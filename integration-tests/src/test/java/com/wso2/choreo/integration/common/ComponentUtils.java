@@ -27,6 +27,7 @@ import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
 import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -35,6 +36,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -79,18 +82,23 @@ public class ComponentUtils {
         return restAPI;
     }
 
-    public static ChoreoComponent createRestAPI(String accessToken) throws Exception {
+    public static ChoreoComponent createRestAPI(String accessToken, String repoName) throws Exception {
         ChoreoOrganization org = TestContext.getTestOrg();
-
         ChoreoProject project = GraphQL.createProject(accessToken);
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        ChoreoComponent restAPI = project.createRestAPI(accessToken, componentName, org);
-
+        GraphqlDTO dto = GraphqlDTO.builder().
+                name(componentName).
+                triggerID("null").
+                srcGitRepoUrl("https://github.com/Avishka217/" + repoName).
+                projectId(project.getId()).
+                displayType(Constant.displayType.restAPI.name()).
+                build();
+        ChoreoComponent restAPI = GraphQL.createUserManagedComponent(project, dto, accessToken);
         restAPI.setOrganization(org);
         restAPI.setProjectId(project.getId());
-
         return restAPI;
     }
+
 
     public static void invokeApiEndpoint(String accessToken, ChoreoComponent component, Constant.Environment env) throws Exception {
         InvokeInformation invokeInformation = component.getInvokeInformation(accessToken,

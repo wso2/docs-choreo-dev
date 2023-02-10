@@ -102,14 +102,14 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void createUserManagedComponent_LoggingAPITestCase() throws IOException {
+    public void createUserManagedComponent_LoggingAPITestCase() throws Exception {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
              GraphqlDTO dto = GraphqlDTO.builder().name(componentName).
                 triggerID("null").
                 srcGitRepoUrl("https://github.com/choreo-test-apps/rest-api").
                 projectId(projectId).
                 displayType(Constant.displayType.restAPI.name()).build();
-        choreoComponent = GraphQL.createUserManagedComponent(dto, accessToken);
+        choreoComponent = GraphQL.createUserManagedComponent(project, dto, accessToken);
         Assert.assertNotNull(choreoComponent.getId());
     }
 

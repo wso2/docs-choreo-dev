@@ -255,9 +255,8 @@ describe("Verify internal API creation functionality", () => {
     ComponentDeployPage.promoteProxyApiToProd();
   });
 
-
-
   it("Verify 1st PROXY API resource access in PROD", () => {
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnCurlDiscardPrevious(
       Enums.Environment.PRODUCTION,
       Enums.HTTPMethod.GET,
@@ -329,9 +328,8 @@ describe("Verify internal API creation functionality", () => {
     ComponentDeployPage.promoteProxyApiToProd();
   });
 
-
-
   it("Verify 2nd PROXY API resource access in prod", () => {
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnCurlDiscardPrevious(
       Enums.Environment.PRODUCTION,
       Enums.HTTPMethod.GET,

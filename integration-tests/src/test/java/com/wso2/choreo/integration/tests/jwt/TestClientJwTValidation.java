@@ -39,6 +39,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     private String projectId;
     private String repoName;
     private String accessToken;
+    private ChoreoProject project;
     private ChoreoComponent choreoComponent;
 
     private String devInvokeURL;
@@ -49,20 +50,20 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     public void setup_TestClientJwTValidation() throws Exception {
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        ChoreoProject project = GraphQL.createProject(accessToken);
+        project = GraphQL.createProject(accessToken);
         projectId = project.getId();
     }
 
 
     @Test
     @CitrusTest
-    public void createUserManagedComponentFor_TestClientJwTValidation() throws IOException {
+    public void createUserManagedComponentFor_TestClientJwTValidation() throws Exception {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
 
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").
                 srcGitRepoUrl("https://github.com/choreo-test-apps/jwt-encoder").
                 projectId(projectId).displayType(Constant.displayType.restAPI.name()).build();
-        choreoComponent = GraphQL.createUserManagedComponent(dto, accessToken);
+        choreoComponent = GraphQL.createUserManagedComponent(project, dto, accessToken);
         Assert.assertNotNull(choreoComponent.getId());
     }
 
