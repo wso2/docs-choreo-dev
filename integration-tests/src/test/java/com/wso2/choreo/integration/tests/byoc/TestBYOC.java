@@ -6,16 +6,13 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
-import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.componentstatus.Status;
-import com.wso2.choreo.integration.models.pullrequests.PullRequest;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -65,10 +62,6 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     public void addDeploymentConfiguration_TestBYOCEUDataPlane() throws Exception {
         Orgs.addConfiguration(choreoComponent, "dev", accessToken);
     }
-
-
-
-
 
     @Test(dependsOnMethods = {"addDeploymentConfiguration_TestBYOCEUDataPlane"})
     @CitrusTest

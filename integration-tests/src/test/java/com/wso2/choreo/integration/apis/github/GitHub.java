@@ -101,10 +101,10 @@ public class GitHub extends ControlPlaneAPI {
     public static Response createNewBranch(String orgName, String repoName, String branchName, String newBranchName)
             throws IOException {
         System.out.println("create new branch");
-        String requestURI = GH_URL + "/repos/" + orgName + "/" +repoName+"/git/refs";
+        String requestURI = GH_URL + "/repos/" + orgName + "/" + repoName + "/git/refs";
         System.out.println(requestURI);
         // getting the sha of the required branch
-        String shaRequestURI = GH_URL + "/repos/" + orgName + "/" +repoName+"/git/refs/heads/"+branchName;
+        String shaRequestURI = GH_URL + "/repos/" + orgName + "/" + repoName + "/git/refs/heads/" + branchName;
         System.out.println(shaRequestURI);
         Response response = HttpClientUtil.httpGET(shaRequestURI, AUTH_HEADER, "");
         JsonObject responseJsonObject = new JsonParser().parse(response.getRes()).getAsJsonObject();
@@ -114,7 +114,7 @@ public class GitHub extends ControlPlaneAPI {
 
         HashMap<String, Object> requestBodyMap = new HashMap<>() {
             {
-                put("ref", "refs/heads/"+newBranchName);
+                put("ref", "refs/heads/" + newBranchName);
                 put("sha", sha);
             }
         };
@@ -143,25 +143,21 @@ public class GitHub extends ControlPlaneAPI {
 
 
     public static void deleteTestProjects() {
-            String requestURL = GH_URL + "/orgs/" + GH_ORG + "/repos?per_page=100";
-            Response response = HttpClientUtil.httpGET(requestURL, AUTH_HEADER, "");
-            Set<Repo> repos = Arrays.stream(ObjectMapperUtil.mapToCollection(Repo[].class, response.getRes(), "")).
-                    filter(r -> r.getName().startsWith("test-repo") || r.getName().startsWith("automationtestcomponent")).collect(Collectors.toSet());
+        String requestURL = GH_URL + "/orgs/" + GH_ORG + "/repos?per_page=100";
+        Response response = HttpClientUtil.httpGET(requestURL, AUTH_HEADER, "");
+        Set<Repo> repos = Arrays.stream(ObjectMapperUtil.mapToCollection(Repo[].class, response.getRes(), "")).
+                filter(r -> r.getName().startsWith("test-repo") || r.getName().startsWith("automationtestcomponent")).collect(Collectors.toSet());
 
-            repos.forEach(rep -> {
-                Date date = new Date();
-                long currentTime = date.getTime();
-                String timeStamp = rep.getName().replace("test-repo-", "").replace("automationtestcomponent","").replace("repo","");
-                long createdTime = Long.parseLong(timeStamp);
-                long timeDiff = currentTime-createdTime;
-                if(timeDiff>3600000){
-                    deleteGitHubRepo(rep.getName());
-                }
+        repos.forEach(rep -> {
+            Date date = new Date();
+            long currentTime = date.getTime();
+            String timeStamp = rep.getName().replace("test-repo-", "").replace("automationtestcomponent", "").replace("repo", "");
+            long createdTime = Long.parseLong(timeStamp);
+            long timeDiff = currentTime - createdTime;
+            if (timeDiff > 3600000) {
+                deleteGitHubRepo(rep.getName());
+            }
 
-            });
-        }
-
-
-
-
+        });
+    }
 }

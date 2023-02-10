@@ -26,27 +26,6 @@ export namespace Enums {
     INTERNAL = "internal",
   }
 
-  export enum ComponentTemplate {
-    REST = "REST",
-    WEBHOOK = "WEBHOOK",
-    MANUAL = "MANUAL",
-  }
-
-  export enum DocumentSourceType {
-    INLINE = "INLINE",
-    MARKDOWN = "MARKDOWN",
-    URL = "URL",
-    FILE = "FILE",
-  }
-
-  export enum DocumentType {
-    SAMPLE = "SAMPLES",
-    HOWTO = "HOWTO",
-    PUBLIC_FORUM = "PUBLIC_FORUM",
-    SUPPORT_FORUM = "SUPPORT_FORUM",
-    OTHER = "OTHER",
-  }
-
   export enum Environment {
     DEVELOPMENT = "Development",
     PRODUCTION = "Production",
@@ -59,12 +38,10 @@ export namespace Enums {
     DELETE = "DELETE",
     PUT = "PUT",
     HEAD = "HEAD",
-    CONNECT = "CONNECT",
     TRACE = "TRACE",
   }
 
   export enum ConnectorAudience {
-    PUBLIC = "public",
     PRIVATE = "private",
   }
 

@@ -16,14 +16,6 @@ import { GraphQL } from "../../apis/graphql";
 import { Utils } from "../../utils";
 
 export class ProjectOverviewPage {
-  static selectComponent(fileID) {
-    cy.get("td>div>p").contains(fileID).click();
-  }
-
-  static addNewComponent() {
-    cy.get(".MuiContainer-root button").click(); // Need to add a id for the Create button
-  }
-
 
   static searchReuseComponent(componentData: ComponentData) {
 
@@ -78,10 +70,5 @@ export class ProjectOverviewPage {
 
   static addComponent() {
     cy.get('[data-cyid="create-component"]').click();
-  }
-
-  //Only used for Enterprise login TC
-  static addNewComponentEL() {
-    cy.get(".MuiContainer-root button").click({ multiple: true }); // Need to add a id for the Create button
   }
 }

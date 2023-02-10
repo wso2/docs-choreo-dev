@@ -54,15 +54,6 @@ export class LoginPage {
     });
   }
 
-  private static enablePreviewFeatures() {
-    if (Utils.isPerspectiveViewEnabled()) {
-      window.localStorage.setItem(
-        "features",
-        JSON.stringify({ "User Perspective": true })
-      );
-    }
-  }
-
   private static rejectCookies() {
     cy.wait(5000);
     cy.get("body").then((b) => {
@@ -82,27 +73,17 @@ export class LoginPage {
       Cypress.env(`commonAuthId`) != null
         ? Cypress.env(`commonAuthId`)
         : "authtoken";
-    Utils.setBrowserCookie(false);
+    Utils.setBrowserCookie();
     this.setCookie(componentURL, "commonAuthId", common);
     cy.visit(componentURL);
     this.rejectCookies();
     cy.get('[data-testid="header-user-profile-menu"]').should("be.visible");
   }
 
-  static navigateToCodespaceEP() {
-    const csurl = Cypress.env(`accessURL`);
-    Utils.setBrowserCookie(true);
-    cy.visit(csurl);
-  }
 
-  static navigateToCodespace() {
-    const csurl = Cypress.env(`accessURL`);
-    Utils.setBrowserCookie(false);
-    cy.visit(csurl);
-  }
 
   static enterpriseLogin() {
-    Utils.setBrowserCookie(true);
+    Utils.setBrowserCookie();
     cy.visit(Cypress.env("enterpriseLoginUrl"));
     cy.get('button[id="enterprise-sign-in"]').should("be.visible", {
       timeout: 180000,
@@ -195,7 +176,7 @@ export class LoginPage {
   }
 
   static visitToHomePage() {
-    Utils.setBrowserCookie(false);
+    Utils.setBrowserCookie();
     cy.visit(Cypress.env("loginURL"));
   }
 
@@ -203,7 +184,7 @@ export class LoginPage {
     envUsername: string,
     envPassword: string
   ) {
-    Utils.setBrowserCookie(false);
+    Utils.setBrowserCookie();
     cy.visit(Cypress.env("loginURL"));
     cy.url({ timeout: 30000 }).then((url) => {
       if (url.includes(Cypress.env("idpURL") + "/authenticationendpoint")) {

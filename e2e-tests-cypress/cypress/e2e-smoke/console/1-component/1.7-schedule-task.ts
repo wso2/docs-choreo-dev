@@ -20,10 +20,7 @@ import { Enums } from "../../../support/console/enums";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-
-import { REUSABLE_PROJECT_NAME } from "../../../support/devportal/constants";
 import { Utils } from "../../../support/console/utils";
-import { GitHub } from "../../../support/github/github";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
 

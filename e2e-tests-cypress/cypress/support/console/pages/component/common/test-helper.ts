@@ -14,7 +14,6 @@
 import { Utils } from "../../../utils";
 import { APITest } from "../../apis/api-test";
 import { Enums } from "../../../enums";
-import { ChoreoHomePage } from "../../home/home-page";
 import { ComponentOverviewPage } from "../component-overview-page";
 import { ComponentTestPage } from "../component-test-page";
 import { Curl } from "../UI-components/curl-component";

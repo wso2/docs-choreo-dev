@@ -22,25 +22,18 @@ import { ComponentOverviewPage } from "../../console/pages/component/component-o
 import { ProjectOverviewPage } from "../../console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../console/pages/projects/projects-listing-page";
 import { RestAPIProxyTemplate } from "../../console/pages/templates/rest-api-proxy-temp";
-import { RestAPITemplate } from "../../console/pages/templates/rest-api-temp";
 import { Utils } from "../../console/utils";
 import { ComponentData } from "../../interfaces/component-data";
-import { generateAppName } from "../utils";
+
 
 export class DevPortalHelper {
-  static FILE_ID = "oasflow";
+
   static PROJECT_DESCRIPTION = "sample oas flow scenario";
   static PROJECT_NAME = Utils.generateProjectName();
 
   static API_BASE_PATH = Utils.generateBasePath();
   static Filepath = "apis/generation_oas.yaml";
-  static idpUser = "choreoe2etest";
-  static OPERATION_USERS = "intensity";
-  static appName = generateAppName("-e2etest");
-
-
-  static COMPONENT_NAME = "create-rest-api-from-scratch-1.3";
-  static REPO_NAME = Utils.generateComponentName("repo");
+    static REPO_NAME = Utils.generateComponentName("repo");
 
 
   static createDeployHttpProxyComponent(API_Name) {

@@ -1,7 +1,6 @@
 export class GraphQLQueryBuilder {
 
 
-
     static getComponentDetails(projectId: string, componentHandler: string) {
         return {
             query: `query{
@@ -58,7 +57,8 @@ export class GraphQLQueryBuilder {
         }
       }
     }
-`}
+`
+        }
     }
 
     static getComponentDeploymentStatus(orgHandler: string, orgUuid: string, componentId: string, versionId: string, environmentId: string) {
@@ -106,9 +106,6 @@ export class GraphQLQueryBuilder {
 `
         }
     }
-
-
-
 
 
 }
