@@ -32,6 +32,10 @@ export namespace Enums {
     MANUAL = "MANUAL",
   }
 
+  export enum ComponentType {
+    MI_REST_API = "miRestApi",
+  }
+
   export enum DocumentSourceType {
     INLINE = "INLINE",
     MARKDOWN = "MARKDOWN",
