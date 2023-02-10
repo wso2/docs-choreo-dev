@@ -35,9 +35,15 @@ export class ProjectListingPage {
   static selectProject(projectName: string = "Default Project") {
 
     cy.get('[data-cyid="search-icon"]').eq(1).click()
-    cy.get('[data-cyid="search-field"]').within(()=>{
+    cy.get('[data-cyid="search-field"]').within(() => {
       cy.get('input').type(projectName)
     })
-     cy.contains(projectName).click();
+    cy.get(`a[href*="organizations/${Cypress.env("choreoOrgHandle")}/projects"]`).each(d => {
+      if (d.find('h4').text() === projectName) {
+        cy.wrap(d).click()
+        return;
+      }
+    })
+    //  cy.contains(projectName).click();
   }
 }

@@ -75,10 +75,6 @@ describe("Verify project creation functionality", () => {
     APIDeployment.DeployToDev();
   });
 
-  it("Verify prod invoke url", () => {
-    APIDeployment.PromoteToProd();
-  });
-
   it("Verify test functionality using Swagger UI in Dev", () => {
     TestHelper.testOnSwagger(
       Enums.Environment.DEVELOPMENT,
@@ -86,6 +82,11 @@ describe("Verify project creation functionality", () => {
     ).then((res) => {
       expect(res.statusCode).to.be.equal("200");
     });
+  });
+
+  it("Verify prod invoke url", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.PromoteToProd();
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
@@ -130,10 +131,6 @@ describe("Verify project creation functionality", () => {
     APIDeployment.DeployToDev();
   });
 
-  it("Verify new prod invoke url", () => {
-    APIDeployment.PromoteToProd();
-  });
-
   it("Test in dev", () => {
     APITest.testAPI();
     APITest.selectDevEnvironment();
@@ -142,6 +139,11 @@ describe("Verify project creation functionality", () => {
     SwaggerUI.getResponseCode().should("eq", "200");
     SwaggerUI.invokeResource(OPERATION_POSTS);
     SwaggerUI.getResponseCode().should("eq", "200");
+  });
+
+  it("Verify new prod invoke url", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.PromoteToProd();
   });
 
   it("Test in prod", () => {
@@ -167,7 +169,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Test in devportal", () => {
-    Apis.searchApiAndSelect(API_NAME, 2);
+    Apis.searchApiAndSelect(API_NAME, 2, API_NEW_VERSION);
     ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials();
     TryOut.navigateToTryOutMenu();

@@ -181,7 +181,7 @@ public class QuotaLimitIT extends TestNGCitrusSpringSupport {
             JsonPrimitive isRateLimited = new JsonParser().parse(responseBody).getAsJsonObject()
                     .getAsJsonObject("data").getAsJsonObject("quotaLimitStatus").getAsJsonPrimitive("isRunningComponentsLimited");
 
-            if (isRateLimited.getAsBoolean()) {
+            if (!isRateLimited.getAsBoolean()) {
                 return;
             }
         }

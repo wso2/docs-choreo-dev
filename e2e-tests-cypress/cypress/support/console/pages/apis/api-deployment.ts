@@ -11,6 +11,8 @@
  * associated services.
  */
 
+import { Utils } from "../../utils";
+
 
 export class APIDeployment {
   static navigateToDeployment() {
@@ -20,6 +22,7 @@ export class APIDeployment {
 
   static DeployToDev() {
     cy.get('[data-cyid="btn-deploy-proxy"]').should("not.be.disabled").click();
+    Utils.interceptConfig()
     cy.get('[data-cyid="btn-next"]')
       .should("be.visible")
       .click();
@@ -42,6 +45,7 @@ export class APIDeployment {
       .should("be.visible");
     cy.get('[data-cyid*="promote"]').should("not.be.disabled");
   }
+
 
   
 }

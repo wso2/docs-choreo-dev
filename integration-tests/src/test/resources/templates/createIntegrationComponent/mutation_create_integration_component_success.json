@@ -1,0 +1,26 @@
+{
+  "data": {
+    "createIntegrationComponent": {
+      "id": "id",
+      "createdAt": "2023-01-30T11:11:23.646872542Z",
+      "updatedAt": "2023-01-30T11:11:23.646872542Z",
+      "name": "componentName",
+      "handle": "proj_handle",
+      "organizationId": "org_id",
+      "projectId": "project_id",
+      "orgHandle": "org_handle",
+      "type": "Deployment",
+      "description": "",
+      "imageRegistryId": "image_reg_id",
+      "imageRegistry": {
+        "id": "image_reg_id",
+        "createdAt": "2023-01-30T11:11:23.598933697Z",
+        "updatedAt": "2023-01-30T11:11:23.598933697Z",
+        "cloudConnectorId": "",
+        "imageRepositoryName": "mirest-default"
+      },
+      "componentType": "miRestApi",
+      "httpBased": true
+    }
+  }
+}

@@ -2,7 +2,7 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   projectId: "$CYPRESS_PROJECT_ID",
-  defaultCommandTimeout: 180000,
+  defaultCommandTimeout: 80000,
   pageLoadTimeout: 300000,
   responseTimeout: 300000,
   viewportHeight: 1000,
@@ -19,31 +19,38 @@ export default defineConfig({
       let apiName;
       let projectName;
       on("task", {
-        'setAPIName'(val) {
+        setAPIName(val) {
           return (apiName = val);
         },
 
-        'getAPIName'() {
+        getAPIName() {
           return apiName;
         },
 
-        'setChoreoProjectName'(val) {
+        setChoreoProjectName(val) {
           return (projectName = val);
         },
 
-        'getChoreoProjectName'() {
+        getChoreoProjectName() {
           return projectName;
         },
       });
+      require("cypress-fail-fast/plugin")(on, config);
       config.env.choreoIDPUsername = process.env.choreoIDPUsername;
       config.env.choreoIDPPassword = process.env.choreoIDPPassword;
       config.env.choreoOrgHandle = process.env.choreoOrgHandle;
       config.env.userName = process.env.userName;
       config.env.userEmail = process.env.userEmail;
-      config.env.gitPAT = process.env.gitPAT
+      config.env.gitPAT = process.env.gitPAT;
       config.env.enablePerspectiveView = process.env.enablePerspectiveView;
       return config;
     },
     specPattern: "cypress/e2e-smoke//./**/*.ts",
+  },
+  env: {
+    FAIL_FAST_STRATEGY: "spec",
+    FAIL_FAST_ENABLED: true,
+    FAIL_FAST_BAIL: 3,
+    FAIL_FAST_PLUGIN: false,
   },
 });

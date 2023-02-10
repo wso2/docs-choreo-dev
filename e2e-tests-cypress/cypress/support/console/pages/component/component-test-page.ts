@@ -12,7 +12,7 @@
  */
 
 
-import { Environment } from '../enum/environment';
+import { Enums } from '../../enums';
 
 export class ComponentTestPage {
   static selectCurl() {
@@ -20,10 +20,10 @@ export class ComponentTestPage {
   }
 
   static getTestKey() {
-    cy.contains('Get Test Key').should('be.visible').click();
+    cy.contains('Get Test Key').should('be.visible').click({ force: true });
   }
 
-  static selectEnvironment(env: Environment) {
+  static selectEnvironment(env: Enums.Environment) {
     cy.get('[data-testid="env"]>div').click();
    cy.get('ul>li').contains(env).click();
   }

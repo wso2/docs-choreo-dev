@@ -14,7 +14,8 @@
 package com.wso2.choreo.integration.common;
 
 
-import com.consol.citrus.annotations.CitrusTest;
+import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.message.MessageType;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
@@ -46,6 +47,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
+import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 public class ComponentUtils {
 
@@ -143,5 +146,39 @@ public class ComponentUtils {
         Writer writer = new StringWriter();
         mustache.execute(writer, params).flush();
         return writer.toString();
+    }
+
+    /**
+     * Invoke API with validation
+     *
+     * @param runner           Test action runner
+     * @param apiKey           API Key
+     * @param invokeUrl        Invoke URL
+     * @param apiRequestUrl    API Request URL
+     * @param expectedResponse Expected response
+     */
+    public static void invokeApi(TestActionRunner runner, String apiKey, String invokeUrl, String apiRequestUrl,
+                                 String expectedResponse) {
+
+        // Test API Invocation
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(invokeUrl)
+                                .send()
+                                .get(apiRequestUrl)
+                                .message()
+                                .header(HttpHeaders.ACCEPT, "application/json")
+                                .header("API-Key", apiKey),
+                        http()
+                                .client(invokeUrl)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                                .body(expectedResponse)));
     }
 }

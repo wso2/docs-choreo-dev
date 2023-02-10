@@ -5,22 +5,18 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.Orgs;
-import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.apis.observability.ObservabilityService;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
 import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
-import com.wso2.choreo.integration.common.utils.FileUtil;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
+import com.wso2.choreo.integration.models.observability.ObservabilityLogs;
 import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import org.hamcrest.core.StringRegularExpression;
@@ -64,7 +60,7 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
 
     @DataProvider(name = "env-provider")
     public Object[][] environment() {
-        return new Object[][]{{Constant.Environment.Development}, {Constant.Environment.Development}};
+        return new Object[][]{{Constant.Environment.Development}, {Constant.Environment.Production}};
     }
 
 
@@ -200,7 +196,8 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
         Environment environment = choreoComponent.getEnvironment(en, env);
         String releaseId = choreoComponent.getReleaseIdForEnvironment(environment.getChoreoEnv());
         String namespace = environment.getNamespace();
-        ObservabilityService.getGroupLogs(releaseId, namespace, accessToken);
+      ObservabilityLogs observabilityLogs = ObservabilityService.getGroupLogs(releaseId, namespace, accessToken);
+        Assert.assertTrue(observabilityLogs.getRows().length > 0);
     }
 
     @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_GraphQLServiceIT"})

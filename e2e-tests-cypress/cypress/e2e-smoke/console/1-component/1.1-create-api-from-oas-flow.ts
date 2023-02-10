@@ -69,20 +69,8 @@ describe("Choreo APIM publisher scenarios", () => {
     APIDeployment.DeployToDev();
   });
 
-  it("Verify prod invoke url", () => {
-    APIDeployment.PromoteToProd();
-  });
-
   it("Verify test functionality using Swagger UI in Dev", () => {
     TestHelper.testOnSwagger(Enums.Environment.DEVELOPMENT, "intensity").then(
-      (res) => {
-        expect(res.statusCode).to.be.equal("200");
-      }
-    );
-  });
-
-  it("Verify test functionality using Swagger UI in Prod", () => {
-    TestHelper.testOnSwagger(Enums.Environment.PRODUCTION, "intensity").then(
       (res) => {
         expect(res.statusCode).to.be.equal("200");
       }
@@ -92,18 +80,6 @@ describe("Choreo APIM publisher scenarios", () => {
   it("Verify test functionality using generated curl in Dev", () => {
     TestHelper.testOnCurl(
       Enums.Environment.DEVELOPMENT,
-      Enums.HTTPMethod.GET,
-      "intensity"
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(200);
-      });
-    });
-  });
-
-  it("Verify test functionality using generated curl in Prod", () => {
-    TestHelper.testOnCurl(
-      Enums.Environment.PRODUCTION,
       Enums.HTTPMethod.GET,
       "intensity"
     ).then((curl) => {
@@ -140,6 +116,31 @@ describe("Choreo APIM publisher scenarios", () => {
     );
   });
 
+  it("Verify prod invoke url", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.PromoteToProd();
+  });
+
+  it("Verify test functionality using Swagger UI in Prod", () => {
+    TestHelper.testOnSwagger(Enums.Environment.PRODUCTION, "intensity").then(
+      (res) => {
+        expect(res.statusCode).to.be.equal("200");
+      }
+    );
+  });
+
+  it("Verify test functionality using generated curl in Prod", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
+      "intensity"
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.status).equal(200);
+      });
+    });
+  });
+
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
@@ -153,7 +154,7 @@ describe("Choreo APIM publisher scenarios", () => {
     );
   });
 
-  it('Tryout published api',()=>{
+  it("Tryout published api", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.searchApiAndSelect(API_NAME, 1);
     // Validate the API call without the scope
@@ -165,9 +166,9 @@ describe("Choreo APIM publisher scenarios", () => {
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.ValidateResponse("200");
-  })
+  });
 
-  it("Create application",()=>{
+  it("Create application", () => {
     // Create app
     DevPortalHomePage.navigateToAppsPage();
     AppsList.createAnApplication(appName);
@@ -178,10 +179,9 @@ describe("Choreo APIM publisher scenarios", () => {
     cy.get('[data-testid="applications-appbar-btn"]')
       .should("be.visible")
       .click();
-  })
+  });
 
   it("Add permissions and tryout", () => {
-  
     AppsList.editAnApplication(appName, permissions[0]);
     // Validate API call with scope
     DevPortalHomePage.navigateToApisPage();
@@ -204,7 +204,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify insight values for dev", () => {
-  ProjectOverviewPage.navigateToComponents()
+    ProjectOverviewPage.navigateToComponents();
     ChoreoHomePage.navigateToInsights();
     InsightsPage.selectTimePeriod();
     InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);

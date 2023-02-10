@@ -27,7 +27,7 @@ describe("Public access on devportal", () => {
         ComponentAPILifecycle.verifyAPIVisibility('Private');
     });
 
-
+  
     it("Check for available public apis", () => {
         DevportalLoginPage.visitToDevportalOrgPublicApis();
         DevPortalHomePage.verifyDevportalHomePagePublicView();

@@ -60,10 +60,6 @@ describe("Verify BYOR functionality", () => {
     ComponentDeployPage.deployToDev();
   });
 
-  it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd();
-  });
-
   it("Verify test functionality of root resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest(true);
     TestHelper.testOnSwagger(
@@ -91,8 +87,15 @@ describe("Verify BYOR functionality", () => {
     });
   });
 
+  it("Verify component promote to prod", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.promoteToProd();
+  });
+
+
+
   it("Verify test functionality of root resource in prod on swagger", () => {
-    ComponentOverviewPage.navigateToTest(true);
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
       Enums.Environment.PRODUCTION,
       RESOURCE_NAME,
@@ -143,7 +146,7 @@ describe("Verify BYOR functionality", () => {
   });
 
   it("Verify resource access without the token in dev", () => {
-    ComponentOverviewPage.navigateToTest(true);
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnCurl(
       Enums.Environment.DEVELOPMENT,
       Enums.HTTPMethod.GET,

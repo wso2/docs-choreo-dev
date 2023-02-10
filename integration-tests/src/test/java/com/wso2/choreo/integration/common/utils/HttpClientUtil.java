@@ -39,7 +39,6 @@ public class HttpClientUtil {
             statusCode = response.getStatusLine().getStatusCode();
             if (entity != null) {
                 responseBody = EntityUtils.toString(entity);
-                LOGGER.debug(responseBody);
             }
         } catch (IOException e) {
             LOGGER.error(e.getLocalizedMessage());

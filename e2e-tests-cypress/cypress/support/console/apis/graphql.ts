@@ -11,12 +11,14 @@
  * associated services.
  */
 
+import { computeHeadingLevel } from "@testing-library/dom";
 import { GitHub } from "../../github/github";
 import { ComponentData } from "../../interfaces/component-data";
 import { PR } from "../../interfaces/pr";
 import { ONE_HOUR } from "../constants";
 import { ChoreoHomePage } from "../pages/home/home-page";
 import { Utils } from "../utils";
+import { GraphQLQueryBuilder } from "./gql-query-builder";
 
 export const SUCCESS_STATUS_CODE = 200;
 export const CREATED_STATUS_CODE = 201;
@@ -209,8 +211,8 @@ export class GraphQL {
                                   name: "${componentData.componentName}",
                                   orgId: ${id},
                                   orgHandler: "${Cypress.env(
-                                    "choreoOrgHandle"
-                                  )}",
+          "choreoOrgHandle"
+        )}",
                                   displayName: "${componentData.componentName}",
                                   displayType: "${componentData.displayType}",
                                   projectId: "${project["id"]}",
@@ -219,48 +221,87 @@ export class GraphQL {
                                   description: "",
                                   apiId: "",
                                   ballerinaVersion: "swan-lake-alpha5",
-                                  triggerChannels: "${
-                                    componentData.triggerChannels
-                                  }",
+                                  triggerChannels: "${componentData.triggerChannels
+          }",
                                   triggerID: ${componentData.triggerId},
                                   httpBase: true,
-                                  sampleTemplate: "${
-                                    componentData.sampleTemplate
-                                  }",
-                                  accessibility: "${
-                                    componentData.accessibility
-                                  }",
-                                  srcGitRepoUrl: "${
-                                    componentData.srcGitRepoUrl
-                                  }"
-                                  repositorySubPath: "${
-                                    componentData.repositorySubPath
-                                  }",
-                                  repositoryType: "${
-                                    componentData.repositoryType
-                                  }",
+                                  sampleTemplate: "${componentData.sampleTemplate
+          }",
+                                  accessibility: "${componentData.accessibility
+          }",
+                                  srcGitRepoUrl: "${componentData.srcGitRepoUrl
+          }"
+                                  repositorySubPath: "${componentData.repositorySubPath
+          }",
+                                  repositoryType: "${componentData.repositoryType
+          }",
                                   repositoryBranch: "main",
-                                  initializeAsBallerinaProject: ${
-                                    componentData.initializeAsBallerinaProject
-                                  },
+                                  initializeAsBallerinaProject: ${componentData.initializeAsBallerinaProject
+          },
                                 } )
                                 {id, orgId, projectId, handler    }
                       }`,
       };
 
       this.callGraphQL(query).then((res) => {
-        const { id } = res.body.data.createComponent;
+        const { id, projectId, handler } = res.body.data.createComponent;
+        Cypress.env("component", { id, projectId, handler })
         if (componentData.initializeAsBallerinaProject) {
           this.getPullRequests(id, repoName);
         }
         expect(res.status).to.be.eq(200);
+        this.getDeployedComponentDetails(projectId, handler)
       });
     });
     ChoreoHomePage.navigateToMarketPlace();
     ChoreoHomePage.navigateToProjects();
     cy.get("tbody>tr p").should("be.visible");
+    return cy.wrap({})
   }
 
+  static getDeployedComponentDetails(projectId: string, handler: string) {
+    const query = GraphQLQueryBuilder.getComponentDetails(projectId, handler)
+    this.callGraphQL(query).then(res => {
+      const { apiVersions } = res.body.data.component
+      const componentId = res.body.data.component["id"];
+      const av = apiVersions as []
+      const latestAPIversion = av.find(a => a["latest"])
+      const latestAPIVersionId = latestAPIversion["id"]
+      const appENVS = latestAPIversion["appEnvVersions"] as []
+      appENVS.forEach(a => {
+        const { release } = a
+        const { id, environmentId } = release
+        const choreoEnv = release["metadata"]["choreoEnv"]
+
+        let releaseData = { componentId, latestAPIVersionId, environmentId, releaseId: id, choreoEnv }
+
+        Cypress.env(choreoEnv, releaseData)
+      })
+    })
+  }
+
+  static getComponentDeploymentStatus(env: string = "dev") {
+    const { handle, uuid, } = Cypress.env("userData");
+    cy.log(JSON.stringify(Cypress.env(env)))
+    const { componentId, latestAPIVersionId, environmentId } = Cypress.env(env)
+    const query = GraphQLQueryBuilder.getComponentDeploymentStatus(handle, uuid, componentId, latestAPIVersionId, environmentId)
+    let isActive: boolean = false
+
+    this.callGraphQL(query).then(res => {
+      const { deploymentStatus, deploymentStatusV2 } = res.body.data.componentDeployment
+      cy.log(deploymentStatus, deploymentStatusV2)
+      if (deploymentStatusV2 === "ERROR" || deploymentStatus === "ERROR") {
+        throw new Error(' Deployment Failed');
+      }
+      if (deploymentStatusV2 === "ACTIVE" && deploymentStatus === "ACTIVE") {
+        return;
+      } else {
+        if (this.count < 10) {
+          this.getComponentDeploymentStatus()
+        }
+      }
+    })
+  }
   private static getPullRequests(componentId: string, repoName: string) {
     const query = {
       query: `query{
@@ -271,19 +312,16 @@ export class GraphQL {
     cy.wait(10000);
     this.callGraphQL(query).then((res) => {
       const prs: PR[] = res.body.data.componentPullRequests as [];
-      cy.log(JSON.stringify(prs));
       if (prs.length > 0) {
         const { number } = prs[0];
-        GitHub.mergePR(repoName, number).then((resp) =>
-          expect(resp.status).to.be.eq(200)
-        );
+        GitHub.mergePR(repoName, number).then((resp) => expect(resp.status).to.be.eq(200));
         return;
       } else {
-        if(this.count<10){
+        if (this.count < 10) {
           this.getPullRequests(componentId, repoName);
           this.count++;
         }
-       
+
       }
     });
   }

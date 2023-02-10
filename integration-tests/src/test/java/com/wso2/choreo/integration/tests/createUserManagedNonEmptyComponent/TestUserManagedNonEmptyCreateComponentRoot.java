@@ -83,7 +83,7 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
         @BeforeClass
         public void setup_TestUserManagedNonEmptyCreateComponentRoot()
                 throws Exception {
-                accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+
                 orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
                 orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
                 orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);

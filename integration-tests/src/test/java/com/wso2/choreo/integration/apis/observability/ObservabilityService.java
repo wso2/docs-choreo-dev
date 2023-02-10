@@ -40,13 +40,13 @@ public class ObservabilityService extends ControlPlaneAPI {
     }
 
 
-    public static void getGroupLogs(String releaseId, String namespace, String accessToken) throws IOException, URISyntaxException {
+    public static ObservabilityLogs getGroupLogs(String releaseId, String namespace, String accessToken) throws IOException, URISyntaxException {
         ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
         ObsRequestParam orp = ObsRequestParam.builder().namespace(namespace).releaseId(releaseId).bin("10").limit("5").build();
         String url = ObservabilityService.getObsUrl(orp,observabilityIdInformation.getObsId(),Constant.logType.groupedlogsV2);
         Response res = HttpClientUtil.httpGET(url, accessToken, "");
         System.out.println(res.getRes());
-     //   ObservabilityLogs obslogs = ObjectMapperUtil.mapStringToObject(ObservabilityLogs.class, res.getRes(), "");
+        return ObjectMapperUtil.mapStringToObject(ObservabilityLogs.class, res.getRes(), "");
     }
 
 

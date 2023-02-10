@@ -49,3 +49,4 @@ anomalyDetection:
   #ANOMALY_DETECTION_TEST_USER_PASSWORD:
 themeManagement:
   THEME_ENDPOINT: https://apis.preview-dv.choreo.dev
+  CDN_THEME_ENDPOINT: https://choreodevdevportalcdn19.blob.core.windows.net/
