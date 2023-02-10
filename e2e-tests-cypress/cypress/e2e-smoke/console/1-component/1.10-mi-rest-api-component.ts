@@ -52,10 +52,6 @@ describe("Verify MI REST API component in root", () => {
     ComponentDeployPage.deployToDev(false); //This is set to false till the env config support is provided for miRestApi
   });
 
-  it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd(false); //This is set to false till the env config support is provided for miRestApi
-  });
-
   it("Verify test functionality of root resource in dev on curl", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnCurl(
@@ -68,6 +64,11 @@ describe("Verify MI REST API component in root", () => {
         expect(res.status).equal(200);
       });
     });
+  });
+
+  it("Verify component promote to prod", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.promoteToProd(false); //This is set to false till the env config support is provided for miRestApi
   });
 
   it("Verify test functionality of root resource in prod on curl", () => {
