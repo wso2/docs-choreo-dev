@@ -8,8 +8,12 @@ import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.models.github.Content;
 import com.wso2.choreo.integration.models.github.Repo;
+import com.wso2.choreo.integration.models.requestheader.HeaderValues;
 import com.wso2.choreo.integration.models.response.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
+import org.apache.http.client.entity.EntityBuilder;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -83,6 +87,7 @@ public class GitHub extends ControlPlaneAPI {
                 "    \"content\":" + "\"" + content + "\"" + ",\n" +
                 "    \"sha\":" + "\"" + serviceBalSha + "\"" + "\n}";
         return HttpClientUtil.httpPUT(requestUrl, request, AUTH_HEADER, "");
+
     }
 
     public static void createNewFile(String repoName, String path, String content) throws IOException {
@@ -160,8 +165,4 @@ public class GitHub extends ControlPlaneAPI {
 
             });
         }
-
-
-
-
 }

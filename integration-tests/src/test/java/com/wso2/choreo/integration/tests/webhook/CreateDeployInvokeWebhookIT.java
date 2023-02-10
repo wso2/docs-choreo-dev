@@ -75,6 +75,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     private String namespace;
     private String obsId;
     private String devInvokeURL;
+    private ChoreoProject project;
     private ChoreoComponent choreoComponent;
 
     @Autowired
@@ -86,13 +87,13 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     public void setup_CreateDeployInvokeWebhookIT() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-        ChoreoProject project  = GraphQL.createProject(accessToken);
+        project  = GraphQL.createProject(accessToken);
         projectId = project.getId();
     }
 
     @Test
     @CitrusTest
-    public void createUserManagedComponent_CreateDeployInvokeWebhookIT() throws IOException {
+    public void createUserManagedComponent_CreateDeployInvokeWebhookIT() throws Exception {
 
         // Creating new GitHub repo
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
@@ -105,7 +106,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                 displayName(componentName).projectId(projectId).
                 triggerChannels("AppService").triggerID("126").
                 displayType(Constant.displayType.webhook.name()).build();
-        choreoComponent = GraphQL.createUserManagedComponent(graphqlDTO, accessToken);
+        choreoComponent = GraphQL.createUserManagedComponent(project, graphqlDTO, accessToken);
         Assert.assertEquals(choreoComponent.getProjectId(), projectId);
 
     }
