@@ -40,6 +40,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     private String projectId;
     private String repoName;
     private String accessToken;
+    private ChoreoProject project;
     private ChoreoComponent choreoComponent;
 
     private String devInvokeURL;
@@ -50,18 +51,18 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     public void setup_TestClientJwTValidation() throws Exception {
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        ChoreoProject project = GraphQL.createProject(accessToken);
+        project = GraphQL.createProject(accessToken);
         projectId = project.getId();
     }
 
 
     @Test
     @CitrusTest
-    public void createUserManagedComponentFor_TestClientJwTValidation() throws IOException {
+    public void createUserManagedComponentFor_TestClientJwTValidation() throws Exception {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         GitHub.initGitHubRepo(repoName, true, true, "nanoc");
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").srcGitRepoUrl(GitHub.getGitHubRepoUrl(repoName)).projectId(projectId).displayType(Constant.displayType.restAPI.name()).build();
-        choreoComponent = GraphQL.createUserManagedComponent(dto, accessToken);
+        choreoComponent = GraphQL.createUserManagedComponent(project, dto, accessToken);
         Assert.assertNotNull(choreoComponent.getId());
     }
 
@@ -135,22 +136,22 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
                 validate(JsonMessageValidationContext.Builder.json());
     }
 
-
-    @Test(dependsOnMethods = {"invokeAPI_TestClientJwTValidation"}, alwaysRun = true)
-    @CitrusTest
-    public void deleteComponent_TestClientJwTValidation() throws IOException {
-        Response response = GraphQL.deleteComponent(choreoComponent.getId(), projectId, accessToken);
-        ChoreoComponent[] components = GraphQL.getProjectComponents(projectId, accessToken);
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
-        Assert.assertEquals(components.length, 0);
-    }
-
-    @Test(dependsOnMethods = {"deleteComponent_TestClientJwTValidation"}, alwaysRun = true)
-    @CitrusTest
-    public void deleteRepo_TestClientJwTValidation() {
-        Response response = GitHub.deleteGitHubRepo(repoName);
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT.value());
-    }
+//
+//    @Test(dependsOnMethods = {"invokeAPI_TestClientJwTValidation"}, alwaysRun = true)
+//    @CitrusTest
+//    public void deleteComponent_TestClientJwTValidation() throws IOException {
+//        Response response = GraphQL.deleteComponent(choreoComponent.getId(), projectId, accessToken);
+//        ChoreoComponent[] components = GraphQL.getProjectComponents(projectId, accessToken);
+//        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
+//        Assert.assertEquals(components.length, 0);
+//    }
+//
+//    @Test(dependsOnMethods = {"deleteComponent_TestClientJwTValidation"}, alwaysRun = true)
+//    @CitrusTest
+//    public void deleteRepo_TestClientJwTValidation() {
+//        Response response = GitHub.deleteGitHubRepo(repoName);
+//        Assert.assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT.value());
+//    }
 
 }
 

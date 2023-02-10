@@ -162,6 +162,11 @@ public class ChoreoProject {
                 "      }}";
     }
 
+
+
+
+
+
     public String getDeleteComponentMutation(String componentId) {
         return "mutation{ deleteComponentV2(" +
                 "        orgHandler: \"" + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE) + "\"," +

@@ -50,8 +50,8 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
     private String accessToken;
     private String projectId;
     private String repoName;
+    private ChoreoProject project;
     private ChoreoComponent choreoComponent;
-
     private String apiKey;
     private String devInvokeURL;
     private String prodInvokeURL;
@@ -72,13 +72,13 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
     public void setup_GraphQLServiceIT() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
-        ChoreoProject project = GraphQL.createProject(accessToken);
+        project = GraphQL.createProject(accessToken);
         projectId = project.getId();
     }
 
     @Test
     @CitrusTest
-    public void createUserManagedComponentFor_GraphQLServiceIT() throws IOException {
+    public void createUserManagedComponentFor_GraphQLServiceIT() throws Exception {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         GraphqlDTO dto = GraphqlDTO.builder().
                 name(componentName).
@@ -87,7 +87,7 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
                 projectId(projectId).
                 displayType(Constant.displayType.graphql.name()).
                 build();
-        choreoComponent = GraphQL.createUserManagedComponent(dto, accessToken);
+        choreoComponent = GraphQL.createUserManagedComponent(project, dto, accessToken);
         Assert.assertNotNull(choreoComponent.getId());
     }
 

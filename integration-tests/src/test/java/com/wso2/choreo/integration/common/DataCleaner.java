@@ -66,7 +66,6 @@ public class DataCleaner  {
         log.info("Total number of test projects: " + numberOfTestProjects);
         log.info("Total number of test projects deleted: " + numberOfTestProjectsDeleted);
     }
-
     private static boolean shouldProjectBeDeleted(String projectName) {
         // Projects that can be deleted that were created with the Old project name prefix have already been removed.
         // What remains are those that cannot be deleted due to connectors being published.
