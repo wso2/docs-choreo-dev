@@ -34,7 +34,6 @@ export class APIDeployment {
 
   static PromoteToProd() {
     cy.get('[data-cyid*="promote"]').click();
-    Utils.interceptConfig()
     cy.get('[data-cyid="btn-next"]').click();
     cy.get('[data-cyid="proxy-env-card-header"]>div>span')
       .contains("Production")
