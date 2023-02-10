@@ -15,10 +15,7 @@ import { Utils } from "../../utils";
 
 
 export class APIDeployment {
-  static navigateToDeployment() {
-    cy.contains("Deploy").should("be.visible").click();
-    cy.get('[id="backdrop-loader"').should("not.exist");
-  }
+
 
   static DeployToDev() {
     cy.get('[data-cyid="btn-deploy-proxy"]').should("not.be.disabled").click();

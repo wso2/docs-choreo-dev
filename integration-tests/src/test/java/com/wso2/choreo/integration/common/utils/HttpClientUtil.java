@@ -39,15 +39,17 @@ public class HttpClientUtil {
             statusCode = response.getStatusLine().getStatusCode();
             if (entity != null) {
                 responseBody = EntityUtils.toString(entity);
+                log.info(request.getURI().toString(),responseBody,statusCode);
             }
         } catch (IOException e) {
-            LOGGER.error(e.getLocalizedMessage());
+         log.error(e.getMessage());
         }
         return Response.builder().res(responseBody).statusCode(statusCode).build();
     }
 
     public static Response httpGET(String url, String accessToken, String apiKey) {
         HttpGet request = new HttpGet(url);
+        log.info(url);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
         request.setHeader("API-Key", apiKey);
@@ -56,6 +58,7 @@ public class HttpClientUtil {
 
     public static Response httpPOST(String url, String payload, String accessToken, String apiKey) throws IOException {
         HttpPost request = new HttpPost(url);
+        log.info(url,payload);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
         request.setHeader("API-Key", apiKey);
@@ -79,6 +82,7 @@ public class HttpClientUtil {
 
     public static Response httpPUT(String url, String payload, String accessToken, String apiKey) throws IOException {
         HttpPut request = new HttpPut(url);
+        log.info(url,payload);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
         request.setHeader("API-Key", apiKey);
@@ -95,6 +99,7 @@ public class HttpClientUtil {
 
     public static Response httpDELETE(String url, String accessToken, String apiKey) {
         HttpDelete request = new HttpDelete(url);
+        log.info(url);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
         request.setHeader("API-Key", apiKey);

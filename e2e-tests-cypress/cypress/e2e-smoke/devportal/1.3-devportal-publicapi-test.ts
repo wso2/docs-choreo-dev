@@ -2,7 +2,7 @@ import { DevPortalHomePage } from "../../support/devportal/pages/home/home-page"
 import { Apis } from "../../support/devportal/pages/apis/apis-home";
 import { ApiOverview } from "../../support/devportal/pages/apis/api-overview";
 import { Utils } from "../../support/console/utils";
-import { LoginPage as ConsoleLoginPage, LoginPage } from "../../support/console/pages/login-page";
+import { LoginPage as ConsoleLoginPage } from "../../support/console/pages/login-page";
 import { LoginPage as DevportalLoginPage } from "../../support/devportal/pages/login/login-page";
 import { ChoreoHomePage } from "../../support/console/pages/home/home-page";
 import { DevPortalHelper } from "../../support/devportal/helpers/devportal-helper";
@@ -33,7 +33,6 @@ describe("Public access on devportal", () => {
         DevPortalHomePage.verifyDevportalHomePagePublicView();
         DevPortalHomePage.navigateToApisPage();
         Apis.confirmAPIUnavailability(API_Name)
-
     });
 
     it("Update the API visibility to public", () => {
@@ -43,8 +42,6 @@ describe("Public access on devportal", () => {
         ComponentOverviewPage.navigateToManage();
         ComponentAPILifecycle.selectSetting();
         ComponentAPILifecycle.updateAPIVisibility('Public');
-
-
     });
 
     it("Check for available public apis to confirm availability", () => {
@@ -53,6 +50,5 @@ describe("Public access on devportal", () => {
         Apis.navigateToApiOverview(API_Name as string);
         ApiOverview.confirmPublicAPIOverview();
         ApiOverview.confirmPublicAPIResourcePage();
-
     });
 })

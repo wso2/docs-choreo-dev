@@ -5,21 +5,6 @@ export class GitHub {
     static headers = {
         Authorization: `token ${Cypress.env("gitPAT")}`,
     };
-    static initGitHubRepo(name: string, autoInit: boolean, isPrivate: boolean, gitignoreTemplate: string) {
-        const requestURI = `${Cypress.env("ghUrl")}/orgs/${Cypress.env("ghOrg")}/repos`
-        const payload = {
-            name,
-            "auto_init": autoInit,
-            "private": isPrivate,
-            "gitignore_template": gitignoreTemplate
-        }
-        return Utils.sendPostRequest(requestURI, this.headers, payload)
-    }
-
-    public static getGitHubRepoUrl(repoName) {
-        return `https://github.com/${Cypress.env("ghOrg")}/${repoName}`
-    }
-
     static mergePR(repoName, prNumber) {
 
         const requestURI = `${Cypress.env("ghUrl")}/repos/${Cypress.env("ghOrg")}/${repoName}/pulls/${prNumber}/merge`
@@ -50,31 +35,9 @@ export class GitHub {
     }
 
 
-    static createNewFile(repoName: string, path: string, filePath: string) {
-        cy.readFile(filePath, 'base64').then(content => {
-            const requestUrl = `${Cypress.env("ghUrl")}/repos/${Cypress.env("ghOrg")}/${repoName}/contents/${path}`
-            const payload = { message: `Create file ${path}`, content }
-            Utils.sendPutRequest(requestUrl, this.headers, payload)
-        })
-    }
 
-    static mergeNewCode(repoName: string, repoPath: string, filePath: string) {
-        cy.readFile(filePath, 'base64').then(content => {
-            const requestUrl = `${Cypress.env("ghUrl")}/repos/${Cypress.env("ghOrg")}/${repoName}/contents/${repoPath}`
-            Utils.sendGetRequest(requestUrl, this.headers).then(res => {
-                const { sha } = res.body
-                const payload = {
-                    message: `updateed ${repoPath}`,
-                    content,
-                    sha
-                }
 
-                Utils.sendPutRequest(requestUrl, this.headers, payload).then(res => {
-                    expect(res.status).to.be.eq(200)
-                })
-            })
-        })
-    }
+
 
 
 

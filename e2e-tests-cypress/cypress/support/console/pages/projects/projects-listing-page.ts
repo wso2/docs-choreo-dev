@@ -44,6 +44,5 @@ export class ProjectListingPage {
         return;
       }
     })
-    //  cy.contains(projectName).click();
   }
 }

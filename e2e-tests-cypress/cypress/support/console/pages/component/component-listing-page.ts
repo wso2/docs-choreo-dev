@@ -30,11 +30,6 @@ export class ComponentListingPage {
     this.verifyDeletion();
   }
 
-  static visitComponentWithoutName() {
-    const componentURL = Cypress.env(`componentURL`);
-    cy.visit(componentURL);
-  }
-
   static visitToAComponent(componentName: string) {
     cy.get('[data-testid="main-left-nav-item-Project"]')
       .should("be.visible")
@@ -49,8 +44,7 @@ export class ComponentListingPage {
     cy.url().then((url) => {
       const projectID = url.split("projects/")[1].split("?")[0];
       const { handle } = Cypress.env("userData");
-      const token = Cypress.env("apim_token");
-      GraphQL.getComponents(projectID, handle, token).then((res) => {
+      GraphQL.getComponents(projectID, handle).then((res) => {
         expect(res.status).to.be.equal(200);
         expect(res.body.data.components).to.be.empty;
       });

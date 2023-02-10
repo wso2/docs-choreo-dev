@@ -14,8 +14,6 @@
 
 
 export class Marketplace {
-  static connectorResults = '[data-testid="search-results"]>a';
-
   static searchConnector(connectorName: string) {
     cy.get('[data-testid="search-field"]').type(connectorName);
     cy.get('[data-testid="search-button"]').click();
@@ -48,9 +46,7 @@ export class Marketplace {
     cy.get('[aria-label="delete-filter-chip"]').click({ multiple: true });
   }
 
-  static collapsAndExpandPrice() {
-    cy.get('ul[role="tree"] >li').contains("Price");
-  }
+
 
   static filterByCategory(mainCategory: string, subCategory: string) {
     cy.get('[role="group"]>div>div').then((ele) => {
@@ -64,10 +60,6 @@ export class Marketplace {
     if (subCategory) {
       cy.get(`[data-testid="${subCategory}"]`).should("be.visible").click();
     }
-  }
-
-  static navigateToConnectorOverview() {
-    cy.get(this.connectorResults).click();
   }
 
   static getConnectorName() {

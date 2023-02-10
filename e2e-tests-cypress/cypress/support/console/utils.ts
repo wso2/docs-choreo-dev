@@ -10,15 +10,10 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-const fs = require('fs')
-import { readFileSync } from 'fs'
 export class Utils {
   static oldProjectNamePrefix = "e2eproject";
   static projectNamePrefix = "automationtestproject";
-
-  static oldComponentNamePrefix = "e2eapi";
   static componentNamePrefix = "automationtestcomponent";
-
   static keyNamePrefix = "e2eOnPremkey";
   static APP_SVC_URL = Cypress.env("appSvcURL");
   static ORG_NAME = Cypress.env("choreoOrgHandle");
@@ -196,10 +191,9 @@ export class Utils {
     });
   }
 
-  static setBrowserCookie(isEPLogin: boolean = false) {
+  static setBrowserCookie() {
     const dateString = new Date().toISOString();
-    const cookie = `OptanonAlertBoxClosed=${dateString};SameSite=Lax;Secure`;
-    document.cookie = cookie;
+    document.cookie = `OptanonAlertBoxClosed=${dateString};SameSite=Lax;Secure`;
     cy.setCookie("OptanonAlertBoxClosed", dateString);
   }
 

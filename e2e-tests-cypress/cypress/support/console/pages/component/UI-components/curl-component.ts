@@ -22,7 +22,7 @@ export class Curl {
 
   static selectCurlEnvironment(env: Enums.Environment) {
 
-    cy.get('[data-testid="env"]>div').click();
+    cy.get('[data-testid="env"]>div[role="button"]').click();
     cy.get('ul>li').contains(env).click();
   }
 

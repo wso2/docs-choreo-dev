@@ -24,7 +24,7 @@ export class ComponentTestPage {
   }
 
   static selectEnvironment(env: Enums.Environment) {
-    cy.get('[data-testid="env"]>div').click();
+    cy.get('[data-testid="env"]>div[role="button"]').click();
    cy.get('ul>li').contains(env).click();
   }
 }
