@@ -216,7 +216,6 @@ spec:
         - name: config
           configMap:
             name: cm-file-app-service
-                - name: secret-gsuite
         - name: secret-api-manager
           csi:
             driver: secrets-store.csi.k8s.io
