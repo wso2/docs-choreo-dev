@@ -103,6 +103,14 @@ nav:
           - Programmatic Access to Choreo Insights API: observe-and-analyze/analyze/programmatic-access-choreo-insights-api.md
   - Alerts: alerts.md
   - DevOps: devops/devops-portal.md
+  - iPaaS:
+      - Getting Started: ipaas/get-started-with-choreo-ipaas.md
+      - Ballerina:
+          - Develop Integrations with Ballerina: ipaas/ballerina/develop-integrations-with-ballerina.md
+          - Create Your First Event-triggered Integration: ipaas/ballerina/create-your-first-event-triggered-integration.md
+      - Micro Integrator:
+          - Develop Integrations with the Micro Integrator: ipaas/micro-integrator/develop-integrations-with-integration-studio.md
+          - Create Your First Integration: ipaas/micro-integrator/create-your-first-integration.md
   - Administer:
       - Connect to an External Identity Provider: administer/connect-to-an-external-identity-provider.md  
       - Configure a Custom Domain for APIs: administer/configure-a-custom-domain-for-apis.md
