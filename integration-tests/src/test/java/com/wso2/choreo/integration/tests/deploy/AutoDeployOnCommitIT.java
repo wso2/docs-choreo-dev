@@ -56,7 +56,7 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
         @Autowired
         private HttpClient choreoTestClient;
         @BeforeClass
-        public void setup_DeployIT()
+        public void setup_AutoDeployOnCommitIT()
                 throws Exception {
             accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
             project = GraphQL.createProject(accessToken);
@@ -65,7 +65,7 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
         }
         @Test
         @CitrusTest
-        public void createUserManagedComponentFor_DeployIT() throws Exception {
+        public void createUserManagedComponentFor_AutoDeployOnCommitIT() throws Exception {
             String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
             GraphqlDTO dto = GraphqlDTO.builder().
                     name(componentName).
@@ -77,12 +77,12 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
             choreoComponent = GraphQL.createUserManagedComponent(project, dto, accessToken);
             Assert.assertNotNull(choreoComponent.getId());
         }
-        @Test(dependsOnMethods = {"createUserManagedComponentFor_DeployIT"})
+        @Test(dependsOnMethods = {"createUserManagedComponentFor_AutoDeployOnCommitIT"})
         @CitrusTest
-        public void createdComponentStatus_DeployIT() {
+        public void createdComponentStatus_AutoDeployOnCommitIT() {
             // Poll component create status
             $(repeatOnError()
-                    .until("i = 50")
+                    .until("i = 30")
                     .index("i")
                     .autoSleep(5000)
                     .actions(
@@ -108,14 +108,14 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
                                     .validate(json()
                                             .ignore("$.message"))));
         }
-        @Test(dependsOnMethods = {"createdComponentStatus_DeployIT"})
+        @Test(dependsOnMethods = {"createdComponentStatus_AutoDeployOnCommitIT"})
         @CitrusTest
-        public void handleConfigInit_DeployIT() throws Exception {
+        public void handleConfigInit_AutoDeployOnCommitIT() throws Exception {
             GraphQL.handleConfigInit(accessToken,choreoComponent.getId());
         }
-        @Test(dependsOnMethods = {"handleConfigInit_DeployIT"})
+        @Test(dependsOnMethods = {"handleConfigInit_AutoDeployOnCommitIT"})
         @CitrusTest
-        public void mergeNewCode_DeployIT() throws IOException {
+        public void mergeNewCode_AutoDeployOnCommitIT() throws IOException {
             String serviceBal = FileUtil.readFileEncodedContent("src/test/resources/templates/autodeploy/service.bal");
             String timeStamp = String.valueOf(new Date().getTime());
             Map<String, String> params = new HashMap<>();
@@ -125,14 +125,15 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
             String encodedCode = Base64.getEncoder().encodeToString(srcCode.getBytes(StandardCharsets.UTF_8));
             GitHub.mergeNewCode(repoName, "service.bal", " change on DeployIT ", encodedCode);
         }
-        @Test(dependsOnMethods = {"mergeNewCode_DeployIT"})
+        @Test(dependsOnMethods = {"mergeNewCode_AutoDeployOnCommitIT"})
         @CitrusTest
-        public void deploymentStatusByVersion_DeployIT() throws Exception {
+        public void deploymentStatusByVersion_AutoDeployOnCommitIT() throws Exception {
             GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
         }
-        @Test(dependsOnMethods = {"deploymentStatusByVersion_DeployIT"})
+        @Test(dependsOnMethods = {"deploymentStatusByVersion_AutoDeployOnCommitIT"})
         @CitrusTest
-        public void componentDevDeploymentStatus_DeployIT() throws Exception {
+        public void componentDevDeploymentStatus_AutoDeployOnCommitIT() throws Exception {
             GraphQL.componentDeployment(choreoComponent, "dev", accessToken);
         }
     }
+
