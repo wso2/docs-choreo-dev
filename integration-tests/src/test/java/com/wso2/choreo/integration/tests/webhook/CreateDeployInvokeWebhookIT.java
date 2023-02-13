@@ -74,6 +74,9 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     private String repoName;
     private String namespace;
     private String obsId;
+    private String orgId;
+    private String githubOrg;
+    private String githubPAT;
     private String devInvokeURL;
     private ChoreoProject project;
     private ChoreoComponent choreoComponent;
@@ -89,22 +92,23 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
         project  = GraphQL.createProject(accessToken);
         projectId = project.getId();
+
+        orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
+        githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
+        githubPAT = Configuration.getConfig(ConfigDefinition.GITHUB_PAT);
     }
 
     @Test
     @CitrusTest
     public void createUserManagedComponent_CreateDeployInvokeWebhookIT() throws Exception {
-
-        // Creating new GitHub repo
-        repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
         // Creating component
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
 
 
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(componentName).
-                srcGitRepoUrl("https://github.com/choreo-test-apps/slack-web-hook").
+                srcGitRepoUrl("https://github.com/choreo-test-apps/GitHub-web-hook").
                 displayName(componentName).projectId(projectId).
-                triggerChannels("AppService").triggerID("126").
+                triggerChannels("IssuesService").triggerID("88").
                 displayType(Constant.displayType.webhook.name()).build();
         choreoComponent = GraphQL.createUserManagedComponent(project, graphqlDTO, accessToken);
         Assert.assertEquals(choreoComponent.getProjectId(), projectId);

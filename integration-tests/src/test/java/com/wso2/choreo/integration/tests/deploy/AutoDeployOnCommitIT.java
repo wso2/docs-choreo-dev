@@ -51,7 +51,7 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
  * $(http()
  * tests related to component deployment using auto deploy on commit trigger on
  */
-public class DeployIT extends TestNGCitrusSpringSupport {
+public class AutoDeployonCommitIT extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private String orgHandle;
     private String projectId;
