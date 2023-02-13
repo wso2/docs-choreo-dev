@@ -6,7 +6,7 @@ WSO2 Ballerina-based integrations provide several advantages over traditional in
 
 - Ballerina provides a unified programming model for integrating different systems and services. Therefore, developers need to learn only one language and one set of tools. This makes it easier to build and deploy integrations.
 - Ballerina provides a range of security and performance features that make it easier to ensure the security and reliability of integrations.
-- Ballerina provides a cloud-native deployment model, making it easier to deploy and manage integrations on the cloud.
+- Ballerina provides a cloud-native deployment model making it easier to deploy and manage integrations on the cloud.
 
 ## Integration types
 

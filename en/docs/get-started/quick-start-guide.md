@@ -293,7 +293,7 @@ To configure the front-end application by defining the ports it needs to run on,
 
             3. In the left navigation menu, click **Production Keys**.
 
-            4. Copy the value in the **Consumer Key**field and paste it as the value of the `VITE_CHOREO_CLIENT_ID` parameter.
+            4. Copy the value in the **Consumer Key** field and paste it as the value of the `VITE_CHOREO_CLIENT_ID` parameter.
 
         - `VITE_ORG_HANDLE`
 
