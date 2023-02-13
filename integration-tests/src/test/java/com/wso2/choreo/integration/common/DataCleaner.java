@@ -18,8 +18,8 @@ import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.config.Constant;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Date;
 import java.util.List;
@@ -28,7 +28,7 @@ import java.util.List;
  * Is responsible for cleaning up reoccurring data that is introduced by integration tests.
  */
 public class DataCleaner  {
-    private static final Logger log = LoggerFactory.getLogger(DataCleaner.class);
+    private static final Logger log = LogManager.getLogger(DataCleaner.class);
     private static final int hourInMilliseconds = 60 * 60 * 1000;
 
     public static void removeOldTestData(ChoreoOrganization org) throws Exception {

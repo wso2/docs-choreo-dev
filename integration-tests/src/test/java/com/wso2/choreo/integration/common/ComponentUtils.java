@@ -22,8 +22,6 @@ import com.github.mustachejava.MustacheFactory;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
-import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
 import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
 import com.wso2.choreo.integration.config.Constant;
@@ -36,8 +34,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -45,14 +41,11 @@ import java.io.Writer;
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 public class ComponentUtils {
-
-    static Logger l = Logger.getLogger(ComponentUtils.class.getName());
 
     public static ChoreoComponent getReusableComponent(String accessToken, String testName) throws Exception {
         ChoreoOrganization org = TestContext.getTestOrg();
