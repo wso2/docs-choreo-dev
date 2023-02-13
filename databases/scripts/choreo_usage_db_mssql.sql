@@ -84,7 +84,7 @@ BEGIN
         org_uuid VARCHAR(128) NOT NULL,
         subscription_item_id VARCHAR(100) NOT NULL,
         usage INT NOT NULL,
-        usage_type VARCHAR(128) NOT NULL, -- "infra" or "component"
+        usage_type VARCHAR(128) NOT NULL, -- "infra", "infra-support" or "component"
         frequency VARCHAR(100) NOT NULL, -- "daily" or "monthly"
         successful BIT NOT NULL DEFAULT 0,
         PRIMARY KEY (date, org_uuid, usage_type, frequency)
@@ -99,9 +99,8 @@ BEGIN
         execution_timestamp DATETIME2(3) NOT NULL,
         started BIT NOT NULL DEFAULT 0,
         completed BIT NOT NULL DEFAULT 0,
-        usage_type VARCHAR(128) NOT NULL, -- "infra" or "component"
         frequency VARCHAR(100) NOT NULL, -- "daily" or "monthly"
-        PRIMARY KEY (usage_date, usage_type, frequency)
+        PRIMARY KEY (usage_date, frequency)
     );
 END
 GO
