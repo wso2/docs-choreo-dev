@@ -214,13 +214,6 @@ To promote the Event-Triggered Integration to the Production environment, follow
 
 Congratulations! You have created your first event-driven integration, deployed it, updated its implementation to integrate with GitHub, tested it, and promoted it to production!
 
-
-
-
-
-
-
-
     
 
 
