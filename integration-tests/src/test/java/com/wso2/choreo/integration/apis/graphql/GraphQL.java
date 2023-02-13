@@ -154,7 +154,8 @@ public class GraphQL extends ControlPlaneAPI {
     public static ChoreoComponent createUserManagedComponent(ChoreoProject project, GraphqlDTO graphqlDTO, String accessToken) throws Exception {
         graphqlDTO.setOrgId(ORG_ID);
         graphqlDTO.setOrgHandler(ORG_HANDLE);
-        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/createUserManagedComponent.mustache", graphqlDTO);
+        String expectedResponse = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/createUserManagedComponent.mustache", graphqlDTO);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         JsonObject responseJson = new JsonParser().parse(response.getRes()).getAsJsonObject();
 

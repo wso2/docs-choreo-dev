@@ -17,9 +17,9 @@ package com.wso2.choreo.integration.common.choreoproject;
 import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
 import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.ComponentInvokeInformationCheckException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
-import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
+import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -27,8 +27,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
@@ -40,7 +40,7 @@ import java.net.http.HttpClient;
  */
 public class RestApiChoreoComponent extends ChoreoComponent {
     private static final HttpClient client = HttpClient.newHttpClient();
-    private final static Logger log = LoggerFactory.getLogger(RestApiChoreoComponent.class);
+    private static final Logger log = LogManager.getLogger(RestApiChoreoComponent.class);
 
     /**
      * Invoke the application for a given number of iterations

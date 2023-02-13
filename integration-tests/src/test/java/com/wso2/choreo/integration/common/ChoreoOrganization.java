@@ -21,16 +21,12 @@ import com.wso2.choreo.integration.common.choreoproject.ControlPlaneAPIs;
 import com.wso2.choreo.integration.common.exceptions.GraphQLException;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.ProjectRetrievalException;
-import com.wso2.choreo.integration.config.ConfigDefinition;
-import com.wso2.choreo.integration.config.Configuration;
-import com.wso2.choreo.integration.config.Constant;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +35,7 @@ import java.util.Optional;
  * Maintain information of the choreo organization used for tests
  */
 public class ChoreoOrganization {
-    private final static Logger log = LoggerFactory.getLogger(ChoreoOrganization.class);
+    private final static Logger log = LogManager.getLogger(ChoreoOrganization.class);
     private final static Gson gson = new Gson();
     private final HashMap<String, ChoreoProject> projectMap;
     private String orgHandle;

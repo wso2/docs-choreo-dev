@@ -1,16 +1,8 @@
 package com.wso2.choreo.integration.tests.anomalyDetector;
 
-import java.io.IOException;
-import java.util.Base64;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.exceptions.GetApiTestTokenStatusCheckException;
-
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -21,16 +13,23 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
+
+import java.io.IOException;
+import java.util.Base64;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Class containing methods to invoke APIs for anomaly detection tests
  */
 public class InvokeApi {
 
-    private final static Logger log = LoggerFactory.getLogger(InvokeApi.class);
+    private static final Logger log = LogManager.getLogger(InvokeApi.class);
 
     /**
      * Invokes the passthrough component from a pool of threads concurrently 
