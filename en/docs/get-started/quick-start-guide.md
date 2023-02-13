@@ -83,20 +83,14 @@ Let's create your first REST API.
     | **Field**             | **Description**                               |
     |-----------------------|-----------------------------------------------|
     | **GitHub Account**    | Your account                                  |
-    | **GitHub Repository** | `**choreo-examples**` |
-    | **Branch**            | `**version-1**`                               |
+    | **GitHub Repository** | **`choreo-examples`** |
+    | **Branch**            | **`version-1`**                               |
     | **Build Preset**      | Click **Ballerina** because you are creating the REST API from a [Ballerina](https://ballerina.io/) project and Choreo needs to run a Ballerina build to build it.|
-    | **Path**              | `**reading-list-service**`                    |
+    | **Path**              | **`reading-list-service`**                    |
 
-9. Click **Create** to initialize a REST API with the implementation from your GitHub repository. Your GitHub account opens on a web page displaying a pull request similar to the following:
+9. Click **Create** to initialize a REST API with the implementation from your GitHub repository.
 
-     ![View pull request](../assets/img/tutorials/connect-own-repo/view-pull-request.png){.cInlineImage-full}
-
-10. Click **View Pull Request**.
-
-11. Review and click **Merge pull request**, and then click **Confirm Merge**. 
-
-     When you merge the pull request, it adds the necessary metadata files to connect your GitHub repository to Choreo so that you can proceed to create the component.
+The REST API opens on a separate page where you can see its overview.
 
 ###  Step 1.2: Deploy the REST API
 
@@ -431,7 +425,18 @@ To verify whether the reading list is personalized for each user, you can log in
 
 Currently, the updates to the `readinglist` REST API are saved only as long as the deployment status of the `readingList` API remains **Active**. If you undeploy and redeploy the `readingList` API, Choreo deploys it in a new container. Therefore you cannot retrieve the reading list with the updates you made after the last deployment. To persist the data even after undeploying and redeploying the REST API, let's connect it to a MySQL database. Then let's create and publish a new version of the REST API with the ability to persist the data to the MySQL database.
 
-### Step 3.1: Create a new version of the REST API
+### Step 3.1: Provision a database
+
+To persist your updates to the reading list, provision a MySQL database on a cloud-based platform. For example, see [AWS Documentation - Provision a database](https://aws.amazon.com/getting-started/hands-on/inventory-system-for-gaming-app-with-amazon-aurora-serverless/3/).
+
+To allow Choreo to interact with the database, add the following IPs to the allowlist of the provisioned database:
+    
+    - 20.22.170.144/28
+    - 20.22.170.176/28
+
+For more information, see [Connect with Protected Third Party Applications](../reference/connect-with-protected-third-party-applications.md)
+
+### Step 3.2: Create a new version of the REST API
 
 Let's create a new version of the `readingList` REST API that can connect to a MySQL database on a cloud platform to persist data, and then redeploy it. To do this, follow the steps given below:
 
@@ -446,30 +451,17 @@ Let's create a new version of the `readingList` REST API that can connect to a M
     !!! info
         The `version-2` GitHub branch has another version of the REST API implementation with the required configurations to connect to the sample MySQL.
 
-4. Click **Config & Deploy**.
+4. Click **Config & Deploy**. When the **Config & Deploy** pane opens, enter values for the **dbHost**, **dbUser**, **dbPassword**, **dbName**, and **dbPort** fields based on the database you provisioned in [Step 3.1: Provision a database](#step-31-provision-a-database).
 
-5. For this scenario, you can connect to the pre-configured MySQL database on AWS. To do this, enter the following information in the **Configure & Deploy** pane:
-
-    !!! info
-        When you are connecting to an external database for a real-life use case, you are required to provision your database on a cloud platform. To allow Choreo to connect to the external database, it is important to add the relevant IPs to the allow list.<br/><br/>For detailed instructions, see [Access Your RDBMS Data Using Choreo](https://wso2.com/choreo/resources/access-your-rdbms-data-using-choreo/).
-
-    | **Field**      | **Value**                                                 |
-    |----------------|-----------------------------------------------------------|
-    | **dbHost**     | `choreo-gsg-db.csobrmx6fi0k.ap-south-1.rds.amazonaws.com` |
-    | **dbUser**     | `admin`                                                   |
-    | **dbPassword** | `qYy71wQaxfLlH4`                                          |
-    | **dbName**     | `reading_list_db`                                         |
-    | **dbPort**     | `3306`                                                    |
-
-7. Click **Deploy**.
+5. Click **Deploy**.
 
 Now you have successfully deployed a new version of your REST API.
 
-### Step 3.2: Publish the new REST API version
+### Step 3.3: Publish the new REST API version
 
 To publish the new version of the REST API you created, repeat [Step 6.2: Publish the REST API](#step-62-publish-the-rest-api)
 
-### Step 3.3: Consume the new REST API version
+### Step 3.4: Consume the new REST API version
 
 You can try out the new version via the front-end application. For more information about accessing and using the front-end application, see [Step 2.4.4: Consume the REST API via the front-end application](#step-244-consume-the-rest-api-via-the-front-end-application).
 
