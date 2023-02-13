@@ -65,7 +65,7 @@ export class LoginPage {
   static reLoginToChoreo(isEPLogin: boolean = false) {
     let componentURL;
     if (isEPLogin) {
-      componentURL = `${Cypress.env('baseUrl')}/organizations/${Cypress.env('choreoOrgHandle')}/home?profile=default`
+      componentURL = `${Cypress.env('baseUrl')}/organizations/${Cypress.env('epuser')}/home?profile=default`
     } else {
       componentURL = Cypress.env('componentURL');
     }
