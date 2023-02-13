@@ -94,8 +94,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -141,7 +141,7 @@ public class ChoreoComponent {
     private String componentType;
     private boolean httpBased;
     private ImageRegistry imageRegistry;
-    private static final Logger log = LoggerFactory.getLogger(ChoreoComponent.class);
+    private static final Logger log = LogManager.getLogger(ChoreoComponent.class);
     private static final Gson gson = new Gson();
 
     public ChoreoComponent() {

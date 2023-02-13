@@ -23,8 +23,8 @@ import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.ListMessagesResponse;
 import com.google.api.services.gmail.model.Message;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -35,7 +35,7 @@ import java.util.List;
  * Email searching util functions for test cases. It is based on the Google gmail rest api.
  */
 public class RestAPIBasedEmailUtils {
-    private final static Logger log = LoggerFactory.getLogger(RestAPIBasedEmailUtils.class);
+    private static final Logger log = LogManager.getLogger(RestAPIBasedEmailUtils.class);
 
     private static final String APPLICATION_NAME = "Gmail API Java Quickstart";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();

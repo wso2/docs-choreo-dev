@@ -3,24 +3,25 @@ package com.wso2.choreo.integration.common.choreoproject;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 import com.wso2.choreo.integration.common.ChoreoOrganization;
-
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationTimeoutException;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationStatusCheckException;
 import com.wso2.choreo.integration.common.exceptions.ComponentCreationException;
+import com.wso2.choreo.integration.common.exceptions.ComponentCreationStatusCheckException;
+import com.wso2.choreo.integration.common.exceptions.ComponentCreationTimeoutException;
 import com.wso2.choreo.integration.common.exceptions.ComponentRetrieveException;
 import com.wso2.choreo.integration.common.exceptions.GraphQLException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import lombok.Data;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Class to represent Choreo project
@@ -29,8 +30,8 @@ import java.util.*;
 @Data
 public class ChoreoProject {
 
-    private final static Logger log = LoggerFactory.getLogger(ChoreoProject.class);
-    private final static Gson gson = new Gson();
+    private static final Logger log = LogManager.getLogger(ChoreoProject.class);
+    private static final Gson gson = new Gson();
 
     private final HashMap<String, ChoreoComponent> componentMap = new HashMap<>();
     private String id;

@@ -18,28 +18,20 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.wso2.choreo.integration.common.ChoreoOrganization;
-import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.TokenHandler;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.email.EmailUtils;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentStatusCheckException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentTimeoutException;
 import com.wso2.choreo.integration.common.exceptions.GetApiTestTokenStatusCheckException;
-import com.wso2.choreo.integration.common.exceptions.GetDeploymentsStatusCheckException;
-import com.wso2.choreo.integration.common.exceptions.RedeployException;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
-import java.io.IOException;
-import java.time.Instant;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.testng.Assert;
+
+import java.time.Instant;
 
 
 /**
@@ -56,7 +48,7 @@ public class BackendFailureAnomaly extends TestNGCitrusSpringSupport {
   private RestApiChoreoComponent restApiComponent;
   private long testStartTimestamp;
 
-  private final static Logger log = LoggerFactory.getLogger(BackendFailureAnomaly.class);
+  private static final Logger log = LogManager.getLogger(BackendFailureAnomaly.class);
 
   @BeforeClass
   public void beforeClass() throws  Exception {
