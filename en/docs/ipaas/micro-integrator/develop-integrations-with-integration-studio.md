@@ -13,7 +13,6 @@ Choreo supports the following types of MI (Micro Integrator) integrations:
 - **Event-triggered Integration**: Integrations that are triggered by external events.
 - **Scheduled Integration**: Integrations that are triggered automatically at scheduled time intervals
 - **Manually-triggered Integration**: Integrations that you need to trigger manually.
-- **Composite Integration (Coming soon)**
 
 ## Develop with Integration Studio
 
