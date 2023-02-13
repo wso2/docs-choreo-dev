@@ -83,10 +83,10 @@ Let's create your first REST API.
     | **Field**             | **Description**                               |
     |-----------------------|-----------------------------------------------|
     | **GitHub Account**    | Your account                                  |
-    | **GitHub Repository** | `**choreo-examples**` |
-    | **Branch**            | `**version-1**`                               |
+    | **GitHub Repository** | **`choreo-examples`** |
+    | **Branch**            | **`version-1`**                               |
     | **Build Preset**      | Click **Ballerina** because you are creating the REST API from a [Ballerina](https://ballerina.io/) project and Choreo needs to run a Ballerina build to build it.|
-    | **Path**              | `**reading-list-service**`                    |
+    | **Path**              | **`reading-list-service`**                    |
 
 9. Click **Create** to initialize a REST API with the implementation from your GitHub repository.
 
@@ -429,7 +429,7 @@ Currently, the updates to the `readinglist` REST API are saved only as long as t
 
 To persist your updates to the reading list, provision a MySQL database on a cloud-based platform. For example, see [AWS Documentation - Provision a database](https://aws.amazon.com/getting-started/hands-on/inventory-system-for-gaming-app-with-amazon-aurora-serverless/3/).
 
-To allow Choreo to interact with the database, add the following IPs to the allow-list of the provisioned database:
+To allow Choreo to interact with the database, add the following IPs to the allowlist of the provisioned database:
     
     - 20.22.170.144/28
     - 20.22.170.176/28
