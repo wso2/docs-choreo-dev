@@ -6,5 +6,5 @@ Choreo provides Integrations developed in Ballerina and integrations based on WS
 
 For more information, see the following topics:
 
-- [Getting Started with Ballerina Based Integrations](ballerina/develop-integrations-with-ballerina.md)
-- [Getting Started with the Micro Integrator Based Integrations](micro-integrator/develop-integrations-with-integration-studio.md)
+- [Develop Integrations with Ballerina](ballerina/develop-integrations-with-ballerina.md)
+- [Develop Integrations with the Micro Integrator](micro-integrator/develop-integrations-with-integration-studio.md)
