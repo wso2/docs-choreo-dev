@@ -13,7 +13,7 @@ Consider a scenario where a developer has created an integration in [WSO2 Integr
 For this tutorial, let's use a basic sample application to expose a proxy service developed in the [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).
 
 !!! tip "Before you begin!"
-    To try this tutorial, you can use a sample integration designed via [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).<br/><br/>To do this, fork the [choreo-examples GitHub repository](https://github.com/wso2/choreo-examples/tree/main/ipaas/wso2-synapse/simple-proxy).
+    To try this tutorial, you can use a sample integration designed via [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).<br/><br/>To do this, fork the [choreo-examples GitHub repository](https://github.com/wso2/choreo-examples/tree/main/ipaas/micro-integrator/simple-proxy).
 
 ## Step 1: Create
 
@@ -54,8 +54,8 @@ Let's add the integration by following the steps given below:
 
      | **Field**             | **Value**                                      |
      |-----------------------|------------------------------------------------|
-     | **Path**              | `ipaas/wso2-synapse/simple-proxy`              |
-     | **OpenAPI File Path** | `ipaas/wso2-synapse/simple-proxy/openapi.yaml` |
+     | **Path**              | `ipaas/micro-integrator/simple-proxy`              |
+     | **OpenAPI File Path** | `ipaas/micro-integrator/simple-proxy/openapi.yaml` |
  
 13. Click **Create**.
 
@@ -96,7 +96,7 @@ The above response indicates that your micro integrator REST API is working as e
 
 To observe statistics for your micro integrator REST API, click **Observe** in the left navigation menu. The graphs for throughput and latency will display the request you sent in [Step 3: Test](#step-3-test).
 
-For more information about observing components, see [Observability Overview](Documents/choreo/docs-choreo-dev/en/docs/observe-and-analyze/observe/observability-overview.md).
+For more information about observing components, see [Observability Overview](../../observe-and-analyze/observe/observability-overview.md).
 
 ## Step 5: Publish
 
@@ -113,5 +113,5 @@ Let's publish the micro integrator REST API to make it available for subscriptio
 Congratulations! You have successfully exposed an integration designed in the [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/) as a REST API in Choreo and published it!
 
 !!! info "What's next"
-    For a micro integrator REST API, you can also perform API management actions. For more information about these API Management actions, see [API Management](Documents/choreo/docs-choreo-dev/en/docs/manage/api-management.md).
+    For a micro integrator REST API, you can also perform API management actions. For more information about these API Management actions, see [API Management](../../manage/api-management.md).
 
