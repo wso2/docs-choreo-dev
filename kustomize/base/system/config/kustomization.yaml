@@ -488,4 +488,3 @@ configMapGenerator:
     behavior: create
     literals:
       - CHOREO_USAGE_HANDLER_CRONJOB_MODE="collector"
-      
