@@ -56,11 +56,11 @@ be exploited by attackers. By conducting vulnerability scans, organizations can 
 risks before they are exploited, which can help prevent data breaches, system compromises, and other security incidents.
 It is an important aspect of maintaining the overall security of an organization's IT infrastructure.
 
-Choreo Integrations scan Third-party libraries for identify security vulnerable. Before the Integrations deployment,
-Trivy scan is performed to identify any `Critical` vulnerable. Deployment will be halt if it found any `Critical`
-vulnerable and developer should fix it before deploying again. The `Library (Trivy) vulnerable scan` step in the
-deployment page Console, gives the status of the Trivy scan and if there any security failures, developers can click on
-the `Library (Trivy) vulnerable scan` step to view the logs.          
+Choreo Integrations scan Third-party libraries to identify security vulnerabilities. Before the Integrations deployment,
+A Trivy scan is performed to identify any `Critical` vulnerability. The deployment will be halt if it found any `Critical`
+vulnerable and the developer should fix it before deploying again. The `Library (Trivy) vulnerable scan` step in the
+deployment page Console, gives the status of the Trivy scan and if there are any security failures, developers can click on
+the `Library (Trivy) vulnerable scan` step to view the logs.         
 
 ## Environment variables
 
