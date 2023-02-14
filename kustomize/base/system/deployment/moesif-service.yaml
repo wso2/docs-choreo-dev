@@ -90,7 +90,6 @@ spec:
               secretProviderClass: secret-moesif-service
             nodePublishSecretRef:
               name: csi-secret-store-azure
-
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
