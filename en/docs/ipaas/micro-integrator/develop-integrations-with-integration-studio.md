@@ -1,4 +1,4 @@
-# Develop Integrations with the Micro Integrator
+# Develop Integrations with the Integration Studio
 
 Choreo iPaaS offers a platform for developing and deploying integrations with ease. With the Integration Studio, developers can create integrations using WSO2 Synapse and deploy them in a Micro Integrator (MI) runtime. Choreo iPaaS provides a centralized management system for integrations, making deployment and maintenance simple.
 
@@ -48,6 +48,19 @@ Adding third-party JARs to the Micro Integrator can provide the following benefi
 To add third-party libraries to the Micro Integrator, you can add a new directory named `libs` to the root of the Micro Integrator project. When you deploy the component, all the JARs in the `libs` directory in the project path will be included in the Micro Integrator runtime.
 
 ![Libs Directory](/assets/img/ipaas/integration-studio/libs_dir.png){.cInlineImage-half}
+
+## Scan Third-party libraries for security vulnerable
+
+A security vulnerability scan is performed to identify potential weaknesses in a application that could
+be exploited by attackers. By conducting vulnerability scans, organizations can proactively detect and mitigate security
+risks before they are exploited, which can help prevent data breaches, system compromises, and other security incidents.
+It is an important aspect of maintaining the overall security of an organization's IT infrastructure.
+
+Choreo Integrations scan Third-party libraries for identify security vulnerable. Before the Integrations deployment,
+Trivy scan is performed to identify any `Critical` vulnerable. Deployment will be halt if it found any `Critical`
+vulnerable and developer should fix it before deploying again. The `Library (Trivy) vulnerable scan` step in the
+deployment page Console, gives the status of the Trivy scan and if there any security failures, developers can click on
+the `Library (Trivy) vulnerable scan` step to view the logs.          
 
 ## Environment variables
 
