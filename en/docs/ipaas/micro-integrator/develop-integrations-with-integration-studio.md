@@ -47,7 +47,7 @@ Adding third-party JARs to the Micro Integrator can provide the following benefi
 
 To add third-party libraries to the Micro Integrator, you can add a new directory named `libs` to the root of the Micro Integrator project. When you deploy the component, all the JARs in the `libs` directory in the project path will be included in the Micro Integrator runtime.
 
-![Libs Directory](/assets/img/ipaas/integration-studio/libs_dir.png){.cInlineImage-half}
+![Libs Directory](../../assets/img/ipaas/integration-studio/libs_dir.png){.cInlineImage-half}
 
 ## Scan Third-party libraries for security vulnerable
 
