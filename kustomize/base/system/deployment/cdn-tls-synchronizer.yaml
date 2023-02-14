@@ -70,14 +70,6 @@ spec:
               mountPath: /mnt/sp.password
               readOnly: true
               subPath: SERVICE_PROVIDER_PASSWORD
-            - name: tls-vol
-              mountPath: /mnt/tls.key
-              readOnly: true
-              subPath: tls.key
-            - name: tls-vol
-              mountPath: /mnt/tls.crt
-              readOnly: true
-              subPath: tls.crt
             - name: mount
               mountPath: /mnt
             - name: tmp
@@ -93,8 +85,6 @@ spec:
               secretProviderClass: secret-cdn-tls-cert-synchronizer
             nodePublishSecretRef:
               name: csi-secret-store-azure
-        - name: tls-vol
-          emptyDir: {}
         # Volume mounts for system functionalities
         - name: mount
           emptyDir: {}
