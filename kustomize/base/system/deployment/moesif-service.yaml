@@ -82,6 +82,9 @@ spec:
               name: secret-moesif-service
               readOnly: true
               subPath: MOESIF_TLS_PVT_KEY
+            - name: secret-moesif-service
+              mountPath: /mnt/csi/secret-moesif-service
+              readOnly: true
       restartPolicy: Always
       volumes:
         - name: config
