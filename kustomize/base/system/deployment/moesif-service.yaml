@@ -91,6 +91,8 @@ spec:
           configMap:
             name: cm-file-moesif-service
         - name: secret-moesif-service
+          emptyDir:
+            sizeLimit: 500Mi
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
