@@ -93,6 +93,8 @@ spec:
               secretProviderClass: secret-cdn-tls-cert-synchronizer
             nodePublishSecretRef:
               name: csi-secret-store-azure
+        - name: tls-vol
+          emptyDir: {}
         # Volume mounts for system functionalities
         - name: mount
           emptyDir: {}
