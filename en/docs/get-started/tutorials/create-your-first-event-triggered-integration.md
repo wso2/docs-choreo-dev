@@ -56,7 +56,7 @@ Let's create the integration component by following the steps given below:
 
      | **Field**             | **Value**                                      |
      |-----------------------|------------------------------------------------|
-     | **Path**              | `ipaas/micro-integrator/simple-rabbitmq-listener/`  |
+     | **Path**              | `ipaas/micro-integrator/simple-rabbitmq-listener`  |
 
 
     !!! info
