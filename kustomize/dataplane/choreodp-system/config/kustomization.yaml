@@ -3,7 +3,7 @@ configMapGenerator:
     behavior: create
     files:
       - choreo-metered-usage-handler/Config.toml
-  - name: cm-file-choreo-metered-usage-handler-collector
+  - name: cm-choreo-metered-usage-handler-collector
     behavior: create
     literals:
       - CHOREO_USAGE_HANDLER_CRONJOB_MODE="collector"

@@ -474,17 +474,17 @@ configMapGenerator:
     behavior: create
     files:
       - choreo-metered-usage-handler/Config.toml
-  - name: cm-file-choreo-metered-usage-handler-daily-publisher
+  - name: cm-choreo-metered-usage-handler-daily-publisher
     behavior: create
     literals:
       - CHOREO_USAGE_HANDLER_CRONJOB_MODE="publisher"
       - CHOREO_USAGE_PUBLISHING_FREQUENCY="daily"
-  - name: cm-file-choreo-metered-usage-handler-monthly-publisher
+  - name: cm-choreo-metered-usage-handler-monthly-publisher
     behavior: create
     literals:
       - CHOREO_USAGE_HANDLER_CRONJOB_MODE="publisher"
       - CHOREO_USAGE_PUBLISHING_FREQUENCY="monthly"
-  - name: cm-file-choreo-metered-usage-handler-collector
+  - name: cm-choreo-metered-usage-handler-collector
     behavior: create
     literals:
       - CHOREO_USAGE_HANDLER_CRONJOB_MODE="collector"

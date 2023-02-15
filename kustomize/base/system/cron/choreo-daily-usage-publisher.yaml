@@ -57,7 +57,7 @@ spec:
                       optional: true
               envFrom:
                 - configMapRef:
-                    name: cm-file-choreo-metered-usage-handler-daily-publisher
+                    name: cm-choreo-metered-usage-handler-daily-publisher
                 - configMapRef:
                     name: env-choreo-metered-usage-handler
               resources:

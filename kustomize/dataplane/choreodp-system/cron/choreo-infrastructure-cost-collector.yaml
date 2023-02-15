@@ -46,7 +46,7 @@ spec:
                       key: MSSQL_PASSWORD
               envFrom:
                 - configMapRef:
-                    name: cm-file-choreo-metered-usage-handler-collector
+                    name: cm-choreo-metered-usage-handler-collector
                 - configMapRef:
                     name: env-choreo-metered-usage-handler
               resources:
