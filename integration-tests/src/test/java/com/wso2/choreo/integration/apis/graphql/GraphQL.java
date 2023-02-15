@@ -28,6 +28,7 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.ControlPlaneAPIs;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.exceptions.*;
+import com.wso2.choreo.integration.models.graphql.CreateComponentResponseDTO;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
@@ -152,11 +153,48 @@ public class GraphQL extends ControlPlaneAPI {
         }
     }
 
-    public static ChoreoComponent createUserManagedComponent(ChoreoProject project, GraphqlDTO graphqlDTO, String accessToken) throws Exception {
+    public static CreateComponentResponseDTO createUserManagedComponent(TestActionRunner runner, HttpClient client,
+                                                                        GraphqlDTO graphqlDTO,
+                                                                        String accessToken) throws Exception {
         graphqlDTO.setOrgId(ORG_ID);
         graphqlDTO.setOrgHandler(ORG_HANDLE);
-        String expectedResponse = ObjectMapperUtil.mapObjectToString(
+        String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/createUserManagedComponent.mustache", graphqlDTO);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        Map<String, String> responseParams = new HashMap<>();
+        responseParams.put("orgId", String.valueOf(ORG_ID));
+        responseParams.put("projectId", graphqlDTO.getProjectId());
+        responseParams.put("handler", ORG_HANDLE);
+        String expectedResponse = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/responses/createComponentSuccess.mustache", responseParams);
+
+        final String[] componentHandlerArray = new String[1];
+        AtomicReference<CreateComponentResponseDTO> responseDTO = new AtomicReference<>();
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .body(expectedResponse)
+                .validate((message, context) -> {
+                    responseDTO.set(ObjectMapperUtil.mapStringToObject(CreateComponentResponseDTO.class,
+                            (String) message.getPayload(), "createComponent"));
+                }));
+
+        return responseDTO.get();
+
+        /*
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         JsonObject responseJson = new JsonParser().parse(response.getRes()).getAsJsonObject();
 
@@ -170,7 +208,9 @@ public class GraphQL extends ControlPlaneAPI {
         if (component.isPresent()) {
             return component.get();
         }
+
         throw new ComponentRetrieveException("Could not find component with handler: " + componentHandler);
+        */
     }
 
 

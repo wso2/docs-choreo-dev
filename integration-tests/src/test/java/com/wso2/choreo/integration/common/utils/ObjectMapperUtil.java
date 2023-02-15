@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ObjectMapperUtil {
     private static final Gson GSON = new Gson();
@@ -68,7 +69,12 @@ public class ObjectMapperUtil {
         return writer.toString();
     }
 
+    public static String mapObjectToString(String template, Map<String, String> params) throws IOException {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile(template);
+        Writer writer = new StringWriter();
+        mustache.execute(writer, params).flush();
+        return writer.toString();
+    }
 
 }
-
-

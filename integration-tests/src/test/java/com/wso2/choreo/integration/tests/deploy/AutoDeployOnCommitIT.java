@@ -16,6 +16,7 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -48,8 +49,6 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
  */
     public class AutoDeployOnCommitIT extends TestNGCitrusSpringSupport {
         private static String accessToken;
-        private String orgHandle;
-        private String projectId;
         private final String repoName = "empty-repo";
         private static ChoreoComponent choreoComponent;
         private ChoreoProject project;
@@ -60,8 +59,6 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
                 throws Exception {
             accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
             project = GraphQL.createProject(accessToken);
-            projectId = project.getId();
-            orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         }
         @Test
         @CitrusTest
@@ -70,48 +67,18 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
             GraphqlDTO dto = GraphqlDTO.builder().
                     name(componentName).
                     triggerID("null").
-                    srcGitRepoUrl("https://github.com/choreo-test-apps/empty-repo").
-                    projectId(projectId).
+                    srcGitRepoUrl("https://github.com/choreo-test-apps/" + repoName).
+                    projectId(project.getId()).
                     displayType(Constant.displayType.graphql.name()).
                     build();
-            choreoComponent = GraphQL.createUserManagedComponent(project, dto, accessToken);
+            choreoComponent = ComponentUtils.createComponent(this, choreoTestClient, accessToken, dto);
             Assert.assertNotNull(choreoComponent.getId());
         }
+
         @Test(dependsOnMethods = {"createUserManagedComponentFor_AutoDeployOnCommitIT"})
         @CitrusTest
-        public void createdComponentStatus_AutoDeployOnCommitIT() {
-            // Poll component create status
-            $(repeatOnError()
-                    .until("i = 30")
-                    .index("i")
-                    .autoSleep(5000)
-                    .actions(
-                            http()
-                                    .client(choreoTestClient)
-                                    .send()
-                                    .get("/orgs/"
-                                            .concat(orgHandle)
-                                            .concat("/projects/")
-                                            .concat(projectId)
-                                            .concat("/components/")
-                                            .concat(choreoComponent.getId())
-                                            .concat("/init/status"))
-                                    .message()
-                                    .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                    .accept(String.valueOf(MediaType.APPLICATION_JSON)),
-                            http().client(choreoTestClient)
-                                    .receive()
-                                    .response(HttpStatus.OK)
-                                    .message()
-                                    .body(new ClassPathResource(
-                                            "templates/createComponent/get_create_status_success.json"))
-                                    .validate(json()
-                                            .ignore("$.message"))));
-        }
-        @Test(dependsOnMethods = {"createdComponentStatus_AutoDeployOnCommitIT"})
-        @CitrusTest
         public void handleConfigInit_AutoDeployOnCommitIT() throws Exception {
-            GraphQL.handleConfigInit(accessToken,choreoComponent.getId());
+            GraphQL.handleConfigInit(accessToken, choreoComponent.getId());
         }
         @Test(dependsOnMethods = {"handleConfigInit_AutoDeployOnCommitIT"})
         @CitrusTest
@@ -136,4 +103,3 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
             GraphQL.componentDeployment(choreoComponent, "dev", accessToken);
         }
     }
-

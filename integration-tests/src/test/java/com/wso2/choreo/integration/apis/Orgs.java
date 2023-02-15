@@ -43,6 +43,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -54,6 +55,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 
 /**
  * Implements Orgs API calls and their response validations.
@@ -280,45 +282,35 @@ public class Orgs extends ControlPlaneAPI {
     }
 
 
-    public static void waitForComponentCreationSuccess(String accessToken, String choreoOrgHandle, String projectId,
-                                                       String componentId) throws ComponentCreationStatusCheckException,
-            ComponentCreationTimeoutException {
-        String choreoEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_ENDPOINT);
-        String requestURI = choreoEndpoint.concat("/orgs/" + choreoOrgHandle + "/projects/" + projectId + "/components/" + componentId + "/init/status");
-
-
-        HttpGet request = new HttpGet(requestURI);
-
-        request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, accessToken);
-
-
-        for (int i = 0; i < 15; ++i) {
-            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-                 CloseableHttpResponse response = httpClient.execute(request)) {
-                int statusCode = response.getStatusLine().getStatusCode();
-                String responseBody = EntityUtils.toString(response.getEntity());
-                if (statusCode == org.apache.http.HttpStatus.SC_OK) {
-                    JsonObject dataJsonObject = new JsonParser().parse(responseBody).getAsJsonObject().
-                            getAsJsonObject("data");
-
-                    String creationStatus =
-                            dataJsonObject.get("status").isJsonNull() ? "" : dataJsonObject.get("status").getAsString();
-                    if (creationStatus.equals("completed")) {
-                        return;
-                    }
-                }
-            } catch (IOException e) {
-                throw new ComponentCreationStatusCheckException(e);
-            }
-
-            try {
-                TimeUnit.SECONDS.sleep(5);
-            } catch (InterruptedException e) {
-                throw new ComponentCreationStatusCheckException(e);
-            }
-        }
-
-        throw new ComponentCreationTimeoutException();
+    public static void waitForComponentCreationSuccess(TestActionRunner runner, HttpClient client, String accessToken,
+                                                       String projectId,
+                                                       String componentId) {
+        runner.$(repeatOnError()
+                .until("i = 50")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .get("/orgs/"
+                                        .concat(ORG_HANDLE)
+                                        .concat("/projects/")
+                                        .concat(projectId)
+                                        .concat("/components/")
+                                        .concat(componentId)
+                                        .concat("/init/status"))
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .body(new ClassPathResource(
+                                        "templates/createComponent/get_create_status_success.json"))
+                                .validate(json()
+                                        .ignore("$.message"))));
     }
 
     public static String getDeploymentLogs(String accessToken, String choreoOrgHandle, String projectId,

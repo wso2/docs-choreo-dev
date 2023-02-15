@@ -15,10 +15,12 @@ package com.wso2.choreo.integration.common;
 
 
 import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
+import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
@@ -26,6 +28,7 @@ import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
 import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.graphql.CreateComponentResponseDTO;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -75,20 +78,32 @@ public class ComponentUtils {
         return restAPI;
     }
 
-    public static ChoreoComponent createRestAPI(String accessToken, String repoName) throws Exception {
-        ChoreoOrganization org = TestContext.getTestOrg();
-        ChoreoProject project = GraphQL.createProject(accessToken);
+    public static ChoreoComponent createComponent(TestActionRunner runner, HttpClient client, String accessToken,
+                                                  GraphqlDTO dto) throws Exception {
+        /*
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         GraphqlDTO dto = GraphqlDTO.builder().
                 name(componentName).
                 triggerID("null").
-                srcGitRepoUrl("https://github.com/Avishka217/" + repoName).
+                srcGitRepoUrl("https://github.com/choreo-test-apps/" + repoName).
                 projectId(project.getId()).
-                displayType(Constant.displayType.restAPI.name()).
+                displayType(displayType.name()).
                 build();
-        ChoreoComponent restAPI = GraphQL.createUserManagedComponent(project, dto, accessToken);
-        restAPI.setOrganization(org);
-        restAPI.setProjectId(project.getId());
+        */
+        CreateComponentResponseDTO responseDTO = GraphQL.createUserManagedComponent(runner, client, dto, accessToken);
+
+        Orgs.waitForComponentCreationSuccess(runner, client, accessToken, responseDTO.getProjectId(),
+                responseDTO.getId());
+
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().
+                projectId(responseDTO.getProjectId()).
+                componentHandler(responseDTO.getHandler()).build();
+
+        ChoreoComponent restAPI = GraphQL.retrieveIntegrationComponent(runner, client, accessToken,
+                graphqlDTO);
+
+        // restAPI.setOrganization(org);
+        // restAPI.setProjectId(project.getId());
         return restAPI;
     }
 
