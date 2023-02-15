@@ -466,10 +466,6 @@ configMapGenerator:
     behavior: create
     files:
       - crypto-key-service/Config.toml
-  - name: cm-file-choreo-org-stat-data-pipeline
-    behavior: create
-    files:
-      - choreo-org-stat-data-pipeline/Config.toml
   - name: cm-file-choreo-metered-usage-handler
     behavior: create
     files:
