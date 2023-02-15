@@ -49,7 +49,6 @@ public class HttpClientUtil {
 
     public static Response httpGET(String url, String accessToken, String apiKey) {
         HttpGet request = new HttpGet(url);
-    
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
         request.setHeader("API-Key", apiKey);
@@ -58,8 +57,6 @@ public class HttpClientUtil {
 
     public static Response httpPOST(String url, String payload, String accessToken, String apiKey) throws IOException {
         HttpPost request = new HttpPost(url);
-       
-      
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
         request.setHeader("API-Key", apiKey);
@@ -83,7 +80,6 @@ public class HttpClientUtil {
 
     public static Response httpPUT(String url, String payload, String accessToken, String apiKey) throws IOException {
         HttpPut request = new HttpPut(url);
-       
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
         request.setHeader("API-Key", apiKey);
@@ -100,7 +96,6 @@ public class HttpClientUtil {
 
     public static Response httpDELETE(String url, String accessToken, String apiKey) {
         HttpDelete request = new HttpDelete(url);
-        log.info(url);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
         request.setHeader("API-Key", apiKey);
