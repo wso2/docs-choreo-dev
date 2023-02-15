@@ -14,6 +14,7 @@
 
 import {GitHub} from "../../github/github";
 import {ComponentData} from "../../interfaces/component-data";
+import { IntegrationComponentData } from "../../interfaces/integration-component-data";
 import {PR} from "../../interfaces/pr";
 import {ONE_HOUR} from "../constants";
 import {ChoreoHomePage} from "../pages/home/home-page";
@@ -246,6 +247,78 @@ export class GraphQL {
         cy.get("tbody>tr p").should("be.visible");
         return cy.wrap({})
     }
+
+    static createIntegrationComponent(
+        componentData: IntegrationComponentData
+         ) {
+        const { id } = Cypress.env("current_org");
+        this.getProjects(id).then((res) => {
+          const projects = res.body.data.projects as [];
+          const project = projects.find(
+            (p) => p["name"] === componentData.projectName
+          );
+          cy.log(`Project Id :: ${project["id"]}`);
+          const query = {
+            query: `mutation{
+                        createIntegrationComponent(
+                                 component: {
+                                      name: "${componentData.componentName}",
+                                      displayName: "${componentData.componentName}",
+                                      description: "",
+                                      orgId: ${id},
+                                      orgHandler: "${Cypress.env(
+                                        "choreoOrgHandle"
+                                      )}",
+                                      projectId: "${project["id"]}",
+                                      labels: "",
+                                      componentType: "${componentData.componentType}",
+                                      accessibility: "${
+                                        componentData.accessibility
+                                      }",
+                                      srcGitRepoUrl: "${
+                                        componentData.srcGitRepoUrl
+                                      }",
+                                      srcGitRepoBranch: "${componentData.branch}",
+                                      oasFilePath: "${componentData.oasFilePath}"
+                                      version: "1.0.0"
+                                    } )
+                                    { id,
+                                      createdAt,
+                                      updatedAt,
+                                      name,
+                                      handle,
+                                      organizationId,
+                                      projectId,
+                                      orgHandle,
+                                      type,
+                                      description,
+                                      imageRegistryId,
+                                      imageRegistry {
+                                      id,
+                                      createdAt,
+                                      updatedAt,
+                                      cloudConnectorId,
+                                      imageRepositoryName
+                                      },
+                                      componentType,
+                                      httpBased }
+
+                                    } )
+                                    {id, orgId, projectId, handler    }
+                          }`,
+          };
+          this.callGraphQL(query).then((res) => {
+            const { id, projectId, handler } = res.body.data.createIntegrationComponent;
+            Cypress.env("component", {id, projectId, handler})
+            expect(res.status).to.be.eq(200);
+            this.getDeployedComponentDetails(projectId, handler)
+          });
+        });
+        ChoreoHomePage.navigateToMarketPlace();
+        ChoreoHomePage.navigateToProjects();
+        cy.get("tbody>tr p").should("be.visible");
+        return cy.wrap({})
+      }
 
     static getDeployedComponentDetails(projectId: string, handler: string) {
         const query = GraphQLQueryBuilder.getComponentDetails(projectId, handler)

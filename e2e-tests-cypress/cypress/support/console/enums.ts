@@ -50,6 +50,10 @@ export namespace Enums {
     US = "US",
   }
 
+  export enum ComponentType {
+    MI_REST_API = "miRestApi",
+  }
+
   export enum RepoType {
     UserManagedEmpty = "UserManagedEmpty",
     UserManagedNonEmpty = "UserManagedNonEmpty",
