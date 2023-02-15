@@ -325,8 +325,6 @@ public class GraphQL extends ControlPlaneAPI {
         for (int i = 0; i < 20; i++) {
             response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(generatedQuery), accessToken, "");
             ComponentStatusByVersion[] status = ObjectMapperUtil.mapToCollection(ComponentStatusByVersion[].class, response.getRes(), "deploymentStatusByVersion");
-
-            log.info(response.getRes());
             if (status.length > 0) {
                 componentStatusByVersion = status[0];
                 if (componentStatusByVersion.getConclusion() != null && componentStatusByVersion.getConclusion().equals("failure")) {

@@ -207,7 +207,6 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                                 .type(MessageType.PLAINTEXT)));
     }
 
-
     @Test(dependsOnMethods = {"invokeAPI_CreateDeployInvokeWebhookIT"})
     @CitrusTest
     public void waitForObservabilityLogs_CreateDeployInvokeWebhookIT() throws Exception {
@@ -378,6 +377,6 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
         Response res = GraphQL.deleteComponent(choreoComponent.getId(), projectId, accessToken);
         Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
     }
-
 }
+
 
