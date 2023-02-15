@@ -279,39 +279,23 @@ export class GraphQL {
                                         componentData.srcGitRepoUrl
                                       }",
                                       srcGitRepoBranch: "${componentData.branch}",
+                                      repositorySubPath: "${componentData.repositorySubPath}",
                                       oasFilePath: "${componentData.oasFilePath}"
                                       version: "1.0.0"
                                     } )
                                     { id,
-                                      createdAt,
-                                      updatedAt,
-                                      name,
                                       handle,
                                       organizationId,
                                       projectId,
-                                      orgHandle,
-                                      type,
-                                      description,
-                                      imageRegistryId,
-                                      imageRegistry {
-                                      id,
-                                      createdAt,
-                                      updatedAt,
-                                      cloudConnectorId,
-                                      imageRepositoryName
-                                      },
-                                      componentType,
-                                      httpBased }
 
                                     } )
-                                    {id, orgId, projectId, handler    }
                           }`,
           };
           this.callGraphQL(query).then((res) => {
-            const { id, projectId, handler } = res.body.data.createIntegrationComponent;
-            Cypress.env("component", {id, projectId, handler})
+            const { id, projectId, handle } = res.body.data.createIntegrationComponent;
+            Cypress.env("component", {id, projectId, handle})
             expect(res.status).to.be.eq(200);
-            this.getDeployedComponentDetails(projectId, handler)
+            this.getDeployedComponentDetails(projectId, handle)
           });
         });
         ChoreoHomePage.navigateToMarketPlace();
