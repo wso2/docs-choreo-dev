@@ -10,3 +10,6 @@ resources:
   - choreo-ai-lowcode-parser.yaml
   - choreo-userapps-image-deleter.yaml
   - cio-internal-metric-collector.yaml
+  - choreo-org-stat-data-pipeline.yaml
+  - choreo-daily-usage-publisher.yaml
+  - choreo-monthly-usage-publisher.yaml
