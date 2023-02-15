@@ -20,5 +20,7 @@ kind: Kustomization
 resources:
   - dp-kv-resolver
   - dp-mizzen
+  - config
+  - cron
 
 namespace: choreodp-system
