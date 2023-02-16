@@ -508,7 +508,38 @@ public class GraphQL extends ControlPlaneAPI {
      * @throws IOException If error occurred in object mapping
      */
     public static void getDeploymentStatusByVersion(TestActionRunner runner, HttpClient client, String accessToken,
-                                                    GraphqlDTO graphqlDTO) throws IOException {
+            GraphqlDTO graphqlDTO) throws IOException {
+        getDeploymentStatusByVersion(runner, client, accessToken, graphqlDTO,
+                "templates/deploy/deploy_status_by_version_success.json");
+    }
+
+    /**
+     * Get deployment status of a failed component by version with validation
+     *
+     * @param runner      Test action runner
+     * @param client      HTTP client
+     * @param accessToken Access token
+     * @param graphqlDTO  DTO
+     * @throws IOException If error occurred in object mapping
+     */
+    public static void getDeploymentStatusOfFailureByVersion(TestActionRunner runner, HttpClient client,
+            String accessToken, GraphqlDTO graphqlDTO) throws IOException {
+        getDeploymentStatusByVersion(runner, client, accessToken, graphqlDTO,
+                "templates/deploy/deploy_status_by_version_failure.json");
+    }
+
+    /**
+     * Get deployment status of the component by version with validation
+     *
+     * @param runner      Test action runner
+     * @param client      HTTP client
+     * @param accessToken Access token
+     * @param graphqlDTO  DTO
+     * @param responseTemplatePath  path to response template file
+     * @throws IOException If error occurred in object mapping
+     */
+    public static void getDeploymentStatusByVersion(TestActionRunner runner, HttpClient client, String accessToken,
+            GraphqlDTO graphqlDTO, String responseTemplatePath) throws IOException {
 
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/createIntegrationComponent/deploymentStatusByVersion.mustache", graphqlDTO);
@@ -532,8 +563,43 @@ public class GraphQL extends ControlPlaneAPI {
                                 .receive()
                                 .response(HttpStatus.OK)
                                 .message()
-                                .body(new ClassPathResource(
-                                        "templates/deploy/deploy_status_by_version_success.json"))));
+                                .body(new ClassPathResource(responseTemplatePath))));
+    }
+
+    public static String getRunId(TestActionRunner runner, HttpClient client, String accessToken, GraphqlDTO graphqlDTO) throws IOException {
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/createIntegrationComponent/deploymentStatusByVersion.mustache", graphqlDTO);
+        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        final String[] runId = new String[1];
+
+        final ChoreoComponent[] componentArray = new ChoreoComponent[1];
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate((message, context) -> {
+                    runId[0] = new JsonParser().parse((String) message.getPayload())
+                            .getAsJsonObject()
+                            .getAsJsonObject("data")
+                            .getAsJsonArray("deploymentStatusByVersion")
+                            .get(0)
+                            .getAsJsonObject()
+                            .get("id")
+                            .getAsString();
+                }));
+        return runId[0];
     }
 
     /**
