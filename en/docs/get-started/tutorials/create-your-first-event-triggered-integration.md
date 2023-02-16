@@ -1,4 +1,4 @@
-# Create an Event-Triggered Integration with an Existing Integration
+# Create Your First Event-Triggered Integration
 
 Event-triggered integrations can help automate business processes and reduce manual work. Choreo allows you to create and manage event-triggered integrations without a complex infrastructure setup.
 
@@ -111,16 +111,16 @@ To test the component, you must publish messages to a designated topic in your R
       }
     }
     ```
-   Now you are ready to observe the logs to take a look at the message received by the integration component.
+   Now you are ready to observe the logs and see the message received by the integration component.
 
 2. Go to the **iPaaS** profile and click the `MQTT listener` component you created.
 
-3. Click **Observe** on the left navigation, go to the **Logs** section, and observe the message received by the integration component from the RabbitMQ server. You will see a message similar to the following in the logs:
+3. Click **Observe** on the left navigation, go to the **Logs** section, and observe the message received by the integration component from the RabbitMQ server. You will see a message similar to the following:
 
     !!! info
-            It will take a few minutes for messages to appear in the logs. click the `Load Latest Logs` button to get the latest logs.
+            It can take a few minutes for messages to appear in the **Logs** section. To view the latest logs, click **Load Latest Logs**.
 
-      ![Received messages in the logs](../../../assets/img/tutorials/event-triggered-integration/rabbitmq-message-in-logs.png){.cInlineImage-full}
+      ![Message entry in logs](../../../assets/img/tutorials/event-triggered-integration/rabbitmq-message-in-logs.png){.cInlineImage-full}
 
       This confirms that the event-triggered integration is functioning as expected.
 
