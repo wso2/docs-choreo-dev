@@ -18,7 +18,7 @@ In this tutorial, you will do the following:
 !!! tip "Before you begin"
     - Fork the [sample application](https://github.com/wso2/choreo-examples) GitHub repository. For this tutorial, you need the [simple-rabbitmq-listener](https://github.com/wso2/choreo-examples/tree/main/ipaas/micro-integrator/simple-rabbitmq-listener) in the **choreo-sample** repository.  
  
-    - Download, install, and start [RabbitMQ](https://www.rabbitmq.com/download.html) either locally or on a server. When you start the server, obtain the `username`, `hostname`, `password`, and `vhost` from the RabbitMQ instance to use later as environment variables. 
+    - Download, install, and start [RabbitMQ](https://www.rabbitmq.com/download.html) on a cloud. When you start the server, obtain the `username`, `hostname`, `password`, and `vhost` from the RabbitMQ instance to use later as environment variables. 
 
 
 ## Step 1: Create the integration component
@@ -117,11 +117,15 @@ To test the component, you must publish messages to a designated topic in your R
 
 3. Click **Observe** on the left navigation, go to the **Logs** section, and observe the message received by the integration component from the RabbitMQ server. You will see a message similar to the following in the logs:
 
+    !!! info
+            It will take a few minutes for messages to appear in the logs. click the `Load Latest Logs` button to get the latest logs.
 
-    This confirms that the event-triggered integration is functioning as expected.
+      ![Received messages in the logs](../../../assets/img/tutorials/event-triggered-integration/rabbitmq-message-in-logs.png){.cInlineImage-full}
+
+      This confirms that the event-triggered integration is functioning as expected.
 
     !!! tip
-        The `Observe` view allows you to observe statistics related to your Choreo component. For more information on observing a Choreo component, see the [Observability overview](../../observe-and-analyze/observe/observability-overview.md).
+            The `Observe` view allows you to observe statistics related to your Choreo component. For more information on observing a Choreo component, see the [Observability overview](../../observe-and-analyze/observe/observability-overview.md).
 
 
 Congratulations! You have successfully created an event-triggered integration in Choreo with an existing integration, deployed the integration component, triggered an event, and tested the component.
