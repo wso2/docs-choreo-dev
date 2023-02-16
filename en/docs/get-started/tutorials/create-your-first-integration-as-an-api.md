@@ -1,4 +1,4 @@
-# Create Your First Integration
+# Create Your First Integration as an API
 
 An integration component integrates APIs, microservices, applications, and data in different languages and formats.
 
