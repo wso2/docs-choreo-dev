@@ -52,6 +52,7 @@ import org.springframework.http.MediaType;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
@@ -571,9 +572,7 @@ public class GraphQL extends ControlPlaneAPI {
                 "templates/createIntegrationComponent/deploymentStatusByVersion.mustache", graphqlDTO);
         String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
-        final String[] runId = new String[1];
-
-        final ChoreoComponent[] componentArray = new ChoreoComponent[1];
+        final AtomicReference<String> runIdRef = new AtomicReference<>();
         runner.$(http()
                 .client(client)
                 .send()
@@ -590,7 +589,7 @@ public class GraphQL extends ControlPlaneAPI {
                 .message()
                 .type(MessageType.JSON)
                 .validate((message, context) -> {
-                    runId[0] = new JsonParser().parse((String) message.getPayload())
+                    String runId = new JsonParser().parse((String) message.getPayload())
                             .getAsJsonObject()
                             .getAsJsonObject("data")
                             .getAsJsonArray("deploymentStatusByVersion")
@@ -598,8 +597,9 @@ public class GraphQL extends ControlPlaneAPI {
                             .getAsJsonObject()
                             .get("id")
                             .getAsString();
+                    runIdRef.set(runId);
                 }));
-        return runId[0];
+        return runIdRef.get();
     }
 
     /**

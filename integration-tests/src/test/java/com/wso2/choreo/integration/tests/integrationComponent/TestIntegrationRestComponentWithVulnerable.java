@@ -20,6 +20,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
@@ -137,7 +138,7 @@ public class TestIntegrationRestComponentWithVulnerable extends TestNGCitrusSpri
     @CitrusTest
     public void DeploymentLogs_TestMIIntegrationsWithVulnerableJars() throws Exception {
 
-        String response = ControlPlaneAPIs.getDeploymentLogs(accessToken, orgHandle, projectId, componentId, runId);
+        String response = Orgs.getDeploymentLogs(accessToken, orgHandle, projectId, componentId, runId);
         JsonObject dataJsonObject = new JsonParser().parse(response).getAsJsonObject().getAsJsonObject("data");
         JsonArray stepJsonArray = dataJsonObject.getAsJsonObject("build").getAsJsonArray("steps");
         for (JsonElement element : stepJsonArray) {
