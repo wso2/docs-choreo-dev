@@ -16,7 +16,7 @@ In this tutorial, you will do the following:
 
 
 !!! tip "Before you begin"
-    - Fork the [sample application](https://github.com/wso2/choreo-examples) GitHub repository. For this tutorial, you need the [simple-rabbitmq-listener](https://github.com/wso2/choreo-examples/tree/main/ipaas/wso2-synapse/simple-rabbitmq-listener) in the **choreo-sample** repository.  
+    - Fork the [sample application](https://github.com/wso2/choreo-examples) GitHub repository. For this tutorial, you need the [simple-rabbitmq-listener](https://github.com/wso2/choreo-examples/tree/main/ipaas/micro-integrator/simple-rabbitmq-listener) in the **choreo-sample** repository.  
  
     - Download, install, and start [RabbitMQ](https://www.rabbitmq.com/download.html) either locally or on a server. When you start the server, obtain the `username`, `hostname`, `password`, and `vhost` from the RabbitMQ instance to use later as environment variables. 
 
