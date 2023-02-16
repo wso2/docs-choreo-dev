@@ -67,7 +67,7 @@ nav:
           - Webhooks: develop/components/webhook.md
           - Scheduled Tasks: develop/components/scheduled-tasks.md
           - GraphQL APIs: develop/components/graphql-api.md
-      - Manage Respository: 
+      - Manage Repository: 
           - Connect Your Own GitHub Repository: develop/manage-repository/connect-your-own-github-repository-to-choreo.md
       - Run and Test:
           - Forecast Performance Metrics: develop/run-and-test/forecast-performance-metrics.md

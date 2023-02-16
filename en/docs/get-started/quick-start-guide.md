@@ -1,6 +1,6 @@
 # Quick Start Guide
 
-Choreo is a full lifecycle cloud-native developer platform that enables your developers to create, deploy, and run new digital components like APIs, microservices, and automations in serverless mode on any Kubernetes cluster.
+Choreo is a full lifecycle cloud-native developer platform that enables your developers to create, deploy, and run new digital components like APIs, microservices, and automation in serverless mode on any Kubernetes cluster.
 
 This guide walks you through the following:
 
@@ -216,7 +216,7 @@ Now your application has subscribed to the `readingList` REST API.
 
 At present, any user can invoke the `readingList` REST API via the `readingListApp` application (i.e., using its token) and update the reading list. However, if a user sends a request to retrieve the reading list, the response will also show entries by other users. To allow multiple users to use the application and maintain personal reading lists, you need a front-end application that allows each user to log in with a unique user ID.
 
-In this step, let's deploy a pre-designed front-end application. This application is designed to personalize the readingList based on the user ID that it obtains from its identity provider. To enable the application to obtain the user ID, let's configure Asgardeo as the identity provider.
+In this step, let's deploy a predesigned front-end application. This application is designed to personalize the readingList based on the user ID that it obtains from its identity provider. To enable the application to obtain the user ID, let's configure Asgardeo as the identity provider.
 
 
 #### Step 2.3.1: Configure Asgardeo to integrate with your application
@@ -245,7 +245,7 @@ To generate the configurations required for end users to log in to the front-end
    
     4. Click **Update**.
 
-7. Click **Quick Start**, and then click the **React** icon (because you will be using a pre-configured sample react front-end application).
+7. Click **Quick Start**, and then click the **React** icon (because you will be using a preconfigured sample react front-end application).
 
     A separate page opens for your application with **Integrate Your Application** option selected by default.
 
@@ -311,7 +311,7 @@ Now you have configured your front-end application. Next, you need to configure 
 
 #### Step 2.3.3: Configure Asgardeo as an identity provider for Choreo
 
-Let's deploy a pre-designed front-end application. This application is designed to personalize the readingList based on the user ID that it obtains from its identity provider. To enable the application to obtain the user ID, let's configure Asgardeo as the identity provider by following the steps given below:
+Let's deploy a predesigned front-end application. This application is designed to personalize the readingList based on the user ID that it obtains from its identity provider. To enable the application to obtain the user ID, let's configure Asgardeo as the identity provider by following the steps given below:
 
 !!! info
     To configure an identity provider for Choreo, you need administration privileges in Choreo.

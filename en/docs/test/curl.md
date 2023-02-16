@@ -7,7 +7,7 @@ You can follow the steps below to test your REST API using the Choreo-generated 
 # Test your REST API
 
 !!! note
-    If you are on the **Deployment** tab, click **Test** in the **Development** card and continue from step 4 onwards. 
+    If you are on the **Deployment** tab, click **Test** in the **Development** card and continue from step 4 onward. 
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
 
