@@ -1,21 +1,24 @@
-# Create Your First Event-Triggered Integration with Integration Studio
+# Create an Event-Triggered Integration with an Existing Integration
 
-Consider a scenario where a developer has created an integration using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/) and wants to use it as an event-triggered integration by deploying it in Choreo. In this tutorial, you will learn how to do the following actions to address this requirement:
+Event-triggered integrations can help automate business processes and reduce manual work. Choreo allows you to create and manage event-triggered integrations without a complex infrastructure setup.
 
-- Create an event-triggered integration in Choreo by connecting the GitHub repository which has an integration developed in [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).
+Consider a scenario where a developer has already created an integration using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/) and wants to deploy it on Choreo to create an event-triggered integration. This tutorial walks you through the steps to accomplish this requirement. 
+
+In this tutorial, you will do the following:
+
+- Create an event-triggered integration component in Choreo by connecting a GitHub repository with a sample application developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/). 
+
+	!!! info
+    	    The sample application listens to a [RabbitMQ](https://www.rabbitmq.com/) topic and logs incoming messages.
+
 - Deploy the integration component to the development environment in Choreo.
 - Test the integration component.
 
-For this tutorial, let's use a basic sample application which listens to a [RabbitMQ](https://www.rabbitmq.com/) topic and logs incoming messages.
 
-!!! tip "Before you begin!"
-    To follow this tutorial, you can utilize a sample integration created with [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/). Simply fork the [choreo-examples](https://github.com/wso2/choreo-examples) repository on GitHub.
-
-In this tutorial, we will be using the [simple-rabbitmq-listener](https://github.com/wso2/choreo-examples/tree/main/ipaas/wso2-synapse/simple-rabbitmq-listener) project in the **choreo-sample** repo. 
-
-## Step 0: Get Ready for the Tutorial
-
-To complete this tutorial, you need to start a RabbitMQ server either on a server or locally. Once it's started, obtain the `username`, `hostname`, `password` and `vhost` from the RabbitMQ instance, which you will later assign as environment variables. 
+!!! tip "Before you begin"
+    - Fork the [sample application](https://github.com/wso2/choreo-examples) GitHub repository. For this tutorial, you need the [simple-rabbitmq-listener](https://github.com/wso2/choreo-examples/tree/main/ipaas/wso2-synapse/simple-rabbitmq-listener) in the **choreo-sample** repository.  
+ 
+    - Download, install, and start [RabbitMQ](https://www.rabbitmq.com/download.html) either locally or on a server. When you start the server, obtain the `username`, `hostname`, `password`, and `vhost` from the RabbitMQ instance to use later as environment variables. 
 
 
 ## Step 1: Create the integration component
@@ -24,54 +27,56 @@ Let's create the integration component by following the steps given below:
 
 1. Go to [https://console.choreo.dev/?profile=ipaas](https://console.choreo.dev/?profile=ipaas) and sign in to the Choreo Console.
 
-2. On the **Home** page, select a project or create a new one by clicking **+Create Project**.
+2. On the **Home** page, click **+Create Project**.
 
-3. If the project has components, click **+Create**. If not, skip to the next step.
+3. Enter a unique name and a description for the project, and select a region.
 
-4. On the **Event-Triggered Integration** card, click **Create** to start creating an event-triggered integration component
+4. Click **Create**.  
 
-5. Give the component a **name** and **description** (e.g. `MQTT listener` and `My first MI MQTT listener`).
+5. Go to the **Event-Triggered Integration** card, click **Create**, and enter the following information:
 
-6. Click **Next**.
+    | **Field**       | **Value**               |
+    |-----------------|-------------------------|
+    | **Name**        | `MQTT listener`           |
+    | **Description** | `My sample listener`    |
 
-7. Authorize Choreo to access your GitHub account by clicking **Authorize with GitHub**.
+6. In the **Access Mode** field, leave the default selection (i.e., **External: API is publicly accessible**) unchanged.
+    
+7. Click **Next**.
 
-8. If you have not already authorized Choreo applications, click **Authorize Choreo Apps** when prompted.
+8. To allow Choreo to access your GitHub account, click **Authorize with GitHub**. 
 
-9.  Enter information related to the GitHub repository you want to connect as follows:
+	!!! tip
+    	    If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the [sample application](https://github.com/wso2/choreo-examples) GitHub repository to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
-     | **Field**             | **Value**                                                                                             |
-     |-----------------------|-------------------------------------------------------------------------------------------------------|
-     | **GitHub Account**    | Select your GitHub account.                                                                           |
-     | **GitHub Repository** | Select your fork of the [choreo-examples GitHub repository](https://github.com/wso2/choreo-examples). |
-     | **Branch**            | `main`                                                                                                |
+9. In the **Connect Repository** dialog box, enter the following information:
 
-10. Under **Build Preset**, click **Micro Integrator**.
+    | **Field**             | **Description**                                   |
+    |-----------------------|---------------------------------------------------|
+    | **GitHub Account**    | Your account                                      |
+    | **GitHub Repository** | `choreo-examples`                                 |
+    | **Branch**            | `main`                                            |
+    | **Build Preset**      | Click **Micro Integrator**                        |
+    | **Path**              | `ipaas/micro-integrator/simple-rabbitmq-listener` | 
 
-     !!! info
-        Build Preset specifies the type of build that must be executed, based on the implementation of the component. For instance, if the component was developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), the Micro Integrator build preset should be chosen. Meanwhile, if the Ballerina language was used to develop the component, the Ballerina build preset should be selected. These presets convert the integration code into a Docker image that can run on Choreo Cloud.
+	!!! tip
+    	    - **Build Preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset. 
 
+            - **Path** specifies the location of the project to build the component. 
 
-11. Enter information as follows.
-
-     | **Field**             | **Value**                                      |
-     |-----------------------|------------------------------------------------|
-     | **Path**              | `ipaas/micro-integrator/simple-rabbitmq-listener`  |
-
-
-    !!! info
-        When Choreo builds the component this is the path it looking for the project in the repository.
- 
-1.  Click **Create**.
+10.  Click **Create**. This creates the component and takes you to the **Deploy** view, where you can proceed to deploy the component.
 
 
 ## Step 2: Deploy
-Before deploying the component you need to assign RabbitMQ credentials to environment variables by following the steps given below:
+Before you deploy the component, you must follow the steps given below to assign appropriate RabbitMQ credentials to the environment variables:
 
-1. Go to **Deploy** In the left navigation menu.
-2. Open the `DevOps Portal` by Clicking **Configure via the DevOps Portal** in **Development** card.
-3. In DevOps Portal, Add the following environment variables and save.  
-   
+1. In the **Deploy** view, go to the **Development** card and click **Configure via the DevOps Portal**. This takes you to the **Configs & Secrets** page in the **DevOps** profile, where you can apply environment-specific configuration files, environment variables, and other secret resources to containers.
+2. Click **Let's Get Started**.
+3. In the **Mount a Configuration** page, select **Environment Variables** as the configuration type and click **Next**.
+4. Select **Create New** and enter a **Config Name**. Here, let's specify `environmentconf` as the **Config Name**.
+5. Click **Next**.
+6. Specify the environment variables as key-value pairs. You must use the values you obtain from your RabbitMQ instance as the values for the following keys: 
+
     | **Key**    |
     |------------|
     | HOSTNAME   | 
@@ -79,44 +84,44 @@ Before deploying the component you need to assign RabbitMQ credentials to enviro
     | PASSWORD   | 
     | VHOST      | 
 
+7. Click **Finish**. Now you are ready to deploy the component to the developer environment. 
+
+8. Go to the **iPaaS** profile and click the `MQTT listener` component you created.
+
+9. Click **Deploy** on the left navigation, go to the **Build Area** card, and then click **Deploy Manually**.
+
     !!! info
-        For more about how to manage Environment variables please refer to the [Configurations and secrets](../../devops/devops-portal.md) documentation.
+        You have to deploy the component manually the first time. Subsequent deployments will occur automatically because automatic deployment is enabled by default.
 
-Let's deploy the component you created to the developer environment by following the step given below:
-
-1. In the Choreo Console **Deploy** view Click **Deploy Manually**.
-
-    !!! info
-        Automatic deployment is enabled for the component by default. You are required to carry out only the first deployment manually.
-
-After Choreo deploys the component, proceed to the next step to test it.
+After Choreo deploys the component, you can proceed to test it.
 
 ## Step 3: Test
 
-Test the component by publishing messages to a designated topic in your RabbitMQ server.
- 
-1. Publish the following message to the **SalesOrderQueue** topic in the RabbitMQ server.
+To test the component, you must publish messages to a designated topic in your RabbitMQ server.
 
-```
-{
-  "Orders": {
-    "Order": {
-      "Id": 1,
-      "Price": 150
+1. Go to the RabbitMQ Management Console and publish the following message to the **SalesOrderQueue** topic.
+
+    ```
+    {
+      "Orders": {
+        "Order": {
+          "Id": 1,
+          "Price": 150
+        }
+      }
     }
-  }
-}
-```
+    ```
+   Now you are ready to observe the logs to take a look at the message received by the integration component.
 
-2. To view logs, use the `Observe` view by clicking the **Observe** icon in the left panel.
+2. Go to the **iPaaS** profile and click the `MQTT listener` component you created.
 
-3. Check the logs to see the message received by the integration component from the RabbitMQ server. 
-
-If the message appears in the logs, your Event-Triggered Integration is functioning as expected.
-
-!!! tip "Observe"
-    You can use the `Observe` view to observe statistics for your component. For more information about observing components, see [Observability Overview](../../observe-and-analyze/observe/observability-overview.md).
+3. Click **Observe** on the left navigation, go to the **Logs** section, and observe the message received by the integration component from the RabbitMQ server. You will see a message similar to the following in the logs:
 
 
-Congratulations! You have successfully deployed an integration designed in the [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/) as an Event-Triggered Integration in Choreo and triggered it!
+    This confirms that the event-triggered integration is functioning as expected.
 
+    !!! tip
+        The `Observe` view allows you to observe statistics related to your Choreo component. For more information on observing a Choreo component, see the [Observability overview](../../observe-and-analyze/observe/observability-overview.md).
+
+
+Congratulations! You have successfully created an event-triggered integration in Choreo with an existing integration, deployed the integration component, triggered an event, and tested the component.
