@@ -83,7 +83,7 @@ BEGIN
         date DATETIME2(0) NOT NULL,
         org_uuid VARCHAR(128) NOT NULL,
         subscription_item_id VARCHAR(100) NOT NULL,
-        usage INT NOT NULL,
+        usage DECIMAL(10, 2) NOT NULL,
         usage_type VARCHAR(128) NOT NULL, -- "infra", "infra-support" or "component"
         frequency VARCHAR(100) NOT NULL, -- "daily" or "monthly"
         successful BIT NOT NULL DEFAULT 0,
