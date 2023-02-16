@@ -22,7 +22,7 @@ import { ProjectListingPage } from "../../../../support/console/pages/projects/p
 import { ComponentData } from "../../../../support/interfaces/component-data";
 
 
-describe("Verify manual trigger creation functionality", () => {
+describe("Verify Reusable Manual Trigger creation functionality", () => {
   const MANUAL_NAME = "create-manualTrigger-1.5.1";
   const PROJECT_NAME = "Default Project"
 
