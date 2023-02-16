@@ -24,17 +24,20 @@ export class ProjectOverviewPage {
     cy.get('body').then(bdy => {
       if (bdy.find('tbody').length > 0) {
         let isFound: boolean = false;
-        const kk = bdy.find('p')
-        for (let i = 0; i < kk.length; i++) {
-          if (kk[i].innerText.trim() === componentData.componentName.trim()) {
+        const components = bdy.find('p')
+        for (let i = 0; i < components.length; i++) {
+          cy.log(components[i].innerText)
+          if (components[i].innerText.trim() === componentData.componentName.trim()) {
             isFound = true;
             break;
           }
         }
-        if(!isFound){
+        if (!isFound) {
           GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+        } else {
+          GraphQL.getComponentInfo("Default Project", componentData.componentName)
         }
-      }else{
+      } else {
         GraphQL.createComponentWithRepo(componentData, REPO_NAME);
       }
     })

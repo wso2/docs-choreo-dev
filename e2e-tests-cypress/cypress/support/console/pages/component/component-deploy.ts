@@ -160,15 +160,9 @@ export class ComponentDeployPage {
   }
 
   static stopAllDeployment() {
-    cy.get('[data-cyid="version-picker"]').click()
-
-    cy.get('div>ul>li').each(li => {
-      cy.wrap(li).click()
       this.stopDevContainer();
       this.stopStgContainer();
       this.stopProdContainer();
-    })
-
   }
 
   private static stopContainer(stpButton: number, len: number) {
@@ -263,7 +257,7 @@ export class ComponentDeployPage {
     cy.get('[data-cyid*="promote"]').should("not.be.disabled");
   }
 
-  static addNewVersion(branch: string = "feature", version: string = "1.1.0") {
+  static addNewVersion(branch: string = "feature", version: string = "1.1") {
     cy.get('[data-cyid="version-picker"]').click()
     cy.get('[data-cyid="btn-create-version"]').should('be.visible').click()
     cy.get('[role="dialog"]').within(() => {
@@ -273,9 +267,8 @@ export class ComponentDeployPage {
     cy.get('[role="dialog"]').within(() => {
       cy.get(`[name="Version name"]`).type(version)
       cy.get('[data-testid="create-version-create"]').click()
+      cy.get('[data-testid="dialog-close-icon"]').should('not.exist')
     })
-
-
-    cy.get('[data-testid="btn-deploy-api"]', { timeout: 50000 }).should('be.enabled')
+    cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
   }
 }
