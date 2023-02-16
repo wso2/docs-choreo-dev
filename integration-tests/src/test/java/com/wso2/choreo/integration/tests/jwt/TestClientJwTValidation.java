@@ -6,19 +6,16 @@ import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.consol.citrus.validation.json.JsonMessageValidationContext;
 import com.wso2.choreo.integration.apis.Orgs;
-import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
+import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
-import com.wso2.choreo.integration.common.utils.FileUtil;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
-import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.componentstatus.Status;
-import com.wso2.choreo.integration.models.pullrequests.PullRequest;
+import com.wso2.choreo.integration.models.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
@@ -34,10 +31,6 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 
 public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
-
-
-    private String projectId;
-    private String repoName;
     private String accessToken;
     private ChoreoProject project;
     private ChoreoComponent choreoComponent;
@@ -48,10 +41,8 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
 
     @BeforeClass
     public void setup_TestClientJwTValidation() throws Exception {
-        repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         project = GraphQL.createProject(accessToken);
-        projectId = project.getId();
     }
 
 
@@ -62,27 +53,12 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
 
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").
                 srcGitRepoUrl("https://github.com/choreo-test-apps/jwt-encoder").
-                projectId(projectId).displayType(Constant.displayType.restAPI.name()).build();
-        choreoComponent = GraphQL.createUserManagedComponent(project, dto, accessToken);
+                projectId(project.getId()).displayType(Constant.displayType.restAPI.name()).build();
+        choreoComponent = ComponentUtils.createComponent(this, choreoTestClient, accessToken, dto);
         Assert.assertNotNull(choreoComponent.getId());
     }
 
     @Test(dependsOnMethods = {"createUserManagedComponentFor_TestClientJwTValidation"})
-    @CitrusTest
-    public void createdComponentStatus_TestClientJwTValidation() throws UnexpectedResponseException {
-        Status status = Orgs.createdComponentStatus(projectId, choreoComponent.getId(), accessToken);
-        Assert.assertTrue(status.isSuccess());
-    }
-
-    @Test(dependsOnMethods = {"createdComponentStatus_TestClientJwTValidation"})
-    @CitrusTest
-    public void componentRetrieval_TestClientJwTValidation() throws IOException {
-        choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandler(), accessToken);
-        Assert.assertNotNull(choreoComponent);
-    }
-
-
-    @Test(dependsOnMethods = {"componentRetrieval_TestClientJwTValidation"})
     @CitrusTest
     public void addDeploymentConfiguration_TestClientJwTValidation() throws Exception {
         Orgs.getConfigurationMapping(choreoComponent, accessToken);
@@ -138,11 +114,10 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"invokeAPI_TestClientJwTValidation"}, alwaysRun = true)
     @CitrusTest
     public void deleteComponent_TestClientJwTValidation() throws IOException {
-        Response response = GraphQL.deleteComponent(choreoComponent.getId(), projectId, accessToken);
-        ChoreoComponent[] components = GraphQL.getProjectComponents(projectId, accessToken);
+        Response response = GraphQL.deleteComponent(choreoComponent.getId(), project.getId(), accessToken);
+        ChoreoComponent[] components = GraphQL.getProjectComponents(project.getId(), accessToken);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
         Assert.assertEquals(components.length, 0);
     }
 
 }
-
