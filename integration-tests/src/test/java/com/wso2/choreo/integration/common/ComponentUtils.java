@@ -41,7 +41,6 @@ import org.springframework.http.HttpStatus;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
@@ -80,16 +79,6 @@ public class ComponentUtils {
 
     public static ChoreoComponent createComponent(TestActionRunner runner, HttpClient client, String accessToken,
                                                   GraphqlDTO dto) throws Exception {
-        /*
-        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        GraphqlDTO dto = GraphqlDTO.builder().
-                name(componentName).
-                triggerID("null").
-                srcGitRepoUrl("https://github.com/choreo-test-apps/" + repoName).
-                projectId(project.getId()).
-                displayType(displayType.name()).
-                build();
-        */
         CreateComponentResponseDTO responseDTO = GraphQL.createUserManagedComponent(runner, client, dto, accessToken);
 
         Orgs.waitForComponentCreationSuccess(runner, client, accessToken, responseDTO.getProjectId(),
@@ -99,14 +88,9 @@ public class ComponentUtils {
                 projectId(responseDTO.getProjectId()).
                 componentHandler(responseDTO.getHandler()).build();
 
-        ChoreoComponent restAPI = GraphQL.retrieveIntegrationComponent(runner, client, accessToken,
+        return GraphQL.retrieveComponent(runner, client, accessToken,
                 graphqlDTO);
-
-        // restAPI.setOrganization(org);
-        // restAPI.setProjectId(project.getId());
-        return restAPI;
     }
-
 
     public static void invokeApiEndpoint(String accessToken, ChoreoComponent component, Constant.Environment env) throws Exception {
         InvokeInformation invokeInformation = component.getInvokeInformation(accessToken,

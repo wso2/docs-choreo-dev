@@ -93,6 +93,8 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     private HttpClient choreoCPTestClient;
     @Autowired
     private HttpClient choreoProjectsTestClient;
+    @Autowired
+    private HttpClient choreoTestClient;
 
     @DataProvider(name = "env-provider")
     public Object[][] environment() {
@@ -117,31 +119,17 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
         // Creating component
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
 
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(componentName).
+        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).
                 srcGitRepoUrl("https://github.com/choreo-test-apps/GitHub-web-hook").
                 displayName(componentName).projectId(projectId).
                 triggerChannels("IssuesService").triggerID("88").
                 displayType(Constant.displayType.webhook.name()).build();
-        choreoComponent = GraphQL.createUserManagedComponent(project, graphqlDTO, accessToken);
+        choreoComponent = ComponentUtils.createComponent(this, choreoTestClient, accessToken, dto);
         Assert.assertEquals(choreoComponent.getProjectId(), projectId);
 
     }
 
     @Test(dependsOnMethods = {"createUserManagedComponent_CreateDeployInvokeWebhookIT"})
-    @CitrusTest
-    public void createdComponentStatus_CreateDeployInvokeWebhookIT() throws UnexpectedResponseException {
-        Status status = Orgs.createdComponentStatus(projectId, choreoComponent.getId(), accessToken);
-        Assert.assertTrue(status.isSuccess());
-    }
-
-    @Test(dependsOnMethods = {"createdComponentStatus_CreateDeployInvokeWebhookIT"})
-    @CitrusTest
-    public void componentRetrieval_CreateDeployInvokeWebhookIT() throws IOException {
-        choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandler(), accessToken);
-        Assert.assertNotNull(choreoComponent);
-    }
-
-    @Test(dependsOnMethods = {"componentRetrieval_CreateDeployInvokeWebhookIT"})
     @CitrusTest
     public void componentDeployment_CreateDeployInvokeWebhookIT() throws Exception {
         BalConfig balConfigs = BalConfig.builder().isRequired(true).configKeyName("config.webhookSecret").valueType("string").valueOrSource("abcd").build();
@@ -378,5 +366,3 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
         Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
     }
 }
-
-
