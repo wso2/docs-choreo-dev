@@ -26,7 +26,6 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.choreoproject.ControlPlaneAPIs;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -99,7 +98,7 @@ public class TestIntegrationRestComponentWithVulnerable extends TestNGCitrusSpri
     public void componentRetrieval_TestMIIntegrationsWithVulnerableJars() throws Exception {
 
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
-        testComponent = GraphQL.retrieveIntegrationComponent(this, choreoProjectsTestClient, accessToken, graphqlDTO);
+        testComponent = GraphQL.retrieveComponent(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 
     @Test(dependsOnMethods = { "componentRetrieval_TestMIIntegrationsWithVulnerableJars" })
@@ -136,7 +135,7 @@ public class TestIntegrationRestComponentWithVulnerable extends TestNGCitrusSpri
 
     @Test(dependsOnMethods = { "deploymentStatusByVersion_TestMIIntegrationsWithVulnerableJars" })
     @CitrusTest
-    public void DeploymentLogs_TestMIIntegrationsWithVulnerableJars() throws Exception {
+    public void checkVulnarabilityScan_TestMIIntegrationsWithVulnerableJars() throws Exception {
 
         String response = Orgs.getDeploymentLogs(accessToken, orgHandle, projectId, componentId, runId);
         JsonObject dataJsonObject = new JsonParser().parse(response).getAsJsonObject().getAsJsonObject("data");
