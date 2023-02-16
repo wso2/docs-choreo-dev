@@ -14,6 +14,7 @@
 
 import {GitHub} from "../../github/github";
 import {ComponentData} from "../../interfaces/component-data";
+import { IntegrationComponentData } from "../../interfaces/integration-component-data";
 import {PR} from "../../interfaces/pr";
 import {ONE_HOUR} from "../constants";
 import {ChoreoHomePage} from "../pages/home/home-page";
@@ -247,6 +248,62 @@ export class GraphQL {
         return cy.wrap({})
     }
 
+    static createIntegrationComponent(
+        componentData: IntegrationComponentData
+         ) {
+        const { id } = Cypress.env("current_org");
+        this.getProjects(id).then((res) => {
+          const projects = res.body.data.projects as [];
+          const project = projects.find(
+            (p) => p["name"] === componentData.projectName
+          );
+          cy.log(`Project Id :: ${project["id"]}`);
+          const query = {
+            query: `mutation{
+                        createIntegrationComponent(
+                                 component: {
+                                      name: "${componentData.componentName}",
+                                      displayName: "${componentData.componentName}",
+                                      description: "",
+                                      orgId: ${id},
+                                      orgHandler: "${Cypress.env(
+                                        "choreoOrgHandle"
+                                      )}",
+                                      projectId: "${project["id"]}",
+                                      labels: "",
+                                      componentType: "${componentData.componentType}",
+                                      accessibility: "${
+                                        componentData.accessibility
+                                      }",
+                                      srcGitRepoUrl: "${
+                                        componentData.srcGitRepoUrl
+                                      }",
+                                      srcGitRepoBranch: "${componentData.branch}",
+                                      repositorySubPath: "${componentData.repositorySubPath}",
+                                      oasFilePath: "${componentData.oasFilePath}"
+                                      version: "1.0.0"
+                                    } )
+                                    { id,
+                                      handle,
+                                      organizationId,
+                                      projectId,
+
+                                    } )
+                          }`,
+          };
+          this.callGraphQL(query).then((res) => {
+            const { id, projectId, handle } = res.body.data.createIntegrationComponent;
+            Cypress.env("component", {id, projectId, handle})
+            expect(res.status).to.be.eq(200);
+            this.getDeployedComponentDetails(projectId, handle)
+          });
+        });
+        ChoreoHomePage.navigateToMarketPlace();
+        ChoreoHomePage.navigateToProjects();
+        cy.get("tbody>tr p").should("be.visible");
+        return cy.wrap({})
+      }
+
     static getDeployedComponentDetails(projectId: string, handler: string) {
         const query = GraphQLQueryBuilder.getComponentDetails(projectId, handler)
         this.callGraphQL(query).then(res => {
@@ -256,6 +313,7 @@ export class GraphQL {
             const latestAPIVersion = av.find(a => a["latest"])
             const latestAPIVersionId = latestAPIVersion["id"]
             const appENVS = latestAPIVersion["appEnvVersions"] as []
+            cy.log(JSON.stringify(appENVS));
             appENVS.forEach(appEnv => {
                 const {release} = appEnv
                 const {id, environmentId} = release
