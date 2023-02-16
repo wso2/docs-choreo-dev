@@ -320,4 +320,26 @@ public class Orgs extends ControlPlaneAPI {
 
         throw new ComponentCreationTimeoutException();
     }
+
+    public static String getDeploymentLogs(String accessToken, String choreoOrgHandle, String projectId,
+            String componentId, String runId) {
+        String choreoEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_ENDPOINT);
+        String requestURI = choreoEndpoint.concat(
+                "/orgs/" + choreoOrgHandle + "/projects/" + projectId + "/components/" + componentId + "/runs/" + runId + "/logs");
+
+        HttpGet request = new HttpGet(requestURI);
+        request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, accessToken);
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+            if (statusCode == org.apache.http.HttpStatus.SC_OK) {
+                return responseBody;
+            }
+            throw new RuntimeException("Invalid response code received: " + statusCode);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
