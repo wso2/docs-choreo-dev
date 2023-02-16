@@ -58,7 +58,8 @@ nav:
           - Create Your First REST API: get-started/tutorials/create-your-first-rest-api.md
           - Expose an Existing API via a REST API Proxy: get-started/tutorials/create-your-first-rest-api-proxy.md
           - Create Your First Webhook: get-started/tutorials/create-your-first-webhook.md
-          - Create Your First Integration: get-started/tutorials/create-your-first-integration.md
+          - Create Your First Integration as an API: get-started/tutorials/create-your-first-integration-as-an-api.md
+          - Create Your First Event-Triggered Integration: get-started/tutorials/create-your-first-event-triggered-integration.md
   - Create:
       - Components:
           - REST APIs: develop/components/rest-api.md
