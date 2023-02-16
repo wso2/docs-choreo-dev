@@ -12,14 +12,14 @@
  */
 
 
-import {GitHub} from "../../github/github";
-import {ComponentData} from "../../interfaces/component-data";
+import { GitHub } from "../../github/github";
+import { ComponentData } from "../../interfaces/component-data";
 import { IntegrationComponentData } from "../../interfaces/integration-component-data";
-import {PR} from "../../interfaces/pr";
-import {ONE_HOUR} from "../constants";
-import {ChoreoHomePage} from "../pages/home/home-page";
-import {Utils} from "../utils";
-import {GraphQLQueryBuilder} from "./gql-query-builder";
+import { PR } from "../../interfaces/pr";
+import { ONE_HOUR } from "../constants";
+import { ChoreoHomePage } from "../pages/home/home-page";
+import { Utils } from "../utils";
+import { GraphQLQueryBuilder } from "./gql-query-builder";
 
 export const SUCCESS_STATUS_CODE = 200;
 export const NO_CONTENT_STATUS_CODE = 204;
@@ -45,7 +45,7 @@ export class GraphQL {
             }[];
 
             const e2eProjects = projects.filter(
-                ({name}) =>
+                ({ name }) =>
                     name.includes(Utils.projectNamePrefix) ||
                     name.includes(Utils.oldProjectNamePrefix)
             );
@@ -104,7 +104,7 @@ export class GraphQL {
         this.getComponents(projectId, orgHandle).then((response) => {
             if (response.status === SUCCESS_STATUS_CODE) {
                 response.body.data.components.forEach((component) => {
-                    const {handler} = component;
+                    const { handler } = component;
                     this.deleteConnectors(token);
                     this.changeComponentLifeCycle(projectId, handler, token);
                     this.deleteComponent(component.id, projectId, orgHandle);
@@ -166,6 +166,8 @@ export class GraphQL {
         return this.callGraphQL(query);
     }
 
+    
+
     static callGraphQL(query: any) {
         const appSvcURL = Cypress.env("newAppSvcURL");
         const header = {
@@ -186,7 +188,7 @@ export class GraphQL {
         componentData: ComponentData,
         repoName?: string
     ) {
-        const {id} = Cypress.env("current_org");
+        const { id } = Cypress.env("current_org");
         this.getProjects(id).then((res) => {
             const projects = res.body.data.projects as [];
             const project = projects.find(
@@ -211,30 +213,30 @@ export class GraphQL {
                                   apiId: "",
                                   ballerinaVersion: "swan-lake-alpha5",
                                   triggerChannels: "${componentData.triggerChannels
-                }",
+                    }",
                                   triggerID: ${componentData.triggerId},
                                   httpBase: true,
                                   sampleTemplate: "${componentData.sampleTemplate
-                }",
+                    }",
                                   accessibility: "${componentData.accessibility
-                }",
+                    }",
                                   srcGitRepoUrl: "${componentData.srcGitRepoUrl
-                }"
+                    }"
                                   repositorySubPath: "${componentData.repositorySubPath
-                }",
+                    }",
                                   repositoryType: "${componentData.repositoryType
-                }",
+                    }",
                                   repositoryBranch: "main",
                                   initializeAsBallerinaProject: ${componentData.initializeAsBallerinaProject
-                },
+                    },
                                 } )
                                 {id, orgId, projectId, handler    }
                       }`,
             };
 
             this.callGraphQL(query).then((res) => {
-                const {id, projectId, handler} = res.body.data.createComponent;
-                Cypress.env("component", {id, projectId, handler})
+                const { id, projectId, handler } = res.body.data.createComponent;
+                Cypress.env("component", { id, projectId, handler })
                 if (componentData.initializeAsBallerinaProject) {
                     this.getPullRequests(id, repoName);
                 }
@@ -250,16 +252,16 @@ export class GraphQL {
 
     static createIntegrationComponent(
         componentData: IntegrationComponentData
-         ) {
+    ) {
         const { id } = Cypress.env("current_org");
         this.getProjects(id).then((res) => {
-          const projects = res.body.data.projects as [];
-          const project = projects.find(
-            (p) => p["name"] === componentData.projectName
-          );
-          cy.log(`Project Id :: ${project["id"]}`);
-          const query = {
-            query: `mutation{
+            const projects = res.body.data.projects as [];
+            const project = projects.find(
+                (p) => p["name"] === componentData.projectName
+            );
+            cy.log(`Project Id :: ${project["id"]}`);
+            const query = {
+                query: `mutation{
                         createIntegrationComponent(
                                  component: {
                                       name: "${componentData.componentName}",
@@ -267,17 +269,15 @@ export class GraphQL {
                                       description: "",
                                       orgId: ${id},
                                       orgHandler: "${Cypress.env(
-                                        "choreoOrgHandle"
-                                      )}",
+                    "choreoOrgHandle"
+                )}",
                                       projectId: "${project["id"]}",
                                       labels: "",
                                       componentType: "${componentData.componentType}",
-                                      accessibility: "${
-                                        componentData.accessibility
-                                      }",
-                                      srcGitRepoUrl: "${
-                                        componentData.srcGitRepoUrl
-                                      }",
+                                      accessibility: "${componentData.accessibility
+                    }",
+                                      srcGitRepoUrl: "${componentData.srcGitRepoUrl
+                    }",
                                       srcGitRepoBranch: "${componentData.branch}",
                                       repositorySubPath: "${componentData.repositorySubPath}",
                                       oasFilePath: "${componentData.oasFilePath}"
@@ -290,24 +290,24 @@ export class GraphQL {
 
                                     } )
                           }`,
-          };
-          this.callGraphQL(query).then((res) => {
-            const { id, projectId, handle } = res.body.data.createIntegrationComponent;
-            Cypress.env("component", {id, projectId, handle})
-            expect(res.status).to.be.eq(200);
-            this.getDeployedComponentDetails(projectId, handle)
-          });
+            };
+            this.callGraphQL(query).then((res) => {
+                const { id, projectId, handle } = res.body.data.createIntegrationComponent;
+                Cypress.env("component", { id, projectId, handle })
+                expect(res.status).to.be.eq(200);
+                this.getDeployedComponentDetails(projectId, handle)
+            });
         });
         ChoreoHomePage.navigateToMarketPlace();
         ChoreoHomePage.navigateToProjects();
         cy.get("tbody>tr p").should("be.visible");
         return cy.wrap({})
-      }
+    }
 
     static getDeployedComponentDetails(projectId: string, handler: string) {
         const query = GraphQLQueryBuilder.getComponentDetails(projectId, handler)
         this.callGraphQL(query).then(res => {
-            const {apiVersions} = res.body.data.component
+            const { apiVersions } = res.body.data.component
             const componentId = res.body.data.component["id"];
             const av = apiVersions as []
             const latestAPIVersion = av.find(a => a["latest"])
@@ -315,23 +315,35 @@ export class GraphQL {
             const appENVS = latestAPIVersion["appEnvVersions"] as []
             cy.log(JSON.stringify(appENVS));
             appENVS.forEach(appEnv => {
-                const {release} = appEnv
-                const {id, environmentId} = release
+                const { release } = appEnv
+                const { id, environmentId } = release
                 const choreoEnv = release["metadata"]["choreoEnv"]
-
-                let releaseData = {componentId, latestAPIVersionId, environmentId, releaseId: id, choreoEnv}
-
+                let releaseData = { componentId, latestAPIVersionId, environmentId, releaseId: id, choreoEnv }
                 Cypress.env(choreoEnv, releaseData)
             })
         })
     }
 
+    static getComponentInfo(projectName: string, componentName: string) {
+        const { orgId } = Cypress.env("userData");
+        this.getProjects(orgId).then(res => {
+            const projects = res.body.data.projects as { name: string }[]
+            const project = projects.find(p => p.name === projectName)
+            const handle = Cypress.env("choreoOrgHandle");
+            this.getComponents(project["id"], handle).then(resp => {
+                const comps = resp.body.data.components as { id: string, handler: string, displayName: string }[]
+                const comp = comps.find(c => c.displayName === componentName)
+                this.getDeployedComponentDetails(project["id"], comp.handler)
+            })
+        })
+    }
+
     static getComponentDeploymentStatus(env: string = "dev") {
-        const {handle, uuid,} = Cypress.env("userData");
-        const {componentId, latestAPIVersionId, environmentId} = Cypress.env(env)
+        const { handle, uuid, } = Cypress.env("userData");
+        const { componentId, latestAPIVersionId, environmentId } = Cypress.env(env)
         const query = GraphQLQueryBuilder.getComponentDeploymentStatus(handle, uuid, componentId, latestAPIVersionId, environmentId)
         this.callGraphQL(query).then(res => {
-            const {deploymentStatus, deploymentStatusV2} = res.body.data.componentDeployment
+            const { deploymentStatus, deploymentStatusV2 } = res.body.data.componentDeployment
             cy.log(deploymentStatus, deploymentStatusV2)
             if (deploymentStatusV2 === "ERROR" || deploymentStatus === "ERROR") {
                 throw new Error(' Deployment Failed');
@@ -357,7 +369,7 @@ export class GraphQL {
         this.callGraphQL(query).then((res) => {
             const prs: PR[] = res.body.data.componentPullRequests as [];
             if (prs.length > 0) {
-                const {number} = prs[0];
+                const { number } = prs[0];
                 GitHub.mergePR(repoName, number).then((resp) => expect(resp.status).to.be.eq(200));
                 return;
             } else {
@@ -420,7 +432,7 @@ export class GraphQL {
             if (res.status === SUCCESS_STATUS_CODE) {
                 const apiVersion: [] = res.body.data.component.apiVersions;
                 apiVersion.forEach((e) => {
-                    const {proxyId} = e;
+                    const { proxyId } = e;
                     if (proxyId) {
                         this.deprecateComponent(proxyId, token);
                     } else {
@@ -434,7 +446,7 @@ export class GraphQL {
     }
 
     private static deprecateComponent(apiId: string, token: string) {
-        const {uuid} = Cypress.env("current_org");
+        const { uuid } = Cypress.env("current_org");
         cy.log(`Current UUID ==> ${uuid}`);
 
         const statusRequest = `${Cypress.env(
@@ -444,7 +456,7 @@ export class GraphQL {
             Authorization: `Bearer ${token}`,
         };
         return Utils.sendGetRequest(statusRequest, headers).then((res) => {
-            const {state} = res.body;
+            const { state } = res.body;
             if (state === "Published") {
                 this.sendDeprecateRetireRequest(apiId, uuid, token);
             }
@@ -459,7 +471,7 @@ export class GraphQL {
         const headers = {
             Authorization: `Bearer ${token}`,
         };
-        const deprecateRequest = `${Cypress.env(            "apimSvcURL"
+        const deprecateRequest = `${Cypress.env("apimSvcURL"
         )}/api/am/publisher/v2/apis/change-lifecycle?organizationId=${uuid}&apiId=${apiId}&action=Deprecate`;
         const retireRequest = `${Cypress.env(
             "apimSvcURL"
@@ -469,7 +481,7 @@ export class GraphQL {
     }
 
     private static deleteConnector(pkg: any, token) {
-        const {organization, name, version} = pkg;
+        const { organization, name, version } = pkg;
         const headers = {
             Authorization: `Bearer ${token}`,
         };
@@ -488,7 +500,7 @@ export class GraphQL {
     }
 
     private static deleteConnectors(token: string) {
-        const {handle} = Cypress.env("current_org");
+        const { handle } = Cypress.env("current_org");
         cy.log(`Current handle ==> ${handle}`);
         const headers = {
             Authorization: `Bearer ${token}`,

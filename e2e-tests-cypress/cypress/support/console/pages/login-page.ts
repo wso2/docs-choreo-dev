@@ -128,7 +128,6 @@ export class LoginPage {
   private static persistOrgs() {
     cy.intercept("GET", Cypress.env("appSvcURL") + "/validate-user").as("org");
     cy.wait("@org", { timeout: 180000 }).then((res) => {
-      cy.log(JSON.stringify(res.response.body))
       let userOrg;
       const handle = Cypress.env("choreoOrgHandle");
       if (handle) {
@@ -154,7 +153,6 @@ export class LoginPage {
         handle: userOrg.handle,
         uuid: userOrg.uuid,
       };
-      cy.log("userData: ", JSON.stringify(userData));
       Cypress.env("userData", userData);
     });
   }

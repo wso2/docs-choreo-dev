@@ -159,11 +159,10 @@ export class ComponentDeployPage {
     cy.get('[data-cyid*="test-nav-btn"]').should("be.visible");
   }
 
-   static stopAllDeployment() {
-    cy.wait(3000);
-    this.stopDevContainer();
-    this.stopStgContainer();
-    this.stopProdContainer();
+  static stopAllDeployment() {
+      this.stopDevContainer();
+      this.stopStgContainer();
+      this.stopProdContainer();
   }
 
   private static stopContainer(stpButton: number, len: number) {
@@ -256,5 +255,20 @@ export class ComponentDeployPage {
       .contains("Active")
       .should("be.visible");
     cy.get('[data-cyid*="promote"]').should("not.be.disabled");
+  }
+
+  static addNewVersion(branch: string = "feature", version: string = "1.1") {
+    cy.get('[data-cyid="version-picker"]').click()
+    cy.get('[data-cyid="btn-create-version"]').should('be.visible').click()
+    cy.get('[role="dialog"]').within(() => {
+      cy.get('[data-testid*="feature"]').click()
+    })
+    cy.get(`[data-value="${branch}"]`).click()
+    cy.get('[role="dialog"]').within(() => {
+      cy.get(`[name="Version name"]`).type(version)
+      cy.get('[data-testid="create-version-create"]').click()
+      cy.get('[data-testid="dialog-close-icon"]').should('not.exist')
+    })
+    cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
   }
 }
