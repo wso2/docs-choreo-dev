@@ -26,7 +26,7 @@ export class ProjectOverviewPage {
         let isFound: boolean = false;
         const kk = bdy.find('p')
         for (let i = 0; i < kk.length; i++) {
-          if (kk[i].innerText === componentData.componentName) {
+          if (kk[i].innerText.trim() === componentData.componentName.trim()) {
             isFound = true;
             break;
           }

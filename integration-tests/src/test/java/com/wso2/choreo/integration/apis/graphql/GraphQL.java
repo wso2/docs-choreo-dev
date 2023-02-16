@@ -183,14 +183,6 @@ public class GraphQL extends ControlPlaneAPI {
             throw new ComponentCreationException(response.getStatusCode(),"Failed to init config");
         }
     }
-    public static ChoreoComponent createChoreoManagedComponent(GraphqlDTO graphqlDTO, String accessToken) throws IOException {
-        graphqlDTO.setOrgId(ORG_ID);
-        graphqlDTO.setOrgHandler(ORG_HANDLE);
-        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/createChoreoManagedComponent.mustache", graphqlDTO);
-        Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
-        return ObjectMapperUtil.mapStringToObject(ChoreoComponent.class, response.getRes(), "createComponent");
-    }
-
 
     public static Response promoteComponent(ChoreoComponent component, String accessToken)
             throws Exception {
@@ -228,23 +220,7 @@ public class GraphQL extends ControlPlaneAPI {
         return ObjectMapperUtil.mapStringToObject(ChoreoComponent.class, response.getRes(), "createByocComponent");
     }
 
-
-    public static PullRequest[] getComponentPullRequests(String componentId, String accessToken, int expectedPRs) throws IOException, UnexpectedResponseException {
-        GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).build();
-        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getComponentPullRequests.mustache", dto);
-        Response response = null;
-        for (int i = 0; i < 10; i++) {
-            response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
-            PullRequest[] pullRequests = ObjectMapperUtil.mapToCollection(PullRequest[].class, response.getRes(), "componentPullRequests");
-            if (pullRequests.length == expectedPRs) {
-                return pullRequests;
-            }
-            SleepUtil.sleep(35);
-        }
-        throw new UnexpectedResponseException(response.getStatusCode(), "Expected PullRequest length " + expectedPRs + " but found " + 0);
-    }
-
-
+    
     public static Environment[] getNamespaceForEnvironment(String projectId, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().orgUuid(ORG_UUID).projectId(projectId).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentObservabilityEnvironmentInformation.mustache", dto);

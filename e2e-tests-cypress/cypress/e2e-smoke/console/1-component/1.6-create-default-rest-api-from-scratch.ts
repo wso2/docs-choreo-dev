@@ -17,10 +17,17 @@ describe("Verify BYOR functionality", () => {
   const REST_API_NAME = Utils.generateComponentName("byor");
   const REPO_NAME = Utils.generateComponentName("repo");
   const RESOURCE_NAME = "greeting";
+  const RESOURCE_NAME1 = "hi";
   const PARAM_NAME = "name";
   const PARAM_VALUE = "World";
   const MATCHING_STRING = "Hello, " + PARAM_VALUE;
+  
+  const PARAM_NAME1 = "name";
+  const PARAM_VALUE1 = "John";
+  const MATCHING_STRING1 = "Hi, " + PARAM_VALUE1;
   const queryParameters1 = [{ key: PARAM_NAME, value: PARAM_VALUE }];
+  const queryParameters2 = [{ key: PARAM_NAME1, value: PARAM_VALUE1 }];
+
 
   before(() => {
     LoginPage.login();
@@ -183,6 +190,73 @@ describe("Verify BYOR functionality", () => {
   it("Verify settings configuration", () => {
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
+  });
+
+  it("Verify new version",()=>{
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.addNewVersion()
+    ComponentDeployPage.deployToDev();
+  })
+
+  it("Verify test functionality of root resource in dev on swagger", () => {
+    ComponentOverviewPage.navigateToTest(true);
+    TestHelper.testOnSwagger(
+      Enums.Environment.DEVELOPMENT,
+      RESOURCE_NAME1,
+      PARAM_NAME1,
+      PARAM_VALUE1
+    ).then((res) => {
+      expect(res.response).to.be.eq(MATCHING_STRING1);
+      expect(res.statusCode).to.be.eq("200");
+    });
+  });
+
+  it("Verify test functionality of root resource in dev on curl", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
+      RESOURCE_NAME1,
+      queryParameters2
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.body).equal(MATCHING_STRING1);
+        expect(res.status).equal(200);
+      });
+    });
+  });
+
+  it("Verify component promote to prod", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.promoteToProd();
+  });
+
+
+
+  it("Verify test functionality of root resource in prod on swagger", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnSwagger(
+      Enums.Environment.PRODUCTION,
+      RESOURCE_NAME1,
+      PARAM_NAME1,
+      PARAM_VALUE1
+    ).then((res) => {
+      expect(res.response).to.be.eq(MATCHING_STRING1);
+      expect(res.statusCode).to.be.eq("200");
+    });
+  });
+
+  it("Verify test functionality of root resource in prod on curl", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
+      RESOURCE_NAME1,
+      queryParameters2
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.body).equal(MATCHING_STRING1);
+        expect(res.status).equal(200);
+      });
+    });
   });
 
   it("Verify suspending Prod deployed component", () => {
