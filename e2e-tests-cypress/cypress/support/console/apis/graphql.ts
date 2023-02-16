@@ -313,6 +313,7 @@ export class GraphQL {
             const latestAPIVersion = av.find(a => a["latest"])
             const latestAPIVersionId = latestAPIVersion["id"]
             const appENVS = latestAPIVersion["appEnvVersions"] as []
+            cy.log(JSON.stringify(appENVS));
             appENVS.forEach(appEnv => {
                 const {release} = appEnv
                 const {id, environmentId} = release

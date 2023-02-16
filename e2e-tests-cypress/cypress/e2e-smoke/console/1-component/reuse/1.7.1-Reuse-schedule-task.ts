@@ -25,7 +25,7 @@ import { ComponentData } from "../../../../support/interfaces/component-data";
 
 
 
-describe("Create Schedule Trigger", () => {
+describe("Create Reusable Schedule Trigger", () => {
   const SCHEDULE_NAME = "create-ReuseScheduleTrigger-1.7.1";
   const PROJECT_NAME = "Default Project"
   const EXPECTED_RESULT =
