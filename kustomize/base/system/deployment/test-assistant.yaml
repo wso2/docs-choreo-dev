@@ -24,7 +24,6 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       securityContext:
-        fsGroup: 500
         seccompProfile:
           type: RuntimeDefault
       containers:
