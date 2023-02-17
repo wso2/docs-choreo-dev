@@ -16,7 +16,7 @@ This guide will take you through the steps to test an API in Choreo.
 
     ![Test Panel](../assets/img/developer-portal/test-api/test-panel.png){.cInlineImage-half}
 
-6. From the **Subscribed Application** list, select the application you used to subsribe the API to. To learn how to subscribe to an application, see [Manage Subscriptions](../manage-subscription/). 
+6. From the **Subscribed Application** list, select the application you used to subscribe the API to. To learn how to subscribe to an application, see [Manage Subscriptions](../manage-subscription/). 
 
 7. Click **Get Test Key** on the **Access Token** field to generate a test access token. To learn more about access tokens and generating tokens for production usage, see [Manage Applications](../manage-application/#generate-keys).
 

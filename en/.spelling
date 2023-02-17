@@ -7,7 +7,7 @@ cInlineImage-full
 microservices
 OpenAPI
 lifecycle
-OAuth 2.0
+OAuth2.0
 developer-centric
 timeframe
 https
@@ -25,7 +25,6 @@ SendGrid
 subusers
 Spotify
 Gmail
-OAuth
 hostname
 millicores
 MiB
@@ -291,6 +290,37 @@ Asgardeo
 Auth0
 Keycloak
 WSO2_LOGIN
+discoverability
+ClouDNS
+IdP
+OpenID
+Okta
+IdPs
+Devportal
+Base64
+NodeJs
+Dockerfile
+monorepo
+filepath
+Trivy
+Kubernetes-level
+Kubernetes
+serverless
+Vercel
+predesigned
+AuthProvider
+undeploy
+undeploying
+IPs
+config
+console.choreo.dev.
+2x
+vCPUs
+50x
+VMWare
+OpenShift
+Tanzu
+OAuth
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -306,6 +336,16 @@ getPopulationByCountry
  - docs/get-started/quick-start-guide.md
 personalizedMessage
 Param
+readingList
+env
+readingListApp
+ORGANIZATION_ID
+allowlist
+dbHost
+dbUser
+dbPassword
+dbName
+dbPort
  - docs/insights/configure-alerts.md
 10-minute
  - docs/references/migrate-applications-to-the-latest-version.md
@@ -399,6 +439,25 @@ site_version
 choreo-insights-api
 programmatic-access-choreo-insights-api
 pricing.md
+create-your-first-integration-as-an-api
+api-proxy
+webhook.md
+graphql-api
+connect-your-own-github-repository-to-choreo
+api-policies
+policies.md
+deploy-a-containerized-choreo-component
+open-api-console
+curl.md
+api-management
+lifecycle.md
+test-api
+alerts.md
+ipaas
+get-started-with-choreo-ipaas
+configure-a-custom-domain-for-apis
+organization.md
+redirect_maps
  - theme/material/templates/home-page.html
 doctype
 html
@@ -411,3 +470,32 @@ uuid
 750ms
  - docs/references/enterprise-login.md
 cInlineImage-small
+ - docs/administer/configure-a-custom-domain-for-apis.md
+cInlineImage-small
+cInlineImage-threeQuarters
+ - docs/administer/configure-developer-portal-self-sign-up.md
+WSO2_LOGIN_FOR_CHOREO_DEV_PORTAL
+Signups
+ - docs/administer/configure-enterprise-login.md
+starkindustries
+stark.com
+starkindustries.com
+stark.eu.
+wso2-domain-verification
+WSO2_LOGIN_FOR_CHOREO_CONSOLE
+ - docs/administer/connect-to-an-external-identity-provider.md
+subject_token
+Your_IdP_name
+ - docs/administer/organization.md
+Env
+ - docs/consume/manage-application.md
+id_token
+ - docs/deploy/deploy-a-containerized-choreo-component.md
+choreo-sample-apps
+ - docs/devops/devops-portal.md
+cInlineImage-threeQuarter
+ - docs/manage/api-management.md
+Pre-released
+ - docs/manage/lifecycle.md
+pre-released
+pre-release
