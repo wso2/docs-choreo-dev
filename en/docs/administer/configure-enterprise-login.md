@@ -111,7 +111,7 @@ Follow the steps below to configure role-based access control to an enterprise l
 2. Be sure your Enterprise IDP includes the groups/roles attributes in the tokens it sends to Asgardeo in the respective protocol.
 3. Be sure you have admin privileges in Choreo.
 
-### Step1: Configure Asgardeo
+### Step 1: Configure Asgardeo
 
 1. [Configure your IDP as an External IDP in Asgardeo](https://wso2.com/asgardeo/docs/guides/authentication/enterprise-login/). Depending on your IDP, you may select OpenID Connect or SAML as the protocol between Asgardeo and your IDP.
 

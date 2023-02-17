@@ -120,7 +120,7 @@ To test the component, you must publish messages to a designated topic in your R
     !!! info
             It can take a few minutes for messages to appear in the **Logs** section. To view the latest logs, click **Load Latest Logs**.
 
-      ![Message entry in logs](../../../assets/img/tutorials/event-triggered-integration/rabbitmq-message-in-logs.png){.cInlineImage-full}
+      ![Message entry in logs](../../assets/img/tutorials/event-triggered-integration/rabbitmq-message-in-logs.png){.cInlineImage-full}
 
       This confirms that the event-triggered integration is functioning as expected.
 
