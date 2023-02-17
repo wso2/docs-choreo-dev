@@ -79,7 +79,7 @@ public class ComponentUtils {
 
     public static ChoreoComponent createComponent(TestActionRunner runner, HttpClient client, String accessToken,
                                                   GraphqlDTO dto) throws Exception {
-        CreateComponentResponseDTO responseDTO = GraphQL.createUserManagedComponent(runner, client, dto, accessToken);
+        CreateComponentResponseDTO responseDTO = GraphQL.createUserManagedComponent(runner, dto, accessToken);
 
         Orgs.waitForComponentCreationSuccess(runner, client, accessToken, responseDTO.getProjectId(),
                 responseDTO.getId());

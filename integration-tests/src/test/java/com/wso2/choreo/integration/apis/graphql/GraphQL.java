@@ -27,24 +27,30 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.ControlPlaneAPIs;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
-import com.wso2.choreo.integration.common.exceptions.*;
-import com.wso2.choreo.integration.models.graphql.CreateComponentResponseDTO;
-import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
+import com.wso2.choreo.integration.common.exceptions.ComponentCreationException;
+import com.wso2.choreo.integration.common.exceptions.ComponentRetrieveException;
+import com.wso2.choreo.integration.common.exceptions.GraphQLException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
+import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
-import com.wso2.choreo.integration.models.proxyapi.ProxyDeployment;
-import com.wso2.choreo.integration.models.response.ProxyResponse;
-import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.componentstatusbyversion.ComponentStatusByVersion;
 import com.wso2.choreo.integration.models.deploymentstatus.ComponentDeploymentStatus;
 import com.wso2.choreo.integration.models.environments.Environment;
-import com.wso2.choreo.integration.models.pullrequests.PullRequest;
-import lombok.extern.slf4j.Slf4j;
+import com.wso2.choreo.integration.models.graphql.CreateComponentResponseDTO;
+import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
+import com.wso2.choreo.integration.models.proxyapi.ProxyDeployment;
+import com.wso2.choreo.integration.models.response.ProxyResponse;
+import com.wso2.choreo.integration.models.response.Response;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -52,7 +58,11 @@ import org.springframework.http.MediaType;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
@@ -62,9 +72,11 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
 /**
  * Implements GraphQL API calls and their response validations.
  */
-@Slf4j
+@Log4j2
 public class GraphQL extends ControlPlaneAPI {
 
+    @Autowired
+    private static HttpClient choreoTestClient;
 
     public static ProxyResponse<ChoreoComponent> createGraphqlQueryForComponentCreation(String apiName, String projectId, String apiId, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().apiName(apiName.toLowerCase()).orgId(ORG_ID).orgHandler(ORG_HANDLE).displayName(apiName).
@@ -153,7 +165,7 @@ public class GraphQL extends ControlPlaneAPI {
         }
     }
 
-    public static CreateComponentResponseDTO createUserManagedComponent(TestActionRunner runner, HttpClient client,
+    public static CreateComponentResponseDTO createUserManagedComponent(TestActionRunner runner,
                                                                         GraphqlDTO graphqlDTO,
                                                                         String accessToken) throws Exception {
         graphqlDTO.setOrgId(ORG_ID);
@@ -171,7 +183,7 @@ public class GraphQL extends ControlPlaneAPI {
 
         AtomicReference<CreateComponentResponseDTO> responseDTO = new AtomicReference<>();
         runner.$(http()
-                .client(client)
+                .client(choreoTestClient)
                 .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
@@ -180,7 +192,7 @@ public class GraphQL extends ControlPlaneAPI {
                 .body(requestBody)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
         runner.$(http()
-                .client(client)
+                .client(choreoTestClient)
                 .receive()
                 .response(HttpStatus.OK)
                 .message()
