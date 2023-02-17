@@ -296,9 +296,7 @@ IdP
 OpenID
 Okta
 IdPs
-OAuth2
 Devportal
-OAuth2.0.
 Base64
 NodeJs
 Dockerfile
@@ -322,6 +320,7 @@ vCPUs
 VMWare
 OpenShift
 Tanzu
+OAuth
 
 
  - docs/references/upgrading-from-the-previous-version.md

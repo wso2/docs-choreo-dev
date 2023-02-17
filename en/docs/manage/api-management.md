@@ -46,7 +46,7 @@ The Choreo Console allows you to define security, rate-limiting, and visibility 
 - **Access mode** - Configure API access as internal or external. 
 - **API Visibility** - Configure API visibility as private or public.
 - **CORS configuration** - Enables CORS configurations and provides necessary CORS headers.
-- **Application level security** - This determines the type of security used to safeguard this API.  You can secure your APIs with OAuth2, any other available security scheme, or both. If the OAuth2 option is selected, that API will need a valid OAuth2 token for successful invocation.
+- **Application level security** - This determines the type of security used to safeguard this API.  You can secure your APIs with OAuth 2.0, any other available security scheme, or both. If the OAuth 2.0 option is selected, that API will need a valid OAuth 2.0 token for successful invocation.
 - **Operations Configuration** - Configure rate limiting to your API in Choreo per API operation.
 
 # Properties
