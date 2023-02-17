@@ -56,7 +56,7 @@ Token Exchange grant type requires you to pass a subject_token as a parameter in
 
     - **Grant Types:** The grant types used to generate the access token. Keep Token Exchange and Refresh Token grant type selected.
     - **Public Client:** Identify the application as a public client to allow authentication without a client secret. You can use this for applications running on a browser or mobile device. 
-    - **Application access   s token expiry time:** The access token expiry time (seconds).
+    - **Application access token expiry time:** The access token expiry time (seconds).
     - **Refresh token expiry time:** The refresh token expiry time (seconds).
     - **ID token expiry time:** ID token expiry time (seconds).
 
