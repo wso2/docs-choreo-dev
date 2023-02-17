@@ -1,6 +1,6 @@
 # Quick Start Guide
 
-Choreo is a full lifecycle cloud-native developer platform that enables your developers to create, deploy, and run new digital components like APIs, microservices, and automation in serverless mode on any Kubernetes cluster.
+Choreo is a full lifecycle cloud-native developer platform that enables your developers to create, deploy,  run, and govern APIs, integrations, and microservices on Kubernetes.
 
 This guide walks you through the following:
 
