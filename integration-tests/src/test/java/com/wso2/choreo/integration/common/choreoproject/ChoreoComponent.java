@@ -1174,7 +1174,7 @@ public class ChoreoComponent {
         log.info("Waiting till observability data appear");
         ObsRequestParam orp = ObsRequestParam.builder().namespace(namespace).releaseId(releaseId).sort("desc").limit("95").build();
         String url = ObservabilityService.getObsUrl(orp,observabilityIdInformation.getObsId(),Constant.logType.logsV2);
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 20; i++) {
             Response res = HttpClientUtil.httpGET(url, accessToken, "");
             ObservabilityLogs obslogs = ObjectMapperUtil.mapStringToObject(ObservabilityLogs.class, res.getRes(), "");
 
@@ -1182,7 +1182,7 @@ public class ChoreoComponent {
                 return;
             }
             log.debug("Observability logs has not appeared, trying again. Attempt : " + i);
-            SleepUtil.sleep(60);
+            SleepUtil.sleep(30);
         }
         log.warn("Exceeding maximum number of attempts for checking observability logs.");
         throw new ObservabilityLogsNotFoundException();
