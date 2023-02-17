@@ -252,7 +252,7 @@ To generate the configurations required for end users to log in to the front-end
     !!! info   
         Under this option, you will see some instructions to configure the application. Some of these steps are already completed for the pre-configured front-end application you will be using.
         
-Next, you need to pass the configurations displayed on this page to your front-end application. To do so, proceed to [Step 2.4.2 - Configure the front-end application](#step-242-configure-the-front-end-application).
+Next, you need to pass the configurations displayed on this page to your front-end application. To do so, proceed to [Step 2.3.2 - Configure the front-end application](#step-23-deploy-a-web-application-and-invoke-the-rest-api).
 
 #### Step 2.3.2: Configure the front-end application
 
@@ -330,7 +330,7 @@ Let's deploy a predesigned front-end application. This application is designed t
 
     2. To get the well-known URL, follow the steps given below:
     
-        1. Navigate to Asgardeo and open the single-page application you created in [Step 2.4.2: Configure the front-end application](#step-242-configure-asgardeo-as-an-identity-provider).
+        1. Navigate to Asgardeo and open the single-page application you created in [Step 2.3.3: Configure Asgardeo as an identity provider for Choreo(#step-23-deploy-a-web-application-and-invoke-the-rest-api).
 
         2. Click **Info** to view the endpoints of the application.
 
@@ -459,11 +459,11 @@ Now you have successfully deployed a new version of your REST API.
 
 ### Step 3.3: Publish the new REST API version
 
-To publish the new version of the REST API you created, repeat [Step 6.2: Publish the REST API](#step-62-publish-the-rest-api)
+To publish the new version of the REST API you created, repeat [Step 1.4: Publish the REST API](#step-14-publish-the-rest-api)
 
 ### Step 3.4: Consume the new REST API version
 
-You can try out the new version via the front-end application. For more information about accessing and using the front-end application, see [Step 2.4.4: Consume the REST API via the front-end application](#step-244-consume-the-rest-api-via-the-front-end-application).
+You can try out the new version via the front-end application. For more information about accessing and using the front-end application, see [Step 2.3.5: Invoke the REST API](#step-23-deploy-a-web-application-and-invoke-the-rest-api).
 
 !!! info
     You do not need to subscribe the `readingListApp` application on the Developer Portal to the new REST API version because Choreo automatically creates this subscription.

@@ -72,7 +72,7 @@ Let's develop the REST API proxy by adding an operation. To do this, follow the 
 
 ## Step 3: Deploy the REST API Proxy
 
-Deploying the REST API proxy makes it invokable. By default, Choreo maintains two environments for development and production. [Learn more](../../develop/components/api-proxies/api-proxy#choreo-environments). For this tutorial, let's deploy the proxy to the development environment.
+Deploying the REST API proxy makes it invokable. By default, Choreo maintains two environments for development and production. [Learn more](../../develop/components/api-proxy.md#choreo-environments). For this tutorial, let's deploy the proxy to the development environment.
 
 1. In the left navigation menu, click **Deploy**. 
 
@@ -139,7 +139,7 @@ First, let's review the security settings and add a rate limit to the API.
     ![Rate Limiting Level](../../assets/img/tutorials/proxy/rate-limiting-level.png){.cInlineImage-full}
 
     !!! info
-        You can also apply rate limits per resource as shown in the image below.<br/><br/>![Rate Limiting Per Resource](../../assets/img/tutorials/proxy/rate-limiting-per-resource.png){.cInlineImage-full}<br/><br/>[Learn more](../../develop/components/api-proxies/api-proxy#settings).
+        You can also apply rate limits per resource as shown in the image below.<br/><br/>![Rate Limiting Per Resource](../../assets/img/tutorials/proxy/rate-limiting-per-resource.png){.cInlineImage-full}<br/><br/>[Learn more](../../develop/components/api-proxy.md#settings).
 
 8. Click **Save**.
 
