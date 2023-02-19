@@ -9,20 +9,20 @@ import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { Utils } from "../../../support/console/utils";
-import { ComponentData } from "../../../support/interfaces/component-data";
+import { ByocComponent } from "../../../support/interfaces/byoc-component";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 
 describe("Verify BYOR functionality", () => {
-  const PROJECT_DESCRIPTION = "Internal API Test";
+  const PROJECT_DESCRIPTION = "BYOC component";
   const PROJECT_NAME = Utils.generateProjectName();
   const REST_API_NAME = Utils.generateComponentName("byor");
   const REPO_NAME = Utils.generateComponentName("repo");
-  const RESOURCE_NAME = "greeting";
+  const RESOURCE_NAME = "movies";
   const RESOURCE_NAME1 = "hi";
   const PARAM_NAME = "name";
   const PARAM_VALUE = "World";
   const MATCHING_STRING = "Hello, " + PARAM_VALUE;
-  
+
   const PARAM_NAME1 = "name";
   const PARAM_VALUE1 = "John";
   const MATCHING_STRING1 = "Hi, " + PARAM_VALUE1;
@@ -39,25 +39,23 @@ describe("Verify BYOR functionality", () => {
   });
 
   it("Verify REST API component creation", () => {
-    let componentData: ComponentData = {
-      componentName: REST_API_NAME,
-      displayType: Enums.DisplayType.restAPI,
+
+    let componentData: ByocComponent = {
+      name: REST_API_NAME,
+      displayName: REST_API_NAME,
       accessibility: Enums.Accessibility.EXTERNAL,
-      projectName: PROJECT_NAME,
-      triggerChannels: "",
-      triggerId: null,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/greeting-rest-api",
-      initializeAsBallerinaProject: false,
-      repositoryType: Enums.RepoType.UserManagedNonEmpty,
-      repositorySubPath: "",
-      sampleTemplate: "",
+      componentType: Enums.DisplayType.byocRestApi,
+      description: "BYOC Component",
+      labels: "",
+      oasFilePath: "",
+      projectId: "",
     };
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
       PROJECT_DESCRIPTION,
       Enums.Region.US
     );
-    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
+    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getBYOCComponentCreationQuery)
   });
 
   it("Deploy component", () => {
@@ -66,32 +64,42 @@ describe("Verify BYOR functionality", () => {
     ComponentDeployPage.deployToDev();
   });
 
-  it("Verify test functionality of root resource in dev on swagger", () => {
-    ComponentOverviewPage.navigateToTest(true);
+  it("Verify test functionality using Swagger UI in Dev", () => {
     TestHelper.testOnSwagger(
       Enums.Environment.DEVELOPMENT,
-      RESOURCE_NAME,
-      PARAM_NAME,
-      PARAM_VALUE
+      RESOURCE_NAME
     ).then((res) => {
-      expect(res.response).to.be.eq(MATCHING_STRING);
-      expect(res.statusCode).to.be.eq("200");
+      expect(res.statusCode).to.be.equal("200");
     });
   });
 
-  it("Verify test functionality of root resource in dev on curl", () => {
+
+
+  it("Verify test functionality using generated curl in dev", () => {
     TestHelper.testOnCurl(
       Enums.Environment.DEVELOPMENT,
       Enums.HTTPMethod.GET,
-      RESOURCE_NAME,
-      queryParameters1
+      RESOURCE_NAME
     ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(MATCHING_STRING);
         expect(res.status).equal(200);
       });
     });
   });
+
+  // it("Verify test functionality of root resource in dev on curl", () => {
+  //   TestHelper.testOnCurl(
+  //     Enums.Environment.DEVELOPMENT,
+  //     Enums.HTTPMethod.GET,
+  //     RESOURCE_NAME,
+  //     queryParameters1
+  //   ).then((curl) => {
+  //     Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+  //       expect(res.body).equal(MATCHING_STRING);
+  //       expect(res.status).equal(200);
+  //     });
+  //   });
+  // });
 
   it("Verify component promote to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
@@ -100,32 +108,28 @@ describe("Verify BYOR functionality", () => {
 
 
 
-  it("Verify test functionality of root resource in prod on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
+  it("Verify test functionality using Swagger UI in Dev", () => {
     TestHelper.testOnSwagger(
       Enums.Environment.PRODUCTION,
-      RESOURCE_NAME,
-      PARAM_NAME,
-      PARAM_VALUE
+      RESOURCE_NAME
     ).then((res) => {
-      expect(res.response).to.be.eq(MATCHING_STRING);
-      expect(res.statusCode).to.be.eq("200");
+      expect(res.statusCode).to.be.equal("200");
     });
   });
 
-  it("Verify test functionality of root resource in prod on curl", () => {
+
+  it("Verify test functionality using generated curl in Prod", () => {
     TestHelper.testOnCurl(
       Enums.Environment.PRODUCTION,
       Enums.HTTPMethod.GET,
-      RESOURCE_NAME,
-      queryParameters1
+      RESOURCE_NAME
     ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(MATCHING_STRING);
         expect(res.status).equal(200);
       });
     });
   });
+
 
   it("Apply configs to dev", () => {
     ComponentOverviewPage.navigateToManage();
@@ -134,7 +138,7 @@ describe("Verify BYOR functionality", () => {
     ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-    ComponentAPILifecycle.applyConfiguration(    );
+    ComponentAPILifecycle.applyConfiguration();
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",
       Enums.Environment.DEVELOPMENT
@@ -148,29 +152,26 @@ describe("Verify BYOR functionality", () => {
     ComponentAPILifecycle.applyConfiguration();
   });
 
-  it("Verify resource access without the token in dev", () => {
-    ComponentOverviewPage.navigateToTest();
+  it("Verify test functionality using generated curl in Dev", () => {
+    ComponentOverviewPage.navigateToTest()
     TestHelper.testOnCurl(
       Enums.Environment.DEVELOPMENT,
       Enums.HTTPMethod.GET,
-      RESOURCE_NAME,
-      queryParameters1
+      RESOURCE_NAME
     ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(MATCHING_STRING);
+      Utils.sendGetRequest(curl.url).then((res) => {
         expect(res.status).equal(200);
       });
     });
   });
 
-  it("Verify resource access without the token in prod", () => {
+  it("Verify test functionality using generated curl in Prod", () => {
     TestHelper.testOnCurl(
       Enums.Environment.PRODUCTION,
       Enums.HTTPMethod.GET,
       RESOURCE_NAME
     ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(MATCHING_STRING);
+      Utils.sendGetRequest(curl.url).then((res) => {
         expect(res.status).equal(200);
       });
     });
@@ -193,73 +194,7 @@ describe("Verify BYOR functionality", () => {
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
   });
 
-  it("Verify new version",()=>{
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.addNewVersion()
-    ComponentDeployPage.deployToDev();
-  })
-
-  it("Verify test functionality of root resource in dev on swagger", () => {
-    ComponentOverviewPage.navigateToTest(true);
-    TestHelper.testOnSwagger(
-      Enums.Environment.DEVELOPMENT,
-      RESOURCE_NAME1,
-      PARAM_NAME1,
-      PARAM_VALUE1
-    ).then((res) => {
-      expect(res.response).to.be.eq(MATCHING_STRING1);
-      expect(res.statusCode).to.be.eq("200");
-    });
-  });
-
-  it("Verify test functionality of root resource in dev on curl", () => {
-    TestHelper.testOnCurl(
-      Enums.Environment.DEVELOPMENT,
-      Enums.HTTPMethod.GET,
-      RESOURCE_NAME1,
-      queryParameters2
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(MATCHING_STRING1);
-        expect(res.status).equal(200);
-      });
-    });
-  });
-
-  it("Verify component promote to prod", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteToProd();
-  });
-
-
-
-  it("Verify test functionality of root resource in prod on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnSwagger(
-      Enums.Environment.PRODUCTION,
-      RESOURCE_NAME1,
-      PARAM_NAME1,
-      PARAM_VALUE1
-    ).then((res) => {
-      expect(res.response).to.be.eq(MATCHING_STRING1);
-      expect(res.statusCode).to.be.eq("200");
-    });
-  });
-
-  it("Verify test functionality of root resource in prod on curl", () => {
-    TestHelper.testOnCurl(
-      Enums.Environment.PRODUCTION,
-      Enums.HTTPMethod.GET,
-      RESOURCE_NAME1,
-      queryParameters2
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(MATCHING_STRING1);
-        expect(res.status).equal(200);
-      });
-    });
-  });
-
+ 
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();

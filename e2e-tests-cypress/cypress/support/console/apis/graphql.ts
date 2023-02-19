@@ -13,7 +13,8 @@
 
 
 import { GitHub } from "../../github/github";
-import { ComponentData } from "../../interfaces/component-data";
+import { AbsComponent } from "../../interfaces/abs-component";
+
 import { IntegrationComponentData } from "../../interfaces/integration-component-data";
 import { PR } from "../../interfaces/pr";
 import { ONE_HOUR } from "../constants";
@@ -28,6 +29,41 @@ export class GraphQL {
     static count = 0
 
 
+    static createComponent(projectName: string, repoName: string, componentData: AbsComponent, callback) {
+        const { orgId, handle } = Cypress.env("userData");
+        this.getProjects(orgId).then(resp => {
+            const projects = resp.body.data.projects as { name: string, id: string }[]
+            const projectId = projects.find(p => p.name === projectName).id
+
+            componentData.handle = handle;
+            componentData.orgId = orgId;
+            
+            const query = callback(componentData, projectId)
+
+            this.callGraphQL(query).then((res) => {
+                let id, projectId, handler;
+                if (res.body.data.createComponent) {
+                    id = res.body.data.createComponent["id"];
+                    projectId = res.body.data.createComponent["projectId"];
+                    handler = res.body.data.createComponent["handler"];
+                } if (res.body.data.createByocComponent) {
+                    id = res.body.data.createByocComponent["id"];
+                    projectId = res.body.data.createByocComponent["projectId"];
+                    handler = res.body.data.createByocComponent["handle"];
+                }
+                Cypress.env("component", { id, projectId, handler })
+                if (componentData.initializeAsBallerinaProject) {
+                    this.getPullRequests(id, repoName);
+                }
+                this.getDeployedComponentDetails(projectId, handler)
+            });
+        })
+
+        ChoreoHomePage.navigateToMarketPlace();
+        ChoreoHomePage.navigateToProjects();
+        cy.get("tbody>tr p").should("be.visible");
+        return cy.wrap({})
+    }
     static deleteProjectsCreatedByTests(
         orgId: number,
         orgHandle: string,
@@ -162,11 +198,10 @@ export class GraphQL {
         const query = {
             query: `query{projects(orgId: ${orgId}){ id, orgId, name, version, createdDate,handler }}`,
         };
-
         return this.callGraphQL(query);
     }
 
-    
+
 
     static callGraphQL(query: any) {
         const appSvcURL = Cypress.env("newAppSvcURL");
@@ -174,7 +209,6 @@ export class GraphQL {
             Authorization: `Bearer ${Cypress.env("apim_token")}`,
             "content-type": "application/json",
         };
-
         return cy.request({
             method: "POST",
             url: `${appSvcURL}/projects/1.0.0/graphql`,
@@ -184,71 +218,6 @@ export class GraphQL {
         });
     }
 
-    static createComponentWithRepo(
-        componentData: ComponentData,
-        repoName?: string
-    ) {
-        const { id } = Cypress.env("current_org");
-        this.getProjects(id).then((res) => {
-            const projects = res.body.data.projects as [];
-            const project = projects.find(
-                (p) => p["name"] === componentData.projectName
-            );
-            cy.log(`Project Id :: ${project["id"]}`);
-            const query = {
-                query: `mutation{
-                  createComponent(
-                             component: {
-                                  name: "${componentData.componentName}",
-                                  orgId: ${id},
-                                  orgHandler: "${Cypress.env(
-                    "choreoOrgHandle"
-                )}",
-                                  displayName: "${componentData.componentName}",
-                                  displayType: "${componentData.displayType}",
-                                  projectId: "${project["id"]}",
-                                  labels: "",
-                                  version: "1.0.0",
-                                  description: "",
-                                  apiId: "",
-                                  ballerinaVersion: "swan-lake-alpha5",
-                                  triggerChannels: "${componentData.triggerChannels
-                    }",
-                                  triggerID: ${componentData.triggerId},
-                                  httpBase: true,
-                                  sampleTemplate: "${componentData.sampleTemplate
-                    }",
-                                  accessibility: "${componentData.accessibility
-                    }",
-                                  srcGitRepoUrl: "${componentData.srcGitRepoUrl
-                    }"
-                                  repositorySubPath: "${componentData.repositorySubPath
-                    }",
-                                  repositoryType: "${componentData.repositoryType
-                    }",
-                                  repositoryBranch: "main",
-                                  initializeAsBallerinaProject: ${componentData.initializeAsBallerinaProject
-                    },
-                                } )
-                                {id, orgId, projectId, handler    }
-                      }`,
-            };
-
-            this.callGraphQL(query).then((res) => {
-                const { id, projectId, handler } = res.body.data.createComponent;
-                Cypress.env("component", { id, projectId, handler })
-                if (componentData.initializeAsBallerinaProject) {
-                    this.getPullRequests(id, repoName);
-                }
-                expect(res.status).to.be.eq(200);
-                this.getDeployedComponentDetails(projectId, handler)
-            });
-        });
-        ChoreoHomePage.navigateToMarketPlace();
-        ChoreoHomePage.navigateToProjects();
-        cy.get("tbody>tr p").should("be.visible");
-        return cy.wrap({})
-    }
 
     static createIntegrationComponent(
         componentData: IntegrationComponentData
@@ -268,9 +237,7 @@ export class GraphQL {
                                       displayName: "${componentData.componentName}",
                                       description: "",
                                       orgId: ${id},
-                                      orgHandler: "${Cypress.env(
-                    "choreoOrgHandle"
-                )}",
+                                      orgHandler: "${Cypress.env(                    "choreoOrgHandle"                )}",
                                       projectId: "${project["id"]}",
                                       labels: "",
                                       componentType: "${componentData.componentType}",
@@ -313,7 +280,6 @@ export class GraphQL {
             const latestAPIVersion = av.find(a => a["latest"])
             const latestAPIVersionId = latestAPIVersion["id"]
             const appENVS = latestAPIVersion["appEnvVersions"] as []
-            cy.log(JSON.stringify(appENVS));
             appENVS.forEach(appEnv => {
                 const { release } = appEnv
                 const { id, environmentId } = release

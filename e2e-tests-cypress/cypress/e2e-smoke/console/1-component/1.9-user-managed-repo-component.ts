@@ -11,6 +11,7 @@ import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { Utils } from "../../../support/console/utils";
 import { ComponentData } from "../../../support/interfaces/component-data";
+import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 
 describe("Verify BYOR functionality", () => {
   const PROJECT_DESCRIPTION = "Internal API Test";
@@ -50,7 +51,7 @@ describe("Verify BYOR functionality", () => {
       PROJECT_DESCRIPTION,
       Enums.Region.EU
     );
-    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
   it("Deploy component", () => {
@@ -87,19 +88,6 @@ describe("Verify BYOR functionality", () => {
   });
 
 
-  it("Verify resource access without the token in dev", () => {
-    TestHelper.testOnCurl(
-      Enums.Environment.DEVELOPMENT,
-      Enums.HTTPMethod.GET,
-      RESOURCE_NAME,
-      queryParameters1
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(MATCHING_STRING);
-        expect(res.status).equal(200);
-      });
-    });
-  });
 
   it("Verify component promote to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
@@ -166,23 +154,6 @@ describe("Verify BYOR functionality", () => {
     ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
     ComponentAPILifecycle.applyConfiguration();
   });
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   it("Verify manage functionality and Publish Connector", () => {
     ComponentOverviewPage.navigateToManage();

@@ -12,6 +12,7 @@
  */
 
 
+import { GraphQLQueryBuilder } from "../../console/apis/gql-query-builder";
 import { GraphQL } from "../../console/apis/graphql";
 import { Enums } from "../../console/enums";
 import { APIDeployment } from "../../console/pages/apis/api-deployment";
@@ -69,7 +70,7 @@ export class DevPortalHelper {
       DevPortalHelper.PROJECT_DESCRIPTION,
       Enums.Region.US
     );
-    GraphQL.createComponentWithRepo(componentData, DevPortalHelper.REPO_NAME)
+    GraphQL.createComponent(projectName, DevPortalHelper.REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
     .then(()=>{
       ComponentListingPage.visitToAComponent(API_Name);
       ComponentOverviewPage.navigateToDeploy();

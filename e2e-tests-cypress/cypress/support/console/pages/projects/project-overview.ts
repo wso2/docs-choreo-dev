@@ -11,13 +11,14 @@
  * associated services.
  */
 
-import { ComponentData } from "../../../interfaces/component-data";
+import { AbsComponent } from "../../../interfaces/abs-component";
+import { GraphQLQueryBuilder } from "../../apis/gql-query-builder";
 import { GraphQL } from "../../apis/graphql";
 import { Utils } from "../../utils";
 
 export class ProjectOverviewPage {
 
-  static searchReuseComponent(componentData: ComponentData) {
+  static searchReuseComponent(componentData: AbsComponent, projectName: string = "Default Project") {
 
     const REPO_NAME = Utils.generateComponentName("repo");
     cy.wait(5000)
@@ -26,19 +27,18 @@ export class ProjectOverviewPage {
         let isFound: boolean = false;
         const components = bdy.find('p')
         for (let i = 0; i < components.length; i++) {
-          cy.log(components[i].innerText)
           if (components[i].innerText.trim() === componentData.componentName.trim()) {
             isFound = true;
             break;
           }
         }
         if (!isFound) {
-          GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+          GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
         } else {
-          GraphQL.getComponentInfo("Default Project", componentData.componentName)
+          GraphQL.getComponentInfo(projectName, componentData.componentName)
         }
       } else {
-        GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+        GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
       }
     })
   }
