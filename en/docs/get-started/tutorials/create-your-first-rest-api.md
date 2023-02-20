@@ -66,7 +66,7 @@ Let's create a new REST API component as follows:
 
 Designing the REST API involves specifying how the REST API should function by adding and configuring the required connectors and statements. You can do this by editing the low-code diagram of the REST API or by editing its code.
 
-You can implement your REST API in Ballerina or any other language and containerize it. You can use the [Ballerina VS code extension](https://ballerina.io/downloads/) to develop the REST API in Ballerina. [Learn more](https://wso2.com/vscode-extentions/ballerina/).
+You can implement your REST API in Ballerina or any other language and containerize it. You can use the [Ballerina VS code extension](https://ballerina.io/downloads/) to develop the REST API in Ballerina. [Learn more](https://wso2.com/ballerina/vscode/docs/).
 
 ## Step 2: Deploy
 
