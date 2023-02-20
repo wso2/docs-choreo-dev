@@ -12,17 +12,14 @@
  */
 
 
-import {LoginPage} from "../login-page";
+import { LoginPage } from "../login-page";
 
 
 export class ChoreoHomePage {
 
     static navigateToHome() {
         const handle = Cypress.env("current_org")["handle"];
-
-        cy.get(
-            `div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home"]`
-        ).click();
+        cy.get(`div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home"]`).click();
     }
 
     static navigateToMarketPlace() {

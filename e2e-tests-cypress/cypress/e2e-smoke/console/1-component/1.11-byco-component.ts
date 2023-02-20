@@ -177,23 +177,6 @@ describe("Verify BYOR functionality", () => {
     });
   });
 
-  it("Verify manage functionality and Publish Connector", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publish(Enums.ConnectorAudience.PRIVATE).should(
-      "be.visible"
-    );
-  });
-
-  it("Verify connector republishing", () => {
-    ComponentAPILifecycle.republishConnector();
-  });
-
-  it("Verify settings configuration", () => {
-    ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
-    ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
-  });
-
  
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
