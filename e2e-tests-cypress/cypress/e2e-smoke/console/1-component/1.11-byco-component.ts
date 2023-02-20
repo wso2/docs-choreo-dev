@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2023, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ *
+ * This software is the property of WSO2 Inc. and its suppliers, if any.
+ * Dissemination of any information or reproduction of any material contained
+ * herein is strictly forbidden, unless permitted by WSO2 in accordance with
+ * the WSO2 Commercial License available at http://wso2.com/licenses.
+ * For specific language governing the permissions and limitations under
+ * this license, please see the license as well as any agreement you’ve
+ * entered into with WSO2 governing the purchase of this software and any
+ * associated services.
+ */
+
+
+
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
@@ -12,22 +27,14 @@ import { Utils } from "../../../support/console/utils";
 import { ByocComponent } from "../../../support/interfaces/byoc-component";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 
-describe("Verify BYOR functionality", () => {
+describe("Verify BYOC functionality", () => {
   const PROJECT_DESCRIPTION = "BYOC component";
   const PROJECT_NAME = Utils.generateProjectName();
   const REST_API_NAME = Utils.generateComponentName("byor");
   const REPO_NAME = Utils.generateComponentName("repo");
   const RESOURCE_NAME = "movies";
-  const RESOURCE_NAME1 = "hi";
-  const PARAM_NAME = "name";
-  const PARAM_VALUE = "World";
-  const MATCHING_STRING = "Hello, " + PARAM_VALUE;
 
-  const PARAM_NAME1 = "name";
-  const PARAM_VALUE1 = "John";
-  const MATCHING_STRING1 = "Hi, " + PARAM_VALUE1;
-  const queryParameters1 = [{ key: PARAM_NAME, value: PARAM_VALUE }];
-  const queryParameters2 = [{ key: PARAM_NAME1, value: PARAM_VALUE1 }];
+
 
 
   before(() => {
@@ -87,19 +94,6 @@ describe("Verify BYOR functionality", () => {
     });
   });
 
-  // it("Verify test functionality of root resource in dev on curl", () => {
-  //   TestHelper.testOnCurl(
-  //     Enums.Environment.DEVELOPMENT,
-  //     Enums.HTTPMethod.GET,
-  //     RESOURCE_NAME,
-  //     queryParameters1
-  //   ).then((curl) => {
-  //     Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-  //       expect(res.body).equal(MATCHING_STRING);
-  //       expect(res.status).equal(200);
-  //     });
-  //   });
-  // });
 
   it("Verify component promote to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
