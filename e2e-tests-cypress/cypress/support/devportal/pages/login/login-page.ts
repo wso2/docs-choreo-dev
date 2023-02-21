@@ -13,8 +13,7 @@
 import { LONG_TIME_OUT, STANDARD_TIME_OUT } from "../../constants";
 const handle = Cypress.env("choreoOrgHandle");
 const idpParam = "?fidp=choreoe2etest";
-const devportalLoginURL =
-  Cypress.env("devPortalLoginURL") + "/" + handle + idpParam;
+const devportalLoginURL = Cypress.env("devportalLoginURL") + "/" + handle + idpParam;
 
 export class LoginPage {
   static loginToDevportal(devportalUrl = ''): void {
@@ -32,7 +31,7 @@ export class LoginPage {
   }
 
   static visitToDevportalOrgPublicApis(): void {
-    const loginURL = Cypress.env("devPortalLoginURL") + "/" + handle;
+    const loginURL = Cypress.env("devportalLoginURL") + "/" + handle;
     cy.visit(loginURL);
     cy.get('[data-testid="home-appbar-btn"]').should("exist");
     cy.log("Successfully navigated to public devportal");
