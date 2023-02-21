@@ -20,10 +20,22 @@ export class ProjectListingPage {
   static createNewProject(
     projectName: string,
     description: string,
-    dataPlane: Enums.Region = Enums.Region.US
+    dataPlane: Enums.Region = Enums.Region.US,
+    perspective:Enums.Perspective = Enums.Perspective.IDEVP
+    
   ) {
     ChoreoHomePage.navigateToHome();
+
+    if (perspective === Enums.Perspective.APIM) {
+      cy.get(`[data-cyid="${perspective}"]`).then(($el) => {
+        cy.get('[data-cyid="project-picker2e1a71e1-2cc3-4332-a3d1-9e22c2bd7586"]').click();
+        cy.get('[data-cyid="btn-create-new"]').click();
+      });
+    }
+    else if (perspective === Enums.Perspective.IDEVP) {
     cy.get('[data-cyid="create-project-card"]').click().wait(3000);
+    }
+    
     cy.get('[name="Name"]').clear().type(projectName);
     cy.get('[name="Description"]').clear().type(description);
     cy.get('[data-cyid="select-region"]').click();
