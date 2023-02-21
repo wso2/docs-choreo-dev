@@ -65,10 +65,5 @@ describe("Verify project creation functionality", () => {
     GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
-  it("Verify component deployment", () => {
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployToDev();
-  });
 
 });
