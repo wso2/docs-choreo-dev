@@ -61,7 +61,6 @@ describe("Verify project creation functionality", () => {
       Enums.Region.US
     );
     GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
-   // GraphQL.createComponentWithRepo(componentData, REPO_NAME);
   });
 
   it("Verify component deployment", () => {
