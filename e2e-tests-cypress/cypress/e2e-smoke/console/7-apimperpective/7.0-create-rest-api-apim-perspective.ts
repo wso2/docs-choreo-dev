@@ -26,8 +26,6 @@ import { ComponentData } from "../../../support/interfaces/component-data";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 
 describe("Verify project creation functionality", () => {
-  const queryParameters1 = [{ key: "number", value: "2" }];
-  const queryParameters2 = [{ key: "number", value: "5" }];
   const COMPONENT_NAME = "create-rest-api-from-scratch-1.3";
   const REPO_NAME = Utils.generateComponentName("repo");
   const PROJECT_DESCRIPTION = "Covid stats project";
