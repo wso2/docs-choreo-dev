@@ -22,15 +22,9 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.utils.FileUtil;
-import com.wso2.choreo.integration.config.ConfigDefinition;
-import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -40,9 +34,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
-import static com.consol.citrus.http.actions.HttpActionBuilder.http;
-import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
+
 /**
  * $(http()
  * tests related to component deployment using auto deploy on commit trigger on
@@ -69,7 +61,7 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
                     triggerID("null").
                     srcGitRepoUrl("https://github.com/choreo-test-apps/" + repoName).
                     projectId(project.getId()).
-                    displayType(Constant.displayType.graphql.name()).
+                    displayType(Constant.displayType.restAPI.name()).
                     build();
             choreoComponent = ComponentUtils.createComponent(this, choreoTestClient, accessToken, dto);
             Assert.assertNotNull(choreoComponent.getId());
@@ -99,7 +91,7 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
         }
         @Test(dependsOnMethods = {"deploymentStatusByVersion_AutoDeployOnCommitIT"})
         @CitrusTest
-        public void componentDevDeploymentStatus_AutoDeployOnCommitIT() throws Exception {
+        public void componentDevDeployment_AutoDeployOnCommitIT() throws Exception {
             GraphQL.componentDeployment(choreoComponent, "dev", accessToken);
         }
     }
