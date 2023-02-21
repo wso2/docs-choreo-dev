@@ -29,7 +29,7 @@ export class ProjectListingPage {
     if (perspective === Enums.Perspective.APIM) {
       cy.get(`[data-cyid="${perspective}"]`).then(($el) => {
         cy.get('[data-testid="project-picker"]').click();
-        cy.get('[data-cyid="btn-create-new"]').click();
+        cy.get('[data-cyid="btn-create-new"]').click().wait(3000);
       });
     }
     else {
