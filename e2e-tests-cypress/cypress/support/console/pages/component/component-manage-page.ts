@@ -78,10 +78,7 @@ export class ComponentAPILifecycle {
   static selectUsagePlans(...plans) {
     cy.get('[data-testid="Usage plans"]').click();
     cy.get('[data-testid="checkbox-Unlimited"]').click();
-    plans.forEach((plan) => {
-      const pln = `[data-testid="checkbox-${plan}"]`;
-      cy.get(pln).click();
-    });
+    plans.forEach((plan) => { const pln = `[data-testid="checkbox-${plan}"]`; cy.get(pln).click(); });
     cy.get("button > span").contains("Save").click();
     cy.get('[data-testid="checkbox-Unlimited"]');
   }

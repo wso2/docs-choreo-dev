@@ -1,3 +1,4 @@
+import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { Enums } from "../../../support/console/enums";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
@@ -50,7 +51,7 @@ describe("Graphql GQL service test", () => {
       PROJECT_DESCRIPTION,
       Enums.Region.US
     );
-    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
 

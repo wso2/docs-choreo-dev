@@ -28,6 +28,7 @@ import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
+import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 
 describe("Verify internal API creation functionality", () => {
   const REST_API_NAME = Utils.generateComponentName("internal");
@@ -87,7 +88,7 @@ describe("Verify internal API creation functionality", () => {
       PROJECT_DESCRIPTION,
       Enums.Region.US
     );
-    GraphQL.createComponentWithRepo(componentData);
+    GraphQL.createComponent(PROJECT_NAME, "", componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
   it("Verify REST API component deployment", () => {

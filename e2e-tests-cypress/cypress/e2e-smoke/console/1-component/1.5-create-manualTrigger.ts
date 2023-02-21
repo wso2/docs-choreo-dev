@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { Enums } from "../../../support/console/enums";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
@@ -51,7 +52,7 @@ describe("Verify manual trigger creation functionality", () => {
       PROJECT_DESCRIPTION,
       Enums.Region.US
     );
-    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
   after(() => {
     ChoreoHomePage.logout();

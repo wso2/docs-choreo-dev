@@ -50,7 +50,6 @@ describe("Choreo APIM publisher scenarios", () => {
 
   before(() => {
     LoginPage.login();
-    ChoreoHomePage.switchOrganization();
   });
   after(() => {
     ChoreoHomePage.logout();

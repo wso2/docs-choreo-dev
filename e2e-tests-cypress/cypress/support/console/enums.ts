@@ -19,6 +19,7 @@ export namespace Enums {
     graphql = "graphql",
     manualTrigger = "manualTrigger",
     scheduledTask = "scheduledTask",
+    byocRestApi ="byocRestApi"
   }
 
   export enum Accessibility {
@@ -52,6 +53,7 @@ export namespace Enums {
 
   export enum ComponentType {
     MI_REST_API = "miRestApi",
+    BYOC_REST_API = "byocRestApi"
   }
 
   export enum RepoType {

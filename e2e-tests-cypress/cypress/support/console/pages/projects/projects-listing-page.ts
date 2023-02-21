@@ -13,6 +13,7 @@
 
 
 import { Enums } from "../../enums";
+import { ChoreoHomePage } from "../home/home-page";
 
 
 export class ProjectListingPage {
@@ -21,6 +22,7 @@ export class ProjectListingPage {
     description: string,
     dataPlane: Enums.Region = Enums.Region.US
   ) {
+    ChoreoHomePage.navigateToHome();
     cy.get('[data-cyid="create-project-card"]').click().wait(3000);
     cy.get('[name="Name"]').clear().type(projectName);
     cy.get('[name="Description"]').clear().type(description);

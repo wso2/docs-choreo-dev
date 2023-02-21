@@ -24,6 +24,7 @@ import { Utils } from "../../../support/console/utils";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
 import { GitHub } from "../../../support/github/github";
+import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 
 describe("Create Greeting sample in Choreo", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
@@ -58,7 +59,7 @@ describe("Create Greeting sample in Choreo", () => {
       PROJECT_DESCRIPTION,
       Enums.Region.US
     );
-    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
   it("Verify component deployment", () => {

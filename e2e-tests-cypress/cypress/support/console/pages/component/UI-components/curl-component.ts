@@ -10,7 +10,7 @@ export class Curl {
     cy.get(`[data-testid="curl-${httpMethod.toLowerCase()}"]`).click();
   }
 
-  static addQueryParameter(parameters: object[]) {
+  static addQueryParameter(parameters: { key: string, value: string }[]) {
     cy.wait(1000);
     for (let i = 0; i < parameters.length; i++) {
       cy.get('[data-testid="add-btn"]').click().wait(1000);
@@ -36,7 +36,7 @@ export class Curl {
     let curl: CurlData = {
       method: "",
       url: "",
-      headers: {"api-key":""}
+      headers: { "api-key": "" }
     }
     if (curlData) {
       curl.headers = curlData["headers"]
@@ -52,7 +52,7 @@ export class Curl {
         const url = arrayURL[1];
         const apiKey = arrayURL[4];
         const method = arrayURL[6];
-      
+
         curl.headers["api-key"] = apiKey
         curl.url = url
         curl.method = method

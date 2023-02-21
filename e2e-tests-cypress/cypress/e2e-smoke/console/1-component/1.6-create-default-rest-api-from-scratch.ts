@@ -10,6 +10,7 @@ import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { Utils } from "../../../support/console/utils";
 import { ComponentData } from "../../../support/interfaces/component-data";
+import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 
 describe("Verify BYOR functionality", () => {
   const PROJECT_DESCRIPTION = "Internal API Test";
@@ -56,7 +57,7 @@ describe("Verify BYOR functionality", () => {
       PROJECT_DESCRIPTION,
       Enums.Region.US
     );
-    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
   it("Deploy component", () => {

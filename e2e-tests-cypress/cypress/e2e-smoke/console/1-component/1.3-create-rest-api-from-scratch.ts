@@ -23,6 +23,7 @@ import { Utils } from "../../../support/console/utils";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
+import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 
 describe("Verify project creation functionality", () => {
   const queryParameters1 = [{ key: "number", value: "2" }];
@@ -59,7 +60,7 @@ describe("Verify project creation functionality", () => {
       PROJECT_DESCRIPTION,
       Enums.Region.US
     );
-    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
   it("Verify component deployment", () => {
