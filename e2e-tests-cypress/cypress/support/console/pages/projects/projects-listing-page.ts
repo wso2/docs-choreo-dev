@@ -32,7 +32,7 @@ export class ProjectListingPage {
         cy.get('[data-cyid="btn-create-new"]').click();
       });
     }
-    else if (perspective === Enums.Perspective.IDEVP) {
+    else {
     cy.get('[data-cyid="create-project-card"]').click().wait(3000);
     }
     
