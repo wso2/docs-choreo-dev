@@ -62,7 +62,7 @@ First, let's add a Webhook component as follows:
 
 Designing a webhook involves specifying how the webhook should function by adding and configuring the required connectors and statements. You can do this by editing the low-code diagram of the Webhookor by editing its code.
 
-You can implement your webhook in Ballerina or any other language and containerize it. You can use the [Ballerina VS code extension](https://ballerina.io/downloads/) to develop the webhook in Ballerina. [Learn more](https://wso2.com/vscode-extentions/ballerina/).
+You can implement your webhook in Ballerina or any other language and containerize it. You can use the [Ballerina VS code extension](https://ballerina.io/downloads/) to develop the webhook in Ballerina. [Learn more](https://wso2.com/ballerina/vscode/docs/).
 
 For example, you can use the following source code to design a webhook to read the labels of GitHub issues in a specific repository and generate an email notification for GitHub issues with the `bug` label. You can add this code in the .bal file in your repository.
 

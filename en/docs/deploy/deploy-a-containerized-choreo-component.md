@@ -27,7 +27,7 @@ Let's add a containerized REST API component by following these steps:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 
-2. Create a project to add the REST API component. You can follow the instructions under [step 1 in the Connect Your Own GitHub Repository to Choreo](../connect-your-own-github-repository-to-choreo/#step-1-create-a-project-to-add-the-rest-api-component) tutorial.
+2. Create a project to add the REST API component. You can follow the instructions under [Prerequisites in the Connect Your Own GitHub Repository to Choreo](../develop/manage-repository/connect-your-own-github-repository-to-choreo.md#prerequisites-create-a-project) tutorial.
 
 3. On the **Components** page, click **Create** on the **REST API** card.
 
