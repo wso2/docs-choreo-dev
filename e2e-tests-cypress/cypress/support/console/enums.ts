@@ -51,6 +51,11 @@ export namespace Enums {
     US = "US",
   }
 
+  export enum Perspective {
+    IDEVP = "perspective-pickeridevp",
+    APIM = "perspective-pickerapim",
+  }
+
   export enum ComponentType {
     MI_REST_API = "miRestApi",
     BYOC_REST_API = "byocRestApi"

@@ -59,4 +59,12 @@ export class ChoreoHomePage {
             LoginPage.persistApimToken();
         }
     }
+
+    static changeToAPIPerspective(){
+        cy.get('[data-testid="perspective-pickeridevp"]').click();
+         cy.get('.MuiList-root')
+           .should("be.visible")
+           .get(`[data-value="apim"]`).click();
+   }
+
 }
