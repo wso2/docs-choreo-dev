@@ -28,5 +28,5 @@ helm upgrade --install actions-runner-controller actions-runner-controller-0.20.
     --set=githubWebhookServer.logLevel="${LOG_LEVEL}" \
     --set=image.repository=choreocontrolplane.azurecr.io/summerwind/actions-runner-controller \
     --set=image.actionsRunnerRepositoryAndTag=choreocontrolplane.azurecr.io/summerwind/actions-runner:latest \
-    --set=image.dindSidecarRepositoryAndTag=choreocontrolplane.azurecr.io/dind:latest \  ## dind:latest for stg & prod || docker:dind for dev
+    --set=image.dindSidecarRepositoryAndTag=choreocontrolplane.azurecr.io/dind:latest \
     --set=metrics.proxy.image.repository=choreocontrolplane.azurecr.io/brancz/kube-rbac-proxy
