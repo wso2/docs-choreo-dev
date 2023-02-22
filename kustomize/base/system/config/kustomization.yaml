@@ -462,6 +462,8 @@ configMapGenerator:
     literals:
       - RUDDER_URL="http://dp-rudder:80"
       - CICD_URL="http://dp-cicd"
+      - USER_SERVICE_URL=http://app-service:8080
+      - MIZZEN_URL=http://dp-mizzen
   - name: cm-file-crypto-key-service
     behavior: create
     files:
