@@ -12,28 +12,9 @@ mutation{
             accessibility: "external"
             srcGitRepoUrl: "{{srcGitRepoUrl}}",
             srcGitRepoBranch: "{{repositoryBranch}}"
-            version: "1.0.0"
-        }
-    ){
-id,
-createdAt,
-updatedAt,
-name,
-handle,
-organizationId,
-projectId,
-orgHandle,
-type,
-description,
-imageRegistryId,
-imageRegistry {
-id,
-createdAt,
-updatedAt,
-cloudConnectorId,
-imageRepositoryName
-},
-componentType,
-httpBased
-}
-}
+            repositorySubPath: "",
+            oasFilePath: "",
+            version: "1.0.0",
+        }){
+            id, organizationId, projectId, handle
+        }}
