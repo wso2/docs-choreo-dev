@@ -39,8 +39,9 @@ export class GraphQL {
             componentData.orgId = orgId;
             
             const query = callback(componentData, projectId)
-
+cy.log(JSON.stringify(query))
             this.callGraphQL(query).then((res) => {
+                cy.log(JSON.stringify(res.body.data))
                 let id, projectId, handler;
                 if (res.body.data.createComponent) {
                     id = res.body.data.createComponent["id"];
