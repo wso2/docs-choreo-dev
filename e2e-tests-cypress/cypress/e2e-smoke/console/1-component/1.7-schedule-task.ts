@@ -24,6 +24,7 @@ import { Utils } from "../../../support/console/utils";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
+import { GitHub } from "../../../support/github/github";
 
 describe("Create Schedule Trigger", () => {
   const SCHEDULE_NAME = "create-ScheduleTrigger-1.7";
@@ -35,6 +36,7 @@ describe("Create Schedule Trigger", () => {
 
   before(() => {
     LoginPage.login();
+    GitHub.deleteWebhooks("schedule-trigger")
   });
 
   after(() => {

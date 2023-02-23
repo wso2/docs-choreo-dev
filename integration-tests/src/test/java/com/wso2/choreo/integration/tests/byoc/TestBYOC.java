@@ -104,6 +104,7 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"componentProdDeploymentStatus_TestBYOC"})
     @CitrusTest
     public void invokeAPIInDev_TestBYOC() throws Exception {
+
         apiKey = APICreator.getAPIKey(choreoComponent.getApiId(), accessToken).getApikey();
         TestHelper.Movie[] movies = TestHelper.getMovies(devInvokeURL, apiKey);
         Assert.assertEquals(movies.length, 5);
