@@ -54,6 +54,9 @@ public class TestIntegrationRestComponentWithVulnerable extends TestNGCitrusSpri
     @Autowired
     private HttpClient choreoProjectsTestClient;
 
+    @Autowired
+    private HttpClient choreoTestClient;
+
     @BeforeClass
     public void setup_TestMIIntegrationsWithVulnerableJars()
             throws Exception {
@@ -98,7 +101,7 @@ public class TestIntegrationRestComponentWithVulnerable extends TestNGCitrusSpri
     public void componentRetrieval_TestMIIntegrationsWithVulnerableJars() throws Exception {
 
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
-        testComponent = GraphQL.retrieveComponent(this, choreoProjectsTestClient, accessToken, graphqlDTO);
+        testComponent = GraphQL.retrieveComponent(this, choreoTestClient, accessToken, graphqlDTO);
     }
 
     @Test(dependsOnMethods = { "componentRetrieval_TestMIIntegrationsWithVulnerableJars" })
@@ -118,7 +121,7 @@ public class TestIntegrationRestComponentWithVulnerable extends TestNGCitrusSpri
                 .devEnvIdToDeploy(devEnvIdToDeploy).branch(branch).sha(latestCommitSha).shaDate("").build();
 
         // Deploy component
-        GraphQL.deployComponent(this, choreoProjectsTestClient, accessToken, graphqlDTO);
+        GraphQL.deployComponent(this, choreoTestClient, accessToken, graphqlDTO);
     }
 
     @Test(dependsOnMethods = { "componentDeployment_TestMIIntegrationsWithVulnerableJars" })

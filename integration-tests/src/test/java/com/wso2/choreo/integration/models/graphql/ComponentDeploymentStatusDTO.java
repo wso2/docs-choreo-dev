@@ -1,9 +1,9 @@
-package com.wso2.choreo.integration.models.deploymentstatus;
+package com.wso2.choreo.integration.models.graphql;
 
 import lombok.Data;
 
 @Data
-public class ComponentDeploymentStatus {
+public class ComponentDeploymentStatusDTO {
 
     private String deploymentStatus;
     private String deploymentStatusV2;
