@@ -18,23 +18,19 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.Orgs;
-import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
+import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.models.GraphqlDTO;
-import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
-import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
-import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponentBuilder;
-import com.wso2.choreo.integration.common.exceptions.*;
-import com.wso2.choreo.integration.config.ConfigDefinition;
-import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +48,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Map;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
@@ -72,6 +69,9 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     private HttpClient choreoTestClient;
     @Autowired
     private HttpClient choreoCPTestClient;
+
+    @Autowired
+    Map<Endpoints, HttpClient> citrusClients;
 
     @DataProvider(name = "env-provider")
     public Object[][] environment() {
@@ -97,39 +97,20 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
                 srcGitRepoUrl("https://github.com/choreo-test-apps/rest-api").
                 projectId(projectId).
                 displayType(Constant.displayType.restAPI.name()).build();
-        choreoComponent = ComponentUtils.createComponent(this, choreoTestClient, accessToken, dto);
+        choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
+                ComponentFlavour.STANDARD);
         Assert.assertNotNull(choreoComponent.getId());
     }
 
     @Test(dependsOnMethods = {"createUserManagedComponent_SysObservabilityAPITestCase"})
     @CitrusTest
-    public void addDeploymentConfiguration_SysObservabilityAPITestCase() throws Exception {
-        Orgs.getConfigurationMapping(choreoComponent, accessToken);
-        Response res = Orgs.addConfiguration(choreoComponent, "dev", accessToken);
-        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
-    }
-
-
-    @Test(dependsOnMethods = {"addDeploymentConfiguration_SysObservabilityAPITestCase"})
-    @CitrusTest
     public void deploy_SysObservabilityAPITestCase() throws Exception {
-        GraphQL.deployComponent(choreoComponent, accessToken);
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
+                accessToken, choreoComponent);
+        devInvokeURL = statusDTO.getInvokeUrl();
     }
 
     @Test(dependsOnMethods = {"deploy_SysObservabilityAPITestCase"})
-    @CitrusTest
-    public void deploymentStatusByVersion_SysObservabilityAPITestCase() throws Exception {
-        GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
-    }
-
-
-    @Test(dependsOnMethods = {"deploymentStatusByVersion_SysObservabilityAPITestCase"})
-    @CitrusTest
-    public void componentDevDeploymentStatus_SysObservabilityAPITestCase() throws Exception {
-        devInvokeURL = GraphQL.componentDeployment(choreoComponent, "dev", accessToken).getInvokeUrl();
-    }
-
-    @Test(dependsOnMethods = {"componentDevDeploymentStatus_SysObservabilityAPITestCase"})
     @CitrusTest
     public void addPromoteConfiguration_SysObservabilityAPITestCase() throws Exception {
         Response res = Orgs.addConfiguration(choreoComponent, "prod", accessToken);

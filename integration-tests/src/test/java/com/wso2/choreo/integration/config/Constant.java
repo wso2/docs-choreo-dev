@@ -24,10 +24,11 @@ public final class Constant {
     public static final String SUBJECT_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:jwt";
     public static final String REQUESTED_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:jwt";
     public static final String OAUTH_SCOPES = "apim:admin apim:api_manage apim:api_publish apim:api_settings " +
-            "apim:dcr:app_manage apim:document_manage apim:publisher_settings apim:subscription_manage " +
-            "apim:subscription_view apim:tier_manage choreo:component_manage choreo:deployment_manage " +
-            "choreo:dev_env_manage choreo:prod_env_manage choreo:project_manage choreo:role_manage " +
-            "choreo:user_manage environments:view_dev environments:view_prod apim:environment_manage";
+            "apim:dcr:app_manage apim:document_manage apim:publisher_settings apim:subscribe " +
+            "apim:subscription_manage apim:subscription_view apim:tier_manage choreo:component_manage " +
+            "choreo:deployment_manage choreo:dev_env_manage choreo:prod_env_manage choreo:project_manage " +
+            "choreo:role_manage choreo:user_manage environments:view_dev environments:view_prod " +
+            "apim:environment_manage";
 
     public static final String GRAPHQL_ENDPOINT_SUFFIX = "/graphql";
     public static final String TEST_PROJECT_NAME_PREFIX = "automationtestproject";
@@ -133,4 +134,3 @@ public final class Constant {
     // Theme management constants
     public static final String THEME_ENDPOINT_SUFFIX = "/org-mgt/1.0.0/orgs/";
 }
-
