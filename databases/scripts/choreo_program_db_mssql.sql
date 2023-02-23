@@ -50,6 +50,7 @@ CREATE TABLE [dbo].[version](
     [ast_hash] [varchar](255) NOT NULL,
     [ast] [varchar](max) NULL,
     [inserted_at] [datetime] NULL,
+    [ast_published_at] [datetime] NULL,
     CONSTRAINT [PK_version_id] PRIMARY KEY CLUSTERED
 (
 [id] ASC
