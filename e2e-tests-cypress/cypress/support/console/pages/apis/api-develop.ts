@@ -11,7 +11,6 @@
  * associated services.
  */
 
-import { Utils } from "../../utils";
 
 export class APIDevelop {
   static addResources(path: string, ...verbs) {
@@ -46,25 +45,10 @@ export class APIDevelop {
     cy.get(`[data-testid="resource-/${path}"]`).should('exist')
   }
 
-
   private static addHTTPVerb(verbs: string[]) {
     cy.get('[data-testid="verb-selector"]').click();
     verbs.forEach((verb) => cy.get(`[data-testid="checkbox-${verb.toUpperCase()}"]`).click().wait(1000));
     cy.get("body").type("{esc}");
-  }
-
-  static addEndpoints() {
-    cy.get('[data-testid="Endpoints"]').click();
-    cy.contains("Save").click();
-  }
-
-  static updateEndpointConfiguration(newEndpoint: string) {
-    cy.get('[data-testid="Endpoints"]').click();
-    cy.get('[data-testid="api-endpoint"]').within(() => cy.get("input").clear().type(newEndpoint));
-    cy.contains("Save").click();
-    cy.get('[id="circular-loader"]').should("not.exist");
-    cy.get('[data-testid="api-endpoint"] > div > input').should("have.value", newEndpoint).wait(1000)
-    cy.log("Endpoint configuration updated successfully");
   }
 
   private static generateOperationId(httpVerb: string[], resourcePath: string) {

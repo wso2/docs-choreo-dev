@@ -23,16 +23,18 @@ import com.github.mustachejava.MustacheFactory;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.Orgs;
-import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
+import com.wso2.choreo.integration.common.ComponentFlavour;
+import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.models.GraphqlDTO;
-import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.common.exceptions.*;
 import com.wso2.choreo.integration.config.ConfigDefinition;
@@ -73,8 +75,6 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     private static final Map<String, JsonObject> envSyntaxTrees = new HashMap<>(2);
 
     ChoreoProject project;
-    String repoName;
-    String projectId;
     String devInvokeURL;
     String prodInvokeURL;
     Environment[] en;
@@ -83,7 +83,12 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     ChoreoOrganization org;
     private static final java.net.http.HttpClient client = java.net.http.HttpClient.newHttpClient();
     @Autowired
+    private HttpClient choreoTestClient;
+    @Autowired
     private HttpClient choreoCPTestClient;
+
+    @Autowired
+    Map<Endpoints, HttpClient> citrusClients;
 
     @DataProvider(name = "env-provider")
     public Object[][] environment() {
@@ -95,70 +100,34 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     public void setup_ObservabilityAPITestCase() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         project = GraphQL.createProject(accessToken);
-        repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
-        projectId = project.getId();
     }
 
 
     @Test
     @CitrusTest
-    public void createUserManagedComponent_ObservabilityAPITestCase() throws IOException {
+    public void createUserManagedComponent_ObservabilityAPITestCase() throws Exception {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
 
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).
                 triggerID("null").
                 srcGitRepoUrl("https://github.com/choreo-test-apps/rest-api").
-                projectId(projectId).
+                projectId(project.getId()).
                 displayType(Constant.displayType.restAPI.name()).build();
-        choreoComponent = GraphQL.createUserManagedComponent(dto, accessToken);
+        choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
+                ComponentFlavour.STANDARD);
         Assert.assertNotNull(choreoComponent.getId());
     }
 
+
     @Test(dependsOnMethods = {"createUserManagedComponent_ObservabilityAPITestCase"})
     @CitrusTest
-    public void createdComponentStatus_ObservabilityAPITestCase() throws UnexpectedResponseException {
-        Status status = Orgs.createdComponentStatus(projectId, choreoComponent.getId(), accessToken);
-        Assert.assertTrue(status.isSuccess());
-    }
-
-
-    @Test(dependsOnMethods = {"createdComponentStatus_ObservabilityAPITestCase"})
-    @CitrusTest
-    public void componentRetrieval_ObservabilityAPITestCase() throws IOException {
-        choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandler(), accessToken);
-        choreoComponent.setOrganization(org);
-        Assert.assertNotNull(choreoComponent);
-    }
-
-    @Test(dependsOnMethods = {"componentRetrieval_ObservabilityAPITestCase"})
-    @CitrusTest
-    public void addDeploymentConfiguration_ObservabilityAPITestCase() throws Exception {
-        Orgs.getConfigurationMapping(choreoComponent, accessToken);
-        Response res = Orgs.addConfiguration(choreoComponent, "dev", accessToken);
-        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
-    }
-
-
-    @Test(dependsOnMethods = {"addDeploymentConfiguration_ObservabilityAPITestCase"})
-    @CitrusTest
     public void deploy_ObservabilityAPITestCase() throws Exception {
-        GraphQL.deployComponent(choreoComponent, accessToken);
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
+                accessToken, choreoComponent);
+        devInvokeURL = statusDTO.getInvokeUrl();
     }
 
     @Test(dependsOnMethods = {"deploy_ObservabilityAPITestCase"})
-    @CitrusTest
-    public void deploymentStatusByVersion_ObservabilityAPITestCase() throws Exception {
-        GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
-    }
-
-
-    @Test(dependsOnMethods = {"deploymentStatusByVersion_ObservabilityAPITestCase"})
-    @CitrusTest
-    public void componentDevDeploymentStatus_ObservabilityAPITestCase() throws Exception {
-        devInvokeURL = GraphQL.componentDeployment(choreoComponent, "dev", accessToken).getInvokeUrl();
-    }
-
-    @Test(dependsOnMethods = {"componentDevDeploymentStatus_ObservabilityAPITestCase"})
     @CitrusTest
     public void addPromoteConfiguration_ObservabilityAPITestCase() throws Exception {
         Response res = Orgs.addConfiguration(choreoComponent, "prod", accessToken);
@@ -182,32 +151,32 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void invokeEP_ObservabilityAPITestCase() throws IOException {
         apiKey = APICreator.getAPIKey(choreoComponent.getApiId(), accessToken).getApikey();
-        TestHelper.invokeEP(devInvokeURL,apiKey);
-        TestHelper.invokeEP(prodInvokeURL,apiKey);
+        TestHelper.invokeEP(devInvokeURL, apiKey);
+        TestHelper.invokeEP(prodInvokeURL, apiKey);
     }
 
     @Test(dependsOnMethods = {"invokeEP_ObservabilityAPITestCase"})
     @CitrusTest
     public void waitForObservabilityLogs_ObservabilityAPITestCase() throws Exception {
 
-        en = GraphQL.getNamespaceForEnvironment(projectId, accessToken);
+        en = GraphQL.getNamespaceForEnvironment(project.getId(), accessToken);
         Environment devEnv = choreoComponent.getEnvironment(en, Constant.Environment.Development);
         Environment prodEnv = choreoComponent.getEnvironment(en, Constant.Environment.Production);
         choreoComponent.waitForObservabilityLogs(devEnv, accessToken);
         choreoComponent.waitForObservabilityLogs(prodEnv, accessToken);
 
-        String devReleaseId =  choreoComponent.getReleaseIdForEnvironment(devEnv.getChoreoEnv());
-        String prodReleaseId =  choreoComponent.getReleaseIdForEnvironment(prodEnv.getChoreoEnv());
+        String devReleaseId = choreoComponent.getReleaseIdForEnvironment(devEnv.getChoreoEnv());
+        String prodReleaseId = choreoComponent.getReleaseIdForEnvironment(prodEnv.getChoreoEnv());
     }
 
 
-    @Test(dataProvider = "env-provider",dependsOnMethods = {"waitForObservabilityLogs_ObservabilityAPITestCase"})
+    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_ObservabilityAPITestCase"})
     @CitrusTest
     public void testObservabilityAST_ObservabilityAPITestCase(String env) throws IOException,
-             ReleaseIdNotFoundException {
+            ReleaseIdNotFoundException {
         String releaseId = choreoComponent.getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation =
-                GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
+                GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
 
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/observability/graphql/queryForAst.mustache");
@@ -247,13 +216,12 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         );
     }
 
-    @Test(dataProvider = "env-provider",dependsOnMethods = {"waitForObservabilityLogs_ObservabilityAPITestCase"})
+    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_ObservabilityAPITestCase"})
     @CitrusTest
-    public void testObservabilityMetricDensity_ObservabilityAPITestCase(String env) throws IOException, ReleaseIdNotFoundException
-             {
+    public void testObservabilityMetricDensity_ObservabilityAPITestCase(String env) throws IOException, ReleaseIdNotFoundException {
         String releaseId = choreoComponent.getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation =
-                GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
+                GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
 
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/observability/graphql/queryForMetricDensity.mustache");
@@ -288,12 +256,12 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         );
     }
 
-    @Test(dataProvider = "env-provider",dependsOnMethods = {"waitForObservabilityLogs_ObservabilityAPITestCase"})
+    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_ObservabilityAPITestCase"})
     @CitrusTest
-    public void testObservabilityMetricDensityHistogram_ObservabilityAPITestCase(String env) throws IOException, ReleaseIdNotFoundException{
+    public void testObservabilityMetricDensityHistogram_ObservabilityAPITestCase(String env) throws IOException, ReleaseIdNotFoundException {
         String releaseId = choreoComponent.getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation =
-                GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
+                GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
 
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/observability/graphql/queryForMetricDensityHistogram.mustache");
@@ -331,12 +299,12 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         );
     }
 
-    @Test( dataProvider = "env-provider",dependsOnMethods = {"waitForObservabilityLogs_ObservabilityAPITestCase"})
+    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_ObservabilityAPITestCase"})
     @CitrusTest
-    public void testObservabilityStats_ObservabilityAPITestCase(String env) throws IOException, ReleaseIdNotFoundException{
+    public void testObservabilityStats_ObservabilityAPITestCase(String env) throws IOException, ReleaseIdNotFoundException {
         String releaseId = choreoComponent.getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation =
-                GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
+                GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
         JsonObject ast = envSyntaxTrees.get(env);
         String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" +
                 ast.get("packageVersion").getAsString();
@@ -363,27 +331,27 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
                 .body(body)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
         $(http()
-                        .client(choreoCPTestClient)
-                        .receive()
-                        .response(HttpStatus.OK)
-                        .message()
-                        .type(MessageType.JSON)
-                        .validate(jsonPath()
-                                        .expression("$.data.invocationMetrics.__typename", "invocationMetrics")
-                                        .expression("$.data.invocationMetrics.keySet()", hasItems("__typename", "failedInvocationCounts", "meanInvocationTimes", "successfulInvocationCounts"))
-                                        .expression("$.data.invocationMetrics.meanInvocationTimes.size()", greaterThan(0))
-                                        .expression("$.data.invocationMetrics.failedInvocationCounts.size()", greaterThan(0))
-                                        .expression("$.data.invocationMetrics.successfulInvocationCounts.size()", greaterThan(0))
-                        )
+                .client(choreoCPTestClient)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate(jsonPath()
+                        .expression("$.data.invocationMetrics.__typename", "invocationMetrics")
+                        .expression("$.data.invocationMetrics.keySet()", hasItems("__typename", "failedInvocationCounts", "meanInvocationTimes", "successfulInvocationCounts"))
+                        .expression("$.data.invocationMetrics.meanInvocationTimes.size()", greaterThan(0))
+                        .expression("$.data.invocationMetrics.failedInvocationCounts.size()", greaterThan(0))
+                        .expression("$.data.invocationMetrics.successfulInvocationCounts.size()", greaterThan(0))
+                )
         );
     }
 
-    @Test( dataProvider = "env-provider",dependsOnMethods = {"waitForObservabilityLogs_ObservabilityAPITestCase"})
+    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_ObservabilityAPITestCase"})
     @CitrusTest
     public void testObservabilityTraceList_ObservabilityAPITestCase(String env) throws IOException, ReleaseIdNotFoundException {
         String releaseId = choreoComponent.getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation =
-                GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
+                GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
         JsonObject ast = envSyntaxTrees.get(env);
         String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" +
                 ast.get("packageVersion").getAsString();
@@ -397,8 +365,8 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         queryParams.put("moduleId", moduleId);
         queryParams.put("entryPointFuncModule", moduleId);
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        queryParams.put("from", fmt.format(OffsetDateTime.now( ZoneOffset.UTC ).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)));
-        queryParams.put("to", fmt.format(OffsetDateTime.now( ZoneOffset.UTC ).truncatedTo(ChronoUnit.SECONDS)));
+        queryParams.put("from", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)));
+        queryParams.put("to", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)));
         mustache.execute(writer, queryParams).flush();
         String body = writer.toString();
 
@@ -430,12 +398,12 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         );
     }
 
-    @Test( dataProvider = "env-provider",dependsOnMethods = {"waitForObservabilityLogs_ObservabilityAPITestCase"})
+    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_ObservabilityAPITestCase"})
     @CitrusTest
     public void testObservabilityTraceInformation_ObservabilityAPITestCase(String env) throws IOException, ReleaseIdNotFoundException, InterruptedException {
         String releaseId = choreoComponent.getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation =
-                GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
+                GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
         JsonObject ast = envSyntaxTrees.get(env);
         String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" +
                 ast.get("packageVersion").getAsString();
@@ -449,8 +417,8 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         traceListQueryParams.put("moduleId", moduleId);
         traceListQueryParams.put("entryPointFuncModule", moduleId);
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        traceListQueryParams.put("from", fmt.format(OffsetDateTime.now( ZoneOffset.UTC ).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)));
-        traceListQueryParams.put("to", fmt.format(OffsetDateTime.now( ZoneOffset.UTC ).truncatedTo(ChronoUnit.SECONDS)));
+        traceListQueryParams.put("from", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)));
+        traceListQueryParams.put("to", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)));
         queryTraceList.execute(traceListWriter, traceListQueryParams).flush();
         String body = traceListWriter.toString();
 
@@ -464,7 +432,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        String traceId =  new JsonParser().parse(response.body()).getAsJsonObject().getAsJsonObject("data")
+        String traceId = new JsonParser().parse(response.body()).getAsJsonObject().getAsJsonObject("data")
                 .getAsJsonObject("requestTraceGroup").getAsJsonArray("traces").get(0).getAsJsonObject().get("traceId").getAsString();
 
         // Getting specific traceInformation
@@ -474,8 +442,8 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         traceInformationQueryParams.put("version", observabilityIdInformation.getVerzion());
         traceInformationQueryParams.put("moduleId", moduleId);
         traceInformationQueryParams.put("traceId", traceId);
-        traceInformationQueryParams.put("from", fmt.format(OffsetDateTime.now( ZoneOffset.UTC ).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)));
-        traceInformationQueryParams.put("to", fmt.format(OffsetDateTime.now( ZoneOffset.UTC ).truncatedTo(ChronoUnit.SECONDS)));
+        traceInformationQueryParams.put("from", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)));
+        traceInformationQueryParams.put("to", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)));
         Writer traceInformationWriter = new StringWriter();
         queryTraceInformation.execute(traceInformationWriter, traceInformationQueryParams).flush();
         body = traceInformationWriter.toString();

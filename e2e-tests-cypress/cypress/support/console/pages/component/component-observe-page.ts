@@ -12,21 +12,16 @@
  */
 
 import { Utils } from "../../utils";
-import { Environment } from "../enum/environment";
+import { Enums } from "../../enums";
 
 export class ComponentObservePage {
-  private static obsUrlRegexp = /.+\/observe\/app\/(.{36})\/(.{36})\b/;
-
-  static gotoOverview() {
-    cy.get('[data-testid="panel-Overview-btn"]').should("be.visible").click();
-  }
 
   static gotoLogs(timeToWait = 0) {
     cy.wait(timeToWait);
     cy.get('[data-testid="panel-Logs-btn"]').should("be.visible").click();
   }
 
-  static selectEnv(env: Environment) {
+  static selectEnv(env: Enums.Environment) {
     cy.get("#environment-selector").should("be.visible").click();
     cy.get("#menu->div>ul>li").contains(env).click({ force: true });
   }
@@ -47,14 +42,13 @@ export class ComponentObservePage {
 
   static navigateToSampleApp() {
     const observabilityViewUrl = Cypress.env("loginURL").replace("login?fidp=choreoe2etest", "") + "observe/sample";
-    Utils.setBrowserCookie(true)
+    Utils.setBrowserCookie()
     cy.visit(observabilityViewUrl);
     cy.url().should("eq", observabilityViewUrl);
     cy.get('[data-testid="backdrop-loader"]').should("not.exist");
   }
 
   static verifyLogsView() {
-    const connectionErrorLogEntry = "error while connecting to the hr-service";
     const employeeInfoNotFoundLogEntry = "No logs found from";
     const commonLogLine = "employee information not found in the hr-service";
 
@@ -87,7 +81,6 @@ export class ComponentObservePage {
       "employee information not found in the hr-service";
     const emptyHistogramMessage =
       "No requests received during the selected time period";
-    const httpStatusCodeRegexp = /[1-5]\d{2}/;
     const responseTimeRegexp = /\d+\sms/;
     let d;
     let prevY;

@@ -21,11 +21,12 @@ import { ChoreoHomePage } from "../../../../support/console/pages/home/home-page
 import { LoginPage } from "../../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../../support/console/pages/projects/projects-listing-page";
+import { GitHub } from "../../../../support/github/github";
 import { ComponentData } from "../../../../support/interfaces/component-data";
 
 
 
-describe("Create Schedule Trigger", () => {
+describe("Create Reusable Schedule Trigger", () => {
   const SCHEDULE_NAME = "create-ReuseScheduleTrigger-1.7.1";
   const PROJECT_NAME = "Default Project"
   const EXPECTED_RESULT =
@@ -33,6 +34,7 @@ describe("Create Schedule Trigger", () => {
 
   before(() => {
     LoginPage.login();
+    GitHub.deleteWebhooks("schedule-trigger")
   });
 
   after(() => {

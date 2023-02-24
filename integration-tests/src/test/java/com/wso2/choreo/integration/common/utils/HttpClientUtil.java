@@ -39,9 +39,10 @@ public class HttpClientUtil {
             statusCode = response.getStatusLine().getStatusCode();
             if (entity != null) {
                 responseBody = EntityUtils.toString(entity);
+                log.info(request.getURI().toString(),responseBody,statusCode);
             }
         } catch (IOException e) {
-            LOGGER.error(e.getLocalizedMessage());
+         log.error(e.getMessage());
         }
         return Response.builder().res(responseBody).statusCode(statusCode).build();
     }

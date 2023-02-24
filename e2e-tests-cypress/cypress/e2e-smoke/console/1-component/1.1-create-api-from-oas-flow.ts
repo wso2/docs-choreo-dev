@@ -50,7 +50,6 @@ describe("Choreo APIM publisher scenarios", () => {
 
   before(() => {
     LoginPage.login();
-    ChoreoHomePage.switchOrganization();
   });
   after(() => {
     ChoreoHomePage.logout();
@@ -96,7 +95,7 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("intensity");
-    ComponentAPILifecycle.applyConfiguration(Enums.Environment.DEVELOPMENT);
+    ComponentAPILifecycle.applyConfiguration();
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",
       Enums.Environment.DEVELOPMENT
@@ -204,7 +203,6 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify insight values for dev", () => {
-    ProjectOverviewPage.navigateToComponents();
     ChoreoHomePage.navigateToInsights();
     InsightsPage.selectTimePeriod();
     InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);

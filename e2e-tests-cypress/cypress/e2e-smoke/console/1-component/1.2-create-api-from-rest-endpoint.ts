@@ -12,7 +12,6 @@
  */
 
 import { LoginPage } from "../../../support/console/pages/login-page";
-
 import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/rest-api-proxy-temp";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";

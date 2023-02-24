@@ -13,15 +13,29 @@
 
 
 import { Enums } from "../../enums";
+import { ChoreoHomePage } from "../home/home-page";
 
 
 export class ProjectListingPage {
   static createNewProject(
     projectName: string,
     description: string,
-    dataPlane: Enums.Region = Enums.Region.US
+    dataPlane: Enums.Region = Enums.Region.US,
+    perspective:Enums.Perspective = Enums.Perspective.IDEVP
+    
   ) {
+    ChoreoHomePage.navigateToHome();
+
+    if (perspective === Enums.Perspective.APIM) {
+      cy.get(`[data-cyid="${perspective}"]`).then(($el) => {
+        cy.get('[data-testid="project-picker"]').click();
+        cy.get('[data-cyid="btn-create-new"]').click().wait(3000);
+      });
+    }
+    else {
     cy.get('[data-cyid="create-project-card"]').click().wait(3000);
+    }
+    
     cy.get('[name="Name"]').clear().type(projectName);
     cy.get('[name="Description"]').clear().type(description);
     cy.get('[data-cyid="select-region"]').click();
@@ -44,6 +58,5 @@ export class ProjectListingPage {
         return;
       }
     })
-    //  cy.contains(projectName).click();
   }
 }

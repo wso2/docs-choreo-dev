@@ -11,11 +11,8 @@
  * associated services.
  */
 
-import { DAY } from './constants';
 
 export const appNamePrefix = "e2eapp";
-export const apiNamePrefix = "e2eapi";
-export const keyNamePrefix = "e2ekey";
 
 /**
  * Create name for app.
@@ -24,41 +21,6 @@ export const keyNamePrefix = "e2ekey";
  */
 export const generateAppName = (name: string) => {
     return appNamePrefix + Date.now() + "-" + name;
-}
-  
-/**
- * Create name for api.
- *
- * @returns true name for a new api
- */
-export const generateApiName = (name: string) => {
-    return apiNamePrefix + Date.now() + name;
-}
-
-/**
- * Create name for on-prem key.
- *
- * @returns true name for a new on-prem key
- */
-export const generateKeyName = (name: string) => {
-    return keyNamePrefix + Date.now() + name;
-}
-
-export const normalizeText = (s: string) => {
-    return s.replace(/\s+/g, '\u00a0')
-}
-
-export const isOldValue = (name: string) => {
-    if (name.length > 13) {
-        let timestamp = Number(name.substring(1,14));
-        if (!isNaN(timestamp)) {
-            let currentTime = Date.now();
-            if ((currentTime - timestamp) < DAY*7) {
-                return false;
-            }
-        }
-    }
-    return true;
 }
 
 Cypress.Commands.add('getByTestId', (selector) => {

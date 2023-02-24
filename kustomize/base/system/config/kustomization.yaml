@@ -167,9 +167,9 @@ configMapGenerator:
       - ORG_REMOVER_RESULT_TOPIC=org-remover-result
       - MARKETING_CONSENT_APP_CLIENT_KEY=0S5JcJ6y3BAIvUuY_mJ6aqKBhfQa
       - APIM_TOKEN_EP=https://sts.choreo.dev/oauth2/token
-      - PARDOT_EP=go.pardot.com/l/142131/2021-11-01/9yzthx
-      - PARDOT_SVC_URL=https://60efab9a-6d2d-4518-9c9d-33e750c6e816-prod.e1-us-east-azure.choreoapis.dev/7g2z/wso2-pardot-form-handler/1.0.0/pardot/api/formhandle
-      - EMAIL_CONSENT_SVC_URL=https://60efab9a-6d2d-4518-9c9d-33e750c6e816-prod.e1-us-east-azure.choreoapis.dev/3qk2/gdpr-email-consent-check/1.0.0
+      - PARDOT_EP=2021-11-01/9yzthx
+      - PARDOT_SVC_URL=https://api.wso2.com/zyup/lead-form-handler/1.0.0/lead-form
+      - EMAIL_CONSENT_SVC_URL=https://api.wso2.com/zyup/gdpr-mailing-consent/1.0.0
   - name: cm-perf-analyzer
     behavior: create
     literals:
@@ -363,6 +363,10 @@ configMapGenerator:
     behavior: create
     files:
       - cp-graphql/Config.toml
+  - name: cm-file-moesif-service
+    behavior: create
+    files:
+      - moesif-service/Config.toml
   - name: cm-file-sys-obsapi
     behavior: create
     files:
@@ -458,10 +462,9 @@ configMapGenerator:
     literals:
       - RUDDER_URL="http://dp-rudder:80"
       - CICD_URL="http://dp-cicd"
-  - name: cm-file-choreo-org-stat-data-pipeline
-    behavior: create
-    files:
-      - choreo-org-stat-data-pipeline/Config.toml
+      - USER_SERVICE_URL=http://app-service:8080
+      - MIZZEN_URL=http://dp-mizzen
+      - CLOUD_MANAGER_SERVICE_URL=http://dp-cloud-manager:80
   - name: cm-file-crypto-key-service
     behavior: create
     files:

@@ -21,9 +21,10 @@ import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { Utils } from "../../../support/console/utils";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
-import { GitHub } from "../../../support/github/github";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
+import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
+import { GitHub } from "../../../support/github/github";
 
 describe("Verify project creation functionality", () => {
   const queryParameters1 = [{ key: "number", value: "2" }];
@@ -35,6 +36,7 @@ describe("Verify project creation functionality", () => {
 
   before(() => {
     LoginPage.login();
+    GitHub.deleteWebhooks("rest-api")
   });
 
   after(() => {
@@ -60,7 +62,7 @@ describe("Verify project creation functionality", () => {
       PROJECT_DESCRIPTION,
       Enums.Region.US
     );
-    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
   it("Verify component deployment", () => {
@@ -200,10 +202,7 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("root");
-    ComponentAPILifecycle.applyConfiguration(
-      Enums.Environment.DEVELOPMENT,
-      "Revision 5"
-    );
+    ComponentAPILifecycle.applyConfiguration(    );
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",
       Enums.Environment.DEVELOPMENT
@@ -214,7 +213,7 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("root");
-    ComponentAPILifecycle.applyConfiguration(Enums.Environment.PRODUCTION);
+    ComponentAPILifecycle.applyConfiguration();
   });
 
   it("Verify resource access without the token in dev", () => {

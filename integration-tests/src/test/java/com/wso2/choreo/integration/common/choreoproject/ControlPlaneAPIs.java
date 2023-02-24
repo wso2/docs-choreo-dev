@@ -16,12 +16,9 @@ package com.wso2.choreo.integration.common.choreoproject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.exceptions.ComponentCreationStatusCheckException;
 import com.wso2.choreo.integration.common.exceptions.ComponentCreationTimeoutException;
 import com.wso2.choreo.integration.common.exceptions.GraphQLException;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
-import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import org.apache.http.HttpHeaders;
@@ -34,16 +31,15 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 public class ControlPlaneAPIs {
-    private final static Logger log = LoggerFactory.getLogger(ControlPlaneAPIs.class);
+    private final static Logger log = LogManager.getLogger(ControlPlaneAPIs.class);
 
     public static JsonObject callGraphQL(String accessToken, String gqlQuery) throws GraphQLException {
         HashMap<String, String> gqlRequestPayload = new HashMap<>() {

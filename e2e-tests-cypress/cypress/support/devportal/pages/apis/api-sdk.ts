@@ -12,7 +12,7 @@
  */
 
 import path from "path";
-import { LONG_TIME_OUT, STANDARD_TIME_OUT } from "../../../devportal/constants";
+import { LONG_TIME_OUT } from "../../constants";
 
 export class APISdk {
   static downloadSDK(sdkFile) {

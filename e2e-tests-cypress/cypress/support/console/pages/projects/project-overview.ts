@@ -11,39 +11,28 @@
  * associated services.
  */
 
-import { ComponentData } from "../../../interfaces/component-data";
+import { AbsComponent } from "../../../interfaces/abs-component";
+import { GraphQLQueryBuilder } from "../../apis/gql-query-builder";
 import { GraphQL } from "../../apis/graphql";
 import { Utils } from "../../utils";
 
 export class ProjectOverviewPage {
-  static selectComponent(fileID) {
-    cy.get("td>div>p").contains(fileID).click();
-  }
 
-  static addNewComponent() {
-    cy.get(".MuiContainer-root button").click(); // Need to add a id for the Create button
-  }
-
-
-  static searchReuseComponent(componentData: ComponentData) {
+  static searchReuseComponent(componentData: AbsComponent, projectName: string = "Default Project") {
 
     const REPO_NAME = Utils.generateComponentName("repo");
-    cy.wait(5000)
-    cy.get('body').then(bdy => {
-      if (bdy.find('tbody').length > 0) {
-        let isFound: boolean = false;
-        const kk = bdy.find('p')
-        for (let i = 0; i < kk.length; i++) {
-          if (kk[i].innerText === componentData.componentName) {
-            isFound = true;
-            break;
+    GraphQL.getProjects().then(res => {
+      const projects = res.projects
+      if (projects.length > 0) {
+        const project = projects.find(p => p.name === projectName)
+        GraphQL.getComponents(project.id).then(comps => {
+          const component = comps.components.find(c => c.displayName.trim() === componentData.componentName.trim())
+          if (component == undefined) {
+            GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
+          } else {
+            GraphQL.getComponentInfo(projectName, componentData.componentName)
           }
-        }
-        if(!isFound){
-          GraphQL.createComponentWithRepo(componentData, REPO_NAME);
-        }
-      }else{
-        GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+        })
       }
     })
   }
@@ -78,10 +67,5 @@ export class ProjectOverviewPage {
 
   static addComponent() {
     cy.get('[data-cyid="create-component"]').click();
-  }
-
-  //Only used for Enterprise login TC
-  static addNewComponentEL() {
-    cy.get(".MuiContainer-root button").click({ multiple: true }); // Need to add a id for the Create button
   }
 }

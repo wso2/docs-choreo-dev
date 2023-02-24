@@ -17,12 +17,14 @@ import com.consol.citrus.dsl.endpoint.CitrusEndpoints;
 import com.consol.citrus.http.client.HttpClient;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.config.ConfigDefinition;
-import com.wso2.choreo.integration.config.Constant;
 
+import com.wso2.choreo.integration.common.Endpoints;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 public class EndpointConfig {
@@ -113,6 +115,44 @@ public class EndpointConfig {
                 .build();
     }
 
+    @Bean
+    public Map<Endpoints, HttpClient> citrusClients() {
+        Map<Endpoints, HttpClient> endpoints = new HashMap<>();
+
+        endpoints.put(Endpoints.CHOREO_ENDPOINT,
+                CitrusEndpoints.http().client().requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                        ConfigDefinition.CHOREO_ENDPOINT)).build());
+
+        endpoints.put(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT,
+                CitrusEndpoints.http().client().requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                        ConfigDefinition.CHOREO_CP_PROJECTS_ENDPOINT)).build());
+
+        endpoints.put(Endpoints.STS_ENDPOINT,
+                CitrusEndpoints.http().client().requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                        ConfigDefinition.STS_ENDPOINT)).build());
+
+        endpoints.put(Endpoints.CHOREO_CP_GW_ENDPOINT,
+                CitrusEndpoints.http().client().requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                        ConfigDefinition.CHOREO_CP_GW_ENDPOINT)).build());
+
+        endpoints.put(Endpoints.INSIGHTS_ENDPOINT,
+                CitrusEndpoints.http().client().requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                        ConfigDefinition.INSIGHTS_ENDPOINT)).build());
+
+        endpoints.put(Endpoints.GITHUB_ENDPOINT,
+                CitrusEndpoints.http().client().requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                        ConfigDefinition.GITHUB_ENDPOINT)).build());
+
+        endpoints.put(Endpoints.THEME_ENDPOINT,
+                CitrusEndpoints.http().client().requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                        ConfigDefinition.THEME_ENDPOINT)).build());
+
+        endpoints.put(Endpoints.CDN_THEME_ENDPOINT,
+                CitrusEndpoints.http().client().requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                        ConfigDefinition.CDN_THEME_ENDPOINT)).build());
+
+        return endpoints;
+    }
 
 
 }

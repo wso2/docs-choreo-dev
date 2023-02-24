@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 @NoArgsConstructor
 @Data
@@ -22,7 +24,13 @@ public class Commit {
 
 
 
-    public  static Commit getLatestCommit(Commit[] commits) throws NoLatestCommitHashFoundException {
-      return Arrays.stream(commits).filter(Commit::isLatest).findFirst().orElseThrow(NoLatestCommitHashFoundException::new);
+    public  static Commit getLatestCommit(List<Commit> commits) throws NoLatestCommitHashFoundException {
+        for (Commit commit:
+             commits) {
+            if (commit.isLatest()) {
+                return commit;
+            }
+        }
+      throw new NoLatestCommitHashFoundException();
     }
 }

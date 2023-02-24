@@ -1,3 +1,4 @@
+import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { Enums } from "../../../support/console/enums";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
@@ -14,7 +15,6 @@ import { ComponentData } from "../../../support/interfaces/component-data";
 describe("Graphql GQL service test", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
-  const commitMessage = "adding new service";
   const TEST_QUERY = '{greeting(name:"John")}';
   const TEST_QUERY_RESPONSE = "Hello, John";
   const TEST_MUTATION = 'mutation{createUser(name:"John")}';
@@ -51,7 +51,7 @@ describe("Graphql GQL service test", () => {
       PROJECT_DESCRIPTION,
       Enums.Region.US
     );
-    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
 

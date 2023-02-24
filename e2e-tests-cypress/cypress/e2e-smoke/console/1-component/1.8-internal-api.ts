@@ -28,6 +28,7 @@ import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
+import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 
 describe("Verify internal API creation functionality", () => {
   const REST_API_NAME = Utils.generateComponentName("internal");
@@ -51,7 +52,6 @@ describe("Verify internal API creation functionality", () => {
   const PARAM_VALUE = "World";
   const PARAM_DATA_TYPE = "string";
   const queryParameters = [{ key: PARAM_NAME, value: PARAM_VALUE }];
-  const ACCESS_MODE_INTERNAL = "internal";
   const ACCESS_MODE_EXTERNAL = "external";
   let DEV_INVOKE_URL = "";
   let PROD_INVOKE_URL = "";
@@ -88,7 +88,7 @@ describe("Verify internal API creation functionality", () => {
       PROJECT_DESCRIPTION,
       Enums.Region.US
     );
-    GraphQL.createComponentWithRepo(componentData);
+    GraphQL.createComponent(PROJECT_NAME, "", componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
   it("Verify REST API component deployment", () => {
@@ -146,10 +146,7 @@ describe("Verify internal API creation functionality", () => {
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-    ComponentAPILifecycle.applyConfiguration(
-      Enums.Environment.DEVELOPMENT,
-      "Revision 5"
-    );
+    ComponentAPILifecycle.applyConfiguration(    );
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",
       Enums.Environment.DEVELOPMENT
@@ -162,7 +159,7 @@ describe("Verify internal API creation functionality", () => {
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-    ComponentAPILifecycle.applyConfiguration(Enums.Environment.PRODUCTION);
+    ComponentAPILifecycle.applyConfiguration();
   });
 
   it("Verify resource access without the security in DEV", () => {
@@ -259,9 +256,8 @@ describe("Verify internal API creation functionality", () => {
     ComponentDeployPage.promoteProxyApiToProd();
   });
 
-
-
   it("Verify 1st PROXY API resource access in PROD", () => {
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnCurlDiscardPrevious(
       Enums.Environment.PRODUCTION,
       Enums.HTTPMethod.GET,
@@ -333,9 +329,8 @@ describe("Verify internal API creation functionality", () => {
     ComponentDeployPage.promoteProxyApiToProd();
   });
 
-
-
   it("Verify 2nd PROXY API resource access in prod", () => {
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnCurlDiscardPrevious(
       Enums.Environment.PRODUCTION,
       Enums.HTTPMethod.GET,

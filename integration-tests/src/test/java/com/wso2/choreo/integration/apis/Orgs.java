@@ -15,52 +15,48 @@ package com.wso2.choreo.integration.apis;
 
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.http.client.HttpClient;
-import com.consol.citrus.model.testcase.core.WaitModel;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.BalConfig;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationStatusCheckException;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationTimeoutException;
 import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
-import com.wso2.choreo.integration.models.configmapping.Config;
-import com.wso2.choreo.integration.models.configmapping.ConfigMapping;
-import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.componentstatus.Status;
+import com.wso2.choreo.integration.models.configmapping.Config;
+import com.wso2.choreo.integration.models.configmapping.ConfigMapping;
 import com.wso2.choreo.integration.models.orgs.PromoteConfigurations;
-import lombok.extern.slf4j.Slf4j;
+import com.wso2.choreo.integration.models.response.Response;
+import lombok.extern.log4j.Log4j2;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 
 /**
  * Implements Orgs API calls and their response validations.
  */
-@Slf4j
+@Log4j2
 public class Orgs extends ControlPlaneAPI {
-
 
     public static Response addConfiguration(ChoreoComponent component, String envName, String accessToken, BalConfig... balconfigs) throws Exception {
         String componentId = component.getId();
@@ -166,14 +162,14 @@ public class Orgs extends ControlPlaneAPI {
                                 .response(HttpStatus.OK)));
     }
 
-    public static void addConfiguration(HttpClient client, TestActionRunner runner,
-                                        ChoreoComponent component, Commit[] commitHistory, String envName,
+    public static void addConfiguration(TestActionRunner runner, HttpClient client,
+                                        ChoreoComponent component, List<Commit> commitHistory, String envName,
                                         BalConfig... balconfigs) throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         String componentId = component.getId();
         String envIdToDeploy = component.getLatestAppEnvId(envName);
         String latestVersionId = component.getLatestApiVersion().getId();
-        String latestCommitSha = component.getLatestCommitHash(commitHistory);
+        String latestCommitSha = component.getLatestCommitHash(commitHistory.toArray(Commit[]::new));
         String orgHandle = component.getOrgHandler();
         String projectId = component.getProjectId();
 
@@ -280,44 +276,56 @@ public class Orgs extends ControlPlaneAPI {
     }
 
 
-    public static void waitForComponentCreationSuccess(String accessToken, String choreoOrgHandle, String projectId,
-                                                       String componentId) throws ComponentCreationStatusCheckException,
-            ComponentCreationTimeoutException {
-        String choreoEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_ENDPOINT);
-        String requestURI = choreoEndpoint.concat("/orgs/" + choreoOrgHandle + "/projects/" + projectId + "/components/" + componentId + "/init/status");
+    public static void waitForComponentCreationSuccess(TestActionRunner runner, HttpClient client, String accessToken,
+                                                       String projectId,
+                                                       String componentId) {
+        runner.$(repeatOnError()
+                .until("i = 50")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .get("/orgs/"
+                                        .concat(ORG_HANDLE)
+                                        .concat("/projects/")
+                                        .concat(projectId)
+                                        .concat("/components/")
+                                        .concat(componentId)
+                                        .concat("/init/status"))
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .body(new ClassPathResource(
+                                        "templates/createComponent/get_create_status_success.json"))
+                                .validate(json()
+                                        .ignore("$.message"))));
+    }
 
+    public static String getDeploymentLogs(String accessToken, String choreoOrgHandle, String projectId,
+            String componentId, String runId) {
+        String choreoEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_ENDPOINT);
+        String requestURI = choreoEndpoint.concat(
+                "/orgs/" + choreoOrgHandle + "/projects/" + projectId + "/components/" + componentId + "/runs/" + runId + "/logs");
 
         HttpGet request = new HttpGet(requestURI);
-
         request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, accessToken);
 
-
-        for (int i = 0; i < 15; ++i) {
-            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-                 CloseableHttpResponse response = httpClient.execute(request)) {
-                int statusCode = response.getStatusLine().getStatusCode();
-                String responseBody = EntityUtils.toString(response.getEntity());
-                if (statusCode == org.apache.http.HttpStatus.SC_OK) {
-                    JsonObject dataJsonObject = new JsonParser().parse(responseBody).getAsJsonObject().
-                            getAsJsonObject("data");
-
-                    String creationStatus =
-                            dataJsonObject.get("status").isJsonNull() ? "" : dataJsonObject.get("status").getAsString();
-                    if (creationStatus.equals("completed")) {
-                        return;
-                    }
-                }
-            } catch (IOException e) {
-                throw new ComponentCreationStatusCheckException(e);
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+            if (statusCode == org.apache.http.HttpStatus.SC_OK) {
+                return responseBody;
             }
-
-            try {
-                TimeUnit.SECONDS.sleep(5);
-            } catch (InterruptedException e) {
-                throw new ComponentCreationStatusCheckException(e);
-            }
+            throw new RuntimeException("Invalid response code received: " + statusCode);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-
-        throw new ComponentCreationTimeoutException();
     }
 }

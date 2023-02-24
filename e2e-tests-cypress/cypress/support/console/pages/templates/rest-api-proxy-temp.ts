@@ -13,9 +13,7 @@ import { Utils } from "../../utils";
  * associated services.
  */
 export class RestAPIProxyTemplate {
-  static SelectHttpProxyAPITemplate() {
-    cy.get('[data-testid="project-template-list-httpProxyApi"]').click();
-  }
+
 
   static skipSource() {
     cy.get('[data-cyid="btn-skip-src"]').should("be.visible").click();
@@ -41,16 +39,16 @@ export class RestAPIProxyTemplate {
     version: string = "",
     validateResourceName: string = ""
   ) {
-    cy.get('[data-cyid="api-name"]').clear().type(apiName);
+    cy.get('[data-cyid="api-name"]').within(() => cy.get('input').clear().type(apiName));
 
     if (version) {
       cy.get('[data-cyid="api-version"]').clear().type(version);
     }
 
-    cy.get('[data-cyid="api-basepath"]').clear().type(apiBasePath);
+    cy.get('[data-cyid="api-basepath"]').within(() => cy.get('input').clear().type(apiBasePath));
 
     if (endpoint) {
-      cy.get('[data-cyid="api-endpoint"]').clear().type(endpoint);
+      cy.get('[data-cyid="api-endpoint"]').within(() => cy.get('input').clear().type(endpoint));
     }
     cy.get('[data-cyid="btn-create"]').should("be.enabled").click();
 
@@ -60,28 +58,5 @@ export class RestAPIProxyTemplate {
     }
     cy.get(`[data-testid="${resourceIdentifier}"]`);
     Utils.saveComponentURL();
-  }
-
-  private static interceptValidate() {
-    cy.intercept(
-      `${Cypress.env(
-        "apimSvcURL"
-      )}/api/am/publisher/v2/apis/validate?organizationId=*&query=*`
-    ).as("validate");
-
-    cy.wait("@validate").then((r) => {
-      if (r.response.statusCode == 404) {
-        cy.get("button").then((buttons) => {
-          if (buttons.length > 0) {
-            buttons.each(function () {
-              if (this.innerText === "Create") {
-                this.click();
-                return;
-              }
-            });
-          }
-        });
-      }
-    });
   }
 }

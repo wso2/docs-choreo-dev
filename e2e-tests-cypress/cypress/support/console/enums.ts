@@ -19,32 +19,12 @@ export namespace Enums {
     graphql = "graphql",
     manualTrigger = "manualTrigger",
     scheduledTask = "scheduledTask",
+    byocRestApi ="byocRestApi"
   }
 
   export enum Accessibility {
     EXTERNAL = "external",
     INTERNAL = "internal",
-  }
-
-  export enum ComponentTemplate {
-    REST = "REST",
-    WEBHOOK = "WEBHOOK",
-    MANUAL = "MANUAL",
-  }
-
-  export enum DocumentSourceType {
-    INLINE = "INLINE",
-    MARKDOWN = "MARKDOWN",
-    URL = "URL",
-    FILE = "FILE",
-  }
-
-  export enum DocumentType {
-    SAMPLE = "SAMPLES",
-    HOWTO = "HOWTO",
-    PUBLIC_FORUM = "PUBLIC_FORUM",
-    SUPPORT_FORUM = "SUPPORT_FORUM",
-    OTHER = "OTHER",
   }
 
   export enum Environment {
@@ -59,18 +39,26 @@ export namespace Enums {
     DELETE = "DELETE",
     PUT = "PUT",
     HEAD = "HEAD",
-    CONNECT = "CONNECT",
     TRACE = "TRACE",
   }
 
   export enum ConnectorAudience {
-    PUBLIC = "public",
     PRIVATE = "private",
   }
 
   export enum Region {
     EU = "EU",
     US = "US",
+  }
+
+  export enum Perspective {
+    IDEVP = "perspective-pickeridevp",
+    APIM = "perspective-pickerapim",
+  }
+
+  export enum ComponentType {
+    MI_REST_API = "miRestApi",
+    BYOC_REST_API = "byocRestApi"
   }
 
   export enum RepoType {

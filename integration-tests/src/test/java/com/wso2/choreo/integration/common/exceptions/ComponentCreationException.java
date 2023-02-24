@@ -5,6 +5,9 @@ package com.wso2.choreo.integration.common.exceptions;
  */
 public class ComponentCreationException extends Exception {
 
+    public ComponentCreationException(String message) {
+    }
+
     public ComponentCreationException(int statusCode, String message) {
         super("{ statusCode=" + statusCode +
                 ", message='" + message + "'}");

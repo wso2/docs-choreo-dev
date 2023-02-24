@@ -20,12 +20,11 @@ import { Enums } from "../../../support/console/enums";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-
-import { REUSABLE_PROJECT_NAME } from "../../../support/devportal/constants";
 import { Utils } from "../../../support/console/utils";
-import { GitHub } from "../../../support/github/github";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
+import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
+import { GitHub } from "../../../support/github/github";
 
 describe("Create Schedule Trigger", () => {
   const SCHEDULE_NAME = "create-ScheduleTrigger-1.7";
@@ -37,6 +36,7 @@ describe("Create Schedule Trigger", () => {
 
   before(() => {
     LoginPage.login();
+    GitHub.deleteWebhooks("schedule-trigger")
   });
 
   after(() => {
@@ -63,7 +63,7 @@ describe("Create Schedule Trigger", () => {
       Enums.Region.EU
     );
     
-    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
   it("Verify component deployment", () => {

@@ -38,16 +38,7 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="deployment-status"]', { timeout: 360000 }).contains("Active", { timeout: 360000 });
   }
 
-  static waitTillAutoBuildComplete() {
-    window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.wait(600);
-    cy.get('[data-testid="btn-stop"]').should("be.visible");
 
-    cy.get('[data-cyid="deployment-status"]', { timeout: 360000 }).contains(
-      "Active",
-      { timeout: 360000 }
-    );
-  }
   static promoteToProd(isExternalAPI: boolean = true) {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
@@ -119,10 +110,7 @@ export class ComponentDeployPage {
     );
   }
 
-  static stopScheduleTask() {
-    cy.contains("Stop").eq(0).click({ multiple: true });
-    cy.contains("Stop").eq(0).click({ multiple: true });
-  }
+
 
   static configureAndDeploy(configValue: string) {
     window.localStorage.setItem("hideSocialShareModel", "true");
@@ -150,9 +138,7 @@ export class ComponentDeployPage {
     cy.get('.ConfigForm button[type="submit"]').click();
   }
 
-  static isDeploymentSuccessful() {
-    return cy.get('[title="Build Success"]', { timeout: 90000 });
-  }
+
 
   static promoteWebHookToProd(configValue: string) {
     this.promote({
@@ -173,41 +159,10 @@ export class ComponentDeployPage {
     cy.get('[data-cyid*="test-nav-btn"]').should("be.visible");
   }
 
-  static promoteWebHookToSTG(config: string) {
-    cy.get('[data-cyid*="promote"]').should("be.enabled").click();
-    cy.get(".MuiCardContent-root button")
-      .contains("Next", { timeout: 360000 })
-      .should("be.visible")
-      .click();
-    cy.get(".ConfigForm input").type(config);
-    cy.get(".ConfigForm button").contains("Promote").click();
-  }
-
-  static verifyInternalAPIdevWarning() {
-    cy.get('[data-testid="warning-banner"]', { timeout: 150000 })
-      .eq(0)
-      .should("be.visible");
-    return cy
-      .get('[data-testid="env.invoke.url.internal.endpoint.warning"]>p')
-      .eq(0)
-      .invoke("text");
-  }
-
-  static verifyInternalAPIprodWarning() {
-    cy.get('[data-testid="warning-banner"]', { timeout: 150000 })
-      .eq(1)
-      .should("be.visible");
-    return cy
-      .get('[data-testid="env.invoke.url.internal.endpoint.warning"]>p')
-      .eq(1)
-      .invoke("text");
-  }
-
   static stopAllDeployment() {
-    cy.wait(3000);
-    this.stopDevContainer();
-    this.stopStgContainer();
-    this.stopProdContainer();
+      this.stopDevContainer();
+      this.stopStgContainer();
+      this.stopProdContainer();
   }
 
   private static stopContainer(stpButton: number, len: number) {
@@ -258,10 +213,7 @@ export class ComponentDeployPage {
     }
   }
 
-  private static promote({
-    settingButtonCount,
-    promoButtonIndex = 0,
-  }: PromoteConfigs) {
+  private static promote({ }: PromoteConfigs) {
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
       .should("be.enabled")
       .wait(2000)
@@ -271,64 +223,6 @@ export class ComponentDeployPage {
       "not.be.disabled"
     );
   }
-
-  static configureAndDeploySalesforceToGsheet(
-    sfUsername: string,
-    sfPassword: string,
-    salesforceOAuthConfig: string,
-    sfclientId: string,
-    sfclientSecret: string,
-    sfrefreshToken: string,
-    sfrefreshUrl: string,
-    sfsalesforceBaseUrl: string,
-    gsClientId: string,
-    gsclientSecret: string,
-    gsrefreshToken: string,
-    gsrefreshUrl: string,
-    gsspreadsheetId: string,
-    gsworksheetName: string
-  ) {
-    cy.wait(8000);
-    window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-deploy-api"]').click();
-    cy.contains("Deploy").should("be.visible").click();
-    const configField = "[type='text']";
-    cy.get("[data-cyid='username']").type(sfUsername);
-    cy.get("[data-cyid='password']").type(sfPassword);
-    cy.get("[data-cyid='clientId']").eq(0).type(salesforceOAuthConfig);
-    cy.get("[data-cyid='clientSecret']").eq(0).type(sfclientId);
-    cy.get("[data-cyid='refreshToken']").eq(0).type(sfclientSecret);
-    cy.get("[data-cyid='refreshUrl']").eq(0).type(sfrefreshToken);
-    cy.get("[data-cyid='worksheetName']")
-      .scrollIntoView()
-      .type(gsworksheetName);
-    cy.get("[data-cyid='salesforceBaseUrl']").type(sfrefreshUrl);
-    cy.get("[data-cyid='salesforceBaseUrl']").type(sfsalesforceBaseUrl);
-    cy.get("[data-cyid='clientId']").eq(1).type(gsClientId);
-    cy.get("[data-cyid='clientSecret']").eq(1).type(gsclientSecret);
-    cy.get("[data-cyid='refreshToken']").eq(1).type(gsrefreshToken);
-    cy.get("[data-cyid='refreshUrl']").eq(1).type(gsrefreshUrl);
-    cy.get("[data-cyid='spreadsheetId']").type(gsspreadsheetId);
-    cy.get('button[type="submit"]').scrollIntoView().click();
-  }
-
-  static promoteConfigDeployment() {
-    window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-promote"]', { timeout: 250000 })
-      .scrollIntoView()
-      .should("be.visible")
-      .click({ force: true });
-    cy.wait(5000);
-    cy.get('[data-cyid="btn-promote"]').click({ force: true });
-    cy.wait(5000);
-    cy.get('input[name="promote-deploy"]').eq(1).click();
-    cy.get('[type="button"]').contains("Next").click();
-    cy.wait(10000);
-    cy.get("[data-cyid='username']").click();
-    cy.get('span[class="MuiButton-label"]').contains("Back").scrollIntoView();
-    cy.get('button[type="submit"]').click();
-  }
-
   static verifyDeploymentStatus() {
     cy.get('[data-cyid="deployment-status"]').eq(0).contains("Active");
   }
@@ -360,5 +254,20 @@ export class ComponentDeployPage {
       .contains("Active")
       .should("be.visible");
     cy.get('[data-cyid*="promote"]').should("not.be.disabled");
+  }
+
+  static addNewVersion(branch: string = "feature", version: string = "1.1") {
+    cy.get('[data-cyid="version-picker"]').click()
+    cy.get('[data-cyid="btn-create-version"]').should('be.visible').click()
+    cy.get('[role="dialog"]').within(() => {
+      cy.get('[data-testid*="feature"]').click()
+    })
+    cy.get(`[data-value="${branch}"]`).click()
+    cy.get('[role="dialog"]').within(() => {
+      cy.get(`[name="Version name"]`).type(version)
+      cy.get('[data-testid="create-version-create"]').click()
+      cy.get('[data-testid="dialog-close-icon"]').should('not.exist')
+    })
+    cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
   }
 }

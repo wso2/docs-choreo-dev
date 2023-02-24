@@ -10,22 +10,21 @@
 
 package com.wso2.choreo.integration.common.email;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import java.util.Properties;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.search.SearchTerm;
-import java.util.Properties;
 
 /**
  * Base class for email related tests.
  */
 public class EmailUtils {
-    private final static Logger log = LoggerFactory.getLogger(EmailUtils.class);
+    private static final Logger log = LogManager.getLogger(EmailUtils.class);
 
     public static boolean checkForMail(String imapHost, String imapPassword, int imapPort, final String searchText, String imapUser, long receivedTimestamp) throws Exception {
         Properties properties = new Properties();

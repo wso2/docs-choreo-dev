@@ -9,14 +9,14 @@ mutation {
                         projectId: "{{projectId}}",
                         labels: "",
                         componentType: "byocRestApi",
-                        port: 8080,
-                        oasFilePath: "",
+                        port: 80,
+                        oasFilePath: "{{oasFilePath}}",
                         accessibility: "external",
                         byocConfig: {
                         dockerfilePath: "{{dockerfilePath}}",
-                        dockerContext:".",
+                        dockerContext: "{{dockerContext}}",
                         srcGitRepoUrl:"{{srcGitRepoUrl}}",
-                        srcGitRepoBranch: "feature"
+                        srcGitRepoBranch: "main"
                         }
                 }
     )

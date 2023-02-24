@@ -39,6 +39,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: cm-cio-incident-configurator
+            - configMapRef:
+                name: env-cio-incident-configurator
+            - secretRef:
+                 name: secret-cio-incident-configurator
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
@@ -78,12 +82,23 @@ spec:
             - name: config
               mountPath: /home/ballerina/Config.toml
               subPath: Config.toml
+            - name: secret-cio-incident-configurator
+              mountPath: "/mnt/csi/secret-cio-incident-configurator"
+              readOnly: true
       volumes:
         - name: temp
           emptyDir: {}
         - name: config
           configMap:
             name: cm-file-cio-incident-configurator
+        - name: secret-cio-incident-configurator
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cio-incident-configurator
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
       affinity:

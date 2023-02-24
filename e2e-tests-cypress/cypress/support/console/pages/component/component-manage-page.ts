@@ -12,7 +12,7 @@
  */
 
 import { Enums } from "../../enums";
-import { Utils } from "../../utils";
+
 
 export class ComponentAPILifecycle {
   static devportl_btn = '[data-testid="go-to-dev-portal-btn"]';
@@ -40,12 +40,6 @@ export class ComponentAPILifecycle {
       .invoke("text");
   }
 
-  static verifyProdRevision() {
-    return cy
-      .get('.MuiBox-root >div>div>span[class*="MuiChip-label"]')
-      .eq(1)
-      .invoke("text");
-  }
   static publish(audience: Enums.ConnectorAudience) {
     this.publishToMarketplace(audience);
     return cy
@@ -73,21 +67,6 @@ export class ComponentAPILifecycle {
     cy.get(ComponentAPILifecycle.devportl_btn).should("not.be.enabled");
   }
 
-  static deprecate() {
-    cy.get('[data-testid="Deprecate-lc-btn"]').click();
-  }
-
-  static block() {
-    cy.get('[data-testid="Block-lc-btn"]').click();
-  }
-
-  static deployAsPrototype() {
-    cy.get('[data-testid="Deploy as a Prototype-lc-btn"]').click();
-  }
-
-  static goToDevportal() {
-    cy.get(ComponentAPILifecycle.devportl_btn).click();
-  }
 
   static goToDeveloperPortalWithoutLogin(idpUser: string) {
     cy.get("[data-cyid=go-to-dev-portal-btn]")
@@ -99,34 +78,11 @@ export class ComponentAPILifecycle {
   static selectUsagePlans(...plans) {
     cy.get('[data-testid="Usage plans"]').click();
     cy.get('[data-testid="checkbox-Unlimited"]').click();
-    plans.forEach((plan) => {
-      const pln = `[data-testid="checkbox-${plan}"]`;
-      cy.get(pln).click();
-    });
+    plans.forEach((plan) => { const pln = `[data-testid="checkbox-${plan}"]`; cy.get(pln).click(); });
     cy.get("button > span").contains("Save").click();
     cy.get('[data-testid="checkbox-Unlimited"]');
   }
 
-  static addDocument(
-    documentName: string,
-    documentSummary: string,
-    documentType: DocumentType,
-    documentSourceType: Enums.DocumentSourceType,
-    documentSource: string
-  ) {
-    cy.get('[data-testid="Documents"]').click();
-    cy.get('[data-testid="add-new-doc"]').click();
-    cy.get('[data-testid="document-name"]>div>input').type(documentName);
-    cy.get('[data-testid="document-summary"]>div>textarea').type(
-      documentSummary
-    );
-    cy.get('[data-testid="document-type-selector"]').click();
-    cy.get(`dta-value=${documentType}`).click();
-    cy.get('[data-testid="document-source-selector"]').click();
-    cy.get(`dta-value=${documentSourceType}`).click();
-    cy.get('[data-testid="document-url"]>div>input').type(documentSource);
-    cy.contains("Save").click();
-  }
 
   static publishToMarketplace(connectorAudience: Enums.ConnectorAudience) {
     cy.get('[data-testid="Publish-lc-btn"]').click();
@@ -135,6 +91,7 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="publish-btn"]').should("be.enabled");
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').should("be.enabled").click();
+    cy.wait(1000);
     cy.get('[data-testid="published-connector-info"]').contains(
       "You have already published a connector for this API."
     );
@@ -250,7 +207,7 @@ export class ComponentAPILifecycle {
       .click();
   }
 
-  static applyConfiguration(env: Enums.Environment, revision: string = "") {
+  static applyConfiguration() {
     cy.get('[data-cyid="btn-save-settings"]').click();
     cy.get("button").contains("Apply").click().wait(2000);
     cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
@@ -285,12 +242,7 @@ export class ComponentAPILifecycle {
     cy.log("Successfully updated the API visibility");
   }
 
-  static verifyAPIAccessMode(accessMode: string) {
-    cy.get('[data-cyid="dropdown-api-access-mode-selector"]')
-      .should("exist")
-      .should("have.text", accessMode);
-    cy.log("Successfully verified the API Access Mode", accessMode);
-  }
+
 
   static updateAPIAccessMode(accessMode: string) {
     cy.get('[data-cyid="dropdown-api-access-mode-selector"]>div')
@@ -366,11 +318,7 @@ export class ComponentAPILifecycle {
     // this.verifyDeleteAllPermissionsFromReources();
   }
 
-  static verifyDeleteAllPermissionsFromReources() {
-    cy.get('[data-testid="autocomplete-textfield"]>div')
-      .find(".MuiChip-root")
-      .should("have.length", 0);
-  }
+
 
   static selectPermission(permissionName: string) {
     cy.get(`[data-testid="scope-item-checkbox-${permissionName}"]`).click();

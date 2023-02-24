@@ -22,6 +22,7 @@ resources:
   - email-service.yaml
   - frontend.yaml
   - loggingapi.yaml
+  - moesif-service.yaml
   - multivariate-anomaly-detector-notification-manager.yaml
   - negotiator.yaml
   - obsapi.yaml
@@ -46,6 +47,7 @@ resources:
   - cio-query-api-service.yaml
   - cio-incident-configurator.yaml
   - crypto-key-service.yaml
+  - cdn-tls-synchronizer.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587,25,1433,6380
