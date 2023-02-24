@@ -141,7 +141,7 @@ Community support is available for all three plans. In addition, paid support is
 |----------------|-----------------|------------|
 | Community support | Community support and paid plans | Community support and paid plans|
 
-For information about support plans, see the [Billing Portal](https://subscriptions.wso2.com/).
+For information about support plans, see the [Customer Support](https://wso2.com/choreo/customer-support/).
 
 
 

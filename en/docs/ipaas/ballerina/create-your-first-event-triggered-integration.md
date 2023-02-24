@@ -55,7 +55,7 @@ Let's create a new project and add an event-triggered integration to it by follo
 10. Click **Ballerina** to select Ballerina as the build preset.
 
     !!! info
-        The build preset specifies the type of build that Choreo needs to run for the component (for example, Choreo needs to run a micro integrator build for components developed via the [WSO2 Integration Studio]((https://wso2.com/integration/integration-studio/), a Ballerina build for a component added via a Ballerina project etc.).
+        The build preset specifies the type of build that Choreo needs to run for the component (for example, Choreo needs to run a micro integrator build for components developed via the [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), a Ballerina build for a component added via a Ballerina project etc.).
 
 11. In the **Path** field enter the path to the directory in your GitHub repository that contains the `Ballerina.toml` file.
 
@@ -133,7 +133,7 @@ Let's deploy your event-triggered integration to the development environment to 
 1. In the Choreo Console, click **Deploy** for your component, and click **Config & Deploy**.
 
     !!! info
-        When you click **Deploy**, you will see the following deployment error displayed.<br/><br/>![Deployment error](../../../assets/img/tutorials/event-triggered-integration/automatic-deployment-failure.png){.cInlineImage-threeQuarter}<br/><br/>This is because the automatic deployment for the event-triggered integration failed when you committed its updated implementation with new configurable variables.<br/><br/>For more information about automatic deployment, see [Deply Your Component](../../deploy/deploy-your-component.md#deploy-automatically)<br/>
+        When you click **Deploy**, you will see the following deployment error displayed.<br/><br/>![Deployment error](../../assets/img/tutorials/event-triggered-integration/automatic-deployment-failure.png){.cInlineImage-threeQuarter}<br/><br/>This is because the automatic deployment for the event-triggered integration failed when you committed its updated implementation with new configurable variables.<br/><br/>For more information about automatic deployment, see [Deply Your Component](../../deploy/deploy-your-component.md#deploy-automatically)<br/>
 
 3. In the **Configure & Deploy** pane, enter the following information:
 

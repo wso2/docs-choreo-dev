@@ -71,7 +71,7 @@ Choreo adds the migrated components to a project named `DefaultProject-{ORGANIZA
 
 You can deploy them after editing and testing them in the VS Code Editor as follows:
 
-1. Access the current Choreo version via [https://console.preview.choreo.dev/](https://console.preview.choreo.dev/).
+1. Access the current Choreo version via [https://console.choreo.dev/](https://console.choreo.dev/).
 
 2. In the Home page, select the **`DefaultProject-{ORGANIZATION_NAME}`** project.
 

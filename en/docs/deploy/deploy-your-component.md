@@ -1,6 +1,6 @@
 # Deploy Your Component
 
-Deploying your component on Choreo makes it invocable. Once you have designed, tested, and committed the REST API, you can deploy it.
+Deploying your component on Choreo makes it invokable. Once you have designed, tested, and committed the REST API, you can deploy it.
 
 To deploy a component, follow the steps below:
 
