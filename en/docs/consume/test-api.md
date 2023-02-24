@@ -27,9 +27,9 @@ This guide will take you through the steps to test an API in Choreo.
         
     To try out the API in the development/production environment, select the endpoint with the **Development** or **Production** label as relevant.
 
-7. From the **Subscribed Application** list, select the application you used to subscribe to the API. To learn how to subscribe to an application, see [Manage Subscriptions](../manage-subscription/). 
+7. From the **Subscribed Application** list, select the application you used to subscribe to the API. To learn how to subscribe to an application, see [Manage Subscriptions](manage-subscription.md). 
 
-8. Click **Get Test Key** on the **Access Token** field to generate a test access token. To learn more about access tokens and generating tokens for production usage, see [Manage Applications](../manage-application/#generate-keys).
+8. Click **Get Test Key** on the **Access Token** field to generate a test access token. To learn more about access tokens and generating tokens for production usage, see [Manage Applications](manage-application.md#generate-keys).
 
 9. Next, expand a resource you want to test by clicking on it.
 
