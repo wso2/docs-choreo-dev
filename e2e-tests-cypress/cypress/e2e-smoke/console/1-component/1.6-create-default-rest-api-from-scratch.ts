@@ -11,6 +11,7 @@ import { ProjectListingPage } from "../../../support/console/pages/projects/proj
 import { Utils } from "../../../support/console/utils";
 import { ComponentData } from "../../../support/interfaces/component-data";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
+import { GitHub } from "../../../support/github/github";
 
 describe("Verify BYOR functionality", () => {
   const PROJECT_DESCRIPTION = "Internal API Test";
@@ -32,6 +33,7 @@ describe("Verify BYOR functionality", () => {
 
   before(() => {
     LoginPage.login();
+    GitHub.deleteWebhooks("greeting-rest-api")
   });
 
   after(() => {

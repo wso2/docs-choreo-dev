@@ -213,8 +213,7 @@ export class ComponentDeployPage {
     }
   }
 
-  private static promote({
-  }: PromoteConfigs) {
+  private static promote({ }: PromoteConfigs) {
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
       .should("be.enabled")
       .wait(2000)

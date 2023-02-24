@@ -24,6 +24,7 @@ import { ComponentListingPage } from "../../../support/console/pages/component/c
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
+import { GitHub } from "../../../support/github/github";
 
 describe("Verify project creation functionality", () => {
   const queryParameters1 = [{ key: "number", value: "2" }];
@@ -35,6 +36,7 @@ describe("Verify project creation functionality", () => {
 
   before(() => {
     LoginPage.login();
+    GitHub.deleteWebhooks("rest-api")
   });
 
   after(() => {
