@@ -15,11 +15,20 @@ You can follow the steps below to test your REST API using the integrated OpenAP
 
 3. To open the test view, click the **Test** on the left navigation menu.
 
-4. Click **Try it out**.
+4. Select the required endpoint from the **API Endpoint** list.
 
-5. Enter any parameter values if necessary.
+    If you want to test the API in your sandbox environment before trying it in the development environment, select the sandbox endpoint. If not, select the API endpoint
 
-6. Click **Execute**.
+    !!! info
+        You can provide a sandbox endpoint for testing purposes when you deploy your REST API. For more information, see [Deploy Your Component](../deploy/deploy-your-component.md).
+
+5. Expand the resource that you want to test.
+
+6. Click **Try it out**.
+
+7. Enter any parameter values if necessary.
+
+8. Click **Execute**.
 
     You can view the response body under **Responses**.
 
