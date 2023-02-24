@@ -49,18 +49,11 @@ To add third-party libraries to the Micro Integrator, you can add a new director
 
 ![Libs Directory](../../assets/img/ipaas/integration-studio/libs_dir.png){.cInlineImage-half}
 
-## Scan Third-party libraries for security vulnerable
+## Scan Third-party libraries to identify security vulnerablities
 
-A security vulnerability scan is performed to identify potential weaknesses in a application that could
-be exploited by attackers. By conducting vulnerability scans, organizations can proactively detect and mitigate security
-risks before they are exploited, which can help prevent data breaches, system compromises, and other security incidents.
-It is an important aspect of maintaining the overall security of an organization's IT infrastructure.
+Conducting security vulnerability scans is crucial for identifying potential weaknesses in an application that could be exploited by attackers. This proactive approach enables organizations to detect and mitigate security risks before they are exploited, thereby preventing data breaches, system compromises, and other security incidents.
 
-Choreo Integrations scan Third-party libraries to identify security vulnerabilities. Before the Integrations deployment,
-A Trivy scan is performed to identify any `Critical` vulnerability. The deployment will be halt if it found any `Critical`
-vulnerable and the developer should fix it before deploying again. The `Library (Trivy) vulnerable scan` step in the
-deployment page Console, gives the status of the Trivy scan and if there are any security failures, developers can click on
-the `Library (Trivy) vulnerable scan` step to view the logs.         
+During deployment, Choreo performs a Trivy scan to detect critical vulnerabilities in third-party libraries added to the integration component. If the scan detects any critical vulnerabilities, it halts the deployment process. The deployment panel shows the Trivy scan status and any security failures in the Library (Trivy) vulnerable scan step, which you can access by clicking on it. After fixing the vulnerability, you can redeploy the component.
 
 ## Environment variables
 
