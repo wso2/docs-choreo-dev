@@ -110,7 +110,7 @@ nav:
           - Develop Integrations with Ballerina: ipaas/ballerina/develop-integrations-with-ballerina.md
           - Create Your First Event-triggered Integration: ipaas/ballerina/create-your-first-event-triggered-integration.md
       - Micro Integrator:
-          - Develop Integrations with the Micro Integrator: ipaas/micro-integrator/develop-integrations-with-integration-studio.md
+          - Develop Integrations with the Integration Studio: ipaas/micro-integrator/develop-integrations-with-integration-studio.md
           - Create Your First Integration: ipaas/micro-integrator/create-your-first-integration.md
   - Administer:
       - Connect to an External Identity Provider: administer/connect-to-an-external-identity-provider.md  
