@@ -53,7 +53,7 @@ To add third-party libraries to the Micro Integrator, you can add a new director
 
 Conducting security vulnerability scans is crucial for identifying potential weaknesses in an application that could be exploited by attackers. This proactive approach enables organizations to detect and mitigate security risks before they are exploited, thereby preventing data breaches, system compromises, and other security incidents.
 
-During deployment, Choreo performs a Trivy scan to detect critical vulnerabilities in third-party libraries added to the integration component. If the scan detects any critical vulnerabilities, it halts the deployment process. The deployment panel shows the Trivy scan status and any security failures in the Library (Trivy) vulnerable scan step, which you can access by clicking on it. After fixing the vulnerability, you can redeploy the component.
+During deployment, Choreo performs a Trivy scan to detect critical vulnerabilities in third-party libraries added to the integration component. If the scan detects any critical vulnerabilities, it halts the deployment process. The deployment pane shows the Trivy scan status and any security failures in the Library (Trivy) vulnerable scan step, which you can access by clicking on it. After fixing the vulnerability, you can redeploy the component.
 
 ## Environment variables
 
