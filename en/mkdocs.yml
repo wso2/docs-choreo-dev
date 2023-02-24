@@ -58,7 +58,8 @@ nav:
           - Create Your First REST API: get-started/tutorials/create-your-first-rest-api.md
           - Expose an Existing API via a REST API Proxy: get-started/tutorials/create-your-first-rest-api-proxy.md
           - Create Your First Webhook: get-started/tutorials/create-your-first-webhook.md
-          - Create Your First Integration: get-started/tutorials/create-your-first-integration.md
+          - Create Your First Integration as an API: get-started/tutorials/create-your-first-integration-as-an-api.md
+          - Create Your First Event-Triggered Integration: get-started/tutorials/create-your-first-event-triggered-integration.md
   - Create:
       - Components:
           - REST APIs: develop/components/rest-api.md
@@ -66,7 +67,7 @@ nav:
           - Webhooks: develop/components/webhook.md
           - Scheduled Tasks: develop/components/scheduled-tasks.md
           - GraphQL APIs: develop/components/graphql-api.md
-      - Manage Respository: 
+      - Manage Repository: 
           - Connect Your Own GitHub Repository: develop/manage-repository/connect-your-own-github-repository-to-choreo.md
       - Run and Test:
           - Forecast Performance Metrics: develop/run-and-test/forecast-performance-metrics.md
@@ -103,6 +104,14 @@ nav:
           - Programmatic Access to Choreo Insights API: observe-and-analyze/analyze/programmatic-access-choreo-insights-api.md
   - Alerts: alerts.md
   - DevOps: devops/devops-portal.md
+  - iPaaS:
+      - Getting Started: ipaas/get-started-with-choreo-ipaas.md
+      - Ballerina:
+          - Develop Integrations with Ballerina: ipaas/ballerina/develop-integrations-with-ballerina.md
+          - Create Your First Event-triggered Integration: ipaas/ballerina/create-your-first-event-triggered-integration.md
+      - Micro Integrator:
+          - Develop Integrations with the Integration Studio: ipaas/micro-integrator/develop-integrations-with-integration-studio.md
+          - Create Your First Integration: ipaas/micro-integrator/create-your-first-integration.md
   - Administer:
       - Connect to an External Identity Provider: administer/connect-to-an-external-identity-provider.md  
       - Configure a Custom Domain for APIs: administer/configure-a-custom-domain-for-apis.md
@@ -160,6 +169,7 @@ plugins:
           'tutorials/configure-automatic-deployment.md': 'https://wso2.com/choreo/docs/deploy/configure-automatic-deployment/'
           'tutorials/map-data.md': 'https://wso2.com/choreo/docs/develop/explore-code-editor/map-data/'
           'rest-api.md': 'https://wso2.com/choreo/docs/develop/components/rest-api/'
+          'api-proxies': 'https://wso2.com/choreo/docs/develop/components/api-proxy/'
           'api-proxies/api-proxy.md': 'https://wso2.com/choreo/docs/develop/components/api-proxy/'
           'webhook.md': 'https://wso2.com/choreo/docs/develop/components/webhook/'
           'scheduled-tasks.md': 'https://wso2.com/choreo/docs/develop/components/scheduled-tasks/'
@@ -174,6 +184,7 @@ plugins:
           'insights/configure-alerts.md': 'https://wso2.com/choreo/docs/observe-and-analyze/analyze/configure-alerts/'
           'insights/choreo-insights-api.md': 'https://wso2.com/choreo/docs/observe-and-analyze/analyze/choreo-insights-api/'
           'insights/programmatic-access-choreo-insights-api.md': 'https://wso2.com/choreo/docs/observe-and-analyze/analyze/programmatic-access-choreo-insights-api/'
+          'administer/connect-to-an-external-identity-provider.md' : 'https://wso2.com/choreo/docs/administration/connect-to-an-external-identity-provider/'
           'administration/connect-to-an-external-identity-provider.md': 'https://wso2.com/choreo/docs/administration/connect-to-an-external-identity-provider/'
           'administration/customize-developer-portal-domain.md': 'https://wso2.com/choreo/docs/administration/customize-developer-portal-domain/'
           'administration/configure-a-custom-domain-for-apis.md': 'https://wso2.com/choreo/docs/administration/configure-a-custom-domain-for-apis/'

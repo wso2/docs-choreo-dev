@@ -13,7 +13,7 @@ Consider a scenario where a developer has created an integration in [WSO2 Integr
 For this tutorial, let's use a basic sample application to expose a proxy service developed in the [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).
 
 !!! tip "Before you begin!"
-    To try this tutorial, you can use a sample integration designed via [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).<br/><br/>To do this, fork the [choreo-examples GitHub repository](https://github.com/wso2/choreo-examples/tree/main/ipaas/wso2-synapse/simple-proxy).
+    To try this tutorial, you can use a sample integration designed via [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).<br/><br/>To do this, fork the [choreo-examples GitHub repository](https://github.com/wso2/choreo-examples/tree/main/ipaas/micro-integrator/simple-proxy).
 
 ## Step 1: Create
 
@@ -47,15 +47,15 @@ Let's add the integration by following the steps given below:
 
 11. Under **Build Preset**, click **Micro Integrator**.
 
-     !!! info
-         The build preset specifies the type of build that Choreo needs to run for the component (for example, Choreo needs to run a micro integrator build for components developed via the [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), a Ballerina build for a component added via a Ballerina project, etc.,).
+    !!! info
+        The build preset specifies the type of build that Choreo needs to run for the component (for example, Choreo needs to run a micro integrator build for components developed via the [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), a Ballerina build for a component added via a Ballerina project, etc.,).
 
 12. Enter information related to the `MI Hello World` project as follows:
 
      | **Field**             | **Value**                                      |
      |-----------------------|------------------------------------------------|
-     | **Path**              | `ipaas/wso2-synapse/simple-proxy`              |
-     | **OpenAPI File Path** | `ipaas/wso2-synapse/simple-proxy/openapi.yaml` |
+     | **Path**              | `ipaas/micro-integrator/simple-proxy`              |
+     | **OpenAPI File Path** | `ipaas/micro-integrator/simple-proxy/openapi.yaml` |
  
 13. Click **Create**.
 
@@ -84,9 +84,9 @@ In this tutorial, let's test via the OpenAPI Console:
 
 2. Click **OpenAPI Console**.
 
-3. Select **/HelloWorld** resource and click **Try it out**.
+3. Select the **/HelloWorld** resource and click **Try it out**.
 
-4. Click **Execute**. Choreo displays the following response in **Response body**.
+4. Click **Execute**. Choreo displays the following response under **Response body**.
 
     `{"Hello":"Integration"}`
 
@@ -114,3 +114,4 @@ Congratulations! You have successfully exposed an integration designed in the [W
 
 !!! info "What's next"
     For a micro integrator REST API, you can also perform API management actions. For more information about these API Management actions, see [API Management](../../manage/api-management.md).
+

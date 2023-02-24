@@ -1,6 +1,6 @@
 # Deploy a Containerized Choreo Component
 
-Choreo allows you to deploy an application written in a wide range of language frameworks (for example, Java, Go, Nodejs, Python, PHP, etc.) on shared or private data planes when you create any of the following components:
+Choreo allows you to deploy an application written in a wide range of language frameworks (for example, Java, Go, NodeJs, Python, PHP, etc.) on shared or private data planes when you create any of the following components:
 
 - REST APIs
 - Scheduled tasks
@@ -27,7 +27,7 @@ Let's add a containerized REST API component by following these steps:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 
-2. Create a project to add the REST API component. You can follow the instructions under [step 1 in the Connect Your Own GitHub Repository to Choreo](../connect-your-own-github-repository-to-choreo/#step-1-create-a-project-to-add-the-rest-api-component) tutorial.
+2. Create a project to add the REST API component. You can follow the instructions under [Prerequisites in the Connect Your Own GitHub Repository to Choreo](../develop/manage-repository/connect-your-own-github-repository-to-choreo.md#prerequisites-create-a-project) tutorial.
 
 3. On the **Components** page, click **Create** on the **REST API** card.
 
@@ -56,10 +56,10 @@ Let's add a containerized REST API component by following these steps:
     | **GitHub Repository**        | You can authorize the REST API to access all the repositories in the selected GitHub account or select one or more repositories that you want to allow the REST API to access. For this tutorial, you can select your fork of the choreo-sample-apps repository |`choreo-sample-apps`  |
     | **Branch** |The branch of the repository |`main` |
     | **Build Preset** | Determines the implementation of the component: Ballerina or any other language as a Docker container|`Dockerfile`|
-    | **Dockerfile path**|The path to your Dockerfile. This path is defined relative to the repository root.<br/>e.g., If the Dockerfile is at the repository root, the value for this field for a mono-repo is `service-one/Dockerfile`.  | `nodejs/rest-api/Dockerfile` |
+    | **Dockerfile path**|The path to your Dockerfile. This path is defined relative to the repository root.<br/>e.g., If the Dockerfile is at the repository root, the value for this field for a monorepo is `service-one/Dockerfile`.  | `nodejs/rest-api/Dockerfile` |
     | **Docker build Context Path** |The Docker build context path. To include the repository root, leave the default `**.**` value. | `nodejs/rest-api/` |
     | **Port** | The port at which your service is running. | `8080` |
-    | **OpenAPI Filepath** | The path to an OpenAPI specification (in yaml/json) relative to the repository root. If you do not specify a path, the system auto-generates a default `allow-all` specification. | `nodejs/rest-api/openapi.yaml` |
+    | **OpenAPI Filepath** | The path to an OpenAPI specification (in YAML/JSON) relative to the repository root. If you do not specify a path, the system auto-generates a default `allow-all` specification. | `nodejs/rest-api/openapi.yaml` |
 
     !!! Tip 
         - The repository you select will be validated when you run a build for it.

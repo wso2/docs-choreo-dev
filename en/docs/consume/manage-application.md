@@ -39,7 +39,7 @@ Depending on your use case, you can generate an access token using one of the tw
 
 Token Exchange grant type requires you to pass a subject_token as a parameter in the token invocation call. You can obtain a subject token (id token) by using the `open_id` scope. Follow the steps below to generate an access token from the IdP along with the subject token:
 
-1. Register the IdP in Choreo by following the steps in the section [add an external IdP](/administer/connect-to-an-external-identity-provider.md#step-1-add-an-external-idp).
+1. Register the IdP in Choreo by following the steps in the section [add an external IdP](../administer/connect-to-an-external-identity-provider.md#step-1-add-an-external-idp).
 
 2. Generate a token from the registered IdP with the `openId` scope and retrieve the `id_token` from the token response.  
                 
@@ -56,7 +56,7 @@ Token Exchange grant type requires you to pass a subject_token as a parameter in
 
     - **Grant Types:** The grant types used to generate the access token. Keep Token Exchange and Refresh Token grant type selected.
     - **Public Client:** Identify the application as a public client to allow authentication without a client secret. You can use this for applications running on a browser or mobile device. 
-    - **Application acces   s token expiry time:** The access token expiry time (seconds).
+    - **Application access token expiry time:** The access token expiry time (seconds).
     - **Refresh token expiry time:** The refresh token expiry time (seconds).
     - **ID token expiry time:** ID token expiry time (seconds).
 
@@ -146,7 +146,7 @@ The above API response grants you a new access token and a refresh token.
 
 ## Grant types
 
-Choreo authentication is based on OAuth2.0. In OAuth 2.0, grant types are methods that allow client applications to obtain an access token depending on the type of the resource owner, the type of the application, and the trust relationship between the authorization server and the resource owner. 
+Choreo authentication is based on OAuth 2.0 In OAuth 2.0, grant types are methods that allow client applications to obtain an access token depending on the type of the resource owner, the type of the application, and the trust relationship between the authorization server and the resource owner. 
 
 ### Refresh token grant
 
@@ -182,7 +182,7 @@ The parameters required to invoke the revoke token endpoint are as follows:
 
 -   `access_token_to_be_revoked` - The access token to be revoked
 
--   `<base64 encoded (consumerKey:consumerSecret)>` - Use a base64 encoder to encode your consumer key and consumer secret. Choreo does not recommend the use of online base64 encoders for this purpose.
+-   `<base64 encoded (consumerKey:consumerSecret)>` - Use a Base64 encoder to encode your consumer key and consumer secret. Choreo does not recommend the use of online Base64 encoders for this purpose.
 
 - `<consumerKey>:<consumerSecret>` Thereafter, enter the encoded value for this parameter.
 
