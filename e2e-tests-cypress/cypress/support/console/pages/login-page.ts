@@ -41,9 +41,7 @@ export class LoginPage {
     this.persistApimToken();
     this.persistCookies(`${Cypress.env("idpURL")}/commonauth`);
 
-    cy.get('[data-testid="header-user-profile-menu"]', {
-      timeout: 180000,
-    }).should("be.visible");
+    cy.get('[data-testid="header-user-profile-menu"]', { timeout: 180000 }).should("be.visible");
     cy.url().then((url) => {
       if (url.includes("sample=true")) {
         const { handle } = Cypress.env("userData");

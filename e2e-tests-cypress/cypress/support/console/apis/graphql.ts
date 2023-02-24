@@ -62,7 +62,7 @@ export class GraphQL {
         ChoreoHomePage.navigateToMarketPlace();
         ChoreoHomePage.navigateToProjects();
         cy.get("tbody>tr p").should("be.visible");
-        return Promise.resolve({})
+        return cy.wrap({})
     }
     static deleteProjectsCreatedByTests(orgId: number, orgHandle: string, token: string) {
         this.getProjects().then((response) => {

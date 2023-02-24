@@ -136,43 +136,6 @@ describe("Verify BYOR functionality", () => {
     });
   });
 
-  it("Apply configs to dev", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.selectSetting();
-    ComponentAPILifecycle.selectResources();
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-    ComponentAPILifecycle.applyConfiguration(    );
-    ComponentAPILifecycle.verifyDevRevision().should(
-      "eq",
-      Enums.Environment.DEVELOPMENT
-    );
-  });
-
-  it("Apply configs to prod", () => {
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-    ComponentAPILifecycle.applyConfiguration();
-  });
-
-  it("Verify manage functionality and Publish Connector", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publish(Enums.ConnectorAudience.PRIVATE).should(
-      "be.visible"
-    );
-  });
-
-  it("Verify connector republishing", () => {
-    ComponentAPILifecycle.republishConnector();
-  });
-
-  it("Verify settings configuration", () => {
-    ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
-    ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
-  });
 
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();

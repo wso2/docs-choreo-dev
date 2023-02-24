@@ -257,10 +257,17 @@ describe("Verify project creation functionality", () => {
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publishRestApiWithoutConnector();
+    ComponentAPILifecycle.publishToMarketplace(Enums.ConnectorAudience.PRIVATE);
+  });
+
+  it("Verify connector republishing ",()=>{
+    ComponentAPILifecycle.republishConnector();
+  })
+
+  it("Verify usage plan change",()=>{
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
-  });
+  })
 
   it("Verify suspending all component deployments", () => {
     ComponentOverviewPage.navigateToDeploy();

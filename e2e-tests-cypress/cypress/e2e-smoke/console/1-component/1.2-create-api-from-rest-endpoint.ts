@@ -49,7 +49,6 @@ describe("Verify project creation functionality", () => {
 
   before(() => {
     LoginPage.login();
-    ChoreoHomePage.switchOrganization();
   });
   after(() => {
     ChoreoHomePage.logout();
