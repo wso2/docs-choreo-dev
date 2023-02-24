@@ -148,9 +148,6 @@ bash private-dataplane/configure-csi-secret-store.sh
 echo -e "\n --- Setup Nginx Ingress --- \n"
 bash private-dataplane/install-nginx-ingress.sh
 
-echo -e "\n --- Setup APIM Secrets and Certificates --- \n"
-bash private-dataplane/setup-kv-objects.sh
-
 echo "--- Setup LetsEncrypt issuer"
 #kubectl apply -f private-dataplane/certs/choreoapis-issuer.yaml
 
