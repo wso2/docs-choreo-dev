@@ -18,7 +18,7 @@ import { LoginPage } from "../login-page";
 export class ChoreoHomePage {
 
     static navigateToHome() {
-        const handle = Cypress.env("current_org")["handle"];
+        const {handle} = Cypress.env("current_org");
         cy.get(`div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home"]`).click();
     }
 

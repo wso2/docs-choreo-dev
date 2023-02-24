@@ -216,9 +216,7 @@ describe("Choreo APIM publisher scenarios", () => {
   it("Verify insight values for prod", () => {
     InsightsPage.selectTimePeriod();
     InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
-    InsightsPage.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(2);
-    });
+    InsightsPage.getTotalTraffic().should((value) => { expect(Number(value)).gte(2) });
     InsightsPage.getTotalErrorRequestCount().should("eq", "0");
     InsightsPage.getAverageErrorRate().should("eq", "0");
   });
