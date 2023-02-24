@@ -49,7 +49,7 @@ To add third-party libraries to the Micro Integrator, you can add a new director
 
 ![Libs Directory](../../assets/img/ipaas/integration-studio/libs_dir.png){.cInlineImage-half}
 
-## Scan Third-party libraries to identify security vulnerablities
+## Scan third-party libraries to identify security vulnerabilities
 
 Conducting security vulnerability scans is crucial for identifying potential weaknesses in an application that could be exploited by attackers. This proactive approach enables organizations to detect and mitigate security risks before they are exploited, thereby preventing data breaches, system compromises, and other security incidents.
 
