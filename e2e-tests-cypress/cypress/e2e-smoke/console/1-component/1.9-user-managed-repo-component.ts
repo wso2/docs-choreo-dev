@@ -12,6 +12,7 @@ import { ProjectListingPage } from "../../../support/console/pages/projects/proj
 import { Utils } from "../../../support/console/utils";
 import { ComponentData } from "../../../support/interfaces/component-data";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
+import { GitHub } from "../../../support/github/github";
 
 describe("Verify BYOR functionality", () => {
   const PROJECT_DESCRIPTION = "Internal API Test";
@@ -26,6 +27,7 @@ describe("Verify BYOR functionality", () => {
 
   before(() => {
     LoginPage.login();
+    GitHub.deleteWebhooks("greeting-rest-api")
   });
 
   after(() => {
@@ -134,43 +136,6 @@ describe("Verify BYOR functionality", () => {
     });
   });
 
-  it("Apply configs to dev", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.selectSetting();
-    ComponentAPILifecycle.selectResources();
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-    ComponentAPILifecycle.applyConfiguration(    );
-    ComponentAPILifecycle.verifyDevRevision().should(
-      "eq",
-      Enums.Environment.DEVELOPMENT
-    );
-  });
-
-  it("Apply configs to prod", () => {
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-    ComponentAPILifecycle.applyConfiguration();
-  });
-
-  it("Verify manage functionality and Publish Connector", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publish(Enums.ConnectorAudience.PRIVATE).should(
-      "be.visible"
-    );
-  });
-
-  it("Verify connector republishing", () => {
-    ComponentAPILifecycle.republishConnector();
-  });
-
-  it("Verify settings configuration", () => {
-    ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
-    ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
-  });
 
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();

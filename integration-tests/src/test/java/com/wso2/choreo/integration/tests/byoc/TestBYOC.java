@@ -1,18 +1,23 @@
 package com.wso2.choreo.integration.tests.byoc;
 
 import com.consol.citrus.annotations.CitrusTest;
+import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
+import com.wso2.choreo.integration.common.ComponentFlavour;
+import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.response.Response;
-import com.wso2.choreo.integration.models.componentstatus.Status;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -20,6 +25,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Map;
 
 public class TestBYOC extends TestNGCitrusSpringSupport {
 
@@ -32,6 +38,9 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     private String prodInvokeURL;
     String apiKey;
 
+    @Autowired
+    Map<Endpoints, HttpClient> citrusClients;
+
     @BeforeClass
     public void setup_TestBYOC() throws Exception {
        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
@@ -42,47 +51,27 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
 
     @Test()
     @CitrusTest
-    public void createByocComponent_TestBYOC() throws IOException {
+    public void createByocComponent_TestBYOC() throws Exception {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).projectId(projectId).dockerfilePath(DOCKER_FILE_PATH).build();
-        choreoComponent = GraphQL.createBYOCComponent(dto, accessToken);
+        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).projectId(projectId)
+                .srcGitRepoUrl("https://github.com/choreo-test-apps/byor-greetings-app2")
+                .oasFilePath("byoc-test/oas.yaml")
+                .dockerContext("byoc-test")
+                .dockerfilePath(DOCKER_FILE_PATH).build();
+        choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
+                ComponentFlavour.BYOC);
         Assert.assertEquals(choreoComponent.getName(), componentName);
 
     }
-
     @Test(dependsOnMethods = {"createByocComponent_TestBYOC"})
     @CitrusTest
-    public void componentRetrieval_TestBYOC() throws IOException {
-        choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandle(), accessToken);
-        Assert.assertNotNull(choreoComponent);
-    }
-
-    @Test(dependsOnMethods = {"componentRetrieval_TestBYOC"})
-    @CitrusTest
-    public void addDeploymentConfiguration_TestBYOCEUDataPlane() throws Exception {
-        Orgs.addConfiguration(choreoComponent, "dev", accessToken);
-    }
-
-    @Test(dependsOnMethods = {"addDeploymentConfiguration_TestBYOCEUDataPlane"})
-    @CitrusTest
     public void deploy_TestBYOC() throws Exception {
-        Status status = GraphQL.deployComponent(choreoComponent, accessToken);
-        Assert.assertTrue(status.isSuccess());
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
+                accessToken, choreoComponent);
+        devInvokeURL = statusDTO.getInvokeUrl();
     }
 
     @Test(dependsOnMethods = {"deploy_TestBYOC"})
-    @CitrusTest
-    public void deploymentStatusByVersion_TestBYOC() throws Exception {
-        GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
-    }
-
-    @Test(dependsOnMethods = {"deploymentStatusByVersion_TestBYOC"})
-    @CitrusTest
-    public void componentDevDeploymentStatus_TestBYOC() throws Exception {
-        devInvokeURL = GraphQL.componentDeployment(choreoComponent, "dev", accessToken).getInvokeUrl();
-    }
-
-    @Test(dependsOnMethods = {"componentDevDeploymentStatus_TestBYOC"})
     @CitrusTest
     public void addPromoteConfiguration_TestBYOC() throws Exception {
         Orgs.addConfiguration(choreoComponent, "prod", accessToken);
@@ -104,6 +93,7 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"componentProdDeploymentStatus_TestBYOC"})
     @CitrusTest
     public void invokeAPIInDev_TestBYOC() throws Exception {
+
         apiKey = APICreator.getAPIKey(choreoComponent.getApiId(), accessToken).getApikey();
         TestHelper.Movie[] movies = TestHelper.getMovies(devInvokeURL, apiKey);
         Assert.assertEquals(movies.length, 5);

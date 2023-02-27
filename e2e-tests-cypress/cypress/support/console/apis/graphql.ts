@@ -17,10 +17,12 @@ import { AbsComponent } from "../../interfaces/abs-component";
 
 import { IntegrationComponentData } from "../../interfaces/integration-component-data";
 import { PR } from "../../interfaces/pr";
+import { Project } from "../../interfaces/choreo-components/projects";
 import { ONE_HOUR } from "../constants";
 import { ChoreoHomePage } from "../pages/home/home-page";
 import { Utils } from "../utils";
 import { GraphQLQueryBuilder } from "./gql-query-builder";
+import { Component } from "../../interfaces/choreo-components/component";
 
 export const SUCCESS_STATUS_CODE = 200;
 export const NO_CONTENT_STATUS_CODE = 204;
@@ -31,15 +33,13 @@ export class GraphQL {
 
     static createComponent(projectName: string, repoName: string, componentData: AbsComponent, callback) {
         const { orgId, handle } = Cypress.env("userData");
-        this.getProjects(orgId).then(resp => {
-            const projects = resp.body.data.projects as { name: string, id: string }[]
-            const projectId = projects.find(p => p.name === projectName).id
+        this.getProjects().then(p => {
+            const projectId = p.projects.find(p => p.name === projectName).id
 
             componentData.handle = handle;
             componentData.orgId = orgId;
-            
-            const query = callback(componentData, projectId)
 
+            const query = callback(componentData, projectId)
             this.callGraphQL(query).then((res) => {
                 let id, projectId, handler;
                 if (res.body.data.createComponent) {
@@ -64,21 +64,14 @@ export class GraphQL {
         cy.get("tbody>tr p").should("be.visible");
         return cy.wrap({})
     }
-    static deleteProjectsCreatedByTests(
-        orgId: number,
-        orgHandle: string,
-        token: string
-    ) {
-        this.getProjects(orgId).then((response) => {
+    static deleteProjectsCreatedByTests(orgId: number, orgHandle: string, token: string) {
+        this.getProjects().then((response) => {
             if (response.status !== SUCCESS_STATUS_CODE) {
                 cy.log(`getProjects failed, status returned: ${response.status}`);
                 return;
             }
 
-            const projects = response.body.data.projects as {
-                id: string;
-                name: string;
-            }[];
+            const projects = response.projects
 
             const e2eProjects = projects.filter(
                 ({ name }) =>
@@ -88,7 +81,7 @@ export class GraphQL {
             cy.log(`Total projects found : ${projects.length}`);
             cy.log(`E2E projects found : ${e2eProjects.length}`);
 
-            projects.forEach((project) => {
+            e2eProjects.forEach((project) => {
                 if (this.isProjectOld(project.name)) {
                     this.deleteComponentsInProject(project.id, orgHandle, token);
                     this.deleteProject(orgId, project.id);
@@ -112,9 +105,10 @@ export class GraphQL {
 
     }
 
-    static getComponents(projectId: string, orgHandle: string) {
+    static getComponents(projectId: string) {
+        const { handle } = Cypress.env("current_org");
         const query = {
-            query: `query{ components(orgHandler: "${orgHandle}", projectId: "${projectId}"){
+            query: `query{ components(orgHandler: "${handle}", projectId: "${projectId}"){
         projectId, id, description, name, handler, displayName, displayType, version, createdAt, orgHandler,apiVersions { 
             apiVersion,
             proxyName,
@@ -128,7 +122,11 @@ export class GraphQL {
           } } }`,
         };
 
-        return this.callGraphQL(query);
+        return this.callGraphQL(query).then(res => {
+            const components = res.body.data.components as Component[]
+            const status = res.status
+            return Promise.resolve({ components, status })
+        });
     }
 
     private static deleteComponentsInProject(
@@ -137,9 +135,9 @@ export class GraphQL {
         token: string
     ) {
         cy.log("deleteComponentsInProject()");
-        this.getComponents(projectId, orgHandle).then((response) => {
-            if (response.status === SUCCESS_STATUS_CODE) {
-                response.body.data.components.forEach((component) => {
+        this.getComponents(projectId).then(response => {
+            if (response.status === SUCCESS_STATUS_CODE && response.components.length > 0) {
+                response.components.forEach((component) => {
                     const { handler } = component;
                     this.deleteConnectors(token);
                     this.changeComponentLifeCycle(projectId, handler, token);
@@ -194,11 +192,16 @@ export class GraphQL {
         });
     }
 
-    static getProjects(orgId: number) {
+    static getProjects() {
+        const { orgId } = Cypress.env("userData");
         const query = {
             query: `query{projects(orgId: ${orgId}){ id, orgId, name, version, createdDate,handler }}`,
         };
-        return this.callGraphQL(query);
+        return this.callGraphQL(query).then(res => {
+            const projects = res.body.data.projects as Project[];
+            const status = res.status
+            return Promise.resolve({ projects, status })
+        });
     }
 
 
@@ -223,8 +226,8 @@ export class GraphQL {
         componentData: IntegrationComponentData
     ) {
         const { id } = Cypress.env("current_org");
-        this.getProjects(id).then((res) => {
-            const projects = res.body.data.projects as [];
+        this.getProjects().then((res) => {
+            const projects = res.projects;
             const project = projects.find(
                 (p) => p["name"] === componentData.projectName
             );
@@ -237,7 +240,7 @@ export class GraphQL {
                                       displayName: "${componentData.componentName}",
                                       description: "",
                                       orgId: ${id},
-                                      orgHandler: "${Cypress.env(                    "choreoOrgHandle"                )}",
+                                      orgHandler: "${Cypress.env("choreoOrgHandle")}",
                                       projectId: "${project["id"]}",
                                       labels: "",
                                       componentType: "${componentData.componentType}",
@@ -291,15 +294,12 @@ export class GraphQL {
     }
 
     static getComponentInfo(projectName: string, componentName: string) {
-        const { orgId } = Cypress.env("userData");
-        this.getProjects(orgId).then(res => {
-            const projects = res.body.data.projects as { name: string }[]
+        this.getProjects().then(res => {
+            const projects = res.projects
             const project = projects.find(p => p.name === projectName)
-            const handle = Cypress.env("choreoOrgHandle");
-            this.getComponents(project["id"], handle).then(resp => {
-                const comps = resp.body.data.components as { id: string, handler: string, displayName: string }[]
-                const comp = comps.find(c => c.displayName === componentName)
-                this.getDeployedComponentDetails(project["id"], comp.handler)
+            this.getComponents(project.id).then(resp => {
+                const comp = resp.components.find(c => c.displayName === componentName)
+                this.getDeployedComponentDetails(project.id, comp.handler)
             })
         })
     }

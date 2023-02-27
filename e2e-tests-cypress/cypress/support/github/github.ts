@@ -34,6 +34,25 @@ export class GitHub {
         })
     }
 
+    static deleteWebhooks(repoName: string) {
+        const requestURI = `${Cypress.env("ghUrl")}/repos/${Cypress.env("ghOrg")}/${repoName}/hooks`
+        Utils.sendGetRequest(requestURI, this.headers).then(res => {
+            if (res.status === 200) {
+                const wh = res.body as { id: number, created_at: string }[]
+                wh.forEach(w => {
+                    const hourDiff = Date.now() - 3600000;
+                    const createdTime = Date.parse(w.created_at)
+                    if (createdTime < hourDiff) {
+                        const deleteRequest = `${Cypress.env("ghUrl")}/repos/${Cypress.env("ghOrg")}/${repoName}/hooks/${w.id}`
+                        Utils.sendDeleteRequest(deleteRequest, this.headers)
+                    }
+                })
+            }
+
+        })
+
+    }
+
 
 
 

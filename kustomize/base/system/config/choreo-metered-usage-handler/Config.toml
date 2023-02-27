@@ -1,0 +1,27 @@
+[choreo.metered_usage_handler.clients]
+subscriptionServiceUrl = "http://localhost:9090"
+grpcServiceTimeout = 10.0
+grpcServiceRetryCount = 3
+grpcServiceInterval = 10.0
+grpcServiceMaxInterval = 20.0
+grpcServiceBackoffFactor = 3.0
+stripeConnectionUrl = "https://api.stripe.com"
+emailServiceUrl = "https://localhost:8082"
+projectManagerUrl = "http://localhost:3000/api/v1"
+kubecostApiUrl = "http://localhost:9090/"
+kubecostApiMaxWaitInterval = 10.0
+kubecostApiRetryCount = 3
+kubecostApiInterval = 10.0
+kubecostApiBackoffFactor = 3.0
+
+[choreo.metered_usage_handler.db]
+dbUsername = "SA"
+dbLoginTimeout = 10000
+dbUseSsl = false
+dbConnPoolMaxOpen = 100
+dbConnPoolMinIdle = 5
+
+[choreo.metered_usage_handler.impl]
+subscriptionMappingsBatchSize = 1000
+startTime = "23:30:00"
+endTime = "23:30:00"

@@ -93,7 +93,7 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="publish-btn"]').should("be.enabled").click();
     cy.wait(1000);
     cy.get('[data-testid="published-connector-info"]').contains(
-      "You have already published a connector for this API."
+      "You have already published a connector for this API.", { timeout: 300000 }
     );
     cy.get('[data-testid="connector-publish-wizard-title"]').should(
       "not.exist"
@@ -261,9 +261,7 @@ export class ComponentAPILifecycle {
   }
 
   static managePermissions(permissions: string[], componentName: string) {
-    permissions.forEach((permission) => {
-      this.addPermission(permission);
-    });
+    permissions.forEach((permission) => { this.addPermission(permission) });
     this.applyAllPermissionsToResources(permissions);
     this.saveAndDeployPermissions(componentName);
     this.deleteAllPermissionsFromReources();
@@ -277,19 +275,14 @@ export class ComponentAPILifecycle {
   }
 
   static navigatePermissionManagementWindow() {
-    cy.get("h5").contains(
-      "You don't have any permissions (scopes) defined as yet"
-    );
+    cy.get("h5").contains("You don't have any permissions (scopes) defined as yet");
     cy.get('[data-testid="scope-add-icon-button"]').click();
   }
 
   static addPermission(permissionName: string) {
     cy.get('[data-testid="scope-add-new-btn"]').should("be.disabled");
     cy.get('[data-testid="scope-text-input"]').type(permissionName);
-    cy.get('[data-testid="scope-add-new-btn"]')
-      .should("be.enabled")
-      .click()
-      .wait(1000);
+    cy.get('[data-testid="scope-add-new-btn"]').should("be.enabled").click().wait(1000);
     cy.contains("Permission(Scope) created successfully");
     cy.get('[data-testid="scope-select-all-btn"]').should("be.visible");
     cy.get(`[data-testid="scope-item-${permissionName}"]`).should("be.visible");

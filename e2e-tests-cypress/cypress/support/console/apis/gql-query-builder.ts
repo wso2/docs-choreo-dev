@@ -131,7 +131,7 @@ export class GraphQLQueryBuilder {
           accessibility: "${byocComponent.accessibility}",
           byocConfig: {
             dockerfilePath:  "byoc-test/Dockerfile",
-            dockerContext:".",
+            dockerContext:"byoc-test",
             srcGitRepoUrl:"https://github.com/choreo-test-apps/byor-greetings-app2",
             srcGitRepoBranch: "main"
           }

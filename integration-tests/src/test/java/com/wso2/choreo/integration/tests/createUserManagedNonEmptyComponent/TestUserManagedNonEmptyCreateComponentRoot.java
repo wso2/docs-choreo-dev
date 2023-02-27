@@ -36,6 +36,7 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
@@ -567,10 +568,12 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
         @CitrusTest
         public void addPromoteConfiguration_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
                 //Retrieve latest component.
-                testComponentV2 = GraphQL.getComponentDetails(projectId,componentHandler, accessToken);
+                testComponentV2 = GraphQL.getComponentDetails(projectId, componentHandler, accessToken);
 
-                Commit[] commitHistory = GraphQL.getCommitHistory(testComponentV2.getId(), accessToken);
-                Orgs.addConfiguration(choreoTestClient, this, testComponentV2, commitHistory, Constant.PROD_ENVIRONMENT);
+                List<Commit> commitHistory = GraphQL.getCommitHistory(this, choreoTestClient,
+                        testComponentV2.getId(), accessToken);
+                Orgs.addConfiguration(this, choreoTestClient, testComponentV2, commitHistory,
+                        Constant.PROD_ENVIRONMENT);
         }
 
         @Test(dependsOnMethods = {"addPromoteConfiguration_TestUserManagedNonEmptyCreateComponentRoot"})
