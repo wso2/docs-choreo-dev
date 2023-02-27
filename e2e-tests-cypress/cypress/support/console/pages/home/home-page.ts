@@ -67,4 +67,10 @@ export class ChoreoHomePage {
            .get(`[data-value="apim"]`).click();
    }
 
+   static selectDefaultProject(){
+    cy.get('.MuiBox-root')
+    .contains('Default Project').click();
+  
+   }
+
 }

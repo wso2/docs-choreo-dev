@@ -14,6 +14,7 @@
     "@testing-library/cypress": "^8.0.1",
     "cypress-fail-fast": "^7.0.0",
     "cypress-file-upload": "^5.0.8",
+    "cypress-localstorage-commands": "^2.2.2",
     "cypress-xpath": "^1.6.2"
   },
   "scripts": {

@@ -30,6 +30,23 @@ export class ComponentListingPage {
     this.verifyDeletion();
   }
 
+  static visitToProjectOverview(){
+    cy.get('[data-testid="main-left-nav-item-Project"]')
+    .should("be.visible")
+    .click();
+  }
+
+  static changeEnvironmentForStats(){
+  cy.get('[name="env"]')
+  .click() // open the dropdown
+  cy.contains('Production').click().wait(3000);
+
+  cy.get('[name="env"]')
+  .click() // open the dropdown
+  cy.contains('Development').click().wait(3000);
+  
+  }
+  
   static visitToAComponent(componentName: string) {
     cy.get('[data-testid="main-left-nav-item-Project"]')
       .should("be.visible")
