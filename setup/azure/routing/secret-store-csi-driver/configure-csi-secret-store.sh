@@ -9,7 +9,7 @@ SYSTEM_CSI_KEY_VAULT_CLIENT_SECRET=$(az ad app credential reset --id "${SYSTEM_C
 kubectl create namespace "${DP_SYSTEM_NAMESPACE}"
 kubectl create secret generic csi-secret-store-azure --from-literal clientid="${SYSTEM_CSI_KEY_VAULT_CLIENT_ID}" --from-literal clientsecret="${SYSTEM_CSI_KEY_VAULT_CLIENT_SECRET}" -n "${DP_SYSTEM_NAMESPACE}"
 
-#APIM_CSI_KEY_VAULT_CLIENT_SECRET=$(az ad app credential reset --id "${APIM_CSI_KEY_VAULT_CLIENT_ID}" --append --display-name "${CLUSTER_NAME}" --years 2 | grep password | cut -d ":" -f2 | cut -d '"' -f 2)
+APIM_CSI_KEY_VAULT_CLIENT_SECRET=$(az ad app credential reset --id "${APIM_CSI_KEY_VAULT_CLIENT_ID}" --append --display-name "${CLUSTER_NAME}" --years 2 | grep password | cut -d ":" -f2 | cut -d '"' -f 2)
 
-#kubectl create namespace "${APIM_NAMESPACE}"
-#kubectl create secret generic csi-secret-store-azure --from-literal clientid="${APIM_CSI_KEY_VAULT_CLIENT_ID}" --from-literal clientsecret="${APIM_CSI_KEY_VAULT_CLIENT_SECRET}" -n "${APIM_NAMESPACE}"
+kubectl create namespace "${APIM_NAMESPACE}"
+kubectl create secret generic csi-secret-store-azure --from-literal clientid="${APIM_CSI_KEY_VAULT_CLIENT_ID}" --from-literal clientsecret="${APIM_CSI_KEY_VAULT_CLIENT_SECRET}" -n "${APIM_NAMESPACE}"
