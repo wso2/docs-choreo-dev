@@ -12,3 +12,4 @@ resources:
   - cio-internal-metric-collector.yaml
   - choreo-daily-usage-publisher.yaml
   - choreo-monthly-usage-publisher.yaml
+  - choreo-daily-usage-publisher-dynamic-billing-cycle.yaml
