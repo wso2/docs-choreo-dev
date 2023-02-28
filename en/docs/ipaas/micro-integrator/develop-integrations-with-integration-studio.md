@@ -59,7 +59,7 @@ During deployment, Choreo performs a Trivy scan to detect critical vulnerabiliti
 
 You can use environment variables in WSO2 Micro Integrator to improve the configuration management, security, portability, and manageability of the Micro Integrator installation. By using environment variables, organizations can simplify the management and maintenance of their micro installations and ensure that they can be quickly and easily updated when required.
 
-The Choreo Console allows you to define enviornment variables for your integration project. You need to define the environment variables before you deploy the component.
+The Choreo Console allows you to define enviornment variables for your integration project. You can define the environment variables before you deploy the component.
 
 ![Environment Variables](../../assets/img/ipaas/integration-studio/env_variables.png){.cInlineImage-half}
 
