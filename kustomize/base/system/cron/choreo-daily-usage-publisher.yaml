@@ -48,7 +48,7 @@ spec:
                   valueFrom:
                     secretKeyRef:
                       name: secret-choreo-metered-usage-handler
-                      key: MSSQL_PASSWORD
+                      key: CHOREO_USAGE_DB_PASSWORD
                 - name: AZURE_AUTH_APP_CLIENT_SECRET
                   valueFrom:
                     secretKeyRef:

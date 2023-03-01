@@ -43,7 +43,7 @@
 #                   valueFrom:
 #                     secretKeyRef:
 #                       name: secret-choreo-metered-usage-handler
-#                       key: MSSQL_PASSWORD
+#                       key: CHOREO_USAGE_DB_PASSWORD
 #               envFrom:
 #                 - configMapRef:
 #                     name: cm-choreo-metered-usage-handler-collector
