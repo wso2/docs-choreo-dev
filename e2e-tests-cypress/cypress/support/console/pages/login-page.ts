@@ -35,7 +35,7 @@ export class LoginPage {
   }
 
   static login() {
-    window.localStorage.setItem("seen", "1677489999273");
+    window.localStorage.setItem("seen", Date.now());
     this.enterUserCredentials("choreoIDPUsername", "choreoIDPPassword");
     this.persistOrgs();
     this.persistLogoutURL();
