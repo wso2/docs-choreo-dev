@@ -43,7 +43,7 @@
 #                     name: cm-choreo-metered-usage-handler-collector
 #                 - configMapRef:
 #                     name: env-choreo-metered-usage-handler
-#                 - secretKeyRef:
+#                 - secretRef:
 #                     name: secret-choreo-metered-usage-handler
 #               resources:
 #                 limits:
