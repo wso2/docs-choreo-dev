@@ -20,5 +20,6 @@ kind: Kustomization
 resources:
   - dp-kv-resolver
   - dp-mizzen
+  - config
 
 namespace: choreodp-system

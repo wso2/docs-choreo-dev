@@ -182,6 +182,7 @@ describe("Verify Reusable RestAPI functionality", () => {
 
   it("Verify connector republishing", () => {
     ComponentAPILifecycle.republishConnector();
+    ComponentAPILifecycle.demoteToCreated();
   });
 
   it("Verify settings configuration", () => {

@@ -11,7 +11,7 @@ kubectl label namespace "${APIM_NAMESPACE}-nginx-ingress" purpose="${APIM_NAMESP
 kubectl annotate namespace "${APIM_NAMESPACE}-nginx-ingress" linkerd.io/inject=enabled
 kubectl annotate namespace "${APIM_NAMESPACE}-nginx-ingress" config.linkerd.io/skip-inbound-ports=443
 
-kubectl apply -f ./netpol/"${APIM_NAMESPACE}-nginx-ingress-ns.yaml"
+kubectl apply -f netpol/"${APIM_NAMESPACE}-nginx-ingress-ns.yaml"
 
 helm registry login choreocontrolplane.azurecr.io --username "${HELM_ACR_USERNAME}" --password "${HELM_ACR_PASSWORD}"
 helm pull oci://choreocontrolplane.azurecr.io/helm/ingress-nginx --version 4.2.1

@@ -469,4 +469,26 @@ configMapGenerator:
     behavior: create
     files:
       - crypto-key-service/Config.toml
-      
+  - name: cm-file-choreo-metered-usage-handler
+    behavior: create
+    files:
+      - choreo-metered-usage-handler/Config.toml
+  - name: cm-choreo-metered-usage-handler-daily-publisher
+    behavior: create
+    literals:
+      - CHOREO_USAGE_HANDLER_CRONJOB_MODE="publisher"
+      - CHOREO_USAGE_PUBLISHING_FREQUENCY="daily"
+  - name: cm-choreo-metered-usage-handler-monthly-publisher
+    behavior: create
+    literals:
+      - CHOREO_USAGE_HANDLER_CRONJOB_MODE="publisher"
+      - CHOREO_USAGE_PUBLISHING_FREQUENCY="monthly"
+  - name: cm-choreo-metered-usage-handler-collector
+    behavior: create
+    literals:
+      - CHOREO_USAGE_HANDLER_CRONJOB_MODE="collector"
+  - name: cm-choreo-metered-usage-handler-daily-publisher-dynamic
+    behavior: create
+    literals:
+      - CHOREO_USAGE_HANDLER_CRONJOB_MODE="publisher"
+      - CHOREO_USAGE_PUBLISHING_FREQUENCY="dynamic-monthly"
