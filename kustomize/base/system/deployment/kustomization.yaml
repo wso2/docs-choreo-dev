@@ -46,7 +46,6 @@ resources:
   - cio-event-collector-service.yaml
   - cio-query-api-service.yaml
   - cio-incident-configurator.yaml
-  - crypto-key-service.yaml
   - cdn-tls-synchronizer.yaml
 
 commonAnnotations:
