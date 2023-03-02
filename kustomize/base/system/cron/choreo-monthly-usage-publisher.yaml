@@ -59,6 +59,8 @@ spec:
                 - name: secret-choreo-metered-usage-handler
                   mountPath: "/mnt/csi/secret-choreo-metered-usage-handler"
                   readOnly: true
+                - name: tmp
+                  mountPath: /tmp
           volumes:
             - name: config
               configMap:
@@ -71,4 +73,6 @@ spec:
                   secretProviderClass: secret-choreo-metered-usage-handler
                 nodePublishSecretRef:
                   name: csi-secret-store-azure
+            - name: tmp
+              emptyDir: {}
           serviceAccountName: sa-choreo-default
