@@ -16,4 +16,21 @@ public class GqlServiceTestHelper {
         return HttpClientUtil.httpPOST(url, request, "", apiKey);
 
     }
+
+    static String getGqlQueryRequest() throws Exception {
+        return ObjectMapperUtil.mapToGraphQLQuery("query{greeting(name:\"John\")}");
+    }
+
+    static String getGqlQueryResponse() {
+        return "{\"data\":{\"greeting\":\"Hello, John\"}}";
+    }
+
+    static String getGqlMutationRequest() throws Exception {
+        return ObjectMapperUtil.mapToGraphQLQuery("mutation{createUser(name:\"Jane\")}");
+    }
+
+    static String getGqlMutationResponse() {
+        return "{\"data\":{\"createUser\":\"User created with name: Jane\"}}";
+    }
+
 }

@@ -66,7 +66,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void deploy_TestClientJwTValidation() throws Exception {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, choreoComponent);
+                accessToken, choreoComponent, ComponentFlavour.STANDARD);
         devInvokeURL = statusDTO.getInvokeUrl();
     }
 

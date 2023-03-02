@@ -18,6 +18,7 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.Orgs;
+import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
@@ -81,6 +82,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     String projectId;
     String devInvokeURL;
     String prodInvokeURL;
+    private String apiId;
     Environment[] en;
     String apiKey;
 
@@ -128,31 +130,21 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void deploy_LoggingAPITestCase() throws Exception {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, choreoComponent);
+                accessToken, choreoComponent, ComponentFlavour.STANDARD);
         devInvokeURL = statusDTO.getInvokeUrl();
     }
 
     @Test(dependsOnMethods = {"deploy_LoggingAPITestCase"})
     @CitrusTest
-    public void addPromoteConfiguration_LoggingAPITestCase() throws Exception {
-        Response res = Orgs.addConfiguration(choreoComponent, "prod", accessToken);
-        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
+    public void promote_LoggingAPITestCase() throws Exception {
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
+                accessToken, choreoComponent, ComponentFlavour.STANDARD);
+        prodInvokeURL = statusDTO.getInvokeUrl();
+        apiId = statusDTO.getApiId();
     }
 
-    @Test(dependsOnMethods = {"addPromoteConfiguration_LoggingAPITestCase"})
-    @CitrusTest
-    public void promote_LoggingAPITestCase() throws Exception {
-        GraphQL.promoteComponent(choreoComponent, accessToken);
-    }
 
     @Test(dependsOnMethods = {"promote_LoggingAPITestCase"})
-    @CitrusTest
-    public void componentProdDeploymentStatus_LoggingAPITestCase() throws Exception {
-        prodInvokeURL = GraphQL.componentDeployment(choreoComponent, "prod", accessToken).getInvokeUrl();
-    }
-
-
-    @Test(dependsOnMethods = {"componentProdDeploymentStatus_LoggingAPITestCase"})
     @CitrusTest
     public void invokeEP_LoggingAPITestCase() throws IOException {
         apiKey = APICreator.getAPIKey(choreoComponent.getApiId(), accessToken).getApikey();
@@ -161,7 +153,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     }
 
 
-    @Test(dependsOnMethods = {"componentProdDeploymentStatus_LoggingAPITestCase"})
+    @Test(dependsOnMethods = {"invokeEP_LoggingAPITestCase"})
     @CitrusTest
     public void waitForObservabilityLogs_LoggingAPITestCase() throws Exception {
 
