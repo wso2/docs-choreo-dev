@@ -69,7 +69,9 @@ export class Utils {
         Authorization: `Bearer ${accessToken}`,
       }).then((res) => {
         const rawMailContent = res.body;
-        const decodedMail = atob(rawMailContent);
+        //const decodedMail = atob(rawMailContent);
+        const decodedMail = window.atob(rawMailContent);
+        console.log(rawMailContent);
 
         const socRegEx = /^<!DOCTYPE html PUBLIC /im;
         const bodyPos = decodedMail.indexOf(
