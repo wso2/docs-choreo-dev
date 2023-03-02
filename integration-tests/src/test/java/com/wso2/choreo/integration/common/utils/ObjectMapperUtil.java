@@ -41,7 +41,7 @@ public class ObjectMapperUtil {
 
     public static <T> T mapStringToObject(Class<T> type, String jsonString, String val) {
 
-        if (jsonString.contains("data") && val != null && !val.equals("")) {
+        if (jsonString.contains("\"data\"") && val != null && !val.equals("")) {
 
             JsonElement je = new JsonParser().parse(jsonString).getAsJsonObject().
                     getAsJsonObject("data").getAsJsonObject(val);

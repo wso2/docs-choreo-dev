@@ -77,6 +77,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     ChoreoProject project;
     String devInvokeURL;
     String prodInvokeURL;
+    private String apiId;
     Environment[] en;
     String apiKey;
     ChoreoComponent choreoComponent;
@@ -123,31 +124,20 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void deploy_ObservabilityAPITestCase() throws Exception {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, choreoComponent);
+                accessToken, choreoComponent, ComponentFlavour.STANDARD);
         devInvokeURL = statusDTO.getInvokeUrl();
     }
 
     @Test(dependsOnMethods = {"deploy_ObservabilityAPITestCase"})
     @CitrusTest
-    public void addPromoteConfiguration_ObservabilityAPITestCase() throws Exception {
-        Response res = Orgs.addConfiguration(choreoComponent, "prod", accessToken);
-        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
-    }
-
-    @Test(dependsOnMethods = {"addPromoteConfiguration_ObservabilityAPITestCase"})
-    @CitrusTest
     public void promote_ObservabilityAPITestCase() throws Exception {
-        GraphQL.promoteComponent(choreoComponent, accessToken);
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
+                accessToken, choreoComponent, ComponentFlavour.STANDARD);
+        prodInvokeURL = statusDTO.getInvokeUrl();
+        apiId = statusDTO.getApiId();
     }
 
     @Test(dependsOnMethods = {"promote_ObservabilityAPITestCase"})
-    @CitrusTest
-    public void componentProdDeploymentStatus_ObservabilityAPITestCase() throws Exception {
-        prodInvokeURL = GraphQL.componentDeployment(choreoComponent, "prod", accessToken).getInvokeUrl();
-    }
-
-
-    @Test(dependsOnMethods = {"componentProdDeploymentStatus_ObservabilityAPITestCase"})
     @CitrusTest
     public void invokeEP_ObservabilityAPITestCase() throws IOException {
         apiKey = APICreator.getAPIKey(choreoComponent.getApiId(), accessToken).getApikey();

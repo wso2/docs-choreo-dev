@@ -5,6 +5,7 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 
 import com.wso2.choreo.integration.apis.Orgs;
+import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ComponentFlavour;
@@ -15,6 +16,7 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.apimanager.KeyData;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,8 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     private String accessToken;
     private String devInvokeURL;
     private String prodInvokeURL;
-    String apiKey;
+    private String apiId;
+    private KeyData keyData;
 
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
@@ -67,55 +70,31 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void deploy_TestBYOC() throws Exception {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, choreoComponent);
+                accessToken, choreoComponent, ComponentFlavour.BYOC);
         devInvokeURL = statusDTO.getInvokeUrl();
     }
 
     @Test(dependsOnMethods = {"deploy_TestBYOC"})
     @CitrusTest
-    public void addPromoteConfiguration_TestBYOC() throws Exception {
-        Orgs.addConfiguration(choreoComponent, "prod", accessToken);
-    }
-
-    @Test(dependsOnMethods = {"addPromoteConfiguration_TestBYOC"})
-    @CitrusTest
     public void promote_TestBYOC() throws Exception {
-        GraphQL.promoteComponent(choreoComponent, accessToken);
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
+                accessToken, choreoComponent, ComponentFlavour.BYOC);
+        prodInvokeURL = statusDTO.getInvokeUrl();
+        apiId = statusDTO.getApiId();
     }
 
     @Test(dependsOnMethods = {"promote_TestBYOC"})
     @CitrusTest
-    public void componentProdDeploymentStatus_TestBYOC() throws Exception {
-        prodInvokeURL = GraphQL.componentDeployment(choreoComponent, "prod", accessToken).getInvokeUrl();
-    }
-
-
-    @Test(dependsOnMethods = {"componentProdDeploymentStatus_TestBYOC"})
-    @CitrusTest
     public void invokeAPIInDev_TestBYOC() throws Exception {
-
-        apiKey = APICreator.getAPIKey(choreoComponent.getApiId(), accessToken).getApikey();
-        TestHelper.Movie[] movies = TestHelper.getMovies(devInvokeURL, apiKey);
-        Assert.assertEquals(movies.length, 5);
-        Assert.assertEquals(movies[0].id, 1);
-        Assert.assertEquals(movies[0].ratings, 9.2);
-        Assert.assertEquals(movies[0].name, "The Shawshank Redemption");
+        keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken, apiId);
+        String expectedResponse = TestHelper.getExpectedResponse();
+        ComponentUtils.invokeApiGET(this, keyData.getApikey(), devInvokeURL, "/movies", expectedResponse);
     }
 
     @Test(dependsOnMethods = {"invokeAPIInDev_TestBYOC"})
     @CitrusTest
     public void invokeAPIProd_TestBYOC() {
-        TestHelper.Movie[] movies = TestHelper.getMovies(prodInvokeURL, apiKey);
-        Assert.assertEquals(movies.length, 5);
-        Assert.assertEquals(movies[0].id, 1);
-        Assert.assertEquals(movies[0].ratings, 9.2);
-        Assert.assertEquals(movies[0].name, "The Shawshank Redemption");
-    }
-
-    @Test(dependsOnMethods = {"invokeAPIProd_TestBYOC"}, alwaysRun = true)
-    @CitrusTest
-    public void deleteComponent_TestBYOC() throws IOException {
-        Response response = GraphQL.deleteComponent(choreoComponent.getId(), projectId, accessToken);
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
+        String expectedResponse = TestHelper.getExpectedResponse();
+        ComponentUtils.invokeApiGET(this, keyData.getApikey(), prodInvokeURL, "/movies", expectedResponse);
     }
 }

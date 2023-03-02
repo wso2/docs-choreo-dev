@@ -60,6 +60,7 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     String projectId;
     String devInvokeURL;
     String prodInvokeURL;
+    private String apiId;
     Environment[] en;
     String apiKey;
     ChoreoComponent choreoComponent;
@@ -106,31 +107,20 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void deploy_SysObservabilityAPITestCase() throws Exception {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, choreoComponent);
+                accessToken, choreoComponent, ComponentFlavour.STANDARD);
         devInvokeURL = statusDTO.getInvokeUrl();
     }
 
     @Test(dependsOnMethods = {"deploy_SysObservabilityAPITestCase"})
     @CitrusTest
-    public void addPromoteConfiguration_SysObservabilityAPITestCase() throws Exception {
-        Response res = Orgs.addConfiguration(choreoComponent, "prod", accessToken);
-        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
-    }
-
-    @Test(dependsOnMethods = {"addPromoteConfiguration_SysObservabilityAPITestCase"})
-    @CitrusTest
     public void promote_SysObservabilityAPITestCase() throws Exception {
-        GraphQL.promoteComponent(choreoComponent, accessToken);
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
+                accessToken, choreoComponent, ComponentFlavour.STANDARD);
+        prodInvokeURL = statusDTO.getInvokeUrl();
+        apiId = statusDTO.getApiId();
     }
 
     @Test(dependsOnMethods = {"promote_SysObservabilityAPITestCase"})
-    @CitrusTest
-    public void componentProdDeploymentStatus_SysObservabilityAPITestCase() throws Exception {
-        prodInvokeURL = GraphQL.componentDeployment(choreoComponent, "prod", accessToken).getInvokeUrl();
-    }
-
-
-    @Test(dependsOnMethods = {"componentProdDeploymentStatus_SysObservabilityAPITestCase"})
     @CitrusTest
     public void invokeEP_SysObservabilityAPITestCase() throws IOException {
         apiKey = APICreator.getAPIKey(choreoComponent.getApiId(), accessToken).getApikey();
