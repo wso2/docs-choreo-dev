@@ -24,7 +24,7 @@ interface PromoteConfigs {
 export class ComponentDeployPage {
   static deployToDev(isExternalAPI: boolean = true) {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
+    cy.get('[data-cyid="btn-deploy-api"]', { timeout: 300000 }).should("be.enabled").click();
     if (isExternalAPI) {
       Utils.interceptConfig()
       cy.get('[data-cyid="btn-next"]', { timeout: 600000 }).click();
@@ -125,11 +125,7 @@ export class ComponentDeployPage {
     // to ensure rendering completes before checking the deployment status
     cy.wait(600);
     cy.get('[data-testid="btn-stop"]').should("be.visible");
-
-    cy.get('[data-cyid="deployment-status"]', { timeout: 360000 }).contains(
-      "Active",
-      { timeout: 360000 }
-    );
+    cy.get('[data-cyid="deployment-status"]', { timeout: 360000 }).contains("Active", { timeout: 360000 });
   }
 
   static addConfiguration(value: string) {
@@ -141,11 +137,7 @@ export class ComponentDeployPage {
 
 
   static promoteWebHookToProd(configValue: string) {
-    this.promote({
-      settingButtonCount: 2,
-      invokeUrlCount: 0,
-      invokeUrlIndex: 0,
-    });
+    this.promote({ settingButtonCount: 2, invokeUrlCount: 0, invokeUrlIndex: 0 });
     cy.get('[data-cyid="btn-next"]').should("be.enabled").click();
     this.addConfiguration(configValue);
     cy.get('[data-testid="btn-stop"]', { timeout: 360000 }).should(
@@ -160,9 +152,9 @@ export class ComponentDeployPage {
   }
 
   static stopAllDeployment() {
-      this.stopDevContainer();
-      this.stopStgContainer();
-      this.stopProdContainer();
+    this.stopDevContainer();
+    this.stopStgContainer();
+    this.stopProdContainer();
   }
 
   private static stopContainer(stpButton: number, len: number) {

@@ -35,6 +35,7 @@ export class LoginPage {
   }
 
   static login() {
+    window.localStorage.setItem("seen", Date.now().toString());
     this.enterUserCredentials("choreoIDPUsername", "choreoIDPPassword");
     this.persistOrgs();
     this.persistLogoutURL();
@@ -71,6 +72,7 @@ export class LoginPage {
       Cypress.env(`commonAuthId`) != null
         ? Cypress.env(`commonAuthId`)
         : "authtoken";
+     window.localStorage.setItem("seen", Date.now().toString());
     Utils.setBrowserCookie();
     this.setCookie(componentURL, "commonAuthId", common);
     cy.visit(componentURL);
@@ -81,6 +83,7 @@ export class LoginPage {
 
 
   static enterpriseLogin() {
+    window.localStorage.setItem("seen", Date.now().toString());
     Utils.setBrowserCookie();
     cy.visit(Cypress.env("enterpriseLoginUrl"));
     cy.get('button[id="enterprise-sign-in"]').should("be.visible", {
@@ -177,10 +180,7 @@ export class LoginPage {
     cy.visit(Cypress.env("loginURL"));
   }
 
-  private static enterUserCredentials(
-    envUsername: string,
-    envPassword: string
-  ) {
+  private static enterUserCredentials(envUsername: string, envPassword: string) {
     Utils.setBrowserCookie();
     cy.visit(Cypress.env("loginURL"));
     cy.url({ timeout: 30000 }).then((url) => {
