@@ -26,13 +26,13 @@ import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
 import com.wso2.choreo.integration.common.choreoproject.BalConfig;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationException;
 import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
 import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
+import com.wso2.choreo.integration.models.graphql.CreateByocComponentResponseDTO;
 import com.wso2.choreo.integration.models.graphql.CreateComponentResponseDTO;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -42,6 +42,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -90,38 +91,41 @@ public class ComponentUtils {
         HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
         HttpClient choreoClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
 
-        Optional<CreateComponentResponseDTO> responseDTO = Optional.empty();
-        if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
-            responseDTO = GraphQL.createUserManagedComponent(runner, cpProjectsClient, dto, accessToken);
-        } else if (componentFlavour.equals(ComponentFlavour.BYOC)) {
-            responseDTO = GraphQL.createBYOCComponent(runner, cpProjectsClient, dto, accessToken);
-        }
 
-        if (responseDTO.isPresent()) {
+        GraphqlDTO graphqlDTO;
+
+        if (componentFlavour.equals(ComponentFlavour.BYOC)) {
+            Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createBYOCComponent(runner, cpProjectsClient, dto, accessToken);
+
+            graphqlDTO = GraphqlDTO.builder().
+                    projectId(responseDTO.get().getProjectId()).
+                    componentHandler(responseDTO.get().getHandle()).build();
+        } else {
+            Optional<CreateComponentResponseDTO> responseDTO = GraphQL.createUserManagedComponent(runner, cpProjectsClient, dto, accessToken);
+
             Orgs.waitForComponentCreationSuccess(runner, choreoClient, accessToken, responseDTO.get().getProjectId(),
                     responseDTO.get().getId());
 
-            GraphqlDTO graphqlDTO = GraphqlDTO.builder().
+            graphqlDTO = GraphqlDTO.builder().
                     projectId(responseDTO.get().getProjectId()).
                     componentHandler(responseDTO.get().getHandler()).build();
-
-
-            return GraphQL.retrieveComponent(runner, cpProjectsClient, accessToken,
-                    graphqlDTO);
         }
 
-        throw new ComponentCreationException("Failed to create component");
+        return GraphQL.retrieveComponent(runner, cpProjectsClient, accessToken,
+                    graphqlDTO);
     }
 
     public static ComponentDeploymentStatusDTO deployComponent(TestActionRunner runner, Map<Endpoints,
-            HttpClient> citrusClients, String accessToken, ChoreoComponent component, BalConfig... balconfigs)
-            throws Exception {
+            HttpClient> citrusClients, String accessToken, ChoreoComponent component, ComponentFlavour componentFlavour,
+                                                               BalConfig... balconfigs) throws Exception {
         HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
         HttpClient choreoClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
 
         List<Commit> commitHistory = GraphQL.getCommitHistory(runner, cpProjectsClient, component.getId(), accessToken);
 
-        Orgs.addConfiguration(runner, choreoClient, component, commitHistory, Constant.DEV_ENVIRONMENT, balconfigs);
+        if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
+            Orgs.addConfiguration(runner, choreoClient, component, commitHistory, Constant.DEV_ENVIRONMENT, balconfigs);
+        }
 
         Commit latestCommit = Commit.getLatestCommit(commitHistory);
         String shaDate = latestCommit.getAuthor().getDate();
@@ -148,6 +152,50 @@ public class ComponentUtils {
 
         Map<String, String> responseParams = new HashMap<>();
         responseParams.put("environmentId", devEnvIdToDeploy);
+        responseParams.put("sha", sha);
+        responseParams.put("versionId", latestVersionId);
+
+        return GraphQL.getComponentDeploymentStatus(runner, cpProjectsClient, accessToken, graphqlDTO, responseParams);
+    }
+
+    public static ComponentDeploymentStatusDTO promoteComponent(TestActionRunner runner, Map<Endpoints,
+            HttpClient> citrusClients, String accessToken, ChoreoComponent component, ComponentFlavour componentFlavour,
+                                                                BalConfig... balconfigs) throws Exception {
+        HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
+        HttpClient choreoClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
+
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().
+                projectId(component.getProjectId()).
+                componentHandler(component.getHandler()).build();
+
+        component = GraphQL.retrieveComponent(runner, cpProjectsClient, accessToken,
+                graphqlDTO);
+
+        List<Commit> commitHistory = GraphQL.getCommitHistory(runner, cpProjectsClient, component.getId(), accessToken);
+
+        if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
+            Orgs.addConfiguration(runner, choreoClient, component, commitHistory, Constant.PROD_ENVIRONMENT, balconfigs);
+        }
+
+        String componentId = component.getId();
+        ApiVersion apiVersion = component.getLatestApiVersion();
+        String latestVersionId = apiVersion.getId();
+        String sourceReleaseId = component.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT);
+        String latestAppEnvId = component.getLatestAppEnvId(Constant.PROD_ENVIRONMENT);
+
+        graphqlDTO = GraphqlDTO.builder().componentId(componentId).apiVersionId(latestVersionId).
+                sourceReleaseId(sourceReleaseId).targetEnvironmentId(latestAppEnvId).build();
+        GraphQL.promoteComponent(runner, cpProjectsClient, accessToken, graphqlDTO);
+
+        ChoreoOrganization org = component.getOrganization();
+        graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(org.getOrgHandle()).
+                orgUuid(org.getOrgUUID()).versionId(latestVersionId).environmentId(latestAppEnvId).build();
+
+        Commit latestCommit = Commit.getLatestCommit(commitHistory);
+        String sha = latestCommit.getSha();
+
+        Map<String, String> responseParams = new HashMap<>();
+        responseParams.put("environmentId", latestAppEnvId);
         responseParams.put("sha", sha);
         responseParams.put("versionId", latestVersionId);
 
@@ -203,30 +251,64 @@ public class ComponentUtils {
     }
 
     /**
-     * Invoke API with validation
+     * Invoke API GET with validation
      *
      * @param runner           Test action runner
      * @param apiKey           API Key
      * @param invokeUrl        Invoke URL
-     * @param apiRequestUrl    API Request URL
+     * @param resource    API Resource
      * @param expectedResponse Expected response
      */
-    public static void invokeApi(TestActionRunner runner, String apiKey, String invokeUrl, String apiRequestUrl,
-                                 String expectedResponse) {
-
+    public static void invokeApiGET(TestActionRunner runner, String apiKey, String invokeUrl, String resource,
+                                    String expectedResponse) {
         // Test API Invocation
         runner.$(repeatOnError()
                 .until("i = 5")
                 .index("i")
                 .autoSleep(5000)
-                .actions(
+                .actions((http()
+                            .client(invokeUrl)
+                            .send()
+                            .get(resource)
+                            .message()
+                            .accept(MediaType.APPLICATION_JSON_VALUE)
+                            .header("API-Key", apiKey)),
                         http()
+                            .client(invokeUrl)
+                            .receive()
+                            .response(HttpStatus.OK)
+                            .message()
+                            .type(MessageType.JSON)
+                            .body(expectedResponse)));
+    }
+
+    /**
+     * Invoke API POST with validation
+     *
+     * @param runner           Test action runner
+     * @param apiKey           API Key
+     * @param invokeUrl        Invoke URL
+     * @param resource    API Resource
+     * @param requestBody Request payload
+     * @param expectedResponse Expected response
+     *
+     */
+    public static void invokeApiPOST(TestActionRunner runner, String apiKey, String invokeUrl, String resource,
+                                    String requestBody, String expectedResponse) {
+        // Test API Invocation
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(5000)
+                .actions((http()
                                 .client(invokeUrl)
                                 .send()
-                                .get(apiRequestUrl)
+                                .post(resource)
                                 .message()
-                                .header(HttpHeaders.ACCEPT, "application/json")
-                                .header("API-Key", apiKey),
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .body(requestBody)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .header("API-Key", apiKey)),
                         http()
                                 .client(invokeUrl)
                                 .receive()
