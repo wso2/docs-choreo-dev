@@ -125,9 +125,12 @@ export class GraphQL {
         };
 
         return this.callGraphQL(query).then(res => {
-            const components = res.body.components as Component[]
-            const status = res.status
-            return Promise.resolve({ components, status })
+            if (res.status === SUCCESS_STATUS_CODE) {
+                const components = res.body.components as Component[]
+                const status = res.status
+                return Promise.resolve({ components, status })
+            }
+            return Promise.resolve({ components: [], status: -1 })
         });
     }
 
@@ -311,8 +314,14 @@ export class GraphQL {
             const projects = res.projects
             const project = projects.find(p => p.name === projectName)
             this.getComponents(project.id).then(resp => {
-                const comp = resp.components.find(c => c.displayName === componentName)
-                this.getDeployedComponentDetails(project.id, comp.handler)
+
+
+                if (resp.status === SUCCESS_STATUS_CODE) {
+                    const comp = resp.components.find(c => c.displayName === componentName)
+                    this.getDeployedComponentDetails(project.id, comp.handler)
+                }
+
+
             })
         })
     }
