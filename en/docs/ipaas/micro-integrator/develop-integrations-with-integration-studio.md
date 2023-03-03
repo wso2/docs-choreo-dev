@@ -57,15 +57,15 @@ During deployment, Choreo performs a Trivy scan to detect critical vulnerabiliti
 
 ## Environment variables
 
-You can use environment variables when developing integration artifacts with WSO2 Integration Studio to improve configuration management, security, portability, and manageability. By using environment variables, organizations can simplify the management and maintenance of their integrations and ensure that they can be quickly and easily updated when required.
+It is recommended to use environment variables when developing integration artifacts with WSO2 Integration Studio to improve configuration management, security, portability, and manageability. By using environment variables, organizations can simplify the management and maintenance of their integrations and ensure that they can be quickly and easily updated when required.
 
-The Choreo Console allows you to define environment variables for your integration project. You can define the environment variables before you deploy the component.
+The component deploy page offers a user-friendly interface for managing environment variables across different environments. For more advanced use cases, the Choreo DevOps portal is available.
 
 ![Environment Variables](../../assets/img/ipaas/integration-studio/env_variables.png){.cInlineImage-half}
 
-The Choreo DevOps Portal also allows you to define configurations and secrets to a deployed integration (as well as other component types) with more flexibility to cater your advance configuration needs. For more information, see [Configurations and secrets](../../devops/devops-portal.md#configurations-and-secrets).
+The Choreo DevOps Portal allows for greater flexibility in defining configurations and secrets for deployed integrations, as well as other component types, to meet more complex configuration requirements. Refer to the section on [Configurations and secrets](../../devops/devops-portal.md#configurations-and-secrets) for further details.
 
-For a list of parameters that you can configure as environment variables, see [WSO2 API Manager Documentation - Injecting Parameters - Supported parameters](https://apim.docs.wso2.com/en/latest/integrate/develop/injecting-parameters/#supported-parameters).
+For a comprehensive list of parameters that can be configured as environment variables, please refer to the [WSO2 API Manager Documentation - Injecting Parameters - Supported parameters](https://apim.docs.wso2.com/en/latest/integrate/develop/injecting-parameters/#supported-parameters).
 
 ## Connectors
 
