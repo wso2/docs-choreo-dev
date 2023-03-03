@@ -202,6 +202,24 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.verifyConsumer(appName).should("be.visible");
   });
 
+
+  it("Verify deleting consumer app", () => {
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin();
+    TryOut.DeleteApplication(appName);
+  })
+
+  it("Verify delete permissions", () => {
+    LoginPage.reLoginToChoreo();
+    ComponentListingPage.visitToAComponent(API_NAME);
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.selectPermissions();
+    permissions.forEach((permission) => {
+      ComponentAPILifecycle.deletePermission(permission);
+    });
+  });
+
   it("Verify insight values for dev", () => {
     ChoreoHomePage.navigateToInsights();
     InsightsPage.selectTimePeriod();
@@ -221,16 +239,11 @@ describe("Choreo APIM publisher scenarios", () => {
     InsightsPage.getAverageErrorRate().should("eq", "0");
   });
 
-  it("Verify delete permissions", () => {
-    ComponentListingPage.visitToAComponent(API_NAME);
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.selectPermissions();
-    permissions.forEach((permission) => {
-      ComponentAPILifecycle.deletePermission(permission);
-    });
-  });
+
 
   it("Reset and undeploy component", () => {
+    ChoreoHomePage.navigateToProjects();
+    ComponentListingPage.visitToAComponent(API_NAME);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });

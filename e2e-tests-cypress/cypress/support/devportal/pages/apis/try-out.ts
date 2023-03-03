@@ -85,6 +85,7 @@ export class TryOut {
     cy.contains(appName).trigger("mouseover");
     cy.get(`[data-testid="delete-btn-${appName}"]`).trigger("mouseover").click();
     cy.get('[data-testid="delete-dialog-ok-button"]').click();
+    cy.get('[data-testid="create-application-btn"]',{timeout:50000}).should("be.visible")
   }
 
   static GenerateAccessToken() {

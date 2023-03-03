@@ -11,21 +11,23 @@
  * associated services.
  */
 
+import { GraphQLQueryBuilder } from "../../../../support/console/apis/gql-query-builder";
+import { GraphQL } from "../../../../support/console/apis/graphql";
+import { Enums } from "../../../../support/console/enums";
+import { TestHelper } from "../../../../support/console/pages/component/common/test-helper";
+import { ComponentDeployPage } from "../../../../support/console/pages/component/component-deploy";
+import { ComponentListingPage } from "../../../../support/console/pages/component/component-listing-page";
+import { ComponentAPILifecycle } from "../../../../support/console/pages/component/component-manage-page";
+import { ComponentOverviewPage } from "../../../../support/console/pages/component/component-overview-page";
+import { ChoreoHomePage } from "../../../../support/console/pages/home/home-page";
+import { LoginPage } from "../../../../support/console/pages/login-page";
+import { ProjectListingPage } from "../../../../support/console/pages/projects/projects-listing-page";
+import { Utils } from "../../../../support/console/utils";
+import { ByocComponent } from "../../../../support/interfaces/byoc-component";
 
 
-import { GraphQL } from "../../../support/console/apis/graphql";
-import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
-import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
-import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
-import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { Enums } from "../../../support/console/enums";
-import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { LoginPage } from "../../../support/console/pages/login-page";
-import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { Utils } from "../../../support/console/utils";
-import { ByocComponent } from "../../../support/interfaces/byoc-component";
-import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
+
+
 
 describe("Verify BYOC functionality", () => {
   const PROJECT_DESCRIPTION = "BYOC component";

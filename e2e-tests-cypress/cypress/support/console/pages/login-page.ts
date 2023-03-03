@@ -148,8 +148,8 @@ export class LoginPage {
       const displayName = res.response.body.displayName;
       const userEmail = res.response.body.userEmail;
       const userData = {
-        displayName: displayName,
-        userEmail: userEmail,
+        displayName,
+        userEmail,
         orgId: userOrg.id,
         handle: userOrg.handle,
         uuid: userOrg.uuid,
