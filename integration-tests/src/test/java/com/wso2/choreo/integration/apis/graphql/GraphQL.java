@@ -18,6 +18,8 @@ import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
@@ -42,8 +44,9 @@ import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.componentstatusbyversion.ComponentStatusByVersion;
-import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
+import com.wso2.choreo.integration.models.graphql.CreateByocComponentResponseDTO;
 import com.wso2.choreo.integration.models.graphql.CreateComponentResponseDTO;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.models.proxyapi.ProxyDeployment;
@@ -204,9 +207,9 @@ public class GraphQL extends ControlPlaneAPI {
         return responseDTO.get() == null ? Optional.empty() :  Optional.of(responseDTO.get());
     }
 
-    public static Optional<CreateComponentResponseDTO> createBYOCComponent(TestActionRunner runner, HttpClient client,
-                                                                        GraphqlDTO graphqlDTO,
-                                                                        String accessToken) throws Exception {
+    public static Optional<CreateByocComponentResponseDTO> createBYOCComponent(TestActionRunner runner, HttpClient client,
+                                                                               GraphqlDTO graphqlDTO,
+                                                                               String accessToken) throws Exception {
         graphqlDTO.setOrgId(ORG_ID);
         graphqlDTO.setOrgHandler(ORG_HANDLE);
         String queryString = ObjectMapperUtil.mapObjectToString(
@@ -220,7 +223,7 @@ public class GraphQL extends ControlPlaneAPI {
         String expectedResponse = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/responses/createByocComponentSuccess.mustache", responseParams);
 
-        AtomicReference<CreateComponentResponseDTO> responseDTO = new AtomicReference<>();
+        AtomicReference<CreateByocComponentResponseDTO> responseDTO = new AtomicReference<>();
         runner.$(http()
                 .client(client)
                 .send()
@@ -238,7 +241,7 @@ public class GraphQL extends ControlPlaneAPI {
                 .type(MessageType.JSON)
                 .body(expectedResponse)
                 .validate((message, context) -> {
-                    responseDTO.set(ObjectMapperUtil.mapStringToObject(CreateComponentResponseDTO.class,
+                    responseDTO.set(ObjectMapperUtil.mapStringToObject(CreateByocComponentResponseDTO.class,
                             (String) message.getPayload(), "createByocComponent"));
                 }));
 
@@ -477,7 +480,7 @@ public class GraphQL extends ControlPlaneAPI {
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                .accept(MediaType.APPLICATION_JSON_VALUE));
         runner.$(http()
                 .client(client)
                 .receive()
@@ -523,7 +526,7 @@ public class GraphQL extends ControlPlaneAPI {
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                .accept(MediaType.APPLICATION_JSON_VALUE));
         runner.$(http()
                 .client(client)
                 .receive()
@@ -564,7 +567,7 @@ public class GraphQL extends ControlPlaneAPI {
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                .accept(MediaType.APPLICATION_JSON_VALUE));
         runner.$(http()
                 .client(client)
                 .receive()
@@ -585,7 +588,7 @@ public class GraphQL extends ControlPlaneAPI {
      * @throws IOException If error occurred in object mapping
      */
     public static void getDeploymentStatusByVersion(TestActionRunner runner, HttpClient client, String accessToken,
-            GraphqlDTO graphqlDTO) throws IOException {
+            GraphqlDTO graphqlDTO) throws Exception {
         getDeploymentStatusByVersion(runner, client, accessToken, graphqlDTO,
                 "templates/graphql/responses/deploymentStatusByVersionSuccess.json");
     }
@@ -600,7 +603,7 @@ public class GraphQL extends ControlPlaneAPI {
      * @throws IOException If error occurred in object mapping
      */
     public static void getDeploymentStatusOfFailureByVersion(TestActionRunner runner, HttpClient client,
-            String accessToken, GraphqlDTO graphqlDTO) throws IOException {
+            String accessToken, GraphqlDTO graphqlDTO) throws Exception {
         getDeploymentStatusByVersion(runner, client, accessToken, graphqlDTO,
                 "templates/graphql/responses/deploymentStatusByVersionFailure.json");
     }
@@ -616,7 +619,7 @@ public class GraphQL extends ControlPlaneAPI {
      * @throws IOException If error occurred in object mapping
      */
     private static void getDeploymentStatusByVersion(TestActionRunner runner, HttpClient client, String accessToken,
-            GraphqlDTO graphqlDTO, String responseTemplatePath) throws IOException {
+            GraphqlDTO graphqlDTO, String responseTemplatePath) throws Exception {
 
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/deploymentStatusByVersion.mustache", graphqlDTO);
@@ -635,7 +638,7 @@ public class GraphQL extends ControlPlaneAPI {
                                 .message()
                                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                                 .body(requestBody)
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
                         http().client(client)
                                 .receive()
                                 .response(HttpStatus.OK)
@@ -657,7 +660,7 @@ public class GraphQL extends ControlPlaneAPI {
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                .accept(MediaType.APPLICATION_JSON_VALUE));
         runner.$(http()
                 .client(client)
                 .receive()
@@ -715,7 +718,7 @@ public class GraphQL extends ControlPlaneAPI {
                                 .message()
                                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                                 .body(requestBody)
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
                         http().client(client)
                                 .receive()
                                 .response(HttpStatus.OK)
@@ -724,10 +727,25 @@ public class GraphQL extends ControlPlaneAPI {
                                 .validate((message, context) -> {
                                     String payload = message.getPayload(String.class);
 
-                                    deploymentStatus.set(ObjectMapperUtil.
-                                            mapStringToObject(ComponentDeploymentStatusDTO.class,
-                                                    payload, "componentDeployment"));
+                                    JsonObject responseJson = new JsonParser().parse(message.getPayload(String.class))
+                                            .getAsJsonObject();
 
+                                    JsonObject data = responseJson.getAsJsonObject("data");
+
+                                    if (data != null && !data.isJsonNull()) {
+                                        deploymentStatus.set(ObjectMapperUtil.
+                                                mapStringToObject(ComponentDeploymentStatusDTO.class,
+                                                        payload, "componentDeployment"));
+
+                                        if (deploymentStatus.get().getDeploymentStatusV2().equals("ERROR") ||
+                                                deploymentStatus.get().getDeploymentStatus().equals("ERROR")) {
+                                            throw new RuntimeException("deploymentStatusV2 is " +
+                                                    deploymentStatus.get().getDeploymentStatusV2() +
+                                                    " and deploymentStatus is " +
+                                                    deploymentStatus.get().getDeploymentStatus());
+                                        }
+
+                                    }
                                 })));
 
         return deploymentStatus.get();
@@ -757,7 +775,7 @@ public class GraphQL extends ControlPlaneAPI {
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                .accept(MediaType.APPLICATION_JSON_VALUE));
 
         runner.$(http()
                 .client(client)
@@ -793,7 +811,7 @@ public class GraphQL extends ControlPlaneAPI {
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                .accept(MediaType.APPLICATION_JSON_VALUE));
 
         runner.$(http()
                 .client(client)

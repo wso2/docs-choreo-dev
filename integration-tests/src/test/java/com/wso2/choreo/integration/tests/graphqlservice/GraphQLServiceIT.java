@@ -4,23 +4,22 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.apis.Orgs;
+import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.apis.observability.ObservabilityService;
-import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
+import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.config.Constant;
-import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.apimanager.KeyData;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.models.observability.ObservabilityLogs;
-import com.wso2.choreo.integration.models.response.Response;
 import org.hamcrest.core.StringRegularExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -49,12 +48,11 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
     private String accessToken;
     private ChoreoProject project;
     private ChoreoComponent choreoComponent;
-    private String apiKey;
     private String devInvokeURL;
     private String prodInvokeURL;
+    private String apiId;
+    private KeyData keyData;
     private Environment[] en;
-    private static final String QUERY = "query{greeting(name:\"" + "John" + "\")}";
-    private static final String MUTATION = "mutation{createUser(name:\"" + "John" + "\")}";
     @Autowired
     private HttpClient choreoCPTestClient;
     @Autowired
@@ -96,58 +94,47 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void componentDeploy_GraphQLServiceIT() throws Exception {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, choreoComponent);
+                accessToken, choreoComponent, ComponentFlavour.STANDARD);
         devInvokeURL = statusDTO.getInvokeUrl();
     }
 
     @Test(dependsOnMethods = {"componentDeploy_GraphQLServiceIT"})
     @CitrusTest
-    public void addPromoteConfiguration_GraphQLServiceIT() throws Exception {
-        Response res = Orgs.addConfiguration(choreoComponent, Constant.PROD_ENVIRONMENT, accessToken);
-        Orgs.getConfigurationMapping(choreoComponent, accessToken);
-        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
-    }
-
-    @Test(dependsOnMethods = {"addPromoteConfiguration_GraphQLServiceIT"})
-    @CitrusTest
     public void promote_GraphQLServiceIT() throws Exception {
-        GraphQL.promoteComponent(choreoComponent, accessToken);
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
+                accessToken, choreoComponent, ComponentFlavour.STANDARD);
+        prodInvokeURL = statusDTO.getInvokeUrl();
+        apiId = statusDTO.getApiId();
     }
 
     @Test(dependsOnMethods = {"promote_GraphQLServiceIT"})
     @CitrusTest
-    public void componentProdDeploymentStatus_GraphQLServiceIT() throws Exception {
-        prodInvokeURL = GraphQL.componentDeployment(choreoComponent, Constant.PROD_ENVIRONMENT, accessToken).getInvokeUrl();
-    }
-
-    @Test(dependsOnMethods = {"componentProdDeploymentStatus_GraphQLServiceIT"})
-    @CitrusTest
     public void invokeQueryInDev_GraphQLServiceIT() throws Exception {
-        apiKey = APICreator.getAPIKey(choreoComponent.getApiId(), accessToken).getApikey();
-        Response res = GqlServiceTestHelper.sendRequest(devInvokeURL, QUERY, apiKey);
-        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
+        keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken, apiId);
+        ComponentUtils.invokeApiPOST(this, keyData.getApikey(), devInvokeURL, "/",
+                GqlServiceTestHelper.getGqlQueryRequest(), GqlServiceTestHelper.getGqlQueryResponse());
     }
 
     @Test(dependsOnMethods = {"invokeQueryInDev_GraphQLServiceIT"})
     @CitrusTest
     public void invokeQueryInProd_GraphQLServiceIT() throws Exception {
-        Response res = GqlServiceTestHelper.sendRequest(prodInvokeURL, QUERY, apiKey);
-        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
+        ComponentUtils.invokeApiPOST(this, keyData.getApikey(), prodInvokeURL, "/",
+                GqlServiceTestHelper.getGqlQueryRequest(), GqlServiceTestHelper.getGqlQueryResponse());
     }
 
 
     @Test(dependsOnMethods = {"invokeQueryInProd_GraphQLServiceIT"})
     @CitrusTest
     public void invokeMutationInDev_GraphQLServiceIT() throws Exception {
-        Response res = GqlServiceTestHelper.sendRequest(devInvokeURL, MUTATION, apiKey);
-        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
+        ComponentUtils.invokeApiPOST(this, keyData.getApikey(), devInvokeURL, "/",
+                GqlServiceTestHelper.getGqlMutationRequest(), GqlServiceTestHelper.getGqlMutationResponse());
     }
 
     @Test(dependsOnMethods = {"invokeMutationInDev_GraphQLServiceIT"})
     @CitrusTest
     public void invokeMutationInProd_GraphQLServiceIT() throws Exception {
-        Response res = GqlServiceTestHelper.sendRequest(prodInvokeURL, MUTATION, apiKey);
-        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
+        ComponentUtils.invokeApiPOST(this, keyData.getApikey(), prodInvokeURL, "/",
+                GqlServiceTestHelper.getGqlMutationRequest(), GqlServiceTestHelper.getGqlMutationResponse());
     }
 
     @Test(dependsOnMethods = {"invokeMutationInProd_GraphQLServiceIT"})
