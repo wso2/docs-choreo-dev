@@ -185,7 +185,6 @@ plugins:
           'insights/choreo-insights-api.md': 'https://wso2.com/choreo/docs/observe-and-analyze/analyze/choreo-insights-api/'
           'insights/programmatic-access-choreo-insights-api.md': 'https://wso2.com/choreo/docs/observe-and-analyze/analyze/programmatic-access-choreo-insights-api/'
           'administer/connect-to-an-external-identity-provider.md' : 'https://wso2.com/choreo/docs/administration/connect-to-an-external-identity-provider/'
-          'administration/connect-to-an-external-identity-provider.md': 'https://wso2.com/choreo/docs/administration/connect-to-an-external-identity-provider/'
           'administration/customize-developer-portal-domain.md': 'https://wso2.com/choreo/docs/administration/customize-developer-portal-domain/'
           'administration/configure-a-custom-domain-for-apis.md': 'https://wso2.com/choreo/docs/administration/configure-a-custom-domain-for-apis/'
           'administration/customize-the-developer-portal.md': 'https://wso2.com/choreo/docs/administration/customize-the-developer-portal/'
