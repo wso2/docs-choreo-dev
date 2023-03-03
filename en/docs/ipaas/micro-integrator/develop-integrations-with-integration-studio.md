@@ -63,6 +63,8 @@ The Choreo Console allows you to define enviornment variables for your integrati
 
 ![Environment Variables](../../assets/img/ipaas/integration-studio/env_variables.png){.cInlineImage-half}
 
+The Choreo DevOps Portal also allows you to define configurations and secrets to a deployed integration (as well as other component types) with more flexibility to cater your advance configuration needs. For more information, see [Configurations and secrets](../../devops/devops-portal.md#configurations-and-secrets).
+
 For a list of parameters that you can configure as environment variables, see [WSO2 API Manager Documentation - Injecting Parameters - Supported parameters](https://apim.docs.wso2.com/en/latest/integrate/develop/injecting-parameters/#supported-parameters).
 
 ## Connectors
