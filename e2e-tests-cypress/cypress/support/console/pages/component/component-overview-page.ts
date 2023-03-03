@@ -12,7 +12,7 @@
  */
 export class ComponentOverviewPage {
   static goBack() {
-    cy.get("button>span>p").contains("Components").should("be.visible").click();
+    cy.get('[data-testid="main-left-nav-item-Project"]').should("be.visible").click();
   }
 
   static navigateToDeploy() {

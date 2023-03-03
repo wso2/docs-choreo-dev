@@ -1,14 +1,14 @@
 import { AppEnvVersion } from "./app-env-version"
 
 export interface APIVersion {
-    accessibility: string
     apiVersion: string
-    branch: string
-    id: string
-    latest: boolean
-    proxyId: string
     proxyName: string
     proxyUrl: string
+    proxyId: string
+    id: string
     state: string
-    appEnvVersions:AppEnvVersion[]
+    latest: boolean
+    branch: string
+    accessibility: string
+    appEnvVersions: AppEnvVersion[]
 }

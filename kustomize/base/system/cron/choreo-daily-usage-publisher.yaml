@@ -38,28 +38,13 @@ spec:
                 capabilities:
                   drop:
                     - all
-              env:
-                - name: STRIPE_TOKEN
-                  valueFrom:
-                    secretKeyRef:
-                      name: secret-choreo-metered-usage-handler
-                      key: STRIPE_TOKEN
-                - name: CHOREO_USAGE_DB_PASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      name: secret-choreo-metered-usage-handler
-                      key: MSSQL_PASSWORD
-                - name: AZURE_AUTH_APP_CLIENT_SECRET
-                  valueFrom:
-                    secretKeyRef:
-                      name: secret-choreo-metered-usage-handler
-                      key: AZURE_AUTH_APP_CLIENT_SECRET
-                      optional: true
               envFrom:
                 - configMapRef:
                     name: cm-choreo-metered-usage-handler-daily-publisher
                 - configMapRef:
                     name: env-choreo-metered-usage-handler
+                - secretRef:
+                    name: secret-choreo-metered-usage-handler
               resources:
                 limits:
                   cpu: 500m
@@ -74,6 +59,8 @@ spec:
                 - name: secret-choreo-metered-usage-handler
                   mountPath: "/mnt/csi/secret-choreo-metered-usage-handler"
                   readOnly: true
+                - name: tmp
+                  mountPath: /tmp
           volumes:
             - name: config
               configMap:
@@ -86,4 +73,6 @@ spec:
                   secretProviderClass: secret-choreo-metered-usage-handler
                 nodePublishSecretRef:
                   name: csi-secret-store-azure
+            - name: tmp
+              emptyDir: {}
           serviceAccountName: sa-choreo-default

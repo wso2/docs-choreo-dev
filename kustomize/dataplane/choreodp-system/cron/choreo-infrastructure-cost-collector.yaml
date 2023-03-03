@@ -38,17 +38,13 @@
 #                 capabilities:
 #                   drop:
 #                     - all
-#               env:
-#                 - name: CHOREO_USAGE_DB_PASSWORD
-#                   valueFrom:
-#                     secretKeyRef:
-#                       name: secret-choreo-metered-usage-handler
-#                       key: MSSQL_PASSWORD
 #               envFrom:
 #                 - configMapRef:
 #                     name: cm-choreo-metered-usage-handler-collector
 #                 - configMapRef:
 #                     name: env-choreo-metered-usage-handler
+#                 - secretRef:
+#                     name: secret-choreo-metered-usage-handler
 #               resources:
 #                 limits:
 #                   cpu: 500m
@@ -63,6 +59,8 @@
 #                 - name: secret-choreo-metered-usage-handler
 #                   mountPath: "/mnt/csi/secret-choreo-metered-usage-handler"
 #                   readOnly: true
+#                 - name: tmp
+#                   mountPath: /tmp
 #           volumes:
 #             - name: config
 #               configMap:
@@ -75,4 +73,6 @@
 #                   secretProviderClass: secret-choreo-metered-usage-handler
 #                 nodePublishSecretRef:
 #                   name: csi-secret-store-azure
+#             - name: tmp
+#               emptyDir: {}
 #           serviceAccountName: sa-choreo-default

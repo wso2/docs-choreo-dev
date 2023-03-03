@@ -5,11 +5,34 @@ export class GitHub {
     static headers = {
         Authorization: `token ${Cypress.env("gitPAT")}`,
     };
-    static mergePR(repoName, prNumber) {
 
+
+    static getPRs(repoName: string) {
+        const requestURI = `${Cypress.env("ghUrl")}/repos/${Cypress.env("ghOrg")}/${repoName}/pulls`
+        return Utils.sendGetRequest(requestURI, this.headers).then(res => {
+            return res.body as { id: number, url: string }[]
+        })
+    }
+
+
+    static getPR(repoName: string, prNumber: number) {
+        const requestURI = `${Cypress.env("ghUrl")}/repos/${Cypress.env("ghOrg")}/${repoName}/pulls/${prNumber}`
+        return Utils.sendGetRequest(requestURI, this.headers)
+    }
+
+
+    static mergePR(repoName, prNumber) {
         const requestURI = `${Cypress.env("ghUrl")}/repos/${Cypress.env("ghOrg")}/${repoName}/pulls/${prNumber}/merge`
         const putRequest = { "commit_title": "Merge initial PR" }
-        return Utils.sendPutRequest(requestURI, this.headers, putRequest)
+
+        this.getPR(repoName, prNumber).then(res => {
+            if (res.status != 200) {
+                this.getPR(repoName, prNumber)
+            } else {
+                cy.log(requestURI)
+                Utils.sendPutRequest(requestURI, this.headers, putRequest).then((resp) => expect(resp.status).to.be.eq(200))
+            }
+        })
     }
 
     static deleteRepoContent(repoName: string) {
