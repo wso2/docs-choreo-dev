@@ -139,7 +139,7 @@ describe("Verify project creation functionality", () => {
   });
 
 
-  it.skip("Verify suspending all component deployments", () => {
+  it("Verify suspending all component deployments", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });
