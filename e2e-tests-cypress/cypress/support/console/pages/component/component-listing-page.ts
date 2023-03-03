@@ -36,16 +36,36 @@ export class ComponentListingPage {
     .click();
   }
 
-  static changeEnvironmentForStats(){
+  static getProductionEnvStats(){
   cy.get('[name="env"]')
-  .click() // open the dropdown
+  .click()
   cy.contains('Production').click().wait(3000);
+  cy.get('[data-cyid="total-apis"]').should('have.text','1');
+  cy.get('[data-cyid="total-traffic"]').should('have.text','2');
+  cy.get('[data-cyid="avg-latency"]').invoke('text')
+  .then((text) => {
+    const avgLatency = parseInt(text);
+    expect(avgLatency).to.be.greaterThan(0);
+  });
+  cy.get('[data-cyid="errors"]').should('have.text','0');
 
-  cy.get('[name="env"]')
-  .click() // open the dropdown
-  cy.contains('Development').click().wait(3000);
-  
   }
+
+  static getDevelopmentEnvStats(){
+    cy.get('[name="env"]')
+    .click()
+    cy.contains('Development').click().wait(3000);
+   
+  cy.get('[data-cyid="total-apis"]').should('have.text','1');
+  cy.get('[data-cyid="total-traffic"]').should('have.text','2');
+  cy.get('[data-cyid="avg-latency"]').invoke('text')
+  .then((text) => {
+    const avgLatency = parseInt(text);
+    expect(avgLatency).to.be.greaterThan(0);
+  });
+  cy.get('[data-cyid="errors"]').should('have.text','0');
+
+    }
   
   static visitToAComponent(componentName: string) {
     cy.get('[data-testid="main-left-nav-item-Project"]')

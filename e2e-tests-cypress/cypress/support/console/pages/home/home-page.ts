@@ -67,10 +67,11 @@ export class ChoreoHomePage {
            .get(`[data-value="apim"]`).click();
    }
 
-   static selectDefaultProject(){
-    cy.get('.MuiBox-root')
-    .contains('Default Project').click();
-  
-   }
+   static changeToIDevP(){
+    cy.get('[data-testid="perspective-pickerapim"]').click();
+     cy.get('.MuiList-root')
+       .should("be.visible")
+       .get(`[data-value="idevp"]`).click();
+}
 
 }

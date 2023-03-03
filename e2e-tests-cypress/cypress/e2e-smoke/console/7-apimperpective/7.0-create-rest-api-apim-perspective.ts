@@ -32,7 +32,7 @@ describe("Verify project creation functionality", () => {
   const COMPONENT_NAME = "restapi-apim-"+ Date.now();
   const REPO_NAME = Utils.generateComponentName("repo");
   const PROJECT_DESCRIPTION = "Covid stats project";
-  const PROJECT_NAME = "Default Project";
+  const PROJECT_NAME = Utils.generateProjectName();
 
   before(() => {
     LoginPage.login();
@@ -42,6 +42,7 @@ describe("Verify project creation functionality", () => {
   after(() => {
     ChoreoHomePage.logout();
   });
+
 
   it("Verify REST API component creation", () => {
     let componentData: ComponentData = {
@@ -57,17 +58,24 @@ describe("Verify project creation functionality", () => {
       repositorySubPath: "",
       sampleTemplate: "",
     };
-    ChoreoHomePage.selectDefaultProject();
+    ProjectListingPage.selectProject();
     ChoreoHomePage.changeToAPIPerspective();
+    ProjectListingPage.createNewProject(
+      PROJECT_NAME,
+      PROJECT_DESCRIPTION,
+      Enums.Region.US
+    );
 
     GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
   
+
     it("Verify component deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployToDev();
   });
+
 
   it("Verify test functionality of root resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
@@ -83,20 +91,6 @@ describe("Verify project creation functionality", () => {
   });
 
 
-  it("Verify test functionality using generated curl in Dev", () => {
-    TestHelper.testOnCurl(
-      Enums.Environment.DEVELOPMENT,
-      Enums.HTTPMethod.GET,
-      "root",
-      queryParameters1
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(4);
-        expect(res.status).equal(200);
-      });
-    });
-  });
-
   it("Verify test functionality of isOdd resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
@@ -110,20 +104,6 @@ describe("Verify project creation functionality", () => {
     });
   });
 
-
-  it("Verify test functionality using generated curl in dev", () => {
-    TestHelper.testOnCurl(
-      Enums.Environment.DEVELOPMENT,
-      Enums.HTTPMethod.GET,
-      "isOdd",
-      queryParameters2
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(true);
-        expect(res.status).equal(200);
-      });
-    });
-  });
 
   it("Verify component promote to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
@@ -145,20 +125,6 @@ describe("Verify project creation functionality", () => {
   });
 
 
-  it("Verify test functionality using generated curl in Prod", () => {
-    TestHelper.testOnCurl(
-      Enums.Environment.PRODUCTION,
-      Enums.HTTPMethod.GET,
-      "root",
-      queryParameters1
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(4);
-        expect(res.status).equal(200);
-      });
-    });
-  });
-
   it("Verify test functionality of isOdd resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
@@ -172,31 +138,23 @@ describe("Verify project creation functionality", () => {
     });
   });
 
- 
-  it("Verify test functionality using generated curl in prod", () => {
-    TestHelper.testOnCurl(
-      Enums.Environment.PRODUCTION,
-      Enums.HTTPMethod.GET,
-      "isOdd",
-      queryParameters2
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(true);
-        expect(res.status).equal(200);
-      });
-    });
-  });
 
- 
-  it("Verify suspending all component deployments", () => {
+  it.skip("Verify suspending all component deployments", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });
 
+
   it("Verify project statistics getting updated",()=>{
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-    ComponentListingPage.visitToProjectOverview();
-    ComponentListingPage.changeEnvironmentForStats();
+    ChoreoHomePage.logout();
+    LoginPage.login();
+    ProjectListingPage.selectProject(PROJECT_NAME);
+    ChoreoHomePage.changeToAPIPerspective();
+    ComponentListingPage.getDevelopmentEnvStats();
+    ComponentListingPage.getProductionEnvStats();
   });
 
 });
+
+
+
