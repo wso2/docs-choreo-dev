@@ -22,7 +22,7 @@ describe("Verify BYOR functionality", () => {
   const RESOURCE_NAME = "greeting";
   const PARAM_NAME = "name";
   const PARAM_VALUE = "World";
-  const MATCHING_STRING = "Hello, " + PARAM_VALUE;
+  const MATCHING_STRING = "Hello ra, " + PARAM_VALUE;
   const queryParameters1 = [{ key: PARAM_NAME, value: PARAM_VALUE }];
 
   before(() => {
@@ -42,16 +42,16 @@ describe("Verify BYOR functionality", () => {
       projectName: PROJECT_NAME,
       triggerChannels: "",
       triggerId: null,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/greeting-rest-api",
+      srcGitRepoUrl: "https://github.com/choreo-test-apps/byor-greetings-app2/tree/main/test",
+      repositorySubPath: "test",
       initializeAsBallerinaProject: false,
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
-      repositorySubPath: "",
       sampleTemplate: "",
     };
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
       PROJECT_DESCRIPTION,
-      Enums.Region.EU
+      Enums.Region.US
     );
     GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
