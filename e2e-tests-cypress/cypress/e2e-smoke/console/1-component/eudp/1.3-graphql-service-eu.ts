@@ -27,82 +27,89 @@ import { ComponentData } from "../../../../support/interfaces/component-data";
 
 
 
-describe("Graphql GQL service test", () => {
-  const PROJECT_DESCRIPTION = "sample oas flow scenario";
-  const PROJECT_NAME = Utils.generateProjectName();
-  const TEST_QUERY = '{greeting(name:"John")}';
-  const TEST_QUERY_RESPONSE = "Hello, John";
-  const TEST_MUTATION = 'mutation{createUser(name:"John")}';
-  const TEST_MUTATION_RESPONSE = 'createUser": "User created with name: John';
-  const COMPONENT_NAME = "graphql-service";
-  const REPO_NAME = "graphql-service-sample";
-  const subPath = Cypress.env("branch").replace("-ci", "");
+const dps = Object.values(Enums.Region)
 
-  before(() => {
-    LoginPage.login();
-    GitHub.deleteWebhooks("graphql")
+dps.forEach(dp=>{
+  describe("Graphql GQL service test", () => {
+    const PROJECT_DESCRIPTION = "sample oas flow scenario";
+    const PROJECT_NAME = Utils.generateProjectName();
+    const TEST_QUERY = '{greeting(name:"John")}';
+    const TEST_QUERY_RESPONSE = "Hello, John";
+    const TEST_MUTATION = 'mutation{createUser(name:"John")}';
+    const TEST_MUTATION_RESPONSE = 'createUser": "User created with name: John';
+    const COMPONENT_NAME = "graphql-service";
+    const REPO_NAME = "graphql-service-sample";
+    const subPath = Cypress.env("branch").replace("-ci", "");
+
+    before(() => {
+      LoginPage.login();
+      GitHub.deleteWebhooks("graphql")
+    });
+    after(() => {
+      ChoreoHomePage.logout();
+    });
+
+    it("Verify GraphQL sample creation", () => {
+      let componentData: ComponentData = {
+        componentName: COMPONENT_NAME,
+        displayType: Enums.DisplayType.graphql,
+        accessibility: Enums.Accessibility.EXTERNAL,
+        projectName: PROJECT_NAME,
+        triggerChannels: "",
+        triggerId: null,
+        srcGitRepoUrl: "https://github.com/choreo-test-apps/graphql",
+        initializeAsBallerinaProject: false,
+        repositoryType: Enums.RepoType.UserManagedEmpty,
+        repositorySubPath: "",
+      };
+      ProjectListingPage.createNewProject(
+        PROJECT_NAME,
+        PROJECT_DESCRIPTION,
+      dp
+      );
+      GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
+    });
+
+
+
+    it("Verify component deployment", () => {
+      ComponentListingPage.visitToAComponent(COMPONENT_NAME);
+      ComponentOverviewPage.navigateToDeploy();
+      ComponentDeployPage.deployToDev();
+    });
+
+    it("Verify component promote to prod", () => {
+      ComponentDeployPage.promoteToProd();
+    });
+
+    it("Verify test functionality of GQL query in dev on swagger", () => {
+      ComponentOverviewPage.navigateToTest();
+      TestHelper.testDevOnGraphQL(TEST_QUERY);
+      TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
+    });
+
+    it("Verify test functionality of GQL query in Prod on swagger", () => {
+      TestHelper.testProdOnGraphQL(TEST_QUERY);
+      TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
+    });
+
+    it("Verify test functionality of GQL mutation in dev on swagger", () => {
+      ComponentOverviewPage.navigateToTest();
+      TestHelper.testDevOnGraphQL(TEST_MUTATION);
+      TestHelper.getGqlResult(TEST_MUTATION_RESPONSE);
+    });
+
+    it("Verify test functionality of GQL mutation in Prod on swagger", () => {
+      TestHelper.testProdOnGraphQL(TEST_MUTATION);
+      TestHelper.getGqlResult(TEST_MUTATION_RESPONSE);
+    });
+
+    it("Verify suspending Prod deployed component", () => {
+      ComponentOverviewPage.navigateToDeploy();
+      ComponentDeployPage.stopAllDeployment();
+    });
   });
-  after(() => {
-    ChoreoHomePage.logout();
-  });
-
-  it("Verify GraphQL sample creation", () => {
-    let componentData: ComponentData = {
-      componentName: COMPONENT_NAME,
-      displayType: Enums.DisplayType.graphql,
-      accessibility: Enums.Accessibility.EXTERNAL,
-      projectName: PROJECT_NAME,
-      triggerChannels: "",
-      triggerId: null,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/graphql",
-      initializeAsBallerinaProject: false,
-      repositoryType: Enums.RepoType.UserManagedEmpty,
-      repositorySubPath: "",
-    };
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.EU
-    );
-    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
-  });
+})
 
 
 
-  it("Verify component deployment", () => {
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployToDev();
-  });
-
-  it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd();
-  });
-
-  it("Verify test functionality of GQL query in dev on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testDevOnGraphQL(TEST_QUERY);
-    TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
-  });
-
-  it("Verify test functionality of GQL query in Prod on swagger", () => {
-    TestHelper.testProdOnGraphQL(TEST_QUERY);
-    TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
-  });
-
-  it("Verify test functionality of GQL mutation in dev on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testDevOnGraphQL(TEST_MUTATION);
-    TestHelper.getGqlResult(TEST_MUTATION_RESPONSE);
-  });
-
-  it("Verify test functionality of GQL mutation in Prod on swagger", () => {
-    TestHelper.testProdOnGraphQL(TEST_MUTATION);
-    TestHelper.getGqlResult(TEST_MUTATION_RESPONSE);
-  });
-
-  it("Verify suspending Prod deployed component", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
-  });
-});

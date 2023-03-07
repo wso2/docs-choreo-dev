@@ -19,7 +19,7 @@ export namespace Enums {
     graphql = "graphql",
     manualTrigger = "manualTrigger",
     scheduledTask = "scheduledTask",
-    byocRestApi ="byocRestApi"
+    byocRestApi = "byocRestApi"
   }
 
   export enum Accessibility {
@@ -49,6 +49,7 @@ export namespace Enums {
   export enum Region {
     EU = "EU",
     US = "US",
+    IND = "IND"
   }
 
   export enum Perspective {
