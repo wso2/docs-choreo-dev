@@ -57,7 +57,7 @@ During deployment, Choreo performs a Trivy scan to detect critical vulnerabiliti
 
 ## Environment variables
 
-It is recommended to use environment variables when developing integration artifacts with WSO2 Integration Studio to improve configuration management, security, portability, and manageability. By using environment variables, organizations can simplify the management and maintenance of their integrations and ensure that they can be quickly and easily updated when required.
+We recommend using environmental variables to improve configuration management, security, portability, and manageability when you develop integration artifacts with WSO2 integration studio. By using environment variables, organizations can simplify the management and maintenance of their integrations and ensure that they can be quickly and easily updated when required.
 
 The component deploy page offers a user-friendly interface for managing environment variables across different environments. For more advanced use cases, the Choreo DevOps portal is available.
 
