@@ -220,6 +220,12 @@ describe("Choreo APIM publisher scenarios", () => {
     });
   });
 
+
+  it("Verify redeployment after removing permissions", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.DeployToDev();
+  });
+
   it("Verify insight values for dev", () => {
     ChoreoHomePage.navigateToInsights();
     InsightsPage.selectTimePeriod();
@@ -229,11 +235,6 @@ describe("Choreo APIM publisher scenarios", () => {
     });
     InsightsPage.getTotalErrorRequestCount().should("eq", "0");
     InsightsPage.getAverageErrorRate().should("eq", "0");
-  });
-
-  it("Verify redeployment after removing permissions", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
   });
 
   it("Verify insight values for prod", () => {
