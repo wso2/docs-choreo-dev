@@ -28,6 +28,19 @@ export class ComponentOverviewPage {
    
   }
 
+  static navigateToOverview(){
+    cy.get("[data-cyid=link-overview]").should("be.visible").click();
+    cy.intercept({
+      method: "POST",
+      url: `/insights/1.0.0/query-api`,
+      times: 1,
+    }).as("insights");
+    cy.wait("@insights", { timeout: 180000 }).then(() => {
+      cy.get("[data-cyid=copy-release-details-btn]").should('be.visible');
+    });
+  
+  }
+
     static navigateToManage() {
     cy.contains("Manage").should("be.visible").click({ force: true });
   }
