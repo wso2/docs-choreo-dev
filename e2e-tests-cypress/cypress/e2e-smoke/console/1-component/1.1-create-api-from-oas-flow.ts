@@ -231,6 +231,11 @@ describe("Choreo APIM publisher scenarios", () => {
     InsightsPage.getAverageErrorRate().should("eq", "0");
   });
 
+  it("Verify redeployment after removing permissions", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.DeployToDev();
+  });
+
   it("Verify insight values for prod", () => {
     InsightsPage.selectTimePeriod();
     InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
