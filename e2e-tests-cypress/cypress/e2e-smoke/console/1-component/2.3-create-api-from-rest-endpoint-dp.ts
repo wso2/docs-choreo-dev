@@ -11,26 +11,27 @@
  * associated services.
  */
 
-import { Enums } from "../../../../support/console/enums";
-import { APIDeployment } from "../../../../support/console/pages/apis/api-deployment";
-import { APIDevelop } from "../../../../support/console/pages/apis/api-develop";
-import { APITest } from "../../../../support/console/pages/apis/api-test";
-import { TestHelper } from "../../../../support/console/pages/component/common/test-helper";
-import { ComponentDeployPage } from "../../../../support/console/pages/component/component-deploy";
-import { ComponentDevelopPage } from "../../../../support/console/pages/component/component-develop-page";
-import { ComponentAPILifecycle } from "../../../../support/console/pages/component/component-manage-page";
-import { ComponentOverviewPage } from "../../../../support/console/pages/component/component-overview-page";
-import { ComponentTestPage } from "../../../../support/console/pages/component/component-test-page";
-import { SwaggerUI } from "../../../../support/console/pages/component/UI-components/swagger-UI-component";
-import { ChoreoHomePage } from "../../../../support/console/pages/home/home-page";
-import { LoginPage } from "../../../../support/console/pages/login-page";
-import { ProjectOverviewPage } from "../../../../support/console/pages/projects/project-overview";
-import { ProjectListingPage } from "../../../../support/console/pages/projects/projects-listing-page";
-import { RestAPIProxyTemplate } from "../../../../support/console/pages/templates/rest-api-proxy-temp";
-import { Utils } from "../../../../support/console/utils";
-import { ApiCredentials } from "../../../../support/devportal/pages/apis/apis-credentials";
-import { Apis } from "../../../../support/devportal/pages/apis/apis-home";
-import { TryOut } from "../../../../support/devportal/pages/apis/try-out";
+import { Enums } from "../../../support/console/enums";
+import { APIDeployment } from "../../../support/console/pages/apis/api-deployment";
+import { APIDevelop } from "../../../support/console/pages/apis/api-develop";
+import { APITest } from "../../../support/console/pages/apis/api-test";
+import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
+import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
+import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
+import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
+import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
+import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
+import { SwaggerUI } from "../../../support/console/pages/component/UI-components/swagger-UI-component";
+import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
+import { LoginPage } from "../../../support/console/pages/login-page";
+import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
+import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
+import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/rest-api-proxy-temp";
+import { Utils } from "../../../support/console/utils";
+import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
+import { Apis } from "../../../support/devportal/pages/apis/apis-home";
+import { TryOut } from "../../../support/devportal/pages/apis/try-out";
+
 
 
 const dps = Object.values(Enums.Region)
