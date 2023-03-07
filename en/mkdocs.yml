@@ -86,6 +86,8 @@ nav:
   - Manage:
       - API Management: manage/api-management.md
       - Lifecycle: manage/lifecycle.md
+      - API Security:
+         - Pass End-User Attributes to the Backend: manage/api-security/pass-end-user-attributes-to-the-backend.md
   - Consume:
       - Developer Portal Overview: consume/developer-portal.md
       - Manage Application: consume/manage-application.md
