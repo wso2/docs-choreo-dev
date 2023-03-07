@@ -1,7 +1,6 @@
 {
   
   "compilerOptions": {
-    // "baseUrl": "./",
     "allowJs": true,
     "esModuleInterop": true,
     "module": "esnext",

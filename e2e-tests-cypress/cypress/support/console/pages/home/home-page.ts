@@ -67,7 +67,7 @@ export class ChoreoHomePage {
            .get(`[data-value="apim"]`).click();
    }
 
-   static changeToIDevP(){
+   static changeToIDevPerspective(){
     cy.get('[data-testid="perspective-pickerapim"]').click();
      cy.get('.MuiList-root')
        .should("be.visible")
