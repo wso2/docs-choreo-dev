@@ -32,155 +32,165 @@ import { ComponentDeployPage } from "../../../support/console/pages/component/co
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 
-describe("Verify project creation functionality", () => {
-  const API_NAME = Utils.generateComponentName("CYE2E");
-  const API_BASE_PATH = Utils.generateBasePath();
-  const API_VERSION = "1.0.0";
-  const API_NEW_VERSION = "1.1.0";
-  const API_ENDPOINT = "https://jsonplaceholder.typicode.com";
-  const OPERATION_USERS = "users";
-  const OPERATION_POSTS = "posts";
-  const ALLOWED_ORIGINS = ["https://127.0.0.1"];
-  const ALLOWED_HEADERS = ["tenantId"];
-  const ALLOWED_METHODS = [Enums.HTTPMethod.TRACE, Enums.HTTPMethod.HEAD];
-  const PROJECT_DESCRIPTION = "sample stats project";
-  const PROJECT_NAME = Utils.generateProjectName();
-  const idpUser = "choreoe2etest";
 
-  before(() => {
-    LoginPage.login();
-  });
-  after(() => {
-    ChoreoHomePage.logout();
-  });
 
-  it("Verify Rest API creation from existing endpoint", () => {
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
-    ProjectOverviewPage.createHttpProxyAPI();
-    RestAPIProxyTemplate.skipSource();
-    RestAPIProxyTemplate.enterAPIdetails(
-      API_NAME,
-      API_BASE_PATH,
-      API_ENDPOINT,
-      API_VERSION,
-      "*"
-    );
-    APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
-  });
+const dps = Object.values(Enums.Region)
 
-  it("Verify component deployment to dev", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
-  });
 
-  it("Verify test functionality using Swagger UI in Dev", () => {
-    TestHelper.testOnSwagger(
-      Enums.Environment.DEVELOPMENT,
-      OPERATION_USERS
-    ).then((res) => {
-      expect(res.statusCode).to.be.equal("200");
+dps.forEach(dp=>{
+
+  describe("Verify project creation functionality", () => {
+    const API_NAME = Utils.generateComponentName("CYE2E");
+    const API_BASE_PATH = Utils.generateBasePath();
+    const API_VERSION = "1.0.0";
+    const API_NEW_VERSION = "1.1.0";
+    const API_ENDPOINT = "https://jsonplaceholder.typicode.com";
+    const OPERATION_USERS = "users";
+    const OPERATION_POSTS = "posts";
+    const ALLOWED_ORIGINS = ["https://127.0.0.1"];
+    const ALLOWED_HEADERS = ["tenantId"];
+    const ALLOWED_METHODS = [Enums.HTTPMethod.TRACE, Enums.HTTPMethod.HEAD];
+    const PROJECT_DESCRIPTION = "sample stats project";
+    const PROJECT_NAME = Utils.generateProjectName();
+    const idpUser = "choreoe2etest";
+
+    before(() => {
+      LoginPage.login();
+    });
+    after(() => {
+      ChoreoHomePage.logout();
+    });
+
+    it("Verify Rest API creation from existing endpoint", () => {
+      ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION,dp);
+      ProjectOverviewPage.createHttpProxyAPI();
+      RestAPIProxyTemplate.skipSource();
+      RestAPIProxyTemplate.enterAPIdetails(
+        API_NAME,
+        API_BASE_PATH,
+        API_ENDPOINT,
+        API_VERSION,
+        "*"
+      );
+      APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
+    });
+
+    it("Verify component deployment to dev", () => {
+      ComponentOverviewPage.navigateToDeploy();
+      APIDeployment.DeployToDev();
+    });
+
+    it("Verify test functionality using Swagger UI in Dev", () => {
+      TestHelper.testOnSwagger(
+        Enums.Environment.DEVELOPMENT,
+        OPERATION_USERS
+      ).then((res) => {
+        expect(res.statusCode).to.be.equal("200");
+      });
+    });
+
+    it("Verify prod invoke url", () => {
+      ComponentOverviewPage.navigateToDeploy();
+      APIDeployment.PromoteToProd();
+    });
+
+    it("Verify test functionality using Swagger UI in Prod", () => {
+      TestHelper.testOnSwagger(
+        Enums.Environment.PRODUCTION,
+        OPERATION_USERS
+      ).then((res) => {
+        expect(res.statusCode).to.be.equal("200");
+      });
+    });
+
+    it("Verify manage functionality", () => {
+      ComponentOverviewPage.navigateToManage();
+      ComponentAPILifecycle.configureSecuritySettings(
+        true,
+        false,
+        ALLOWED_ORIGINS,
+        ALLOWED_HEADERS,
+        ALLOWED_METHODS
+      );
+      ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
+      ComponentAPILifecycle.manageLifecycle();
+      ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
+    });
+
+    it("Create new version from the created API", () => {
+      ComponentOverviewPage.navigateToDeploy();
+      ComponentOverviewPage.createNewVersion(API_NEW_VERSION, "");
+      ComponentDevelopPage.getVersion().should(
+        "eq",
+        `API Version ${API_NEW_VERSION}`
+      );
+    });
+
+    it("Add  a new version", () => {
+      ComponentOverviewPage.navigateToDevelop();
+      APIDevelop.addResources(OPERATION_POSTS, Enums.HTTPMethod.GET);
+    });
+
+    it("Deploy new version to Dev", () => {
+      ComponentOverviewPage.navigateToDeploy();
+      APIDeployment.DeployToDev();
+    });
+
+    it("Test in dev", () => {
+      APITest.testAPI();
+      APITest.selectDevEnvironment();
+      ComponentTestPage.getTestKey();
+      SwaggerUI.invokeResource(OPERATION_USERS);
+      SwaggerUI.getResponseCode().should("eq", "200");
+      SwaggerUI.invokeResource(OPERATION_POSTS);
+      SwaggerUI.getResponseCode().should("eq", "200");
+    });
+
+    it("Verify new prod invoke url", () => {
+      ComponentOverviewPage.navigateToDeploy();
+      APIDeployment.PromoteToProd();
+    });
+
+    it("Test in prod", () => {
+      APITest.testAPI();
+      APITest.selectProdEnvironment();
+      ComponentTestPage.getTestKey();
+      SwaggerUI.invokeResource(OPERATION_USERS);
+      SwaggerUI.getResponseCode().should("eq", "200");
+      SwaggerUI.invokeResource(OPERATION_POSTS);
+      SwaggerUI.getResponseCode().should("eq", "200");
+    });
+
+    it("Publish the API", () => {
+      ComponentOverviewPage.navigateToManage();
+      ComponentAPILifecycle.manageLifecycle();
+      ComponentAPILifecycle.publishWithoutConnector();
+    });
+
+    it("Verify api invoke urls", () => {
+      ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+      Apis.verifyAPIname().should("eq", API_NAME);
+      Apis.verifyInvokeUrl();
+    });
+
+    it("Test in devportal", () => {
+      Apis.searchApiAndSelect(API_NAME, 2, API_NEW_VERSION);
+      ApiCredentials.navigateCredentialsTab();
+      ApiCredentials.generateCredentials();
+      TryOut.navigateToTryOutMenu();
+      TryOut.generateTestKeyAndVerify();
+      TryOut.SelectResource(null, OPERATION_USERS);
+      TryOut.TryoutAPI();
+      TryOut.ExecuteResourceFunction();
+      TryOut.GetResponse();
+    });
+
+    it("Verify application suspension", () => {
+      LoginPage.reLoginToChoreo();
+      ComponentOverviewPage.navigateToDeploy();
+      ComponentDeployPage.stopAllDeployment();
     });
   });
+})
 
-  it("Verify prod invoke url", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.PromoteToProd();
-  });
 
-  it("Verify test functionality using Swagger UI in Prod", () => {
-    TestHelper.testOnSwagger(
-      Enums.Environment.PRODUCTION,
-      OPERATION_USERS
-    ).then((res) => {
-      expect(res.statusCode).to.be.equal("200");
-    });
-  });
-
-  it("Verify manage functionality", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.configureSecuritySettings(
-      true,
-      false,
-      ALLOWED_ORIGINS,
-      ALLOWED_HEADERS,
-      ALLOWED_METHODS
-    );
-    ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
-  });
-
-  it("Create new version from the created API", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentOverviewPage.createNewVersion(API_NEW_VERSION, "");
-    ComponentDevelopPage.getVersion().should(
-      "eq",
-      `API Version ${API_NEW_VERSION}`
-    );
-  });
-
-  it("Add  a new version", () => {
-    ComponentOverviewPage.navigateToDevelop();
-    APIDevelop.addResources(OPERATION_POSTS, Enums.HTTPMethod.GET);
-  });
-
-  it("Deploy new version to Dev", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
-  });
-
-  it("Test in dev", () => {
-    APITest.testAPI();
-    APITest.selectDevEnvironment();
-    ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource(OPERATION_USERS);
-    SwaggerUI.getResponseCode().should("eq", "200");
-    SwaggerUI.invokeResource(OPERATION_POSTS);
-    SwaggerUI.getResponseCode().should("eq", "200");
-  });
-
-  it("Verify new prod invoke url", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.PromoteToProd();
-  });
-
-  it("Test in prod", () => {
-    APITest.testAPI();
-    APITest.selectProdEnvironment();
-    ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource(OPERATION_USERS);
-    SwaggerUI.getResponseCode().should("eq", "200");
-    SwaggerUI.invokeResource(OPERATION_POSTS);
-    SwaggerUI.getResponseCode().should("eq", "200");
-  });
-
-  it("Publish the API", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publishWithoutConnector();
-  });
-
-  it("Verify api invoke urls", () => {
-    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
-    Apis.verifyAPIname().should("eq", API_NAME);
-    Apis.verifyInvokeUrl();
-  });
-
-  it("Test in devportal", () => {
-    Apis.searchApiAndSelect(API_NAME, 2, API_NEW_VERSION);
-    ApiCredentials.navigateCredentialsTab();
-    ApiCredentials.generateCredentials();
-    TryOut.navigateToTryOutMenu();
-    TryOut.generateTestKeyAndVerify();
-    TryOut.SelectResource(null, OPERATION_USERS);
-    TryOut.TryoutAPI();
-    TryOut.ExecuteResourceFunction();
-    TryOut.GetResponse();
-  });
-
-  it("Verify application suspension", () => {
-    LoginPage.reLoginToChoreo();
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
-  });
-});
