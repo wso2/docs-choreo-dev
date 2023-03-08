@@ -40,15 +40,7 @@ export class ChoreoHomePage {
     }
 
     static logout() {
-
-        cy.window().then(w => {
-            w.sessionStorage.clear()
-            w.localStorage.clear()
-        })
-
-
         cy.request(Cypress.env("sign_out_url"));
-
     }
 
     static navigateToSettings() {
