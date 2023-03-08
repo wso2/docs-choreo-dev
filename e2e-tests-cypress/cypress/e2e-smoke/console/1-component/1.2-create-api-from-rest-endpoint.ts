@@ -36,10 +36,17 @@ import { TestHelper } from "../../../support/console/pages/component/common/test
 
 const dps = Object.values(Enums.Region)
 
+before(() => {
+  LoginPage.login();
+});
+after(() => {
+  ChoreoHomePage.logout();
+});
+
 
 dps.forEach(dp=>{
 
-  describe("Verify project creation functionality", () => {
+  describe(`Verify proxy api functionality in region ${dp}`, () => {
     const API_NAME = Utils.generateComponentName("CYE2E");
     const API_BASE_PATH = Utils.generateBasePath();
     const API_VERSION = "1.0.0";
@@ -54,12 +61,7 @@ dps.forEach(dp=>{
     const PROJECT_NAME = Utils.generateProjectName();
     const idpUser = "choreoe2etest";
 
-    before(() => {
-      LoginPage.login();
-    });
-    after(() => {
-      ChoreoHomePage.logout();
-    });
+
 
     it("Verify Rest API creation from existing endpoint", () => {
       ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION,dp);

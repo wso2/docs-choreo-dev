@@ -17,8 +17,16 @@ import { GitHub } from "../../../support/github/github";
 
 const dps = Object.values(Enums.Region)
 
+before(() => {
+  LoginPage.login();
+  GitHub.deleteWebhooks("greeting-rest-api")
+});
+
+after(() => {
+  ChoreoHomePage.logout();
+});
 dps.forEach(dp => {
-  describe("Verify BYOR functionality", () => {
+  describe(`Verify BYOR functionality in region ${dp}`, () => {
     const PROJECT_DESCRIPTION = "Internal API Test";
     const PROJECT_NAME = Utils.generateProjectName();
     const REST_API_NAME = Utils.generateComponentName("byor");
@@ -36,14 +44,7 @@ dps.forEach(dp => {
     const queryParameters2 = [{ key: PARAM_NAME1, value: PARAM_VALUE1 }];
 
 
-    before(() => {
-      LoginPage.login();
-      GitHub.deleteWebhooks("greeting-rest-api")
-    });
 
-    after(() => {
-      ChoreoHomePage.logout();
-    });
 
     it("Verify REST API component creation", () => {
       let componentData: ComponentData = {

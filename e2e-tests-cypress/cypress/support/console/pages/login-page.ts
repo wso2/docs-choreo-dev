@@ -36,6 +36,7 @@ export class LoginPage {
 
   static login() {
     window.localStorage.setItem("seen", Date.now().toString());
+  
     this.enterUserCredentials("choreoIDPUsername", "choreoIDPPassword");
     this.persistOrgs();
     this.persistLogoutURL();
@@ -72,7 +73,7 @@ export class LoginPage {
       Cypress.env(`commonAuthId`) != null
         ? Cypress.env(`commonAuthId`)
         : "authtoken";
-     window.localStorage.setItem("seen", Date.now().toString());
+    window.localStorage.setItem("seen", Date.now().toString());
     Utils.setBrowserCookie();
     this.setCookie(componentURL, "commonAuthId", common);
     cy.visit(componentURL);
@@ -183,16 +184,19 @@ export class LoginPage {
   private static enterUserCredentials(envUsername: string, envPassword: string) {
     Utils.setBrowserCookie();
     cy.visit(Cypress.env("loginURL"));
-    cy.url({ timeout: 30000 }).then((url) => {
-      if (url.includes(Cypress.env("idpURL") + "/authenticationendpoint")) {
-        cy.get('button[type="submit"]').should("be.visible", {
-          timeout: 180000,
-        });
-        cy.get("#usernameUserInput").type(Cypress.env(envUsername));
-        cy.get("#password").type(Cypress.env(envPassword), { log: false });
-        cy.get('button[type="submit"]').click();
-      }
-    });
+    cy.get("#usernameUserInput",{timeout:180000}).type(Cypress.env(envUsername));
+    cy.get("#password").type(Cypress.env(envPassword), { log: false });
+    cy.get('button[type="submit"]').click();
+    // cy.url({ timeout: 30000 }).then((url) => {
+    //   if (url.includes(Cypress.env("idpURL") + "/authenticationendpoint")) {
+    //     cy.get('button[type="submit"]').should("be.visible", {
+    //       timeout: 180000,
+    //     });
+    //     cy.get("#usernameUserInput").type(Cypress.env(envUsername));
+    //     cy.get("#password").type(Cypress.env(envPassword), { log: false });
+    //     cy.get('button[type="submit"]').click();
+    //   }
+    // });
   }
 
   private static setCookie(
