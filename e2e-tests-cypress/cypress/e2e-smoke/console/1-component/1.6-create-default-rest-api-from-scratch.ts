@@ -18,7 +18,7 @@ import { GitHub } from "../../../support/github/github";
 const dps = Object.values(Enums.Region)
 
 dps.forEach(dp => {
-  describe("Verify BYOR functionality", () => {
+  describe(`Verify BYOR functionality in region ${dp}`, () => {
     const PROJECT_DESCRIPTION = "Internal API Test";
     const PROJECT_NAME = Utils.generateProjectName();
     const REST_API_NAME = Utils.generateComponentName("byor");

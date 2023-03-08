@@ -39,7 +39,7 @@ const dps = Object.values(Enums.Region)
 
 dps.forEach(dp=>{
 
-  describe("Verify project creation functionality", () => {
+  describe(`Verify proxy api functionality in region ${dp}`, () => {
     const API_NAME = Utils.generateComponentName("CYE2E");
     const API_BASE_PATH = Utils.generateBasePath();
     const API_VERSION = "1.0.0";

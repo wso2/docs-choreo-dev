@@ -30,7 +30,7 @@ const dps = Object.values(Enums.Region)
 
 
 dps.forEach(dp => {
-  describe("Verify BYOC functionality", () => {
+  describe(`Verify BYOC functionality in region ${dp}`, () => {
     const PROJECT_DESCRIPTION = "BYOC component";
     const PROJECT_NAME = Utils.generateProjectName();
     const REST_API_NAME = Utils.generateComponentName("byor");

@@ -29,8 +29,8 @@ import { ComponentData } from "../../../support/interfaces/component-data";
 
 const dps = Object.values(Enums.Region)
 
-dps.forEach(dp=>{
-  describe("Graphql GQL service test", () => {
+dps.forEach(dp => {
+  describe(`Graphql GQL service functionality in region ${dp}`, () => {
     const PROJECT_DESCRIPTION = "sample oas flow scenario";
     const PROJECT_NAME = Utils.generateProjectName();
     const TEST_QUERY = '{greeting(name:"John")}';
@@ -65,7 +65,7 @@ dps.forEach(dp=>{
       ProjectListingPage.createNewProject(
         PROJECT_NAME,
         PROJECT_DESCRIPTION,
-      dp
+        dp
       );
       GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
     });

@@ -36,6 +36,7 @@ export class LoginPage {
 
   static login() {
     window.localStorage.setItem("seen", Date.now().toString());
+  
     this.enterUserCredentials("choreoIDPUsername", "choreoIDPPassword");
     this.persistOrgs();
     this.persistLogoutURL();
@@ -72,7 +73,7 @@ export class LoginPage {
       Cypress.env(`commonAuthId`) != null
         ? Cypress.env(`commonAuthId`)
         : "authtoken";
-     window.localStorage.setItem("seen", Date.now().toString());
+    window.localStorage.setItem("seen", Date.now().toString());
     Utils.setBrowserCookie();
     this.setCookie(componentURL, "commonAuthId", common);
     cy.visit(componentURL);
