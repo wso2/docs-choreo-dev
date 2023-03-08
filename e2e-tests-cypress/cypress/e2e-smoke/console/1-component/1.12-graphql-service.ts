@@ -29,6 +29,14 @@ import { ComponentData } from "../../../support/interfaces/component-data";
 
 const dps = Object.values(Enums.Region)
 
+before(() => {
+  LoginPage.login();
+  GitHub.deleteWebhooks("graphql")
+});
+after(() => {
+  ChoreoHomePage.logout();
+});
+
 dps.forEach(dp => {
   describe(`Graphql GQL service functionality in region ${dp}`, () => {
     const PROJECT_DESCRIPTION = "sample oas flow scenario";
@@ -39,15 +47,7 @@ dps.forEach(dp => {
     const TEST_MUTATION_RESPONSE = 'createUser": "User created with name: John';
     const COMPONENT_NAME = "graphql-service";
     const REPO_NAME = "graphql-service-sample";
-    const subPath = Cypress.env("branch").replace("-ci", "");
 
-    before(() => {
-      LoginPage.login();
-      GitHub.deleteWebhooks("graphql")
-    });
-    after(() => {
-      ChoreoHomePage.logout();
-    });
 
     it("Verify GraphQL sample creation", () => {
       let componentData: ComponentData = {

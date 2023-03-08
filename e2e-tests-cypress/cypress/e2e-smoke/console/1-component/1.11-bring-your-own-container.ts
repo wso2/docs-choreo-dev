@@ -29,6 +29,15 @@ import { ByocComponent } from "../../../support/interfaces/byoc-component";
 const dps = Object.values(Enums.Region)
 
 
+before(() => {
+  LoginPage.login();
+});
+
+after(() => {
+  ChoreoHomePage.logout();
+});
+
+
 dps.forEach(dp => {
   describe(`Verify BYOC functionality in region ${dp}`, () => {
     const PROJECT_DESCRIPTION = "BYOC component";
@@ -36,17 +45,6 @@ dps.forEach(dp => {
     const REST_API_NAME = Utils.generateComponentName("byor");
     const REPO_NAME = Utils.generateComponentName("repo");
     const RESOURCE_NAME = "movies";
-
-
-
-
-    before(() => {
-      LoginPage.login();
-    });
-
-    after(() => {
-      ChoreoHomePage.logout();
-    });
 
     it("Verify REST API component creation", () => {
 

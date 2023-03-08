@@ -36,6 +36,13 @@ import { TestHelper } from "../../../support/console/pages/component/common/test
 
 const dps = Object.values(Enums.Region)
 
+before(() => {
+  LoginPage.login();
+});
+after(() => {
+  ChoreoHomePage.logout();
+});
+
 
 dps.forEach(dp=>{
 
@@ -54,12 +61,7 @@ dps.forEach(dp=>{
     const PROJECT_NAME = Utils.generateProjectName();
     const idpUser = "choreoe2etest";
 
-    before(() => {
-      LoginPage.login();
-    });
-    after(() => {
-      ChoreoHomePage.logout();
-    });
+
 
     it("Verify Rest API creation from existing endpoint", () => {
       ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION,dp);
