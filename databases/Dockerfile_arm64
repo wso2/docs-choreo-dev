@@ -10,7 +10,7 @@
 # --------------------------------------------------------------------------------------
 
 # Derived from official Azure SQL edge image (our base image)
-FROM mcr.microsoft.com/azure-sql-edge:latest
+FROM mcr.microsoft.com/azure-sql-edge:1.0.7
 
 # Switch to root user for access to apt-get install
 USER root
