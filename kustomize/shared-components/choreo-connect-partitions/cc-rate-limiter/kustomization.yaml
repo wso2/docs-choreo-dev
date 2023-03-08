@@ -17,8 +17,8 @@
 resources:
   - cc-rate-limiter-deployment.yaml
   - cc-rate-limiter-headless-service.yaml
-  - cc-rate-limiter-hpa.yaml
-  - cc-rate-limiter-pdb.yaml
+#   - cc-rate-limiter-hpa.yaml
+#   - cc-rate-limiter-pdb.yaml
 
 configMapGenerator:
   - name: env-cc-rate-limiter
