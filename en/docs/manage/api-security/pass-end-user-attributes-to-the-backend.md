@@ -54,12 +54,11 @@ JWKS allows the issuer to rotate keys dynamically rather than hardcoding the pub
 
 ## JWKS support in Choreo to validate the JWT
 
-Choreo provides an endpoint to specify the public keys for backend JWT validation. Here are the endpoint URLs for the US East and EU regions:
+Choreo provides an endpoint to specify the public keys for backend JWT validation.
 
-- [https://gateway.e1-us-east-azure.choreoapis.dev/.wellknown/jwks](https://gateway.e1-us-east-azure.choreoapis.dev/.wellknown/jwks)
-- [https://gateway.e1-eu-north-azure.choreoapis.dev/.wellknown/jwks](https://gateway.e1-eu-north-azure.choreoapis.dev/.wellknown/jwks)
+[https://gateway.e1-us-east-azure.choreoapis.dev/.wellknown/jwks](https://gateway.e1-us-east-azure.choreoapis.dev/.wellknown/jwks)
 
-The endpoint provides one or more signing keys to validate the JWT.
+This endpoint provides one or more signing keys to validate the JWT.
 The JSON web keys have a kid identifier that can be matched with the same property on the JWT to decide which key to use when validating.
 
 Here is a sample JWKS response:
