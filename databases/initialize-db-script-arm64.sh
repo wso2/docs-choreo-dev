@@ -27,7 +27,6 @@ declare -a DB_SCRIPTS=(
 )
 HOST="localhost"             # hostname
 USERNAME="sa"                # username
-PASSWORD=${SA_PASSWORD}      # get from env var MSSQL_SA_PASSWORD
 DATABASE_NAME="choreo_db"    # database name
 #####################################################################################
 
