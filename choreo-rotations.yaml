@@ -4,23 +4,23 @@ rotations:
       - name: Platform Engineering
         members:
           - chalithak@wso2.com
-          - shana@wso2.com
           - sachithka@wso2.com
+          - shana@wso2.com
       - name: QA Engineering
         members:
           - isurupi@wso2.com
           - dasun@wso2.com
     endMessage: "Please contact above team regarding Choreo releases within above dates"
     notifications:
-      - release_webhook_space1
-      - release_webhook_space2
+      - choreo_release_chat
+      - choreo_team_chat
   - subject: cost analysis rotation
     teams:
       - name: Platform Engineering
         members:
           - chalithak@wso2.com
-          - shana@wso2.com
           - sachithka@wso2.com
+          - shana@wso2.com
     endMessage: "Please contact above person regarding cost analysis within above dates"
     notifications:
-      - cost_webhook_space1
+      - choreo_pe_chat
