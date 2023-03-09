@@ -192,6 +192,7 @@ export class LoginPage {
     cy.wait(3000)
       .url({ timeout: 30000 })
       .then((url) => {
+        cy.log(`URL after login page load: ${url}`);
         if (url.includes(Cypress.env("idpURL") + "/authenticationendpoint")) {
           cy.get('button[type="submit"]').should("be.visible", {
             timeout: 180000,
