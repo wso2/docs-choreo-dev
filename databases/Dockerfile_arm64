@@ -28,7 +28,7 @@ WORKDIR /db-script-data
 COPY initialize-db-script-arm64.sh entrypoint.sh scripts/ /db-script-data/
 
 # Grant permissions for the initialize-db-script script to be executable
-RUN chmod +x /db-script-data/initialize-db-script.sh
+RUN chmod +x /db-script-data/initialize-db-script-arm64.sh
 
 # Switch back to mssql user and run the entrypoint script
 USER mssql
