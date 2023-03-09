@@ -37,6 +37,8 @@ export class LoginPage {
   static login() {
     window.localStorage.setItem("seen", Date.now().toString());
 
+    this.registerNetworkCallsForInterception();
+
     this.enterUserCredentials("choreoIDPUsername", "choreoIDPPassword");
     this.persistOrgs();
     this.persistLogoutURL();
@@ -129,8 +131,16 @@ export class LoginPage {
     });
   }
 
-  private static persistOrgs() {
+  private static registerNetworkCallsForInterception() {
     cy.intercept("GET", Cypress.env("appSvcURL") + "/validate-user").as("org");
+    cy.intercept({
+      method: "GET",
+      url: `${Cypress.env("appSvcURL")}/orgs/*`,
+      times: 1,
+    }).as("orgs");
+  }
+
+  private static persistOrgs() {
     cy.wait("@org", { timeout: 180000 }).then((res) => {
       let userOrg;
       const handle = Cypress.env("choreoOrgHandle");
@@ -162,11 +172,6 @@ export class LoginPage {
   }
 
   static persistApimToken() {
-    cy.intercept({
-      method: "GET",
-      url: `${Cypress.env("appSvcURL")}/orgs/*`,
-      times: 1,
-    }).as("orgs");
     cy.wait("@orgs", { timeout: 150000 }).then((intercept) => {
       const header = intercept.request.headers["authorization"] as string;
       const token = header.replace("Bearer", "").trim();
