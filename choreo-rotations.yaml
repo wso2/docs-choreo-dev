@@ -10,6 +10,7 @@ rotations:
         members:
           - isurupi@wso2.com
           - dasun@wso2.com
+    endMessage: "Please contact above team regarding Choreo releases within above dates"
     notifications:
       - release_webhook_space1
       - release_webhook_space2
@@ -20,5 +21,6 @@ rotations:
           - chalithak@wso2.com
           - shana@wso2.com
           - sachithka@wso2.com
+    endMessage: "Please contact above person regarding cost analysis within above dates"
     notifications:
       - cost_webhook_space1
