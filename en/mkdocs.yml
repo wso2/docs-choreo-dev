@@ -74,9 +74,7 @@ nav:
       - API Policies:
           - Policies: develop/api-policies/policies.md
           - Create Policy: develop/api-policies/create-a-policy.md
-          - Attach Policy: develop/api-policies/attach-policies.md   
-      - Advanced Topics:
-          - Manage Connectors: develop/advanced-topics/manage-connectors.md
+          - Attach Policy: develop/api-policies/attach-policies.md
   - Deploy: 
       - Deploy Your Choreo Component: deploy/deploy-your-component.md
       - Deploy a Containerized Component: deploy/deploy-a-containerized-choreo-component.md
