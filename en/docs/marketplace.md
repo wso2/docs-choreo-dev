@@ -55,23 +55,3 @@ Once you populate the Marketplace page by filtering or searching for connectors 
 You can also sort the list by the newest or the most used connectors/triggers.
 
 If you want to view more information about a specific connector on the list, click on it. This directs you to an overview page with information about versions and compatibility, and links for reporting issues, accessing API documentation, contacting the vendor, etc.
-
-## Use a connector in your component design
-
-When you design your components in the low-code view, you can search and add the connectors displayed in the Marketplace as follows:
-
-1. Open the component you are designing in the VS Code Editor and add a connector.
-
-   ![Add connector](assets/img/marketplace/add-connector.png){.cInlineImage-half}
-
-2. Search for the connector you need to add (e.g., World Bank), and click on it to add it.
-
-   ![Select connector](assets/img/marketplace/select-connector.png){.cInlineImage-half}
-
-If the connector is not available by default, you need to visit the vendor portal, make a payment/provide your Freemium account details if required, and access the required authorization tokens beforehand.
-
-e.g., If you need to use the Azure SQL DB connector, you need to create an Azure account and obtain an authorization token.
-
-## Update a connector 
-
-If you want to introduce a change to your component and update the connector you published for it, you need to explicitly republish the connector. To learn more on how to update a connector, see [Use a Connector in Your Component](develop/advanced-topics/manage-connectors.md).
