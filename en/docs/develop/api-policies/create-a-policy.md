@@ -25,15 +25,15 @@ Let's create a Ballerina project for the mediation policy using the **mediation.
    
 **Format:**
 
-    ```
-       bal new -t choreo/mediation.template:1.0.0 <policy-name> 
-    ```
+```
+    bal new -t choreo/mediation.template:1.0.0 <policy-name> 
+```
     
 **Example:**
 
-    ```
-       bal new -t choreo/mediation.template:1.0.0 validateHeader 
-    ```
+```
+    bal new -t choreo/mediation.template:1.0.0 validateHeader 
+```
  The Ballerina project you generated above has the following content: 
 
 ![Ballerina project](../../assets/img/develop/api-policy/ballerina-project.png){.cInlineImage-xsmall}

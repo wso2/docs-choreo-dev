@@ -1,6 +1,6 @@
 # Create Your First Event-triggered Integration
 
-Choreo allows you to deploy, test, manage, and observe integration components that integrate APIs, microservices, applications, and data in different languages and formats.
+Choreo allows you to deploy, test, manage, and observe integration components that integrate APIs, microservices, applications implemented in different languages and data in different formats.
 
 To explore this capability, let's consider a scenario where a team of software engineers in an organization wants to be notified via email whenever someone creates a GitHub issue with the `bug` label in a specific GitHub repository.
 

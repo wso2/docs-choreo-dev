@@ -4,8 +4,8 @@ Today, with the growth of the global API ecosystem, APIs have become an essentia
 
 Choreo, a versatile and comprehensive platform for cloud-native engineering, provides the following advantages:
 
-- Provides different perspectives in the platform that groups related functionalities together which helps you find exactly what you will need to easily and efficiently implement your organization's intergation story.  
-    - **Internal developer Platform**: A full lifecycle cloud native application development plaform perspective that helps you create, deploy, run, and observe APIs, integrtaions, and microservices on Kubernetes. 
+- Provides different perspectives in the platform that groups related functionalities together which helps you find exactly what you will need to easily and efficiently implement your organization's integration story.  
+    - **Internal developer Platform**: A full lifecycle cloud native application development platform perspective that helps you create, deploy, run, and observe APIs, integrations, and microservices on Kubernetes. 
     - **API Manager**:   Provides the capabilities to develop APIs and get them to production. Choreo’s API Publisher Portal allows API developers to design, publish, and manage the lifecycle of APIs whereas the API Developer Portal allows consumers to consume APIs.
     - **IPaaS**: A platform perspective designed to help you create, manage, and share enterprise-grade integrations and automations easily. 
     - **DevOps**: Experience realistic DevOps with versions, environments, CI/CD pipelines, and automation test with Choreo's DevOps perspective. 

@@ -48,11 +48,7 @@ Let's add the integration by following the steps given below:
 11. Under **Build Preset**, click **Micro Integrator**.
 
     !!! info
-<<<<<<< HEAD:en/docs/ipaas/micro-integrator/create-your-first-integration.md
         The build preset specifies the type of build that Choreo needs to run for the component (for example, Choreo needs to run a micro integrator build for components developed via the [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), a Ballerina build for a component added via a Ballerina project, etc.,).
-=======
-        The build preset specifies the type of build that Choreo needs to run for the component (for example, Choreo needs to run a micro integrator build for components developed via the [WSO2 Integration Studio]((https://wso2.com/integration/integration-studio/), a Ballerina build for a component added via a Ballerina project, etc.,).
->>>>>>> 3a34627 (Updated doc):en/docs/get-started/tutorials/create-your-first-integration.md
 
 12. Enter information related to the `MI Hello World` project as follows:
 
@@ -88,15 +84,9 @@ In this tutorial, let's test via the OpenAPI Console:
 
 2. Click **OpenAPI Console**.
 
-<<<<<<< HEAD:en/docs/ipaas/micro-integrator/create-your-first-integration.md
-3. Select the **/HelloWorld** resource and click **Try it out**.
-
-4. Click **Execute**. Choreo displays the following response under **Response body**.
-=======
 3. Select **/HelloWorld** resource and click **Try it out**.
 
 4. Click **Execute**. Choreo displays the following response in **Response body**.
->>>>>>> 3a34627 (Updated doc):en/docs/get-started/tutorials/create-your-first-integration.md
 
     `{"Hello":"Integration"}`
 
