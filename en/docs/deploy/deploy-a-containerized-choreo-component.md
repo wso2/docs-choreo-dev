@@ -51,6 +51,11 @@ Let's add a containerized REST API component by following these steps:
 
 7. Select the following values to connect the repository:
 
+<<<<<<< HEAD
+=======
+7. Select the following values to connect the repository:
+
+>>>>>>> 890546a (Add note on defining USER instruction)
     !!! info
         To successfully build your container with Choreo, it is essential that you explicitly define a User ID (`UID`) under the `USER` instruction in your Dockerfile. You can refer to the [sample Dockerfile](https://github.com/wso2/choreo-sample-apps/blob/main/go/rest-api/Dockerfile) for guidance.
 
