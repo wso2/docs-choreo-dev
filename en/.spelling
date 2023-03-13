@@ -321,6 +321,9 @@ VMWare
 OpenShift
 Tanzu
 OAuth
+cInlineImage-xsmall
+IPaaS
+automations
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -473,7 +476,7 @@ uuid
 cInlineImage-small
  - docs/administer/configure-a-custom-domain-for-apis.md
 cInlineImage-small
-cInlineImage-threeQuarters
+cInlineImage-threeQuarter
  - docs/administer/configure-developer-portal-self-sign-up.md
 WSO2_LOGIN_FOR_CHOREO_DEV_PORTAL
 Signups
@@ -494,8 +497,6 @@ id_token
  - docs/deploy/deploy-a-containerized-choreo-component.md
 choreo-sample-apps
  - docs/devops/devops-portal.md
-cInlineImage-threeQuarter
- - docs/manage/api-management.md
 Pre-released
  - docs/manage/lifecycle.md
 pre-released

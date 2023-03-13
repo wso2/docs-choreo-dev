@@ -118,6 +118,6 @@ For detailed instructions, see the following sections of the [Create Your First 
 
 If you want to view Kubernetes-level insights to carry out a more detailed diagnosis of this Dockerfile-based REST API, click **DevOps Portal** in the top menu.
 
-![Access DevOps Portal](../assets/img/byoc/access-devops-portal.png){.cInlineImage-full}
+![Access DevOps Portal](../assets/img/byoc/access-devops-portal.png){.cInlineImage-small}
 
 For more information about the information, see [DevOps Portal](../devops/devops-portal.md).
