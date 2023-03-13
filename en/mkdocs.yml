@@ -61,6 +61,7 @@ nav:
           - Create Your First Integration as an API: get-started/tutorials/create-your-first-integration-as-an-api.md
           - Create Your First Event-Triggered Integration: get-started/tutorials/create-your-first-event-triggered-integration.md
           - Create Your First Containerized Service: get-started/tutorials/create-your-first-containerized-service-component.md
+          - Create Event-Triggered Integration as a BYOC Component: get-started/tutorials/create-your-first-event-triggered-using-containerized-app.md
   - Create:
       - Components:
           - REST APIs: develop/components/rest-api.md
