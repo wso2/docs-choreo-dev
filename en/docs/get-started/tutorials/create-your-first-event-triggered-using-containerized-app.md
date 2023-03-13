@@ -16,7 +16,7 @@ In this tutorial, you will do the following:
 
 
 !!! tip "Before you begin"
-    - Fork the [choreo examples](https://github.com/wso2/choreo-examples) GitHub repository. For this tutorial, you need the [containerized-rabbitmq-listener](https://github.com/wso2/choreo-examples/tree/main/ipaas/micro-integrator/containerized-rabbitmq-listener) in the **choreo-examples** repository.  
+    - Fork the [choreo examples](https://github.com/wso2/choreo-examples) GitHub repository. For this tutorial, you need the [containerized-rabbitmq-listener](https://github.com/wso2/choreo-examples/tree/main/ipaas/containerized/containerized-rabbitmq-listener) in the **choreo-examples** repository.  
  
     - Use an existing RabbitMQ instance or start a new [RabbitMQ](https://www.rabbitmq.com/download.html) instance. The instance should be accessible via the internet. Obtain the `username`, `host`, `password`, and `vhost` from the RabbitMQ instance to use later as environment variables. 
 
@@ -57,7 +57,7 @@ Let's create the integration component by following the steps given below:
     | **GitHub Repository** | `choreo-examples`                                 |
     | **Branch**            | `main`                                            |
     | **Build Preset**      | Click **Dockerfile**                        |
-    | **Path**              | `ipaas/micro-integrator/containerized-rabbitmq-listener` |
+    | **Path**              | `ipaas/containerized/containerized-rabbitmq-listener` |
     | **Dockerfile Path**   | `Dockerfile` |  
     | **Docker Context Path**   | `.` | 
 
