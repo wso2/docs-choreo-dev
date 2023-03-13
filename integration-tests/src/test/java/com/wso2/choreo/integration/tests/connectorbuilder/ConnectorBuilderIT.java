@@ -229,3 +229,4 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .body(new ClassPathResource("templates/connectorbuilder/republish_success_ok.json")));
     }
 }
+
