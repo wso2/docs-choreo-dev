@@ -60,6 +60,7 @@ nav:
           - Create Your First Webhook: get-started/tutorials/create-your-first-webhook.md
           - Create Your First Integration as an API: get-started/tutorials/create-your-first-integration-as-an-api.md
           - Create Your First Event-Triggered Integration: get-started/tutorials/create-your-first-event-triggered-integration.md
+          - Secure an API with Role-Based Authorization: get-started/tutorials/secure-an-api-with-role-based-authorization.md
   - Create:
       - Components:
           - REST APIs: develop/components/rest-api.md
