@@ -51,11 +51,7 @@ describe("Verify MI REST API component in root", () => {
       oasFilePath: "",
       srcGitRepoBranch: "with-response-message"
     };
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.EU
-    );
+    ProjectListingPage.createNewProject(PROJECT_NAME,PROJECT_DESCRIPTION,Enums.Region.EU);
     GraphQL.createIntegrationComponent(componentData);
   });
 

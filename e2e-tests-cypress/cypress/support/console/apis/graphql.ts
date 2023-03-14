@@ -258,11 +258,9 @@ export class GraphQL {
                                       projectId: "${project["id"]}",
                                       labels: "",
                                       componentType: "${componentData.componentType}",
-                                      accessibility: "${componentData.accessibility
-                    }",
-                                      srcGitRepoUrl: "${componentData.srcGitRepoUrl
-                    }",
-                                      srcGitRepoBranch: "${componentData.branch}",
+                                      accessibility: "${componentData.accessibility}",
+                                      srcGitRepoUrl: "${componentData.srcGitRepoUrl}",
+                                      srcGitRepoBranch: "${componentData.srcGitRepoBranch}",
                                       repositorySubPath: "${componentData.repositorySubPath}",
                                       oasFilePath: "${componentData.oasFilePath}"
                                       version: "1.0.0"
