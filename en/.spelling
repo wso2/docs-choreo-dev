@@ -459,6 +459,7 @@ get-started-with-choreo-ipaas
 configure-a-custom-domain-for-apis
 organization.md
 redirect_maps
+configure-cio-dashboard
  - theme/material/templates/home-page.html
 doctype
 html
