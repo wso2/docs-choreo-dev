@@ -29,12 +29,25 @@ Let’s take a look at the steps to follow to implement the scenario described a
 
 ### Prerequisites
 
-If you created your Organization in Choreo before 21st February 2023, follow these steps to enable Asgardeo as the default key manager:
+If you created your Organization in Choreo before 21st of February 2023, follow these steps to enable Asgardeo as the default key manager:
+  
+!!!tip
 
-1. Go to the Choreo Console, click **Settings**, and then click **API Management**.
-2. On the **API Management** page, click **Enable Asgardeo Key Manager**.
+     If you created your Organization in Choreo after the 21st of February, 2023, Asgardeo will be the default key manager.
 
-    ![Enable key manager](../../assets/img/tutorials/role-based-auth/enable-asgardeo-key-manager.png){.cInlineImage-threeQuarter}
+   1. Go to the Choreo Console, click **Settings**, and then click **API Management**.
+   2. On the **API Management** page, click **Enable Asgardeo Key Manager**.
+
+       ![Enable key manager](../../assets/img/tutorials/role-based-auth/enable-asgardeo-key-manager.png){.cInlineImage-threeQuarter}.
+  
+    !!!info
+
+            Enabling Asgardeo as the default key manager has the following effects:
+
+            - Existing applications created via the Developer Portal in your Organization will continue to function as usual. However, any new application you create within the Organization will use Asgardeo as the key manager.
+            - New grant types such as **Password**, **Authorization Code**, **PKCE**, and **Implicit**, which were not available in Choreo will become available.
+            - The capability to add an external IdP will be disabled because Asgardeo does not support token exchange. However, you can use the federation capabilities of Asgardeo to achieve similar functionality.
+
 
 ### Step 1: Create a REST API proxy component and deploy it
 
