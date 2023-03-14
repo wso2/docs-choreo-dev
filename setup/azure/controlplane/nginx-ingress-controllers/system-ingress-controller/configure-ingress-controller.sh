@@ -23,7 +23,7 @@ helm registry login choreocontrolplane.azurecr.io --username "${HELM_ACR_USERNAM
 helm pull oci://choreocontrolplane.azurecr.io/helm/ingress-nginx --version 4.2.1
 
 echo "--- Installing System Nginx Ingress using Helm 3..."
-helm upgrade --install "${SYSTEM_NAMESPACE}-nginx-ingress" ingress-nginx-4.2.1.tgz \
+helm upgrade --install "${SYSTEM_NAMESPACE}" ingress-nginx-4.2.1.tgz \
   --namespace "${SYSTEM_NAMESPACE}-nginx-ingress" \
   --version 4.2.1 \
   --set controller.replicaCount=2 \
