@@ -21,7 +21,7 @@ helm pull oci://choreocontrolplane.azurecr.io/helm/ingress-nginx --version 4.2.1
 
 echo "--- Installing Control Plane Internal Nginx Ingress using Helm 3..."
 # shellcheck disable=SC2140
-helm upgrade --install "${INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx-ingress" ingress-nginx-4.2.1.tgz \
+helm upgrade --install "${INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}" ingress-nginx-4.2.1.tgz \
   --namespace "${INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx-ingress" \
   --version 4.2.1 \
   --set controller.replicaCount=2 \
