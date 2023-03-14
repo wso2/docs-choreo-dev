@@ -25,5 +25,7 @@ spec:
       env:
         - name: DISABLE_RUNNER_UPDATE
           value: "true"
+        - name: LOG_DEBUG_DISABLED
+          value: "true"
       labels:
         - choreo-custom-runner
