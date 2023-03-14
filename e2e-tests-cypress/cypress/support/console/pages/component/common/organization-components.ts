@@ -82,7 +82,7 @@ export class OrganizationComponent {
 
   static deleteMember(email: string) {
     cy.contains("td", email).trigger("mouseover");
-    cy.get("tr>td>div>button").click();
+    cy.get("tr>td>div>button").click({ force: true });
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
       .contains("Delete")
       .click();

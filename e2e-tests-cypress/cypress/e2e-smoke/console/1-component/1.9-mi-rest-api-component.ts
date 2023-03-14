@@ -49,13 +49,9 @@ describe("Verify MI REST API component in root", () => {
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: "",
       oasFilePath: "",
-      branch: "with-response-message"
+      srcGitRepoBranch: "with-response-message"
     };
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.EU
-    );
+    ProjectListingPage.createNewProject(PROJECT_NAME,PROJECT_DESCRIPTION,Enums.Region.EU);
     GraphQL.createIntegrationComponent(componentData);
   });
 
