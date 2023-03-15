@@ -5,7 +5,7 @@
 // herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
 // You may not alter or remove any copyright or other notice from copies of this content.
 
-.create table leadTime (
+.create table commits (
     timestamp: datetime,
     orgId: string,
     projectId: string,
@@ -17,7 +17,7 @@
     properties: string
 );
 
-.create table leadTime ingestion json mapping "leadTimeMapping"
+.create table commits ingestion json mapping "commitsMapping"
     '['
     '    { "column" : "timestamp", "Properties":{"Path":"$.timestamp"}},'
     '    { "column" : "orgId", "Properties":{"Path":"$.organizationId"}},'
