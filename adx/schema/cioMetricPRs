@@ -20,7 +20,7 @@
     properties: string
 );
 
-.create table incidentsRaw ingestion json mapping "incidentRawMapping"
+.create table PRsRaw ingestion json mapping "PRsRawMapping"
     '['
     '    { "column" : "timestamp", "Properties":{"Path":"$.createdTime"}},'
     '    { "column" : "orgId", "Properties":{"Path":"$.organizationId"}},'
