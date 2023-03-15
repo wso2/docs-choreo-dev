@@ -1,6 +1,6 @@
 # Service Components
 
-Explore how you can design, develop, manage, and observe services in Choreo to implement your business API strategy.
+Service components are an essential element of building cloud-native applications. They provide a simple and effective way of exposing functionality as a service to other components in the application or to the outside world. The purpose of this document is to introduce the concept of service components and explain their functionality, use cases, and how to configure them.
 
 ## What is a service component?
 
@@ -12,7 +12,7 @@ With the help of the service component, developers can quickly create APIs and m
 
 ## What are endpoints in service components?
 
-Endpoints in service components are the access points through which other components or systems can interact with the functionalities provided by a service component. Endpoints represent the specific locations where the service component can be reached and provide a standardized interface for communication with the service.
+Endpoints are a crucial concept when developing services that need to be exposed to other services or applications. Services can expose multiple endpoints, each representing a unique entry point into the service. For example, a service may expose a REST API endpoint and a GraphQL endpoint, each providing different ways to interact with the service. Endpoints provide a way to define the specific network details for how a service can be accessed, such as the port number, protocol, and endpoint name. By defining these details, endpoints make it possible for other services and applications to discover and interact with the service in a standardized way.
 
 Endpoints in Choreo are defined by a combination of port binding, protocol, endpoint name, network visibility, endpoint schema and additional protocol related fields. Following table provides details about each field
 
@@ -29,6 +29,8 @@ Endpoints in Choreo are defined by a combination of port binding, protocol, endp
 
 When building a service component with a Dockerfile build preset, you can configure the endpoint details using an endpoints.yaml configuration file. This file needs to be placed in the .choreo directory at the root of the build context path, and committed to the source repository.
 
+> **Note:** When building a service component with Ballerina build preset, the endpoint details are automatically detected by Choreo and there is no need to provide an endpoints.yaml configuration file.
+
 The endpoints.yaml file has a specific structure, and contains the following details:
 
 - name: A unique name for the endpoint, which will be used when generating the managed API.
@@ -38,14 +40,14 @@ The endpoints.yaml file has a specific structure, and contains the following det
 - context (optional): The context (base path) of the API that is exposed via this endpoint. This field is mandatory if the endpoint type is set to REST or GraphQL.
 - schemaFilePath (optional): The path to the schema definition file, which defaults to the wild card route if not provided. This field is only applicable to REST endpoint types, and should be a relative path to the Docker context.
 
-> **Note** that when building a service component with Ballerina build preset, the endpoint details are automatically detected by Choreo and there is no need to provide an endpoints.yaml configuration file.
-
 ### Sample endpoints.yaml
 
 File location:
 ```bash
-<docker-build-context>/.choreo/endpoints.yaml
+<docker-build-context-path>/.choreo/endpoints.yaml
 ```
+
+> NOTE: For components with Ballerina build preset `docker-build-context-path` should be replaced with `component-root`
 
 File Content:
 ```yaml
@@ -73,17 +75,18 @@ endpoints:
   schemaFilePath: greeting_openapi.yaml
 ```
 
-## exposing endpoint as managed APIs
+## Exposing endpoint as managed APIs
+
+Exposing endpoints as managed APIs is crucial to ensure secure and controlled access to the services being exposed. When a user wants to expose their written service to the outside world or to the organization at large, there is an inherent security risk involved. To mitigate this risk, Choreo platform is build with an internal (access within organization only) or external (publicly accessible) gateway that is protected with Choreo API management making the services secure by design.
 
 If you want to expose an endpoint as a managed API in Choreo, you need to set the network visibility to either Organization or Public. This allows the endpoint to be exposed through the Choreo API Gateway, which provides a number of benefits, including:
 
-- **Full Lifecycle API Management**: Exposing your endpoint through the Choreo API Gateway gives you access to full lifecycle API management features, including design, testing, deployment, and maintenance. This allows you to create high-quality APIs that meet the needs of your organization and your customers.
+- Full lifecycle API Management
+- API throttling
+- secure APIs with policies
+- API analytics and montioring
 
-- **API Management Features**: In addition to full lifecycle API management, exposing your endpoint through the Choreo API Gateway gives you access to a range of API management features, including analytics, monitoring, and security policies. This allows you to monitor and control the usage of your endpoint, and ensure that it meets your organization's performance and security requirements.
-
-- **Internal or External Gateway**: Depending on the network visibility of your endpoint, it will be exposed through either the internal or external gateway of Choreo API Gateway. Endpoints with Organization visibility will be exposed through the internal gateway, while endpoints with Public visibility will be exposed through the external gateway. This allows you to choose the appropriate level of access control for your API, based on the intended audience.
-
-### To expose an endpoint as a managed API, follow these steps:
+To expose an endpoint as a managed API, follow these steps:
 
 > NOTE: This feature is not available for gRPC endpoints.
 
@@ -92,6 +95,7 @@ If you want to expose an endpoint as a managed API in Choreo, you need to set th
 3. Deploy the service component navigating to the deploy tab.
 4. Go to manage then lifecycle section and select the endpoint from the drop down
 5. Publish the API
-4. Configure the API management settings, such as security policies and access controls, as required using the usage plans, permissions, and settings tabs.
+4. Configure the API management settings such as throttling, security policies and access controls as required using the usage plans, permissions, and settings tabs.
 
 Once the service component is deployed, the endpoint will be exposed as a managed API through the Choreo API Gateway. You can then use the full lifecycle API management features provided by Choreo to design, test, deploy, and maintain your API, as well as monitor and manage it using the API management features.
+
