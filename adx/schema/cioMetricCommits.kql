@@ -13,7 +13,8 @@
     developerId: string,
     commits: int,
     additions: int,
-    deletions: int
+    deletions: int,
+    properties: string
 );
 
 .create table leadTime ingestion json mapping "leadTimeMapping"
@@ -25,5 +26,6 @@
     '    { "column" : "developerId", "Properties":{"Path":"$.developerId"}},'
     '    { "column" : "commits", "Properties":{"Path":"$.commits"}},'
     '    { "column" : "additions", "Properties":{"Path":"$.additions"}},'
-    '    { "column" : "deletions", "Properties":{"Path":"$.deletions"}}'
+    '    { "column" : "deletions", "Properties":{"Path":"$.deletions"}},'
+    '    { "column" : "properties", "Properties":{"Path":"$.properties"}}'
     ']';
