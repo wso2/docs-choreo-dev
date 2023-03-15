@@ -29,10 +29,6 @@ Endpoints in Choreo are defined by a combination of port binding, protocol, endp
 
 When building a service component with a Dockerfile build preset, you can configure the endpoint details using an endpoints.yaml configuration file. This file needs to be placed in the .choreo directory at the root of the build context path, and committed to the source repository.
 
-```console
-<docker-build-context>/.choreo/endpoints.yaml
-```
-
 The endpoints.yaml file has a specific structure, and contains the following details:
 
 - name: A unique name for the endpoint, which will be used when generating the managed API.
@@ -43,6 +39,39 @@ The endpoints.yaml file has a specific structure, and contains the following det
 - schemaFilePath (optional): The path to the schema definition file, which defaults to the wild card route if not provided. This field is only applicable to REST endpoint types, and should be a relative path to the Docker context.
 
 > **Note** that when building a service component with Ballerina build preset, the endpoint details are automatically detected by Choreo and there is no need to provide an endpoints.yaml configuration file.
+
+### Sample endpoints.yaml
+
+File location:
+```bash
+<docker-build-context>/.choreo/endpoints.yaml
+```
+
+File Content:
+```yaml
+# +required Version of the endpoint configuration YAML
+version: 0.1
+
+# +required List of endpoints to create
+endpoints:
+  # +required Unique name for the endpoint. (This name will be used when generating the managed API)
+- name: Greeting 9090
+  # +required Numeric port value that gets exposed via this endpoint
+  port: 9090
+  # +required Type of the traffic this endpoint is accepting. Example: REST, GraphQL, etc.
+  # Allowed values: REST, GraphQL, GRPC
+  type: REST
+  # +optional Network level visibility of this endpoint. Defaults to Project
+  # Accepted values: Project|Organization|Public.
+  visibility: Project
+  # +optional Context (base path) of the API that is exposed via this endpoint.
+  # This is mandatory if the endpoint type is set to REST or GraphQL.
+  context: /greeting
+  # +optional Path to the schema definition file. Defaults to wild card route if not provided
+  # This is only applicable to REST endpoint types.
+  # The path should be relative to the docker context.
+  schemaFilePath: greeting_openapi.yaml
+```
 
 ## exposing endpoint as managed APIs
 
