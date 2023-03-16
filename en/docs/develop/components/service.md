@@ -36,9 +36,9 @@ The endpoints.yaml file has a specific structure, and contains the following det
 - name: A unique name for the endpoint, which will be used when generating the managed API.
 - port: The numeric port value that gets exposed via this endpoint.
 - type: The type of traffic this endpoint is accepting, such as REST, GraphQL, or gRPC.
-- visibility (optional): The network level visibility of this endpoint, which defaults to "Project" if not specified. Accepted values are "Project", "Organization", or "Public".
-- context (optional): The context (base path) of the API that is exposed via this endpoint. This field is mandatory if the endpoint type is set to REST or GraphQL.
-- schemaFilePath (optional): The path to the schema definition file, which defaults to the wild card route if not provided. This field is only applicable to REST endpoint types and should be a relative path to the Docker context.
+- visibility: The network level visibility of this endpoint, which defaults to "Project" if not specified. Accepted values are "Project", "Organization", or "Public".
+- context: The context (base path) of the API that is exposed via this endpoint. This field is mandatory if the endpoint type is set to REST or GraphQL.
+- schemaFilePath: The path to the schema definition file, which defaults to the wild card route if not provided. This field is only applicable to REST endpoint types and should be a relative path to the Docker context.
 
 ### Sample endpoints.yaml
 
@@ -77,18 +77,19 @@ endpoints:
 
 ## Exposing endpoint as managed APIs
 
+> NOTE: This feature is not available for gRPC endpoints.
+
 Exposing endpoints as managed APIs is crucial to ensure secure and controlled access to the services being exposed. When a user wants to expose their written service to the outside world or the organization at large, there is an inherent security risk involved. To mitigate this risk, the Choreo platform is built with an internal (access within the organization only) or external (publicly accessible) gateway that is protected with Choreo API management making the services secure by design.
 
 If you want to expose an endpoint as a managed API in Choreo, you need to set the network visibility to either Organization or Public. This allows the endpoint to be exposed through the Choreo API Gateway, which provides several benefits, including:
 
+- Expose APIs to external and internal cosumers
 - Full lifecycle API Management
 - API throttling
-- secure APIs with policies
+- Secure APIs with industry standard authorization flows
 - API analytics and monitoring
 
 To expose an endpoint as a managed API, follow these steps:
-
-> NOTE: This feature is not available for gRPC endpoints.
 
 1. Create a service component with the endpoint that you want to expose.
 2. Set the network visibility of the endpoint to either Organization or the Public.
