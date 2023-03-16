@@ -1,5 +1,5 @@
 # --------------------------------------------------------------------
-# Copyright (c) 2022, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+# Copyright (c) 2023, WSO2 LLC. (http://wso2.com) All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,10 +13,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # -----------------------------------------------------------------------
-
-resources:
-  - opentelemetry-agent-deployment.yaml
-  - opentelemetry-agent-service.yaml
-  - opentelemetry-agent-hpa.yaml
-  - opentelemetry-agent-pdb.yaml
-  - opentelemetry-agent-rbac.yaml
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pixie-opentelemetry-agent-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: pixie-opentelemetry-agent-reader-binding
+subjects:
+- kind: ServiceAccount
+  name: pixie-opentelemetry-agent-sa
+roleRef:
+  kind: ClusterRole
+  name: pixie-opentelemetry-agent-reader
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pixie-opentelemetry-agent-sa

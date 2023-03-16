@@ -3,7 +3,7 @@
 #########################################################
 ### Install IDP Nginx Ingress Controller using Helm 3 ###
 #########################################################
-echo "--- Setting up M1 Webapps NGINX Ingress Controller.."
+echo "--- Setting up Webapps NGINX Ingress Controller.."
 echo "--- Creating namespace ${WEBAPPS_NAMESPACE}-nginx-ingress..."
 kubectl create namespace "${WEBAPPS_NAMESPACE}-nginx-ingress" --dry-run=client -o yaml | kubectl apply -f -
 
@@ -14,8 +14,8 @@ kubectl label namespace "${WEBAPPS_NAMESPACE}-nginx-ingress" userapp-ingress-all
 helm registry login choreocontrolplane.azurecr.io --username "${HELM_ACR_USERNAME}" --password "${HELM_ACR_PASSWORD}"
 helm pull oci://choreocontrolplane.azurecr.io/helm/ingress-nginx --version 4.2.1
 
-echo "--- Installing IDP Nginx Ingress using Helm 3..."
-helm upgrade --install "${WEBAPPS_NAMESPACE}-nginx-ingress" ingress-nginx-4.2.1.tgz \
+echo "--- Installing WebApps Nginx Ingress using Helm 3..."
+helm upgrade --install "${WEBAPPS_NAMESPACE}" ingress-nginx-4.2.1.tgz \
   --namespace "${WEBAPPS_NAMESPACE}-nginx-ingress" \
   --version 4.2.1 \
   --set controller.replicaCount=2 \
@@ -43,7 +43,7 @@ helm upgrade --install "${WEBAPPS_NAMESPACE}-nginx-ingress" ingress-nginx-4.2.1.
   --set controller.admissionWebhooks.enabled=false \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-resource-group=${LOADBALANCER_IP_RG}" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal=true" \
-  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET_NAME}"
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET}"
 
 ## Apply netpols
 kubectl apply -f
