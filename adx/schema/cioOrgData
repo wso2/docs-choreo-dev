@@ -11,6 +11,11 @@
     developerCount: int,
     componentCount: int,
     projectCount: int,
+    proxyCount: int,
+    serviceCount: int,
+    taskCount: int,
+    integrationCount: int,
+    webAppsCount: int,
     properties: string
 );
 
@@ -21,5 +26,10 @@
     '    { "column" : "developerCount", "Properties":{"Path":"$.developerCount"}},'
     '    { "column" : "componentCount", "Properties":{"Path":"$.componentCount"}},'
     '    { "column" : "projectCount", "Properties":{"Path":"$.projectCount"}},'
+    '    { "column" : "proxyCount", "Properties":{"Path":"$.proxyCount"}},'
+    '    { "column" : "serviceCount", "Properties":{"Path":"$.serviceCount"}},'
+    '    { "column" : "taskCount", "Properties":{"Path":"$.taskCount"}},'
+    '    { "column" : "integrationCount", "Properties":{"Path":"$.integrationCount"}},'
+    '    { "column" : "webAppsCount", "Properties":{"Path":"$.webAppsCount"}},'
     '    { "column" : "properties", "Properties":{"Path":"$.properties"}}'
     ']';
