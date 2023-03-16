@@ -19,6 +19,7 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
     seccomp.security.alpha.kubernetes.io/pod: "docker/default"
+    checkov.io/skip1: "CKV_K8S_38=Need this to talk to kube api"
   labels:
     choreo.component: opentelemetry-agent
   name: opentelemetry-agent
@@ -36,7 +37,8 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
         seccomp.security.alpha.kubernetes.io/pod: "docker/default"
     spec:
-      automountServiceAccountToken: false
+      automountServiceAccountToken: true
+      serviceAccountName: pixie-opentelemetry-agent-sa
       securityContext:
         seccompProfile:
           type: RuntimeDefault
