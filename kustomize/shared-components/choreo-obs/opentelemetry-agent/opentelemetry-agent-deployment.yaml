@@ -36,7 +36,8 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
         seccomp.security.alpha.kubernetes.io/pod: "docker/default"
     spec:
-      automountServiceAccountToken: false
+      automountServiceAccountToken: true
+      serviceAccountName: pixie-opentelemetry-agent-sa
       securityContext:
         seccompProfile:
           type: RuntimeDefault
