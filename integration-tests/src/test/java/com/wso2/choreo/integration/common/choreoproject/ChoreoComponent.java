@@ -1172,8 +1172,8 @@ public class ChoreoComponent {
         ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
 
         log.info("Waiting till observability data appear");
-        ObsRequestParam orp = ObsRequestParam.builder().namespace(namespace).releaseId(releaseId).sort("desc").limit("95").build();
-        String url = ObservabilityService.getObsUrl(orp,observabilityIdInformation.getObsId(),Constant.logType.logsV2);
+        ObsRequestParam orp = ObsRequestParam.builder().namespace(namespace).releaseId(releaseId).sort("asc").limit("63").build();
+        String url = ObservabilityService.getObsUrl(orp,Constant.logType.logsV2);
         for (int i = 0; i < 20; i++) {
             Response res = HttpClientUtil.httpGET(url, accessToken, "");
             ObservabilityLogs obslogs = ObjectMapperUtil.mapStringToObject(ObservabilityLogs.class, res.getRes(), "");
