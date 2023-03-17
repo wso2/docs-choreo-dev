@@ -87,12 +87,10 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
       });
     });
   });
-
   it("Verify component promote to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.promoteToProd();
   });
-
   it("Verify test functionality using Swagger UI in Dev", () => {
     TestHelper.testOnSwagger(Enums.Environment.PRODUCTION, RESOURCE_NAME).then(
       (res) => {
