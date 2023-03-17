@@ -1178,7 +1178,7 @@ public class ChoreoComponent {
             Response res = HttpClientUtil.httpGET(url, accessToken, "");
             ObservabilityLogs obslogs = ObjectMapperUtil.mapStringToObject(ObservabilityLogs.class, res.getRes(), "");
 
-            if (obslogs.getRows().length > 0) {
+            if (res.getStatusCode()<205  && obslogs.getRows().length > 0) {
                 return;
             }
             log.debug("Observability logs has not appeared, trying again. Attempt : " + i);

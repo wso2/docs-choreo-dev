@@ -60,7 +60,6 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
     private static String revisionId;
     private String orgId;
     private String githubOrg;
-    private String orgUuid;
     private String githubPAT;
     private String devInvokeURL;
 
@@ -70,32 +69,38 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
     private HttpClient choreoProjectsTestClient;
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
+    ChoreoOrganization org;
 
     @BeforeClass
-    public void setup_ConnectorBuilderIT() throws Exception, ApiLifecycleChangeException {
+    public void setup_ConnectorBuilderIT() throws Exception {
 
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
 
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-        project  = GraphQL.createProject(accessToken);
+        project = GraphQL.createProject(accessToken);
         projectId = project.getId();
-        ChoreoOrganization org = new ChoreoOrganization(orgHandle,orgId,orgUuid);
+        org = new ChoreoOrganization(orgHandle, orgId, orgUUID);
         githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
         githubPAT = Configuration.getConfig(ConfigDefinition.GITHUB_PAT);
+        orgHandle=Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
 
-        // Creating component
+    }
+
+    @Test
+    @CitrusTest
+    public void createComponent_ConnectorBuilderIT() throws Exception, ApiLifecycleChangeException {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
 
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").
-                srcGitRepoUrl("https://github.com/choreo-test-apps/greeting-rest-api").
+                srcGitRepoUrl("https://github.com/choreo-test-apps/rest-api").
                 projectId(project.getId()).
                 displayType(Constant.displayType.restAPI.name()).enableCellDiagram(false).
                 build();
 
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
-        Assert.assertNotNull(choreoComponent.getId());
+
 
         //Deploying component
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
@@ -104,26 +109,26 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
 
         //change the API lifecycle
         choreoComponent.getLatestApiVersion().changeApiLifeCycle(accessToken, org.getOrgUUID(), Constant.apiLIifCycleState.Publish);
-       JsonArray revisions = choreoComponent.getRevisions(accessToken, choreoComponent.getLatestApiVersion().getProxyId(),orgUuid);
-        JsonObject revision =(JsonObject) revisions.get(0);
+        JsonArray revisions = choreoComponent.getRevisions(accessToken, choreoComponent.getLatestApiVersion().getProxyId(), orgUUID);
+        JsonObject revision = (JsonObject) revisions.get(0);
         revisionId = revision.get("id").getAsString();
     }
 
-    @Test
+    @Test(dependsOnMethods = "createComponent_ConnectorBuilderIT")
     @CitrusTest
     public void publishConnector_ConnectorBuilderIT() {
         $(http()
                 .client(choreoTestClient)
                 .send()
                 .post(Constant.USER_CONNECTORS_ENDPOINT_SUFFIX.concat("/").concat(orgHandle)
-                        .concat("/").concat(componentId))
+                        .concat("/").concat(choreoComponent.getId()))
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .header("x-correlation-id", Constant.X_CORRELATION_UUID)
                 .body("{" +
                         "    \"apiId\": \"" + revisionId + "\"," +
-                        "    \"organizationId\": \"" + orgUuid + "\"," +
+                        "    \"organizationId\": \"" + orgUUID + "\"," +
                         "    \"connectorVersion\": \"" + Constant.TEST_CONNECTOR_VERSION + "\"," +
                         "    \"visibility\": \"" + Constant.TEST_CONNECTOR_VISIBILITY + "\"" +
                         "}")
@@ -214,7 +219,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .header("x-correlation-id", Constant.X_CORRELATION_UUID)
                 .body("{" +
                         "    \"apiId\": \"" + revisionId + "\"," +
-                        "    \"organizationId\": \"" + orgUuid + "\"," +
+                        "    \"organizationId\": \"" + orgUUID + "\"," +
                         "    \"connectorVersion\": \"" + Constant.TEST_CONNECTOR_VERSION + "\"," +
                         "    \"visibility\": \"" + Constant.TEST_CONNECTOR_VISIBILITY + "\"" +
                         "}")
