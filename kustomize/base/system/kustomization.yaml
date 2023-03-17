@@ -13,9 +13,3 @@ resources:
   - netpol
 
 namespace: choreo-system
-
-patches:
-  - path: workspace-manager-port-skip-patch.yaml
-    target:
-      kind: Deployment
-      name: workspace-manager

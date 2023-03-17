@@ -3,10 +3,6 @@ configMapGenerator:
     behavior: create
     literals:
       - TEMP_DATA_DIR=/temp-data-dir/
-  - name: env-workspace-manager-shared # shared workspace-manager configs across environments
-    behavior: create
-    literals:
-      - WORKSPACE_BALLERINA_VERSION=swan-lake-beta3
   - name: cm-choreo-testbase-db
     behavior: create
     literals:
@@ -315,11 +311,6 @@ configMapGenerator:
       - REACT_APP_AUTHENTICATOR_GITHUB=GithubAuthenticator
       - REACT_APP_AUTHENTICATOR_ANONYMOUS=OpenIDConnectAuthenticator
       - REACT_APP_AUTHENTICATOR_ENTERPRISE=EnterpriseIDPAuthenticator
-  - name: cm-workspace-manager-cp
-    behavior: create
-    literals:
-      - CSM_DB_NAME=choreo_codeserver_db
-      - CSM_DB_USERNAME=choreo_codeserver_db_user
   - name: cm-userapps-image-deleter
     behavior: create
     literals:
@@ -407,10 +398,6 @@ configMapGenerator:
     behavior: create
     files:
       - runtime/app-deployer.yaml
-  - name: cm-file-workspace-manager
-    behavior: create
-    files:
-      - runtime/workspace-manager.yaml
   - name: cm-file-step-enforcer
     behavior: create
     files:
