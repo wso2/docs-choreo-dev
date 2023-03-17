@@ -66,11 +66,6 @@ public class ProxyApiEUDpIT extends TestNGCitrusSpringSupport {
         return DataProviderWrapper.convertToDataProvider(dps);
     }
 
-    @DataProvider(name = "reg")
-    public Object[][] regions() {
-        return DataProviderWrapper.convertToDataProvider(Arrays.asList(Constant.region.values()));
-    }
-
 
     @BeforeClass
     public void setup_ProxyApiEUDpIT() throws IOException, TokenRetrievalException {
