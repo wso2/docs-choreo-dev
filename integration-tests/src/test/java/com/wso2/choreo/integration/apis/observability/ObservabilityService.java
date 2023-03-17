@@ -24,9 +24,9 @@ public class ObservabilityService extends ControlPlaneAPI {
 
     }
 
-    public static String getObsUrl(ObsRequestParam obsRequestParam, String obsId, Constant.logType logType) throws URISyntaxException {
+    public static String getObsUrl(ObsRequestParam obsRequestParam, Constant.logType logType) throws URISyntaxException {
 
-        String requestURI = CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX).concat(obsId).concat("/").concat(logType.name());
+        String requestURI = CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX).concat("/").concat(logType.name());
         URIBuilder builder = new URIBuilder(requestURI);
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         builder.setParameter("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)))
@@ -43,7 +43,7 @@ public class ObservabilityService extends ControlPlaneAPI {
     public static ObservabilityLogs getGroupLogs(String releaseId, String namespace, String accessToken) throws IOException, URISyntaxException {
         ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
         ObsRequestParam orp = ObsRequestParam.builder().namespace(namespace).releaseId(releaseId).bin("10").limit("5").build();
-        String url = ObservabilityService.getObsUrl(orp,observabilityIdInformation.getObsId(),Constant.logType.groupedlogsV2);
+        String url = ObservabilityService.getObsUrl(orp,Constant.logType.groupedlogsV2);
         Response res = HttpClientUtil.httpGET(url, accessToken, "");
         System.out.println(res.getRes());
         return ObjectMapperUtil.mapStringToObject(ObservabilityLogs.class, res.getRes(), "");
