@@ -55,6 +55,42 @@ Conducting security vulnerability scans is crucial for identifying potential wea
 
 During deployment, Choreo performs a Trivy scan to detect critical vulnerabilities in third-party libraries added to the integration component. If the scan detects any critical vulnerabilities, it halts the deployment process. The deployment pane shows the Trivy scan status and any security failures in the Library (Trivy) vulnerable scan step, which you can access by clicking on it. After fixing the vulnerability, you can redeploy the component.
 
+## Configuring Micro Integrator
+
+By default, WSO2 MI comes with a set of pre-configured settings that are designed to work in a general context. However,
+these default configurations may not be suitable for every organization's specific needs. Therefore, it is important to
+change the default configuration in WSO2 MI to optimize its performance and ensure its compatibility with the
+organization's systems and applications.
+
+To modify the default configurations in WSO2 MI, users can apply their desired configurations in the instances that runs
+on the Choreo. To add new configurations, users need to define a `deployment.toml` file in the project sub-path.
+Similar to configuring MI locally, users can apply configuration changes in the `deployment.toml`. However, it's
+essential to apply only the required changes to avoid breaking the internal communication. It's worth noting that
+changing default configurations like port offset, hostname, and other critical settings might break the internal
+communication. Therefore, it's advisable to avoid modifying them unless it's necessary.
+
+A sample `deployment.toml` configuration to configure JMS transport is looks like below. Also refer to
+the [MI Config Catalog](https://apim.docs.wso2.com/en/latest/reference/config-catalog-mi/) to know more about configuring
+Micro Integrator.
+
+```
+[[transport.jms.sender]]
+name = "myQueueSender"
+parameter.initial_naming_factory = "org.apache.activemq.jndi.ActiveMQInitialContextFactory"
+parameter.provider_url = "$env{JMS_PROVIDER_URL}"
+parameter.connection_factory_name = "QueueConnectionFactory"
+parameter.connection_factory_type = "queue"
+parameter.cache_level = "producer"
+
+[[transport.jms.listener]]
+name = "myQueueListener"
+parameter.initial_naming_factory = "org.apache.activemq.jndi.ActiveMQInitialContextFactory"
+parameter.provider_url = "$env{JMS_PROVIDER_URL}"
+parameter.connection_factory_name = "QueueConnectionFactory"
+parameter.connection_factory_type = "queue"
+parameter.cache_level = "consumer"
+```
+
 ## Environment variables
 
 We recommend using environmental variables to improve configuration management, security, portability, and manageability when you develop integration artifacts with WSO2 integration studio. By using environment variables, organizations can simplify the management and maintenance of their integrations and ensure that they can be quickly and easily updated when required.
@@ -66,6 +102,31 @@ The component's Deploy page allows you to easily manage environment variables ac
 The Choreo DevOps Portal allows for greater flexibility in defining configurations and secrets for deployed integrations, as well as other component types, to meet more complex configuration requirements. Refer to the section on [Configurations and secrets](../../devops/devops-portal.md#configurations-and-secrets) for further details.
 
 For a comprehensive list of parameters that can be configured as environment variables, please refer to the [WSO2 API Manager Documentation - Injecting Parameters - Supported parameters](https://apim.docs.wso2.com/en/latest/integrate/develop/injecting-parameters/#supported-parameters).
+
+## Configuring logging
+
+When developing and maintaining a software system, one of the crucial aspects is to have proper logging mechanisms in
+place. Logging is a way to capture events and messages that occur during the execution of an application, providing
+valuable information for troubleshooting and debugging purposes.
+
+In Micro Integrator (MI) instances, logging can be configured and customized to meet specific requirements. The logging
+configuration can be added to each MI instance's environment, allowing developers to fine-tune logging based on the
+specific environment or deployment scenario.
+
+To configure logging in MI instances, developers can utilize environment variables with specific naming conventions. The
+name of the variable should start with "logging_level_", followed by the package or class name, where the dot character
+in the package name is replaced with an underscore. The value of the variable should be set to the required logging
+level for the corresponding package or class.
+
+For example, to set the logging level for the `org.apache.synapse.transport.http.wire` package to `debug`, the following
+environment variable can be defined:
+
+```
+export logging_level_org_apache_synapse_transport_http_wire=debug
+```
+By configuring logging in this manner, developers can control the granularity of logging, which can help in
+troubleshooting and identifying issues faster. Proper logging can save time and effort during the development, testing,
+and maintenance phases of a software project, making it an essential aspect of the software development process.
 
 ## Connectors
 
