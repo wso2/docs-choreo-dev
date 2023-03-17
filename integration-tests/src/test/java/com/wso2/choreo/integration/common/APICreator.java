@@ -72,12 +72,19 @@ public class APICreator extends ControlPlaneAPI {
     }
 
     public static Response updateAPI(ProxyAPI proxyAPI, String accessToken) throws IOException {
+        return updateAPIWithSwagger(proxyAPI,
+                "templates/graphql/requests/proxyapiUpdateRequestWithMethodRatelimit.mustache",
+                accessToken);
+    }
+
+    public static Response updateAPIWithSwagger(ProxyAPI proxyAPI, String swaggerFileName, String accessToken)
+            throws IOException {
         String requestURI = APIS_ENDPOINT + "/" + proxyAPI.getId() + "/swagger?organizationId=" + ORG_UUID;
         HeaderValues headerValues = new HeaderValues().setValues(org.springframework.http.HttpHeaders.AUTHORIZATION, accessToken);
         ApiDTO apiDTO = ApiDTO.builder().apiName(proxyAPI.getName()).description(proxyAPI.getDescription()).productionEndpoint(Constant.DEFAULT_ENDPOINT).
                 sandboxEndpoint(Constant.DEFAULT_ENDPOINT).basePath(proxyAPI.getContext() + "/1.0.0").build();
 
-        String i = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/proxyapiupdaterequest.mustache", apiDTO);
+        String i = ObjectMapperUtil.mapObjectToString(swaggerFileName, apiDTO);
 
         MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
         multipartEntityBuilder.addTextBody("apiDefinition", i);
