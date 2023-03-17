@@ -254,6 +254,7 @@ configMapGenerator:
       - ASB_DELETE_QUEUE_NAME=delete-manager
       - API_SERVER_URL=http://api-server
       - GCHAT_URL=https://chat.googleapis.com
+      - APP_SERVICE_URL=app-service:8080
   - name: cm-logsarchiver
     behavior: create
     literals:
@@ -428,6 +429,8 @@ configMapGenerator:
     behavior: create
     literals:
       - CIO_ADX_DB="cio-metrics"
+      - USER_SERVICE_ENDPOINT="http://app-service:8080"
+      - PROJECT_MANAGER_ENDPOINT="http://dp-project-manager:80"
   - name: cm-file-cio-event-collector
     behavior: create
     files:

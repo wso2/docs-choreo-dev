@@ -1,5 +1,6 @@
+import { AbsComponent } from "./abs-component";
 
-export interface IntegrationComponentData {
+export interface IntegrationComponentData extends AbsComponent {
   projectName: string;
   componentName: string;
   srcGitRepoUrl: string;
@@ -8,5 +9,5 @@ export interface IntegrationComponentData {
   repositorySubPath: string;
   accessibility: string;
   componentType: string;
-  branch: string;
+  srcGitRepoBranch: string;
 }

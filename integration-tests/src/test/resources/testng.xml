@@ -8,7 +8,7 @@
              <class name="com.wso2.choreo.integration.tests.anomalyDetector.BackendFailureAnomaly"/>
             <class name="com.wso2.choreo.integration.tests.connectorbuilder.ConnectorBuilderIT"/>
             <class name="com.wso2.choreo.integration.tests.apiproxy.ProxyApiIT"/>
-            <class name="com.wso2.choreo.integration.tests.apiproxy.ProxyApiEUDpIT"/>
+            <class name="com.wso2.choreo.integration.tests.dp.ProxyApiEUDpIT"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestMaxAPIRevisionsUsingDeployments"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestBasicAPIRevisionCreation"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingSettingsPage"/>
@@ -31,7 +31,7 @@
             <class name="com.wso2.choreo.integration.tests.byoc.TestBYOC"/>
             <class name="com.wso2.choreo.integration.tests.byoc.TestBYOCEUDp"/>
             <class name="com.wso2.choreo.integration.tests.graphqlservice.GraphQLServiceIT"/>
-            <class name="com.wso2.choreo.integration.tests.graphqlservice.GraphQLServiceEUdpIT"/>
+            <class name="com.wso2.choreo.integration.tests.dp.GraphQLServiceEUdpIT"/>
         </classes>
     </test>
 </suite>

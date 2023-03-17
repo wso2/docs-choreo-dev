@@ -126,7 +126,7 @@ export class GraphQLQueryBuilder {
           projectId: "${projectId}",
           labels: "",
           componentType: "${Enums.ComponentType.BYOC_REST_API}",
-          port: 80,
+          port: 8080,
           oasFilePath: "byoc-test/oas.yaml",
           accessibility: "${byocComponent.accessibility}",
           byocConfig: {
