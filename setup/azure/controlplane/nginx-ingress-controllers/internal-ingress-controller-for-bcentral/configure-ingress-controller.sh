@@ -22,7 +22,7 @@ helm pull oci://choreocontrolplane.azurecr.io/helm/ingress-nginx --version 4.2.1
 
 echo "--- Installing Control Plane Internal Nginx Ingress using Helm 3..."
 # shellcheck disable=SC2140
-helm upgrade --install "${BCENTRAL_INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx-ingress" ingress-nginx-4.2.1.tgz \
+helm upgrade --install "${BCENTRAL_INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}" ingress-nginx-4.2.1.tgz \
   --namespace "${BCENTRAL_INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx-ingress" \
   --version 4.2.1 \
   --set controller.replicaCount=2 \
@@ -50,7 +50,7 @@ helm upgrade --install "${BCENTRAL_INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPAC
   --set controller.admissionWebhooks.enabled=false \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-resource-group=${LOADBALANCER_IP_RG}" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal=true" \
-  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET_NAME}" \
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET}" \
   --set controller.extraVolumeMounts[0].name="log4j-lua-conf-script-volume-mount" \
   --set controller.extraVolumeMounts[0].mountPath="/var/lib/lua-charts" \
   --set controller.extraVolumes[0].name="log4j-lua-conf-script-volume-mount" \
