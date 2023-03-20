@@ -336,10 +336,6 @@ configMapGenerator:
       - TLS_KEY_PATH=/mnt/tls.key
       - TLS_CERT_PATH=/mnt/tls.crt
       - KEYVAULT_NAME=shared-fe-apps-cdn-60
-  - name: cm-file-lowcode-parser
-    behavior: create
-    files:
-      - lowcode-parser/application.properties
   - name: cm-file-devops-portal-api
     behavior: create
     files:
