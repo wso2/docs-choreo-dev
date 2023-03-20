@@ -12,7 +12,7 @@ With the help of the service component, developers can quickly create APIs and m
 
 ## What are endpoints in service components?
 
-Endpoints are a crucial concept when developing services that need to be exposed to other services or applications. Services can expose multiple endpoints, each representing a unique entry point into the service. For example, a service may expose a REST API endpoint and a GraphQL endpoint, each providing different ways to interact with the service. Endpoints provide a way to define the specific network details for how a service can be accessed, such as the port number, protocol, and endpoint name. By defining these details, endpoints make it possible for other services and applications to discover and interact with the service in a standardized way.
+Endpoints are a crucial concept in Choreo when developing services that need to be exposed to other services or applications. Services can expose multiple endpoints, each representing a unique entry point into the service. For example, a service may expose a REST API endpoint and a GraphQL endpoint, each providing different ways to interact with the service. Endpoints provide a way to define the specific network details for how a service can be accessed, such as the port number, protocol, and context path. By defining these details, endpoints make it possible for other services and applications to discover and interact with the service in a standardized way.
 
 Endpoints in Choreo are defined by a combination of port binding, protocol, endpoint name, network visibility, endpoint schema and additional protocol-related fields. The following table provides details about each field
 
