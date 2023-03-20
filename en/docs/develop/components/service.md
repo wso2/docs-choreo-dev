@@ -1,6 +1,6 @@
 # Service Components
 
-Service components are an essential element of building cloud-native applications. They provide a simple and effective way of exposing functionality as a service to other components in the application or the outside world. The purpose of this document is to introduce the concept of service components and explain their functionality, use cases, and how to configure them.
+Service components are an essential building block in Choreo for developing cloud-native applications. They provide a simple and effective way of exposing functionality as a service to other components in the application or to the outside world.
 
 ## What is a service component?
 
