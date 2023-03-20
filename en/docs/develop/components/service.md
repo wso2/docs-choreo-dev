@@ -98,4 +98,4 @@ To expose an endpoint as a managed API, follow these steps:
 5. Publish the API
 4. Configure the API management settings such as throttling, security policies and access controls as required using the usage plans, permissions, and settings tabs.
 
-Once the service component is deployed, the endpoint will be exposed as a managed API through the Choreo API Gateway. You can then use the full lifecycle API management features provided by Choreo to design, test, deploy, and maintain your API, as well as monitor and manage it using the API management features.
+Once the service component is deployed, the endpoint will be exposed as a managed API through the Choreo API Gateway. You can then use the full lifecycle API management features provided by Choreo to test, deploy, and maintain your API, as well as monitor and manage it using the API management features.
