@@ -4,7 +4,7 @@ Service components are an essential building block in Choreo for developing clou
 
 ## What is a service component?
 
-A service component in Choreo is a component type that can be used to write web services and expose APIs as REST APIs, GraphQL APIs, or gRPC services. It is a fundamental building block for creating cloud-native applications in Choreo.
+A service component in Choreo is a component type that can be used to deploy and expose REST, GraphQL, or gRPC services. It is a fundamental building block for creating cloud-native applications in Choreo.
 
 Service components can be used to encapsulate business logic and provide endpoints (standardized interfaces) for communication with other components or systems. They can be deployed and scaled independently, making them highly flexible and adaptable to changing workloads.
 
