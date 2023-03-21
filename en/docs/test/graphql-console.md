@@ -1,5 +1,8 @@
 # GraphQL Console
 
+!!! note
+    The GraphQL Console will be deprecated in the future. We recommend using the Service component and [Test Console](../test/console.md) to test your Service APIs.
+
 The GraphQL Console is an interactive UI that guides you to write queries and mutations to test the GraphQL API. Choreo uses OAuth2.0 authentication to secure GraphQL APIs by default. Therefore, the GraphQL Console allows you to generate test keys to test the APIs.
 
 # Test your GraphQL API
