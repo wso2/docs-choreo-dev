@@ -65,7 +65,8 @@ nav:
           - REST APIs: develop/components/rest-api.md
           - REST API Proxy: develop/components/api-proxy.md
           - Webhooks: develop/components/webhook.md
-          - Scheduled Tasks: develop/components/scheduled-tasks.md
+          - Scheduled Triggers: develop/components/scheduled-tasks.md
+          - Manual Triggers: develop/components/manual-triggers.md
           - GraphQL APIs: develop/components/graphql-api.md
       - Manage Repository: 
           - Connect Your Own GitHub Repository: develop/manage-repository/connect-your-own-github-repository-to-choreo.md
@@ -176,6 +177,7 @@ plugins:
           'api-proxies/api-proxy.md': 'https://wso2.com/choreo/docs/develop/components/api-proxy/'
           'webhook.md': 'https://wso2.com/choreo/docs/develop/components/webhook/'
           'scheduled-tasks.md': 'https://wso2.com/choreo/docs/develop/components/scheduled-tasks/'
+          'manual-triggers.md': 'https://wso2.com/choreo/docs/develop/components/manual-triggers/'
           'graphql-api.md': 'https://wso2.com/choreo/docs/develop/components/graphql-api/'
           'developer-portal/developer-portal.md': 'https://wso2.com/choreo/docs/consume/developer-portal/'
           'developer-portal/manage-application.md': 'https://wso2.com/choreo/docs/consume/manage-application/'
