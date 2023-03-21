@@ -19,7 +19,7 @@ To add an external IdP, follow this procedure:
 !!! note
     You must have organization administrator privileges to add an external IdP.
 
-1. Sign in to the Choreo Console at https://console.choreo.dev/.
+1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
 
 2. In the left navigation menu, click **Settings**.
 

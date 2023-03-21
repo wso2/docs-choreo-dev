@@ -1,6 +1,6 @@
 # Create Your First Event-Triggered Integration
 
-Event-triggered integrations can help automate business processes and reduce manual work. Choreo allows you to create and manage event-triggered integrations without a complex infrastructure setup.
+Event-triggered integrations can help automate business processes and reduce manual work. Choreo allows you to effortlessly create and manage event-triggered integrations, eliminating the need for a complicated infrastructure setup.
 
 Consider a scenario where a developer has already created an integration using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/) and wants to deploy it on Choreo to create an event-triggered integration. This tutorial walks you through the steps to accomplish this requirement. 
 
@@ -68,14 +68,11 @@ Let's create the integration component by following the steps given below:
 
 
 ## Step 2: Deploy
+
 Before you deploy the component, you must follow the steps given below to assign appropriate RabbitMQ credentials to the environment variables:
 
-1. In the **Deploy** view, go to the **Development** card and click **Configure via the DevOps Portal**. This takes you to the **Configs & Secrets** page in the **DevOps** profile, where you can apply environment-specific configuration files, environment variables, and other secret resources to containers.
-2. Click **Let's Get Started**.
-3. In the **Mount a Configuration** page, select **Environment Variables** as the configuration type and click **Next**.
-4. Select **Create New** and enter a **Config Name**. Here, let's specify `environmentconf` as the **Config Name**.
-5. Click **Next**.
-6. Specify the environment variables as key-value pairs. You must use the values you obtain from your RabbitMQ instance as the values for the following keys: 
+1. In the **Deploy** view, go to the **Build Area** card, and then click **Configure & Deploy**.
+2. In the **Configure & Deploy** pane, add the environment variables as key-value pairs. You must use the values you obtain from your RabbitMQ instance as the values for the following keys: 
 
     | **Key**    |
     |------------|
@@ -83,12 +80,17 @@ Before you deploy the component, you must follow the steps given below to assign
     | USERNAME   |
     | PASSWORD   | 
     | VHOST      | 
+3. Click **Deploy**. 
 
-7. Click **Finish**. Now you are ready to deploy the component to the developer environment. 
-
-8. Go to the **iPaaS** profile and click the `MQTT listener` component you created.
-
-9. Click **Deploy** on the left navigation, go to the **Build Area** card, and then click **Deploy Manually**.
+4. Alternatively, you can go to the **Development** card and click **Configure via the DevOps Portal**. This takes you to the **Configs & Secrets** page in the **DevOps** profile, where you can apply environment-specific configuration files, environment variables, and other secret resources to containers.
+    1. Click **Let's Get Started**.
+    2. In the **Mount a Configuration** page, select **Environment Variables** as the configuration type and click **Next**.
+    3. Select **Create New** and enter a **Config Name**. Here, let's specify `environmentconf` as the **Config Name**.
+    4. Click **Next**.
+    5. Click **Finish**. Now you are ready to deploy the component to the developer environment. 
+    6. Go to the **iPaaS** profile and click the `MQTT listener` component you created.
+    7. Click **Deploy** on the left navigation, go to the **Build Area** card, and then click **Configure & Deploy**.
+    8. Click **Deploy**. 
 
     !!! info
         You have to deploy the component manually the first time. Subsequent deployments will occur automatically because automatic deployment is enabled by default.

@@ -17,32 +17,11 @@ Webhooks are a widely used programming element to create event-driven API archit
 
 Developing a webhook is the process of creating the webhook by identifying the trigger event and implementing the logic to execute the event. You can create and design an event-driven integration using webhooks in Choreo easily. 
 
-Choreo’s low-code editor allows developers to easily design and develop webhooks for platforms such as GitHub, Slack, and Google Calendar, etc. using the integrated pro-code or low-code editor. Creating a webhook in Choreo starts by either creating the Webhook component from scratch or by connecting an existing Ballerina repository. To create a webhook from scratch, you can start by creating a Webhook component and selecting the trigger type(e.g. GitHub).
-Next, you can give the webhook a name, select the trigger channel, and select whether to manage the webhook code in a choreo-managed repository or in your own repository.
+The [Choreo VS code extension](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo) allows developers to easily design and develop webhooks for platforms such as GitHub, Slack, and Google Calendar, etc. using the integrated pro-code or low-code editor. Creating a webhook in Choreo starts by connecting an existing repository containing the implementation written in Ballerina or any other language in the form of a Dockerfile. Alternatively, you can also create a Webhook component with an empty implementation, and later commit the implementation to the GitHub repo by creating a Webhook component, giving the webhook a name, attaching an empty repository, and selecting the trigger type(e.g. GitHub). Make sure to add the implementation before you deploy the component. 
 
 ![Create a webhook](../../assets/img/webhooks/create-webhook.png){.cInlineImage-half}
 
- Once you have created your webhook, you can start developing the logic for the specific event(E.g. onOpened). Choreo will execute this logic when the webhook is activated. E.g. send an email when an issue gets created in GitHub.
-
-Additionally, you can define any configurations needed to run the webhook.
-
-### Low code mode
-
-![Low Code](../../assets/img/webhooks/low-code-webhook.png){.cInlineImage-threeQuarter}
-
-The low-code programming model allows developers to use common programming constructs such as loops, conditions(if/else, variable declarations and assignments, logs, data transformations(visual data mapping), and much more in a graphical editor. It also allows developers to connect to any built-in or custom-developed [connectors](https://central.ballerina.io).
-
-Choreo allows you to add multiple triggers and channels to your webhook implementation via the low-code editor. It also shows the configurations needed to deploy the Webhook component. 
-
-The main advantage of the low-code programming mode is that it increases the developer productivity by multiple folds by eliminating the need to write complex code. As developers use constructs on the low-code editor to implement the integration logic for the webhook, the IDE automatically writes the corresponding [Ballerina](https://ballerina.io) source code of the webhook. This speeds up the developer's learning process significantly and thereby boosts overall productivity.
-
-### Pro code mode
-
-In addition to the low-code mode, Choreo provides a pro code mode of implementing the webhook's functionality with the ability to alternate between low-code and pro-code at any time. Choreo's online IDE allows viewing the low-code and pro-code editors side by side:
-
-![Low-Code Pro-Code View](../../assets/img/webhooks/low-code-pro-code-webhook.png){.cInlineImage-threeQuarter}
-
-Choreo gives the developers the flexibility to use the pro-code mode only or use it for implementing certain parts of the API and use the low-code mode for the rest (based on their preference). Choreo treats the source code (generated and handwritten) of the API as the single source of truth and therefore has no limitations or restrictions on which mode developers may choose to implement their webhook's functionality.
+ If you attached an empty repository, once you have created your webhook, you can start developing the logic for the specific event(E.g. onOpened). Choreo will execute this logic when the webhook is activated. E.g. send an email when an issue gets created in GitHub.
 
 ## Deploy a webhook
 

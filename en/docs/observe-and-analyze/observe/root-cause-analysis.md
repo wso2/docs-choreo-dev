@@ -10,15 +10,13 @@ To visualize the observability data of a component, follow these steps:
 
 2. On the Home page, select the project with the component that you want to observe.
 
-    ![Select project](../../assets/img/observability/select-project.png){.cInlineImage-full}
-
 3. Click on the component that you need to observe to open it.
 
 4. To open the **Observability** view for the component, click **Observe** on the left navigation.
 
     You can view the following:
     
-    - Low-code diagram
+    - Visual diagram
     - Throughput graph
     - Latency graph
     - Logs
@@ -36,7 +34,7 @@ The throughput graph depicts the total throughput of the component (which includ
 
 The actions you can perform in a throughput graph are as follows:
 
-- **View the number of successful requests and errors:** To do this, hold the pointer over the area of the graph that shows the required time interval. The throughput graph displays the number of successes over the graph as shown in the figure above (in this example, it displays 757.64 successes and 200.14 errors). The low-code diagram displays the success rate for each API call.
+- **View the number of successful requests and errors:** To do this, hold the pointer over the area of the graph that shows the required time interval. The throughput graph displays the number of successes over the graph as shown in the figure above (in this example, it displays 757.64 successes and 200.14 errors). The visual diagram displays the success rate for each API call.
 
 - **View log entries:** If you click the required area on the graph, the log entries applicable for that period are displayed in the Logs pane. In this example, the log displays multiple entries indicating the error `employee information not found in the hr-service`.
 
@@ -48,7 +46,7 @@ The actions you can perform in a throughput graph are as follows:
 
     This pane displays the latency, the time at which the service received the request, and the status.
 
-    When you click on a specific request, the low-code diagram displays the following:
+    When you click on a specific request, the visual diagram displays the following:
 
     - If an error has occurred, the error code is displayed near the relevant API call. In this example, the `404` error code has occurred when the request was processed by an API call.
   
@@ -60,9 +58,9 @@ The actions you can perform in a throughput graph are as follows:
 
 The latency graph depicts the latency of requests over a selected time interval. You can analyze the spikes in the latency graph to identify the API invocations that result in error status. The actions you can perform are as follows:
 
-- **View details of a latency that has occurred:** To do this, go to the latency graph under the **Throughput & Latency** tab and click a data point where there is a spike. This displays the latency, start time, and status of the corresponding requests just above the low-code diagram as shown in the following figure:
+- **View details of a latency that has occurred:** To do this, go to the latency graph under the **Throughput & Latency** tab and click a data point where there is a spike. This displays the latency, start time, and status of the corresponding requests just above the visual diagram as shown in the following figure:
 
-    ![View latency statistics](../../assets/img/observability/latency-statistics.png){.cInlineImage-full}
+    ![View latency statistics](../../assets/img/observability/latency-details.png){.cInlineImage-threeQuarter}
 
 - **View details for a custom time range:** If you want to drill down to view details at a higher granularity, drag the pointer over a time range to view the graph for the selected period.
 

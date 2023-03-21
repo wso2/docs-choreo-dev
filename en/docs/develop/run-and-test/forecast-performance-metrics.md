@@ -1,6 +1,6 @@
 # Forecast Performance Metrics
 
-The Performance Analyzer tool is an AI-based tool that generates intelligent estimations of the performance of integration-based services and APIs based on historical data. The Performance Analyzer tool allows developers to obtain forecasts at development time using advanced machine learning techniques and mathematical performance models.
+The Performance Analyzer tool is an AI-based tool that generates intelligent estimations regarding the performance of integration-based services and APIs based on historical data. The Performance Analyzer tool allows developers to obtain forecasts at development time using advanced machine learning techniques and mathematical performance models.
 
 Traditionally, performance analysis includes performance debugging which involves measuring the performance of services by load testing them. The Performance Analyzer allows you to measure performance at the application development stage, significantly reducing the time and cost spent on performance debugging.
 
@@ -20,19 +20,23 @@ Making accurate performance estimations before releasing an application you have
 
 ## Use the Performance Analyzer
 
-You can use the Choreo Performance Analyzer on the Web Editor in low-code mode. 
+You can use the Choreo Performance Analyzer on the [Choreo VS code extension](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo) in low-code mode. 
 
 ### Analyze the performance-critical path in real-time
 
 To view the real-time analysis of the performance-critical path of your component, follow the steps below:
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev). 
-2. Navigate to your component and click **Overview** from the left pane. 
-3. Click **Edit Code** to access the Web Editor.
+1. Enable the [Choreo VS code extension](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo) on the VS Code editor.
+2. Navigate to your component and click on the `show diagram` icon on the **VS Code editor** groups. 
+
+    ![Show diagram](../../assets/img/references/performance-analysis/show-diagram.png){.cInlineImage-threeQuarter}
 
 #### Overall performance of the performance-critical path
 
-On the low-code editor, you will see a bar with the summarized overall performance estimates for each resource function. By default, this banner displays the forecasted latency and throughput when the indicated user count range executes the performance-critical path. The upper bound of the user count range is set based on the availability of historical data. Since the Performance Analyzer tool derives these metrics in real-time,  any changes to the component will update the metrics in real-time. 
+!!! note
+    If you **cannot see** the summarized overall performance on the low-code view, you are most probably using a connector for which we do not have sufficient data to generate the estimates. If you are exploring this functionality, we recommend you try the **Covid-19 Statistics** sample.
+
+On the low-code pane of the VS Code editor, you will see a bar with the summarized overall performance estimates for each resource function. By default, this banner displays the forecasted latency and throughput when the indicated user count range executes the performance-critical path. The upper bound of the user count range is set based on the availability of historical data. Since the Performance Analyzer tool derives these metrics in real-time,  any changes to the component will update the metrics in real-time. 
 
 ![Real-time performance analysis of the critical path](../../assets/img/references/performance-analysis/real-time-performance-analysis.png){.cInlineImage-threeQuarter}
 
