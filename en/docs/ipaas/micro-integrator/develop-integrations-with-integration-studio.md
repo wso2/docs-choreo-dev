@@ -104,9 +104,7 @@ For a comprehensive list of parameters that can be configured as environment var
 
 ## Configuring logging
 
-When developing and maintaining a software system, one of the crucial aspects is to have proper logging mechanisms in
-place. Logging is a way to capture events and messages that occur during the execution of an application, providing
-valuable information for troubleshooting and debugging purposes.
+Proper logging mechanisms are crucial when developing and maintaining a software system. Logging captures events and messages that occur during an application's execution, providing valuable information for troubleshooting and debugging purposes.
 
 In Micro Integrator (MI) instances, logging can be configured and customized to meet specific requirements. The logging
 configuration can be added to each MI instance's environment, allowing developers to fine-tune logging based on the
