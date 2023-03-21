@@ -102,6 +102,9 @@ nav:
           - Configure Alerts: observe-and-analyze/analyze/configure-alerts.md
           - Choreo Insights API: observe-and-analyze/analyze/choreo-insights-api.md
           - Programmatic Access to Choreo Insights API: observe-and-analyze/analyze/programmatic-access-choreo-insights-api.md
+          - DORA Metrics:
+              - Configure CIO Dashboard: observe-and-analyze/analyze/dora-metrics/configure-cio-dashboard.md
+              - View DORA Metrics: observe-and-analyze/analyze/dora-metrics/view-dora-metrics.md
   - Alerts: alerts.md
   - DevOps: devops/devops-portal.md
   - iPaaS:

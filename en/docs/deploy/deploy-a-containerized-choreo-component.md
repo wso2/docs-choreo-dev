@@ -49,6 +49,15 @@ Let's add a containerized REST API component by following these steps:
     If you have not already authorized Choreo applications, click **Authorize Choreo Apps** when prompted. 
     Once you perform the authorization, the **GitHub Account** field in the **Connect Repository** dialog box displays the GitHub account you authorized the REST API to access. 
 
+7. Select the following values to connect the repository:
+
+    !!! info
+        To successfully build your container with Choreo, it is essential that you explicitly define a User ID (`UID`) under the `USER` instruction in your Dockerfile. You can refer to the [sample Dockerfile](https://github.com/wso2/choreo-sample-apps/blob/main/go/rest-api/Dockerfile) for guidance.
+
+        To ensure that the defined USER instruction is valid, it must conform to the following conditions:
+            
+        - A valid User ID is a numeric value between 10000-20000, such as `10001` or `10500`.
+        - Usernames are not considered valid and should not be used, for example, `my-custom-user-12221` or `my-custom-user`.
 
 8. Select the following values to connect the repository.
 
@@ -67,7 +76,7 @@ Let's add a containerized REST API component by following these steps:
         - The repository you select will be validated when you run a build for it.
         - If you want to add another GitHub repository from your account, you can expand the list, click **+ Connect More Repositories**, and repeat step 6.
 
-9. Click **Create**.
+8. Click **Create**.
 
     The REST API deploy section opens on a separate page.
 
