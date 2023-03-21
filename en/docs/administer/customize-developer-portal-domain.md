@@ -6,7 +6,7 @@ Follow the steps below to configure the custom domain for the Developer Portal:
 
 ## Prerequisites
 
-1. Sign in to the Choreo Console at <a>https://console.choreo.dev/</a> using a Google/ GitHub/ Microsoft account.
+1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev) using a Google/ GitHub/ Microsoft account.
 2. If you are a new user, create an organization. Enter a unique organization name. For example, "Stark Industries".
     
     ![Create an organization in Choreo](../assets/img/references/enterprise-login/create-choreo-organization.png){.cInlineImage-small}

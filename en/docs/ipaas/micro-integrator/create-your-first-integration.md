@@ -84,9 +84,9 @@ In this tutorial, let's test via the OpenAPI Console:
 
 2. Click **OpenAPI Console**.
 
-3. Select the **/HelloWorld** resource and click **Try it out**.
+3. Select **/HelloWorld** resource and click **Try it out**.
 
-4. Click **Execute**. Choreo displays the following response under **Response body**.
+4. Click **Execute**. Choreo displays the following response in **Response body**.
 
     `{"Hello":"Integration"}`
 

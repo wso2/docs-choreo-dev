@@ -36,7 +36,7 @@ To enable automatic deployment for your REST API, follow the steps given below:
 
 4. For the **Component build and deployment failure alert**, enter a valid email address and click the toggle to enable the alert.
 
-    ![Enable build failure alerts](../assets/img/tutorials/deploy-automatically/enable-build-failure-alerts.png){.cInlineImage-threeQuarters}
+    ![Enable build failure alerts](../assets/img/tutorials/deploy-automatically/enable-build-failure-alerts.png){.cInlineImage-threeQuarter}
 
 Now automatic deployment is enabled for your REST API and a build should be automatically triggered every time you commit a change to the REST API implementation. To verify this, move on to Step 3.
 
@@ -55,13 +55,13 @@ To verify whether your REST API implementation gets automatically deployed when 
 
 4. Click **Sync with Choreo Upstream** in the Git status bar.
 
-    ![Sync changes to implementation](../assets/img/tutorials/deploy-automatically/sync-changes-to-implementation.png){.cInlineImage-threeQuarters}
+    ![Sync changes to implementation](../assets/img/tutorials/deploy-automatically/sync-changes-to-implementation.png){.cInlineImage-threeQuarter}
 
     In the message that appears, click **Sync my changes with Choreo**.
 
 5. In the left pane, enter a commit message (e.g., `Implement REST API`) and click the tick.
 
-    ![Commit message](../assets/img/tutorials/rest-api/commit-message.png){.cInlineImage-threeQuarters}
+    ![Commit message](../assets/img/tutorials/rest-api/commit-message.png){.cInlineImage-threeQuarter}
 
     You will get a message prompting you to configure your `user.name` and `user.email`. To proceed, follow the steps given below:
 
@@ -74,7 +74,7 @@ To verify whether your REST API implementation gets automatically deployed when 
 
 6. To push the changes to your GitHub repository, click **0↓ 1↑** in the Git Status Bar.
 
-    ![Push changes](../assets/img/tutorials/deploy-automatically/push-changes.png){.cInlineImage-threeQuarters}
+    ![Push changes](../assets/img/tutorials/deploy-automatically/push-changes.png){.cInlineImage-threeQuarter}
 
     !!! info
         This icon only appears after the Web Editor completes the committing process.
@@ -93,11 +93,11 @@ To verify whether your REST API implementation gets automatically deployed when 
 
 12. Click the refresh icon next to **Build and Deployment History**.
 
-     ![Refresh build and deployment history](../assets/img/tutorials/deploy-automatically/refresh-build-and-deployment-history.png){.cInlineImage-threeQuarters}
+     ![Refresh build and deployment history](../assets/img/tutorials/deploy-automatically/refresh-build-and-deployment-history.png){.cInlineImage-threeQuarter}
 
     The **Build and Deployment History** section will display a new record with the **Automatic** label as shown below for the automatic build you triggered with your last commit.
 
-    ![Automatic deployment record](../assets/img/tutorials/deploy-automatically/automatic-deployment-record.png){.cInlineImage-threeQuarters}
+    ![Automatic deployment record](../assets/img/tutorials/deploy-automatically/automatic-deployment-record.png){.cInlineImage-threeQuarter}
 
     You can click on this record to open the **Console** panel and view the logs that Choreo generated when it deployed the REST API.
 

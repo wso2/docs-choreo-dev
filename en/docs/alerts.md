@@ -15,7 +15,7 @@ If the Kubernetes pod that runs your component goes out of memory, it restarts i
 Due to this, the out-of-memory error can be very adverse for your component. Therefore, when an out-of-memory error occurs, the admin members of the organization that owns the component receive an alert email similar to the sample given below.
 
 
-![Out of Memory alert email](assets/img/alerting/oom-email.png){.cInlineImage-full}
+![Out of Memory alert email](assets/img/alerting/oom-email.png){.cInlineImage-half}
 
 This email contains details about your component and the number of times this event occurred within the alert monitoring period.
 You can check the logs and the memory usage during that time interval by clicking **Check in Portal**. This takes you to the **Observe** tab of that particular component. You can also contact WSO2 for support via the **Contact us** link provided at the bottom of the alert email.
@@ -54,7 +54,7 @@ For more information on how to use the **Observe** tab for root cause analysis, 
 
 This alert is triggered when you use the **`log:printError()`** function in your component and the component logs an error via that. Such errors indicate that your component is unable to function as designed, and therefore you are notified via email so that you can troubleshoot them. The following is a sample of such a notification email. 
 
-![Application Error email](assets/img/alerting/application-error-email.png){.cInlineImage-full}
+![Application Error email](assets/img/alerting/application-error-email.png){.cInlineImage-half}
 
 This email provides details about the component. You can click **Check in Portal** to open the **Observe** tab in the Choreo Console for this component. You can also get support from WSO2 via the **Contact us** link provided in the email.
 

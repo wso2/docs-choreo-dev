@@ -33,15 +33,15 @@ To create an application and generate keys, follow the steps below:
 
 3. To subscribe to the **Insights** API via the newly created application, click **Subscriptions** in the left navigator, and then click **Add** for the Insights API.
 
-    ![Subscribe-API](../../assets/img/insights/subscribe-api.png){.cInlineImage-full}
+    ![Subscribe-API](../../assets/img/insights/subscribe-api.png){.cInlineImage-threeQuarter}
 
 4. To generate credentials for the application, click  **Production Keys** -> **OAuth 2.0 Tokens** in the left navigator, and then click **Generate Credentials**. This generates a consumer key and secret for the created application.
 
-    ![Generate-Credentials](../../assets/img/insights/generate-credentials.png){.cInlineImage-full}
+    ![Generate-Credentials](../../assets/img/insights/generate-credentials.png){.cInlineImage-threeQuarter}
 
 5. Specify a suitable token expiry time and click **Update**.
    
-    ![Generate-Test-Token](../../assets/img/insights/update-token-expirary-time.png){.cInlineImage-full}
+    ![Generate-Test-Token](../../assets/img/insights/update-token-expirary-time.png){.cInlineImage-threeQuarter}
 
 6. Execute the following curl command to generate an access token:
 
@@ -73,4 +73,4 @@ To create an application and generate keys, follow the steps below:
 
         If a token theft occurs, the relevant token can be revoked by making an API call to the revoke-endpoint.
 
-        ![Endpoints](../../assets/img/insights/endpoints.png){.cInlineImage-full}
+        ![Endpoints](../../assets/img/insights/endpoints.png){.cInlineImage-threeQuarter}

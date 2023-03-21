@@ -1,8 +1,8 @@
 # Create Your First Integration as an API
 
-An integration component integrates APIs, microservices, applications, and data in different languages and formats.
+An integration component integrates APIs, microservices, applications implemented in different languages, and data in different formats. 
 
-Consider a scenario where a developer has created an integration in [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/) and wants to use it for API-led integration by exposing it in Choreo. In this tutorial, you will learn how to do the following actions to address this requirement:
+Consider a scenario where a developer needs to use an existing integration that was created using the [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/) and expose it as an API in Choreo. In this tutorial, you will learn how to do the following actions to address this requirement:
 
 - Expose an integration created in [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/) as an API in Choreo by connecting the GitHub repository in which it resides to Choreo.
 - Deploy the Integration component to the development environment.
@@ -76,7 +76,7 @@ Once Choreo has deployed the micro integrator REST API, you can proceed to the n
 
 ## Step 3: Test
 
-Once you have deployed the Integration REST API you can test it via the OpenAPI Console, or a cURL command.
+Once you have deployed the integration REST API you can test it via the OpenAPI Console, or a cURL command.
 
 In this tutorial, let's test via the OpenAPI Console:
 
