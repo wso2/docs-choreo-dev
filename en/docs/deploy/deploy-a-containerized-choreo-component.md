@@ -58,9 +58,7 @@ Let's add a containerized REST API component by following these steps:
             
         - A valid User ID is a numeric value between 10000-20000, such as `10001` or `10500`.
         - Usernames are not considered valid and should not be used, for example, `my-custom-user-12221` or `my-custom-user`.
-
-8. Select the following values to connect the repository.
-
+        
     | **Field**       |   **Description**   |**Value**                             |
     |-----------------|------------------|------------------------------|
     | **GitHub Account** | Your GitHub account. If you want to add another GitHub account, you can expand the list, click **+ Add**, and repeat step 6. |select your GitHub account|
