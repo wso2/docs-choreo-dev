@@ -18,15 +18,15 @@ You will be prompted to authorize the **Choreo Apps** when you try to connect yo
 
 * Connect GitHub Repository
     
-    ![Connect GitHub Repository](../assets/img/deploy/containerized-apps/create-component-authz-github-page.png){.cInlineImage-threeQuarter}
+    ![Connect GitHub Repository](../assets/img/deploy/shared/create-component-authz-github-page.png){.cInlineImage-threeQuarter}
 
 * Authorize GitHub Application
     
-    ![Authorize GitHub Application](../assets/img/deploy/containerized-apps/authz-choreo-github-app.png){.cInlineImage-quarter height="600px"}
+    ![Authorize GitHub Application](../assets/img/deploy/shared/authz-choreo-github-app.png){.cInlineImage-quarter height="600px"}
 
 * Grant Repository Access
 
-    ![Grant Repository Access](../assets/img/deploy/containerized-apps/github-repo-access.png){.cInlineImage-full height="600px"}
+    ![Grant Repository Access](../assets/img/deploy/shared/github-repo-access.png){.cInlineImage-full height="600px"}
 
 
     The **Choreo Apps** requires the following permission:
