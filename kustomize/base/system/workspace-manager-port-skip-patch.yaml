@@ -1,3 +1,0 @@
-- op: replace
-  path: /spec/template/metadata/annotations/config.linkerd.io~1skip-outbound-ports
-  value: 3306,443,2587,8080
