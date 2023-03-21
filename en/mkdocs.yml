@@ -76,8 +76,8 @@ nav:
           - Create Policy: develop/api-policies/create-a-policy.md
           - Attach Policy: develop/api-policies/attach-policies.md
   - Deploy: 
-      - Deploy Your Choreo Component: deploy/deploy-your-component.md
-      - Deploy a Containerized Component: deploy/deploy-a-containerized-choreo-component.md
+#      - Ballerina Application: deploy/deploy-your-component.md / todo: @mirage20 add this back once the content is ready
+      - Containerized Application: deploy/deploy-a-containerized-choreo-component.md
   - Test: 
       - OpenAPI Console: test/open-api-console.md
       - cURL: test/curl.md

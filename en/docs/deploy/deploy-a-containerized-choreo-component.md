@@ -1,131 +1,130 @@
-# Deploy a Containerized Choreo Component
+# Deploy a Containerized Application 
 
-Choreo allows you to deploy an application written in a wide range of language frameworks (for example, Java, Go, NodeJs, Python, PHP, etc.) on shared or private data planes when you create any of the following components:
+Choreo allows you to deploy an application written in a wide range of language frameworks (for example, Java, Go, NodeJs, Python, etc.) on shared or private data planes using containers.
 
-- REST APIs
-- Scheduled tasks
-- Manual triggers
+Following component types are supported for the containerized application deployments:
 
-This guide walks you through the steps to deploy a sample containerized REST API component in Choreo.
+- Service
+- Scheduled Trigger
+- Manual Trigger
+- REST API
 
-## Prerequisites
+## Connect your repository to Choreo
 
-To deploy a containerized component, you need a GitHub account with a repository that contains a Dockerfile. For this tutorial, you can fork and use the [choreo-sample-apps repository](https://github.com/wso2/choreo-sample-apps).
+### GitHub repository
 
-The **Choreo GitHub App** requires the following permission:
+In order to connect your GitHub repository to Choreo, you need to authorize the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application to be installed to your account or organization. 
+You will be prompted to authorize the **Choreo Apps** when you try to connect your GitHub repository via the Component creation page.
 
- - Read access to issues and metadata
- - Read and write access to code, pull requests, and repository hooks
+* Connect GitHub Repository
+    
+    ![Connect GitHub Repository](../assets/img/deploy/containerized-apps/create-component-authz-github-page.png){.cInlineImage-threeQuarter}
 
-You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. Choreo needs write access only to send pull requests to a user repository. Choreo does not directly push any changes to a repository.
+* Authorize GitHub Application
+    
+    ![Authorize GitHub Application](../assets/img/deploy/containerized-apps/authz-choreo-github-app.png){.cInlineImage-quarter height="600px"}
 
-Let's get started!
+* Grant Repository Access
 
-## Step 1: Create a component from a Dockerfile
-
-Let's add a containerized REST API component by following these steps:
-
-1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
-
-2. Create a project to add the REST API component. You can follow the instructions under [Prerequisites in the Connect Your Own GitHub Repository to Choreo](../develop/manage-repository/connect-your-own-github-repository-to-choreo.md#prerequisites-create-a-project) tutorial.
-
-3. On the **Components** page, click **Create** on the **REST API** card.
-
-4. Enter a unique name and a description for the API. For this tutorial, let's enter the following values:
-
-    | **Field**       | **Value**                             |
-    |-----------------|---------------------------------------|
-    | **Name**        | `Greetings`                       |
-    | **Description** | `Sends greetings` |
-
-    !!! Info
-        Leave the value for the **Access Mode** field unchanged.<br/><br/>
-        This field allows you to select whether you want the REST API to be publicly accessible or to be accessible only within Choreo. By default, the API is publicly accessible.
-
-    Click **Next**.
-
-6. Click **Authorize with GitHub** to allow the REST API to access your GitHub account.
-
-    If you have not already authorized Choreo applications, click **Authorize Choreo Apps** when prompted. 
-    Once you perform the authorization, the **GitHub Account** field in the **Connect Repository** dialog box displays the GitHub account you authorized the REST API to access. 
+    ![Grant Repository Access](../assets/img/deploy/containerized-apps/github-repo-access.png){.cInlineImage-full height="600px"}
 
 
-7. Select the following values to connect the repository:
+    The **Choreo Apps** requires the following permission:
+    
+    - Read access to issues and metadata
+    - Read and write access to code, pull requests, and repository hooks
 
-    !!! info
-        To successfully build your container with Choreo, it is essential that you explicitly define a User ID (`UID`) under the `USER` instruction in your Dockerfile. You can refer to the [sample Dockerfile](https://github.com/wso2/choreo-sample-apps/blob/main/go/rest-api/Dockerfile) for guidance.
+!!! note
+    You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. Choreo needs write access only to send pull requests to a user repository. Choreo does not directly push any changes to a repository.
 
-        To ensure that the defined USER instruction is valid, it must conform to the following conditions:
-            
-        - A valid User ID is a numeric value between 10000-20000, such as `10001` or `10500`.
-        - Usernames are not considered valid and should not be used, for example, `my-custom-user-12221` or `my-custom-user`.
+Once you grant access to the necessary repositories, you can select the repository to connect to the Choreo component with an associated branch to start with.
+For the containerized application deployments, you should to select the **Dockerfile** as the **Build Preset** and provide **Dockerfile Path** and [**Docker Context Path**](https://docs.docker.com/build/building/context/#path-context) for the docker build.
 
-    | **Field**       |   **Description**   |**Value**                             |
-    |-----------------|------------------|------------------------------|
-    | **GitHub Account** | Your GitHub account. If you want to add another GitHub account, you can expand the list, click **+ Add**, and repeat step 6. |select your GitHub account|
-    | **GitHub Repository**        | You can authorize the REST API to access all the repositories in the selected GitHub account or select one or more repositories that you want to allow the REST API to access. For this tutorial, you can select your fork of the choreo-sample-apps repository |`choreo-sample-apps`  |
-    | **Branch** |The branch of the repository |`main` |
-    | **Build Preset** | Determines the implementation of the component: Ballerina or any other language as a Docker container|`Dockerfile`|
-    | **Dockerfile path**|The path to your Dockerfile. This path is defined relative to the repository root.<br/>e.g., If the Dockerfile is at the repository root, the value for this field for a monorepo is `service-one/Dockerfile`.  | `nodejs/rest-api/Dockerfile` |
-    | **Docker build Context Path** |The Docker build context path. To include the repository root, leave the default `**.**` value. | `nodejs/rest-api` |
-    | **Port** | The port at which your service is running. | `8080` |
-    | **OpenAPI Filepath** | The path to an OpenAPI specification (in YAML/JSON) relative to the repository root. If you do not specify a path, the system auto-generates a default `allow-all` specification. | `nodejs/rest-api/openapi.yaml` |
+![Connected Dockerfile Repository](../assets/img/deploy/containerized-apps/create-component-connected-repo.png){.cInlineImage-full}
 
-    !!! Tip 
-        - The repository you select will be validated when you run a build for it.
-        - If you want to add another GitHub repository from your account, you can expand the list, click **+ Connect More Repositories**, and repeat step 6.
+The following table describe the individual fields in the **Connect Repository** dialog box.
 
-8. Click **Create**.
+| **Field**               | **Description**                                                                                                                                                                      |
+|-------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **GitHub Account**      | Your GitHub account or organization. If you want to add another GitHub account, you can expand the list, click **+ Add**.                                                            |
+| **GitHub Repository**   | Depending on the repository access you provided, the drop down will show the repository to connect.                                                                                  |
+| **Branch**              | The branch of the repository                                                                                                                                                         |
+| **Build Preset**        | Determines the implementation of the component: Ballerina or any other language as a Docker container                                                                                |
+| **Dockerfile Path**     | The path to your Dockerfile. This path is defined relative to the repository root.<br/>e.g., If the Dockerfile is at the repository root, the value for this field is `/Dockerfile`. |
+| **Docker Context Path** | The Docker build context path. To include the repository root, leave the default `/` value.                                                                                          |
+| **Port***               | The port at which your service is running.                                                                                                                                           |
+| **OpenAPI Filepath***   | The path to an OpenAPI specification (in YAML/JSON) relative to the repository root. If you do not specify a path, the system auto-generates a default `allow-all` specification.    |
 
-    The REST API deploy section opens on a separate page.
+!!! note
+    These fields are marked with **\*** not only visible for all component types.
 
-    - You need to build and deploy the REST API to execute the required commands in the Dockerfile to generate the specification.<br/><br/>
+!!! note
+    To successfully build your container with Choreo, it is essential that you explicitly define a User ID (`UID`) under the `USER` instruction in your Dockerfile. You can refer to the [sample Dockerfile](https://github.com/wso2/choreo-sample-apps/blob/main/go/rest-api/Dockerfile) for guidance.
+
+    To ensure that the defined USER instruction is valid, it must conform to the following conditions:
         
-    - To select a specific version of the REST API you want to deploy, click the first card in the **Build Area** section, select the required commit in the **Configure & Deploy** pane, and click **Select**. <br/><br/>
-          ![Select commit](../assets/img/byoc/select-commits.png){.cInlineImage-threeQuarter}<br/><br/>
-        
-    - If you want to make changes to the build configurations you previously defined, follow these steps:<br/> 1. Click the **Build Configurations** card in the **Build Area** section.<br/> 2. Make the required changes in the **Build Configurations** pane.<br/> 3. Click **Save**.<br/>
-          ![Update build configurations](../assets/img/byoc/update-build-configurations.png){.cInlineImage-threeQuarter}<br/><br/>
-        
-    - When you create a Ballerina component, Choreo will allow you to develop it and define variables for which you can provide values when you deploy it. However, when you bring your own non-Ballerina component, the system runs the build via the Dockerfile. If you want to define configurable values before deploying, you can configure them in the DevOps Portal. For more information, see [DevOps Portal - Configurations and secrets](../devops/devops-portal.md#configurations-and-secrets)
+    - A valid User ID is a numeric value between 10000-20000, such as `10001` or `10500`.
+    - Usernames are not considered valid and should not be used, for example, `my-custom-user-12221` or `my-custom-user`.
 
-You have successfully added a Dockerfile-based REST API component from a Dockerfile. Now let's build and deploy it.
+## Deploy the Containerized component
 
-## Step 2: Build and deploy 
+Depending on the component type that you selected when creating the component, the Choreo will pick relevant deployment configuration and settings to apply.
+For example, if you selected the **Service** component type, the Choreo will deploy it as Kubernetes deployment with relevant scaling configurations.
 
-To invoke the REST API, you need to build and deploy it. When you trigger the build you execute the commands in the selected Dockerfile to apply the required configurations to the REST API.
+### Application configurations
 
-To build and deploy the REST API, follow these steps:
+If there are any configuration requires to the application, you need to provide them in the **Configs & Secrets** section of the component **Deploy** page.
 
-1. On the **Deploy** page, click **Build and Deploy** or if there are configurable variables in the implementation, then click **Configure & Deploy** , input the necessary values, and click **Deploy**.
+Once you click **Create** button, you have the option to select confidentiality of the configuration and how it should be mounted to the container.
 
-    !!! note
-        Deploying the REST API component may take a while. You can track the progress by observing the logs.
+![Application Configuration Page](../assets/img/deploy/containerized-apps/deploy-app-config-page.png){.cInlineImage-full}
 
-    Once the deployment is complete, the deployment status changes to **Active**. The **Invoke URL** field displays the URL via which you can invoke the REST API.
 
-2. Check the deployment progress by observing the console logs on the right of the page.
+![Create Configuration Mount Page](../assets/img/deploy/containerized-apps/deploy-app-config-type-mount-page.png){.cInlineImage-full}
 
-    You can access the following scans under **Build**.
+#### Configuration Types
 
-     - **The Dockerfile scan**: This scans the Dockerfile for a user ID and fails the build if no user is assigned to the Docker container.
-   
-     - **Container (Trivy) vulnerability scan**: This detects vulnerabilities in the Dockerfile-based image and in the third-party packages that the source code uses. If you click **Container (Trivy) vulnerability scan**, the details of the vulnerabilities open in a separate pane. If this scan detects critical vulnerabilities, the build will fail.
-   
-        !!! info
-            If you want to bypass these vulnerabilities, you need to run Choreo on a private data plane.
+* **ConfigMap**: Used to store non-confidential data as key-value pairs.
+* **Secret**: Allows you to store and manage sensitive information, such as passwords, OAuth tokens, and ssh keys as key-value pairs.
 
-You can test, manage, and observe this REST API you created from a Dockerfile the way you would a Ballerina component.
+#### Mount Types
 
-For detailed instructions, see the following sections of the [Create Your First REST API tutorial](../get-started/tutorials/create-your-first-rest-api.md).
+* **Environment Variables**: Mounts the selected ConfigMap or Secret as an environment variable in the container.
+* **File Mount**: Mounts the selected ConfigMap or Secret as a file in the container. Here, the key will be the file name and the value will be the file content.
 
-- [Step 3: Test](../get-started/tutorials/create-your-first-rest-api.md#step-3-test)
-- [Step 4: Manage](../get-started/tutorials/create-your-first-rest-api.md#step-4-manage)
+The following screenshot shows adding a **ConfigMap** with **File Mount** to read by the application.
 
-## Step 3: Manage the deployment
+![Configuration File Mount Page](../assets/img/deploy/containerized-apps/deploy-app-config-file-mount.png){.cInlineImage-full}
 
-If you want to view Kubernetes-level insights to carry out a more detailed diagnosis of this Dockerfile-based REST API, click **DevOps Portal** in the top menu.
+!!! note
+    In the above JSON file, the `${DB_PASS}` is an environment variable that is defined in a Secret. 
+    The application will read JSON and replace any placeholders with environment variables.
 
-![Access DevOps Portal](../assets/img/byoc/access-devops-portal.png){.cInlineImage-small}
+### Deployment configurations
 
-For more information about the information, see [DevOps Portal](../devops/devops-portal.md).
+Depending on the component type, the Choreo will allow you to configure the deployment configurations such as scaling, resource limits, and health check configurations.
+
+For more information about these configurations, see [DevOps Portal](../devops/devops-portal.md).
+
+The **Service** component will additionally allow you to configure the **Endpoints** to expose your service. See [Service Component](../develop/components/service.md) for more information.
+
+### Build, Deploy and Promote
+
+After adding the application configuration, you can build and deploy it by clicking the **Deploy Manually** button. The Choreo will start the build process with the selected commit in the **Build Area**. 
+
+!!! note
+    The **Auto Deploy on Commit** option to enabled by default which does build and deploy the application when you push a code change to the repository.
+    If you do not want this behaviour, you can disable it from the build area.
+
+During the build phase, the Choreo will scan your Dockerfile for any security vulnerabilities and start the build process if there are no vulnerabilities found.
+Once the image is built, the final image will be scanned for any security vulnerabilities before deploying it to the environment.
+You can check the build logs from the right side panel as shown in below image.
+
+![Build Logs Panel](../assets/img/deploy/containerized-apps/build-deploy-page-logs.png){.cInlineImage-full}
+
+Once the build is successful, the application will automatically deploy to the Development environment, and you can promote it to the higher environments by clicking the **Promote** button.
+Depending on your environment configurations, you may see multiple environment cards in the page.
+
+![Build and Deploy Page](../assets/img/deploy/containerized-apps/build-deploy-page.png){.cInlineImage-full}
+
+
