@@ -69,9 +69,8 @@ essential to apply only the required changes to avoid breaking the internal comm
 changing default configurations like port offset, hostname, and other critical settings might break the internal
 communication. Therefore, it's advisable to avoid modifying them unless it's necessary.
 
-A sample `deployment.toml` configuration to configure JMS transport is looks like below. Also refer to
-the [MI Config Catalog](https://apim.docs.wso2.com/en/latest/reference/config-catalog-mi/) to know more about configuring
-Micro Integrator.
+Below is a sample `deployment.toml` configuration for configuring JMS transport. Refer to
+the [MI Config Catalog](https://apim.docs.wso2.com/en/latest/reference/config-catalog-mi/) for more information about configuring the Micro Integrator.
 
 ```
 [[transport.jms.sender]]
