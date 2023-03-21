@@ -49,7 +49,6 @@ Let's add a containerized REST API component by following these steps:
     If you have not already authorized Choreo applications, click **Authorize Choreo Apps** when prompted. 
     Once you perform the authorization, the **GitHub Account** field in the **Connect Repository** dialog box displays the GitHub account you authorized the REST API to access. 
 
-
 7. Select the following values to connect the repository:
 
     !!! info
@@ -59,6 +58,8 @@ Let's add a containerized REST API component by following these steps:
             
         - A valid User ID is a numeric value between 10000-20000, such as `10001` or `10500`.
         - Usernames are not considered valid and should not be used, for example, `my-custom-user-12221` or `my-custom-user`.
+
+8. Select the following values to connect the repository.
 
     | **Field**       |   **Description**   |**Value**                             |
     |-----------------|------------------|------------------------------|

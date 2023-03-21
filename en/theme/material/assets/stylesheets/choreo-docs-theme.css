@@ -337,6 +337,14 @@ position: relative;
 	height: 100%;
 }
 
+.cInlineImage-xsmall {
+    display: inline-block;
+    text-align: center;
+    height:15%;
+    width:20%;
+    border: 1px solid gray;
+}
+
 .cInlineImage-small {
     display: inline-block;
     text-align: center;
@@ -360,6 +368,8 @@ position: relative;
     width:65%;
     border: 1px solid gray;
 }
+
+
 
 .cInlineImage-half {
     display: inline-block;

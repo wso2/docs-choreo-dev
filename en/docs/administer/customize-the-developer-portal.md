@@ -5,17 +5,17 @@ The Developer Portal allows API consumers to find and consume APIs with ease. Yo
 To customize the Developer Portal theme, follow the steps given below:
 
 !!! Note
-    - To customize the Developer Portal theme for an organization, you need to be an admin user of that organization.<br/><br/>
+    - To customize the Developer Portal theme for an organization, you need to be an admin user of that organization.
     - You cannot undo a change and restore or revert to a previous version of the theme. However, you can reset it to the default theme.
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/) using a Google, GitHub, or Microsoft account.
+1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/) using a Google/ GitHub/ Microsoft account.
 
 
 2. In the left pane, click **Settings**.
 
 3. In the **API Management** tab, click **Devportal Theme**.
 
-    ![Access Devportal theme](../assets/img/administration/devportal-theme/access-devportal-theme.png){.cInlineImage-threeQuarters}
+    ![Access Devportal theme](../assets/img/administration/devportal-theme/access-devportal-theme.png){.cInlineImage-threeQuarter}
 
     Once you access the theme, you can customize the **Home** page, color theme, font, header and footer, logos, etc., by expanding the relevant sections.
 
@@ -27,23 +27,13 @@ To customize the Developer Portal theme, follow the steps given below:
    
     3. Click **Preview** to view a preview of the Developer Portal with the changes you made. Based on the changes given in the examples, the preview appears as follows.
 
-         ![Preview of customization](../assets/img/administration/devportal-theme/preview-of-customization.png){.cInlineImage-threeQuarters}
+         ![Preview of customization](../assets/img/administration/devportal-theme/preview-of-customization.png){.cInlineImage-threeQuarter}
    
     4. Click **Save** to save your changes as a draft theme.
     
     5. To apply the changes to the Developer Portal, toggle the **Go Live** switch. To confirm that you want to go live with the changes, click **Enable** in the message that appears.
-    
-    6. If you want to make further changes to the Developer Portal theme after going live with the previous changes, follow the steps given below:
-    
-    	1. Make the required changes and click **Save**.
     	
-    	2. If you want to apply the latest changes to the Developer Portal, click **Confirm** in the **Proceed to Go Live** message. If not, click **Cancel**.
-    	
-    		!!! info
-    	
-    			If you did not apply the latest changes to the Developer Portal, you can publish them later or discard them.<br/>![Publish or discard Developer Portal changes](../assets/img/administration/devportal-theme/publish-or-discard-developer-portal-changes.png){.cInlineImage-threeQuarters}
-    	
-6. Sign in to the Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev).
+5. Sign in to the Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev).
 
 The **Home** page will appear as it did in the preview.
 

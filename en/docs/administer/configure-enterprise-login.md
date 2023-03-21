@@ -29,7 +29,7 @@ To configure enterprise login for your Choreo organization, follow the steps bel
 1. Expand the drop-down for your profile and click **Settings**.
 2. Click **Copy Handle** to copy the organization handle to the clipboard.
 
-    ![Copy organization name](../assets/img/references/enterprise-login/copy-organization-name.png){.cInlineImage-half}
+    ![Copy organization name](../assets/img/administration/configure-enterprise-login/copy-organization-name.png){.cInlineImage-full}
 
 3. When you add a Choreo organization, Choreo reserves the organization name for your user account. Therefore, you need to create an organization of the same name on the Choreo IdP (i.e., Asgardeo).
    
@@ -139,15 +139,16 @@ Follow the steps below to configure role-based access control to an enterprise l
 ### Step 2: Map Asgardeo groups to Choreo Roles in the Choreo Console 
 
 !!! note
-    1. This configuration can be done only by the **organization Admin**.
-    2. The Choreo organization admin should add the group role mapping entry for the Admin role to enable the external enterprise organization Admin to access this page.
+    1. This configuration can be done only if Asgardeo is your Key Manager.
+    2.This configuration can be done only by the **organization Admin**.
+    3. The Choreo organization admin should add the group role mapping entry for the Admin role to enable the external enterprise organization Admin to access this page.
 
 1. Log in to the Choreo console.
 2. From the left navigation menu, click **Settings**.
 3. Click **Organization** -> **Role Mapping** 
 4. To add a new group role mapping, click **Add Mapping**. 
 
-    ![Add mapping](../assets/img/administration/configure-enterprise-login/add-mapping.png){.cInlineImage-half}
+    ![Add mapping](../assets/img/administration/configure-enterprise-login/add-mapping.png){.cInlineImage-small}
 
  5. Enter the exact `Groups` name configured at the Enterprise IdP and map the list of Choreo roles by selecting the checkbox(s) from the list.
  6. Click **Save**. 

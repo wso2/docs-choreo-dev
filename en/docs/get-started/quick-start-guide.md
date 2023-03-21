@@ -299,7 +299,7 @@ To configure the front-end application by defining the ports it needs to run on,
 
             This is the value displayed next to the **Asgardeo** logo in the Asgardeo Console.
 
-            ![Organization handle](../assets/img/get-started/organization-handle.png){.cInlineImage-threeQuarters}
+            ![Organization handle](../assets/img/get-started/organization-handle.png){.cInlineImage-threeQuarter}
 
         - `VITE_STS_TOKEN_ENDPOINT`
 
@@ -444,7 +444,7 @@ Let's create a new version of the `readingList` REST API that can connect to a M
 
 2. Expand the list of versions and click **+ Create New**.
 
-    ![Create new version](../assets/img/get-started/create-new-version.png){.cInlineImage-threeQuarters}
+    ![Create new version](../assets/img/get-started/create-new-version.png){.cInlineImage-threeQuarter}
 
 3. Select **version-2** as the associated GitHub branch and enter `2.0.0` as the version name. Next click **Create**.
 

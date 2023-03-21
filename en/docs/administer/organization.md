@@ -6,7 +6,7 @@ An organization in Choreo is a logical grouping of users and users' resources. A
 
 If you are a member of more than one organization, you can switch from one organization to another. To do this, select the required organization from the **Organization** list in the header bar.
 
-![organizations](../assets/img/administration/organizations.png){.cInlineImage-half}
+![organizations](../assets/img/administration/organizations.png){.cInlineImage-small}
 
 ## Inviting members
 
@@ -20,7 +20,6 @@ Choreo roles are defined as follows:
 - **API Publisher**: An API Publisher can discover, create, publish, delete, test, and manage an API.
 
 - **API Subscriber**:  An API Subscriber is a developer in a particular organization. An API subscriber can subscribe to an application, manage subscriptions, manage applications, generate API keys, and manage API keys.
-- ```
 
 - **Admin**: An admin is responsible for all administration tasks, including IDP creation, user management, customizing the dev portal, managing projects, enabling analytics, managing domains, etc.
 
