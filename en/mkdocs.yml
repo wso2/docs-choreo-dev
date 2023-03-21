@@ -60,6 +60,7 @@ nav:
           - Create Your First Webhook: get-started/tutorials/create-your-first-webhook.md
           - Create Your First Integration as an API: get-started/tutorials/create-your-first-integration-as-an-api.md
           - Create Your First Event-Triggered Integration: get-started/tutorials/create-your-first-event-triggered-integration.md
+          - Create Your First Containerized Service: get-started/tutorials/create-your-first-containerized-service-component.md
   - Create:
       - Components:
           - REST APIs: develop/components/rest-api.md
@@ -78,7 +79,7 @@ nav:
           - Attach Policy: develop/api-policies/attach-policies.md
   - Deploy: 
 #      - Ballerina Application: deploy/deploy-your-component.md / todo: @mirage20 add this back once the content is ready
-      - Containerized Application: deploy/deploy-a-containerized-choreo-component.md
+      - Containerized Application: deploy/containerized-application.md
   - Test: 
       - OpenAPI Console: test/open-api-console.md
       - cURL: test/curl.md
@@ -170,7 +171,6 @@ plugins:
           'tutorials/connect-your-own-github-repository-to-choreo.md': 'https://wso2.com/choreo/docs/manage-repository/connect-your-own-github-repository-to-choreo/'
           'tutorials/construct-statements.md': 'https://wso2.com/choreo/docs/develop/explore-code-editor/construct-statements/'
           'tutorials/connect-your-existing-ballerina-project-to-choreo.md': 'https://wso2.com/choreo/docs/manage-repository/connect-your-existing-ballerina-project-to-choreo/'
-          'tutorials/deploy-a-containerized-choreo-component.md': 'https://wso2.com/choreo/docs/deploy/deploy-a-containerized-choreo-component/'
           'tutorials/configure-automatic-deployment.md': 'https://wso2.com/choreo/docs/deploy/configure-automatic-deployment/'
           'tutorials/map-data.md': 'https://wso2.com/choreo/docs/develop/explore-code-editor/map-data/'
           'rest-api.md': 'https://wso2.com/choreo/docs/develop/components/rest-api/'
