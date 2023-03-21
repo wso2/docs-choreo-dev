@@ -34,7 +34,7 @@ export class LoginPage {
     });
   }
 
-  static login() {
+  static login(doCleanup:boolean=false) {
     window.localStorage.setItem("seen", Date.now().toString());
 
     this.registerNetworkCallsForInterception();
@@ -42,7 +42,7 @@ export class LoginPage {
     this.enterUserCredentials("choreoIDPUsername", "choreoIDPPassword");
     this.persistOrgs();
     this.persistLogoutURL();
-    this.persistApimToken();
+    this.persistApimToken(doCleanup);
     this.persistCookies(`${Cypress.env("idpURL")}/commonauth`);
 
     cy.get('[data-testid="header-user-profile-menu"]', {
@@ -171,7 +171,7 @@ export class LoginPage {
     });
   }
 
-  static persistApimToken() {
+  static persistApimToken(doCleanup:boolean=false) {
     cy.wait("@orgs", { timeout: 150000 }).then((intercept) => {
       const header = intercept.request.headers["authorization"] as string;
       const token = header.replace("Bearer", "").trim();
@@ -179,7 +179,9 @@ export class LoginPage {
       const current_org = { id, uuid, handle };
       Cypress.env("apim_token", token);
       Cypress.env("current_org", current_org);
-      GraphQL.deleteProjectsCreatedByTests(id, handle, token);
+      if(doCleanup){
+        GraphQL.deleteProjectsCreatedByTests(id, handle, token);
+      }
     });
   }
 
