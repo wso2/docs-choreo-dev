@@ -59,12 +59,7 @@ During deployment, Choreo performs a Trivy scan to detect critical vulnerabiliti
 
 WSO2 MI comes with a set of pre-configured settings by default, designed to work in a general context. However, these default configurations might not be suitable for every organization's specific needs. As a result, it is crucial to modify the default configuration in WSO2 MI to optimize its performance and ensure compatibility with an organization's systems and applications.
 
-To modify the default configurations in WSO2 MI, users can apply their desired configurations in the instances that runs
-on the Choreo. To add new configurations, users need to define a `deployment.toml` file in the project sub-path.
-Similar to configuring MI locally, users can apply configuration changes in the `deployment.toml`. However, it's
-essential to apply only the required changes to avoid breaking the internal communication. It's worth noting that
-changing default configurations like port offset, hostname, and other critical settings might break the internal
-communication. Therefore, it's advisable to avoid modifying them unless it's necessary.
+To customize the default configurations in WSO2 MI, users can apply their desired configurations to the instances running on Choreo. To add new configurations, users need to define a `deployment.toml` file in the project sub-path. Similar to configuring MI locally, users can apply configuration changes in the `deployment.toml` file. However, it is essential to apply only the required changes to avoid disrupting internal communication. It's worth noting that altering default configurations such as port offset, hostname, and other critical settings might break internal communication. Therefore, it's advisable to avoid modifying them unless necessary.
 
 Below is a sample `deployment.toml` configuration for configuring JMS transport. Refer to
 the [MI Config Catalog](https://apim.docs.wso2.com/en/latest/reference/config-catalog-mi/) for more information about configuring the Micro Integrator.
