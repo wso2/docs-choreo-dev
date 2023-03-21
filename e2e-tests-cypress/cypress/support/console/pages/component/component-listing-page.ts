@@ -68,7 +68,7 @@ export class ComponentListingPage {
     }
   
   static visitToAComponent(componentName: string) {
-    cy.get('[data-testid="main-left-nav-item-Project"]')
+    cy.get('[data-testid="main-left-nav-item-Components"]')
       .should("be.visible")
       .click();
     cy.get("tr p").contains(componentName).should("be.visible").click();

@@ -30,6 +30,10 @@ export class ChoreoHomePage {
         cy.get('[data-testid="main-left-nav-item-Project"]').click();
     }
 
+    static navigateToComponents(){
+        cy.get('[data-testid="main-left-nav-item-Components"]').click()
+    }
+
     static navigateToInsights() {
         cy.get('[data-testid="main-left-nav-item-Insights"]').click();
     }

@@ -62,7 +62,7 @@ export class GraphQL {
         })
 
         ChoreoHomePage.navigateToMarketPlace();
-        ChoreoHomePage.navigateToProjects();
+        ChoreoHomePage.navigateToComponents();
         cy.get("tbody>tr p").should("be.visible");
         return cy.wrap({})
     }
