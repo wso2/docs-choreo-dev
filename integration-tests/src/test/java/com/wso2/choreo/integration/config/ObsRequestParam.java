@@ -11,6 +11,8 @@ public class ObsRequestParam {
     private String endTime;
     private String releaseId;
     private String namespace;
+    private String interval;
+    private String region;
     private String sort;
     private String limit;
     private String bin;
