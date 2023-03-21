@@ -369,8 +369,12 @@ position: relative;
     border: 1px solid gray;
 }
 
-
-
+.cInlineImage-70 {
+    display: inline-block;
+    text-align: center;
+    width:70%;
+    border: 1px solid gray;
+}
 .cInlineImage-half {
     display: inline-block;
     text-align: center;
