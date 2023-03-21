@@ -38,27 +38,27 @@ Let's get started!
 Our sample application has several key files that we need to know before going ahead with the tutorial. Following table gives a brief overview of the important files in our greeter service.
 
 !!! Note
-Following filepaths are relative to the path `<sample-repository-dir>/go/greeter`
+    Following filepaths are relative to the path `<sample-repository-dir>/go/greeter`
 
-| Filepath | Description |
-| -------- | ----------- |
-| main.go | Greeter service code written in Go language |
-| Dockerfile | Dockerfile used by Choreo to build the container image of the application |
-| .choreo/endpoints.yaml | Provides information about the service port, API contract, protocol used etc. |
-| openapi.yaml | OpenAPI contract of the greeter service. This is needed when we want to publish our service as a managed API. This openapi.yaml file is referenced by the `.choreo/endpoints.yaml` |
+| Filepath               | Description                                                                                                                                                                        |
+|------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| main.go                | Greeter service code written in Go language                                                                                                                                        |
+| Dockerfile             | Dockerfile used by Choreo to build the container image of the application                                                                                                          |
+| .choreo/endpoints.yaml | Provides information about the service port, API contract, protocol used etc.                                                                                                      |
+| openapi.yaml           | OpenAPI contract of the greeter service. This is needed when we want to publish our service as a managed API. This openapi.yaml file is referenced by the `.choreo/endpoints.yaml` |
 
 ## Create a service component from a Dockerfile
 
 Let's create a containerized service component by following these steps:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
-2. Create a project to add the service component. You can follow the instructions under [Prerequisites in the Connect Your Own GitHub Repository to Choreo](../develop/manage-repository/connect-your-own-github-repository-to-choreo.md#prerequisites-create-a-project) tutorial.
+2. Create a project to add the service component. You can follow the instructions under [Prerequisites in the Connect Your Own GitHub Repository to Choreo](../../develop/manage-repository/connect-your-own-github-repository-to-choreo.md#prerequisites-create-a-project) tutorial.
 3. On the **Components** page, click **Create** on the **Service** card.
 4. Enter a unique name and a description for the service. For this tutorial, let's enter the following values:
-
-    | **Field** | **Value** |
-    | ----- | ----- |
-    | **Name** | `Greetings` |
+    
+    | **Field**       | **Value**         |
+    |-----------------|-------------------|
+    | **Name**        | `Greetings`       |
     | **Description** | `Sends greetings` |
 
     Click <strong>Next</strong>.
@@ -123,15 +123,15 @@ To build and deploy the service, follow these steps:
 
 You can test, manage, and observe the service you created from a Dockerfile the sameway you would do with any other component type.
 
-For detailed instructions, see the following sections of the [Create Your First REST API tutorial](../get-started/tutorials/create-your-first-rest-api.md).
+For detailed instructions, see the following sections of the [Create Your First REST API tutorial](../tutorials/create-your-first-rest-api.md).
 
-* [Step 3: Test](../get-started/tutorials/create-your-first-rest-api.md#step-3-test)
-* [Step 4: Manage](../get-started/tutorials/create-your-first-rest-api.md#step-4-manage)
+* [Step 3: Test](../tutorials/create-your-first-rest-api.md#step-3-test)
+* [Step 4: Manage](../tutorials/create-your-first-rest-api.md#step-4-manage)
 
 ## Manage the deployment
 
 If you want to view Kubernetes-level insights to carry out a more detailed diagnosis of this Dockerfile-based REST API, click **DevOps Portal** in the top menu.
 
-![Access DevOps Portal](../assets/img/byoc/access-devops-portal.png){.cInlineImage-small}
+![Access DevOps Portal](../../assets/img/byoc/access-devops-portal.png){.cInlineImage-small}
 
-For more information about the information, see [DevOps Portal](../devops/devops-portal.md).
+For more information about the information, see [DevOps Portal](../../devops/devops-portal.md).
