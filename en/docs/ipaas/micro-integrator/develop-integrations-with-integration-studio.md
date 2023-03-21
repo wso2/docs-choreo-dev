@@ -57,10 +57,7 @@ During deployment, Choreo performs a Trivy scan to detect critical vulnerabiliti
 
 ## Configuring Micro Integrator
 
-By default, WSO2 MI comes with a set of pre-configured settings that are designed to work in a general context. However,
-these default configurations may not be suitable for every organization's specific needs. Therefore, it is important to
-change the default configuration in WSO2 MI to optimize its performance and ensure its compatibility with the
-organization's systems and applications.
+WSO2 MI comes with a set of pre-configured settings by default, designed to work in a general context. However, these default configurations might not be suitable for every organization's specific needs. As a result, it is crucial to modify the default configuration in WSO2 MI to optimize its performance and ensure compatibility with an organization's systems and applications.
 
 To modify the default configurations in WSO2 MI, users can apply their desired configurations in the instances that runs
 on the Choreo. To add new configurations, users need to define a `deployment.toml` file in the project sub-path.
