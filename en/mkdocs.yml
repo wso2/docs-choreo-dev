@@ -78,6 +78,13 @@ nav:
   - Deploy: 
       - Deploy Your Choreo Component: deploy/deploy-your-component.md
       - Deploy a Containerized Component: deploy/deploy-a-containerized-choreo-component.md
+      - DevOps: 
+          - Runtime: deploy/devops/runtime.md
+          - Containers: deploy/devops/containers.md
+          - Configurations and Secrets: deploy/devops/configs-and-secrets.md
+          - Health Checks: deploy/devops/health-checks.md
+          - Scaling: deploy/devops/scaling.md
+          - Storage: deploy/devops/storage.md
   - Test: 
       - OpenAPI Console: test/open-api-console.md
       - cURL: test/curl.md
@@ -106,7 +113,6 @@ nav:
               - Configure CIO Dashboard: observe-and-analyze/analyze/dora-metrics/configure-cio-dashboard.md
               - View DORA Metrics: observe-and-analyze/analyze/dora-metrics/view-dora-metrics.md
   - Alerts: alerts.md
-  - DevOps: devops/devops-portal.md
   - iPaaS:
       - Getting Started: ipaas/get-started-with-choreo-ipaas.md
       - Ballerina:
@@ -181,7 +187,6 @@ plugins:
           'developer-portal/manage-application.md': 'https://wso2.com/choreo/docs/consume/manage-application/'
           'developer-portal/manage-subscription.md': 'https://wso2.com/choreo/docs/consume/manage-subscription/'
           'developer-portal/test-api.md': 'https://wso2.com/choreo/docs/consume/test-api/'
-          'devops-portal.md': 'https://wso2.com/choreo/docs/devops/devops-portal/'
           'insights/view-api-insights.md': 'https://wso2.com/choreo/docs/observe-and-analyze/analyze/view-api-insights/'
           'insights/generate-custom-reports.md': 'https://wso2.com/choreo/docs/observe-and-analyze/analyze/generate-custom-reports/'
           'insights/configure-alerts.md': 'https://wso2.com/choreo/docs/observe-and-analyze/analyze/configure-alerts/'

@@ -87,7 +87,7 @@ Let's add a containerized REST API component by following these steps:
     - If you want to make changes to the build configurations you previously defined, follow these steps:<br/> 1. Click the **Build Configurations** card in the **Build Area** section.<br/> 2. Make the required changes in the **Build Configurations** pane.<br/> 3. Click **Save**.<br/>
           ![Update build configurations](../assets/img/byoc/update-build-configurations.png){.cInlineImage-threeQuarter}<br/><br/>
         
-    - When you create a Ballerina component, Choreo will allow you to develop it and define variables for which you can provide values when you deploy it. However, when you bring your own non-Ballerina component, the system runs the build via the Dockerfile. If you want to define configurable values before deploying, you can configure them in the DevOps Portal. For more information, see [DevOps Portal - Configurations and secrets](../devops/devops-portal.md#configurations-and-secrets)
+    - When you create a Ballerina component, Choreo will allow you to develop it and define variables for which you can provide values when you deploy it. However, when you bring your own non-Ballerina component, the system runs the build via the Dockerfile. If you want to define configurable values before deploying, you can configure them in the Configs and Secrets section under the Deploy view. For more information, see [managing configurations and secrets](./devops/configs-and-secrets.md)
 
 You have successfully added a Dockerfile-based REST API component from a Dockerfile. Now let's build and deploy it.
 
@@ -124,8 +124,5 @@ For detailed instructions, see the following sections of the [Create Your First 
 
 ## Step 3: Manage the deployment
 
-If you want to view Kubernetes-level insights to carry out a more detailed diagnosis of this Dockerfile-based REST API, click **DevOps Portal** in the top menu.
+If you want to view Kubernetes-level insights to carry out a more detailed diagnosis of this Dockerfile-based REST API, see [Runtime documentation](./devops/runtime.md).
 
-![Access DevOps Portal](../assets/img/byoc/access-devops-portal.png){.cInlineImage-small}
-
-For more information about the information, see [DevOps Portal](../devops/devops-portal.md).
