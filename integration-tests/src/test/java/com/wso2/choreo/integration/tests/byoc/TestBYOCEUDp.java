@@ -92,7 +92,7 @@ public class TestBYOCEUDp extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"promote_TestBYOCEUDataPlane"})
     @CitrusTest
-    public void invokeAPIInDev_TestBYOCEUDataPlane() {
+    public void invokeAPIInDev_TestBYOCEUDataPlane() throws Exception {
         keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken, apiId);
         String expectedResponse = TestHelper.getExpectedResponse();
         ComponentUtils.invokeApiGET(this, keyData.getApikey(), devInvokeURL, "/movies", expectedResponse);
@@ -100,7 +100,7 @@ public class TestBYOCEUDp extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"invokeAPIInDev_TestBYOCEUDataPlane"})
     @CitrusTest
-    public void invokeAPIProd_TestBYOCEUDataPlane() {
+    public void invokeAPIProd_TestBYOCEUDataPlane() throws Exception {
         String expectedResponse = TestHelper.getExpectedResponse();
         ComponentUtils.invokeApiGET(this, keyData.getApikey(), prodInvokeURL, "/movies", expectedResponse);
     }

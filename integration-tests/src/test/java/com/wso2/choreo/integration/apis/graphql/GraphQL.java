@@ -18,8 +18,6 @@ import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
@@ -330,7 +328,7 @@ public class GraphQL extends ControlPlaneAPI {
     
     public static Environment[] getNamespaceForEnvironment(String projectId, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().orgUuid(ORG_UUID).projectId(projectId).build();
-        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentObservabilityEnvironmentInformation.mustache", dto);
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getEnvironments.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         return ObjectMapperUtil.mapToCollection(Environment[].class, response.getRes(), "environments");
     }
@@ -351,7 +349,7 @@ public class GraphQL extends ControlPlaneAPI {
 
     public static ObservabilityIdInformation getComponentObservabilityIdForReleaseId(String releaseId, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().releaseId(releaseId).build();
-        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentObservabilityIds.mustache", dto);
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getObservabilityIds.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         return Arrays.
                 stream(ObjectMapperUtil.mapToCollection(ObservabilityIdInformation[].class,
@@ -821,5 +819,73 @@ public class GraphQL extends ControlPlaneAPI {
                 .type(MessageType.JSON)
                 .body(new ClassPathResource("templates/deploy/stop_deployment_success.json"))
                 .validate(json()));
+    }
+
+    public static List<Environment> getEnvironments(TestActionRunner runner, HttpClient client, String accessToken,
+                                       GraphqlDTO graphqlDTO) throws IOException {
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/getEnvironments.mustache", graphqlDTO);
+
+        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        List<Environment> environments = new ArrayList<>();
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate((message, context) -> {
+                    Environment[] envArray = ObjectMapperUtil.mapToCollection(Environment[].class,
+                            message.getPayload(String.class), "environments");
+                    environments.addAll(List.of(envArray));
+                }));
+
+        return environments;
+    }
+
+    public static List<ObservabilityIdInformation> getObservabilityIds(TestActionRunner runner, HttpClient client, String accessToken,
+                                                    GraphqlDTO graphqlDTO) throws IOException {
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/getObservabilityIds.mustache", graphqlDTO);
+
+        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        List<ObservabilityIdInformation> observabilityIds = new ArrayList<>();
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate((message, context) -> {
+                    ObservabilityIdInformation[] observerbilityIdArray = ObjectMapperUtil.mapToCollection(ObservabilityIdInformation[].class,
+                            message.getPayload(String.class), "observerbilityIds");
+                    observabilityIds.addAll(List.of(observerbilityIdArray));
+                }));
+
+        return observabilityIds;
     }
 }
