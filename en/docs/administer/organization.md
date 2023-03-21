@@ -17,19 +17,19 @@ The organization admin can invite members by assigning them roles in the organiz
 Choreo roles are defined as follows:
 
 
-- **API Publisher**: An API Publisher can discover, create, publish, delete, test, and manage an API.
+- **API Publisher**: An API publisher can discover, create, publish, delete, test, and manage an API.
 
-- **API Subscriber**:  An API Subscriber is a developer in a particular organization. An API subscriber can subscribe to an application, manage subscriptions, manage applications, generate API keys, and manage API keys.
+- **API Subscriber**:  An API subscriber is a developer in a particular organization. An API subscriber can subscribe to an application, manage subscriptions, manage applications, generate API keys, and manage API keys.
 
-- **Admin**: An admin is responsible for all administration tasks, including IDP creation, user management, customizing the dev portal, managing projects, enabling analytics, managing domains, etc.
+- **Admin**: An admin is responsible for all administration tasks, including IdP creation, user management, customizing the Developer Portal, managing projects, enabling analytics, managing domains, etc.
 
 - **Billing Admin**:  Is responsible for billing administration that includes viewing tiers, creating and viewing organizations, managing invoices, viewing and creating subscriptions, and viewing and creating payment methods. 
 
-- **Developer**: A Developer focuses on developing components and solutions in Choreo. Developers can create, build, test, and manage any component type in Choreo: API, services, triggers, scheduled jobs, and Webhooks. 
+- **Developer**: A user with a developer role focuses on developing components and solutions in Choreo. Developers can create, build, test, and manage any component type in Choreo: API, services, triggers, scheduled jobs, and Webhooks. 
 
 - **Env Manager**: Manages deployment environments. 
 
-- **External API Subscriber**: External API Subscribers are API consumers who have access only to the API Developer Portal. They join an organization with the sole purpose of consuming APIs. 
+- **External API Subscriber**: External API subscribers are API consumers who have access only to the API Developer Portal. They join an organization with the sole purpose of consuming APIs. 
 
 
 ## Theme preference

@@ -1,6 +1,6 @@
 # Manage Connectors 
 
-A connector in Choreo is a component you or another party have:
+A connector in Choreo lets you connect to various datasources and integrations. Choreo connectors can take on any of the following forms:
 
 1. Designed and developed in Choreo.
 2. Exposed as an API in Choreo. 
@@ -9,6 +9,7 @@ A connector in Choreo is a component you or another party have:
 A connector lets you share your APIs privately or publicly, promoting the reuse of APIs. Developers can use them when they implement their components. 
 
 ## Use a connector in your component design
+
 When you implement your components in Ballerina using the [Choreo VS code extension](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo), you can search and add the connectors displayed in the Marketplace as follows:
 
 1. Open the component you are designing in the VS code editor and add a connector.
