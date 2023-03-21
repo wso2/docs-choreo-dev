@@ -1,10 +1,10 @@
 {
     "ignorePatterns": [
       {
-        "pattern": "^http:\/\/localhost*" 
+        "pattern": "^http://localhost*" 
       },
       { 
-        "pattern": "^https:\/\/choreocontrolplane.choreo.dev\/93tu\/insights\/1.0.0\/query-api" 
+        "pattern": "^https://choreocontrolplane.choreo.dev/93tu/insights/1.0.0/query-api" 
       }
     ]
 }
