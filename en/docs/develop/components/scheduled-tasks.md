@@ -2,7 +2,7 @@
 
 Learn how to use scheduled triggers to execute routine tasks at specified time intervals.
 
-## What is a scheduled Trigger?
+## What is a scheduled trigger?
 
 A scheduled trigger performs a routine action at scheduled time intervals. Following are examples of scenarios where you can schedule tasks:
 

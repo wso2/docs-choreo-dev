@@ -99,7 +99,7 @@ Bring your own identity to Choreo by configuring a federated enterprise IdP on A
 You are all set! Your users in the enterprise IdP can now log into the Choreo Console using their user credentials.
 
 
-## Role-based access control for Enterprise login
+## Role-based access control for enterprise login
 
 Choreo allows you to configure your users residing in an external IDP (Identity Provider) to log in to Choreo with appropriate permissions seamlessly based on their role.
 
@@ -136,15 +136,15 @@ Follow the steps below to configure role-based access control to an enterprise l
 
          ![Add attribute](../assets/img/administration/configure-enterprise-login/new-attribute.png){.cInlineImage-half}
 
-### Step 2: Map Asgardeo groups to Choreo Roles in the Choreo Console 
+### Step 2: Map Asgardeo groups to Choreo roles in the Choreo Console 
 
 !!! note
     1. This configuration can be done only if Asgardeo is your Key Manager.
     2.This configuration can be done only by the **organization Admin**.
     3. The Choreo organization admin should add the group role mapping entry for the Admin role to enable the external enterprise organization Admin to access this page.
 
-1. Log in to the Choreo console.
-2. From the left navigation menu, click **Settings**.
+1. Sign in to the Choreo console.
+2. In the left navigation menu, click **Settings**.
 3. Click **Organization** -> **Role Mapping** 
 4. To add a new group role mapping, click **Add Mapping**. 
 
