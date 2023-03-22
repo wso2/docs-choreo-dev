@@ -1967,8 +1967,14 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Ma
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Users','choreo:user_manage','ACCOUNT-MANAGE','Add and remove users');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Roles','choreo:role_manage','ACCOUNT-MANAGE','Create, update and delete roles');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Organization','choreo:organization_manage','ACCOUNT-MANAGE','Create, update and delete organization');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Groups','urn:choreocontrolplane:groupmanagement:role_mapping_manage','ACCOUNT-MANAGE','Create, Edit and Delete Group role mappings');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Groups','urn:choreocontrolplane:groupmanagement:role_mapping_view','ACCOUNT-MANAGE','View Group role mappings');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Global Configs','urn:choreocontrolplane:configmanagement:global_config_manage','CONFIGURATIONS-MANAGEMENT','Create, Edit and Delete Global Configs');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Global Configs','urn:choreocontrolplane:configmanagement:global_config_view','CONFIGURATIONS-MANAGEMENT','View Global Configs');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Global Configs','urn:choreocontrolplane:configmanagement:global_config_create','CONFIGURATIONS-MANAGEMENT','Create Global Configs');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Global Configs','urn:choreocontrolplane:configmanagement:global_config_delete','CONFIGURATIONS-MANAGEMENT','Delete Global Configs');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Global Configs','urn:choreocontrolplane:configmanagement:global_config_update','CONFIGURATIONS-MANAGEMENT','Update Global Configs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Configs','urn:choreocontrolplane:configmanagement:config_manage','CONFIGURATIONS-MANAGEMENT','Create, Edit and Delete Configs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Configs','urn:choreocontrolplane:configmanagement:config_view','CONFIGURATIONS-MANAGEMENT','View Configs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Configs','urn:choreocontrolplane:configmanagement:config_create','CONFIGURATIONS-MANAGEMENT','Create Configs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Configs','urn:choreocontrolplane:configmanagement:config_delete','CONFIGURATIONS-MANAGEMENT','Delete Configs');
