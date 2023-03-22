@@ -53,7 +53,7 @@ First, let's add a Webhook component as follows:
       
 ### Step 1.2: Design the webhook
 
-Designing a webhook involves specifying how the webhook should function by adding and configuring the required connectors and statements. You can do this by editing the low-code diagram of the Webhookor by editing its code.
+Designing a webhook involves specifying how the webhook should function by adding and configuring the required connectors and statements. You can do this by editing the low-code diagram of the Webhookor by editing its code in the  [Choreo VS code extension](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo).
 
 You can implement your webhook in Ballerina or any other language and containerize it. You can use the [Ballerina VS code extension](https://ballerina.io/downloads/) to develop the webhook in Ballerina. [Learn more](https://wso2.com/ballerina/vscode/docs/).
 

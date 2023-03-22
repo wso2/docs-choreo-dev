@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Choreo is a Digital Platform as a Service that helps you develop integration solutions faster by reducing the coding effort with a low-code development platform. 
+Choreo is a Digital Platform as a Service that helps you develop cloud-native applications by focusing on innovation and increasing developer productivity. 
 
 The pricing for your Choreo deployment is mainly determined based on the following: 
 
