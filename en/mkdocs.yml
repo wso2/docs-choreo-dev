@@ -81,10 +81,10 @@ nav:
       - Ballerina Application: deploy/ballerina-application.md
       - Containerized Application: deploy/containerized-application.md
   - Test: 
+      - Invoke APIs via Console: test/invoke-apis-via-console.md
       - OpenAPI Console: test/open-api-console.md
       - cURL: test/curl.md
       - GraphQL Console: test/graphql-console.md
-      - Console: test/console.md
   - Manage:
       - API Management: manage/api-management.md
       - Lifecycle: manage/lifecycle.md

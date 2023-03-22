@@ -1,7 +1,7 @@
 # Open API Console
 
 !!! note
-    The OpenAPI Console will be deprecated in the future. We recommend using the Service component and [Test Console](../test/console.md) to test your Service APIs.
+    The REST Component will be deprecated in the future. We recommend using the Service component and [Test Console](../test/invoke-apis-via-console.md#rest-endpoints) to test your REST APIs.
 
 Choreo allows you to test your APIs using the integrated OpenAPI Console, the generated cURL command, or by integrating Postman to Choreo. Once you have created an API and deployed it, it is ready to be tested. 
 
