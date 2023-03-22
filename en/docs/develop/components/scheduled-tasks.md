@@ -1,10 +1,16 @@
 # Scheduled Triggers
 
-Learn how to use scheduled triggers to execute routine tasks at specified time intervals.
+Scheduled triggers are a crucial component that enable developers to automate their workflows by executing specific actions at predetermined intervals.
 
 ## What is a scheduled trigger?
 
-A scheduled trigger performs a routine action at scheduled time intervals. Following are sample scenarios where you can use scheduled triggers:
+Scheduled triggers in Choreo work by invoking a predefined function or set of functions at a specified time, allowing developers to automate tasks such as data backups, system maintenance, or updates.
+
+Scheduled triggers can be configured to run on a recurring basis, such as daily, weekly, or monthly, or they can be set to execute at a specific time and date. This flexibility makes them an essential tool for managing complex applications with multiple components that need to be synchronized.
+
+Scheduled triggers automate repetitive tasks, which reduces workload and frees up time for more strategic projects. They also ensure timely and efficient execution of critical tasks and reduce the risk of human error, minimizing downtime in fast-paced business environments.
+
+Following are sample scenarios where you can use scheduled triggers:
 
 - Logging a session time-out message for a user at a specific time interval
 
