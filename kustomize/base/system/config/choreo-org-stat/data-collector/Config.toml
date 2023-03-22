@@ -1,0 +1,34 @@
+[subscription]
+host = "{{.MSSQL_HOST}}"
+user = "choreo_subscriptions_db_user"
+password_file_path = "/mnt/csi/secret-choreo-org-stat-data-collector/SUBSCRIPTION_PASSWORD"
+database = "choreo_subscriptions_db"
+port = 1433
+
+[deploymnent]
+host = "{{.MSSQL_HOST}}"
+user = "choreo_rudder_db_user"
+password_file_path = "/mnt/csi/secret-choreo-org-stat-data-collector/DEPLOYMENT_PASSWORD"
+database = "choreo_rudder_db"
+port = 1433
+
+[choreoStat]
+host = "{{.MSSQL_HOST}}"
+user = "choreo_org_stat_db_user"
+password_file_path = "/mnt/csi/secret-choreo-org-stat-data-collector/CHOREO_STAT_PASSWORD"
+database = "choreo_org_stat_db"
+port = 1433
+
+[components]
+host = "{{.COMPONENTS_HOST}}"
+user = "{{.COMPONENTS_USER}}"
+password_file_path = "/mnt/csi/secret-choreo-org-stat-data-collector/COMPONENTS_PASSWORD"
+database = "{{.COMPONENTS_DATABASE}}"
+port = 0
+
+[subscriptionQuery]
+payAGTierId = "01ebea43-be76-1d7a-b410-2d1b873c57af"
+enterpriseTierId = "01ec1f84-ce3d-122e-ac9b-f10c95fd72da"
+
+[script]
+dataDownload = true

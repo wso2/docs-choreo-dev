@@ -39,7 +39,7 @@ describe("API overview comment and rating scenario", () => {
 
   before(() => {
     LoginPage.login();
-    DevPortalHelper.createDeployHttpProxyComponent(API_Name);
+ 
   });
 
   after(() => {
@@ -47,6 +47,7 @@ describe("API overview comment and rating scenario", () => {
   });
 
   it("Test in devportal", () => {
+    DevPortalHelper.createDeployHttpProxyComponent(API_Name);
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.verifyAPIname().should("eq", API_Name);
     Apis.searchApiAndSelect(API_Name);

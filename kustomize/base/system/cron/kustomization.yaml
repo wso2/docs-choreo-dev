@@ -7,6 +7,10 @@ resources:
   - choreo-step-usage-publisher.yaml
   - program-cleaner.yaml
   - logs-archiver.yaml
-  - choreo-ai-lowcode-parser.yaml
   - choreo-userapps-image-deleter.yaml
   - cio-internal-metric-collector.yaml
+  - choreo-daily-usage-publisher.yaml
+  - choreo-monthly-usage-publisher.yaml
+  - choreo-daily-usage-publisher-dynamic-billing-cycle.yaml
+  - choreo-org-stat-data-collector.yaml
+  - choreo-org-stat-data-publisher.yaml

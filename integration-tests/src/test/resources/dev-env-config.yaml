@@ -1,3 +1,5 @@
+dps:
+  REGIONS: EU,US
 accountInfo:
   TEST_USER_EMAIL: choreo-integration-test-user-dev@wso2.com@carbon.super
   #TEST_USER_PASSWORD:
@@ -17,6 +19,7 @@ common:
   CHOREO_ENDPOINT: https://app.preview-dv.choreo.dev
   CHOREO_CP_PROJECTS_ENDPOINT: https://apis.preview-dv.choreo.dev/projects/1.0.0
   CHOREO_CP_GW_ENDPOINT: https://choreocontrolplane.preview-dv.choreo.dev
+  BAL_REGISTRY_URL: https://api.dev-central.ballerina.io/2.0/registry
   GITHUB_ENDPOINT: https://api.github.com
   GITHUB_ORG: choreo-test-apps
   #GITHUB_PAT:
@@ -48,3 +51,6 @@ anomalyDetection:
   #ANOMALY_DETECTION_TEST_USER_PASSWORD:
 themeManagement:
   THEME_ENDPOINT: https://apis.preview-dv.choreo.dev
+  CDN_THEME_ENDPOINT: https://choreodevdevportalcdn19.blob.core.windows.net/
+
+

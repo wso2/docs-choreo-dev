@@ -10,7 +10,7 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { MEDIUM_TIME_OUT } from "../../constants";
+
 
 export class ProductionKeys {
 
@@ -18,7 +18,7 @@ export class ProductionKeys {
         cy.get('[data-testid="oauth-key"]').click();
         cy.wait(2000);
         cy.get('[data-testid="generate-token-btn"]').should('not.exist');
-        cy.get('[data-testid="generate-oauth-key"]').click();
+        cy.get('[data-testid="generate-oauth-key"]').should("be.enabled").click();
         cy.get('[data-testid="generate-token-btn"]').should('exist');
         cy.wait(2000);
     }

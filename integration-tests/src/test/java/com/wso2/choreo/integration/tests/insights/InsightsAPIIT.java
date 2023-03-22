@@ -21,7 +21,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.exceptions.AddConfigurationsException;
 import com.wso2.choreo.integration.common.exceptions.ApiLifecycleChangeException;

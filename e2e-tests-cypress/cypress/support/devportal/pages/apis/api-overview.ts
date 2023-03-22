@@ -31,7 +31,7 @@ export class ApiOverview {
   static deleteComment(): void {
     cy.log("Deleting the comment");
     cy.get("table > tbody > tr:first").within(() => {
-      cy.get('[data-testid="btn-delete-comment"]').click({ force: true });
+      cy.get('[data-testid="btn-delete-comment"]',{timeout:180000}).should('be.visible').click({ force: true });
     });
     cy.get('[class="MuiPopover-root"]')
       .get("button")
@@ -47,7 +47,7 @@ export class ApiOverview {
 
   static openRatings(): void {
     cy.log("Opening the rating box");
-    cy.xpath("//P[contains(text(),'Rating')]//../../div/button").click();
+    cy.xpath("//P[contains(text(),'Rating')]//../../div/button",{timeout:100000}).click();
   }
 
   static addRatings(): void {

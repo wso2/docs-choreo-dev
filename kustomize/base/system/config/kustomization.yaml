@@ -3,10 +3,6 @@ configMapGenerator:
     behavior: create
     literals:
       - TEMP_DATA_DIR=/temp-data-dir/
-  - name: env-workspace-manager-shared # shared workspace-manager configs across environments
-    behavior: create
-    literals:
-      - WORKSPACE_BALLERINA_VERSION=swan-lake-beta3
   - name: cm-choreo-testbase-db
     behavior: create
     literals:
@@ -167,9 +163,9 @@ configMapGenerator:
       - ORG_REMOVER_RESULT_TOPIC=org-remover-result
       - MARKETING_CONSENT_APP_CLIENT_KEY=0S5JcJ6y3BAIvUuY_mJ6aqKBhfQa
       - APIM_TOKEN_EP=https://sts.choreo.dev/oauth2/token
-      - PARDOT_EP=go.pardot.com/l/142131/2021-11-01/9yzthx
-      - PARDOT_SVC_URL=https://60efab9a-6d2d-4518-9c9d-33e750c6e816-prod.e1-us-east-azure.choreoapis.dev/7g2z/wso2-pardot-form-handler/1.0.0/pardot/api/formhandle
-      - EMAIL_CONSENT_SVC_URL=https://60efab9a-6d2d-4518-9c9d-33e750c6e816-prod.e1-us-east-azure.choreoapis.dev/3qk2/gdpr-email-consent-check/1.0.0
+      - PARDOT_EP=2021-11-01/9yzthx
+      - PARDOT_SVC_URL=https://api.wso2.com/zyup/lead-form-handler/1.0.0/lead-form
+      - EMAIL_CONSENT_SVC_URL=https://api.wso2.com/zyup/gdpr-mailing-consent/1.0.0
   - name: cm-perf-analyzer
     behavior: create
     literals:
@@ -258,6 +254,7 @@ configMapGenerator:
       - ASB_DELETE_QUEUE_NAME=delete-manager
       - API_SERVER_URL=http://api-server
       - GCHAT_URL=https://chat.googleapis.com
+      - APP_SERVICE_URL=app-service:8080
   - name: cm-logsarchiver
     behavior: create
     literals:
@@ -268,6 +265,7 @@ configMapGenerator:
     literals:
       - RUDDER_URL=http://dp-rudder:80
       - SUBSCRIPTION_SERVICE_URL=subscriptions:9090
+      - DELETION_PERIOD_IN_MONTHS=3
   - name: cm-dp-rudder
     behavior: create
     literals:
@@ -314,21 +312,21 @@ configMapGenerator:
       - REACT_APP_AUTHENTICATOR_GITHUB=GithubAuthenticator
       - REACT_APP_AUTHENTICATOR_ANONYMOUS=OpenIDConnectAuthenticator
       - REACT_APP_AUTHENTICATOR_ENTERPRISE=EnterpriseIDPAuthenticator
-  - name: cm-workspace-manager-cp
-    behavior: create
-    literals:
-      - CSM_DB_NAME=choreo_codeserver_db
-      - CSM_DB_USERNAME=choreo_codeserver_db_user
   - name: cm-userapps-image-deleter
     behavior: create
     literals:
       - AZURE_TENANT_ID="da76d684-740f-4d94-8717-9d5fb21dd1f9"
       - AZURE_CLIENT_ID="08eae7d4-cdcb-400d-894e-b27d66419876"
       - RUDDER_HOST="http://dp-rudder:80"
-  - name: cm-file-lowcode-parser
+      - EMAIL_USER_SECRET_FILE_PATH="/mnt/csi/secret-userapps-image-deleter/EMAIL_USERNAME"
+      - EMAIL_PASSWORD_SECRET_FILE_PATH="/mnt/csi/secret-userapps-image-deleter/EMAIL_PASSWORD"
+  - name: cm-cdn-tlscert-synchronizer
     behavior: create
-    files:
-      - lowcode-parser/application.properties
+    literals:
+      - TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+      - TLS_KEY_PATH=/mnt/tls.key
+      - TLS_CERT_PATH=/mnt/tls.crt
+      - KEYVAULT_NAME=shared-fe-apps-cdn-60
   - name: cm-file-devops-portal-api
     behavior: create
     files:
@@ -353,6 +351,10 @@ configMapGenerator:
     behavior: create
     files:
       - cp-graphql/Config.toml
+  - name: cm-file-moesif-service
+    behavior: create
+    files:
+      - moesif-service/Config.toml
   - name: cm-file-sys-obsapi
     behavior: create
     files:
@@ -393,10 +395,6 @@ configMapGenerator:
     behavior: create
     files:
       - runtime/app-deployer.yaml
-  - name: cm-file-workspace-manager
-    behavior: create
-    files:
-      - runtime/workspace-manager.yaml
   - name: cm-file-step-enforcer
     behavior: create
     files:
@@ -427,6 +425,8 @@ configMapGenerator:
     behavior: create
     literals:
       - CIO_ADX_DB="cio-metrics"
+      - USER_SERVICE_ENDPOINT="http://app-service:8080"
+      - PROJECT_MANAGER_ENDPOINT="http://dp-project-manager:80"
   - name: cm-file-cio-event-collector
     behavior: create
     files:
@@ -439,3 +439,50 @@ configMapGenerator:
     behavior: create
     files:
       - cio-dashboard/query-api/Config.toml
+  - name: cm-file-cio-incident-configurator
+    behavior: create
+    files:
+      - cio-dashboard/incident-configurator/Config.toml
+  - name: cm-cio-incident-configurator
+    behavior: create
+    literals:
+      - RUDDER_URL="http://dp-rudder:80"
+      - CICD_URL="http://dp-cicd"
+      - USER_SERVICE_URL=http://app-service:8080
+      - MIZZEN_URL=http://dp-mizzen
+      - CLOUD_MANAGER_SERVICE_URL=http://dp-cloud-manager:80
+  - name: cm-file-crypto-key-service
+    behavior: create
+    files:
+      - crypto-key-service/Config.toml
+  - name: cm-file-choreo-metered-usage-handler
+    behavior: create
+    files:
+      - choreo-metered-usage-handler/Config.toml
+  - name: cm-choreo-metered-usage-handler-daily-publisher
+    behavior: create
+    literals:
+      - CHOREO_USAGE_HANDLER_CRONJOB_MODE="publisher"
+      - CHOREO_USAGE_PUBLISHING_FREQUENCY="daily"
+  - name: cm-choreo-metered-usage-handler-monthly-publisher
+    behavior: create
+    literals:
+      - CHOREO_USAGE_HANDLER_CRONJOB_MODE="publisher"
+      - CHOREO_USAGE_PUBLISHING_FREQUENCY="monthly"
+  - name: cm-choreo-metered-usage-handler-collector
+    behavior: create
+    literals:
+      - CHOREO_USAGE_HANDLER_CRONJOB_MODE="collector"
+  - name: cm-choreo-metered-usage-handler-daily-publisher-dynamic
+    behavior: create
+    literals:
+      - CHOREO_USAGE_HANDLER_CRONJOB_MODE="publisher"
+      - CHOREO_USAGE_PUBLISHING_FREQUENCY="dynamic-monthly"
+  - name: cm-file-choreo-org-stat-data-collector
+    behavior: create
+    files:
+      - choreo-org-stat/data-collector/Config.toml
+  - name: cm-file-choreo-org-stat-data-publisher
+    behavior: create
+    files:
+      - choreo-org-stat/data-publisher/application.properties

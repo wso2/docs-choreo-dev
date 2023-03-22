@@ -12,7 +12,6 @@
  */
 
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
@@ -20,13 +19,12 @@ import { SwaggerUI } from "../../../support/console/pages/component/UI-component
 import { Enums } from "../../../support/console/enums";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
-import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { GreetingSample } from "../../../support/console/pages/samples/greeting";
 import { Utils } from "../../../support/console/utils";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
 import { GitHub } from "../../../support/github/github";
+import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 
 describe("Create Greeting sample in Choreo", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
@@ -61,7 +59,7 @@ describe("Create Greeting sample in Choreo", () => {
       PROJECT_DESCRIPTION,
       Enums.Region.US
     );
-    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
   it("Verify component deployment", () => {
@@ -94,7 +92,7 @@ describe("Create Greeting sample in Choreo", () => {
     ComponentDeployPage.stopProdContainer();
   });
   it("Verify component deletion", () => {
-    ComponentOverviewPage.goBack();
+    ChoreoHomePage.navigateToProjects();
     ComponentListingPage.deleteComponent(COMPONENT_NAME);
   });
 });

@@ -16,21 +16,10 @@
 import { Utils } from "../../../utils";
 
 export class OrganizationComponent {
-  static invitationEmail = Cypress.env("invitationUserEmail");
+
 
   static navigateToMembers() {
     cy.get('[data-cyid="members"]').click();
-  }
-
-  static navigateToGroups() {
-    cy.get('[data-testid="/user-settings/organization/groups"]').click();
-    cy.wait(2000);
-  }
-
-  static navigateToCustomDomains() {
-    cy.get(
-      '[data-testid="/user-settings/organization/custom-domains"]'
-    ).click();
   }
 
   static navigateToRoles() {
@@ -93,7 +82,7 @@ export class OrganizationComponent {
 
   static deleteMember(email: string) {
     cy.contains("td", email).trigger("mouseover");
-    cy.get("tr>td>div>button").click();
+    cy.get("tr>td>div>button").click({ force: true });
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
       .contains("Delete")
       .click();
@@ -144,19 +133,6 @@ export class OrganizationComponent {
 
   static selectPendingInvitation() {
     cy.get('[data-cyid="pending-invitation"]').click();
-  }
-
-  static selectMembers() {
-    cy.get('data-testid="members"').click();
-  }
-
-  static deleteRecord(email: string) {
-    cy.contains("td", email).trigger("mouseover");
-    cy.get(
-      '[class="MuiButtonBase-root MuiIconButton-root sc-hKwDye iZMHze"]'
-    ).click();
-    cy.get("button > span > h5").should("be.visible");
-    cy.get("button > span > h5").contains("Delete").click();
   }
 
   private static addRoles(roles: string[]) {

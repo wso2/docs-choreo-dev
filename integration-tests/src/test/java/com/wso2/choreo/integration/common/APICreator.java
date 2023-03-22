@@ -28,7 +28,7 @@ import com.wso2.choreo.integration.models.requestheader.HeaderValues;
 import com.wso2.choreo.integration.models.response.ProxyResponse;
 import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
-import com.wso2.choreo.integration.models.testconfigs.TestConfigs;
+import com.wso2.choreo.integration.models.apimanager.KeyData;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -138,18 +138,19 @@ public class APICreator extends ControlPlaneAPI {
 
     }
 
-    public static Status promoteProxyAPI(String componentId, String versionId, String envId, String revisionId, String buildId, String apiId, String accessToken) throws IOException {
-        String url = PROXY_URI + componentId + "/versions/" + versionId + "/deploy?environmentId=" + envId + "&revisionId=" + revisionId + "&buildId=" + buildId + "&apiId=" + apiId + "&accessMode=external";
+
+
+    public static Status promoteProxyAPI(String componentId, String versionId, String fromEnv,String targetEnv,  String buildId,  String accessToken) throws IOException {
+        String url = PROXY_URI + componentId + "/versions/" + versionId + "/promote?fromEnv=" + fromEnv+"&targetEnv="+targetEnv +  "&buildId=" + buildId ;
         Response response = HttpClientUtil.httpPOST(url, "", accessToken, "");
         return ObjectMapperUtil.mapStringToObject(Status.class, response.getRes(), "");
     }
 
 
-
-    public static TestConfigs getAPIKey(String apiId, String accessToken) throws IOException {
+    public static KeyData getAPIKey(String apiId, String accessToken) throws IOException {
         String url = APIS_ENDPOINT + "/" + apiId + "/generate-key?organizationId=" + ORG_UUID;
         Response res = HttpClientUtil.httpPOST(url, "", accessToken, "");
-        return ObjectMapperUtil.mapStringToObject(TestConfigs.class, res.getRes(), "");
+        return ObjectMapperUtil.mapStringToObject(KeyData.class, res.getRes(), "");
     }
 
     public static DeploySettings deployRevision(String componentId, String versionId, String envId, String orgId,

@@ -1,0 +1,20 @@
+mutation{
+    createIntegrationComponent(
+        component: {
+            name: "{{apiName}}",
+            displayName: "{{displayName}}",
+            description: "",
+            orgId: {{orgId}},
+            orgHandler: "{{orgHandler}}",
+            projectId: "{{projectId}}",
+            labels: "",
+            componentType: "{{componentType}}",
+            accessibility: "external"
+            srcGitRepoUrl: "{{srcGitRepoUrl}}",
+            srcGitRepoBranch: "{{repositoryBranch}}"
+            repositorySubPath: "",
+            oasFilePath: "",
+            version: "1.0.0",
+        }){
+            id, organizationId, projectId, handle
+        }}

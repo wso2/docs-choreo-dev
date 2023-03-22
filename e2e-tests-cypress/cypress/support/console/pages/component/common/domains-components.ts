@@ -11,10 +11,10 @@
  * associated services.
  */
 
-import { Utils } from "../../../utils";
+
 
 export class DomainsComponents {
-  static keyName = Utils.generateKeyName("key");
+
 
   static navigateToDomainsSettings() {
     cy.get('[data-cy="/domains"]').click();

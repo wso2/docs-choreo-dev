@@ -68,11 +68,15 @@ spec:
             - name: config
               mountPath: /home/ballerina/Config.toml
               subPath: Config.toml
+            - name: tmp
+              mountPath: /tmp
       restartPolicy: Always
       volumes:
         - name: config
           configMap:
             name: cm-file-devops-portal-api
+        - name: tmp
+          emptyDir: {}
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:

@@ -1,6 +1,6 @@
 
 import { CurlData } from "../../../../interfaces/curl-data";
-import { Environment } from "../../enum/environment";
+import { Enums } from "../../../enums";
 
 
 
@@ -10,7 +10,7 @@ export class Curl {
     cy.get(`[data-testid="curl-${httpMethod.toLowerCase()}"]`).click();
   }
 
-  static addQueryParameter(parameters: object[]) {
+  static addQueryParameter(parameters: { key: string, value: string }[]) {
     cy.wait(1000);
     for (let i = 0; i < parameters.length; i++) {
       cy.get('[data-testid="add-btn"]').click().wait(1000);
@@ -20,13 +20,13 @@ export class Curl {
     }
   }
 
-  static selectCurlEnvironment(env: Environment) {
+  static selectCurlEnvironment(env: Enums.Environment) {
 
-    cy.get('[data-testid="env"]>div').click();
+    cy.get('[data-testid="env"]>div[role="button"]').click();
     cy.get('ul>li').contains(env).click();
   }
 
-  static selectEnvironment(env: Environment) {
+  static selectEnvironment(env: Enums.Environment) {
     cy.get('[data-cyid="select-env"]').click()
     cy.get('[data-cyid="item-env-name"]').contains(env).click()
   }
@@ -36,7 +36,7 @@ export class Curl {
     let curl: CurlData = {
       method: "",
       url: "",
-      headers: {"api-key":""}
+      headers: { "api-key": "" }
     }
     if (curlData) {
       curl.headers = curlData["headers"]
@@ -52,7 +52,7 @@ export class Curl {
         const url = arrayURL[1];
         const apiKey = arrayURL[4];
         const method = arrayURL[6];
-      
+
         curl.headers["api-key"] = apiKey
         curl.url = url
         curl.method = method

@@ -33,6 +33,7 @@ public class GraphqlDTO {
     private String apiId;
     private String srcGitRepoUrl;
     private String repositorySubPath;
+    private String oasFilePath;
     private String repositoryType;
     private String repositoryBranch;
     private String componentId;
@@ -42,6 +43,7 @@ public class GraphqlDTO {
     private String componentType;
     private String name;
     private String dockerfilePath;
+    private String dockerContext;
     private String environmentId;
     private String sha;
     private String message;
@@ -58,4 +60,6 @@ public class GraphqlDTO {
     private String releaseId;
     private String region;
     private String shaDate;
+    private String releaseIds;
+    private boolean enableCellDiagram;
 }

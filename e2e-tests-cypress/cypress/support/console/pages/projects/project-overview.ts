@@ -11,18 +11,32 @@
  * associated services.
  */
 
+import { AbsComponent } from "../../../interfaces/abs-component";
+import { GraphQLQueryBuilder } from "../../apis/gql-query-builder";
+import { GraphQL } from "../../apis/graphql";
 import { Utils } from "../../utils";
-import { RestAPIProxyTemplate } from "../templates/rest-api-proxy-temp";
-import { RestAPITemplate } from "../templates/rest-api-temp";
-import { TriggersTemplate } from "../templates/slackTrigger-creation-temp";
 
 export class ProjectOverviewPage {
-  static selectComponent(fileID) {
-    cy.get("td>div>p").contains(fileID).click();
-  }
 
-  static addNewComponent() {
-    cy.get(".MuiContainer-root button").click(); // Need to add a id for the Create button
+  static searchReuseComponent(componentData: AbsComponent, projectName: string = "Default Project") {
+
+    const REPO_NAME = Utils.generateComponentName("repo");
+    GraphQL.getProjects().then(res => {
+      const projects = res.projects
+      if (projects.length > 0) {
+        const project = projects.find(p => p.name === projectName)
+        GraphQL.getComponents(project.id).then(comps => {
+          if (comps.status === 200) {
+            const component = comps.components.find(c => c.displayName.trim() === componentData.componentName.trim())
+            if (component == undefined) {
+              GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
+            } else {
+              GraphQL.getComponentInfo(projectName, componentData.componentName)
+            }
+          }
+        })
+      }
+    })
   }
 
   static createHttpProxyAPI() {
@@ -55,10 +69,5 @@ export class ProjectOverviewPage {
 
   static addComponent() {
     cy.get('[data-cyid="create-component"]').click();
-  }
-
-  //Only used for Enterprise login TC
-  static addNewComponentEL() {
-    cy.get(".MuiContainer-root button").click({ multiple: true }); // Need to add a id for the Create button
   }
 }

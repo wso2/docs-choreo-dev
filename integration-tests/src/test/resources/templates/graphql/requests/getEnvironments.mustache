@@ -1,11 +1,16 @@
 query {
-environments(orgUuid:"{{orgUuid}}", type: "external",
-projectId:"{{projectId}}"
-){
-name,
-id,
-choreoEnv,
-vhost,
-apiEnvName,
-}
-}
+        environments(
+        orgUuid:"{{orgUuid}}",
+        projectId: "{{projectId}}"
+        ) {
+          organizationUuid,
+          orgShared,
+          name,
+          description,
+          id,
+          choreoEnv,
+          projectId,
+          promoteFrom,
+          namespace,
+        }
+      }

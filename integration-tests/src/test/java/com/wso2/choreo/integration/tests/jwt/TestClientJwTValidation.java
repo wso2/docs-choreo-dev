@@ -5,20 +5,17 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.consol.citrus.validation.json.JsonMessageValidationContext;
-import com.wso2.choreo.integration.apis.Orgs;
-import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
+import com.wso2.choreo.integration.common.ComponentFlavour;
+import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
-import com.wso2.choreo.integration.common.utils.FileUtil;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.models.GraphqlDTO;
-import com.wso2.choreo.integration.models.response.Response;
-import com.wso2.choreo.integration.models.componentstatus.Status;
-import com.wso2.choreo.integration.models.pullrequests.PullRequest;
+import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
@@ -27,92 +24,54 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.Date;
+import java.util.Map;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 
 public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
-
-
-
-    private String projectId;
-    private String repoName;
     private String accessToken;
+    private ChoreoProject project;
     private ChoreoComponent choreoComponent;
 
     private String devInvokeURL;
     @Autowired
     private HttpClient choreoTestClient;
 
+    @Autowired
+    Map<Endpoints, HttpClient> citrusClients;
+
     @BeforeClass
     public void setup_TestClientJwTValidation() throws Exception {
-        repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        ChoreoProject project = GraphQL.createProject(accessToken);
-        projectId = project.getId();
+        project = GraphQL.createProject(accessToken);
     }
 
 
     @Test
     @CitrusTest
-    public void createUserManagedComponentFor_TestClientJwTValidation() throws IOException {
+    public void createUserManagedComponentFor_TestClientJwTValidation() throws Exception {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        GitHub.initGitHubRepo(repoName, true, true, "nanoc");
-        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").srcGitRepoUrl(GitHub.getGitHubRepoUrl(repoName)).projectId(projectId).displayType(Constant.displayType.restAPI.name()).build();
-        choreoComponent = GraphQL.createUserManagedComponent(dto, accessToken);
+
+        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").
+                srcGitRepoUrl("https://github.com/choreo-test-apps/jwt-encoder").
+                projectId(project.getId()).displayType(Constant.displayType.restAPI.name()).build();
+        choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
+                ComponentFlavour.STANDARD);
         Assert.assertNotNull(choreoComponent.getId());
     }
 
     @Test(dependsOnMethods = {"createUserManagedComponentFor_TestClientJwTValidation"})
     @CitrusTest
-    public void createdComponentStatus_TestClientJwTValidation() throws UnexpectedResponseException {
-        Status status = Orgs.createdComponentStatus(projectId, choreoComponent.getId(), accessToken);
-        Assert.assertTrue(status.isSuccess());
+    public void deploy_TestClientJwTValidation() throws Exception {
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
+                accessToken, choreoComponent, ComponentFlavour.STANDARD);
+        devInvokeURL = statusDTO.getInvokeUrl();
     }
 
 
-
-    @Test(dependsOnMethods = {"createdComponentStatus_TestClientJwTValidation"})
-    @CitrusTest
-    public void mergeNewCode_TestClientJwTValidation() throws IOException {
-        String serviceBal = FileUtil.readFileEncodedContent("src/test/resources/templates/encodedbal/jwt/service.bal");
-        String balToml = FileUtil.readFileEncodedContent("src/test/resources/templates/encodedbal/jwt/Ballerina.toml");
-        GitHub.createNewFile(repoName, "service.bal", serviceBal);
-        GitHub.createNewFile(repoName, "Ballerina.toml", balToml);
-    }
-
-    @Test(dependsOnMethods = {"mergeNewCode_TestClientJwTValidation"})
-    @CitrusTest
-    public void componentRetrieval_TestClientJwTValidation() throws IOException {
-        choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandler(), accessToken);
-        Assert.assertNotNull(choreoComponent);
-    }
-
-    @Test(dependsOnMethods = {"componentRetrieval_TestClientJwTValidation"})
-    @CitrusTest
-    public void addDeploymentConfiguration_TestClientJwTValidation() throws Exception {
-        Orgs.getConfigurationMapping(choreoComponent,accessToken);
-        Orgs.addConfiguration(choreoComponent, "dev", accessToken);
-    }
-
-
-    @Test(dependsOnMethods = {"addDeploymentConfiguration_TestClientJwTValidation"})
-    @CitrusTest
-    public void deploymentStatusByVersion_TestClientJwTValidation() throws Exception {
-        GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
-    }
-
-
-    @Test(dependsOnMethods = {"deploymentStatusByVersion_TestClientJwTValidation"})
-    @CitrusTest
-    public void componentDevDeploymentStatus_TestClientJwTValidation() throws Exception {
-        devInvokeURL = GraphQL.componentDeployment(choreoComponent, Constant.DEV_ENVIRONMENT, accessToken).getInvokeUrl();
-    }
-
-
-    @Test(dependsOnMethods = {"componentDevDeploymentStatus_TestClientJwTValidation"})
+    @Test(dependsOnMethods = {"deploy_TestClientJwTValidation"})
     @CitrusTest
     public void invokeAPI_TestClientJwTValidation() throws Exception {
         String apiKey = APICreator.getAPIKey(choreoComponent.getApiId(), accessToken).getApikey();
@@ -135,22 +94,4 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
                 validate(JsonMessageValidationContext.Builder.json());
     }
 
-
-    @Test(dependsOnMethods = {"invokeAPI_TestClientJwTValidation"}, alwaysRun = true)
-    @CitrusTest
-    public void deleteComponent_TestClientJwTValidation() throws IOException {
-        Response response = GraphQL.deleteComponent(choreoComponent.getId(), projectId, accessToken);
-        ChoreoComponent[] components = GraphQL.getProjectComponents(projectId, accessToken);
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
-        Assert.assertEquals(components.length, 0);
-    }
-
-    @Test(dependsOnMethods = {"deleteComponent_TestClientJwTValidation"}, alwaysRun = true)
-    @CitrusTest
-    public void deleteRepo_TestClientJwTValidation() {
-        Response response = GitHub.deleteGitHubRepo(repoName);
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT.value());
-    }
-
 }
-

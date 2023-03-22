@@ -13,8 +13,8 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import lombok.Data;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -30,8 +30,8 @@ import java.util.Optional;
 @Data
 public class ChoreoProject {
 
-    private final static Logger log = LoggerFactory.getLogger(ChoreoProject.class);
-    private final static Gson gson = new Gson();
+    private static final Logger log = LogManager.getLogger(ChoreoProject.class);
+    private static final Gson gson = new Gson();
 
     private final HashMap<String, ChoreoComponent> componentMap = new HashMap<>();
     private String id;
@@ -63,6 +63,7 @@ public class ChoreoProject {
 
 
     private String getComponentsQuery() {
+
         return "query{" +
                 "      components(" +
                 "        orgHandler: \"" + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE) + "\"," +
@@ -161,6 +162,11 @@ public class ChoreoProject {
                 "        id, orgId, projectId, handler" +
                 "      }}";
     }
+
+
+
+
+
 
     public String getDeleteComponentMutation(String componentId) {
         return "mutation{ deleteComponentV2(" +

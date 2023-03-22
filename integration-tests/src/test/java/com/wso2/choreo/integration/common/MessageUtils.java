@@ -13,11 +13,13 @@
 
 package com.wso2.choreo.integration.common;
 
+import com.consol.citrus.message.Message;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -50,5 +52,11 @@ public class MessageUtils {
 
     public static String generateJson(Map<String, Object> keyValues) throws JsonProcessingException {
         return new ObjectMapper().writeValueAsString(keyValues);
+    }
+
+    public static void logCitrusResponse(Logger log, Message message) {
+        log.debug("================================================================================================");
+        log.debug("Received response payload << " + message.getPayload(String.class));
+        log.debug("================================================================================================");
     }
 }

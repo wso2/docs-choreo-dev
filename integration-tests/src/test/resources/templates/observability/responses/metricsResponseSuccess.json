@@ -1,0 +1,25 @@
+{
+  "columns": [
+    {
+      "name": "cpu",
+      "type": "dynamic"
+    },
+    {
+      "name": "memory",
+      "type": "dynamic"
+    },
+    {
+      "name": "cpuPercentage",
+      "type": "dynamic"
+    },
+    {
+      "name": "memoryPercentage",
+      "type": "dynamic"
+    },
+    {
+      "name": "TimeGenerated",
+      "type": "dynamic"
+    }
+  ],
+  "rows": "@ignore@"
+}

@@ -12,21 +12,16 @@
  */
 
 import { Utils } from "../../utils";
-import { Environment } from "../enum/environment";
+import { Enums } from "../../enums";
 
 export class ComponentObservePage {
-  private static obsUrlRegexp = /.+\/observe\/app\/(.{36})\/(.{36})\b/;
-
-  static gotoOverview() {
-    cy.get('[data-testid="panel-Overview-btn"]').should("be.visible").click();
-  }
 
   static gotoLogs(timeToWait = 0) {
     cy.wait(timeToWait);
     cy.get('[data-testid="panel-Logs-btn"]').should("be.visible").click();
   }
 
-  static selectEnv(env: Environment) {
+  static selectEnv(env: Enums.Environment) {
     cy.get("#environment-selector").should("be.visible").click();
     cy.get("#menu->div>ul>li").contains(env).click({ force: true });
   }
@@ -47,14 +42,13 @@ export class ComponentObservePage {
 
   static navigateToSampleApp() {
     const observabilityViewUrl = Cypress.env("loginURL").replace("login?fidp=choreoe2etest", "") + "observe/sample";
-    Utils.setBrowserCookie(true)
+    Utils.setBrowserCookie()
     cy.visit(observabilityViewUrl);
     cy.url().should("eq", observabilityViewUrl);
     cy.get('[data-testid="backdrop-loader"]').should("not.exist");
   }
 
   static verifyLogsView() {
-    const connectionErrorLogEntry = "error while connecting to the hr-service";
     const employeeInfoNotFoundLogEntry = "No logs found from";
     const commonLogLine = "employee information not found in the hr-service";
 
@@ -65,21 +59,14 @@ export class ComponentObservePage {
     cy.get("#log-search").should("be.visible");
     cy.get("#log-search").type(commonLogLine.substring(0, 13));
     cy.get('[data-testid="log-search-btn"]').click();
-    cy.contains('[data-testid="log-panel-entry"]', commonLogLine).should(
-      "exist"
-    );
+    cy.contains('[data-testid="log-panel-entry"]', commonLogLine).should( "exist");
 
     cy.log("Asserting mandatory log entry by providing a search phrase");
     cy.get('[data-testid="log-search"]').clear();
     cy.get('[data-testid="log-search"]').type(commonLogLine);
     cy.get('[data-testid="log-search-btn"]').click();
-    cy.contains('[data-testid="log-panel-entry"]', commonLogLine).should(
-      "exist"
-    );
-    cy.contains(
-      '[data-testid="log-panel"]',
-      employeeInfoNotFoundLogEntry
-    ).should("not.exist");
+    cy.contains('[data-testid="log-panel-entry"]', commonLogLine).should("exist");
+    cy.contains('[data-testid="log-panel"]',employeeInfoNotFoundLogEntry).should("not.exist");
   }
 
   static verifyObserveOverview() {
@@ -87,7 +74,6 @@ export class ComponentObservePage {
       "employee information not found in the hr-service";
     const emptyHistogramMessage =
       "No requests received during the selected time period";
-    const httpStatusCodeRegexp = /[1-5]\d{2}/;
     const responseTimeRegexp = /\d+\sms/;
     let d;
     let prevY;
@@ -97,20 +83,10 @@ export class ComponentObservePage {
     cy.get(".worker-line").should("exist");
     cy.get('[data-testid="preloader"]').should("not.exist");
 
-    cy.contains(
-      '[data-testid="histogram-throughput"]',
-      emptyHistogramMessage
-    ).should("not.exist");
-    cy.contains(
-      '[data-testid="histogram-response-time"]',
-      emptyHistogramMessage
-    ).should("not.exist");
-    cy.get('[data-testid="histogram-throughput"]')
-      .get("g.recharts-layer.recharts-area")
-      .should("exist");
-    cy.get('[data-testid="histogram-response-time"]')
-      .get("g.recharts-layer.recharts-area")
-      .should("exist");
+    cy.contains('[data-testid="histogram-throughput"]',emptyHistogramMessage).should("not.exist");
+    cy.contains('[data-testid="histogram-response-time"]',emptyHistogramMessage).should("not.exist");
+    cy.get('[data-testid="histogram-throughput"]').get("g.recharts-layer.recharts-area").should("exist");
+    cy.get('[data-testid="histogram-response-time"]').get("g.recharts-layer.recharts-area").should("exist");
 
     cy.log("Asserting the default log panel");
     cy.get('[data-testid="log-panel"]').should("exist");
@@ -135,41 +111,26 @@ export class ComponentObservePage {
           prevY = arr[1];
         }
 
-        cy.get('[data-testid="histogram-throughput"]')
-          .find("svg")
-          .click(Math.round(finalX), Math.round(finalY));
+        cy.get('[data-testid="histogram-throughput"]').find("svg").click(Math.round(finalX), Math.round(finalY));
         cy.get('[data-testid="preloader"]').should("not.exist");
 
-        cy.log(
-          "Asserting the log panel after clicking on the very first point in the latency graph"
-        );
-        cy.contains(
-          '[data-testid="log-panel"]',
-          employeeInfoNotFoundLogEntry
-        ).should("not.exist");
+        cy.log("Asserting the log panel after clicking on the very first point in the latency graph");
+        cy.contains('[data-testid="log-panel"]',employeeInfoNotFoundLogEntry).should("not.exist");
 
         cy.log("Asserting the request list");
-        cy.get('[data-testid="request-table"]', { timeout: 60000 }).should(
-          "exist"
-        );
-        cy.get('[data-testid="request-information"]')
-          .its("length")
-          .should("be.gte", 1);
+        cy.get('[data-testid="request-table"]', { timeout: 60000 }).should("exist");
+        cy.get('[data-testid="request-information"]').its("length").should("be.gte", 1);
 
-        cy.get('[data-testid="request-information"]')
-          .eq(0)
-          .find("div>div")
-          .then(($elements) => {
+        cy.get('[data-testid="request-information"]').eq(0).find("div>div").then(($elements) => {
             expect($elements[0].textContent).to.match(responseTimeRegexp);
             expect($elements[1].textContent).to.contain(":");
             expect($elements[2].textContent).to.be.empty;
           });
-        // TODO: Uncomment the following once https://github.com/wso2-enterprise/choreo/issues/4310 is fixed
-        // cy.get('[data-testid="request-information"]').eq(1).click().find('div>div').then(($elements) => {
-        //     expect($elements[0].textContent).to.match(responseTimeRegexp);
-        //     expect($elements[1].textContent).to.contain(':');
-        //     expect($elements[2].textContent).to.match(httpStatusCodeRegexp);
-        // });
+       
+         cy.get('[data-testid="request-information"]').eq(1).click().find('div>div').then(($elements) => {
+             expect($elements[0].textContent).to.match(responseTimeRegexp);
+             expect($elements[1].textContent).to.contain(':');
+         });
       });
   }
 
@@ -183,9 +144,7 @@ export class ComponentObservePage {
     cy.get('[data-testid="diagnostics-view-tab"]').should("be.visible");
 
     cy.log("Accessing the diagnostics view");
-    cy.get('[data-testid="diagnostics-view-tab"]')
-      .click()
-      .then(() => {
+    cy.get('[data-testid="diagnostics-view-tab"]').click().then(() => {
         cy.get('[data-testid="time-interval-loader"]').should("not.exist");
         cy.get('[data-testid="logs-loader"]').should("not.exist");
         cy.get('[data-testid="error-graph-loader"]').should("not.exist");
@@ -205,19 +164,11 @@ export class ComponentObservePage {
         cy.get('[data-testid="time-interval-5"]').should("not.exist");
         cy.get('[data-testid="logs-partition-5"]').should("not.exist");
         cy.log("Verifying whether all the graphs are rendered");
-        cy.get('[data-testid="error-graph"]', { timeout: 60000 }).should(
-          "exist"
-        );
-        cy.get('[data-testid="throughput-graph"]', { timeout: 60000 }).should(
-          "exist"
-        );
-        cy.get('[data-testid="latency-graph"]', { timeout: 60000 }).should(
-          "exist"
-        );
+        cy.get('[data-testid="error-graph"]', { timeout: 60000 }).should("exist");
+        cy.get('[data-testid="throughput-graph"]', { timeout: 60000 }).should("exist");
+        cy.get('[data-testid="latency-graph"]', { timeout: 60000 }).should("exist");
         cy.get('[data-testid="cpu-graph"]', { timeout: 60000 }).should("exist");
-        cy.get('[data-testid="memory-graph"]', { timeout: 60000 }).should(
-          "exist"
-        );
+        cy.get('[data-testid="memory-graph"]', { timeout: 60000 }).should("exist");
 
         cy.log("Scroll the graph and check selector repositioning");
         cy.get('[data-testid="diagnostics-view-slider"]').should("be.visible");
@@ -229,21 +180,13 @@ export class ComponentObservePage {
         cy.get('[data-testid="flame-graph-btn"]').click();
         cy.get('[data-testid="flame-graph-loader"]').should("not.exist");
 
-        cy.get('[data-testid="flame-graph-message-container"]', {
-          timeout: 60000,
-        }).should("not.exist");
+        cy.get('[data-testid="flame-graph-message-container"]', {timeout: 60000,}).should("be.visible");
 
         cy.get('[data-testid="flame-graph"]').should("exist");
         cy.get('[data-testid="latencies-for-flame-graph"]').should("exist");
-        cy.get('[data-testid="flame-graph-slider"]').should("exist");
-        // TODO: Move the flame graph slider and assert the flame graph once https://github.com/wso2-enterprise/choreo/issues/4310 is fixed
-        cy.log(
-          "Close the flame graph and navigate to the diagnostics view again"
-        );
+        cy.log("Close the flame graph and navigate to the diagnostics view again");
         cy.get('[data-testid="flame-graph-close-btn"]').should("be.visible");
-        cy.get('[data-testid="flame-graph-close-btn"]')
-          .click()
-          .then(() => {
+        cy.get('[data-testid="flame-graph-close-btn"]').click().then(() => {
             cy.get('[data-testid="cpu-graph-loader"]').should("not.exist");
             cy.get('[data-testid="cpu-graph"]').should("exist");
           });

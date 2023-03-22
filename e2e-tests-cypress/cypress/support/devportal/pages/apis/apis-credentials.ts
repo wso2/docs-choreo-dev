@@ -10,7 +10,6 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { MEDIUM_TIME_OUT, STANDARD_TIME_OUT } from "../../constants";
 
 export class ApiCredentials {
   static navigateCredentialsTab() {
@@ -26,14 +25,5 @@ export class ApiCredentials {
     cy.wait(3000);
     cy.get('[data-testid="generate-access-token-btn"]').should("exist");
     cy.log("Successfully generated credentials");
-  }
-
-  static removeCredentials() {
-    cy.log("Removing credentials");
-    cy.get('[data-testid="remove-creds-btn"]').click();
-    cy.get('[data-testid="remove-creds-confirmation-ok"]').click();
-    cy.wait(3000);
-    cy.get('[data-testid="generate-access-token-btn"]').should("not.exist");
-    cy.log("Successfully removed credentials");
   }
 }

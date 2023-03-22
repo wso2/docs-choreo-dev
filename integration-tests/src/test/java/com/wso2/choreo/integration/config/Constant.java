@@ -24,10 +24,11 @@ public final class Constant {
     public static final String SUBJECT_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:jwt";
     public static final String REQUESTED_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:jwt";
     public static final String OAUTH_SCOPES = "apim:admin apim:api_manage apim:api_publish apim:api_settings " +
-            "apim:dcr:app_manage apim:document_manage apim:publisher_settings apim:subscription_manage " +
-            "apim:subscription_view apim:tier_manage choreo:component_manage choreo:deployment_manage " +
-            "choreo:dev_env_manage choreo:prod_env_manage choreo:project_manage choreo:role_manage " +
-            "choreo:user_manage environments:view_dev environments:view_prod apim:environment_manage";
+            "apim:dcr:app_manage apim:document_manage apim:publisher_settings apim:subscribe " +
+            "apim:subscription_manage apim:subscription_view apim:tier_manage choreo:component_manage " +
+            "choreo:deployment_manage choreo:dev_env_manage choreo:prod_env_manage choreo:project_manage " +
+            "choreo:role_manage choreo:user_manage environments:view_dev environments:view_prod " +
+            "apim:environment_manage";
 
     public static final String GRAPHQL_ENDPOINT_SUFFIX = "/graphql";
     public static final String TEST_PROJECT_NAME_PREFIX = "automationtestproject";
@@ -39,6 +40,10 @@ public final class Constant {
 
     public static final String DEV_ENVIRONMENT = "dev";
     public static final String PROD_ENVIRONMENT = "prod";
+
+    public static final String INVOKE_URL = "invokeUrl";
+
+    public static final String API_ID = "apiId";
 
     public static final String USER_CONNECTORS_ENDPOINT_SUFFIX = "/user-connectors";
     public static final String GITHUB_URL = "https://github.com/";
@@ -88,7 +93,8 @@ public final class Constant {
 
     public enum  logType{
         groupedlogsV2,
-        logsV2
+        logsV2,
+        metricsV2
     }
     public enum displayType {
         restAPI,
@@ -122,11 +128,18 @@ public final class Constant {
     }
 
     // Observability related constants
-    public static final String OBSERVABILITY_LOGS_ENDPOINT_SUFFIX = "/observability/logging/0.1.0/applications/";
-    public static final String OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX = "/observability/system/0.1.0/applications/";
+    public static final String OBSERVABILITY_LOGS_ENDPOINT_SUFFIX = "/observability/logging/0.1.0/applications/loggingAPI";
+    public static final String OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX = "/observability/system/0.1.0/applications/sysObsAPI";
     public static final String OBSERVABILITY_OBS_ENDPOINT_SUFFIX = "/observability/application/0.1.0";
+
+    public static final String OBSERVABILITY_METRICS = "/metricsV2";
+
+    public static final String OBSERVABILITY_LOGS = "/logsV2";
+
+    public static final String OBSERVABILITY_ZIP_LOGS = "/logsV2/zip";
+
+    public static final String OBSERVABILITY_GROUP_LOGS = "/groupedlogsV2";
 
     // Theme management constants
     public static final String THEME_ENDPOINT_SUFFIX = "/org-mgt/1.0.0/orgs/";
-    public static final String CDN_THEME_ENDPOINT = "https://choreodevdevportalcdn19.blob.core.windows.net/";
 }

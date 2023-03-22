@@ -11,80 +11,71 @@
  * associated services.
  */
 
-import { Utils } from "../../../console/utils";
+import {Utils} from "../../../console/utils";
 
 export class DevPortalHomePage {
-  static username = "[data-testid=signedin-user-menu-btn]";
 
-  static navigateToHome(): void {
-    cy.get('[data-testid="main-left-nav-item-Home"]')
-      .should("be.visible")
-      .click();
-  }
 
-  static clickOnLoggedInUser(): void {
-    cy.get(this.username).click();
-  }
+    static logout(): void {
 
-  static logout(): void {
-    
-    cy.window()
-      .its("sessionStorage")
-      .invoke("getItem", "sign_out_url")
-      .then((url) => {
-        cy.request(url);
-      });
-  }
+        cy.window()
+            .its("sessionStorage")
+            .invoke("getItem", "sign_out_url")
+            .then((url) => {
+                cy.request(url);
+            });
+    }
 
-  static verifyDevportalHomePagePublicView(): void {
-    cy.get('[data-testid="applications-appbar-btn"]').should("not.exist");
-    cy.get('[data-testid="login-button"]').should("exist");
-    cy.get('[data-testid="home-appbar-btn"]').should("exist");
-    cy.log("Successfully navigated to public devportal home page");
-  }
+    static verifyDevportalHomePagePublicView(): void {
+        cy.get('[data-testid="applications-appbar-btn"]').should("not.exist");
+        cy.get('[data-testid="login-button"]').should("exist");
+        cy.get('[data-testid="home-appbar-btn"]').should("exist");
+        cy.log("Successfully navigated to public devportal home page");
+    }
 
-  static navigateToApisPage(): void {
-    cy.get("[data-testid=apis-appbar-btn]").should("be.visible").click();
-  }
+    static navigateToApisPage(): void {
+        cy.wait(5000)
+        cy.get("[data-testid=apis-appbar-btn]").click();
+    }
 
-  static navigateSelectAPI(apiName: string): void {
-    cy.get(`[data-testid="apiCard-${apiName}"`).click();
-  }
+    static navigateSelectAPI(apiName: string): void {
+        cy.get(`[data-testid="apiCard-${apiName}"`).click();
+    }
 
-  static navigateToPerApiView(apiName: string): void {
-    cy.wait(60000);
-    cy.reload();
-    cy.get('[data-testid="txt-api-name"]').should('be.visible').invoke('text').then(t=>{
-      expect(t).to.be.equal(apiName)
-    })
-  }
+    static navigateToPerApiView(apiName: string): void {
+        cy.wait(60000);
+        cy.reload();
+        cy.get('[data-testid="txt-api-name"]').should('be.visible').invoke('text').then(t => {
+            expect(t).to.be.equal(apiName)
+        })
+    }
 
-  static navigateToAppsPage() {
-    cy.get('[data-testid="applications-appbar-btn"]')
-      .should("be.visible")
-      .click();
-    this.interceptApplications();
-  }
+    static navigateToAppsPage() {
+        cy.get('[data-testid="applications-appbar-btn"]')
+            .should("be.visible")
+            .click();
+        this.interceptApplications();
+    }
 
-  private static interceptApplications() {
-    cy.intercept(
-      `${Cypress.env("apimSvcURL")}/api/am/devportal/v2/applications/?organizationId=*`
-    ).as("apps");
-    cy.wait("@apps", { timeout: 180000 }).then((intercept) => {
-      const orgId = intercept.request.url.split("organizationId=")[1];
+    private static interceptApplications() {
+        cy.intercept(
+            `${Cypress.env("apimSvcURL")}/api/am/devportal/v2/applications/?organizationId=*`
+        ).as("apps");
+        cy.wait("@apps", {timeout: 180000}).then((intercept) => {
+            const orgId = intercept.request.url.split("organizationId=")[1];
 
-      const header = intercept.request.headers.authorization;
-      const apps = intercept.response.body.list as [];
-      const headers = {
-        Authorization: `${header}`,
-      };
-      apps.forEach((app) => {
-        let appId = app["applicationId"];
-        Utils.sendDeleteRequest(
-          `${Cypress.env("apimSvcURL")}/api/am/devportal/v2/applications/${appId}?organizationId=${orgId}`,
-          headers
-        );
-      });
-    });
-  }
+            const header = intercept.request.headers.authorization;
+            const apps = intercept.response.body.list as [];
+            const headers = {
+                Authorization: `${header}`,
+            };
+            apps.forEach((app) => {
+                let appId = app["applicationId"];
+                Utils.sendDeleteRequest(
+                    `${Cypress.env("apimSvcURL")}/api/am/devportal/v2/applications/${appId}?organizationId=${orgId}`,
+                    headers
+                );
+            });
+        });
+    }
 }

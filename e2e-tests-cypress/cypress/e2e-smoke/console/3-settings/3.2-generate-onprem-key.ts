@@ -18,9 +18,6 @@ import { OnPremkeyComponent } from "../../../support/console/pages/component/com
 /// <reference types="cypress" />
 
 describe("Generate on-prem keys", () => {
-  const FILE_ID = "1.2-generate-onprem-key";
-
-
   before(()=>{
     LoginPage.login()
   })

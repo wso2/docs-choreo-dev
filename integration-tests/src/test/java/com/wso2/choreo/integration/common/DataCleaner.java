@@ -13,13 +13,15 @@
 
 package com.wso2.choreo.integration.common;
 
-import com.wso2.choreo.integration.apis.github.GitHub;
+import com.wso2.choreo.integration.apis.balregistry.BallerinaRegistry;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.config.Constant;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -27,11 +29,14 @@ import java.util.List;
  * Is responsible for cleaning up reoccurring data that is introduced by integration tests.
  */
 public class DataCleaner  {
-    private static final Logger log = LoggerFactory.getLogger(DataCleaner.class);
+    private static final Logger log = LogManager.getLogger(DataCleaner.class);
     private static final int hourInMilliseconds = 60 * 60 * 1000;
 
     public static void removeOldTestData(ChoreoOrganization org) throws Exception {
         TokenHandler tokenHandler = TestContext.getTestUserTokenHandler();
+
+        BallerinaRegistry.deleteOldConnectors(tokenHandler.getTestTokenForCPAPIs());
+
         List<ChoreoProject> projects = org.getProjects(tokenHandler.getTestTokenForCPAPIs());
 
         log.info("Total number of projects: " + projects.size());
@@ -58,12 +63,10 @@ public class DataCleaner  {
                 }
             }
         }
-        GitHub.deleteTestProjects();
         log.info("Total number of test projects: " + numberOfTestProjects);
         log.info("Total number of test projects deleted: " + numberOfTestProjectsDeleted);
     }
-
-    private static boolean shouldProjectBeDeleted(String projectName) {
+    private static boolean shouldProjectBeDeleted(String projectName) throws ParseException {
         // Projects that can be deleted that were created with the Old project name prefix have already been removed.
         // What remains are those that cannot be deleted due to connectors being published.
         if (projectName.startsWith(Constant.TEST_OLD_PROJECT_NAME_PREFIX)) {
@@ -72,9 +75,15 @@ public class DataCleaner  {
 
         long createdDateTime = Long.parseLong(projectName.split(Constant.TEST_PROJECT_NAME_PREFIX)[1]);
 
+        String dateFormatStr = "Jan 01 2023 00:00:01.000 UTC";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd yyyy HH:mm:ss.SSS zzz");
+        long twenty23BeginDateTime = dateFormat.parse(dateFormatStr).getTime();
+
         long currentDateTime = new Date().getTime();
 
-        return currentDateTime - createdDateTime > hourInMilliseconds;
+        // Delete projects created after beginning of 2023(some older project data can't be deleted)
+        // and are 1 hour older than current time
+        return createdDateTime > twenty23BeginDateTime && currentDateTime - createdDateTime > hourInMilliseconds;
     }
 
 }

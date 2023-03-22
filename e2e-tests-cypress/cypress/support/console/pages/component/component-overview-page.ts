@@ -12,35 +12,41 @@
  */
 export class ComponentOverviewPage {
   static goBack() {
-    cy.get("button>span>p").contains("Components").should("be.visible").click();
-  }
-
-  static navigateToOverview() {
-    cy.get("[data-cyid=link-overview]").click();
+    cy.get('[data-testid="main-left-nav-item-Project"]').should("be.visible").click();
   }
 
   static navigateToDeploy() {
     cy.get("[data-cyid=link-deploy]").click();
   }
 
-  static navigateToDeployFromTest() {
-    cy.get("[data-testid=deploy-link]").click();
+  static navigateToTest(navigateViaLink:boolean=false) {
+    if(navigateViaLink){
+      cy.get('[data-cyid="test-nav-btn"]').eq(0).click()
+    }else{
+      cy.contains("Test").should("be.visible").click({ force: true });
+    }
+   
   }
 
-  static navigateToTest() {
-    cy.contains("Test").should("be.visible").click({force: true});
+  static navigateToOverview(){
+    cy.get("[data-cyid=link-overview]").should("be.visible").click();
+    cy.intercept({
+      method: "POST",
+      url: `/insights/1.0.0/query-api`,
+      times: 1,
+    }).as("insights");
+    cy.wait("@insights", { timeout: 180000 }).then(() => {
+      cy.get("[data-cyid=copy-release-details-btn]").should('be.visible');
+    });
+  
   }
 
-  static navigateToManage() {
+    static navigateToManage() {
     cy.contains("Manage").should("be.visible").click({ force: true });
   }
 
   static navigateToObserve() {
     cy.get("[data-cyid=link-observe]").click();
-  }
-
-  static navigateToDevops() {
-    cy.contains("Devops").should("be.visible").click();
   }
 
   static navigateToDevelop() {
@@ -54,21 +60,7 @@ export class ComponentOverviewPage {
     return cy.get("header>div>div>p").invoke("text");
   }
 
-  static verifyResource(validateResourceName: string = "") {
-    let resourceIdentifier = "resource-/intensity";
-    if (validateResourceName) {
-      resourceIdentifier = "resource-/" + validateResourceName;
-    }
 
-    cy.get(`[data-testid="${resourceIdentifier}"]`);
-  }
-
-  static getComponentName() {
-    return cy
-      .get("#root .MuiCardHeader-content span")
-      .invoke("text")
-      .then((text) => text.replace("overview", "").trim());
-  }
 
   static createNewVersion(version: string, newBranch: string) {
     cy.get('[data-cyid="version-picker"]').click();
@@ -83,7 +75,7 @@ export class ComponentOverviewPage {
 
   private static createNewVersionApiProxy(version: string) {
     cy.contains("Create new version", { timeout: 180000 });
-    cy.get('[data-cyid="text-field-new-version"]').within(e=>{cy.get("input").clear().type(version)})
+    cy.get('[data-cyid="text-field-new-version"]').within(()=>{cy.get("input").clear().type(version)})
     cy.get("[data-testid=create-version-create]").click();
     cy.get('[data-testid="dialog-close-icon"]').should("not.exist");
   }

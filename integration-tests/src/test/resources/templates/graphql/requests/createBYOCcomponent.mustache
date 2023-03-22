@@ -10,13 +10,13 @@ mutation {
                         labels: "",
                         componentType: "byocRestApi",
                         port: 8080,
-                        oasFilePath: "",
+                        oasFilePath: "{{oasFilePath}}",
                         accessibility: "external",
                         byocConfig: {
                         dockerfilePath: "{{dockerfilePath}}",
-                        dockerContext:".",
+                        dockerContext: "{{dockerContext}}",
                         srcGitRepoUrl:"{{srcGitRepoUrl}}",
-                        srcGitRepoBranch: "feature"
+                        srcGitRepoBranch: "main"
                         }
                 }
     )

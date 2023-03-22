@@ -27,10 +27,8 @@ export class Apis {
     cy.get("#outlined-search-bar-api-listing", {
       timeout: STANDARD_TIME_OUT,
     }).type(apiName + "{enter}");
-    cy.get('[data-testid="apiCard-' + apiName + '"]')
-      .first()
-      .should("be.visible")
-      .click();
+
+    cy.get(`[data-testid="apiCard-${apiName}"]`).should("be.visible").click();
     cy.log("Successfully navigated to Overview");
   }
 
@@ -41,7 +39,11 @@ export class Apis {
       .invoke("text");
   }
 
-  static searchApiAndSelect(textApiName, versionCount = 1) {
+  static searchApiAndSelect(
+    textApiName: string,
+    versionCount: number = 1,
+    version: string = ""
+  ) {
     cy.get("[data-testid=apis-appbar-btn]").click();
 
     cy.intercept(
@@ -59,7 +61,7 @@ export class Apis {
       this.futureTime = Date.now() + 600000;
       this.verifyAPI(url, header, versionCount);
     });
-    this.searchAPI(textApiName);
+    this.searchAPI(textApiName, version);
   }
 
   static confirmAPIUnavailability(textApiName) {
@@ -70,11 +72,17 @@ export class Apis {
     cy.log("Successfully verified the api unavailability");
   }
 
-  private static searchAPI(textApiName) {
+  private static searchAPI(textApiName: string, version: string = "") {
     cy.get("#outlined-search-bar-api-listing")
       .focus()
       .type(`${textApiName}{enter}`);
-    cy.get(`[data-testid="apiCard-${textApiName}"`).last().click();
+    if (version == "") {
+      cy.get(`[data-testid="apiCard-${textApiName}"`).click();
+    } else {
+      cy.get(`[data-testid="apiCard-${textApiName}"`)
+        .contains(`Version : ${version}`)
+        .click();
+    }
   }
 
   private static getInvokeUrl() {
@@ -94,7 +102,9 @@ export class Apis {
         expect(urls).contains(
           Cypress.env(`${Enums.Environment.DEVELOPMENT}_test_url`)
         );
-        expect(urls).contains(Cypress.env(`${Enums.Environment.STAGING}_test_url`));
+        expect(urls).contains(
+          Cypress.env(`${Enums.Environment.STAGING}_test_url`)
+        );
         expect(urls).contains(
           Cypress.env(`${Enums.Environment.PRODUCTION}_test_url`)
         );

@@ -10,7 +10,7 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { MEDIUM_TIME_OUT } from "../../constants";
+
 
 export class AppsList {
 

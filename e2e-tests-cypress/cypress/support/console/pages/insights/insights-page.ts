@@ -15,10 +15,10 @@
 
 
 
-import { Environment } from "../enum/environment";
+import { Enums } from "../../enums";
 
 export class InsightsPage {
-  static selectEnvironment(env: Environment) {
+  static selectEnvironment(env: Enums.Environment) {
     cy.contains("Environment").should("be.visible");
     cy.contains("Environment").next().click();
     cy.contains(env).click();

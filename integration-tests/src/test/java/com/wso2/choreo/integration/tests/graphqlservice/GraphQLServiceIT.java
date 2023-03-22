@@ -4,25 +4,22 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.apis.Orgs;
-import com.wso2.choreo.integration.apis.github.GitHub;
+import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.apis.observability.ObservabilityService;
-import com.wso2.choreo.integration.common.APICreator;
+import com.wso2.choreo.integration.common.ComponentFlavour;
+import com.wso2.choreo.integration.common.ComponentUtils;
+import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
-import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
-import com.wso2.choreo.integration.common.utils.FileUtil;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.apimanager.KeyData;
 import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
-import com.wso2.choreo.integration.models.response.Response;
-import com.wso2.choreo.integration.models.componentstatus.Status;
+import com.wso2.choreo.integration.models.observability.ObservabilityLogs;
 import org.hamcrest.core.StringRegularExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -33,161 +30,117 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Map;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
-import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.hasItems;
 
 public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
 
     private String accessToken;
-    private String projectId;
-    private String repoName;
+    private ChoreoProject project;
     private ChoreoComponent choreoComponent;
-
-    private String apiKey;
     private String devInvokeURL;
     private String prodInvokeURL;
+    private String apiId;
+    private KeyData keyData;
     private Environment[] en;
-    private static final String QUERY = "query{greeting(name:\"" + "John" + "\")}";
-    private static final String MUTATION = "mutation{createUser(name:\"" + "John" + "\")}";
     @Autowired
     private HttpClient choreoCPTestClient;
+    @Autowired
+    private HttpClient choreoTestClient;
+
+    @Autowired
+    Map<Endpoints, HttpClient> citrusClients;
 
 
     @DataProvider(name = "env-provider")
     public Object[][] environment() {
-        return new Object[][]{{Constant.Environment.Development}, {Constant.Environment.Development}};
+        return new Object[][]{{Constant.Environment.Development}, {Constant.Environment.Production}};
     }
 
 
     @BeforeClass
     public void setup_GraphQLServiceIT() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
-        ChoreoProject project = GraphQL.createProject(accessToken);
-        projectId = project.getId();
+        project = GraphQL.createProject(accessToken);
     }
 
     @Test
     @CitrusTest
-    public void createUserManagedComponentFor_GraphQLServiceIT() throws IOException {
+    public void createUserManagedComponentFor_GraphQLServiceIT() throws Exception {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         GraphqlDTO dto = GraphqlDTO.builder().
                 name(componentName).
                 triggerID("null").
                 srcGitRepoUrl("https://github.com/choreo-test-apps/graphql").
-                projectId(projectId).
+                projectId(project.getId()).
                 displayType(Constant.displayType.graphql.name()).
                 build();
-        choreoComponent = GraphQL.createUserManagedComponent(dto, accessToken);
+        choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
+                ComponentFlavour.STANDARD);
         Assert.assertNotNull(choreoComponent.getId());
     }
 
-
     @Test(dependsOnMethods = {"createUserManagedComponentFor_GraphQLServiceIT"})
     @CitrusTest
-    public void createdComponentStatus_GraphQLServiceIT() throws UnexpectedResponseException {
-        Status status = Orgs.createdComponentStatus(projectId, choreoComponent.getId(), accessToken);
-        Assert.assertTrue(status.isSuccess());
-    }
-
-
-    @Test(dependsOnMethods = {"createdComponentStatus_GraphQLServiceIT"})
-    @CitrusTest
-    public void componentRetrieval_GraphQLServiceEUdpIT() throws IOException {
-        choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandler(), accessToken);
-        Assert.assertNotNull(choreoComponent);
-    }
-
-
-    @Test(dependsOnMethods = {"componentRetrieval_GraphQLServiceEUdpIT"})
-    @CitrusTest
-    public void addDeploymentConfiguration_GraphQLServiceIT() throws Exception {
-        Orgs.getConfigurationMapping(choreoComponent, accessToken);
-        Orgs.addConfiguration(choreoComponent, Constant.DEV_ENVIRONMENT, accessToken);
-    }
-
-    @Test(dependsOnMethods = {"addDeploymentConfiguration_GraphQLServiceIT"})
-    @CitrusTest
     public void componentDeploy_GraphQLServiceIT() throws Exception {
-        GraphQL.deployComponent(choreoComponent, accessToken);
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
+                accessToken, choreoComponent, ComponentFlavour.STANDARD);
+        devInvokeURL = statusDTO.getInvokeUrl();
     }
 
     @Test(dependsOnMethods = {"componentDeploy_GraphQLServiceIT"})
     @CitrusTest
-    public void deploymentStatusByVersion_GraphQLServiceIT() throws Exception {
-        GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
-    }
-
-
-    @Test(dependsOnMethods = {"deploymentStatusByVersion_GraphQLServiceIT"})
-    @CitrusTest
-    public void componentDevDeploymentStatus_GraphQLServiceIT() throws Exception {
-        devInvokeURL = GraphQL.componentDeployment(choreoComponent, Constant.DEV_ENVIRONMENT, accessToken).getInvokeUrl();
-    }
-
-    @Test(dependsOnMethods = {"componentDevDeploymentStatus_GraphQLServiceIT"})
-    @CitrusTest
-    public void addPromoteConfiguration_GraphQLServiceIT() throws Exception {
-        Response res = Orgs.addConfiguration(choreoComponent, Constant.PROD_ENVIRONMENT, accessToken);
-        Orgs.getConfigurationMapping(choreoComponent, accessToken);
-        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
-    }
-
-    @Test(dependsOnMethods = {"addPromoteConfiguration_GraphQLServiceIT"})
-    @CitrusTest
     public void promote_GraphQLServiceIT() throws Exception {
-        GraphQL.promoteComponent(choreoComponent, accessToken);
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
+                accessToken, choreoComponent, ComponentFlavour.STANDARD);
+        prodInvokeURL = statusDTO.getInvokeUrl();
+        apiId = statusDTO.getApiId();
     }
 
     @Test(dependsOnMethods = {"promote_GraphQLServiceIT"})
     @CitrusTest
-    public void componentProdDeploymentStatus_GraphQLServiceIT() throws Exception {
-        prodInvokeURL = GraphQL.componentDeployment(choreoComponent, Constant.PROD_ENVIRONMENT, accessToken).getInvokeUrl();
-    }
-
-    @Test(dependsOnMethods = {"componentProdDeploymentStatus_GraphQLServiceIT"})
-    @CitrusTest
     public void invokeQueryInDev_GraphQLServiceIT() throws Exception {
-        apiKey = APICreator.getAPIKey(choreoComponent.getApiId(), accessToken).getApikey();
-        Response res = GqlServiceTestHelper.sendRequest(devInvokeURL, QUERY, apiKey);
-        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
+        keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken, apiId);
+        ComponentUtils.invokeApiPOST(this, keyData.getApikey(), devInvokeURL, "/",
+                GqlServiceTestHelper.getGqlQueryRequest(), GqlServiceTestHelper.getGqlQueryResponse());
     }
 
     @Test(dependsOnMethods = {"invokeQueryInDev_GraphQLServiceIT"})
     @CitrusTest
     public void invokeQueryInProd_GraphQLServiceIT() throws Exception {
-        Response res = GqlServiceTestHelper.sendRequest(prodInvokeURL, QUERY, apiKey);
-        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
+        ComponentUtils.invokeApiPOST(this, keyData.getApikey(), prodInvokeURL, "/",
+                GqlServiceTestHelper.getGqlQueryRequest(), GqlServiceTestHelper.getGqlQueryResponse());
     }
 
 
     @Test(dependsOnMethods = {"invokeQueryInProd_GraphQLServiceIT"})
     @CitrusTest
     public void invokeMutationInDev_GraphQLServiceIT() throws Exception {
-        Response res = GqlServiceTestHelper.sendRequest(devInvokeURL, MUTATION, apiKey);
-        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
+        ComponentUtils.invokeApiPOST(this, keyData.getApikey(), devInvokeURL, "/",
+                GqlServiceTestHelper.getGqlMutationRequest(), GqlServiceTestHelper.getGqlMutationResponse());
     }
 
     @Test(dependsOnMethods = {"invokeMutationInDev_GraphQLServiceIT"})
     @CitrusTest
     public void invokeMutationInProd_GraphQLServiceIT() throws Exception {
-        Response res = GqlServiceTestHelper.sendRequest(prodInvokeURL, MUTATION, apiKey);
-        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
+        ComponentUtils.invokeApiPOST(this, keyData.getApikey(), prodInvokeURL, "/",
+                GqlServiceTestHelper.getGqlMutationRequest(), GqlServiceTestHelper.getGqlMutationResponse());
     }
 
     @Test(dependsOnMethods = {"invokeMutationInProd_GraphQLServiceIT"})
     @CitrusTest
     public void waitForObservabilityLogs_GraphQLServiceIT() throws Exception {
-        en = GraphQL.getNamespaceForEnvironment(projectId, accessToken);
+        en = GraphQL.getNamespaceForEnvironment(project.getId(), accessToken);
         Environment devEnv = choreoComponent.getEnvironment(en, Constant.Environment.Development);
         Environment prodEnv = choreoComponent.getEnvironment(en, Constant.Environment.Production);
         choreoComponent.waitForObservabilityLogs(devEnv, accessToken);
@@ -200,7 +153,8 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
         Environment environment = choreoComponent.getEnvironment(en, env);
         String releaseId = choreoComponent.getReleaseIdForEnvironment(environment.getChoreoEnv());
         String namespace = environment.getNamespace();
-        ObservabilityService.getGroupLogs(releaseId, namespace, accessToken);
+      ObservabilityLogs observabilityLogs = ObservabilityService.getGroupLogs(releaseId, namespace, accessToken);
+        Assert.assertTrue(observabilityLogs.getRows().length > 0);
     }
 
     @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_GraphQLServiceIT"})

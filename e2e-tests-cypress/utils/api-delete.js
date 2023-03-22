@@ -1,5 +1,5 @@
 const https = require('https');
-var hostname = "sts.choreo.dev";
+let hostname = "sts.choreo.dev";
 
 const args = process.argv.slice(2);
 
@@ -23,16 +23,16 @@ if (args.length == 2) {
   const token = args[1];
   const jwtPayload = parseJwt(token);
   const orgId = jwtPayload.organization.uuid;
-  var offset = 0;
-  var limit =  25;
+  let offset = 0;
+  let limit =  25;
   deleteApis(token, orgId, offset, limit);
 } else {
   printUsage();
 }
 
 function deleteApis(token, orgId, offset, limit) {
-  var e2eApis = [];
-  e2eApis = getApis(token, orgId, offset, limit, e2eApis);
+  let e2eApis = [];
+ getApis(token, orgId, offset, limit, e2eApis);
 }
 
 function getApis(token, orgId, offset, limit, apisList = []) {

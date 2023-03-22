@@ -11,9 +11,10 @@
  * associated services.
  */
 
-import { GraphQL } from "../../apis/graphql";
+
 import { Enums } from "../../enums";
-import { Utils } from "../../utils";
+import { ChoreoHomePage } from "../home/home-page";
+
 
 export class ProjectListingPage {
   static createNewProject(
@@ -21,7 +22,17 @@ export class ProjectListingPage {
     description: string,
     dataPlane: Enums.Region = Enums.Region.US
   ) {
-    cy.get('[data-cyid="create-project-card"]').click().wait(3000);
+    ChoreoHomePage.navigateToHome();
+
+    cy.url().then((url) => {
+      if (url.includes("projects") && !url.includes("home")) {
+        cy.get('[data-testid="project-picker"]').click();
+        cy.get('[data-cyid="btn-create-new"]').click().wait(3000);
+      } else {
+        cy.get('[data-cyid="create-project-card"]').click().wait(3000);
+      }
+    });
+
     cy.get('[name="Name"]').clear().type(projectName);
     cy.get('[name="Description"]').clear().type(description);
     cy.get('[data-cyid="select-region"]').click();
@@ -30,18 +41,19 @@ export class ProjectListingPage {
     cy.get('[data-testid="create-version-create"]').should("not.exist");
   }
 
+
+
   static selectProject(projectName: string = "Default Project") {
 
-    cy.get(
-      '[class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall"]'
-    ).click();
-    cy.get('[class="MuiFormControl-root MuiTextField-root"]')
-      .should("be.visible")
-      .click();
-    cy.get('[class="MuiFormControl-root MuiTextField-root"]').type(
-      projectName
-    );
-    cy.contains(projectName).click();
-
+    cy.get('[data-cyid="search-icon"]').eq(1).click()
+    cy.get('[data-cyid="search-field"]').within(() => {
+      cy.get('input').type(projectName)
+    })
+    cy.get(`a[href*="organizations/${Cypress.env("choreoOrgHandle")}/projects"]`).each(d => {
+      if (d.find('h4').text() === projectName) {
+        cy.wrap(d).click()
+        return;
+      }
+    })
   }
 }

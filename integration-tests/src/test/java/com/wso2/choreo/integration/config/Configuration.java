@@ -49,6 +49,7 @@ public class Configuration {
                         getResource(testConfig)).toURI()), ConfigYaml.class);
 
         List<Map<String, String>> yamlConfigCollection = new ArrayList<>() {{
+            add(configYaml.dps);
             add(configYaml.accountInfo);
             add(configYaml.authInfo);
             add(configYaml.common);
@@ -89,6 +90,7 @@ public class Configuration {
                 }
             }
         }
+
 
     }
 

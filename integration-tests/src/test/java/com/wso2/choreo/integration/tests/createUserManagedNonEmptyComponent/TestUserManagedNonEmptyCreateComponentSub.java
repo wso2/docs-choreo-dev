@@ -26,6 +26,7 @@ import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundExcept
 import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -270,9 +271,11 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
         public void componentDeployment_TestUserManagedNonEmptyCreateComponentSub() throws GetCommitHistoryException, IOException, InterruptedException,
                 NoLatestCommitHashFoundException, NoLatestApiVersionFoundException,
                 NoLatestAppEnvIdFoundException {
+
+                SleepUtil.sleep(20);
+
                 // Retrieve the latest component.
                 testComponentV2 = GraphQL.getComponentDetails(projectId,componentHandler, accessToken);
-
 
                 JsonArray commitHistory = testComponentV2.getCommitHistorySub(accessToken);
                 String latestCommitSha = testComponentV2.getLatestCommitHash(commitHistory);

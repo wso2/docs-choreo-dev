@@ -27,7 +27,6 @@ import { ProductionKeys } from "../../support/devportal/pages/applications/produ
 import { Subscriptions } from "../../support/devportal/pages/applications/subscriptions";
 import { generateAppName } from "../../support/devportal/utils";
 import { APISdk } from "../../support/devportal/pages/apis/api-sdk";
-import { DevPortalHelper } from "../../support/devportal/helpers/devportal-helper";
 import { ProjectOverviewPage } from "../../support/console/pages/projects/project-overview";
 import { RestAPIProxyTemplate } from "../../support/console/pages/templates/rest-api-proxy-temp";
 import { ComponentOverviewPage } from "../../support/console/pages/component/component-overview-page";

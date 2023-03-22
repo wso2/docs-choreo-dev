@@ -11,31 +11,12 @@
  * associated services.
  */
 import {
-  LONG_TIME_OUT,
-  MEDIUM_TIME_OUT,
+
   STANDARD_TIME_OUT,
 } from "../../constants";
 
 export class TryOut {
-  static tryOutApi(appName: string) {
-    // Tryout the added API
-    cy.xpath(
-      '//input[@placeholder="Select an Environment"]//../div[@role="button"]'
-    ).click({ force: true });
-    cy.get('[data-value="dev-us-east-azure"]').click();
-    cy.xpath(
-      '//input[@placeholder="Select an Application"]//../div[@role="button"]'
-    ).click({ force: true });
-    // cy.get("option").click();
-    cy.get(".MuiList-root").contains(appName).click();
-    cy.wait(5000);
-    cy.get('[data-testid="get-test-key-btn"]').should("not.be.disabled");
-    cy.get('[data-testid="get-test-key-btn"]').click();
-    cy.wait(4000);
-  }
-
-
-  static navigateToTryOutMenu() {
+   static navigateToTryOutMenu() {
     cy.get('[data-testid="tryout-item-link"]').click();
     cy.wait(STANDARD_TIME_OUT);
   }
@@ -78,26 +59,6 @@ export class TryOut {
     cy.log("Execution is successful");
   }
 
-  static VerifyAPI() {
-    cy.get('tr[data-param-name="sort"]').within(() => {
-      cy.get(".parameters-col_description").within(() => {
-        cy.get("select")
-          .select("todayCases")
-          .should("have.value", "todayCases");
-      });
-    });
-    cy.get('tr[data-param-name="yesterday"]').within(() => {
-      cy.get(".parameters-col_description").within(() => {
-        cy.get("select").select("true").should("have.value", "true");
-      });
-    });
-    cy.get('tr[data-param-name="allowNull"]').within(() => {
-      cy.get(".parameters-col_description").within(() => {
-        cy.get("select").select("0").should("have.value", "0");
-      });
-    });
-  }
-
   static GetResponse() {
     cy.get(".curl-command").should("exist");
     cy.get(".request-url").should("exist");
@@ -122,8 +83,9 @@ export class TryOut {
     cy.get('[data-testid="search-btn"]').trigger("mouseover");
     cy.get('[data-testid="search-app"] [placeholder="Search"]').type(appName)
     cy.contains(appName).trigger("mouseover");
-    cy.get('[data-testid="delete-btn"]').trigger("mouseover").click();
+    cy.get(`[data-testid="delete-btn-${appName}"]`).trigger("mouseover").click();
     cy.get('[data-testid="delete-dialog-ok-button"]').click();
+    cy.get('[data-testid="create-application-btn"]',{timeout:50000}).should("be.visible")
   }
 
   static GenerateAccessToken() {
@@ -134,16 +96,4 @@ export class TryOut {
     cy.wait(4000);
   }
 
-  static removeGeneratedCredentials() {
-    cy.log("Navigating to Credentials tab to remove credentials");
-    cy.wait(5000);
-    cy.get('[data-testid="credentials-item-link"]').click();
-    cy.url().should("include", "/credentials");
-    cy.get("keys-info-cell").should("not.exist");
-    cy.get('[data-testid="remove-creds-btn"]').click();
-    cy.get('[data-testid="remove-creds-confirmation-ok"]').click();
-    cy.wait(4000);
-    cy.get("keys-info-cell").should("be.visible");
-    cy.log("Successfully removed credentials");
-  }
 }

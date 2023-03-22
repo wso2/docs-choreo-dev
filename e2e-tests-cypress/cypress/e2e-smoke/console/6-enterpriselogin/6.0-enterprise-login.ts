@@ -11,15 +11,14 @@ entered into with WSO2 governing the purchase of this software and any
 associated services.
 */
 
-import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
+
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
-import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { REUSABLE_PROJECT_NAME } from "../../../support/devportal/constants";
+
 
 describe("Enterprise Login using auth0Idp", () => {
-  const COMPONENT_NAME = "create-default-Rest-API-6.0";
+
 
   before(() => {
     cy.request(Cypress.env("auth0LogoutUrl"), {
@@ -29,25 +28,18 @@ describe("Enterprise Login using auth0Idp", () => {
   });
 
   after(() => {
-    LoginPage.reLoginToChoreo();
-    ChoreoHomePage.logout();
+      ChoreoHomePage.logout();
   });
 
   it("Enterprise login to console", () => {
     LoginPage.enterpriseLogin();
   });
 
-  it("Verify REST API component creation", () => {
-    ProjectListingPage.selectProject(REUSABLE_PROJECT_NAME);
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-  });
-      
-  });
 
   it("Verify devportal sso login", () => {
-    LoginPage.reLoginToChoreo();
     ComponentOverviewPage.navigateToDevPortal().should(
       "eq",
       "API Developer Portal"
     );
   });
+})

@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { Enums } from "../../../support/console/enums";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
@@ -21,6 +22,7 @@ import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { Utils } from "../../../support/console/utils";
+import { GitHub } from "../../../support/github/github";
 import { ComponentData } from "../../../support/interfaces/component-data";
 
 describe("Verify webhook creation functionality", () => {
@@ -32,6 +34,7 @@ describe("Verify webhook creation functionality", () => {
 
   before(() => {
     LoginPage.login();
+    GitHub.deleteWebhooks("slack-web-hook")
   });
 
   after(() => {
@@ -57,7 +60,7 @@ describe("Verify webhook creation functionality", () => {
       PROJECT_DESCRIPTION,
       Enums.Region.US
     );
-    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
   it("Deploy the component", () => {
