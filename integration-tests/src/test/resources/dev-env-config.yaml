@@ -1,3 +1,5 @@
+dps:
+  REGIONS: EU,US
 accountInfo:
   TEST_USER_EMAIL: choreo-integration-test-user-dev@wso2.com@carbon.super
   #TEST_USER_PASSWORD:
@@ -50,3 +52,5 @@ anomalyDetection:
 themeManagement:
   THEME_ENDPOINT: https://apis.preview-dv.choreo.dev
   CDN_THEME_ENDPOINT: https://choreodevdevportalcdn19.blob.core.windows.net/
+
+

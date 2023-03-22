@@ -309,9 +309,9 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
 
-    public static ChoreoProject createProject(Constant.region region, String accessToken) throws IOException {
+    public static ChoreoProject createProject(String region, String accessToken) throws IOException {
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(Constant.TEST_PROJECT_NAME_PREFIX.concat(String.valueOf(new Date().getTime())))
-                .description(Constant.TEST_PROJECT_DESCRIPTION).region(region.name()).orgId(ORG_ID).orgHandler(ORG_HANDLE).build();
+                .description(Constant.TEST_PROJECT_DESCRIPTION).region(region).orgId(ORG_ID).orgHandler(ORG_HANDLE).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/createProject.mustache", graphqlDTO);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         return ObjectMapperUtil.mapStringToObject(ChoreoProject.class, response.getRes(), "createProject");

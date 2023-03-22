@@ -17,8 +17,6 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.apis.Orgs;
-import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ChoreoOrganization;

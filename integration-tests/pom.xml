@@ -16,7 +16,7 @@
     <log4j2.version>2.17.2</log4j2.version>
     <citrus.version>3.1.1</citrus.version>
     <system.under.test.mode>embedded</system.under.test.mode>
-    <jackson.version>2.13.3</jackson.version>
+    <jackson.version>2.14.2</jackson.version>
     <javax.mail.version>1.6.2</javax.mail.version>
     <google-api-gmail.version>v1-rev20211108-1.32.1</google-api-gmail.version>
     <google-oauth-client-jetty.version>1.32.1</google-oauth-client-jetty.version>

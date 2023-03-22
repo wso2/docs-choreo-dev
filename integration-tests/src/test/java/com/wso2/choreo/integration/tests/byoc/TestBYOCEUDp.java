@@ -12,19 +12,24 @@ import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.response.Response;
+import com.wso2.choreo.integration.tests.dp.DataProviderWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 
@@ -49,12 +54,17 @@ public class TestBYOCEUDp extends TestNGCitrusSpringSupport {
 
     }
 
-    @Test
+    @DataProvider(name = "reg")
+    public Object[][] regionData() {
+        return DataProviderWrapper.convertToDataProvider(Arrays.asList(Configuration.getConfig(ConfigDefinition.REGIONS).split(",")));
+    }
+
+    @Test(dataProvider = "reg")
     @CitrusTest
-    public void creteProject_TestBYOCEUDataPlane() throws IOException {
-        ChoreoProject project = GraphQL.createProject(Constant.region.EU, accessToken);
+    public void creteProject_TestBYOCEUDataPlane(String region) throws IOException {
+        ChoreoProject project = GraphQL.createProject(region, accessToken);
         projectId = project.getId();
-        Assert.assertEquals(project.getRegion(), Constant.region.EU.name());
+        Assert.assertEquals(project.getRegion(), region);
     }
 
     @Test(dependsOnMethods = {"creteProject_TestBYOCEUDataPlane"})
