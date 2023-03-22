@@ -29,7 +29,7 @@ spec:
           terminationGracePeriodSeconds: 30
           containers:
             - name: choreo-daily-usage-publisher
-              image: choreocontrolplane.azurecr.io/choreoipaas/choreo-metered-usage-handler:latest
+              image: choreocontrolplane.azurecr.io/choreoipaas/metered-usage-handler-crons:latest
               securityContext:
                 runAsUser: 10500
                 runAsGroup: 10500
