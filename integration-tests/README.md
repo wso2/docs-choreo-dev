@@ -27,7 +27,11 @@ You can execute integration tests against your own Choreo account in Dev using t
 3. run `mvn clean verify -DToken=<Your access_token>` to execute the tests
 4. Note the access token is only valid for 1 hour, so you will need to get a new access token to run the tests after the expiry takes place
 
-## 3. Run a specific test in InteliJ
+## 3. Run DP tests
+1. Navigate to the  `integration-tests` directory
+2. run `sh runner.sh <staging/prod> <staging-access-token/prod-access-token>`
+
+## 4. Run a specific test in InteliJ
 
 1. Repeat the previous steps 1 to get you access_token.
 2. Right-click on the test you want to run and select the `Modify Run Configuration...` option.

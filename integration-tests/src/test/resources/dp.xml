@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="choreoIntegrationTests_dps" parallel="classes" thread-count="7">
+    <test name="choreo">
+        <classes>
+            <class name="com.wso2.choreo.integration.tests.dp.GraphQLServiceDpIT"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestBYOCDpIT"/>
+            <class name="com.wso2.choreo.integration.tests.dp.ProxyApiEUDpIT"/>
+        </classes>
+    </test>
+</suite>

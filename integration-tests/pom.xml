@@ -55,7 +55,8 @@
             <system.under.test.mode>${system.under.test.mode}</system.under.test.mode>
           </systemProperties>
           <suiteXmlFiles>
-            <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+            <!--suppress UnresolvedMavenProperty -->
+            <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
           </suiteXmlFiles>
         </configuration>
         <executions>

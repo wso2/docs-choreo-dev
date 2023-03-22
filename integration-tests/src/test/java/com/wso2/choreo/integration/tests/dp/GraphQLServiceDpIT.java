@@ -4,7 +4,6 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.sun.xml.bind.v2.runtime.reflect.opt.Const;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.apis.observability.ObservabilityService;
@@ -24,7 +23,6 @@ import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.models.observability.ObservabilityLogs;
 import com.wso2.choreo.integration.tests.graphqlservice.GqlServiceTestHelper;
-import org.apache.tools.ant.Project;
 import org.hamcrest.core.StringRegularExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -35,7 +33,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -48,7 +45,7 @@ import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasItems;
 
-public class GraphQLServiceEUdpIT extends TestNGCitrusSpringSupport {
+public class GraphQLServiceDpIT extends TestNGCitrusSpringSupport {
 
     private String accessToken;
     private ChoreoComponent choreoComponent;
