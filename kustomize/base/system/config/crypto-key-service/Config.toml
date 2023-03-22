@@ -6,3 +6,6 @@ jwtJwksEndpoint = "{{.JWT_JWKS_ENDPOINT}}"
 dbUrl = "{{.CRYPTO_KEY_DB_URL}}"
 dbUser = "choreo_crypto_key_db_user"
 rudderEndpoint = "http://dp-rudder:80/api/v1"
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"
