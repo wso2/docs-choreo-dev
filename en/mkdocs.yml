@@ -84,6 +84,7 @@ nav:
       - OpenAPI Console: test/open-api-console.md
       - cURL: test/curl.md
       - GraphQL Console: test/graphql-console.md
+      - Console: test/console.md
   - Manage:
       - API Management: manage/api-management.md
       - Lifecycle: manage/lifecycle.md
