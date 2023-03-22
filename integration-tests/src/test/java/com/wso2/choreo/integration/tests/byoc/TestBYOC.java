@@ -93,7 +93,7 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"invokeAPIInDev_TestBYOC"})
     @CitrusTest
-    public void invokeAPIProd_TestBYOC() {
+    public void invokeAPIProd_TestBYOC() throws Exception {
         String expectedResponse = TestHelper.getExpectedResponse();
         ComponentUtils.invokeApiGET(this, keyData.getApikey(), prodInvokeURL, "/movies", expectedResponse);
     }

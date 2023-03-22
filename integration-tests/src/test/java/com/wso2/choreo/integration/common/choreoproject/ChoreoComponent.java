@@ -812,7 +812,7 @@ public class ChoreoComponent {
     public String getNamespaceForEnvironment(String accessToken, String environment) throws IOException, EnvironmentDetailsCheckException, NamespaceNotFoundException {
         String requestURI = choreoEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
         MustacheFactory mf = new DefaultMustacheFactory();
-        Mustache mustache = mf.compile("templates/observability/graphql/queryForComponentObservabilityEnvironmentInformation.mustache");
+        Mustache mustache = mf.compile("templates/graphql/requests/getEnvironments.mustache");
         Writer writer = new StringWriter();
         Map<String, String> queryParams = new HashMap<String, String>();
         queryParams.put("orgUUID", organization.getOrgUUID());
@@ -858,7 +858,7 @@ public class ChoreoComponent {
      */
     public String getComponentObservabilityIdsQuery(String releaseId) throws IOException {
         MustacheFactory mf = new DefaultMustacheFactory();
-        Mustache mustache = mf.compile("templates/observability/graphql/queryForComponentObservabilityIds.mustache");
+        Mustache mustache = mf.compile("templates/graphql/requests/getObservabilityIds.mustache");
         Writer writer = new StringWriter();
         Map<String, String> queryParams = new HashMap<String, String>();
         queryParams.put("releaseId", releaseId);

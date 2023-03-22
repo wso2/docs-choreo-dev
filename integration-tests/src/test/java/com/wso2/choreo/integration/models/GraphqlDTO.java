@@ -60,5 +60,6 @@ public class GraphqlDTO {
     private String releaseId;
     private String region;
     private String shaDate;
+    private String releaseIds;
     private boolean enableCellDiagram;
 }
