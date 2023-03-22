@@ -23,6 +23,8 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.environments.Environment;
@@ -66,16 +68,19 @@ public class ProxyApiEUDpIT extends TestNGCitrusSpringSupport {
         return DataProviderWrapper.convertToDataProvider(dps);
     }
 
+    @DataProvider(name = "reg")
+    public Object[][] regionData() {
+        return DataProviderWrapper.convertToDataProvider(Arrays.asList(Configuration.getConfig(ConfigDefinition.REGIONS).split(",")));
+    }
 
     @BeforeClass
     public void setup_ProxyApiEUDpIT() throws IOException, TokenRetrievalException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-
     }
 
     @Test(dataProvider = "reg")
     @CitrusTest
-    public void creteProject_ProxyApiEUDpIT(Constant.region region) throws IOException {
+    public void creteProject_ProxyApiEUDpIT(String region) throws IOException {
         String firstAPIName = Constant.DEFAULT_API_NAME.concat(String.valueOf(new Date().getTime()));
         String firstContext = APICreator.generateContext(firstAPIName);
         ChoreoProject project = GraphQL.createProject(region, accessToken);
@@ -87,7 +92,7 @@ public class ProxyApiEUDpIT extends TestNGCitrusSpringSupport {
                 context(firstContext).
                 build();
         dps.add(dp);
-        Assert.assertEquals(project.getRegion(), region.name());
+        Assert.assertEquals(project.getRegion(), region);
     }
 
     @Test(dependsOnMethods = {"creteProject_ProxyApiEUDpIT"}, dataProvider = "dps")

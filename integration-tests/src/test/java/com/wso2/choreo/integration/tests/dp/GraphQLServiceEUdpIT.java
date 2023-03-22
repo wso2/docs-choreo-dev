@@ -14,6 +14,8 @@ import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
@@ -62,23 +64,23 @@ public class GraphQLServiceEUdpIT extends TestNGCitrusSpringSupport {
     Map<Endpoints, HttpClient> citrusClients;
 
 
-
-     private final List<DataProviderWrapper> dps = new ArrayList<>();
+    private final List<DataProviderWrapper> dps = new ArrayList<>();
 
 
     @DataProvider(name = "dps")
     public Object[][] provideData() {
         return DataProviderWrapper.convertToDataProvider(dps);
     }
+
     @DataProvider(name = "reg")
-    public Object[][] regions() {
-        return DataProviderWrapper.convertToDataProvider(Arrays.asList(Constant.region.values()));
+    public Object[][] regionData() {
+        return DataProviderWrapper.convertToDataProvider(Arrays.asList(Configuration.getConfig(ConfigDefinition.REGIONS).split(",")));
     }
 
 
     @DataProvider(name = "env-provider")
-    public Object[][] envProvider(){
-        return  DataProviderWrapper.convertToDataProvider(Arrays.asList(Constant.Environment.values()));
+    public Object[][] envProvider() {
+        return DataProviderWrapper.convertToDataProvider(Arrays.asList(Constant.Environment.values()));
     }
 
     @BeforeClass
@@ -88,7 +90,7 @@ public class GraphQLServiceEUdpIT extends TestNGCitrusSpringSupport {
 
     @Test(dataProvider = "reg")
     @CitrusTest
-    public void createUserManagedComponentFor_GraphQLServiceEUdpIT(Constant.region region) throws Exception {
+    public void createUserManagedComponentFor_GraphQLServiceEUdpIT(String region) throws Exception {
         ChoreoProject project = GraphQL.createProject(region, accessToken);
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").
