@@ -80,7 +80,7 @@ nav:
       - Deploy a Containerized Component: deploy/deploy-a-containerized-choreo-component.md
       - DevOps: 
           - View Runtime Details: deploy/devops/runtime.md
-          - View Container Details: deploy/devops/containers.md
+          - Configure Container Details: deploy/devops/containers.md
           - Manage Configurations and Secrets: deploy/devops/configs-and-secrets.md
           - Set Up Health Checks: deploy/devops/health-checks.md
           - Scale Component Replicas: deploy/devops/scaling.md
