@@ -1,57 +1,78 @@
 # Configure Storage
 
-All Choreo components are created with a **read-only file system**, and you cannot write or access a file system from your applications by default.
+All components you create in Choreo have a default **read-only file system**, which you cannot access or write to from your applications.
 
-Volume Mounts allow you to create (temporary or persisted) writable file system locations for your applications.
+Volume mounts allow you to create either temporary or persisted writable file system storage locations for your applications.
 
-## Storage (volume mount) types
+## Volume mount types
 
 | Type                              | Description                                                                                                                                                         |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Empty Directory (In-Memory tmpfs) | A fast temporary in-memory (tempfs) storage location. This volume will be erased when the attached container is restarted or removed. *Available on all data planes.* |
-| Empty Directory (Disk)            | A temporary storage location on disk. This volume will be destroyed when the attached container is restarted or removed. *Only available on private data planes.*   |
-| Persistent Volume                 | A permanent storage location. This volume will be persisted even when the attached container is restarted or removed. *Only available on private data planes.*      |
+| Empty Directory (In-Memory) | A fast, temporary in-memory (tempfs) storage location. This volume gets erased when you restart or remove the attached container. *Available on all data planes.* |
+| Empty Directory (Disk)            | A temporary storage location on disk. This volume gets destroyed when you restart or remove the attached container. *Only available on private data planes.*   |
+| Persistent Volume                 | A permanent storage location. This volume persists even when if you restart or remove the attached container. *Only available on private data planes.*      |
 
-!!! tip "The `/tmp` directory"
-    All components are provided with a writable location under `/tmp` at creation, but you can configure other locations as required.
+!!! tip 
+    All components have a writable location in the `/tmp` directory at the time of component creation. You can also configure other writable locations if required.
 
 
-## Creating a temporary storage space for your container
+## Create a temporary storage space for your container
 
-Empty Directory (In-memory tmpfs or on-disk) mounts allow you to create temporary file systems that your application can read and write from. But it's important to note that these volumes are destroyed when a container is restarted or updated (*i.e. it's attached to the lifetime of a container*).
+Empty directory (in-memory or on-disk) mounts allow you to create temporary file systems that your application can read and write from. This option provides a convenient way to create a *scratch space* to write files temporarily before storing them in a more permanent storage location such as a cloud-backed storage bucket.
+For example, unzipping a file, temporarily writing results from a memory-intensive operation to disk, a temporary local cache, etc. 
+However, it is important to note that these volumes destroy when you restart or update a container because it is attached to the lifetime of a container.
 
-This option provides a convenient way to create a 'scratch space' to write files temporarily before they are stored on a more permanent storage location (such as a cloud-backed storage bucket).
-> Eg. Unzipping a file, writing results from a memory-intensive operation to disk temporarily, a temporary local cache, etc.
+Follow these steps to create a temporary storage space for your container:
 
-1. Click the **Create** button in the Storage view.
+1. Go to the **Deploy** view of the component for which you want to create temporary storage.
+2. Click **Storage** and then click **+ Create**.
+3. In the **Create a Volume Mount** pane, specify a name for the volume and select **Empty Directory (In-Memory)**.
+   ![Create temporary storage](../../assets/img/deploy/devops/storage/create-emptydir-step-1.png){.cInlineImage-full}
+4. Click **Next**.
 
-2. Select the empty directory type (In-memory or on-disk) and give a reference name to the volume.
-
-    ![Step 1: Create empty directory](../../assets/img/deploy/devops/storage/create-emptydir-step-1.png){.cInlineImage-full}
-
-    !!! warning "In-memory (tmpfs) storage uses up your container's memory"
+    !!! warning "In-memory (tmpfs) storage uses up container memory"
         Storage capacity for this type of volume will count against the container's memory limit.<br/>
-        Uncontrolled writes to this location may starve your application process of memory and may result in the container getting killed and restarted if the memory limits are exceeded.
+        Uncontrolled writes to this location may starve your application process of memory and can result in the container getting killed and restarted if the memory limits exceed.
 
-3. Configure the mount locations.
-    ![Step 2: Create empty directory mounts](../../assets/img/deploy/devops/storage/create-emptydir-step-2.png){.cInlineImage-full}
-    - You can add multiple mount locations to this volume. Type in the **mount path** and click **Add mount** to add a mount.
-    - Mount paths should be *absolute file paths* and will be available to your application to read/write from.
-    - Once the mount paths are added, click **Create**. The mount(s) will be applied immediately to your containers (a rolling restart will be triggered).
+5. Specify a **Mount Path** and click **Add mount** to add a mount location.
+  
+    !!!tip
 
-## Creating a persisted storage space for your container
+          - You can add multiple mount locations to a volume.
+          - Mount paths should be *absolute file paths* and will be available to your application to read/write from.
 
-> Persistent volume options are only available on private data planes.
+    ![Specify mount details](../../assets/img/deploy/devops/storage/create-emptydir-step-2.png){.cInlineImage-full}
 
-1. Click the **Create** button in the Storage view.
-2. Select the type **Persistent Volume**
-3. Select a **Storage Class** available on the private data plane.
-4. Configure the *storage capacity* (in GBs).
-5. Select the *access mode*. 
+6. Click **Create**. This applies the volume mount immediately to your container and triggers a rolling restart.
 
-    !!! note "Check the access modes supported by the selected Storage Class"
-        Choreo does not check if the access mode(s) you select are supported by the selected Storage Class. These need to be checked against the cloud providers documentation.<br/>
-        Invalid use of access modes may result in a runtime mount error.
-    ![Create PV from storage classes](../../assets/img/deploy/devops/storage/create-pv.png){.cInlineImage-full}
+## Create a persistent storage space for your container
 
-6. Click **Create**. (The volume will be created and applied to your containers immediately).
+Follow these steps to create a persistent storage space for your container:
+
+!!! info "Note"
+
+       Persistent volume options are only available in private data plane organizations.
+
+
+1. Go to the **Deploy** view of the component for which you want to create persistent storage.
+2. Click **Storage** and then click **+ Create**.
+3. In the **Create a Volume Mount** pane, specify a name for the volume and select **Persistent Volume**.
+4. Select a **Storage Class**.
+5. Move the **Storage Capacity** slider to set the required capacity.
+6. Select an appropriate **Access Mode**. 
+
+    !!! tip "Check and specify an access mode supported by the Storage Class"
+        - You must check the cloud provider documentation to select an appropriate access mode that the Storage Class supports. Choreo does not verify whether the Storage Class supports the access mode you select.
+        - If the Storage class does not support the Access Mode you select, it can result in a runtime mount error.
+
+    ![Create persistent storage](../../assets/img/deploy/devops/storage/create-pv.png){.cInlineImage-full}
+
+7. Click **Next**.
+8. Specify a **Mount Path** and click **Add mount** to add a mount location.
+  
+    !!!tip
+
+          - You can add multiple mount locations to a volume.
+          - Mount paths should be *absolute file paths* and will be available to your application to read/write from.
+
+9. Click **Create**. This applies the volume immediately to your container.
