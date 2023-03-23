@@ -1,4 +1,4 @@
-# Health Checks
+# Set Up Health Checks
 
 Health Checks ensure that your running containers are always healthy and ready to serve traffic.
 
