@@ -1,4 +1,4 @@
-# Runtime
+# View Runtime Details
 
 The Runtime view provides insights into your component’s running replicas (instances) in a given environment, with information retrieved from the underlying Choreo data plane. 
 The Runtime view is analogous to a *‘zoomed in’* view of a single environment in the **Build and Deploy** section.
