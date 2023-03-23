@@ -1,4 +1,4 @@
-# Containers
+# View Container Details
 
 The Containers page includes information about the containers that comprise your component, including the currently deployed image tag and the commit from which it was built as well as compute resource usage limits imposed on the containers. 
 
