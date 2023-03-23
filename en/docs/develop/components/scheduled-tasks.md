@@ -12,12 +12,11 @@ Scheduled triggers automate repetitive tasks, which reduces workload and frees u
 
 Following are sample scenarios where you can use scheduled triggers:
 
-- Logging a session time-out message for a user at a specific time interval
+- Logging a session time-out message for a user at a specific time interval.
 
-- Publishing a summary of GitHub issues (i.e., with details such as the number of GitHub issues in each status) as a message in a group chat window of a team every day at a specific time
+- Publishing a summary of GitHub issues (i.e., with details such as the number of GitHub issues in each status) as a message in a group chat window of a team every day at a specific time.
 
-- Periodically checking whether an application is active or not
-
+- Periodically checking an application's health.
 
 ## Develop a scheduled trigger
 
@@ -76,7 +75,7 @@ Choreo allows you to view the deployment logs through the **Deploy** view. There
 
 Choreo provides a development environment and a production environment in two separate Kubernetes clusters by default. Once you have deployed the scheduled trigger to the development environment and verified whether it functions as expected, you can promote it to the production environment.
 
-![Promote scheduled task](../../assets/img/scheduled-tasks/promote-scheduled-task-to-production.png){.cInlineImage-full}
+![Promote scheduled trigger](../../assets/img/scheduled-tasks/promote-scheduled-task-to-production.png){.cInlineImage-threeQuarter}
 
 If required, you can change the time interval of the scheduled trigger before you promote it to the production environment.
 

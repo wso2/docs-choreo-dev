@@ -8,9 +8,9 @@ This guide takes you through the steps to subscribe to APIs in Choreo.
 
 Let's get started!
 
-1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click on the Developer Portal link on the Choreo console header. 
+1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click **Go to DevPortal** on the Choreo Console or the Developer Portal icon on the left navigation menu.
 
-    ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-half}
+    ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-small}
 
 2. Click **Applications**. 
 3. Select and click on the application you want to subscribe to from the list. 

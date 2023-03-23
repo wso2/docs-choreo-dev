@@ -2,13 +2,13 @@
 
 This tutorial introduces REST API proxies. 
 
-An API Proxy exposes an existing API on Choreo and intercepts the requests to the REST API. It API Proxy acts as a managed API to which you can apply security, rate-limiting, etc.
+An API Proxy exposes an existing API on Choreo and intercepts the requests to the REST API. The API Proxy acts as a managed API to which you can apply security, rate-limiting, etc.
 
 In this tutorial, you will learn how to do the following:
 
-1. Expose an existing API by creating a REST API proxy
-2. Deploy the REST API proxy
-3. Test the REST API proxy to verify its functionality
+1. Expose an existing API by creating a REST API proxy.
+2. Deploy the REST API proxy.
+3. Test the REST API proxy to verify its functionality.
 4. Manage your REST API proxy by adding rate limiting and security policies, thereby leveraging the platform's API management capabilities.
 
 !!!tip "Before you begin..."
@@ -21,7 +21,6 @@ Let's begin!
 
 You can create a REST API proxy in one of the following methods: 
 
-
 In this tutorial, you will be providing a URL to an OpenAPI definition of a sample API. 
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
@@ -30,9 +29,11 @@ In this tutorial, you will be providing a URL to an OpenAPI definition of a samp
 
 3. On the **REST API Proxy** card, click **Create**.
 
-4. Click **Try with Sample URL** to create an API proxy for a sample API.
+4. Under **Provide URL for OpenAPI** and click **Try with sample URL**.
 
-5. Enter API proxy details as follows:
+5. Click **Next**. 
+
+5. On the **Create API Proxy** page enter the following values to create the API Proxy: 
 
     |  **Field**    | **Value**                                   |
     |---------------|---------------------------------------------|
@@ -40,6 +41,7 @@ In this tutorial, you will be providing a URL to an OpenAPI definition of a samp
     | **Base Path** | `<DEFAULT_VALUE>/ abc-hr`                   |
     | **Version**   | `1.0.0`                                     |
     | **Target**    | `https://samples.choreoapps.dev/company/hr` |
+    |**Access Mode**| `External: API is publicly accessible`      |
 
 7. Click **Create**. 
 
@@ -100,9 +102,9 @@ In this tutorial, let's use the inbuilt OpenAPI Console.
 
 1. In the left navigation menu, click **Test**.
 
-2. In the **Environment** list, select **Development**.
+2. From the environment list, select **Development**.
 
-3. Choreo uses OAuth 2.0 Therefore, you will notice the security header. Click **Get Test Key** to generate a new test key for testing purposes.
+3. Choreo uses OAuth 2.0. Therefore, you will notice the security header. Click **Get Test Key** to generate a new test key for testing purposes.
 
 4. Let's invoke. Expand the **GET** resource with the **/department/{departmentId}** path and click **Try it Out**.
 
@@ -128,7 +130,8 @@ First, let's review the security settings and add a rate limit to the API.
 1. Click **Manage** on the left navigation and click **Settings**.
 
 2. Click **Security**. Review the security settings. If you wish to change the security settings, click **Edit** and make the necessary changes. Once the changes are confirmed, you can save them by clicking **Save**.
-    ![Security Settings](../../assets/img/tutorials/proxy/security-settings.png){.cInlineImage-full}
+
+    ![Security Settings](../../assets/img/tutorials/proxy/security-settings.png){.cInlineImage-threeQuarter}
 
 3. Next, let's add a rate-limiting policy to the API. Click **Resources**.
 
@@ -136,10 +139,10 @@ First, let's review the security settings and add a rate limit to the API.
 
 5. Select **API Level** as the rate-limiting level and then select the required rate-limiting level. Here, you are adding a rate-limiting policy for the entire API.  
 
-    ![Rate Limiting Level](../../assets/img/tutorials/proxy/rate-limiting-level.png){.cInlineImage-full}
+    ![Rate Limiting Level](../../assets/img/tutorials/proxy/rate-limiting-level.png){.cInlineImage-small}
 
     !!! info
-        You can also apply rate limits per resource as shown in the image below.<br/><br/>![Rate Limiting Per Resource](../../assets/img/tutorials/proxy/rate-limiting-per-resource.png){.cInlineImage-full}<br/><br/>[Learn more](../../develop/components/api-proxy.md#settings).
+        You can also apply rate limits per resource as shown in the image below.<br/><br/>![Rate Limiting Per Resource](../../assets/img/tutorials/proxy/rate-limiting-per-resource.png){.cInlineImage-small}<br/><br/>[Learn more](../../develop/components/api-proxy.md#settings).
 
 8. Click **Save**.
 
@@ -183,7 +186,7 @@ Now your REST API proxy is ready to be consumed. An application developer can di
 
 3. Click **Generate Credentials**. Choreo populates the **Consumer Key** and **Consumer Secret** fields with newly generated tokens.
 
-4. Click **://Curl**. Then copy the cURL command that is displayed.
+4. To generate access tokens for production use, click **://Curl**. Then copy the cURL command that is displayed.
 
     !!!info
         Click the icon for copying to copy the cURL command. **Do not manually copy it**. The displayed cURL command is only a template, and it does not include the generated credentials.
@@ -203,7 +206,7 @@ Now your REST API proxy is ready to be consumed. An application developer can di
 
 1. In the left navigation menu, click **Try out**.
 
-2. Enter the following values:
+2. Verify the **Endpoint** field has the following values:
 
     | **Field** | **Value** |
     |-----------------|-------------------------------|

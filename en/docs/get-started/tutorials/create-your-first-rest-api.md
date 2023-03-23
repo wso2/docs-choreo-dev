@@ -2,9 +2,9 @@
 
 A RESTful API (Application Program Interface) uses HTTP requests to access and use data. The operations you can perform on data are GET (reading), PUT (updating), POST (creating), and DELETE (deleting).
 
-Choreo’s low-code editor allows developers to easily design (and then implement) high-quality REST APIs. To explore this capability, let's consider a scenario where an Analyst needs to retrieve the daily count of COVID-19 patients per one million population by country. In this tutorial, you will address this requirement by doing the following:
+Choreo allows developers to easily design high-quality REST APIs. To explore this capability, let's consider a scenario where an Analyst needs to retrieve the daily count of COVID-19 patients per one million population by country. In this tutorial, you will address this requirement by doing the following:
 
-- Design a REST API that addresses the described requirement, test it in the Web Editor, and then commit it so that it is available in the Choreo Console.
+- Design a REST API that addresses the described requirement, test it, and then commit it so that it is available in the Choreo Console.
 - Deploy the REST API you created to make it available for use.
 - Test the REST API after deploying it to check whether it works as expected.
 
@@ -18,7 +18,7 @@ In this section, let's create the API that retrieves COVID-19-related statistics
 
 2. On the **Home**** page, click the **+ Create Project**.
 
-    ![Create project](../../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-small}
+    ![Create project](../../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-xsmall}
 
 3. Enter a unique name and a description for the project. For this tutorial, let's enter the following values:
 
@@ -34,8 +34,6 @@ In this section, let's create the API that retrieves COVID-19-related statistics
 Let's create a new REST API component as follows:
 
 1. On the **Components** page, click **Create** on the **REST API** card.
-
-    ![Create component](../../assets/img/tutorials/rest-api/create-component.png){.cInlineImage-small}
 
 2. Enter a unique name and a description for the API. For this tutorial, let's enter the following values:
 
@@ -64,7 +62,7 @@ Let's create a new REST API component as follows:
 
 ### Step 1.2: Design the REST API
 
-Designing the REST API involves specifying how the REST API should function by adding and configuring the required connectors and statements. You can do this by editing the low-code diagram of the REST API or by editing its code.
+Designing the REST API involves specifying how the REST API should function by adding and configuring the required connectors and statements. You can do this by editing the low-code diagram of the REST API or by editing its code in the [Choreo VS code extension](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo)..
 
 You can implement your REST API in Ballerina or any other language and containerize it. You can use the [Ballerina VS code extension](https://ballerina.io/downloads/) to develop the REST API in Ballerina. [Learn more](https://wso2.com/ballerina/vscode/docs/).
 
@@ -79,7 +77,7 @@ To deploy the API, follow the steps below:
     !!! note
          Automatic deployment is enabled by default. However, you have to deploy the component manually the first time. Subsequent deployments will occur automatically.
 
-    ![Deploy API](../../assets/img/tutorials/rest-api/deploy-api.png){.cInlineImage-small}
+    ![Deploy API](../../assets/img/tutorials/rest-api/deploy-api.png){.cInlineImage-xsmall}
 
 2. To check the progress of the deployment, observe the **Console** pane.
 

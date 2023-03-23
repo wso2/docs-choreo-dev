@@ -176,7 +176,7 @@ plugins:
           'tutorials/configure-automatic-deployment.md': 'https://wso2.com/choreo/docs/deploy/configure-automatic-deployment/'
           'tutorials/map-data.md': 'https://wso2.com/choreo/docs/develop/explore-code-editor/map-data/'
           'rest-api.md': 'https://wso2.com/choreo/docs/develop/components/rest-api/'
-          'api-proxies': 'https://wso2.com/choreo/docs/develop/components/api-proxy/'
+          'api-proxies.md': 'https://wso2.com/choreo/docs/develop/components/api-proxy/'
           'api-proxies/api-proxy.md': 'https://wso2.com/choreo/docs/develop/components/api-proxy/'
           'webhook.md': 'https://wso2.com/choreo/docs/develop/components/webhook/'
           'scheduled-tasks.md': 'https://wso2.com/choreo/docs/develop/components/scheduled-tasks/'

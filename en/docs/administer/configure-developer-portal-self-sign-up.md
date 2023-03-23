@@ -6,7 +6,7 @@ This page walks you through the steps to configure self-sign-up to the Developer
 
 ## Prerequisites
 
-1. Sign in to the Choreo Console at https://console.choreo.dev/ using your Google, GitHub, or Microsoft account.
+1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/) using your Google, GitHub, or Microsoft account.
 2. If you are a new user, create an organization with a unique organization name. For example, "Stark Industries".
 
     ![Create an organization](../assets/img/administration/self-sign-up/create-organization.png){.cInlineImage-small}
@@ -15,9 +15,6 @@ This page walks you through the steps to configure self-sign-up to the Developer
 
 1. Click **Settings** in the left navigation menu of the Choreo Console.
 2. Click **Copy Handle** to copy the organization handle to the clipboard.
-
-    ![Copy handle](../assets/img/administration/self-sign-up/copy-handle.png){.cInlineImage-half}
-
 3. Go to the [Asgardeo sign-up page](https://asgardeo.io/signup?utm_source=console) and register using the same email address/user account you used to sign up with Choreo.
 
     !!! tip
@@ -100,11 +97,11 @@ This page walks you through the steps to configure self-sign-up to the Developer
 
 Once you complete these steps, the Choreo support team will perform the final self-sign-up configuration, and you will see a sign-up link similar to the following in your Developer Portal:
 
-![Sign-up](../assets/img/administration/self-sign-up/sign-up.png){.cInlineImage-full}
+![Sign-up](../assets/img/administration/self-sign-up/sign-up.png){.cInlineImage-half}
  
 Users can click **LOGIN/SIGN UP** and then click **Create an account** to sign up to your Developer Portal without having to send you a request to register them.
 
-![Create an account](../assets/img/administration/self-sign-up/create-an-account.png){.cInlineImage-half} 
+![Create an account](../assets/img/administration/self-sign-up/create-an-account.png){.cInlineImage-small} 
 
 ## Approve or reject new users
 

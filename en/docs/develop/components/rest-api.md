@@ -1,4 +1,3 @@
-
 # REST APIs
 Explore how you can easily design, develop, and manage REST APIs in Choreo to implement your business API strategy.
 
@@ -10,31 +9,8 @@ A Representational State Transfer(REST) API is an Application Programming Interf
 
 Designing a REST API is the process of declaring the resources, the appropriate HTTP verbs, paths, and input (request) and output (response) data formats to showcase the capabilities of the API. Designing an API based on a standard helps to do the design well and provide a consistent experience to the users of your API. [The OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification) is the most widely used standard for declaring HTTP/REST APIs. The design of an API is a crucial factor that determines the usability and the value of the API. A well-designed API is profitable due to the ease of adoption. 
 
-Choreo’s low-code editor allows developers to design (and develop) high-quality REST APIs with ease. To design a REST API in Choreo, you must create a REST API component. You can design a REST API from scratch by manually specifying the resources, the HTTP verbs, paths, and other required elements. The Choreo roadmap also includes the capability to design a REST API by importing an OpenAPI document, which will be available soon.
-
-Choreo allows you to design your REST API in three possible ways as shown in the image below:
-
-![Create REST API](../../assets/img/rest-apis/create-a-rest-api.png){.cInlineImage-small}
-
-- **Start from scratch**
-
-    You can design a REST API via Choreo’s low-code editor that allows developers to design (and develop) high-quality REST APIs with ease. This method involves designing the REST API from scratch by manually specifying the resources, the HTTP verbs, paths, and other required elements.
-  
-    ![Add resource](../../assets/img/rest-apis/add-resource.png){.cInlineImage-threeQuarter}
-
-    Choreo allows developers to easily specify input and output data formats for each API resource:
-
-    ![Configure request payload](../../assets/img/rest-apis/configure-request-payload.png){.cInlineImage-threeQuarter}
-
-    ![Configure response](../../assets/img/rest-apis/configure-response.png){.cInlineImage-threeQuarter}
-
-- **Connect existing Ballerina repository**
-
-    If you have a REST API written in the [Ballerina Programming Language](https://ballerina.io), you can deploy it in Choreo. To do this, you must save it in a private GitHub repository and connect that repository to Choreo.
-
-- **Bring your Dockerfile**
-
-  If you have an existing REST API written in any programming language, you can deploy it in Choreo. To do this, you must generate a Docker image for the REST API and save the Dockerfile in a private GitHub repository. When you connect this GitHub repository to Choreo, you can build the Dockerfile to pull the REST API implementation from the Docker image.
+To design a REST API in Choreo, you must create a REST API component. You can design a REST API from scratch by manually specifying the resources, the HTTP verbs, paths, and other required elements. 
+Alternatively you can use the [Choreo VS code extension](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo) to design and develop the REST API and publish it on Choreo. 
 
 ## Developing a REST API
 
@@ -47,7 +23,6 @@ WSO2 provides a [Ballerina extension for Visual Studio Code](https://marketplace
 Once you implement a REST API, you should build it, test it, and eventually push it to the production environment. You can apply any of the six API lifecycles states (i.e., Created, Pre-released, Published, Blocked, Deprecated, and Retired) while adhering to their respective lifecycle flows.
 
 When you publish an API, you can also publish a connector for that API to make it available on the Choreo Marketplace.
-
 
 ## Deploying a REST API
 
@@ -71,12 +46,11 @@ Once you promote an API to production, Choreo provides a second URL that you can
 
 ## API management
 
-Choreo provides API management capabilities by default for REST APIs (and other APIs) so that you can manage the exposure of APIs to consumers. Choreo API management capabilities also allow you to configure API security settings, set rate limits, associate usage plans, provide other documentation, and perform other related functions to govern the API. The following image shows how you can execute the consumer-facing lifecycle of an API.
+Choreo provides API management capabilities by default for REST APIs (and other APIs) so that you can manage the exposure of APIs to consumers. Choreo API management capabilities also allow you to configure API security settings, set rate-limits, associate usage plans, provide other documentation, and perform other related functions to govern the API. The following image shows how you can execute the consumer-facing lifecycle of an API.
 
 ![Manage API lifecycle](../../assets/img/rest-apis/api-lifecycle-manage.png){.cInlineImage-threeQuarter}
 
 The inbuilt Choreo Developer Portal makes it easy for consumers to consume published APIs. Application developers can discover and invoke published APIs via the Choreo Developer Portal. To learn more about the Choreo Developer portal, see [Developer Portal](../../consume/developer-portal.md)).
-
 
 ## Observability
 
