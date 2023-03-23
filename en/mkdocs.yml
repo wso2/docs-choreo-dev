@@ -79,12 +79,12 @@ nav:
       - Deploy Your Choreo Component: deploy/deploy-your-component.md
       - Deploy a Containerized Component: deploy/deploy-a-containerized-choreo-component.md
       - DevOps: 
-          - Runtime: deploy/devops/runtime.md
-          - Containers: deploy/devops/containers.md
-          - Configurations and Secrets: deploy/devops/configs-and-secrets.md
-          - Health Checks: deploy/devops/health-checks.md
-          - Scaling: deploy/devops/scaling.md
-          - Storage: deploy/devops/storage.md
+          - View Runtime Details: deploy/devops/runtime.md
+          - View Container Details: deploy/devops/containers.md
+          - Manage Configurations and Secrets: deploy/devops/configs-and-secrets.md
+          - Set Up Health Checks: deploy/devops/health-checks.md
+          - Scale Component Replicas: deploy/devops/scaling.md
+          - Configure Storage: deploy/devops/storage.md
   - Test: 
       - OpenAPI Console: test/open-api-console.md
       - cURL: test/curl.md
