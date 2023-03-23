@@ -1,4 +1,4 @@
-# Scaling
+# Scale Component Replicas
 
 Services can be configured to automatically scale up or down in number *(i.e. the number of active replicas)* to handle traffic spikes and to also cut down on costs during periods of low usage.
 
