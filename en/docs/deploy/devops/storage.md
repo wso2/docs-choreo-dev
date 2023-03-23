@@ -1,4 +1,4 @@
-# Storage
+# Configure Storage
 
 All Choreo components are created with a **read-only file system**, and you cannot write or access a file system from your applications by default.
 
