@@ -1,4 +1,4 @@
-# View Container Details
+# Configure Container Details
 
 The Containers page includes information about the containers that comprise your component, including the currently deployed image tag and the commit from which it was built as well as compute resource usage limits imposed on the containers. 
 
@@ -9,28 +9,28 @@ The Containers page includes information about the containers that comprise your
 
 * Components in Choreo are currently limited to a single main container.
 
-## Editing Containers
+## Update container details
 
 To open the edit view, click the **Edit** button the respective Container you wish to modify.
 
 ![Containers View](../../assets/img/deploy/devops/containers/edit-container-form.png){.cInlineImage-full}
 
-### Resource Requests and Limits
+### Update resource requests and limits
 
 Drag the sliders to modify the resource requests and limits as necessary. A resource request cannot be less than its limit.
   > You can only modify resource requests and limits on private data planes.
 
-### Image Pull Policy
+### Set the image pull policy
 
 - *Always* - The image is always pulled from the container registry, even if a matching tag is already present on the data plane.
 - *If Not Present* - The image is only pulled if a matching image is not present in the data plane (recommended option).
 
-### Container Ports
+### Specify container ports
 
 Specify the container port, service port and protocol. The service port is the port that is exposed outside of the container to your Project-scoped endpoint. If you're unsure, use the container port in both fields. 
 > You do not need to configure the port manually for Ballerina components. This option is provided primarily to edit ports on containerized/Dockerfile-based components. 
 
-### Container Command and Arguments *(Advanced)*
+### Set command and arguments for the container
 
 In certain scenarios (*Eg. running legacy or third-party applications*), you may need to provide or override the `ENTRYPOINT` of a container.
 
