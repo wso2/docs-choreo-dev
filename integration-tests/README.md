@@ -29,7 +29,7 @@ You can execute integration tests against your own Choreo account in Dev using t
 
 ## 3. Run DP tests
 1. Navigate to the  `integration-tests` directory
-2. run `sh runner.sh <staging/prod> <staging-access-token/prod-access-token>`
+2. run `sh dp-test-runner.sh <staging/prod> <staging-access-token/prod-access-token>`
 
 ## 4. Run a specific test in InteliJ
 
