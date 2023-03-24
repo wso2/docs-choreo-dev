@@ -19,11 +19,11 @@ To connect your GitHub repository to Choreo, you should authorize the [Choreo Ap
 
 * Authorize GitHub Application
     
-    ![Authorize GitHub Application](../assets/img/deploy/shared/authz-choreo-github-app.png){.cInlineImage-quarter height="600px"}
+    ![Authorize GitHub Application](../assets/img/deploy/shared/authz-choreo-github-app.png){.cInlineImage-half}
 
 * Grant Repository Access
 
-    ![Grant Repository Access](../assets/img/deploy/shared/github-repo-access.png){.cInlineImage-full height="600px"}
+    ![Grant Repository Access](../assets/img/deploy/shared/github-repo-access.png){.cInlineImage-full}
 
 
     The **Choreo Apps** requires the following permission:
@@ -52,16 +52,17 @@ The following table describes the individual fields in the **Connect Repository*
 | **Port***               | The port at which your service is running.                                                                                                                                           |
 | **OpenAPI Filepath***   | The path to an OpenAPI specification (in YAML/JSON) relative to the repository root. If you don't provide a path, the system automatically generates a default allow-all specification.    |
 
+   
 !!! note
-    Fields marked with **\*** are not visible for all component types.
+ 
+    - Fields marked with **\*** are not visible for all component types.
 
-!!! note
-    To successfully build your container with Choreo, it is essential to explicitly define a User ID (`UID`) under the `USER` instruction in your Dockerfile. You can refer the [sample Dockerfile](https://github.com/wso2/choreo-sample-apps/blob/main/go/rest-api/Dockerfile) for guidance.
+    - To successfully build your container with Choreo, it is essential to explicitly define a User ID (`UID`) under the `USER` instruction in your Dockerfile. You can refer the [sample Dockerfile](https://github.com/wso2/choreo-sample-apps/blob/main/go/rest-api/Dockerfile) for guidance.
 
-    To ensure that the defined USER instruction is valid, it must conform to the following conditions:
+    - To ensure that the defined USER instruction is valid, it must conform to the following conditions:
         
-    - A valid User ID is a numeric value between 10000-20000, such as `10001` or `10500`.
-    - Usernames are not considered valid and should not be used. For example, `my-custom-user-12221` or `my-custom-user` are  invalid User IDs.
+        - A valid User ID is a numeric value between 10000-20000, such as `10001` or `10500`.
+        - Usernames are not considered valid and should not be used. For example, `my-custom-user-12221` or `my-custom-user` are  invalid User IDs.
 
 ## Deploy the Containerized component
 

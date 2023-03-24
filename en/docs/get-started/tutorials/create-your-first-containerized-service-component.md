@@ -31,7 +31,7 @@ Our next step is to set up the resources required to follow the tutorial, includ
     * Read and write access to code, pull requests, and repository hooks
 
 !!! info
-   For more information, see  [Containerized Application Deployment](../../deploy/containerized-application.md).
+    For more information, see  [Containerized Application Deployment](../../deploy/containerized-application.md).
 
 Let's get started!
 

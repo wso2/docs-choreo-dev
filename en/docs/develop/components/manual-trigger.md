@@ -16,6 +16,7 @@ The criteria upon which the Manual Trigger component can assess whether the appl
 A log that reports to the end-user whether the application is healthy or not.
 
 There are two potential approaches to developing a manual trigger with the above configurations, as shown in the image below:
+
 ![Create manual trigger](../../assets/img/manual-triggers/create-manual-trigger.png){.cInlineImage-half}
 
 ### Ballerina
