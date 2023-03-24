@@ -38,7 +38,7 @@ The endpoints.yaml file has a specific structure and contains the following deta
 * name: A unique name for the endpoint, which Choreo will use to generate the managed API.
 * port: The numeric port value that gets exposed via this endpoint.
 * type: The type of traffic this endpoint is accepting, such as REST, GraphQL, or gRPC.
-* visibility: The network level visibility of this endpoint, which defaults to "Project" if not specified. Accepted values are "Project", "Organization", or "Public".
+* networkVisibility: The network level visibility of this endpoint, which defaults to "Project" if not specified. Accepted values are "Project", "Organization", or "Public".
 * context: The context (base path) of the API that Choreo exposes via this endpoint. This field is mandatory if you set the endpoint type to REST or GraphQL.
 * schemaFilePath: The schema definition file path is specified in this field and defaults to the wildcard route if not provided. For REST endpoint types, this field should be a relative path to the Docker context.
 
@@ -68,7 +68,7 @@ endpoints:
   type: REST
   # +optional Network level visibility of this endpoint. Defaults to Project
   # Accepted values: Project|Organization|Public.
-  visibility: Project
+  networkVisibility: Project
   # +optional Context (base path) of the API that is exposed via this endpoint.
   # This is mandatory if the endpoint type is set to REST or GraphQL.
   context: /greeting

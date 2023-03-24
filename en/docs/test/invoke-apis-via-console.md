@@ -22,7 +22,7 @@ You can follow the below steps to navigate to the test console:
 
 6. From the **Public Endpoint** list, select the required **Endpoint** 
     !!! note
-        You can only see the endpoints that you have configured with **Public** visibility.
+        You can only see the endpoints that you have configured with **Public** networkVisibility.
 
 ## REST Endpoints
 
