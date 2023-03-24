@@ -44,3 +44,4 @@ resources:
   - cio-query-api-service.yaml
   - cio-incident-configurator.yaml
   - cdn-tls-synchronizer.yaml
+  - crypto-key-service.yaml
