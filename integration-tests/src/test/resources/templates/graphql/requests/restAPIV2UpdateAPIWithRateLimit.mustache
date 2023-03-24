@@ -1,9 +1,9 @@
 {
     "name": "{{apiName}}",
-    "description": "This is a simple API for Pizza Shack online pizza delivery store.",
+    "description": "",
     "context": "{{basePath}}",
-    "version": "1.0.0",
-    "provider": "admin",
+    "version": "2.0.0",
+    "provider": "choreo_dev_apim_admin",
     "lifeCycleStatus": "CREATED",
     "wsdlInfo": null,
     "wsdlUrl": null,
@@ -11,9 +11,10 @@
     "cacheTimeout": 300,
     "hasThumbnail": false,
     "isDefaultVersion": false,
-    "isRevision": false,
-    "revisionedApiId": null,
-    "revisionId": 0,
+    "isRevision": true,
+    "enableBackendJWT": false,
+    "revisionedApiId": "{{apiId}}",
+    "revisionId": {{revisionId}},
     "enableSchemaValidation": false,
     "type": "HTTP",
     "audience": null,
@@ -21,15 +22,12 @@
         "http",
         "https"
     ],
-    "tags": [
-        "add",
-        "substract"
-    ],
+    "tags": [],
     "policies": [
         "Unlimited"
     ],
     "throttlingLimit": {
-        "requestCount": 10,
+        "requestCount": 5,
         "unit": "MINUTE"
     },
     "authorizationHeader": "Authorization",
@@ -37,11 +35,8 @@
         "oauth2",
         "oauth_basic_auth_api_key_mandatory"
     ],
-    "maxTps": {
-        "production": 1000,
-        "sandbox": 1000
-    },
-    "visibility": "PUBLIC",
+    "maxTps": null,
+    "visibility": "PRIVATE",
     "visibleRoles": [
         ""
     ],
@@ -51,19 +46,71 @@
     "subscriptionAvailableTenants": [
         ""
     ],
-    "additionalProperties": [],
-    "additionalPropertiesMap": {},
+    "additionalProperties": [
+        {
+            "name": "projectId",
+            "value": "db932f6c-7aca-42cb-8f24-d55eda0543a0",
+            "display": true
+        },
+        {
+            "name": "accessibility",
+            "value": "external",
+            "display": true
+        },
+        {
+            "name": "application",
+            "value": "automationtestcomponent1679546000190",
+            "display": false
+        },
+        {
+            "name": "org",
+            "value": "virajgamage",
+            "display": false
+        },
+        {
+            "name": "applicationId",
+            "value": "959c8e62-74f6-405a-9263-fb8ed61b746f",
+            "display": false
+        }
+    ],
+    "additionalPropertiesMap": {
+        "projectId__display": {
+            "name": "projectId",
+            "value": "db932f6c-7aca-42cb-8f24-d55eda0543a0",
+            "display": false
+        },
+        "accessibility__display": {
+            "name": "accessibility",
+            "value": "external",
+            "display": false
+        },
+        "application": {
+            "name": "application",
+            "value": "automationtestcomponent1679546000190",
+            "display": false
+        },
+        "org": {
+            "name": "org",
+            "value": "virajgamage",
+            "display": false
+        },
+        "applicationId": {
+            "name": "applicationId",
+            "value": "959c8e62-74f6-405a-9263-fb8ed61b746f",
+            "display": false
+        }
+    },
     "monetization": null,
     "accessControl": "NONE",
     "accessControlRoles": [],
     "businessInformation": {
-        "businessOwner": "John Doe",
-        "businessOwnerEmail": "johndoe@wso2.com",
-        "technicalOwner": "Jane Roe",
-        "technicalOwnerEmail": "janeroe@wso2.com"
+        "businessOwner": null,
+        "businessOwnerEmail": null,
+        "technicalOwner": null,
+        "technicalOwnerEmail": null
     },
     "corsConfiguration": {
-        "corsConfigurationEnabled": false,
+        "corsConfigurationEnabled": true,
         "accessControlAllowOrigins": [
             "*"
         ],
@@ -74,7 +121,8 @@
             "Content-Type",
             "SOAPAction",
             "apikey",
-            "Internal-Key"
+            "API-Key",
+            "testKey"
         ],
         "accessControlAllowMethods": [
             "GET",
@@ -92,12 +140,12 @@
         "signatureHeader": "x-hub-signature"
     },
     "workflowStatus": null,
-    "createdTime": "1676027528613",
-    "lastUpdatedTime": null,
+    "createdTime": "1679546061243",
+    "lastUpdatedTime": "2023-03-23 04:35:41.205",
     "endpointConfig": {
         "endpoint_type": "http",
         "production_endpoints": {
-            "url": "{{productionEndpoint}}"
+            "url": "http://resource-name.ns-name.svc.cluster.local:9090/"
         }
     },
     "endpointImplementationType": "ENDPOINT",
@@ -106,7 +154,7 @@
     "operations": [
         {
             "id": "",
-            "target": "/users",
+            "target": "/greeting",
             "verb": "GET",
             "authType": "Application & Application User",
             "throttlingPolicy": "Unlimited",
@@ -138,7 +186,7 @@
         "apiExternalProductionEndpoint": null,
         "apiExternalSandboxEndpoint": null,
         "originalDevPortalUrl": null,
-        "apiOwner": "admin",
+        "apiOwner": "choreo_dev_apim_admin",
         "vendor": "WSO2"
     },
     "gatewayVendor": "wso2",

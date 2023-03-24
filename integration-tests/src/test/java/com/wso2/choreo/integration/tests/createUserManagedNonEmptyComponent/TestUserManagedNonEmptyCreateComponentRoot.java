@@ -6,30 +6,48 @@ import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.api.client.json.Json;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
+import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
+import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
+import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
+import com.wso2.choreo.integration.common.utils.HttpClientUtil;
+import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.ApiDTO;
 import com.wso2.choreo.integration.models.commithistory.Commit;
+import com.wso2.choreo.integration.models.componentstatus.Status;
+import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
+import com.wso2.choreo.integration.models.proxyapi.DeploySettings;
+import com.wso2.choreo.integration.models.proxyapi.DeploymentStatus;
+import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
+import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
+import com.wso2.choreo.integration.models.response.ProxyResponse;
+import com.wso2.choreo.integration.models.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -69,6 +87,11 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
         private String repoBranch = "dev";
         private String repoBranchV2 = "dev-v2";
         private ApiVersion apiVersion;
+
+        private String revisionUUID;
+        private int revisionId;
+
+        private String buildId;
         @Autowired
         private HttpClient choreoTestClient;
 
@@ -451,7 +474,16 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
                                         .receive()
                                         .response(HttpStatus.OK)
                                         .message()
-                                        .body(expectedResponse)));
+                                        .body(expectedResponse)
+                                        .extract((message, context) -> {
+                                        JsonObject component = new JsonParser().parse((String) message.getPayload())
+                                                .getAsJsonObject();
+                                        this.buildId = component
+                                                .get("data").getAsJsonObject()
+                                                .get("componentDeployment").getAsJsonObject()
+                                                .get("build").getAsJsonObject()
+                                                .get("buildId").getAsString();
+                                })));
         }
 
         @Test(dependsOnMethods = {"componentDeploymentStatus_TestUserManagedNonEmptyCreateComponentRoot"})
@@ -594,7 +626,93 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
                 ComponentUtils.invokeApiEndpoint(accessToken, testComponentV2, Constant.Environment.Production);
         }
 
-        @Test(dependsOnMethods = { "invokeAPIProd_TestUserManagedNonEmptyCreateComponentRoot" })
+        @Test(dependsOnMethods = {"invokeAPIProd_TestUserManagedNonEmptyCreateComponentRoot"})
+        @CitrusTest
+        public void ComponentDeploymentAfterAPIRateLimitUpdate_TestUserManagedNonEmptyCreateComponentRoot()
+                throws Exception {
+                ProxyAPI proxyAPI = APICreator.getProxyAPI(testComponentV2.getApiId(), orgUUID, accessToken).getEntity();
+                String apiYamlFilename = "templates/graphql/requests/restAPIV2UpdateAPIWithRateLimit.mustache";
+                Map<String, String> apiYamlParams = new HashMap<>();
+                apiYamlParams.put("apiId", proxyAPI.getId());
+                apiYamlParams.put("apiName", proxyAPI.getName());
+                apiYamlParams.put("basePath", proxyAPI.getContext() + "/2.0.0");
+                apiYamlParams.put("revisionId", String.valueOf(revisionId));
+                String apiPayload = ObjectMapperUtil.mapObjectToString(apiYamlFilename, apiYamlParams);
+
+                JsonArray jsonArray = testComponentV2.getRevisions(accessToken, apiId, orgUUID);
+                for (JsonElement jsonElement : jsonArray) {
+                        if (jsonElement.getAsJsonObject().has("deploymentInfo")) {
+                                JsonArray deploymentInfo = jsonElement.getAsJsonObject()
+                                        .get("deploymentInfo").getAsJsonArray();
+                                if (deploymentInfo.size() > 0) {
+                                        JsonObject deploymentInfoObject = deploymentInfo.get(0).getAsJsonObject();
+                                        if (deploymentInfoObject.has("name") &&
+                                                "dev-us-east-azure".equals(deploymentInfoObject.get("name")
+                                                        .getAsString())) {
+                                                this.revisionUUID =
+                                                        deploymentInfoObject.get("revisionUuid").getAsString();
+                                                this.revisionId =
+                                                        Integer.parseInt(jsonElement.getAsJsonObject()
+                                                                .get("displayName").getAsString()
+                                                                .split(" ")[1]);
+                                        }
+                                }
+                        }
+                }
+                Assert.assertNotNull(this.revisionUUID, "Revision ID is null");
+                DeploySettings deploySettings = APICreator.deployRevision(testComponentV2.getId(),
+                        testComponentV2.getLatestApiVersion().getId(),
+                        testComponentV2.getLatestAppEnvId("dev"), orgUUID,
+                        revisionUUID, buildId, apiId, accessToken, apiPayload);
+                boolean requestSuccess = false;
+                DeploymentStatus deploymentStatus = null;
+                int count = 0;
+                while (!requestSuccess && count < 10) {
+                        deploymentStatus = APICreator.checkDeploymentStatus(componentId,
+                                testComponentV2.getLatestApiVersion().getId(),
+                                deploySettings.getRequestId(), accessToken);
+                        if ("completed".equals(deploymentStatus.getStatus())) {
+                                requestSuccess = true;
+                        } else {
+                                Thread.sleep(2000);
+                                count++;
+                        }
+                }
+                Assert.assertTrue(requestSuccess, "Deployment request failed : Current Action : " +
+                        deploymentStatus.getCurrent_Action() + " Status : " + deploymentStatus.getStatus());
+        }
+
+        @Test(dependsOnMethods = {"ComponentDeploymentAfterAPIRateLimitUpdate_TestUserManagedNonEmptyCreateComponentRoot"})
+        @CitrusTest
+        public void invokeRestAPIAfterAPIRateLimitUpdate_TestUserManagedNonEmptyCreateComponentRoot()
+                throws Exception {
+                // To give a time to deploy the API.
+                Thread.sleep(10000);
+                // Rate limiting counter resets based on the system clock.
+                long timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
+                if (timeRemainingTillNextMinute < 15000) {
+                        Thread.sleep(timeRemainingTillNextMinute + 5000);
+                }
+                boolean isThrottled = false;
+                try {
+                        ComponentUtils.invokeApiEndpointMultipleTimes(accessToken, testComponentV2, Constant.Environment.Development,
+                                15);
+                } catch (InvokeAPICheckException e) {
+                        isThrottled = true;
+                }
+
+                Assert.assertTrue(isThrottled, "Requests are not rate limited at the desired limit");
+                timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
+                Thread.sleep(timeRemainingTillNextMinute + 5000);
+                try {
+                        ComponentUtils.invokeApiEndpoint(accessToken, testComponentV2, Constant.Environment.Production);
+                } catch (Exception e) {
+                        Assert.fail("Unexpected error occured while invoking API : " + e.getMessage());
+                }
+        }
+
+        @Test(dependsOnMethods = { "invokeAPIProd_TestUserManagedNonEmptyCreateComponentRoot" ,
+                "invokeRestAPIAfterAPIRateLimitUpdate_TestUserManagedNonEmptyCreateComponentRoot"})
         @CitrusTest
         public void deleteBranchV2_TestUserManagedNonEmptyCreateComponentRoot() throws JsonProcessingException {
                 String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
