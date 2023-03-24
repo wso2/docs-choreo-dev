@@ -1,9 +1,9 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: devops-portal
+  name: crypto-key-service
 spec:
   minAvailable: "50%"
   selector:
     matchLabels:
-      choreo.component: devops-portal
+      choreo.component: crypto-key-service

@@ -35,7 +35,6 @@ resources:
   - testbase.yaml
   - shared-image-viewer.yaml
   - image-share-service.yaml
-  - devops-portal.yaml
   - devops-portal-api.yaml
   - organization-management.yaml
   - choreo-apim-proxy-deployer.yaml
@@ -45,3 +44,4 @@ resources:
   - cio-query-api-service.yaml
   - cio-incident-configurator.yaml
   - cdn-tls-synchronizer.yaml
+  - crypto-key-service.yaml

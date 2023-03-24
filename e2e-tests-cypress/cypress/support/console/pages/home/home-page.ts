@@ -23,7 +23,7 @@ export class ChoreoHomePage {
     }
 
     static navigateToMarketPlace() {
-        cy.get('[data-testid="main-left-nav-item-Marketplace"]').click();
+        cy.get('[data-testid="main-left-nav-item-Marketplace"]').click({ force: true })
     }
 
     static navigateToProjects() {
