@@ -66,8 +66,8 @@ nav:
           - REST APIs: develop/components/rest-api.md
           - REST API Proxy: develop/components/api-proxy.md
           - Webhooks: develop/components/webhook.md
-          - Scheduled Triggers: develop/components/scheduled-tasks.md
-          - Manual Triggers: develop/components/manual-triggers.md
+          - Scheduled Trigger: develop/components/scheduled-trigger.md
+          - Manual Trigger: develop/components/manual-trigger.md
           - GraphQL APIs: develop/components/graphql-api.md
           - Service: develop/components/service.md
       - Manage Repository:

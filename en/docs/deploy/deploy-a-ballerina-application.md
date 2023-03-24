@@ -75,12 +75,12 @@ For more information about these configurations, see [DevOps Portal](../devops/d
 
 You can configure the **Endpoints** to expose your service using the **Service** Component in Choreo. See [Service Component](../develop/components/service.md) for more information.
 
-### Build, Deploy and Promote
+### Build, Deploy, and Promote
 
 After adding the application configuration, you can build and deploy it by clicking the **Deploy Manually** button. Choreo will start the build process with the selected commit in the **Build Area**. 
 
 !!! note
-   The **Auto Deploy on Commit** feature, which automatically builds and deploys the application upon pushing a code change to the repository, is enabled by default. To turn off this feature, navigate to the **Build Area**.
+    The **Auto Deploy on Commit** feature, which automatically builds and deploys the application upon pushing a code change to the repository, is enabled by default. To turn off this feature, navigate to the **Build Area**.
 
 While building and deploying the application, you can view the build logs from the right-side panel. Choreo will automatically deploy the application to the Development environment once the build against the application is successful. You can then promote it to a higher environment by clicking the Promote button. The page may display multiple environment cards depending on your environment configurations.
 
