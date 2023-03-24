@@ -37,6 +37,7 @@ public class DataProviderWrapper {
     private String devInvokeUrl;
     private String prodInvokeUrl;
     private String apiKey;
+    private String region;
 
 
     public static <T> Object[][] convertToDataProvider(List<T> list) {

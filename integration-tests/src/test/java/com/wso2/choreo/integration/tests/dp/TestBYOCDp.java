@@ -2,7 +2,6 @@ package com.wso2.choreo.integration.tests.dp;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
-import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentFlavour;
@@ -30,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
-public class TestBYOCDpIT extends TestNGCitrusSpringSupport {
+public class TestBYOCDp extends TestBase {
 
 
     private static final String DOCKER_FILE_PATH = "byoc-test/Dockerfile";
@@ -42,13 +41,13 @@ public class TestBYOCDpIT extends TestNGCitrusSpringSupport {
     @BeforeClass
     public void setup_TestBYOCEUDataPlane() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-
     }
 
     @DataProvider(name = "dps")
     public Object[][] provideData() {
-        return DataProviderWrapper.convertToDataProvider(dps);
+        return this.setUp();
     }
+
 
     @DataProvider(name = "reg")
     public Object[][] regionData() {
@@ -56,11 +55,11 @@ public class TestBYOCDpIT extends TestNGCitrusSpringSupport {
     }
 
 
-    @Test(dataProvider = "reg")
+    @Test(dataProvider = "dps")
     @CitrusTest
-    public void createByocComponent_TestBYOCEUDataPlane(String region) throws Exception {
+    public void createByocComponent_TestBYOCEUDataPlane(DataProviderWrapper dp) throws Exception {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        ChoreoProject project = GraphQL.createProject(region, accessToken);
+        ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
 
 
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).projectId(project.getId())
@@ -69,10 +68,11 @@ public class TestBYOCDpIT extends TestNGCitrusSpringSupport {
                 .dockerContext("byoc-test")
                 .dockerfilePath(DOCKER_FILE_PATH).build();
 
-        ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.BYOC);
-        DataProviderWrapper dp = DataProviderWrapper.builder().choreoProject(project).choreoComponent(choreoComponent).build();
-        dps.add(dp);
-        Assert.assertEquals(choreoComponent.getName(), componentName);
+        ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
+        dp.setChoreoProject(project);
+        dp.setChoreoComponent(choreoComponent);
+        Assert.assertEquals(project.getRegion(), dp.getRegion());
+        Assert.assertNotNull(choreoComponent.getId());
 
     }
 

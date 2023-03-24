@@ -7,8 +7,6 @@
              <class name="com.wso2.choreo.integration.tests.quotaLimit.QuotaLimitIT"/>
              <class name="com.wso2.choreo.integration.tests.anomalyDetector.BackendFailureAnomaly"/>
             <class name="com.wso2.choreo.integration.tests.connectorbuilder.ConnectorBuilderIT"/>
-            <class name="com.wso2.choreo.integration.tests.apiproxy.ProxyApiIT"/>
-            <class name="com.wso2.choreo.integration.tests.dp.ProxyApiEUDpIT"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestMaxAPIRevisionsUsingDeployments"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestBasicAPIRevisionCreation"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingSettingsPage"/>
@@ -23,14 +21,16 @@
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationMICustomConfig"/>
             <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.TestUserManagedNonEmptyCreateComponentRoot"/>
             <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.TestUserManagedNonEmptyCreateComponentSub"/>
-            <class name="com.wso2.choreo.integration.tests.webhook.CreateDeployInvokeWebhookIT"/>
             <class name="com.wso2.choreo.integration.tests.observability.ObservabilityAPITestCase"/>
             <class name="com.wso2.choreo.integration.tests.observability.LoggingAPITestCase"/>
             <class name="com.wso2.choreo.integration.tests.observability.SysObservabilityAPITestCase"/>
             <class name="com.wso2.choreo.integration.tests.themeManagement.ThemePreference"/>
             <class name="com.wso2.choreo.integration.tests.jwt.TestClientJwTValidation"/>
-            <class name="com.wso2.choreo.integration.tests.dp.TestBYOCDpIT"/>
-            <class name="com.wso2.choreo.integration.tests.dp.GraphQLServiceDpIT"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestGraphQLServiceDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestBYOCDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestWebhookDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestRestAPIDp"/>
         </classes>
     </test>
 </suite>
