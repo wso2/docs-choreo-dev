@@ -3,9 +3,11 @@
 <suite name="choreoIntegrationTests_dps" parallel="classes" thread-count="7">
     <test name="choreo">
         <classes>
-            <class name="com.wso2.choreo.integration.tests.dp.GraphQLServiceDpIT"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestGraphQLServiceDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestBYOCDpIT"/>
-            <class name="com.wso2.choreo.integration.tests.dp.ProxyApiEUDpIT"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiEUDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestWebhookDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestRestAPIIT"/>
         </classes>
     </test>
 </suite>

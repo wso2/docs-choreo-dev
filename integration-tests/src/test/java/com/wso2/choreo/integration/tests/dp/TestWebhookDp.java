@@ -3,7 +3,6 @@ package com.wso2.choreo.integration.tests.dp;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
-import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -46,7 +45,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -69,11 +67,10 @@ import static org.junit.Assert.fail;
  * 4. Send a mock event to the deployed webhook
  * 5. Analyze the logs to check whether the relevant log is printed or not
  */
-public class WebhookDpIT extends TestNGCitrusSpringSupport {
+public class TestWebhookDp extends TestBase {
     private static String accessToken;
 
     private String orgUUID;
-    private String projectId;
     private String repoName;
     private String namespace;
     private String obsId;
@@ -99,14 +96,8 @@ public class WebhookDpIT extends TestNGCitrusSpringSupport {
 
     @DataProvider(name = "dps")
     public Object[][] provideData() {
-        return DataProviderWrapper.convertToDataProvider(dps);
+        return this.setUp();
     }
-
-    @DataProvider(name = "reg")
-    public Object[][] regionData() {
-        return DataProviderWrapper.convertToDataProvider(Arrays.asList(Configuration.getConfig(ConfigDefinition.REGIONS).split(",")));
-    }
-
 
     @BeforeClass
     public void setup_CreateDeployInvokeWebhookIT() throws Exception {
@@ -114,24 +105,24 @@ public class WebhookDpIT extends TestNGCitrusSpringSupport {
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
     }
 
-    @Test(dataProvider = "reg")
+    @Test(dataProvider = "dps")
     @CitrusTest
-    public void createUserManagedComponent_CreateDeployInvokeWebhookIT(String region) throws Exception {
+    public void createUserManagedComponent_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
         // Creating component
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        ChoreoProject project = GraphQL.createProject(region, accessToken);
-        projectId = project.getId();
+        ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
+        String projectId = project.getId();
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).
                 srcGitRepoUrl("https://github.com/choreo-test-apps/GitHub-web-hook").
                 displayName(componentName).projectId(project.getId()).
                 triggerChannels("IssuesService").triggerID("88").
                 displayType(Constant.displayType.webhook.name()).build();
-        choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
-                ComponentFlavour.STANDARD);
+        choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
 
-        DataProviderWrapper dp = DataProviderWrapper.builder().choreoProject(project).choreoComponent(choreoComponent).build();
-        dps.add(dp);
-        Assert.assertEquals(choreoComponent.getProjectId(), projectId);
+        dp.setChoreoProject(project);
+        dp.setChoreoComponent(choreoComponent);
+        Assert.assertEquals(project.getRegion(), dp.getRegion());
+        Assert.assertNotNull(choreoComponent.getId());
 
     }
 
@@ -144,7 +135,7 @@ public class WebhookDpIT extends TestNGCitrusSpringSupport {
         dp.setDevInvokeUrl(devInvokeURL);
     }
 
-    @Test(dependsOnMethods = {"componentDeployment_CreateDeployInvokeWebhookIT"},dataProvider = "dps")
+    @Test(dependsOnMethods = {"componentDeployment_CreateDeployInvokeWebhookIT"}, dataProvider = "dps")
     @CitrusTest
     public void invokeAPI_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
         String apiKey = APICreator.getAPIKey(dp.getChoreoComponent().getApiId(), accessToken).getApikey();
@@ -189,7 +180,7 @@ public class WebhookDpIT extends TestNGCitrusSpringSupport {
                                 .type(MessageType.PLAINTEXT)));
     }
 
-    @Test(dependsOnMethods = {"invokeAPI_CreateDeployInvokeWebhookIT"},dataProvider = "dps")
+    @Test(dependsOnMethods = {"invokeAPI_CreateDeployInvokeWebhookIT"}, dataProvider = "dps")
     @CitrusTest
     public void waitForObservabilityLogs_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
 
@@ -201,7 +192,7 @@ public class WebhookDpIT extends TestNGCitrusSpringSupport {
 
     }
 
-    @Test(dependsOnMethods = {"waitForObservabilityLogs_CreateDeployInvokeWebhookIT"},dataProvider = "dps")
+    @Test(dependsOnMethods = {"waitForObservabilityLogs_CreateDeployInvokeWebhookIT"}, dataProvider = "dps")
     @CitrusTest
     public void fetchObservabilityId_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
 
@@ -357,7 +348,7 @@ public class WebhookDpIT extends TestNGCitrusSpringSupport {
         );
     }
 
-    @Test(dependsOnMethods = {"observabilityLogs_CreateDeployInvokeWebhookIT"}, alwaysRun = true,dataProvider = "dps")
+    @Test(dependsOnMethods = {"observabilityLogs_CreateDeployInvokeWebhookIT"}, alwaysRun = true, dataProvider = "dps")
     @CitrusTest
     public void deleteWebhookComponent_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
         Response res = GraphQL.deleteComponent(dp.getChoreoComponent().getId(), dp.getChoreoProject().getId(), accessToken);

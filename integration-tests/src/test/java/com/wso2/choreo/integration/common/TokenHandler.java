@@ -197,6 +197,8 @@ public class TokenHandler {
         urlParameters.add(new BasicNameValuePair("requested_token_type", Constant.REQUESTED_TOKEN_TYPE));
         urlParameters.add(new BasicNameValuePair("orgHandle", testChoreoOrgHandle));
         urlParameters.add(new BasicNameValuePair("scope", Constant.OAUTH_SCOPES));
+        urlParameters.add(new BasicNameValuePair("client_id", stsClientId));
+
 
         try {
             request.setEntity(new UrlEncodedFormEntity(urlParameters));
