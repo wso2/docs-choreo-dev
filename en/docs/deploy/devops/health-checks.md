@@ -1,54 +1,61 @@
 # Set Up Health Checks
 
-Health Checks ensure that your running containers are always healthy and ready to serve traffic.
+Health checks ensure that a running container is always healthy and ready to serve traffic.
 
 ## Liveness probes
 
-Liveness probes run periodically on your container and restarts it if the probe fails.
-<br/>
-This allows your containers to self-heal in scenarios where the application may have crashed or become unresponsive.
+Liveness probes run periodically on your container and restart if the probe fails.
+This allows the container to self-heal in scenarios where the application may have crashed or become unresponsive.
 
 ## Readiness probes
 
-Similar to livess probes, readiness probes run periodically throughout the lifecycle of your container.
-<br/>
-But unlike livess probes it will not restart the container if the probe fails, instead it will stop the container from receiving network traffic.
+Similar to liveliness probes, readiness probes run periodically throughout the lifecycle of a container.
+However, unlike liveliness probes, it does not restart the container if the probe fails. Instead, it stops the container from receiving network traffic.
 
 !!! warning "Readiness probes on single replicas"
-    Be mindful when configuring readiness probes on a single running replica. If the readiness probe fails your application will stop receiving traffic altogether as there is only a single active replica. <br/>
-    The application may not recover unless the liveness probe (if configured) also fails and restarts the container.
+    You must be mindful when you configure readiness probes on a single-running replica. If the readiness probe fails, your application stops receiving traffic  because there is only one active replica. The application may not recover unless the liveness probe fails and restarts the container.
 
 ## Probe types
 
-The following probe types can be configured for both readiness and liveness probes.
+You can configure the following probe types for both readiness and liveness probes.
 
 ### HTTP `GET` request
 
-A HTTP `GET` request is sent to a specified port and path on the container. A response status code within the range of 200-399 is considered a success.
+Sends an HTTP `GET` request to a specified port and path on the container. A response status code in the range of 200-399 indicates that the request is a success.
 
-- Additional HTTP headers can be configured as needed.
-- It is recommended to create a `/healthz` or `/health` endpoint on your service as per convention for this purpose.
+Depending on your requirement, you can configure additional HTTP headers.
+
+The recommended approach is to create a `/healthz` or `/health` endpoint in your service for this purpose.
 
 ![HTTP GET probe](../../assets/img/deploy/devops/healthchecks/http-get-probe.png){.cInlineImage-half}
 
 ### TCP connection probe
 
-The probe will attempt to open a socket to the container on the specified port.</br>
-If it cannot establish a TCP connection it will be considered a failure.
+The probe attempts to open a socket to the container on the specified port. If it cannot establish a TCP connection, it becomes a failure.
 
 ### Execute a command
 
-The probe will execute the given script inside the container. A non-zero return from the command will be considered a failure.
-Eg. `["cat", "/tmp/healthy"]` will be considered healthy if the file `/tmp/healthy` is present, if not it will be considered a failure (non-zero exit code).</br>
-The application would be responsible for writing and mainting this file in the specified location in this scenario.
+The probe executes the given script inside the container. A non-zero return from the command is considered a failure.
+
+For example, `["cat", "/tmp/healthy"]` is considered healthy if the file `/tmp/healthy` is present. If not, it becomes a failure (non-zero exit code).
+In such scenarios, the application is responsible for writing and maintaining this file in the specified location.
 
 ## Configure liveness and readiness probes
 
-1. Click **Create** on the Health Checks view.
+Follow these steps to configure liveliness and readiness probes on a container:
 
-2. Configure the liveness and readiness probes as necessary (both are optional). 
-> Probes can be edited and/or removed later at any time.
+1. Go to the **Deploy** view of the component for which you want to configure liveliness and readiness probes.
+2. Click **Health Checks**.
+3. In the **Health Checks** pane, click **+ Create**.
+4. Configure the liveness probe and readiness probe depending on your requirement.
 
-3. Once configured, go to the **Runtime** view, refresh and ensure that your application works as expected. If the container does not start check the **events and conditions** to see if any of the probes are causing the container to fail.
+    ![Configure probe](../../assets/img/deploy/devops/healthchecks/confgure-probes.png){.cInlineImage-full}
+  
+    !!!info "Note"
 
-![Configure probe](../../assets/img/deploy/devops/healthchecks/confgure-probes.png){.cInlineImage-full}
+          You can update or remove a probe at any time.
+
+Follow these steps to ensure that the container works as expected:
+
+1. In the left navigation menu, click **Runtime**.
+2. In the **Runtime** pane, check the details to confirm that the container works as expected. If the container does not start, check the **events and conditions** to see if any of the probes are causing the container to fail.
