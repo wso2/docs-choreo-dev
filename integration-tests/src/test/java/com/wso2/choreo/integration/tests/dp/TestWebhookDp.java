@@ -305,12 +305,8 @@ public class TestWebhookDp extends TestBase {
     @CitrusTest
     public void observabilityLogs_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
         Environment environmentDev = choreoComponent.getEnvironment(en, dp.getDev());
-        Environment environmentProd = choreoComponent.getEnvironment(en, dp.getDev());
         String releaseIdDev = choreoComponent.getReleaseIdForEnvironment(environmentDev.getChoreoEnv());
         String namespaceDev = environmentDev.getNamespace();
-
-        String releaseIdProd = choreoComponent.getReleaseIdForEnvironment(environmentProd.getChoreoEnv());
-        String namespaceProd = environmentProd.getNamespace();
         ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseIdDev, accessToken);
 
         String requestPath = Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX
@@ -347,6 +343,77 @@ public class TestWebhookDp extends TestBase {
                 )
         );
     }
+
+
+    @Test(dataProvider = "dps", dependsOnMethods = {"fetchObservabilityId_CreateDeployInvokeWebhookIT"})
+    @CitrusTest
+    public void observabilityLogsProd_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
+        Environment environmentProd = choreoComponent.getEnvironment(en, dp.getDev());
+        String releaseIdProd = choreoComponent.getReleaseIdForEnvironment(environmentProd.getChoreoEnv());
+        String namespaceProd = environmentProd.getNamespace();
+        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseIdProd, accessToken);
+
+        String requestPath = Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX
+                .concat(observabilityIdInformation.getObsId())
+                .concat("/logsV2");
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        $(http()
+                .client(choreoCPTestClient)
+                .send()
+                .get(requestPath)
+                .queryParam("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)))
+                .queryParam("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)))
+                .queryParam("releaseId", releaseIdProd)
+                .queryParam("namespace", namespaceProd)
+                .queryParam("sort", "desc")
+                .queryParam("limit", "95")
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        $(http()
+                .client(choreoCPTestClient)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate(jsonPath()
+                        .expression("$.keySet()", hasItems("columns", "rows"))
+                        .expression("$.columns.size()", greaterThanOrEqualTo(1))
+                        .expression("$.columns[*].name", hasItems("TimeGenerated", "LogLevel", "LogEntry", "LogContext"))
+                        .expression("$.columns[*].type", hasItems("datetime", "string", "dynamic", "dynamic"))
+                        .expression("$.rows.size()", greaterThanOrEqualTo(1))
+                        .expression("$.rows[*][0]", everyItem(StringRegularExpression.matchesRegex("^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)((-(\\d{2}):(\\d{2})|Z)?)$")))
+                )
+        );
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Test(dependsOnMethods = {"observabilityLogs_CreateDeployInvokeWebhookIT"}, alwaysRun = true, dataProvider = "dps")
     @CitrusTest

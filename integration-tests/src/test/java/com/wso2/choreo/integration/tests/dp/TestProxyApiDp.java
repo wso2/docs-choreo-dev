@@ -39,7 +39,7 @@ import java.io.IOException;
 import java.util.Date;
 
 
-public class TestProxyApiEUDp extends TestBase {
+public class TestProxyApiDp extends TestBase {
     private static String accessToken;
 
     Environment[] environments;

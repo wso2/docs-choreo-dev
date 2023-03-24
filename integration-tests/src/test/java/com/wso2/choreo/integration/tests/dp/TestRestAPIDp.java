@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 
-public class TestRestAPIIT extends TestBase {
+public class TestRestAPIDp extends TestBase {
 
     private String accessToken;
     private Environment[] en;
@@ -89,7 +89,6 @@ public class TestRestAPIIT extends TestBase {
     }
 
 
-
     @Test(dependsOnMethods = {"promote_TestRestAPIIT"}, dataProvider = "dps")
     @CitrusTest
     public void invokeAPIInDev_TestBYOCEUDataPlane(DataProviderWrapper dp) throws Exception {
@@ -98,5 +97,10 @@ public class TestRestAPIIT extends TestBase {
         dp.setKeyData(keyData);
     }
 
+    @Test(dependsOnMethods = {"promote_TestRestAPIIT"}, dataProvider = "dps")
+    @CitrusTest
+    public void invokeAPIInProd_TestBYOCEUDataPlane(DataProviderWrapper dp) throws Exception {
+        ComponentUtils.invokeApiGET(this, dp.getKeyData().getApikey(), dp.getProdInvokeUrl(), "/isOdd?number=34", "false");
+    }
 
 }

@@ -4,10 +4,10 @@
     <test name="choreo">
         <classes>
             <class name="com.wso2.choreo.integration.tests.dp.TestGraphQLServiceDp"/>
-            <class name="com.wso2.choreo.integration.tests.dp.TestBYOCDpIT"/>
-            <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiEUDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestBYOCDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestWebhookDp"/>
-            <class name="com.wso2.choreo.integration.tests.dp.TestRestAPIIT"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestRestAPIDp"/>
         </classes>
     </test>
 </suite>

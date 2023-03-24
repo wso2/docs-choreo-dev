@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
-public class TestBYOCDpIT extends TestBase {
+public class TestBYOCDp extends TestBase {
 
 
     private static final String DOCKER_FILE_PATH = "byoc-test/Dockerfile";
