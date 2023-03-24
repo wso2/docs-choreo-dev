@@ -45,7 +45,7 @@ export class ProjectListingPage {
 
   static selectProject(projectName: string = "Default Project") {
 
-    cy.get('[data-cyid="search-icon"]').eq(1).click()
+    cy.get('[data-cyid="search-icon"]').eq(1) .should("be.visible").click();
     cy.get('[data-cyid="search-field"]').within(() => {
       cy.get('input').type(projectName)
     })
