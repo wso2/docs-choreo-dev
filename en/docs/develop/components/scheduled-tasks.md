@@ -1,12 +1,12 @@
-# Scheduled Triggers
+# Scheduled Trigger
 
-Scheduled triggers are a crucial component that enable developers to automate their workflows by executing specific actions at predetermined intervals.
+Learn how to use scheduled triggers to execute routine tasks at specified time intervals.
 
 ## What is a scheduled trigger?
 
-Scheduled triggers in Choreo work by invoking a predefined function or set of functions at a specified time, allowing developers to automate tasks such as data backups, system maintenance, or updates.
+A scheduled trigger performs a routine action at scheduled time intervals. Following are examples of scenarios where you can schedule tasks:
 
-Scheduled triggers can be configured to run on a recurring basis, such as daily, weekly, or monthly, or they can be set to execute at a specific time and date. This flexibility makes them an essential tool for managing complex applications with multiple components that need to be synchronized.
+- Logging a session time-out message for a user at a specific time interval.
 
 Scheduled triggers automate repetitive tasks, which reduces workload and frees up time for more strategic projects. They also ensure timely and efficient execution of critical tasks and reduce the risk of human error, minimizing downtime in fast-paced business environments.
 
@@ -23,35 +23,27 @@ Following are sample scenarios where you can use scheduled triggers:
 Developing a scheduled trigger refers to configuring an action to be executed.
 
 !!! tip
-    The development stage does not require you to specify the time interval at which the system needs to execute the action of the scheduled trigger. You need to provide it only when you deploy the Scheduled Trigger component.
+    The development stage does not require you to specify the time interval at which the system needs to execute the action of the scheduled trigger. You need to provide it only when you deploy the Scheduled Task component.
 
 e.g., If you need to schedule a health check log for an application, you may need to configure the following:
 
-- How the Scheduled Trigger component gets the heartbeat of the application that it is monitoring
+- How the Scheduled Task component gets the heartbeat of the application that it is monitoring
 
-- The conditions based on which the Scheduled Trigger component can determine whether the application is healthy or not
+- The conditions based on which the Scheduled Task component can determine whether the application is healthy or not
 
 - A log that indicates whether the application is healthy or not to the end-user
 
-You can develop a scheduled trigger with such configurations in two possible ways as shown in the image below:
+You can design a scheduled trigger via the [Choreo VS code extension](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo) that allows developers to design scheduled triggers with ease. This method involves designing the scheduled triggers from scratch by manually specifying the resources, the HTTP verbs, paths, and other required elements. You can do so in the low-code view or the pro-code view.
 
-![Create scheduled task](../../assets/img/scheduled-tasks/create-scheduled-task.png){.cInlineImage-small}
+![Create scheduled trigger](../../assets/img/scheduled-tasks/create-scheduled-task.png){.cInlineImage-threeQuarter}
 
-### Ballerina
+### Connect existing Ballerina repository
 
-If you have a scheduled trigger written in the [Ballerina Programming Language](https://ballerina.io), you can deploy it in Choreo. To do this, you must save it in a GitHub repository and connect that repository to Choreo.
+If you have a scheduled trigger written in the [Ballerina Programming Language](https://ballerina.io), or any other language and containerized as a Dockerfile, you can deploy it in Choreo. To do this, you must save it in a GitHub repository and connect that repository to Choreo at component creation time.
 
-#### Start with a sample
+### Bring your Dockerfile
 
-Choreo gives the developers the flexibility to start with a sample scheduled trigger. If your connected repository does not have a scheduled trigger written in the [Ballerina Programming Language](https://ballerina.io), and you select the Ballerina build preset, you can proceed by either adding a code later to the repository or by starting with a sample as shown in the image below:
-
-![Start with a sample scheduled task](../../assets/img/scheduled-tasks/start-with-a-sample-scheduled-task.png){.cInlineImage-full}
-
-If you select the option to start with a sample, a pull request will be created in your repository with the sample scheduled trigger implementation. You can proceed by merging the pull request.
-
-### Dockerfile
-
-If you have an existing scheduled trigger written in any programming language, you can deploy it in Choreo. To do this, you must generate a Docker image for the scheduled trigger and save the Dockerfile in a GitHub repository. When you connect this GitHub repository to Choreo, you can build the Dockerfile to pull the scheduled trigger implementation from the Docker image.
+If you have an existing scheduled trigger written in any programming language, you can deploy it in Choreo. To do this, you must generate a Docker image for the scheduled trigger and save the Dockerfile in a private GitHub repository. When you connect this GitHub repository to Choreo, you can build the Dockerfile to pull the scheduled trigger implementation from the Docker image.
 
 ## Deploy a scheduled trigger
 
@@ -61,11 +53,11 @@ At the deployment stage, Choreo prompts you to specify the time interval at whic
 
 Once you specify the time interval and proceed to deploy, Choreo starts the process of deploying an API to the default development environment as shown below:
 
-![Deploy scheduled task](../../assets/img/scheduled-tasks/deploy-scheduled-task.png){.cInlineImage-small}
+![Deploy scheduled trigger](../../assets/img/scheduled-tasks/deploy-scheduled-task.png){.cInlineImage-xsmall}
 
 Choreo runs a professional, enterprise-grade CI/CD process to deploy APIs to its runtime(data plane) clusters. Under the hood, the data plane of Choreo runs on a Kubernetes stack, benefitting from all its features such as auto-scaling, auto-healing, secret management, liveness, readiness checks, etc.
 
-Once you deploy the scheduled trigger, Choreo checks out your latest code, builds it, creates a Docker image, and starts it in a Kubernetes cluster managed by Choreo.
+Once you deploy the scheduled trigger to the development environment, the system exposes it through an API Gateway with API security turned on.
 
 When you deploy the scheduled trigger to the development environment, it is active in the developer environment. When you are ready to take the code to production, you can promote the deployment and enable the functionality for your consumers.
 
