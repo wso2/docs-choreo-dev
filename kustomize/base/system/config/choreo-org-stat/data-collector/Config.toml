@@ -31,4 +31,4 @@ payAGTierId = "01ebea43-be76-1d7a-b410-2d1b873c57af"
 enterpriseTierId = "01ec1f84-ce3d-122e-ac9b-f10c95fd72da"
 
 [script]
-dataDownload = true
+dataDownload = {{.DATA_DOWNLOAD}}
