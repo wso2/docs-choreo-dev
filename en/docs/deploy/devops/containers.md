@@ -13,8 +13,6 @@ Choreo allows you to edit the default container configurations depending on your
 
 ## Update container configurations
 
-Choreo allows you to edit the default container configurations depending on your requirement. 
-
 Follow these steps to update container configurations:
 
 1. Go to the **Deploy** view of the component for which you want to edit container configurations.
