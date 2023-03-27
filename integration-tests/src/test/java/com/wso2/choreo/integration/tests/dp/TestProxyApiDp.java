@@ -203,10 +203,10 @@ public class TestProxyApiDp extends TestBase {
     }
 
 
-    @Test(dependsOnMethods = {"componentDevDeploymentStatus_ProxyApiEUDpIT"})
+    @Test(dependsOnMethods = {"testDevDeployment_ProxyApiEUDpIT", "testProdDeployment_ProxyApiEUDpIT"})
     @CitrusTest
-    public void testUpdateSwaggerWithOperationRateLimit_ProxyApiIT() throws IOException {
-        Response response = APICreator.updateAPIWithSwaggerFile(proxyAPI,
+    public void testUpdateSwaggerWithOperationRateLimit_ProxyApiIT(DataProviderWrapper dp) throws IOException {
+        Response response = APICreator.updateAPIWithSwaggerFile(dp.getProxyAPI(),
                 "templates/graphql/requests/proxyapiUpdateRequestWithMethodRatelimit.mustache",
                 accessToken);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
@@ -214,7 +214,7 @@ public class TestProxyApiDp extends TestBase {
 
     @Test(dependsOnMethods = {"testUpdateSwaggerWithOperationRateLimit_ProxyApiIT"})
     @CitrusTest
-    public void initiateProxyDeploymentAfterOperationRateLimitUpdate_ProxyApiIT()
+    public void initiateProxyDeploymentAfterOperationRateLimitUpdate_ProxyApiIT(DataProviderWrapper dp)
             throws IOException, NoLatestApiVersionFoundException {
         ProxyResponse<Status> statusProxyResponse = APICreator.initiateDeployment(choreoComponent.getId(),
                 choreoComponent.getLatestApiVersion().getId(), devEnv.getId(), accessToken);
@@ -224,24 +224,26 @@ public class TestProxyApiDp extends TestBase {
 
     @Test(dependsOnMethods = {"initiateProxyDeploymentAfterOperationRateLimitUpdate_ProxyApiIT"})
     @CitrusTest
-    public void getProxyAPIBuildsAfterOperationRateLimitUpdate_ProxyApiIT() throws NoLatestApiVersionFoundException {
+    public void getProxyAPIBuildsAfterOperationRateLimitUpdate_ProxyApiIT(DataProviderWrapper dp)
+            throws NoLatestApiVersionFoundException {
         proxyAPIBuild = APICreator.getAPIBuilds(choreoComponent.getId(), choreoComponent.getLatestApiVersion().getId(), accessToken);
     }
 
     @Test(dependsOnMethods = {"getProxyAPIBuildsAfterOperationRateLimitUpdate_ProxyApiIT"})
     @CitrusTest
-    public void deployProxyAPIAfterOperationRateLimitUpdate_ProxyApiIT() throws IOException {
+    public void deployProxyAPIAfterOperationRateLimitUpdate_ProxyApiIT(DataProviderWrapper dp) throws IOException {
         String buildId = proxyAPIBuild.getBuilds()[0].getBuildId();
-        ProxyResponse<Status> res = APICreator.deployProxyAPI(choreoComponent.getId(), proxyAPI.getId(), buildId, devEnv.getId(), accessToken);
+        ProxyResponse<Status> res = APICreator.deployProxyAPI(choreoComponent.getId(), dp.getProxyAPI().getId(), buildId,
+                devEnv.getId(), accessToken);
         Assert.assertEquals(res.getResponse().getStatusCode(), HttpStatus.OK.value());
     }
 
     @Test(dependsOnMethods = {"deployProxyAPIAfterOperationRateLimitUpdate_ProxyApiIT"})
     @CitrusTest
-    public void testDevDeploymentAfterOperationRateLimitUpdate_ProxyApiIT() throws IOException, InterruptedException {
+    public void testDevDeploymentAfterOperationRateLimitUpdate_ProxyApiIT(DataProviderWrapper dp) throws IOException, InterruptedException {
         // To give a time to deploy the API.
         Thread.sleep(10000);
-        apiKey = APICreator.getAPIKey(proxyAPI.getId(), accessToken).getApikey();
+        apiKey = APICreator.getAPIKey(dp.getProxyAPI().getId(), accessToken).getApikey();
         String devURL = devInvokeBaseURL + "/users";
         // Rate limiting counter resets based on the system clock.
         long timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
@@ -269,8 +271,8 @@ public class TestProxyApiDp extends TestBase {
 
     @Test(dependsOnMethods = {"testDevDeploymentAfterOperationRateLimitUpdate_ProxyApiIT"})
     @CitrusTest
-    public void testUpdateSwaggerWithAPIRateLimit_ProxyApiIT() throws IOException {
-        Response response = APICreator.updateAPIWithAPIYaml(proxyAPI,
+    public void testUpdateSwaggerWithAPIRateLimit_ProxyApiIT(DataProviderWrapper dp) throws IOException {
+        Response response = APICreator.updateAPIWithAPIYaml(dp.getProxyAPI(),
                 "templates/graphql/requests/proxyAPIUpdateAPIWithAPIRateLimit.mustache",
                 accessToken);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
@@ -278,7 +280,7 @@ public class TestProxyApiDp extends TestBase {
 
     @Test(dependsOnMethods = {"testUpdateSwaggerWithAPIRateLimit_ProxyApiIT"})
     @CitrusTest
-    public void initiateProxyDeploymentAfterAPIRateLimitUpdate_ProxyApiIT()
+    public void initiateProxyDeploymentAfterAPIRateLimitUpdate_ProxyApiIT(DataProviderWrapper dp)
             throws IOException, NoLatestApiVersionFoundException {
         ProxyResponse<Status> statusProxyResponse = APICreator.initiateDeployment(choreoComponent.getId(),
                 choreoComponent.getLatestApiVersion().getId(), devEnv.getId(), accessToken);
@@ -288,24 +290,26 @@ public class TestProxyApiDp extends TestBase {
 
     @Test(dependsOnMethods = {"initiateProxyDeploymentAfterAPIRateLimitUpdate_ProxyApiIT"})
     @CitrusTest
-    public void getProxyAPIBuildsAfterAPIRateLimitUpdate_ProxyApiIT() throws NoLatestApiVersionFoundException {
+    public void getProxyAPIBuildsAfterAPIRateLimitUpdate_ProxyApiIT(DataProviderWrapper dp)
+            throws NoLatestApiVersionFoundException {
         proxyAPIBuild = APICreator.getAPIBuilds(choreoComponent.getId(), choreoComponent.getLatestApiVersion().getId(), accessToken);
     }
 
     @Test(dependsOnMethods = {"getProxyAPIBuildsAfterAPIRateLimitUpdate_ProxyApiIT"})
     @CitrusTest
-    public void deployProxyAPIAfterAPIRateLimitUpdate_ProxyApiIT() throws IOException {
+    public void deployProxyAPIAfterAPIRateLimitUpdate_ProxyApiIT(DataProviderWrapper dp) throws IOException {
         String buildId = proxyAPIBuild.getBuilds()[0].getBuildId();
-        ProxyResponse<Status> res = APICreator.deployProxyAPI(choreoComponent.getId(), proxyAPI.getId(), buildId, devEnv.getId(), accessToken);
+        ProxyResponse<Status> res = APICreator.deployProxyAPI(choreoComponent.getId(),
+                dp.getProxyAPI().getId(), buildId, devEnv.getId(), accessToken);
         Assert.assertEquals(res.getResponse().getStatusCode(), HttpStatus.OK.value());
     }
 
     @Test(dependsOnMethods = {"deployProxyAPIAfterAPIRateLimitUpdate_ProxyApiIT"})
     @CitrusTest
-    public void testDevDeploymentAfterAPIRateLimitUpdate_ProxyApiIT() throws IOException, InterruptedException {
+    public void testDevDeploymentAfterAPIRateLimitUpdate_ProxyApiIT(DataProviderWrapper dp) throws IOException, InterruptedException {
         // To give a time to deploy the API.
         Thread.sleep(10000);
-        apiKey = APICreator.getAPIKey(proxyAPI.getId(), accessToken).getApikey();
+        apiKey = APICreator.getAPIKey(dp.getProxyAPI().getId(), accessToken).getApikey();
         String devURL = devInvokeBaseURL + "/users";
         // Rate limiting counter resets based on the system clock.
         long timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
