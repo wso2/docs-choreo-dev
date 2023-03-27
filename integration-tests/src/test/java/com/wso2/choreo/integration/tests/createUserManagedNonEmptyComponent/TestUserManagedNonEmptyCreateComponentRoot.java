@@ -6,19 +6,16 @@ import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.api.client.json.Json;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.Orgs;
+import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
-import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
-import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -26,22 +23,17 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
-import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
-import com.wso2.choreo.integration.models.ApiDTO;
 import com.wso2.choreo.integration.models.commithistory.Commit;
-import com.wso2.choreo.integration.models.componentstatus.Status;
-import com.wso2.choreo.integration.models.environments.Environment;
-import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.proxyapi.DeploySettings;
 import com.wso2.choreo.integration.models.proxyapi.DeploymentStatus;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
-import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
-import com.wso2.choreo.integration.models.response.ProxyResponse;
-import com.wso2.choreo.integration.models.response.Response;
+import com.wso2.choreo.integration.models.revision.DeploymentInfo;
+import com.wso2.choreo.integration.models.revision.Revision;
+import com.wso2.choreo.integration.models.revision.RevisionWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
@@ -630,32 +622,25 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
         @CitrusTest
         public void ComponentDeploymentAfterAPIRateLimitUpdate_TestUserManagedNonEmptyCreateComponentRoot()
                 throws Exception {
-                ProxyAPI proxyAPI = APICreator.getProxyAPI(testComponentV2.getApiId(), orgUUID, accessToken).getEntity();
+                ProxyAPI api = APICreator.getProxyAPI(testComponentV2.getApiId(), orgUUID, accessToken).getEntity();
                 String apiYamlFilename = "templates/graphql/requests/restAPIV2UpdateAPIWithRateLimit.mustache";
                 Map<String, String> apiYamlParams = new HashMap<>();
-                apiYamlParams.put("apiId", proxyAPI.getId());
-                apiYamlParams.put("apiName", proxyAPI.getName());
-                apiYamlParams.put("basePath", proxyAPI.getContext() + "/2.0.0");
+                apiYamlParams.put("apiId", api.getId());
+                apiYamlParams.put("apiName", api.getName());
+                apiYamlParams.put("basePath", api.getContext() + "/2.0.0");
                 apiYamlParams.put("revisionId", String.valueOf(revisionId));
                 String apiPayload = ObjectMapperUtil.mapObjectToString(apiYamlFilename, apiYamlParams);
 
-                JsonArray jsonArray = testComponentV2.getRevisions(accessToken, apiId, orgUUID);
-                for (JsonElement jsonElement : jsonArray) {
-                        if (jsonElement.getAsJsonObject().has("deploymentInfo")) {
-                                JsonArray deploymentInfo = jsonElement.getAsJsonObject()
-                                        .get("deploymentInfo").getAsJsonArray();
-                                if (deploymentInfo.size() > 0) {
-                                        JsonObject deploymentInfoObject = deploymentInfo.get(0).getAsJsonObject();
-                                        if (deploymentInfoObject.has("name") &&
-                                                "dev-us-east-azure".equals(deploymentInfoObject.get("name")
-                                                        .getAsString())) {
-                                                this.revisionUUID =
-                                                        deploymentInfoObject.get("revisionUuid").getAsString();
-                                                this.revisionId =
-                                                        Integer.parseInt(jsonElement.getAsJsonObject()
-                                                                .get("displayName").getAsString()
-                                                                .split(" ")[1]);
-                                        }
+                RevisionWrapper revisionList = ApiManager.getApiRevision(testComponentV2.getApiId(), accessToken);
+                for (Revision revision : revisionList.getList()) {
+                        if (revision.getDeploymentInfo() == null) {
+                                return;
+                        }
+                        for (DeploymentInfo deploymentInfo : revision.getDeploymentInfo()) {
+                                if ("dev-us-east-azure".equals(deploymentInfo.getName())) {
+                                        this.revisionUUID = deploymentInfo.getRevisionUuid();
+                                        this.revisionId = Integer.parseInt(revision.getDisplayName()
+                                                .split(" ")[1]);
                                 }
                         }
                 }
