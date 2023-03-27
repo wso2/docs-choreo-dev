@@ -1978,3 +1978,8 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Ma
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Configs','urn:choreocontrolplane:configmanagement:config_view','CONFIGURATIONS-MANAGEMENT','View Configs');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Configs','urn:choreocontrolplane:configmanagement:config_create','CONFIGURATIONS-MANAGEMENT','Create Configs');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Configs','urn:choreocontrolplane:configmanagement:config_delete','CONFIGURATIONS-MANAGEMENT','Delete Configs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Custom Domains','urn:choreocontrolplane:customdomainapi:custom_domain_manage','CUSTOM-DOMAINS','Create, Edit and Delete Custom Domains');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Custom Domains','urn:choreocontrolplane:customdomainapi:custom_domain_view','CUSTOM-DOMAINS','View Custom Domains');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Custom Domains','urn:choreocontrolplane:customdomainapi:custom_domain_create','CUSTOM-DOMAINS','Create Custom Domains');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Custom Domains','urn:choreocontrolplane:customdomainapi:custom_domain_delete','CUSTOM-DOMAINS','Delete Custom Domains');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Custom Domains','urn:choreocontrolplane:customdomainapi:custom_domain_update','CUSTOM-DOMAINS','Update Custom Domains');

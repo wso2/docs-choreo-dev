@@ -261,6 +261,11 @@ defaultRoles:
         - {{.PERMISSION_CONFIG_CREATE}}
         - {{.PERMISSION_CONFIG_DELETE}}
         - {{.PERMISSION_CONFIG_MANAGE}}
+        - {{.PERMISSION_CUSTOM_DOMAIN_VIEW}}
+        - {{.PERMISSION_CUSTOM_DOMAIN_CREATE}}
+        - {{.PERMISSION_CUSTOM_DOMAIN_DELETE}}
+        - {{.PERMISSION_CUSTOM_DOMAIN_UPDATE}}
+        - {{.PERMISSION_CUSTOM_DOMAIN_MANAGE}}
     - name: Project Manager
       handle: project-manager
       description: Users who are involved in project management
