@@ -21,7 +21,7 @@ You can configure the following probe types for both readiness and liveness prob
 
 ### HTTP `GET` request
 
-Sends an HTTP `GET` request to a specified port and path on the container. A response status code in the range of 200-399 indicates that the request is a success.
+This probe sends an HTTP `GET` request to a specified port and path on the container. A response status code in the range of 200-399 indicates that the request is a success.
 
 Depending on your requirement, you can configure additional HTTP headers.
 
@@ -31,11 +31,11 @@ The recommended approach is to create a `/healthz` or `/health` endpoint in your
 
 ### TCP connection probe
 
-The probe attempts to open a socket to the container on the specified port. If it cannot establish a TCP connection, it becomes a failure.
+This probe attempts to open a socket to the container on the specified port. If it cannot establish a TCP connection, it becomes a failure.
 
 ### Execute a command
 
-The probe executes the given script inside the container. A non-zero return from the command is considered a failure.
+This probe executes the given script inside the container. A non-zero return from the command is considered a failure.
 
 For example, `["cat", "/tmp/healthy"]` is considered healthy if the file `/tmp/healthy` is present. If not, it becomes a failure (non-zero exit code).
 In such scenarios, the application is responsible for writing and maintaining this file in the specified location.
