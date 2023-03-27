@@ -1594,6 +1594,7 @@ CREATE TABLE [dbo].[configuration_mount](
     [value_type] [nvarchar](50) NOT NULL,
     [is_system] [bit] NOT NULL DEFAULT 0,
     [is_required] [bit] NOT NULL DEFAULT 0,
+    [metadata] [nvarchar](255) NULL,
     PRIMARY KEY (id),
     CONSTRAINT configuration_mount$component_data_uuid_fk FOREIGN KEY (component_data_uuid) REFERENCES [component_data](uuid) ON DELETE CASCADE,
     CONSTRAINT configuration_mount$component_data_uuid_key_unique UNIQUE(component_data_uuid,config_key_name)
