@@ -14,6 +14,7 @@
 package com.wso2.choreo.integration.tests.dp;
 
 import com.consol.citrus.annotations.CitrusTest;
+import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.TestContext;
@@ -22,13 +23,22 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
+import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.ApiDTO;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.proxyapi.DeploySettings;
+import com.wso2.choreo.integration.models.proxyapi.DeploymentStatus;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
 import com.wso2.choreo.integration.models.response.ProxyResponse;
 import com.wso2.choreo.integration.models.response.Response;
+import com.wso2.choreo.integration.models.revision.DeploymentInfo;
+import com.wso2.choreo.integration.models.revision.Revision;
+import com.wso2.choreo.integration.models.revision.RevisionWrapper;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -205,11 +215,57 @@ public class TestProxyApiDp extends TestBase {
     @Test(dependsOnMethods = {"testDevDeployment_ProxyApiEUDpIT", "testProdDeployment_ProxyApiEUDpIT"},
             dataProvider = "dps")
     @CitrusTest
-    public void testUpdateSwaggerWithOperationRateLimit_ProxyApiEUDpIT(DataProviderWrapper dp) throws IOException {
-        Response response = APICreator.updateAPIWithSwaggerFile(dp.getProxyAPI(),
-                "templates/graphql/requests/proxyapiUpdateRequestWithMethodRatelimit.mustache",
-                accessToken);
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
+    public void testUpdateSwaggerWithOperationRateLimit_ProxyApiEUDpIT(DataProviderWrapper dp)
+            throws Exception {
+        ChoreoComponent component = dp.getChoreoComponent();
+        String buildId = dp.getProxyAPIBuild().getBuilds()[0].getBuildId();
+        String orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+        String apiId = dp.getProxyAPI().getId();
+        String revisionUUID = null;
+        ApiDTO apiDTO = ApiDTO.builder().apiName(dp.getProxyAPI().getName())
+                .description(dp.getProxyAPI().getDescription())
+                .productionEndpoint(Constant.DEFAULT_ENDPOINT)
+                .sandboxEndpoint(Constant.DEFAULT_ENDPOINT)
+                .basePath(dp.getProxyAPI().getContext() + "/1.0.0")
+                .build();
+        String swaggerContent = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/proxyapiUpdateRequestWithMethodRatelimit.mustache", apiDTO);
+        RevisionWrapper revisionList = ApiManager.getApiRevision(apiId, accessToken);
+        for (Revision revision : revisionList.getList()) {
+            if (revision.getDeploymentInfo() == null) {
+                return;
+            }
+            for (DeploymentInfo deploymentInfo : revision.getDeploymentInfo()) {
+                if (dp.getDevEnv().getApiEnvName().equals(deploymentInfo.getName())) {
+                    revisionUUID = deploymentInfo.getRevisionUuid();
+                    break;
+                }
+            }
+            if (revisionUUID != null) {
+                break;
+            }
+        }
+        Assert.assertNotNull(revisionUUID);
+        DeploySettings deploySettings = APICreator.deployRevision(component.getId(),
+                component.getLatestApiVersion().getId(),
+                dp.getDevEnv().getId(),
+                orgId,
+                revisionUUID, buildId, apiId, accessToken, null, swaggerContent);
+        boolean requestSuccess = false;
+        DeploymentStatus deploymentStatus = null;
+        int count = 0;
+        while (!requestSuccess && count < 10) {
+            deploymentStatus = APICreator.checkDeploymentStatus(component.getId(),
+                    component.getLatestApiVersion().getId(),
+                    deploySettings.getRequestId(), accessToken);
+            if ("completed".equals(deploymentStatus.getStatus())) {
+                requestSuccess = true;
+            } else {
+                Thread.sleep(2000);
+                count++;
+            }
+        }
+        Assert.assertTrue(requestSuccess, "API is not deployed. " + deploySettings.getMessage());
     }
 
     @Test(dependsOnMethods = {"testUpdateSwaggerWithOperationRateLimit_ProxyApiEUDpIT"}, dataProvider = "dps")
@@ -227,7 +283,8 @@ public class TestProxyApiDp extends TestBase {
     @CitrusTest
     public void getProxyAPIBuildsAfterOperationRateLimitUpdate_ProxyApiEUDpIT(DataProviderWrapper dp)
             throws NoLatestApiVersionFoundException {
-        ProxyAPIBuild proxyAPIBuild = APICreator.getAPIBuilds(dp.getChoreoComponent().getId(), choreoComponent.getLatestApiVersion().getId(), accessToken);
+        ProxyAPIBuild proxyAPIBuild = APICreator.getAPIBuilds(dp.getChoreoComponent().getId(),
+                dp.getChoreoComponent().getLatestApiVersion().getId(), accessToken);
         dp.setProxyAPIBuild(proxyAPIBuild);
     }
 
@@ -274,11 +331,54 @@ public class TestProxyApiDp extends TestBase {
     @Test(dependsOnMethods = {"testDevDeploymentAfterOperationRateLimitUpdate_ProxyApiEUDpIT"},
             dataProvider = "dps")
     @CitrusTest
-    public void testUpdateSwaggerWithAPIRateLimit_ProxyApiEUDpIT(DataProviderWrapper dp) throws IOException {
-        Response response = APICreator.updateAPIWithAPIYaml(dp.getProxyAPI(),
-                "templates/graphql/requests/proxyAPIUpdateAPIWithAPIRateLimit.mustache",
-                accessToken);
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
+    public void testUpdateSwaggerWithAPIRateLimit_ProxyApiEUDpIT(DataProviderWrapper dp) throws Exception {
+
+        ApiDTO apiDTO = ApiDTO.builder().apiName(dp.getProxyAPI().getName())
+                .description(dp.getProxyAPI().getDescription()).productionEndpoint(Constant.DEFAULT_ENDPOINT).
+                sandboxEndpoint(Constant.DEFAULT_ENDPOINT).basePath(dp.getProxyAPI().getContext() + "/1.0.0").build();
+        String apiPayload = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/proxyAPIUpdateAPIWithAPIRateLimit.mustache", apiDTO);
+        ChoreoComponent component = dp.getChoreoComponent();
+        String buildId = dp.getProxyAPIBuild().getBuilds()[0].getBuildId();
+        String orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+        String apiId = dp.getProxyAPI().getId();
+        String revisionUUID = null;
+        RevisionWrapper revisionList = ApiManager.getApiRevision(apiId, accessToken);
+        for (Revision revision : revisionList.getList()) {
+            if (revision.getDeploymentInfo() == null) {
+                return;
+            }
+            for (DeploymentInfo deploymentInfo : revision.getDeploymentInfo()) {
+                if (dp.getDevEnv().getApiEnvName().equals(deploymentInfo.getName())) {
+                    revisionUUID = deploymentInfo.getRevisionUuid();
+                    break;
+                }
+            }
+            if (revisionUUID != null) {
+                break;
+            }
+        }
+        Assert.assertNotNull(revisionUUID);
+        DeploySettings deploySettings = APICreator.deployRevision(component.getId(),
+                component.getLatestApiVersion().getId(),
+                dp.getDevEnv().getId(),
+                orgId,
+                revisionUUID, buildId, apiId, accessToken, apiPayload, null);
+        boolean requestSuccess = false;
+        DeploymentStatus deploymentStatus = null;
+        int count = 0;
+        while (!requestSuccess && count < 10) {
+            deploymentStatus = APICreator.checkDeploymentStatus(component.getId(),
+                    component.getLatestApiVersion().getId(),
+                    deploySettings.getRequestId(), accessToken);
+            if ("completed".equals(deploymentStatus.getStatus())) {
+                requestSuccess = true;
+            } else {
+                Thread.sleep(2000);
+                count++;
+            }
+        }
+        Assert.assertTrue(requestSuccess, "API is not deployed. " + deploySettings.getMessage());
     }
 
     @Test(dependsOnMethods = {"testUpdateSwaggerWithAPIRateLimit_ProxyApiEUDpIT"}, dataProvider = "dps")

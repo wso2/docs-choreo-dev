@@ -84,25 +84,14 @@ public class APICreator extends ControlPlaneAPI {
         ApiDTO apiDTO = ApiDTO.builder().apiName(proxyAPI.getName()).description(proxyAPI.getDescription()).productionEndpoint(Constant.DEFAULT_ENDPOINT).
                 sandboxEndpoint(Constant.DEFAULT_ENDPOINT).basePath(proxyAPI.getContext() + "/1.0.0").build();
 
-        String i = ObjectMapperUtil.mapObjectToString(swaggerFileName, apiDTO);
+        String swaggerContent = ObjectMapperUtil.mapObjectToString(swaggerFileName, apiDTO);
 
         MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
-        multipartEntityBuilder.addTextBody("apiDefinition", i);
+        multipartEntityBuilder.addTextBody("apiDefinition", swaggerContent);
         multipartEntityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
         HttpEntity entity = multipartEntityBuilder.build();
 
         return HttpClientUtil.httpPUT(requestURI, entity, headerValues);
-    }
-
-    public static Response updateAPIWithAPIYaml(ProxyAPI proxyAPI, String apiYamlFilename, String accessToken)
-            throws IOException {
-        String requestURI = APIS_ENDPOINT + "/" + proxyAPI.getId() + "?organizationId=" + ORG_UUID;
-        ApiDTO apiDTO = ApiDTO.builder().apiName(proxyAPI.getName())
-                .description(proxyAPI.getDescription()).productionEndpoint(Constant.DEFAULT_ENDPOINT).
-                sandboxEndpoint(Constant.DEFAULT_ENDPOINT).basePath(proxyAPI.getContext() + "/1.0.0").build();
-        String apiPayload = ObjectMapperUtil.mapObjectToString(apiYamlFilename, apiDTO);
-
-        return HttpClientUtil.httpPUT(requestURI, apiPayload, accessToken, "");
     }
 
     public static String generateContext(String firstAPIName) {

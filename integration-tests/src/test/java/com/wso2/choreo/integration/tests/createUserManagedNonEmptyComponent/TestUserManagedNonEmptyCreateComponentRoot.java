@@ -641,7 +641,11 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
                                         this.revisionUUID = deploymentInfo.getRevisionUuid();
                                         this.revisionId = Integer.parseInt(revision.getDisplayName()
                                                 .split(" ")[1]);
+                                        break;
                                 }
+                        }
+                        if (this.revisionUUID != null) {
+                                break;
                         }
                 }
                 Assert.assertNotNull(this.revisionUUID, "Revision ID is null");
