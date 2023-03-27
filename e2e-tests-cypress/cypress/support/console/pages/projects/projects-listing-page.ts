@@ -44,19 +44,9 @@ export class ProjectListingPage {
 
 
   static selectProject(projectName: string = "Default Project") {
-
     cy.get('#project-picker').should("be.visible").click()
-    cy.get('input[placeholder="Search"]').type(projectName)
-
-    cy.get('[data-cyid="search-icon"]').eq(1) .should("be.visible").click();
-    cy.get('[data-cyid="search-field"]').within(() => {
-      cy.get('input').type(projectName)
-    })
-    cy.get(`a[href*="organizations/${Cypress.env("choreoOrgHandle")}/projects"]`).each(d => {
-      if (d.find('h4').text() === projectName) {
-        cy.wrap(d).click()
-        return;
-      }
-    })
+    cy.get('input[placeholder="Search"]').type(`${projectName}{enter}`)
+    cy.get('ul>li>div>span>p').contains(projectName).click()
+    cy.contains("Let's Start Building...").should('be.visible')
   }
 }

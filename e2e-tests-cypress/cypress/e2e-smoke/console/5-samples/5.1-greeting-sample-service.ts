@@ -92,7 +92,7 @@ describe("Create Greeting sample in Choreo", () => {
     ComponentDeployPage.stopProdContainer();
   });
   it("Verify component deletion", () => {
-    ChoreoHomePage.navigateToProjects();
+    ChoreoHomePage.navigateToComponents();
     ComponentListingPage.deleteComponent(COMPONENT_NAME);
   });
 });
