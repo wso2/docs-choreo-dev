@@ -70,6 +70,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
+import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
+import static org.hamcrest.Matchers.greaterThan;
 
 /**
  * Implements GraphQL API calls and their response validations.
@@ -587,38 +589,6 @@ public class GraphQL extends ControlPlaneAPI {
      */
     public static void getDeploymentStatusByVersion(TestActionRunner runner, HttpClient client, String accessToken,
             GraphqlDTO graphqlDTO) throws Exception {
-        getDeploymentStatusByVersion(runner, client, accessToken, graphqlDTO,
-                "templates/graphql/responses/deploymentStatusByVersionSuccess.json");
-    }
-
-    /**
-     * Get deployment status of a failed component by version with validation
-     *
-     * @param runner      Test action runner
-     * @param client      HTTP client
-     * @param accessToken Access token
-     * @param graphqlDTO  DTO
-     * @throws IOException If error occurred in object mapping
-     */
-    public static void getDeploymentStatusOfFailureByVersion(TestActionRunner runner, HttpClient client,
-            String accessToken, GraphqlDTO graphqlDTO) throws Exception {
-        getDeploymentStatusByVersion(runner, client, accessToken, graphqlDTO,
-                "templates/graphql/responses/deploymentStatusByVersionFailure.json");
-    }
-
-    /**
-     * Get deployment status of the component by version with validation
-     *
-     * @param runner      Test action runner
-     * @param client      HTTP client
-     * @param accessToken Access token
-     * @param graphqlDTO  DTO
-     * @param responseTemplatePath  path to response template file
-     * @throws IOException If error occurred in object mapping
-     */
-    private static void getDeploymentStatusByVersion(TestActionRunner runner, HttpClient client, String accessToken,
-            GraphqlDTO graphqlDTO, String responseTemplatePath) throws Exception {
-
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/deploymentStatusByVersion.mustache", graphqlDTO);
         String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
@@ -641,7 +611,55 @@ public class GraphQL extends ControlPlaneAPI {
                                 .receive()
                                 .response(HttpStatus.OK)
                                 .message()
-                                .body(new ClassPathResource(responseTemplatePath))));
+                                .type(MessageType.JSON)
+                                .validate(jsonPath()
+                                        .expression("$.data.deploymentStatusByVersion.size()", greaterThan(0))
+                                        .expression("$.data.deploymentStatusByVersion[*].keySet()",
+                                                "[id,sha,completed_at,started_at,name,status,conclusion,isAutoDeploy,failureReason,sourceCommitId]")
+                                        .expression("$.data.deploymentStatusByVersion[*].name", "Choreo Generated Build Deploy Action")
+                                        .expression("$.data.deploymentStatusByVersion[*].status", "completed")
+                                        .expression("$.data.deploymentStatusByVersion[*].conclusion", "success")
+                                        .expression("$.data.deploymentStatusByVersion[*].isAutoDeploy", false)
+                                        .expression("$.data.deploymentStatusByVersion[*].failureReason", 0)
+                                                )
+                                        )
+                                );
+    }
+
+    /**
+     * Get deployment status of a failed component by version with validation
+     *
+     * @param runner      Test action runner
+     * @param client      HTTP client
+     * @param accessToken Access token
+     * @param graphqlDTO  DTO
+     * @throws IOException If error occurred in object mapping
+     */
+    public static void getDeploymentStatusOfFailureByVersion(TestActionRunner runner, HttpClient client,
+            String accessToken, GraphqlDTO graphqlDTO) throws Exception {
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/deploymentStatusByVersion.mustache", graphqlDTO);
+        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        // Poll deployment status
+        runner.$(repeatOnError()
+                .until("i = 50")
+                .index("i")
+                .autoSleep(10000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .body(requestBody)
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
+                        http().client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .body(new ClassPathResource("templates/graphql/responses/deploymentStatusByVersionFailure.json"))));
     }
 
     public static String getRunId(TestActionRunner runner, HttpClient client, String accessToken, GraphqlDTO graphqlDTO) throws IOException {
