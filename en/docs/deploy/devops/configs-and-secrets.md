@@ -2,7 +2,7 @@
 
 Choreo provides a seamless mechanism to manage and version your component's configurations and secrets as **file mounts** or **environment variables**.
 
-!!! info "Encrypted at rest and in transit"
+!!! info "Note"
     All configurations and secrets applied to a Choreo component are stored in an encrypted secret vault in the cloud data plane, which is managed by WSO2.
     <br/>If you are on a private data plane, the configurations and secrets are stored in an Azure key vault or AWS secret manager attached to your data plane in your cloud environment.
 
