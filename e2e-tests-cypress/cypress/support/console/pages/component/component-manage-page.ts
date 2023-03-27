@@ -235,8 +235,8 @@ export class ComponentAPILifecycle {
   }
 
   static verifyAPIVisibility(visibility: string) {
-    cy.get('[data-cyid="dropdown-api-visibility-selector"]')
-      .should("exist")
+    cy.get('div[role="combobox"]').eq(1)
+      .should("be.visible")
       .should("have.text", visibility);
     cy.log("Successfully verified the API visibility", visibility);
   }
@@ -244,7 +244,7 @@ export class ComponentAPILifecycle {
   static updateAPIVisibility(visibility: string) {
     cy.get('[data-cyid="tab-security-settings"]').should("be.visible");
     cy.wait(5000);
-    cy.get('[data-cyid="dropdown-api-visibility-selector"]').click();
+    cy.get('div[role="combobox"]').eq(1).click();
     cy.get(`[data-cyid="item-${visibility.toUpperCase()}"]`).focus().click();
     cy.get('[data-testid="info-banner"]').should("be.visible");
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]').wait(100).realClick();
