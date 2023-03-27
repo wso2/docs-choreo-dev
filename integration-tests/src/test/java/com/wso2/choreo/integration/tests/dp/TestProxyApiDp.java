@@ -69,7 +69,6 @@ public class TestProxyApiDp extends TestBase {
         String firstContext = APICreator.generateContext(firstAPIName);
         ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
         dp.setChoreoProject(project);
-        dp.setChoreoComponent(choreoComponent);
         dp.setFirstName(firstAPIName);
         dp.setContext(firstContext);
         Assert.assertEquals(project.getRegion(), dp.getRegion());
@@ -95,13 +94,14 @@ public class TestProxyApiDp extends TestBase {
     public void testCreateComponentForProxyAPI_ProxyApiEUDpIT(DataProviderWrapper dp) throws IOException {
         ProxyResponse<ChoreoComponent> response = GraphQL.createGraphqlQueryForComponentCreation(dp.getFirstName(), dp.getChoreoProject().getId(), dp.getProxyAPI().getId(), accessToken);
         choreoComponent = response.getEntity();
+        dp.setChoreoComponent(choreoComponent);
         Assert.assertEquals(response.getResponse().getStatusCode(), HttpStatus.OK.value());
     }
 
     @Test(dependsOnMethods = {"testCreateComponentForProxyAPI_ProxyApiEUDpIT"}, dataProvider = "dps")
     @CitrusTest
     public void componentRetrieval_ProxyApiEUDpIT(DataProviderWrapper dp) throws IOException {
-        choreoComponent = GraphQL.getComponentDetails(dp.getChoreoProject().getId(), choreoComponent.getHandler(), accessToken);
+        choreoComponent = GraphQL.getComponentDetails(dp.getChoreoProject().getId(), dp.getChoreoComponent().getHandler(), accessToken);
         dp.setChoreoComponent(choreoComponent);
         Assert.assertNotNull(choreoComponent);
     }
@@ -191,7 +191,7 @@ public class TestProxyApiDp extends TestBase {
         String devURL = dp.getDevInvokeUrl() + "/users";
         Response dev = HttpClientUtil.httpGET(devURL, "", apiKey);
         Assert.assertEquals(dev.getStatusCode(), HttpStatus.OK.value());
-        dp.setApiId(apiKey);
+        dp.setApiKey(apiKey);
     }
 
     @Test(dependsOnMethods = {"componentDevDeploymentStatus_ProxyApiEUDpIT"}, dataProvider = "dps")
