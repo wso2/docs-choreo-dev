@@ -3,7 +3,6 @@ package com.wso2.choreo.integration.tests.dp;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
-import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.apis.observability.ObservabilityService;
@@ -13,8 +12,6 @@ import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.config.ConfigDefinition;
-import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
@@ -45,12 +42,10 @@ import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasItems;
 
-public class GraphQLServiceDpIT extends TestNGCitrusSpringSupport {
+public class TestGraphQLServiceDp extends TestBase {
 
     private String accessToken;
     private ChoreoComponent choreoComponent;
-    private String devInvokeURL;
-    private String prodInvokeURL;
     private Environment[] en;
     @Autowired
     private HttpClient choreoCPTestClient;
@@ -60,20 +55,10 @@ public class GraphQLServiceDpIT extends TestNGCitrusSpringSupport {
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
 
-
-    private final List<DataProviderWrapper> dps = new ArrayList<>();
-
-
     @DataProvider(name = "dps")
     public Object[][] provideData() {
-        return DataProviderWrapper.convertToDataProvider(dps);
+        return this.setUp();
     }
-
-    @DataProvider(name = "reg")
-    public Object[][] regionData() {
-        return DataProviderWrapper.convertToDataProvider(Arrays.asList(Configuration.getConfig(ConfigDefinition.REGIONS).split(",")));
-    }
-
 
     @DataProvider(name = "env-provider")
     public Object[][] envProvider() {
@@ -85,10 +70,10 @@ public class GraphQLServiceDpIT extends TestNGCitrusSpringSupport {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     }
 
-    @Test(dataProvider = "reg")
+    @Test(dataProvider = "dps")
     @CitrusTest
-    public void createUserManagedComponentFor_GraphQLServiceEUdpIT(String region) throws Exception {
-        ChoreoProject project = GraphQL.createProject(region, accessToken);
+    public void createUserManagedComponentFor_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
+        ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").
                 srcGitRepoUrl("https://github.com/choreo-test-apps/graphql").
@@ -96,8 +81,9 @@ public class GraphQLServiceDpIT extends TestNGCitrusSpringSupport {
                 displayType(Constant.displayType.graphql.name()).
                 build();
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
-        DataProviderWrapper dp = DataProviderWrapper.builder().choreoProject(project).choreoComponent(choreoComponent).build();
-        dps.add(dp);
+        dp.setChoreoProject(project);
+        dp.setChoreoComponent(choreoComponent);
+        Assert.assertEquals(project.getRegion(), dp.getRegion());
         Assert.assertNotNull(choreoComponent.getId());
     }
 
@@ -106,7 +92,7 @@ public class GraphQLServiceDpIT extends TestNGCitrusSpringSupport {
     public void componentDeploy_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
                 accessToken, dp.getChoreoComponent(), ComponentFlavour.STANDARD);
-        devInvokeURL = statusDTO.getInvokeUrl();
+        String devInvokeURL = statusDTO.getInvokeUrl();
         dp.setDevInvokeUrl(devInvokeURL);
     }
 
@@ -115,7 +101,7 @@ public class GraphQLServiceDpIT extends TestNGCitrusSpringSupport {
     public void promote_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
                 accessToken, dp.getChoreoComponent(), ComponentFlavour.STANDARD);
-        prodInvokeURL = statusDTO.getInvokeUrl();
+        String prodInvokeURL = statusDTO.getInvokeUrl();
         String apiId = statusDTO.getApiId();
         dp.setApiId(apiId);
         dp.setProdInvokeUrl(prodInvokeURL);
