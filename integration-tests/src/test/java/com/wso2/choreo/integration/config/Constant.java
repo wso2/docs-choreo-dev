@@ -93,7 +93,8 @@ public final class Constant {
 
     public enum  logType{
         groupedlogsV2,
-        logsV2
+        logsV2,
+        metricsV2
     }
     public enum displayType {
         restAPI,
@@ -127,9 +128,17 @@ public final class Constant {
     }
 
     // Observability related constants
-    public static final String OBSERVABILITY_LOGS_ENDPOINT_SUFFIX = "/observability/logging/0.1.0/applications/";
-    public static final String OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX = "/observability/system/0.1.0/applications/";
+    public static final String OBSERVABILITY_LOGS_ENDPOINT_SUFFIX = "/observability/logging/0.1.0/applications/loggingAPI";
+    public static final String OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX = "/observability/system/0.1.0/applications/sysObsAPI";
     public static final String OBSERVABILITY_OBS_ENDPOINT_SUFFIX = "/observability/application/0.1.0";
+
+    public static final String OBSERVABILITY_METRICS = "/metricsV2";
+
+    public static final String OBSERVABILITY_LOGS = "/logsV2";
+
+    public static final String OBSERVABILITY_ZIP_LOGS = "/logsV2/zip";
+
+    public static final String OBSERVABILITY_GROUP_LOGS = "/groupedlogsV2";
 
     // Theme management constants
     public static final String THEME_ENDPOINT_SUFFIX = "/org-mgt/1.0.0/orgs/";

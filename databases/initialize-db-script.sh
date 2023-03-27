@@ -23,7 +23,6 @@ declare -a DB_SCRIPTS=(
   "choreo_apim_user_db_mssql.sql"
   "choreo_testbase_db_mssql.sql"
   "choreo_app_db_mssql.sql"
-  "choreo_codeserver_db_mssql.sql"
 )
 HOST="localhost"             # hostname
 USERNAME="sa"                # username

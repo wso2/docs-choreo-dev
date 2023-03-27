@@ -68,11 +68,21 @@ export class ComponentAPILifecycle {
   }
 
 
-  static goToDeveloperPortalWithoutLogin(idpUser: string) {
+  static goToDeveloperPortalWithoutLogin(idpUser: string = "") {
+
+    let devportalURL = Cypress.env("devportalURL")
     cy.get("[data-cyid=go-to-dev-portal-btn]")
       .parent()
       .invoke("attr", "href")
-      .then((href) => cy.visit(href + "&fidp=" + idpUser));
+      .then((href) => {
+      
+        cy.log(devportalURL)
+        if (!devportalURL) {
+          devportalURL = href + "&fidp=" + idpUser
+          Cypress.env("devportalURL", devportalURL)
+        }
+        cy.visit(devportalURL)
+      });
   }
 
   static selectUsagePlans(...plans) {

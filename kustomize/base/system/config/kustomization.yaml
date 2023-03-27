@@ -3,10 +3,6 @@ configMapGenerator:
     behavior: create
     literals:
       - TEMP_DATA_DIR=/temp-data-dir/
-  - name: env-workspace-manager-shared # shared workspace-manager configs across environments
-    behavior: create
-    literals:
-      - WORKSPACE_BALLERINA_VERSION=swan-lake-beta3
   - name: cm-choreo-testbase-db
     behavior: create
     literals:
@@ -258,6 +254,7 @@ configMapGenerator:
       - ASB_DELETE_QUEUE_NAME=delete-manager
       - API_SERVER_URL=http://api-server
       - GCHAT_URL=https://chat.googleapis.com
+      - APP_SERVICE_URL=app-service:8080
   - name: cm-logsarchiver
     behavior: create
     literals:
@@ -315,11 +312,6 @@ configMapGenerator:
       - REACT_APP_AUTHENTICATOR_GITHUB=GithubAuthenticator
       - REACT_APP_AUTHENTICATOR_ANONYMOUS=OpenIDConnectAuthenticator
       - REACT_APP_AUTHENTICATOR_ENTERPRISE=EnterpriseIDPAuthenticator
-  - name: cm-workspace-manager-cp
-    behavior: create
-    literals:
-      - CSM_DB_NAME=choreo_codeserver_db
-      - CSM_DB_USERNAME=choreo_codeserver_db_user
   - name: cm-userapps-image-deleter
     behavior: create
     literals:
@@ -335,10 +327,6 @@ configMapGenerator:
       - TLS_KEY_PATH=/mnt/tls.key
       - TLS_CERT_PATH=/mnt/tls.crt
       - KEYVAULT_NAME=shared-fe-apps-cdn-60
-  - name: cm-file-lowcode-parser
-    behavior: create
-    files:
-      - lowcode-parser/application.properties
   - name: cm-file-devops-portal-api
     behavior: create
     files:
@@ -407,10 +395,6 @@ configMapGenerator:
     behavior: create
     files:
       - runtime/app-deployer.yaml
-  - name: cm-file-workspace-manager
-    behavior: create
-    files:
-      - runtime/workspace-manager.yaml
   - name: cm-file-step-enforcer
     behavior: create
     files:
@@ -441,6 +425,8 @@ configMapGenerator:
     behavior: create
     literals:
       - CIO_ADX_DB="cio-metrics"
+      - USER_SERVICE_ENDPOINT="http://app-service:8080"
+      - PROJECT_MANAGER_ENDPOINT="http://dp-project-manager:80"
   - name: cm-file-cio-event-collector
     behavior: create
     files:
@@ -492,3 +478,15 @@ configMapGenerator:
     literals:
       - CHOREO_USAGE_HANDLER_CRONJOB_MODE="publisher"
       - CHOREO_USAGE_PUBLISHING_FREQUENCY="dynamic-monthly"
+  - name: cm-file-choreo-org-stat-data-collector
+    behavior: create
+    files:
+      - choreo-org-stat/data-collector/Config.toml
+  - name: cm-file-choreo-org-stat-data-publisher
+    behavior: create
+    files:
+      - choreo-org-stat/data-publisher/application.properties
+  - name: cm-file-choreo-metered-usage-handler-service
+    behavior: create
+    files:
+      - choreo-metered-usage-handler-service/Config.toml

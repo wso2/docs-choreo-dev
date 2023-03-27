@@ -13,7 +13,18 @@ import { ComponentData } from "../../../support/interfaces/component-data";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GitHub } from "../../../support/github/github";
 
-describe("Verify BYOR functionality", () => {
+const dp = Enums.Region.US;
+
+before(() => {
+  LoginPage.login();
+  GitHub.deleteWebhooks("greeting-rest-api");
+});
+
+after(() => {
+  ChoreoHomePage.logout();
+});
+
+describe(`Verify BYOR functionality in region ${dp}`, () => {
   const PROJECT_DESCRIPTION = "Internal API Test";
   const PROJECT_NAME = Utils.generateProjectName();
   const REST_API_NAME = Utils.generateComponentName("byor");
@@ -23,22 +34,12 @@ describe("Verify BYOR functionality", () => {
   const PARAM_NAME = "name";
   const PARAM_VALUE = "World";
   const MATCHING_STRING = "Hello, " + PARAM_VALUE;
-  
+
   const PARAM_NAME1 = "name";
   const PARAM_VALUE1 = "John";
   const MATCHING_STRING1 = "Hi, " + PARAM_VALUE1;
   const queryParameters1 = [{ key: PARAM_NAME, value: PARAM_VALUE }];
   const queryParameters2 = [{ key: PARAM_NAME1, value: PARAM_VALUE1 }];
-
-
-  before(() => {
-    LoginPage.login();
-    GitHub.deleteWebhooks("greeting-rest-api")
-  });
-
-  after(() => {
-    ChoreoHomePage.logout();
-  });
 
   it("Verify REST API component creation", () => {
     let componentData: ComponentData = {
@@ -54,12 +55,13 @@ describe("Verify BYOR functionality", () => {
       repositorySubPath: "",
       sampleTemplate: "",
     };
-    ProjectListingPage.createNewProject(
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, dp);
+    GraphQL.createComponent(
       PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.US
+      REPO_NAME,
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
     );
-    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
   it("Deploy component", () => {
@@ -100,8 +102,6 @@ describe("Verify BYOR functionality", () => {
     ComponentDeployPage.promoteToProd();
   });
 
-
-
   it("Verify test functionality of root resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
@@ -136,7 +136,7 @@ describe("Verify BYOR functionality", () => {
     ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-    ComponentAPILifecycle.applyConfiguration(    );
+    ComponentAPILifecycle.applyConfiguration();
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",
       Enums.Environment.DEVELOPMENT
@@ -178,11 +178,11 @@ describe("Verify BYOR functionality", () => {
     });
   });
 
-   it("Verify new version",()=>{
+  it("Verify new version", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.addNewVersion()
+    ComponentDeployPage.addNewVersion();
     ComponentDeployPage.deployToDev();
-  })
+  });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest(true);
@@ -215,8 +215,6 @@ describe("Verify BYOR functionality", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.promoteToProd();
   });
-
-
 
   it("Verify test functionality of root resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();

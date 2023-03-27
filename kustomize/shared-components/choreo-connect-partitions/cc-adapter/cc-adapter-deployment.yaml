@@ -131,6 +131,7 @@ spec:
             - containerPort: 18000
             - containerPort: 9843
             - containerPort: 6060
+            - containerPort: 18001
           livenessProbe:
             exec:
               command: [ "sh", "check_health.sh" ]

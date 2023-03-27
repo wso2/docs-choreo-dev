@@ -1,12 +1,8 @@
 package com.wso2.choreo.integration.apis;
 
-import com.wso2.choreo.integration.common.TestContext;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
-
-import java.io.IOException;
 
 
 public abstract class ControlPlaneAPI {

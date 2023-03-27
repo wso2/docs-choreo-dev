@@ -77,6 +77,8 @@ spec:
             - name: secret-moesif-service
               mountPath: /mnt/csi/secret-moesif-service
               readOnly: true
+            - name: tmp
+              mountPath: /tmp
       restartPolicy: Always
       volumes:
         - name: config
@@ -90,6 +92,8 @@ spec:
               secretProviderClass: secret-moesif-service
             nodePublishSecretRef:
               name: csi-secret-store-azure
+        - name: tmp
+          emptyDir: {}
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:

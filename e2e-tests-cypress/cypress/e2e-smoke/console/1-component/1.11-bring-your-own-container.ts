@@ -11,42 +11,38 @@
  * associated services.
  */
 
-
-
+import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
+import { Enums } from "../../../support/console/enums";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { Enums } from "../../../support/console/enums";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { Utils } from "../../../support/console/utils";
 import { ByocComponent } from "../../../support/interfaces/byoc-component";
-import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 
-describe("Verify BYOC functionality", () => {
+const dp = Enums.Region.US;
+
+before(() => {
+  LoginPage.login();
+});
+
+after(() => {
+  ChoreoHomePage.logout();
+});
+
+describe(`Verify BYOC functionality in region ${dp}`, () => {
   const PROJECT_DESCRIPTION = "BYOC component";
   const PROJECT_NAME = Utils.generateProjectName();
   const REST_API_NAME = Utils.generateComponentName("byor");
   const REPO_NAME = Utils.generateComponentName("repo");
   const RESOURCE_NAME = "movies";
 
-
-
-
-  before(() => {
-    LoginPage.login();
-  });
-
-  after(() => {
-    ChoreoHomePage.logout();
-  });
-
   it("Verify REST API component creation", () => {
-
     let componentData: ByocComponent = {
       name: REST_API_NAME,
       displayName: REST_API_NAME,
@@ -57,12 +53,13 @@ describe("Verify BYOC functionality", () => {
       oasFilePath: "",
       projectId: "",
     };
-    ProjectListingPage.createNewProject(
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, dp);
+    GraphQL.createComponent(
       PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.US
+      REPO_NAME,
+      componentData,
+      GraphQLQueryBuilder.getBYOCComponentCreationQuery
     );
-    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getBYOCComponentCreationQuery)
   });
 
   it("Deploy component", () => {
@@ -72,15 +69,12 @@ describe("Verify BYOC functionality", () => {
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
-    TestHelper.testOnSwagger(
-      Enums.Environment.DEVELOPMENT,
-      RESOURCE_NAME
-    ).then((res) => {
-      expect(res.statusCode).to.be.equal("200");
-    });
+    TestHelper.testOnSwagger(Enums.Environment.DEVELOPMENT, RESOURCE_NAME).then(
+      (res) => {
+        expect(res.statusCode).to.be.equal("200");
+      }
+    );
   });
-
-
 
   it("Verify test functionality using generated curl in dev", () => {
     TestHelper.testOnCurl(
@@ -94,23 +88,18 @@ describe("Verify BYOC functionality", () => {
     });
   });
 
-
   it("Verify component promote to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.promoteToProd();
   });
 
-
-
   it("Verify test functionality using Swagger UI in Dev", () => {
-    TestHelper.testOnSwagger(
-      Enums.Environment.PRODUCTION,
-      RESOURCE_NAME
-    ).then((res) => {
-      expect(res.statusCode).to.be.equal("200");
-    });
+    TestHelper.testOnSwagger(Enums.Environment.PRODUCTION, RESOURCE_NAME).then(
+      (res) => {
+        expect(res.statusCode).to.be.equal("200");
+      }
+    );
   });
-
 
   it("Verify test functionality using generated curl in Prod", () => {
     TestHelper.testOnCurl(
@@ -123,7 +112,6 @@ describe("Verify BYOC functionality", () => {
       });
     });
   });
-
 
   it("Apply configs to dev", () => {
     ComponentOverviewPage.navigateToManage();
@@ -147,7 +135,7 @@ describe("Verify BYOC functionality", () => {
   });
 
   it("Verify test functionality using generated curl in Dev", () => {
-    ComponentOverviewPage.navigateToTest()
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnCurl(
       Enums.Environment.DEVELOPMENT,
       Enums.HTTPMethod.GET,
@@ -171,7 +159,6 @@ describe("Verify BYOC functionality", () => {
     });
   });
 
- 
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();

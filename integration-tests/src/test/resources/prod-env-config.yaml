@@ -1,3 +1,5 @@
+dps:
+  REGIONS: EU,US,IND
 accountInfo:
   TEST_USER_EMAIL: choreo-integration-test-user-prod@wso2.com@carbon.super
   #TEST_USER_PASSWORD:

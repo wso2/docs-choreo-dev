@@ -162,6 +162,15 @@ defaultRoles:
         - environments:view_dev
         - choreo:component_manage
         - choreo:dev_env_manage
+        - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
+        - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_DELETE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_UPDATE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_MANAGE}}
+        - {{.PERMISSION_CONFIG_VIEW}}
+        - {{.PERMISSION_CONFIG_CREATE}}
+        - {{.PERMISSION_CONFIG_DELETE}}
+        - {{.PERMISSION_CONFIG_MANAGE}}
     - name: API Subscriber
       handle: api-subscriber
       description: Users or Application Developers who search the Developer Portal to discover APIs and use them. They read the documentation and forums, rates/comments on the APIs, subscribes to APIs, obtain access tokens, and invokes the APIs
@@ -243,6 +252,15 @@ defaultRoles:
         - environments:view_dev
         - environments:view_prod
         - apim:environment_manage
+        - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
+        - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_DELETE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_UPDATE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_MANAGE}}
+        - {{.PERMISSION_CONFIG_VIEW}}
+        - {{.PERMISSION_CONFIG_CREATE}}
+        - {{.PERMISSION_CONFIG_DELETE}}
+        - {{.PERMISSION_CONFIG_MANAGE}}
     - name: Project Manager
       handle: project-manager
       description: Users who are involved in project management
@@ -260,6 +278,15 @@ defaultRoles:
         - apim:subscription_view
         - environments:view_dev
         - environments:view_prod
+        - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
+        - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_DELETE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_UPDATE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_MANAGE}}
+        - {{.PERMISSION_CONFIG_VIEW}}
+        - {{.PERMISSION_CONFIG_CREATE}}
+        - {{.PERMISSION_CONFIG_DELETE}}
+        - {{.PERMISSION_CONFIG_MANAGE}}
 roleBasedUserMgt:
   enabled: ${ROLE_BASED_USER_MGT_ENABLED}
 onPremKeySubscription:

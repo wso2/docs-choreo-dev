@@ -26,11 +26,13 @@ export class ProjectOverviewPage {
       if (projects.length > 0) {
         const project = projects.find(p => p.name === projectName)
         GraphQL.getComponents(project.id).then(comps => {
-          const component = comps.components.find(c => c.displayName.trim() === componentData.componentName.trim())
-          if (component == undefined) {
-            GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
-          } else {
-            GraphQL.getComponentInfo(projectName, componentData.componentName)
+          if (comps.status === 200) {
+            const component = comps.components.find(c => c.displayName.trim() === componentData.componentName.trim())
+            if (component == undefined) {
+              GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
+            } else {
+              GraphQL.getComponentInfo(projectName, componentData.componentName)
+            }
           }
         })
       }

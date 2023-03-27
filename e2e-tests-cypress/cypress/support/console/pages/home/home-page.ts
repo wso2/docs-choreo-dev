@@ -18,16 +18,20 @@ import { LoginPage } from "../login-page";
 export class ChoreoHomePage {
 
     static navigateToHome() {
-        const {handle} = Cypress.env("current_org");
+        const { handle } = Cypress.env("current_org");
         cy.get(`div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home"]`).click();
     }
 
     static navigateToMarketPlace() {
-        cy.get('[data-testid="main-left-nav-item-Marketplace"]').click();
+        cy.get('[data-testid="main-left-nav-item-Marketplace"]').click({ force: true })
     }
 
     static navigateToProjects() {
         cy.get('[data-testid="main-left-nav-item-Project"]').click();
+    }
+
+    static navigateToComponents(){
+        cy.get('[data-testid="main-left-nav-item-Components"]').click()
     }
 
     static navigateToInsights() {
@@ -60,18 +64,18 @@ export class ChoreoHomePage {
         }
     }
 
-    static changeToAPIPerspective(){
+    static changeToAPIPerspective() {
         cy.get('[data-testid="perspective-pickeridevp"]').click();
-         cy.get('.MuiList-root')
-           .should("be.visible")
-           .get(`[data-value="apim"]`).click();
-   }
+        cy.get('.MuiList-root')
+            .should("be.visible")
+            .get(`[data-value="apim"]`).click();
+    }
 
-   static changeToIDevPerspective(){
-    cy.get('[data-testid="perspective-pickerapim"]').click();
-     cy.get('.MuiList-root')
-       .should("be.visible")
-       .get(`[data-value="idevp"]`).click();
-}
+    static changeToIDevPerspective() {
+        cy.get('[data-testid="perspective-pickerapim"]').click();
+        cy.get('.MuiList-root')
+            .should("be.visible")
+            .get(`[data-value="idevp"]`).click();
+    }
 
 }
