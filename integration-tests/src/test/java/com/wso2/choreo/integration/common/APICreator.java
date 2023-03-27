@@ -174,12 +174,12 @@ public class APICreator extends ControlPlaneAPI {
     public static DeploySettings deployRevision(String componentId, String versionId, String envId, String orgId,
                                                 String revisionId, String buildId, String apiId, String accessToken)
                                                 throws IOException {
-        return deployRevision(componentId, versionId, envId, orgId, revisionId, buildId, apiId, accessToken, null);
+        return deployRevision(componentId, versionId, envId, orgId, revisionId, buildId, apiId, accessToken, null, null);
     }
 
     public static DeploySettings deployRevision(String componentId, String versionId, String envId, String orgId,
                                                 String revisionId, String buildId, String apiId, String accessToken,
-                                                String restAPIContent)
+                                                String restAPIContent, String swaggerContent)
             throws IOException {
         String url = PROXY_URI + componentId + "/versions/" + versionId + "/deploy-settings?environmentId=" + envId +
                 "&revisionId=" + revisionId + "&buildId=" + buildId + "&description=" + "" + "&apiId=" + apiId +
@@ -190,6 +190,12 @@ public class APICreator extends ControlPlaneAPI {
             payload.put("api", restAPIContent);
         } else {
             payload.put("api", getApi(apiId, orgId, accessToken));
+        }
+
+        if (swaggerContent != null) {
+            payload.put("openApi", swaggerContent);
+        } else {
+            payload.put("openApi", getSwagger(apiId, orgId, accessToken));
         }
         Response response = HttpClientUtil.httpPOSTFormData(url, payload, accessToken, "");
         return ObjectMapperUtil.mapStringToObject(DeploySettings.class, response.getRes(), "");

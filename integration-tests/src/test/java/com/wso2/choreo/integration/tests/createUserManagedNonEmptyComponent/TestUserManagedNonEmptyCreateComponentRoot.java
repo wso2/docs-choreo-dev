@@ -648,7 +648,7 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
                 DeploySettings deploySettings = APICreator.deployRevision(testComponentV2.getId(),
                         testComponentV2.getLatestApiVersion().getId(),
                         testComponentV2.getLatestAppEnvId("dev"), orgUUID,
-                        revisionUUID, buildId, apiId, accessToken, apiPayload);
+                        revisionUUID, buildId, apiId, accessToken, apiPayload, null);
                 boolean requestSuccess = false;
                 DeploymentStatus deploymentStatus = null;
                 int count = 0;
