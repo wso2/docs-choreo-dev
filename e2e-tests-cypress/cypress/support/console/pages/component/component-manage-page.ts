@@ -243,7 +243,7 @@ export class ComponentAPILifecycle {
     cy.get('[data-cyid="tab-security-settings"]').should("be.visible");
     cy.wait(5000);
     cy.get('div[role="combobox"]').eq(1).click();
-    cy.get(`ul[id="Select List-popup"]>li`).contains(visibility).focus().click();
+    cy.get(`ul[id="Select List-popup"]>li`).contains(visibility).click();
     cy.get('[data-testid="info-banner"]').should("be.visible");
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]').wait(100).realClick();
     this.verifyAPIVisibility(visibility);
