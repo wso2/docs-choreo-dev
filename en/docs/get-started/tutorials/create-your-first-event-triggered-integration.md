@@ -21,7 +21,7 @@ In this tutorial, you will do the following:
     - Use an existing RabbitMQ instance or start a new [RabbitMQ](https://www.rabbitmq.com/download.html) instance on a server that can be accessed via the internet. Obtain the `username`, `hostname`, `password`, and `vhost` from the RabbitMQ instance to use later as environment variables. 
 
 !!! tip "RabbitMQ instance"
-    You can use RabbitMQ services such as [CloudAMQP](https://www.cloudamqp.com/) to set up RabbitMQ instances easily.
+    You can easily set up RabbitMQ instances by utilizing services like [CloudAMQP](https://www.cloudamqp.com/).
 
 ## Step 1: Create the integration component
 
