@@ -82,7 +82,7 @@ Before you deploy the component, you must follow the steps given below to assign
     | VHOST      | 
 3. Click **Deploy**. 
 
-4. Alternatively, you can go to the **Development** card and click **Manage Configs and Secrets**. This takes you to the [Configurations and secrets](../../deploy/devops/configs-and-secrets) page, where you can apply environment-specific configuration files, environment variables, and other secret resources to containers.
+4. Alternatively, you can go to the **Development** card and click **Manage Configs and Secrets**. This takes you to the [Configurations and secrets](../../deploy/devops/configs-and-secrets.md) page, where you can apply environment-specific configuration files, environment variables, and other secret resources to containers.
     1. Click **Create**.
     2. In **Step 1** page, select the type **Environment Variables** as the configuration type and click **Next**.
     3. Select **Create New** and enter a **Config Name**. Here, let's specify `environmentconf` as the **Config Name**.
