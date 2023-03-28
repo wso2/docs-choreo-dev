@@ -59,11 +59,11 @@ During deployment, Choreo performs a Trivy scan to detect critical vulnerabiliti
 
 We recommend using environmental variables to improve configuration management, security, portability, and manageability when you develop integration artifacts with WSO2 integration studio. By using environment variables, organizations can simplify the management and maintenance of their integrations and ensure that they can be quickly and easily updated when required.
 
-The component's Deploy page allows you to easily manage environment variables across environments via a user-friendly interface. See [Configurations and secrets](../../deploy/devops/configs-and-secrets) to learn how to manage environment variables for complex use-cases.
+The component's Deploy page allows you to easily manage environment variables across environments via a user-friendly interface. See [Configurations and secrets](../../deploy/devops/configs-and-secrets.md) to learn how to manage environment variables for complex use-cases.
 
 ![Environment Variables](../../assets/img/ipaas/integration-studio/env_variables.png){.cInlineImage-half}
 
-Choreo's DevOps capabilities allow for greater flexibility in defining configurations and secrets for deployed integrations, as well as other component types, to meet more complex configuration requirements. Refer to the section on [Configurations and secrets](../../deploy/devops/configs-and-secrets) for further details.
+Choreo's DevOps capabilities allow for greater flexibility in defining configurations and secrets for deployed integrations, as well as other component types, to meet more complex configuration requirements. Refer to the section on [Configurations and secrets](../../deploy/devops/configs-and-secrets.md) for further details.
 
 For a comprehensive list of parameters that can be configured as environment variables, please refer to the [WSO2 API Manager Documentation - Injecting Parameters - Supported parameters](https://apim.docs.wso2.com/en/latest/integrate/develop/injecting-parameters/#supported-parameters).
 
