@@ -78,7 +78,7 @@ Based on the commit you select to deploy, Choreo will prompt you to provide the 
 
 Depending on the component type, Choreo will allow you to configure the deployment configurations such as scaling, resource limits, and health check configurations.
 
-For more information about these configurations, see the [DevOps capabilities](./devops/runtime.md).
+For more information about these configurations, see [DevOps Portal](../devops/devops-portal.md).
 
 The **Service** component will additionally allow you to configure the **Endpoints** to expose your service. See [Service Component](../develop/components/service.md) for more information.
 
