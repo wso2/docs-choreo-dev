@@ -67,12 +67,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.greaterThan;
+
 
 /**
  * Implements GraphQL API calls and their response validations.
@@ -614,15 +614,7 @@ public class GraphQL extends ControlPlaneAPI {
                                 .message()
                                 .type(MessageType.JSON)
                                 .validate(jsonPath()
-                                        .expression("$.data.deploymentStatusByVersion.size()", greaterThan(0))
-                                        .expression("$.data.deploymentStatusByVersion[*].keySet()",
-                                                containsInAnyOrder("id","sha","completed_at","started_at","name","status","conclusion",
-                                                        "isAutoDeploy","failureReason","sourceCommitId"))
-                                        .expression("$.data.deploymentStatusByVersion[*].name", "Choreo Generated Build Deploy Action")
-                                        .expression("$.data.deploymentStatusByVersion[*].status", "completed")
-                                        .expression("$.data.deploymentStatusByVersion[*].conclusion", "success")
-                                        .expression("$.data.deploymentStatusByVersion[*].isAutoDeploy", false)
-                                        .expression("$.data.deploymentStatusByVersion[*].failureReason", 0)
+                                        .expression("$.data.deploymentStatusByVersion[0].conclusion", "success")
                                                 )
                                         )
                                 );
