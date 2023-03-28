@@ -10,10 +10,6 @@ This guide walks you through the following:
 
 Let's consider a use case where a web application developer designs an application that allows you to maintain reading lists. A user can create a private reading list by adding books. The user can also view and delete them when required. A Choreo developer develops a REST API for this web application to consume. The two developers will create two versions of the solution in two iterations. The second version of the application will add data persistence as a new feature.
 
-The following diagram summarizes the use case:
-
-![Use case summary](../assets/img/get-started/use-case-summary.png){.cInlineImage-full}
-
 Let's get started!
 
 ## Prerequisites
@@ -45,17 +41,17 @@ Before you try out this guide, complete the following:
     2. Enter a unique name and a description for the project, and click **Create**.
 
 
-## Step 1: Create and publish a REST API
+## Step 1: Create a service component and publish a REST API
 
-In this step, you are playing the role of the API developer. You will create and publish the REST API that the web application needs to consume.
+In this step, you are playing the role of the API developer. You will create a service component and publish a REST API endpoint that the web application needs to consume.
 
-### Step 1.1: Create the REST API
+### Step 1.1: Create the Service
 
-Let's create your first REST API.
+Let's create your first Service.
 
 1. On the **Home** page, click on the project you created.
 
-2. Click **Create** in the  REST API card.
+2. Click **Create** in the Service card.
 
 3. Enter a unique name and a description for the API. For example, you can enter the name and the description given below:
 
@@ -64,13 +60,11 @@ Let's create your first REST API.
     | **Name**        | `readingList`           |
     | **Description** | `Manages reading lists` |
 
-4. In the **Access Mode** field, leave the default selection (i.e., **External: API is publicly accessible**) unchanged so that users outside your organization can access your API.
+6. Click **Next**.
 
-5. Click **Next**.
+7. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
 
-6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
-
-7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the private repository you created by forking [https://github.com/wso2/choreo-examples/tree/version-1](https://github.com/wso2/choreo-examples/tree/version-1) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+8. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the private repository you created by forking [https://github.com/wso2/choreo-examples/tree/version-1](https://github.com/wso2/choreo-examples/tree/version-1) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
@@ -78,7 +72,7 @@ Let's create your first REST API.
      ![Authorize GitHub app](../assets/img/tutorials/connect-own-repo/authorize-github-app.png){.cInlineImage-half}
 
 
-8. In the **Connect Repository** dialog box, enter the following information:
+9. In the **Connect Repository** dialog box, enter the following information:
 
     | **Field**             | **Description**                               |
     |-----------------------|-----------------------------------------------|
@@ -88,33 +82,34 @@ Let's create your first REST API.
     | **Build Preset**      | Click **Ballerina** because you are creating the REST API from a [Ballerina](https://ballerina.io/) project and Choreo needs to run a Ballerina build to build it.|
     | **Path**              | **`reading-list-service`**                    |
 
-9. Click **Create** to initialize a REST API with the implementation from your GitHub repository.
+10. Click **Create** to initialize a REST API with the implementation from your GitHub repository.
 
-The REST API opens on a separate page where you can see its overview.
+The Service opens on a separate page where you can see its overview.
 
-###  Step 1.2: Deploy the REST API
+###  Step 1.2: Deploy a REST API Endpoint
 
-For the REST API to be invokable, you need to deploy it. To deploy the REST API, follow the steps given below:
+For the service to be invokable, you need to create a REST API endpoint and deploy it. To do that, follow the steps given below:
 
 1. Navigate to the Choreo Console. You will be viewing an overview of the `readingList` REST API.
 
-2. In the left pane, click **Deploy**, and then click **Configure & Deploy**.
-
-    !!! info
-        Automatic deployment is enabled for the REST API by default. You are required to carry out only the first deployment manually.<br/><br/> When automatic deployment is enabled, your REST API is automatically deployed every time you push a commit to the GitHub repository in which its implementation resides. You can disable automatic deployment if required.
+2. In the left pane, click **Deploy**, and then click **Deploy Manually**.
         
-3. In the **Configure & Deploy** pane, click **Deploy** without entering a sandbox endpoint. 
+3. In the **Configure & Deploy** pane you can see there is an REST endpoint generated and waiting to be deployed. Click **Deploy**.
 
     !!! info
-        In this example, you are testing the REST API only in the Choreo Console and not in a sandbox environment. Therefore, you do not need to enter a sandbox endpoint.
+        In this example, we are deploying a Ballerina service as a REST API. Therefore, the REST endpoint is generated automatically. If you are deploying a non Ballerina service you will have to manually add the REST endpoint. Make to set the endpoint's visibility to **Public**.
 
-    This deploys the API to the development environment.
+    This deploys the service with the REST API endpoint to the development environment.
 
-### Step 1.3: Test the REST API
+### Step 1.3: Test the Service
 
 Let's test the `readingList` REST API via Choreo's Open API Console by following the steps given below:
 
-1. Click **Test** in the left pane, and be sure that you are in the **OpenAPI Console** view. If not, click **OpenAPI Console** in the left pane.
+1. Click **Test** in the left pane, and be sure that you are in the **Console** view. If not, click **Console** in the left pane.
+
+2. Select the environment you deployed the service to from the **Environment** drop-down list.
+
+3. You can see the available public endpoints in the **Pubic Endpoint** dropdown. Select the endpoint you deployed the service to.
 
 2. Expand the **POST** method and click **Try it out**.
 
