@@ -253,7 +253,7 @@ export class ComponentAPILifecycle {
 
 
   static updateAPIAccessMode(accessMode: string) {
-    cy.get('[data-cyid="dropdown-api-access-mode-selector"]>div')
+    cy.get('div[role="combobox"]>div>div>input').eq(0)
       .should("be.visible")
       .click({ force: true });
     cy.get(`[data-cyid="item-${accessMode}"]`)
