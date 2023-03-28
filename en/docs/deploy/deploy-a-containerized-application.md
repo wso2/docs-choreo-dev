@@ -100,7 +100,7 @@ The following image shows adding a **ConfigMap** with **File Mount** mount type 
 
 Choreo lets you configure deployment settings such as scaling, resource limits, and health checks based on your selected component type.
 
-For more information about these configurations, see Choreo's [DevOps capabilities](./devops/runtime.md).
+For more information about these configurations, see [DevOps Portal](../devops/devops-portal.md).
 
 You can configure the **Endpoints** to expose your service using the **Service** Component in Choreo. See [Service Component](../develop/components/service.md) for more information. 
 
