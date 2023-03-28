@@ -15,6 +15,7 @@ integrations
 cInlineImage-half
 choreo-connectors-list
 prebuilt
+Pre-released
 ForEach
 md
 cInlineImage-bordered
@@ -448,6 +449,13 @@ programmatic-access-choreo-insights-api
 pricing.md
 create-your-first-integration-as-an-api
 api-proxy
+configs-and-secrets
+runtime.md
+containers.md
+health-checks.md
+configs-and-secrets.md
+scaling.md
+storage.md
 webhook.md
 graphql-api
 connect-your-own-github-repository-to-choreo
