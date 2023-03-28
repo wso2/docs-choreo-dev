@@ -45,7 +45,7 @@ Adding third-party JARs to the Micro Integrator can provide the following benefi
 - Providing optimized implementations of common functions, improving the performance of Micro Integrator.
 - Developers can avoid having to re-implement commonly used functions, reducing development time and increasing efficiency.
 
-To add third-party libraries to the Micro Integrator, you can add a new directory named `libs` to the root of the Micro Integrator project. When you deploy the component, all the JARs in the `libs` directory in the project path will be included in the Micro Integrator runtime.
+To add third-party libraries to the Micro Integrator, you can add a new directory named `libs` to the root of the Micro Integrator project. Please note that this directory does not necessarily need to be at the root of the GitHub repository, but specifically at the root of the Micro Integrator project. When you deploy the component, all the JARs in the `libs` directory in the project path will be included in the Micro Integrator runtime.
 
 ![Libs Directory](../../assets/img/ipaas/integration-studio/libs_dir.png){.cInlineImage-half}
 
