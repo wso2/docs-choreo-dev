@@ -4,13 +4,15 @@ The Choreo Console allows you to observe the basic deployment process of a Docke
 
 ## Access the DevOps Portal
 
-You can access the DevOps Portal in one of the following ways:
+To access the DevOps Portal, you can either:
 
-- Via https://devops.choreo.dev/
+ - Navigate to [https://devops.choreo.dev/](https://devops.choreo.dev/) 
+ 
+     or
+ 
+ - Select **DevOps** from the **Profile** list in the top menu of the Choreo Console.
 
-- Clicking **DevOps Portal** in the top menu of the Choreo Console
-
-   ![Top menu link](../assets/img/byoc/access-devops-portal.png){.cInlineImage-full}
+      ![Top menu link](../assets/img/byoc/access-devops-portal.png){.cInlineImage-xsmall}
 
 When you open the DevOps Portal, it displays the deployment insights and the recently created components of the currently selected project as shown below:
 
@@ -30,9 +32,9 @@ On this page, you can view the information described in the following subtopics.
 
 ### Overview
 
-This tab displays the following information:
+The **Overview** tab displays the following information:
 
-![Component overview in the private data plane](../assets/img/devops-portal/devops-component-overview-in-private-data-plane.png){.cInlineImage-full}
+![Component overview in the private data plane](../assets/img/devops-portal/devops-component-overview-in-private-data-plane.png){.cInlineImage-threeQuarter}
 
 !!! Tip
     The internal routing URL is an internal endpoint for the component. Other components in the same organization can use this URL to communicate with this component without using the public internet or an internal gateway.
@@ -43,7 +45,7 @@ In this tab, you can perform the following activities:
 
     You can click **Deploy** or **Redeploy** as relevant.
 
-- Perform advance promotions for a component
+- Promote the component to another environment 
 
     When you have multiple environments, the **Overview** tab of the DevOps Portal allows you to select the environment to which you want to promote the component as shown below: 
 
@@ -80,27 +82,30 @@ Choreo allocates a default storage volume for each component. Choreo also allows
 
 #### Create a volume mount for a component
 
-Follow these steps to create a volume mount:
+**Prerequisite**
 
-1. Sign in to the Choreo DevOps Portal at https://devops.choreo.dev/, select a project, and click a component to create a volume.
+- Ensure the project is in an organization where you have set up the private data plane capability.
 
-    !!! Tip
-        Ensure the project is in an organization where you have set up the private data plane capability.
+Follow these below to create a volume mount:
+
+1. Sign in to the Choreo DevOps Portal at [https://devops.choreo.dev](https://devops.choreo.dev), select a project, and click a component to create a volume.
 
 2. Click the **Storage** tab and then click **Let’s Get Started**. This opens the **Create Volume Mounts** pane, where you can specify volume information depending on your requirement.
+
 3. Enter a **Volume Name**, add the required labels, and select an appropriate **Volume Type**.
 
     !!! Tip
-        You must specify values for the additional volume information depending on the **Volume Type** you select. For example, if the **Volume Type** is **NFS Server**, you must specify the **Server IP Address** and **Path**.
+        You must specify values for the fields depending on the **Volume Type** you select. For example, if the **Volume Type** is **NFS Server**, you must specify the **Server IP Address** and **Path**.
 
 4. Click **Continue** and proceed to add container mount information.
+
 5. For the selected container, specify a **Mount Path** and click **Finish**.
 
-    ![Container mount information](../assets/img/devops-portal/container-mount-information.png){.cInlineImage-full}
+    ![Container mount information](../assets/img/devops-portal/container-mount-information.png){.cInlineImage-threeQuarter}
 
     This creates the volume and displays details of it in the **Volume Mounts** pane.
 
-    ![Volume mounts](../assets/img/devops-portal/volume-mounts.png){.cInlineImage-full}
+    ![Volume mounts](../assets/img/devops-portal/volume-mounts.png){.cInlineImage-threeQuarter}
 
     You can perform the following actions in the **Volume Mounts** pane:
 
@@ -112,7 +117,7 @@ Follow these steps to create a volume mount:
 
 This tab allows you to define health checks for a selected container. 
 
-![Create health check](../assets/img/devops-portal/create-a-health-check.png){.cInlineImage-half}
+![Create health check](../assets/img/devops-portal/create-a-health-check.png){.cInlineImage-xsmall}
 
 ### Scaling
 

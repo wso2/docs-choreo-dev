@@ -1,5 +1,8 @@
 # Open API Console
 
+!!! note
+    The REST component will be deprecated in the future. We recommend using the Service component and [Test Console](../test/invoke-apis-via-console.md#rest-endpoints) to test your REST APIs.
+
 Choreo allows you to test your APIs using the integrated OpenAPI Console, the generated cURL command, or by integrating Postman to Choreo. Once you have created an API and deployed it, it is ready to be tested. 
 
 You can follow the steps below to test your REST API using the integrated OpenAPI Console:
@@ -32,6 +35,6 @@ You can follow the steps below to test your REST API using the integrated OpenAP
 
     You can view the response body under **Responses**.
 
-    ![Response for the Deployed API](../assets/img/tutorials/rest-api/deployed-api-response.png){.cInlineImage-full}
+    ![Response for the Deployed API](../assets/img/tutorials/rest-api/deployed-api-response.png){.cInlineImage-half}
 
 Congratulations! You have now successfully created and tested a REST API in Choreo!

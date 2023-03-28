@@ -278,7 +278,6 @@ To configure the front-end application by defining the ports it needs to run on,
 
         - `VITE_RESOURCE_ENDPOINT_CONTEXT`
 
-
 Now you have configured your front-end application. Next, you need to configure Asgardeo as the identity provider for your application.
 
 #### Step 2.3.3: Create a user in Asgardeo
@@ -383,7 +382,7 @@ Let's create a new version of the `readingList` Service that can connect to a My
 
 2. Expand the list of versions and click **+ Create New**.
 
-    ![Create new version](../assets/img/get-started/create-new-version.png){.cInlineImage-threeQuarters}
+    ![Create new version](../assets/img/get-started/create-new-version.png){.cInlineImage-threeQuarter}
 
 3. Select **version-2** as the associated GitHub branch and enter `2.0.0` as the version name. Next click **Create**.
 

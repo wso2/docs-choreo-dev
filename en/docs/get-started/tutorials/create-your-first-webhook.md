@@ -1,10 +1,10 @@
 # Create Your First Webhook
 
-Choreo’s low-code editor allows developers to easily design (and then implement) high-quality webhooks. To explore this capability, let's consider a scenario where a team of software engineers in an organization wants to be notified via email whenever someone creates a GitHub issue with the `bug` label in a specific repository. 
+Choreo allows developers to easily design high-quality webhooks. To explore this capability, let's consider a scenario where a team of software engineers in an organization wants to be notified via email whenever someone creates a GitHub issue with the `bug` label in a specific repository. 
 
 In this tutorial, you will address this requirement by doing the following:
 
-- Create a webhook component by connecting to your GitHub repository that includes the implementation of the webhook that addresses the described requirement.
+- Create a webhook component by connecting to your GitHub repository containing the implementation of the webhook that addresses the described requirement.
 - Deploy the webhook you created to the development environment.
 - Modify the webhook implementation to connect the webhook implementation to GitHub, enabling it to act in response to selected GitHub-related events.
 - Test the webhook.
@@ -31,12 +31,13 @@ First, let's add a Webhook component as follows:
     | **Name**        | `IssueTracking`       |
     | **Description** | `Track GitHub issues` |
 
-4. Click **Create**. This takes you to the **Components** page.
+4. Select a region closer to you and Click **Create**. This takes you to the **Components** page.
 
 5. On the **Components** page, click **Create** on the **Webhook** card.
 
     ![Create component](../../assets/img/tutorials/webhook/create-webhook.png){.cInlineImage-small}
 
+5. In the **Name** field, enter a unique webhook name (e.g., `IssueTracking`), a meaningful description to the **Description** field, and select the **Access Mode**. Click **Next**.Click **Next**.
 6. Provide authorization with your GitHub account by clicking  **Authorize with GitHub**. 
 7. If you have not already authorized Choreo apps, click **Authorize Choreo Apps** when prompted.
 8. Select a GitHub account, a repository that includes a Ballerina project or a Dockerfile, the relevant branch, and **Ballerina** as the build preset.  
@@ -45,22 +46,14 @@ First, let's add a Webhook component as follows:
     !!! note
         If you connect an empty GitHub repository to create the component, you cannot deploy the component. Be sure to implement your webhook before proceeding to the deployment stage. 
 
-10. Click **Next**.
-
-10. In the **Create a Webhook** pane, click on the Webhook type you want to create, for example **GitHub**. 
-11. Click **Create**.
-
-    1. In the **Webhook Name** field, enter a unique webhook name (e.g., `IssueTracking`).
-   
-    2. From the **Trigger Channel** list, select **IssuesService** so that the system can trigger your webhook based on a change it observes in GitHub issues (i.e., assigning a label in this scenario).
-
-    3. Click **Create**.
+10. In the **Create a Webhook** pane, click on the trigger type you want to create, for example **GitHub**. Click **Next**.
+11. Review the trigger type you selected and Click **Create**.
 
          The webhook opens on a separate page.
       
 ### Step 1.2: Design the webhook
 
-Designing a webhook involves specifying how the webhook should function by adding and configuring the required connectors and statements. You can do this by editing the low-code diagram of the Webhookor by editing its code.
+Designing a webhook involves specifying how the webhook should function by adding and configuring the required connectors and statements. You can do this by editing the low-code diagram of the Webhookor by editing its code in the [Choreo VS code extension](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo).
 
 You can implement your webhook in Ballerina or any other language and containerize it. You can use the [Ballerina VS code extension](https://ballerina.io/downloads/) to develop the webhook in Ballerina. [Learn more](https://wso2.com/ballerina/vscode/docs/).
 
@@ -133,7 +126,7 @@ Let's deploy your webhook to the development environment to make it invokable:
    
     3. Click **Deploy**.
 
-    Choreo starts deploying the webhook. You can monitor the progress of the deployment in the **Console** pane that opens on the right of the page.
+    You can monitor the progress of the deployment in the **Console** pane that opens on the right of the page.
 
 Once Choreo completes the deployment, the **Deploy** page displays the **Active** deployment status for the webhook as shown in the image below:
 

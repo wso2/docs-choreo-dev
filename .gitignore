@@ -7,3 +7,8 @@ node_modules
 cloud.key
 cloud.key.pub
 
+site/
+output.txt
+.vscode/
+fil
+

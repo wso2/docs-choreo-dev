@@ -20,25 +20,25 @@ The information displayed is as follows:
 
 - **Total Traffic**
 
-  ![Total traffic](../../assets/img/insights/overview-page-total-traffic.png){.cInlineImage-half}
+  ![Total traffic](../../assets/img/insights/overview-page-total-traffic.png){.cInlineImage-small}
 
   This widget displays the total traffic of the selected environment received during a given time interval. Both successful requests and failed requests are displayed. To investigate further, you can click the arrow icon on the bottom right corner of the widget to open the [**Traffic**](#traffic) page.
 
 - **Error Request Count**
 
-  ![Error request count](../../assets/img/insights/overview-page-error-request-count.png){.cInlineImage-half}
+  ![Error request count](../../assets/img/insights/overview-page-error-request-count.png){.cInlineImage-small}
 
   This widget displays the total number of requests that have resulted in errors in your selected environment during the selected time range.
 
 - **Average Error Rate**
 
-  ![Average error rate](../../assets/img/insights/overview-page-error-rate.png){.cInlineImage-half}
+  ![Average error rate](../../assets/img/insights/overview-page-error-rate.png){.cInlineImage-small}
 
   This widget displays the average error rate (i.e., error count/total request count) of the selected environment for a given time interval. You can use this widget as an indicator to understand the health of the system. If the error rate is high, you can investigate further by clicking the arrow on the bottom right of the widget and opening the [**Errors**](#errors) page.
 
 - **95th Percentile Latency**
 
-  ![95th percentile latency](../../assets/img/insights/overview-page-latency.png){.cInlineImage-half}
+  ![95th percentile latency](../../assets/img/insights/overview-page-latency.png){.cInlineImage-small}
 
   This widget displays the 95th percentile of all API latencies in your selected environment for the given time interval. You can use this widget to know whether the complete system operates under given SLAs. This metric provides the first indication of slow APIs. To investigate further, you can click the arrow on the bottom right of the widget to open the [**Latency**](#latency) page where you can further analyze the latency.
 
@@ -85,7 +85,7 @@ You can view the following information for the APIs you have selected using the 
 
   This table shows a resource-level breakdown of API traffic. Each row represents an API resource and it shows the API name, resource path, API method, and the hit count for that combination.
 
-  ![API resource usage](../../assets/img/insights/resource-usage.png){.cInlineImage-half}
+  ![API resource usage](../../assets/img/insights/resource-usage.png){.cInlineImage-full}
 
 ### Errors
 
@@ -301,19 +301,15 @@ To filter the information displayed on this page by API, select the required API
 
 This heat map highlights the countries with the appropriate color based on the hit count. It uses a relative color scale to depict the highest hit count to the lowest non-zero hit count.
 
-![Geo Map Hit Scale](../../assets/img/insights/geomap-hit-count-scale.png){.cInlineImage-half}
+![Geo Map Hit Scale](../../assets/img/insights/geomap-hit-count-scale.png){.cInlineImage-xsmall}
 
 #### Viewing the number of requests by country
 
-You can hold the pointer over the highlighted countries to view the country name and the total number of hits from that location. You can also use the mouse to zoom the map or pan it.
+You can hold the pointer over the highlighted countries to view the country name and the total number of hits from that location. You can also use the mouse to zoom the map or pan it. Optionally, you can download geo map data in a tabular format using the PDF or CSV download options by clicking ![download](../../assets/img/insights/insights-download-report.svg) on the top right corner.
 
 ![Geo Map by country](../../assets/img/insights/geomap-requests-by-country.png){.cInlineImage-half}
 
 !!! Note
-    Currently, this feature is only available for on-premise environments.
-
-Optionally you can download geo map data in a tabular format using the PDF or CSV download options by clicking ![download](../../assets/img/insights/insights-download-report.svg) on the top right corner.
-
-!!! Note
-The geo-map page utilizes the IP address of the incoming request to derive the geolocation. The actual source IP address can be replaced if there are intermediate hosts between the client and the gateway node. Therefore, the reverse proxy or the load balancer fronting the gateway node must add the `x-forwarded-for` header to each request to preserve the source IP address. If you do not configure this correctly, the **Geo Map** page will not show any data. To test this, you can manually add an `x-forwarded-for` header to the request.
+    -  Currently, this feature is only available for on-premise environments.
+    - The geo-map page utilizes the IP address of the incoming request to derive the geolocation. The actual source IP address can be replaced if there are intermediate hosts between the client and the gateway node. Therefore, the reverse proxy or the load balancer fronting the gateway node must add the `x-forwarded-for` header to each request to preserve the source IP address. If you do not configure this correctly, the **Geo Map** page will not show any data. To test this, you can manually add an `x-forwarded-for` header to the request.
 
