@@ -160,25 +160,25 @@ The application developer in this scenario calls the API from a different domain
 
 7. Click **Save**.
 
-#### Step 1.4.2: Publish the REST API
+#### Step 1.4.2: Publish the Service
 
-We are now ready to publish the REST API. To do so, follow the steps given below:
+We are now ready to publish the Service. To do so, follow the steps given below:
 
 1. In the **Manage** tab, click **Lifecycle**.
 
-2. Click **Publish** to publish the REST API to the Developer Portal. External applications can subscribe to the API via the Developer Portal.
+2. Click **Publish** to publish the Service to the Developer Portal. External applications can subscribe to the API via the Developer Portal.
 
 3. To access the Developer Portal, click **Go to DevPortal**.
 
-    The readingList REST API will open in the Developer Portal.
+    The readingList Service will open in the Developer Portal.
 
-## Step 2: Consume the REST API
+## Step 2: Consume the Service
 
-You have published the readingList REST API to the Developer Portal where application developers can find it and subscribe their applications to it.
+You have published the readingList Service to the Developer Portal where application developers can find it and subscribe their applications to it.
 
-In the previous steps, you played the role of a REST API developer and developed a REST API. In this step, you will play the role of the web application developer who will consume this REST API.
+In the previous steps, you played the role of a Service developer and developed a Service. In this step, you will play the role of the web application developer who will consume this Service.
 
-To consume the `readingList` REST API, let's create an application, subscribe it to the REST API, generate keys, and invoke the API.
+To consume the `readingList` Service, let's create an application, subscribe it to the Service, generate keys, and invoke the API.
 
 ### Step 2.1: Create an application
 
