@@ -454,7 +454,7 @@ subscriptions:
   enable: ${IS_SUBSCRIPTIONS_ENABLED}
   freeStepQuota: ${FREE_STEP_QUOTA}
 permissions:
-  roleManage: choreo:role_manage
+  roleManage: {{.PERMISSION_CHOREO_ROLE_MANAGE}}
 configurableWebhook:
   enabled: ${CONFIGURABLE_WEBHOOK_ENABLED}
 pardotNewUserRegistration:
