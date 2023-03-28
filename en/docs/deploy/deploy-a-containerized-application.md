@@ -8,6 +8,7 @@ Choreo supports deploying containerized applications for the following component
 - Scheduled Trigger
 - Manual Trigger
 - REST API
+- Webhook
 
 ## Connect your repository to Choreo
 
