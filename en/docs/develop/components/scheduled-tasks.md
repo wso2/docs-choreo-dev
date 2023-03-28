@@ -8,6 +8,12 @@ A scheduled trigger performs a routine action at scheduled time intervals. Follo
 
 - Logging a session time-out message for a user at a specific time interval.
 
+Scheduled triggers automate repetitive tasks, which reduces workload and frees up time for more strategic projects. They also ensure timely and efficient execution of critical tasks and reduce the risk of human error, minimizing downtime in fast-paced business environments.
+
+Following are sample scenarios where you can use scheduled triggers:
+
+- Logging a session time-out message for a user at a specific time interval.
+
 - Publishing a summary of GitHub issues (i.e., with details such as the number of GitHub issues in each status) as a message in a group chat window of a team every day at a specific time.
 
 - Periodically checking an application's health.

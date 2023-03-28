@@ -60,14 +60,17 @@ nav:
           - Create Your First Webhook: get-started/tutorials/create-your-first-webhook.md
           - Create Your First Integration as an API: get-started/tutorials/create-your-first-integration-as-an-api.md
           - Create Your First Event-Triggered Integration: get-started/tutorials/create-your-first-event-triggered-integration.md
+          - Create Your First Containerized Service: get-started/tutorials/create-your-first-containerized-service-component.md
   - Create:
       - Components:
           - REST APIs: develop/components/rest-api.md
           - REST API Proxy: develop/components/api-proxy.md
           - Webhooks: develop/components/webhook.md
-          - Scheduled Tasks: develop/components/scheduled-tasks.md
+          - Scheduled Trigger: develop/components/scheduled-trigger.md
+          - Manual Trigger: develop/components/manual-trigger.md
           - GraphQL APIs: develop/components/graphql-api.md
-      - Manage Repository: 
+          - Service: develop/components/service.md
+      - Manage Repository:
           - Connect Your Own GitHub Repository: develop/manage-repository/connect-your-own-github-repository-to-choreo.md
       - Run and Test:
           - Forecast Performance Metrics: develop/run-and-test/forecast-performance-metrics.md
@@ -76,8 +79,8 @@ nav:
           - Create Policy: develop/api-policies/create-a-policy.md
           - Attach Policy: develop/api-policies/attach-policies.md
   - Deploy: 
-      - Deploy Your Choreo Component: deploy/deploy-your-component.md
-      - Deploy a Containerized Component: deploy/deploy-a-containerized-choreo-component.md
+      - Deploy a Ballerina Application: deploy/deploy-a-ballerina-application.md
+      - Deploy a Containerized Application: deploy/deploy-a-containerized-application.md
       - DevOps: 
           - View Runtime Details: deploy/devops/runtime.md
           - Configure Container Details: deploy/devops/containers.md
@@ -86,8 +89,10 @@ nav:
           - Scale Component Replicas: deploy/devops/scaling.md
           - Configure Storage: deploy/devops/storage.md
   - Test: 
+      - Invoke APIs via Console: test/invoke-apis-via-console.md
       - OpenAPI Console: test/open-api-console.md
       - cURL: test/curl.md
+      - GraphQL Console: test/graphql-console.md
   - Manage:
       - API Management: manage/api-management.md
       - Lifecycle: manage/lifecycle.md
@@ -174,14 +179,14 @@ plugins:
           'tutorials/connect-your-own-github-repository-to-choreo.md': 'https://wso2.com/choreo/docs/manage-repository/connect-your-own-github-repository-to-choreo/'
           'tutorials/construct-statements.md': 'https://wso2.com/choreo/docs/develop/explore-code-editor/construct-statements/'
           'tutorials/connect-your-existing-ballerina-project-to-choreo.md': 'https://wso2.com/choreo/docs/manage-repository/connect-your-existing-ballerina-project-to-choreo/'
-          'tutorials/deploy-a-containerized-choreo-component.md': 'https://wso2.com/choreo/docs/deploy/deploy-a-containerized-choreo-component/'
           'tutorials/configure-automatic-deployment.md': 'https://wso2.com/choreo/docs/deploy/configure-automatic-deployment/'
           'tutorials/map-data.md': 'https://wso2.com/choreo/docs/develop/explore-code-editor/map-data/'
           'rest-api.md': 'https://wso2.com/choreo/docs/develop/components/rest-api/'
           'api-proxies.md': 'https://wso2.com/choreo/docs/develop/components/api-proxy/'
           'api-proxies/api-proxy.md': 'https://wso2.com/choreo/docs/develop/components/api-proxy/'
           'webhook.md': 'https://wso2.com/choreo/docs/develop/components/webhook/'
-          'scheduled-tasks.md': 'https://wso2.com/choreo/docs/develop/components/scheduled-tasks/'
+          'scheduled-tasks.md': 'https://wso2.com/choreo/docs/develop/components/scheduled-trigger/'
+          'manual-triggers.md': 'https://wso2.com/choreo/docs/develop/components/manual-trigger/'
           'graphql-api.md': 'https://wso2.com/choreo/docs/develop/components/graphql-api/'
           'developer-portal/developer-portal.md': 'https://wso2.com/choreo/docs/consume/developer-portal/'
           'developer-portal/manage-application.md': 'https://wso2.com/choreo/docs/consume/manage-application/'

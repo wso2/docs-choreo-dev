@@ -324,6 +324,9 @@ OAuth
 cInlineImage-xsmall
 IPaaS
 automations
+natively
+Configs
+ConfigMap
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -463,6 +466,9 @@ configure-a-custom-domain-for-apis
 organization.md
 redirect_maps
 configure-cio-dashboard
+service.md
+invoke-apis-via-console
+graphql-console
  - theme/material/templates/home-page.html
 doctype
 html
@@ -502,3 +508,10 @@ Pre-released
  - docs/manage/lifecycle.md
 pre-released
 pre-release
+ - docs/deploy/ballerina-application.md
+cInlineImage-quarter
+600px
+Ballerina.toml
+Dependencies.toml
+ - docs/deploy/deploy-a-containerized-application.md
+DB_PASS
