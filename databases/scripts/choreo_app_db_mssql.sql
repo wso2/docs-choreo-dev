@@ -1625,7 +1625,7 @@ CREATE TABLE [dbo].[permission]
     [id] [int] IDENTITY(1,1) NOT NULL ,
     [handle][varchar](255) NOT NULL,
     [display_name][varchar](255) NOT NULL,
-    [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BC','AI','BILLING','ACCOUNT-MANAGE','CONFIGURATIONS-MANAGEMENT')),
+    [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BC','AI','BILLING','ACCOUNT-MANAGE','CONFIGURATIONS-MANAGEMENT','CUSTOM-DOMAINS','ON-PREM-KEYS','USER-MANAGEMENT')),
     [description] [varchar](255) NULL,
     [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1984,3 +1984,8 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Vi
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Custom Domains','urn:choreocontrolplane:customdomainapi:custom_domain_create','CUSTOM-DOMAINS','Create Custom Domains');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Custom Domains','urn:choreocontrolplane:customdomainapi:custom_domain_delete','CUSTOM-DOMAINS','Delete Custom Domains');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Custom Domains','urn:choreocontrolplane:customdomainapi:custom_domain_update','CUSTOM-DOMAINS','Update Custom Domains');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage OnPrem Keys','urn:choreocontrolplane:onpremkeymanagement:on_prem_key_manage','ON-PREM-KEYS','Create, Edit and Delete OnPrem Keys');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View OnPrem Keys','urn:choreocontrolplane:onpremkeymanagement:on_prem_key_view','ON-PREM-KEYS','View OnPrem Keys');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create OnPrem Keys','urn:choreocontrolplane:onpremkeymanagement:on_prem_key_create','ON-PREM-KEYS','Create OnPrem Keys');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete OnPrem Keys','urn:choreocontrolplane:onpremkeymanagement:on_prem_key_delete','ON-PREM-KEYS','Delete OnPrem Keys');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update OnPrem Keys','urn:choreocontrolplane:onpremkeymanagement:on_prem_key_update','ON-PREM-KEYS','Update OnPrem Keys');
