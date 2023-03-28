@@ -59,7 +59,7 @@ describe("Create Reusable Webhook functionality", () => {
   it("Deploy the component", () => {
     ComponentListingPage.visitToAComponent(WEBHOOK_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.configureAndDeploy(CONFIG,WEBHOOK_NAME);
+    ComponentDeployPage.configureAndDeploy(CONFIG);
   });
 
   it("Component promotion to prod", () => {

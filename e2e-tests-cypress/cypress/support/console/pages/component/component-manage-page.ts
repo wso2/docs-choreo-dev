@@ -256,7 +256,7 @@ export class ComponentAPILifecycle {
     cy.get('div[role="combobox"]>div>div>input').eq(0)
       .should("be.visible")
       .click({ force: true });
-    cy.get(`[data-cyid="item-${accessMode}"]`)
+    cy.get(`ul[id="Select List-popup"]>li`).contains(accessMode)
       .should("exist")
       .click({ force: true });
     cy.get('[data-testid="warning-banner"]').should("be.visible");
