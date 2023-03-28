@@ -218,36 +218,32 @@ In this step, let's deploy a predesigned front-end application. This application
 
 To generate the configurations required for end users to log in to the front-end application (for example, the access token, redirect URLs, etc.), let's create an application in Asgardeo by following the steps given below:
 
-1. Access Asgardeo at [https://console.asgardeo.io/](https://console.asgardeo.io/) and log in with the same credentials with which you logged in to Choreo.
 
-2. Click **Single-Page Application** to start adding a single-page application.
+To configure Asgardeo as the identity provider, follow the steps given below:
 
-3. Enter a name for the single-page application and enter `https://localhost:5173` as the authorized redirect URL.
+1. Navigate to **Settings** and select **API Management**.
 
-4. Click **Register**.
+2. Click **Enable Asgardeo**, If you have already enabled Asgardeo, you can skip this step.
+
+3. Access Asgardeo at [https://console.asgardeo.io/](https://console.asgardeo.io/) and log in with the same credentials with which you logged in to Choreo.
+
+4. Navigate to **Develop** and select **Applications**. In here you can see there is an app called `readingListApp` which is automatically created for you.	
 
 5. Click **Protocol** to open the **Protocol** tab, and make the following changes:
 
-    1. In the **Authorized redirect URLs** field, enter `http://localhost:5173/`. Next, click the **Add** icon.
+    1. In the **Allowed Grant Types** section, select **Code** and **Refresh Token**.
+
+    2. In the **Authorized redirect URLs** field, enter `http://localhost:5173/`. Next, click the **Add** icon.
    
-    2. Under **Access Token**, select **JWT** as the token type.
+    3. Under **Access Token**, select **JWT** as the token type.
    
-    3. Scroll down to the **ID Token** section and enter the following value in the **Audience** field.
+    4. Scroll down to the **ID Token** section and enter the following value in the **Audience** field.
 
         `https://sts.choreo.dev/oauth2/token`
 
          Click **Add URL** to save this value.
    
-    4. Click **Update**.
-
-7. Click **Quick Start**, and then click the **React** icon (because you will be using a preconfigured sample react front-end application).
-
-    A separate page opens for your application with **Integrate Your Application** option selected by default.
-
-    !!! info   
-        Under this option, you will see some instructions to configure the application. Some of these steps are already completed for the pre-configured front-end application you will be using.
-        
-Next, you need to pass the configurations displayed on this page to your front-end application. To do so, proceed to [Step 2.3.2 - Configure the front-end application](#step-23-deploy-a-web-application-and-invoke-the-rest-api).
+    5. Click **Update**.
 
 #### Step 2.3.2: Configure the front-end application
 
@@ -270,74 +266,22 @@ To configure the front-end application by defining the ports it needs to run on,
         | `VITE_ASG_CLIENT_ID`        | `clientID`                 |
         | `VITE_BASE_URL`             | `baseUrl`                  |
 
-    4. Enter values for the rest of the parameters as given below:
+    4. Extract values from the **Invoke URL** of the `readingList` REST API and add them to the `.env` file as given below.
 
-        - `VITE_RESOURCE_SERVER_URL`
+        - `VITE_RESOURCE_HOST`
 
-            1. On the page for the `readingList` REST API in the Choreo Console, click **Test** to open the **Test** tab.
+        - `VITE_RESOURCE_SERICE_NAME`
 
-            2. In the **Open API Console** pane, copy the API endpoint.
+        - `VITE_RESOURCE_VERSION`
 
-            3. Add `/books` to the end of the API endpoint you copied to complete the resource server URL.
+        - `VITE_RESOURCE_HANDLE`
 
-        - `VITE_CHOREO_CLIENT_ID`
+        - `VITE_RESOURCE_ENDPOINT_CONTEXT`
 
-            1. Access the Choreo Developer Portal at [https://devportal.choreo.dev/](https://devportal.choreo.dev/).
-
-            2. In the top menu, click **Applications** and then click the **readingListApp** application.
-
-            3. In the left navigation menu, click **Production Keys**.
-
-            4. Copy the value in the **Consumer Key** field and paste it as the value of the `VITE_CHOREO_CLIENT_ID` parameter.
-
-        - `VITE_ORG_HANDLE`
-
-            This is the value displayed next to the **Asgardeo** logo in the Asgardeo Console.
-
-            ![Organization handle](../assets/img/get-started/organization-handle.png){.cInlineImage-threeQuarters}
-
-        - `VITE_STS_TOKEN_ENDPOINT`
-
-            1. In the Choreo Developer Portal, open the **readingListApp** application.
-
-            2. Copy the value in the **Token Endpoint** field and paste it as the value of the `VITE_STS_TOKEN_ENDPOINT` parameter.
 
 Now you have configured your front-end application. Next, you need to configure Asgardeo as the identity provider for your application.
 
-#### Step 2.3.3: Configure Asgardeo as an identity provider for Choreo
-
-Let's deploy a predesigned front-end application. This application is designed to personalize the readingList based on the user ID that it obtains from its identity provider. To enable the application to obtain the user ID, let's configure Asgardeo as the identity provider by following the steps given below:
-
-!!! info
-    To configure an identity provider for Choreo, you need administration privileges in Choreo.
-
-1. In the Choreo Console, open the **Home** page.
-
-2. In the left navigation menu, click **Settings**.
-
-3. Click API Management and under **Identity Providers**, click **+ Add Provider**.
-
-4. In the list of identity providers, click **Asgardeo**.
-
-5. In the **Asgardeo** dialog, enter the following information:
-
-    1. In the **Name** and **Description** fields, enter a name and a description for the identity provider.
-
-    2. To get the well-known URL, follow the steps given below:
-    
-        1. Navigate to Asgardeo and open the single-page application you created in [Step 2.3.3: Configure Asgardeo as an identity provider for Choreo(#step-23-deploy-a-web-application-and-invoke-the-rest-api).
-
-        2. Click **Info** to view the endpoints of the application.
-
-        3. Copy the endpoint in the **Discovery** field.
-
-        4. Navigate to the Choreo Console and paste the URL you copied in the **Well-Known URL** field in the **Asgardeo** dialog.
-
-    3. Click **Next**, and then click **Add**.
-    
-Now you have successfully configured Asgardeo as the identity provider for the front-end application.
-
-#### Step 2.3.4: Create a user in Asgardeo
+#### Step 2.3.3: Create a user in Asgardeo
 
 To sign in to the `readingListApp` application and create private reading lists, the end users require user IDs. The end users can self-register these user IDs in Asgardeo or request an Asgardeo user with administration privileges to add them. For more information, see [Asgardeo Documentation - Manage users](https://wso2.com/asgardeo/docs/guides/users/manage-customers/#onboard-a-user).
 
@@ -364,7 +308,7 @@ To define a user for the readingListApp application, follow the steps given belo
 !!! tip 
     You can create more users to test your front-end application.
 
-#### Step 2.3.5: Invoke the REST API
+#### Step 2.3.5: Invoke the Service REST API Endpoint
 To run the front-end application and send requests to the `readingList` REST API via it, follow the steps given below:
 
 !!! info
@@ -416,9 +360,9 @@ To run the front-end application and send requests to the `readingList` REST API
 
 To verify whether the reading list is personalized for each user, you can log in as a different user. The reading list items you entered above will not appear for the other user.
 
-## Step 3: Create and publish a new version of the REST API
+## Step 3: Create and publish a new version of the Service
 
-Currently, the updates to the `readinglist` REST API are saved only as long as the deployment status of the `readingList` API remains **Active**. If you undeploy and redeploy the `readingList` API, Choreo deploys it in a new container. Therefore you cannot retrieve the reading list with the updates you made after the last deployment. To persist the data even after undeploying and redeploying the REST API, let's connect it to a MySQL database. Then let's create and publish a new version of the REST API with the ability to persist the data to the MySQL database.
+Currently, the updates to the `readinglist` Service are saved only as long as the deployment status of the `readingList` API remains **Active**. If you undeploy and redeploy the `readingList` API, Choreo deploys it in a new container. Therefore you cannot retrieve the reading list with the updates you made after the last deployment. To persist the data even after undeploying and redeploying the Service, let's connect it to a MySQL database. Then let's create and publish a new version of the Service with the ability to persist the data to the MySQL database.
 
 ### Step 3.1: Provision a database
 
@@ -431,11 +375,11 @@ To allow Choreo to interact with the database, add the following IPs to the allo
 
 For more information, see [Connect with Protected Third Party Applications](../reference/connect-with-protected-third-party-applications.md)
 
-### Step 3.2: Create a new version of the REST API
+### Step 3.2: Create a new version of the Service
 
-Let's create a new version of the `readingList` REST API that can connect to a MySQL database on a cloud platform to persist data, and then redeploy it. To do this, follow the steps given below:
+Let's create a new version of the `readingList` Service that can connect to a MySQL database on a cloud platform to persist data, and then redeploy it. To do this, follow the steps given below:
 
-1. In the Choreo Console, open the `readingList` REST API (if it is not already open) and click the **Deploy** icon to open the **Deploy** tab.
+1. In the Choreo Console, open the `readingList` Service (if it is not already open) and click the **Deploy** icon to open the **Deploy** tab.
 
 2. Expand the list of versions and click **+ Create New**.
 
@@ -444,21 +388,21 @@ Let's create a new version of the `readingList` REST API that can connect to a M
 3. Select **version-2** as the associated GitHub branch and enter `2.0.0` as the version name. Next click **Create**.
 
     !!! info
-        The `version-2` GitHub branch has another version of the REST API implementation with the required configurations to connect to the sample MySQL.
+        The `version-2` GitHub branch has another version of the Service implementation with the required configurations to connect to the sample MySQL.
 
 4. Click **Config & Deploy**. When the **Config & Deploy** pane opens, enter values for the **dbHost**, **dbUser**, **dbPassword**, **dbName**, and **dbPort** fields based on the database you provisioned in [Step 3.1: Provision a database](#step-31-provision-a-database).
 
 5. Click **Deploy**.
 
-Now you have successfully deployed a new version of your REST API.
+Now you have successfully deployed a new version of your Service.
 
-### Step 3.3: Publish the new REST API version
+### Step 3.3: Publish the new Service version
 
-To publish the new version of the REST API you created, repeat [Step 1.4: Publish the REST API](#step-14-publish-the-rest-api)
+To publish the new version of the Service you created, repeat [Step 1.4: Publish the Service](#step-14-publish-the-rest-api)
 
-### Step 3.4: Consume the new REST API version
+### Step 3.4: Consume the new Service version
 
-You can try out the new version via the front-end application. For more information about accessing and using the front-end application, see [Step 2.3.5: Invoke the REST API](#step-23-deploy-a-web-application-and-invoke-the-rest-api).
+You can try out the new version via the front-end application. For more information about accessing and using the front-end application, see [Step 2.3.5: Invoke the Service](#step-23-deploy-a-web-application-and-invoke-the-rest-api).
 
 !!! info
-    You do not need to subscribe the `readingListApp` application on the Developer Portal to the new REST API version because Choreo automatically creates this subscription.
+    You do not need to subscribe the `readingListApp` application on the Developer Portal to the new Service version because Choreo automatically creates this subscription.
