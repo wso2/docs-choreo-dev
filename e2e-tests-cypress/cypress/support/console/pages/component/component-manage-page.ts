@@ -75,7 +75,7 @@ export class ComponentAPILifecycle {
       .parent()
       .invoke("attr", "href")
       .then((href) => {
-      
+
         cy.log(devportalURL)
         if (!devportalURL) {
           devportalURL = href + "&fidp=" + idpUser
@@ -235,9 +235,7 @@ export class ComponentAPILifecycle {
   }
 
   static verifyAPIVisibility(visibility: string) {
-    cy.get('div[role="combobox"]').eq(1)
-      .should("be.visible")
-      .should("have.text", visibility);
+    cy.get('div[role="combobox"]>div>div>input').eq(1).invoke('val').should("eq", visibility)
     cy.log("Successfully verified the API visibility", visibility);
   }
 
@@ -245,7 +243,7 @@ export class ComponentAPILifecycle {
     cy.get('[data-cyid="tab-security-settings"]').should("be.visible");
     cy.wait(5000);
     cy.get('div[role="combobox"]').eq(1).click();
-    cy.get(`[data-cyid="item-${visibility.toUpperCase()}"]`).focus().click();
+    cy.get(`ul[id="Select List-popup"]>li`).contains(visibility).focus().click();
     cy.get('[data-testid="info-banner"]').should("be.visible");
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]').wait(100).realClick();
     this.verifyAPIVisibility(visibility);
