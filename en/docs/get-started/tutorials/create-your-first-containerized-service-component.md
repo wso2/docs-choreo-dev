@@ -135,8 +135,4 @@ For detailed instructions, see the following sections:
 
 ## Manage the deployment
 
-If you want to view Kubernetes-level insights to perform a more detailed diagnosis of this Dockerfile-based REST API, click **DevOps Portal** in the top menu.
-
-![Access DevOps Portal](../../assets/img/byoc/access-devops-portal.png){.cInlineImage-small}
-
-For more information, see [DevOps Portal](../../devops/devops-portal.md).
+If you want to view Kubernetes-level insights to perform a more detailed diagnosis of this Dockerfile-based REST API, see Choreo's [DevOps capabilities](../../deploy/devops/runtime.md).
