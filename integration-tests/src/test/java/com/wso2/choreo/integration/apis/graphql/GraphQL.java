@@ -71,6 +71,7 @@ import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatO
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.greaterThan;
 
 /**
@@ -614,8 +615,9 @@ public class GraphQL extends ControlPlaneAPI {
                                 .type(MessageType.JSON)
                                 .validate(jsonPath()
                                         .expression("$.data.deploymentStatusByVersion.size()", greaterThan(0))
-//                                        .expression("$.data.deploymentStatusByVersion[*].keySet()",
-//                                                "[id,sha,completed_at,started_at,name,status,conclusion,isAutoDeploy,failureReason,sourceCommitId]")
+                                        .expression("$.data.deploymentStatusByVersion[*].keySet()",
+                                                containsInAnyOrder("id","sha","completed_at","started_at","name","status","conclusion",
+                                                        "isAutoDeploy","failureReason","sourceCommitId"))
                                         .expression("$.data.deploymentStatusByVersion[*].name", "Choreo Generated Build Deploy Action")
                                         .expression("$.data.deploymentStatusByVersion[*].status", "completed")
                                         .expression("$.data.deploymentStatusByVersion[*].conclusion", "success")
