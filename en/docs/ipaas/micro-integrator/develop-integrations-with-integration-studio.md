@@ -57,12 +57,20 @@ During deployment, Choreo performs a Trivy scan to detect critical vulnerabiliti
 
 ## Customize WSO2 Micro Integrator preconfigured settings
 
-WSO2 Micro Integrator (WSO2 MI) comes with preconfigured settings to work in a general context. However, these settings may not apply to the specific requirements of an organization. Therefore, it is important to customize the WSO2 MI preconfigured settings to optimize its performance and ensure compatibility with the systems and applications of the organization.
+WSO2 Micro Integrator (WSO2 MI) comes with preconfigured settings to work in a general context. However, these settings
+may not apply to the specific requirements of an organization. Therefore, it is important to customize the WSO2 MI
+preconfigured settings to optimize its performance and ensure compatibility with the systems and applications of the
+organization.
 
-To customize the preconfigured settings of WSO2 MI instances running on Choreo, you must define a `deployment.toml` file in the GitHub repository subpath of the Micro Integrator project. Configuration parameter changes should be applied via this file:
+To customize the preconfigured settings of WSO2 MI instances running on Choreo, you must define a `deployment.toml` file
+in the GitHub repository subpath of the Micro Integrator project. Configuration parameter changes should be applied via
+this file:
+
+![deployment.toml](../../assets/img/ipaas/integration-studio/config_file.png){.cInlineImage-half}
 
 !!! note
-    If you change critical configuration parameters such as port offset and hostname, it can break internal communication. Therefore, the recommended approach is to update only the necessary configuration parameters.
+    If you change critical configuration parameters such as port offset and hostname, it can break internal communication.
+    Therefore, the recommended approach is to update only the necessary configuration parameters.
 
 Here is a sample `deployment.toml` file that can be used to configure the JMS transport. For more information on WSO2 MI
 configuration parameters, see the [MI Config Catalog](https://apim.docs.wso2.com/en/latest/reference/config-catalog-mi/).
