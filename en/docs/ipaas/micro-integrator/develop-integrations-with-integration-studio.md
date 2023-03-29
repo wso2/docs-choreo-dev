@@ -64,8 +64,8 @@ To customize the preconfigured settings of WSO2 MI instances running on Choreo, 
 !!! note
     If you change critical configuration parameters such as port offset and hostname, it can break internal communication. Therefore, the recommended approach is to update only the necessary configuration parameters.
 
-Below is a sample `deployment.toml` configuration for configuring JMS transport. Refer to
-the [MI Config Catalog](https://apim.docs.wso2.com/en/latest/reference/config-catalog-mi/) for more information about configuring the Micro Integrator.
+Here is a sample `deployment.toml` file that can be used to configure the JMS transport. For more information on WSO2 MI
+configuration parameters, see the [MI Config Catalog](https://apim.docs.wso2.com/en/latest/reference/config-catalog-mi/).
 
 ```
 [[transport.jms.sender]]
@@ -99,28 +99,29 @@ For a comprehensive list of parameters that can be configured as environment var
 
 ## Configure logging
 
-When you develop and maintain a software system, it is crucial to implement proper logging mechanisms. Proper logging can save time and effort during the development, testing, and maintenance phases of the software development process.
+When you develop and maintain a software system, it is crucial to implement proper logging mechanisms. Proper logging
+can save time and effort during the development, testing, and maintenance phases of the software development process.
+Logging captures events and messages that occur during the execution of an application. These events and messages
+provide insights to troubleshoot and debug issues.
 
-Logging captures events and messages that occur during the execution of an application. These events and messages provide insights to troubleshoot and debug issues.
-
-In Micro Integrator (MI) instances, logging can be configured and customized to meet specific requirements. The logging
-configuration can be added to each MI instance's environment, allowing developers to fine-tune logging based on the
+In Micro Integrator instances, you can configure and customize logging depending on your requirement. You can add
+logging configurations to each MI instance's environment, which allows you to fine-tune logging depending on the
 specific environment or deployment scenario.
 
-To configure logging in MI instances, developers can utilize environment variables with specific naming conventions. The
-name of the variable should start with "logging_level_", followed by the package or class name, where the dot character
-in the package name is replaced with an underscore. The value of the variable should be set to the required logging
-level for the corresponding package or class.
+To configure logging in MI instances, you can use environment variables with specific naming conventions as follows:
 
-For example, to set the logging level for the `org.apache.synapse.transport.http.wire` package to `debug`, the following
-environment variable can be defined:
+1. Start the variable name with `logging_level_` followed by the package or class name.
+2. Replace the dot character in the package name with an underscore.
+3. Set the variable value to the required logging level for the corresponding package or class.
+
+For example, to set the logging level for the `org.apache.synapse.transport.http.wire` package to `debug`, define the
+following environment variable:
 
 ```
 export logging_level_org_apache_synapse_transport_http_wire=debug
 ```
-By configuring logging in this manner, developers can control the granularity of logging, which can help in
-troubleshooting and identifying issues faster. Proper logging can save time and effort during the development, testing,
-and maintenance phases of a software project, making it an essential aspect of the software development process.
+
+This approach allows you to control the logging granularity, which helps you troubleshoot and identify issues faster.
 
 ## Connectors
 
