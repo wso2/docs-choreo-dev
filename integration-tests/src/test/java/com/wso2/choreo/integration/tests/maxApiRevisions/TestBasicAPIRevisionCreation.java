@@ -99,7 +99,7 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
     }
 
     @Test
-    @CitrusTest(name = "Create new revision")
+    @CitrusTest
     public void createNewRevision_TestBasicAPIRevisionCreation() throws Exception {
 
         Map<String, Object> responseParams = new HashMap<>();
@@ -147,7 +147,7 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = {"createNewRevision_TestBasicAPIRevisionCreation"})
-    @CitrusTest(name = "Verify if the new revision is listed")
+    @CitrusTest
     public void verifyCreateNewRevision_TestBasicAPIRevisionCreation() throws Exception {
         Map<String, Object> responseParams = new HashMap<>();
         responseParams.put("REVISION_COUNT", 2);
@@ -194,7 +194,7 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = {"verifyCreateNewRevision_TestBasicAPIRevisionCreation"})
-    @CitrusTest(name = "Deploy new revision")
+    @CitrusTest
     public void deployNewRevision_TestBasicAPIRevisionCreation() throws Exception {
         String buildId = proxyAPIBuild.getBuilds()[0].getBuildId();
         DeploySettings res = APICreator.deployRevision(choreoComponent.getId(), versionId, devEnv.getId(), orgUuid,
@@ -211,7 +211,7 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = {"deployNewRevision_TestBasicAPIRevisionCreation"})
-    @CitrusTest(name = "Verify deploy new revision")
+    @CitrusTest
     public void verifyDeployNewRevision_TestBasicAPIRevisionCreation() throws Exception {
         Map<String, Object> responseParams = new HashMap<>();
         responseParams.put("REVISION_COUNT", 3);
@@ -254,7 +254,7 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = {"verifyDeployNewRevision_TestBasicAPIRevisionCreation"})
-    @CitrusTest(name = "Re deploy old revision")
+    @CitrusTest
     public void deployOldRevision_TestBasicAPIRevisionCreation() throws Exception {
         String buildId = proxyAPIBuild.getBuilds()[0].getBuildId();
         DeploySettings res = APICreator.deployRevision(choreoComponent.getId(), versionId, devEnv.getId(), orgUuid,
@@ -271,7 +271,7 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = {"deployOldRevision_TestBasicAPIRevisionCreation"})
-    @CitrusTest(name = "Verify redeploy old revision")
+    @CitrusTest
     public void verifyRedeployOldRevision_TestBasicAPIRevisionCreation() throws Exception {
         Map<String, Object> responseParams = new HashMap<>();
         responseParams.put("REVISION_COUNT", 4);
