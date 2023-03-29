@@ -560,15 +560,20 @@ public class GraphQL extends ControlPlaneAPI {
                 "templates/graphql/requests/deployComponent.mustache", graphqlDTO);
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
-        runner.$(http()
-                .client(client)
-                .send()
+        runner.$(repeatOnError()
+                .until("i = 20")
+                .index("i")
+                .autoSleep(10000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
-                .accept(MediaType.APPLICATION_JSON_VALUE));
+                .accept(MediaType.APPLICATION_JSON_VALUE)));
         runner.$(http()
                 .client(client)
                 .receive()
