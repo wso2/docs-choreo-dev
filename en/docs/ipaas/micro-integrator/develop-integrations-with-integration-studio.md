@@ -55,11 +55,14 @@ Conducting security vulnerability scans is crucial for identifying potential wea
 
 During deployment, Choreo performs a Trivy scan to detect critical vulnerabilities in third-party libraries added to the integration component. If the scan detects any critical vulnerabilities, it halts the deployment process. The deployment pane shows the Trivy scan status and any security failures in the Library (Trivy) vulnerable scan step, which you can access by clicking on it. After fixing the vulnerability, you can redeploy the component.
 
-## Configuring Micro Integrator
+## Customize WSO2 Micro Integrator preconfigured settings
 
-WSO2 MI comes with a set of pre-configured settings by default, designed to work in a general context. However, these default configurations might not be suitable for every organization's specific needs. As a result, it is crucial to modify the default configuration in WSO2 MI to optimize its performance and ensure compatibility with an organization's systems and applications.
+WSO2 Micro Integrator (WSO2 MI) comes with preconfigured settings to work in a general context. However, these settings may not apply to the specific requirements of an organization. Therefore, it is important to customize the WSO2 MI preconfigured settings to optimize its performance and ensure compatibility with the systems and applications of the organization.
 
-To customize the default configurations in WSO2 MI, users can apply their desired configurations to the instances running on Choreo. To add new configurations, users need to define a `deployment.toml` file in the project sub-path. Similar to configuring MI locally, users can apply configuration changes in the `deployment.toml` file. However, it is essential to apply only the required changes to avoid disrupting internal communication. It's worth noting that altering default configurations such as port offset, hostname, and other critical settings might break internal communication. Therefore, it's advisable to avoid modifying them unless necessary.
+To customize the preconfigured settings of WSO2 MI instances running on Choreo, you must define a `deployment.toml` file in the GitHub repository subpath of the Micro Integrator project. Configuration parameter changes should be applied via this file:
+
+!!! note
+    If you change critical configuration parameters such as port offset and hostname, it can break internal communication. Therefore, the recommended approach is to update only the necessary configuration parameters.
 
 Below is a sample `deployment.toml` configuration for configuring JMS transport. Refer to
 the [MI Config Catalog](https://apim.docs.wso2.com/en/latest/reference/config-catalog-mi/) for more information about configuring the Micro Integrator.
@@ -94,9 +97,11 @@ The Choreo DevOps Portal allows for greater flexibility in defining configuratio
 
 For a comprehensive list of parameters that can be configured as environment variables, please refer to the [WSO2 API Manager Documentation - Injecting Parameters - Supported parameters](https://apim.docs.wso2.com/en/latest/integrate/develop/injecting-parameters/#supported-parameters).
 
-## Configuring logging
+## Configure logging
 
-Proper logging mechanisms are crucial when developing and maintaining a software system. Logging captures events and messages that occur during an application's execution, providing valuable information for troubleshooting and debugging purposes.
+When you develop and maintain a software system, it is crucial to implement proper logging mechanisms. Proper logging can save time and effort during the development, testing, and maintenance phases of the software development process.
+
+Logging captures events and messages that occur during the execution of an application. These events and messages provide insights to troubleshoot and debug issues.
 
 In Micro Integrator (MI) instances, logging can be configured and customized to meet specific requirements. The logging
 configuration can be added to each MI instance's environment, allowing developers to fine-tune logging based on the
