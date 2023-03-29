@@ -10,4 +10,5 @@ public class ComponentDeploymentStatusDTO {
     private String apiId;
     private String invokeUrl;
     private String releaseId;
+    private BuildDTO build;
 }
