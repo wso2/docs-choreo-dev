@@ -253,10 +253,10 @@ export class ComponentAPILifecycle {
 
 
   static updateAPIAccessMode(accessMode: string) {
-    cy.get('div[role="combobox"]>div>div>input').eq(0)
+    cy.get('[role="combobox"]').eq(0)
       .should("be.visible")
-      .click({ force: true });
-    cy.get(`ul[id="Select List-popup"]>li`).contains(accessMode)
+      .click();
+    cy.get(`li[id*="Select"]`).contains(accessMode)
       .should("exist")
       .click({ force: true });
     cy.get('[data-testid="warning-banner"]').should("be.visible");
