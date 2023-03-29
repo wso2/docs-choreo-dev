@@ -45,7 +45,8 @@ export class ProjectListingPage {
 
   static selectProject(projectName: string = "Default Project") {
     cy.get('#project-picker').should("be.visible").click()
-    cy.get('input[placeholder="Search"]').type(`${projectName}{enter}`)
+    cy.wait(3000)
+    cy.get('ul>li [placeholder="Search"]').type(`${projectName}{enter}`)
     cy.get('ul>li>div>span>p').contains(projectName).click()
     cy.contains("Let's Start Building...").should('be.visible')
   }

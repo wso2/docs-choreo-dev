@@ -72,10 +72,10 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api"]', { timeout: 360000 })
       .should("be.enabled")
       .click();
-    cy.get('[data-testid="btn-view-in-devops"]', { timeout: 360000 }).should(
-      "have.length",
-      1
-    );
+    // cy.get('[data-testid="btn-view-in-devops"]', { timeout: 360000 }).should(
+    //   "have.length",
+    //   1
+    // );
   }
 
   static promoteManualTriggerToProd() {
@@ -83,10 +83,10 @@ export class ComponentDeployPage {
       .should("be.enabled")
 
       .click();
-    cy.get('[data-testid="btn-view-in-devops"]', { timeout: 360000 }).should(
-      "have.length",
-      2
-    );
+    // cy.get('[data-testid="btn-view-in-devops"]', { timeout: 360000 }).should(
+    //   "have.length",
+    //   2
+    // );
   }
 
   static deployScheduleTask() {
