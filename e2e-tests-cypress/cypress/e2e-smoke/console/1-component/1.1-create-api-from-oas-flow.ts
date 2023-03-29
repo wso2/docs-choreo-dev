@@ -248,7 +248,7 @@ describe("Choreo APIM publisher scenarios", () => {
 
 
   it("Reset and undeploy component", () => {
-    ChoreoHomePage.navigateToProjects();
+    ChoreoHomePage.navigateToComponents();
     ComponentListingPage.visitToAComponent(API_NAME);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();

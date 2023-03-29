@@ -33,15 +33,15 @@ import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-bui
 describe("Verify internal API creation functionality", () => {
   const REST_API_NAME = Utils.generateComponentName("internal");
   const PROXY_API_NAME_DEV = Utils.generateComponentName("dev").substring(
-    10,
-    50
+    0,
+    20
   );
   const PROXY_API_VERSION_DEV = "1.0.0";
   const PROXY_API_BASEPATH_DEV = `/${PROXY_API_NAME_DEV}`;
 
   const PROXY_API_NAME_PROD = Utils.generateComponentName("prod").substring(
-    10,
-    50
+    0,
+    20
   );
   const PROXY_API_VERSION_PROD = "1.0.0";
   const PROXY_API_BASEPATH_PROD = `/${PROXY_API_NAME_PROD}`;
@@ -52,7 +52,7 @@ describe("Verify internal API creation functionality", () => {
   const PARAM_VALUE = "World";
   const PARAM_DATA_TYPE = "string";
   const queryParameters = [{ key: PARAM_NAME, value: PARAM_VALUE }];
-  const ACCESS_MODE_EXTERNAL = "external";
+  const ACCESS_MODE_EXTERNAL = "External";
   let DEV_INVOKE_URL = "";
   let PROD_INVOKE_URL = "";
 

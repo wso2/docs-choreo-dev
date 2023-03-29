@@ -40,7 +40,6 @@ import java.util.Map;
 public class TestRestAPIDp extends TestBase {
 
     private String accessToken;
-    private Environment[] en;
     @Autowired
     private HttpClient choreoCPTestClient;
     @Autowired

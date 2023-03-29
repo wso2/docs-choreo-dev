@@ -71,6 +71,7 @@ import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatO
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.greaterThan;
 
 /**
@@ -330,7 +331,7 @@ public class GraphQL extends ControlPlaneAPI {
     
     public static Environment[] getNamespaceForEnvironment(String projectId, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().orgUuid(ORG_UUID).projectId(projectId).build();
-        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentObservabilityEnvironmentInformation.mustache", dto);
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getEnvironments.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         return ObjectMapperUtil.mapToCollection(Environment[].class, response.getRes(), "environments");
     }
@@ -351,7 +352,7 @@ public class GraphQL extends ControlPlaneAPI {
 
     public static ObservabilityIdInformation getComponentObservabilityIdForReleaseId(String releaseId, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().releaseId(releaseId).build();
-        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentObservabilityIds.mustache", dto);
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getObservabilityIds.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         return Arrays.
                 stream(ObjectMapperUtil.mapToCollection(ObservabilityIdInformation[].class,
@@ -559,15 +560,20 @@ public class GraphQL extends ControlPlaneAPI {
                 "templates/graphql/requests/deployComponent.mustache", graphqlDTO);
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
-        runner.$(http()
-                .client(client)
-                .send()
+        runner.$(repeatOnError()
+                .until("i = 20")
+                .index("i")
+                .autoSleep(10000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
-                .accept(MediaType.APPLICATION_JSON_VALUE));
+                .accept(MediaType.APPLICATION_JSON_VALUE)));
         runner.$(http()
                 .client(client)
                 .receive()
@@ -615,7 +621,8 @@ public class GraphQL extends ControlPlaneAPI {
                                 .validate(jsonPath()
                                         .expression("$.data.deploymentStatusByVersion.size()", greaterThan(0))
                                         .expression("$.data.deploymentStatusByVersion[*].keySet()",
-                                                "[conclusion, completed_at, failureReason, name, started_at, sourceCommitId, id, sha, isAutoDeploy, status]")
+                                                containsInAnyOrder("id","sha","completed_at","started_at","name","status","conclusion",
+                                                        "isAutoDeploy","failureReason","sourceCommitId"))
                                         .expression("$.data.deploymentStatusByVersion[*].name", "Choreo Generated Build Deploy Action")
                                         .expression("$.data.deploymentStatusByVersion[*].status", "completed")
                                         .expression("$.data.deploymentStatusByVersion[*].conclusion", "success")
