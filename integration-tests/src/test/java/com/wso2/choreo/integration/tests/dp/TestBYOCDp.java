@@ -68,7 +68,7 @@ public class TestBYOCDp extends TestBase {
                 .dockerContext("byoc-test")
                 .dockerfilePath(DOCKER_FILE_PATH).build();
 
-        ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
+        ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.BYOC);
         dp.setChoreoProject(project);
         dp.setChoreoComponent(choreoComponent);
         Assert.assertEquals(project.getRegion(), dp.getRegion());

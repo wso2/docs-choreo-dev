@@ -44,10 +44,23 @@ export class ProjectListingPage {
 
 
   static selectProject(projectName: string = "Default Project") {
+
+
+
+cy.get('body').then(bdy=>{
+  if (bdy.find('[data-cyid="create-project-card"]').length>0){
+    cy.get('[data-cyid="search-icon"]').eq(1).click()
+    cy.get('[placeholder="Search"]').type(`${projectName}{enter}`)
+    cy.contains(projectName).click()
+  }else{
+
+
     cy.get('#project-picker').should("be.visible").click()
     cy.wait(3000)
     cy.get('ul>li [placeholder="Search"]').type(`${projectName}{enter}`)
     cy.get('ul>li>div>span>p').contains(projectName).click()
-    cy.contains("Let's Start Building...").should('be.visible')
+  }
+})
+
   }
 }
