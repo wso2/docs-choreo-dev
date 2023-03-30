@@ -11,9 +11,9 @@
  * associated services.
  */
 export class Utils {
-  static oldProjectNamePrefix = "e2eproject";
-  static projectNamePrefix = "test";
-  static componentNamePrefix = "test";
+  static oldProjectNamePrefix = "automationtestproject";
+  static projectNamePrefix = "autotest";
+  static componentNamePrefix = "autotest";
   static keyNamePrefix = "e2eOnPremkey";
   static APP_SVC_URL = Cypress.env("appSvcURL");
   static ORG_NAME = Cypress.env("choreoOrgHandle");
