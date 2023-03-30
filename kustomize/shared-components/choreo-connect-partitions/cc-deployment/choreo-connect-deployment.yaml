@@ -166,6 +166,12 @@ spec:
               name: mgw-common-cert-vol
               readOnly: true
               subPath: mg.pem
+            - name: secret-cc-rate-limiter-cert
+              mountPath: /home/wso2/security/truststore/rate-limiter.pem
+              subPath: RATE_LIMITER_KEYSTORE_CERT
+            - name: secret-cc-rate-limiter-cert
+              mountPath: /mnt/csi/secret-cc-rate-limiter-cert
+              readOnly: true
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router:latest
           imagePullPolicy: Always
           securityContext:
@@ -257,6 +263,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-cc-deployment
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-cc-rate-limiter-cert
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cc-rate-limiter-cert
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always
