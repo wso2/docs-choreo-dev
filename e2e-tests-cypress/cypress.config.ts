@@ -53,4 +53,12 @@ export default defineConfig({
     FAIL_FAST_BAIL: 3,
     FAIL_FAST_PLUGIN: false,
   },
+  retries: {
+    // Configure retry attempts for `cypress run`
+    // Default is 0
+    runMode: 2,
+    // Configure retry attempts for `cypress open`
+    // Default is 0
+    openMode: 0,
+  },
 });
