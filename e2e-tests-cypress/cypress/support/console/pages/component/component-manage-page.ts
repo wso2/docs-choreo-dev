@@ -263,7 +263,7 @@ export class ComponentAPILifecycle {
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
       .should("exist")
       .click();
-    cy.contains(`Successfully converted to an ${accessMode.toUpperCase()} API.`).should(
+    cy.contains(`Successfully converted to an ${accessMode.toLowerCase()} API.`).should(
       "be.visible"
     );
   }
