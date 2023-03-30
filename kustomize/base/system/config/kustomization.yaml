@@ -11,6 +11,10 @@ configMapGenerator:
       - CHOREO_DB_PORT=1433
       - CHOREO_DB_USERNAME=choreo_testbase_db_user
       - CHOREO_DB_DRIVER=sqlserver
+  - name: cm-admin-api
+    behavior: create
+    literals:
+      - MAX_HEADER_SIZE=64000
   - name: cm-testbase
     behavior: create
     literals:
