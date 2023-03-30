@@ -11,7 +11,7 @@
  * associated services.
  */
 export class Utils {
-  static oldProjectNamePrefix = "e2eproject";
+  static oldProjectNamePrefix = "automationtestproject";
   static projectNamePrefix = "autotest";
   static componentNamePrefix = "autotest";
   static keyNamePrefix = "e2eOnPremkey";
