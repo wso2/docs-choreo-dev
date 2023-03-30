@@ -39,6 +39,11 @@ spec:
                 secretKeyRef:
                   name: secret-app-db
                   key: CHOREO_DB_PASSWORD
+            - name: MAX_HEADER_SIZE
+              valueFrom:
+                configMapKeyRef:
+                  name: cm-admin-api
+                  key: MAX_HEADER_SIZE
           envFrom:
             - configMapRef:
                 name: env-admin-api
