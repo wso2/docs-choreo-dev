@@ -28,6 +28,7 @@ import org.springframework.http.MediaType;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 /**
@@ -62,8 +63,11 @@ public class DevopsPortalApi extends ControlPlaneAPI {
         payloadMap.put("data", varMap);
         String payload = ObjectMapperUtil.mapObjectToString(payloadMap);
 
-        runner.$(http()
-                .client(DEVOPS_ENDPOINT)
+        runner.$(repeatOnError()
+                .until("i = 12")
+                .index("i")
+                .autoSleep(5000)
+                .actions((http().client(DEVOPS_ENDPOINT)
                 .send()
                 .put(url)
                 .queryParam("organization_id", orgUuid)
@@ -73,7 +77,7 @@ public class DevopsPortalApi extends ControlPlaneAPI {
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(payload)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)))));
 
         runner.$(http()
                 .client(DEVOPS_ENDPOINT)
@@ -111,17 +115,18 @@ public class DevopsPortalApi extends ControlPlaneAPI {
         final Map<String, String> envVariableMap = new HashMap<>();
         final String url = "/components/integration/" + componentId + "/release/" + releaseId + "/environment-variables";
 
-        runner.$(http()
-                .client(DEVOPS_ENDPOINT)
-                .send()
-                .get(url)
-                .queryParam("organization_id", orgUuid)
-                .queryParam("project_id", projectId)
-                .queryParam("env_id", environmentId)
+        runner.$(repeatOnError()
+                .until("i = 12")
+                .index("i")
+                .autoSleep(5000)
+                .actions((http().client(DEVOPS_ENDPOINT).send().get(url)
+                                .queryParam("organization_id", orgUuid)
+                                .queryParam("project_id", projectId)
+                                .queryParam("env_id", environmentId)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)))));
 
         runner.$(http()
                 .client(DEVOPS_ENDPOINT)

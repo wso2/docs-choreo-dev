@@ -93,23 +93,6 @@ command -v helm >/dev/null 2>&1 || {
 #    fi
 #}
 
-############### Install Certmanager
-echo -e "\n --- Installing Cert Manager --- \n"
-kubectl create ns cert-manager
-kubectl label namespace cert-manager cert-manager.io/disable-validation=true
-
-helm repo add jetstack https://charts.jetstack.io
-helm repo update
-helm upgrade --install \
-  cert-manager jetstack/cert-manager \
-  --namespace cert-manager \
-  --version v1.8.0 \
-  -n cert-manager \
-  --set installCRDs=true \
-  --set replicaCount=2 \
-  --set webhook.replicaCount=2 \
-  --set cainjector.replicaCount=2
-
 echo -e "\n --- Creating secrets for DNS-01 challenge --- \n"
 #DNS01_CHALLENGE_CLIENT_SECRET=$(az ad app credential reset --id "${DNS01_CHALLENGE_CLIENT_ID}" --append --display-name "dataplane-${ENV}" --years 2 | grep password | cut -d ":" -f2 | cut -d '"' -f 2)
 #kubectl create secret generic "choreo-secret-azuredns-config" --from-literal=client-secret="${DNS01_CHALLENGE_CLIENT_SECRET}" -n cert-manager --dry-run=client -o yaml | kubectl apply -f -

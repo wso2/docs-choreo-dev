@@ -331,7 +331,7 @@ public class GraphQL extends ControlPlaneAPI {
     
     public static Environment[] getNamespaceForEnvironment(String projectId, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().orgUuid(ORG_UUID).projectId(projectId).build();
-        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentObservabilityEnvironmentInformation.mustache", dto);
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getEnvironments.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         return ObjectMapperUtil.mapToCollection(Environment[].class, response.getRes(), "environments");
     }
@@ -352,7 +352,7 @@ public class GraphQL extends ControlPlaneAPI {
 
     public static ObservabilityIdInformation getComponentObservabilityIdForReleaseId(String releaseId, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().releaseId(releaseId).build();
-        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentObservabilityIds.mustache", dto);
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getObservabilityIds.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         return Arrays.
                 stream(ObjectMapperUtil.mapToCollection(ObservabilityIdInformation[].class,
@@ -560,15 +560,20 @@ public class GraphQL extends ControlPlaneAPI {
                 "templates/graphql/requests/deployComponent.mustache", graphqlDTO);
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
-        runner.$(http()
-                .client(client)
-                .send()
+        runner.$(repeatOnError()
+                .until("i = 20")
+                .index("i")
+                .autoSleep(10000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
-                .accept(MediaType.APPLICATION_JSON_VALUE));
+                .accept(MediaType.APPLICATION_JSON_VALUE)));
         runner.$(http()
                 .client(client)
                 .receive()

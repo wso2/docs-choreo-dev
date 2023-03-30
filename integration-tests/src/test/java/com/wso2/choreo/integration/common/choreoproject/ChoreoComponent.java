@@ -538,7 +538,7 @@ public class ChoreoComponent {
                 // If still waiting after 10 attempts, increase the wait time between calls by 2 seconds
                 // to reduce sending too many requests
                 if (numberOfTries == 10) {
-                    waitForSeconds += 2;
+                    waitForSeconds += 5;
                 }
 
                 log.debug("waitForComponentDeploymentSuccess()... " + numberOfTries + " attempts, retrying");

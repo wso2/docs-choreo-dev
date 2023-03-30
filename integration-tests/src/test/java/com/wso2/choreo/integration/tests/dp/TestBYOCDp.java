@@ -48,19 +48,16 @@ public class TestBYOCDp extends TestBase {
         return this.setUp();
     }
 
-
     @DataProvider(name = "reg")
     public Object[][] regionData() {
         return DataProviderWrapper.convertToDataProvider(Arrays.asList(Configuration.getConfig(ConfigDefinition.REGIONS).split(",")));
     }
-
 
     @Test(dataProvider = "dps")
     @CitrusTest
     public void createByocComponent_TestBYOCEUDataPlane(DataProviderWrapper dp) throws Exception {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
-
 
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).projectId(project.getId())
                 .srcGitRepoUrl("https://github.com/choreo-test-apps/byor-greetings-app2")
@@ -73,7 +70,6 @@ public class TestBYOCDp extends TestBase {
         dp.setChoreoComponent(choreoComponent);
         Assert.assertEquals(project.getRegion(), dp.getRegion());
         Assert.assertNotNull(choreoComponent.getId());
-
     }
 
     @Test(dependsOnMethods = {"createByocComponent_TestBYOCEUDataPlane"}, dataProvider = "dps")
@@ -95,7 +91,6 @@ public class TestBYOCDp extends TestBase {
         dp.setApiId(apiId);
         dp.setProdInvokeUrl(prodInvokeURL);
     }
-
 
     @Test(dependsOnMethods = {"promote_TestBYOCEUDataPlane"}, dataProvider = "dps")
     @CitrusTest

@@ -351,7 +351,7 @@ public class ComponentUtils {
                                     String expectedResponse) throws Exception {
         // Test API Invocation
         runner.$(repeatOnError()
-                .until("i = 5")
+                .until("i = 12")
                 .index("i")
                 .autoSleep(5000)
                 .actions((http()
