@@ -82,6 +82,7 @@ Before you deploy the component, you must follow the steps given below to assign
     | USERNAME   |
     | PASSWORD   | 
     | VHOST      | 
+
 3. Click **Deploy**. 
 
 4. Alternatively, you can go to the **Development** card and click **Manage Configs and Secrets**. This takes you to the [Configurations and secrets](../../deploy/devops/configs-and-secrets.md) page, where you can apply environment-specific configuration files, environment variables, and other secret resources to containers.
