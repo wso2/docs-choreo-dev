@@ -88,9 +88,6 @@ spec:
             - name: secret-cc-rate-limiter-cert
               mountPath: /home/wso2/security/truststore/rate-limiter.pem
               subPath: RATE_LIMITER_KEYSTORE_CERT
-            - name: secret-cc-rate-limiter-cert
-              mountPath: /mnt/csi/secret-cc-rate-limiter-cert
-              readOnly: true
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-adapter:latest
           imagePullPolicy: Always
           securityContext:
