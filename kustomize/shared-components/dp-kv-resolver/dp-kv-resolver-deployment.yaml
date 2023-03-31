@@ -52,13 +52,13 @@ spec:
             - --v=10
           ports:
             - containerPort: 8443
-              name: https-kube-proxy-port
+              name: proxy-port
           livenessProbe:
             tcpSocket:
-              port: https-kube-proxy-port
+              port: proxy-port
           readinessProbe:
             tcpSocket:
-              port: https-kube-proxy-port
+              port: proxy-port
           resources:
             requests:
               cpu: 150m
@@ -81,21 +81,21 @@ spec:
             - /manager
           ports:
             - containerPort: 9090
-              name: http-api-port
+              name: api-port
               protocol: TCP
             - containerPort: 8081
-              name: http-probe-port
+              name: probe-port
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /healthz
-              port: http-probe-port
+              port: probe-port
             initialDelaySeconds: 15
             periodSeconds: 20
           readinessProbe:
             httpGet:
               path: /readyz
-              port: http-probe-port
+              port: probe-port
             initialDelaySeconds: 5
             periodSeconds: 10
           resources:

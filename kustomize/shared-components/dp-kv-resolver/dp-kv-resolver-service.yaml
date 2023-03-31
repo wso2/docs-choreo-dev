@@ -22,7 +22,7 @@ metadata:
 spec:
   ports:
   - port: 80
-    targetPort: http-api-port
+    targetPort: api-port
     protocol: TCP
   selector:
     choreo.component: dp-kv-resolver
