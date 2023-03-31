@@ -47,6 +47,14 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
       .should("be.enabled")
       .click();
+
+      cy.get('body').then(bdy=>{
+        if (bdy.find('[data-testid="deployment-history-btn"]').length==2){
+          cy.get('[data-cyid="btn-next"]').realClick();
+        }
+      })
+
+
     if (isExternalAPI) {
       Utils.interceptConfig()
       cy.get('[data-cyid="btn-next"]').realClick();
@@ -130,7 +138,7 @@ export class ComponentDeployPage {
 
   static promoteWebHookToProd(configValue: string) {
     this.promote({ settingButtonCount: 2, invokeUrlCount: 0, invokeUrlIndex: 0 });
-    cy.get('[data-cyid="btn-next"]').should("be.enabled").click();
+    cy.get('button[type="submit"]').should("be.enabled").click();
     this.addConfiguration(configValue);
     cy.get('[data-testid="btn-stop"]', { timeout: 360000 }).should(
       "have.length",
