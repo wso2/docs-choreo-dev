@@ -404,64 +404,61 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
 
         }
 
+        @Test(dependsOnMethods = { "deploymentStatusByVersion_TestUserManagedNonEmptyCreateComponentSub" })
+        @CitrusTest
+        public void componentDeploymentStatus_TestUserManagedNonEmptyCreateComponentSub() throws Exception {
+                String versionId = testComponentV2.getLatestApiVersion().getId();
+                String devEnvIdToDeploy = testComponent.getLatestAppEnvId("dev");
+                Map<String, String> params = new HashMap<>();
+                params.put("orgHandler", orgHandle);
+                params.put("orgUuid", orgUUID);
+                params.put("componentId", componentId);
+                params.put("versionId", versionId);
+                params.put("environmentId", devEnvIdToDeploy);
 
-        //uncomment below test method once https://github.com/wso2-enterprise/choreo/issues/19976 is fixed
+                String graphQlQuery = ComponentUtils.generateStringFromTemplate(
+                        "templates/deploy/graphql/componentDeployment.mustache", params);
+                HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+                        {
+                                put("query", graphQlQuery);
+                        }
+                };
+                ObjectMapper objectMapper = new ObjectMapper();
+                String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
 
-//        @Test(dependsOnMethods = { "deploymentStatusByVersion_TestUserManagedNonEmptyCreateComponentSub" })
-//        @CitrusTest
-//        public void componentDeploymentStatus_TestUserManagedNonEmptyCreateComponentSub() throws Exception {
-//                String versionId = testComponentV2.getLatestApiVersion().getId();
-//                String devEnvIdToDeploy = testComponent.getLatestAppEnvId("dev");
-//                Map<String, String> params = new HashMap<>();
-//                params.put("orgHandler", orgHandle);
-//                params.put("orgUuid", orgUUID);
-//                params.put("componentId", componentId);
-//                params.put("versionId", versionId);
-//                params.put("environmentId", devEnvIdToDeploy);
-//
-//                String graphQlQuery = ComponentUtils.generateStringFromTemplate(
-//                        "templates/deploy/graphql/componentDeployment.mustache", params);
-//                HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-//                        {
-//                                put("query", graphQlQuery);
-//                        }
-//                };
-//                ObjectMapper objectMapper = new ObjectMapper();
-//                String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
-//
-//                JsonArray commitHistory = testComponentV2.getCommitHistorySub(accessToken);
-//                String latestCommitSha = testComponentV2.getLatestCommitHash(commitHistory);
-//
-//                Map<String, String> responseParams = new HashMap<>();
-//                responseParams.put("environmentId", devEnvIdToDeploy);
-//                responseParams.put("sha", latestCommitSha);
-//                responseParams.put("versionId", versionId);
-//
-//                String expectedResponse = ComponentUtils.generateStringFromTemplate(
-//                        "templates/deploy/deploy_managed_status_success.mustache", responseParams);
-//
-//                // Poll deployment status
-//                $(repeatOnError()
-//                        .until("i = 25")
-//                        .index("i")
-//                        .autoSleep(5000)
-//                        .actions(
-//                                http()
-//                                        .client(choreoTestClient)
-//                                        .send()
-//                                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-//                                        .message()
-//                                        .header(HttpHeaders.AUTHORIZATION, accessToken)
-//                                        .body(requestBody)
-//                                        .accept(String.valueOf(MediaType.APPLICATION_JSON)),
-//                                http().client(choreoTestClient)
-//                                        .receive()
-//                                        .response(HttpStatus.OK)
-//                                        .message()
-//                                        .body(expectedResponse)));
-//        }
+                JsonArray commitHistory = testComponentV2.getCommitHistorySub(accessToken);
+                String latestCommitSha = testComponentV2.getLatestCommitHash(commitHistory);
 
-        @Test(dependsOnMethods = {"deploymentStatusByVersion_TestUserManagedNonEmptyCreateComponentSub"})
+                Map<String, String> responseParams = new HashMap<>();
+                responseParams.put("environmentId", devEnvIdToDeploy);
+                responseParams.put("sha", latestCommitSha);
+                responseParams.put("versionId", versionId);
+
+                String expectedResponse = ComponentUtils.generateStringFromTemplate(
+                        "templates/deploy/deploy_managed_status_success.mustache", responseParams);
+
+                // Poll deployment status
+                $(repeatOnError()
+                        .until("i = 25")
+                        .index("i")
+                        .autoSleep(5000)
+                        .actions(
+                                http()
+                                        .client(choreoTestClient)
+                                        .send()
+                                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                        .message()
+                                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                        .body(requestBody)
+                                        .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                                http().client(choreoTestClient)
+                                        .receive()
+                                        .response(HttpStatus.OK)
+                                        .message()
+                                        .body(expectedResponse)));
+        }
+
+        @Test(dependsOnMethods = {"componentDeploymentStatus_TestUserManagedNonEmptyCreateComponentSub"})
         @CitrusTest
         public void componentPromotionToProd_TestUserManagedNonEmptyCreateComponentSub() throws Exception {
                 testComponentV2 = GraphQL.getComponentDetails(projectId,componentHandler, accessToken);
