@@ -122,12 +122,17 @@ To configure logging in MI instances, you can use environment variables with spe
 2. Replace the dot character in the package name with an underscore.
 3. Set the variable value to the required logging level for the corresponding package or class.
 
-For example, to set the logging level for the `org.apache.synapse.transport.http.wire` package to `debug`, define the
-following environment variable:
+For example, to enable wire logs logging level of the `org.apache.synapse.transport.http.wire` package needs to be changed
+to `debug`. To configure logging define the environment variable as follows:
 
-```
-export logging_level_org_apache_synapse_transport_http_wire=debug
-```
+- Go to the `Deploy` page and go to the `Configs & Secrets` tab.
+- Click on `Create` button to add a new config.
+- Select the `Config Type` as `ConfigMap` and `Mount Type` as `Environment Variables`.
+- Click `Next` to add configurations.
+- Give a name for the configuration in the `Config Name`.
+- Then define the key-value pair for the `Environment Variables`.
+- For example, Add `logging_level_org_apache_synapse_transport_http_wire` as the `Name` and `debug` as the value.
+- Then click on `Create` to apply the changes.
 
 This approach allows you to control the logging granularity, which helps you troubleshoot and identify issues faster.
 
