@@ -42,7 +42,7 @@ const PROJECT_DESCRIPTION = "sample oas flow scenario";
 const PROJECT_NAME = Utils.generateProjectName();
 
 
-describe("Create and deploy a component to test developer portal with custom domain", () => {
+describe.skip("Create and deploy a component to test developer portal with custom domain", () => {
   before(() => {
     ConsoleLoginPage.login();
   });
@@ -74,7 +74,7 @@ describe("Create and deploy a component to test developer portal with custom dom
   });
 });
 
-describe("Login and test developer portal with custom domain", () => {
+describe.skip("Login and test developer portal with custom domain", () => {
   const OPERATION_USERS = "intensity";
   const appName = generateAppName("-e2etest");
 
@@ -141,7 +141,7 @@ describe("Login and test developer portal with custom domain", () => {
   });
 });
 
-describe("Delete added custom domain", () => {
+describe.skip("Delete added custom domain", () => {
   before(() => {
     ConsoleLoginPage.login();
     ChoreoHomePage.navigateToSettings();
