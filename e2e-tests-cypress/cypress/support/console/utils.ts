@@ -22,6 +22,8 @@ export class Utils {
   static MAIL_READER_CLIENT_SECRET = Cypress.env("mailReaderClientSecret");
   static MAIL_READER_TOKEN_URL = Cypress.env("mailReaderTokenURL");
 
+  static TRY_COUNT = 5;
+
   /**
    * Create name for app.
    *
@@ -32,7 +34,9 @@ export class Utils {
   }
 
   static generateComponentName(name: string) {
-    return this.componentNamePrefix + Date.now() + name;
+    const genName = this.componentNamePrefix + Date.now() + name;
+
+    return genName.substring(0, 25)
   }
 
   static generateBasePath() {
@@ -139,6 +143,26 @@ export class Utils {
     return false;
   }
 
+
+  private static sendRequest(request) {
+    return cy.request(request).then((res) => {
+      if (res.status > 205) {
+        while (this.TRY_COUNT > 0) {
+          cy.wait(10000)
+          this.sendRequest(request)
+          this.TRY_COUNT--;
+        }
+      }
+      return cy.wrap({ body: res.body, status: res.status }, { log: false });
+    });
+  }
+
+
+
+
+
+
+
   static sendPostRequest(url: string, headers, body) {
     const request = {
       method: "POST",
@@ -174,9 +198,7 @@ export class Utils {
       headers,
       failOnStatusCode: false,
     };
-    return cy.request(request).then((res) => {
-      return cy.wrap({ body: res.body, status: res.status }, { log: false });
-    });
+   return this.sendRequest(request)
   }
 
   static sendDeleteRequest(url: string, headers: any = {}, body?: any) {
@@ -186,7 +208,7 @@ export class Utils {
       body,
       headers,
       failOnStatusCode: false
-      
+
     };
     return cy.request(request).then((res) => {
       return cy.wrap({ body: res.body, status: res.status }, { log: false });
@@ -222,8 +244,8 @@ export class Utils {
     return false;
   }
 
-   static interceptConfig() {
-     cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/**`).as('config')
+  static interceptConfig() {
+    cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/**`).as('config')
     cy.wait('@config', { timeout: 180000 })
   }
 
