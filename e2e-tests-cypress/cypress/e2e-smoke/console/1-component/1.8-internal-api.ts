@@ -32,13 +32,11 @@ import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-bui
 
 describe("Verify internal API creation functionality", () => {
   const REST_API_NAME = Utils.generateComponentName("internal");
-  const PROXY_API_NAME_DEV =
-    "proxy" + Utils.generateComponentName("dev").substring(10, 30);
+  const PROXY_API_NAME_DEV = Utils.generateComponentName("dev")
   const PROXY_API_VERSION_DEV = "1.0.0";
   const PROXY_API_BASEPATH_DEV = `/${PROXY_API_NAME_DEV}`;
 
-  const PROXY_API_NAME_PROD =
-    "proxy" + Utils.generateComponentName("prod").substring(10, 30);
+  const PROXY_API_NAME_PROD = Utils.generateComponentName("prod")
   const PROXY_API_VERSION_PROD = "1.0.0";
   const PROXY_API_BASEPATH_PROD = `/${PROXY_API_NAME_PROD}`;
 
