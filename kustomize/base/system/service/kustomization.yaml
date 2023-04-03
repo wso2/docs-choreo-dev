@@ -45,4 +45,4 @@ resources:
   - cio-query-api-service.yaml
   - cio-incident-configurator.yaml
   - crypto-key-service.yaml
-  
+  - metered-uage-handler.yaml
