@@ -22,24 +22,41 @@ interface PromoteConfigs {
 }
 
 export class ComponentDeployPage {
-  static deployToDev(isExternalAPI: boolean = true) {
+  static deployToDev(
+    isAdditionalConfigs: boolean = true,
+    isManagedByAPIM: boolean = true
+  ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-deploy-api"]', { timeout: 300000 }).should("be.enabled").click();
-    if (isExternalAPI) {
-      Utils.interceptConfig()
+    cy.get('[data-cyid="btn-deploy-api"]', { timeout: 300000 })
+      .should("be.enabled")
+      .click();
+    if (isAdditionalConfigs) {
+      if (isManagedByAPIM) {
+        Utils.interceptConfig();
+      }
       cy.get('[data-cyid="btn-next"]', { timeout: 600000 }).click();
     }
-    cy.get('[data-testid="btn-stop"]', { timeout: 600000 }).should("be.visible");
-    GraphQL.getComponentDeploymentStatus()
+    cy.get('[data-testid="btn-stop"]', { timeout: 600000 }).should(
+      "be.visible"
+    );
+    GraphQL.getComponentDeploymentStatus();
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
     // to ensure rendering completes before checking the deployment status
     cy.wait(600);
-    cy.get('[data-testid="btn-stop"]', { timeout: 600000 }).should("be.visible");
-    cy.get('[data-cyid="deployment-status"]', { timeout: 360000 }).contains("Active", { timeout: 360000 });
+    cy.get('[data-testid="btn-stop"]', { timeout: 600000 }).should(
+      "be.visible"
+    );
+    cy.get('[data-cyid="deployment-status"]', { timeout: 360000 }).contains(
+      "Active",
+      { timeout: 360000 }
+    );
   }
 
-
-  static promoteToProd(isExternalAPI: boolean = true) {
+  static promoteToProd(
+    isAdditionalConfigs: boolean = true,
+    isManagedByAPIM: boolean = true,
+    numberOfNextPrompts: number = 2
+  ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
       .should("be.enabled")
@@ -48,19 +65,21 @@ export class ComponentDeployPage {
       .should("be.enabled")
       .click();
 
-      cy.get('body').then(bdy=>{
-        if (bdy.find('[data-testid="deployment-history-btn"]').length==2){
-          cy.get('[data-cyid="btn-next"]').realClick();
-        }
-      })
+    cy.get("body").then((bdy) => {
+      if (bdy.find('[data-testid="deployment-history-btn"]').length == 2) {
+        cy.get('[data-cyid="btn-next"]').realClick();
+      }
+    });
 
+    if (isAdditionalConfigs) {
+      if (isManagedByAPIM) {
+        Utils.interceptConfig();
+      }
 
-    if (isExternalAPI) {
-      Utils.interceptConfig()
-      cy.get('[data-cyid="btn-next"]').realClick();
-      cy.get('[data-cyid="btn-next"]').realClick();
+      for (var i = 0; i < numberOfNextPrompts; i++) {
+        cy.get('[data-cyid="btn-next"]').realClick();
+      }
     }
-
 
     cy.get('[data-testid="btn-stop"]', { timeout: 360000 })
       .should("have.length", 2)
@@ -110,8 +129,6 @@ export class ComponentDeployPage {
     );
   }
 
-
-
   static configureAndDeploy(configValue: string) {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.wait(4000);
@@ -125,7 +142,10 @@ export class ComponentDeployPage {
     // to ensure rendering completes before checking the deployment status
     cy.wait(600);
     cy.get('[data-testid="btn-stop"]').should("be.visible");
-    cy.get('[data-cyid="deployment-status"]', { timeout: 360000 }).contains("Active", { timeout: 360000 });
+    cy.get('[data-cyid="deployment-status"]', { timeout: 360000 }).contains(
+      "Active",
+      { timeout: 360000 }
+    );
   }
 
   static addConfiguration(value: string) {
@@ -134,10 +154,12 @@ export class ComponentDeployPage {
     cy.get('.ConfigForm button[type="submit"]').click();
   }
 
-
-
   static promoteWebHookToProd(configValue: string) {
-    this.promote({ settingButtonCount: 2, invokeUrlCount: 0, invokeUrlIndex: 0 });
+    this.promote({
+      settingButtonCount: 2,
+      invokeUrlCount: 0,
+      invokeUrlIndex: 0,
+    });
     cy.get('button[type="submit"]').should("be.enabled").click();
     this.addConfiguration(configValue);
     cy.get('[data-testid="btn-stop"]', { timeout: 360000 }).should(
@@ -205,7 +227,7 @@ export class ComponentDeployPage {
     }
   }
 
-  private static promote({ }: PromoteConfigs) {
+  private static promote({}: PromoteConfigs) {
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
       .should("be.enabled")
       .wait(2000)
@@ -249,17 +271,17 @@ export class ComponentDeployPage {
   }
 
   static addNewVersion(branch: string = "feature", version: string = "1.1") {
-    cy.get('[data-cyid="version-picker"]').click()
-    cy.get('[data-cyid="btn-create-version"]').should('be.visible').click()
+    cy.get('[data-cyid="version-picker"]').click();
+    cy.get('[data-cyid="btn-create-version"]').should("be.visible").click();
     cy.get('[role="dialog"]').within(() => {
-      cy.get('[data-testid*="feature"]').click()
-    })
-    cy.get(`[data-value="${branch}"]`).click()
+      cy.get('[data-testid*="feature"]').click();
+    });
+    cy.get(`[data-value="${branch}"]`).click();
     cy.get('[role="dialog"]').within(() => {
-      cy.get(`[name="Version name"]`).type(version)
-      cy.get('[data-testid="create-version-create"]').click()
-      cy.get('[data-testid="dialog-close-icon"]').should('not.exist')
-    })
+      cy.get(`[name="Version name"]`).type(version);
+      cy.get('[data-testid="create-version-create"]').click();
+      cy.get('[data-testid="dialog-close-icon"]').should("not.exist");
+    });
     cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
   }
 }

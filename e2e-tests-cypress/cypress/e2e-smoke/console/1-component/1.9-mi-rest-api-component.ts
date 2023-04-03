@@ -45,20 +45,25 @@ describe("Verify MI REST API component in root", () => {
       componentType: Enums.ComponentType.MI_REST_API,
       accessibility: Enums.Accessibility.EXTERNAL,
       projectName: PROJECT_NAME,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/synaps-api-project-sample",
+      srcGitRepoUrl:
+        "https://github.com/choreo-test-apps/synaps-api-project-sample",
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: "",
       oasFilePath: "",
-      srcGitRepoBranch: "with-response-message"
+      srcGitRepoBranch: "with-response-message",
     };
-    ProjectListingPage.createNewProject(PROJECT_NAME,PROJECT_DESCRIPTION,Enums.Region.EU);
+    ProjectListingPage.createNewProject(
+      PROJECT_NAME,
+      PROJECT_DESCRIPTION,
+      Enums.Region.EU
+    );
     GraphQL.createIntegrationComponent(componentData);
   });
 
   it("Deploy component", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployToDev(false); //This is set to false till the env config support is provided for miRestApi
+    ComponentDeployPage.deployToDev(true, false);
   });
 
   it("Verify test functionality of root resource in dev on curl", () => {
@@ -77,7 +82,7 @@ describe("Verify MI REST API component in root", () => {
 
   it("Verify component promote to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteToProd(false); //This is set to false till the env config support is provided for miRestApi
+    ComponentDeployPage.promoteToProd(true, false, 1);
   });
 
   it("Verify test functionality of root resource in prod on curl", () => {
