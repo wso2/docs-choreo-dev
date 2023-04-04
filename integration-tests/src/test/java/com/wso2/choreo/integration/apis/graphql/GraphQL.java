@@ -46,6 +46,7 @@ import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.graphql.CreateByocComponentResponseDTO;
 import com.wso2.choreo.integration.models.graphql.CreateComponentResponseDTO;
+import com.wso2.choreo.integration.models.graphql.CreateNewVersionResponseDTO;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.models.proxyapi.ProxyDeployment;
 import com.wso2.choreo.integration.models.response.ProxyResponse;
@@ -912,5 +913,37 @@ public class GraphQL extends ControlPlaneAPI {
                 }));
 
         return observabilityIds;
+    }
+    
+    public static CreateNewVersionResponseDTO createNewVersion(TestActionRunner runner,
+                    HttpClient choreoProjectsTestClient, String accessToken,
+                    GraphqlDTO graphqlDTO) throws IOException {
+
+            String queryString = ObjectMapperUtil.mapObjectToString(
+                            "templates/graphql/requests/createNewVersion.mustache", graphqlDTO);
+            String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+            AtomicReference<CreateNewVersionResponseDTO> mapStringToObject = new AtomicReference<>();
+            runner.$(http()
+                .client(choreoProjectsTestClient)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+            runner.$(http()
+                .client(choreoProjectsTestClient)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .body(new ClassPathResource("templates/graphql/responses/createNewVersionSuccess.json"))
+                .validate((message, context) -> {
+                        mapStringToObject.set(ObjectMapperUtil.mapStringToObject(
+                                CreateNewVersionResponseDTO.class, message.getPayload(String.class),
+                                        "createVersion"));
+                }));
+            return mapStringToObject.get();
     }
 }
