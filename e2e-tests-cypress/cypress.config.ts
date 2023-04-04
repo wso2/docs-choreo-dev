@@ -13,6 +13,7 @@ export default defineConfig({
   videoUploadOnPasses: false,
   videoCompression: false,
   watchForFileChanges: false,
+  chromeWebSecurity:false,
   e2e: {
     setupNodeEvents(on, config) {
       let apiName;
