@@ -55,7 +55,7 @@ describe(`Graphql GQL service functionality in region ${dp}`, () => {
       triggerId: null,
       srcGitRepoUrl: "https://github.com/choreo-test-apps/graphql",
       initializeAsBallerinaProject: false,
-      repositoryType: Enums.RepoType.UserManagedEmpty,
+      repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: "",
     };
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, dp);
