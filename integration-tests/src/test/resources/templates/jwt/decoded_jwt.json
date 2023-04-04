@@ -3,7 +3,7 @@
 "exp": "@ignore@",
 "iat": "@ignore@",
 "jti": "@ignore@",
-"http://wso2.org/claims/apiname": "{{API_NAME}}",
+"http://wso2.org/claims/apiname": "@ignore@",
 "http://wso2.org/claims/version": "1.0.0",
 "http://wso2.org/claims/keytype": "PRODUCTION",
 "http://wso2.org/claims/enduserTenantId": "0",
