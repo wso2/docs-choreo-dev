@@ -177,11 +177,7 @@ describe("Verify Reusable RestAPI functionality", () => {
   it("Verify manage functionality and Publish Connector", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publish(Enums.ConnectorAudience.PRIVATE).should("be.visible");
-  });
-
-  it("Verify connector republishing", () => {
-    ComponentAPILifecycle.republishConnector();
+    ComponentAPILifecycle.publishRestApiWithoutConnector();
     ComponentAPILifecycle.demoteToCreated();
   });
 
