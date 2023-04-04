@@ -194,7 +194,7 @@ public class Orgs extends ControlPlaneAPI {
         runner.$(repeatOnError()
                 .until("i = 3")
                 .index("i")
-                .autoSleep(5000)
+                .autoSleep(30000)
                 .actions(
                         http()
                                 .client(client)
