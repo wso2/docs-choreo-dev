@@ -13,6 +13,7 @@
 
 package com.wso2.choreo.integration.common;
 
+
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
@@ -40,6 +41,7 @@ import com.wso2.choreo.integration.models.graphql.CreateComponentResponseDTO;
 import com.wso2.choreo.integration.models.graphql.CreateNewVersionResponseDTO;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
+import com.wso2.choreo.integration.models.observability.SyntaxTree;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -236,8 +238,7 @@ public class ComponentUtils {
         List<Commit> commitHistory = GraphQL.getCommitHistory(runner, cpProjectsClient, component.getId(), accessToken);
 
         if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
-            Orgs.addConfiguration(runner, choreoClient, component, commitHistory, Constant.PROD_ENVIRONMENT,
-                    balconfigs);
+            Orgs.addConfiguration(runner, choreoClient, component, commitHistory, Constant.PROD_ENVIRONMENT, balconfigs);
         }
 
         String componentId = component.getId();
@@ -318,6 +319,7 @@ public class ComponentUtils {
             }
         }
     }
+
 
     public static String generateStringFromTemplate(String templateRelativePath, Map<String, String> params)
             throws IOException {
@@ -405,6 +407,17 @@ public class ComponentUtils {
                                 .message()
                                 .type(MessageType.JSON)
                                 .body(expectedResponse)));
+    }
+
+    public static List<Environment> getEnvironments(TestActionRunner runner, Map<Endpoints,
+            HttpClient> citrusClients, String accessToken, ChoreoComponent component) throws Exception {
+        HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
+
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder()
+                .orgUuid(component.getOrganization().getOrgUUID())
+                .projectId(component.getProjectId()).build();
+
+        return GraphQL.getEnvironments(runner, cpProjectsClient, accessToken, graphqlDTO);
     }
 
     private static Pair<Environment, String> getEnvironmentWithReleaseId(TestActionRunner runner,
@@ -578,5 +591,55 @@ public class ComponentUtils {
                 graphqlDTO);
         Orgs.createdComponentStatus(graphqlDTO.getProjectId(), graphqlDTO.getComponentId(), accessToken);
         return response;
+    }
+
+    public static SyntaxTree verifyObservabilityAST(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+                                              String accessToken, List<ObservabilityIdInformation> observabilityIds,
+                                                    ChoreoComponent component) throws Exception {
+        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
+
+        return ObservabilityService.verifyObservabilityAST(runner, choreoCPTestClient, accessToken, observabilityIds, component);
+    }
+
+    public static void verifyObservabilityMetricDensity(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+                                                        String accessToken, ObservabilityIdInformation observabilityId) throws Exception {
+        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
+
+        ObservabilityService.verifyObservabilityMetricDensity(runner, choreoCPTestClient, accessToken, observabilityId);
+    }
+
+    public static void verifyObservabilityMetricDensityHistrogram(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+                                                                  String accessToken, List<ObservabilityIdInformation> observabilityIds,
+                                                                  ChoreoComponent component) throws Exception {
+        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
+
+        ObservabilityService.verifyObservabilityMetricDensityHistrogram(runner, choreoCPTestClient, accessToken, observabilityIds, component);
+    }
+
+    public static void verifyObservabilityAPI(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+                                              String accessToken, List<ObservabilityIdInformation> observabilityIds,
+                                              ChoreoComponent component, SyntaxTree syntaxTree) throws Exception {
+        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
+
+        ObservabilityService.verifyObservabilityAPI(runner, choreoCPTestClient, accessToken, observabilityIds,
+                component, syntaxTree);
+    }
+
+    public static String verifyObservabilityTraceList(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+                                              String accessToken, List<ObservabilityIdInformation> observabilityIds,
+                                              ChoreoComponent component, SyntaxTree syntaxTree, int requestCount) throws Exception {
+        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
+
+        return ObservabilityService.verifyObservabilityTraceList(runner, choreoCPTestClient, accessToken,
+                observabilityIds, component, syntaxTree, requestCount);
+    }
+
+    public static void verifyObservabilityTraceInformation(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+                                                           String accessToken, List<ObservabilityIdInformation> observabilityIds,
+                                                           ChoreoComponent component, SyntaxTree syntaxTree, String traceId) throws Exception {
+        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
+
+        ObservabilityService.verifyObservabilityTraceInformation(runner, choreoCPTestClient, accessToken,
+                observabilityIds, component, syntaxTree, traceId);
     }
 }
