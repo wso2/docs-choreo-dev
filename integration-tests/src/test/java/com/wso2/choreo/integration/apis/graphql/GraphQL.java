@@ -621,14 +621,14 @@ public class GraphQL extends ControlPlaneAPI {
                                 .type(MessageType.JSON)
                                 .validate(jsonPath()
                                         .expression("$.data.deploymentStatusByVersion.size()", greaterThan(0))
-                                        .expression("$.data.deploymentStatusByVersion[*].keySet()",
+                                        .expression("$.data.deploymentStatusByVersion[0].keySet()",
                                                 containsInAnyOrder("id","sha","completed_at","started_at","name","status","conclusion",
                                                         "isAutoDeploy","failureReason","sourceCommitId"))
-                                        .expression("$.data.deploymentStatusByVersion[*].name", "Choreo Generated Build Deploy Action")
-                                        .expression("$.data.deploymentStatusByVersion[*].status", "completed")
-                                        .expression("$.data.deploymentStatusByVersion[*].conclusion", "success")
-                                        .expression("$.data.deploymentStatusByVersion[*].isAutoDeploy", false)
-                                        .expression("$.data.deploymentStatusByVersion[*].failureReason", 0)
+                                        .expression("$.data.deploymentStatusByVersion[0].name", "Choreo Generated Build Deploy Action")
+                                        .expression("$.data.deploymentStatusByVersion[0].status", "completed")
+                                        .expression("$.data.deploymentStatusByVersion[0].conclusion", "success")
+                                        .expression("$.data.deploymentStatusByVersion[0].isAutoDeploy", false)
+                                        .expression("$.data.deploymentStatusByVersion[0].failureReason", 0)
                                                 )
                                         )
                                 );
