@@ -1,8 +1,8 @@
-# Secure an API with Role-Based Authorization
+# Secure an API with Role-Based Access Control
 
-Role-based authorization is a crucial security mechanism that provides the necessary access controls to ensure the security and integrity of API resources. In this approach, each user or group is assigned a specific role that determines the actions they are authorized to perform on an API resource.
+Role-based access control is a flexible and scalable approach to manage access to API resources. In this approach, each user or group is assigned a specific role that determines the permission granted to perform operations on an API resource.
 
-This tutorial explains how to implement role-based authorization using Choreo and Asgardeo. It includes a real-world scenario and practical steps to create and publish a REST API proxy component in Choreo and apply role-based access control.
+This tutorial explains how to implement role-based access control using Choreo and Asgardeo. It includes a real-world scenario with instructions to create and publish a REST API proxy component in Choreo and apply role-based access control.
 
 ## Scenario
 
@@ -29,11 +29,11 @@ Let’s take a look at the steps to follow to implement the scenario described a
 
 ### Prerequisites
 
-If you created your Organization in Choreo before 21st of February 2023, follow these steps to enable Asgardeo as the default key manager:
+If you created your organization in Choreo before 21st of February 2023, follow these steps to enable Asgardeo as the default key manager:
   
 !!!tip
 
-     If you created your Organization in Choreo after the 21st of February, 2023, Asgardeo will be the default key manager.
+     If you created your organization in Choreo after the 21st of February, 2023, Asgardeo will be the default key manager.
 
    1. Go to the Choreo Console, click **Settings**, and then click **API Management**.
    2. On the **API Management** page, click **Enable Asgardeo Key Manager**.
@@ -44,7 +44,7 @@ If you created your Organization in Choreo before 21st of February 2023, follow 
 
             Enabling Asgardeo as the default key manager has the following effects:
 
-            - Existing applications created via the Developer Portal in your Organization will continue to function as usual. However, any new application you create within the Organization will use Asgardeo as the key manager.
+            - Existing applications created via the Developer Portal in your organization will continue to function as usual. However, any new application you create within the organization will use Asgardeo as the key manager.
             - New grant types such as **Password**, **Authorization Code**, **PKCE**, and **Implicit**, which were not available in Choreo will become available.
             - The capability to add an external IdP will be disabled because Asgardeo does not support token exchange. However, you can use the federation capabilities of Asgardeo to achieve similar functionality.
 
@@ -53,7 +53,7 @@ If you created your Organization in Choreo before 21st of February 2023, follow 
 
 Follow these steps to create a REST API proxy component, add resources, and deploy it:
 
-1. To create a REST API proxy component, see the instructions under [step 1](../tutorials/create-your-first-rest-api-proxy.md#step-1-create-a-rest-api-proxy) in the Create Your First REST API Proxy tutorial.
+1. To create a REST API proxy component, see the instructions in the [Create Your First REST API Proxy tutorial: Step 1](../tutorials/create-your-first-rest-api-proxy.md#step-1-create-a-rest-api-proxy).
 2. In the **Develop** view, click **Resources**, and follow these steps to add resources:
 
      - Select **GET** as the **HTTP Verb**, enter `/users` as the **URI Pattern**, and click **+** to add the resource.
@@ -74,19 +74,20 @@ Follow these steps to create a REST API proxy component, add resources, and depl
 Follow these steps:
 
 1. In the left navigation menu, click **Manage**, and then click **Permissions**. 
-2. In the **Permissions** pane, click **+ Add Permission**.
+2. In the **Permissions** pane, click **+ Add Permission(Scope)**.
 3. Follow these steps to add the permission values to the permission list:
-   - In the Permission List pane, enter `get_user_list` as the permission value and click **+Add New**.
+   - In the **Permission List** pane, enter `get_user_list` as the permission value and click **+Add New**.
      Similarly, add `get_user`, `create_user`, and `delete_user` as permission values.
 4. Select the permission values as follows for each of the resources:
 
-    ![Permission values](../../assets/img/tutorials/role-based-auth/permission-values.png){.cInlineImage-full}
+    |  **Resource**             | **Permission** |
+    |---------------------------|----------------|
+    | **GET/users**             | `get_user_list`|
+    | **GET/users/{userID}**    | `get_user`     |
+    | **POST/users**            | `create_user`  |
+    | **DELETE/users/{userID}** | `delete_user`  |
 
-5. Click **Save and Deploy**. 
-Now you are ready to promote the API to production.
-6. In the left navigation menu, click **Deploy**.
-7. Go to the **Development** card and click **Promote**.  The **Configure & Deploy** pane opens with `Use Development Endpoint Configuration` selected by default.
-8. Click **Next** to promote the API to production. Now you can publish the API.
+5. Click **Save and Deploy**.
   
     !!!note
 
@@ -94,12 +95,17 @@ Now you are ready to promote the API to production.
 
             ![Resource permission](../../assets/img/tutorials/role-based-auth/resource-permission.png){.cInlineImage-full}
 
+Now you are ready to promote the API to production.
+
+6. In the left navigation menu, click **Deploy**.
+7. Go to the **Development** card and click **Promote**.  The **Configure & Deploy** pane opens with `Use Development Endpoint Configuration` selected by default.
+8. Click **Next** to promote the API to production. Now you can publish the API
 9. In the **Manage** view, click **Lifecycle**.
 10. In the **Lifecycle Management** pane, click **Publish**.
-    A message appears where you can specify whether you want to publish a connector for this REST API proxy. Creating a connector for this REST API proxy makes it available in the Marketplace. 
-11. Click **No, Thanks**. This changes the status of the API to `Published`.
+    A message appears where you can specify whether you want to publish a connector for this REST API proxy. Creating a connector for this REST API proxy makes it available in the Marketplace. In this tutorial we will not publish a connector for the API.
+11. Click **No, Thanks**. This changes the status of the API to **Published**.
 
-Now the REST API proxy is ready to be consumed. An application developer can discover the API, subscribe to it and then invoke it.
+Now, an application developer can discover the API, subscribe to it and then invoke it.
 
 ### Step 3: Subscribe to the Published API
 
@@ -109,27 +115,30 @@ To consume the REST API, you must create an application, generate keys, and subs
 Follow these steps:
 
 1. Go to the [API Developer Portal](https://devportal.choreo.dev/) and click **Applications** on the top menu.
-2. Click **Create**.
+2. Click **+Create**.
 3. Enter `User Management App` as the **Application Name**, select **10PerMin** as the **Per Token Quota**, and then click **Create**. This creates the application and takes you to the application overview page.
 4. On the left navigation menu, click **Production Keys**.
 5. Click to expand **Advanced Configurations** and follow these steps to generate credentials for the application:
     1. Select **Code** as the grant type.
     2. Enter the hosted URL of the application as the **Callback URL**.
     3. Click **Generate Credentials**.
-6. To Subscribe to the API follow these steps:
+6. To subscribe to the API follow these steps:
     1. On the left navigation menu, click **Subscriptions**.
-    2. In the Subscription Management pane, click Add APIs.
+    2. In the **Subscription Management** pane, click **Add APIs**.
     3. In the **Add APIs** list, go to the API you created, and click **Add**.
 
 ### Step 4: Define roles and assign them to groups
 
+In this step, you define roles, create necessary groups and assign appropriate roles to groups so that you can easily manage user permission.
+
 Follow these steps:
 
-1. Click **Manage Permission** on the top right. This takes you to the **Roles** tab in Asgardeo, where you can add applicable roles.
+1. In the [API Developer Portal](https://devportal.choreo.dev/), click **Manage Permission** on the top right. This takes you to the **Roles** tab in Asgardeo, where you can add applicable roles.
 2. Follow these steps to add roles:
     1. Click **+ New Role**,  enter `admin` as the **Role Name** and click **Next**.
-    2. Select all four permission values listed, and then click **Finish**.
-    3. Similarly, add another role with `user` as the Role Name and `get_user_list`, and `get_user` as Role Permissions.
+    2. Select `get_user_list`, `get_user`, `create_user`, and `delete_user`as **Role Permissions**.
+    3. Click **Finish**.
+    4. Similarly, add another role with `user` as the **Role Name** and `get_user_list`, and `get_user` as **Role Permissions**.
     
     Now you can proceed to create groups.
     
@@ -138,20 +147,22 @@ Follow these steps:
     1. Click **+ New Group**,  enter `HR-Manager` as the **Group Name** and click **Finish**. 
     2. Similarly, add another group with `HR-Officer` as the **Group Name**.
 
-   Now you are ready to assign roles to groups.
+   Now, let's assign roles to groups.
 
 5. Follow these steps to assign roles:
     1. Click to edit the **HR-Manager** group.
     2. Click the **Roles** tab and then click **+Assign Roles**.
-    3. Select **admin** and click Save.
+    3. Select **admin** and click **Save**.
     4. Similarly, assign the **user** role to the **HR-Officer** group.
 
 ### Step 5: Define users and assign them to groups
 
+In this step, you define users and assign them to groups depending on the job function of the user. 
+
 Follow these steps:
 
-1. Define two users named `John` and `Kim`.  For step-by-step instructions on adding a user, see [Manage users](https://wso2.com/asgardeo/docs/guides/users/manage-customers/#onboard-a-user) in the Asgardeo documentation.
-2. Assign `John` to the **HR-Manager** group and assign `Kim` to the **HR-Officer** group. For step-by-step instructions on assigning a user to a group, see [Assign groups](https://wso2.com/asgardeo/docs/guides/users/manage-customers/#assign-groups) in the Asgardeo documentation.
+1. Define two users named `Cameron` and `Alex`.  For step-by-step instructions on adding a user, see [Manage users](https://wso2.com/asgardeo/docs/guides/users/manage-customers/#onboard-a-user) in the Asgardeo documentation.
+2. Assign `Cameron` to the **HR-Manager** group and assign `Alex` to the **HR-Officer** group. For step-by-step instructions on assigning a user to a group, see [Assign groups](https://wso2.com/asgardeo/docs/guides/users/manage-customers/#assign-groups) in the Asgardeo documentation.
 
 ### Step 6: Obtain an access token and try out the API
 
@@ -167,20 +178,23 @@ Follow these steps:
 
         ![Authorize endpoint](../../assets/img/tutorials/role-based-auth/authorize-endpoint.png){.cInlineImage-full}
 
-    - Replace <redirect_URL> with the value specified as the **Callback URL** under **Advanced Configurations** in the **Application Keys** pane.
+    - Replace `<redirect_URL>` with the value specified as the **Callback URL** under **Advanced Configurations** in the **Application Keys** pane.
 
         ![Callback URL](../../assets/img/tutorials/role-based-auth/callback-url.png){.cInlineImage-full}
 
-     - Replace `<scopes>` with the scopes applicable to the user. Here let’s use the scopes applicable to user `Kim`.
+     - Replace `<scopes>` with the permission(scopes) applicable to the user. You can copy the applicable permission(scopes) from the API Overview page. Here let’s copy the permission(scopes) applicable to the user `Alex`.
+
+        ![Scopes](../../assets/img/tutorials/role-based-auth/scopes.png){.cInlineImage-full}
+
      - Replace `<clientID>` with the value populated as **Consumer Key** in the **Application Keys** pane.
 
         ![Consumer key](../../assets/img/tutorials/role-based-auth/consumer-key.png){.cInlineImage-full}
 
 2. Open the constructed URL via a web browser. This will take you to a sign-in page provided by Asgardeo.
 
-      ![Sign-in page](../../assets/img/tutorials/role-based-auth/sign-in-kim.png){.cInlineImage-small}
+      ![Sign-in page](../../assets/img/tutorials/role-based-auth/sign-in.png){.cInlineImage-small}
 
-3. Sign in with credentials of `Kim` and click **Allow** to approve the consent.
+3. Sign in with credentials of `Alex` and click **Allow** to approve the consent.
 
       ![Approve consent](../../assets/img/tutorials/role-based-auth/consent.png){.cInlineImage-small}
 
@@ -206,7 +220,7 @@ Follow these steps:
   
         !!!note
 
-                WSO2 does not recommend the use of online base64 encoders for this purpose.
+                WSO2 does not recommend the use of online Base64 encoders for this purpose.
 
 5. Extract the access token from the response that you get.
 
@@ -214,18 +228,14 @@ Follow these steps:
 
 6. Go to the [API Developer Portal](https://devportal.choreo.dev/), try out the HR API using the access token you extracted, and observe the responses.
 
-    You’ll observe that it is only possible to access the following resources because the access token only contains the scopes for those:
+    You’ll observe that it is only possible to access the following resources because the access token only contains the permission(scopes) to invoke those resources:
 
     - GET /users
     - GET /users/{userID}
 
-    Trying out the following resources results in a scope validation failed response because the token doesn’t include the scopes for those resources:
+    Invoking any other resource gives you a scope validation failed response becasue the token doesn't include the required scopes to invoke them.
+       ![Scope validation failed](../../assets/img/tutorials/role-based-auth/scope-validation-failed.png){.cInlineImage-full}    
 
-    - DELETE /users/{userID}
-    - POST /users
-
-        ![Scope validation failed](../../assets/img/tutorials/role-based-auth/scope-validation-failed.png){.cInlineImage-full}    
-
-   Similarly, if you use John’s credentials and sign in to obtain an access token, you'll observe that you can invoke all four resources because it would contain all the required scopes.
+   Similarly, if you use Cameron’s credentials and sign in to obtain an access token, you'll observe that you can invoke all four resources because it would contain all the required permission(scopes).
 
 Congratulations! You have successfully implemented role-based access control with Choreo and Asgardeo.
