@@ -45,7 +45,7 @@ describe(`Graphql GQL service functionality in region ${dp}`, () => {
   const COMPONENT_NAME = "graphql-service";
   const REPO_NAME = "graphql-service-sample";
 
-  it("Verify GraphQL sample creation", () => {
+  it("Verify GraphQL component creation", () => {
     let componentData: ComponentData = {
       componentName: COMPONENT_NAME,
       displayType: Enums.DisplayType.graphql,
