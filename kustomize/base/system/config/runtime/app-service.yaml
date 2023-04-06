@@ -486,3 +486,15 @@ choreoDemoOrg:
   enable: ${IS_CHOREO_DEMO_ORG_ENABLED}
   demoOrgId: ${DEMO_ORG_ID}
   role: ${DEMO_ORG_ROLE}
+salesforceLeadPardotConfig:
+  enable: {{.SALESFORCE_LEAD_VIA_PARDOT_ENABLED}}
+  pardot:
+    clientKey: ${SALESFORCE_LEAD_VIA_PARDOT_APP_KEY}
+    clientSecret: ${SALESFORCE_LEAD_VIA_PARDOT_APP_SECRET}
+    tokenURL: {{.SALESFORCE_LEAD_VIA_PARDOT_TOKEN_URL}}
+    pardotEndpoint: {{.SALESFORCE_LEAD_VIA_PARDOT_ENDPOINT}}
+    pardotSvcURL: {{.SALESFORCE_LEAD_VIA_PARDOT_SVC_URL}}
+  geoLocation:
+    geoLocServiceURL:  {{.GEO_LOCATION_SERVICE_URL}}
+    geoLocServiceUserName: ${MAX_MIND_GEO_LOC_COUNTRY_USERNAME}
+    geoLocServicePassword: ${MAX_MIND_GEO_LOC_COUNTRY_PASSWORD}
