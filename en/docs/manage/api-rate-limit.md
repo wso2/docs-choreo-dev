@@ -36,7 +36,7 @@ available in the response headers, you can have specific implementations to hand
 
 | **Header Name**  | **Description** |
 |------------------|-----------------|
-| `x-ratelimit-limit`     | Denotes the request count allocated for the specified time unit      |
+| `x-ratelimit-limit`     | Denotes the request count allocated for the specified time unit       |
 | `x-ratelimit-reset`     | Provides the time remaining to start the next rate-limiting time unit |
 | `x-ratelimit-remaining` | Denotes the remaining request count for the specified time unit       |
 | `x-ratelimit-enforced`  | Visible after exceeding the allocated request count                   |
