@@ -495,6 +495,6 @@ salesforceLeadPardotConfig:
     pardotEndpoint: {{.SALESFORCE_LEAD_VIA_PARDOT_ENDPOINT}}
     pardotSvcURL: {{.SALESFORCE_LEAD_VIA_PARDOT_SVC_URL}}
   geoLocation:
-    geoLocServiceURL:  {{.GEO_LOCATION_SERVICE_URL}}
-    geoLocServiceUserName: ${MAX_MIND_GEO_LOC_COUNTRY_USERNAME}
-    geoLocServicePassword: ${MAX_MIND_GEO_LOC_COUNTRY_PASSWORD}
+    url:  {{.GEO_LOCATION_SERVICE_URL}}
+    username: ${MAX_MIND_GEO_LOC_COUNTRY_USERNAME}
+    password: ${MAX_MIND_GEO_LOC_COUNTRY_PASSWORD}
