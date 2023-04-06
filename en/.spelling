@@ -15,6 +15,7 @@ integrations
 cInlineImage-half
 choreo-connectors-list
 prebuilt
+Pre-released
 ForEach
 md
 cInlineImage-bordered
@@ -321,6 +322,12 @@ VMWare
 OpenShift
 Tanzu
 OAuth
+cInlineImage-xsmall
+IPaaS
+automations
+natively
+Configs
+ConfigMap
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -442,6 +449,13 @@ programmatic-access-choreo-insights-api
 pricing.md
 create-your-first-integration-as-an-api
 api-proxy
+configs-and-secrets
+runtime.md
+containers.md
+health-checks.md
+configs-and-secrets.md
+scaling.md
+storage.md
 webhook.md
 graphql-api
 connect-your-own-github-repository-to-choreo
@@ -459,6 +473,10 @@ get-started-with-choreo-ipaas
 configure-a-custom-domain-for-apis
 organization.md
 redirect_maps
+configure-cio-dashboard
+service.md
+invoke-apis-via-console
+graphql-console
  - theme/material/templates/home-page.html
 doctype
 html
@@ -473,7 +491,7 @@ uuid
 cInlineImage-small
  - docs/administer/configure-a-custom-domain-for-apis.md
 cInlineImage-small
-cInlineImage-threeQuarters
+cInlineImage-threeQuarter
  - docs/administer/configure-developer-portal-self-sign-up.md
 WSO2_LOGIN_FOR_CHOREO_DEV_PORTAL
 Signups
@@ -494,9 +512,14 @@ id_token
  - docs/deploy/deploy-a-containerized-choreo-component.md
 choreo-sample-apps
  - docs/devops/devops-portal.md
-cInlineImage-threeQuarter
- - docs/manage/api-management.md
 Pre-released
  - docs/manage/lifecycle.md
 pre-released
 pre-release
+ - docs/deploy/ballerina-application.md
+cInlineImage-quarter
+600px
+Ballerina.toml
+Dependencies.toml
+ - docs/deploy/deploy-a-containerized-application.md
+DB_PASS

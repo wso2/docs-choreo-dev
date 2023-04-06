@@ -45,7 +45,7 @@ Adding third-party JARs to the Micro Integrator can provide the following benefi
 - Providing optimized implementations of common functions, improving the performance of Micro Integrator.
 - Developers can avoid having to re-implement commonly used functions, reducing development time and increasing efficiency.
 
-To add third-party libraries to the Micro Integrator, you can add a new directory named `libs` to the root of the Micro Integrator project. When you deploy the component, all the JARs in the `libs` directory in the project path will be included in the Micro Integrator runtime.
+To incorporate third-party libraries into your Micro Integrator project, you need to create a new directory called libs at the root of your project. If your project root and GitHub repository root are not the same, you should place the libs directory in the project root. Once you have placed the necessary JAR files in the libs directory, the Micro Integrator runtime will automatically include them when you deploy the component. This ensures that any dependencies required by your integration flow are available at runtime.
 
 ![Libs Directory](../../assets/img/ipaas/integration-studio/libs_dir.png){.cInlineImage-half}
 
@@ -55,17 +55,81 @@ Conducting security vulnerability scans is crucial for identifying potential wea
 
 During deployment, Choreo performs a Trivy scan to detect critical vulnerabilities in third-party libraries added to the integration component. If the scan detects any critical vulnerabilities, it halts the deployment process. The deployment pane shows the Trivy scan status and any security failures in the Library (Trivy) vulnerable scan step, which you can access by clicking on it. After fixing the vulnerability, you can redeploy the component.
 
+## Customize WSO2 Micro Integrator preconfigured settings
+
+WSO2 Micro Integrator (WSO2 MI) comes with preconfigured settings to work in a general context. However, these settings
+may not apply to the specific requirements of an organization. Therefore, it is important to customize the WSO2 MI
+preconfigured settings to optimize its performance and ensure compatibility with the systems and applications of the
+organization.
+
+To customize the preconfigured settings of WSO2 MI instances running on Choreo, you must define a `deployment.toml` file
+in the GitHub repository subpath of the Micro Integrator project. Configuration parameter changes should be applied via
+this file:
+
+![deployment.toml](../../assets/img/ipaas/integration-studio/config_file.png){.cInlineImage-half}
+
+!!! note
+    If you change critical configuration parameters such as port offset and hostname, it can break internal communication.
+    Therefore, the recommended approach is to update only the necessary configuration parameters.
+
+Here is a sample `deployment.toml` file that can be used to configure the JMS transport. For more information on WSO2 MI
+configuration parameters, see the [MI Config Catalog](https://apim.docs.wso2.com/en/latest/reference/config-catalog-mi/).
+
+```
+[[transport.jms.sender]]
+name = "myQueueSender"
+parameter.initial_naming_factory = "org.apache.activemq.jndi.ActiveMQInitialContextFactory"
+parameter.provider_url = "$env{JMS_PROVIDER_URL}"
+parameter.connection_factory_name = "QueueConnectionFactory"
+parameter.connection_factory_type = "queue"
+parameter.cache_level = "producer"
+
+[[transport.jms.listener]]
+name = "myQueueListener"
+parameter.initial_naming_factory = "org.apache.activemq.jndi.ActiveMQInitialContextFactory"
+parameter.provider_url = "$env{JMS_PROVIDER_URL}"
+parameter.connection_factory_name = "QueueConnectionFactory"
+parameter.connection_factory_type = "queue"
+parameter.cache_level = "consumer"
+```
+
 ## Environment variables
 
 We recommend using environmental variables to improve configuration management, security, portability, and manageability when you develop integration artifacts with WSO2 integration studio. By using environment variables, organizations can simplify the management and maintenance of their integrations and ensure that they can be quickly and easily updated when required.
 
-The component's Deploy page allows you to easily manage environment variables across environments via a user-friendly interface. We recommend the Choreo DevOps portal for managing environment variables in advance use cases.
+The component's Deploy page allows you to easily manage environment variables across environments via a user-friendly interface. See [Configurations and secrets](../../deploy/devops/configs-and-secrets.md) to learn how to manage environment variables for complex use-cases.
 
 ![Environment Variables](../../assets/img/ipaas/integration-studio/env_variables.png){.cInlineImage-half}
 
-The Choreo DevOps Portal allows for greater flexibility in defining configurations and secrets for deployed integrations, as well as other component types, to meet more complex configuration requirements. Refer to the section on [Configurations and secrets](../../devops/devops-portal.md#configurations-and-secrets) for further details.
+Choreo's DevOps capabilities allow for greater flexibility in defining configurations and secrets for deployed integrations, as well as other component types, to meet more complex configuration requirements. Refer to the section on [Configurations and secrets](../../deploy/devops/configs-and-secrets.md) for further details.
 
 For a comprehensive list of parameters that can be configured as environment variables, please refer to the [WSO2 API Manager Documentation - Injecting Parameters - Supported parameters](https://apim.docs.wso2.com/en/latest/integrate/develop/injecting-parameters/#supported-parameters).
+
+## Configure logging
+
+When you develop and maintain a software system, it is crucial to implement proper logging mechanisms. Proper logging
+can save time and effort during the development, testing, and maintenance phases of the software development process.
+Logging captures events and messages that occur during the execution of an application. These events and messages
+provide insights to troubleshoot and debug issues.
+
+In Micro Integrator instances, you can configure and customize logging depending on your requirement. You can add
+logging configurations to each MI instance's environment, which allows you to fine-tune logging depending on the
+specific environment or deployment scenario.
+
+To configure logging in MI instances, you can use environment variables with specific naming conventions as follows:
+
+1. Start the variable name with `logging_level_` followed by the package or class name.
+2. Replace the dot character in the package name with an underscore.
+3. Set the variable value to the required logging level for the corresponding package or class.
+
+For example, to set the logging level for the `org.apache.synapse.transport.http.wire` package to `debug`, define the
+following environment variable:
+
+```
+export logging_level_org_apache_synapse_transport_http_wire=debug
+```
+
+This approach allows you to control the logging granularity, which helps you troubleshoot and identify issues faster.
 
 ## Connectors
 

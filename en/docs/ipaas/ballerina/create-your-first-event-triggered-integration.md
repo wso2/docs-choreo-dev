@@ -1,6 +1,6 @@
 # Create Your First Event-triggered Integration
 
-Choreo allows you to deploy, test, manage, and observe integration components that integrate APIs, microservices, applications, and data in different languages and formats.
+Choreo allows you to deploy, test, manage, and observe integration components that integrate APIs, microservices, applications implemented in different languages and data in different formats.
 
 To explore this capability, let's consider a scenario where a team of software engineers in an organization wants to be notified via email whenever someone creates a GitHub issue with the `bug` label in a specific GitHub repository.
 
@@ -79,7 +79,7 @@ Designing an event-triggered integration involves adding the required statements
 You can do this by editing its code.
 
 !!! info
-    You can implement your Event-Triggered Integration in Ballerina or any other language. If you implement it in a language other than Ballerina, you need to containerize it and then deploy the containerized event-triggered integration. To learn more, see [Deploy a Containerized Choreo Component](../../deploy/deploy-a-containerized-choreo-component.md).<br/><br/>When you create an event-triggered integration from a Ballerina project, you can design it using the [Ballerina VS code extension](https://ballerina.io/downloads/).
+    You can implement your Event-Triggered Integration in Ballerina or any other language. If you implement it in a language other than Ballerina, you need to containerize it and then deploy the containerized event-triggered integration. To learn more, see [Deploy a Containerized Choreo Component](../../deploy/containerized-application.md).<br/><br/>When you create an event-triggered integration from a Ballerina project, you can design it using the [Ballerina VS code extension](https://ballerina.io/downloads/).
 
 In this tutorial, you can use the following source code of an event-triggered integration that reads the labels of GitHub issues in a specific GitHub repository and generates an email notification for GitHub issues with the `bug` label.
 

@@ -12,7 +12,7 @@ The following diagram shows the Observability dashboard:
 ![Dashboard overview](../../assets/img/observability/overview-overall.png){.cInlineImage-full}
 
 !!! note
-    The observability dashboard for non-Ballerina components doed not display the low-code diagram. Therefore, the functionality within the low-code diagram is available only to Ballerina components. 
+    The observability dashboard for non-Ballerina components does not display the visual diagram. Therefore, the functionality within the visual diagram is available only to Ballerina components. 
 
 The Observability dashboard allows you to:
 
@@ -20,11 +20,11 @@ The Observability dashboard allows you to:
 - View the logs generated over a given period.
 - Compare metrics side-by-side for better diagnosis.
 - Observe the flame graph (Diagnostics view) generated over a given period (not available for non-Ballerina components).
-- View the low-code diagram (not available for non-Ballerina components).
+- View the visual diagram (not available for non-Ballerina components).
 - Trace requests (not available for non-Ballerina components).
 
 !!! info
-    By default, automatic refreshing is turned off for the Observability view. You can configure the Observability view to be automatically refreshed at a specified time interval via this field.
+    By default, automatic refreshing is turned off for the Observability view. You can configure the Observability view to automatically refresh at a specific time interval via this field.
     ![../../assets/img/observability/options-bar.png]
 
 !!! note
@@ -38,7 +38,7 @@ The throughput graph shows the throughput of requests per hour for a selected ti
 ![Throughput and latency graph](../../assets/img/observability/throughput-and-latency.png){.cInlineImage-full}
 
 !!! note
-    The low-code diagram is not available for non-ballerina components. 
+    The visual diagram is not available for non-ballerina components. 
     
 By default, Choreo renders this graph for the data generated within the past 24 hours. You can change the default time window by selecting the time range and zone from the options bar. To expand the graph, click and drag the cursor over the period you want to drill down. 
 
@@ -79,6 +79,6 @@ To download the log entries, click **Download**. As a result, the log entries ar
 
 ### Trace requests
 
-You can trace requests received by your service at a given timestamp by clicking a point in the time axis of either the throughput or the latency graphs.  The low-code view shows the received requests.
-For each request in the low-code view, it displays the request time, the latency, and the status. Furthermore, when you click on a specific request, you can view the status code, request latency, the path (control flow) followed to execute the request, and the execution time per `if`, `while`, and `foreach` body.
-The low-code diagram also displays the average request latency and the success rate for each client request that corresponds to the selected time interval.
+You can trace requests received by your service at a given timestamp by clicking a point in the time axis of either the throughput or the latency graphs.  The visual diagram shows the received requests.
+For each request in the visual diagram view, it displays the request time, the latency, and the status. Furthermore, when you click on a specific request, you can view the status code, request latency, the path (control flow) followed to execute the request, and the execution time per `if`, `while`, and `foreach` body.
+The visual diagram also displays the average request latency and the success rate for each client request that corresponds to the selected time interval.

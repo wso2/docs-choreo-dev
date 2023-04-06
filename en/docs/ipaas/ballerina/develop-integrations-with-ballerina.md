@@ -19,7 +19,7 @@ Choreo supports the following types of integrations:
 
 ## Develop with VS Code Studio
 
-Visual Studio Code (VS Code) is a versatile code editor that provides a rich user interface for developing integrations
+[Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo)  is a versatile code editor that provides a rich user interface for developing integrations
 using Ballerina. Ballerina is a modern programming language designed specifically for integration, and the Ballerina
 extension for VS Code adds a range of features and tools that help developers create high-quality integrations.
 

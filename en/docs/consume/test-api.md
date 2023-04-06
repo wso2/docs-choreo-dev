@@ -4,9 +4,10 @@ Before using your API in production, you can test it using the integrated consol
 
 This guide will take you through the steps to test an API in Choreo. 
 
-1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click **Developer Portal**  on the Choreo Console header. 
+1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click **Go to DevPortal** on the Choreo Console or the Developer Portal icon on the left navigation menu. 
 
-    ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-half}
+
+    ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-small}
 
 2. Click **APIs**.
 

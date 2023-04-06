@@ -10,9 +10,9 @@ Let's get started!
 
 Follow the steps below to create an application on Choreo:
 
-1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click the Developer Portal link on the Choreo Console header. 
+1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click **Go to DevPortal** on the Choreo Console or the Developer Portal icon on the left navigation menu. 
 
-    ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-half}
+    ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-small}
     
 2. Click **Applications** and then, click **+Create**.
 3. Enter the application name and select the usage policy. Optionally, add the application description. 
@@ -113,7 +113,7 @@ You can generate an access token for testing using the Choreo UI by following th
   
     ![cURL command](../assets/img/developer-portal/manage-applications/curl-command.png){.cInlineImage-half}
 
-### Renew an access token using the refresh token grant type
+### Renew an access token using the Refresh Token grant type
 
 !!! note
     - To use this grant type, you will need the refresh token you received when you generated your current access token.
@@ -172,7 +172,7 @@ In the case of theft, security violation, or precaution, Choreo allows an admin 
 
 1. Sign in to the Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click **Developer Portal** on the Choreo Console header. 
 
-    ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-half}
+    ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-small}
 
 2. Click **Applications**.
 3. In the left pane, click **OAuth 2.0 Tokens**.
