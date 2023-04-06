@@ -177,7 +177,7 @@ describe("Verify Reusable RestAPI functionality", () => {
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publishRestApiWithoutConnector();
+    ComponentAPILifecycle.publishToDevportal();
     ComponentAPILifecycle.demoteToCreated();
   });
 
