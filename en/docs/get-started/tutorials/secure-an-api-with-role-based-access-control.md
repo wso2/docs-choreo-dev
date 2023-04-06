@@ -157,7 +157,7 @@ Follow these steps:
 
 ### Step 5: Define users and assign them to groups
 
-In this step, you define users and assign them to groups depending on the job function of the user. 
+In this step, you define users and assign them to groups depending on the job function of the user. This allows you to manage permission at the group level instead of for individual users.
 
 Follow these steps:
 
@@ -182,7 +182,7 @@ Follow these steps:
 
         ![Callback URL](../../assets/img/tutorials/role-based-auth/callback-url.png){.cInlineImage-full}
 
-     - Replace `<scopes>` with the permission(scopes) applicable to the user. You can copy the applicable permission(scopes) from the API Overview page. Here let’s copy the permission(scopes) applicable to the user `Alex`.
+     - Replace `<scopes>` with the permission(scopes) applicable to the user. You can copy the applicable permission(scopes) from the **API Overview** page. Here let’s copy the permission(scopes) applicable to the user `Alex`.
 
         ![Scopes](../../assets/img/tutorials/role-based-auth/scopes.png){.cInlineImage-full}
 
