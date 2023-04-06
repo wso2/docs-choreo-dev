@@ -18,14 +18,15 @@ exceeding the allocated request count.
 
 ## API level rate-limiting
 
-API level rate limiting applies to the all the operations in the API.
+API level rate limiting applies to the all the operations in the API. All the operations in the API will share the 
+request count allocated for the specified time unit.
 
 ![API level rate-limit](../assets/img/manage/api-level-rate-limit.png){.cInlineImage-full}
 
 ## Operation level rate-limiting
 
-In the operation level rate-limiting, you can configure different rate-limiting values for each operation. All the 
-operations in the API will share the request count allocated for the specified time unit.
+In the operation level rate-limiting, you can configure different rate-limiting values for each operation. In this method,
+you can define different rate-limiting values for each operation. This will allow you to protect the critical operations.
 
 ![Operation level rate-limit](../assets/img/manage/operation-level-rate-limit.png){.cInlineImage-full}
 
