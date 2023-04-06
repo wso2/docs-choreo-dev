@@ -214,7 +214,7 @@ Follow these steps:
 
     - Replace `<redirect_uri>` with the value specified as the **Callback URL** under **Advanced Configurations** in the **Application Keys** pane.
     
-    - Use a base64 encoder to encode your client ID and client secret in the following format and replace `<base64(clientId:clientSecret)>` with the encoded value:
+    - Use a Base64 encoder to encode your client ID and client secret in the following format and replace `<base64(clientId:clientSecret)>` with the encoded value:
 
         **`<clientId>:<clientSecret>`**
   
