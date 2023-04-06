@@ -33,7 +33,12 @@ public final class Constant {
             "urn:choreocontrolplane:organizationmanagement:theme_delete " +
             "urn:choreocontrolplane:organizationmanagement:theme_deploy " +
             "urn:choreocontrolplane:organizationmanagement:theme_manage" +
-            "urn:choreocontrolplane:organizationmanagement:theme_view" ;
+            "urn:choreocontrolplane:organizationmanagement:theme_view" +
+            "urn:choreosystem:organizationmanagement:theme_create " +
+            "urn:choreosystem:organizationmanagement:theme_delete " +
+            "urn:choreosystem:organizationmanagement:theme_deploy " +
+            "urn:choreosystem:organizationmanagement:theme_manage " +
+            "urn:choreosystem:organizationmanagement:theme_view ";
 
     public static final String GRAPHQL_ENDPOINT_SUFFIX = "/graphql";
     public static final String TEST_PROJECT_NAME_PREFIX = "automationtestproject";
