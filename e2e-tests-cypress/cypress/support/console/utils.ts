@@ -34,9 +34,7 @@ export class Utils {
   }
 
   static generateComponentName(name: string) {
-    const genName = this.componentNamePrefix + Date.now() + name;
-
-    return genName.substring(0, 25)
+    return this.componentNamePrefix + Date.now() + name;
   }
 
   static generateBasePath() {
