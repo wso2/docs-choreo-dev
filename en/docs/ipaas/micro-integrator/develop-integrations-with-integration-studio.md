@@ -122,17 +122,22 @@ To configure logging in MI instances, you can use environment variables with spe
 2. Replace the dot character in the package name with an underscore.
 3. Set the variable value to the required logging level for the corresponding package or class.
 
-For example, to enable wire logs logging level of the `org.apache.synapse.transport.http.wire` package needs to be changed
-to `debug`. To configure logging define the environment variable as follows:
+For example, to enable wire logs, the logging level of the `org.apache.synapse.transport.http.wire package` must be
+adjusted to `debug`. In order to configure the logging, set the environment variable in the following manner:
 
-- Go to the `Deploy` page and go to the `Configs & Secrets` tab.
-- Click on `Create` button to add a new config.
-- Select the `Config Type` as `ConfigMap` and `Mount Type` as `Environment Variables`.
-- Click `Next` to add configurations.
-- Give a name for the configuration in the `Config Name`.
-- Then define the key-value pair for the `Environment Variables`.
-- For example, Add `logging_level_org_apache_synapse_transport_http_wire` as the `Name` and `debug` as the value.
-- Then click on `Create` to apply the changes.
+1. In the left navigation menu, click **Deploy** and then click **Configs & Secrets**. 
+2. Click **+ Create**. 
+3. Select `ConfigMap` as the Config Type and `Environment Variables` as the Mount Type. 
+4. Click **Next** to add the mount configurations. 
+5. Add the following follows to the mount configuration:
+
+   | **Field**       | **Value**                                                |                                    
+   |----------------------------------------------------------|-----------------|
+   | **Config Name** | Name for the configuration.                              |
+   | **Name**        | logging_level_org_apache_synapse_transport_http_wire     |
+   | **Value**       | debug                                                    |
+
+6. Click **Create**.
 
 This approach allows you to control the logging granularity, which helps you troubleshoot and identify issues faster.
 
