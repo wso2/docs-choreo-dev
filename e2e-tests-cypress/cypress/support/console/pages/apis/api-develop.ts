@@ -46,7 +46,7 @@ export class APIDevelop {
   }
 
   private static addHTTPVerb(verbs: string[]) {
-    cy.get('[data-testid="verb-selector"]').click();
+    cy.get('#verb-selector').click();
     verbs.forEach((verb) => cy.get(`[data-testid="checkbox-${verb.toUpperCase()}"]`).click().wait(1000));
     cy.get("body").type("{esc}");
   }
