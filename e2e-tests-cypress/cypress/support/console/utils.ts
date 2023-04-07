@@ -196,7 +196,7 @@ export class Utils {
       headers,
       failOnStatusCode: false,
     };
-   return this.sendRequest(request)
+    return this.sendRequest(request)
   }
 
   static sendDeleteRequest(url: string, headers: any = {}, body?: any) {
@@ -246,5 +246,15 @@ export class Utils {
     cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/**`).as('config')
     // cy.wait('@config', { timeout: 180000 })
   }
-
+  public static pollElement(locator: string) {
+    return cy.get('body').then(bdy => {
+      if (bdy.find(locator).length == 0) {
+        cy.wait(4000)
+        this.pollElement(locator)
+      } else {
+        return cy.get(locator)
+      }
+    }
+    )
+  }
 }

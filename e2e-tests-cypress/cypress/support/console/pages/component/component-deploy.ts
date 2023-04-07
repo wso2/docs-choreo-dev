@@ -24,9 +24,9 @@ interface PromoteConfigs {
 export class ComponentDeployPage {
 
   private static pollElement(locator: string) {
-  return  cy.get('body').then(bdy => {
+    cy.wait(5000)
+    return cy.get('body').then(bdy => {
       if (bdy.find(locator).length == 0) {
-        cy.wait(4000)
         this.pollElement(locator)
       } else {
         return cy.get(locator)
@@ -49,7 +49,7 @@ export class ComponentDeployPage {
       if (isManagedByAPIM) {
         Utils.interceptConfig();
       }
-    //  cy.get('[data-cyid="btn-next"]', { timeout: 600000 }).click();
+      //  cy.get('[data-cyid="btn-next"]', { timeout: 600000 }).click();
       this.pollElement('[data-cyid="btn-next"]').click()
     }
     cy.get('[data-testid="btn-stop"]', { timeout: 600000 }).should(
@@ -66,19 +66,15 @@ export class ComponentDeployPage {
       "Active",
       { timeout: 360000 }
     );
+
+    cy.get('[data-testid="test-nav-btn"]').should('be.visible')
   }
 
-  static promoteToProd(
-    isAdditionalConfigs: boolean = true,
-    isManagedByAPIM: boolean = true,
-    numberOfNextPrompts: number = 2
-  ) {
+  static promoteToProd(isAdditionalConfigs: boolean = true, isManagedByAPIM: boolean = true, numberOfNextPrompts: number = 2) {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
-      .should("be.enabled")
-      .wait(2000);
+    cy.wait(10000)
     this.pollElement('[data-cyid="btn-promote"]')
-      .click();
+      .realClick();
 
     cy.get("body").then((bdy) => {
       if (bdy.find('[data-testid="deployment-history-btn"]').length == 2) {
@@ -179,7 +175,6 @@ export class ComponentDeployPage {
     if (isNewComponent) {
       this.addConfiguration(configValue);
     }
-    //   this.addConfiguration(configValue);
     cy.get('[data-testid="btn-stop"]', { timeout: 360000 }).should(
       "have.length",
       2
