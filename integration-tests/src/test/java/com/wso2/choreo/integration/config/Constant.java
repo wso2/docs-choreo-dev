@@ -91,6 +91,7 @@ public final class Constant {
     public static final int INDEX_OF_DEPLOYED_REVISION = MAX_API_REVISIONS_LIMIT_SETTINGS_PAGE - 1;
 
 
+    public static final String NON_EMPTY_REPO_TYPE = "UserManagedNonEmpty";
 
 
     public enum region{
