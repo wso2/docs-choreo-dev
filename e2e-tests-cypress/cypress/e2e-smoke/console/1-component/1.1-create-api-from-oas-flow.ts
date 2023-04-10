@@ -206,7 +206,7 @@ describe("Choreo APIM publisher scenarios", () => {
   it("Verify deleting consumer app", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin();
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     TryOut.DeleteApplication(appName);
   })
 

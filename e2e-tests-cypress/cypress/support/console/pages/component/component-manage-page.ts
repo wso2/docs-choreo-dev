@@ -12,6 +12,7 @@
  */
 
 import { Enums } from "../../enums";
+import { Utils } from "../../utils";
 
 
 export class ComponentAPILifecycle {
@@ -257,9 +258,10 @@ export class ComponentAPILifecycle {
 
 
   static updateAPIAccessMode(accessMode: string) {
-    cy.get('[role="combobox"]').eq(0)
-      .should("be.visible")
-      .click();
+    Utils.pollElement('[data-testid="access-mode"]').click()
+    // cy.get('[data-testid="access-mode"]')
+    //   .should("be.visible")
+    //   .click();
     cy.get(`li[id*="Select"]`).contains(accessMode)
       .should("exist")
       .click({ force: true });
