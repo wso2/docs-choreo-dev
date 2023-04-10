@@ -10,10 +10,6 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import {
-
-  STANDARD_TIME_OUT,
-} from "../../constants";
 
 export class TryOut {
    static navigateToTryOutMenu() {
@@ -22,7 +18,9 @@ export class TryOut {
 
 
   static SelectApplication(applicationName: string) {
-    cy.get('[data-testid="application-selector"]').should('be.visible').click();
+    cy.get('[data-testid="application-selector-wrapper"]').within(()=>{
+      cy.get('[data-testid="application-selector"]').click()
+    })
     cy.wait(500)
     cy.get(`[data-value="${applicationName}"]`).click().wait(1000);
   }

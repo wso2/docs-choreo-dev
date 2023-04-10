@@ -22,6 +22,21 @@ interface PromoteConfigs {
 }
 
 export class ComponentDeployPage {
+
+  private static pollElement(locator: string) {
+    cy.wait(5000)
+    return cy.get('body').then(bdy => {
+      if (bdy.find(locator).length == 0) {
+        this.pollElement(locator)
+      } else {
+        return cy.get(locator)
+      }
+    }
+    )
+  }
+
+
+
   static deployToDev(
     isAdditionalConfigs: boolean = true,
     isManagedByAPIM: boolean = true
@@ -34,7 +49,8 @@ export class ComponentDeployPage {
       if (isManagedByAPIM) {
         Utils.interceptConfig();
       }
-      cy.get('[data-cyid="btn-next"]', { timeout: 600000 }).click();
+      //  cy.get('[data-cyid="btn-next"]', { timeout: 600000 }).click();
+      this.pollElement('[data-cyid="btn-next"]').click()
     }
     cy.get('[data-testid="btn-stop"]', { timeout: 600000 }).should(
       "be.visible"
@@ -50,20 +66,15 @@ export class ComponentDeployPage {
       "Active",
       { timeout: 360000 }
     );
+
+    cy.get('[data-testid="test-nav-btn"]').should('be.visible')
   }
 
-  static promoteToProd(
-    isAdditionalConfigs: boolean = true,
-    isManagedByAPIM: boolean = true,
-    numberOfNextPrompts: number = 2
-  ) {
+  static promoteToProd(isAdditionalConfigs: boolean = true, isManagedByAPIM: boolean = true, numberOfNextPrompts: number = 2) {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
-      .should("be.enabled")
-      .wait(2000);
-    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
-      .should("be.enabled")
-      .click();
+    cy.wait(10000)
+    this.pollElement('[data-cyid="btn-promote"]')
+      .realClick();
 
     cy.get("body").then((bdy) => {
       if (bdy.find('[data-testid="deployment-history-btn"]').length == 2) {
@@ -154,14 +165,16 @@ export class ComponentDeployPage {
     cy.get('.ConfigForm button[type="submit"]').click();
   }
 
-  static promoteWebHookToProd(configValue: string) {
+  static promoteWebHookToProd(configValue: string, isNewComponent: boolean = true) {
     this.promote({
       settingButtonCount: 2,
       invokeUrlCount: 0,
       invokeUrlIndex: 0,
     });
     cy.get('button[type="submit"]').should("be.enabled").click();
-    this.addConfiguration(configValue);
+    if (isNewComponent) {
+      this.addConfiguration(configValue);
+    }
     cy.get('[data-testid="btn-stop"]', { timeout: 360000 }).should(
       "have.length",
       2
@@ -227,10 +240,10 @@ export class ComponentDeployPage {
     }
   }
 
-  private static promote({}: PromoteConfigs) {
+  private static promote({ }: PromoteConfigs) {
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
       .should("be.enabled")
-      .wait(2000)
+      .wait(5000)
       .click(); // promote button
     cy.wait(6000);
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should(
