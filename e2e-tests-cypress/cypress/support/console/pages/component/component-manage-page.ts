@@ -69,20 +69,24 @@ export class ComponentAPILifecycle {
 
 
   static goToDeveloperPortalWithoutLogin(idpUser: string = "") {
+    
+    const { latestAPIVersionId } = Cypress.env("apiInfo")
+    const loginUrl = Cypress.env("devportalLoginURL")
+    const { uuid, handle } = Cypress.env("userData");
+    let devportalURL = `${loginUrl}/${handle}/apis/${latestAPIVersionId}?fidp=${idpUser}&orgUuid=${uuid}&correlationId=1a1bd33a-4ba0-4d1e-2b75-7bacc96c4009`
+    cy.visit(devportalURL)
+    // cy.get("[data-cyid=go-to-dev-portal-btn]")
+    //   .parent()
+    //   .invoke("attr", "href")
+    //   .then((href) => {
 
-    let devportalURL = Cypress.env("devportalURL")
-    cy.get("[data-cyid=go-to-dev-portal-btn]")
-      .parent()
-      .invoke("attr", "href")
-      .then((href) => {
-
-        cy.log(devportalURL)
-        if (!devportalURL) {
-          devportalURL = href + "&fidp=" + idpUser
-          Cypress.env("devportalURL", devportalURL)
-        }
-        cy.visit(devportalURL)
-      });
+    //     cy.log(devportalURL)
+    //     if (!devportalURL) {
+    //       devportalURL = href + "&fidp=" + idpUser
+    //       Cypress.env("devportalURL", devportalURL)
+    //     }
+       
+    //   });
   }
 
   static selectUsagePlans(...plans) {

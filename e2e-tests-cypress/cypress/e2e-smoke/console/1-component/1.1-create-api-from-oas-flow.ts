@@ -65,7 +65,7 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify component deployment and endpoint configurations", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.DeployToDev(PROJECT_NAME,API_NAME);
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -223,7 +223,7 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify redeployment after removing permissions", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.DeployToDev(PROJECT_NAME,API_NAME);
   });
 
   it("Verify insight values for dev", () => {
