@@ -21,11 +21,11 @@ In this tutorial, you will do the following:
     - Use an existing RabbitMQ instance or start a new [RabbitMQ](https://www.rabbitmq.com/download.html) instance. The instance should be accessible via the internet. Obtain the `username`, `host`, `password`, and `vhost` from the RabbitMQ instance to use later as environment variables. 
 
 !!! tip "RabbitMQ instance"
-    You can easily set up RabbitMQ instances by utilizing services like [CloudAMQP](https://www.cloudamqp.com/).
+    You can use a service such as [CloudAMQP](https://www.cloudamqp.com/) to easily set up a RabbitMQ instance.
   
 ## Step 1: Create the integration component
 
-Let's create the integration component by following the steps given below:
+Follow the steps given below to create the integration component:
 
 1. Go to [https://console.choreo.dev/ipaas](https://console.choreo.dev/ipaas) and sign in to the Choreo Console.
 
@@ -47,7 +47,7 @@ Let's create the integration component by following the steps given below:
 7. To allow Choreo to access your GitHub account, click **Authorize with GitHub**. 
 
 	!!! tip
-    	    If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the [sample application](https://github.com/wso2/choreo-examples) GitHub repository to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+    	    If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the [choreo examples](https://github.com/wso2/choreo-examples) GitHub repository to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
 8. In the **Connect Repository** dialog box, enter the following information:
 
@@ -61,7 +61,7 @@ Let's create the integration component by following the steps given below:
     | **Docker Context Path**   | `ipaas/containerized/containerized-rabbitmq-listener` | 
 
 	!!! tip
-    	    - **Build Preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on the Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset. If integration is Containerized application, select **Dockerfile** as the build preset.
+    	    - **Build Preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If the integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If the integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset. If the integration is developed as a containerized application, select **Dockerfile** as the build preset.
 
             - **Dockerfile Path** specifies the location of the Dockerfile to build the component. 
 
@@ -71,7 +71,7 @@ Let's create the integration component by following the steps given below:
 ## Step 2: Deploy
 Before you deploy the component, you must follow the steps given below to assign appropriate RabbitMQ credentials to the environment variables:
 
-1. In the **Deploy** view, go to the **Configs & Secrets** tab, where you can apply environment-specific configuration files, environment variables, and other secret resources to containers.
+1. In the **Deploy** view, go to the **Configs & Secrets** tab to apply environment-specific configuration files, environment variables, and other secret resources to containers.
 2. Click **Create**.
 3. In the **Mount a Configuration** form, select **ConfigMap** as the configuration type, **Environment Variables** as the mount type and click **Next**.
 4. Enter a **Config Name**. Here, let's specify `environmentconf` as the **Config Name**.
@@ -105,7 +105,7 @@ To test the component, you must publish messages to a designated topic in your R
    Now you are ready to observe the logs and see the message received by the integration component.
 
     !!! info
-         Our containerized Python app creates the **TestQueue** in the RabbitMQ queues once it is connected successfully. If you cannot see this queue in the queue list of your RabbitMQ instance, the app is most likely not connected correctly.
+         The containerized Python app creates the **TestQueue** in the RabbitMQ queues once it is connected successfully. If you cannot see this queue in the queue list of your RabbitMQ instance, the app is most likely not connected correctly.
 
 2. Go to the **iPaaS** profile and click the `MQTT listener` component you created.
 
