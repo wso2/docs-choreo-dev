@@ -946,4 +946,36 @@ public class GraphQL extends ControlPlaneAPI {
                 }));
             return mapStringToObject.get();
     }
+    
+    public static List<Commit> getCommitHistory(TestActionRunner runner, HttpClient client, String componentId,
+                                            String accessToken, String branchName) throws Exception {
+        GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).branch(branchName).build();
+        String queryString = ObjectMapperUtil.
+                mapObjectToString("templates/graphql/requests/commitHistoryBranch.mustache", dto);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        List<Commit> commitList = new ArrayList<>();
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate((message, context) -> {
+                    Commit[] commits = ObjectMapperUtil.mapToCollection(Commit[].class, message.getPayload(String.class), "commitHistory");
+                    commitList.addAll(List.of(commits));
+                }));
+
+        return commitList;
+    }
 }
