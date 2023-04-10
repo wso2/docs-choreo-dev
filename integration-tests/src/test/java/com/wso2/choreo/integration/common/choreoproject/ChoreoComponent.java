@@ -1170,7 +1170,6 @@ public class ChoreoComponent {
 
         String releaseId = getReleaseIdForEnvironment(environment.getChoreoEnv());
         String namespace = environment.getNamespace();
-        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
 
         log.info("Waiting till observability data appear");
         ObsRequestParam orp = ObsRequestParam.builder().namespace(namespace).releaseId(releaseId).sort("asc").limit("63").build();
