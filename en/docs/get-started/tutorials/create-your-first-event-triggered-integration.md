@@ -20,6 +20,8 @@ In this tutorial, you will do the following:
  
     - Use an existing RabbitMQ instance or start a new [RabbitMQ](https://www.rabbitmq.com/download.html) instance on a server that can be accessed via the internet. Obtain the `username`, `hostname`, `password`, and `vhost` from the RabbitMQ instance to use later as environment variables. 
 
+!!! tip "RabbitMQ instance"
+    You can use a service such as [CloudAMQP](https://www.cloudamqp.com/) to easily set up a RabbitMQ instance.
 
 ## Step 1: Create the integration component
 
@@ -80,6 +82,7 @@ Before you deploy the component, you must follow the steps given below to assign
     | USERNAME   |
     | PASSWORD   | 
     | VHOST      | 
+
 3. Click **Deploy**. 
 
 4. Alternatively, you can go to the **Development** card and click **Manage Configs and Secrets**. This takes you to the [Configurations and secrets](../../deploy/devops/configs-and-secrets.md) page, where you can apply environment-specific configuration files, environment variables, and other secret resources to containers.
