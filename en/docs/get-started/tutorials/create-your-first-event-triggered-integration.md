@@ -1,6 +1,6 @@
-# Deploy a Containerized Application as an Event-Triggered Integration
+# Create Your First Event-Triggered Integration
 
-Event-triggered integrations can help automate business processes and workflows in response to specific events. With Choreo, you can deploy your containerized application as an event-triggered integration component, which makes your application deployment process efficient and reduces manual intervention.
+Event-triggered integrations can help automate business processes and reduce manual work. Choreo allows you to effortlessly create and manage event-triggered integrations, eliminating the need for a complicated infrastructure setup.
 
 Consider a scenario where a developer has already created an integration using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/) and wants to deploy it on Choreo to create an event-triggered integration. This tutorial walks you through the steps to accomplish this requirement. 
 

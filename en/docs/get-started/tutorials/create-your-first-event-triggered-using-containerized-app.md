@@ -1,6 +1,6 @@
-# Create an Event-Triggered Integration as a BYOC component
+# Deploy a Containerized Application as an Event-Triggered Integration
 
-Event-triggered integrations can help automate business processes and reduce manual work. Choreo allows you to create and manage event-triggered integrations without complex infrastructure setup.
+Event-triggered integrations can help automate business processes and workflows in response to specific events. With Choreo, you can deploy your containerized application as an event-triggered integration component, which makes your application deployment process efficient and reduces manual intervention.
 
 Consider a scenario where a developer has an event-triggered integration and needs to deploy it as a containerized application. This tutorial walks you through the steps to accomplish this requirement.
 
