@@ -27,8 +27,18 @@ public final class Constant {
             "apim:dcr:app_manage apim:document_manage apim:publisher_settings apim:subscribe " +
             "apim:subscription_manage apim:subscription_view apim:tier_manage choreo:component_manage " +
             "choreo:deployment_manage choreo:dev_env_manage choreo:prod_env_manage choreo:project_manage " +
-            "choreo:role_manage choreo:user_manage environments:view_dev environments:view_prod " +
-            "apim:environment_manage";
+            "urn:choreocontrolplane:rolemanagement:role_manage & urn:choreoasystem:rolemanagement:role_manage choreo:user_manage environments:view_dev environments:view_prod " +
+            "apim:environment_manage " + "urn:choreocontrolplane:customdomainapi:custom_domain_create " +
+            "urn:choreocontrolplane:organizationmanagement:theme_create " +
+            "urn:choreocontrolplane:organizationmanagement:theme_delete " +
+            "urn:choreocontrolplane:organizationmanagement:theme_deploy " +
+            "urn:choreocontrolplane:organizationmanagement:theme_manage" +
+            "urn:choreocontrolplane:organizationmanagement:theme_view" +
+            "urn:choreosystem:organizationmanagement:theme_create " +
+            "urn:choreosystem:organizationmanagement:theme_delete " +
+            "urn:choreosystem:organizationmanagement:theme_deploy " +
+            "urn:choreosystem:organizationmanagement:theme_manage " +
+            "urn:choreosystem:organizationmanagement:theme_view ";
 
     public static final String GRAPHQL_ENDPOINT_SUFFIX = "/graphql";
     public static final String TEST_PROJECT_NAME_PREFIX = "automationtestproject";

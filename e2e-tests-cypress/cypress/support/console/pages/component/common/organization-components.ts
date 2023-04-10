@@ -203,10 +203,6 @@ export class OrganizationComponent {
 
   static deleteRoleIfExists(roleName: string) {
     cy.get('[data-cyid="search-app"]').clear().type(roleName);
-    cy.wait(2000);
-    cy.get('[data-testid="table-roles"]')
-      .contains("progressbar")
-      .should("not.exist");
     cy.get("td").then(($role) => {
       if (!$role.text().includes("No records to display")) {
         cy.contains("td", roleName).should("be.visible");

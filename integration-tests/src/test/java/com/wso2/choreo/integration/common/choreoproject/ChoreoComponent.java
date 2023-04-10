@@ -141,6 +141,7 @@ public class ChoreoComponent {
     private String componentType;
     private boolean httpBased;
     private ImageRegistry imageRegistry;
+    private String branch;
     private static final Logger log = LogManager.getLogger(ChoreoComponent.class);
     private static final Gson gson = new Gson();
 
@@ -1519,4 +1520,11 @@ public class ChoreoComponent {
         this.imageRegistry = imageRegistry;
     }
 
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
 }

@@ -13,15 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # -----------------------------------------------------------------------
-
-resources:
-  - dp-kv-resolver-cr.yaml
-  - dp-kv-resolver-crb.yaml
-  - dp-kv-resolver-crd.yaml
-  - dp-kv-resolver-deployment.yaml
-  - dp-kv-resolver-hpa.yaml
-  - dp-kv-resolver-pdb.yaml
-  - dp-kv-resolver-rb.yaml
-  - dp-kv-resolver-role.yaml
-  - dp-kv-resolver-sa.yaml
-  - dp-kv-resolver-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: dp-kv-resolver
+  name: dp-kv-resolver
+spec:
+  ports:
+  - port: 80
+    targetPort: api-port
+    protocol: TCP
+  selector:
+    choreo.component: dp-kv-resolver

@@ -162,11 +162,11 @@ public class APICreator extends ControlPlaneAPI {
 
     public static DeploySettings deployRevision(String componentId, String versionId, String envId, String orgId,
                                                 String revisionId, String buildId, String apiId, String accessToken)
-                                                throws IOException {
+            throws IOException {
         return deployRevision(componentId, versionId, envId, orgId, revisionId, buildId, apiId, accessToken, null, null);
     }
 
-    public static DeploySettings deployRevision(String componentId, String versionId, String envId, String orgId,
+public static DeploySettings deployRevision(String componentId, String versionId, String envId, String orgId,
                                                 String revisionId, String buildId, String apiId, String accessToken,
                                                 String restAPIContent, String swaggerContent)
             throws IOException {

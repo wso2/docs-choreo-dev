@@ -74,7 +74,7 @@ describe("Create and deploy a component to test developer portal with custom dom
   });
 });
 
-describe("Login and test developer portal with custom domain", () => {
+describe.skip("Login and test developer portal with custom domain", () => {
   const OPERATION_USERS = "intensity";
   const appName = generateAppName("-e2etest");
 

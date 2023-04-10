@@ -17,6 +17,9 @@ import { ChoreoHomePage } from "../home/home-page";
 
 
 export class ProjectListingPage {
+
+
+
   static createNewProject(
     projectName: string,
     description: string,
@@ -35,8 +38,8 @@ export class ProjectListingPage {
 
     cy.get('[name="Name"]').clear().type(projectName);
     cy.get('[name="Description"]').clear().type(description);
-    cy.get('[data-cyid="select-region"]').click();
-    cy.get(`[data-value="${dataPlane}"]`).click();
+    cy.get('#Region').click();
+    cy.contains(`Cloud Data Plane - ${dataPlane}`).click()
     cy.get('[data-testid="create-version-create"]').click();
     cy.get('[data-testid="create-version-create"]').should("not.exist");
   }
@@ -47,20 +50,20 @@ export class ProjectListingPage {
 
 
 
-cy.get('body').then(bdy=>{
-  if (bdy.find('[data-cyid="create-project-card"]').length>0){
-    cy.get('[data-cyid="search-icon"]').eq(1).click()
-    cy.get('[placeholder="Search"]').type(`${projectName}{enter}`)
-    cy.contains(projectName).click()
-  }else{
+    cy.get('body').then(bdy => {
+      if (bdy.find('[data-cyid="create-project-card"]').length > 0) {
+        cy.get('[data-cyid="search-icon"]').eq(1).click()
+        cy.get('[placeholder="Search"]').type(`${projectName}{enter}`)
+        cy.contains(projectName).click()
+      } else {
 
 
-    cy.get('#project-picker').should("be.visible").click()
-    cy.wait(3000)
-    cy.get('ul>li [placeholder="Search"]').type(`${projectName}{enter}`)
-    cy.get('ul>li>div>span>p').contains(projectName).click()
-  }
-})
+        cy.get('#project-picker').should("be.visible").click()
+        cy.wait(3000)
+        cy.get('ul>li [placeholder="Search"]').type(`${projectName}{enter}`)
+        cy.get('ul>li>div>span>p').contains(projectName).click()
+      }
+    })
 
   }
 }

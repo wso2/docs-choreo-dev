@@ -13,6 +13,19 @@
 
 
 export class APIDevelop {
+
+  static httpVerbs: string[] = ["GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "HEAD",
+    "OPTIONS"]
+
+
+
+
+
   static addResources(path: string, ...verbs) {
     cy.get('[data-testid="develop-resources-header"]').contains("Resources").should("be.visible");
     cy.get('[id="backdrop-loader"]').should("not.exist")
@@ -28,10 +41,10 @@ export class APIDevelop {
   }
 
   private static addResource(verbs: string[], path: string) {
-    cy.get("#operation-target").type(path);
+    cy.get('[name="target"]').type(path);
     cy.get('[data-testid="add-btn"]').click();
     this.generateOperationId(verbs, path);
-     cy.get(".MuiGrid-align-items-xs-center>div>button").should('be.enabled').click({force:true})
+    cy.get(".MuiGrid-align-items-xs-center>div>button").should('be.enabled').contains("Save").click({ force: true })
     cy.intercept({
       method: "PUT",
       url: `${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
@@ -46,8 +59,11 @@ export class APIDevelop {
   }
 
   private static addHTTPVerb(verbs: string[]) {
-    cy.get('[data-testid="verb-selector"]').click();
-    verbs.forEach((verb) => cy.get(`[data-testid="checkbox-${verb.toUpperCase()}"]`).click().wait(1000));
+    cy.get('#verb-selector').click();
+    verbs.forEach((verb) => {
+      let id = `verb-selector-option-${this.httpVerbs.indexOf(verb)}`
+      cy.get(`#${id}`).click().wait(1000)
+    });
     cy.get("body").type("{esc}");
   }
 
