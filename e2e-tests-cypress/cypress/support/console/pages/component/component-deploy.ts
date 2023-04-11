@@ -22,12 +22,14 @@ interface PromoteConfigs {
 }
 
 export class ComponentDeployPage {
+  static count:number = 6
 
   private static pollElement(locator: string) {
     cy.wait(5000)
     return cy.get('body').then(bdy => {
-      if (bdy.find(locator).length == 0) {
+      if (this.count > 0 && bdy.find(locator).length == 0) {
         this.pollElement(locator)
+        this.count--
       } else {
         return cy.get(locator)
       }
