@@ -212,10 +212,6 @@ describe("Verify internal API creation functionality", () => {
   it("Verify Add resource to 1st Proxy API", () => {
     ComponentOverviewPage.navigateToDevelop();
     APIDevelop.addResources(RESOURCE_NAME, Enums.HTTPMethod.GET);
-    // ComponentDevelopPage.addResourcesToProxy(
-    //   RESOURCE_NAME,
-    //   Enums.HTTPMethod.GET
-    // );
     ComponentDevelopPage.addParameterToProxyResource(
       RESOURCE_NAME,
       Enums.HTTPMethod.GET,
@@ -285,10 +281,6 @@ describe("Verify internal API creation functionality", () => {
   it("Verify Add resource to 2nd proxy API", () => {
     ComponentOverviewPage.navigateToDevelop();
     APIDevelop.addResources(RESOURCE_NAME, Enums.HTTPMethod.GET);
-    // ComponentDevelopPage.addResourcesToProxy(
-    //   RESOURCE_NAME,
-    //   Enums.HTTPMethod.GET
-    // );
     ComponentDevelopPage.addParameterToProxyResource(
       RESOURCE_NAME,
       Enums.HTTPMethod.GET,
