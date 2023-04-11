@@ -313,7 +313,10 @@ export class GraphQL {
       const av: APIVersion[] = component.apiVersions;
       const latestAPIVersion = av.find((a) => a.latest);
       const latestAPIVersionId = latestAPIVersion.id;
-
+     
+      const apiInfo = {componentId,latestAPIVersionId}
+      Cypress.env("apiInfo",apiInfo)
+      cy.log(JSON.stringify(apiInfo))
       const appENVS: AppEnvVersion[] = latestAPIVersion.appEnvVersions;
       appENVS.forEach((appEnv) => {
         const { release } = appEnv;
@@ -326,6 +329,7 @@ export class GraphQL {
           releaseId: id,
           choreoEnv,
         };
+   
         Cypress.env(choreoEnv, releaseData);
       });
     });

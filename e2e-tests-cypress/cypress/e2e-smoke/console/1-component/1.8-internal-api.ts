@@ -29,6 +29,7 @@ import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-pa
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
+import { APIDevelop } from "../../../support/console/pages/apis/api-develop";
 
 describe("Verify internal API creation functionality", () => {
   const REST_API_NAME = Utils.generateComponentName("internal");
@@ -210,10 +211,7 @@ describe("Verify internal API creation functionality", () => {
 
   it("Verify Add resource to 1st Proxy API", () => {
     ComponentOverviewPage.navigateToDevelop();
-    ComponentDevelopPage.addResourcesToProxy(
-      RESOURCE_NAME,
-      Enums.HTTPMethod.GET
-    );
+    APIDevelop.addResources(RESOURCE_NAME, Enums.HTTPMethod.GET);
     ComponentDevelopPage.addParameterToProxyResource(
       RESOURCE_NAME,
       Enums.HTTPMethod.GET,
@@ -282,10 +280,7 @@ describe("Verify internal API creation functionality", () => {
 
   it("Verify Add resource to 2nd proxy API", () => {
     ComponentOverviewPage.navigateToDevelop();
-    ComponentDevelopPage.addResourcesToProxy(
-      RESOURCE_NAME,
-      Enums.HTTPMethod.GET
-    );
+    APIDevelop.addResources(RESOURCE_NAME, Enums.HTTPMethod.GET);
     ComponentDevelopPage.addParameterToProxyResource(
       RESOURCE_NAME,
       Enums.HTTPMethod.GET,
