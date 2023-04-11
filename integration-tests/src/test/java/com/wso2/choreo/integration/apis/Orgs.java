@@ -328,4 +328,46 @@ public class Orgs extends ControlPlaneAPI {
             throw new RuntimeException(e);
         }
     }
+    
+    public static void triggerConfigurableGeneration(TestActionRunner runner, HttpClient client,
+                    ChoreoComponent component, List<Commit> commitHistory, String branchName) throws Exception {
+            String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+            String componentId = component.getId();
+            String latestVersionId = component.getLatestApiVersion().getId();
+            String latestCommitSha = component.getLatestCommitHash(commitHistory.toArray(Commit[]::new));
+            String orgHandle = component.getOrgHandler();
+            String projectId = component.getProjectId();
+
+            String configGenerationTriggerURI = "/orgs/".concat(orgHandle).concat("/projects/")
+                            .concat(projectId).concat("/triggers/").concat("configurable-generation");
+            Map<String, Object> requestBodyMap = new HashMap<>() {
+                {
+                        put("componentId", componentId);
+                        put("versionId", latestVersionId);
+                        put("branch", branchName);
+                        put("sha", latestCommitSha);
+                }
+            };
+
+            String configurationsRequestBody = MessageUtils.generateJson(requestBodyMap).replace("required",
+                            "isRequired");
+            runner.$(repeatOnError()
+                            .until("i = 5")
+                            .index("i")
+                            .autoSleep(30000)
+                            .actions(
+                                http()
+                                        .client(client)
+                                        .send()
+                                        .post(configGenerationTriggerURI)
+                                        .message()
+                                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                        .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                        .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                        .body(configurationsRequestBody),
+                                http()
+                                        .client(client)
+                                        .receive()
+                                        .response(HttpStatus.OK)));
+    }
 }

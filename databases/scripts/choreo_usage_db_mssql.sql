@@ -24,13 +24,13 @@ BEGIN
         start_date DATETIME2(0) NOT NULL,
         end_date DATETIME2(0) NOT NULL,
         namespace VARCHAR(128) NOT NULL,
-        monthly_total_cost DECIMAL(10, 2) DEFAULT NULL,
-        cpu_cost DECIMAL(10, 2) DEFAULT NULL,
-        gpu_cost DECIMAL(10, 2) DEFAULT NULL,
-        ram_cost DECIMAL(10, 2) DEFAULT NULL,
-        network_cost DECIMAL(10, 2) DEFAULT NULL, 
-        lb_cost DECIMAL(10, 2) DEFAULT NULL,
-        pv_cost DECIMAL(10, 2) DEFAULT NULL,
+        monthly_total_cost FLOAT,
+        cpu_cost FLOAT,
+        gpu_cost FLOAT,
+        ram_cost FLOAT,
+        network_cost FLOAT, 
+        lb_cost FLOAT,
+        pv_cost FLOAT,
         PRIMARY KEY (id)
     );
 END
@@ -48,13 +48,13 @@ BEGIN
         start_date DATETIME2(0) NOT NULL,
         end_date DATETIME2(0) NOT NULL,
         execution_timestamp DATETIME2(3) NOT NULL,
-        daily_total_cost DECIMAL(10, 2) NOT NULL,
-        cpu_cost DECIMAL(10, 2) DEFAULT NULL,
-        gpu_cost DECIMAL(10, 2) DEFAULT NULL,
-        ram_cost DECIMAL(10, 2) DEFAULT NULL,
-        network_cost DECIMAL(10, 2) DEFAULT NULL, 
-        lb_cost DECIMAL(10, 2) DEFAULT NULL,
-        pv_cost DECIMAL(10, 2) DEFAULT NULL,
+        daily_total_cost FLOAT,
+        cpu_cost FLOAT,
+        gpu_cost FLOAT,
+        ram_cost FLOAT,
+        network_cost FLOAT, 
+        lb_cost FLOAT,
+        pv_cost FLOAT,
         PRIMARY KEY (id)
     );
 END
@@ -83,7 +83,7 @@ BEGIN
         date DATETIME2(0) NOT NULL,
         org_uuid VARCHAR(128) NOT NULL,
         subscription_item_id VARCHAR(100) NOT NULL,
-        usage DECIMAL(10, 2) NOT NULL,
+        usage FLOAT NOT NULL,
         usage_type VARCHAR(128) NOT NULL, -- "infra", "infra-support" or "component"
         frequency VARCHAR(100) NOT NULL, -- "daily" or "monthly"
         successful BIT NOT NULL DEFAULT 0,
