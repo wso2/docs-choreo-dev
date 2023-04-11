@@ -22,6 +22,7 @@ jwks_enable = true
 audience_console = "{{.CONSOLE_AUDIENCE}}"
 audience_dev_portal = "choreodevportal"
 audience_site24x7_application = "{{.SITE24x7_AUDIENCE}}"
+audience_vs_code_client = "{{.VS_CODE_AUDIENCE}}" 
 hpaEnabledOrgs = "{{.HPA_ENABLED_ORGS}}"
 rateLimiterServiceUrl = "http://quota-limiter:9090"
 maxQueryDepth = {{.MAX_QUERY_DEPTH}}
