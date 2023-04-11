@@ -6,4 +6,4 @@ dbConnPoolMaxOpen = 100
 dbConnPoolMinIdle = 5
 
 [ballerina.log]
-level = "DEBUG"
+level = "{{.LOG_LEVEL}}"
