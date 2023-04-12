@@ -1,6 +1,6 @@
 # Choreo Documentation
 
-This is the Choreo documentation repository. This repository is open and we welcome your contributions! 
+This is the Choreo documentation repository. This repository is open and we welcome your contributions!
 
 To see the Choreo documentation site, go to [https://wso2.com/choreo/docs/](https://wso2.com/choreo/docs/)
 
@@ -14,11 +14,53 @@ Before you contribute, read the following guidelines to understand how you can s
 
     If the CLA changes for some (unlikely) reason, you'll have to accept the new CLA text when you send your first PR after the change.
 
-2. Fork this repository, make your changes, and send in a pull request. 
+2. Fork this repository, make your changes, and send in a pull request.
 
    For an overview of the general voice, tone, content style, and text formatting to follow when contributing to Choreo documentation, see [Choreo Documentation Guidelines and Best Practices](https://github.com/wso2/docs-choreo-dev/wiki/Choreo-Documentation-Guidelines-and-Best-Practices)
 
 We look forward to your contributions.
+
+## Run the project locally with Devcontainers
+
+This repository supports the VS Code dev containers feature, which allows you to create a consistent and isolated development environment inside a Docker container. To use this feature, you need to have the following pre requisites:
+
+- VS Code
+- Docker installed on your system
+- [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension for VS Code
+
+Once you have these installed, you can open the repository in VS Code and follow these steps:
+
+- Press F1 and select the Remote-Containers: Open Folder in Container... command.
+- Select the repository folder and wait for the container to build and start.
+- You can now edit, run, debug, and test your code inside the container.
+
+For more information on how to use VS Code dev containers, please refer to the official documentation: https://code.visualstudio.com/docs/remote/containers
+
+### Run MkDocs server locally
+
+To start the server and view the site on your local server, run the following command:
+
+    ```shell
+    $ mkdocs serve
+    ```
+
+    > **NOTE:**
+    >
+    > If you want to make changes and see them on the fly, run the following command to start the server and view the site on your local server:
+    > 1. Navigate to the `mkdocs.yml` file.
+    > 2. Set the following configuration:
+    >     ```
+    >     #Breaks build if there's a warning
+    >     strict: false
+    >     ```
+    > 3. To start the server, make it load the changes, and display the changes faster, run the following command:
+    >
+    >    `mkdocs serve --dirtyreload`
+
+2. To view the Choreo documentation site locally, open the following URL on a new browser window:
+
+    [http://localhost:8000/](http://localhost:8000/)
+
 
 ## Run the project locally
 
@@ -106,15 +148,15 @@ To clone the Choreo documentation GitHub repository and run the site on your loc
     >
     > If you want to make changes and see them on the fly, run the following command to start the server and view the site on your local server:
     > 1. Navigate to the `mkdocs.yml` file.
-    > 2. Set the following configuration: 
+    > 2. Set the following configuration:
     >     ```
     >     #Breaks build if there's a warning
     >     strict: false
     >     ```
-    > 3. To start the server, make it load the changes, and display the changes faster, run the following command: 
+    > 3. To start the server, make it load the changes, and display the changes faster, run the following command:
     >
     >    `mkdocs serve --dirtyreload`
-  
+
 2. To view the Choreo documentation site locally, open the following URL on a new browser window:
 
     [http://localhost:8000/](http://localhost:8000/)
@@ -123,9 +165,8 @@ To clone the Choreo documentation GitHub repository and run the site on your loc
 >
 > If you are using the `mkdocs serve --dirtyreload` command to run the MkDocs server, be sure to change the configuration in the `mkdocs.yml` file as follows before sending a pull request:
 >
-> `strict: true` 
+> `strict: true`
 
 ## License
 
 Licenses this source under the Apache License, Version 2.0 ([LICENSE](LICENSE)), You may not use this file except in compliance with the License.
-
