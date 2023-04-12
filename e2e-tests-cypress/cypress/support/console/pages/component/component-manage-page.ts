@@ -327,7 +327,6 @@ export class ComponentAPILifecycle {
 
   static deletePermission(permissionName: string) {
     cy.get(`[data-testid="scope-delete-btn-${permissionName}"]`).click()
-   // cy.get(`[data-testid="scope-delete-btn-${permissionName}"]`).click();
     cy.get('[data-testid="scope-delete-description"]').contains(
       `Are you sure you want to Delete the permission (scope) "${permissionName}"?`
     );
