@@ -22,7 +22,7 @@ interface PromoteConfigs {
 }
 
 export class ComponentDeployPage {
-  static count:number = 6
+  static count: number = 6
 
   private static pollElement(locator: string) {
     cy.wait(5000)
@@ -173,7 +173,7 @@ export class ComponentDeployPage {
       invokeUrlCount: 0,
       invokeUrlIndex: 0,
     });
-    cy.get('button[type="submit"]').should("be.enabled").click();
+    cy.get('[data-cyid="btn-next"]').should("be.enabled").click();
     if (isNewComponent) {
       this.addConfiguration(configValue);
     }
@@ -243,14 +243,9 @@ export class ComponentDeployPage {
   }
 
   private static promote({ }: PromoteConfigs) {
-    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
-      .should("be.enabled")
-      .wait(5000)
-      .click(); // promote button
-    cy.wait(6000);
-    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should(
-      "not.be.disabled"
-    );
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should('not.be.disabled');
+    cy.wait(3000)
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).click()
   }
   static verifyDeploymentStatus() {
     cy.get('[data-cyid="deployment-status"]').eq(0).contains("Active");

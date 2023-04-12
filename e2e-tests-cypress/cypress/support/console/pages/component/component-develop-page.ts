@@ -46,7 +46,6 @@ export class ComponentDevelopPage {
     cy.get("#parameter-name").focus().type(name);
     cy.get("#mui-component-select-type").eq(0).click();
     cy.get(`[data-value="${dataType}"]`).click();
-    // cy.get('[data-testid="checkbox-required"]>span>input').check();
     cy.contains("Add").click();
   }
   static saveResource() {

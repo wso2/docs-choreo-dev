@@ -70,7 +70,6 @@ export class ComponentAPILifecycle {
 
 
   static goToDeveloperPortalWithoutLogin(idpUser: string = "") {
-    
     const { latestAPIVersionId } = Cypress.env("apiInfo")
     const loginUrl = Cypress.env("devportalLoginURL")
     const { uuid, handle } = Cypress.env("userData");
@@ -297,8 +296,7 @@ export class ComponentAPILifecycle {
   }
 
   static verifyApplyAllPermissionsToResources(permissions: string[]) {
-    cy.get('[data-testid="autocomplete-textfield"]>div')
-      .find(".MuiChip-root")
+    cy.get('.MuiChip-root')
       .should("have.length", permissions.length * 3);
   }
 
@@ -307,7 +305,7 @@ export class ComponentAPILifecycle {
     // This can be enabled after fixing the bug in the autocomplete
     // https://github.com/wso2-enterprise/choreo/issues/17547
 
-    // this.verifyDeleteAllPermissionsFromReources();
+   //  this.verifyDeleteAllPermissionsFromReources();
   }
 
 
@@ -327,7 +325,7 @@ export class ComponentAPILifecycle {
   }
 
   static deletePermission(permissionName: string) {
-    cy.get(`[data-testid="scope-delete-btn-${permissionName}"]`).click();
+    cy.get(`[data-testid="scope-delete-btn-${permissionName}"]`).click()
     cy.get('[data-testid="scope-delete-description"]').contains(
       `Are you sure you want to Delete the permission (scope) "${permissionName}"?`
     );
