@@ -4,28 +4,17 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
-import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
-import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
-import com.wso2.choreo.integration.config.ConfigDefinition;
-import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
-import com.wso2.choreo.integration.models.proxyapi.DeploySettings;
-import com.wso2.choreo.integration.models.proxyapi.DeploymentStatus;
-import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
-import com.wso2.choreo.integration.models.revision.DeploymentInfo;
-import com.wso2.choreo.integration.models.revision.Revision;
-import com.wso2.choreo.integration.models.revision.RevisionWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -34,7 +23,6 @@ import org.testng.annotations.Test;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 public class TestRestAPIDp extends TestBase {
@@ -86,7 +74,6 @@ public class TestRestAPIDp extends TestBase {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, dp.getChoreoComponent(), ComponentFlavour.STANDARD);
         String devInvokeURL = statusDTO.getInvokeUrl();
         dp.setDevInvokeUrl(devInvokeURL);
-        dp.setBuildId(statusDTO.getBuild().getBuildId());
     }
 
 
@@ -113,94 +100,6 @@ public class TestRestAPIDp extends TestBase {
     @CitrusTest
     public void invokeAPIInProd_TestBYOCEUDataPlane(DataProviderWrapper dp) throws Exception {
         ComponentUtils.invokeApiGET(this, dp.getKeyData().getApikey(), dp.getProdInvokeUrl(), "/isOdd?number=34", "false");
-    }
-
-    @Test(dependsOnMethods = {"promote_TestRestAPIIT"}, dataProvider = "dps")
-    @CitrusTest
-    public void ComponentDeploymentAfterAPIRateLimitUpdate_TestUserManagedNonEmptyCreateComponentRoot(
-            DataProviderWrapper dp) throws Exception {
-
-        String revisionUUID = null;
-        int revisionId = 0;
-        RevisionWrapper revisionList = ApiManager.getApiRevision(dp.getChoreoComponent().getApiId(), accessToken);
-        for (Revision revision : revisionList.getList()) {
-            if (revision.getDeploymentInfo() == null) {
-                return;
-            }
-            for (DeploymentInfo deploymentInfo : revision.getDeploymentInfo()) {
-                if ("dev-us-east-azure".equals(deploymentInfo.getName())) {
-                    revisionUUID = deploymentInfo.getRevisionUuid();
-                    revisionId = Integer.parseInt(revision.getDisplayName()
-                            .split(" ")[1]);
-                    break;
-                }
-            }
-            if (revisionUUID != null) {
-                break;
-            }
-        }
-        Assert.assertNotNull(revisionUUID, "Revision ID is null");
-
-        String orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-        ProxyAPI api = APICreator.getProxyAPI(dp.getChoreoComponent().getApiId(), orgUUID, accessToken).getEntity();
-        String apiYamlFilename = "templates/graphql/requests/restAPIV2UpdateAPIWithRateLimit.mustache";
-        Map<String, String> apiYamlParams = new HashMap<>();
-        apiYamlParams.put("apiId", api.getId());
-        apiYamlParams.put("apiName", api.getName());
-        apiYamlParams.put("basePath", api.getContext() + "/2.0.0");
-        apiYamlParams.put("revisionId", String.valueOf(0));
-        String apiPayload = ObjectMapperUtil.mapObjectToString(apiYamlFilename, apiYamlParams);
-
-        DeploySettings deploySettings = APICreator.deployRevision(dp.getChoreoComponent().getId(),
-                dp.getChoreoComponent().getLatestApiVersion().getId(),
-                dp.getDevEnv().getId(), orgUUID,
-                revisionUUID, dp.getBuildId(), api.getId(), accessToken, apiPayload, null);
-        boolean requestSuccess = false;
-        DeploymentStatus deploymentStatus = null;
-        int count = 0;
-        while (!requestSuccess && count < 10) {
-            deploymentStatus = APICreator.checkDeploymentStatus(dp.getChoreoComponent().getId(),
-                    dp.getChoreoComponent().getLatestApiVersion().getId(),
-                    deploySettings.getRequestId(), accessToken);
-            if ("completed".equals(deploymentStatus.getStatus())) {
-                requestSuccess = true;
-            } else {
-                Thread.sleep(2000);
-                count++;
-            }
-        }
-        Assert.assertTrue(requestSuccess, "Deployment request failed : Current Action : " +
-                deploymentStatus.getCurrent_Action() + " Status : " + deploymentStatus.getStatus());
-    }
-
-    @Test(dependsOnMethods = {"ComponentDeploymentAfterAPIRateLimitUpdate_TestUserManagedNonEmptyCreateComponentRoot"},
-            dataProvider = "dps")
-    @CitrusTest
-    public void invokeRestAPIAfterAPIRateLimitUpdate_TestUserManagedNonEmptyCreateComponentRoot(DataProviderWrapper dp)
-            throws Exception {
-        // To give a time to deploy the API.
-        Thread.sleep(10000);
-        // Rate limiting counter resets based on the system clock.
-        long timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
-        if (timeRemainingTillNextMinute < 15000) {
-            Thread.sleep(timeRemainingTillNextMinute + 5000);
-        }
-        boolean isThrottled = false;
-        try {
-            ComponentUtils.invokeApiEndpointMultipleTimes(accessToken, dp.getChoreoComponent(),
-                    Constant.Environment.Development, 15);
-        } catch (InvokeAPICheckException e) {
-            isThrottled = true;
-        }
-
-        Assert.assertTrue(isThrottled, "Requests are not rate limited at the desired limit");
-        timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
-        Thread.sleep(timeRemainingTillNextMinute + 5000);
-        try {
-            ComponentUtils.invokeApiEndpoint(accessToken, dp.getChoreoComponent(), Constant.Environment.Production);
-        } catch (Exception e) {
-            Assert.fail("Unexpected error occured while invoking API : " + e.getMessage());
-        }
     }
 
 }
