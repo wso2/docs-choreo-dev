@@ -292,12 +292,11 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="scope-apply-to-all-btn"]')
       .should("be.enabled")
       .click();
-    //this.verifyApplyAllPermissionsToResources(permissions);
+    this.verifyApplyAllPermissionsToResources(permissions);
   }
 
   static verifyApplyAllPermissionsToResources(permissions: string[]) {
-    cy.get('[data-testid="autocomplete-textfield"]>div')
-      .find(".MuiChip-root")
+    cy.get('.MuiChip-root')
       .should("have.length", permissions.length * 3);
   }
 
@@ -306,7 +305,7 @@ export class ComponentAPILifecycle {
     // This can be enabled after fixing the bug in the autocomplete
     // https://github.com/wso2-enterprise/choreo/issues/17547
 
-    // this.verifyDeleteAllPermissionsFromReources();
+   //  this.verifyDeleteAllPermissionsFromReources();
   }
 
 
