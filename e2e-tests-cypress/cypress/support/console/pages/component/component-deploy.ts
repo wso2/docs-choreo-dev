@@ -243,8 +243,9 @@ export class ComponentDeployPage {
   }
 
   private static promote({ }: PromoteConfigs) {
-    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should("have.length",1).click().should('not.be.disabled');
-
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should('not.be.disabled');
+    cy.wait(3000)
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).click()
   }
   static verifyDeploymentStatus() {
     cy.get('[data-cyid="deployment-status"]').eq(0).contains("Active");
