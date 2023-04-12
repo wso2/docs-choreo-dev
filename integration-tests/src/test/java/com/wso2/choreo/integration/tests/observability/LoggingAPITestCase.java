@@ -16,21 +16,19 @@ package com.wso2.choreo.integration.tests.observability;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
-
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
-import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
-import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
@@ -71,11 +69,15 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void createUserManagedComponent_LoggingAPITestCase() throws Exception {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
              GraphqlDTO dto = GraphqlDTO.builder().name(componentName).
                 triggerID("null").
                 srcGitRepoUrl("https://github.com/choreo-test-apps/rest-api").
                 projectId(projectId).
-                displayType(Constant.displayType.restAPI.name()).build();
+                orgHandler(orgHandle).repositoryType(Constant.NON_EMPTY_REPO_TYPE)
+                .repositoryBranch("main")
+                .repositorySubPath("")
+                .displayType(Constant.displayType.restAPI.name()).build();
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
         Assert.assertNotNull(choreoComponent.getId());

@@ -14,7 +14,6 @@
 package com.wso2.choreo.integration.tests.dp;
 
 import com.consol.citrus.annotations.CitrusTest;
-import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.TestContext;
@@ -23,8 +22,6 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
-import com.wso2.choreo.integration.config.ConfigDefinition;
-import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.environments.Environment;
@@ -39,16 +36,11 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 
-public class ProxyApiEUDpIT extends TestNGCitrusSpringSupport {
+public class TestProxyApiDp extends TestBase {
     private static String accessToken;
-    private static String projectId;
-    private ProxyAPI proxyAPI;
 
     Environment[] environments;
     Environment devEnv;
@@ -59,40 +51,27 @@ public class ProxyApiEUDpIT extends TestNGCitrusSpringSupport {
     String prodInvokeBaseURL;
     String apiKey;
 
-
-    private final List<DataProviderWrapper> dps = new ArrayList<>();
-
-
     @DataProvider(name = "dps")
     public Object[][] provideData() {
-        return DataProviderWrapper.convertToDataProvider(dps);
+        return this.setUp();
     }
 
-    @DataProvider(name = "reg")
-    public Object[][] regionData() {
-        return DataProviderWrapper.convertToDataProvider(Arrays.asList(Configuration.getConfig(ConfigDefinition.REGIONS).split(",")));
-    }
 
     @BeforeClass
     public void setup_ProxyApiEUDpIT() throws IOException, TokenRetrievalException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     }
 
-    @Test(dataProvider = "reg")
+    @Test(dataProvider = "dps")
     @CitrusTest
-    public void creteProject_ProxyApiEUDpIT(String region) throws IOException {
+    public void creteProject_ProxyApiEUDpIT(DataProviderWrapper dp) throws IOException {
         String firstAPIName = Constant.DEFAULT_API_NAME.concat(String.valueOf(new Date().getTime()));
         String firstContext = APICreator.generateContext(firstAPIName);
-        ChoreoProject project = GraphQL.createProject(region, accessToken);
-        projectId = project.getId();
-        DataProviderWrapper dp = DataProviderWrapper.builder().
-                choreoProject(project).
-                choreoComponent(choreoComponent).
-                firstName(firstAPIName).
-                context(firstContext).
-                build();
-        dps.add(dp);
-        Assert.assertEquals(project.getRegion(), region);
+        ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
+        dp.setChoreoProject(project);
+        dp.setFirstName(firstAPIName);
+        dp.setContext(firstContext);
+        Assert.assertEquals(project.getRegion(), dp.getRegion());
     }
 
     @Test(dependsOnMethods = {"creteProject_ProxyApiEUDpIT"}, dataProvider = "dps")
@@ -105,7 +84,7 @@ public class ProxyApiEUDpIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"verifyAPIName_ProxyApiEUDpIT"}, dataProvider = "dps")
     @CitrusTest
     public void createAPI_ProxyApiEUDpIT(DataProviderWrapper dp) throws IOException {
-        proxyAPI = APICreator.createAPI(dp.getFirstName(), dp.getContext(), accessToken).getEntity();
+        ProxyAPI proxyAPI = APICreator.createAPI(dp.getFirstName(), dp.getContext(), accessToken).getEntity();
         dp.setProxyAPI(proxyAPI);
         Assert.assertNotNull(proxyAPI.getId());
     }
@@ -115,13 +94,14 @@ public class ProxyApiEUDpIT extends TestNGCitrusSpringSupport {
     public void testCreateComponentForProxyAPI_ProxyApiEUDpIT(DataProviderWrapper dp) throws IOException {
         ProxyResponse<ChoreoComponent> response = GraphQL.createGraphqlQueryForComponentCreation(dp.getFirstName(), dp.getChoreoProject().getId(), dp.getProxyAPI().getId(), accessToken);
         choreoComponent = response.getEntity();
+        dp.setChoreoComponent(choreoComponent);
         Assert.assertEquals(response.getResponse().getStatusCode(), HttpStatus.OK.value());
     }
 
     @Test(dependsOnMethods = {"testCreateComponentForProxyAPI_ProxyApiEUDpIT"}, dataProvider = "dps")
     @CitrusTest
     public void componentRetrieval_ProxyApiEUDpIT(DataProviderWrapper dp) throws IOException {
-        choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandler(), accessToken);
+        choreoComponent = GraphQL.getComponentDetails(dp.getChoreoProject().getId(), dp.getChoreoComponent().getHandler(), accessToken);
         dp.setChoreoComponent(choreoComponent);
         Assert.assertNotNull(choreoComponent);
     }
@@ -211,7 +191,7 @@ public class ProxyApiEUDpIT extends TestNGCitrusSpringSupport {
         String devURL = dp.getDevInvokeUrl() + "/users";
         Response dev = HttpClientUtil.httpGET(devURL, "", apiKey);
         Assert.assertEquals(dev.getStatusCode(), HttpStatus.OK.value());
-        dp.setApiId(apiKey);
+        dp.setApiKey(apiKey);
     }
 
     @Test(dependsOnMethods = {"componentDevDeploymentStatus_ProxyApiEUDpIT"}, dataProvider = "dps")

@@ -78,12 +78,11 @@ export class ComponentListingPage {
   }
 
   private static verifyDeletion() {
-    cy.url().then((url) => {
-      const projectID = url.split("projects/")[1].split("?")[0];
-      GraphQL.getComponents(projectID).then((res) => {
-        expect(res.status).to.be.equal(200);
-        expect(res.components).to.be.empty;
-      });
+
+    const { projectId } = Cypress.env("component")
+    GraphQL.getComponents(projectId).then((res) => {
+      expect(res.status).to.be.equal(200);
+      expect(res.components).to.be.empty;
     });
   }
 }

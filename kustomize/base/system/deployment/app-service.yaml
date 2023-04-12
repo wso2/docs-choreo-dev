@@ -139,6 +139,26 @@ spec:
                 secretKeyRef:
                   name: secret-api-manager
                   key: API_MANAGER_CLIENT_SECRET                
+            - name: SALESFORCE_LEAD_VIA_PARDOT_APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: SALESFORCE_LEAD_VIA_PARDOT_APP_KEY
+            - name: SALESFORCE_LEAD_VIA_PARDOT_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: SALESFORCE_LEAD_VIA_PARDOT_APP_SECRET
+            - name: MAX_MIND_GEO_LOC_COUNTRY_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: MAX_MIND_GEO_LOC_COUNTRY_USERNAME
+            - name: MAX_MIND_GEO_LOC_COUNTRY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: MAX_MIND_GEO_LOC_COUNTRY_PASSWORD              
           envFrom:
             - configMapRef:
                 name: env-app-service

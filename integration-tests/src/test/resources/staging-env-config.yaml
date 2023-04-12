@@ -1,11 +1,11 @@
 dps:
-  REGIONS: EU,US,IND
+  REGIONS: EU,US
 accountInfo:
   TEST_USER_EMAIL: choreo-integration-test-user-stage@wso2.com@carbon.super
   #TEST_USER_PASSWORD:
-  #TEST_CHOREO_ORG_ID:
+  TEST_CHOREO_ORG_ID:
   TEST_CHOREO_ORG_HANDLE: choreointegrationtestuserstage
-  #TEST_CHOREO_ORG_UUID:
+  TEST_CHOREO_ORG_UUID:
 authInfo:
   STS_ENDPOINT: https://sts.st.choreo.dev
   #STS_CLIENT_ID:

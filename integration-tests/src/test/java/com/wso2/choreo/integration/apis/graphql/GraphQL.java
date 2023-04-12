@@ -46,6 +46,7 @@ import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.graphql.CreateByocComponentResponseDTO;
 import com.wso2.choreo.integration.models.graphql.CreateComponentResponseDTO;
+import com.wso2.choreo.integration.models.graphql.CreateNewVersionResponseDTO;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.models.proxyapi.ProxyDeployment;
 import com.wso2.choreo.integration.models.response.ProxyResponse;
@@ -70,6 +71,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
+import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.greaterThan;
 
 /**
  * Implements GraphQL API calls and their response validations.
@@ -348,7 +352,7 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
     public static ObservabilityIdInformation getComponentObservabilityIdForReleaseId(String releaseId, String accessToken) throws IOException {
-        GraphqlDTO dto = GraphqlDTO.builder().releaseId(releaseId).build();
+        GraphqlDTO dto = GraphqlDTO.builder().releaseIds(releaseId).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getObservabilityIds.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         return Arrays.
@@ -557,15 +561,20 @@ public class GraphQL extends ControlPlaneAPI {
                 "templates/graphql/requests/deployComponent.mustache", graphqlDTO);
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
-        runner.$(http()
-                .client(client)
-                .send()
+        runner.$(repeatOnError()
+                .until("i = 20")
+                .index("i")
+                .autoSleep(10000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
-                .accept(MediaType.APPLICATION_JSON_VALUE));
+                .accept(MediaType.APPLICATION_JSON_VALUE)));
         runner.$(http()
                 .client(client)
                 .receive()
@@ -587,38 +596,6 @@ public class GraphQL extends ControlPlaneAPI {
      */
     public static void getDeploymentStatusByVersion(TestActionRunner runner, HttpClient client, String accessToken,
             GraphqlDTO graphqlDTO) throws Exception {
-        getDeploymentStatusByVersion(runner, client, accessToken, graphqlDTO,
-                "templates/graphql/responses/deploymentStatusByVersionSuccess.json");
-    }
-
-    /**
-     * Get deployment status of a failed component by version with validation
-     *
-     * @param runner      Test action runner
-     * @param client      HTTP client
-     * @param accessToken Access token
-     * @param graphqlDTO  DTO
-     * @throws IOException If error occurred in object mapping
-     */
-    public static void getDeploymentStatusOfFailureByVersion(TestActionRunner runner, HttpClient client,
-            String accessToken, GraphqlDTO graphqlDTO) throws Exception {
-        getDeploymentStatusByVersion(runner, client, accessToken, graphqlDTO,
-                "templates/graphql/responses/deploymentStatusByVersionFailure.json");
-    }
-
-    /**
-     * Get deployment status of the component by version with validation
-     *
-     * @param runner      Test action runner
-     * @param client      HTTP client
-     * @param accessToken Access token
-     * @param graphqlDTO  DTO
-     * @param responseTemplatePath  path to response template file
-     * @throws IOException If error occurred in object mapping
-     */
-    private static void getDeploymentStatusByVersion(TestActionRunner runner, HttpClient client, String accessToken,
-            GraphqlDTO graphqlDTO, String responseTemplatePath) throws Exception {
-
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/deploymentStatusByVersion.mustache", graphqlDTO);
         String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
@@ -641,7 +618,56 @@ public class GraphQL extends ControlPlaneAPI {
                                 .receive()
                                 .response(HttpStatus.OK)
                                 .message()
-                                .body(new ClassPathResource(responseTemplatePath))));
+                                .type(MessageType.JSON)
+                                .validate(jsonPath()
+                                        .expression("$.data.deploymentStatusByVersion.size()", greaterThan(0))
+                                        .expression("$.data.deploymentStatusByVersion[0].keySet()",
+                                                containsInAnyOrder("id","sha","completed_at","started_at","name","status","conclusion",
+                                                        "isAutoDeploy","failureReason","sourceCommitId"))
+                                        .expression("$.data.deploymentStatusByVersion[0].name", "Choreo Generated Build Deploy Action")
+                                        .expression("$.data.deploymentStatusByVersion[0].status", "completed")
+                                        .expression("$.data.deploymentStatusByVersion[0].conclusion", "success")
+                                        .expression("$.data.deploymentStatusByVersion[0].isAutoDeploy", false)
+                                        .expression("$.data.deploymentStatusByVersion[0].failureReason", 0)
+                                                )
+                                        )
+                                );
+    }
+
+    /**
+     * Get deployment status of a failed component by version with validation
+     *
+     * @param runner      Test action runner
+     * @param client      HTTP client
+     * @param accessToken Access token
+     * @param graphqlDTO  DTO
+     * @throws IOException If error occurred in object mapping
+     */
+    public static void getDeploymentStatusOfFailureByVersion(TestActionRunner runner, HttpClient client,
+            String accessToken, GraphqlDTO graphqlDTO) throws Exception {
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/deploymentStatusByVersion.mustache", graphqlDTO);
+        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        // Poll deployment status
+        runner.$(repeatOnError()
+                .until("i = 50")
+                .index("i")
+                .autoSleep(10000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .body(requestBody)
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
+                        http().client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .body(new ClassPathResource("templates/graphql/responses/deploymentStatusByVersionFailure.json"))));
     }
 
     public static String getRunId(TestActionRunner runner, HttpClient client, String accessToken, GraphqlDTO graphqlDTO) throws IOException {
@@ -887,5 +913,69 @@ public class GraphQL extends ControlPlaneAPI {
                 }));
 
         return observabilityIds;
+    }
+    
+    public static CreateNewVersionResponseDTO createNewVersion(TestActionRunner runner,
+                    HttpClient choreoProjectsTestClient, String accessToken,
+                    GraphqlDTO graphqlDTO) throws IOException {
+
+            String queryString = ObjectMapperUtil.mapObjectToString(
+                            "templates/graphql/requests/createNewVersion.mustache", graphqlDTO);
+            String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+            AtomicReference<CreateNewVersionResponseDTO> mapStringToObject = new AtomicReference<>();
+            runner.$(http()
+                .client(choreoProjectsTestClient)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+            runner.$(http()
+                .client(choreoProjectsTestClient)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .body(new ClassPathResource("templates/graphql/responses/createNewVersionSuccess.json"))
+                .validate((message, context) -> {
+                        mapStringToObject.set(ObjectMapperUtil.mapStringToObject(
+                                CreateNewVersionResponseDTO.class, message.getPayload(String.class),
+                                        "createVersion"));
+                }));
+            return mapStringToObject.get();
+    }
+    
+    public static List<Commit> getCommitHistory(TestActionRunner runner, HttpClient client, String componentId,
+                                            String accessToken, String branchName) throws Exception {
+        GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).branch(branchName).build();
+        String queryString = ObjectMapperUtil.
+                mapObjectToString("templates/graphql/requests/commitHistoryBranch.mustache", dto);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        List<Commit> commitList = new ArrayList<>();
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate((message, context) -> {
+                    Commit[] commits = ObjectMapperUtil.mapToCollection(Commit[].class, message.getPayload(String.class), "commitHistory");
+                    commitList.addAll(List.of(commits));
+                }));
+
+        return commitList;
     }
 }

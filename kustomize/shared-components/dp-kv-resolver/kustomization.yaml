@@ -24,3 +24,4 @@ resources:
   - dp-kv-resolver-rb.yaml
   - dp-kv-resolver-role.yaml
   - dp-kv-resolver-sa.yaml
+  - dp-kv-resolver-service.yaml

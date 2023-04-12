@@ -45,7 +45,7 @@ describe(`Graphql GQL service functionality in region ${dp}`, () => {
   const COMPONENT_NAME = "graphql-service";
   const REPO_NAME = "graphql-service-sample";
 
-  it("Verify GraphQL sample creation", () => {
+  it("Verify GraphQL component creation", () => {
     let componentData: ComponentData = {
       componentName: COMPONENT_NAME,
       displayType: Enums.DisplayType.graphql,
@@ -55,7 +55,7 @@ describe(`Graphql GQL service functionality in region ${dp}`, () => {
       triggerId: null,
       srcGitRepoUrl: "https://github.com/choreo-test-apps/graphql",
       initializeAsBallerinaProject: false,
-      repositoryType: Enums.RepoType.UserManagedEmpty,
+      repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: "",
     };
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, dp);

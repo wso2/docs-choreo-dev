@@ -17,6 +17,9 @@ import { ChoreoHomePage } from "../home/home-page";
 
 
 export class ProjectListingPage {
+
+
+
   static createNewProject(
     projectName: string,
     description: string,
@@ -36,7 +39,7 @@ export class ProjectListingPage {
     cy.get('[name="Name"]').clear().type(projectName);
     cy.get('[name="Description"]').clear().type(description);
     cy.get('[data-cyid="select-region"]').click();
-    cy.get(`[data-value="${dataPlane}"]`).click();
+    cy.contains(`Cloud Data Plane - ${dataPlane}`).click()
     cy.get('[data-testid="create-version-create"]').click();
     cy.get('[data-testid="create-version-create"]').should("not.exist");
   }
@@ -45,15 +48,22 @@ export class ProjectListingPage {
 
   static selectProject(projectName: string = "Default Project") {
 
-    cy.get('[data-cyid="search-icon"]').eq(1).click()
-    cy.get('[data-cyid="search-field"]').within(() => {
-      cy.get('input').type(projectName)
-    })
-    cy.get(`a[href*="organizations/${Cypress.env("choreoOrgHandle")}/projects"]`).each(d => {
-      if (d.find('h4').text() === projectName) {
-        cy.wrap(d).click()
-        return;
+
+
+    cy.get('body').then(bdy => {
+      if (bdy.find('[data-cyid="create-project-card"]').length > 0) {
+        cy.get('[data-cyid="search-icon"]').eq(0).click()
+        cy.get('[data-testid="search-field"]').type(`${projectName}{enter}`)
+        cy.contains(projectName).click()
+      } else {
+
+
+        cy.get('#project-picker').should("be.visible").click()
+        cy.wait(3000)
+        cy.get('ul>li [placeholder="Search"]').type(`${projectName}{enter}`)
+        cy.get('ul>li>div>span>p').contains(projectName).click()
       }
     })
+
   }
 }
