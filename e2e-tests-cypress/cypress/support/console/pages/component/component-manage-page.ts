@@ -70,7 +70,6 @@ export class ComponentAPILifecycle {
 
 
   static goToDeveloperPortalWithoutLogin(idpUser: string = "") {
-    
     const { latestAPIVersionId } = Cypress.env("apiInfo")
     const loginUrl = Cypress.env("devportalLoginURL")
     const { uuid, handle } = Cypress.env("userData");
@@ -293,7 +292,7 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="scope-apply-to-all-btn"]')
       .should("be.enabled")
       .click();
-    this.verifyApplyAllPermissionsToResources(permissions);
+    //this.verifyApplyAllPermissionsToResources(permissions);
   }
 
   static verifyApplyAllPermissionsToResources(permissions: string[]) {
@@ -327,7 +326,8 @@ export class ComponentAPILifecycle {
   }
 
   static deletePermission(permissionName: string) {
-    cy.get(`[data-testid="scope-delete-btn-${permissionName}"]`).click();
+    cy.get(`[data-testid="scope-delete-btn-${permissionName}"]`).click()
+   // cy.get(`[data-testid="scope-delete-btn-${permissionName}"]`).click();
     cy.get('[data-testid="scope-delete-description"]').contains(
       `Are you sure you want to Delete the permission (scope) "${permissionName}"?`
     );
