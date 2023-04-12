@@ -113,7 +113,7 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
                         accessToken);
                 Assert.assertEquals(status.getData().getConclusion(), "success");
                 ComponentUtils.deployComponent(this, citrusClients, accessToken,
-                        choreoComponent, ComponentFlavour.STANDARD, null);      
+                        choreoComponent, ComponentFlavour.STANDARD, null);
         }
 
         @Test(dependsOnMethods = {"componentDeployment_TestUserManagedNonEmptyCreateComponentRoot"})

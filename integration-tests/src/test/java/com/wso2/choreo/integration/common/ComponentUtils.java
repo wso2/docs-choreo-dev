@@ -320,6 +320,37 @@ public class ComponentUtils {
         }
     }
 
+    public static void invokeApiEndpointMultipleTimes(String accessToken, ChoreoComponent component,
+                                                      Constant.Environment env, int attempts) throws Exception {
+        InvokeInformation invokeInformation = component.getInvokeInformation(accessToken,
+                Constant.displayType.restAPI.name(), env.name());
+        String requestURI = invokeInformation.getInvokeUrl();
+        if (requestURI == null) {
+            throw new InvokeInformationNotFoundException();
+        }
+        requestURI = requestURI.concat("/")
+                .concat("greeting")
+                .concat("?name=testUser");
+        // Escaping the quotations
+        String apiKey = component.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId()).replace("\"", "");
+        HttpGet request = new HttpGet(requestURI);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
+        request.setHeader("API-Key", apiKey);
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
+            for (int i = 0; i < attempts; i++) {
+                try (CloseableHttpResponse response = httpClient.execute(request)) {
+                    int statusCode = response.getStatusLine().getStatusCode();
+                    String responseBody = EntityUtils.toString(response.getEntity());
+                    if (statusCode != HttpStatus.OK.value()) {
+                        throw new InvokeAPICheckException(statusCode, responseBody);
+                    }
+                    Thread.sleep(200);
+                }
+            }
+        }
+    }
 
     public static String generateStringFromTemplate(String templateRelativePath, Map<String, String> params)
             throws IOException {
