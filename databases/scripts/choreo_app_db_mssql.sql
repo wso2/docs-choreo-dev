@@ -2033,6 +2033,16 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Ma
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Organization','choreo:organization_manage','ACCOUNT-MANAGE','Create, update and delete organization');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Groups','urn:choreocontrolplane:groupmanagement:role_mapping_manage','ACCOUNT-MANAGE','Create, Edit and Delete Group role mappings');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Groups','urn:choreocontrolplane:groupmanagement:role_mapping_view','ACCOUNT-MANAGE','View Group role mappings');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Roles','urn:choreosystem:rolemanagement:role_view','USER-MANAGEMENT','View Roles');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Roles','urn:choreosystem:rolemanagement:role_create','USER-MANAGEMENT','Create Roles');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Roles','urn:choreosystem:rolemanagement:role_delete','USER-MANAGEMENT','Delete Roles');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Roles','urn:choreosystem:rolemanagement:role_update','USER-MANAGEMENT','Update Roles');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Users','urn:choreosystem:usersmanagement:user_view', 'USER-MANAGEMENT','View Users');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Users','urn:choreosystem:usersmanagement:user_delete ', 'USER-MANAGEMENT','Delete Users');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Users','urn:choreosystem:usersmanagement:user_update', 'USER-MANAGEMENT','Update Users');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Permissions','urn:choreosystem:usersmanagement:permission_view', 'USER-MANAGEMENT','View Permissions');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Non-Prod Logs','choreo:log_view_non_prod','OBSERVABILITY-MANAGEMENT','View non-production environment logs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Prod Logs','choreo:log_view_prod','OBSERVABILITY-MANAGEMENT','View production environment logs');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Global Configs','urn:choreocontrolplane:configmanagement:global_config_manage','CONFIGURATIONS-MANAGEMENT','Create, Edit and Delete Global Configs');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Global Configs','urn:choreocontrolplane:configmanagement:global_config_view','CONFIGURATIONS-MANAGEMENT','View Global Configs');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Global Configs','urn:choreocontrolplane:configmanagement:global_config_create','CONFIGURATIONS-MANAGEMENT','Create Global Configs');
