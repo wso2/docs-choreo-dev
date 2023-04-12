@@ -1717,6 +1717,38 @@ CREATE TABLE [dbo].[org_self_signup_approval_request]
     CONSTRAINT unique_org_self_signup_approval_request UNIQUE(organization_uuid, user_idp_id)
 )
 
+CREATE TABLE [dbo].[enterprise_group_role_mapping]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [organization_id] [int] NOT NULL,
+    [role_list] [nvarchar](255) NOT NULL,
+    [group_name] [nvarchar](1000) NOT NULL,
+    [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at]   [datetime]    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT enterprise_group_role_mapping_org_id_fk FOREIGN KEY (organization_id) REFERENCES organization(id) ON DELETE CASCADE
+)
+
+/****** Object:  Trigger [dbo].[enterprise_group_role_mapping_UpdateTimeTrigger] ******/
+SET ANSI_NULLS ON
+    GO
+SET QUOTED_IDENTIFIER ON
+    GO
+
+CREATE TRIGGER [dbo].[enterprise_group_role_mapping_UpdateTimeTrigger] ON [dbo].[enterprise_group_role_mapping]
+    FOR INSERT, UPDATE AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE tble
+    SET updated_at = GETDATE()
+    FROM [enterprise_group_role_mapping] AS tble
+    INNER JOIN inserted AS i
+    ON tble.id = i.id;
+END
+GO
+ALTER TABLE [dbo].[enterprise_group_role_mapping] ENABLE TRIGGER [enterprise_group_role_mapping_UpdateTimeTrigger]
+    GO
+
 CREATE TABLE [dbo].[org_enterprise_login_config]
 (
     [id] [int] IDENTITY(1,1) NOT NULL,
