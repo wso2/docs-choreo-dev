@@ -57,7 +57,7 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
 
         @BeforeClass
         public void setup_TestUserManagedNonEmptyCreateComponentRoot()
-                throws Exception {
+                        throws Exception {
                 orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
                 orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
                 orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
@@ -76,14 +76,14 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
                 String repoSubpath = "";
                 String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
                 GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").srcGitRepoUrl(srcGitHubURL)
-                        .projectId(projectId).orgId(Integer.parseInt(orgId))
-                        .orgHandler(orgHandle)
-                        .repositoryType(repoType)
-                        .repositoryBranch(repoBranch)
-                        .repositorySubPath(repoSubpath)
-                        .displayType(Constant.displayType.restAPI.name()).build();
+                                .projectId(projectId).orgId(Integer.parseInt(orgId))
+                                .orgHandler(orgHandle)
+                                .repositoryType(repoType)
+                                .repositoryBranch(repoBranch)
+                                .repositorySubPath(repoSubpath)
+                                .displayType(Constant.displayType.restAPI.name()).build();
                 choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
-                        ComponentFlavour.STANDARD);
+                                ComponentFlavour.STANDARD);
                 Assert.assertNotNull(choreoComponent.getId());
         }
 
@@ -93,23 +93,23 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
                 // Creating new branch
                 GitHub.createNewBranch(githubOrg, repoName, repoBranch, repoBranchV2);
                 GraphqlDTO dto = GraphqlDTO.builder()
-                        .orgHandler(orgHandle)
-                        .projectId(projectId)
-                        .orgUuid(orgUUID)
-                        .componentId(choreoComponent.getId())
-                        .componentType(choreoComponent.getType())
-                        .branch(repoBranchV2)
-                        .apiId(choreoComponent.getApiId())
-                        .build();
+                                .orgHandler(orgHandle)
+                                .projectId(projectId)
+                                .orgUuid(orgUUID)
+                                .componentId(choreoComponent.getId())
+                                .componentType(choreoComponent.getType())
+                                .branch(repoBranchV2)
+                                .apiId(choreoComponent.getApiId())
+                                .build();
                 CreateNewVersionResponseDTO response = ComponentUtils.createNewVersion(this, citrusClients, accessToken,
-                        dto);
+                                dto);
                 Assert.assertEquals("2.0.0", response.getApiVersion());
         }
 
         @Test(dependsOnMethods = { "createNewVersion_TestUserManagedNonEmptyCreateComponentRoot" })
         @CitrusTest
         public void componentDeployment_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
-                Status status = Orgs.createdComponentStatus(choreoComponent.getProjectId(), choreoComponent.getId(),
+                Status status = Orgs.createdComponentStatus(choreoComponent.getProjectId(), choreoComponent.getId(), 
                         accessToken);
                 Assert.assertEquals(status.getData().getConclusion(), "success");
                 ComponentUtils.deployComponent(this, citrusClients, accessToken,

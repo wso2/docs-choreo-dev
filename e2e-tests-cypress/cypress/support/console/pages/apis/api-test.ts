@@ -23,8 +23,10 @@ export class APITest {
   static selectDevEnvironment() {
     cy.get("[data-testid=env]").click();
     cy.get("[data-cyid=undefined-Development]").click({ force: true });
-    cy.get('[data-cyid="text-field-endpoint"]>div>input').invoke("attr", "value").
-    then((val) => { Cypress.env(`${Enums.Environment.DEVELOPMENT}_test_url`, val); });
+    cy.get('[data-cyid="text-field-endpoint"]').within(() => {
+      cy.get('input').invoke("attr", "value").
+        then((val) => { Cypress.env(`${Enums.Environment.DEVELOPMENT}_test_url`, val); });
+    })
   }
 
   static selectProdEnvironment() {

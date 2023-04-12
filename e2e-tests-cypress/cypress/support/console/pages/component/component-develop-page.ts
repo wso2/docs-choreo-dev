@@ -24,7 +24,7 @@ export class ComponentDevelopPage {
   }
 
   private static checkHTTPVerb(verbs: string[]) {
-    cy.get("#mui-component-select-verbs").click();
+    cy.get("#verb-selector").click();
     verbs.forEach((verb) => {
       cy.get(
         `[data-testid="checkbox-${verb.toUpperCase()}"]>span>input `

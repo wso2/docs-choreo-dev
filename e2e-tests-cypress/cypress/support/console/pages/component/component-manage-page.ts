@@ -12,6 +12,7 @@
  */
 
 import { Enums } from "../../enums";
+import { Utils } from "../../utils";
 
 
 export class ComponentAPILifecycle {
@@ -69,20 +70,12 @@ export class ComponentAPILifecycle {
 
 
   static goToDeveloperPortalWithoutLogin(idpUser: string = "") {
-
-    let devportalURL = Cypress.env("devportalURL")
-    cy.get("[data-cyid=go-to-dev-portal-btn]")
-      .parent()
-      .invoke("attr", "href")
-      .then((href) => {
-
-        cy.log(devportalURL)
-        if (!devportalURL) {
-          devportalURL = href + "&fidp=" + idpUser
-          Cypress.env("devportalURL", devportalURL)
-        }
-        cy.visit(devportalURL)
-      });
+    
+    const { latestAPIVersionId } = Cypress.env("apiInfo")
+    const loginUrl = Cypress.env("devportalLoginURL")
+    const { uuid, handle } = Cypress.env("userData");
+    let devportalURL = `${loginUrl}/${handle}/apis/${latestAPIVersionId}?fidp=${idpUser}&orgUuid=${uuid}`
+    cy.visit(devportalURL)
   }
 
   static selectUsagePlans(...plans) {
@@ -253,10 +246,8 @@ export class ComponentAPILifecycle {
 
 
   static updateAPIAccessMode(accessMode: string) {
-    cy.get('[role="combobox"]').eq(0)
-      .should("be.visible")
-      .click();
-    cy.get(`li[id*="Select"]`).contains(accessMode)
+    Utils.pollElement('[data-testid="access-mode"]').click()
+      cy.get(`li[id*="Select"]`).contains(accessMode)
       .should("exist")
       .click({ force: true });
     cy.get('[data-testid="warning-banner"]').should("be.visible");

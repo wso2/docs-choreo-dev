@@ -54,7 +54,7 @@ describe("Create and deploy a component to test developer portal with custom dom
     RestAPIProxyTemplate.enterAPIdetails(API_NAME, API_BASE_PATH, "", "", "");
     cy.task('setAPIName', API_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.DeployToDev(PROJECT_NAME,API_NAME);
     APIDeployment.PromoteToProd()
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
