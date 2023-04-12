@@ -52,13 +52,8 @@ export class ProjectListingPage {
 
     cy.get('body').then(bdy => {
       if (bdy.find('[data-cyid="create-project-card"]').length > 0) {
-<<<<<<< HEAD
-        cy.get('[data-cyid="search-icon"]').eq(1).click()
-        cy.get('[placeholder="Search"]').type(`${projectName}{enter}`)
-=======
         cy.get('[data-cyid="search-icon"]').eq(0).click()
         cy.get('[data-testid="search-field"]').type(`${projectName}{enter}`)
->>>>>>> main
         cy.contains(projectName).click()
       } else {
 
