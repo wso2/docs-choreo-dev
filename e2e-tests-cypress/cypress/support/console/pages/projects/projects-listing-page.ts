@@ -32,7 +32,7 @@ export class ProjectListingPage {
         cy.get('[data-testid="project-picker"]').click();
         cy.get('[data-cyid="btn-create-new"]').click().wait(3000);
       } else {
-        cy.get('[data-cyid="create-project-card"]').realClick().wait(3000);
+        cy.get('[data-cyid="create-project-card"]').click({force:true}).wait(3000);
       }
     });
 
