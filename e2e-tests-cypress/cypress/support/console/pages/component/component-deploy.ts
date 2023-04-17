@@ -173,7 +173,7 @@ export class ComponentDeployPage {
       invokeUrlCount: 0,
       invokeUrlIndex: 0,
     });
-    cy.get('[data-cyid="btn-next"]').should("be.enabled").click();
+    cy.get('.ConfigForm button').contains("Promote").should('have.length',1).click();
     if (isNewComponent) {
       this.addConfiguration(configValue);
     }

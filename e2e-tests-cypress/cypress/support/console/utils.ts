@@ -30,8 +30,7 @@ export class Utils {
    * @returns true name for a new app
    */
   static generateProjectName() {
-    const r = (Math.random() + 1).toString(36).substring(7);
-    return `${this.projectNamePrefix}${r}_${Date.now()}`
+    return `${this.projectNamePrefix}${Date.now()}`
   }
 
   static generateComponentName(name: string) {

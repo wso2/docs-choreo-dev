@@ -107,7 +107,7 @@ export class GraphQL {
     }
 
     // Extract date section of project name for comparison
-    const createdDate = Number(projectName.split("_")[1]);
+    const createdDate = Number(projectName.split(Utils.projectNamePrefix)[1]);
 
     // Only delete projects(and their components) that are older than 1 hour
     return Date.now() - createdDate > ONE_HOUR;
