@@ -30,7 +30,7 @@ export class Utils {
    * @returns true name for a new app
    */
   static generateProjectName() {
-    return this.projectNamePrefix + Date.now();
+    return `${this.projectNamePrefix}${Date.now()}`
   }
 
   static generateComponentName(name: string) {
