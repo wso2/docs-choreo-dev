@@ -502,6 +502,18 @@ public class ComponentUtils {
         }
     }
 
+    public static void updateEnvironments(List<Environment> existingEnvs, List<Environment> addionalEnvironmentInfo) {
+        for (Environment environment : addionalEnvironmentInfo) {
+            Optional<Environment> first = existingEnvs.stream()
+                    .filter(e -> e.getId().equals(environment.getId())).findFirst();
+
+            if (first.isPresent()) {
+                Environment existingEnv = first.get();
+                existingEnv.setNamespace(environment.getNamespace());
+            }
+        }
+    }
+
     public static List<ObservabilityIdInformation> getObservabilityIds(TestActionRunner runner,
             Map<Endpoints, HttpClient> citrusClients,
             String accessToken, ChoreoComponent component)
@@ -516,17 +528,12 @@ public class ComponentUtils {
     }
 
     public static void verifyLogs(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-            String accessToken, ChoreoComponent component, Constant.Environment env,
-            Constant.region region) throws Exception {
+            String accessToken, ChoreoComponent component, Environment env,
+            String region) throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
 
-        Pair<Environment, String> environmentWithReleaseId = getEnvironmentWithReleaseId(runner, citrusClients,
-                accessToken, component, env);
-
-        Environment environment = environmentWithReleaseId.getLeft();
-        String releaseId = environmentWithReleaseId.getRight();
-
-        String namespace = environment.getNamespace();
+        String releaseId = component.getReleaseIdForEnvironment(env);
+        String namespace = env.getNamespace();
 
         Map<String, Object> validationMap = new HashMap<>();
         validationMap.put("$.rows.size()", greaterThan(0));
@@ -540,17 +547,12 @@ public class ComponentUtils {
     }
 
     public static void verifyZipLogs(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-            String accessToken, ChoreoComponent component, Constant.Environment env,
-            Constant.region region) throws Exception {
+            String accessToken, ChoreoComponent component, Environment env,
+            String region) throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
 
-        Pair<Environment, String> environmentWithReleaseId = getEnvironmentWithReleaseId(runner, citrusClients,
-                accessToken, component, env);
-
-        Environment environment = environmentWithReleaseId.getLeft();
-        String releaseId = environmentWithReleaseId.getRight();
-
-        String namespace = environment.getNamespace();
+        String releaseId = component.getReleaseIdForEnvironment(env);
+        String namespace = env.getNamespace();
 
         List<ObservabilityIdInformation> observabilityIds = getObservabilityIds(runner, citrusClients, accessToken,
                 component);
@@ -568,17 +570,12 @@ public class ComponentUtils {
     }
 
     public static void verifyGroupLogs(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-            String accessToken, ChoreoComponent component, Constant.Environment env,
-            Constant.region region) throws Exception {
+            String accessToken, ChoreoComponent component, Environment env,
+            String region) throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
 
-        Pair<Environment, String> environmentWithReleaseId = getEnvironmentWithReleaseId(runner, citrusClients,
-                accessToken, component, env);
-
-        Environment environment = environmentWithReleaseId.getLeft();
-        String releaseId = environmentWithReleaseId.getRight();
-
-        String namespace = environment.getNamespace();
+        String releaseId = component.getReleaseIdForEnvironment(env);
+        String namespace = env.getNamespace();
 
         ObservabilityService.verifyGroupLogsOverShorterDuration(runner, choreoCPTestClient, accessToken,
                 releaseId, namespace, region);
@@ -588,7 +585,7 @@ public class ComponentUtils {
     }
 
     public static void verifyMetrics(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-            String accessToken, ChoreoComponent component, Constant.region region) throws Exception {
+            String accessToken, ChoreoComponent component, String region) throws Exception {
         HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
 
