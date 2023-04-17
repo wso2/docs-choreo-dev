@@ -15,7 +15,7 @@
 export class ProductionKeys {
 
     static generateTestToken() {
-        cy.get('[data-testid="oauth-key"]').click();
+        cy.get('[data-testid="oauth-key"]').contains("Production").click();
         cy.wait(2000);
         cy.get('[data-testid="generate-token-btn"]').should('not.exist');
         cy.get('[data-testid="generate-oauth-key"]').should("be.enabled").click();
