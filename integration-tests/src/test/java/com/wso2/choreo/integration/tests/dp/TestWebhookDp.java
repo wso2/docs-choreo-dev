@@ -109,14 +109,17 @@ public class TestWebhookDp extends TestBase {
     @CitrusTest
     public void createUserManagedComponent_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
         // Creating component
-        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
+        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+
         String projectId = project.getId();
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).
                 srcGitRepoUrl("https://github.com/choreo-test-apps/GitHub-web-hook").
                 displayName(componentName).projectId(project.getId()).
                 triggerChannels("IssuesService").triggerID("88").
-                displayType(Constant.displayType.webhook.name()).build();
+                displayType(Constant.displayType.webhook.name()).repositoryBranch("main")
+                .repositorySubPath("").build();
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
 
         dp.setChoreoProject(project);
