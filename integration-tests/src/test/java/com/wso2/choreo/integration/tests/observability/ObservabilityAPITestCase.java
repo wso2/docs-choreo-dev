@@ -27,6 +27,7 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
+import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.models.observability.SyntaxTree;
@@ -57,6 +58,11 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
 
     ChoreoComponent choreoComponent;
 
+    private List<Environment> environments;
+    private List<ComponentDeploymentStatusDTO> statusDTOs;
+
+    private List<Environment> observabilityEnvs;
+
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
 
@@ -80,6 +86,8 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
         Assert.assertNotNull(choreoComponent.getId());
+
+        environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
     }
 
 
@@ -87,23 +95,22 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void deploy_ObservabilityAPITestCase() throws Exception {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, choreoComponent, ComponentFlavour.STANDARD);
+                accessToken, choreoComponent, environments, ComponentFlavour.STANDARD);
+        apiId = statusDTO.getApiId();
         devInvokeURL = statusDTO.getInvokeUrl();
     }
 
     @Test(dependsOnMethods = {"deploy_ObservabilityAPITestCase"})
     @CitrusTest
     public void promote_ObservabilityAPITestCase() throws Exception {
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
-                accessToken, choreoComponent, ComponentFlavour.STANDARD);
-        prodInvokeURL = statusDTO.getInvokeUrl();
-        apiId = statusDTO.getApiId();
+        statusDTOs = ComponentUtils.promoteComponent(this, citrusClients,
+                accessToken, choreoComponent, environments, ComponentFlavour.STANDARD);
     }
 
     @Test(dependsOnMethods = {"promote_ObservabilityAPITestCase"})
     @CitrusTest
     public void getEnvironments_ObservabilityAPITestCase() throws Exception {
-        ComponentUtils.getEnvironments(this, citrusClients, accessToken, choreoComponent);
+        observabilityEnvs = ComponentUtils.getEnvironments(this, citrusClients, accessToken, choreoComponent);
     }
 
     @Test(dependsOnMethods = {"getEnvironments_ObservabilityAPITestCase"})
@@ -119,7 +126,10 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         String expectedResponse = TestHelper.getExpectedResponse();
         for (int i = 0; i < REQUEST_COUNT; ++i) {
             ComponentUtils.invokeApiGET(this, keyData.getApikey(), devInvokeURL, "/isOdd?number=12121", expectedResponse);
-            ComponentUtils.invokeApiGET(this, keyData.getApikey(), prodInvokeURL, "/isOdd?number=12121", expectedResponse);
+
+            for (ComponentDeploymentStatusDTO statusDTO : statusDTOs) {
+                ComponentUtils.invokeApiGET(this, keyData.getApikey(), statusDTO.getInvokeUrl(), "/isOdd?number=12121", expectedResponse);
+            }
         }
     }
 

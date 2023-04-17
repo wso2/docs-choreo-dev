@@ -124,13 +124,16 @@ public class TestWebhookDp extends TestBase {
         Assert.assertEquals(project.getRegion(), dp.getRegion());
         Assert.assertNotNull(choreoComponent.getId());
 
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
+        dp.setEnvironments(environments);
     }
 
     @Test(dependsOnMethods = {"createUserManagedComponent_CreateDeployInvokeWebhookIT"}, dataProvider = "dps")
     @CitrusTest
     public void componentDeployment_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
         BalConfig balConfigs = BalConfig.builder().isRequired(true).configKeyName("config.webhookSecret").valueType("string").valueOrSource("abcd").build();
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, dp.getChoreoComponent(), ComponentFlavour.STANDARD, balConfigs);
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
+                dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD, balConfigs);
         devInvokeURL = statusDTO.getInvokeUrl();
         dp.setDevInvokeUrl(devInvokeURL);
     }

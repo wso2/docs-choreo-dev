@@ -21,6 +21,7 @@ import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.componentstatus.Status;
+import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.CreateNewVersionResponseDTO;
 import com.wso2.choreo.integration.models.response.Response;
 
@@ -31,6 +32,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,6 +54,8 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
         private String githubPAT;
         private static ChoreoComponent choreoComponent;
         private String repoBranchV2 = "feature-v2";
+
+        private List<Environment> environments;
 
         @Autowired
         Map<Endpoints, HttpClient> citrusClients;
@@ -89,6 +93,8 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
                                 ComponentFlavour.STANDARD);
                 choreoComponent.setBranch(repoBranch);
                 Assert.assertNotNull(choreoComponent.getId());
+
+                environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
         }
 
         @Test(dependsOnMethods = {"createUserManagedComponent_TestUserManagedNonEmptyCreateComponentSub"})
@@ -117,14 +123,15 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
                 Status status = Orgs.createdComponentStatus(choreoComponent.getProjectId(), choreoComponent.getId(), 
                         accessToken);
                 Assert.assertEquals(status.getData().getConclusion(), "success");
-                ComponentUtils.deployComponentInBranch(this, citrusClients, accessToken, choreoComponent, ComponentFlavour.STANDARD, repoBranch, null);  
+                ComponentUtils.deployComponentInBranch(this, citrusClients, accessToken, choreoComponent,
+                        environments, ComponentFlavour.STANDARD, repoBranch, null);
         }
 
         @Test(dependsOnMethods = {"componentDeployment_TestUserManagedNonEmptyCreateComponentSub"})
         @CitrusTest
         public void componentPromotionToProd_TestUserManagedNonEmptyCreateComponentSub() throws Exception {
                 ComponentUtils.promoteComponentInBranch(this, citrusClients, accessToken, choreoComponent,
-                        ComponentFlavour.STANDARD, repoBranch, null);
+                        environments, ComponentFlavour.STANDARD, repoBranch, null);
         }
 
         @Test(dependsOnMethods = { "componentPromotionToProd_TestUserManagedNonEmptyCreateComponentSub" })

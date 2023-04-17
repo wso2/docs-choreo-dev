@@ -30,6 +30,7 @@ import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.configmapping.Config;
 import com.wso2.choreo.integration.models.configmapping.ConfigMapping;
+import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.orgs.PromoteConfigurations;
 import com.wso2.choreo.integration.models.response.Response;
 import lombok.extern.log4j.Log4j2;
@@ -163,11 +164,11 @@ public class Orgs extends ControlPlaneAPI {
     }
 
     public static void addConfiguration(TestActionRunner runner, HttpClient client,
-                                        ChoreoComponent component, List<Commit> commitHistory, String envName,
+                                        ChoreoComponent component, List<Commit> commitHistory, Environment environment,
                                         BalConfig... balconfigs) throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         String componentId = component.getId();
-        String envIdToDeploy = component.getLatestAppEnvId(envName);
+        String envIdToDeploy = environment.getId();
         String latestVersionId = component.getLatestApiVersion().getId();
         String latestCommitSha = component.getLatestCommitHash(commitHistory.toArray(Commit[]::new));
         String orgHandle = component.getOrgHandler();

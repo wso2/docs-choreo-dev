@@ -29,6 +29,7 @@ import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
+import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
@@ -37,6 +38,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
@@ -51,6 +53,9 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     Map<Endpoints, HttpClient> citrusClients;
 
     ChoreoComponent choreoComponent;
+
+    private List<Environment> environments;
+    private List<ComponentDeploymentStatusDTO> statusDTOs;
 
     @DataProvider(name = "env-provider")
     public Object[][] environment() {
@@ -81,6 +86,8 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
         Assert.assertNotNull(choreoComponent.getId());
+
+        environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
     }
 
 
@@ -88,17 +95,16 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void deploy_LoggingAPITestCase() throws Exception {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, choreoComponent, ComponentFlavour.STANDARD);
+                accessToken, choreoComponent, environments, ComponentFlavour.STANDARD);
+        apiId = statusDTO.getApiId();
         devInvokeURL = statusDTO.getInvokeUrl();
     }
 
     @Test(dependsOnMethods = {"deploy_LoggingAPITestCase"})
     @CitrusTest
     public void promote_LoggingAPITestCase() throws Exception {
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
-                accessToken, choreoComponent, ComponentFlavour.STANDARD);
-        prodInvokeURL = statusDTO.getInvokeUrl();
-        apiId = statusDTO.getApiId();
+        statusDTOs = ComponentUtils.promoteComponent(this, citrusClients,
+                accessToken, choreoComponent, environments, ComponentFlavour.STANDARD);
     }
 
 
@@ -109,7 +115,10 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
         String expectedResponse = TestHelper.getExpectedResponse();
         for (int i = 0; i < 5; ++i) {
             ComponentUtils.invokeApiGET(this, keyData.getApikey(), devInvokeURL, "/isOdd?number=12121", expectedResponse);
-            ComponentUtils.invokeApiGET(this, keyData.getApikey(), prodInvokeURL, "/isOdd?number=12121", expectedResponse);
+
+            for (ComponentDeploymentStatusDTO statusDTO : statusDTOs) {
+                ComponentUtils.invokeApiGET(this, keyData.getApikey(), statusDTO.getInvokeUrl(), "/isOdd?number=12121", expectedResponse);
+            }
         }
     }
 
