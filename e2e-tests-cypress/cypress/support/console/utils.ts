@@ -141,25 +141,18 @@ export class Utils {
     return false;
   }
 
-
   private static sendRequest(request) {
     return cy.request(request).then((res) => {
       if (res.status > 205) {
         while (this.TRY_COUNT > 0) {
-          cy.wait(10000)
-          this.sendRequest(request)
+          cy.wait(10000);
+          this.sendRequest(request);
           this.TRY_COUNT--;
         }
       }
       return cy.wrap({ body: res.body, status: res.status }, { log: false });
     });
   }
-
-
-
-
-
-
 
   static sendPostRequest(url: string, headers, body) {
     const request = {
@@ -173,8 +166,6 @@ export class Utils {
       return cy.wrap({ body: res.body, status: res.status }, { log: false });
     });
   }
-
-
 
   static sendPutRequest(url: string, headers, body) {
     const request = {
@@ -196,7 +187,7 @@ export class Utils {
       headers,
       failOnStatusCode: false,
     };
-    return this.sendRequest(request)
+    return this.sendRequest(request);
   }
 
   static sendDeleteRequest(url: string, headers: any = {}, body?: any) {
@@ -205,8 +196,7 @@ export class Utils {
       url,
       body,
       headers,
-      failOnStatusCode: false
-
+      failOnStatusCode: false,
     };
     return cy.request(request).then((res) => {
       return cy.wrap({ body: res.body, status: res.status }, { log: false });
@@ -243,18 +233,31 @@ export class Utils {
   }
 
   static interceptConfig() {
-    cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/**`).as('config')
+    cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/**`).as(
+      "config"
+    );
     // cy.wait('@config', { timeout: 180000 })
   }
   public static pollElement(locator: string) {
-    return cy.get('body').then(bdy => {
+    return cy.get("body").then((bdy) => {
       if (bdy.find(locator).length == 0) {
-        cy.wait(4000)
-        this.pollElement(locator)
+        cy.wait(4000);
+        this.pollElement(locator);
       } else {
-        return cy.get(locator)
+        return cy.get(locator);
       }
-    }
-    )
+    });
+  }
+
+  // Ensure that element remains visible multiple times before returning to handle rerendering scenarios
+  static getRenderedElement(locator: string) {
+    return cy
+      .get(locator)
+      .should("be.visible")
+      .get(locator)
+      .should("be.visible")
+      .get(locator)
+      .should("be.visible")
+      .get(locator);
   }
 }
