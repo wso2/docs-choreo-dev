@@ -1,0 +1,5 @@
+projectApiUrl = "http://localhost:9090/graphql"
+devPortalUrl = "https://sts.preview-dv.choreo.dev/api/am/devportal/v2"
+appServiceUrl = "http://localhost:9098"
+healthCheckPort = 9091
+servicePort = 9000
