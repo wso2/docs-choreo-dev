@@ -546,6 +546,36 @@ public class GraphQL extends ControlPlaneAPI {
         return componentArray[0];
     }
 
+    public static List<Environment> getDeploymentEndvironments(TestActionRunner runner, HttpClient client,
+                                                               String accessToken, GraphqlDTO dto) throws IOException {
+        String queryString = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getComponentDeploymentEnvironments.mustache", dto);
+        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        List<Environment> envs = new ArrayList<>();
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate((message, context) -> {
+                    envs.addAll(List.of(ObjectMapperUtil.mapToCollection(Environment[].class,
+                            message.getPayload(String.class), "environments")));
+                }));
+
+        return envs;
+    }
+
     /**
      * Deploy component with validations
      *

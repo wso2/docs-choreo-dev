@@ -39,10 +39,13 @@ public class DataProviderWrapper {
     private String prodInvokeUrl;
     private String apiKey;
     private String region;
+<<<<<<< HEAD
     // To store the buildId for RestAPI test cases
     private String buildId;
+=======
     private List<Environment> environments;
     List<ComponentDeploymentStatusDTO> promoteStatusDTO;
+>>>>>>> 0f59c555e... Support dynamic choreo envs & fix 1.6.1 test
 
 
     public static <T> Object[][] convertToDataProvider(List<T> list) {
