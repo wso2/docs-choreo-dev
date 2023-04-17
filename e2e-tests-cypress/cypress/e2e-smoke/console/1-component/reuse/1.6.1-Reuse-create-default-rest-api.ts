@@ -25,10 +25,8 @@ import { Utils } from "../../../../support/console/utils";
 import { GitHub } from "../../../../support/github/github";
 import { ComponentData } from "../../../../support/interfaces/component-data";
 
-
 describe("Verify Reusable RestAPI functionality", () => {
-
-  const PROJECT_NAME = "Default Project"
+  const PROJECT_NAME = "Default Project";
   const REST_API_NAME = "create-ReuseRestAPI-1.6.1";
   const RESOURCE_NAME = "greeting";
   const PARAM_NAME = "name";
@@ -38,7 +36,7 @@ describe("Verify Reusable RestAPI functionality", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("greeting-rest-api")
+    GitHub.deleteWebhooks("greeting-rest-api");
   });
 
   after(() => {
@@ -136,7 +134,10 @@ describe("Verify Reusable RestAPI functionality", () => {
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
     ComponentAPILifecycle.applyConfiguration();
-    ComponentAPILifecycle.verifyDevRevision().should("eq", Enums.Environment.DEVELOPMENT);
+    ComponentAPILifecycle.verifyDevRevision().should(
+      "eq",
+      Enums.Environment.DEVELOPMENT
+    );
   });
 
   it("Apply configs to prod", () => {
@@ -178,7 +179,6 @@ describe("Verify Reusable RestAPI functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publishToDevportal();
-    ComponentAPILifecycle.demoteToCreated();
   });
 
   it("Verify settings configuration", () => {
@@ -187,6 +187,8 @@ describe("Verify Reusable RestAPI functionality", () => {
   });
 
   it("Verify suspending Prod deployed component", () => {
+    ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.demoteToCreated();
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });

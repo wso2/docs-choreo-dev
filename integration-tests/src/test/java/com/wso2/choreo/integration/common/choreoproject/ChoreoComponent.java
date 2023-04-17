@@ -751,6 +751,17 @@ public class ChoreoComponent {
         throw new NoLatestAppEnvIdFoundException();
     }
 
+    public String getReleaseIdForEnvironment(Environment env) throws NoLatestApiVersionFoundException {
+        ApiVersion latestApiVersion = getLatestApiVersion();
+        for (AppEnvVersion latestAppEnvVersion : latestApiVersion.getAppEnvVersions()) {
+            if (latestAppEnvVersion.getEnvironmentId().equals(env.getId())) {
+                return latestAppEnvVersion.getReleaseId();
+            }
+        }
+
+        throw new IllegalStateException("Corresponding environment " + env.getId() + "does not exist in component");
+    }
+
     /**
      * Get the app environment ID for a given API version
      *

@@ -5,6 +5,7 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
 import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
 import lombok.AllArgsConstructor;
@@ -40,6 +41,8 @@ public class DataProviderWrapper {
     private String region;
     // To store the buildId for RestAPI test cases
     private String buildId;
+    private List<Environment> environments;
+    List<ComponentDeploymentStatusDTO> promoteStatusDTO;
 
 
     public static <T> Object[][] convertToDataProvider(List<T> list) {

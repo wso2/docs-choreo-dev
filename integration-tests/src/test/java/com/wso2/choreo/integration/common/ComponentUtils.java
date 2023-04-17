@@ -56,6 +56,7 @@ import org.springframework.http.MediaType;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -155,9 +156,21 @@ public class ComponentUtils {
                 graphqlDTO);
     }
 
+    public static List<Environment> getDeploymentEnvironments(TestActionRunner runner,
+                                                               Map<Endpoints, HttpClient> citrusClients,
+                                                                         String accessToken, ChoreoComponent component)
+            throws Exception {
+        HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
+
+        ChoreoOrganization org = component.getOrganization();
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().orgUuid(org.getOrgUUID()).projectId(component.getProjectId()).build();
+
+        return GraphQL.getDeploymentEndvironments(runner, cpProjectsClient, accessToken, graphqlDTO);
+    }
+
     public static ComponentDeploymentStatusDTO deployComponent(TestActionRunner runner,
             Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component,
-            ComponentFlavour componentFlavour,
+            List<Environment> environments, ComponentFlavour componentFlavour,
             BalConfig... balconfigs) throws Exception {
         HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
         HttpClient choreoClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
@@ -165,7 +178,7 @@ public class ComponentUtils {
         List<Commit> commitHistory = GraphQL.getCommitHistory(runner, cpProjectsClient, component.getId(), accessToken);
 
         if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
-            Orgs.addConfiguration(runner, choreoClient, component, commitHistory, Constant.DEV_ENVIRONMENT, balconfigs);
+            Orgs.addConfiguration(runner, choreoClient, component, commitHistory, environments.get(0), balconfigs);
         }
 
         Commit latestCommit = Commit.getLatestCommit(commitHistory);
@@ -176,7 +189,7 @@ public class ComponentUtils {
         ApiVersion apiVersion = component.getLatestApiVersion();
         String latestVersionId = apiVersion.getId();
 
-        String devEnvIdToDeploy = component.getLatestAppEnvId(Constant.DEV_ENVIRONMENT);
+        String devEnvIdToDeploy = environments.get(0).getId();
         String branch = component.getRepository().getBranch();
 
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).latestVersionId(latestVersionId)
@@ -225,45 +238,55 @@ public class ComponentUtils {
         return GraphQL.getComponentDeploymentStatus(runner, cpProjectsClient, accessToken, graphqlDTO, responseParams);
     }
 
-    public static ComponentDeploymentStatusDTO promoteComponent(TestActionRunner runner,
+    public static List<ComponentDeploymentStatusDTO> promoteComponent(TestActionRunner runner,
             Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component,
-            ComponentFlavour componentFlavour,
+            List<Environment> environments, ComponentFlavour componentFlavour,
             BalConfig... balconfigs) throws Exception {
         HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
         HttpClient choreoClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
 
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(component.getProjectId())
-                .componentHandler(component.getHandler()).build();
-
         List<Commit> commitHistory = GraphQL.getCommitHistory(runner, cpProjectsClient, component.getId(), accessToken);
 
-        if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
-            Orgs.addConfiguration(runner, choreoClient, component, commitHistory, Constant.PROD_ENVIRONMENT, balconfigs);
+        int srcEnvIndex = 0;
+        int destEnvIndex = 1;
+
+        List<ComponentDeploymentStatusDTO> deploymentStatus = new ArrayList<>();
+
+        while (destEnvIndex < environments.size()) {
+            Environment srcEnv = environments.get(srcEnvIndex);
+            Environment destEnv = environments.get(destEnvIndex);
+            if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
+                Orgs.addConfiguration(runner, choreoClient, component, commitHistory, destEnv, balconfigs);
+            }
+
+            String componentId = component.getId();
+            ApiVersion apiVersion = component.getLatestApiVersion();
+            String latestVersionId = apiVersion.getId();
+            String sourceReleaseId = component.getReleaseIdForEnvironment(srcEnv);
+            String latestAppEnvId = destEnv.getId();
+
+            GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).apiVersionId(latestVersionId)
+                    .sourceReleaseId(sourceReleaseId).targetEnvironmentId(latestAppEnvId).build();
+            GraphQL.promoteComponent(runner, cpProjectsClient, accessToken, graphqlDTO);
+
+            ChoreoOrganization org = component.getOrganization();
+            graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(org.getOrgHandle())
+                    .orgUuid(org.getOrgUUID()).versionId(latestVersionId).environmentId(latestAppEnvId).build();
+
+            Commit latestCommit = Commit.getLatestCommit(commitHistory);
+            String sha = latestCommit.getSha();
+
+            Map<String, String> responseParams = new HashMap<>();
+            responseParams.put("environmentId", latestAppEnvId);
+            responseParams.put("sha", sha);
+            responseParams.put("versionId", latestVersionId);
+
+            deploymentStatus.add(GraphQL.getComponentDeploymentStatus(runner, cpProjectsClient, accessToken, graphqlDTO, responseParams));
+            ++srcEnvIndex;
+            ++destEnvIndex;
         }
 
-        String componentId = component.getId();
-        ApiVersion apiVersion = component.getLatestApiVersion();
-        String latestVersionId = apiVersion.getId();
-        String sourceReleaseId = component.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT);
-        String latestAppEnvId = component.getLatestAppEnvId(Constant.PROD_ENVIRONMENT);
-
-        graphqlDTO = GraphqlDTO.builder().componentId(componentId).apiVersionId(latestVersionId)
-                .sourceReleaseId(sourceReleaseId).targetEnvironmentId(latestAppEnvId).build();
-        GraphQL.promoteComponent(runner, cpProjectsClient, accessToken, graphqlDTO);
-
-        ChoreoOrganization org = component.getOrganization();
-        graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(org.getOrgHandle())
-                .orgUuid(org.getOrgUUID()).versionId(latestVersionId).environmentId(latestAppEnvId).build();
-
-        Commit latestCommit = Commit.getLatestCommit(commitHistory);
-        String sha = latestCommit.getSha();
-
-        Map<String, String> responseParams = new HashMap<>();
-        responseParams.put("environmentId", latestAppEnvId);
-        responseParams.put("sha", sha);
-        responseParams.put("versionId", latestVersionId);
-
-        return GraphQL.getComponentDeploymentStatus(runner, cpProjectsClient, accessToken, graphqlDTO, responseParams);
+        return deploymentStatus;
     }
 
     public static ComponentDeploymentStatusDTO getComponenetPromotionStatus(TestActionRunner runner,
@@ -676,16 +699,19 @@ public class ComponentUtils {
     
     public static ComponentDeploymentStatusDTO deployComponentInBranch(TestActionRunner runner,
                     Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component,
-                    ComponentFlavour componentFlavour, String branchName,
+                    List<Environment> environments, ComponentFlavour componentFlavour, String branchName,
                     BalConfig... balconfigs) throws Exception {
             HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
             HttpClient choreoClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
             List<Commit> commitHistory = GraphQL.getCommitHistory(runner, cpProjectsClient, component.getId(),
                             accessToken, branchName);
-            if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
+
+        Environment environment = environments.get(0);
+
+        if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
                     Orgs.triggerConfigurableGeneration(runner, choreoClient, component, commitHistory,
                                     component.getBranch());
-                    Orgs.addConfiguration(runner, choreoClient, component, commitHistory, Constant.DEV_ENVIRONMENT,
+                    Orgs.addConfiguration(runner, choreoClient, component, commitHistory, environment,
                                     balconfigs);
             }
 
@@ -697,7 +723,7 @@ public class ComponentUtils {
             ApiVersion apiVersion = component.getLatestApiVersion();
             String latestVersionId = apiVersion.getId();
 
-            String devEnvIdToDeploy = component.getLatestAppEnvId(Constant.DEV_ENVIRONMENT);
+            String devEnvIdToDeploy = environment.getId();
             String branch = component.getRepository().getBranch();
 
             GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).latestVersionId(latestVersionId)
@@ -722,36 +748,44 @@ public class ComponentUtils {
                             responseParams);
     }
 
-    public static ComponentDeploymentStatusDTO promoteComponentInBranch(TestActionRunner runner,
+    public static List<ComponentDeploymentStatusDTO> promoteComponentInBranch(TestActionRunner runner,
                     Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component,
+                    List<Environment> environments,
                     ComponentFlavour componentFlavour, String branchName, BalConfig... balconfigs) throws Exception {
             HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
             HttpClient choreoClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
 
-            GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(component.getProjectId())
-                            .componentHandler(component.getHandler()).build();
 
             List<Commit> commitHistory = GraphQL.getCommitHistory(runner, cpProjectsClient, component.getId(),
                             accessToken, branchName);
 
+        int srcEnvIndex = 0;
+        int destEnvIndex = 1;
+
+        List<ComponentDeploymentStatusDTO> deploymentStatus = new ArrayList<>();
+
+        while (destEnvIndex < environments.size()) {
+            Environment srcEnv = environments.get(srcEnvIndex);
+            Environment destEnv = environments.get(destEnvIndex);
+
             if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
-                    Orgs.addConfiguration(runner, choreoClient, component, commitHistory, Constant.PROD_ENVIRONMENT,
-                                    balconfigs);
+                Orgs.addConfiguration(runner, choreoClient, component, commitHistory, destEnv,
+                        balconfigs);
             }
 
             String componentId = component.getId();
             ApiVersion apiVersion = component.getLatestApiVersion();
             String latestVersionId = apiVersion.getId();
-            String sourceReleaseId = component.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT);
-            String latestAppEnvId = component.getLatestAppEnvId(Constant.PROD_ENVIRONMENT);
+            String sourceReleaseId = srcEnv.getId();
+            String latestAppEnvId = destEnv.getId();
 
-            graphqlDTO = GraphqlDTO.builder().componentId(componentId).apiVersionId(latestVersionId)
-                            .sourceReleaseId(sourceReleaseId).targetEnvironmentId(latestAppEnvId).build();
+            GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).apiVersionId(latestVersionId)
+                    .sourceReleaseId(sourceReleaseId).targetEnvironmentId(latestAppEnvId).build();
             GraphQL.promoteComponent(runner, cpProjectsClient, accessToken, graphqlDTO);
 
             ChoreoOrganization org = component.getOrganization();
             graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(org.getOrgHandle())
-                            .orgUuid(org.getOrgUUID()).versionId(latestVersionId).environmentId(latestAppEnvId).build();
+                    .orgUuid(org.getOrgUUID()).versionId(latestVersionId).environmentId(latestAppEnvId).build();
 
             Commit latestCommit = Commit.getLatestCommit(commitHistory);
             String sha = latestCommit.getSha();
@@ -761,8 +795,14 @@ public class ComponentUtils {
             responseParams.put("sha", sha);
             responseParams.put("versionId", latestVersionId);
 
-            return GraphQL.getComponentDeploymentStatus(runner, cpProjectsClient, accessToken, graphqlDTO,
-                            responseParams);
+            deploymentStatus.add(GraphQL.getComponentDeploymentStatus(runner, cpProjectsClient, accessToken, graphqlDTO,
+                    responseParams));
+
+            ++srcEnvIndex;
+            ++destEnvIndex;
+        }
+
+        return deploymentStatus;
     }
 
 }

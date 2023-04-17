@@ -48,6 +48,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
@@ -65,6 +66,9 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     String apiKey;
     ChoreoComponent choreoComponent;
     ChoreoOrganization org;
+
+    private List<Environment> environments;
+    private List<ComponentDeploymentStatusDTO> statusDTOs;
 
     @Autowired
     private HttpClient choreoTestClient;
@@ -101,23 +105,24 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
         Assert.assertNotNull(choreoComponent.getId());
+
+        environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
     }
 
     @Test(dependsOnMethods = {"createUserManagedComponent_SysObservabilityAPITestCase"})
     @CitrusTest
     public void deploy_SysObservabilityAPITestCase() throws Exception {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, choreoComponent, ComponentFlavour.STANDARD);
+                accessToken, choreoComponent, environments, ComponentFlavour.STANDARD);
+        apiId = statusDTO.getApiId();
         devInvokeURL = statusDTO.getInvokeUrl();
     }
 
     @Test(dependsOnMethods = {"deploy_SysObservabilityAPITestCase"})
     @CitrusTest
     public void promote_SysObservabilityAPITestCase() throws Exception {
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
-                accessToken, choreoComponent, ComponentFlavour.STANDARD);
-        prodInvokeURL = statusDTO.getInvokeUrl();
-        apiId = statusDTO.getApiId();
+        statusDTOs = ComponentUtils.promoteComponent(this, citrusClients,
+                accessToken, choreoComponent, environments, ComponentFlavour.STANDARD);
     }
 
     @Test(dependsOnMethods = {"promote_SysObservabilityAPITestCase"})
@@ -125,61 +130,59 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     public void invokeEP_SysObservabilityAPITestCase() throws IOException {
         apiKey = APICreator.getAPIKey(choreoComponent.getApiId(), accessToken).getApikey();
         TestHelper.invokeEP(devInvokeURL, apiKey);
-        TestHelper.invokeEP(prodInvokeURL, apiKey);
+        for (ComponentDeploymentStatusDTO statusDTO : statusDTOs) {
+            TestHelper.invokeEP(statusDTO.getInvokeUrl(), apiKey);
+        }
     }
 
     @Test(dependsOnMethods = {"invokeEP_SysObservabilityAPITestCase"})
     @CitrusTest
     public void waitForObservabilityLogs_SysObservabilityAPITestCase() throws Exception {
-
-        en = GraphQL.getNamespaceForEnvironment(projectId, accessToken);
-        Environment devEnv = choreoComponent.getEnvironment(en, Constant.Environment.Development);
-        Environment prodEnv = choreoComponent.getEnvironment(en, Constant.Environment.Production);
-        choreoComponent.waitForObservabilityLogs(devEnv, accessToken);
-        choreoComponent.waitForObservabilityLogs(prodEnv, accessToken);
-
-        String devReleaseId = choreoComponent.getReleaseIdForEnvironment(devEnv.getChoreoEnv());
-        String prodReleaseId = choreoComponent.getReleaseIdForEnvironment(prodEnv.getChoreoEnv());
+        environments = ComponentUtils.getEnvironments(this, citrusClients, accessToken, choreoComponent);
+        for (Environment env : environments) {
+            choreoComponent.waitForObservabilityLogs(env, accessToken);
+        }
     }
 
-    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_SysObservabilityAPITestCase"})
+    @Test(dependsOnMethods = {"waitForObservabilityLogs_SysObservabilityAPITestCase"})
     @CitrusTest
-    public void testSystemMetrics_SysObservabilityAPITestCase(Constant.Environment env) throws Exception {
-        Environment environment = choreoComponent.getEnvironment(en, env);
-        String releaseId = choreoComponent.getReleaseIdForEnvironment(environment.getChoreoEnv());
-        String namespace = environment.getNamespace();
-        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
+    public void testSystemMetrics_SysObservabilityAPITestCase() throws Exception {
+        for (Environment env : environments) {
+            String releaseId = env.getId();
+            String namespace = env.getNamespace();
+            ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
 
-        String requestPath = Constant.OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX
-                .concat(observabilityIdInformation.getObsId())
-                .concat("/metricsV2");
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        $(http()
-                .client(choreoCPTestClient)
-                .send()
-                .get(requestPath)
-                .message()
-                .queryParam("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)))
-                .queryParam("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)))
-                .queryParam("interval", "15")
-                .queryParam("releaseId", releaseId)
-                .queryParam("namespace", namespace)
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .validate(jsonPath()
-                        .expression("$.keySet()", hasItems("columns", "rows"))
-                        .expression("$.columns[*].name", hasItems("cpu", "memory", "cpuPercentage", "memoryPercentage", "TimeGenerated"))
-                        .expression("$.columns[*].type", hasItems("dynamic", "dynamic", "dynamic", "dynamic", "dynamic"))
-                        .expression("$.rows.size()", greaterThan(0))
-                        .expression("$.rows[*]", allOf(is(not(emptyString()))))
-                )
-        );
+            String requestPath = Constant.OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX
+                    .concat(observabilityIdInformation.getObsId())
+                    .concat("/metricsV2");
+            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            $(http()
+                    .client(choreoCPTestClient)
+                    .send()
+                    .get(requestPath)
+                    .message()
+                    .queryParam("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)))
+                    .queryParam("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)))
+                    .queryParam("interval", "15")
+                    .queryParam("releaseId", releaseId)
+                    .queryParam("namespace", namespace)
+                    .header(HttpHeaders.AUTHORIZATION, accessToken)
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                    .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+            $(http()
+                    .client(choreoCPTestClient)
+                    .receive()
+                    .response(HttpStatus.OK)
+                    .message()
+                    .type(MessageType.JSON)
+                    .validate(jsonPath()
+                            .expression("$.keySet()", hasItems("columns", "rows"))
+                            .expression("$.columns[*].name", hasItems("cpu", "memory", "cpuPercentage", "memoryPercentage", "TimeGenerated"))
+                            .expression("$.columns[*].type", hasItems("dynamic", "dynamic", "dynamic", "dynamic", "dynamic"))
+                            .expression("$.rows.size()", greaterThan(0))
+                            .expression("$.rows[*]", allOf(is(not(emptyString()))))
+                    )
+            );
+        }
     }
 }

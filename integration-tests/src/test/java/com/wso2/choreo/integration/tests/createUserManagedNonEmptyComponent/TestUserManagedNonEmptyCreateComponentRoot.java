@@ -2,8 +2,10 @@ package com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
+import com.wso2.choreo.integration.models.environments.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -47,6 +49,8 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
         private String repoBranchV2 = "dev-v2";
         private String githubPAT;
 
+        private List<Environment> environments;
+
         @Autowired
         Map<Endpoints, HttpClient> citrusClients;
 
@@ -85,6 +89,8 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
                 choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                                 ComponentFlavour.STANDARD);
                 Assert.assertNotNull(choreoComponent.getId());
+
+                environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
         }
 
         @Test(dependsOnMethods = { "createUserManagedComponent_TestUserManagedNonEmptyCreateComponentRoot" })
@@ -113,13 +119,13 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
                         accessToken);
                 Assert.assertEquals(status.getData().getConclusion(), "success");
                 ComponentUtils.deployComponent(this, citrusClients, accessToken,
-                        choreoComponent, ComponentFlavour.STANDARD, null);
+                        choreoComponent, environments, ComponentFlavour.STANDARD, null);
         }
 
         @Test(dependsOnMethods = {"componentDeployment_TestUserManagedNonEmptyCreateComponentRoot"})
         @CitrusTest
         public void componentPromotionToProd_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
-                ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent,
+                ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent, environments,
                         ComponentFlavour.STANDARD, null);
         }
 
