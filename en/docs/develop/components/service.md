@@ -21,7 +21,7 @@ Choreo defines endpoints by combining port binding, protocol, endpoint name, net
 | Name | A unique identifier for the endpoint within the service component. |
 | Port | The network port on which the endpoint is accessible. |
 | Type | The communication protocol used by the endpoint (e.g., HTTP, HTTPS, gRPC, etc.). |
-| Network Visibility | The level of visibility granted to the endpoint. Determines the level of visibility granted to the endpoint, with the following options: <ul><li>Project: the endpoint can only be accessed by other components within the same project.</li><li>Organization: the endpoint can be accessed by any component within the same organization, but not by components outside of the organization.</li><li>Public: the endpoint can be accessed by any component, regardless of its location or organization.</li></ul> |
+| Network Visibility | The level of visibility granted to the endpoint. Determines the level of visibility granted to the endpoint, with the following options: <ul><li>Project: the endpoint can only be accessed by other components within the same project.</li><li>Organization: the endpoint can be accessed by any component within the same organization, but not by components outside of the organization.</li><li>Public: the endpoint can be accessed by any client, regardless of its location or organization.</li></ul> |
 | Schema | specifies the structure and format of the data exchanged through the endpoint. |
 | Context (HTTP and GraphQL only) | A context path that you add to the endpoint's URL for routing purposes. |
 
