@@ -42,6 +42,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-admin-api
+            - configMapRef:
+                name: cm-admin-api
           ports:
             - containerPort: 9090
               name: service-port

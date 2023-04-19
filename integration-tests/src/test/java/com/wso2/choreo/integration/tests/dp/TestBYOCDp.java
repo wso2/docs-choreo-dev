@@ -15,6 +15,7 @@ import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
+import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.tests.byoc.TestHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,12 +49,10 @@ public class TestBYOCDp extends TestBase {
         return this.setUp();
     }
 
-
     @DataProvider(name = "reg")
     public Object[][] regionData() {
         return DataProviderWrapper.convertToDataProvider(Arrays.asList(Configuration.getConfig(ConfigDefinition.REGIONS).split(",")));
     }
-
 
     @Test(dataProvider = "dps")
     @CitrusTest
@@ -61,41 +60,40 @@ public class TestBYOCDp extends TestBase {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
 
-
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).projectId(project.getId())
                 .srcGitRepoUrl("https://github.com/choreo-test-apps/byor-greetings-app2")
                 .oasFilePath("byoc-test/oas.yaml")
                 .dockerContext("byoc-test")
                 .dockerfilePath(DOCKER_FILE_PATH).build();
 
-        ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
+        ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.BYOC);
         dp.setChoreoProject(project);
         dp.setChoreoComponent(choreoComponent);
         Assert.assertEquals(project.getRegion(), dp.getRegion());
         Assert.assertNotNull(choreoComponent.getId());
 
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
+        dp.setEnvironments(environments);
     }
 
     @Test(dependsOnMethods = {"createByocComponent_TestBYOCEUDataPlane"}, dataProvider = "dps")
     @CitrusTest
     public void deploy_TestBYOCEUDataPlane(DataProviderWrapper dp) throws Exception {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, dp.getChoreoComponent(), ComponentFlavour.BYOC);
+                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.BYOC);
         String devInvokeURL = statusDTO.getInvokeUrl();
+        String apiId = statusDTO.getApiId();
+        dp.setApiId(apiId);
         dp.setDevInvokeUrl(devInvokeURL);
     }
 
     @Test(dependsOnMethods = {"deploy_TestBYOCEUDataPlane"}, dataProvider = "dps")
     @CitrusTest
     public void promote_TestBYOCEUDataPlane(DataProviderWrapper dp) throws Exception {
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
-                accessToken, dp.getChoreoComponent(), ComponentFlavour.BYOC);
-        String prodInvokeURL = statusDTO.getInvokeUrl();
-        String apiId = statusDTO.getApiId();
-        dp.setApiId(apiId);
-        dp.setProdInvokeUrl(prodInvokeURL);
+        List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
+                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.BYOC);
+        dp.setPromoteStatusDTO(statusDTO);
     }
-
 
     @Test(dependsOnMethods = {"promote_TestBYOCEUDataPlane"}, dataProvider = "dps")
     @CitrusTest
@@ -110,7 +108,9 @@ public class TestBYOCDp extends TestBase {
     @CitrusTest
     public void invokeAPIProd_TestBYOCEUDataPlane(DataProviderWrapper dp) throws Exception {
         String expectedResponse = TestHelper.getExpectedResponse();
-        ComponentUtils.invokeApiGET(this, dp.getKeyData().getApikey(), dp.getProdInvokeUrl(), "/movies", expectedResponse);
+        for (ComponentDeploymentStatusDTO statusDTO :dp.getPromoteStatusDTO()) {
+            ComponentUtils.invokeApiGET(this, dp.getKeyData().getApikey(), statusDTO.getInvokeUrl(), "/movies", expectedResponse);
+        }
     }
 
 }

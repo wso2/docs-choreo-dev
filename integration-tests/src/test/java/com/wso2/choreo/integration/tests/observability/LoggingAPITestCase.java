@@ -16,17 +16,16 @@ package com.wso2.choreo.integration.tests.observability;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
-
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
-import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
@@ -39,6 +38,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
@@ -53,6 +53,9 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     Map<Endpoints, HttpClient> citrusClients;
 
     ChoreoComponent choreoComponent;
+
+    private List<Environment> environments;
+    private List<ComponentDeploymentStatusDTO> statusDTOs;
 
     @DataProvider(name = "env-provider")
     public Object[][] environment() {
@@ -71,14 +74,20 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void createUserManagedComponent_LoggingAPITestCase() throws Exception {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
              GraphqlDTO dto = GraphqlDTO.builder().name(componentName).
                 triggerID("null").
                 srcGitRepoUrl("https://github.com/choreo-test-apps/rest-api").
                 projectId(projectId).
-                displayType(Constant.displayType.restAPI.name()).build();
+                orgHandler(orgHandle).repositoryType(Constant.NON_EMPTY_REPO_TYPE)
+                .repositoryBranch("main")
+                .repositorySubPath("")
+                .displayType(Constant.displayType.restAPI.name()).build();
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
         Assert.assertNotNull(choreoComponent.getId());
+
+        environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
     }
 
 
@@ -86,17 +95,16 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void deploy_LoggingAPITestCase() throws Exception {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, choreoComponent, ComponentFlavour.STANDARD);
+                accessToken, choreoComponent, environments, ComponentFlavour.STANDARD);
+        apiId = statusDTO.getApiId();
         devInvokeURL = statusDTO.getInvokeUrl();
     }
 
     @Test(dependsOnMethods = {"deploy_LoggingAPITestCase"})
     @CitrusTest
     public void promote_LoggingAPITestCase() throws Exception {
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
-                accessToken, choreoComponent, ComponentFlavour.STANDARD);
-        prodInvokeURL = statusDTO.getInvokeUrl();
-        apiId = statusDTO.getApiId();
+        statusDTOs = ComponentUtils.promoteComponent(this, citrusClients,
+                accessToken, choreoComponent, environments, ComponentFlavour.STANDARD);
     }
 
 
@@ -107,27 +115,37 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
         String expectedResponse = TestHelper.getExpectedResponse();
         for (int i = 0; i < 5; ++i) {
             ComponentUtils.invokeApiGET(this, keyData.getApikey(), devInvokeURL, "/isOdd?number=12121", expectedResponse);
-            ComponentUtils.invokeApiGET(this, keyData.getApikey(), prodInvokeURL, "/isOdd?number=12121", expectedResponse);
+
+            for (ComponentDeploymentStatusDTO statusDTO : statusDTOs) {
+                ComponentUtils.invokeApiGET(this, keyData.getApikey(), statusDTO.getInvokeUrl(), "/isOdd?number=12121", expectedResponse);
+            }
         }
     }
 
 
-    @Test(dataProvider = "env-provider", dependsOnMethods = {"invokeEP_LoggingAPITestCase"})
+    @Test(dependsOnMethods = {"invokeEP_LoggingAPITestCase"})
     @CitrusTest
-    public void testGroupedLogs_LoggingAPITestCase(Constant.Environment env) throws Exception {
-        ComponentUtils.verifyGroupLogs(this, citrusClients, accessToken, choreoComponent, env, Constant.region.US);
+    public void testGroupedLogs_LoggingAPITestCase() throws Exception {
+        ComponentUtils.updateEnvironments(environments, ComponentUtils.getEnvironments(this, citrusClients, accessToken, choreoComponent));
+        for (Environment env : environments) {
+            ComponentUtils.verifyGroupLogs(this, citrusClients, accessToken, choreoComponent, env, Constant.region.US.name());
+        }
     }
 
-    @Test(dataProvider = "env-provider", dependsOnMethods = {"testGroupedLogs_LoggingAPITestCase"})
+    @Test(dependsOnMethods = {"testGroupedLogs_LoggingAPITestCase"})
     @CitrusTest
-    public void testLiveLogs_LoggingAPITestCase(Constant.Environment env) throws Exception {
-        ComponentUtils.verifyLogs(this, citrusClients, accessToken, choreoComponent, env, Constant.region.US);
+    public void testLiveLogs_LoggingAPITestCase() throws Exception {
+        for (Environment env : environments) {
+            ComponentUtils.verifyLogs(this, citrusClients, accessToken, choreoComponent, env, Constant.region.US.name());
+        }
     }
 
-    @Test(dataProvider = "env-provider", dependsOnMethods = {"testLiveLogs_LoggingAPITestCase"})
+    @Test(dependsOnMethods = {"testLiveLogs_LoggingAPITestCase"})
     @CitrusTest
-    public void downloadZippedLogs_LoggingAPITestCase(Constant.Environment env) throws Exception {
-        ComponentUtils.verifyZipLogs(this, citrusClients, accessToken, choreoComponent, env, Constant.region.US);
+    public void downloadZippedLogs_LoggingAPITestCase() throws Exception {
+        for (Environment env : environments) {
+            ComponentUtils.verifyZipLogs(this, citrusClients, accessToken, choreoComponent, env, Constant.region.US.name());
+        }
     }
 
 }

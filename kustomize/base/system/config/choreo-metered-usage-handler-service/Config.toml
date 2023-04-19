@@ -4,3 +4,6 @@ dbLoginTimeout = 10000
 dbUseSsl = false
 dbConnPoolMaxOpen = 100
 dbConnPoolMinIdle = 5
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"

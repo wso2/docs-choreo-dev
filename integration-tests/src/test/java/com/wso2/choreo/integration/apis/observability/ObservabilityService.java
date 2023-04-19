@@ -2,8 +2,14 @@ package com.wso2.choreo.integration.apis.observability;
 
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.http.client.HttpClient;
+import com.consol.citrus.message.MessageType;
+import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.common.MessageUtils;
+import com.wso2.choreo.integration.common.choreoproject.AppEnvVersion;
+import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
+import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.ObservabilityLogsDownloadStatusCheckException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
@@ -13,6 +19,7 @@ import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.config.ObsRequestParam;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.models.observability.ObservabilityLogs;
+import com.wso2.choreo.integration.models.observability.SyntaxTree;
 import com.wso2.choreo.integration.models.response.Response;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -35,24 +42,34 @@ import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.containsStringIgnoringCase;
+import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.stringContainsInOrder;
 
 public class ObservabilityService extends ControlPlaneAPI {
 
@@ -94,7 +111,7 @@ public class ObservabilityService extends ControlPlaneAPI {
         return builder.build().toString();
     }
 
-    private static ObsRequestParam getShorterTimeSpanParams(String releaseId, String namespace, Constant.region region,
+    private static ObsRequestParam getShorterTimeSpanParams(String releaseId, String namespace, String region,
                                                            Constant.logType logType) {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         OffsetDateTime currentDateTime = OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.MILLIS);
@@ -106,7 +123,7 @@ public class ObservabilityService extends ControlPlaneAPI {
                 .endTime(endTime)
                 .namespace(namespace)
                 .releaseId(releaseId)
-                .region(region.name());
+                .region(region);
 
         switch (logType) {
             case metricsV2:
@@ -120,7 +137,7 @@ public class ObservabilityService extends ControlPlaneAPI {
         }
     }
 
-    private static ObsRequestParam getLongerTimeSpanParams(String releaseId, String namespace, Constant.region region,
+    private static ObsRequestParam getLongerTimeSpanParams(String releaseId, String namespace, String region,
                                                           Constant.logType logType) {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         OffsetDateTime currentDateTime = OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.MILLIS);
@@ -132,7 +149,7 @@ public class ObservabilityService extends ControlPlaneAPI {
                 .endTime(endTime)
                 .namespace(namespace)
                 .releaseId(releaseId)
-                .region(region.name());
+                .region(region);
 
         switch (logType) {
             case metricsV2:
@@ -295,7 +312,7 @@ public class ObservabilityService extends ControlPlaneAPI {
 
 
     public static void verifyLogsOverShorterDuration(TestActionRunner runner, HttpClient client, String accessToken,
-                                                     String releaseId, String namespace, Constant.region region,
+                                                     String releaseId, String namespace, String region,
                                                      Map<String, Object> validationMap) throws Exception {
 
         ObsRequestParam shorterTimeSpanParams = getShorterTimeSpanParams(releaseId, namespace, region, Constant.logType.logsV2);
@@ -304,7 +321,7 @@ public class ObservabilityService extends ControlPlaneAPI {
     }
 
     public static void verifyLogsOverLongerDuration(TestActionRunner runner, HttpClient client, String accessToken,
-                                                     String releaseId, String namespace, Constant.region region,
+                                                     String releaseId, String namespace, String region,
                                                     Map<String, Object> validationMap) throws Exception {
 
         ObsRequestParam longerTimeSpanParams = getLongerTimeSpanParams(releaseId, namespace, region, Constant.logType.logsV2);
@@ -313,7 +330,7 @@ public class ObservabilityService extends ControlPlaneAPI {
     }
 
     public static void verifyZipLogsOverLongerDuration(TestActionRunner runner, HttpClient client, String accessToken,
-                                                    String releaseId, String namespace, Constant.region region, String obsId) throws Exception {
+                                                    String releaseId, String namespace, String region, String obsId) throws Exception {
 
         ObsRequestParam longerTimeSpanParams = getLongerTimeSpanParams(releaseId, namespace, region, Constant.logType.logsV2);
 
@@ -321,7 +338,7 @@ public class ObservabilityService extends ControlPlaneAPI {
     }
 
     public static void verifyGroupLogsOverShorterDuration(TestActionRunner runner, HttpClient client, String accessToken,
-                                                     String releaseId, String namespace, Constant.region region) throws Exception {
+                                                     String releaseId, String namespace, String region) throws Exception {
 
         ObsRequestParam shorterTimeSpanParams = getShorterTimeSpanParams(releaseId, namespace, region, Constant.logType.groupedlogsV2);
 
@@ -329,7 +346,7 @@ public class ObservabilityService extends ControlPlaneAPI {
     }
 
     public static void verifyGroupLogsOverLongerDuration(TestActionRunner runner, HttpClient client, String accessToken,
-                                                    String releaseId, String namespace, Constant.region region) throws Exception {
+                                                    String releaseId, String namespace, String region) throws Exception {
 
         ObsRequestParam longerTimeSpanParams = getLongerTimeSpanParams(releaseId, namespace, region, Constant.logType.groupedlogsV2);
 
@@ -337,7 +354,7 @@ public class ObservabilityService extends ControlPlaneAPI {
     }
 
     public static void verifyMetricsOverShorterDuration(TestActionRunner runner, HttpClient client, String accessToken,
-                                                     String releaseId, String namespace, Constant.region region) throws Exception {
+                                                     String releaseId, String namespace, String region) throws Exception {
 
         ObsRequestParam shorterTimeSpanParams = getShorterTimeSpanParams(releaseId, namespace, region, Constant.logType.metricsV2);
 
@@ -347,7 +364,7 @@ public class ObservabilityService extends ControlPlaneAPI {
     }
 
     public static void verifyMetricsOverLongerDuration(TestActionRunner runner, HttpClient client, String accessToken,
-                                                    String releaseId, String namespace, Constant.region region) throws Exception {
+                                                    String releaseId, String namespace, String region) throws Exception {
 
         ObsRequestParam longerTimeSpanParams = getLongerTimeSpanParams(releaseId, namespace, region, Constant.logType.metricsV2);
 
@@ -355,4 +372,358 @@ public class ObservabilityService extends ControlPlaneAPI {
         validationMap.put("$.rows.size()", greaterThan(0));
         verifyMetrics(runner, client, accessToken, longerTimeSpanParams, validationMap);
     }
+
+    public static SyntaxTree verifyObservabilityAST(TestActionRunner runner, HttpClient client, String accessToken,
+                                                    List<ObservabilityIdInformation> observabilityIds,
+                                                    ChoreoComponent component) throws Exception {
+        ObservabilityIdInformation obsInfo = selectObsId(observabilityIds, component);
+
+        Map<String, String> params = new HashMap<>();
+        params.put("obsId", obsInfo.getObsId());
+        params.put("version", obsInfo.getVerzion());
+        String body = MessageUtils.
+                generateStringFromTemplate("templates/observability/graphql/queryForAst.mustache", params);
+
+        AtomicReference<SyntaxTree> syntaxTree = new AtomicReference<>();
+
+        runner.$(repeatOnError()
+                .until("i = 20")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX)
+                                .message()
+                                .body(body)
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                                .validate(jsonPath()
+                                        .expression("$.data.ast.__typename", "ast")
+                                        .expression("$.data.ast.keySet()", hasItems("__typename", "ast"))
+                                        .expression("$.data.ast.ast", stringContainsInOrder(Arrays.asList("packageOrg", "packageName", "packageVersion")))
+                                )
+                )
+        );
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX)
+                .message()
+                .body(body)
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate((message, context) -> {
+                    JsonParser parser = new JsonParser();
+                    String astString = parser.parse(message.getPayload(String.class)).getAsJsonObject()
+                            .getAsJsonObject("data")
+                            .getAsJsonObject("ast").get("ast").getAsString();
+
+                    syntaxTree.set(ObjectMapperUtil.mapStringToObject(SyntaxTree.class, astString, ""));
+                }));
+
+        return syntaxTree.get();
+    }
+
+
+    public static void verifyObservabilityMetricDensity(TestActionRunner runner, HttpClient client, String accessToken,
+                                                    ObservabilityIdInformation observabilityIdInformation) throws Exception {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("observeId", observabilityIdInformation.getObsId());
+        params.put("version", observabilityIdInformation.getVerzion());
+        String body = MessageUtils.
+                generateStringFromTemplate("templates/observability/graphql/queryForMetricDensity.mustache", params);
+
+        runner.$(repeatOnError()
+                .until("i = 20")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                            .client(client)
+                            .send()
+                            .post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX)
+                            .message()
+                            .header(HttpHeaders.AUTHORIZATION, accessToken)
+                            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                            .body(body)
+                            .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http()
+                            .client(client)
+                            .receive()
+                            .response(HttpStatus.OK)
+                            .message()
+                            .type(MessageType.JSON)
+                            .validate(jsonPath()
+                                    .expression("$.data.metricDensity.__typename", "metricDensity")
+                                    .expression("$.data.metricDensity.keySet()", hasItems("__typename", "metricCounts"))
+                                    .expression("$.data.metricDensity.metricCounts.size()", 4)
+                                    .expression("$.data.metricDensity.metricCounts[0].keySet()", hasItems("__typename", "count", "range"))
+                            )
+        ));
+    }
+
+    public static void verifyObservabilityMetricDensityHistrogram(TestActionRunner runner, HttpClient client, String accessToken,
+                                                                  List<ObservabilityIdInformation> observabilityIds,
+                                                                  ChoreoComponent component) throws Exception {
+        ObservabilityIdInformation obsInfo = selectObsId(observabilityIds, component);
+
+        Map<String, String> params = new HashMap<>();
+        params.put("observeId", obsInfo.getObsId());
+        params.put("version", obsInfo.getVerzion());
+        params.put("from", Instant.now().minusSeconds(60 * 60).toString());
+        params.put("to", Instant.now().toString());
+        String body = MessageUtils.
+                generateStringFromTemplate("templates/observability/graphql/queryForMetricDensityHistogram.mustache", params);
+
+        runner.$(repeatOnError()
+                .until("i = 20")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(body)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                                .validate(jsonPath()
+                                        .expression("$.data.metricDensityHistogram.__typename", "metricDensityHistogram")
+                                        .expression("$.data.metricDensityHistogram.keySet()", hasItems("__typename", "metricDensityHistogram"))
+                                        .expression("$.data.metricDensityHistogram.metricDensityHistogram.size()", greaterThan(1))
+                                        .expression("$.data.metricDensityHistogram.metricDensityHistogram[0].keySet()", hasItems("__typename", "time", "value"))
+                                )
+                ));
+    }
+
+    public static void verifyObservabilityAPI(TestActionRunner runner, HttpClient client, String accessToken,
+                                              List<ObservabilityIdInformation> observabilityIds,
+                                              ChoreoComponent component, SyntaxTree syntaxTree) throws Exception {
+        ObservabilityIdInformation obsInfo = selectObsId(observabilityIds, component);
+
+        String moduleId = syntaxTree.getPackageOrg() + "/" + syntaxTree.getPackageName() + ":" +
+              syntaxTree.getPackageVersion();
+
+        Map<String, String> params = new HashMap<>();
+        params.put("observeId", obsInfo.getObsId());
+        params.put("version", obsInfo.getVerzion());
+        params.put("moduleId", moduleId);
+        params.put("from", Instant.now().minusSeconds(60 * 60 * 24).toString());
+        params.put("to", Instant.now().toString());
+
+        String body = MessageUtils.
+                generateStringFromTemplate("templates/observability/graphql/queryForObservabilityStats.mustache", params);
+
+        runner.$(repeatOnError()
+                .until("i = 20")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(body)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                                .validate(jsonPath()
+                                        .expression("$.data.invocationMetrics.__typename", "invocationMetrics")
+                                        .expression("$.data.invocationMetrics.keySet()",
+                                                hasItems("__typename", "failedInvocationCounts", "meanInvocationTimes", "successfulInvocationCounts"))
+                                        .expression("$.data.invocationMetrics.meanInvocationTimes.size()", greaterThan(0))
+                                        .expression("$.data.invocationMetrics.successfulInvocationCounts.size()", greaterThan(0))
+                                )
+                ));
+
+    }
+
+    public static String verifyObservabilityTraceList(TestActionRunner runner, HttpClient client, String accessToken,
+                                              List<ObservabilityIdInformation> observabilityIds,
+                                                      ChoreoComponent component, SyntaxTree syntaxTree, int requestCount) throws Exception {
+        ObservabilityIdInformation obsInfo = selectObsId(observabilityIds, component);
+
+        String moduleId = syntaxTree.getPackageOrg() + "/" + syntaxTree.getPackageName() + ":" +
+                syntaxTree.getPackageVersion();
+
+        Map<String, String> params = new HashMap<>();
+        params.put("observeId",  obsInfo.getObsId());
+        params.put("version",  obsInfo.getVerzion());
+        params.put("moduleId", moduleId);
+        params.put("entryPointFuncModule", moduleId);
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        params.put("from", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)));
+        params.put("to", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)));
+
+        String body = MessageUtils.
+                generateStringFromTemplate("templates/observability/graphql/queryForTraceList.mustache", params);
+
+        AtomicReference<String> traceId = new AtomicReference<>();
+
+        runner.$(repeatOnError()
+                .until("i = 20")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(body)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                                .validate(jsonPath()
+                                        .expression("$.data.requestTraceGroup.keySet()", hasItems("__typename", "traces", "totalCount"))
+                                        .expression("$.data.requestTraceGroup.traces[0].keySet()",
+                                                hasItems("__typename", "duration", "errorStatus", "httpStatusCode", "startTime", "traceId"))
+                                        .expression("$.data.requestTraceGroup.traces.size()", greaterThan(1))
+                                        .expression("$.data.requestTraceGroup.totalCount", requestCount)
+                                        .expression("$.data.requestTraceGroup.traces[*].httpStatusCode", everyItem(containsString("200")))
+                                        .expression("$.data.requestTraceGroup.traces[*].errorStatus", everyItem(containsString("false")))
+                                        .expression("$.data.requestTraceGroup.traces[*].traceId", everyItem(is(not(emptyString()))))
+                                        .expression("$.data.requestTraceGroup.traces[*].duration", everyItem(greaterThan(1L)))
+                                )
+
+                ));
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX)
+                .message()
+                .body(body)
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate((message, context) -> {
+                    traceId.set(new JsonParser().parse(message.getPayload(String.class))
+                            .getAsJsonObject().getAsJsonObject("data")
+                            .getAsJsonObject("requestTraceGroup")
+                            .getAsJsonArray("traces").get(0).getAsJsonObject()
+                            .get("traceId").getAsString());
+                }));
+
+        return traceId.get();
+    }
+
+    public static void verifyObservabilityTraceInformation(TestActionRunner runner, HttpClient client, String accessToken,
+                                                           List<ObservabilityIdInformation> observabilityIds,
+                                                           ChoreoComponent component, SyntaxTree syntaxTree,
+                                                           String traceId) throws Exception {
+        ObservabilityIdInformation obsInfo = selectObsId(observabilityIds, component);
+
+        String moduleId = syntaxTree.getPackageOrg() + "/" + syntaxTree.getPackageName() + ":" +
+                syntaxTree.getPackageVersion();
+
+        Map<String, String> params = new HashMap<>();
+        params.put("observeId", obsInfo.getObsId());
+        params.put("version", obsInfo.getVerzion());
+        params.put("moduleId", moduleId);
+        params.put("traceId", traceId);
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        params.put("from", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)));
+        params.put("to", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)));
+
+        String body = MessageUtils.
+                generateStringFromTemplate("templates/observability/graphql/queryForTraceInformation.mustache", params);
+
+        runner.$(repeatOnError()
+                .until("i = 20")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(body)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                                .validate(jsonPath()
+                                        .expression("$.data.traceById.__typename", "traceById")
+                                        .expression("$.data.traceById.keySet()", hasItems("__typename", "spans"))
+                                        .expression("$.data.traceById.spans.size()", greaterThan(0))
+                                        .expression("$.data.traceById.spans[0].checkpoints[0].keySet()",
+                                                hasItems("__typename", "moduleId", "positionId", "timestamp"))
+                                        .expression("$.data.traceById.spans[0].keySet()",
+                                                hasItems("__typename", "checkpoints", "duration", "errorMsg", "errorStatus", "httpStatusCode", "position"))
+                                        .expression("$.data.traceById.spans[0].checkpoints[*].__typename", everyItem(containsString("checkpoint")))
+                                        .expression("$.data.traceById.spans[0].checkpoints[*].moduleId", everyItem(containsString(moduleId)))
+                                        .expression("$.data.traceById.spans[0].checkpoints[*].positionId", allOf(is(not(emptyString()))))
+                                )
+                ));
+    }
+
+    private static ObservabilityIdInformation selectObsId(List<ObservabilityIdInformation> observabilityIds, ChoreoComponent component)
+            throws NoLatestApiVersionFoundException {
+        List<AppEnvVersion> appEnvVersions = component.getLatestApiVersion().getAppEnvVersions();
+
+        Optional<AppEnvVersion> appEnvVersion = appEnvVersions.stream().filter(AppEnvVersion::isDev).findFirst();
+        Optional<ObservabilityIdInformation> obsInfo;
+
+        if (appEnvVersion.isPresent()) {
+            obsInfo = observabilityIds.stream().
+                    filter(o -> o.getReleaseId().equals(appEnvVersion.get().getReleaseId())).findFirst();
+        } else {
+            throw new IllegalStateException("Prod env does not exist");
+        }
+
+        if (obsInfo.isEmpty()) {
+            throw new IllegalStateException("Prod env with releaseId " + appEnvVersion.get().getReleaseId() + " does not contain Obs info");
+        }
+
+        return obsInfo.get();
+    }
+
 }

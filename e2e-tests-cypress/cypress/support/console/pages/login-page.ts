@@ -34,7 +34,7 @@ export class LoginPage {
     });
   }
 
-  static login(doCleanup:boolean=false) {
+  static login(doCleanup: boolean = false) {
     window.localStorage.setItem("seen", Date.now().toString());
 
     this.registerNetworkCallsForInterception();
@@ -44,6 +44,7 @@ export class LoginPage {
     this.persistLogoutURL();
     this.persistApimToken(doCleanup);
     this.persistCookies(`${Cypress.env("idpURL")}/commonauth`);
+    
 
     cy.get('[data-testid="header-user-profile-menu"]', {
       timeout: 180000,
@@ -132,7 +133,7 @@ export class LoginPage {
   }
 
   private static registerNetworkCallsForInterception() {
-    cy.intercept("GET", Cypress.env("appSvcURL") + "/validate-user").as("org");
+    cy.intercept("GET",Cypress.env("newAppSvcURL") + "/validation-mgt/1.0.0/validate-user").as("org");
     cy.intercept({
       method: "GET",
       url: `${Cypress.env("appSvcURL")}/orgs/*`,
@@ -171,7 +172,7 @@ export class LoginPage {
     });
   }
 
-  static persistApimToken(doCleanup:boolean=false) {
+  static persistApimToken(doCleanup: boolean = false) {
     cy.wait("@orgs", { timeout: 150000 }).then((intercept) => {
       const header = intercept.request.headers["authorization"] as string;
       const token = header.replace("Bearer", "").trim();
@@ -179,8 +180,9 @@ export class LoginPage {
       const current_org = { id, uuid, handle };
       Cypress.env("apim_token", token);
       Cypress.env("current_org", current_org);
-      if(doCleanup){
+      if (doCleanup) {
         GraphQL.deleteProjectsCreatedByTests(id, handle, token);
+        this.deleteOnPremKeys()
       }
     });
   }
@@ -225,5 +227,35 @@ export class LoginPage {
         sameSite: "no_restriction",
       });
     });
+  }
+
+
+  private static deleteOnPremKeys() {
+    const { handle } = Cypress.env("userData");
+    const header = {
+      Authorization: `Bearer ${Cypress.env("apim_token")}`,
+      "content-type": "application/json",
+    };
+    this.getOnPremKeys(handle, header).then(keys => {
+      keys.forEach(ke => {
+        const url = `${Cypress.env("newAppSvcURL")}/onprem-key-mgt/1.0.0/orgs/${handle}/keys/${ke.handle}/revoke`
+        Utils.sendPostRequest(url,header,"")
+      })
+
+
+    })
+  }
+
+  private static getOnPremKeys(handle: string, header: any) {
+
+    const url = `${Cypress.env("newAppSvcURL")}/onprem-key-mgt/1.0.0/orgs/${handle}/keys`
+
+    return Utils.sendGetRequest(url, header).then(res => {
+      if (res.status == 200) {
+        return res.body as { handle: string }[]
+      } else {
+        throw new Error("Error While Getting On Prem Keys")
+      }
+    })
   }
 }

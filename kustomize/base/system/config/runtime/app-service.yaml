@@ -261,6 +261,11 @@ defaultRoles:
         - {{.PERMISSION_CONFIG_CREATE}}
         - {{.PERMISSION_CONFIG_DELETE}}
         - {{.PERMISSION_CONFIG_MANAGE}}
+        - {{.PERMISSION_CUSTOM_DOMAIN_VIEW}}
+        - {{.PERMISSION_CUSTOM_DOMAIN_CREATE}}
+        - {{.PERMISSION_CUSTOM_DOMAIN_DELETE}}
+        - {{.PERMISSION_CUSTOM_DOMAIN_UPDATE}}
+        - {{.PERMISSION_CUSTOM_DOMAIN_MANAGE}}
     - name: Project Manager
       handle: project-manager
       description: Users who are involved in project management
@@ -466,7 +471,7 @@ subscriptions:
   enable: ${IS_SUBSCRIPTIONS_ENABLED}
   freeStepQuota: ${FREE_STEP_QUOTA}
 permissions:
-  roleManage: choreo:role_manage
+  roleManage: {{.PERMISSION_CHOREO_ROLE_MANAGE}}
 configurableWebhook:
   enabled: ${CONFIGURABLE_WEBHOOK_ENABLED}
 pardotNewUserRegistration:
@@ -481,3 +486,15 @@ choreoDemoOrg:
   enable: ${IS_CHOREO_DEMO_ORG_ENABLED}
   demoOrgId: ${DEMO_ORG_ID}
   role: ${DEMO_ORG_ROLE}
+salesforceLeadPardotConfig:
+  enable: {{.SALESFORCE_LEAD_VIA_PARDOT_ENABLED}}
+  pardot:
+    clientKey: ${SALESFORCE_LEAD_VIA_PARDOT_APP_KEY}
+    clientSecret: ${SALESFORCE_LEAD_VIA_PARDOT_APP_SECRET}
+    tokenURL: {{.SALESFORCE_LEAD_VIA_PARDOT_TOKEN_URL}}
+    pardotEndpoint: {{.SALESFORCE_LEAD_VIA_PARDOT_ENDPOINT}}
+    pardotSvcURL: {{.SALESFORCE_LEAD_VIA_PARDOT_SVC_URL}}
+  geoLocation:
+    url:  {{.GEO_LOCATION_SERVICE_URL}}
+    username: ${MAX_MIND_GEO_LOC_COUNTRY_USERNAME}
+    password: ${MAX_MIND_GEO_LOC_COUNTRY_PASSWORD}

@@ -3,53 +3,45 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip2: CKV_K8S_38=Required by LinkerD
+    checkov.io/skip1: CKV_K8S_38=Required by LinkerD
   labels:
-    choreo.component: image-share-service
-  name: image-share-service
+    choreo.component: choreo-marketplace
+  name: choreo-marketplace
 spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: image-share-service
+      choreo.component: choreo-marketplace
   strategy: { }
   template:
     metadata:
       labels:
-        choreo.component: image-share-service
-        antiaffinity: image-share-service
+        choreo.component: choreo-marketplace
+        antiaffinity: choreo-marketplace
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
-      automountServiceAccountToken: true
       securityContext:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: image-share-service
-          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-image-share-service:latest
-          env:
-            - name: AZURE_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: secret-image-share-service
-                  key: IMAGE_SHARE_SERVICE_SECRET
-          envFrom:
-            - configMapRef:
-                name: env-image-share-service
+        - name: choreo-marketplace
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-marketplace:latest
           ports:
             - containerPort: 9090
-              name: http-port
+              name: service-port
+            - containerPort: 9091      # To be used for readiness/liveness probes (internal)
+              name: health-port
           readinessProbe:
             initialDelaySeconds: 5
-            timeoutSeconds: 5
+            timeoutSeconds: 15
             periodSeconds: 10
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              port: http-port
-              path: /healthz
+              port: health-port
+              path: /readiness
           livenessProbe:
             initialDelaySeconds: 30
             timeoutSeconds: 15
@@ -57,8 +49,8 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              port: http-port
-              path: /healthz
+              port: health-port
+              path: /liveness
           resources:
             limits:
               cpu: "1"
@@ -70,24 +62,19 @@ spec:
             allowPrivilegeEscalation: false
             runAsUser: 10500
             runAsGroup: 10500
+            readOnlyRootFilesystem: true
             capabilities:
               drop:
                 - ALL
-            readOnlyRootFilesystem: true
           volumeMounts:
-            - name: secret-image-share-service
-              mountPath: "/mnt/csi/secret-image-share-service"
-              readOnly: true
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
       restartPolicy: Always
       volumes:
-        - name: secret-image-share-service
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-image-share-service
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
+        - name: config
+          configMap:
+            name: cm-file-choreo-marketplace
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
@@ -97,5 +84,5 @@ spec:
                   - key: antiaffinity
                     operator: In
                     values:
-                      - image-share-service
+                      - choreo-marketplace
               topologyKey: kubernetes.io/hostname

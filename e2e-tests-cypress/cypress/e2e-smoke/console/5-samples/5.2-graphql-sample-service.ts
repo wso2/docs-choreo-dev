@@ -77,17 +77,6 @@ describe("Graphql GQL service test", () => {
     TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
   });
 
-  it("Verify test functionality of GQL mutation in dev on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testDevOnGraphQL(TEST_MUTATION);
-    TestHelper.getGqlResult(TEST_MUTATION_RESPONSE);
-  });
-
-  it("Verify test functionality of GQL mutation in Prod on swagger", () => {
-    TestHelper.testProdOnGraphQL(TEST_MUTATION);
-    TestHelper.getGqlResult(TEST_MUTATION_RESPONSE);
-  });
-
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();

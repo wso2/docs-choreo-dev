@@ -10,27 +10,24 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import {
-
-  STANDARD_TIME_OUT,
-} from "../../constants";
 
 export class TryOut {
    static navigateToTryOutMenu() {
     cy.get('[data-testid="tryout-item-link"]').click();
-    cy.wait(STANDARD_TIME_OUT);
   }
 
 
   static SelectApplication(applicationName: string) {
-    cy.get('[data-testid="application-selector"]').click();
+    cy.get('[data-testid="application-selector-wrapper"]').within(()=>{
+      cy.get('[data-testid="application-selector"]').click()
+    })
+    cy.wait(500)
     cy.get(`[data-value="${applicationName}"]`).click().wait(1000);
   }
 
 
   static generateTestKeyAndVerify() {
     cy.get('[data-testid="get-test-key-btn"]').click({force: true});
-    cy.get('#notistack-snackbar').should('be.visible')
     cy.contains("Successfully created the access token").should('be.visible')
     cy.get("#accessTokenInput").invoke("val").should("not.be.empty");
   }

@@ -19,6 +19,7 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -30,6 +31,7 @@ import org.testng.annotations.Test;
 
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
@@ -63,6 +65,8 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
     Map<Endpoints, HttpClient> citrusClients;
     ChoreoOrganization org;
 
+    private List<Environment> environments;
+
     @BeforeClass
     public void setup_ConnectorBuilderIT() throws Exception {
 
@@ -93,10 +97,12 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
 
+        environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
+
 
         //Deploying component
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, choreoComponent, ComponentFlavour.STANDARD);
+                accessToken, choreoComponent, environments, ComponentFlavour.STANDARD);
         devInvokeURL = statusDTO.getInvokeUrl();
 
         //change the API lifecycle
@@ -226,4 +232,3 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .body(new ClassPathResource("templates/connectorbuilder/republish_success_ok.json")));
     }
 }
-

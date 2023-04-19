@@ -141,6 +141,7 @@ public class ChoreoComponent {
     private String componentType;
     private boolean httpBased;
     private ImageRegistry imageRegistry;
+    private String branch;
     private static final Logger log = LogManager.getLogger(ChoreoComponent.class);
     private static final Gson gson = new Gson();
 
@@ -538,7 +539,7 @@ public class ChoreoComponent {
                 // If still waiting after 10 attempts, increase the wait time between calls by 2 seconds
                 // to reduce sending too many requests
                 if (numberOfTries == 10) {
-                    waitForSeconds += 2;
+                    waitForSeconds += 5;
                 }
 
                 log.debug("waitForComponentDeploymentSuccess()... " + numberOfTries + " attempts, retrying");
@@ -748,6 +749,17 @@ public class ChoreoComponent {
             }
         }
         throw new NoLatestAppEnvIdFoundException();
+    }
+
+    public String getReleaseIdForEnvironment(Environment env) throws NoLatestApiVersionFoundException {
+        ApiVersion latestApiVersion = getLatestApiVersion();
+        for (AppEnvVersion latestAppEnvVersion : latestApiVersion.getAppEnvVersions()) {
+            if (latestAppEnvVersion.getEnvironmentId().equals(env.getId())) {
+                return latestAppEnvVersion.getReleaseId();
+            }
+        }
+
+        throw new IllegalStateException("Corresponding environment " + env.getId() + "does not exist in component");
     }
 
     /**
@@ -1169,7 +1181,6 @@ public class ChoreoComponent {
 
         String releaseId = getReleaseIdForEnvironment(environment.getChoreoEnv());
         String namespace = environment.getNamespace();
-        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
 
         log.info("Waiting till observability data appear");
         ObsRequestParam orp = ObsRequestParam.builder().namespace(namespace).releaseId(releaseId).sort("asc").limit("63").build();
@@ -1519,4 +1530,11 @@ public class ChoreoComponent {
         this.imageRegistry = imageRegistry;
     }
 
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
 }

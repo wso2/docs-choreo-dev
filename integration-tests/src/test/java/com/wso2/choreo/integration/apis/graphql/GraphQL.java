@@ -46,6 +46,7 @@ import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.graphql.CreateByocComponentResponseDTO;
 import com.wso2.choreo.integration.models.graphql.CreateComponentResponseDTO;
+import com.wso2.choreo.integration.models.graphql.CreateNewVersionResponseDTO;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.models.proxyapi.ProxyDeployment;
 import com.wso2.choreo.integration.models.response.ProxyResponse;
@@ -331,7 +332,7 @@ public class GraphQL extends ControlPlaneAPI {
     
     public static Environment[] getNamespaceForEnvironment(String projectId, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().orgUuid(ORG_UUID).projectId(projectId).build();
-        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentObservabilityEnvironmentInformation.mustache", dto);
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getEnvironments.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         return ObjectMapperUtil.mapToCollection(Environment[].class, response.getRes(), "environments");
     }
@@ -351,8 +352,8 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
     public static ObservabilityIdInformation getComponentObservabilityIdForReleaseId(String releaseId, String accessToken) throws IOException {
-        GraphqlDTO dto = GraphqlDTO.builder().releaseId(releaseId).build();
-        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentObservabilityIds.mustache", dto);
+        GraphqlDTO dto = GraphqlDTO.builder().releaseIds(releaseId).build();
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getObservabilityIds.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         return Arrays.
                 stream(ObjectMapperUtil.mapToCollection(ObservabilityIdInformation[].class,
@@ -545,6 +546,36 @@ public class GraphQL extends ControlPlaneAPI {
         return componentArray[0];
     }
 
+    public static List<Environment> getDeploymentEndvironments(TestActionRunner runner, HttpClient client,
+                                                               String accessToken, GraphqlDTO dto) throws IOException {
+        String queryString = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getComponentDeploymentEnvironments.mustache", dto);
+        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        List<Environment> envs = new ArrayList<>();
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate((message, context) -> {
+                    envs.addAll(List.of(ObjectMapperUtil.mapToCollection(Environment[].class,
+                            message.getPayload(String.class), "environments")));
+                }));
+
+        return envs;
+    }
+
     /**
      * Deploy component with validations
      *
@@ -560,15 +591,20 @@ public class GraphQL extends ControlPlaneAPI {
                 "templates/graphql/requests/deployComponent.mustache", graphqlDTO);
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
-        runner.$(http()
-                .client(client)
-                .send()
+        runner.$(repeatOnError()
+                .until("i = 20")
+                .index("i")
+                .autoSleep(10000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
-                .accept(MediaType.APPLICATION_JSON_VALUE));
+                .accept(MediaType.APPLICATION_JSON_VALUE)));
         runner.$(http()
                 .client(client)
                 .receive()
@@ -899,5 +935,69 @@ public class GraphQL extends ControlPlaneAPI {
                 }));
 
         return observabilityIds;
+    }
+    
+    public static CreateNewVersionResponseDTO createNewVersion(TestActionRunner runner,
+                    HttpClient choreoProjectsTestClient, String accessToken,
+                    GraphqlDTO graphqlDTO) throws IOException {
+
+            String queryString = ObjectMapperUtil.mapObjectToString(
+                            "templates/graphql/requests/createNewVersion.mustache", graphqlDTO);
+            String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+            AtomicReference<CreateNewVersionResponseDTO> mapStringToObject = new AtomicReference<>();
+            runner.$(http()
+                .client(choreoProjectsTestClient)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+            runner.$(http()
+                .client(choreoProjectsTestClient)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .body(new ClassPathResource("templates/graphql/responses/createNewVersionSuccess.json"))
+                .validate((message, context) -> {
+                        mapStringToObject.set(ObjectMapperUtil.mapStringToObject(
+                                CreateNewVersionResponseDTO.class, message.getPayload(String.class),
+                                        "createVersion"));
+                }));
+            return mapStringToObject.get();
+    }
+    
+    public static List<Commit> getCommitHistory(TestActionRunner runner, HttpClient client, String componentId,
+                                            String accessToken, String branchName) throws Exception {
+        GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).branch(branchName).build();
+        String queryString = ObjectMapperUtil.
+                mapObjectToString("templates/graphql/requests/commitHistoryBranch.mustache", dto);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        List<Commit> commitList = new ArrayList<>();
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate((message, context) -> {
+                    Commit[] commits = ObjectMapperUtil.mapToCollection(Commit[].class, message.getPayload(String.class), "commitHistory");
+                    commitList.addAll(List.of(commits));
+                }));
+
+        return commitList;
     }
 }

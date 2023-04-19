@@ -11,10 +11,9 @@
  * associated services.
  */
 
-
 import { Enums } from "../../enums";
+import { Utils } from "../../utils";
 import { ChoreoHomePage } from "../home/home-page";
-
 
 export class ProjectListingPage {
   static createNewProject(
@@ -26,27 +25,33 @@ export class ProjectListingPage {
 
     cy.url().then((url) => {
       if (url.includes("projects") && !url.includes("home")) {
-        cy.get('[data-testid="project-picker"]').click();
-        cy.get('[data-cyid="btn-create-new"]').click().wait(3000);
+        Utils.getRenderedElement('[data-testid="project-picker"]').click();
+        Utils.getRenderedElement('[data-cyid="btn-create-new"]').click();
       } else {
-        cy.get('[data-cyid="create-project-card"]').click().wait(3000);
+        Utils.getRenderedElement('[data-cyid="create-project-card"]').click();
       }
     });
 
     cy.get('[name="Name"]').clear().type(projectName);
     cy.get('[name="Description"]').clear().type(description);
     cy.get('[data-cyid="select-region"]').click();
-    cy.get(`[data-value="${dataPlane}"]`).click();
-    cy.get('[data-testid="create-version-create"]').click();
+    cy.contains(`Cloud Data Plane - ${dataPlane}`).click();
+    Utils.getRenderedElement('[data-testid="create-version-create"]').click();
     cy.get('[data-testid="create-version-create"]').should("not.exist");
   }
 
-
-
   static selectProject(projectName: string = "Default Project") {
-    cy.get('#project-picker').should("be.visible").click()
-    cy.get('input[placeholder="Search"]').type(`${projectName}{enter}`)
-    cy.get('ul>li>div>span>p').contains(projectName).click()
-    cy.contains("Let's Start Building...").should('be.visible')
+    cy.get("body").then((bdy) => {
+      if (bdy.find('[data-cyid="create-project-card"]').length > 0) {
+        cy.get('[data-cyid="search-icon"]').eq(0).click();
+        cy.get('[data-testid="search-field"]').type(`${projectName}{enter}`);
+        cy.contains(projectName).click();
+      } else {
+        Utils.getRenderedElement("#project-picker").click();
+        cy.wait(3000);
+        cy.get('ul>li [placeholder="Search"]').type(`${projectName}{enter}`);
+        cy.get("ul>li>div>span>p").contains(projectName).click();
+      }
+    });
   }
 }

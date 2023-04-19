@@ -12,6 +12,8 @@ import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
@@ -45,12 +47,6 @@ import static org.hamcrest.Matchers.hasItems;
 public class TestGraphQLServiceDp extends TestBase {
 
     private String accessToken;
-    private ChoreoComponent choreoComponent;
-    private Environment[] en;
-    @Autowired
-    private HttpClient choreoCPTestClient;
-    @Autowired
-    private HttpClient choreoTestClient;
 
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
@@ -58,11 +54,6 @@ public class TestGraphQLServiceDp extends TestBase {
     @DataProvider(name = "dps")
     public Object[][] provideData() {
         return this.setUp();
-    }
-
-    @DataProvider(name = "env-provider")
-    public Object[][] envProvider() {
-        return DataProviderWrapper.convertToDataProvider(Arrays.asList(Constant.Environment.values()));
     }
 
     @BeforeClass
@@ -75,36 +66,41 @@ public class TestGraphQLServiceDp extends TestBase {
     public void createUserManagedComponentFor_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
         ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").
                 srcGitRepoUrl("https://github.com/choreo-test-apps/graphql").
                 projectId(project.getId()).
                 displayType(Constant.displayType.graphql.name()).
-                build();
-        choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
+                orgHandler(orgHandle).repositoryType(Constant.NON_EMPTY_REPO_TYPE)
+                .repositoryBranch("main")
+                .repositorySubPath("").build();
+        ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
         dp.setChoreoProject(project);
         dp.setChoreoComponent(choreoComponent);
         Assert.assertEquals(project.getRegion(), dp.getRegion());
         Assert.assertNotNull(choreoComponent.getId());
+
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
+        dp.setEnvironments(environments);
     }
 
     @Test(dependsOnMethods = {"createUserManagedComponentFor_GraphQLServiceEUdpIT"}, dataProvider = "dps")
     @CitrusTest
     public void componentDeploy_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, dp.getChoreoComponent(), ComponentFlavour.STANDARD);
+                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD);
         String devInvokeURL = statusDTO.getInvokeUrl();
+        String apiId = statusDTO.getApiId();
+        dp.setApiId(apiId);
         dp.setDevInvokeUrl(devInvokeURL);
     }
 
     @Test(dependsOnMethods = {"componentDeploy_GraphQLServiceEUdpIT"}, dataProvider = "dps")
     @CitrusTest
     public void promote_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
-                accessToken, dp.getChoreoComponent(), ComponentFlavour.STANDARD);
-        String prodInvokeURL = statusDTO.getInvokeUrl();
-        String apiId = statusDTO.getApiId();
-        dp.setApiId(apiId);
-        dp.setProdInvokeUrl(prodInvokeURL);
+        List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
+                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD);
+        dp.setPromoteStatusDTO(statusDTO);
     }
 
     @Test(dependsOnMethods = {"promote_GraphQLServiceEUdpIT"}, dataProvider = "dps")
@@ -119,8 +115,10 @@ public class TestGraphQLServiceDp extends TestBase {
     @Test(dependsOnMethods = {"invokeQueryInDev_GraphQLServiceEUdpIT"}, dataProvider = "dps")
     @CitrusTest
     public void invokeQueryInProd_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
-        ComponentUtils.invokeApiPOST(this, dp.getKeyData().getApikey(), dp.getProdInvokeUrl(), "/",
-                GqlServiceTestHelper.getGqlQueryRequest(), GqlServiceTestHelper.getGqlQueryResponse());
+        for (ComponentDeploymentStatusDTO statusDTO : dp.getPromoteStatusDTO()) {
+            ComponentUtils.invokeApiPOST(this, dp.getKeyData().getApikey(), statusDTO.getInvokeUrl(), "/",
+                    GqlServiceTestHelper.getGqlQueryRequest(), GqlServiceTestHelper.getGqlQueryResponse());
+        }
     }
 
 
@@ -134,75 +132,32 @@ public class TestGraphQLServiceDp extends TestBase {
     @Test(dependsOnMethods = {"invokeMutationInDev_GraphQLServiceEUdpIT"}, dataProvider = "dps")
     @CitrusTest
     public void invokeMutationInProd_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
-        ComponentUtils.invokeApiPOST(this, dp.getKeyData().getApikey(), dp.getProdInvokeUrl(), "/",
-                GqlServiceTestHelper.getGqlMutationRequest(), GqlServiceTestHelper.getGqlMutationResponse());
+        for (ComponentDeploymentStatusDTO statusDTO : dp.getPromoteStatusDTO()) {
+            ComponentUtils.invokeApiPOST(this, dp.getKeyData().getApikey(), statusDTO.getInvokeUrl(), "/",
+                    GqlServiceTestHelper.getGqlMutationRequest(), GqlServiceTestHelper.getGqlMutationResponse());
+        }
     }
 
     @Test(dependsOnMethods = {"invokeMutationInProd_GraphQLServiceEUdpIT"}, dataProvider = "dps")
     @CitrusTest
     public void waitForObservabilityLogs_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
-        en = GraphQL.getNamespaceForEnvironment(dp.getChoreoProject().getId(), accessToken);
-        Environment devEnv = dp.getChoreoComponent().getEnvironment(en, Constant.Environment.Development);
-        Environment prodEnv = dp.getChoreoComponent().getEnvironment(en, Constant.Environment.Production);
-        dp.getChoreoComponent().waitForObservabilityLogs(devEnv, accessToken);
-        dp.getChoreoComponent().waitForObservabilityLogs(prodEnv, accessToken);
+        dp.updateEnvironments(ComponentUtils.getEnvironments(this, citrusClients, accessToken, dp.getChoreoComponent()));
     }
+
 
     @Test(dataProvider = "dps", dependsOnMethods = {"waitForObservabilityLogs_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void testGroupedLogs_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
-        Environment envDev = dp.getChoreoComponent().getEnvironment(en, dp.getDev());
-        Environment envPrd = dp.getChoreoComponent().getEnvironment(en, dp.getPrd());
-        String releaseIdDev = dp.getChoreoComponent().getReleaseIdForEnvironment(envDev.getChoreoEnv());
-        String releaseIdPrd = dp.getChoreoComponent().getReleaseIdForEnvironment(envPrd.getChoreoEnv());
-        String namespaceDev = envDev.getNamespace();
-        String namespacePrd = envPrd.getNamespace();
-        ObservabilityLogs observabilityLogsDev = ObservabilityService.getGroupLogs(releaseIdDev, namespaceDev, accessToken);
-        ObservabilityLogs observabilityLogsPrd = ObservabilityService.getGroupLogs(releaseIdPrd, namespacePrd, accessToken);
-        Assert.assertTrue(observabilityLogsDev.getRows().length > 0);
-        Assert.assertTrue(observabilityLogsPrd.getRows().length > 0);
+    public void testLiveLogs_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
+        for (Environment env : dp.getEnvironments()) {
+            ComponentUtils.verifyLogs(this, citrusClients, accessToken, dp.getChoreoComponent(), env, dp.getRegion());
+        }
     }
 
-    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_GraphQLServiceEUdpIT"})
+    @Test(dataProvider = "dps", dependsOnMethods = {"testLiveLogs_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void testLiveLogs_GraphQLServiceEUdpIT(Constant.Environment env) throws Exception {
-        Environment environment = choreoComponent.getEnvironment(en, env);
-        String releaseId = choreoComponent.getReleaseIdForEnvironment(environment.getChoreoEnv());
-        String namespace = environment.getNamespace();
-        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
-
-        String requestPath = Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX
-                .concat(observabilityIdInformation.getObsId())
-                .concat("/logsV2");
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        $(http()
-                .client(choreoCPTestClient)
-                .send()
-                .get(requestPath)
-                .queryParam("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)))
-                .queryParam("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)))
-                .queryParam("releaseId", releaseId)
-                .queryParam("namespace", namespace)
-                .queryParam("sort", "desc")
-                .queryParam("limit", "95")
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .validate(jsonPath()
-                        .expression("$.keySet()", hasItems("columns", "rows"))
-                        .expression("$.columns.size()", greaterThanOrEqualTo(1))
-                        .expression("$.columns[*].name", hasItems("TimeGenerated", "LogLevel", "LogEntry", "LogContext"))
-                        .expression("$.columns[*].type", hasItems("datetime", "string", "dynamic", "dynamic"))
-                        .expression("$.rows.size()", greaterThanOrEqualTo(1))
-                        .expression("$.rows[*][0]", everyItem(StringRegularExpression.matchesRegex("^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)((-(\\d{2}):(\\d{2})|Z)?)$")))
-                )
-        );
+    public void testGroupedLogs_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
+        for (Environment env : dp.getEnvironments()) {
+            ComponentUtils.verifyGroupLogs(this, citrusClients, accessToken, dp.getChoreoComponent(), env, dp.getRegion());
+        }
     }
 }
