@@ -20,7 +20,10 @@ import com.consol.citrus.message.MessageType;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.wso2.choreo.integration.apis.Orgs;
+import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.apis.observability.ObservabilityService;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
@@ -33,6 +36,7 @@ import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundEx
 import com.wso2.choreo.integration.common.exceptions.ProjectRetrievalException;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.apimanager.KeyData;
 import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
@@ -40,6 +44,8 @@ import com.wso2.choreo.integration.models.graphql.CreateByocComponentResponseDTO
 import com.wso2.choreo.integration.models.graphql.CreateComponentResponseDTO;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
+import com.wso2.choreo.integration.models.revision.Revision;
+import com.wso2.choreo.integration.models.revision.RevisionWrapper;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -62,6 +68,8 @@ import java.util.concurrent.TimeUnit;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
+import static com.wso2.choreo.integration.config.Constant.MAX_API_REVISIONS_LIMIT_SETTINGS_PAGE;
 import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.greaterThan;
 
@@ -107,7 +115,7 @@ public class ComponentUtils {
             restAPI.setOrganization(org);
             return restAPI;
         } else {
-           throw new RuntimeException("Component named: " + componentName + "does not exist in " + project.getName() + " project");
+            throw new RuntimeException("Component named: " + componentName + "does not exist in " + project.getName() + " project");
         }
     }
 
@@ -149,7 +157,7 @@ public class ComponentUtils {
         }
 
         return GraphQL.retrieveComponent(runner, cpProjectsClient, accessToken,
-                    graphqlDTO);
+                graphqlDTO);
     }
 
     public static ComponentDeploymentStatusDTO deployComponent(TestActionRunner runner, Map<Endpoints,
@@ -344,7 +352,7 @@ public class ComponentUtils {
      * @param runner           Test action runner
      * @param apiKey           API Key
      * @param invokeUrl        Invoke URL
-     * @param resource    API Resource
+     * @param resource         API Resource
      * @param expectedResponse Expected response
      */
     public static void invokeApiGET(TestActionRunner runner, String apiKey, String invokeUrl, String resource,
@@ -355,19 +363,19 @@ public class ComponentUtils {
                 .index("i")
                 .autoSleep(5000)
                 .actions((http()
-                            .client(invokeUrl)
-                            .send()
-                            .get(resource)
-                            .message()
-                            .accept(MediaType.APPLICATION_JSON_VALUE)
-                            .header("API-Key", apiKey)),
+                                .client(invokeUrl)
+                                .send()
+                                .get(resource)
+                                .message()
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .header("API-Key", apiKey)),
                         http()
-                            .client(invokeUrl)
-                            .receive()
-                            .response(HttpStatus.OK)
-                            .message()
-                            .type(MessageType.JSON)
-                            .body(expectedResponse)));
+                                .client(invokeUrl)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                                .body(expectedResponse)));
 
         TimeUnit.SECONDS.sleep(2);
     }
@@ -378,13 +386,12 @@ public class ComponentUtils {
      * @param runner           Test action runner
      * @param apiKey           API Key
      * @param invokeUrl        Invoke URL
-     * @param resource    API Resource
-     * @param requestBody Request payload
+     * @param resource         API Resource
+     * @param requestBody      Request payload
      * @param expectedResponse Expected response
-     *
      */
     public static void invokeApiPOST(TestActionRunner runner, String apiKey, String invokeUrl, String resource,
-                                    String requestBody, String expectedResponse) {
+                                     String requestBody, String expectedResponse) {
         // Test API Invocation
         runner.$(repeatOnError()
                 .until("i = 5")
@@ -518,7 +525,7 @@ public class ComponentUtils {
     }
 
     public static void verifyMetrics(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-                                  String accessToken, ChoreoComponent component, Constant.region region) throws Exception {
+                                     String accessToken, ChoreoComponent component, Constant.region region) throws Exception {
         HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
 
@@ -566,4 +573,12 @@ public class ComponentUtils {
             throw new RuntimeException("Prod env does not exist");
         }
     }
+
+    public static RevisionWrapper getRevisions(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients , String accessToken, String apiId, String orgUuid) throws Exception {
+        HttpClient httpClient = citrusClients.get(Endpoints.STS_ENDPOINT);
+
+        RevisionWrapper revisionCount = ApiManager.getRevisionCount(runner , httpClient ,  accessToken,  apiId, orgUuid);
+        return revisionCount;
+    }
+
 }
