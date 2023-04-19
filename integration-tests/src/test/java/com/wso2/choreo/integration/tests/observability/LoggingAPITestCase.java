@@ -123,22 +123,29 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     }
 
 
-    @Test(dataProvider = "env-provider", dependsOnMethods = {"invokeEP_LoggingAPITestCase"})
+    @Test(dependsOnMethods = {"invokeEP_LoggingAPITestCase"})
     @CitrusTest
-    public void testGroupedLogs_LoggingAPITestCase(Constant.Environment env) throws Exception {
-        ComponentUtils.verifyGroupLogs(this, citrusClients, accessToken, choreoComponent, env, Constant.region.US);
+    public void testGroupedLogs_LoggingAPITestCase() throws Exception {
+        ComponentUtils.updateEnvironments(environments, ComponentUtils.getEnvironments(this, citrusClients, accessToken, choreoComponent));
+        for (Environment env : environments) {
+            ComponentUtils.verifyGroupLogs(this, citrusClients, accessToken, choreoComponent, env, Constant.region.US.name());
+        }
     }
 
-    @Test(dataProvider = "env-provider", dependsOnMethods = {"testGroupedLogs_LoggingAPITestCase"})
+    @Test(dependsOnMethods = {"testGroupedLogs_LoggingAPITestCase"})
     @CitrusTest
-    public void testLiveLogs_LoggingAPITestCase(Constant.Environment env) throws Exception {
-        ComponentUtils.verifyLogs(this, citrusClients, accessToken, choreoComponent, env, Constant.region.US);
+    public void testLiveLogs_LoggingAPITestCase() throws Exception {
+        for (Environment env : environments) {
+            ComponentUtils.verifyLogs(this, citrusClients, accessToken, choreoComponent, env, Constant.region.US.name());
+        }
     }
 
-    @Test(dataProvider = "env-provider", dependsOnMethods = {"testLiveLogs_LoggingAPITestCase"})
+    @Test(dependsOnMethods = {"testLiveLogs_LoggingAPITestCase"})
     @CitrusTest
-    public void downloadZippedLogs_LoggingAPITestCase(Constant.Environment env) throws Exception {
-        ComponentUtils.verifyZipLogs(this, citrusClients, accessToken, choreoComponent, env, Constant.region.US);
+    public void downloadZippedLogs_LoggingAPITestCase() throws Exception {
+        for (Environment env : environments) {
+            ComponentUtils.verifyZipLogs(this, citrusClients, accessToken, choreoComponent, env, Constant.region.US.name());
+        }
     }
 
 }

@@ -31,11 +31,11 @@ export class OrganizationComponent {
   }
 
   static verifyEmailIsNotDisplayed(email: string) {
-    cy.get(`td[value="${email}"]`).should("not.exist");
+    cy.contains(email).should('not.be.visible');
   }
 
   static verifyEmailIsDisplayed(email: string) {
-    cy.get(`td[value="${email}"]`).should("exist");
+    cy.contains(email).should('be.visible');
   }
 
   static verifyGroupNameIsDisplayed(groupName: string) {
@@ -46,7 +46,7 @@ export class OrganizationComponent {
     cy.get(`td[value="${groupName}"]`).should("not.exist");
   }
 
-  static inviteMembers(email: string, ...roles) {
+  static inviteMembers(email: string, ...roles: string[]) {
     cy.wait(300);
     cy.get('[data-cyid="invite-members"]').click();
     cy.wait(300);

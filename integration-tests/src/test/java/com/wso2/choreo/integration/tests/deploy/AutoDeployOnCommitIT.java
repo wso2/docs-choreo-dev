@@ -23,6 +23,8 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.utils.FileUtil;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.models.GraphqlDTO;
@@ -62,13 +64,15 @@ import java.util.Map;
         @CitrusTest
         public void createUserManagedComponentFor_AutoDeployOnCommitIT() throws Exception {
             String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+            String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
             GraphqlDTO dto = GraphqlDTO.builder().
                     name(componentName).
                     triggerID("null").
                     srcGitRepoUrl("https://github.com/choreo-test-apps/" + repoName).
                     projectId(project.getId()).
-                    displayType(Constant.displayType.restAPI.name()).
-                    build();
+                    displayType(Constant.displayType.restAPI.name()).repositoryBranch("main")
+                    .repositorySubPath("").build();
+
             choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                     ComponentFlavour.STANDARD);
             Assert.assertNotNull(choreoComponent.getId());

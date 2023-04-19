@@ -14,6 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @NoArgsConstructor
@@ -51,6 +52,18 @@ public class DataProviderWrapper {
             dataProvider[i][0] = list.get(i);
         }
         return dataProvider;
+    }
+
+    public void updateEnvironments(List<Environment> addionalEnvironmentInfo) {
+        for (Environment environment : addionalEnvironmentInfo) {
+            Optional<Environment> first = environments.stream()
+                    .filter(e -> e.getId().equals(environment.getId())).findFirst();
+
+            if (first.isPresent()) {
+                Environment existingEnv = first.get();
+                existingEnv.setNamespace(environment.getNamespace());
+            }
+        }
     }
 
 

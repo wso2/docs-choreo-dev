@@ -27,6 +27,8 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.Endpoints;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
@@ -47,6 +49,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -67,8 +70,10 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     ChoreoComponent choreoComponent;
     ChoreoOrganization org;
 
+    private List<ObservabilityIdInformation> observabilityIdInfoList = new ArrayList<>();
     private List<Environment> environments;
     private List<ComponentDeploymentStatusDTO> statusDTOs;
+    private List<Environment> observabilityEnvs;
 
     @Autowired
     private HttpClient choreoTestClient;
@@ -96,12 +101,14 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void createUserManagedComponent_SysObservabilityAPITestCase() throws Exception {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).
                 triggerID("null").
                 srcGitRepoUrl("https://github.com/choreo-test-apps/rest-api").
                 projectId(projectId).
-                displayType(Constant.displayType.restAPI.name()).build();
+                displayType(Constant.displayType.restAPI.name()).repositoryBranch("main").
+                repositorySubPath("").build();
+
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
         Assert.assertNotNull(choreoComponent.getId());
@@ -127,6 +134,18 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"promote_SysObservabilityAPITestCase"})
     @CitrusTest
+    public void getEnvironments_SysObservabilityAPITestCase() throws Exception {
+        observabilityEnvs = ComponentUtils.getEnvironments(this, citrusClients, accessToken, choreoComponent);
+    }
+
+    @Test(dependsOnMethods = {"getEnvironments_SysObservabilityAPITestCase"})
+    @CitrusTest
+    public void getObservabilityIds_SysObservabilityAPITestCase() throws Exception {
+        observabilityIdInfoList = ComponentUtils.getObservabilityIds(this, citrusClients, accessToken, choreoComponent);
+    }
+
+    @Test(dependsOnMethods = {"getObservabilityIds_SysObservabilityAPITestCase"})
+    @CitrusTest
     public void invokeEP_SysObservabilityAPITestCase() throws IOException {
         apiKey = APICreator.getAPIKey(choreoComponent.getApiId(), accessToken).getApikey();
         TestHelper.invokeEP(devInvokeURL, apiKey);
@@ -136,15 +155,6 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = {"invokeEP_SysObservabilityAPITestCase"})
-    @CitrusTest
-    public void waitForObservabilityLogs_SysObservabilityAPITestCase() throws Exception {
-        environments = ComponentUtils.getEnvironments(this, citrusClients, accessToken, choreoComponent);
-        for (Environment env : environments) {
-            choreoComponent.waitForObservabilityLogs(env, accessToken);
-        }
-    }
-
-    @Test(dependsOnMethods = {"waitForObservabilityLogs_SysObservabilityAPITestCase"})
     @CitrusTest
     public void testSystemMetrics_SysObservabilityAPITestCase() throws Exception {
         for (Environment env : environments) {
