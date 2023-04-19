@@ -42,7 +42,7 @@ describe(`Graphql GQL service functionality in region ${dp}`, () => {
   const TEST_QUERY_RESPONSE = "Hello, John";
   const TEST_MUTATION = 'mutation{createUser(name:"John")}';
   const TEST_MUTATION_RESPONSE = 'createUser": "User created with name: John';
-  const COMPONENT_NAME = "graphql-service";
+  const COMPONENT_NAME = "gservice";
   const REPO_NAME = "graphql-service-sample";
 
   it("Verify GraphQL component creation", () => {
@@ -57,6 +57,7 @@ describe(`Graphql GQL service functionality in region ${dp}`, () => {
       initializeAsBallerinaProject: false,
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: "",
+      sampleTemplate:""
     };
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, dp);
     GraphQL.createComponent(

@@ -76,7 +76,7 @@ export class GraphQL {
     token: string
   ) {
     this.getProjects().then((response) => {
-      if (response.status !== SUCCESS_STATUS_CODE) {
+      if (response.status > 205) {
         cy.log(`getProjects failed, status returned: ${response.status}`);
         return;
       }
@@ -86,7 +86,8 @@ export class GraphQL {
       const e2eProjects = projects.filter(
         ({ name }) =>
           name.includes(Utils.projectNamePrefix) ||
-          name.includes(Utils.oldProjectNamePrefix)
+          name.includes(Utils.oldProjectNamePrefix) ||
+          name.includes("test")
       );
       cy.log(`Total projects found : ${projects.length}`);
       cy.log(`E2E projects found : ${e2eProjects.length}`);
