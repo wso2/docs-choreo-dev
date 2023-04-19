@@ -1,0 +1,8 @@
+projectApiUrl = "http://cp-graphql:9090/graphql"
+devPortalUrl = "{{.DEV_PORTAL_URL}}"
+appServiceUrl = "http://app-service:8080"
+healthCheckPort = 9091
+servicePort = 9000
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"

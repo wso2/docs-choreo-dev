@@ -25,6 +25,7 @@ resources:
   - dp-mizzen.yaml
   - cp-graphql.yaml
   - console-next.yaml
+  - marketplace.yaml
   - multivariate-anomaly-detector-notification-manager.yaml
   - alert-notification-service.yaml
   - alert-configuration-service.yaml

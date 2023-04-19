@@ -499,3 +499,7 @@ configMapGenerator:
     literals:
       - MIZZEN_URL="http://dp-mizzen"
       - KV_RESOLVER_INTERNAL_SVC_URL="http://dp-kv-resolver"
+  - name: cm-file-choreo-marketplace
+    behavior: create
+    files:
+      - marketplace/Config.toml
