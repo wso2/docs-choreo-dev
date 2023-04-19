@@ -87,13 +87,6 @@ Exposing endpoints as managed APIs is crucial to ensure secure and controlled ac
 
 If you want to expose an endpoint as a managed API in Choreo, you need to set the network visibility to either Organization or Public. This allows the endpoint to be exposed through the Choreo API Gateway, which provides a number of benefits, including:
 
-- Full lifecycle API Management
-- API throttling
-- secure APIs with policies
-- API analytics and montioring
-
-To expose an endpoint as a managed API, follow these steps:
-
 * Expose APIs to external and internal cosumers
 * Full lifecycle API Management
 * API throttling
@@ -101,5 +94,3 @@ To expose an endpoint as a managed API, follow these steps:
 * API analytics and monitoring
 
 Once you deploy the service component, Choreo will expose the endpoint as a managed API through the Choreo API Gateway. You can then use the full lifecycle API management features provided by Choreo to test, deploy, maintain, monitor, and manage your API using the API management features.
-
-
