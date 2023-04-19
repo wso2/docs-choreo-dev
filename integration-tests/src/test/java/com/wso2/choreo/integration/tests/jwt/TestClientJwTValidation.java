@@ -12,6 +12,8 @@ import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.models.GraphqlDTO;
@@ -58,10 +60,14 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void createUserManagedComponentFor_TestClientJwTValidation() throws Exception {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
 
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").
                 srcGitRepoUrl("https://github.com/choreo-test-apps/jwt-encoder").
-                projectId(project.getId()).displayType(Constant.displayType.restAPI.name()).build();
+                projectId(project.getId()).displayType(Constant.displayType.restAPI.name())
+        .repositoryBranch("main").
+                repositorySubPath("").build();
+
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
         Assert.assertNotNull(choreoComponent.getId());
