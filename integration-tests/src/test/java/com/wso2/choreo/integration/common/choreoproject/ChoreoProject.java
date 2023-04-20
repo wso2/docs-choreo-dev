@@ -44,7 +44,7 @@ public class ChoreoProject {
     private String description;
     private String createdDate;
     private String region;
-
+    private String GitRepoURL = "https://github.com/choreo-test-apps/rest-api";
     /**
      * Create a Choreo component
      *
@@ -157,7 +157,14 @@ public class ChoreoProject {
                 "        triggerChannels: \"\"," +
                 "        triggerID: null," +
                 "        httpBase: true," +
-                "        sampleTemplate: \"\"" +
+                "        sampleTemplate: \"\"," +
+                "accessibility: \"external\"," +
+                "srcGitRepoUrl:\""+GitRepoURL+"\","+
+                "repositorySubPath: \"\","+
+                "repositoryType: \"UserManagedNonEmpty\","+
+                "repositoryBranch: \"main\","+
+                "initializeAsBallerinaProject:false,"+
+                "enableCellDiagram:false"+
                 "      }){" +
                 "        id, orgId, projectId, handler" +
                 "      }}";

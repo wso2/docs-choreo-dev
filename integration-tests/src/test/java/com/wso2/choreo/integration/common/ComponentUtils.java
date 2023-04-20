@@ -21,6 +21,7 @@ import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import com.wso2.choreo.integration.apis.Orgs;
+import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.apis.observability.ObservabilityService;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
@@ -42,6 +43,7 @@ import com.wso2.choreo.integration.models.graphql.CreateNewVersionResponseDTO;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.models.observability.SyntaxTree;
+import com.wso2.choreo.integration.models.revision.RevisionWrapper;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -436,7 +438,6 @@ public class ComponentUtils {
      * @param resource         API Resource
      * @param requestBody      Request payload
      * @param expectedResponse Expected response
-     *
      */
     public static void invokeApiPOST(TestActionRunner runner, String apiKey, String invokeUrl, String resource,
             String requestBody, String expectedResponse) {
@@ -634,6 +635,13 @@ public class ComponentUtils {
         }
     }
 
+    public static RevisionWrapper getRevisions(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients , String accessToken, String apiId, String orgUuid) throws Exception {
+        HttpClient httpClient = citrusClients.get(Endpoints.STS_ENDPOINT);
+
+        RevisionWrapper revisionCount = ApiManager.getRevisionCount(runner , httpClient ,  accessToken,  apiId, orgUuid);
+        return revisionCount;
+
+    }
     public static CreateNewVersionResponseDTO createNewVersion(TestActionRunner runner,
             Map<Endpoints, HttpClient> citrusClients,
             String accessToken, GraphqlDTO graphqlDTO) throws Exception {

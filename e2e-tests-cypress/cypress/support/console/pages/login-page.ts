@@ -165,11 +165,8 @@ export class LoginPage {
     cy.wait("@orgs", { timeout: 150000 }).then((intercept) => {
       const header = intercept.request.headers["authorization"] as string;
       const token = header.replace("Bearer", "").trim();
-      // const { id, uuid, handle } = intercept.response.body.organization;
-      // const userData = { id, uuid, handle };
+     const { orgId, handle } =  Cypress.env("userData");
       Cypress.env("apim_token", token);
-      // Cypress.env("userData", userData);
-      const { orgId, uuid, handle } = Cypress.env("userData");
       if (doCleanup) {
         GraphQL.deleteProjectsCreatedByTests(orgId, handle, token);
         this.deleteOnPremKeys()
