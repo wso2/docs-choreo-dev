@@ -4,30 +4,30 @@ Explore how to create, deploy, manage, and observe service components in Choreo.
 
 ## What is a service component?
 
-A service component in Choreo is a component type that you can use to deploy and expose REST, GraphQL, or gRPC services. It is a fundamental building block for creating cloud-native applications in Choreo. They provide a simple and effective way of exposing functionality as a service to other components in the application or the outside world.
+A service component in Choreo lets you deploy and expose REST, GraphQL, or gRPC services. It is a fundamental building block for creating cloud-native applications in Choreo. They provide a simple and effective way to expose functionality as a service to other components within Choreo or to the outside world.
 
-Service components encapsulate business logic and provide standardized interfaces, called endpoints, for communicating with other components or systems. You can deploy and scale them independently, which makes them highly flexible and adaptable to changing workloads.
+Service components encapsulate business logic and provide standardized interfaces, called endpoints, for communicating with other components or systems. You can deploy and scale services independently, which makes them highly flexible and adaptable to changing workloads.
 
-With the help of the service component, developers can quickly create APIs and microservices, making it easier to implement and manage complex software systems. Service components can also be integrated with other Choreo components, such as message processors, connectors, and data sources, to create powerful end-to-end solutions.
+With the help of the service component, developers can quickly create APIs and microservices, making it easier to implement and manage complex software systems. Service components can also be integrated with other Choreo components, that acts as message processors, connectors, and data sources, etc to create powerful end-to-end solutions.
 
 ## What are endpoints in-service components?
 
-Endpoints are a crucial concept when developing services that need to be exposed to other services or applications. Services can expose multiple endpoints, each representing a unique entry point into the service. For example, a service may expose a REST API endpoint and a GraphQL endpoint, each providing different ways to interact with the service. Endpoints provide a way to define the specific network details for how a service can be accessed, such as the port number, protocol, and endpoint name. By defining these details, endpoints make it possible for other services and applications to discover and interact with the service in a standardized way.
+Services are exposed to other services or applications through endpoints. A service can expose multiple endpoints, each representing a unique entry point into the service. For example, a service may expose a REST API endpoint and a GraphQL endpoint, each providing different ways to interact with the service. Endpoints provide specific details for how a service can be consumed. For instance, the port number, protocol, and the schema such as open API specification (OAS) or GraphQL schema. By defining these details, endpoints make it possible for other services and applications to discover and interact with the service in a standardized way.
 
-Choreo defines endpoints by combining port binding, protocol, endpoint name, network visibility, endpoint schema, and additional protocol-related fields. Here are details about each field in the following table:
+Choreo defines endpoints by combining port binding, protocol, endpoint name, network visibility, endpoint schema, and additional protocol-related fields. Following table describe each attribute of an endpoint.
 
 | Field | Description |
 | ----- | ----------- |
 | Name | A unique identifier for the endpoint within the service component. |
 | Port | The network port on which the endpoint is accessible. |
 | Type | The communication protocol used by the endpoint (e.g., HTTP, HTTPS, gRPC, etc.). |
-| Network Visibility | The level of visibility granted to the endpoint. Determines the level of visibility granted to the endpoint, with the following options: <ul><li>Project: the endpoint can only be accessed by other components within the same project.</li><li>Organization: the endpoint can be accessed by any component within the same organization, but not by components outside of the organization.</li><li>Public: the endpoint can be accessed by any component, regardless of its location or organization.</li></ul> |
+| Network Visibility | Determines the level of visibility of an endpoint. Possible values are: <ul><li>Project: Allows components within the same project to access the endpoint.</li><li>Organization: Allows any component within the same organization to access the endpoint but restricts access to components outside the organization.</li><li>Public: Allows any client to access the endpoint, regardless of location or organization.</li></ul> |
 | Schema | specifies the structure and format of the data exchanged through the endpoint. |
 | Context (HTTP and GraphQL only) | A context path that you add to the endpoint's URL for routing purposes. |
 
 ## Configuring endpoints
 
-When you build a service component using the Dockerfile build-preset in Choreo, you can configure the endpoint details using the endpoints.yaml configuration file. You must place this file in the .choreo directory at the root of the build context path and commit it to the source repository.
+When you build a service component using the Dockerfile build-preset, you can configure the endpoint details with the endpoints.yaml configuration file. You must place this file inside the `.choreo` directory. `at the build context path and commit it to the source repository.
 
 !!! note
     When you create a service component with the `Ballerina preset`, Choreo automatically detects the endpoint details for REST API and GraphQL endpoints. You can override the autogenerated endpoint configuration by providing the endpoints.yaml file in the source directory
@@ -87,13 +87,6 @@ Exposing endpoints as managed APIs is crucial to ensure secure and controlled ac
 
 If you want to expose an endpoint as a managed API in Choreo, you need to set the network visibility to either Organization or Public. This allows the endpoint to be exposed through the Choreo API Gateway, which provides a number of benefits, including:
 
-- Full lifecycle API Management
-- API throttling
-- secure APIs with policies
-- API analytics and montioring
-
-To expose an endpoint as a managed API, follow these steps:
-
 * Expose APIs to external and internal cosumers
 * Full lifecycle API Management
 * API throttling
@@ -101,5 +94,3 @@ To expose an endpoint as a managed API, follow these steps:
 * API analytics and monitoring
 
 Once you deploy the service component, Choreo will expose the endpoint as a managed API through the Choreo API Gateway. You can then use the full lifecycle API management features provided by Choreo to test, deploy, maintain, monitor, and manage your API using the API management features.
-
-
