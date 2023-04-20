@@ -455,6 +455,7 @@ configMapGenerator:
       - USER_SERVICE_URL=http://app-service:8080
       - MIZZEN_URL=http://dp-mizzen
       - CLOUD_MANAGER_SERVICE_URL=http://dp-cloud-manager:80
+      - LOGAPI_URL=http://loggingapi:9097
   - name: cm-file-crypto-key-service
     behavior: create
     files:
