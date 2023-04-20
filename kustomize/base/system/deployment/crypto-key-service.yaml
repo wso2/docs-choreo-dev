@@ -30,6 +30,9 @@ spec:
         - name: crypto-key-service
           imagePullPolicy: Always
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-crypto-key-service:latest
+          envFrom:
+            - secretRef:
+                name: secret-crypto-key-service
           resources:
             limits:
               cpu: 600m
@@ -73,11 +76,31 @@ spec:
             - name: config
               mountPath: /home/ballerina/Config.toml
               subPath: Config.toml
+            - name: crypto-service-ingress-secret
+              mountPath: /mnt/csi/crypto-service-ingress-secret
+            - name: secret-crypto-key-service
+              mountPath: /mnt/csi/secret-crypto-key-service
       restartPolicy: Always
       volumes:
         - name: config
           configMap:
             name: cm-file-crypto-key-service
+        - name: crypto-service-ingress-secret
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: ingress-tls-crypto-key-service
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-crypto-key-service
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-crypto-key-service
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:

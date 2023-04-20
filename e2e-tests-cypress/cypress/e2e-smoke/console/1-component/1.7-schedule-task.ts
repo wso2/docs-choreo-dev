@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { LONG_TIME } from "../../../support/console/constants";
+import { MEDIUM_TIME } from "../../../support/console/constants";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentObservePage } from "../../../support/console/pages/component/component-observe-page";
@@ -24,6 +24,7 @@ import { Utils } from "../../../support/console/utils";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
+import { GitHub } from "../../../support/github/github";
 
 describe("Create Schedule Trigger", () => {
   const SCHEDULE_NAME = "create-ScheduleTrigger-1.7";
@@ -35,6 +36,7 @@ describe("Create Schedule Trigger", () => {
 
   before(() => {
     LoginPage.login();
+    GitHub.deleteWebhooks("schedule-trigger");
   });
 
   after(() => {
@@ -60,8 +62,13 @@ describe("Create Schedule Trigger", () => {
       PROJECT_DESCRIPTION,
       Enums.Region.EU
     );
-    
-    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
+
+    GraphQL.createComponent(
+      PROJECT_NAME,
+      REPO_NAME,
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
+    );
   });
 
   it("Verify component deployment", () => {
@@ -76,7 +83,7 @@ describe("Create Schedule Trigger", () => {
 
   it("Verify task execution in observability ", () => {
     ComponentOverviewPage.navigateToObserve();
-    ComponentObservePage.gotoLogs(LONG_TIME);
+    ComponentObservePage.gotoLogs(MEDIUM_TIME);
   });
   it("Verify dev env logs", () => {
     ComponentObservePage.selectEnv(Enums.Environment.DEVELOPMENT);

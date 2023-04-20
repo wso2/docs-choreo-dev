@@ -7,13 +7,13 @@ export default defineConfig({
   responseTimeout: 300000,
   viewportHeight: 1000,
   viewportWidth: 1600,
-  chromeWebSecurity: false,
   video: true,
   screenshotsFolder: "cypress/screenshots/e2e-smoke",
   videosFolder: "cypress/videos/e2e-smoke",
   videoUploadOnPasses: false,
   videoCompression: false,
   watchForFileChanges: false,
+  chromeWebSecurity:false,
   e2e: {
     setupNodeEvents(on, config) {
       let apiName;
@@ -46,11 +46,20 @@ export default defineConfig({
       return config;
     },
     specPattern: "cypress/e2e-smoke//./**/*.ts",
+    testIsolation: false
   },
   env: {
     FAIL_FAST_STRATEGY: "spec",
     FAIL_FAST_ENABLED: true,
     FAIL_FAST_BAIL: 3,
     FAIL_FAST_PLUGIN: false,
+  },
+  retries: {
+    // Configure retry attempts for `cypress run`
+    // Default is 0
+    runMode: 2,
+    // Configure retry attempts for `cypress open`
+    // Default is 0
+    openMode: 0,
   },
 });

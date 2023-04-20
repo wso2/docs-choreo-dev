@@ -11,9 +11,9 @@
  * associated services.
  */
 export class Utils {
-  static oldProjectNamePrefix = "e2eproject";
-  static projectNamePrefix = "automationtestproject";
-  static componentNamePrefix = "automationtestcomponent";
+  static oldProjectNamePrefix = "automationtestproject";
+  static projectNamePrefix = "autotest";
+  static componentNamePrefix = "autotest";
   static keyNamePrefix = "e2eOnPremkey";
   static APP_SVC_URL = Cypress.env("appSvcURL");
   static ORG_NAME = Cypress.env("choreoOrgHandle");
@@ -22,13 +22,15 @@ export class Utils {
   static MAIL_READER_CLIENT_SECRET = Cypress.env("mailReaderClientSecret");
   static MAIL_READER_TOKEN_URL = Cypress.env("mailReaderTokenURL");
 
+  static TRY_COUNT = 5;
+
   /**
    * Create name for app.
    *
    * @returns true name for a new app
    */
   static generateProjectName() {
-    return this.projectNamePrefix + Date.now();
+    return `${this.projectNamePrefix}${Date.now()}`
   }
 
   static generateComponentName(name: string) {
@@ -69,7 +71,9 @@ export class Utils {
         Authorization: `Bearer ${accessToken}`,
       }).then((res) => {
         const rawMailContent = res.body;
-        const decodedMail = atob(rawMailContent);
+        //const decodedMail = atob(rawMailContent);
+        const decodedMail = window.atob(rawMailContent);
+        console.log(rawMailContent);
 
         const socRegEx = /^<!DOCTYPE html PUBLIC /im;
         const bodyPos = decodedMail.indexOf(
@@ -137,6 +141,19 @@ export class Utils {
     return false;
   }
 
+  private static sendRequest(request) {
+    return cy.request(request).then((res) => {
+      if (res.status > 205) {
+        while (this.TRY_COUNT > 0) {
+          cy.wait(10000);
+          this.sendRequest(request);
+          this.TRY_COUNT--;
+        }
+      }
+      return cy.wrap({ body: res.body, status: res.status }, { log: false });
+    });
+  }
+
   static sendPostRequest(url: string, headers, body) {
     const request = {
       method: "POST",
@@ -149,8 +166,6 @@ export class Utils {
       return cy.wrap({ body: res.body, status: res.status }, { log: false });
     });
   }
-
-
 
   static sendPutRequest(url: string, headers, body) {
     const request = {
@@ -172,9 +187,7 @@ export class Utils {
       headers,
       failOnStatusCode: false,
     };
-    return cy.request(request).then((res) => {
-      return cy.wrap({ body: res.body, status: res.status }, { log: false });
-    });
+    return this.sendRequest(request);
   }
 
   static sendDeleteRequest(url: string, headers: any = {}, body?: any) {
@@ -183,8 +196,7 @@ export class Utils {
       url,
       body,
       headers,
-      failOnStatusCode: false
-      
+      failOnStatusCode: false,
     };
     return cy.request(request).then((res) => {
       return cy.wrap({ body: res.body, status: res.status }, { log: false });
@@ -220,9 +232,32 @@ export class Utils {
     return false;
   }
 
-   static interceptConfig() {
-     cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/**`).as('config')
-    cy.wait('@config', { timeout: 180000 })
+  static interceptConfig() {
+    cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/**`).as(
+      "config"
+    );
+    // cy.wait('@config', { timeout: 180000 })
+  }
+  public static pollElement(locator: string) {
+    return cy.get("body").then((bdy) => {
+      if (bdy.find(locator).length == 0) {
+        cy.wait(4000);
+        this.pollElement(locator);
+      } else {
+        return cy.get(locator);
+      }
+    });
   }
 
+  // Ensure that element remains visible multiple times before returning to handle rerendering scenarios
+  static getRenderedElement(locator: string) {
+    return cy
+      .get(locator)
+      .should("be.visible")
+      .get(locator)
+      .should("be.visible")
+      .get(locator)
+      .should("be.visible")
+      .get(locator);
+  }
 }

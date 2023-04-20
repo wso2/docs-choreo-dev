@@ -18,10 +18,11 @@ mutation{
                 sampleTemplate: "",
                 accessibility: "external",
                 srcGitRepoUrl: "{{srcGitRepoUrl}}"
-                repositorySubPath: "",
+                repositorySubPath: "{{repositorySubPath}}",
                 repositoryType: "UserManagedNonEmpty",
-                repositoryBranch: "main",
-         initializeAsBallerinaProject: false,
+                repositoryBranch: "{{repositoryBranch}}",
+                initializeAsBallerinaProject: false,
+                enableCellDiagram: false,
 }
     )
 {id, orgId, projectId, handler    }

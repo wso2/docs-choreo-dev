@@ -24,20 +24,27 @@ import { ComponentListingPage } from "../../../support/console/pages/component/c
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
+import { GitHub } from "../../../support/github/github";
+
 
 describe("Verify project creation functionality", () => {
-  const COMPONENT_NAME = "create-rest-api-from-scratch-1.3";
+  const queryParameters1 = [{ key: "number", value: "2" }];
+  const queryParameters2 = [{ key: "number", value: "5" }];
+  const COMPONENT_NAME = "restapi-apim-"+ Date.now();
   const REPO_NAME = Utils.generateComponentName("repo");
   const PROJECT_DESCRIPTION = "Covid stats project";
   const PROJECT_NAME = Utils.generateProjectName();
 
   before(() => {
     LoginPage.login();
+    GitHub.deleteWebhooks("rest-api")
   });
+
 
   after(() => {
     ChoreoHomePage.logout();
   });
+
 
   it("Verify REST API component creation", () => {
     let componentData: ComponentData = {
@@ -53,20 +60,103 @@ describe("Verify project creation functionality", () => {
       repositorySubPath: "",
       sampleTemplate: "",
     };
+    ProjectListingPage.selectProject();
     ChoreoHomePage.changeToAPIPerspective();
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
       PROJECT_DESCRIPTION,
-      Enums.Region.US,
-      Enums.Perspective.APIM
+      Enums.Region.US
     );
+
     GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
   
-    it("Verify component creation", () => {
+
+    it("Verify component deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.deployToDev();
   });
 
 
+  it("Verify test functionality of root resource in dev on swagger", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnSwagger(
+      Enums.Environment.DEVELOPMENT,
+      "root",
+      "number",
+      "2"
+    ).then((res) => {
+      expect(res.response).to.be.eq("4");
+      expect(res.statusCode).to.be.eq("200");
+    });
+  });
+
+
+  it("Verify test functionality of isOdd resource in dev on swagger", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnSwagger(
+      Enums.Environment.DEVELOPMENT,
+      "isOdd",
+      "number",
+      "5"
+    ).then((res) => {
+      expect(res.response).to.be.eq("true");
+      expect(res.statusCode).to.be.eq("200");
+    });
+  });
+
+
+  it("Verify component promote to prod", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.promoteToProd();
+  });
+
+
+  it("Verify test functionality of root resource in prod on swagger", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnSwagger(
+      Enums.Environment.PRODUCTION,
+      "root",
+      "number",
+      "2"
+    ).then((res) => {
+      expect(res.response).to.be.eq("4");
+      expect(res.statusCode).to.be.eq("200");
+    });
+  });
+
+
+  it("Verify test functionality of isOdd resource in prod on swagger", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnSwagger(
+      Enums.Environment.PRODUCTION,
+      "isOdd",
+      "number",
+      "5"
+    ).then((res) => {
+      expect(res.response).to.be.eq("true");
+      expect(res.statusCode).to.be.eq("200");
+    });
+  });
+
+
+  it("Verify suspending all component deployments", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopAllDeployment();
+  });
+
+
+  it("Verify project statistics getting updated",()=>{
+    ChoreoHomePage.logout();
+    LoginPage.login();
+    ProjectListingPage.selectProject(PROJECT_NAME);
+    ChoreoHomePage.changeToAPIPerspective();
+    ComponentListingPage.getDevelopmentEnvStats();
+    ComponentListingPage.getProductionEnvStats();
+  });
+
 });
+
+
+

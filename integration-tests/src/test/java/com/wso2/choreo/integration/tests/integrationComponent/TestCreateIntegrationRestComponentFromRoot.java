@@ -100,7 +100,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
     public void componentRetrieval_TestCreateIntegrationRestComponentFromRoot() throws Exception {
 
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
-        testComponent = GraphQL.retrieveComponent(this, choreoProjectsTestClient, accessToken,
+        testComponent = GraphQL.retrieveComponent(this, choreoTestClient, accessToken,
                 graphqlDTO);
     }
 
@@ -121,7 +121,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
                 .devEnvIdToDeploy(devEnvIdToDeploy).branch(branch).sha(latestCommitSha).shaDate("").build();
 
         // Deploy component
-        GraphQL.deployComponent(this, choreoProjectsTestClient, accessToken, graphqlDTO);
+        GraphQL.deployComponent(this, choreoTestClient, accessToken, graphqlDTO);
     }
 
     @Test(dependsOnMethods = {"componentDeployment_TestCreateIntegrationRestComponentFromRoot"})
@@ -163,7 +163,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         final String devApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId())
                 .replace("\"", "");
         String invokeUrlDev = invokeInformation.getInvokeUrl();
-        ComponentUtils.invokeApi(this, devApiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI,
+        ComponentUtils.invokeApiGET(this, devApiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI,
                 REST_API_EXPECTED_RESPONSE);
     }
 
@@ -193,7 +193,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         final String prodApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId())
                 .replace("\"", "");
         final String invokeUrlProd = invokeInformation.getInvokeUrl();
-        ComponentUtils.invokeApi(this, prodApiKey, invokeUrlProd, API_INVOCATION_REQUEST_URI,
+        ComponentUtils.invokeApiGET(this, prodApiKey, invokeUrlProd, API_INVOCATION_REQUEST_URI,
                 REST_API_EXPECTED_RESPONSE);
     }
 

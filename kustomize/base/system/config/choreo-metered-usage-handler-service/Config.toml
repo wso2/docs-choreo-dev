@@ -1,0 +1,9 @@
+[choreo.metered_usage_handler_service.db]
+dbUsername = "choreo_usage_db_user"
+dbLoginTimeout = 10000
+dbUseSsl = false
+dbConnPoolMaxOpen = 100
+dbConnPoolMinIdle = 5
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"

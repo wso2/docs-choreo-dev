@@ -49,7 +49,7 @@ describe("Choreo APIM publisher scenarios", () => {
   const OPERATION = "intensity";
 
   before(() => {
-    LoginPage.login();
+    LoginPage.login(true);
   });
   after(() => {
     ChoreoHomePage.logout();
@@ -65,7 +65,7 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify component deployment and endpoint configurations", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.DeployToDev(PROJECT_NAME,API_NAME);
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -202,6 +202,30 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.verifyConsumer(appName).should("be.visible");
   });
 
+
+  it("Verify deleting consumer app", () => {
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+    TryOut.DeleteApplication(appName);
+  })
+
+  it("Verify delete permissions", () => {
+    LoginPage.reLoginToChoreo();
+    ComponentListingPage.visitToAComponent(API_NAME);
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.selectPermissions();
+    permissions.forEach((permission) => {
+      ComponentAPILifecycle.deletePermission(permission);
+    });
+  });
+
+
+  it("Verify redeployment after removing permissions", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.DeployToDev(PROJECT_NAME,API_NAME);
+  });
+
   it("Verify insight values for dev", () => {
     ChoreoHomePage.navigateToInsights();
     InsightsPage.selectTimePeriod();
@@ -216,23 +240,16 @@ describe("Choreo APIM publisher scenarios", () => {
   it("Verify insight values for prod", () => {
     InsightsPage.selectTimePeriod();
     InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
-    InsightsPage.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(2);
-    });
+    InsightsPage.getTotalTraffic().should((value) => { expect(Number(value)).gte(2) });
     InsightsPage.getTotalErrorRequestCount().should("eq", "0");
     InsightsPage.getAverageErrorRate().should("eq", "0");
   });
 
-  it("Verify delete permissions", () => {
-    ComponentListingPage.visitToAComponent(API_NAME);
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.selectPermissions();
-    permissions.forEach((permission) => {
-      ComponentAPILifecycle.deletePermission(permission);
-    });
-  });
+
 
   it("Reset and undeploy component", () => {
+    ChoreoHomePage.navigateToComponents();
+    ComponentListingPage.visitToAComponent(API_NAME);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });

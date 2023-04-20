@@ -22,12 +22,11 @@ import { LoginPage } from "../../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../../support/console/pages/projects/projects-listing-page";
 import { Utils } from "../../../../support/console/utils";
+import { GitHub } from "../../../../support/github/github";
 import { ComponentData } from "../../../../support/interfaces/component-data";
 
-
 describe("Verify Reusable RestAPI functionality", () => {
-  
-  const PROJECT_NAME = "Default Project"
+  const PROJECT_NAME = "Default Project";
   const REST_API_NAME = "create-ReuseRestAPI-1.6.1";
   const RESOURCE_NAME = "greeting";
   const PARAM_NAME = "name";
@@ -37,6 +36,7 @@ describe("Verify Reusable RestAPI functionality", () => {
 
   before(() => {
     LoginPage.login();
+    GitHub.deleteWebhooks("greeting-rest-api");
   });
 
   after(() => {
@@ -59,7 +59,7 @@ describe("Verify Reusable RestAPI functionality", () => {
     };
     ProjectListingPage.selectProject();
     ProjectOverviewPage.searchReuseComponent(componentData);
-   });
+  });
 
   it("Deploy component", () => {
     ComponentListingPage.visitToAComponent(REST_API_NAME);
@@ -96,7 +96,7 @@ describe("Verify Reusable RestAPI functionality", () => {
 
   it("Verify component promote to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteToProd();
+    ComponentDeployPage.promoteToProd(false);
   });
 
   it("Verify test functionality of root resource in prod on swagger", () => {
@@ -133,7 +133,7 @@ describe("Verify Reusable RestAPI functionality", () => {
     ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-    ComponentAPILifecycle.applyConfiguration(    );
+    ComponentAPILifecycle.applyConfiguration();
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",
       Enums.Environment.DEVELOPMENT
@@ -175,16 +175,10 @@ describe("Verify Reusable RestAPI functionality", () => {
     });
   });
 
-  it("Verify manage functionality and Publish Connector", () => {
+  it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publish(Enums.ConnectorAudience.PRIVATE).should(
-      "be.visible"
-    );
-  });
-
-  it("Verify connector republishing", () => {
-    ComponentAPILifecycle.republishConnector();
+    ComponentAPILifecycle.publishToDevportal();
   });
 
   it("Verify settings configuration", () => {
@@ -193,6 +187,8 @@ describe("Verify Reusable RestAPI functionality", () => {
   });
 
   it("Verify suspending Prod deployed component", () => {
+    ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.demoteToCreated();
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });

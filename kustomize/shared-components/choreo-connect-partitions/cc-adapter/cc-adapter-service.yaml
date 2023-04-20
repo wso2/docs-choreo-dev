@@ -30,3 +30,7 @@ spec:
       port: 9843
       targetPort: 9843
       protocol: TCP
+    - name: "https-rate-limiter"
+      port: 18001
+      targetPort: 18001
+      protocol: TCP

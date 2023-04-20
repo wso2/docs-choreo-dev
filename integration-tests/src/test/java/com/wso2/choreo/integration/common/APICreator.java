@@ -28,7 +28,7 @@ import com.wso2.choreo.integration.models.requestheader.HeaderValues;
 import com.wso2.choreo.integration.models.response.ProxyResponse;
 import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
-import com.wso2.choreo.integration.models.testconfigs.TestConfigs;
+import com.wso2.choreo.integration.models.apimanager.KeyData;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -72,15 +72,22 @@ public class APICreator extends ControlPlaneAPI {
     }
 
     public static Response updateAPI(ProxyAPI proxyAPI, String accessToken) throws IOException {
+        return updateAPIWithSwaggerFile(proxyAPI,
+                "templates/graphql/requests/proxyapiupdaterequest.mustache",
+                accessToken);
+    }
+
+    public static Response updateAPIWithSwaggerFile(ProxyAPI proxyAPI, String swaggerFileName, String accessToken)
+            throws IOException {
         String requestURI = APIS_ENDPOINT + "/" + proxyAPI.getId() + "/swagger?organizationId=" + ORG_UUID;
         HeaderValues headerValues = new HeaderValues().setValues(org.springframework.http.HttpHeaders.AUTHORIZATION, accessToken);
         ApiDTO apiDTO = ApiDTO.builder().apiName(proxyAPI.getName()).description(proxyAPI.getDescription()).productionEndpoint(Constant.DEFAULT_ENDPOINT).
                 sandboxEndpoint(Constant.DEFAULT_ENDPOINT).basePath(proxyAPI.getContext() + "/1.0.0").build();
 
-        String i = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/proxyapiupdaterequest.mustache", apiDTO);
+        String swaggerContent = ObjectMapperUtil.mapObjectToString(swaggerFileName, apiDTO);
 
         MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
-        multipartEntityBuilder.addTextBody("apiDefinition", i);
+        multipartEntityBuilder.addTextBody("apiDefinition", swaggerContent);
         multipartEntityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
         HttpEntity entity = multipartEntityBuilder.build();
 
@@ -147,21 +154,38 @@ public class APICreator extends ControlPlaneAPI {
     }
 
 
-    public static TestConfigs getAPIKey(String apiId, String accessToken) throws IOException {
+    public static KeyData getAPIKey(String apiId, String accessToken) throws IOException {
         String url = APIS_ENDPOINT + "/" + apiId + "/generate-key?organizationId=" + ORG_UUID;
         Response res = HttpClientUtil.httpPOST(url, "", accessToken, "");
-        return ObjectMapperUtil.mapStringToObject(TestConfigs.class, res.getRes(), "");
+        return ObjectMapperUtil.mapStringToObject(KeyData.class, res.getRes(), "");
     }
 
     public static DeploySettings deployRevision(String componentId, String versionId, String envId, String orgId,
                                                 String revisionId, String buildId, String apiId, String accessToken)
-                                                throws IOException {
+            throws IOException {
+        return deployRevision(componentId, versionId, envId, orgId, revisionId, buildId, apiId, accessToken, null, null);
+    }
+
+public static DeploySettings deployRevision(String componentId, String versionId, String envId, String orgId,
+                                                String revisionId, String buildId, String apiId, String accessToken,
+                                                String restAPIContent, String swaggerContent)
+            throws IOException {
         String url = PROXY_URI + componentId + "/versions/" + versionId + "/deploy-settings?environmentId=" + envId +
                 "&revisionId=" + revisionId + "&buildId=" + buildId + "&description=" + "" + "&apiId=" + apiId +
                 "&accessMode=external" + "&isDevEnv=" + true;
         Map<String, String> payload = new HashMap<>();
         payload.put("openApi",getSwagger(apiId, orgId, accessToken));
-        payload.put("api",getApi(apiId, orgId, accessToken));
+        if (restAPIContent != null) {
+            payload.put("api", restAPIContent);
+        } else {
+            payload.put("api", getApi(apiId, orgId, accessToken));
+        }
+
+        if (swaggerContent != null) {
+            payload.put("openApi", swaggerContent);
+        } else {
+            payload.put("openApi", getSwagger(apiId, orgId, accessToken));
+        }
         Response response = HttpClientUtil.httpPOSTFormData(url, payload, accessToken, "");
         return ObjectMapperUtil.mapStringToObject(DeploySettings.class, response.getRes(), "");
     }
@@ -179,8 +203,17 @@ public class APICreator extends ControlPlaneAPI {
     }
 
     public static String getApi(String apiId, String organizationId, String accessToken) {
-        String url = APIS_ENDPOINT + "/" + apiId + "?organizationId=" + organizationId;;
+        String url = APIS_ENDPOINT + "/" + apiId + "?organizationId=" + organizationId;
         Response res = HttpClientUtil.httpGET(url, accessToken, "");
         return res.getRes();
+    }
+
+    public static ProxyResponse<ProxyAPI> getProxyAPI(String apiId, String organizationId, String accessToken) {
+        String url = APIS_ENDPOINT + "/" + apiId + "?organizationId=" + organizationId;
+        Response res = HttpClientUtil.httpGET(url, accessToken, "");
+        if (res.getStatusCode() != HttpStatus.OK.value()) {
+            return ProxyResponse.<ProxyAPI>builder().entity(new ProxyAPI()).response(res).build();
+        }
+        return ProxyResponse.<ProxyAPI>builder().entity(ObjectMapperUtil.mapStringToObject(ProxyAPI.class, res.getRes(), "")).response(res).build();
     }
 }

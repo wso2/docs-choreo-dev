@@ -12,6 +12,7 @@
  */
 
 import { Enums } from "../../enums";
+import { Utils } from "../../utils";
 
 
 export class ComponentAPILifecycle {
@@ -68,17 +69,21 @@ export class ComponentAPILifecycle {
   }
 
 
-  static goToDeveloperPortalWithoutLogin(idpUser: string) {
-    cy.get("[data-cyid=go-to-dev-portal-btn]")
-      .parent()
-      .invoke("attr", "href")
-      .then((href) => cy.visit(href + "&fidp=" + idpUser));
+  static goToDeveloperPortalWithoutLogin(idpUser: string = "") {
+    const { latestAPIVersionId } = Cypress.env("apiInfo");
+    const loginUrl = Cypress.env("devportalLoginURL");
+    const { uuid, handle } = Cypress.env("userData");
+    let devportalURL = `${loginUrl}/${handle}/apis/${latestAPIVersionId}?fidp=${idpUser}&orgUuid=${uuid}`;
+    cy.visit(devportalURL);
   }
 
   static selectUsagePlans(...plans) {
     cy.get('[data-testid="Usage plans"]').click();
     cy.get('[data-testid="checkbox-Unlimited"]').click();
-    plans.forEach((plan) => { const pln = `[data-testid="checkbox-${plan}"]`; cy.get(pln).click(); });
+    plans.forEach((plan) => {
+      const pln = `[data-testid="checkbox-${plan}"]`;
+      cy.get(pln).click();
+    });
     cy.get("button > span").contains("Save").click();
     cy.get('[data-testid="checkbox-Unlimited"]');
   }
@@ -93,7 +98,8 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="publish-btn"]').should("be.enabled").click();
     cy.wait(1000);
     cy.get('[data-testid="published-connector-info"]').contains(
-      "You have already published a connector for this API."
+      "You have already published a connector for this API.",
+      { timeout: 300000 }
     );
     cy.get('[data-testid="connector-publish-wizard-title"]').should(
       "not.exist"
@@ -225,17 +231,18 @@ export class ComponentAPILifecycle {
   }
 
   static verifyAPIVisibility(visibility: string) {
-    cy.get('[data-cyid="dropdown-api-visibility-selector"]')
-      .should("exist")
-      .should("have.text", visibility);
+    cy.get('div[role="combobox"]>div>div>input')
+      .eq(1)
+      .invoke("val")
+      .should("eq", visibility);
     cy.log("Successfully verified the API visibility", visibility);
   }
 
   static updateAPIVisibility(visibility: string) {
     cy.get('[data-cyid="tab-security-settings"]').should("be.visible");
     cy.wait(5000);
-    cy.get('[data-cyid="dropdown-api-visibility-selector"]').click();
-    cy.get(`[data-cyid="item-${visibility.toUpperCase()}"]`).focus().click();
+    cy.get('div[role="combobox"]').eq(1).click();
+    cy.get(`ul[id="Select List-popup"]>li`).contains(visibility).click();
     cy.get('[data-testid="info-banner"]').should("be.visible");
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]').wait(100).realClick();
     this.verifyAPIVisibility(visibility);
@@ -245,19 +252,18 @@ export class ComponentAPILifecycle {
 
 
   static updateAPIAccessMode(accessMode: string) {
-    cy.get('[data-cyid="dropdown-api-access-mode-selector"]>div')
-      .should("be.visible")
-      .click({ force: true });
-    cy.get(`[data-cyid="item-${accessMode}"]`)
+    Utils.pollElement('[data-testid="access-mode"]').click();
+    cy.get(`li[id*="Select"]`)
+      .contains(accessMode)
       .should("exist")
       .click({ force: true });
     cy.get('[data-testid="warning-banner"]').should("be.visible");
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
       .should("exist")
       .click();
-    cy.contains(`Successfully converted to an ${accessMode} API.`).should(
-      "be.visible"
-    );
+    cy.contains(
+      `Successfully converted to an ${accessMode.toLowerCase()} API.`
+    ).should("be.visible");
   }
 
   static managePermissions(permissions: string[], componentName: string) {

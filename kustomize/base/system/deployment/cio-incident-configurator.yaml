@@ -41,6 +41,8 @@ spec:
                 name: cm-cio-incident-configurator
             - configMapRef:
                 name: env-cio-incident-configurator
+            - configMapRef:
+                name: common-env-variables
             - secretRef:
                  name: secret-cio-incident-configurator
           securityContext:

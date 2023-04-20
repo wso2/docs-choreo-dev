@@ -32,7 +32,16 @@ import { ComponentDeployPage } from "../../../support/console/pages/component/co
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 
-describe("Verify project creation functionality", () => {
+const dp = Enums.Region.US;
+
+before(() => {
+  LoginPage.login();
+});
+after(() => {
+  ChoreoHomePage.logout();
+});
+
+describe(`Verify proxy api functionality in region ${dp}`, () => {
   const API_NAME = Utils.generateComponentName("CYE2E");
   const API_BASE_PATH = Utils.generateBasePath();
   const API_VERSION = "1.0.0";
@@ -47,16 +56,8 @@ describe("Verify project creation functionality", () => {
   const PROJECT_NAME = Utils.generateProjectName();
   const idpUser = "choreoe2etest";
 
-  before(() => {
-    LoginPage.login();
-    ChoreoHomePage.switchOrganization();
-  });
-  after(() => {
-    ChoreoHomePage.logout();
-  });
-
   it("Verify Rest API creation from existing endpoint", () => {
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, dp);
     ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.skipSource();
     RestAPIProxyTemplate.enterAPIdetails(
@@ -71,7 +72,7 @@ describe("Verify project creation functionality", () => {
 
   it("Verify component deployment to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.DeployToDev(PROJECT_NAME,API_NAME);
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -127,7 +128,7 @@ describe("Verify project creation functionality", () => {
 
   it("Deploy new version to Dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.DeployToDev(PROJECT_NAME,API_NAME);
   });
 
   it("Test in dev", () => {

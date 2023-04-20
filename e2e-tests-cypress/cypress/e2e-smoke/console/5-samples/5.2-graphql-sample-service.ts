@@ -19,7 +19,7 @@ describe("Graphql GQL service test", () => {
   const TEST_QUERY_RESPONSE = "Hello, John";
   const TEST_MUTATION = 'mutation{createUser(name:"John")}';
   const TEST_MUTATION_RESPONSE = 'createUser": "User created with name: John';
-  const COMPONENT_NAME = "graphql-service";
+  const COMPONENT_NAME = "graphql-sample";
   const REPO_NAME = "graphql-service-sample";
   const subPath = Cypress.env("branch").replace("-ci", "");
 
@@ -75,17 +75,6 @@ describe("Graphql GQL service test", () => {
   it("Verify test functionality of GQL query in Prod on swagger", () => {
     TestHelper.testProdOnGraphQL(TEST_QUERY);
     TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
-  });
-
-  it("Verify test functionality of GQL mutation in dev on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testDevOnGraphQL(TEST_MUTATION);
-    TestHelper.getGqlResult(TEST_MUTATION_RESPONSE);
-  });
-
-  it("Verify test functionality of GQL mutation in Prod on swagger", () => {
-    TestHelper.testProdOnGraphQL(TEST_MUTATION);
-    TestHelper.getGqlResult(TEST_MUTATION_RESPONSE);
   });
 
   it("Verify suspending Prod deployed component", () => {

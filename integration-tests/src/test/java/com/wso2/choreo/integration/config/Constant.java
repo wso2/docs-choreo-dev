@@ -24,10 +24,21 @@ public final class Constant {
     public static final String SUBJECT_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:jwt";
     public static final String REQUESTED_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:jwt";
     public static final String OAUTH_SCOPES = "apim:admin apim:api_manage apim:api_publish apim:api_settings " +
-            "apim:dcr:app_manage apim:document_manage apim:publisher_settings apim:subscription_manage " +
-            "apim:subscription_view apim:tier_manage choreo:component_manage choreo:deployment_manage " +
-            "choreo:dev_env_manage choreo:prod_env_manage choreo:project_manage choreo:role_manage " +
-            "choreo:user_manage environments:view_dev environments:view_prod apim:environment_manage";
+            "apim:dcr:app_manage apim:document_manage apim:publisher_settings apim:subscribe " +
+            "apim:subscription_manage apim:subscription_view apim:tier_manage choreo:component_manage " +
+            "choreo:deployment_manage choreo:dev_env_manage choreo:prod_env_manage choreo:project_manage " +
+            "urn:choreocontrolplane:rolemanagement:role_manage & urn:choreoasystem:rolemanagement:role_manage choreo:user_manage environments:view_dev environments:view_prod " +
+            "apim:environment_manage " + "urn:choreocontrolplane:customdomainapi:custom_domain_create " +
+            "urn:choreocontrolplane:organizationmanagement:theme_create " +
+            "urn:choreocontrolplane:organizationmanagement:theme_delete " +
+            "urn:choreocontrolplane:organizationmanagement:theme_deploy " +
+            "urn:choreocontrolplane:organizationmanagement:theme_manage" +
+            "urn:choreocontrolplane:organizationmanagement:theme_view" +
+            "urn:choreosystem:organizationmanagement:theme_create " +
+            "urn:choreosystem:organizationmanagement:theme_delete " +
+            "urn:choreosystem:organizationmanagement:theme_deploy " +
+            "urn:choreosystem:organizationmanagement:theme_manage " +
+            "urn:choreosystem:organizationmanagement:theme_view ";
 
     public static final String GRAPHQL_ENDPOINT_SUFFIX = "/graphql";
     public static final String TEST_PROJECT_NAME_PREFIX = "automationtestproject";
@@ -80,6 +91,7 @@ public final class Constant {
     public static final int INDEX_OF_DEPLOYED_REVISION = MAX_API_REVISIONS_LIMIT_SETTINGS_PAGE - 1;
 
 
+    public static final String NON_EMPTY_REPO_TYPE = "UserManagedNonEmpty";
 
 
     public enum region{
@@ -92,7 +104,8 @@ public final class Constant {
 
     public enum  logType{
         groupedlogsV2,
-        logsV2
+        logsV2,
+        metricsV2
     }
     public enum displayType {
         restAPI,
@@ -126,11 +139,18 @@ public final class Constant {
     }
 
     // Observability related constants
-    public static final String OBSERVABILITY_LOGS_ENDPOINT_SUFFIX = "/observability/logging/0.1.0/applications/";
-    public static final String OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX = "/observability/system/0.1.0/applications/";
+    public static final String OBSERVABILITY_LOGS_ENDPOINT_SUFFIX = "/observability/logging/0.1.0/applications/loggingAPI";
+    public static final String OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX = "/observability/system/0.1.0/applications/sysObsAPI";
     public static final String OBSERVABILITY_OBS_ENDPOINT_SUFFIX = "/observability/application/0.1.0";
+
+    public static final String OBSERVABILITY_METRICS = "/metricsV2";
+
+    public static final String OBSERVABILITY_LOGS = "/logsV2";
+
+    public static final String OBSERVABILITY_ZIP_LOGS = "/logsV2/zip";
+
+    public static final String OBSERVABILITY_GROUP_LOGS = "/groupedlogsV2";
 
     // Theme management constants
     public static final String THEME_ENDPOINT_SUFFIX = "/org-mgt/1.0.0/orgs/";
 }
-

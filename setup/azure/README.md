@@ -90,6 +90,8 @@ APIM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
 DNS01_CHALLENGE_CLIENT_ID=xxxxxxxxxxxxxxxxx
 AKS_READONLY_AD_GROUP_ID=xxxxxxxxxxxxxxxxx
 ENV=xxxxx
+HELM_ACR_USERNAME=xxxxxxxxxxxxxxxxx
+HELM_ACR_PASSWORD=xxxxxxxxxxxxxxxxx
 EOF
 ````
 
@@ -99,10 +101,13 @@ EOF
 CLUSTER_NAME=xxxxxxxxxxxxxxxxx
 APIM_NAMESPACE=xxxxxxxxxxxxxxxxx
 DP_SYSTEM_NAMESPACE=xxxxxxxxxxxxxxxxx
+OBS_NAMESPACE=xxxxxxxxxxxxxxxxx
 SYSTEM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
 APIM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
 AKS_READONLY_AD_GROUP_ID=xxxxxxxxxxxxxxxxx
 ENV=xxxxx
+HELM_ACR_USERNAME=xxxxxxxxxxxxxxxxx
+HELM_ACR_PASSWORD=xxxxxxxxxxxxxxxxx
 EOF
 ```
 

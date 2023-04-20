@@ -15,34 +15,44 @@ import { Utils } from "../../utils";
 import { Enums } from "../../enums";
 
 export class ComponentObservePage {
-
   static gotoLogs(timeToWait = 0) {
     cy.wait(timeToWait);
     cy.get('[data-testid="panel-Logs-btn"]').should("be.visible").click();
   }
 
   static selectEnv(env: Enums.Environment) {
-    cy.get("#environment-selector").should("be.visible").click();
-    cy.get("#menu->div>ul>li").contains(env).click({ force: true });
-  }
+    let index = 0;
+    if (env == Enums.Environment.DEVELOPMENT) {
+      index = 1;
+    }
 
-  static verifyTextInLogs(text: string) {
-    cy.get('[data-testid="log-panel-entry"]', { timeout: 180000 }).should('be.visible').each(($e) => {
-      let log = $e
-        .text()
-        .replace("ballerina: sending metrics to Choreo", "")
-        .trim()
-        .toString();
-      if (log.includes(text)) {
-        const exactText = log.slice(log.indexOf("{"), log.indexOf("}") + 1);
-        expect(text).to.be.eq(exactText);
-      }
+    cy.get('[data-cyid="environment-selector"]').should("be.visible").click();
+    cy.get(`#environment-selector-label-option-${index}`).click({
+      force: true,
     });
   }
 
+  static verifyTextInLogs(text: string) {
+    cy.get('[data-testid="log-panel-entry"]', { timeout: 180000 })
+      .should("be.visible")
+      .each(($e) => {
+        let log = $e
+          .text()
+          .replace("ballerina: sending metrics to Choreo", "")
+          .trim()
+          .toString();
+        if (log.includes(text)) {
+          const exactText = log.slice(log.indexOf("{"), log.indexOf("}") + 1);
+          expect(text).to.be.eq(exactText);
+        }
+      });
+  }
+
   static navigateToSampleApp() {
-    const observabilityViewUrl = Cypress.env("loginURL").replace("login?fidp=choreoe2etest", "") + "observe/sample";
-    Utils.setBrowserCookie()
+    const observabilityViewUrl =
+      Cypress.env("loginURL").replace("login?fidp=choreoe2etest", "") +
+      "observe/sample";
+    Utils.setBrowserCookie();
     cy.visit(observabilityViewUrl);
     cy.url().should("eq", observabilityViewUrl);
     cy.get('[data-testid="backdrop-loader"]').should("not.exist");
@@ -121,8 +131,8 @@ export class ComponentObservePage {
           const arr = v.split(",");
           if (prevY !== undefined && prevY !== arr[1]) {
             //Added margins to the coordinates manually
-            finalX = arr[0]+95;
-            finalY = arr[1]-30;
+            finalX = arr[0] + 95;
+            finalY = arr[1] - 30;
             break;
           }
           prevY = arr[1];
@@ -157,12 +167,15 @@ export class ComponentObservePage {
             expect($elements[1].textContent).to.contain(":");
             expect($elements[2].textContent).to.be.empty;
           });
-        // TODO: Uncomment the following once https://github.com/wso2-enterprise/choreo/issues/4310 is fixed
-        // cy.get('[data-testid="request-information"]').eq(1).click().find('div>div').then(($elements) => {
-        //     expect($elements[0].textContent).to.match(responseTimeRegexp);
-        //     expect($elements[1].textContent).to.contain(':');
-        //     expect($elements[2].textContent).to.match(httpStatusCodeRegexp);
-        // });
+
+        cy.get('[data-testid="request-information"]')
+          .eq(1)
+          .click()
+          .find("div>div")
+          .then(($elements) => {
+            expect($elements[0].textContent).to.match(responseTimeRegexp);
+            expect($elements[1].textContent).to.contain(":");
+          });
       });
   }
 
@@ -224,12 +237,10 @@ export class ComponentObservePage {
 
         cy.get('[data-testid="flame-graph-message-container"]', {
           timeout: 60000,
-        }).should("not.exist");
+        }).should("be.visible");
 
         cy.get('[data-testid="flame-graph"]').should("exist");
         cy.get('[data-testid="latencies-for-flame-graph"]').should("exist");
-        cy.get('[data-testid="flame-graph-slider"]').should("exist");
-        // TODO: Move the flame graph slider and assert the flame graph once https://github.com/wso2-enterprise/choreo/issues/4310 is fixed
         cy.log(
           "Close the flame graph and navigate to the diagnostics view again"
         );

@@ -141,6 +141,7 @@ public class ChoreoComponent {
     private String componentType;
     private boolean httpBased;
     private ImageRegistry imageRegistry;
+    private String branch;
     private static final Logger log = LogManager.getLogger(ChoreoComponent.class);
     private static final Gson gson = new Gson();
 
@@ -538,7 +539,7 @@ public class ChoreoComponent {
                 // If still waiting after 10 attempts, increase the wait time between calls by 2 seconds
                 // to reduce sending too many requests
                 if (numberOfTries == 10) {
-                    waitForSeconds += 2;
+                    waitForSeconds += 5;
                 }
 
                 log.debug("waitForComponentDeploymentSuccess()... " + numberOfTries + " attempts, retrying");
@@ -750,6 +751,17 @@ public class ChoreoComponent {
         throw new NoLatestAppEnvIdFoundException();
     }
 
+    public String getReleaseIdForEnvironment(Environment env) throws NoLatestApiVersionFoundException {
+        ApiVersion latestApiVersion = getLatestApiVersion();
+        for (AppEnvVersion latestAppEnvVersion : latestApiVersion.getAppEnvVersions()) {
+            if (latestAppEnvVersion.getEnvironmentId().equals(env.getId())) {
+                return latestAppEnvVersion.getReleaseId();
+            }
+        }
+
+        throw new IllegalStateException("Corresponding environment " + env.getId() + "does not exist in component");
+    }
+
     /**
      * Get the app environment ID for a given API version
      *
@@ -812,7 +824,7 @@ public class ChoreoComponent {
     public String getNamespaceForEnvironment(String accessToken, String environment) throws IOException, EnvironmentDetailsCheckException, NamespaceNotFoundException {
         String requestURI = choreoEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
         MustacheFactory mf = new DefaultMustacheFactory();
-        Mustache mustache = mf.compile("templates/observability/graphql/queryForComponentObservabilityEnvironmentInformation.mustache");
+        Mustache mustache = mf.compile("templates/graphql/requests/getEnvironments.mustache");
         Writer writer = new StringWriter();
         Map<String, String> queryParams = new HashMap<String, String>();
         queryParams.put("orgUUID", organization.getOrgUUID());
@@ -858,7 +870,7 @@ public class ChoreoComponent {
      */
     public String getComponentObservabilityIdsQuery(String releaseId) throws IOException {
         MustacheFactory mf = new DefaultMustacheFactory();
-        Mustache mustache = mf.compile("templates/observability/graphql/queryForComponentObservabilityIds.mustache");
+        Mustache mustache = mf.compile("templates/graphql/requests/getObservabilityIds.mustache");
         Writer writer = new StringWriter();
         Map<String, String> queryParams = new HashMap<String, String>();
         queryParams.put("releaseId", releaseId);
@@ -1169,16 +1181,15 @@ public class ChoreoComponent {
 
         String releaseId = getReleaseIdForEnvironment(environment.getChoreoEnv());
         String namespace = environment.getNamespace();
-        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
 
         log.info("Waiting till observability data appear");
-        ObsRequestParam orp = ObsRequestParam.builder().namespace(namespace).releaseId(releaseId).sort("desc").limit("95").build();
-        String url = ObservabilityService.getObsUrl(orp,observabilityIdInformation.getObsId(),Constant.logType.logsV2);
+        ObsRequestParam orp = ObsRequestParam.builder().namespace(namespace).releaseId(releaseId).sort("asc").limit("63").build();
+        String url = ObservabilityService.getObsUrl(orp,Constant.logType.logsV2);
         for (int i = 0; i < 20; i++) {
             Response res = HttpClientUtil.httpGET(url, accessToken, "");
             ObservabilityLogs obslogs = ObjectMapperUtil.mapStringToObject(ObservabilityLogs.class, res.getRes(), "");
 
-            if (obslogs.getRows().length > 0) {
+            if (res.getStatusCode()<205  && obslogs.getRows().length > 0) {
                 return;
             }
             log.debug("Observability logs has not appeared, trying again. Attempt : " + i);
@@ -1519,4 +1530,11 @@ public class ChoreoComponent {
         this.imageRegistry = imageRegistry;
     }
 
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
 }

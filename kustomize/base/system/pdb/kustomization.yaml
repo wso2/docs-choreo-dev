@@ -22,6 +22,7 @@ resources:
   - email-service.yaml
   - frontend.yaml
   - loggingapi.yaml
+  - marketplace.yaml
   - multivariate-anomaly-detector-notification-manager.yaml
   - negotiator.yaml
   - obsapi.yaml
@@ -33,10 +34,6 @@ resources:
   - telemetry.yaml
   - test-assistant.yaml
   - testbase.yaml
-  - workspace-manager.yaml
-  - shared-image-viewer.yaml
-  - image-share-service.yaml
-  - devops-portal.yaml
   - devops-portal-api.yaml
   - organization-management.yaml
   - choreo-apim-proxy-deployer.yaml
@@ -46,3 +43,4 @@ resources:
   - cio-query-api-service.yaml
   - cio-incident-configurator.yaml
   - cdn-tls-synchronizer.yaml
+  - crypto-key-service.yaml

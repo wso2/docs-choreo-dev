@@ -11,13 +11,14 @@
  * associated services.
  */
 
+import { GraphQL } from "../../apis/graphql";
 import { Utils } from "../../utils";
 
 
 export class APIDeployment {
 
 
-  static DeployToDev() {
+  static DeployToDev(projectName:string, componentName:string) {
     cy.get('[data-cyid="btn-deploy-proxy"]').should("not.be.disabled").click();
     Utils.interceptConfig()
     cy.get('[data-cyid="btn-next"]')
@@ -27,6 +28,7 @@ export class APIDeployment {
       .contains("Active")
       .should("be.visible");
     cy.get('[data-cyid*="promote"]').should("not.be.disabled");
+    GraphQL.getComponentInfo(projectName,componentName)
   }
 
   static PromoteToProd() {

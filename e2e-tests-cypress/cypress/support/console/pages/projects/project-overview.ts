@@ -21,24 +21,20 @@ export class ProjectOverviewPage {
   static searchReuseComponent(componentData: AbsComponent, projectName: string = "Default Project") {
 
     const REPO_NAME = Utils.generateComponentName("repo");
-    cy.wait(5000)
-    cy.get('body').then(bdy => {
-      if (bdy.find('tbody').length > 0) {
-        let isFound: boolean = false;
-        const components = bdy.find('p')
-        for (let i = 0; i < components.length; i++) {
-          if (components[i].innerText.trim() === componentData.componentName.trim()) {
-            isFound = true;
-            break;
+    GraphQL.getProjects().then(res => {
+      const projects = res.projects
+      if (projects.length > 0) {
+        const project = projects.find(p => p.name === projectName)
+        GraphQL.getComponents(project.id).then(comps => {
+          if (comps.status === 200) {
+            const component = comps.components.find(c => c.displayName.trim() === componentData.componentName.trim())
+            if (component == undefined) {
+              GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
+            } else {
+              GraphQL.getComponentInfo(projectName, componentData.componentName)
+            }
           }
-        }
-        if (!isFound) {
-          GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
-        } else {
-          GraphQL.getComponentInfo(projectName, componentData.componentName)
-        }
-      } else {
-        GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
+        })
       }
     })
   }

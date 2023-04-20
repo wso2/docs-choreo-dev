@@ -31,11 +31,11 @@ export class OrganizationComponent {
   }
 
   static verifyEmailIsNotDisplayed(email: string) {
-    cy.get(`td[value="${email}"]`).should("not.exist");
+    cy.contains(email).should('not.be.visible');
   }
 
   static verifyEmailIsDisplayed(email: string) {
-    cy.get(`td[value="${email}"]`).should("exist");
+    cy.contains(email).should('be.visible');
   }
 
   static verifyGroupNameIsDisplayed(groupName: string) {
@@ -46,7 +46,7 @@ export class OrganizationComponent {
     cy.get(`td[value="${groupName}"]`).should("not.exist");
   }
 
-  static inviteMembers(email: string, ...roles) {
+  static inviteMembers(email: string, ...roles: string[]) {
     cy.wait(300);
     cy.get('[data-cyid="invite-members"]').click();
     cy.wait(300);
@@ -82,7 +82,7 @@ export class OrganizationComponent {
 
   static deleteMember(email: string) {
     cy.contains("td", email).trigger("mouseover");
-    cy.get("tr>td>div>button").click();
+    cy.get("tr>td>div>button").click({ force: true });
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
       .contains("Delete")
       .click();
@@ -203,10 +203,6 @@ export class OrganizationComponent {
 
   static deleteRoleIfExists(roleName: string) {
     cy.get('[data-cyid="search-app"]').clear().type(roleName);
-    cy.wait(2000);
-    cy.get('[data-testid="table-roles"]')
-      .contains("progressbar")
-      .should("not.exist");
     cy.get("td").then(($role) => {
       if (!$role.text().includes("No records to display")) {
         cy.contains("td", roleName).should("be.visible");

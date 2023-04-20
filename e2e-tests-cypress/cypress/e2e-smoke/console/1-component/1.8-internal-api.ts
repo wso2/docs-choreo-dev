@@ -29,20 +29,15 @@ import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-pa
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
+import { APIDevelop } from "../../../support/console/pages/apis/api-develop";
 
 describe("Verify internal API creation functionality", () => {
   const REST_API_NAME = Utils.generateComponentName("internal");
-  const PROXY_API_NAME_DEV = Utils.generateComponentName("dev").substring(
-    10,
-    50
-  );
+  const PROXY_API_NAME_DEV = Utils.generateComponentName("dev")
   const PROXY_API_VERSION_DEV = "1.0.0";
   const PROXY_API_BASEPATH_DEV = `/${PROXY_API_NAME_DEV}`;
 
-  const PROXY_API_NAME_PROD = Utils.generateComponentName("prod").substring(
-    10,
-    50
-  );
+  const PROXY_API_NAME_PROD = Utils.generateComponentName("prod")
   const PROXY_API_VERSION_PROD = "1.0.0";
   const PROXY_API_BASEPATH_PROD = `/${PROXY_API_NAME_PROD}`;
 
@@ -52,7 +47,7 @@ describe("Verify internal API creation functionality", () => {
   const PARAM_VALUE = "World";
   const PARAM_DATA_TYPE = "string";
   const queryParameters = [{ key: PARAM_NAME, value: PARAM_VALUE }];
-  const ACCESS_MODE_EXTERNAL = "external";
+  const ACCESS_MODE_EXTERNAL = "External";
   let DEV_INVOKE_URL = "";
   let PROD_INVOKE_URL = "";
 
@@ -88,7 +83,12 @@ describe("Verify internal API creation functionality", () => {
       PROJECT_DESCRIPTION,
       Enums.Region.US
     );
-    GraphQL.createComponent(PROJECT_NAME, "", componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
+    GraphQL.createComponent(
+      PROJECT_NAME,
+      "",
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
+    );
   });
 
   it("Verify REST API component deployment", () => {
@@ -97,8 +97,6 @@ describe("Verify internal API creation functionality", () => {
     ComponentDeployPage.deployToDev(false);
     ComponentDeployPage.verifyDeploymentStatus();
   });
-
- 
 
   it("Publish the API", () => {
     ComponentOverviewPage.navigateToManage();
@@ -117,8 +115,6 @@ describe("Verify internal API creation functionality", () => {
       expect(Utils.isHostResolvable(curl.url) == false);
     });
   });
-
-
 
   it("Verify REST API component promote to PROD", () => {
     ComponentOverviewPage.navigateToDeploy();
@@ -146,7 +142,7 @@ describe("Verify internal API creation functionality", () => {
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-    ComponentAPILifecycle.applyConfiguration(    );
+    ComponentAPILifecycle.applyConfiguration();
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",
       Enums.Environment.DEVELOPMENT
@@ -215,10 +211,7 @@ describe("Verify internal API creation functionality", () => {
 
   it("Verify Add resource to 1st Proxy API", () => {
     ComponentOverviewPage.navigateToDevelop();
-    ComponentDevelopPage.addResourcesToProxy(
-      RESOURCE_NAME,
-      Enums.HTTPMethod.GET
-    );
+    APIDevelop.addResources(RESOURCE_NAME, Enums.HTTPMethod.GET);
     ComponentDevelopPage.addParameterToProxyResource(
       RESOURCE_NAME,
       Enums.HTTPMethod.GET,
@@ -233,7 +226,6 @@ describe("Verify internal API creation functionality", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.configureAndDeployProxyApiToDev();
   });
-
 
   // Invoke the Proxy API via curl, verify that Internal API is accessible to the Proxy API
   // by receiving a 200 response
@@ -288,10 +280,7 @@ describe("Verify internal API creation functionality", () => {
 
   it("Verify Add resource to 2nd proxy API", () => {
     ComponentOverviewPage.navigateToDevelop();
-    ComponentDevelopPage.addResourcesToProxy(
-      RESOURCE_NAME,
-      Enums.HTTPMethod.GET
-    );
+    APIDevelop.addResources(RESOURCE_NAME, Enums.HTTPMethod.GET);
     ComponentDevelopPage.addParameterToProxyResource(
       RESOURCE_NAME,
       Enums.HTTPMethod.GET,
@@ -306,7 +295,6 @@ describe("Verify internal API creation functionality", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.configureAndDeployProxyApiToDev();
   });
-
 
   // Invoke the Proxy API via curl, verify that Internal API is accessible to the Proxy API
   // by receiving a 200 response

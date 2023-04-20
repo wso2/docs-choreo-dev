@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { LONG_TIME } from "../../../../support/console/constants";
+import { MEDIUM_TIME } from "../../../../support/console/constants";
 import { Enums } from "../../../../support/console/enums";
 import { ComponentDeployPage } from "../../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../../support/console/pages/component/component-listing-page";
@@ -21,18 +21,18 @@ import { ChoreoHomePage } from "../../../../support/console/pages/home/home-page
 import { LoginPage } from "../../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../../support/console/pages/projects/projects-listing-page";
+import { GitHub } from "../../../../support/github/github";
 import { ComponentData } from "../../../../support/interfaces/component-data";
-
-
 
 describe("Create Reusable Schedule Trigger", () => {
   const SCHEDULE_NAME = "create-ReuseScheduleTrigger-1.7.1";
-  const PROJECT_NAME = "Default Project"
+  const PROJECT_NAME = "Default Project";
   const EXPECTED_RESULT =
     '{"userId":1,"id":1,"title":"delectus aut autem","completed":false}';
 
   before(() => {
     LoginPage.login();
+    GitHub.deleteWebhooks("schedule-trigger");
   });
 
   after(() => {
@@ -40,7 +40,6 @@ describe("Create Reusable Schedule Trigger", () => {
   });
 
   it("Verify Schedule Trigger component creation", () => {
-
     let componentData: ComponentData = {
       componentName: SCHEDULE_NAME,
       displayType: Enums.DisplayType.scheduledTask,
@@ -71,7 +70,7 @@ describe("Create Reusable Schedule Trigger", () => {
 
   it("Verify task execution in observability ", () => {
     ComponentOverviewPage.navigateToObserve();
-    ComponentObservePage.gotoLogs(LONG_TIME);
+    ComponentObservePage.gotoLogs(MEDIUM_TIME);
   });
   it("Verify dev env logs", () => {
     ComponentObservePage.selectEnv(Enums.Environment.DEVELOPMENT);

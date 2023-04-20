@@ -1,0 +1,84 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: infrastructure-cost-collector
+  labels:
+    choreo.component: infrastructure-cost-collector
+spec:
+  schedule: 30 23 * * *
+  successfulJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 10
+      completions: 1
+      parallelism: 1
+      template:
+        metadata:
+          annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+            linkerd.io/inject: disabled # https://github.com/linkerd/linkerd2/issues/2833
+          labels:
+            choreo.component: infrastructure-cost-collector
+        spec:
+          automountServiceAccountToken: false
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+          containers:
+            - name: infrastructure-cost-collector
+              image: choreocontrolplane.azurecr.io/choreoipaas/metered-usage-handler-crons:latest
+              securityContext:
+                runAsUser: 10500
+                runAsGroup: 10500
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - all
+              envFrom:
+                - configMapRef:
+                    name: cm-choreo-metered-usage-handler-collector
+                - configMapRef:
+                    name: env-choreo-metered-usage-handler
+                - secretRef:
+                    name: secret-choreo-metered-usage-handler
+              resources:
+                limits:
+                  cpu: 500m
+                  memory: 1024Mi
+                requests:
+                  cpu: 300m
+                  memory: 512Mi
+              volumeMounts:
+                - name: config
+                  mountPath: /home/ballerina/Config.toml
+                  subPath: Config.toml
+                - name: secret-choreo-metered-usage-handler
+                  mountPath: "/mnt/csi/secret-choreo-metered-usage-handler"
+                  readOnly: true
+                - name: tmp
+                  mountPath: /tmp
+                - name: client-truststore
+                  mountPath: /home/ballerina/security/clientTrustStore.p12
+                  subPath: clientTrustStore.p12
+                  readOnly: true
+          volumes:
+            - name: config
+              configMap:
+                name: cm-file-choreo-metered-usage-handler
+            - name: secret-choreo-metered-usage-handler
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: secret-choreo-metered-usage-handler
+                nodePublishSecretRef:
+                  name: csi-secret-store-azure
+            - name: tmp
+              emptyDir: {}
+            - name: client-truststore
+              configMap:
+                name: client-truststore

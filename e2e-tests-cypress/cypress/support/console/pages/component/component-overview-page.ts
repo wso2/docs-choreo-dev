@@ -12,7 +12,7 @@
  */
 export class ComponentOverviewPage {
   static goBack() {
-    cy.get("button>span>p").contains("Components").should("be.visible").click();
+    cy.get('[data-testid="main-left-nav-item-Project"]').should("be.visible").click();
   }
 
   static navigateToDeploy() {
@@ -26,6 +26,19 @@ export class ComponentOverviewPage {
       cy.contains("Test").should("be.visible").click({ force: true });
     }
    
+  }
+
+  static navigateToOverview(){
+    cy.get("[data-cyid=link-overview]").should("be.visible").click();
+    cy.intercept({
+      method: "POST",
+      url: `/insights/1.0.0/query-api`,
+      times: 1,
+    }).as("insights");
+    cy.wait("@insights", { timeout: 180000 }).then(() => {
+      cy.get("[data-cyid=copy-release-details-btn]").should('be.visible');
+    });
+  
   }
 
     static navigateToManage() {

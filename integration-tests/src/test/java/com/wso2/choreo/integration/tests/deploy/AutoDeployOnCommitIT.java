@@ -16,13 +16,17 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.utils.FileUtil;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
@@ -46,6 +50,10 @@ import java.util.Map;
         private ChoreoProject project;
         @Autowired
         private HttpClient choreoTestClient;
+
+        @Autowired
+        Map<Endpoints, HttpClient> citrusClients;
+
         @BeforeClass
         public void setup_AutoDeployOnCommitIT()
                 throws Exception {
@@ -56,14 +64,17 @@ import java.util.Map;
         @CitrusTest
         public void createUserManagedComponentFor_AutoDeployOnCommitIT() throws Exception {
             String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+            String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
             GraphqlDTO dto = GraphqlDTO.builder().
                     name(componentName).
                     triggerID("null").
                     srcGitRepoUrl("https://github.com/choreo-test-apps/" + repoName).
                     projectId(project.getId()).
-                    displayType(Constant.displayType.restAPI.name()).
-                    build();
-            choreoComponent = ComponentUtils.createComponent(this, choreoTestClient, accessToken, dto);
+                    displayType(Constant.displayType.restAPI.name()).repositoryBranch("main")
+                    .repositorySubPath("").build();
+
+            choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
+                    ComponentFlavour.STANDARD);
             Assert.assertNotNull(choreoComponent.getId());
         }
 
