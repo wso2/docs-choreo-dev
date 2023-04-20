@@ -26,6 +26,7 @@ import org.springframework.http.MediaType;
 
 import java.util.concurrent.atomic.AtomicReference;
 
+import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 public class ProxyDeployer extends ControlPlaneAPI {
@@ -35,20 +36,25 @@ public class ProxyDeployer extends ControlPlaneAPI {
     public static void initiateDeployment(TestActionRunner runner, HttpClient client, String accessToken, String componentId, String versionId, String envId) {
         String resource = PROXY_RESOURCE + componentId + "/versions/" + versionId + "/initiate-deployment?environmentId=" + envId + "&accessMode=external";
 
-        runner.$(http()
-                .client(client)
-                .send()
-                .post(resource)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE));
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON));
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                    http()
+                        .client(client)
+                        .send()
+                        .post(resource)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON_VALUE),
+                    http()
+                        .client(client)
+                        .receive()
+                        .response(HttpStatus.OK)
+                        .message()
+                        .type(MessageType.JSON)));
     }
 
     public static ProxyAPIBuild getApiBuilds(TestActionRunner runner, HttpClient client, String accessToken, String componentId, String versionId) {
@@ -56,23 +62,28 @@ public class ProxyDeployer extends ControlPlaneAPI {
 
         AtomicReference<ProxyAPIBuild> build = new AtomicReference<>();
 
-        runner.$(http()
-                .client(client)
-                .send()
-                .get(resource)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE));
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .validate((message, context) -> {
-                    build.set(ObjectMapperUtil.mapStringToObject(ProxyAPIBuild.class, message.getPayload(String.class), ""));
-                }));
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                    http()
+                        .client(client)
+                        .send()
+                        .get(resource)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON_VALUE),
+                    http()
+                        .client(client)
+                        .receive()
+                        .response(HttpStatus.OK)
+                        .message()
+                        .type(MessageType.JSON)
+                        .validate((message, context) -> {
+                            build.set(ObjectMapperUtil.mapStringToObject(ProxyAPIBuild.class, message.getPayload(String.class), ""));
+                        })));
 
         return build.get();
     }
@@ -82,20 +93,25 @@ public class ProxyDeployer extends ControlPlaneAPI {
         String resource = PROXY_RESOURCE + componentId + "/versions/" + versionId + "/deploy-service?buildId=" +
                 buildId + "&environmentId=" + envId;
 
-        runner.$(http()
-                .client(client)
-                .send()
-                .post(resource)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE));
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON));
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                    http()
+                        .client(client)
+                        .send()
+                        .post(resource)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON_VALUE),
+                    http()
+                        .client(client)
+                        .receive()
+                        .response(HttpStatus.OK)
+                        .message()
+                        .type(MessageType.JSON)));
     }
 
     public static void promoteProxyAPI(TestActionRunner runner, HttpClient client, String accessToken,
@@ -103,19 +119,24 @@ public class ProxyDeployer extends ControlPlaneAPI {
         String resource = PROXY_RESOURCE + componentId + "/versions/" + versionId + "/promote?fromEnv=" +
                 fromEnv+"&targetEnv="+targetEnv +  "&buildId=" + buildId;
 
-        runner.$(http()
-                .client(client)
-                .send()
-                .post(resource)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE));
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON));
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                    http()
+                        .client(client)
+                        .send()
+                        .post(resource)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON_VALUE),
+                    http()
+                        .client(client)
+                        .receive()
+                        .response(HttpStatus.OK)
+                        .message()
+                        .type(MessageType.JSON)));
     }
 }

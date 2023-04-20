@@ -100,7 +100,6 @@ public class TestProxyApiDp extends TestBase {
     @CitrusTest
     public void createAPI_ProxyApiEUDpIT(DataProviderWrapper dp) throws Exception {
         ProxyAPI proxyAPI = ComponentUtils.createApiProxy(this, citrusClients, accessToken, dp.getFirstName());
-        //ProxyAPI proxyAPI = APICreator.createAPI(dp.getFirstName(), dp.getContext(), accessToken).getEntity();
         dp.setProxyAPI(proxyAPI);
         Assert.assertNotNull(proxyAPI.getId());
     }

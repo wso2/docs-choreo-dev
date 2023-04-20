@@ -22,6 +22,7 @@ import org.springframework.http.MediaType;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 public class ApiManager extends ControlPlaneAPI {
@@ -39,24 +40,29 @@ public class ApiManager extends ControlPlaneAPI {
 
         AtomicReference<ProxyAPI> proxyAPI = new AtomicReference<>();
 
-        runner.$(http()
-                .client(client)
-                .send()
-                .post(resource)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(requestBody)
-                .accept(MediaType.APPLICATION_JSON_VALUE));
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.CREATED)
-                .message()
-                .type(MessageType.JSON)
-                .validate((message, context) -> {
-                    proxyAPI.set(ObjectMapperUtil.mapStringToObject(ProxyAPI.class, message.getPayload(String.class), ""));
-                }));
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                    http()
+                            .client(client)
+                            .send()
+                            .post(resource)
+                            .message()
+                            .header(HttpHeaders.AUTHORIZATION, accessToken)
+                            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                            .body(requestBody)
+                            .accept(MediaType.APPLICATION_JSON_VALUE),
+                    http()
+                            .client(client)
+                            .receive()
+                            .response(HttpStatus.CREATED)
+                            .message()
+                            .type(MessageType.JSON)
+                            .validate((message, context) -> {
+                                proxyAPI.set(ObjectMapperUtil.mapStringToObject(ProxyAPI.class, message.getPayload(String.class), ""));
+                            })));
 
         return proxyAPI.get();
     }
