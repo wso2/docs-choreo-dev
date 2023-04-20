@@ -118,7 +118,7 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
     @Test
     @CitrusTest(name = "Get the revision count")
     public void getRevisionCount() throws Exception {
-
+        component.deploy(accessToken, orgHandle, orgUuid);
         JsonArray deploymentArray = component.getDeployments(accessToken, orgHandle, orgUuid, versionId);
         JsonObject deployment = (JsonObject) deploymentArray.get(0);
         apiId = deployment.get("apiId").getAsString();
