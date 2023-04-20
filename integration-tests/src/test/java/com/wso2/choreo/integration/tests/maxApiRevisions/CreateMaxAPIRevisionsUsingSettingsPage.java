@@ -84,7 +84,7 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
 
     private int revisionCount;
     private int count;
-    private List<Environment> environments;
+
     @Autowired
     private HttpClient choreoTestClient;
     @Autowired
@@ -111,26 +111,28 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
         componentId = component.getId();
         environmentId = component.getLatestAppEnvId(Constant.DEV_ENVIRONMENT);
         versionId = component.getLatestApiVersion().getId();
-        environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, component);
+
 
     }
 
     @Test
     @CitrusTest(name = "Get the revision count")
     public void getRevisionCount() throws Exception {
-      JsonArray deploymentArray = component.getDeployments(accessToken, orgHandle, orgUuid, versionId);
+
+        JsonArray deploymentArray = component.getDeployments(accessToken, orgHandle, orgUuid, versionId);
         JsonObject deployment = (JsonObject) deploymentArray.get(0);
         apiId = deployment.get("apiId").getAsString();
-        releaseId = deployment.get("releaseId").getAsString();;
+        releaseId = deployment.get("releaseId").getAsString();
+
          revisionWrapper = ComponentUtils.getRevisions(this,citrusClients, accessToken,apiId,orgUuid);
          revisionCount = revisionWrapper.getCount();
+
         while(revisionCount<18){
             component.deploy(accessToken, orgHandle, orgUuid);
-            ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                    accessToken, component, environments, ComponentFlavour.STANDARD);
             revisionCount = revisionCount+1;
             SleepUtil.sleep(5);
         }
+
     }
 
     @Test(dependsOnMethods = {"getRevisionCount"})
@@ -139,14 +141,13 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
 //         Creating a revision using Settings page requires a deployment.
 //         Each deployment creates a new revision.
 //         This deployment is done to reach API revision limit of the Settings page (i.e. 19).
+
         component.deploy(accessToken, orgHandle, orgUuid);
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, component, environments, ComponentFlavour.STANDARD);
+
         JsonArray deploymentArray = component.getDeployments(accessToken, orgHandle, orgUuid, versionId);
         JsonObject deployment = (JsonObject) deploymentArray.get(0);
         releaseId = deployment.get("releaseId").getAsString();
         apiId = deployment.get("apiId").getAsString();
-
 
         Map<String, Object> responseParams = new HashMap<>();
         responseParams.put("REVISION_COUNT", MAX_API_REVISIONS_LIMIT_SETTINGS_PAGE);
