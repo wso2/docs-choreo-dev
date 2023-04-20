@@ -27,7 +27,7 @@ import { ComponentData } from "../../../support/interfaces/component-data";
 
 describe("Verify webhook creation functionality", () => {
   const CONFIG = "pkKgDNr5vGND364IsHzwGM7O";
-  const WEBHOOK_NAME = "create-webhook-slackTrigger-1.4";
+  const WEBHOOK_NAME = Utils.generateComponentName()
   const REPO_NAME = Utils.generateComponentName("repo");
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Slack Webhook";

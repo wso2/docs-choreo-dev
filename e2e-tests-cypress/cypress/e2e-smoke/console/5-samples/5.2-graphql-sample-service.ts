@@ -19,7 +19,7 @@ describe("Graphql GQL service test", () => {
   const TEST_QUERY_RESPONSE = "Hello, John";
   const TEST_MUTATION = 'mutation{createUser(name:"John")}';
   const TEST_MUTATION_RESPONSE = 'createUser": "User created with name: John';
-  const COMPONENT_NAME = "graphql-sample";
+  const COMPONENT_NAME = Utils.generateComponentName()
   const REPO_NAME = "graphql-service-sample";
   const subPath = Cypress.env("branch").replace("-ci", "");
 

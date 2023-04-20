@@ -122,7 +122,7 @@ export class LoginPage {
   }
 
   private static registerNetworkCallsForInterception() {
-    cy.intercept("GET",Cypress.env("newAppSvcURL") + "/validation-mgt/1.0.0/validate-user").as("org");
+    cy.intercept("GET", Cypress.env("newAppSvcURL") + "/validation-mgt/1.0.0/validate-user").as("org");
     cy.intercept({
       method: "GET",
       url: `${Cypress.env("appSvcURL")}/orgs/*`,

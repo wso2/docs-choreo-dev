@@ -33,7 +33,7 @@ export class Utils {
     return `${this.projectNamePrefix}${Date.now()}`
   }
 
-  static generateComponentName(name: string) {
+  static generateComponentName(name: string="") {
     return this.componentNamePrefix + Date.now() + name;
   }
 

@@ -17,7 +17,7 @@ import { GitHub } from "../../../support/github/github";
 describe("Verify BYOR functionality", () => {
   const PROJECT_DESCRIPTION = "Internal API Test";
   const PROJECT_NAME = Utils.generateProjectName();
-  const REST_API_NAME = Utils.generateComponentName("byor");
+  const REST_API_NAME = Utils.generateComponentName();
   const REPO_NAME = Utils.generateComponentName("repo");
   const RESOURCE_NAME = "greeting";
   const PARAM_NAME = "name";
