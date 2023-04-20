@@ -168,6 +168,7 @@ export class ComponentDeployPage {
   }
 
   static addConfiguration(value: string) {
+
     cy.get(".ConfigForm").should("be.visible");
     cy.get(".ConfigForm div input").type(value);
     cy.get('.ConfigForm button[type="submit"]').click();
@@ -182,9 +183,12 @@ export class ComponentDeployPage {
       invokeUrlCount: 0,
       invokeUrlIndex: 0,
     });
-    cy.get('.ConfigForm button').contains("Promote").should('have.length',1).click();
+   
     if (isNewComponent) {
+      cy.get('[data-cyid="btn-next"]').click()
       this.addConfiguration(configValue);
+    }else{
+      cy.get('.ConfigForm button').contains("Promote").should('have.length', 1).click();
     }
     cy.get('[data-testid="btn-stop"]', { timeout: LONG_TIME }).should(
       "have.length",

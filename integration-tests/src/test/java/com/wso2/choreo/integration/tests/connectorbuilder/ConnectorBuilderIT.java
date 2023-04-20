@@ -87,12 +87,14 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void createComponent_ConnectorBuilderIT() throws Exception, ApiLifecycleChangeException {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
 
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").
                 srcGitRepoUrl("https://github.com/choreo-test-apps/rest-api").
                 projectId(project.getId()).
-                displayType(Constant.displayType.restAPI.name()).enableCellDiagram(false).
-                build();
+                displayType(Constant.displayType.restAPI.name()).enableCellDiagram(false)
+                .repositoryBranch("main").
+                repositorySubPath("").build();
 
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
@@ -135,7 +137,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
         $(http()
                 .client(choreoTestClient)
                 .receive()
-                .response(HttpStatus.OK)
+                .response(HttpStatus.CREATED)
                 .message()
                 .type(MessageType.JSON)
                 .body(new ClassPathResource("templates/connectorbuilder/publish_success_ok.json")));
@@ -226,7 +228,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
         $(http()
                 .client(choreoTestClient)
                 .receive()
-                .response(HttpStatus.OK)
+                .response(HttpStatus.CREATED)
                 .message()
                 .type(MessageType.JSON)
                 .body(new ClassPathResource("templates/connectorbuilder/republish_success_ok.json")));

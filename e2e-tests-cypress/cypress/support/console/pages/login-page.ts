@@ -44,19 +44,8 @@ export class LoginPage {
     this.persistLogoutURL();
     this.persistApimToken(doCleanup);
     this.persistCookies(`${Cypress.env("idpURL")}/commonauth`);
-    
+    cy.get('[data-testid="header-user-profile-menu"]', { timeout: 180000, }).should("be.visible");
 
-    cy.get('[data-testid="header-user-profile-menu"]', {
-      timeout: 180000,
-    }).should("be.visible");
-    cy.url().then((url) => {
-      if (url.includes("sample=true")) {
-        const { handle } = Cypress.env("userData");
-        const tmpURL = `${Cypress.env("baseUrl")}/organizations/${handle}/home`;
-        cy.wait(5000);
-        cy.visit(tmpURL);
-      }
-    });
   }
 
   private static rejectCookies() {
@@ -239,7 +228,7 @@ export class LoginPage {
     this.getOnPremKeys(handle, header).then(keys => {
       keys.forEach(ke => {
         const url = `${Cypress.env("newAppSvcURL")}/onprem-key-mgt/1.0.0/orgs/${handle}/keys/${ke.handle}/revoke`
-        Utils.sendPostRequest(url,header,"")
+        Utils.sendPostRequest(url, header, "")
       })
 
 
@@ -247,9 +236,7 @@ export class LoginPage {
   }
 
   private static getOnPremKeys(handle: string, header: any) {
-
     const url = `${Cypress.env("newAppSvcURL")}/onprem-key-mgt/1.0.0/orgs/${handle}/keys`
-
     return Utils.sendGetRequest(url, header).then(res => {
       if (res.status == 200) {
         return res.body as { handle: string }[]
