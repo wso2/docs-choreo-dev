@@ -98,7 +98,7 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
     public void beforeClass() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
 
-        String componentName = "testing";
+        String componentName = "maxApiRevisionsUsingSettingsPage";
         // Access a reusable component which has a total of 18 revisions
         component = ComponentUtils.getReusableComponent(
                 TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(), componentName.toLowerCase());
