@@ -18,7 +18,7 @@ import { LoginPage } from "../login-page";
 export class ChoreoHomePage {
 
     static navigateToHome() {
-        const { handle } = Cypress.env("current_org");
+        const { handle } = Cypress.env("userData");
         cy.get(`div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home"]`).click();
     }
 
@@ -30,7 +30,7 @@ export class ChoreoHomePage {
         cy.get('[data-testid="main-left-nav-item-Project"]').click();
     }
 
-    static navigateToComponents(){
+    static navigateToComponents() {
         cy.get('[data-testid="main-left-nav-item-Components"]').click()
     }
 

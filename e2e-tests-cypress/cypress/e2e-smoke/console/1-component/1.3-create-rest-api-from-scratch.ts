@@ -29,7 +29,7 @@ import { GitHub } from "../../../support/github/github";
 describe("Verify project creation functionality", () => {
   const queryParameters1 = [{ key: "number", value: "2" }];
   const queryParameters2 = [{ key: "number", value: "5" }];
-  const COMPONENT_NAME = "create-rest-api-from-scratch-1.3";
+  const COMPONENT_NAME = Utils.generateComponentName()
   const REPO_NAME = Utils.generateComponentName("repo");
   const PROJECT_DESCRIPTION = "Covid stats project";
   const PROJECT_NAME = Utils.generateProjectName();

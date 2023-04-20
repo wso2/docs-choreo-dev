@@ -40,7 +40,7 @@ after(() => {
 describe(`Verify BYOC functionality in region ${dp}`, () => {
   const PROJECT_DESCRIPTION = "BYOC component";
   const PROJECT_NAME = Utils.generateProjectName();
-  const REST_API_NAME = Utils.generateComponentName("byor");
+  const REST_API_NAME = Utils.generateComponentName();
   const REPO_NAME = Utils.generateComponentName("repo");
   const RESOURCE_NAME = "movies";
 

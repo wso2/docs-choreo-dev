@@ -115,7 +115,7 @@ export class GraphQL {
   }
 
   static getComponents(projectId: string) {
-    const { handle } = Cypress.env("current_org");
+    const { handle } = Cypress.env("userData");
     const query = {
       query: `query{ components(orgHandler: "${handle}", projectId: "${projectId}"){
         projectId, id, description, name, handler, displayName, displayType, version, createdAt, orgHandler,apiVersions {
@@ -209,6 +209,7 @@ export class GraphQL {
     const query = {
       query: `query{projects(orgId: ${orgId}){ id, orgId, name, version, createdDate,handler }}`,
     };
+    cy.log(JSON.stringify(query))
     return this.callGraphQL(query).then((res) => {
       const projects = res.body.projects as Project[];
       const status = res.status;
@@ -243,7 +244,7 @@ export class GraphQL {
   }
 
   static createIntegrationComponent(componentData: IntegrationComponentData) {
-    const { id } = Cypress.env("current_org");
+    const { orgId } = Cypress.env("userData");
     this.getProjects().then((res) => {
       const projects = res.projects;
       const project = projects.find(
@@ -255,34 +256,27 @@ export class GraphQL {
                         createIntegrationComponent(
                                  component: {
                                       name: "${componentData.componentName}",
-                                      displayName: "${
-                                        componentData.componentName
-                                      }",
+                                      displayName: "${componentData.componentName
+          }",
                                       description: "",
-                                      orgId: ${id},
+                                      orgId: ${orgId},
                                       orgHandler: "${Cypress.env(
-                                        "choreoOrgHandle"
-                                      )}",
+            "choreoOrgHandle"
+          )}",
                                       projectId: "${project["id"]}",
                                       labels: "",
-                                      componentType: "${
-                                        componentData.componentType
-                                      }",
-                                      accessibility: "${
-                                        componentData.accessibility
-                                      }",
-                                      srcGitRepoUrl: "${
-                                        componentData.srcGitRepoUrl
-                                      }",
-                                      srcGitRepoBranch: "${
-                                        componentData.srcGitRepoBranch
-                                      }",
-                                      repositorySubPath: "${
-                                        componentData.repositorySubPath
-                                      }",
-                                      oasFilePath: "${
-                                        componentData.oasFilePath
-                                      }"
+                                      componentType: "${componentData.componentType
+          }",
+                                      accessibility: "${componentData.accessibility
+          }",
+                                      srcGitRepoUrl: "${componentData.srcGitRepoUrl
+          }",
+                                      srcGitRepoBranch: "${componentData.srcGitRepoBranch
+          }",
+                                      repositorySubPath: "${componentData.repositorySubPath
+          }",
+                                      oasFilePath: "${componentData.oasFilePath
+          }"
                                       version: "1.0.0"
                                     } )
                                     { id,
@@ -314,9 +308,9 @@ export class GraphQL {
       const av: APIVersion[] = component.apiVersions;
       const latestAPIVersion = av.find((a) => a.latest);
       const latestAPIVersionId = latestAPIVersion.id;
-     
-      const apiInfo = {componentId,latestAPIVersionId}
-      Cypress.env("apiInfo",apiInfo)
+
+      const apiInfo = { componentId, latestAPIVersionId }
+      Cypress.env("apiInfo", apiInfo)
       cy.log(JSON.stringify(apiInfo))
       const appENVS: AppEnvVersion[] = latestAPIVersion.appEnvVersions;
       appENVS.forEach((appEnv) => {
@@ -330,7 +324,7 @@ export class GraphQL {
           releaseId: id,
           choreoEnv,
         };
-   
+
         Cypress.env(choreoEnv, releaseData);
       });
     });
@@ -465,7 +459,7 @@ export class GraphQL {
   }
 
   private static deprecateComponent(apiId: string, token: string) {
-    const { uuid } = Cypress.env("current_org");
+    const { uuid } = Cypress.env("userData");
     cy.log(`Current UUID ==> ${uuid}`);
 
     const statusRequest = `${Cypress.env(
@@ -516,7 +510,7 @@ export class GraphQL {
   }
 
   private static deleteConnectors(token: string) {
-    const { handle } = Cypress.env("current_org");
+    const { handle } = Cypress.env("userData");
     cy.log(`Current handle ==> ${handle}`);
     const headers = { Authorization: `Bearer ${token}` };
     const url = `${Cypress.env("balRegistryURL")}/packages/${handle}`;
