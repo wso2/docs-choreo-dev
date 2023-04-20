@@ -155,6 +155,16 @@ The organization filter.
 </td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">projectId</td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The project ID by which the results need to be filtered. It is optional to specify a value for this
+parameter. Note that providing a project ID with an on-prem key is not allowed.
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>listTenants</strong></td>
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
@@ -3827,6 +3837,16 @@ The environment ID by which the results need to be filtered. It is required to s
 
 The name of the tenant by which the results need to be filtered. It is required to specify a value for this
 parameter.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>projectId</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The project ID by which the results need to be filtered. It is optional to specify a value for this
+parameter. Note that providing a project ID with an on-prem key is not allowed.
 
 </td>
 </tr>
