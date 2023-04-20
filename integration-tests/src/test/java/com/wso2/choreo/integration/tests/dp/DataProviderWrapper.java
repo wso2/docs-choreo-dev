@@ -8,6 +8,7 @@ import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
+import com.wso2.choreo.integration.models.proxyapi.ProxyDeployment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -44,6 +45,7 @@ public class DataProviderWrapper {
     private String buildId;
     private List<Environment> environments;
     List<ComponentDeploymentStatusDTO> promoteStatusDTO;
+    List<ProxyDeployment> proxyDeployments;
 
 
     public static <T> Object[][] convertToDataProvider(List<T> list) {
