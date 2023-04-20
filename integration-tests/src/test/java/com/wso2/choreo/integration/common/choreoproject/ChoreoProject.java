@@ -44,7 +44,7 @@ public class ChoreoProject {
     private String description;
     private String createdDate;
     private String region;
-    private String GitRepoURL = "https://github.com/Avishka217/balrestapisample";
+    private String GitRepoURL = "https://github.com/choreo-test-apps/rest-api";
     /**
      * Create a Choreo component
      *
