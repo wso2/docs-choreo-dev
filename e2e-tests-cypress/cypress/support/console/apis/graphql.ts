@@ -115,7 +115,7 @@ export class GraphQL {
   }
 
   static getComponents(projectId: string) {
-    const { handle } = Cypress.env("current_org");
+    const { handle } = Cypress.env("userData");
     const query = {
       query: `query{ components(orgHandler: "${handle}", projectId: "${projectId}"){
         projectId, id, description, name, handler, displayName, displayType, version, createdAt, orgHandler,apiVersions {
@@ -243,7 +243,7 @@ export class GraphQL {
   }
 
   static createIntegrationComponent(componentData: IntegrationComponentData) {
-    const { id } = Cypress.env("current_org");
+    const { id } = Cypress.env("userData");
     this.getProjects().then((res) => {
       const projects = res.projects;
       const project = projects.find(
@@ -465,7 +465,7 @@ export class GraphQL {
   }
 
   private static deprecateComponent(apiId: string, token: string) {
-    const { uuid } = Cypress.env("current_org");
+    const { uuid } = Cypress.env("userData");
     cy.log(`Current UUID ==> ${uuid}`);
 
     const statusRequest = `${Cypress.env(
@@ -516,7 +516,7 @@ export class GraphQL {
   }
 
   private static deleteConnectors(token: string) {
-    const { handle } = Cypress.env("current_org");
+    const { handle } = Cypress.env("userData");
     cy.log(`Current handle ==> ${handle}`);
     const headers = { Authorization: `Bearer ${token}` };
     const url = `${Cypress.env("balRegistryURL")}/packages/${handle}`;
