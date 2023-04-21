@@ -9,41 +9,69 @@ import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.ApiDTO;
+import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
 import com.wso2.choreo.integration.models.response.Response;
-import com.wso2.choreo.integration.models.revision.Revision;
 import com.wso2.choreo.integration.models.revision.RevisionWrapper;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.wso2.choreo.integration.common.Endpoints;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-
 import java.io.IOException;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
-
 
 public class ApiManager extends ControlPlaneAPI {
 
     private static final String APIS_ENDPOINT = STS_ENDPOINT + Constant.APIS_ENDPOINT;
 
-    @Autowired
-    static
-    Map<Endpoints, HttpClient> citrusClients;
-    @Autowired
-    private static HttpClient choreoTestClientForSTS;
+    public static ProxyAPI createApiProxy(TestActionRunner runner, HttpClient client, String accessToken, String apiName) throws IOException {
+        String resource = Constant.APIS_ENDPOINT.concat("?").concat(Constant.ORGANIZATION_ID).concat("=") + ORG_UUID;
+
+        String apiContext = ORG_UUID.concat("/").concat(ORG_HANDLE).concat("/").concat(apiName.toLowerCase());
+        String scopePrefix = "urn:" + ORG_HANDLE + ":" + apiName.toLowerCase() + ":";
+        ApiDTO api = ApiDTO.builder().apiName(apiName).version(Constant.DEFAULT_VERSION).context(apiContext).
+                scopePrefix(scopePrefix).productionEndpoint(Constant.DEFAULT_ENDPOINT).sandboxEndpoint(Constant.DEFAULT_ENDPOINT).build();
+        String requestBody = ObjectMapperUtil.mapObjectToString("templates/api-proxy/requestBodyForAPICreation.mustache", api);
+
+        AtomicReference<ProxyAPI> proxyAPI = new AtomicReference<>();
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                    http()
+                            .client(client)
+                            .send()
+                            .post(resource)
+                            .message()
+                            .header(HttpHeaders.AUTHORIZATION, accessToken)
+                            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                            .body(requestBody)
+                            .accept(MediaType.APPLICATION_JSON_VALUE),
+                    http()
+                            .client(client)
+                            .receive()
+                            .response(HttpStatus.CREATED)
+                            .message()
+                            .type(MessageType.JSON)
+                            .validate((message, context) -> {
+                                proxyAPI.set(ObjectMapperUtil.mapStringToObject(ProxyAPI.class, message.getPayload(String.class), ""));
+                            })));
+
+        return proxyAPI.get();
+    }
 
 
     public static Response changeLifeCycle(String apiId, String action, String accessToken) throws IOException {
         String url = STS_ENDPOINT + "api/am/publisher/v2/apis/change-lifecycle?organizationId=" + ORG_UUID + "&apiId=" + apiId + "&action=" + action;
         return HttpClientUtil.httpPOST(url, "", accessToken, "");
     }
-
 
     public static RevisionWrapper getApiRevision(String apiId, String accessToken) {
 
