@@ -29,7 +29,7 @@ const dp = Enums.Region.US;
 
 before(() => {
   LoginPage.login();
-  GitHub.deleteWebhooks("graphql");
+  GitHub.deleteWebhooks("gql-service");
 });
 after(() => {
   ChoreoHomePage.logout();
@@ -53,7 +53,7 @@ describe(`Graphql GQL service functionality in region ${dp}`, () => {
       projectName: PROJECT_NAME,
       triggerChannels: "",
       triggerId: null,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/graphql",
+      srcGitRepoUrl: "https://github.com/choreo-test-apps/gql-service",
       initializeAsBallerinaProject: false,
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: "",
