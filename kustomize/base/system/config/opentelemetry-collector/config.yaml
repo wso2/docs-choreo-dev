@@ -46,11 +46,12 @@ processors:
       - key: dataplaneId
         from_context: auth.subject
         action: insert
+  publishingfailuredetection:
 
 service:
   extensions: [choreosts, health_check/liveness, health_check/readiness]
   pipelines:
     metrics:
       receivers: [otlp]
-      processors: [attributes]
+      processors: [attributes, k8smetadataoverlay]
       exporters: [logging, eventhubexporter]
