@@ -53,5 +53,5 @@ service:
   pipelines:
     metrics:
       receivers: [otlp]
-      processors: [attributes, k8smetadataoverlay]
+      processors: [attributes, publishingfailuredetection]
       exporters: [logging, eventhubexporter]
