@@ -134,3 +134,20 @@ spec:
   - Egress
 
 ---        
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-cost-collector
+  namespace: kubecost
+spec:
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: dev-choreodp-system
+      podSelector:
+        matchLabels:
+          choreo.component: infrastructure-cost-collector
+  podSelector: {}
+  policyTypes:
+  - Ingress
