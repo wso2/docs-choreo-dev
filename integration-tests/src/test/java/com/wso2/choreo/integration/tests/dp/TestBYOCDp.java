@@ -61,14 +61,6 @@ public class TestBYOCDp extends TestBase {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
 
-        /*
-        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).projectId(project.getId())
-                .srcGitRepoUrl("https://github.com/choreo-test-apps/byor-greetings-app2")
-                .oasFilePath("byoc-test/oas.yaml")
-                .dockerContext("byoc-test")
-                .dockerfilePath(DOCKER_FILE_PATH).build();
-        */
-
         Repository repo = Repository.builder().
                 repoUrl("https://github.com/choreo-test-apps/byor-greetings-app2").
                 oasFilePath("byoc-test/oas.yaml").
