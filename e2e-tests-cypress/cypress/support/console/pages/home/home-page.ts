@@ -30,7 +30,7 @@ export class ChoreoHomePage {
         cy.get('[data-testid="main-left-nav-item-Project"]').click();
     }
 
-    static navigateToComponents(){
+    static navigateToComponents() {
         cy.get('[data-testid="main-left-nav-item-Components"]').click()
     }
 

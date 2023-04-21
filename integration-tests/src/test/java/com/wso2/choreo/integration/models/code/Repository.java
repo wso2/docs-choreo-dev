@@ -11,14 +11,19 @@
  *  associated services.
  */
 
-package com.wso2.choreo.integration.common;
+package com.wso2.choreo.integration.models.code;
 
-/**
- * Component flavours supported by Choreos.
- */
-public enum ComponentFlavour {
-    STANDARD,
-    MI,
-    BYOC,
-    PROXY
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Repository {
+    String repoUrl;
+    String branch = "main";
+    String subPath = "";
 }
