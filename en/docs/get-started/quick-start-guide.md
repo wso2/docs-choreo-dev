@@ -41,12 +41,14 @@ Before you try out this guide, complete the following:
          
          If you created your organization in Choreo before the 21st of February 2023, and you have not already enabled Asgardeo as the key manager, follow these steps to enable Asgardeo as the default key manager:
 
-         1. In the Choreo Console, click **Settings**, and then click **API Management**.
-         2. On the **API Management** page, click **Enable Asgardeo Key Manager**.
+         1. In the Choreo Console, click your username in the top right corner.
+         2. In the drop-down menu, click **Settings**.
+         3. In **Settings**, click **API Management** and then click **Enable Asgardeo Key Manager**.
+         4. In the confirmation dialog that opens, click **Yes**.
 
 3. Create a new project as follows:
     
-    1. On the **Home** page of the Choreo Console, click **+ Create Project**.
+    1. Go to the **Home** page of the Choreo Console, click the **Project** list and then click **+ Create Project**.
 
     2. Enter a unique name and a description for the project, and click **Create**.
 
