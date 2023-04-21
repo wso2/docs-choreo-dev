@@ -89,6 +89,21 @@ export class ComponentAPILifecycle {
   }
 
 
+  private static handleConnectorPublishPopup() {
+
+    cy.get('body').then(bdy => {
+      if (bdy.find('[data-testid="connector-publish-wizard-title"]').length > 0) {
+        if (bdy.find('[data-testid="retry-btn"]').length > 0) {
+          cy.get('button[aria-label="close"]').eq(1).click()
+        } else {
+          cy.wait(20000);
+          this.handleConnectorPublishPopup()
+        }
+
+      }
+    })
+  }
+
   static publishToMarketplace(connectorAudience: Enums.ConnectorAudience) {
     cy.get('[data-testid="Publish-lc-btn"]').click();
     cy.get('[aria-labelledby="confirmation-dialog"]').should("be.visible");
@@ -96,7 +111,7 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="publish-btn"]').should("be.enabled");
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').should("be.enabled").click();
-    cy.wait(1000);
+    this.handleConnectorPublishPopup()
     cy.get('[data-testid="published-connector-info"]').contains(
       "You have already published a connector for this API.",
       { timeout: 300000 }
