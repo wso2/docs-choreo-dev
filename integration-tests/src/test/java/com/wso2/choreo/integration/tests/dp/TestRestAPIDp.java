@@ -15,6 +15,7 @@ import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
+import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,16 +60,9 @@ public class TestRestAPIDp extends TestBase {
     public void createUserManagedRestAPI_TestRestAPIIT(DataProviderWrapper dp) throws Exception {
         ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
-        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").
-                srcGitRepoUrl("https://github.com/choreo-test-apps/rest-api").
-                projectId(project.getId()).
-                orgHandler(orgHandle).
-                repositoryType(Constant.NON_EMPTY_REPO_TYPE).
-                repositoryBranch("main").
-                repositorySubPath("").
-                displayType(Constant.displayType.restAPI.name()).
-                build();
+
+        Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/rest-api").branch("main").subPath("").build();
+        GraphqlDTO dto = ComponentUtils.createRestApiComponentRequest(componentName, project, repo);
         ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
         dp.setChoreoProject(project);
         dp.setChoreoComponent(choreoComponent);
