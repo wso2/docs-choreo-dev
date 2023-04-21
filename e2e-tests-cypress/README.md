@@ -141,9 +141,10 @@ parameters:
     1. Navigate to the `e2e-tests-cypress` directory
     2. Run `npm install` - only for first time
     3. Change the following in `cypress.env.json` if you are working on front-end local dev server
-        - The following URLs should be updated to include `http://localhost:3000` - your front-end serving url
+        - The following URLs should be updated to include `https://localhost:3000` - your front-end serving url
             - `loginURL: "https://localhost:3000/login?fidp=choreoe2etest"`
             - `appSvcURL: "https://localhost:3000"`
+			- `newAppSvcURL: "https://localhost:3000"`
             - `baseUrl: "https://localhost:3000"`
             - `apimSvcURL: "https://localhost:3000"`
 

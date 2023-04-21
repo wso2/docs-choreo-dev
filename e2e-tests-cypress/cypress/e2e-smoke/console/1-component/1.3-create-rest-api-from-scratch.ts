@@ -29,14 +29,14 @@ import { GitHub } from "../../../support/github/github";
 describe("Verify project creation functionality", () => {
   const queryParameters1 = [{ key: "number", value: "2" }];
   const queryParameters2 = [{ key: "number", value: "5" }];
-  const COMPONENT_NAME = Utils.generateComponentName()
+  const COMPONENT_NAME = Utils.generateComponentName();
   const REPO_NAME = Utils.generateComponentName("repo");
   const PROJECT_DESCRIPTION = "Covid stats project";
   const PROJECT_NAME = Utils.generateProjectName();
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("rest-api")
+    GitHub.deleteWebhooks("rest-api");
   });
 
   after(() => {
@@ -62,7 +62,12 @@ describe("Verify project creation functionality", () => {
       PROJECT_DESCRIPTION,
       Enums.Region.US
     );
-    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
+    GraphQL.createComponent(
+      PROJECT_NAME,
+      REPO_NAME,
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
+    );
   });
 
   it("Verify component deployment", () => {
@@ -83,7 +88,6 @@ describe("Verify project creation functionality", () => {
       expect(res.statusCode).to.be.eq("200");
     });
   });
-
 
   it("Verify test functionality using generated curl in Dev", () => {
     TestHelper.testOnCurl(
@@ -112,7 +116,6 @@ describe("Verify project creation functionality", () => {
     });
   });
 
-
   it("Verify test functionality using generated curl in dev", () => {
     TestHelper.testOnCurl(
       Enums.Environment.DEVELOPMENT,
@@ -132,8 +135,6 @@ describe("Verify project creation functionality", () => {
     ComponentDeployPage.promoteToProd();
   });
 
-
-
   it("Verify test functionality of root resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
@@ -146,8 +147,6 @@ describe("Verify project creation functionality", () => {
       expect(res.statusCode).to.be.eq("200");
     });
   });
-
-
 
   it("Verify test functionality using generated curl in Prod", () => {
     TestHelper.testOnCurl(
@@ -163,8 +162,6 @@ describe("Verify project creation functionality", () => {
     });
   });
 
-
-
   it("Verify test functionality of isOdd resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
@@ -177,8 +174,6 @@ describe("Verify project creation functionality", () => {
       expect(res.statusCode).to.be.eq("200");
     });
   });
-
- 
 
   it("Verify test functionality using generated curl in prod", () => {
     TestHelper.testOnCurl(
@@ -202,7 +197,7 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("root");
-    ComponentAPILifecycle.applyConfiguration(    );
+    ComponentAPILifecycle.applyConfiguration();
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",
       Enums.Environment.DEVELOPMENT
@@ -257,17 +252,20 @@ describe("Verify project creation functionality", () => {
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
+  });
+
+  it("Verify connector publishing ", () => {
     ComponentAPILifecycle.publishToMarketplace(Enums.ConnectorAudience.PRIVATE);
   });
 
-  it("Verify connector republishing ",()=>{
+  it("Verify connector republishing ", () => {
     ComponentAPILifecycle.republishConnector();
-  })
+  });
 
-  it("Verify usage plan change",()=>{
+  it("Verify usage plan change", () => {
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
-  })
+  });
 
   it("Verify suspending all component deployments", () => {
     ComponentOverviewPage.navigateToDeploy();
