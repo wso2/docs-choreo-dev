@@ -16,8 +16,6 @@
 import { Utils } from "../../../utils";
 
 export class OrganizationComponent {
-
-
   static navigateToMembers() {
     cy.get('[data-cyid="members"]').click();
   }
@@ -31,11 +29,11 @@ export class OrganizationComponent {
   }
 
   static verifyEmailIsNotDisplayed(email: string) {
-    cy.contains(email).should('not.be.visible');
+    cy.contains(email).should("not.exist");
   }
 
   static verifyEmailIsDisplayed(email: string) {
-    cy.contains(email).should('be.visible');
+    cy.contains(email).should("be.visible");
   }
 
   static verifyGroupNameIsDisplayed(groupName: string) {
