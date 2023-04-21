@@ -53,6 +53,7 @@ import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
 import com.wso2.choreo.integration.models.proxyapi.ProxyDeployment;
 import com.wso2.choreo.integration.models.revision.RevisionWrapper;
+import com.wso2.choreo.integration.models.webhook.Trigger;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -144,7 +145,7 @@ public class ComponentUtils {
         return ApiManager.createApiProxy(runner, stsClient, accessToken, apiName);
     }
 
-    public static GraphqlDTO createProxyComponentRequest(String name, ChoreoProject project, Repository repo, String apiId) {
+    public static GraphqlDTO createProxyComponentRequest(String name, ChoreoProject project, String apiId) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
         return GraphqlDTO.builder().
@@ -156,6 +157,70 @@ public class ComponentUtils {
                 orgHandler(orgHandle).
                 displayType(Constant.displayType.proxy.name()).
                 apiId(apiId.replaceAll("\"", "")).
+                build();
+    }
+
+    public static GraphqlDTO createRestApiComponentRequest(String name, ChoreoProject project, Repository repo) {
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+
+        return GraphqlDTO.builder().name(name).triggerID("null").
+                srcGitRepoUrl(repo.getRepoUrl()).
+                projectId(project.getId()).
+                orgId(orgId).
+                orgHandler(orgHandle).
+                repositoryType(Constant.NON_EMPTY_REPO_TYPE).
+                repositoryBranch(repo.getBranch()).
+                repositorySubPath(repo.getSubPath()).
+                displayType(Constant.displayType.restAPI.name()).
+                build();
+    }
+
+    public static GraphqlDTO createByocComponentRequest(String name, ChoreoProject project, Repository repo) {
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+
+        return GraphqlDTO.builder().name(name).
+                srcGitRepoUrl(repo.getRepoUrl()).
+                projectId(project.getId()).
+                orgId(orgId).
+                orgHandler(orgHandle).
+                oasFilePath(repo.getOasFilePath()).
+                dockerContext(repo.getDockerContext()).
+                dockerfilePath(repo.getDockerfilePath()).build();
+    }
+
+    public static GraphqlDTO createGrpahQLComponentRequest(String name, ChoreoProject project, Repository repo) {
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+
+        return GraphqlDTO.builder().name(name).triggerID("null").
+                srcGitRepoUrl(repo.getRepoUrl()).
+                projectId(project.getId()).
+                orgId(orgId).
+                orgHandler(orgHandle).
+                repositoryType(Constant.NON_EMPTY_REPO_TYPE).
+                repositoryBranch(repo.getBranch()).
+                repositorySubPath(repo.getSubPath()).
+                displayType(Constant.displayType.graphql.name()).
+                build();
+    }
+
+    public static GraphqlDTO createWebhookComponentRequest(String name, ChoreoProject project, Repository repo, Trigger trigger) {
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+
+        return GraphqlDTO.builder().name(name).
+                triggerID(trigger.getId()).
+                triggerChannels(trigger.getChannels()).
+                srcGitRepoUrl(repo.getRepoUrl()).
+                projectId(project.getId()).
+                orgId(orgId).
+                orgHandler(orgHandle).
+                repositoryType(Constant.NON_EMPTY_REPO_TYPE).
+                repositoryBranch(repo.getBranch()).
+                repositorySubPath(repo.getSubPath()).
+                displayType(Constant.displayType.webhook.name()).
                 build();
     }
 
@@ -899,7 +964,7 @@ public class ComponentUtils {
             String componentId = component.getId();
             ApiVersion apiVersion = component.getLatestApiVersion();
             String latestVersionId = apiVersion.getId();
-            String sourceReleaseId = srcEnv.getId();
+            String sourceReleaseId = component.getReleaseIdForEnvironment(srcEnv);
             String latestAppEnvId = destEnv.getId();
 
             GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).apiVersionId(latestVersionId)
