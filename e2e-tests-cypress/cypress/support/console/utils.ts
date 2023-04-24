@@ -30,10 +30,10 @@ export class Utils {
    * @returns true name for a new app
    */
   static generateProjectName() {
-    return `${this.projectNamePrefix}${Date.now()}`
+    return `${this.projectNamePrefix}${Date.now()}`;
   }
 
-  static generateComponentName(name: string="") {
+  static generateComponentName(name: string = "") {
     return this.componentNamePrefix + Date.now() + name;
   }
 
@@ -70,37 +70,41 @@ export class Utils {
       this.sendGetRequest(Utils.MAIL_READER_SVC_URL + timestamp, {
         Authorization: `Bearer ${accessToken}`,
       }).then((res) => {
-        const rawMailContent = res.body;
-        //const decodedMail = atob(rawMailContent);
-        const decodedMail = window.atob(rawMailContent);
-        console.log(rawMailContent);
+        if (res.status == 200) {
+          const rawMailContent = res.body;
+          //const decodedMail = atob(rawMailContent);
+          const decodedMail = window.atob(rawMailContent);
+          console.log(rawMailContent);
 
-        const socRegEx = /^<!DOCTYPE html PUBLIC /im;
-        const bodyPos = decodedMail.indexOf(
-          socRegEx.exec(decodedMail) as unknown as string
-        );
-        let bodyLines = decodedMail.substring(bodyPos);
-        bodyLines = bodyLines.replace(/\r?\n?[^\r\n]*$/, "");
-        bodyLines = bodyLines.replace(/\r?\n?[^\r\n]*$/, "");
-        const invitationId =
-          /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/.exec(
-            bodyLines
-          )[0];
-
-        const header = {
-          Authorization: `Bearer ${token}`,
-          "content-type": "application/json",
-        };
-        this.sendPostRequest(
-          `${Utils.APP_SVC_URL}/v2/orgs/${Utils.ORG_NAME}/invitations/${invitationId}`,
-          header,
-          {}
-        ).then((resp) => {
-          cy.log(`Org invite accept response status: ${resp.status}`);
-          cy.log(
-            `Org invite accept response body: ${JSON.stringify(resp.body)}`
+          const socRegEx = /^<!DOCTYPE html PUBLIC /im;
+          const bodyPos = decodedMail.indexOf(
+            socRegEx.exec(decodedMail) as unknown as string
           );
-        });
+          let bodyLines = decodedMail.substring(bodyPos);
+          bodyLines = bodyLines.replace(/\r?\n?[^\r\n]*$/, "");
+          bodyLines = bodyLines.replace(/\r?\n?[^\r\n]*$/, "");
+          const invitationId =
+            /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/.exec(
+              bodyLines
+            )[0];
+
+          const header = {
+            Authorization: `Bearer ${token}`,
+            "content-type": "application/json",
+          };
+          this.sendPostRequest(
+            `${Utils.APP_SVC_URL}/v2/orgs/${Utils.ORG_NAME}/invitations/${invitationId}`,
+            header,
+            {}
+          ).then((resp) => {
+            cy.log(`Org invite accept response status: ${resp.status}`);
+            cy.log(
+              `Org invite accept response body: ${JSON.stringify(resp.body)}`
+            );
+          });
+        } else {
+          cy.log(`Error while reading email: ${res.status}`);
+        }
       });
     });
   }
