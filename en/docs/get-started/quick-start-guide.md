@@ -100,13 +100,15 @@ This takes you to a page with an overview of the service.
 
 For the REST endpoint of the service to be invokable, you need to deploy it. To deploy the service, follow the steps given below:
 
-1. In the left navigation menu, click **Deploy**, then click **Deploy Manually**.
+1. In the left navigation menu, click **Deploy**.
+
+2. In the **Build Area** card, click **Deploy Manually**.
         
-2. In the **Configure & Deploy** pane that opens, you can see the **Readinglist** endpoint ready to be deployed. Click the edit icon next to the **Readinglist** endpoint.
+3. In the **Configure & Deploy** pane that opens, you can see the **Readinglist** endpoint ready to be deployed. Click the edit icon next to the **Readinglist** endpoint.
 
-3. Change the **Network Visibility** to **Public**. This allows you to expose the endpoint to your web application securely.
+4. Change the **Network Visibility** to **Public**. This allows you to expose the endpoint to your web application securely.
 
-4. Click **Deploy**.
+5. Click **Deploy**.
 
     !!! info
          In this example, you deploy a Ballerina service as a REST endpoint. Therefore, the REST endpoint is generated automatically. If you deploy a non-Ballerina service, you must manually add the REST endpoint and set the network visibility to **Public**.
