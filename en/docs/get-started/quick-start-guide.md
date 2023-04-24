@@ -361,3 +361,5 @@ To run the front-end application and send requests to the **Reading List Service
 
 To verify whether the reading list is personalized for each user, you can sign in as a different user. The reading list items you entered above will not appear for the other user.
 
+Congratulations! You have successfully exposed a service endpoint as a REST API via Choreo and securely consumed the API from a web application.
+
