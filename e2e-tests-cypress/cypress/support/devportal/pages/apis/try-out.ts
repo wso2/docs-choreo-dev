@@ -21,7 +21,7 @@ export class TryOut {
     cy.get('[data-testid="application-selector-wrapper"]').within(()=>{
       cy.get('[data-testid="application-selector"]').click()
     })
-    cy.wait(500)
+    cy.wait(5000)
     cy.get(`[data-value="${applicationName}"]`).click().wait(1000);
   }
 
