@@ -18,6 +18,8 @@ import { ComponentOverviewPage } from "../component-overview-page";
 import { ComponentTestPage } from "../component-test-page";
 import { Curl } from "../UI-components/curl-component";
 import { SwaggerUI } from "../UI-components/swagger-UI-component";
+import { LONG_TIME_OUT } from "../../../../devportal/constants";
+import { SHORT_TIME } from "../../../constants";
 
 export class TestHelper {
   static testOnSwagger(env: Enums.Environment, resourcePath: string, key: string = "", value: string = "") {
@@ -64,7 +66,6 @@ export class TestHelper {
   static testDevOnGraphQL(code: string) {
     cy.get('div[class="execute-button-wrap"]>button').should("be.visible");
     APITest.selectDevEnvironment();
-    cy.wait(5000);
     cy.get('section> div>div>div>div>div[class="CodeMirror-lines"]>div').eq(0).click()
     cy.get('section>div>div>div[class="CodeMirror-sizer"]>div>div>div>div>div>pre>span>span[cm-text]')
       .then($p => {
@@ -78,7 +79,6 @@ export class TestHelper {
   static testProdOnGraphQL(code: string) {
     cy.get('div[class="execute-button-wrap"]>button').should("be.visible");
     APITest.selectProdEnvironment();
-    cy.wait(5000);
     cy.get('section> div>div>div>div>div[class="CodeMirror-lines"]>div').eq(0).click()
     cy.get('section>div>div>div[class="CodeMirror-sizer"]>div>div>div>div>div>pre>span>span[cm-text]')
       .then($p => {
