@@ -21,9 +21,9 @@ Before you try out this guide, complete the following:
 
 1. Create a GitHub repository to save the service implementation. For this guide, you can fork [https://github.com/wso2/choreo-examples](https://github.com/wso2/choreo-examples).
 
-2. If you are signing in to Choreo Console for the first time, create an organization as follows:
+2. If you are signing in to the Choreo Console for the first time, create an organization as follows:
 
-    1. In [https://wso2.com/choreo/](https://wso2.com/choreo/), click **Try Choreo Now**.
+    1. Go to [https://wso2.com/choreo/](https://wso2.com/choreo/) and click **Try Choreo Now**.
 
     2. Sign in to Choreo using your Google, GitHub, or Microsoft account.
 
@@ -63,7 +63,7 @@ Follow the steps below to create the service:
 
 1. On the **Home** page of the Choreo Console, click on the project you created.
 
-2. Click **Create** in the **Service** card.
+2. In the **Service** card, click **Create**.
 
 3. Enter a unique name and a description for the service. For example, you can enter the name and the description given below:
 
