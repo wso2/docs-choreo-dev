@@ -12,7 +12,7 @@
  */
 
 import {
-  DEVPORTAL_APP_KEY_GEN_URL,
+  DEVPORTAL_APP_TOKEN_GEN_URL,
   VERY_SHORT_TIME,
 } from "../../../console/constants";
 import { Utils } from "../../../console/utils";
@@ -105,7 +105,7 @@ export class TryOut {
     cy.log("Generating an access token");
     cy.intercept({
       method: "POST",
-      url: DEVPORTAL_APP_KEY_GEN_URL,
+      url: DEVPORTAL_APP_TOKEN_GEN_URL,
       times: 1,
     }).as("generateAppToken");
 

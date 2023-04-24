@@ -28,6 +28,9 @@ export const ORGS_URL = Cypress.env("appSvcURL") + "/orgs/*";
 
 export const DEVPORTAL_URL = Cypress.env("apimSvcURL") + "/api/am/devportal/v2";
 
-export const DEVPORTAL_APP_KEY_GEN_URL =
+export const DEVPORTAL_APP_TOKEN_GEN_URL =
   DEVPORTAL_URL +
   "/applications/*/oauth-keys/*/generate-token?organizationId=*";
+
+export const DEVPORTAL_APP_KEY_GEN_URL =
+  DEVPORTAL_URL + "/applications/*/generate-keys?organizationId=*";
