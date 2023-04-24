@@ -11,6 +11,10 @@
  * associated services.
  */
 
+import {
+  DEVPORTAL_APP_KEY_GEN_URL,
+  VERY_SHORT_TIME,
+} from "../../../console/constants";
 import { Utils } from "../../../console/utils";
 
 export class TryOut {
@@ -22,7 +26,6 @@ export class TryOut {
     cy.get('[data-testid="application-selector-wrapper"]').within(() => {
       cy.get('[data-testid="application-selector"]').click();
     });
-    cy.wait(500);
     cy.get(`[data-value="${applicationName}"]`).click().wait(1000);
   }
 
@@ -34,7 +37,7 @@ export class TryOut {
 
   static SelectResource(httpMethod: string, path: string) {
     const pathVariable = `[data-path="/${path}"]`;
-    cy.get(".swagger-ui").within(() => {
+    Utils.getRenderedElement(".swagger-ui").within(() => {
       cy.get(pathVariable).click();
     });
   }
@@ -44,6 +47,11 @@ export class TryOut {
       .contains("Try it out")
       .should("exist")
       .click();
+    cy.get(".opblock-section-header").contains("Cancel").should("exist");
+  }
+
+  static TryoutApplication() {
+    cy.get(".try-out__btn").should("exist").click();
     cy.get(".opblock-section-header").contains("Cancel").should("exist");
   }
 
@@ -95,11 +103,23 @@ export class TryOut {
 
   static GenerateAccessToken() {
     cy.log("Generating an access token");
-    Utils.getRenderedElement('[data-testid="get-test-key-btn"]')
-      .should("be.enabled")
-      .click();
-    cy.get("[data-testid=accessTokenInput]").should("not.be.empty");
-    cy.log("Successfully generated an access token");
-    cy.wait(4000);
+    cy.intercept({
+      method: "POST",
+      url: DEVPORTAL_APP_KEY_GEN_URL,
+      times: 1,
+    }).as("generateAppToken");
+
+    Utils.getRenderedElement('[data-testid="get-test-key-btn"]').should(
+      "be.enabled"
+    );
+    Utils.getRenderedElement('[data-testid="get-test-key-btn"]').click();
+
+    cy.wait("@generateAppToken", { timeout: VERY_SHORT_TIME }).then(() => {
+      Utils.getRenderedElement('[data-testid="get-test-key-btn"]')
+        .contains('role="progressbar"')
+        .should("not.exist");
+      cy.get("[data-testid=accessTokenInput]").should("not.be.empty");
+      cy.log("Successfully generated an access token");
+    });
   }
 }
