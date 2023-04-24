@@ -262,7 +262,7 @@ To configure the front-end application, follow the steps given below:
 
 2. Open the cloned repository using an IDE such as Visual Studio Code, and make the following changes:
 
-    1. Expand the `reading-list-front-end` folder, and click the `.env.development` file.
+    1. Expand the `cloud-native-app-developer` folder. Then expand the `reading-list-front-end` folder, and click the `.env.development` file.
 
     2. Enter values for the parameters in the `.env.development` file, as specified in the following table:
 
