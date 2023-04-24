@@ -19,3 +19,8 @@ export const VERY_LONG_TIME = 600000; // 10 minutes
 
 export const DEPLOYMENT_SUCCESS = "Active";
 export const DEPLOYMENT_STOPPED = "Suspended";
+
+export const VALIDATE_USER_URL =
+  Cypress.env("newAppSvcURL") + "/validation-mgt/1.0.0/validate-user";
+
+export const ORGS_URL = Cypress.env("appSvcURL") + "/orgs/*";
