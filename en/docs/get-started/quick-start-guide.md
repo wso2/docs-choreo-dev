@@ -315,7 +315,7 @@ To run the front-end application and send requests to the **Reading List Service
 !!! info
     To render the front-end application as a web application, you can use the [Node Package Manager](https://www.npmjs.com) software.
 
-1. In a new terminal, navigate to the `choreo-reading-list-application-example/reading-list-front-end` directory in the clone of your GitHub repository.
+1. In a new terminal, navigate to the `cloud-native-app-developer/reading-list-front-end` directory in the clone of your GitHub repository.
 
 2. Issue the following commands in the given order:
 
