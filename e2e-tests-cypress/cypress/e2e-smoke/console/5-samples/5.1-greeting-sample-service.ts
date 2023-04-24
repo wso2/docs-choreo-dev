@@ -29,7 +29,7 @@ import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-bui
 describe("Create Greeting sample in Choreo", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
-  const COMPONENT_NAME = "greeting-service";
+  const COMPONENT_NAME = Utils.generateComponentName()
   const REPO_NAME = "hello-world-sample";
   before(() => {
     LoginPage.login();
@@ -92,7 +92,7 @@ describe("Create Greeting sample in Choreo", () => {
     ComponentDeployPage.stopProdContainer();
   });
   it("Verify component deletion", () => {
-    ChoreoHomePage.navigateToProjects();
+    ChoreoHomePage.navigateToComponents();
     ComponentListingPage.deleteComponent(COMPONENT_NAME);
   });
 });

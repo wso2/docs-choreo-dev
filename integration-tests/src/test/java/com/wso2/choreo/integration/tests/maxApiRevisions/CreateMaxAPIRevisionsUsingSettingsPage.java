@@ -13,6 +13,7 @@
 
 package com.wso2.choreo.integration.tests.maxApiRevisions;
 
+
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
@@ -22,10 +23,16 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
+import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
+import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
+import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
+import com.wso2.choreo.integration.models.revision.RevisionWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
@@ -73,6 +80,10 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
     private Boolean deploymentDisplayOnDevportal;
     private String backupRevisionId;
     private String newRevisionId;
+    private RevisionWrapper revisionWrapper;
+
+    private int revisionCount;
+    private int count;
 
     @Autowired
     private HttpClient choreoTestClient;
@@ -80,6 +91,8 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
     private HttpClient choreoTestClientForSTS;
     @Autowired
     private HttpClient choreoProjectsTestClient;
+    @Autowired
+    Map<Endpoints, HttpClient> citrusClients;
 
     @BeforeClass
     public void beforeClass() throws Exception {
@@ -98,20 +111,43 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
         componentId = component.getId();
         environmentId = component.getLatestAppEnvId(Constant.DEV_ENVIRONMENT);
         versionId = component.getLatestApiVersion().getId();
+
+
     }
 
     @Test
-    @CitrusTest(name = "Create deployment at API revision limit")
-    public void createDeploymentAtApiRevisionLimit() throws Exception {
-        // Creating a revision using Settings page requires a deployment.
-        // Each deployment creates a new revision.
-        // This deployment is done to reach API revision limit of the Settings page (i.e. 19).
-        component.deploy(accessToken, orgHandle, orgUuid);
+    @CitrusTest(name = "Get the revision count")
+    public void getRevisionCount() throws Exception {
 
         JsonArray deploymentArray = component.getDeployments(accessToken, orgHandle, orgUuid, versionId);
         JsonObject deployment = (JsonObject) deploymentArray.get(0);
         apiId = deployment.get("apiId").getAsString();
         releaseId = deployment.get("releaseId").getAsString();
+
+         revisionWrapper = ComponentUtils.getRevisions(this,citrusClients, accessToken,apiId,orgUuid);
+         revisionCount = revisionWrapper.getCount();
+
+        while(revisionCount<18){
+            component.deploy(accessToken, orgHandle, orgUuid);
+            revisionCount = revisionCount+1;
+            SleepUtil.sleep(5);
+        }
+
+    }
+
+    @Test(dependsOnMethods = {"getRevisionCount"})
+    @CitrusTest(name = "Create deployment at API revision limit")
+    public void createDeploymentAtApiRevisionLimit() throws Exception {
+//         Creating a revision using Settings page requires a deployment.
+//         Each deployment creates a new revision.
+//         This deployment is done to reach API revision limit of the Settings page (i.e. 19).
+
+        component.deploy(accessToken, orgHandle, orgUuid);
+
+        JsonArray deploymentArray = component.getDeployments(accessToken, orgHandle, orgUuid, versionId);
+        JsonObject deployment = (JsonObject) deploymentArray.get(0);
+        releaseId = deployment.get("releaseId").getAsString();
+        apiId = deployment.get("apiId").getAsString();
 
         Map<String, Object> responseParams = new HashMap<>();
         responseParams.put("REVISION_COUNT", MAX_API_REVISIONS_LIMIT_SETTINGS_PAGE);
@@ -142,7 +178,6 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
                 .validate(json()
                         .ignore("$.list")));
     }
-
     @Test(dependsOnMethods = {"createDeploymentAtApiRevisionLimit"})
     @CitrusTest(name = "Get revision to delete")
     public void getRevisionToDelete() throws Exception {

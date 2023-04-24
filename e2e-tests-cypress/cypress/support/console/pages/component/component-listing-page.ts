@@ -19,9 +19,7 @@ export class ComponentListingPage {
   static deleteComponent(componentName: string) {
     cy.get(`tbody>tr`).should("be.visible").realHover();
     cy.get("button>span").contains("Delete").click();
-    cy.get('[data-testid="confirm-name"]').within(()=>{
-      cy.get('input').type(componentName)
-    })
+    cy.get('[name="confirmName"]').type(componentName)
     cy.get(".MuiDialogActions-spacing button")
       .should("be.enabled")
       .eq(1)
@@ -78,12 +76,11 @@ export class ComponentListingPage {
   }
 
   private static verifyDeletion() {
-    cy.url().then((url) => {
-      const projectID = url.split("projects/")[1].split("?")[0];
-      GraphQL.getComponents(projectID).then((res) => {
-        expect(res.status).to.be.equal(200);
-        expect(res.components).to.be.empty;
-      });
+
+    const { projectId } = Cypress.env("component")
+    GraphQL.getComponents(projectId).then((res) => {
+      expect(res.status).to.be.equal(200);
+      expect(res.components).to.be.empty;
     });
   }
 }

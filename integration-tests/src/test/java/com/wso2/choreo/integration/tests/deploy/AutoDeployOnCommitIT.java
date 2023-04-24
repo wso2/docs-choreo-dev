@@ -23,9 +23,12 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.utils.FileUtil;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.code.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -62,13 +65,10 @@ import java.util.Map;
         @CitrusTest
         public void createUserManagedComponentFor_AutoDeployOnCommitIT() throws Exception {
             String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-            GraphqlDTO dto = GraphqlDTO.builder().
-                    name(componentName).
-                    triggerID("null").
-                    srcGitRepoUrl("https://github.com/choreo-test-apps/" + repoName).
-                    projectId(project.getId()).
-                    displayType(Constant.displayType.restAPI.name()).
-                    build();
+
+            Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/empty-repo").branch("main").subPath("").build();
+            GraphqlDTO dto = ComponentUtils.createRestApiComponentRequest(componentName, project, repo);
+
             choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                     ComponentFlavour.STANDARD);
             Assert.assertNotNull(choreoComponent.getId());

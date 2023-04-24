@@ -12,4 +12,15 @@
  */
 
 export const ONE_HOUR = 60 * 60 * 1000;
-export const LONG_TIME = 150000;
+export const SHORT_TIME = 60000; // 1 minute
+export const MEDIUM_TIME = 180000; // 3 minutes
+export const LONG_TIME = 360000; // 6 minutes
+export const VERY_LONG_TIME = 600000; // 10 minutes
+
+export const DEPLOYMENT_SUCCESS = "Active";
+export const DEPLOYMENT_STOPPED = "Suspended";
+
+export const VALIDATE_USER_URL =
+  Cypress.env("newAppSvcURL") + "/validation-mgt/1.0.0/validate-user";
+
+export const ORGS_URL = Cypress.env("appSvcURL") + "/orgs/*";

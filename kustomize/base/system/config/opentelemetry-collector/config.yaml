@@ -70,15 +70,16 @@ processors:
             match_type: strict
             metric_names:
               - dns_events
+  publishingfailuredetection:
 
 service:
   extensions: [choreosts, health_check/liveness, health_check/readiness]
   pipelines:
     metrics/telemetry:
       receivers: [otlp]
-      processors: [attributes, filter/telemetry]
+      processors: [attributes, filter/telemetry, publishingfailuredetection]
       exporters: [logging, eventhubexporter/telemetry]
     metrics/dns:
       receivers: [otlp]
-      processors: [attributes, filter/dns]
+      processors: [attributes, filter/dns, publishingfailuredetection]
       exporters: [logging, eventhubexporter/dns]

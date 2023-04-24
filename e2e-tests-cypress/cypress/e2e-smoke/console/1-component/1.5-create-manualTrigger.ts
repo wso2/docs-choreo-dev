@@ -25,7 +25,7 @@ import { GitHub } from "../../../support/github/github";
 import { ComponentData } from "../../../support/interfaces/component-data";
 
 describe("Verify manual trigger creation functionality", () => {
-  const MANUAL_NAME = "create-manualTrigger";
+  const MANUAL_NAME = Utils.generateComponentName()
   const REPO_NAME = Utils.generateComponentName("repo");
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Manual Trigger";

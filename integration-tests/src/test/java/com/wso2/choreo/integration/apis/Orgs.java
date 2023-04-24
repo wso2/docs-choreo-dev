@@ -30,6 +30,7 @@ import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.configmapping.Config;
 import com.wso2.choreo.integration.models.configmapping.ConfigMapping;
+import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.orgs.PromoteConfigurations;
 import com.wso2.choreo.integration.models.response.Response;
 import lombok.extern.log4j.Log4j2;
@@ -163,11 +164,11 @@ public class Orgs extends ControlPlaneAPI {
     }
 
     public static void addConfiguration(TestActionRunner runner, HttpClient client,
-                                        ChoreoComponent component, List<Commit> commitHistory, String envName,
+                                        ChoreoComponent component, List<Commit> commitHistory, Environment environment,
                                         BalConfig... balconfigs) throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         String componentId = component.getId();
-        String envIdToDeploy = component.getLatestAppEnvId(envName);
+        String envIdToDeploy = environment.getId();
         String latestVersionId = component.getLatestApiVersion().getId();
         String latestCommitSha = component.getLatestCommitHash(commitHistory.toArray(Commit[]::new));
         String orgHandle = component.getOrgHandler();
@@ -194,7 +195,7 @@ public class Orgs extends ControlPlaneAPI {
         runner.$(repeatOnError()
                 .until("i = 3")
                 .index("i")
-                .autoSleep(5000)
+                .autoSleep(30000)
                 .actions(
                         http()
                                 .client(client)
@@ -327,5 +328,47 @@ public class Orgs extends ControlPlaneAPI {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    
+    public static void triggerConfigurableGeneration(TestActionRunner runner, HttpClient client,
+                    ChoreoComponent component, List<Commit> commitHistory, String branchName) throws Exception {
+            String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+            String componentId = component.getId();
+            String latestVersionId = component.getLatestApiVersion().getId();
+            String latestCommitSha = component.getLatestCommitHash(commitHistory.toArray(Commit[]::new));
+            String orgHandle = component.getOrgHandler();
+            String projectId = component.getProjectId();
+
+            String configGenerationTriggerURI = "/orgs/".concat(orgHandle).concat("/projects/")
+                            .concat(projectId).concat("/triggers/").concat("configurable-generation");
+            Map<String, Object> requestBodyMap = new HashMap<>() {
+                {
+                        put("componentId", componentId);
+                        put("versionId", latestVersionId);
+                        put("branch", branchName);
+                        put("sha", latestCommitSha);
+                }
+            };
+
+            String configurationsRequestBody = MessageUtils.generateJson(requestBodyMap).replace("required",
+                            "isRequired");
+            runner.$(repeatOnError()
+                            .until("i = 5")
+                            .index("i")
+                            .autoSleep(30000)
+                            .actions(
+                                http()
+                                        .client(client)
+                                        .send()
+                                        .post(configGenerationTriggerURI)
+                                        .message()
+                                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                        .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                        .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                        .body(configurationsRequestBody),
+                                http()
+                                        .client(client)
+                                        .receive()
+                                        .response(HttpStatus.OK)));
     }
 }

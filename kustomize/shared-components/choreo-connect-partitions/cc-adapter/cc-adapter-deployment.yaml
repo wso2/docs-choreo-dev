@@ -85,6 +85,9 @@ spec:
             - name: secret-apim
               mountPath: /mnt/csi/secret-apim
               readOnly: true
+            - name: secret-cc-rate-limiter-cert
+              mountPath: /home/wso2/security/truststore/rate-limiter.pem
+              subPath: RATE_LIMITER_KEYSTORE_CERT
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-adapter:latest
           imagePullPolicy: Always
           securityContext:
@@ -131,6 +134,7 @@ spec:
             - containerPort: 18000
             - containerPort: 9843
             - containerPort: 6060
+            - containerPort: 18001
           livenessProbe:
             exec:
               command: [ "sh", "check_health.sh" ]
@@ -189,6 +193,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-apim
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-cc-rate-limiter-cert
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cc-rate-limiter-cert
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always
