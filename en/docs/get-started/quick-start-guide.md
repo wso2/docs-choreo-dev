@@ -3,7 +3,7 @@
 Choreo is a full lifecycle cloud-native developer platform that enables developers to create, deploy, run, and govern APIs, integrations, and microservices on Kubernetes.
 
 In this quick start guide, you will explore how to expose a service endpoint as a REST API via Choreo and securely consume the API from a web application. 
-You will build a simple reading list web application with a sign-in page and functionality to interact with a secure backend REST API. You will use Asgardeo, WSO2's Identity as a Service (IDaaS) solution, to secure user authentication to the web application. The application will allow users to sign in and view the reading list. On signing in, a user can add books to a reading list and delete books from the reading list. The application will also allow users to sign out of the application.
+You will build a simple reading list web application with functionality to interact with a secure backend REST API. You will use Asgardeo, WSO2's Identity as a Service (IDaaS) solution, to secure user authentication to the web application. The application will allow users to sign in and view the reading list. On signing in, a user can add books to a reading list and delete books from the reading list. The application will also allow users to sign out of the application.
 
 
 This guide walks you through the following steps:
@@ -111,7 +111,7 @@ For the REST endpoint of the service to be invokable, you need to deploy it. To 
 5. Click **Update**.
 
     !!! info
-         In this example, you deploy a Ballerina service as a REST endpoint. Therefore, the REST endpoint is generated automatically. If you deploy a non-Ballerina service, you must manually add the REST endpoint and set the network visibility to **Public**.
+         In this example, you deploy a Ballerina service as a REST endpoint. Therefore, the REST endpoint is generated automatically. If you deploy a non-Ballerina service, you must manually add the REST endpoint and set the network visibility to **Public**. To learn more about configuring endpoints in a service component, see [Configuring endpoints](../develop/components/service.md#configuring-endpoints).
 
 
 6. Click **Deploy**. This deploys the REST endpoint of the service to the development environment.
@@ -159,7 +159,7 @@ Now you can publish the tested REST endpoint to make it available for the web ap
 
 #### Step 1.4.1: Update the CORS configuration
 
-Since you expect to deploy the web application in Vercel, you would want to call the **Readinglist** backend service deployed in Choreo through the web application on a Vercel domain. By default, web browsers block such calls for security reasons. To enable the web application to call the backend service, you must update the CORS configuration as follows:
+Let's assume you deploy the web application in a cloud deployment platform such as Vercel. In such a scenario, you would want to call the **Readinglist** backend service deployed in Choreo through the web application on a Vercel domain. By default, web browsers block such calls for security reasons. To enable the web application to call the backend service, you must update the CORS configuration as follows:
 
 1. In the left navigation menu, click **Manage**, and then click **Settings**.
 
