@@ -165,13 +165,13 @@ Since you expect to deploy the web application in Vercel, you would want to call
 
 2. Under **API Settings**, click **Edit**.
 
-3. Toggle the **CORS Configuration** switch to enable the CORS configuration.
+3. To enable the CORS configuration, toggle the **CORS Configuration** switch.
 
 4. Select the **Access Control Allow Credentials** checkbox.
 
-5. In the **Apply to Development** pane that opens, enter a meaningful message and click **Apply**.
+5. Click **Save**.
 
-6. Click **Save**.
+5. In the **Apply to Development** pane that opens, enter a meaningful message and click **Apply**.
 
 #### Step 1.4.2: Publish the service endpoint as a REST API
 
