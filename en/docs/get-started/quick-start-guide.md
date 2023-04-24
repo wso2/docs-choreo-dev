@@ -108,12 +108,13 @@ For the REST endpoint of the service to be invokable, you need to deploy it. To 
 
 4. Change the **Network Visibility** to **Public**. This allows you to expose the endpoint to your web application securely.
 
-5. Click **Deploy**.
+5. Click **Update**.
 
     !!! info
          In this example, you deploy a Ballerina service as a REST endpoint. Therefore, the REST endpoint is generated automatically. If you deploy a non-Ballerina service, you must manually add the REST endpoint and set the network visibility to **Public**.
 
-    This deploys the REST endpoint of the service to the development environment.
+
+6. Click **Deploy**. This deploys the REST endpoint of the service to the development environment.
 
 ### Step 1.3: Test the service
 
