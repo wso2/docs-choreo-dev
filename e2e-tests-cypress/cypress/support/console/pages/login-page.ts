@@ -12,23 +12,25 @@
  */
 
 import { GraphQL } from "../apis/graphql";
+import { ORGS_URL, VALIDATE_USER_URL } from "../constants";
 import { Utils } from "../utils";
 
 export class LoginPage {
   static acceptInviteAsInvitedUser(timestamp: string) {
+    cy.intercept({
+      method: "GET",
+      url: ORGS_URL,
+      times: 1,
+    }).as("token");
+
     this.enterUserCredentials(
       "choreoIDPInvitedUsername",
       "choreoIDPInvitedPassword"
     );
-    cy.intercept({
-      method: "POST",
-      url: `${Cypress.env("apimSvcURL")}/oauth2/token`,
-      times: 1,
-    }).as("token");
 
-    let token: string;
-    cy.wait("@token", { timeout: 180000 }).then((interceptions) => {
-      token = interceptions.response.body.access_token;
+    cy.wait("@token", { timeout: 180000 }).then((intercept) => {
+      const header = intercept.request.headers["authorization"] as string;
+      const token = header.replace("Bearer", "").trim();
       Utils.acceptEmailInviteToOrg(token, timestamp);
       cy.reload(); // Reload in order to get updated orgs
     });
@@ -44,8 +46,9 @@ export class LoginPage {
     this.persistLogoutURL();
     this.persistApimToken(doCleanup);
     this.persistCookies(`${Cypress.env("idpURL")}/commonauth`);
-    cy.get('[data-testid="header-user-profile-menu"]', { timeout: 180000, }).should("be.visible");
-
+    cy.get('[data-testid="header-user-profile-menu"]', {
+      timeout: 180000,
+    }).should("be.visible");
   }
 
   private static rejectCookies() {
@@ -122,10 +125,10 @@ export class LoginPage {
   }
 
   private static registerNetworkCallsForInterception() {
-    cy.intercept("GET", Cypress.env("newAppSvcURL") + "/validation-mgt/1.0.0/validate-user").as("org");
+    cy.intercept("GET", VALIDATE_USER_URL).as("org");
     cy.intercept({
       method: "GET",
-      url: `${Cypress.env("appSvcURL")}/orgs/*`,
+      url: ORGS_URL,
       times: 1,
     }).as("orgs");
   }
@@ -165,11 +168,11 @@ export class LoginPage {
     cy.wait("@orgs", { timeout: 150000 }).then((intercept) => {
       const header = intercept.request.headers["authorization"] as string;
       const token = header.replace("Bearer", "").trim();
-     const { orgId, handle } =  Cypress.env("userData");
+      const { orgId, handle } = Cypress.env("userData");
       Cypress.env("apim_token", token);
       if (doCleanup) {
         GraphQL.deleteProjectsCreatedByTests(orgId, handle, token);
-        this.deleteOnPremKeys()
+        this.deleteOnPremKeys();
       }
     });
   }
@@ -216,31 +219,32 @@ export class LoginPage {
     });
   }
 
-
   private static deleteOnPremKeys() {
     const { handle } = Cypress.env("userData");
     const header = {
       Authorization: `Bearer ${Cypress.env("apim_token")}`,
       "content-type": "application/json",
     };
-    this.getOnPremKeys(handle, header).then(keys => {
-      keys.forEach(ke => {
-        const url = `${Cypress.env("newAppSvcURL")}/onprem-key-mgt/1.0.0/orgs/${handle}/keys/${ke.handle}/revoke`
-        Utils.sendPostRequest(url, header, "")
-      })
-
-
-    })
+    this.getOnPremKeys(handle, header).then((keys) => {
+      keys.forEach((ke) => {
+        const url = `${Cypress.env(
+          "newAppSvcURL"
+        )}/onprem-key-mgt/1.0.0/orgs/${handle}/keys/${ke.handle}/revoke`;
+        Utils.sendPostRequest(url, header, "");
+      });
+    });
   }
 
   private static getOnPremKeys(handle: string, header: any) {
-    const url = `${Cypress.env("newAppSvcURL")}/onprem-key-mgt/1.0.0/orgs/${handle}/keys`
-    return Utils.sendGetRequest(url, header).then(res => {
+    const url = `${Cypress.env(
+      "newAppSvcURL"
+    )}/onprem-key-mgt/1.0.0/orgs/${handle}/keys`;
+    return Utils.sendGetRequest(url, header).then((res) => {
       if (res.status == 200) {
-        return res.body as { handle: string }[]
+        return res.body as { handle: string }[];
       } else {
-        throw new Error("Error While Getting On Prem Keys")
+        throw new Error("Error While Getting On Prem Keys");
       }
-    })
+    });
   }
 }
