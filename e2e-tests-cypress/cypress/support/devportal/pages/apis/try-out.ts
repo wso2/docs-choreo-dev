@@ -21,7 +21,6 @@ export class TryOut {
     cy.get('[data-testid="application-selector-wrapper"]').within(()=>{
       cy.get('[data-testid="application-selector"]').click()
     })
-    cy.wait(500)
     cy.get(`[data-value="${applicationName}"]`).click().wait(1000);
   }
 
@@ -43,6 +42,13 @@ export class TryOut {
     cy.get('[id*="operations-"] button')
       .contains("Try it out")
       .should("exist")
+      .click();
+    cy.get(".opblock-section-header").contains("Cancel").should("exist");
+  }
+
+  static TryoutApplication() {
+    cy.get('.try-out__btn')
+      .should('exist')
       .click();
     cy.get(".opblock-section-header").contains("Cancel").should("exist");
   }
