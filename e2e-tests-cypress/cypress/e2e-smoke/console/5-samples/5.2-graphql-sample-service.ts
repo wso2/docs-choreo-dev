@@ -16,7 +16,7 @@ describe("Graphql GQL service test", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
   const TEST_QUERY = '{greeting(name:"John")}';
-  const TEST_QUERY_RESPONSE = "Hello, John";
+  const TEST_QUERY_RESPONSE = 'greeting": "Hello, John';
   const TEST_MUTATION = 'mutation{createUser(name:"John")}';
   const TEST_MUTATION_RESPONSE = 'createUser": "User created with name: John';
   const COMPONENT_NAME = Utils.generateComponentName()
@@ -62,17 +62,19 @@ describe("Graphql GQL service test", () => {
     ComponentDeployPage.deployToDev();
   });
 
-  it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd();
-  });
-
   it("Verify test functionality of GQL query in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testDevOnGraphQL(TEST_QUERY);
     TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
   });
 
+  it("Verify component promote to prod", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.promoteToProd();
+  });
+
   it("Verify test functionality of GQL query in Prod on swagger", () => {
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testProdOnGraphQL(TEST_QUERY);
     TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
   });

@@ -62,10 +62,10 @@ export class TestHelper {
   }
 
   static testDevOnGraphQL(code: string) {
+    cy.wait(5000);
     cy.get('div[class="execute-button-wrap"]>button').should('be.enabled')
     APITest.selectDevEnvironment();
-
-    cy.wait(5000)
+    cy.wait(5000);
     cy.get('section> div>div>div>div>div[class="CodeMirror-lines"]>div').eq(0).click()
     cy.get('section>div>div>div[class="CodeMirror-sizer"]>div>div>div>div>div>pre>span>span[cm-text]')
       .then($p => {
@@ -77,10 +77,10 @@ export class TestHelper {
   }
 
   static testProdOnGraphQL(code: string) {
+    cy.wait(5000);
     cy.get('div[class="execute-button-wrap"]>button').should('be.enabled')
     APITest.selectProdEnvironment();
-
-    cy.wait(5000)
+    cy.wait(5000);
     cy.get('section> div>div>div>div>div[class="CodeMirror-lines"]>div').eq(0).click()
     cy.get('section>div>div>div[class="CodeMirror-sizer"]>div>div>div>div>div>pre>span>span[cm-text]')
       .then($p => {
