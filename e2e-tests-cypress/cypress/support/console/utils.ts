@@ -21,6 +21,7 @@ export class Utils {
   static MAIL_READER_CLIENT_ID = Cypress.env("mailReaderClientId");
   static MAIL_READER_CLIENT_SECRET = Cypress.env("mailReaderClientSecret");
   static MAIL_READER_TOKEN_URL = Cypress.env("mailReaderTokenURL");
+  static NEW_APP_SVC_URL = Cypress.env("newAppSvcURL");
 
   static TRY_COUNT = 5;
 
@@ -93,7 +94,7 @@ export class Utils {
             "content-type": "application/json",
           };
           this.sendPostRequest(
-            `${Utils.APP_SVC_URL}/v2/orgs/${Utils.ORG_NAME}/invitations/${invitationId}`,
+            `${Utils.NEW_APP_SVC_URL}/users-mgt/1.0.0/orgs/${Utils.ORG_NAME}/invitations/${invitationId}`,
             header,
             {}
           ).then((resp) => {
