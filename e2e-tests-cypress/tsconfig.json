@@ -7,7 +7,6 @@
     "moduleResolution": "node",
     "noImplicitAny": false,
     "resolveJsonModule": true,
-    "suppressImplicitAnyIndexErrors": true,
     "declaration": true,
     "lib": [
       "es5",
