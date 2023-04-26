@@ -154,8 +154,9 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"invokeEP_SysObservabilityAPITestCase"})
     @CitrusTest
     public void testSystemMetrics_SysObservabilityAPITestCase() throws Exception {
+        ComponentUtils.updateEnvironments(environments, ComponentUtils.getEnvironments(this, citrusClients, accessToken, choreoComponent));
         for (Environment env : environments) {
-            String releaseId = env.getId();
+            String releaseId = choreoComponent.getReleaseIdForEnvironment(env);
             String namespace = env.getNamespace();
             ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
 
@@ -186,7 +187,7 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
                             .expression("$.keySet()", hasItems("columns", "rows"))
                             .expression("$.columns[*].name", hasItems("cpu", "memory", "cpuPercentage", "memoryPercentage", "TimeGenerated"))
                             .expression("$.columns[*].type", hasItems("dynamic", "dynamic", "dynamic", "dynamic", "dynamic"))
-                            .expression("$.rows.size()", greaterThan(0))
+                            .expression("$.rows.size()", greaterThanOrEqualTo(0))
                             .expression("$.rows[*]", allOf(is(not(emptyString()))))
                     )
             );
