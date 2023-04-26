@@ -27,9 +27,21 @@ export class ProjectOverviewPage {
         const project = projects.find(p => p.name === projectName)
         GraphQL.getComponents(project.id).then(comps => {
           if (comps.status === 200) {
-            const component = comps.components.find(c => c.displayName.trim() === componentData.componentName.trim())
+
+            const component = comps.components.find(c => {
+
+              cy.log(JSON.stringify(c))
+              c.displayName.trim() === componentData.componentName.trim()
+            })
             if (component == undefined) {
-              GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
+
+
+              if (Object.keys(componentData).includes("displayType")) {
+                GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
+              } else {
+                GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getBYOCComponentCreationQuery)
+              }
+
             } else {
               GraphQL.getComponentInfo(projectName, componentData.componentName)
             }
@@ -38,7 +50,7 @@ export class ProjectOverviewPage {
       }
     })
   }
-
+   
   static createHttpProxyAPI() {
     this.waitForTemplateCardsToLoad();
     cy.get('[data-testid="project-template-list-httpProxyApi"]')
