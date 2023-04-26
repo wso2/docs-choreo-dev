@@ -19,15 +19,17 @@ export class LoginPage {
   static loginToDevportal(devportalUrl = ''): void {
     const loginURL = devportalUrl ? devportalUrl + "/" + handle + idpParam : devportalLoginURL;
     cy.visit(loginURL);
-    cy.get('button[type="submit"]', { timeout: STANDARD_TIME_OUT }).should(
-      "be.visible"
-    );
-    cy.get("#usernameUserInput").type(Cypress.env("choreoIDPUsername"));
-    cy.get("#password").type(Cypress.env("choreoIDPPassword"), { log: false });
-    cy.get('button[type="submit"]').click();
-    cy.get("[data-testid=home-appbar-btn]", { timeout: LONG_TIME_OUT }).should(
-      "be.visible"
-    );
+    cy.wait(3000)
+      .url({ timeout: 30000 })
+      .then((url) => {
+        if (url.includes(Cypress.env("idpURL") + "/authenticationendpoint")) {
+          cy.get('button[type="submit"]', { timeout: STANDARD_TIME_OUT }).should("be.visible");
+          cy.get("#usernameUserInput").type(Cypress.env("choreoIDPUsername"));
+          cy.get("#password").type(Cypress.env("choreoIDPPassword"), { log: false });
+          cy.get('button[type="submit"]').click();
+        }
+    });
+    cy.get("[data-testid=home-appbar-btn]", { timeout: LONG_TIME_OUT }).should("be.visible"); 
   }
 
   static visitToDevportalOrgPublicApis(): void {
