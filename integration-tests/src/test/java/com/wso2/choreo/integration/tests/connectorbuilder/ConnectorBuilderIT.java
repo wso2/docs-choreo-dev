@@ -44,7 +44,6 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
  */
 public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
 
-    private static String componentId;
     private static String accessToken;
     private static String componentHandler;
     private ChoreoComponent choreoComponent;
@@ -152,7 +151,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                                 .send()
                                 .get(Constant.USER_CONNECTORS_ENDPOINT_SUFFIX.concat("/")
                                         .concat(orgHandle).concat("/")
-                                        .concat(componentId).concat("/status"))
+                                        .concat(choreoComponent.getId()).concat("/status"))
                                 .message()
                                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                                 .header("x-correlation-id", Constant.X_CORRELATION_UUID)
@@ -180,7 +179,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .client(choreoTestClient)
                 .send()
                 .get(Constant.USER_CONNECTORS_ENDPOINT_SUFFIX.concat("/").concat(orgHandle)
-                        .concat("/").concat(componentId))
+                        .concat("/").concat(choreoComponent.getId()))
                 .queryParam("version=".concat(Constant.TEST_CONNECTOR_VERSION))
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
@@ -208,7 +207,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .client(choreoTestClient)
                 .send()
                 .post(Constant.USER_CONNECTORS_ENDPOINT_SUFFIX.concat("/").concat(orgHandle)
-                        .concat("/").concat(componentId).concat("/republish"))
+                        .concat("/").concat(choreoComponent.getId()).concat("/republish"))
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
