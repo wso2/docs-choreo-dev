@@ -34,14 +34,12 @@ export class ProjectOverviewPage {
               c.displayName.trim() === componentData.componentName.trim()
             })
             if (component == undefined) {
-
-
-              if (Object.keys(componentData).includes("displayType")) {
+              if (Object.keys(componentData).includes("byocRestApi")) {
                 GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
               } else {
+                
                 GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getBYOCComponentCreationQuery)
               }
-
             } else {
               GraphQL.getComponentInfo(projectName, componentData.componentName)
             }
