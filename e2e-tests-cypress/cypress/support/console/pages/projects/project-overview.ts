@@ -18,7 +18,7 @@ import { Utils } from "../../utils";
 
 export class ProjectOverviewPage {
 
-  static searchReuseComponent(componentData: AbsComponent, projectName: string = "Default Project", isComponentBYOC: boolean = true) {
+  static searchReuseComponent(componentData: AbsComponent, projectName: string = "Default Project", isComponentBYOC: boolean = false) {
     
     const REPO_NAME = Utils.generateComponentName("repo");
     GraphQL.getProjects().then(res => {
@@ -35,9 +35,10 @@ export class ProjectOverviewPage {
             })
             if (component == undefined) {
               if (isComponentBYOC) {
-                GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getBYOCComponentCreationQuery)
-              } else {
                 GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
+              } else {
+                
+                GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getBYOCComponentCreationQuery)
               }
             } else {
               GraphQL.getComponentInfo(projectName, componentData.componentName)
