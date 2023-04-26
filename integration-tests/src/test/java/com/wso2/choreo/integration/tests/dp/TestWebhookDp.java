@@ -19,10 +19,13 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.models.response.Response;
+import com.wso2.choreo.integration.models.webhook.Trigger;
+import com.wso2.choreo.integration.tests.graphqlservice.GqlServiceTestHelper;
 import org.apache.commons.codec.binary.Hex;
 import org.hamcrest.core.StringRegularExpression;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +54,7 @@ import java.util.HashMap;
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
+import static com.wso2.choreo.integration.config.Constant.NON_EMPTY_REPO_TYPE;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.everyItem;
@@ -111,12 +115,15 @@ public class TestWebhookDp extends TestBase {
         // Creating component
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
-        String projectId = project.getId();
-        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).
-                srcGitRepoUrl("https://github.com/choreo-test-apps/GitHub-web-hook").
-                displayName(componentName).projectId(project.getId()).
-                triggerChannels("IssuesService").triggerID("88").
-                displayType(Constant.displayType.webhook.name()).build();
+
+        Repository repo = Repository.builder().
+                repoUrl("https://github.com/choreo-test-apps/GitHub-web-hook").
+                branch("main").
+                subPath("").build();
+
+        Trigger trigger = Trigger.builder().channels("IssuesService").id("88").build();
+
+        GraphqlDTO dto = ComponentUtils.createWebhookComponentRequest(componentName, project, repo, trigger);
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
 
         dp.setChoreoProject(project);
@@ -124,18 +131,29 @@ public class TestWebhookDp extends TestBase {
         Assert.assertEquals(project.getRegion(), dp.getRegion());
         Assert.assertNotNull(choreoComponent.getId());
 
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
+        dp.setEnvironments(environments);
     }
 
     @Test(dependsOnMethods = {"createUserManagedComponent_CreateDeployInvokeWebhookIT"}, dataProvider = "dps")
     @CitrusTest
     public void componentDeployment_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
         BalConfig balConfigs = BalConfig.builder().isRequired(true).configKeyName("config.webhookSecret").valueType("string").valueOrSource("abcd").build();
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, dp.getChoreoComponent(), ComponentFlavour.STANDARD, balConfigs);
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
+                dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD, balConfigs);
         devInvokeURL = statusDTO.getInvokeUrl();
         dp.setDevInvokeUrl(devInvokeURL);
     }
 
     @Test(dependsOnMethods = {"componentDeployment_CreateDeployInvokeWebhookIT"}, dataProvider = "dps")
+    @CitrusTest
+    public void promote_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
+        List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
+                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD);
+        dp.setPromoteStatusDTO(statusDTO);
+    }
+
+    @Test(dependsOnMethods = {"promote_CreateDeployInvokeWebhookIT"}, dataProvider = "dps")
     @CitrusTest
     public void invokeAPI_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
         String apiKey = APICreator.getAPIKey(dp.getChoreoComponent().getApiId(), accessToken).getApikey();
@@ -184,238 +202,27 @@ public class TestWebhookDp extends TestBase {
     @CitrusTest
     public void waitForObservabilityLogs_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
 
-        en = GraphQL.getNamespaceForEnvironment(dp.getChoreoProject().getId(), accessToken);
-        Environment devEnv = dp.getChoreoComponent().getEnvironment(en, Constant.Environment.Development);
-
-        dp.getChoreoComponent().waitForObservabilityLogs(devEnv, accessToken);
-        String devReleaseId = dp.getChoreoComponent().getReleaseIdForEnvironment(devEnv.getChoreoEnv());
-
+        dp.updateEnvironments(ComponentUtils.getEnvironments(this, citrusClients, accessToken, dp.getChoreoComponent()));
     }
+
 
     @Test(dependsOnMethods = {"waitForObservabilityLogs_CreateDeployInvokeWebhookIT"}, dataProvider = "dps")
     @CitrusTest
-    public void fetchObservabilityId_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
-
-        String releaseId = dp.getChoreoComponent().getLatestApiVersion().getAppEnvVersions().get(0).getReleaseId();
-        String environmentsGraphQlQuery = "query {" +
-                "environments(orgUuid:\"" + orgUUID + "\"){" +
-                "organizationUuid," +
-                "orgShared," +
-                "name," +
-                "description," +
-                "id," +
-                "choreoEnv," +
-                "projectId," +
-                "promoteFrom," +
-                "namespace," +
-                "}" +
-                "}";
-        HashMap<String, String> environmentsGqlRequestPayload = new HashMap<>() {
-            {
-                put("query", environmentsGraphQlQuery);
-            }
-        };
-        ObjectMapper envsObjectMapper = new ObjectMapper();
-        String envsRequestBody = envsObjectMapper.writeValueAsString(environmentsGqlRequestPayload);
-        $(http()
-                .client(choreoProjectsTestClient)
-                .send()
-                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(envsRequestBody)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-        $(http()
-                .client(choreoProjectsTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .validate((message, context) -> {
-                    namespace = new JsonParser().parse((String) message.getPayload())
-                            .getAsJsonObject()
-                            .getAsJsonObject("data")
-                            .getAsJsonArray("environments")
-                            .get(0)
-                            .getAsJsonObject()
-                            .get("namespace")
-                            .getAsString();
-                }));
-
-        String obsGraphQlQuery = "query {" +
-                "observerbilityIds(" +
-                "releaseIds: \"" + releaseId + "\"" +
-                "){" +
-                "obsId," +
-                "releaseId," +
-                "verzion," +
-                "}" +
-                "}";
-        HashMap<String, String> obsGqlRequestPayload = new HashMap<>() {
-            {
-                put("query", obsGraphQlQuery);
-            }
-        };
-        ObjectMapper obsObjectMapper = new ObjectMapper();
-        String obsRequestBody = obsObjectMapper.writeValueAsString(obsGqlRequestPayload);
-
-        $(repeatOnError()
-                .until("i = 3")
-                .index("i")
-                .autoSleep(6000)
-                .actions(
-                        http()
-                                .client(choreoProjectsTestClient)
-                                .send()
-                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .header(HttpHeaders.CONTENT_TYPE,
-                                        MediaType.APPLICATION_JSON_VALUE)
-                                .body(obsRequestBody)
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
-                        http()
-                                .client(choreoProjectsTestClient)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .type(MessageType.JSON)
-                                .validate((message, context) -> {
-                                    try {
-                                        obsId = new JsonParser()
-                                                .parse((String) message
-                                                        .getPayload())
-                                                .getAsJsonObject()
-                                                .getAsJsonObject("data")
-                                                .getAsJsonArray("observerbilityIds")
-                                                .get(0)
-                                                .getAsJsonObject()
-                                                .get("obsId")
-                                                .getAsString();
-                                    } catch (UnsupportedOperationException e) {
-                                        fail("Could not fetch the observerbility id: "
-                                                .concat((String) message
-                                                        .getPayload()));
-                                    }
-                                })));
+    public void testLiveLogs_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
+        for (Environment env : dp.getEnvironments()) {
+            ComponentUtils.verifyLogs(this, citrusClients, accessToken, dp.getChoreoComponent(), env, dp.getRegion());
+        }
     }
 
-    @Test(dataProvider = "dps", dependsOnMethods = {"fetchObservabilityId_CreateDeployInvokeWebhookIT"})
+    @Test(dataProvider = "dps", dependsOnMethods = {"testLiveLogs_CreateDeployInvokeWebhookIT"})
     @CitrusTest
-    public void observabilityLogs_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
-        Environment environmentDev = choreoComponent.getEnvironment(en, dp.getDev());
-        String releaseIdDev = choreoComponent.getReleaseIdForEnvironment(environmentDev.getChoreoEnv());
-        String namespaceDev = environmentDev.getNamespace();
-        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseIdDev, accessToken);
-
-        String requestPath = Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX
-                .concat(observabilityIdInformation.getObsId())
-                .concat("/logsV2");
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        $(http()
-                .client(choreoCPTestClient)
-                .send()
-                .get(requestPath)
-                .queryParam("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)))
-                .queryParam("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)))
-                .queryParam("releaseId", releaseIdDev)
-                .queryParam("namespace", namespaceDev)
-                .queryParam("sort", "desc")
-                .queryParam("limit", "95")
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .validate(jsonPath()
-                        .expression("$.keySet()", hasItems("columns", "rows"))
-                        .expression("$.columns.size()", greaterThanOrEqualTo(1))
-                        .expression("$.columns[*].name", hasItems("TimeGenerated", "LogLevel", "LogEntry", "LogContext"))
-                        .expression("$.columns[*].type", hasItems("datetime", "string", "dynamic", "dynamic"))
-                        .expression("$.rows.size()", greaterThanOrEqualTo(1))
-                        .expression("$.rows[*][0]", everyItem(StringRegularExpression.matchesRegex("^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)((-(\\d{2}):(\\d{2})|Z)?)$")))
-                )
-        );
+    public void testGroupedLogs_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
+        for (Environment env : dp.getEnvironments()) {
+            ComponentUtils.verifyGroupLogs(this, citrusClients, accessToken, dp.getChoreoComponent(), env, dp.getRegion());
+        }
     }
 
-
-    @Test(dataProvider = "dps", dependsOnMethods = {"fetchObservabilityId_CreateDeployInvokeWebhookIT"})
-    @CitrusTest
-    public void observabilityLogsProd_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
-        Environment environmentProd = choreoComponent.getEnvironment(en, dp.getDev());
-        String releaseIdProd = choreoComponent.getReleaseIdForEnvironment(environmentProd.getChoreoEnv());
-        String namespaceProd = environmentProd.getNamespace();
-        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseIdProd, accessToken);
-
-        String requestPath = Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX
-                .concat(observabilityIdInformation.getObsId())
-                .concat("/logsV2");
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        $(http()
-                .client(choreoCPTestClient)
-                .send()
-                .get(requestPath)
-                .queryParam("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)))
-                .queryParam("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)))
-                .queryParam("releaseId", releaseIdProd)
-                .queryParam("namespace", namespaceProd)
-                .queryParam("sort", "desc")
-                .queryParam("limit", "95")
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .validate(jsonPath()
-                        .expression("$.keySet()", hasItems("columns", "rows"))
-                        .expression("$.columns.size()", greaterThanOrEqualTo(1))
-                        .expression("$.columns[*].name", hasItems("TimeGenerated", "LogLevel", "LogEntry", "LogContext"))
-                        .expression("$.columns[*].type", hasItems("datetime", "string", "dynamic", "dynamic"))
-                        .expression("$.rows.size()", greaterThanOrEqualTo(1))
-                        .expression("$.rows[*][0]", everyItem(StringRegularExpression.matchesRegex("^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)((-(\\d{2}):(\\d{2})|Z)?)$")))
-                )
-        );
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @Test(dependsOnMethods = {"observabilityLogs_CreateDeployInvokeWebhookIT"}, alwaysRun = true, dataProvider = "dps")
+    @Test(dependsOnMethods = {"testGroupedLogs_CreateDeployInvokeWebhookIT"}, alwaysRun = true, dataProvider = "dps")
     @CitrusTest
     public void deleteWebhookComponent_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
         Response res = GraphQL.deleteComponent(dp.getChoreoComponent().getId(), dp.getChoreoProject().getId(), accessToken);

@@ -29,7 +29,7 @@ spec:
           terminationGracePeriodSeconds: 30
           containers:
             - name: infrastructure-cost-collector
-              image: choreocontrolplane.azurecr.io/choreoipaas/choreo-metered-usage-handler:latest
+              image: choreocontrolplane.azurecr.io/choreoipaas/metered-usage-handler-crons:latest
               securityContext:
                 runAsUser: 10500
                 runAsGroup: 10500
@@ -61,6 +61,10 @@ spec:
                   readOnly: true
                 - name: tmp
                   mountPath: /tmp
+                - name: client-truststore
+                  mountPath: /home/ballerina/security/clientTrustStore.p12
+                  subPath: clientTrustStore.p12
+                  readOnly: true
           volumes:
             - name: config
               configMap:
@@ -75,3 +79,6 @@ spec:
                   name: csi-secret-store-azure
             - name: tmp
               emptyDir: {}
+            - name: client-truststore
+              configMap:
+                name: client-truststore

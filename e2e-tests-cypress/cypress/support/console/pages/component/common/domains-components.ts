@@ -39,9 +39,7 @@ export class DomainsComponents {
   }
 
   private static deleteSelectedDomain(domainName: string) {
-    cy.get(
-      '[class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"]'
-    ).dblclick();
+    cy.get('tbody>tr').dblclick();
     cy.contains("Delete").click({ force: true });
     cy.log("Deleting the created Domain");
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]').click();

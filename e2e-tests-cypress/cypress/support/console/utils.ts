@@ -21,6 +21,7 @@ export class Utils {
   static MAIL_READER_CLIENT_ID = Cypress.env("mailReaderClientId");
   static MAIL_READER_CLIENT_SECRET = Cypress.env("mailReaderClientSecret");
   static MAIL_READER_TOKEN_URL = Cypress.env("mailReaderTokenURL");
+  static NEW_APP_SVC_URL = Cypress.env("newAppSvcURL");
 
   static TRY_COUNT = 5;
 
@@ -30,10 +31,10 @@ export class Utils {
    * @returns true name for a new app
    */
   static generateProjectName() {
-    return this.projectNamePrefix + Date.now();
+    return `${this.projectNamePrefix}${Date.now()}`;
   }
 
-  static generateComponentName(name: string) {
+  static generateComponentName(name: string = "") {
     return this.componentNamePrefix + Date.now() + name;
   }
 
@@ -70,37 +71,41 @@ export class Utils {
       this.sendGetRequest(Utils.MAIL_READER_SVC_URL + timestamp, {
         Authorization: `Bearer ${accessToken}`,
       }).then((res) => {
-        const rawMailContent = res.body;
-        //const decodedMail = atob(rawMailContent);
-        const decodedMail = window.atob(rawMailContent);
-        console.log(rawMailContent);
+        if (res.status == 200) {
+          const rawMailContent = res.body;
+          //const decodedMail = atob(rawMailContent);
+          const decodedMail = window.atob(rawMailContent);
+          console.log(rawMailContent);
 
-        const socRegEx = /^<!DOCTYPE html PUBLIC /im;
-        const bodyPos = decodedMail.indexOf(
-          socRegEx.exec(decodedMail) as unknown as string
-        );
-        let bodyLines = decodedMail.substring(bodyPos);
-        bodyLines = bodyLines.replace(/\r?\n?[^\r\n]*$/, "");
-        bodyLines = bodyLines.replace(/\r?\n?[^\r\n]*$/, "");
-        const invitationId =
-          /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/.exec(
-            bodyLines
-          )[0];
-
-        const header = {
-          Authorization: `Bearer ${token}`,
-          "content-type": "application/json",
-        };
-        this.sendPostRequest(
-          `${Utils.APP_SVC_URL}/v2/orgs/${Utils.ORG_NAME}/invitations/${invitationId}`,
-          header,
-          {}
-        ).then((resp) => {
-          cy.log(`Org invite accept response status: ${resp.status}`);
-          cy.log(
-            `Org invite accept response body: ${JSON.stringify(resp.body)}`
+          const socRegEx = /^<!DOCTYPE html PUBLIC /im;
+          const bodyPos = decodedMail.indexOf(
+            socRegEx.exec(decodedMail) as unknown as string
           );
-        });
+          let bodyLines = decodedMail.substring(bodyPos);
+          bodyLines = bodyLines.replace(/\r?\n?[^\r\n]*$/, "");
+          bodyLines = bodyLines.replace(/\r?\n?[^\r\n]*$/, "");
+          const invitationId =
+            /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/.exec(
+              bodyLines
+            )[0];
+
+          const header = {
+            Authorization: `Bearer ${token}`,
+            "content-type": "application/json",
+          };
+          this.sendPostRequest(
+            `${Utils.NEW_APP_SVC_URL}/users-mgt/1.0.0/orgs/${Utils.ORG_NAME}/invitations/${invitationId}`,
+            header,
+            {}
+          ).then((resp) => {
+            cy.log(`Org invite accept response status: ${resp.status}`);
+            cy.log(
+              `Org invite accept response body: ${JSON.stringify(resp.body)}`
+            );
+          });
+        } else {
+          cy.log(`Error while reading email: ${res.status}`);
+        }
       });
     });
   }
@@ -141,25 +146,18 @@ export class Utils {
     return false;
   }
 
-
   private static sendRequest(request) {
     return cy.request(request).then((res) => {
       if (res.status > 205) {
         while (this.TRY_COUNT > 0) {
-          cy.wait(10000)
-          this.sendRequest(request)
+          cy.wait(10000);
+          this.sendRequest(request);
           this.TRY_COUNT--;
         }
       }
       return cy.wrap({ body: res.body, status: res.status }, { log: false });
     });
   }
-
-
-
-
-
-
 
   static sendPostRequest(url: string, headers, body) {
     const request = {
@@ -173,8 +171,6 @@ export class Utils {
       return cy.wrap({ body: res.body, status: res.status }, { log: false });
     });
   }
-
-
 
   static sendPutRequest(url: string, headers, body) {
     const request = {
@@ -196,7 +192,7 @@ export class Utils {
       headers,
       failOnStatusCode: false,
     };
-    return this.sendRequest(request)
+    return this.sendRequest(request);
   }
 
   static sendDeleteRequest(url: string, headers: any = {}, body?: any) {
@@ -205,8 +201,7 @@ export class Utils {
       url,
       body,
       headers,
-      failOnStatusCode: false
-
+      failOnStatusCode: false,
     };
     return cy.request(request).then((res) => {
       return cy.wrap({ body: res.body, status: res.status }, { log: false });
@@ -243,18 +238,31 @@ export class Utils {
   }
 
   static interceptConfig() {
-    cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/**`).as('config')
+    cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/**`).as(
+      "config"
+    );
     // cy.wait('@config', { timeout: 180000 })
   }
   public static pollElement(locator: string) {
-    return cy.get('body').then(bdy => {
+    return cy.get("body").then((bdy) => {
       if (bdy.find(locator).length == 0) {
-        cy.wait(4000)
-        this.pollElement(locator)
+        cy.wait(4000);
+        this.pollElement(locator);
       } else {
-        return cy.get(locator)
+        return cy.get(locator);
       }
-    }
-    )
+    });
+  }
+
+  // Ensure that element remains visible multiple times before returning to handle rerendering scenarios
+  static getRenderedElement(locator: string) {
+    return cy
+      .get(locator)
+      .should("be.visible")
+      .get(locator)
+      .should("be.visible")
+      .get(locator)
+      .should("be.visible")
+      .get(locator);
   }
 }

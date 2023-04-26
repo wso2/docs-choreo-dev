@@ -19,5 +19,6 @@ package com.wso2.choreo.integration.common;
 public enum ComponentFlavour {
     STANDARD,
     MI,
-    BYOC
+    BYOC,
+    PROXY
 }

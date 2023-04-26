@@ -70,22 +70,39 @@ export class ComponentAPILifecycle {
 
 
   static goToDeveloperPortalWithoutLogin(idpUser: string = "") {
-    
-    const { latestAPIVersionId } = Cypress.env("apiInfo")
-    const loginUrl = Cypress.env("devportalLoginURL")
+    const { latestAPIVersionId } = Cypress.env("apiInfo");
+    const loginUrl = Cypress.env("devportalLoginURL");
     const { uuid, handle } = Cypress.env("userData");
-    let devportalURL = `${loginUrl}/${handle}/apis/${latestAPIVersionId}?fidp=${idpUser}&orgUuid=${uuid}`
-    cy.visit(devportalURL)
+    let devportalURL = `${loginUrl}/${handle}/apis/${latestAPIVersionId}?fidp=${idpUser}&orgUuid=${uuid}`;
+    cy.visit(devportalURL);
   }
 
   static selectUsagePlans(...plans) {
     cy.get('[data-testid="Usage plans"]').click();
     cy.get('[data-testid="checkbox-Unlimited"]').click();
-    plans.forEach((plan) => { const pln = `[data-testid="checkbox-${plan}"]`; cy.get(pln).click(); });
+    plans.forEach((plan) => {
+      const pln = `[data-testid="checkbox-${plan}"]`;
+      cy.get(pln).click();
+    });
     cy.get("button > span").contains("Save").click();
     cy.get('[data-testid="checkbox-Unlimited"]');
   }
 
+
+  private static handleConnectorPublishPopup() {
+
+    cy.get('body').then(bdy => {
+      if (bdy.find('[data-testid="connector-publish-wizard-title"]').length > 0) {
+        if (bdy.find('[data-testid="retry-btn"]').length > 0) {
+          cy.get('button[aria-label="close"]').eq(1).click()
+        } else {
+          cy.wait(20000);
+          this.handleConnectorPublishPopup()
+        }
+
+      }
+    })
+  }
 
   static publishToMarketplace(connectorAudience: Enums.ConnectorAudience) {
     cy.get('[data-testid="Publish-lc-btn"]').click();
@@ -94,9 +111,10 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="publish-btn"]').should("be.enabled");
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').should("be.enabled").click();
-    cy.wait(1000);
+    this.handleConnectorPublishPopup()
     cy.get('[data-testid="published-connector-info"]').contains(
-      "You have already published a connector for this API.", { timeout: 300000 }
+      "You have already published a connector for this API.",
+      { timeout: 300000 }
     );
     cy.get('[data-testid="connector-publish-wizard-title"]').should(
       "not.exist"
@@ -228,7 +246,10 @@ export class ComponentAPILifecycle {
   }
 
   static verifyAPIVisibility(visibility: string) {
-    cy.get('div[role="combobox"]>div>div>input').eq(1).invoke('val').should("eq", visibility)
+    cy.get('div[role="combobox"]>div>div>input')
+      .eq(1)
+      .invoke("val")
+      .should("eq", visibility);
     cy.log("Successfully verified the API visibility", visibility);
   }
 
@@ -246,21 +267,24 @@ export class ComponentAPILifecycle {
 
 
   static updateAPIAccessMode(accessMode: string) {
-    Utils.pollElement('[data-testid="access-mode"]').click()
-      cy.get(`li[id*="Select"]`).contains(accessMode)
+    Utils.pollElement('[data-testid="access-mode"]').click();
+    cy.get(`li[id*="Select"]`)
+      .contains(accessMode)
       .should("exist")
       .click({ force: true });
     cy.get('[data-testid="warning-banner"]').should("be.visible");
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
       .should("exist")
       .click();
-    cy.contains(`Successfully converted to an ${accessMode.toLowerCase()} API.`).should(
-      "be.visible"
-    );
+    cy.contains(
+      `Successfully converted to an ${accessMode.toLowerCase()} API.`
+    ).should("be.visible");
   }
 
   static managePermissions(permissions: string[], componentName: string) {
-    permissions.forEach((permission) => { this.addPermission(permission) });
+    permissions.forEach((permission) => {
+      this.addPermission(permission);
+    });
     this.applyAllPermissionsToResources(permissions);
     this.saveAndDeployPermissions(componentName);
     this.deleteAllPermissionsFromReources();
@@ -274,14 +298,19 @@ export class ComponentAPILifecycle {
   }
 
   static navigatePermissionManagementWindow() {
-    cy.get("h5").contains("You don't have any permissions (scopes) defined as yet");
+    cy.get("h5").contains(
+      "You don't have any permissions (scopes) defined as yet"
+    );
     cy.get('[data-testid="scope-add-icon-button"]').click();
   }
 
   static addPermission(permissionName: string) {
     cy.get('[data-testid="scope-add-new-btn"]').should("be.disabled");
     cy.get('[data-testid="scope-text-input"]').type(permissionName);
-    cy.get('[data-testid="scope-add-new-btn"]').should("be.enabled").click().wait(1000);
+    cy.get('[data-testid="scope-add-new-btn"]')
+      .should("be.enabled")
+      .click()
+      .wait(1000);
     cy.contains("Permission(Scope) created successfully");
     cy.get('[data-testid="scope-select-all-btn"]').should("be.visible");
     cy.get(`[data-testid="scope-item-${permissionName}"]`).should("be.visible");

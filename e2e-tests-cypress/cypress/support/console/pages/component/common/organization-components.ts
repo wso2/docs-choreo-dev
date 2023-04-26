@@ -16,8 +16,6 @@
 import { Utils } from "../../../utils";
 
 export class OrganizationComponent {
-
-
   static navigateToMembers() {
     cy.get('[data-cyid="members"]').click();
   }
@@ -31,11 +29,11 @@ export class OrganizationComponent {
   }
 
   static verifyEmailIsNotDisplayed(email: string) {
-    cy.get(`td[value="${email}"]`).should("not.exist");
+    cy.contains(email).should("not.exist");
   }
 
   static verifyEmailIsDisplayed(email: string) {
-    cy.get(`td[value="${email}"]`).should("exist");
+    cy.contains(email).should("be.visible");
   }
 
   static verifyGroupNameIsDisplayed(groupName: string) {
@@ -46,7 +44,7 @@ export class OrganizationComponent {
     cy.get(`td[value="${groupName}"]`).should("not.exist");
   }
 
-  static inviteMembers(email: string, ...roles) {
+  static inviteMembers(email: string, ...roles: string[]) {
     cy.wait(300);
     cy.get('[data-cyid="invite-members"]').click();
     cy.wait(300);
@@ -172,10 +170,8 @@ export class OrganizationComponent {
 
   static addMembertoRole(roleName: string) {
     cy.get('[data-cyid="search-app"]').clear().type(roleName);
-    cy.get(
-      '[class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"]'
-    ).should("contain", roleName);
-    cy.contains("td", roleName).click();
+    cy.get('[data-cyid="roles-table-rows"]').should("contain", roleName);
+    cy.get('[data-cyid="roles-table-rows"]').contains("td", roleName).click();
     cy.get('[data-cyid="btn-add-member-to-role"]').click();
     cy.get('[data-cyid="select_members_to_role"]').click();
 
