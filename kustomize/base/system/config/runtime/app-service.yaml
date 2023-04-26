@@ -162,6 +162,7 @@ defaultRoles:
         - environments:view_dev
         - choreo:component_manage
         - choreo:dev_env_manage
+        - choreo:non_prod_env_manage
         - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
         - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
         - {{.PERMISSION_GLOBAL_CONFIG_DELETE}}
@@ -252,6 +253,7 @@ defaultRoles:
         - environments:view_dev
         - environments:view_prod
         - apim:environment_manage
+        - choreo:non_prod_env_manage
         - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
         - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
         - {{.PERMISSION_GLOBAL_CONFIG_DELETE}}
@@ -283,6 +285,7 @@ defaultRoles:
         - apim:subscription_view
         - environments:view_dev
         - environments:view_prod
+        - choreo:non_prod_env_manage
         - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
         - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
         - {{.PERMISSION_GLOBAL_CONFIG_DELETE}}
