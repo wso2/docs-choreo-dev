@@ -52,7 +52,7 @@ To deploy an existing scheduled trigger written in any programming language to C
 
 ## Deploy a scheduled trigger
 
-During the deployment stage, Choreo prompts you to specify the time interval for the scheduled trigger to run and execute the configured action.
+During the deployment stage, Choreo prompts you to specify the time interval for the scheduled trigger to run and execute the configured action. Using the provided UI inputs, you can easily define the time interval, or alternatively, you can write your own custom Cron syntax for more advanced scheduling options.
 
 ![Specify time interval](../../assets/img/scheduled-tasks/specify-time-interval.png){.cInlineImage-full}
 
