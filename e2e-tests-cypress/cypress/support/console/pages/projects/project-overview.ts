@@ -18,8 +18,8 @@ import { Utils } from "../../utils";
 
 export class ProjectOverviewPage {
 
-  static searchReuseComponent(componentData: AbsComponent, projectName: string = "Default Project") {
-
+  static searchReuseComponent(componentData: AbsComponent, projectName: string = "Default Project", isComponentBYOC: boolean = true) {
+    
     const REPO_NAME = Utils.generateComponentName("repo");
     GraphQL.getProjects().then(res => {
       const projects = res.projects
@@ -34,11 +34,10 @@ export class ProjectOverviewPage {
               c.displayName.trim() === componentData.componentName.trim()
             })
             if (component == undefined) {
-              if (Object.keys(componentData).includes("byocRestApi")) {
-                GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
-              } else {
-                
+              if (isComponentBYOC) {
                 GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getBYOCComponentCreationQuery)
+              } else {
+                GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
               }
             } else {
               GraphQL.getComponentInfo(projectName, componentData.componentName)
