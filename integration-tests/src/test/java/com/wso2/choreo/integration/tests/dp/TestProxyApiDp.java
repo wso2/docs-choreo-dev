@@ -18,7 +18,6 @@ import com.consol.citrus.http.client.HttpClient;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
-import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
@@ -34,7 +33,6 @@ import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.ApiDTO;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
-import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.proxyapi.DeploySettings;
@@ -107,7 +105,7 @@ public class TestProxyApiDp extends TestBase {
     @Test(dependsOnMethods = {"createAPI_ProxyApiEUDpIT"}, dataProvider = "dps")
     @CitrusTest
     public void testCreateComponentForProxyAPI_ProxyApiEUDpIT(DataProviderWrapper dp) throws Exception {
-        GraphqlDTO dto = ComponentUtils.createProxyComponentRequest(dp.getFirstName(), dp.getChoreoProject(), Repository.builder().build(), dp.getProxyAPI().getId());
+        GraphqlDTO dto = ComponentUtils.createProxyComponentRequest(dp.getFirstName(), dp.getChoreoProject(), dp.getProxyAPI().getId());
 
         ChoreoComponent choreoComponent = ComponentUtils.createProxyComponent(this, citrusClients, accessToken, dto);
 

@@ -58,7 +58,7 @@ export class Apis {
 
       Cypress.env("devportal_auth", header);
 
-      this.futureTime = Date.now() + 600000;
+      this.futureTime = Date.now() + 60000;
       this.verifyAPI(url, header, versionCount);
     });
     this.searchAPI(textApiName, version);
