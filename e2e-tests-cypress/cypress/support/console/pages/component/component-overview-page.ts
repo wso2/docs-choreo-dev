@@ -42,7 +42,7 @@ export class ComponentOverviewPage {
   }
 
     static navigateToManage() {
-    cy.contains("Manage").should("be.visible").click({ force: true });
+      cy.get('[data-cyid="link-manage"]').should("be.visible").click({ force: true });
   }
 
   static navigateToObserve() {

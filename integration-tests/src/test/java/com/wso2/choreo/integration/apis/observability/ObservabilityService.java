@@ -73,7 +73,7 @@ import static org.hamcrest.Matchers.stringContainsInOrder;
 
 public class ObservabilityService extends ControlPlaneAPI {
 
-    private static final String timestampRegexMatch = "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}Z|\\d{2}.\\d{2}Z|\\d{2}.\\d{3}Z|\\d{2}.\\d{4}Z|\\d{2}.\\d{5}Z|\\d{2}.\\d{6}Z|\\d{2}.\\d{7}Z)";
+    private static final String timestampRegexMatch = "[\\x00-\\x7F]+";
 
     public static String getObsUrl(ObsRequestParam obsRequestParam, Constant.logType logType) throws URISyntaxException {
 
@@ -111,7 +111,7 @@ public class ObservabilityService extends ControlPlaneAPI {
         return builder.build().toString();
     }
 
-    private static ObsRequestParam getShorterTimeSpanParams(String releaseId, String namespace, Constant.region region,
+    private static ObsRequestParam getShorterTimeSpanParams(String releaseId, String namespace, String region,
                                                            Constant.logType logType) {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         OffsetDateTime currentDateTime = OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.MILLIS);
@@ -123,7 +123,7 @@ public class ObservabilityService extends ControlPlaneAPI {
                 .endTime(endTime)
                 .namespace(namespace)
                 .releaseId(releaseId)
-                .region(region.name());
+                .region(region);
 
         switch (logType) {
             case metricsV2:
@@ -137,7 +137,7 @@ public class ObservabilityService extends ControlPlaneAPI {
         }
     }
 
-    private static ObsRequestParam getLongerTimeSpanParams(String releaseId, String namespace, Constant.region region,
+    private static ObsRequestParam getLongerTimeSpanParams(String releaseId, String namespace, String region,
                                                           Constant.logType logType) {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         OffsetDateTime currentDateTime = OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.MILLIS);
@@ -149,7 +149,7 @@ public class ObservabilityService extends ControlPlaneAPI {
                 .endTime(endTime)
                 .namespace(namespace)
                 .releaseId(releaseId)
-                .region(region.name());
+                .region(region);
 
         switch (logType) {
             case metricsV2:
@@ -312,7 +312,7 @@ public class ObservabilityService extends ControlPlaneAPI {
 
 
     public static void verifyLogsOverShorterDuration(TestActionRunner runner, HttpClient client, String accessToken,
-                                                     String releaseId, String namespace, Constant.region region,
+                                                     String releaseId, String namespace, String region,
                                                      Map<String, Object> validationMap) throws Exception {
 
         ObsRequestParam shorterTimeSpanParams = getShorterTimeSpanParams(releaseId, namespace, region, Constant.logType.logsV2);
@@ -321,7 +321,7 @@ public class ObservabilityService extends ControlPlaneAPI {
     }
 
     public static void verifyLogsOverLongerDuration(TestActionRunner runner, HttpClient client, String accessToken,
-                                                     String releaseId, String namespace, Constant.region region,
+                                                     String releaseId, String namespace, String region,
                                                     Map<String, Object> validationMap) throws Exception {
 
         ObsRequestParam longerTimeSpanParams = getLongerTimeSpanParams(releaseId, namespace, region, Constant.logType.logsV2);
@@ -330,7 +330,7 @@ public class ObservabilityService extends ControlPlaneAPI {
     }
 
     public static void verifyZipLogsOverLongerDuration(TestActionRunner runner, HttpClient client, String accessToken,
-                                                    String releaseId, String namespace, Constant.region region, String obsId) throws Exception {
+                                                    String releaseId, String namespace, String region, String obsId) throws Exception {
 
         ObsRequestParam longerTimeSpanParams = getLongerTimeSpanParams(releaseId, namespace, region, Constant.logType.logsV2);
 
@@ -338,7 +338,7 @@ public class ObservabilityService extends ControlPlaneAPI {
     }
 
     public static void verifyGroupLogsOverShorterDuration(TestActionRunner runner, HttpClient client, String accessToken,
-                                                     String releaseId, String namespace, Constant.region region) throws Exception {
+                                                     String releaseId, String namespace, String region) throws Exception {
 
         ObsRequestParam shorterTimeSpanParams = getShorterTimeSpanParams(releaseId, namespace, region, Constant.logType.groupedlogsV2);
 
@@ -346,7 +346,7 @@ public class ObservabilityService extends ControlPlaneAPI {
     }
 
     public static void verifyGroupLogsOverLongerDuration(TestActionRunner runner, HttpClient client, String accessToken,
-                                                    String releaseId, String namespace, Constant.region region) throws Exception {
+                                                    String releaseId, String namespace, String region) throws Exception {
 
         ObsRequestParam longerTimeSpanParams = getLongerTimeSpanParams(releaseId, namespace, region, Constant.logType.groupedlogsV2);
 
@@ -354,7 +354,7 @@ public class ObservabilityService extends ControlPlaneAPI {
     }
 
     public static void verifyMetricsOverShorterDuration(TestActionRunner runner, HttpClient client, String accessToken,
-                                                     String releaseId, String namespace, Constant.region region) throws Exception {
+                                                     String releaseId, String namespace, String region) throws Exception {
 
         ObsRequestParam shorterTimeSpanParams = getShorterTimeSpanParams(releaseId, namespace, region, Constant.logType.metricsV2);
 
@@ -364,7 +364,7 @@ public class ObservabilityService extends ControlPlaneAPI {
     }
 
     public static void verifyMetricsOverLongerDuration(TestActionRunner runner, HttpClient client, String accessToken,
-                                                    String releaseId, String namespace, Constant.region region) throws Exception {
+                                                    String releaseId, String namespace, String region) throws Exception {
 
         ObsRequestParam longerTimeSpanParams = getLongerTimeSpanParams(releaseId, namespace, region, Constant.logType.metricsV2);
 

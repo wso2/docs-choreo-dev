@@ -13,8 +13,8 @@
 
 
 export class SwaggerUI {
-  static SelectResource(path: string) {
-    const pathVariable = `[data-path="/${path}"]`;
+  static SelectResource(path: string, method: string = "") {
+    const pathVariable = method ? `[id="operations-default-${method}${path}"]` : `[data-path="/${path}"]`;
     cy.get('body').then(b => {
       if (b.find(`div[id*="${SwaggerUI.getModifiedResourceName(path)}"]>div>div>div>div>div>button`).length == 0) {
         cy.get(pathVariable).click()
@@ -29,6 +29,9 @@ export class SwaggerUI {
   }
 
   private static getModifiedResourceName(resource: string = "-get") {
+    if (resource.includes("/")) {
+      return resource.replace("/", "_")
+    }
     return Cypress._.capitalize(resource)
   }
 
@@ -58,8 +61,8 @@ export class SwaggerUI {
     cy.get(`[placeholder="${placeholder}"]`).clear().type(value);
   }
 
-  static invokeResource(resource: string, key: string = "", value: string = "") {
-    this.SelectResource(resource);
+  static invokeResource(resource: string, key: string = "", value: string = "", method: string = "") {
+    this.SelectResource(resource, method);
     this.TryoutAPI(resource);
     if (key) { this.enterValue(key, value); }
     this.ExecuteResourceFunction(resource);

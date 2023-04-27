@@ -29,14 +29,15 @@ import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-pa
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
+import { APIDevelop } from "../../../support/console/pages/apis/api-develop";
 
 describe("Verify internal API creation functionality", () => {
   const REST_API_NAME = Utils.generateComponentName("internal");
-  const PROXY_API_NAME_DEV = Utils.generateComponentName("dev")
+  const PROXY_API_NAME_DEV = Utils.generateComponentName("dev");
   const PROXY_API_VERSION_DEV = "1.0.0";
   const PROXY_API_BASEPATH_DEV = `/${PROXY_API_NAME_DEV}`;
 
-  const PROXY_API_NAME_PROD = Utils.generateComponentName("prod")
+  const PROXY_API_NAME_PROD = Utils.generateComponentName("prod");
   const PROXY_API_VERSION_PROD = "1.0.0";
   const PROXY_API_BASEPATH_PROD = `/${PROXY_API_NAME_PROD}`;
 
@@ -210,10 +211,7 @@ describe("Verify internal API creation functionality", () => {
 
   it("Verify Add resource to 1st Proxy API", () => {
     ComponentOverviewPage.navigateToDevelop();
-    ComponentDevelopPage.addResourcesToProxy(
-      RESOURCE_NAME,
-      Enums.HTTPMethod.GET
-    );
+    APIDevelop.addResources(RESOURCE_NAME, Enums.HTTPMethod.GET);
     ComponentDevelopPage.addParameterToProxyResource(
       RESOURCE_NAME,
       Enums.HTTPMethod.GET,
@@ -282,10 +280,7 @@ describe("Verify internal API creation functionality", () => {
 
   it("Verify Add resource to 2nd proxy API", () => {
     ComponentOverviewPage.navigateToDevelop();
-    ComponentDevelopPage.addResourcesToProxy(
-      RESOURCE_NAME,
-      Enums.HTTPMethod.GET
-    );
+    APIDevelop.addResources(RESOURCE_NAME, Enums.HTTPMethod.GET);
     ComponentDevelopPage.addParameterToProxyResource(
       RESOURCE_NAME,
       Enums.HTTPMethod.GET,
@@ -383,7 +378,7 @@ describe("Verify internal API creation functionality", () => {
     ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials();
     TryOut.navigateToTryOutMenu();
-    TryOut.generateTestKeyAndVerify();
+    TryOut.GenerateAccessToken();
     TryOut.SelectResource(Enums.HTTPMethod.GET, "greeting");
     TryOut.TryoutAPI();
     TryOut.InputQueryParamater(PARAM_NAME, PARAM_VALUE);

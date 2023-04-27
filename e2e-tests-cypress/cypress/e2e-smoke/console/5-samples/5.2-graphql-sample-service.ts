@@ -16,10 +16,10 @@ describe("Graphql GQL service test", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
   const TEST_QUERY = '{greeting(name:"John")}';
-  const TEST_QUERY_RESPONSE = "Hello, John";
+  const TEST_QUERY_RESPONSE = 'greeting": "Hello, John';
   const TEST_MUTATION = 'mutation{createUser(name:"John")}';
   const TEST_MUTATION_RESPONSE = 'createUser": "User created with name: John';
-  const COMPONENT_NAME = "graphql-service";
+  const COMPONENT_NAME = Utils.generateComponentName()
   const REPO_NAME = "graphql-service-sample";
   const subPath = Cypress.env("branch").replace("-ci", "");
 
@@ -54,16 +54,10 @@ describe("Graphql GQL service test", () => {
     GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
-
-
   it("Verify component deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployToDev();
-  });
-
-  it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd();
   });
 
   it("Verify test functionality of GQL query in dev on swagger", () => {
@@ -72,7 +66,13 @@ describe("Graphql GQL service test", () => {
     TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
   });
 
+  it("Verify component promote to prod", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.promoteToProd();
+  });
+
   it("Verify test functionality of GQL query in Prod on swagger", () => {
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testProdOnGraphQL(TEST_QUERY);
     TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
   });

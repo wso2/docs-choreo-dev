@@ -40,7 +40,7 @@ after(() => {
 describe(`Verify BYOC functionality in region ${dp}`, () => {
   const PROJECT_DESCRIPTION = "BYOC component";
   const PROJECT_NAME = Utils.generateProjectName();
-  const REST_API_NAME = Utils.generateComponentName("byor");
+  const REST_API_NAME = Utils.generateComponentName();
   const REPO_NAME = Utils.generateComponentName("repo");
   const RESOURCE_NAME = "movies";
 
@@ -52,8 +52,15 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
       componentType: Enums.DisplayType.byocRestApi,
       description: "BYOC Component",
       labels: "",
-      oasFilePath: "",
+      oasFilePath: "byoc-test/oas.yaml",
+      port: 8080,
       projectId: "",
+      byocConfig: {
+        dockerfilePath: "byoc-test/Dockerfile",
+        dockerContext: "byoc-test",
+        srcGitRepoUrl: "https://github.com/choreo-test-apps/byor-greetings-app2",
+        srcGitRepoBranch: "main",
+      }
     };
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, dp);
     GraphQL.createComponent(

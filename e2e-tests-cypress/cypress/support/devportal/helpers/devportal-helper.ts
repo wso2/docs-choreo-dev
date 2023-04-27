@@ -43,7 +43,7 @@ export class DevPortalHelper {
     RestAPIProxyTemplate.createOpenApi(DevPortalHelper.Filepath);
     RestAPIProxyTemplate.enterAPIdetails(API_Name, DevPortalHelper.API_BASE_PATH, "", "", "");
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.DeployToDev(this.PROJECT_NAME,API_Name);
     APIDeployment.PromoteToProd()
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");

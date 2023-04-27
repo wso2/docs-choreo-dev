@@ -33,7 +33,12 @@ public final class Constant {
             "urn:choreocontrolplane:organizationmanagement:theme_delete " +
             "urn:choreocontrolplane:organizationmanagement:theme_deploy " +
             "urn:choreocontrolplane:organizationmanagement:theme_manage" +
-            "urn:choreocontrolplane:organizationmanagement:theme_view" ;
+            "urn:choreocontrolplane:organizationmanagement:theme_view" +
+            "urn:choreosystem:organizationmanagement:theme_create " +
+            "urn:choreosystem:organizationmanagement:theme_delete " +
+            "urn:choreosystem:organizationmanagement:theme_deploy " +
+            "urn:choreosystem:organizationmanagement:theme_manage " +
+            "urn:choreosystem:organizationmanagement:theme_view ";
 
     public static final String GRAPHQL_ENDPOINT_SUFFIX = "/graphql";
     public static final String TEST_PROJECT_NAME_PREFIX = "automationtestproject";
@@ -86,6 +91,7 @@ public final class Constant {
     public static final int INDEX_OF_DEPLOYED_REVISION = MAX_API_REVISIONS_LIMIT_SETTINGS_PAGE - 1;
 
 
+    public static final String NON_EMPTY_REPO_TYPE = "UserManagedNonEmpty";
 
 
     public enum region{

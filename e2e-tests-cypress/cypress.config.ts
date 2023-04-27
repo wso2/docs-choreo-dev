@@ -7,7 +7,6 @@ export default defineConfig({
   responseTimeout: 300000,
   viewportHeight: 1000,
   viewportWidth: 1600,
-  chromeWebSecurity: false,
   video: true,
   screenshotsFolder: "cypress/screenshots/e2e-smoke",
   videosFolder: "cypress/videos/e2e-smoke",
@@ -47,6 +46,7 @@ export default defineConfig({
       return config;
     },
     specPattern: "cypress/e2e-smoke//./**/*.ts",
+    testIsolation: false
   },
   env: {
     FAIL_FAST_STRATEGY: "spec",

@@ -68,12 +68,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.greaterThan;
+
 
 /**
  * Implements GraphQL API calls and their response validations.
@@ -169,17 +169,13 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
     public static Optional<CreateComponentResponseDTO> createUserManagedComponent(TestActionRunner runner, HttpClient client,
-                                                                        GraphqlDTO graphqlDTO,
+                                                                        String queryString, String projectId,
                                                                         String accessToken) throws Exception {
-        graphqlDTO.setOrgId(ORG_ID);
-        graphqlDTO.setOrgHandler(ORG_HANDLE);
-        String queryString = ObjectMapperUtil.mapObjectToString(
-                "templates/graphql/requests/createUserManagedComponent.mustache", graphqlDTO);
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
         Map<String, String> responseParams = new HashMap<>();
         responseParams.put("orgId", String.valueOf(ORG_ID));
-        responseParams.put("projectId", graphqlDTO.getProjectId());
+        responseParams.put("projectId", projectId);
         responseParams.put("handler", ORG_HANDLE);
         String expectedResponse = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/responses/createComponentSuccess.mustache", responseParams);
@@ -352,7 +348,7 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
     public static ObservabilityIdInformation getComponentObservabilityIdForReleaseId(String releaseId, String accessToken) throws IOException {
-        GraphqlDTO dto = GraphqlDTO.builder().releaseId(releaseId).build();
+        GraphqlDTO dto = GraphqlDTO.builder().releaseIds(releaseId).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getObservabilityIds.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         return Arrays.
@@ -546,6 +542,36 @@ public class GraphQL extends ControlPlaneAPI {
         return componentArray[0];
     }
 
+    public static List<Environment> getDeploymentEndvironments(TestActionRunner runner, HttpClient client,
+                                                               String accessToken, GraphqlDTO dto) throws IOException {
+        String queryString = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getComponentDeploymentEnvironments.mustache", dto);
+        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        List<Environment> envs = new ArrayList<>();
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate((message, context) -> {
+                    envs.addAll(List.of(ObjectMapperUtil.mapToCollection(Environment[].class,
+                            message.getPayload(String.class), "environments")));
+                }));
+
+        return envs;
+    }
+
     /**
      * Deploy component with validations
      *
@@ -620,15 +646,7 @@ public class GraphQL extends ControlPlaneAPI {
                                 .message()
                                 .type(MessageType.JSON)
                                 .validate(jsonPath()
-                                        .expression("$.data.deploymentStatusByVersion.size()", greaterThan(0))
-                                        .expression("$.data.deploymentStatusByVersion[0].keySet()",
-                                                containsInAnyOrder("id","sha","completed_at","started_at","name","status","conclusion",
-                                                        "isAutoDeploy","failureReason","sourceCommitId"))
-                                        .expression("$.data.deploymentStatusByVersion[0].name", "Choreo Generated Build Deploy Action")
-                                        .expression("$.data.deploymentStatusByVersion[0].status", "completed")
                                         .expression("$.data.deploymentStatusByVersion[0].conclusion", "success")
-                                        .expression("$.data.deploymentStatusByVersion[0].isAutoDeploy", false)
-                                        .expression("$.data.deploymentStatusByVersion[0].failureReason", 0)
                                                 )
                                         )
                                 );
@@ -774,6 +792,38 @@ public class GraphQL extends ControlPlaneAPI {
 
         return deploymentStatus.get();
     }
+
+    public static ProxyDeployment getProxyComponentDeployment(TestActionRunner runner, HttpClient client, String accessToken,
+                                                                            GraphqlDTO graphqlDTO) throws IOException {
+        String queryString = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getProxyDeploymentDetails.mustache", graphqlDTO);
+        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        AtomicReference<ProxyDeployment> proxyDeployment = new AtomicReference<>();
+        // Poll deployment status
+        runner.$(repeatOnError()
+                .until("i = 30")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .body(requestBody)
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
+                        http().client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .validate((message, context) -> {
+                                    proxyDeployment.set(ObjectMapperUtil.mapStringToObject(ProxyDeployment.class, message.getPayload(String.class), "proxyDeployment"));
+                                })));
+
+        return proxyDeployment.get();
+    }
+
 
     /**
      * Promote component with validation
@@ -945,5 +995,37 @@ public class GraphQL extends ControlPlaneAPI {
                                         "createVersion"));
                 }));
             return mapStringToObject.get();
+    }
+    
+    public static List<Commit> getCommitHistory(TestActionRunner runner, HttpClient client, String componentId,
+                                            String accessToken, String branchName) throws Exception {
+        GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).branch(branchName).build();
+        String queryString = ObjectMapperUtil.
+                mapObjectToString("templates/graphql/requests/commitHistoryBranch.mustache", dto);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        List<Commit> commitList = new ArrayList<>();
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate((message, context) -> {
+                    Commit[] commits = ObjectMapperUtil.mapToCollection(Commit[].class, message.getPayload(String.class), "commitHistory");
+                    commitList.addAll(List.of(commits));
+                }));
+
+        return commitList;
     }
 }

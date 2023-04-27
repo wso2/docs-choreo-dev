@@ -162,6 +162,7 @@ defaultRoles:
         - environments:view_dev
         - choreo:component_manage
         - choreo:dev_env_manage
+        - choreo:log_view_non_prod
         - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
         - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
         - {{.PERMISSION_GLOBAL_CONFIG_DELETE}}
@@ -217,6 +218,7 @@ defaultRoles:
         - apim:dcr:app_manage
         - environments:view_dev
         - environments:view_prod
+        - choreo:log_view_non_prod
     - name: Billing Admin
       handle: billing-admin
       description: Users who manage billing and subscription related stuffs.
@@ -252,6 +254,8 @@ defaultRoles:
         - environments:view_dev
         - environments:view_prod
         - apim:environment_manage
+        - choreo:log_view_non_prod
+        - choreo:log_view_prod
         - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
         - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
         - {{.PERMISSION_GLOBAL_CONFIG_DELETE}}
@@ -283,6 +287,7 @@ defaultRoles:
         - apim:subscription_view
         - environments:view_dev
         - environments:view_prod
+        - choreo:log_view_non_prod
         - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
         - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
         - {{.PERMISSION_GLOBAL_CONFIG_DELETE}}
@@ -495,6 +500,6 @@ salesforceLeadPardotConfig:
     pardotEndpoint: {{.SALESFORCE_LEAD_VIA_PARDOT_ENDPOINT}}
     pardotSvcURL: {{.SALESFORCE_LEAD_VIA_PARDOT_SVC_URL}}
   geoLocation:
-    geoLocServiceURL:  {{.GEO_LOCATION_SERVICE_URL}}
-    geoLocServiceUserName: ${MAX_MIND_GEO_LOC_COUNTRY_USERNAME}
-    geoLocServicePassword: ${MAX_MIND_GEO_LOC_COUNTRY_PASSWORD}
+    url:  {{.GEO_LOCATION_SERVICE_URL}}
+    username: ${MAX_MIND_GEO_LOC_COUNTRY_USERNAME}
+    password: ${MAX_MIND_GEO_LOC_COUNTRY_PASSWORD}

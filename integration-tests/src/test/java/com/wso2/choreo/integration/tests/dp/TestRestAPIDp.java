@@ -10,9 +10,12 @@ import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
+import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,7 @@ import org.testng.annotations.Test;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class TestRestAPIDp extends TestBase {
@@ -56,23 +60,27 @@ public class TestRestAPIDp extends TestBase {
     public void createUserManagedRestAPI_TestRestAPIIT(DataProviderWrapper dp) throws Exception {
         ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").
-                srcGitRepoUrl("https://github.com/choreo-test-apps/rest-api").
-                projectId(project.getId()).
-                displayType(Constant.displayType.restAPI.name()).
-                build();
+
+        Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/rest-api").branch("main").subPath("").build();
+        GraphqlDTO dto = ComponentUtils.createRestApiComponentRequest(componentName, project, repo);
         ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
         dp.setChoreoProject(project);
         dp.setChoreoComponent(choreoComponent);
         Assert.assertEquals(project.getRegion(), dp.getRegion());
         Assert.assertNotNull(choreoComponent.getId());
+
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
+        dp.setEnvironments(environments);
     }
 
     @Test(dependsOnMethods = {"createUserManagedRestAPI_TestRestAPIIT"}, dataProvider = "dps")
     @CitrusTest
     public void componentDeploy_TestRestAPIIT(DataProviderWrapper dp) throws Exception {
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, dp.getChoreoComponent(), ComponentFlavour.STANDARD);
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
+                dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD);
         String devInvokeURL = statusDTO.getInvokeUrl();
+        String apiId = statusDTO.getApiId();
+        dp.setApiId(apiId);
         dp.setDevInvokeUrl(devInvokeURL);
     }
 
@@ -80,11 +88,9 @@ public class TestRestAPIDp extends TestBase {
     @Test(dependsOnMethods = {"componentDeploy_TestRestAPIIT"}, dataProvider = "dps")
     @CitrusTest
     public void promote_TestRestAPIIT(DataProviderWrapper dp) throws Exception {
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.promoteComponent(this, citrusClients, accessToken, dp.getChoreoComponent(), ComponentFlavour.STANDARD);
-        String prodInvokeURL = statusDTO.getInvokeUrl();
-        String apiId = statusDTO.getApiId();
-        dp.setApiId(apiId);
-        dp.setProdInvokeUrl(prodInvokeURL);
+        List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients, accessToken, dp.getChoreoComponent(),
+                dp.getEnvironments(), ComponentFlavour.STANDARD);
+        dp.setPromoteStatusDTO(statusDTO);
     }
 
 
@@ -99,7 +105,9 @@ public class TestRestAPIDp extends TestBase {
     @Test(dependsOnMethods = {"promote_TestRestAPIIT"}, dataProvider = "dps")
     @CitrusTest
     public void invokeAPIInProd_TestBYOCEUDataPlane(DataProviderWrapper dp) throws Exception {
-        ComponentUtils.invokeApiGET(this, dp.getKeyData().getApikey(), dp.getProdInvokeUrl(), "/isOdd?number=34", "false");
+        for (ComponentDeploymentStatusDTO statusDTO :dp.getPromoteStatusDTO()) {
+            ComponentUtils.invokeApiGET(this, dp.getKeyData().getApikey(), statusDTO.getInvokeUrl(), "/isOdd?number=34", "false");
+        }
     }
 
 }

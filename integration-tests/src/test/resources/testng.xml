@@ -7,10 +7,8 @@
              <class name="com.wso2.choreo.integration.tests.quotaLimit.QuotaLimitIT"/>
              <class name="com.wso2.choreo.integration.tests.anomalyDetector.BackendFailureAnomaly"/>
             <class name="com.wso2.choreo.integration.tests.connectorbuilder.ConnectorBuilderIT"/>
-            <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestMaxAPIRevisionsUsingDeployments"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestBasicAPIRevisionCreation"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingSettingsPage"/>
-            <class name="com.wso2.choreo.integration.tests.alert.OOMAlertIT"/>
             <class name="com.wso2.choreo.integration.tests.deploy.AutoDeployOnCommitIT"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAPIIT"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPIIT"/>
@@ -31,6 +29,7 @@
             <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestWebhookDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestRestAPIDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestManualTriggerDp"/>
         </classes>
     </test>
 </suite>

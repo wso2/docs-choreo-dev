@@ -65,7 +65,7 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify component deployment and endpoint configurations", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -160,7 +160,7 @@ describe("Choreo APIM publisher scenarios", () => {
     ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials();
     TryOut.navigateToTryOutMenu();
-    TryOut.generateTestKeyAndVerify();
+    TryOut.GenerateAccessToken();
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
@@ -188,9 +188,9 @@ describe("Choreo APIM publisher scenarios", () => {
     // DevPortalHomePage.navigateSelectAPI(API_NAME);
     TryOut.navigateToTryOutMenu();
     TryOut.SelectApplication(appName);
-    TryOut.generateTestKeyAndVerify();
+    TryOut.GenerateAccessToken();
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);
-    TryOut.TryoutAPI();
+    TryOut.TryoutApplication();
     TryOut.ExecuteResourceFunction();
     TryOut.ValidateResponse("200");
   });
@@ -202,13 +202,12 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.verifyConsumer(appName).should("be.visible");
   });
 
-
   it("Verify deleting consumer app", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin();
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     TryOut.DeleteApplication(appName);
-  })
+  });
 
   it("Verify delete permissions", () => {
     LoginPage.reLoginToChoreo();
@@ -220,10 +219,9 @@ describe("Choreo APIM publisher scenarios", () => {
     });
   });
 
-
   it("Verify redeployment after removing permissions", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
   });
 
   it("Verify insight values for dev", () => {
@@ -240,12 +238,12 @@ describe("Choreo APIM publisher scenarios", () => {
   it("Verify insight values for prod", () => {
     InsightsPage.selectTimePeriod();
     InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
-    InsightsPage.getTotalTraffic().should((value) => { expect(Number(value)).gte(2) });
+    InsightsPage.getTotalTraffic().should((value) => {
+      expect(Number(value)).gte(2);
+    });
     InsightsPage.getTotalErrorRequestCount().should("eq", "0");
     InsightsPage.getAverageErrorRate().should("eq", "0");
   });
-
-
 
   it("Reset and undeploy component", () => {
     ChoreoHomePage.navigateToComponents();

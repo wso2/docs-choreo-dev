@@ -79,4 +79,35 @@ export class Curl {
   static enterPathParameter(pathParameter: string) {
     cy.get("#path-id").clear().type(pathParameter);
   }
+
+  static getRequestComponentsForService(env: string) {
+    const curlData = Cypress.env(`${env}`);
+    let curl: CurlData = {
+      method: "",
+      url: "",
+      headers: { "api-key": "" }
+    }
+    if (curlData) {
+      curl.headers = curlData["headers"]
+      curl.method = curlData["method"]
+      curl.url = curlData["url"]
+      return cy.wrap(curl)
+    }
+
+    return cy.get('[class="language-bash"]').invoke("text")
+      .then((c) => {
+        const modifiedURL = c.replace(/"/g, "").replace(/'/g, "");
+        const arrayURL = modifiedURL.split(" ");
+        console.log('arrayURL', arrayURL);
+        const url = arrayURL[5];
+        const apiKey = arrayURL[13];
+        const method = arrayURL[3];
+
+        curl.headers["api-key"] = apiKey
+        curl.url = url
+        curl.method = method
+        Cypress.env(`${env}`, curl);
+        return cy.wrap(curl);
+      });
+  }
 }

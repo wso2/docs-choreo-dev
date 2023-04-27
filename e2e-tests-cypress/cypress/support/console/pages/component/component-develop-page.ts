@@ -24,7 +24,7 @@ export class ComponentDevelopPage {
   }
 
   private static checkHTTPVerb(verbs: string[]) {
-    cy.get("#mui-component-select-verbs").click();
+    cy.get("#verb-selector").click();
     verbs.forEach((verb) => {
       cy.get(
         `[data-testid="checkbox-${verb.toUpperCase()}"]>span>input `
@@ -46,7 +46,6 @@ export class ComponentDevelopPage {
     cy.get("#parameter-name").focus().type(name);
     cy.get("#mui-component-select-type").eq(0).click();
     cy.get(`[data-value="${dataType}"]`).click();
-    // cy.get('[data-testid="checkbox-required"]>span>input').check();
     cy.contains("Add").click();
   }
   static saveResource() {

@@ -39,19 +39,26 @@ describe("API overview comment and rating scenario", () => {
 
   before(() => {
     LoginPage.login();
- 
+   
   });
 
   after(() => {
     ChoreoHomePage.logout();
   });
 
+  
+
   it("Test in devportal", () => {
     DevPortalHelper.createDeployHttpProxyComponent(API_Name);
+ 
+  });
+
+  it("verify api in devportal",()=>{
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.verifyAPIname().should("eq", API_Name);
     Apis.searchApiAndSelect(API_Name);
-  });
+  })
+
   it("Add and delete comment for the API", () => {
     ApiOverview.addCommentToApi("Test comment from Cypress Test Runner");
     ApiOverview.deleteComment();
