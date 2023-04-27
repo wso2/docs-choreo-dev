@@ -161,7 +161,6 @@ defaultRoles:
         - environments:view_prod
         - environments:view_dev
         - choreo:component_manage
-        - choreo:dev_env_manage
         - choreo:non_prod_env_manage
         - choreo:log_view_non_prod
         - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
@@ -249,13 +248,12 @@ defaultRoles:
         - apim:api_manage
         - apim:subscription_manage
         - choreo:deployment_manage
-        - choreo:dev_env_manage
         - choreo:prod_env_manage
+        - choreo:non_prod_env_manage
         - apim:api_settings
         - environments:view_dev
         - environments:view_prod
         - apim:environment_manage
-        - choreo:non_prod_env_manage
         - choreo:log_view_non_prod
         - choreo:log_view_prod
         - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
@@ -282,7 +280,6 @@ defaultRoles:
         - apim:tier_manage
         - choreo:project_manage
         - choreo:component_manage
-        - choreo:dev_env_manage
         - apim:api_publish
         - apim:document_manage
         - apim:api_settings
