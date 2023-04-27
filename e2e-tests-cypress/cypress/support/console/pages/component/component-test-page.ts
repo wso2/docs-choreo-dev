@@ -27,4 +27,9 @@ export class ComponentTestPage {
     cy.get('[data-testid="env"]>div[role="button"]').click();
    cy.get('ul>li').contains(env).click();
   }
+
+  static selectEndpoint(endpoint: string) {
+    cy.get('[data-cyid="select-endpoint"]>div[role="button"]').click();
+    cy.get('ul>li[role="option"]').contains(endpoint).click();
+  }
 }

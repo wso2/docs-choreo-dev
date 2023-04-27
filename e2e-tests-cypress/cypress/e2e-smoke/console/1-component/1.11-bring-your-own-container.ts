@@ -52,8 +52,15 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
       componentType: Enums.DisplayType.byocRestApi,
       description: "BYOC Component",
       labels: "",
-      oasFilePath: "",
+      oasFilePath: "byoc-test/oas.yaml",
+      port: 8080,
       projectId: "",
+      byocConfig: {
+        dockerfilePath: "byoc-test/Dockerfile",
+        dockerContext: "byoc-test",
+        srcGitRepoUrl: "https://github.com/choreo-test-apps/byor-greetings-app2",
+        srcGitRepoBranch: "main",
+      }
     };
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, dp);
     GraphQL.createComponent(

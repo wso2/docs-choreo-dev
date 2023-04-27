@@ -106,4 +106,26 @@ export class TestHelper {
     ComponentOverviewPage.navigateToTest()
   }
 
+  static testProjectLevelEndpoint() {
+    cy.get('[data-testid="no-public-endpoints-notification"]').should("be.visible");
+  }
+
+  static testManagedEndpoint(env: Enums.Environment, endpoint: string, resourcePath: string, method = "", key: string = "", value: string = "") {
+    cy.get('[data-cyid="Console"]').click();
+    ComponentTestPage.selectEnvironment(env);
+    ComponentTestPage.selectEndpoint(endpoint);
+    ComponentTestPage.getTestKey();
+    SwaggerUI.invokeResource(resourcePath, key, value, method);
+    Curl.getRequestComponentsForService(`${env}${resourcePath}`);
+
+    return SwaggerUI.getResponseCode().then((res) => {
+      return SwaggerUI.GetResponse().then((r) => {
+        return cy.wrap({
+          response: r,
+          statusCode: res,
+        });
+      });
+    });
+  }
+
 }

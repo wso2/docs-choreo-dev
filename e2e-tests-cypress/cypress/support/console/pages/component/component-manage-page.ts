@@ -361,4 +361,21 @@ export class ComponentAPILifecycle {
     cy.contains("Permissions(Scopes) assigned successfully").wait(1000);
     cy.contains(`Deployed the component ${componentName}`).wait(10000);
   }
+
+  static verifyOverviewForProjectLevelEndpoints() {
+    cy.get('[data-testid="no-endpoints-notification"]').should("be.visible");
+  }
+
+  static selectEndpoint(endpoint: string) {
+    cy.get('[data-cyid="endpoint-list"]').click();
+    cy.get('ul>li[role="option"]').contains(endpoint).click();
+  }
+
+  static publishServiceToMarketplace() {
+    cy.get('[data-testid="Publish-lc-btn"]').click();
+    cy.get('[data-testid="Block-lc-btn"]').should("be.visible");
+    cy.get('[data-testid="Deploy as a Prototype-lc-btn"]').should("be.visible");
+    cy.get('[data-testid="Demote to Created-lc-btn"]').should("be.visible");
+    cy.get('[data-testid="Deprecate-lc-btn"]').should("be.visible");
+  }
 }
