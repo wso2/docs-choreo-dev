@@ -125,15 +125,15 @@ export class GraphQLQueryBuilder {
           orgHandler: "${byocComponent.handle}",
           projectId: "${projectId}",
           labels: "",
-          componentType: "${Enums.ComponentType.BYOC_REST_API}",
-          port: 8080,
-          oasFilePath: "byoc-test/oas.yaml",
+          componentType: "${byocComponent.componentType}",
+          port: ${byocComponent.port},
+          oasFilePath: "${byocComponent.oasFilePath}",
           accessibility: "${byocComponent.accessibility}",
           byocConfig: {
-            dockerfilePath:  "byoc-test/Dockerfile",
-            dockerContext:"byoc-test",
-            srcGitRepoUrl:"https://github.com/choreo-test-apps/byor-greetings-app2",
-            srcGitRepoBranch: "main"
+            dockerfilePath:  "${byocComponent.byocConfig.dockerfilePath}",
+            dockerContext:"${byocComponent.byocConfig.dockerContext}",
+            srcGitRepoUrl:"${byocComponent.byocConfig.srcGitRepoUrl}",
+            srcGitRepoBranch: "${byocComponent.byocConfig.srcGitRepoBranch}",
           }
         }
       ) 
