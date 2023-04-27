@@ -35,7 +35,7 @@ after(() => {
 });
 
 describe("Verify containerized service functionality", () => {
-  const COMPONENT_NAME = "containerized-service-1.13";
+  const COMPONENT_NAME = Utils.generateComponentName("containerized-service");
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "sample containerized service scenario";
   const REPO_NAME = Utils.generateComponentName("repo");

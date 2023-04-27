@@ -38,7 +38,7 @@ after(() => {
 });
 
 describe("Verify Ballerina service functionality", () => {
-  const COMPONENT_NAME = "ballerina-service-1.13";
+  const COMPONENT_NAME = Utils.generateComponentName("ballerina-service");
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "sample ballerina service scenario";
   const REPO_NAME = Utils.generateComponentName("repo");
