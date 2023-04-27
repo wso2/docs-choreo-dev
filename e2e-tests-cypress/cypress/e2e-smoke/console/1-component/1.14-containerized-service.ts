@@ -1,0 +1,109 @@
+/*
+ * Copyright (c) 2023, WSO2 LLC. (http://www.wso2.com). All Rights Reserved.
+ *
+ * This software is the property of WSO2 LLC. and its suppliers, if any.
+ * Dissemination of any information or reproduction of any material contained
+ * herein is strictly forbidden, unless permitted by WSO2 in accordance with
+ * the WSO2 Commercial License available at http://wso2.com/licenses.
+ * For specific language governing the permissions and limitations under
+ * this license, please see the license as well as any agreement you’ve
+ * entered into with WSO2 governing the purchase of this software and any
+ * associated services.
+ */
+
+import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
+import { GraphQL } from "../../../support/console/apis/graphql";
+import { Enums } from "../../../support/console/enums";
+import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
+import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
+import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
+import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
+import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
+import { LoginPage } from "../../../support/console/pages/login-page";
+import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
+import { Utils } from "../../../support/console/utils";
+import { GitHub } from "../../../support/github/github";
+import { ByocComponent } from "../../../support/interfaces/byoc-component";
+
+before(() => {
+  LoginPage.login();
+  GitHub.deleteWebhooks("byoc-service-app")
+});
+
+after(() => {
+  ChoreoHomePage.logout();
+});
+
+describe("Verify containerized service functionality", () => {
+  const COMPONENT_NAME = Utils.generateComponentName("containerized-service");
+  const PROJECT_NAME = Utils.generateProjectName();
+  const PROJECT_DESCRIPTION = "sample containerized service scenario";
+  const REPO_NAME = Utils.generateComponentName("repo");
+  const ENDPOINT_NAME = "Go Greeter";
+
+  it("Verify containerized service component creation", () => {
+    let componentData: ByocComponent = {
+      name: COMPONENT_NAME,
+      displayName: COMPONENT_NAME,
+      accessibility: Enums.Accessibility.EXTERNAL,
+      componentType: Enums.DisplayType.byocService,
+      description: "Containerized Service Component",
+      labels: "",
+      oasFilePath: "",
+      port: 80,
+      projectId: "",
+      byocConfig: {
+        dockerfilePath: "Dockerfile",
+        dockerContext: "",
+        srcGitRepoUrl: "https://github.com/choreo-test-apps/byoc-service-app",
+        srcGitRepoBranch: "main",
+      }
+    };
+    ProjectListingPage.createNewProject(
+      PROJECT_NAME,
+      PROJECT_DESCRIPTION,
+      Enums.Region.US
+    );
+    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getBYOCComponentCreationQuery)
+  });
+
+  it("Verify component deployment with public level endpoint", () => {
+    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.deployService(ENDPOINT_NAME);
+  });
+
+  it("Verify test functionality of root resource in dev on swagger", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testManagedEndpoint(
+      Enums.Environment.DEVELOPMENT,
+      ENDPOINT_NAME,
+      "greeter/greet"
+    ).then((res) => {
+      expect(res.response).to.be.eq("Hello, Stranger!\n\n");
+      expect(res.statusCode).to.be.eq("200");
+    });
+  });
+
+  it("Verify component promote to prod", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.promoteService(ENDPOINT_NAME);
+  });
+
+  it("Verify test functionality of root resource in prod on swagger", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testManagedEndpoint(
+      Enums.Environment.PRODUCTION,
+      ENDPOINT_NAME,
+      "greeter/greet"
+    ).then((res) => {
+      expect(res.response).to.be.eq("Hello, Stranger!\n\n");
+      expect(res.statusCode).to.be.eq("200");
+    });
+  });
+
+  it("Verify suspending all component deployments", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopAllDeployment();
+  });
+})

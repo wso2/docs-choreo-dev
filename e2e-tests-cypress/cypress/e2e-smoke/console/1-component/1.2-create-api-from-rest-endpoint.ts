@@ -72,7 +72,7 @@ describe(`Verify proxy api functionality in region ${dp}`, () => {
 
   it("Verify component deployment to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(PROJECT_NAME,API_NAME);
+    APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -128,7 +128,7 @@ describe(`Verify proxy api functionality in region ${dp}`, () => {
 
   it("Deploy new version to Dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(PROJECT_NAME,API_NAME);
+    APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
   });
 
   it("Test in dev", () => {
@@ -173,7 +173,7 @@ describe(`Verify proxy api functionality in region ${dp}`, () => {
     ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials();
     TryOut.navigateToTryOutMenu();
-    TryOut.generateTestKeyAndVerify();
+    TryOut.GenerateAccessToken();
     TryOut.SelectResource(null, OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();

@@ -11,11 +11,16 @@
  * associated services.
  */
 
+import {
+  DEVPORTAL_APP_TOKEN_GEN_URL,
+  VERY_SHORT_TIME,
+} from "../../../console/constants";
+import { Utils } from "../../../console/utils";
+
 export class TryOut {
-   static navigateToTryOutMenu() {
+  static navigateToTryOutMenu() {
     cy.get('[data-testid="tryout-item-link"]').click();
   }
-
 
   static SelectApplication(applicationName: string) {
     cy.get('[data-testid="application-selector-wrapper"]').within(()=>{
@@ -24,10 +29,9 @@ export class TryOut {
     cy.get(`[data-value="${applicationName}"]`).click().wait(1000);
   }
 
-
   static generateTestKeyAndVerify() {
-    cy.get('[data-testid="get-test-key-btn"]').click({force: true});
-    cy.contains("Successfully created the access token").should('be.visible')
+    cy.get('[data-testid="get-test-key-btn"]').click({ force: true });
+    cy.contains("Successfully created the access token").should("be.visible");
     cy.get("#accessTokenInput").invoke("val").should("not.be.empty");
   }
 
@@ -48,8 +52,17 @@ export class TryOut {
     cy.get(".opblock-section-header").contains("Cancel").should("exist");
   }
 
+  static TryoutApplication() {
+    cy.get(".try-out__btn").should("exist").click();
+    cy.get(".opblock-section-header").contains("Cancel").should("exist");
+  }
+
   static InputQueryParamater(paramName: string, paramValue: any) {
-    cy.get(`tr[data-param-name="${paramName}"]>td[class="parameters-col_description"]>input`).clear().type(paramValue);
+    cy.get(
+      `tr[data-param-name="${paramName}"]>td[class="parameters-col_description"]>input`
+    )
+      .clear()
+      .type(paramValue);
   }
 
   static ExecuteResourceFunction() {
@@ -73,25 +86,42 @@ export class TryOut {
     cy.log("Response is successfully returned");
     cy.get(
       ":nth-child(1) > .responses-table > tbody > .response > .response-col_status"
-    ).should('contain', statusCode);
+    ).should("contain", statusCode);
   }
 
   static DeleteApplication(appName: string) {
     cy.get('[data-testid="applications-appbar-btn"]').click();
     cy.get('[data-testid="search-btn"]').trigger("mouseover");
-    cy.get('[data-testid="search-app"] [placeholder="Search"]').type(appName)
+    cy.get('[data-testid="search-app"] [placeholder="Search"]').type(appName);
     cy.contains(appName).trigger("mouseover");
-    cy.get(`[data-testid="delete-btn-${appName}"]`).trigger("mouseover").click();
+    cy.get(`[data-testid="delete-btn-${appName}"]`)
+      .trigger("mouseover")
+      .click();
     cy.get('[data-testid="delete-dialog-ok-button"]').click();
-    cy.get('[data-testid="create-application-btn"]',{timeout:50000}).should("be.visible")
+    cy.get('[data-testid="create-application-btn"]', { timeout: 50000 }).should(
+      "be.visible"
+    );
   }
 
   static GenerateAccessToken() {
     cy.log("Generating an access token");
-    cy.get('[data-testid="get-test-key-btn"]').should("be.enabled").click();
-    cy.get("[data-testid=accessTokenInput]").should("not.be.empty");
-    cy.log("Successfully generated an access token");
-    cy.wait(4000);
-  }
+    cy.intercept({
+      method: "POST",
+      url: DEVPORTAL_APP_TOKEN_GEN_URL,
+      times: 1,
+    }).as("generateAppToken");
 
+    Utils.getRenderedElement('[data-testid="get-test-key-btn"]').should(
+      "be.enabled"
+    );
+    Utils.getRenderedElement('[data-testid="get-test-key-btn"]').click();
+
+    cy.wait("@generateAppToken", { timeout: VERY_SHORT_TIME }).then(() => {
+      Utils.getRenderedElement('[data-testid="get-test-key-btn"]')
+        .contains('role="progressbar"')
+        .should("not.exist");
+      cy.get("[data-testid=accessTokenInput]").should("not.be.empty");
+      cy.log("Successfully generated an access token");
+    });
+  }
 }

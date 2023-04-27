@@ -20,6 +20,7 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.CreateNewVersionResponseDTO;
@@ -46,6 +47,8 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
         private String orgId;
         private String orgUUID;
         private String projectId;
+
+        private ChoreoProject project;
         private static final String repoName = "byor-greetings-app2";
         private static final String repoSubpath = "hello_service";
         private static final String repoType = "UserManagedNonEmpty";
@@ -69,26 +72,19 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
                 orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
                 githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
                 githubPAT = Configuration.getConfig(ConfigDefinition.GITHUB_PAT);
-                ChoreoProject project = GraphQL.createProject(accessToken);
+                project = GraphQL.createProject(accessToken);
                 projectId = project.getId();
         }
 
         @Test
         @CitrusTest
         public void createUserManagedComponent_TestUserManagedNonEmptyCreateComponentSub() throws Exception {
-
                 // Creating component
                 String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-                // The GH repository is initiated everyday with a new Ballerina project using a GH Action Workflow
-                String srcGitHubURL = Constant.GITHUB_URL.concat(githubOrg).concat("/")
-                                .concat(repoName).concat("/tree/").concat(repoBranch).concat("/").concat(repoSubpath);
-                GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").srcGitRepoUrl(srcGitHubURL)
-                                .projectId(projectId).orgId(Integer.parseInt(orgId))
-                                .orgHandler(orgHandle)
-                                .repositoryType(repoType)
-                                .repositoryBranch(repoBranch)
-                                .repositorySubPath(repoSubpath)
-                                .displayType(Constant.displayType.restAPI.name()).build();
+
+                Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/byor-greetings-app2").branch(repoBranch).subPath(repoSubpath).build();
+                GraphqlDTO dto = ComponentUtils.createRestApiComponentRequest(componentName, project, repo);
+
                 choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                                 ComponentFlavour.STANDARD);
                 choreoComponent.setBranch(repoBranch);

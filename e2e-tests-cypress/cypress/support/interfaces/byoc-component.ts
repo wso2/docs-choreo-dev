@@ -9,7 +9,7 @@ export interface ByocComponent extends AbsComponent {
     projectId: string,
     labels: string,
     componentType: string,
-    port?: 80,
+    port?: number,
     oasFilePath: string,
     accessibility: Enums.Accessibility,
     byocConfig?: ByocConfig

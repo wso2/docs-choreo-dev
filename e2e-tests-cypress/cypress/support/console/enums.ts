@@ -19,7 +19,9 @@ export namespace Enums {
     graphql = "graphql",
     manualTrigger = "manualTrigger",
     scheduledTask = "scheduledTask",
-    byocRestApi = "byocRestApi"
+    byocRestApi = "byocRestApi",
+    ballerinaService = "ballerinaService",
+    byocService = "byocService",
   }
 
   export enum Accessibility {

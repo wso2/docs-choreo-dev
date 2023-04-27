@@ -11,29 +11,29 @@
  * associated services.
  */
 
-
 export class APIDevelop {
-
-  static httpVerbs: string[] = ["GET",
+  static httpVerbs: string[] = [
+    "GET",
     "POST",
     "PUT",
     "PATCH",
     "DELETE",
     "HEAD",
-    "OPTIONS"]
-
-
-
-
+    "OPTIONS",
+  ];
 
   static addResources(path: string, ...verbs) {
-    cy.get('[data-testid="develop-resources-header"]').contains("Resources").should("be.visible");
-    cy.get('[id="backdrop-loader"]').should("not.exist")
+    cy.get('[data-testid="develop-resources-header"]')
+      .contains("Resources")
+      .should("be.visible");
+    cy.get('[id="backdrop-loader"]').should("not.exist");
     cy.get("body").then((body) => {
       if (body.find("#panel1a-header>div>h4").text().trim() === "/*") {
         cy.log("trigger delete all");
         cy.get('[data-testid="delete-all-operations-btn"]').click();
-        cy.contains("Undo Delete", { timeout: 120000 }).should("be.visible").wait(3000);
+        cy.contains("Undo Delete", { timeout: 120000 })
+          .should("be.visible")
+          .wait(3000);
       }
     });
     this.addHTTPVerb(verbs);
@@ -47,22 +47,26 @@ export class APIDevelop {
     cy.get("button").should('be.enabled').contains("Save").click({ force: true })
     cy.intercept({
       method: "PUT",
-      url: `${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
+      url: `${Cypress.env(
+        "apimSvcURL"
+      )}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
     }).as("swagger");
     cy.wait("@swagger", { timeout: 120000 }).then((res) => {
-      const reqUrl = res.request.url
-      const geturl = reqUrl.replace("/swagger", "")
-      cy.log(geturl)
-      expect(res.response.body.paths).to.have.property(`/${path}`)
+      const reqUrl = res.request.url;
+      const geturl = reqUrl.replace("/swagger", "");
+      cy.log(geturl);
+      expect(res.response.body.paths).to.have.property(`/${path}`);
     });
-    cy.get(`[id="panel-/${path}/get-header"]`).should('exist')
+    cy.get(`[id="panel-/${path}/${verbs[0].toLowerCase()}-header"]`).should(
+      "exist"
+    );
   }
 
   private static addHTTPVerb(verbs: string[]) {
-    cy.get('#verb-selector').click();
+    cy.get("#verb-selector").click();
     verbs.forEach((verb) => {
-      let id = `verb-selector-option-${this.httpVerbs.indexOf(verb)}`
-      cy.get(`#${id}`).click().wait(1000)
+      let id = `verb-selector-option-${this.httpVerbs.indexOf(verb)}`;
+      cy.get(`#${id}`).click().wait(1000);
     });
     cy.get("body").type("{esc}");
   }
@@ -82,7 +86,4 @@ export class APIDevelop {
    //   cy.get(input).eq(0).type(operationId);
     });
   }
-
-
-
 }
