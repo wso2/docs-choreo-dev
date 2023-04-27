@@ -88,8 +88,6 @@ describe("Verify Ballerina service functionality", () => {
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
-    cy.get('[title="ballerina-service-1.13"]', { timeout: VERY_LONG_TIME }).click();
-
     ComponentOverviewPage.navigateToTest();
     TestHelper.testManagedEndpoint(
       Enums.Environment.DEVELOPMENT,
