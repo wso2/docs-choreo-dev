@@ -35,10 +35,9 @@ export class ProjectOverviewPage {
             })
             if (component == undefined) {
               if (isComponentBYOC) {
-                GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
-              } else {
-                
                 GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getBYOCComponentCreationQuery)
+              } else {
+                GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery) 
               }
             } else {
               GraphQL.getComponentInfo(projectName, componentData.componentName)

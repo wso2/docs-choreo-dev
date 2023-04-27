@@ -39,7 +39,6 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
 
     const BYOC_NAME = "create-ReuseBYOC";
     const RESOURCE_NAME = "movies";
-    const REPO_NAME = Utils.generateComponentName("repo");
 
   it("Verify BYOC REST API component creation", () => {
     let componentData: ByocComponent = {
@@ -54,7 +53,7 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
       projectId: "",
     };
     ProjectListingPage.selectProject();
-    ProjectOverviewPage.searchReuseComponent(componentData);
+    ProjectOverviewPage.searchReuseComponent(componentData, "Default Project", true);
    });  
 
   it("Deploy component", () => {
