@@ -226,8 +226,7 @@ export class ComponentAPILifecycle {
   static applyConfiguration() {
     cy.get('[data-cyid="btn-save-settings"]').click();
     cy.get("button").contains("Apply").click().wait(2000);
-    cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
-    cy.get('.MuiBadge-root > .MuiButtonBase-root > .MuiButton-label').should("be.visible");
+    cy.get('[data-testid="operation"]').should("be.visible");
     cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
     cy.wait(4000);
   }
