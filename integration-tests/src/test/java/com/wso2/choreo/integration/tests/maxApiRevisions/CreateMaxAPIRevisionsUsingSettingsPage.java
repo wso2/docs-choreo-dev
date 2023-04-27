@@ -81,9 +81,11 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
     private String backupRevisionId;
     private String newRevisionId;
     private RevisionWrapper revisionWrapper;
+    private List<Environment> environments;
 
     private int revisionCount;
     private int count;
+
 
     @Autowired
     private HttpClient choreoTestClient;
@@ -118,7 +120,10 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
     @Test
     @CitrusTest(name = "Get the revision count")
     public void getRevisionCount() throws Exception {
-        component.deploy(accessToken, orgHandle, orgUuid);
+        environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, component);
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
+                accessToken, component, environments, ComponentFlavour.STANDARD);
+
         JsonArray deploymentArray = component.getDeployments(accessToken, orgHandle, orgUuid, versionId);
         JsonObject deployment = (JsonObject) deploymentArray.get(0);
         apiId = deployment.get("apiId").getAsString();
@@ -142,7 +147,8 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
 //         Each deployment creates a new revision.
 //         This deployment is done to reach API revision limit of the Settings page (i.e. 19).
 
-        component.deploy(accessToken, orgHandle, orgUuid);
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
+                accessToken, component, environments, ComponentFlavour.STANDARD);
 
         JsonArray deploymentArray = component.getDeployments(accessToken, orgHandle, orgUuid, versionId);
         JsonObject deployment = (JsonObject) deploymentArray.get(0);
@@ -178,6 +184,7 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
                 .validate(json()
                         .ignore("$.list")));
     }
+
     @Test(dependsOnMethods = {"createDeploymentAtApiRevisionLimit"})
     @CitrusTest(name = "Get revision to delete")
     public void getRevisionToDelete() throws Exception {
