@@ -19,6 +19,7 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,6 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
  */
 public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
 
-    private static String componentId;
     private static String accessToken;
     private static String componentHandler;
     private ChoreoComponent choreoComponent;
@@ -87,14 +87,9 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void createComponent_ConnectorBuilderIT() throws Exception, ApiLifecycleChangeException {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
 
-        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").
-                srcGitRepoUrl("https://github.com/choreo-test-apps/rest-api").
-                projectId(project.getId()).
-                displayType(Constant.displayType.restAPI.name()).enableCellDiagram(false)
-                .repositoryBranch("main").
-                repositorySubPath("").build();
+        Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/rest-api").branch("main").subPath("").build();
+        GraphqlDTO dto = ComponentUtils.createRestApiComponentRequest(componentName, project, repo);
 
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
@@ -156,7 +151,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                                 .send()
                                 .get(Constant.USER_CONNECTORS_ENDPOINT_SUFFIX.concat("/")
                                         .concat(orgHandle).concat("/")
-                                        .concat(componentId).concat("/status"))
+                                        .concat(choreoComponent.getId()).concat("/status"))
                                 .message()
                                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                                 .header("x-correlation-id", Constant.X_CORRELATION_UUID)
@@ -184,7 +179,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .client(choreoTestClient)
                 .send()
                 .get(Constant.USER_CONNECTORS_ENDPOINT_SUFFIX.concat("/").concat(orgHandle)
-                        .concat("/").concat(componentId))
+                        .concat("/").concat(choreoComponent.getId()))
                 .queryParam("version=".concat(Constant.TEST_CONNECTOR_VERSION))
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
@@ -212,7 +207,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .client(choreoTestClient)
                 .send()
                 .post(Constant.USER_CONNECTORS_ENDPOINT_SUFFIX.concat("/").concat(orgHandle)
-                        .concat("/").concat(componentId).concat("/republish"))
+                        .concat("/").concat(choreoComponent.getId()).concat("/republish"))
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)

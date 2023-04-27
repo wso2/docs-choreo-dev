@@ -67,6 +67,8 @@ export class GraphQL {
 
     ChoreoHomePage.navigateToMarketPlace();
     ChoreoHomePage.navigateToComponents();
+    cy.get('#filterByType').click().should('have.length',1)
+    cy.contains('Select All').click()
     cy.get("tbody>tr p").should("be.visible");
     return cy.wrap({});
   }

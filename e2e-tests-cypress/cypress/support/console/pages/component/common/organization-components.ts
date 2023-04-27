@@ -170,10 +170,8 @@ export class OrganizationComponent {
 
   static addMembertoRole(roleName: string) {
     cy.get('[data-cyid="search-app"]').clear().type(roleName);
-    cy.get(
-      '[class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"]'
-    ).should("contain", roleName);
-    cy.contains("td", roleName).click();
+    cy.get('[data-cyid="roles-table-rows"]').should("contain", roleName);
+    cy.get('[data-cyid="roles-table-rows"]').contains("td", roleName).click();
     cy.get('[data-cyid="btn-add-member-to-role"]').click();
     cy.get('[data-cyid="select_members_to_role"]').click();
 

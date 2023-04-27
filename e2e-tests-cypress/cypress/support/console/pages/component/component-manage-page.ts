@@ -14,7 +14,6 @@
 import { Enums } from "../../enums";
 import { Utils } from "../../utils";
 
-
 export class ComponentAPILifecycle {
   static devportl_btn = '[data-testid="go-to-dev-portal-btn"]';
 
@@ -68,7 +67,6 @@ export class ComponentAPILifecycle {
     cy.get(ComponentAPILifecycle.devportl_btn).should("not.be.enabled");
   }
 
-
   static goToDeveloperPortalWithoutLogin(idpUser: string = "") {
     const { latestAPIVersionId } = Cypress.env("apiInfo");
     const loginUrl = Cypress.env("devportalLoginURL");
@@ -88,6 +86,20 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="checkbox-Unlimited"]');
   }
 
+  private static handleConnectorPublishPopup() {
+    cy.get("body").then((bdy) => {
+      if (
+        bdy.find('[data-testid="connector-publish-wizard-title"]').length > 0
+      ) {
+        if (bdy.find('[data-testid="retry-btn"]').length > 0) {
+          cy.get('button[aria-label="close"]').eq(1).click();
+        } else {
+          cy.wait(20000);
+          this.handleConnectorPublishPopup();
+        }
+      }
+    });
+  }
 
   static publishToMarketplace(connectorAudience: Enums.ConnectorAudience) {
     cy.get('[data-testid="Publish-lc-btn"]').click();
@@ -96,7 +108,7 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="publish-btn"]').should("be.enabled");
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').should("be.enabled").click();
-    cy.wait(1000);
+    this.handleConnectorPublishPopup();
     cy.get('[data-testid="published-connector-info"]').contains(
       "You have already published a connector for this API.",
       { timeout: 300000 }
@@ -208,9 +220,7 @@ export class ComponentAPILifecycle {
 
   static disableResourceSecurity(resource: string) {
     cy.get(`[id="panel-/${resource}/get-header"]`).scrollIntoView().click();
-    cy.get(`[id="panel-/${resource}/get-content"] [data-testid="security"]`)
-      .scrollIntoView()
-      .click();
+    cy.get(`[data-testid="security"]`).scrollIntoView().click();
   }
 
   static applyConfiguration() {
@@ -248,8 +258,6 @@ export class ComponentAPILifecycle {
     this.verifyAPIVisibility(visibility);
     cy.log("Successfully updated the API visibility");
   }
-
-
 
   static updateAPIAccessMode(accessMode: string) {
     Utils.pollElement('[data-testid="access-mode"]').click();
@@ -323,8 +331,6 @@ export class ComponentAPILifecycle {
 
     // this.verifyDeleteAllPermissionsFromReources();
   }
-
-
 
   static selectPermission(permissionName: string) {
     cy.get(`[data-testid="scope-item-checkbox-${permissionName}"]`).click();

@@ -11,7 +11,7 @@
  *  associated services.
  */
 
-package com.wso2.choreo.integration.models.code;
+package com.wso2.choreo.integration.models.webhook;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,11 +22,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Repository {
-    String repoUrl;
-    String branch = "main";
-    String subPath = "";
-    String oasFilePath;
-    String dockerContext;
-    String dockerfilePath;
+public class Trigger {
+    String channels;
+    String id = "";
 }
