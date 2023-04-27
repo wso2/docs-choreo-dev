@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { GRAPHQL_URL, SHORT_TIME } from "../../constants";
 import { Enums } from "../../enums";
 import { Utils } from "../../utils";
 import { ChoreoHomePage } from "../home/home-page";
@@ -28,7 +29,15 @@ export class ProjectListingPage {
         Utils.getRenderedElement('[data-testid="project-picker"]').click();
         Utils.getRenderedElement('[data-cyid="btn-create-new"]').click();
       } else {
-        Utils.getRenderedElement('[data-cyid="create-project-card"]').click();
+        cy.intercept({
+          method: "POST",
+          url: GRAPHQL_URL,
+          times: 10,
+        }).as("queryComponents");
+
+        cy.wait("@queryComponents", { timeout: SHORT_TIME }).then(() => {
+          Utils.getRenderedElement('[data-cyid="create-project-card"]').click();
+        });
       }
     });
 

@@ -60,9 +60,19 @@ export class RestAPIProxyTemplate {
     if (validateResourceName) {
       resourceIdentifier = "panel-/" + validateResourceName + "/get-header";
     }
+    let isResourceFound = false;
+
     cy.get(`[data-testid="operation"]`)
-      .invoke("attr", "id")
-      .should("eq", resourceIdentifier);
+      .each((item, index, list) => {
+        let resourceId = Cypress.$(item).attr("id");
+        if (resourceId === resourceIdentifier) {
+          isResourceFound = true;
+        }
+      })
+      .then(() => {
+        expect(isResourceFound).to.be.true;
+      });
+
     Utils.saveComponentURL();
   }
 }

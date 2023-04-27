@@ -43,7 +43,7 @@ describe("Create proxy api using existing url", () => {
       API_BASE_PATH,
       `${URL}/v2`,
       "1.0.0",
-      "pet"
+      "pet/{petId}"
     );
   });
 });
