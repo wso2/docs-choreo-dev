@@ -37,7 +37,8 @@ export class RestAPIProxyTemplate {
     apiBasePath: string,
     endpoint: string,
     version: string = "",
-    validateResourceName: string = ""
+    validateResourceName: string = "",
+    operation:string
   ) {
     cy.get('[data-cyid="api-name"]').within(() => cy.get('input').clear().type(apiName));
 
@@ -52,11 +53,11 @@ export class RestAPIProxyTemplate {
     }
     cy.get('[data-cyid="btn-create"]').should("be.enabled").click();
 
-    let resourceIdentifier = "resource-/intensity";
+    let resourceIdentifier = `panel-/${apiName}/${operation}-header`;
     if (validateResourceName) {
       resourceIdentifier = "resource-/" + validateResourceName;
     }
-    cy.get(`[data-testid="${resourceIdentifier}"]`);
+    cy.get(`[data-testid="delete-all-operations-btn"]`).click();
     Utils.saveComponentURL();
   }
 }

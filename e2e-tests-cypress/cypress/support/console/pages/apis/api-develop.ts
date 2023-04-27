@@ -44,7 +44,7 @@ export class APIDevelop {
     cy.get('[name="target"]').type(path);
     cy.get('[data-testid="add-btn"]').click();
     this.generateOperationId(verbs, path);
-    cy.get(".MuiGrid-align-items-xs-center>div>button").should('be.enabled').contains("Save").click({ force: true })
+    cy.get("button").should('be.enabled').contains("Save").click({ force: true })
     cy.intercept({
       method: "PUT",
       url: `${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
@@ -55,7 +55,7 @@ export class APIDevelop {
       cy.log(geturl)
       expect(res.response.body.paths).to.have.property(`/${path}`)
     });
-    cy.get(`[data-testid="resource-/${path}"]`).should('exist')
+    cy.get(`[id="panel-/${path}/get-header"]`).should('exist')
   }
 
   private static addHTTPVerb(verbs: string[]) {
@@ -70,12 +70,16 @@ export class APIDevelop {
   private static generateOperationId(httpVerb: string[], resourcePath: string) {
     httpVerb.forEach((verb) => {
       const header = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-header"]`;
-      const input = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-content"]  div>input[type="text"]`;
+      const input = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-header"]  div>input[type="text"]`;
       const modifiedResourcePath = Cypress._.capitalize(resourcePath.replace(/\\/g, ""))
       const operationId = `${verb.toLowerCase()}${modifiedResourcePath}`;
 
       cy.get(header).click();
-      cy.get(input).eq(0).type(operationId);
+    cy.wait(5000)
+      cy.get(header).parent().then(p=>cy.wrap(p).within(()=>{
+        cy.get(`div>input[type="text"]`).eq(0).type(operationId)
+      }))
+   //   cy.get(input).eq(0).type(operationId);
     });
   }
 

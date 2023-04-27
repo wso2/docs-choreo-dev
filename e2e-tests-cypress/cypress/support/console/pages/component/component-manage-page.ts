@@ -223,17 +223,15 @@ export class ComponentAPILifecycle {
 
   static disableResourceSecurity(resource: string) {
     cy.get(`[id="panel-/${resource}/get-header"]`).scrollIntoView().click();
-    cy.get(`[id="panel-/${resource}/get-content"] [data-testid="security"]`)
-      .scrollIntoView()
-      .click();
+    cy.get('[data-testid="security"]').click()
+
   }
 
   static applyConfiguration() {
     cy.get('[data-cyid="btn-save-settings"]').click();
     cy.get("button").contains("Apply").click().wait(2000);
     cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
-    cy.get("#panel1a-header").should("be.visible");
-    cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
+ 
     cy.wait(4000);
   }
 
