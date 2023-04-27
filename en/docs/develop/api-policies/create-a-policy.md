@@ -6,7 +6,7 @@ A policy can be implemented as a Ballerina project and attached to an API Proxy.
 
 ## Prerequisites
 
-1. Set up [Ballerina 2201.2.0 or later](https://ballerina.io/learn/install-ballerina/set-up-ballerina/).
+1. [Ballerina 2201.3.1](https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.3.1).
 2. Open the ~/.ballerina/Settings.toml file and check if you have configured an access token to the Ballerina Central. If an access token is not configured in the file, follow the steps below: 
     1. Generate a token from [https://central.ballerina.io/dashboard?tab=token](https://central.ballerina.io/dashboard?tab=token).
     2. Download the generated Settings.toml file and copy it to your local ~/.ballerina directory.
