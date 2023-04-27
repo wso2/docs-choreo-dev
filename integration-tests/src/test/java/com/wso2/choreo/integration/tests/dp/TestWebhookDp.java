@@ -19,10 +19,12 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.models.response.Response;
+import com.wso2.choreo.integration.models.webhook.Trigger;
 import com.wso2.choreo.integration.tests.graphqlservice.GqlServiceTestHelper;
 import org.apache.commons.codec.binary.Hex;
 import org.hamcrest.core.StringRegularExpression;
@@ -113,15 +115,15 @@ public class TestWebhookDp extends TestBase {
         // Creating component
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
-        String projectId = project.getId();
-        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).
-                srcGitRepoUrl("https://github.com/choreo-test-apps/GitHub-web-hook").
-                displayName(componentName).projectId(project.getId()).
-                triggerChannels("IssuesService").triggerID("88").
-                repositoryType(NON_EMPTY_REPO_TYPE).
-                repositoryBranch("main").
-                repositorySubPath("").
-                displayType(Constant.displayType.webhook.name()).build();
+
+        Repository repo = Repository.builder().
+                repoUrl("https://github.com/choreo-test-apps/GitHub-web-hook").
+                branch("main").
+                subPath("").build();
+
+        Trigger trigger = Trigger.builder().channels("IssuesService").id("88").build();
+
+        GraphqlDTO dto = ComponentUtils.createWebhookComponentRequest(componentName, project, repo, trigger);
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
 
         dp.setChoreoProject(project);

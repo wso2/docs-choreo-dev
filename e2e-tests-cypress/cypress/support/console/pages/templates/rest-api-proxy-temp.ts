@@ -13,8 +13,6 @@ import { Utils } from "../../utils";
  * associated services.
  */
 export class RestAPIProxyTemplate {
-
-
   static skipSource() {
     cy.get('[data-cyid="btn-skip-src"]').should("be.visible").click();
   }
@@ -39,24 +37,32 @@ export class RestAPIProxyTemplate {
     version: string = "",
     validateResourceName: string = ""
   ) {
-    cy.get('[data-cyid="api-name"]').within(() => cy.get('input').clear().type(apiName));
+    cy.get('[data-cyid="api-name"]').within(() =>
+      cy.get("input").clear().type(apiName)
+    );
 
     if (version) {
       cy.get('[data-cyid="api-version"]').clear().type(version);
     }
 
-    cy.get('[data-cyid="api-basepath"]').within(() => cy.get('input').clear().type(apiBasePath));
+    cy.get('[data-cyid="api-basepath"]').within(() =>
+      cy.get("input").clear().type(apiBasePath)
+    );
 
     if (endpoint) {
-      cy.get('[data-cyid="api-endpoint"]').within(() => cy.get('input').clear().type(endpoint));
+      cy.get('[data-cyid="api-endpoint"]').within(() =>
+        cy.get("input").clear().type(endpoint)
+      );
     }
     cy.get('[data-cyid="btn-create"]').should("be.enabled").click();
 
-    let resourceIdentifier = "resource-/intensity";
+    let resourceIdentifier = "panel-/intensity/get-header";
     if (validateResourceName) {
-      resourceIdentifier = "resource-/" + validateResourceName;
+      resourceIdentifier = "panel-/" + validateResourceName + "/get-header";
     }
-    cy.get(`[data-testid="${resourceIdentifier}"]`);
+    cy.get(`[data-testid="operation"]`)
+      .invoke("attr", "id")
+      .should("eq", resourceIdentifier);
     Utils.saveComponentURL();
   }
 }

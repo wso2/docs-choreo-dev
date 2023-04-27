@@ -27,7 +27,7 @@ import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-bui
 import { GitHub } from "../../../support/github/github";
 
 describe("Create Schedule Trigger", () => {
-  const SCHEDULE_NAME = "create-ScheduleTrigger-1.7";
+  const SCHEDULE_NAME = Utils.generateComponentName()
   const EXPECTED_RESULT =
     '{"userId":1,"id":1,"title":"delectus aut autem","completed":false}';
   const REPO_NAME = Utils.generateComponentName("repo");

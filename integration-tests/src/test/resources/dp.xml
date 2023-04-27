@@ -3,6 +3,7 @@
 <suite name="choreoIntegrationTests_dps" parallel="classes" thread-count="7">
     <test name="choreo">
         <classes>
+            <class name="com.wso2.choreo.integration.common.TestContext"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestGraphQLServiceDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestBYOCDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiDp"/>

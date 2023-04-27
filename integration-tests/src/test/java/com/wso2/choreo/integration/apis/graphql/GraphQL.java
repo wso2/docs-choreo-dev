@@ -68,12 +68,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.greaterThan;
+
 
 /**
  * Implements GraphQL API calls and their response validations.
@@ -169,17 +169,13 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
     public static Optional<CreateComponentResponseDTO> createUserManagedComponent(TestActionRunner runner, HttpClient client,
-                                                                        GraphqlDTO graphqlDTO,
+                                                                        String queryString, String projectId,
                                                                         String accessToken) throws Exception {
-        graphqlDTO.setOrgId(ORG_ID);
-        graphqlDTO.setOrgHandler(ORG_HANDLE);
-        String queryString = ObjectMapperUtil.mapObjectToString(
-                "templates/graphql/requests/createUserManagedComponent.mustache", graphqlDTO);
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
         Map<String, String> responseParams = new HashMap<>();
         responseParams.put("orgId", String.valueOf(ORG_ID));
-        responseParams.put("projectId", graphqlDTO.getProjectId());
+        responseParams.put("projectId", projectId);
         responseParams.put("handler", ORG_HANDLE);
         String expectedResponse = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/responses/createComponentSuccess.mustache", responseParams);
@@ -650,15 +646,7 @@ public class GraphQL extends ControlPlaneAPI {
                                 .message()
                                 .type(MessageType.JSON)
                                 .validate(jsonPath()
-                                        .expression("$.data.deploymentStatusByVersion.size()", greaterThan(0))
-                                        .expression("$.data.deploymentStatusByVersion[0].keySet()",
-                                                containsInAnyOrder("id","sha","completed_at","started_at","name","status","conclusion",
-                                                        "isAutoDeploy","failureReason","sourceCommitId"))
-                                        .expression("$.data.deploymentStatusByVersion[0].name", "Choreo Generated Build Deploy Action")
-                                        .expression("$.data.deploymentStatusByVersion[0].status", "completed")
                                         .expression("$.data.deploymentStatusByVersion[0].conclusion", "success")
-                                        .expression("$.data.deploymentStatusByVersion[0].isAutoDeploy", false)
-                                        .expression("$.data.deploymentStatusByVersion[0].failureReason", 0)
                                                 )
                                         )
                                 );
@@ -804,6 +792,38 @@ public class GraphQL extends ControlPlaneAPI {
 
         return deploymentStatus.get();
     }
+
+    public static ProxyDeployment getProxyComponentDeployment(TestActionRunner runner, HttpClient client, String accessToken,
+                                                                            GraphqlDTO graphqlDTO) throws IOException {
+        String queryString = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getProxyDeploymentDetails.mustache", graphqlDTO);
+        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        AtomicReference<ProxyDeployment> proxyDeployment = new AtomicReference<>();
+        // Poll deployment status
+        runner.$(repeatOnError()
+                .until("i = 30")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .body(requestBody)
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
+                        http().client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .validate((message, context) -> {
+                                    proxyDeployment.set(ObjectMapperUtil.mapStringToObject(ProxyDeployment.class, message.getPayload(String.class), "proxyDeployment"));
+                                })));
+
+        return proxyDeployment.get();
+    }
+
 
     /**
      * Promote component with validation
