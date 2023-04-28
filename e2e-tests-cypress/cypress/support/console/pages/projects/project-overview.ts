@@ -30,9 +30,11 @@ export class ProjectOverviewPage {
 
             const component = comps.components.find(c => {
 
-              cy.log(JSON.stringify(c))
+          
               c.displayName.trim() === componentData.componentName.trim()
             })
+
+
             if (component == undefined) {
               if (isComponentBYOC) {
                 GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getBYOCComponentCreationQuery)

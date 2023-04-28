@@ -35,7 +35,8 @@ export class RestAPIProxyTemplate {
     apiBasePath: string,
     endpoint: string,
     version: string = "",
-    validateResourceName: string = ""
+    validateResourceName: string = "",
+    operation:string
   ) {
     cy.get('[data-cyid="api-name"]').within(() =>
       cy.get("input").clear().type(apiName)

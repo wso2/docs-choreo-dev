@@ -44,7 +44,7 @@ export class APIDevelop {
     cy.get('[name="target"]').type(path);
     cy.get('[data-testid="add-btn"]').click();
     this.generateOperationId(verbs, path);
-    cy.contains("Save").should("be.enabled").click({ force: true });
+    cy.get("button").should('be.enabled').contains("Save").click({ force: true })
     cy.intercept({
       method: "PUT",
       url: `${Cypress.env(
@@ -74,12 +74,16 @@ export class APIDevelop {
   private static generateOperationId(httpVerb: string[], resourcePath: string) {
     httpVerb.forEach((verb) => {
       const header = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-header"]`;
-      const modifiedResourcePath = Cypress._.capitalize(
-        resourcePath.replace(/\\/g, "")
-      );
+      const input = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-header"]  div>input[type="text"]`;
+      const modifiedResourcePath = Cypress._.capitalize(resourcePath.replace(/\\/g, ""))
       const operationId = `${verb.toLowerCase()}${modifiedResourcePath}`;
 
       cy.get(header).click();
+    cy.wait(5000)
+      cy.get(header).parent().then(p=>cy.wrap(p).within(()=>{
+        cy.get(`div>input[type="text"]`).eq(0).type(operationId)
+      }))
+   //   cy.get(input).eq(0).type(operationId);
     });
   }
 }
