@@ -43,11 +43,9 @@ export class ComponentDevelopPage {
     cy.get(`[id="panel-/${path}/${verb.toLowerCase()}-header"`).click();
     cy.get("#in").eq(0).click();
     cy.contains(type).click()
-   // cy.get(`[data-value="${type}"]`).click();
     cy.get("#parameter-name").focus().type(name);
     cy.get("#type").eq(0).click();
     cy.contains(dataType).click()
-  //  cy.get(`[data-value="${dataType}"]`).click();
     cy.get('[aria-label="add"]').click();
   }
   static saveResource() {
