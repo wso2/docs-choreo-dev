@@ -63,7 +63,7 @@ describe("Create Reusable Webhook functionality", () => {
   });
 
   it("Component promotion to prod", () => {
-    ComponentDeployPage.promoteWebHookToProd(CONFIG,false);
+    ComponentDeployPage.promoteWebHookToProd(CONFIG);
   });
 
   it("Verify manage functionality", () => {
