@@ -11,6 +11,8 @@
  * associated services.
  */
 
+ 
+
 
 
 export class ComponentDevelopPage {
@@ -19,16 +21,14 @@ export class ComponentDevelopPage {
     cy.get('[id="backdrop-loader"').should("not.exist");
     cy.get('[data-testid="delete-all-operations-btn"]').click();
     this.checkHTTPVerb(verbs);
-    cy.get("#operation-target").type(path);
+    cy.type("#operation-target").type(path);
     cy.get('[data-testid="add-btn"]').click();
   }
 
   private static checkHTTPVerb(verbs: string[]) {
     cy.get("#verb-selector").click();
     verbs.forEach((verb) => {
-      cy.get(
-        `[data-testid="checkbox-${verb.toUpperCase()}"]>span>input `
-      ).check();
+      cy.get(`[data-testid="checkbox-${verb.toUpperCase()}"]>span>input`).click();
     });
     cy.get("body").type("{esc}");
   }

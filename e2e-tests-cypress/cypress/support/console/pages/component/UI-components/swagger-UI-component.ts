@@ -11,6 +11,8 @@
  * associated services.
  */
 
+
+
 export class SwaggerUI {
   static SelectResource(path: string, method: string = "") {
     const pathVariable = method

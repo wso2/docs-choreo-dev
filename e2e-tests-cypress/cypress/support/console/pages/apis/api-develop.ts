@@ -11,6 +11,9 @@
  * associated services.
  */
 
+
+import { MEDIUM_TIME } from "../../../commons/timeouts";
+
 export class APIDevelop {
   static httpVerbs: string[] = [
     "GET",
@@ -28,10 +31,10 @@ export class APIDevelop {
       .should("be.visible");
     cy.get('[id="backdrop-loader"]').should("not.exist");
     cy.get("body").then((body) => {
-      if (body.find("#panel1a-header>div>h4").text().trim() === "/*") {
+      if (body.find('[data-testid="operation"]>div>span>div>div>p').first().text().trim() === "/*") {
         cy.log("trigger delete all");
         cy.get('[data-testid="delete-all-operations-btn"]').click();
-        cy.contains("Undo Delete", { timeout: 120000 })
+        cy.contains("Undo Delete", MEDIUM_TIME)
           .should("be.visible")
           .wait(3000);
       }
@@ -51,10 +54,7 @@ export class APIDevelop {
         "apimSvcURL"
       )}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
     }).as("swagger");
-    cy.wait("@swagger", { timeout: 120000 }).then((res) => {
-      const reqUrl = res.request.url;
-      const geturl = reqUrl.replace("/swagger", "");
-      cy.log(geturl);
+    cy.wait("@swagger", MEDIUM_TIME).then((res) => {
       expect(res.response.body.paths).to.have.property(`/${path}`);
     });
     cy.get(`[id="panel-/${path}/${verbs[0].toLowerCase()}-header"]`).should(
@@ -74,16 +74,14 @@ export class APIDevelop {
   private static generateOperationId(httpVerb: string[], resourcePath: string) {
     httpVerb.forEach((verb) => {
       const header = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-header"]`;
-      const input = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-header"]  div>input[type="text"]`;
       const modifiedResourcePath = Cypress._.capitalize(resourcePath.replace(/\\/g, ""))
       const operationId = `${verb.toLowerCase()}${modifiedResourcePath}`;
 
       cy.get(header).click();
-    cy.wait(5000)
-      cy.get(header).parent().then(p=>cy.wrap(p).within(()=>{
+      cy.wait(5000)
+      cy.get(header).parent().then(p => cy.wrap(p).within(() => {
         cy.get(`div>input[type="text"]`).eq(0).type(operationId)
       }))
-   //   cy.get(input).eq(0).type(operationId);
     });
   }
 }

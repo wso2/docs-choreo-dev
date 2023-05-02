@@ -11,19 +11,23 @@
  * associated services.
  */
 
+import { DEPLOYMENT_STATUS_V2_ACTIVE, DEPLOYMENT_STATUS_V2_ERROR, ONE_HOUR } from "../../commons/constants";
+import { AUTH_HEADER, OK } from "../../commons/http";
+import { Utils } from "../../commons/utils";
 import { GitHub } from "../../github/github";
 import { AbsComponent } from "../../interfaces/abs-component";
-
+import { APIVersion } from "../../interfaces/choreo-components/api-version";
+import { AppEnvVersion } from "../../interfaces/choreo-components/app-env-version";
+import { Component } from "../../interfaces/choreo-components/component";
+import { Project } from "../../interfaces/choreo-components/projects";
 import { IntegrationComponentData } from "../../interfaces/integration-component-data";
 import { PR } from "../../interfaces/pr";
-import { Project } from "../../interfaces/choreo-components/projects";
-import { ONE_HOUR } from "../constants";
 import { ChoreoHomePage } from "../pages/home/home-page";
-import { Utils } from "../utils";
+import { APILifeCycleService } from "./api-life-cycle-service";
+import { BallerinaService } from "./bal-service";
 import { GraphQLQueryBuilder } from "./gql-query-builder";
-import { Component } from "../../interfaces/choreo-components/component";
-import { APIVersion } from "../../interfaces/choreo-components/api-versions";
-import { AppEnvVersion } from "../../interfaces/choreo-components/app-env-version";
+
+
 
 export const SUCCESS_STATUS_CODE = 200;
 export const NO_CONTENT_STATUS_CODE = 204;
@@ -67,7 +71,7 @@ export class GraphQL {
 
     ChoreoHomePage.navigateToMarketPlace();
     ChoreoHomePage.navigateToComponents();
-    cy.get('#filterByType').click().should('have.length',1)
+    cy.get('#filterByType').click().should('have.length', 1)
     cy.contains('Select All').click()
     cy.get("tbody>tr p").should("be.visible");
     return cy.wrap({});
@@ -150,13 +154,10 @@ export class GraphQL {
   ) {
     cy.log("deleteComponentsInProject()");
     this.getComponents(projectId).then((response) => {
-      if (
-        response.status === SUCCESS_STATUS_CODE &&
-        response.components.length > 0
-      ) {
+      if (response.status === OK && response.components.length > 0) {
         response.components.forEach((component) => {
           const { handler } = component;
-          this.deleteConnectors(token);
+          BallerinaService.deleteConnectors(token);
           this.changeComponentLifeCycle(projectId, handler, token);
           this.deleteComponent(component.id, projectId, orgHandle);
         });
@@ -211,7 +212,6 @@ export class GraphQL {
     const query = {
       query: `query{projects(orgId: ${orgId}){ id, orgId, name, version, createdDate,handler }}`,
     };
-    cy.log(JSON.stringify(query))
     return this.callGraphQL(query).then((res) => {
       const projects = res.body.projects as Project[];
       const status = res.status;
@@ -221,22 +221,18 @@ export class GraphQL {
 
   static callGraphQL(query: any) {
     const appSvcURL = Cypress.env("newAppSvcURL");
-    const header = {
-      Authorization: `Bearer ${Cypress.env("apim_token")}`,
-      "content-type": "application/json",
-    };
     return cy
       .request({
         method: "POST",
         url: `${appSvcURL}/projects/1.0.0/graphql`,
         body: JSON.stringify(query),
-        headers: header,
+        headers: AUTH_HEADER(),
         failOnStatusCode: false,
       })
       .then((resp) => {
         if (resp.status > 205) {
-          cy.log(JSON.stringify(query));
-          cy.log(JSON.stringify(resp.body));
+          cy.log(query);
+          cy.log(resp.body);
         }
         return Promise.resolve({
           body: resp.body.data,
@@ -313,7 +309,7 @@ export class GraphQL {
 
       const apiInfo = { componentId, latestAPIVersionId }
       Cypress.env("apiInfo", apiInfo)
-      cy.log(JSON.stringify(apiInfo))
+
       const appENVS: AppEnvVersion[] = latestAPIVersion.appEnvVersions;
       appENVS.forEach((appEnv) => {
         const { release } = appEnv;
@@ -358,13 +354,12 @@ export class GraphQL {
       environmentId
     );
     this.callGraphQL(query).then((res) => {
-      const { deploymentStatus, deploymentStatusV2 } =
-        res.body.componentDeployment;
+      const { deploymentStatus, deploymentStatusV2 } = res.body.componentDeployment;
       cy.log(deploymentStatus, deploymentStatusV2);
-      if (deploymentStatusV2 === "ERROR" || deploymentStatus === "ERROR") {
+      if (deploymentStatusV2 === DEPLOYMENT_STATUS_V2_ERROR || deploymentStatus === DEPLOYMENT_STATUS_V2_ERROR) {
         throw new Error(" Deployment Failed");
       }
-      if (deploymentStatusV2 === "ACTIVE" && deploymentStatus === "ACTIVE") {
+      if (deploymentStatusV2 === DEPLOYMENT_STATUS_V2_ACTIVE && deploymentStatus === DEPLOYMENT_STATUS_V2_ACTIVE) {
         return;
       } else {
         if (this.count < 10) {
@@ -463,64 +458,19 @@ export class GraphQL {
   private static deprecateComponent(apiId: string, token: string) {
     const { uuid } = Cypress.env("userData");
     cy.log(`Current UUID ==> ${uuid}`);
-
-    const statusRequest = `${Cypress.env(
-      "apimSvcURL"
-    )}/api/am/publisher/v2/apis/${apiId}/lifecycle-state?organizationId=${uuid}`;
+    const statusRequest = `${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/${apiId}/lifecycle-state?organizationId=${uuid}`;
     const headers = { Authorization: `Bearer ${token}` };
     return Utils.sendGetRequest(statusRequest, headers).then((res) => {
       const { state } = res.body;
       if (state === "Published") {
-        this.sendDeprecateRetireRequest(apiId, uuid, token);
+        this.sendDeprecateRetireRequest(apiId);
       }
     });
   }
 
-  private static sendDeprecateRetireRequest(
-    apiId: string,
-    uuid: string,
-    token: string
-  ) {
-    const headers = { Authorization: `Bearer ${token}` };
-    const deprecateRequest = `${Cypress.env(
-      "apimSvcURL"
-    )}/api/am/publisher/v2/apis/change-lifecycle?organizationId=${uuid}&apiId=${apiId}&action=Deprecate`;
-    const retireRequest = `${Cypress.env(
-      "apimSvcURL"
-    )}/api/am/publisher/v2/apis/change-lifecycle?organizationId=${uuid}&apiId=${apiId}&action=Retire`;
-    Utils.sendPostRequest(deprecateRequest, headers, {});
-    Utils.sendPostRequest(retireRequest, headers, {});
+  private static sendDeprecateRetireRequest(apiId: string) {
+    APILifeCycleService.deprecateAPI(apiId)
+    APILifeCycleService.retireAPI(apiId)
   }
 
-  private static deleteConnector(pkg: any, token) {
-    const { organization, name, version } = pkg;
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-    const url = `${Cypress.env(
-      "balRegistryURL"
-    )}/packages/${organization}/${name}/${version}?force=true`;
-    Utils.sendDeleteRequest(url, headers).then((res) => {
-      if (res.status === NO_CONTENT_STATUS_CODE) {
-        cy.log(`Successfully deleted Connector  ${name}`);
-      } else {
-        cy.log(
-          `Could not delete connector: ${name}, status returned: ${res.status}`
-        );
-      }
-    });
-  }
-
-  private static deleteConnectors(token: string) {
-    const { handle } = Cypress.env("userData");
-    cy.log(`Current handle ==> ${handle}`);
-    const headers = { Authorization: `Bearer ${token}` };
-    const url = `${Cypress.env("balRegistryURL")}/packages/${handle}`;
-    Utils.sendGetRequest(url, headers).then((res) => {
-      const packages = res.body as [];
-      if (packages.length > 0) {
-        packages.forEach((p) => this.deleteConnector(p, token));
-      }
-    });
-  }
 }

@@ -16,7 +16,6 @@ import { DomainsComponents } from "../../support/console/pages/component/common/
 import { DevPortalHomePage } from "../../support/devportal/pages/home/home-page";
 import { Apis } from "../../support/devportal/pages/apis/apis-home";
 import { ApiOverview } from "../../support/devportal/pages/apis/api-overview";
-import { Utils } from "../../support/console/utils";
 import { ApiCredentials } from "../../support/devportal/pages/apis/apis-credentials";
 import { TryOut } from "../../support/devportal/pages/apis/try-out";
 import { LoginPage as ConsoleLoginPage } from "../../support/console/pages/login-page";
@@ -33,6 +32,7 @@ import { ComponentOverviewPage } from "../../support/console/pages/component/com
 import { APIDeployment } from "../../support/console/pages/apis/api-deployment";
 import { ProjectListingPage } from "../../support/console/pages/projects/projects-listing-page";
 import { ComponentAPILifecycle } from "../../support/console/pages/component/component-manage-page";
+import { Utils } from "../../support/commons/utils";
 
 const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
 const API_BASE_PATH = Utils.generateBasePath();
@@ -51,10 +51,10 @@ describe("Create and deploy a component to test developer portal with custom dom
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.createOpenApi(Filepath);
-    RestAPIProxyTemplate.enterAPIdetails(API_NAME, API_BASE_PATH, "", "", "");
+    RestAPIProxyTemplate.enterAPIdetails(API_NAME, API_BASE_PATH, "", "", "","");
     cy.task('setAPIName', API_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(PROJECT_NAME,API_NAME);
+    APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
     APIDeployment.PromoteToProd()
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();

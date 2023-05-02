@@ -11,12 +11,14 @@
  * associated services.
  */
 
+import { Utils } from "../../../support/commons/utils";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/rest-api-proxy-temp";
-import { Utils } from "../../../support/console/utils";
+
+
 
 describe("Create proxy api using existing url", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
@@ -43,7 +45,8 @@ describe("Create proxy api using existing url", () => {
       API_BASE_PATH,
       `${URL}/v2`,
       "1.0.0",
-      "pet/{petId}"
+      "pet/{petId}",
+      ""
     );
   });
 });

@@ -16,15 +16,15 @@ import { ComponentListingPage } from "../../../support/console/pages/component/c
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
 import { SwaggerUI } from "../../../support/console/pages/component/UI-components/swagger-UI-component";
-import { Enums } from "../../../support/console/enums";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { Utils } from "../../../support/console/utils";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
 import { GitHub } from "../../../support/github/github";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
+import { Enums } from "../../../support/commons/enums";
+import { Utils } from "../../../support/commons/utils";
 
 describe("Create Greeting sample in Choreo", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";

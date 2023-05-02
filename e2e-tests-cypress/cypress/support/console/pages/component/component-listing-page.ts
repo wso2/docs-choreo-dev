@@ -11,8 +11,10 @@
  * associated services.
  */
 
+
+import { Utils } from "../../../commons/utils";
 import { GraphQL } from "../../apis/graphql";
-import { Utils } from "../../utils";
+
 
 export class ComponentListingPage {
 
@@ -35,8 +37,7 @@ export class ComponentListingPage {
   }
 
   static getProductionEnvStats() {
-    cy.get('[name="env"]')
-      .click()
+    cy.get('[name="env"]').click()
     cy.contains('Production').click().wait(3000);
     cy.get('[data-cyid="total-apis"]').should('have.text', '1');
     cy.get('[data-cyid="total-traffic"]').should('have.text', '2');
@@ -50,10 +51,8 @@ export class ComponentListingPage {
   }
 
   static getDevelopmentEnvStats() {
-    cy.get('[name="env"]')
-      .click()
+    cy.get('[name="env"]').click()
     cy.contains('Development').click().wait(3000);
-
     cy.get('[data-cyid="total-apis"]').should('have.text', '1');
     cy.get('[data-cyid="total-traffic"]').should('have.text', '2');
     cy.get('[data-cyid="avg-latency"]').invoke('text')

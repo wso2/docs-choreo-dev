@@ -11,10 +11,10 @@
  * associated services.
  */
 
-import {
-  DEVPORTAL_APP_KEY_GEN_URL,
-  VERY_SHORT_TIME,
-} from "../../../console/constants";
+
+
+import { VERY_SHORT_TIME } from "../../../commons/timeouts";
+import { DEV_PORTAL_APP_KEY_GEN_URL } from "../../../commons/urls";
 
 export class ApiCredentials {
   static navigateCredentialsTab() {
@@ -29,13 +29,13 @@ export class ApiCredentials {
 
     cy.intercept({
       method: "POST",
-      url: DEVPORTAL_APP_KEY_GEN_URL,
+      url: DEV_PORTAL_APP_KEY_GEN_URL,
       times: 1,
     }).as("generateAppKey");
 
     cy.get('[data-testid="generate-creds-btn"]').click();
 
-    cy.wait("@generateAppKey", { timeout: VERY_SHORT_TIME }).then(() => {
+    cy.wait("@generateAppKey", VERY_SHORT_TIME).then(() => {
       cy.get('[data-testid="generate-access-token-btn"]').should("exist");
       cy.log("Successfully generated credentials");
     });

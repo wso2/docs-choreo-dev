@@ -11,7 +11,9 @@
  * associated services.
  */
 
-import { Utils } from "../../../utils";
+import { Utils } from "../../../../commons/utils";
+
+
 
 export class OnPremkeyComponent {
   static keyName = Utils.generateKeyName("key");
@@ -69,5 +71,5 @@ export class OnPremkeyComponent {
       .click();
   }
 
- 
+
 }

@@ -1,3 +1,6 @@
+
+import { MEDIUM_TIME } from "../../../commons/timeouts";
+
 /*
  * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
@@ -74,8 +77,9 @@ export class ComponentOverviewPage {
   }
 
   private static createNewVersionApiProxy(version: string) {
-    cy.contains("Create new version", { timeout: 180000 });
-    cy.get('[data-cyid="text-field-new-version"]').within(()=>{cy.get("input").clear().type(version)})
+    cy.contains("Create new version", MEDIUM_TIME);
+    
+    cy.get('[data-cyid="text-field-new-version"]').within(() => { cy.get("input").clear().type(version) })
     cy.get("[data-testid=create-version-create]").click();
     cy.get('[data-testid="dialog-close-icon"]').should("not.exist");
   }

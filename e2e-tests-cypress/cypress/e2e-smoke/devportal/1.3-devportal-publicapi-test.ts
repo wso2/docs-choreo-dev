@@ -1,7 +1,6 @@
 import { DevPortalHomePage } from "../../support/devportal/pages/home/home-page";
 import { Apis } from "../../support/devportal/pages/apis/apis-home";
 import { ApiOverview } from "../../support/devportal/pages/apis/api-overview";
-import { Utils } from "../../support/console/utils";
 import { LoginPage as ConsoleLoginPage } from "../../support/console/pages/login-page";
 import { LoginPage as DevportalLoginPage } from "../../support/devportal/pages/login/login-page";
 import { ChoreoHomePage } from "../../support/console/pages/home/home-page";
@@ -10,6 +9,7 @@ import { ComponentOverviewPage } from "../../support/console/pages/component/com
 import { ComponentAPILifecycle } from "../../support/console/pages/component/component-manage-page";
 import { ComponentListingPage } from "../../support/console/pages/component/component-listing-page";
 import { ProjectListingPage } from "../../support/console/pages/projects/projects-listing-page";
+import { Utils } from "../../support/commons/utils";
 
 describe("Public access on devportal", () => {
     const API_Name = Utils.generateComponentName("rest");
@@ -20,14 +20,14 @@ describe("Public access on devportal", () => {
 
     after(() => { ChoreoHomePage.logout(); });
 
-    
+
     it("Create and deploy a component", () => {
         DevPortalHelper.createDeployRestApiComponent(API_Name, description, projectName);
         ComponentAPILifecycle.selectSetting();
         ComponentAPILifecycle.verifyAPIVisibility('Private');
     });
 
-  
+
     it("Check for available public apis", () => {
         DevportalLoginPage.visitToDevportalOrgPublicApis();
         DevPortalHomePage.verifyDevportalHomePagePublicView();

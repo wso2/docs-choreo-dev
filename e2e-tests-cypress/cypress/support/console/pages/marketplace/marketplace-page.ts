@@ -12,6 +12,9 @@
  */
 
 
+import { MEDIUM_TIME } from "../../../commons/timeouts";
+
+
 
 export class Marketplace {
   static searchConnector(connectorName: string) {
@@ -98,7 +101,7 @@ export class Marketplace {
       times: 1,
     }).as("balRegistry");
 
-    cy.wait("@balRegistry", { timeout: 120000 }).then(() => {
+    cy.wait("@balRegistry", MEDIUM_TIME).then(() => {
       tags.forEach(function (tag) {
         cy.get('[data-testid="connector-tag"]').contains(tag);
       });

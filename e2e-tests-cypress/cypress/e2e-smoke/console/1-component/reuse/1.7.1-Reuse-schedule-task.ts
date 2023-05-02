@@ -11,8 +11,8 @@
  * associated services.
  */
 
-import { MEDIUM_TIME } from "../../../../support/console/constants";
-import { Enums } from "../../../../support/console/enums";
+import { MEDIUM_TIME } from "../../../../support/commons/constants";
+import { Enums } from "../../../../support/commons/enums";
 import { ComponentDeployPage } from "../../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../../support/console/pages/component/component-listing-page";
 import { ComponentObservePage } from "../../../../support/console/pages/component/component-observe-page";
