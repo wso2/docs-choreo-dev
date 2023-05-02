@@ -12,7 +12,7 @@ To configure a custom domain for your APIs, you must first register a custom dom
 
 2. If you are a new user, create an organization. Enter a unique organization name. For example, `Stark Industries Ltd`.
 
-    ![Create an organization in Choreo](../assets/img/references/enterprise-login/create-choreo-organization.png){.cInlineImage-small}
+    ![Create an organization in Choreo](../assets/img/administer/create-choreo-organization.png){.cInlineImage-small}
 
 3. To expose the custom domain to which your APIs need to be exposed, register it with a domain registrar service (for example, [ClouDNS](https://www.cloudns.net/)).
 
@@ -30,7 +30,7 @@ To configure a custom domain for your APIs, follow the steps given below:
 
 3. Enter your domain name and click **Verify**. 
 
-    ![Verify domain name](../assets/img/administration/create-custom-domain.png){.cInlineImage-half}
+    ![Verify domain name](../assets/img/administer/create-custom-domain.png){.cInlineImage-half}
 
 4. Once Choreo verifies the custom domain successfully, click **Next**.
 
@@ -40,9 +40,9 @@ To configure a custom domain for your APIs, follow the steps given below:
 
     The **Settings** page displays the custom domain in the **Domains**/**Gateway** sub-tab.
 
-    ![List custom domain](../assets/img/references/enterprise-login/list-custom-domain.png){.cInlineImage-threeQuarter}
+    ![List custom domain](../assets/img/administer/list-custom-domain.png){.cInlineImage-threeQuarter}
 
 That's it! You have successfully configured a custom domain for your API Gateway. The API endpoint of the APIs you create will now include the custom domain as shown in the image below:
 
-![API with custom URL](../assets/img/references/enterprise-login/api-with-custom-url.png){.cInlineImage-threeQuarter}
+![API with custom URL](../assets/img/administer/api-with-custom-url.png){.cInlineImage-threeQuarter}
 
