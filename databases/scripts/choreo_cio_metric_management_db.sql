@@ -37,6 +37,9 @@ BEGIN
         incident_system_type VARCHAR(128) NOT NULL,
         client_id VARCHAR(256) NOT NULL,
         client_secret VARCHAR(256) NOT NULL,
+	app_id VARCHAR(256) NOT NULL,
+	collector_subscription_id VARCHAR(256) NOT NULL,
+	configurator_subscription_id VARCHAR(256) NOT NULL,
         PRIMARY KEY (org_id)
     );
 END
