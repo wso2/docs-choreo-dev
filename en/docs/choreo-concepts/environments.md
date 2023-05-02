@@ -1,8 +1,8 @@
-﻿# Environments
+# Environments
 
-In a given data plane, Choreo offers one or more environments for developers to run their applications. The cloud data plane of Choreo provides two environments by default. One for development and one for production use. Each project in Choreo is bound to one or more environments available for the organization. For example, project A can choose to use environments dev, staging and production while project B can choose to use only development and production environments.
+Choreo offers developers one or more environments to run their applications within a given data plane. By default, the Choreo cloud data plane provides two environments (i.e., development and production). Each project in Choreo is associated with one or more  environments available in the organization. For example, project A may choose to utilize dev, staging, and production environments, while project B may only use development and production environments.
 
-a components in a project can be promoted across the environments that are available in the project. Upon promotion, configuration values of a component can be overridden with values that are specific to the environment to which the component is being promoted.
+You can promote components within a project across available environments. When you promote a component, its configuration values can be overridden with environment-specific values.
 
 The following diagram illustrates how a component is promoted across environments.
 

@@ -1,6 +1,6 @@
 ﻿# Resource Hierarchy
 
-The following diagram depicts the high-level resources and their relationships in the Choreo.
+The following diagram depicts the high-level resources and their relationships in Choreo.
 
 ![Resource hierarchy](../assets/img/choreo-concepts/resource-hierarchy.png){.cInlineImage-full}
 

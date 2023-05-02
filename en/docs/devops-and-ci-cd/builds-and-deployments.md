@@ -1,63 +1,59 @@
 # Builds and Deployments
 
-Choreo offers a streamlined continuous build and deployment experience to quickly and efficiently deploy applications and services across multiple environments.
+Choreo provides a streamlined continuous build and deployment experience to deploy applications and services efficiently across multiple environments.
 
-Environments are created for each project where all components in the project share the environments. Environments are isolated deployment areas where network and resource access is restricted between them (i.e., a service in one environment cannot communicate or reach a service deployed in another environment).
- - The cloud data plane provides two environments (i.e., development and production) by default. 
- - If you are in a private data plane organization, you can have customizable environments. 
+In Choreo, environments are created for each project. All components in a project share environments. An environment is an isolated deployment area with restricted network and resource access. Services deployed in one environment cannot communicate with or reach services deployed in another environment.
 
-Choreo takes a *build once and promote* strategy to manage components across multiple environments. An application is only built once (per commit if auto-build on commit is enabled - or based on the commit you select when you build manually) and then promoted into subsequent environments. Lower, non-production environments like *development* allows you to test changes before promoting a selected build into a production environment.
+The Choreo cloud data plane provides two default environments (i.e., development and production). However, if you are in a private data plane organization, you can customize the environments and have multiple environments based on your requirements. 
 
-Configurations and secrets are maintained at an environment level and are injected at runtime into components. This ensures a strict separation of environment-specific configurations from source code (configurations vary across environments, but the code and the built container does not). Configurations and secrets include values such as, 
+Choreo adopts a *build-once and promote* strategy to manage components across multiple environments. An application is built only once (i.e., per commit if auto-build on commit is enabled or based on the selected commit during a manual build), and then it is promoted to subsequent environments. Lower, non-production environments such as development allow you to test changes before promoting a selected build into a production environment.
 
- - Resource credentials to a database, cache, and other backing services.
+Configurations and secrets are maintained at the environment level and are injected at runtime into components. This ensures a strict separation of environment-specific configurations from source code. Although configurations can vary across environments, the code and the built container do not change. Configurations and secrets include values such as: 
+
+ - Resource credentials to a database, cache, or other backing services.
  - Credentials to external cloud services such as Amazon S3 or an external API.
 
-All configurations and secrets are encrypted at rest and in transit and stored in a secure vault. (In your own infrastructure in private data planes).
+All configurations and secrets are encrypted at rest and in transit and stored in a secure vault. If you are in a private data plane organization, configurations and secrets are stored in your own infrastructure.
 
 ## Build pipelines
 
-Choreo’s auto-generated build pipelines slightly differ based on the ‘type’ of the component that you create but at a high-level, all build pipelines 
-Build a container image either from the provided source code or from a given Dockerfile.
-Run security and vulnerability scans (if applicable, depending on the component type).
-This container image is then pushed to a container registry (to a registry that you own in private data planes and to a Choreo-managed registry on the cloud data plane).
-Update service endpoints and API specifications from the provided repository (if applicable)
-Deploy the newly built container to the development environment (or the first environment in your environment promotion order).
+Choreo auto-generated build pipelines can slightly differ depending on the component type that you create. However, at a high level, all build pipelines work as follows:
+
+- Builds a container image either from the provided source code or from a given Dockerfile.
+- Runs security and vulnerability scans if applicable, depending on the component type.
+- Pushes the container image to a container registry. In the cloud data plane, the image is pushed to a Choreo-managed registry. In a private data plane organization, it is pushed to a registry that you own.
+- Updates service endpoints and API specifications from the provided repository if applicable. 
+-  Deploys the newly built container to the development environment or the first environment in your environment promotion order.
 
 ### Triggering a build
 
-There are two ways to trigger a new build in Choreo.
+There are two approaches to trigger a new build in Choreo:
 
-- Manually build and deploy
-  Select a commit by clicking on the first card in the ‘Build Area’ (the latest commit is always selected by default) and click ‘Deploy Manually’. This will trigger a manual build on demand.
+- Manually build and deploy: In the **Deploy** view, go to **Build Area** card and click **Deploy Manually**. This triggers a manual build on demand.
 
-
-- Auto deploy on GitHub commit
-  Enable the toggle named ‘Auto Deploy on Commit’ under the ‘Build Area’. Choreo will automatically create the necessary webhooks on your connected git repository to enable this feature.
-
-Once you commit (or merge a pull request) to the chosen branch in your development track, Choreo will automatically trigger a build pipeline and deploy it to your development environment.
+- Automatically deploy on GitHub commit: In the **Deploy** view, go to **Build Area** card and click the **Auto Deploy on Commit** toggle to enable the setting. Choreo creates the necessary webhooks on your connected GitHub repository to enable automatic deployment. When you commit or merge a pull request to a branch in your GitHub repository, Choreo automatically triggers a build pipeline and deploys it to your development environment.
 
 !!! note
-    - You will need to trigger the first build in a Ballerina component manually to ensure that the required configurations are applied to the development environment. Auto builds can be enabled afterwards.
-    - Choreo automatically checks the ‘configurables’ defined in your source code against the configurable values you have provided to an environment. The configurable values will be requested on deployment and promotion. If you have changed the configurables in your Ballerina component, auto build pipelines will fail to ensure that the component does not crash at runtime due to missing configurables.
-    - The configurable checking feature is only available for Ballerina components. For Dockerfile-based components, you are responsible for managing and updating configs and secrets in environments ahead of time - and ensuring backward compatibility between at least one release when changing the required configs for your application, Choreo cannot perform this check for you. See: Managing configurations and secrets
+    - You must trigger the first build in a Ballerina component manually to ensure that the required configurations are applied to the development environment. You can enable automatic builds subsequently.
+    - Choreo automatically checks the configurables defined in your source code against the configurable values applied in an environment. The configurable values are requested on deployment and promotion. If you have changed the configurables in your Ballerina component, auto-build pipelines can fail as a precaution to avoid a component crash at runtime due to missing configurables.
+    - The configurable verifying capability is only available for Ballerina components. For Dockerfile-based components, you must make sure to manage and update the configurations and secrets in environments ahead of time. You must also ensure backward compatibility between at least one release if you change the configurations.
 
 ### Build history
 
-The build history can be found at the bottom of the ‘Build Area’.
+The **Build Area** card in the **Deploy** view of a component displays its build history.
  
-You can click on a build to open the build console with the build steps and logs.
+You can click on a build to open its details, including build steps and logs in the build console.
 
 
 ## Promotions
 
-Choreo builds a container once (per git commit) and then promotes it to subsequent (higher) environments. 
+Choreo builds a container once per GitHub commit and then promotes it to subsequent (higher) environments. 
 
-Promotions can be done manually (automatic release management will be available soon) by clicking on the ‘Promote’ button in an environment, which will trigger the promotion to the next environment in the promotion order.
+As of now, you can go to the **Deploy** view of a component and promote a component manually across environments.
 
 
 ## Zero-downtime deployments
 
 Choreo performs a rolling update that can ensure zero downtime between deployments and promotions when configured correctly.
 
-A new version (i.e., a build) of your component is brought up in the environment and checked if it’s healthy before sending traffic over to the new build from the previous (currently running) build. If you have correctly configured health checks for the component, an unhealthy version will not be deployed or promoted - the existing build will continue to run.
+A new version (i.e., a build) of your component is brought up in the environment for a health check before sending traffic over to the new build from the current build that is running. If you have configured the necessary health checks for a component, it can prevent deploying and promoting an unhealthy version of a component.
