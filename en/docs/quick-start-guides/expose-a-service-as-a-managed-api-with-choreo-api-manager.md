@@ -10,7 +10,7 @@ Before you try out this guide, complete the following:
 
 - If you are signing in to the Choreo Console for the first time, create an organization as follows:
 
-    1. Go to [https://wso2.com/choreo/](https://wso2.com/choreo/), click **Try Choreo Now**.
+    1. Go to [https://wso2.com/choreo/](https://wso2.com/choreo/), and click **Try Choreo Now**.
     2. Sign in to Choreo using your Google, GitHub, or Microsoft account.
     3. Enter a unique organization name. For example, `Stark Industries`.
 
@@ -19,7 +19,7 @@ Before you try out this guide, complete the following:
     4. Read and accept the privacy policy and terms of use.
     5. Click **Create**.
 
-    This creates the organization and opens the the **Project Home** page of the default project created for you.
+    This creates the organization and opens the **Project Home** page of the default project created for you.
 
 
 ## Step 1: Create a REST API proxy
@@ -46,7 +46,7 @@ Follow the steps given below:
 
 5.  Click **Create**.
    
-   This takes you to the **Develop** view where you can see the operations of the REST API proxy.
+   This takes you to the **Develop** view, where you can see the operations of the REST API proxy.
 
 ## Step 2: Deploy the REST API proxy
 
@@ -54,7 +54,7 @@ To deploy the REST API proxy to the development environment, follow the steps gi
 
 1. In the left navigation menu, click **Deploy**.
 
-2. In the **Build Area** card, click **Configure & Deploy**. This opens the **Configure & Deploy** pane where you can specify endpoint details depending on your requirement. In this guide you will proceed with the populated endpoint details.
+2. In the **Build Area** card, click **Configure & Deploy**. This opens the **Configure & Deploy** pane, where you can specify endpoint details depending on your requirement. In this guide, you will proceed with the populated endpoint details.
 
 3. Click **Save and Deploy**. The **Development** card indicates the **Deployment Status** as **Active** when the API proxy is successfully deployed.
 
@@ -67,7 +67,7 @@ You can test the REST API proxy in the development environment before promoting 
 - cURL
 - Postman
 
-In this guide you will use the OpenAPI Console.
+In this guide, you will use the OpenAPI Console.
 
 To test the REST API proxy via the OpenAPI Console, follow the steps given below:
 
@@ -107,9 +107,9 @@ Once you verify that the REST API proxy is working as expected in the developmen
 
 To publish the API to the Choreo Developer Portal, follow the steps given below:
 
-1. In the left navigation menu, click **Manage** and then click **Lifecycle**. This opens the **Lifecycle Management** pane where you can see the different lifecycle stages that an API can be in. You can see that the current lifecycle stage is **Created**.
+1. In the left navigation menu, click **Manage** and then click **Lifecycle**. This opens the **Lifecycle Management** pane, where you can see the different lifecycle stages that an API can be in. You can see that the current lifecycle stage is **Created**.
 
-2. In the **Lifecycle Management** pane, click **Publish**. A message appears where you can specify whether you want to publish a connector for this REST API proxy. Creating a connector for this REST API proxy makes it available in the Marketplace. In this tutorial we will not publish a connector for the API.
+2. In the **Lifecycle Management** pane, click **Publish**. A message appears where you can specify whether you want to publish a connector for this REST API proxy. Creating a connector for this REST API proxy makes it available in the Marketplace. In this guide, you will not publish a connector for the API.
 
 3. Click **No, Thanks**. 
 
@@ -130,7 +130,7 @@ To generate credentials for the published API and to invoke it via the Developer
 3. To invoke the API, follow the steps given below:
 
    1. In the Developer Portal left navigation menu, click **Try Out**.
-   2. In the **Endpoint** list, select the environment in which you want to try out the API. In this guide let's select **Development**.
+   2. In the **Endpoint** list, select **Development** as the environment to try out the API.
    3. Click **Get Test Key**. This generates an access token.
    4. Expand the `GET /pet/findByStatus` operation and click **Try it out**.
    5. Select **available** as the status and click **Execute**.
