@@ -1,9 +1,9 @@
 # Manage Environments
 
-You can view the environments of a given project in the **Environments** page of the project.
+You can view the environments of a given project on the **Environments** page of the project.
 
-By default, all projects in the cloud data plane (irrespective of the data plane region) are provisioned with two environments, development and production.
-The list of environments are listed in the order of deployment and promotion. The initial build takes place in the first environment and you can proceed to promote the component to subsequent environments.
+By default, all projects in the cloud data plane (irrespective of the data plane region) are provisioned with two environments (i.e., development and production).
+The environments are listed in the order of deployment and promotion. The initial build takes place in the first environment and you can proceed to promote the component to subsequent environments.
 
 ## Create a new environment
 
@@ -31,14 +31,14 @@ To create a new environment, follow the steps given below:
   
         !!!tip
 
-              In Choreo, a project can have multiple non-production and production environments. To work in a production environment, you must have permission to access and deploy to production environments. Depending on your requirement, you can decide how you want to configure a new environments within a project.
+              In Choreo, a project can have multiple non-production and production environments. To work in a production environment, you must have permission to access and deploy to production environments. Depending on your requirement, you can decide how you want to configure a new environment within a project.
 
 ## Change the order of promotion
 
 !!! info "Note"
      The capability to change the order of promotion is only available in private data plane organizations.
 
-The order in which environments are listed in the **Environments** page of a project is the same order in which promotion takes place.
+The order in which environments are listed on the **Environments** page of a project is the same order in which promotion takes place.
 
 To change the order of promotion across environments in a project, follow the steps given below:
 
@@ -47,6 +47,6 @@ To change the order of promotion across environments in a project, follow the st
 3. In the **Environments** page, click and drag the environment list items to rearrange the order of listed environments.
 
     !!! note
-        Although the changes done to an environment list promotion order is applied immediately, it does not affect the running components in the environments. Only the new builds and promotions follow the new order. 
+        Although changes to the order of environment promotion are applied immediately, the change does not affect the components already running in the environments. Only the new builds and promotions follow the new order.
 
 To see the changes, go to the **Build and Deploy** page of a component in the project.
