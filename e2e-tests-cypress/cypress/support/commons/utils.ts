@@ -244,12 +244,12 @@ export class Utils {
     // cy.wait('@config', { timeout: 180000 })
   }
   public static pollElement(locator: string) {
-    returncy.get("body").then((bdy) => {
+    return cy.get("body").then((bdy) => {
       if (bdy.find(locator).length == 0) {
         cy.wait(4000);
         this.pollElement(locator);
       } else {
-        returncy.get(locator);
+        return cy.get(locator);
       }
     });
   }
