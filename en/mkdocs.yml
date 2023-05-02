@@ -51,95 +51,52 @@ strict: false
 # Navigation
 nav:
   - Home: index.md
-  - Get Started:
-      - What is Choreo?: get-started/what-is-choreo.md
-      - Quick Start Guide: get-started/quick-start-guide.md
-      - Tutorials: 
-          - Create Your First REST API: get-started/tutorials/create-your-first-rest-api.md
-          - Expose an Existing API via a REST API Proxy: get-started/tutorials/create-your-first-rest-api-proxy.md
-          - Create Your First Webhook: get-started/tutorials/create-your-first-webhook.md
-          - Create Your First Integration as an API: get-started/tutorials/create-your-first-integration-as-an-api.md
-          - Create Your First Event-Triggered Integration: get-started/tutorials/create-your-first-event-triggered-integration.md
-          - Secure an API with Role-Based Access Control: get-started/tutorials/secure-an-api-with-role-based-access-control.md
-          - Create Your First Containerized Service: get-started/tutorials/create-your-first-containerized-service-component.md
-          - Deploy a Containerized Application as an Event-Triggered Integration: get-started/tutorials/deploy-a-containerized-application-as-an-event-triggered-integration.md
-  - Create:
-      - Components:
-          - REST APIs: develop/components/rest-api.md
-          - REST API Proxy: develop/components/api-proxy.md
-          - Webhooks: develop/components/webhook.md
-          - Scheduled Trigger: develop/components/scheduled-trigger.md
-          - Manual Trigger: develop/components/manual-trigger.md
-          - GraphQL APIs: develop/components/graphql-api.md
-          - Service: develop/components/service.md
-      - Manage Repository:
-          - Connect Your Own GitHub Repository: develop/manage-repository/connect-your-own-github-repository-to-choreo.md
-      - Run and Test:
-          - Forecast Performance Metrics: develop/run-and-test/forecast-performance-metrics.md
-      - API Policies:
-          - Policies: develop/api-policies/policies.md
-          - Create Policy: develop/api-policies/create-a-policy.md
-          - Attach Policy: develop/api-policies/attach-policies.md
-  - Deploy: 
-      - Deploy a Ballerina Application: deploy/deploy-a-ballerina-application.md
-      - Deploy a Containerized Application: deploy/deploy-a-containerized-application.md
-      - DevOps: 
-          - View Runtime Details: deploy/devops/runtime.md
-          - Configure Container Details: deploy/devops/containers.md
-          - Manage Configurations and Secrets: deploy/devops/configs-and-secrets.md
-          - Set Up Health Checks: deploy/devops/health-checks.md
-          - Scale Component Replicas: deploy/devops/scaling.md
-          - Configure Storage: deploy/devops/storage.md
-  - Test: 
-      - Invoke APIs via Console: test/invoke-apis-via-console.md
-      - OpenAPI Console: test/open-api-console.md
-      - cURL: test/curl.md
-      - GraphQL Console: test/graphql-console.md
-  - Manage:
-      - API Management: manage/api-management.md
-      - Lifecycle: manage/lifecycle.md
-      - API Security:
-         - Pass End-User Attributes to the Backend: manage/api-security/pass-end-user-attributes-to-the-backend.md
-      - API Rate Limiting: manage/api-rate-limiting.md
-  - Consume:
-      - Developer Portal Overview: consume/developer-portal.md
-      - Manage Application: consume/manage-application.md
-      - Manage Subscription: consume/manage-subscription.md
-      - Test APIs: consume/test-api.md
-  - Marketplace: marketplace.md
-  - Observe and Analyze:
-      - Observe:
-         - Observability Overview: observe-and-analyze/observe/observability-overview.md
-         - Root Cause Analysis: observe-and-analyze/observe/root-cause-analysis.md
-      - Analyze: 
-          - View API Insights: observe-and-analyze/analyze/view-api-insights.md
-          - Generate Custom Reports: observe-and-analyze/analyze/generate-custom-reports.md
-          - Configure Alerts: observe-and-analyze/analyze/configure-alerts.md
-          - Choreo Insights API: observe-and-analyze/analyze/choreo-insights-api.md
-          - Programmatic Access to Choreo Insights API: observe-and-analyze/analyze/programmatic-access-choreo-insights-api.md
-          - DORA Metrics:
-              - Configure CIO Dashboard: observe-and-analyze/analyze/dora-metrics/configure-cio-dashboard.md
-              - View DORA Metrics: observe-and-analyze/analyze/dora-metrics/view-dora-metrics.md
-  - Alerts: alerts.md
-  - iPaaS:
-      - Getting Started: ipaas/get-started-with-choreo-ipaas.md
-      - Ballerina:
-          - Develop Integrations with Ballerina: ipaas/ballerina/develop-integrations-with-ballerina.md
-          - Create Your First Event-triggered Integration: ipaas/ballerina/create-your-first-event-triggered-integration.md
-      - Micro Integrator:
-          - Develop Integrations with the Integration Studio: ipaas/micro-integrator/develop-integrations-with-integration-studio.md
-          - Create Your First Integration: ipaas/micro-integrator/create-your-first-integration.md
+  - What is Choreo?: what-is-choreo.md
+  - Quick Start Guides:
+      - Build Your First Cloud Native Application with Choreo: quick-start-guides/build-your-first-cloud-native-application-with-choreo.md
+      - Expose a Service as a Managed API with Choreo API Manager: quick-start-guides/expose-a-service-as-a-managed-api-with-choreo-api-manager.md
+      - Build Your First Integration with Choreo iPaaS: quick-start-guides/build-your-first-integration-with-choreo-ipaas.md
+  - Choreo Concepts:
+      - Resource Hierarchy: choreo-concepts/resource-hierarchy.md
+      - Organization: choreo-concepts/organization.md
+      - Project: choreo-concepts/project.md
+      - Component: choreo-concepts/component.md
+      - Endpoint: choreo-concepts/endpoint.md
+      - Data Planes: choreo-concepts/data-planes.md
+      - Environments: choreo-concepts/environments.md
+  - DevOps and CI/CD: 
+      - Builds and Deployments: devops-and-ci-cd/builds-and-deployments.md
+      - Manage Configurations and Secrets: devops-and-ci-cd/manage-configurations-and-secrets.md
+      - View Runtime Details: devops-and-ci-cd/view-runtime-details.md
+      - Configure Container Resources, Commands, and Arguments: devops-and-ci-cd/configure-container-resources-commands-and-arguments.md
+      - Set Up Health Checks: devops-and-ci-cd/set-up-health-checks.md
+      - Autoscale Component Replicas: devops-and-ci-cd/autoscale-component-replicas.md
+      - Configure Storage: devops-and-ci-cd/configure-storage.md
+      - Manage Environments: devops-and-ci-cd/manage-environments.md
+  - Testing: 
+      - Test REST Endpoints via the OpenAPI Console: testing/test-rest-endpoints-via-the-openapi-console.md
+      - Test GraphQL Endpoints via the GraphQL Console: testing/test-graphql-endpoints-via-the-graphql-console.md
+      - Test APIs with cURL: testing/test-apis-with-curl.md
+      - Test APIs using Postman: testing/test-apis-using-postman.md
+  - Consuming Services:
+      - Manage Application: consuming-services/manage-application.md
+      - Manage Subscription: consuming-services/manage-subscription.md
+  - API Management:
+      - Lifecycle Management: api-management/lifecycle-management.md
+      - Documents: api-management/documents.md
+      - API Rate Limiting: api-management/api-rate-limiting.md
+  - Monitoring and Insights:
+      - Observability Overview: monitoring-and-insights/observability-overview.md
+      - View API Insights: monitoring-and-insights/view-api-insights.md
+      - Generate Custom Reports: monitoring-and-insights/generate-custom-reports.md
+      - Alerts:
+          - Configure Alerts: monitoring-and-insights/alerts/configure-alerts.md
   - Administer:
-      - Connect to an External Identity Provider: administer/connect-to-an-external-identity-provider.md  
       - Configure a Custom Domain for APIs: administer/configure-a-custom-domain-for-apis.md
-      - Configure Enterprise Login: administer/configure-enterprise-login.md
       - Developer Portal:
-          - Configure a Custom Domain for Developer Portal: administer/customize-developer-portal-domain.md
           - Customize the Developer Portal: administer/customize-the-developer-portal.md
-          - Configure Developer Portal Self-Sign-Up: administer/configure-developer-portal-self-sign-up.md
-      - Organization: administer/organization.md
-  - References:
-     - Connect with Protected Third Party Applications: reference/connect-with-protected-third-party-applications.md
+          - Configure Self-Sign-Up: administer/configure-self-sign-up.md
+          - Customize the Developer Portal Domain: administer/customize-the-developer-portal-domain.md
 # Extensions
 markdown_extensions:
   - markdown.extensions.admonition
