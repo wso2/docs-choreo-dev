@@ -2044,10 +2044,10 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Ma
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Users','urn:choreosystem:usersmanagement:user_view', 'USER-MANAGEMENT','View Users');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Users','urn:choreosystem:usersmanagement:user_delete ', 'USER-MANAGEMENT','Delete Users');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Users','urn:choreosystem:usersmanagement:user_update', 'USER-MANAGEMENT','Update Users');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Invitations','urn:choreosystem:invitationmanagement:invitation_manage','USER-MANAGEMENT','Manage Invitations');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Invitations','urn:choreosystem:invitationmanagement:invitation_view', 'USER-MANAGEMENT','View Invitations'); 
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Send Invitations','urn:choreosystem:invitationmanagement:invitation_send', 'USER-MANAGEMENT','Send Invitations'); 
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Invitations','urn:choreosystem:invitationmanagement:invitation_delete', 'USER-MANAGEMENT','Delete Invitations');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Invitations','urn:choreosystem:usersmanagement:invitation_manage','USER-MANAGEMENT','Manage Invitations');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Invitations','urn:choreosystem:usersmanagement:invitation_view', 'USER-MANAGEMENT','View Invitations'); 
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Send Invitations','urn:choreosystem:usersmanagement:invitation_send', 'USER-MANAGEMENT','Send Invitations'); 
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Invitations','urn:choreosystem:usersmanagement:invitation_delete', 'USER-MANAGEMENT','Delete Invitations');
 
 
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Non-Prod Logs','choreo:log_view_non_prod','OBSERVABILITY-MANAGEMENT','View non-production environment logs');
