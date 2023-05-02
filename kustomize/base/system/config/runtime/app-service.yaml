@@ -161,7 +161,7 @@ defaultRoles:
         - environments:view_prod
         - environments:view_dev
         - choreo:component_manage
-        - choreo:dev_env_manage
+        - choreo:non_prod_env_manage
         - choreo:log_view_non_prod
         - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
         - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
@@ -248,8 +248,8 @@ defaultRoles:
         - apim:api_manage
         - apim:subscription_manage
         - choreo:deployment_manage
-        - choreo:dev_env_manage
         - choreo:prod_env_manage
+        - choreo:non_prod_env_manage
         - apim:api_settings
         - environments:view_dev
         - environments:view_prod
@@ -280,13 +280,13 @@ defaultRoles:
         - apim:tier_manage
         - choreo:project_manage
         - choreo:component_manage
-        - choreo:dev_env_manage
         - apim:api_publish
         - apim:document_manage
         - apim:api_settings
         - apim:subscription_view
         - environments:view_dev
         - environments:view_prod
+        - choreo:non_prod_env_manage
         - choreo:log_view_non_prod
         - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
         - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
@@ -477,6 +477,8 @@ subscriptions:
   freeStepQuota: ${FREE_STEP_QUOTA}
 permissions:
   roleManage: {{.PERMISSION_CHOREO_ROLE_MANAGE}}
+  devEnvManage: choreo:non_prod_env_manage
+  prodEnvManage: choreo:prod_env_manage
 configurableWebhook:
   enabled: ${CONFIGURABLE_WEBHOOK_ENABLED}
 pardotNewUserRegistration:

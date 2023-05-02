@@ -18,13 +18,13 @@ import { OnPremkeyComponent } from "../../../support/console/pages/component/com
 /// <reference types="cypress" />
 
 describe("Generate on-prem keys", () => {
-  before(()=>{
+  before(() => {
     LoginPage.login()
   })
-  after(()=>{
+  after(() => {
     ChoreoHomePage.logout()
   })
-  
+
   beforeEach(() => {
     ChoreoHomePage.navigateToSettings();
     OnPremkeyComponent.navigateToOpPremKeySettings()

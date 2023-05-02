@@ -11,29 +11,26 @@
  * associated services.
  */
 
+
+import { Utils } from "../../../commons/utils";
 import { GraphQL } from "../../apis/graphql";
-import { Utils } from "../../utils";
 
 
 export class APIDeployment {
-
-
-  static DeployToDev(projectName:string, componentName:string) {
+  static DeployToDev(projectName: string, componentName: string) {
     cy.get('[data-cyid="btn-deploy-proxy"]').should("not.be.disabled").click();
-    Utils.interceptConfig()
-    cy.get('[data-cyid="btn-next"]')
-      .should("be.visible")
-      .click();
+    Utils.interceptConfig();
+    cy.get('[data-cyid="btn-next"]').should("be.visible").click();
     cy.get('[data-cyid="deployment-status"]')
       .contains("Active")
       .should("be.visible");
     cy.get('[data-cyid*="promote"]').should("not.be.disabled");
-    GraphQL.getComponentInfo(projectName,componentName)
+    GraphQL.getComponentInfo(projectName, componentName);
   }
 
   static PromoteToProd() {
     cy.get('[data-cyid*="promote"]').click();
-    cy.get('[data-cyid="btn-next"]').click();
+    cy.get('[data-cyid="btn-next"]').should("be.visible").click();
     cy.get('[data-cyid="proxy-env-card-header"]>div>span')
       .contains("Production")
       .should("be.visible");
@@ -44,7 +41,4 @@ export class APIDeployment {
       .should("be.visible");
     cy.get('[data-cyid*="promote"]').should("not.be.disabled");
   }
-
-
-  
 }

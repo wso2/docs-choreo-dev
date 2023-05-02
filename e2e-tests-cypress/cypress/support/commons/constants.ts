@@ -12,25 +12,13 @@
  */
 
 export const ONE_HOUR = 60 * 60 * 1000;
-export const VERY_SHORT_TIME = 10000; // 10 seconds
-export const SHORT_TIME = 60000; // 1 minute
-export const MEDIUM_TIME = 180000; // 3 minutes
-export const LONG_TIME = 360000; // 6 minutes
-export const VERY_LONG_TIME = 600000; // 10 minutes
 
 export const DEPLOYMENT_SUCCESS = "Active";
 export const DEPLOYMENT_STOPPED = "Suspended";
+export const DEPLOYMENT_STATUS_V2_ACTIVE ="ACTIVE"
+export const DEPLOYMENT_STATUS_V2_ERROR = "ERROR"
 
-export const VALIDATE_USER_URL =
-  Cypress.env("newAppSvcURL") + "/users-mgt/1.0.0/validate/user";
 
-export const ORGS_URL = Cypress.env("appSvcURL") + "/orgs/*";
 
-export const DEVPORTAL_URL = Cypress.env("apimSvcURL") + "/api/am/devportal/v2";
 
-export const DEVPORTAL_APP_TOKEN_GEN_URL =
-  DEVPORTAL_URL +
-  "/applications/*/oauth-keys/*/generate-token?organizationId=*";
 
-export const DEVPORTAL_APP_KEY_GEN_URL =
-  DEVPORTAL_URL + "/applications/*/generate-keys?organizationId=*";

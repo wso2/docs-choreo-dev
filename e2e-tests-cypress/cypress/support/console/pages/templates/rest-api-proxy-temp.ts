@@ -1,5 +1,3 @@
-import { Utils } from "../../utils";
-
 /*
  * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
@@ -12,6 +10,11 @@ import { Utils } from "../../utils";
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
+
+
+import { Utils } from "../../../commons/utils";
+
+
 export class RestAPIProxyTemplate {
   static skipSource() {
     cy.get('[data-cyid="btn-skip-src"]').should("be.visible").click();
@@ -35,7 +38,8 @@ export class RestAPIProxyTemplate {
     apiBasePath: string,
     endpoint: string,
     version: string = "",
-    validateResourceName: string = ""
+    validateResourceName: string = "",
+    operation: string
   ) {
     cy.get('[data-cyid="api-name"]').within(() =>
       cy.get("input").clear().type(apiName)
@@ -60,9 +64,19 @@ export class RestAPIProxyTemplate {
     if (validateResourceName) {
       resourceIdentifier = "panel-/" + validateResourceName + "/get-header";
     }
+    let isResourceFound = false;
+
     cy.get(`[data-testid="operation"]`)
-      .invoke("attr", "id")
-      .should("eq", resourceIdentifier);
+      .each((item, index, list) => {
+        let resourceId = Cypress.$(item).attr("id");
+        if (resourceId === resourceIdentifier) {
+          isResourceFound = true;
+        }
+      })
+      .then(() => {
+        expect(isResourceFound).to.be.true;
+      });
+
     Utils.saveComponentURL();
   }
 }

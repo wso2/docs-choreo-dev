@@ -114,11 +114,6 @@ spec:
             - configMapRef:
                 name: env-cc-enforcer
           env:
-            - name: tm_admin_pwd
-              valueFrom:
-                secretKeyRef:
-                  key: SUPER_ADMIN_PSWD
-                  name: secret-apim
             - name: analytics_authToken
               valueFrom:
                 secretKeyRef:

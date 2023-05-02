@@ -11,15 +11,15 @@
  * associated services.
  */
 
-import { Utils } from "../../../utils";
+
+import { Enums } from "../../../../commons/enums";
+import { Utils } from "../../../../commons/utils";
 import { APITest } from "../../apis/api-test";
-import { Enums } from "../../../enums";
-import { ComponentOverviewPage } from "../component-overview-page";
-import { ComponentTestPage } from "../component-test-page";
 import { Curl } from "../UI-components/curl-component";
 import { SwaggerUI } from "../UI-components/swagger-UI-component";
-import { LONG_TIME_OUT } from "../../../../devportal/constants";
-import { SHORT_TIME } from "../../../constants";
+import { ComponentOverviewPage } from "../component-overview-page";
+import { ComponentTestPage } from "../component-test-page";
+
 
 export class TestHelper {
   static testOnSwagger(env: Enums.Environment, resourcePath: string, key: string = "", value: string = "") {
@@ -63,42 +63,37 @@ export class TestHelper {
     return Curl.getRequestComponentsDiscardPrevious(`${env}${pathParm}`);
   }
 
-  static testDevOnGraphQL(code: string) {
+  static testGraphQL(env: Enums.Environment, code: string) {
     cy.get('div[class="execute-button-wrap"]>button').should("be.visible");
-    APITest.selectDevEnvironment();
-    cy.get('section> div>div>div>div>div[class="CodeMirror-lines"]>div').eq(0).click()
-    cy.get('section>div>div>div[class="CodeMirror-sizer"]>div>div>div>div>div>pre>span>span[cm-text]')
-      .then($p => {
-        Utils.paste($p, code, false)
-        cy.wait(2000)
+    APITest.selectEnvironment(env);
+    cy.wait(5000)
+    cy.get('[data-testid="graphiql-container"]').within(() => {
+      cy.get('[class="query-editor"]').within(() => {
+        cy.get('span[cm-text]')
+          .eq(1)
+          .then($p => {
+            Utils.paste($p, code, false)
+            cy.wait(2000)
+          })
       })
-    cy.get('div[class="toolbar"]>button').eq(0).click()
-    cy.get('div[class="execute-button-wrap"]>button').click()
-  }
-
-  static testProdOnGraphQL(code: string) {
-    cy.get('div[class="execute-button-wrap"]>button').should("be.visible");
-    APITest.selectProdEnvironment();
-    cy.get('section> div>div>div>div>div[class="CodeMirror-lines"]>div').eq(0).click()
-    cy.get('section>div>div>div[class="CodeMirror-sizer"]>div>div>div>div>div>pre>span>span[cm-text]')
-      .then($p => {
-        Utils.paste($p, code, false)
-        cy.wait(2000)
-      })
+    })
     cy.get('div[class="toolbar"]>button').eq(0).click()
     cy.get('div[class="execute-button-wrap"]>button').click()
   }
 
   static getGqlResult(expectedResponse: string = "") {
     cy.wait(6000)
-    cy.get('.CodeMirror-sizer>div>div>div').eq(3).invoke('text').then(r => {
-      const response = r.replace('x', '').trim()
-      expect(response).to.be.contains(expectedResponse)
+    cy.get('[class="result-window"]').within(() => {
+      cy.get('[class="CodeMirror-sizer"]').within(() => {
+        cy.get('[class="CodeMirror-code"]').invoke('text').then(r => {
+          const response = r.replace('x', '').trim()
+          expect(response).to.be.contains(expectedResponse)
+        })
+      })
     })
     cy.wait(6000)
     this.clearGQL()
   }
-
 
   private static clearGQL() {
     ComponentOverviewPage.navigateToDeploy()
@@ -127,5 +122,4 @@ export class TestHelper {
       });
     });
   }
-
 }

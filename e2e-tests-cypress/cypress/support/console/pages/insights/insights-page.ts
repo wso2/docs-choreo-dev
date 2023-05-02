@@ -13,9 +13,12 @@
  */
 
 
+import { Enums } from "../../../commons/enums";
 
 
-import { Enums } from "../../enums";
+
+
+
 
 export class InsightsPage {
   static selectEnvironment(env: Enums.Environment) {

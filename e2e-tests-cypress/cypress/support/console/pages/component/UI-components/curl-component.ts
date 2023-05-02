@@ -1,6 +1,8 @@
 
+
+import { Enums } from "../../../../commons/enums";
 import { CurlData } from "../../../../interfaces/curl-data";
-import { Enums } from "../../../enums";
+
 
 
 
@@ -21,7 +23,6 @@ export class Curl {
   }
 
   static selectCurlEnvironment(env: Enums.Environment) {
-
     cy.get('[data-testid="env"]>div[role="button"]').click();
     cy.get('ul>li').contains(env).click();
   }

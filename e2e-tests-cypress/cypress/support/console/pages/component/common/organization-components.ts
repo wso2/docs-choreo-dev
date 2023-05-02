@@ -13,7 +13,10 @@
 
 /// <reference types="cypress" />
 
-import { Utils } from "../../../utils";
+import { OK } from "../../../../commons/http";
+import { Utils } from "../../../../commons/utils";
+
+
 
 export class OrganizationComponent {
   static navigateToMembers() {
@@ -112,7 +115,7 @@ export class OrganizationComponent {
         )}/v2/orgs/${handle}/users/${idpId}`;
 
         Utils.sendDeleteRequest(deleteUserRequest, headers).then((res) => {
-          if (res.status === 200) {
+          if (res.status === OK) {
             cy.log("Deleted Invited User");
           } else {
             cy.log("User Has Not Invited Or Error");
@@ -120,7 +123,7 @@ export class OrganizationComponent {
         });
       }
       Utils.sendDeleteRequest(deletePendingInvitation, headers).then((res) => {
-        if (res.status === 200) {
+        if (res.status === OK) {
           cy.log("Deleted Invited User");
         } else {
           cy.log("User Has Not Invited Or Error");

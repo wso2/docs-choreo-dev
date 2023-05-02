@@ -12,17 +12,16 @@
  */
 
 import path from "path";
-import { LONG_TIME_OUT } from "../../constants";
+import { MEDIUM_TIME } from "../../../commons/timeouts";
+
 
 export class APISdk {
   static downloadSDK(sdkFile) {
     cy.get('[data-testid="sdks-item-link"]').click();
-    cy.get('[data-testid="sdk-android-button"]', { timeout: LONG_TIME_OUT })
+    cy.get('[data-testid="sdk-android-button"]', MEDIUM_TIME)
       .should("be.visible")
       .click();
     const downloadsFolder = Cypress.config("downloadsFolder");
-    cy.readFile(path.join(downloadsFolder, sdkFile)).should("exist", {
-      timeout: LONG_TIME_OUT,
-    });
+    cy.readFile(path.join(downloadsFolder, sdkFile)).should("exist", MEDIUM_TIME);
   }
 }
