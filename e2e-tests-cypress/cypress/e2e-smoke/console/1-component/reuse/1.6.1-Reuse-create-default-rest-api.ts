@@ -96,7 +96,7 @@ describe("Verify Reusable RestAPI functionality", () => {
 
   it("Verify component promote to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteToProd(false);
+    ComponentDeployPage.promoteToProd();
   });
 
   it("Verify test functionality of root resource in prod on swagger", () => {

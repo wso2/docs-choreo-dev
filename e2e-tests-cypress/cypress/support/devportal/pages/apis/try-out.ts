@@ -23,9 +23,9 @@ export class TryOut {
   }
 
   static SelectApplication(applicationName: string) {
-    cy.get('[data-testid="application-selector-wrapper"]').within(() => {
-      cy.get('[data-testid="application-selector"]').click();
-    });
+    cy.get('[data-testid="application-selector-wrapper"]').within(()=>{
+      cy.get('[data-testid="application-selector"]>div').realClick()     
+    })
     cy.get(`[data-value="${applicationName}"]`).click().wait(1000);
   }
 
@@ -36,9 +36,11 @@ export class TryOut {
   }
 
   static SelectResource(httpMethod: string, path: string) {
+    cy.get('[data-testid="get-test-key-btn"]').should('be.enabled')
+    cy.wait(5000)
     const pathVariable = `[data-path="/${path}"]`;
-    Utils.getRenderedElement(".swagger-ui").within(() => {
-      cy.get(pathVariable).click();
+    cy.get(".swagger-ui").within(() => {
+      cy.get(pathVariable).realClick();
     });
   }
 
@@ -46,7 +48,7 @@ export class TryOut {
     cy.get('[id*="operations-"] button')
       .contains("Try it out")
       .should("exist")
-      .click();
+      .realClick();
     cy.get(".opblock-section-header").contains("Cancel").should("exist");
   }
 
@@ -64,7 +66,7 @@ export class TryOut {
   }
 
   static ExecuteResourceFunction() {
-    cy.get(".execute-wrapper").click();
+    cy.get(".execute-wrapper").realClick();
     cy.log("Execution is successful");
   }
 

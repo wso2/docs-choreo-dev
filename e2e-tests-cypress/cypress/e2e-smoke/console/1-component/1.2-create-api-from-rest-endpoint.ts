@@ -65,7 +65,7 @@ describe(`Verify proxy api functionality in region ${dp}`, () => {
       API_BASE_PATH,
       API_ENDPOINT,
       API_VERSION,
-      "*"
+      "*","get"
     );
     APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
   });

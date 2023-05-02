@@ -14,7 +14,6 @@
 import { Enums } from "../../enums";
 import { Utils } from "../../utils";
 
-
 export class ComponentAPILifecycle {
   static devportl_btn = '[data-testid="go-to-dev-portal-btn"]';
 
@@ -68,7 +67,6 @@ export class ComponentAPILifecycle {
     cy.get(ComponentAPILifecycle.devportl_btn).should("not.be.enabled");
   }
 
-
   static goToDeveloperPortalWithoutLogin(idpUser: string = "") {
     const { latestAPIVersionId } = Cypress.env("apiInfo");
     const loginUrl = Cypress.env("devportalLoginURL");
@@ -88,20 +86,19 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="checkbox-Unlimited"]');
   }
 
-
   private static handleConnectorPublishPopup() {
-
-    cy.get('body').then(bdy => {
-      if (bdy.find('[data-testid="connector-publish-wizard-title"]').length > 0) {
+    cy.get("body").then((bdy) => {
+      if (
+        bdy.find('[data-testid="connector-publish-wizard-title"]').length > 0
+      ) {
         if (bdy.find('[data-testid="retry-btn"]').length > 0) {
-          cy.get('button[aria-label="close"]').eq(1).click()
+          cy.get('button[aria-label="close"]').eq(1).click();
         } else {
           cy.wait(20000);
-          this.handleConnectorPublishPopup()
+          this.handleConnectorPublishPopup();
         }
-
       }
-    })
+    });
   }
 
   static publishToMarketplace(connectorAudience: Enums.ConnectorAudience) {
@@ -111,7 +108,7 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="publish-btn"]').should("be.enabled");
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').should("be.enabled").click();
-    this.handleConnectorPublishPopup()
+    this.handleConnectorPublishPopup();
     cy.get('[data-testid="published-connector-info"]').contains(
       "You have already published a connector for this API.",
       { timeout: 300000 }
@@ -223,17 +220,14 @@ export class ComponentAPILifecycle {
 
   static disableResourceSecurity(resource: string) {
     cy.get(`[id="panel-/${resource}/get-header"]`).scrollIntoView().click();
-    cy.get(`[id="panel-/${resource}/get-content"] [data-testid="security"]`)
-      .scrollIntoView()
-      .click();
+    cy.get(`[data-testid="security"]`).scrollIntoView().click();
   }
 
   static applyConfiguration() {
     cy.get('[data-cyid="btn-save-settings"]').click();
     cy.get("button").contains("Apply").click().wait(2000);
     cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
-    cy.get("#panel1a-header").should("be.visible");
-    cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
+ 
     cy.wait(4000);
   }
 
@@ -263,8 +257,6 @@ export class ComponentAPILifecycle {
     this.verifyAPIVisibility(visibility);
     cy.log("Successfully updated the API visibility");
   }
-
-
 
   static updateAPIAccessMode(accessMode: string) {
     Utils.pollElement('[data-testid="access-mode"]').click();
@@ -339,8 +331,6 @@ export class ComponentAPILifecycle {
     // this.verifyDeleteAllPermissionsFromReources();
   }
 
-
-
   static selectPermission(permissionName: string) {
     cy.get(`[data-testid="scope-item-checkbox-${permissionName}"]`).click();
     cy.get('[data-testid="scope-apply-to-all-btn"]')
@@ -369,5 +359,22 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="scope-save-and-deploy-btn"]').click();
     cy.contains("Permissions(Scopes) assigned successfully").wait(1000);
     cy.contains(`Deployed the component ${componentName}`).wait(10000);
+  }
+
+  static verifyOverviewForProjectLevelEndpoints() {
+    cy.get('[data-testid="no-endpoints-notification"]').should("be.visible");
+  }
+
+  static selectEndpoint(endpoint: string) {
+    cy.get('[data-cyid="endpoint-list"]').click();
+    cy.get('ul>li[role="option"]').contains(endpoint).click();
+  }
+
+  static publishServiceToMarketplace() {
+    cy.get('[data-testid="Publish-lc-btn"]').click();
+    cy.get('[data-testid="Block-lc-btn"]').should("be.visible");
+    cy.get('[data-testid="Deploy as a Prototype-lc-btn"]').should("be.visible");
+    cy.get('[data-testid="Demote to Created-lc-btn"]').should("be.visible");
+    cy.get('[data-testid="Deprecate-lc-btn"]').should("be.visible");
   }
 }
