@@ -123,18 +123,27 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
         environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, component);
 
         JsonArray deploymentArray = component.getDeployments(accessToken, orgHandle, orgUuid, versionId);
-        JsonObject deployment = (JsonObject) deploymentArray.get(0);
-        apiId = deployment.get("apiId").getAsString();
-        releaseId = deployment.get("releaseId").getAsString();
+        if(deploymentArray.size()==0){
+            for(int i=1;i<=18;i++){
+                ComponentUtils.deployComponent(this, citrusClients,
+                        accessToken, component, environments, ComponentFlavour.STANDARD);
+                revisionCount = revisionCount+1;
+                SleepUtil.sleep(5);
+            }
+        }else{
+            JsonObject deployment = (JsonObject) deploymentArray.get(0);
+            apiId = deployment.get("apiId").getAsString();
+            releaseId = deployment.get("releaseId").getAsString();
 
-        revisionWrapper = ComponentUtils.getRevisions(this, citrusClients, accessToken, apiId, orgUuid);
-        revisionCount = revisionWrapper.getCount();
+            revisionWrapper = ComponentUtils.getRevisions(this, citrusClients, accessToken, apiId, orgUuid);
+            revisionCount = revisionWrapper.getCount();
 
-        while(revisionCount<18){
-            ComponentUtils.deployComponent(this, citrusClients,
-                    accessToken, component, environments, ComponentFlavour.STANDARD);
-            revisionCount = revisionCount+1;
-            SleepUtil.sleep(5);
+            while(revisionCount<18){
+                ComponentUtils.deployComponent(this, citrusClients,
+                        accessToken, component, environments, ComponentFlavour.STANDARD);
+                revisionCount = revisionCount+1;
+                SleepUtil.sleep(5);
+            }
         }
     }
 
