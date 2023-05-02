@@ -121,23 +121,21 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
     @CitrusTest(name = "Get the revision count")
     public void getRevisionCount() throws Exception {
         environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, component);
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, component, environments, ComponentFlavour.STANDARD);
 
         JsonArray deploymentArray = component.getDeployments(accessToken, orgHandle, orgUuid, versionId);
         JsonObject deployment = (JsonObject) deploymentArray.get(0);
         apiId = deployment.get("apiId").getAsString();
         releaseId = deployment.get("releaseId").getAsString();
 
-         revisionWrapper = ComponentUtils.getRevisions(this,citrusClients, accessToken,apiId,orgUuid);
-         revisionCount = revisionWrapper.getCount();
+        revisionWrapper = ComponentUtils.getRevisions(this, citrusClients, accessToken, apiId, orgUuid);
+        revisionCount = revisionWrapper.getCount();
 
         while(revisionCount<18){
-            component.deploy(accessToken, orgHandle, orgUuid);
+            ComponentUtils.deployComponent(this, citrusClients,
+                    accessToken, component, environments, ComponentFlavour.STANDARD);
             revisionCount = revisionCount+1;
             SleepUtil.sleep(5);
         }
-
     }
 
     @Test(dependsOnMethods = {"getRevisionCount"})
