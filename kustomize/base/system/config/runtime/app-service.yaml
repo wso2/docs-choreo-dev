@@ -478,7 +478,7 @@ subscriptions:
 permissions:
   roleManage: {{.PERMISSION_CHOREO_ROLE_MANAGE}}
   devEnvManage: choreo:non_prod_env_manage
-  prodEnvManage: choreo:choreo:prod_env_manage
+  prodEnvManage: choreo:prod_env_manage
 configurableWebhook:
   enabled: ${CONFIGURABLE_WEBHOOK_ENABLED}
 pardotNewUserRegistration:
