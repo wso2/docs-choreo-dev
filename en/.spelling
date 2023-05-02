@@ -524,6 +524,14 @@ configure-cio-dashboard
 service.md
 invoke-apis-via-console
 graphql-console
+choreo-logo
+vs.min.css
+blue-palette-alt2
+choreotheme.css
+fontawesome-free-6
+all.min.css
+choreotheme.js
+fontawesome
  - theme/material/templates/home-page.html
 doctype
 html
