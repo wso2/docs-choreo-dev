@@ -16,7 +16,6 @@ import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/r
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
-import { Enums } from "../../../support/console/enums";
 import { APITest } from "../../../support/console/pages/apis/api-test";
 import { SwaggerUI } from "../../../support/console/pages/component/UI-components/swagger-UI-component";
 import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
@@ -24,13 +23,14 @@ import { APIDeployment } from "../../../support/console/pages/apis/api-deploymen
 import { APIDevelop } from "../../../support/console/pages/apis/api-develop";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
-import { Utils } from "../../../support/console/utils";
 import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
+import { Enums } from "../../../support/commons/enums";
+import { Utils } from "../../../support/commons/utils";
 
 const dp = Enums.Region.US;
 
@@ -65,7 +65,7 @@ describe(`Verify proxy api functionality in region ${dp}`, () => {
       API_BASE_PATH,
       API_ENDPOINT,
       API_VERSION,
-      "*","get"
+      "*", "get"
     );
     APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
   });

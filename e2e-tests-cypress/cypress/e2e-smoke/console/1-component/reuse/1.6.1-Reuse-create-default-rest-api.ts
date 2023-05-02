@@ -11,7 +11,8 @@
  * associated services.
  */
 
-import { Enums } from "../../../../support/console/enums";
+import { Enums } from "../../../../support/commons/enums";
+import { Utils } from "../../../../support/commons/utils";
 import { TestHelper } from "../../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../../support/console/pages/component/component-listing-page";
@@ -21,9 +22,10 @@ import { ChoreoHomePage } from "../../../../support/console/pages/home/home-page
 import { LoginPage } from "../../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../../support/console/pages/projects/projects-listing-page";
-import { Utils } from "../../../../support/console/utils";
 import { GitHub } from "../../../../support/github/github";
 import { ComponentData } from "../../../../support/interfaces/component-data";
+
+
 
 describe("Verify Reusable RestAPI functionality", () => {
   const PROJECT_NAME = "Default Project";

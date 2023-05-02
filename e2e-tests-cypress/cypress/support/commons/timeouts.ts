@@ -12,27 +12,9 @@
  */
 
 
-import { Enums } from "../../../commons/enums";
 
-
-
-
-export class ComponentTestPage {
-  static selectCurl() {
-   cy.get('[data-testid="cURL"]').click();
-  }
-
-  static getTestKey() {
-    cy.contains('Get Test Key').should('be.visible').click({ force: true });
-  }
-
-  static selectEnvironment(env: Enums.Environment) {
-    cy.get('[data-testid="env"]>div[role="button"]').click();
-   cy.get('ul>li').contains(env).click();
-  }
-
-  static selectEndpoint(endpoint: string) {
-    cy.get('[data-cyid="select-endpoint"]>div[role="button"]').click();
-    cy.get('ul>li[role="option"]').contains(endpoint).click();
-  }
-}
+export const VERY_SHORT_TIME = { timeout: 10000 }; // 10 seconds
+export const SHORT_TIME = { timeout: 60000 }
+export const MEDIUM_TIME = { timeout: 180000 }; // 3 minutes
+export const LONG_TIME = { timeout: 360000 }; // 6 minutes
+export const VERY_LONG_TIME = { timeout: 600000 }; // 10 minutes

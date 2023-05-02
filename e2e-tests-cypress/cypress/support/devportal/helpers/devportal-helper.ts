@@ -12,9 +12,10 @@
  */
 
 
+import { Enums } from "../../commons/enums";
+import { Utils } from "../../commons/utils";
 import { GraphQLQueryBuilder } from "../../console/apis/gql-query-builder";
 import { GraphQL } from "../../console/apis/graphql";
-import { Enums } from "../../console/enums";
 import { APIDeployment } from "../../console/pages/apis/api-deployment";
 import { ComponentDeployPage } from "../../console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../console/pages/component/component-listing-page";
@@ -23,7 +24,7 @@ import { ComponentOverviewPage } from "../../console/pages/component/component-o
 import { ProjectOverviewPage } from "../../console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../console/pages/projects/projects-listing-page";
 import { RestAPIProxyTemplate } from "../../console/pages/templates/rest-api-proxy-temp";
-import { Utils } from "../../console/utils";
+
 import { ComponentData } from "../../interfaces/component-data";
 
 
@@ -31,19 +32,18 @@ export class DevPortalHelper {
 
   static PROJECT_DESCRIPTION = "sample oas flow scenario";
   static PROJECT_NAME = Utils.generateProjectName();
-
   static API_BASE_PATH = Utils.generateBasePath();
   static Filepath = "apis/generation_oas.yaml";
-    static REPO_NAME = Utils.generateComponentName("repo");
+  static REPO_NAME = Utils.generateComponentName("repo");
 
 
   static createDeployHttpProxyComponent(API_Name) {
     ProjectListingPage.createNewProject(DevPortalHelper.PROJECT_NAME, DevPortalHelper.PROJECT_DESCRIPTION);
     ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.createOpenApi(DevPortalHelper.Filepath);
-    RestAPIProxyTemplate.enterAPIdetails(API_Name, DevPortalHelper.API_BASE_PATH, "", "", "");
+    RestAPIProxyTemplate.enterAPIdetails(API_Name, DevPortalHelper.API_BASE_PATH, "", "", "", "");
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(this.PROJECT_NAME,API_Name);
+    APIDeployment.DeployToDev(this.PROJECT_NAME, API_Name);
     APIDeployment.PromoteToProd()
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
@@ -71,14 +71,14 @@ export class DevPortalHelper {
       Enums.Region.US
     );
     GraphQL.createComponent(projectName, DevPortalHelper.REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
-    .then(()=>{
-      ComponentListingPage.visitToAComponent(API_Name);
-      ComponentOverviewPage.navigateToDeploy();
-      ComponentDeployPage.deployToDev();
-      ComponentOverviewPage.navigateToManage();
-      ComponentAPILifecycle.manageLifecycle();
-      ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
-    });   
+      .then(() => {
+        ComponentListingPage.visitToAComponent(API_Name);
+        ComponentOverviewPage.navigateToDeploy();
+        ComponentDeployPage.deployToDev();
+        ComponentOverviewPage.navigateToManage();
+        ComponentAPILifecycle.manageLifecycle();
+        ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
+      });
   }
 
 }

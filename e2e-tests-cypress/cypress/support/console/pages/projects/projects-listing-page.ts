@@ -11,10 +11,15 @@
  * associated services.
  */
 
-import { GRAPHQL_URL, SHORT_TIME } from "../../constants";
-import { Enums } from "../../enums";
-import { Utils } from "../../utils";
+
+
+import { Enums } from "../../../commons/enums";
+import { SHORT_TIME } from "../../../commons/timeouts";
+import { GRAPHQL_URL } from "../../../commons/urls";
+import { Utils } from "../../../commons/utils";
 import { ChoreoHomePage } from "../home/home-page";
+
+
 
 export class ProjectListingPage {
   static createNewProject(
@@ -35,7 +40,7 @@ export class ProjectListingPage {
           times: 10,
         }).as("queryComponents");
 
-        cy.wait("@queryComponents", { timeout: SHORT_TIME }).then(() => {
+        cy.wait("@queryComponents", SHORT_TIME).then(() => {
           Utils.getRenderedElement('[data-cyid="create-project-card"]').click();
         });
       }

@@ -11,7 +11,8 @@
  * associated services.
  */
 
-import { Enums } from "../../../../support/console/enums";
+
+import { Enums } from "../../../../support/commons/enums";
 import { ComponentDeployPage } from "../../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../../support/console/pages/component/component-listing-page";
 import { ComponentOverviewPage } from "../../../../support/console/pages/component/component-overview-page";

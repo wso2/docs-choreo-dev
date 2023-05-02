@@ -11,7 +11,8 @@
  * associated services.
  */
 
-import { Enums } from "../../../../support/console/enums";
+
+import { Enums } from "../../../../support/commons/enums";
 import { ComponentDeployPage } from "../../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../../support/console/pages/component/component-listing-page";
 import { ComponentAPILifecycle } from "../../../../support/console/pages/component/component-manage-page";
@@ -54,7 +55,7 @@ describe("Create Reusable Webhook functionality", () => {
     };
     ProjectListingPage.selectProject();
     ProjectOverviewPage.searchReuseComponent(componentData);
-   });
+  });
 
   it("Deploy the component", () => {
     ComponentListingPage.visitToAComponent(WEBHOOK_NAME);
@@ -63,7 +64,7 @@ describe("Create Reusable Webhook functionality", () => {
   });
 
   it("Component promotion to prod", () => {
-    ComponentDeployPage.promoteWebHookToProd(CONFIG,false);
+    ComponentDeployPage.promoteWebHookToProd(CONFIG, false);
   });
 
   it("Verify manage functionality", () => {

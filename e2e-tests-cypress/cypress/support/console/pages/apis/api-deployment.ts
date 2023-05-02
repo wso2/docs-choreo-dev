@@ -11,8 +11,10 @@
  * associated services.
  */
 
+
+import { Utils } from "../../../commons/utils";
 import { GraphQL } from "../../apis/graphql";
-import { Utils } from "../../utils";
+
 
 export class APIDeployment {
   static DeployToDev(projectName: string, componentName: string) {

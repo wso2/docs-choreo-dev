@@ -12,12 +12,15 @@
  */
 
 
-import { Enums } from "../../enums";
+import { Enums } from "../../../commons/enums";
+
+
+
 
 export class APITest {
   static testAPI() {
     cy.contains("Test").should("be.visible").click();
-    cy.get('[id="backdrop-loader"').should("not.exist")
+    cy.get('[id="backdrop-loader"]').should("not.exist")
   }
 
   static selectDevEnvironment() {
@@ -34,6 +37,15 @@ export class APITest {
     cy.get("[data-cyid=undefined-Production]").click({ force: true });
     cy.get('[data-cyid="text-field-endpoint"]').within(() => cy.get('input').invoke("attr", "value").
       then((val) => { Cypress.env(`${Enums.Environment.PRODUCTION}_test_url`, val); }));
+  }
+
+  static selectEnvironment(env: Enums.Environment) {
+    cy.get("[data-testid=env]").click()
+    cy.get(`[data-cyid=undefined-${env}]`).click({ force: true });
+    cy.get('[data-cyid="text-field-endpoint"]').within(() => {
+      cy.get('input').invoke("attr", "value").
+        then((val) => { Cypress.env(`${env}_test_url`, val); });
+    })
   }
 
 }
