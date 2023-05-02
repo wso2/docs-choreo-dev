@@ -12,10 +12,12 @@
  */
 
 
+
+
 export class Subscriptions {
 
     static addSubscriptionToApplication(apiName: string) {
-    
+
         cy.get('[data-testid="subscriptions"]').click();
         cy.get('[data-testid="create-subscription-btn"]').click();
         cy.wait(2000);
@@ -27,7 +29,7 @@ export class Subscriptions {
     }
 
     static validateResubscribingApi(apiName: string) {
-    
+
         cy.log("Check whether user can re-subscribe to the API -  " + apiName + " ,that has already subscribed ");
         cy.get('[data-testid="create-subscription-btn"]').click();
         cy.wait(2000);

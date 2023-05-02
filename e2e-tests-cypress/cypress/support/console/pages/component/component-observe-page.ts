@@ -11,8 +11,10 @@
  * associated services.
  */
 
-import { Utils } from "../../utils";
-import { Enums } from "../../enums";
+import { Enums } from "../../../commons/enums";
+import { SHORT_TIME } from "../../../commons/timeouts";
+import { Utils } from "../../../commons/utils";
+
 
 export class ComponentObservePage {
   static gotoLogs(timeToWait = 0) {
@@ -152,7 +154,7 @@ export class ComponentObservePage {
         ).should("not.exist");
 
         cy.log("Asserting the request list");
-        cy.get('[data-testid="request-table"]', { timeout: 60000 }).should(
+        cy.get('[data-testid="request-table"]', SHORT_TIME).should(
           "exist"
         );
         cy.get('[data-testid="request-information"]')
@@ -211,17 +213,17 @@ export class ComponentObservePage {
         cy.get('[data-testid="time-interval-5"]').should("not.exist");
         cy.get('[data-testid="logs-partition-5"]').should("not.exist");
         cy.log("Verifying whether all the graphs are rendered");
-        cy.get('[data-testid="error-graph"]', { timeout: 60000 }).should(
+        cy.get('[data-testid="error-graph"]', SHORT_TIME).should(
           "exist"
         );
-        cy.get('[data-testid="throughput-graph"]', { timeout: 60000 }).should(
+        cy.get('[data-testid="throughput-graph"]', SHORT_TIME).should(
           "exist"
         );
-        cy.get('[data-testid="latency-graph"]', { timeout: 60000 }).should(
+        cy.get('[data-testid="latency-graph"]', SHORT_TIME).should(
           "exist"
         );
-        cy.get('[data-testid="cpu-graph"]', { timeout: 60000 }).should("exist");
-        cy.get('[data-testid="memory-graph"]', { timeout: 60000 }).should(
+        cy.get('[data-testid="cpu-graph"]', SHORT_TIME).should("exist");
+        cy.get('[data-testid="memory-graph"]', SHORT_TIME).should(
           "exist"
         );
 

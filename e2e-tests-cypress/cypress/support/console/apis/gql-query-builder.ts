@@ -1,7 +1,6 @@
-import { AbsComponent } from "../../interfaces/abs-component";
 import { ByocComponent } from "../../interfaces/byoc-component"
 import { ComponentData } from "../../interfaces/component-data";
-import { Enums } from "../enums";
+
 
 export class GraphQLQueryBuilder {
 

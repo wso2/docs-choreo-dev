@@ -22,10 +22,10 @@ const INVITATION_EMAIL = Cypress.env("invitationUserEmail");
 describe("Invite members", () => {
   before(() => {
     LoginPage.login();
-   
+
   });
   after(() => {
-   ChoreoHomePage.logout();
+    ChoreoHomePage.logout();
   });
 
   it("Invite a member to users org", () => {

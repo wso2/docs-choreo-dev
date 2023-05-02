@@ -16,13 +16,11 @@ import { ComponentDevelopPage } from "../../../support/console/pages/component/c
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { Enums } from "../../../support/console/enums";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/rest-api-proxy-temp";
-import { Utils } from "../../../support/console/utils";
 import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
 import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
@@ -30,6 +28,8 @@ import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { APIDevelop } from "../../../support/console/pages/apis/api-develop";
+import { Enums } from "../../../support/commons/enums";
+import { Utils } from "../../../support/commons/utils";
 
 describe("Verify internal API creation functionality", () => {
   const REST_API_NAME = Utils.generateComponentName("internal");
@@ -205,7 +205,7 @@ describe("Verify internal API creation functionality", () => {
       PROXY_API_BASEPATH_DEV,
       DEV_INVOKE_URL,
       PROXY_API_VERSION_DEV,
-      "*"
+      "*", ""
     );
   });
 
@@ -274,7 +274,7 @@ describe("Verify internal API creation functionality", () => {
       PROXY_API_BASEPATH_PROD,
       PROD_INVOKE_URL,
       PROXY_API_VERSION_PROD,
-      "*"
+      "*", ""
     );
   });
 

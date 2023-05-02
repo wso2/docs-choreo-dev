@@ -15,16 +15,16 @@ import { ComponentDeployPage } from "../../../support/console/pages/component/co
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
-import { Enums } from "../../../support/console/enums";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { Utils } from "../../../support/console/utils";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GitHub } from "../../../support/github/github";
+import { Enums } from "../../../support/commons/enums";
+import { Utils } from "../../../support/commons/utils";
 
 describe("Verify project creation functionality", () => {
   const queryParameters1 = [{ key: "number", value: "2" }];
@@ -252,10 +252,11 @@ describe("Verify project creation functionality", () => {
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.changeLifeCycleToPublished(Enums.ConnectorAudience.PRIVATE);
   });
 
   it("Verify connector publishing ", () => {
-    ComponentAPILifecycle.publishToMarketplace(Enums.ConnectorAudience.PRIVATE);
+    ComponentAPILifecycle.publishConnector(Enums.ConnectorAudience.PRIVATE);
   });
 
   it("Verify connector republishing ", () => {
