@@ -1,5 +1,3 @@
-import { Utils } from "../../utils";
-
 /*
  * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
@@ -12,6 +10,11 @@ import { Utils } from "../../utils";
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
+
+
+import { Utils } from "../../../commons/utils";
+
+
 export class RestAPIProxyTemplate {
   static skipSource() {
     cy.get('[data-cyid="btn-skip-src"]').should("be.visible").click();
@@ -36,7 +39,7 @@ export class RestAPIProxyTemplate {
     endpoint: string,
     version: string = "",
     validateResourceName: string = "",
-    operation:string
+    operation: string
   ) {
     cy.get('[data-cyid="api-name"]').within(() =>
       cy.get("input").clear().type(apiName)

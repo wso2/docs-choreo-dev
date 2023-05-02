@@ -15,7 +15,6 @@
 import { DevPortalHomePage } from "../../support/devportal/pages/home/home-page";
 import { Apis } from "../../support/devportal/pages/apis/apis-home";
 import { ApiOverview } from "../../support/devportal/pages/apis/api-overview";
-import { Utils } from "../../support/console/utils";
 import { ComponentAPILifecycle } from "../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../support/console/pages/component/component-overview-page";
 import { ApiCredentials } from "../../support/devportal/pages/apis/apis-credentials";
@@ -29,6 +28,7 @@ import { generateAppName } from "../../support/devportal/utils";
 import { ComponentDeployPage } from "../../support/console/pages/component/component-deploy";
 import { APISdk } from "../../support/devportal/pages/apis/api-sdk";
 import { DevPortalHelper } from "../../support/devportal/helpers/devportal-helper";
+import { Utils } from "../../support/commons/utils";
 
 describe("API overview comment and rating scenario", () => {
   const API_Name = Utils.generateComponentName("oas");
@@ -39,21 +39,21 @@ describe("API overview comment and rating scenario", () => {
 
   before(() => {
     LoginPage.login();
-   
+
   });
 
   after(() => {
     ChoreoHomePage.logout();
   });
 
-  
+
 
   it("Test in devportal", () => {
     DevPortalHelper.createDeployHttpProxyComponent(API_Name);
- 
+
   });
 
-  it("verify api in devportal",()=>{
+  it("verify api in devportal", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.verifyAPIname().should("eq", API_Name);
     Apis.searchApiAndSelect(API_Name);

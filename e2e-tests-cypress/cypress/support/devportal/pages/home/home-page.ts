@@ -11,7 +11,10 @@
  * associated services.
  */
 
-import {Utils} from "../../../console/utils";
+
+import { MEDIUM_TIME } from "../../../commons/timeouts";
+import { Utils } from "../../../commons/utils";
+
 
 export class DevPortalHomePage {
 
@@ -61,7 +64,7 @@ export class DevPortalHomePage {
         cy.intercept(
             `${Cypress.env("apimSvcURL")}/api/am/devportal/v2/applications/?organizationId=*`
         ).as("apps");
-        cy.wait("@apps", {timeout: 180000}).then((intercept) => {
+        cy.wait("@apps", MEDIUM_TIME).then((intercept) => {
             const orgId = intercept.request.url.split("organizationId=")[1];
 
             const header = intercept.request.headers.authorization;

@@ -12,6 +12,8 @@
  */
 
 
+
+
 export class AppsList {
 
     static createAnApplication(appName: string) {

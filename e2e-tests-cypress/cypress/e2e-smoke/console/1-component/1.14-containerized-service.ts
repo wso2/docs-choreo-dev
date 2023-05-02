@@ -11,9 +11,10 @@
  * associated services.
  */
 
+import { Enums } from "../../../support/commons/enums";
+import { Utils } from "../../../support/commons/utils";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
-import { Enums } from "../../../support/console/enums";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
@@ -21,7 +22,6 @@ import { ComponentOverviewPage } from "../../../support/console/pages/component/
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { Utils } from "../../../support/console/utils";
 import { GitHub } from "../../../support/github/github";
 import { ByocComponent } from "../../../support/interfaces/byoc-component";
 

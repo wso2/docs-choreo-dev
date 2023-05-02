@@ -10,8 +10,11 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { Enums } from "../../../console/enums";
-import { Utils } from "../../../console/utils";
+
+
+import { Enums } from "../../../commons/enums";
+import { MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
+import { Utils } from "../../../commons/utils";
 import { STANDARD_TIME_OUT } from "../../constants";
 
 export class Apis {
@@ -19,22 +22,19 @@ export class Apis {
 
   static navigateToApiOverview(apiName: string): void {
     cy.log("Navigating to Overview");
-    cy.get('[data-testid="apis-appbar-btn"]', { timeout: STANDARD_TIME_OUT })
+    cy.get('[data-testid="apis-appbar-btn"]', SHORT_TIME)
       .should("be.visible")
       .click();
     cy.log("Searching the API");
     cy.get("#outlined-search-bar-api-listing").clear();
-    cy.get("#outlined-search-bar-api-listing", {
-      timeout: STANDARD_TIME_OUT,
-    }).type(apiName + "{enter}");
+    cy.get("#outlined-search-bar-api-listing", SHORT_TIME).type(apiName + "{enter}");
 
     cy.get(`[data-testid="apiCard-${apiName}"]`).should("be.visible").click();
     cy.log("Successfully navigated to Overview");
   }
 
   static verifyAPIname() {
-    return cy
-      .get('[data-testid="txt-api-name"]', { timeout: 120000 })
+    return cy.get('[data-testid="txt-api-name"]', MEDIUM_TIME)
       .should("be.visible")
       .invoke("text");
   }
@@ -51,7 +51,7 @@ export class Apis {
       `${Cypress.env("apimSvcURL")}/api/am/devportal/v2/apis?organizationId=*`
     ).as("apis");
 
-    cy.wait("@apis", { timeout: 40000 }).then((intercept) => {
+    cy.wait("@apis", SHORT_TIME).then((intercept) => {
       const splitArr = intercept.request.url.split("apis?");
       const url = `${splitArr[0]}apis?query=name:${textApiName}&${splitArr[1]}`;
       const header = intercept.request.headers.authorization;

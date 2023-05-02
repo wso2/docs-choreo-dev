@@ -11,31 +11,34 @@
  * associated services.
  */
 
-import { LoginPage } from "../../../support/console/pages/login-page";
-import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
+
+import { Enums } from "../../../support/commons/enums";
+import { Utils } from "../../../support/commons/utils";
 import { APIDeployment } from "../../../support/console/pages/apis/api-deployment";
+import { APITest } from "../../../support/console/pages/apis/api-test";
+import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
+import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
+import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
+import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { APITest } from "../../../support/console/pages/apis/api-test";
 import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
-import { Enums } from "../../../support/console/enums";
-import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
+import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
+import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
+import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
-import { Utils } from "../../../support/console/utils";
-import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
-import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
+import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
+import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/rest-api-proxy-temp";
+import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
+import { Apis } from "../../../support/devportal/pages/apis/apis-home";
+import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { AppsList } from "../../../support/devportal/pages/applications/apps-list";
 import { ProductionKeys } from "../../../support/devportal/pages/applications/production-keys";
 import { Subscriptions } from "../../../support/devportal/pages/applications/subscriptions";
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { generateAppName } from "../../../support/devportal/utils";
-import { Apis } from "../../../support/devportal/pages/apis/apis-home";
-import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
-import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/rest-api-proxy-temp";
-import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
-import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
-import { TryOut } from "../../../support/devportal/pages/apis/try-out";
-import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
+
+
 
 describe("Choreo APIM publisher scenarios", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
@@ -60,7 +63,7 @@ describe("Choreo APIM publisher scenarios", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.createOpenApi(Filepath);
-    RestAPIProxyTemplate.enterAPIdetails(API_NAME, API_BASE_PATH, "", "", "","get");
+    RestAPIProxyTemplate.enterAPIdetails(API_NAME, API_BASE_PATH, "", "", "", "get");
   });
 
   it("Verify component deployment and endpoint configurations", () => {

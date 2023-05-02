@@ -11,28 +11,14 @@
  * associated services.
  */
 
+export const ONE_HOUR = 60 * 60 * 1000;
 
-import { Enums } from "../../../commons/enums";
+export const DEPLOYMENT_SUCCESS = "Active";
+export const DEPLOYMENT_STOPPED = "Suspended";
+export const DEPLOYMENT_STATUS_V2_ACTIVE ="ACTIVE"
+export const DEPLOYMENT_STATUS_V2_ERROR = "ERROR"
 
 
 
 
-export class ComponentTestPage {
-  static selectCurl() {
-   cy.get('[data-testid="cURL"]').click();
-  }
 
-  static getTestKey() {
-    cy.contains('Get Test Key').should('be.visible').click({ force: true });
-  }
-
-  static selectEnvironment(env: Enums.Environment) {
-    cy.get('[data-testid="env"]>div[role="button"]').click();
-   cy.get('ul>li').contains(env).click();
-  }
-
-  static selectEndpoint(endpoint: string) {
-    cy.get('[data-cyid="select-endpoint"]>div[role="button"]').click();
-    cy.get('ul>li[role="option"]').contains(endpoint).click();
-  }
-}
