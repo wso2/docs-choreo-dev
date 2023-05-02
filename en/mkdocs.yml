@@ -15,7 +15,7 @@
 # under the License.
 
 # Project information
-site_name: Learning Portal
+site_name: Documentation
 site_description: Choreo Learning Portal
 site_author: WSO2
 site_url: https://wso2.com/choreo/docs
@@ -27,25 +27,47 @@ edit_uri: https://github.com/wso2/docs-choreo-dev/edit/dev/en/docs/
 dev_addr: localhost:8000
 
 # Copyright
-copyright: ©2022 WSO2 LLC.
+copyright: ©2023 WSO2 LLC.
 
 # Configuration
 theme:
   name: material
   custom_dir: theme/material
-  palette:
-    primary: indigo
-    accent: indigo
-  logo: images/logo.svg
-  favicon: images/favicon.png
-  discord: images/discord-help-icon.svg
-  choreo_logo: images/choreo-logo-icon.svg
-  highlightjs: true
-  feature:
-    tabs: true
+  logo: assets/img/choreo-logo.png
   font:
-    text: 'Montserrat'
+    text: Montserrat
+  favicon: assets/images/favicon.png
+  features:    
+    - navigation.sections
+    - content.code.copy
+    - content.action.edit
+    - content.action.view
+    - navigation.top 
+    - navigation.path
   language: 'en'
+  palette:
+
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default 
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+  icon:
+    logo: logo
 #Breaks build if there's a warning
 strict: false
 # Navigation
@@ -98,14 +120,11 @@ nav:
           - Configure Self-Sign-Up: administer/configure-self-sign-up.md
           - Customize the Developer Portal Domain: administer/customize-the-developer-portal-domain.md
 # Extensions
+# Extensions
 markdown_extensions:
   - markdown.extensions.admonition
-  - markdown.extensions.codehilite:
-      linenums: true
-      use_pygments: false
   - markdown.extensions.def_list
   - markdown.extensions.footnotes
-  - markdown.extensions.meta
   - markdown.extensions.toc:
       permalink: true
       toc_depth: 3
@@ -128,8 +147,6 @@ markdown_extensions:
   - pymdownx.snippets:
       base_path: docs
   - attr_list
-  - markdown_include.include:
-      base_path: docs
 plugins:
   - search
   - markdownextradata: {}
@@ -173,25 +190,31 @@ plugins:
           'references/connect-with-protected-third-party-applications.md': 'https://wso2.com/choreo/docs/references/connect-with-protected-third-party-applications/'
           'develop/components/api-proxies/policies.md': 'https://wso2.com/choreo/docs/develop/api-policies/policies/'
 extra_css:
-  - assets/lib/highlightjs/default.min.css
-  - assets/css/theme.css
-  - assets/css/prism.css
+  # - assets/lib/highlightjs/default.min.css
+  # - assets/css/theme.css
+  # - assets/css/prism.css
+  # - assets/lib/json-formatter/json-formatter.css
+  
+  - assets/lib/highlightjs/styles/vs.min.css
+  - assets/css/blue-palette-alt2.css
+  - assets/css/choreotheme.css
   - assets/lib/json-formatter/json-formatter.css
+  - assets/css/config-catalog.css
+  - assets/lib/fontawesome-free-6.3.0-web/css/all.min.css  
 extra_javascript:
   - assets/lib/json-formatter/json-formatter.umd.js
   - assets/lib/highlightjs/highlight.min.js
-  - assets/lib/prism/prism.js
-  - assets/js/theme.js
-  - assets/js/prism-ballerina.js
-  - assets/lib/backtotop/js/util.js
-  - assets/lib/backtotop/js/main.js
+ # - assets/js/theme.js
+  #- assets/js/prism-ballerina.js
+  - assets/js/choreotheme.js
 extra:
   social:
-    - type: github
+    - icon: fontawesome/brands/github
       link: https://github.com/wso2
-    - type: twitter
+    - icon: fontawesome/brands/twitter
       link: https://twitter.com/wso2
-    - type: linkedin
+    - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/company/wso2
-  site_version: 1.0.0
-  #base_path: http://localhost:8000
+#site_version: 1.0.0
+#base_path: http://localhost:8000
+
