@@ -27,6 +27,8 @@ spec:
       - envFrom:
           - secretRef:
               name: opentelemetry-collector
+          - configMapRef:
+              name: env-opentelemetry-collector
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-opentelemetry-collector:latest
         name: otel-collector
         resources:
