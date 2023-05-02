@@ -252,10 +252,11 @@ describe("Verify project creation functionality", () => {
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.changeLifeCycleToPublished(Enums.ConnectorAudience.PRIVATE);
   });
 
   it("Verify connector publishing ", () => {
-    ComponentAPILifecycle.publishToMarketplace(Enums.ConnectorAudience.PRIVATE);
+    ComponentAPILifecycle.publishConnector(Enums.ConnectorAudience.PRIVATE);
   });
 
   it("Verify connector republishing ", () => {
