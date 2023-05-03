@@ -532,6 +532,7 @@ fontawesome-free-6
 all.min.css
 choreotheme.js
 fontawesome
+glightbox
  - theme/material/templates/home-page.html
 doctype
 html
