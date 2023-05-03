@@ -68,6 +68,7 @@ In this guide, you will use the OpenAPI Console.
 To test the REST API proxy via the OpenAPI Console, follow the steps given below:
 
 1. In the left navigation menu, click **Test**.
+
     !!! tip
           Since the REST API proxy is secured when it is deployed, you will need a key to invoke it. Choreo automatically generates a key when you navigate to the **Test** view.
 
@@ -79,7 +80,7 @@ To test the REST API proxy via the OpenAPI Console, follow the steps given below
 
     ![API proxy response](../assets/img/quick-start-guides/api-proxy-response.png){.cInlineImage-full}
 
-   This indicates that your REST API Proxy is working as expected.
+   This indicates that your REST API proxy is working as expected.
 
 ## Step 4: Promote the REST API proxy to production
 
@@ -90,6 +91,7 @@ Once you verify that the REST API proxy is working as expected in the developmen
 2. In the **Development** card, click **Promote**.
 
 3. In the **Configure & Deploy** pane that opens, click **Next**.
+
     !!! tip
           If you want to specify a different endpoint for your production environment, you can do the change in the **Configure & Deploy** pane.
 
@@ -120,15 +122,15 @@ To generate credentials for the published API and to invoke it via the Developer
 
 2. To generate credentials for testing the API, follow the steps given below:
 
-   1. In the Developer Portal left navigation menu, click **Credentials**.
-   2. Click **Generate Credentials**. Choreo generates new tokens and populates the **Consumer Key** and **Consumer Secret** fields.
+    1. In the Developer Portal left navigation menu, click **Production** under **Credentials**.
+    2. Click **Generate Credentials**. Choreo generates new tokens and populates the **Consumer Key** and **Consumer Secret** fields.
 
 3. To invoke the API, follow the steps given below:
 
-   1. In the Developer Portal left navigation menu, click **Try Out**.
-   2. In the **Endpoint** list, select **Development** as the environment to try out the API.
-   3. Click **Get Test Key**. This generates an access token.
-   4. Expand the `GET /pet/findByStatus` operation and click **Try it out**.
-   5. Select **available** as the status and click **Execute**.
+    1. In the Developer Portal left navigation menu, click **Try Out**.
+    2. In the **Endpoint** list, select **Development** as the environment to try out the API.
+    3. Click **Get Test Key**. This generates an access token.
+    4. Expand the `GET /pet/findByStatus` operation and click **Try it out**.
+    5. Select **available** as the status and click **Execute**.
 
-Congratulations! You have successfully used Choreo API Manager to create a REST API proxy, deploy, test, and publish it. You have also used the Choreo Developer Portal to generate credentials for the published API and invoke it.
+Congratulations! You have successfully created, deployed, tested, and published a REST API proxy using Choreo API Manager.
