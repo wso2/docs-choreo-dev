@@ -46,7 +46,7 @@ describe(`Graphql GQL service functionality in region ${dp}`, () => {
   const REPO_NAME = "graphql-service-sample";
   const ENDPOINT_NAME = "GraphQL Greet";
 
-  it.skip("Verify GraphQL component creation", () => {
+  it("Verify GraphQL component creation", () => {
     let componentData: ComponentData = {
       componentName: COMPONENT_NAME,
       displayType: Enums.DisplayType.ballerinaService,
@@ -69,19 +69,19 @@ describe(`Graphql GQL service functionality in region ${dp}`, () => {
     );
   });
 
-  it.skip("Verify component deployment", () => {
+  it("Verify component deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployService(ENDPOINT_NAME);
   });
 
-  it.skip("Verify test functionality of GQL query in dev on swagger", () => {
+  it("Verify test functionality of GQL query in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testGraphQL(Enums.Environment.DEVELOPMENT,TEST_QUERY, ENDPOINT_NAME);
     TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
   });
 
-  it.skip("Verify test functionality of GQL mutation in dev on swagger", () => {
+  it("Verify test functionality of GQL mutation in dev on swagger", () => {
     TestHelper.testGraphQL(Enums.Environment.DEVELOPMENT, TEST_MUTATION, ENDPOINT_NAME);
     TestHelper.getGqlResult(TEST_MUTATION_RESPONSE);
   });
