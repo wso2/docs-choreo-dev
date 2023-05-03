@@ -4,7 +4,7 @@ Choreo is a powerful SaaS application development suite that streamlines the pro
 
 The Choreo suite comprises 5 profiles that work together seamlessly:
   
- - **Internal developer Platform** is a full lifecycle cloud native application development platform to create, deploy, run, and govern APIs, integrations, and microservices on Kubernetes. Gives you the benefit of organization-wide productivity via self-service teams, governance and security, enterprise marketplaces, and business metrics.
+ - **Internal Developer Platform** is a full lifecycle cloud native application development platform to create, deploy, run, and govern APIs, integrations, and microservices on Kubernetes. Gives you the benefit of organization-wide productivity via self-service teams, governance and security, enterprise marketplaces, and business metrics.
 
  - **API Manager** is an enterprise-grade, API-first development platform to create, deploy, run, and manage APIs and services that integrate perfectly with your development practices across multiple environments. You can deploy to the Choreo cloud or any private cloud within minutes.
 
