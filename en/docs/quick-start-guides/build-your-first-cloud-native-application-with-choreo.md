@@ -22,14 +22,13 @@ Before you try out this guide, complete the following:
 1. Create a GitHub repository to save the service implementation. For this guide, you can fork [https://github.com/wso2/choreo-examples](https://github.com/wso2/choreo-examples).
 2. If you are signing in to the Choreo Console for the first time, create an organization as follows:
 
-    1. Go to [https://wso2.com/choreo/](https://wso2.com/choreo/), and click **Try Choreo Now**.
-    2. Sign in to Choreo using your Google, GitHub, or Microsoft account.
-    3. Enter a unique organization name. For example, `Stark Industries`.
+    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
+    2. Enter a unique organization name. For example, `Stark Industries`.
 
         ![Create an organization in Choreo](../assets/img/quick-start-guides/create-choreo-organization.png){.cInlineImage-small}
 
-    4. Read and accept the privacy policy and terms of use.
-    5. Click **Create**.
+    3. Read and accept the privacy policy and terms of use.
+    4. Click **Create**.
 
     This creates the organization and opens the **Project Home** page of the default project created for you.
 
