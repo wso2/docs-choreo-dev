@@ -122,15 +122,15 @@ To generate credentials for the published API and to invoke it via the Developer
 
 2. To generate credentials for testing the API, follow the steps given below:
 
-   1. In the Developer Portal left navigation menu, click **Credentials**.
-   2. Click **Generate Credentials**. Choreo generates new tokens and populates the **Consumer Key** and **Consumer Secret** fields.
+    1. In the Developer Portal left navigation menu, click **Production** under **Credentials**.
+    2. Click **Generate Credentials**. Choreo generates new tokens and populates the **Consumer Key** and **Consumer Secret** fields.
 
 3. To invoke the API, follow the steps given below:
 
-   1. In the Developer Portal left navigation menu, click **Try Out**.
-   2. In the **Endpoint** list, select **Development** as the environment to try out the API.
-   3. Click **Get Test Key**. This generates an access token.
-   4. Expand the `GET /pet/findByStatus` operation and click **Try it out**.
-   5. Select **available** as the status and click **Execute**.
+    1. In the Developer Portal left navigation menu, click **Try Out**.
+    2. In the **Endpoint** list, select **Development** as the environment to try out the API.
+    3. Click **Get Test Key**. This generates an access token.
+    4. Expand the `GET /pet/findByStatus` operation and click **Try it out**.
+    5. Select **available** as the status and click **Execute**.
 
 Congratulations! You have successfully created, deployed, tested, and published a REST API proxy using Choreo API Manager.
