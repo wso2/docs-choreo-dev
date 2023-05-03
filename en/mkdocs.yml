@@ -149,6 +149,7 @@ markdown_extensions:
   - attr_list
 plugins:
   - search
+  - glightbox
   - markdownextradata: {}
   - redirects:
       redirect_maps:
