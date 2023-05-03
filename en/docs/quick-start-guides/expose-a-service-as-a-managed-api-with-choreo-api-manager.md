@@ -12,9 +12,6 @@ Before you try out this guide, complete the following:
 
     1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
     2. Enter a unique organization name. For example, `Stark Industries`.
-
-        ![Create an organization in Choreo](../assets/img/quick-start-guides/create-choreo-organization.png){.cInlineImage-small}
-
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
 
@@ -80,7 +77,7 @@ To test the REST API proxy via the OpenAPI Console, follow the steps given below
 
 4. Select **available** as the status and click **Execute**. You will see a response similar to the following:
 
-        ![API proxy response](../assets/img/quick-start-guides/api-proxy-response.png){.cInlineImage-full}
+    ![API proxy response](../assets/img/quick-start-guides/api-proxy-response.png){.cInlineImage-full}
 
    This indicates that your REST API Proxy is working as expected.
 
