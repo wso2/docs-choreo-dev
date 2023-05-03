@@ -212,7 +212,6 @@ export class Utils {
     const dateString = new Date().toISOString();
     document.cookie = `OptanonAlertBoxClosed=${dateString};SameSite=Lax;Secure`;
     cy.setCookie("OptanonAlertBoxClosed", dateString);
-    cy.setCookie("fidpId", "choreoe2etest");
   }
 
   static paste(obj, code, enter) {
