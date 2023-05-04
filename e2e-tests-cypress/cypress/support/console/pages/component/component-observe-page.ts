@@ -183,7 +183,7 @@ export class ComponentObservePage {
 
   static verifyDiagnosticView() {
     const timestampRegex =
-      /(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/\d{4}\s([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/;
+      /\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2}:\d{2}/;
     const numberOfBins = 5;
 
     cy.log("Waiting for the diagram to be rendered");
