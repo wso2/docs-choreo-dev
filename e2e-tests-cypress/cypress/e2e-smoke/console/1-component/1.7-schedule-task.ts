@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { MEDIUM_TIME } from "../../../support/commons/constants";
+
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentObservePage } from "../../../support/console/pages/component/component-observe-page";
@@ -25,6 +25,7 @@ import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-bui
 import { GitHub } from "../../../support/github/github";
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
+import { MEDIUM_TIME } from "../../../support/commons/timeouts";
 
 describe("Create Schedule Trigger", () => {
   const SCHEDULE_NAME = Utils.generateComponentName()
@@ -83,7 +84,7 @@ describe("Create Schedule Trigger", () => {
 
   it("Verify task execution in observability ", () => {
     ComponentOverviewPage.navigateToObserve();
-    ComponentObservePage.gotoLogs(MEDIUM_TIME);
+    ComponentObservePage.gotoLogs(MEDIUM_TIME.timeout);
   });
   it("Verify dev env logs", () => {
     ComponentObservePage.selectEnv(Enums.Environment.DEVELOPMENT);

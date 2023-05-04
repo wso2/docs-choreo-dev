@@ -65,7 +65,7 @@ export class GraphQLQueryBuilder {
     }
   }
 
-  static getComponentDeploymentStatus(orgHandler: string, orgUuid: string, componentId: string, versionId: string, environmentId: string) {
+  static getComponentDeploymentStatusQuery(orgHandler: string, orgUuid: string, componentId: string, versionId: string, environmentId: string) {
     return {
       query: `query {
                          componentDeployment(
