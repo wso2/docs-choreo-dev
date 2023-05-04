@@ -82,7 +82,7 @@ import static com.consol.citrus.validation.json.JsonPathMessageValidationContext
 public class GraphQL extends ControlPlaneAPI {
 
     public static ProxyResponse<ChoreoComponent> createGraphqlQueryForComponentCreation(String apiName, String projectId, String apiId, String accessToken) throws IOException {
-        GraphqlDTO dto = GraphqlDTO.builder().apiName(apiName.toLowerCase()).orgId(ORG_ID).orgHandler(ORG_HANDLE).displayName(apiName).
+        GraphqlDTO dto = GraphqlDTO.builder().name(apiName.toLowerCase()).orgId(ORG_ID).orgHandler(ORG_HANDLE).displayName(apiName).
                 displayType(Constant.displayType.proxy.name()).projectId(projectId).apiId(apiId.replaceAll("\"", "")).build();
 
         String generatedQuery = ObjectMapperUtil.mapObjectToString("templates/api-proxy/graphqlQueryForComponentCreation.mustache", dto);
