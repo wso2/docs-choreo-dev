@@ -273,7 +273,7 @@ describe("Verify project creation functionality", () => {
     ComponentDeployPage.stopAllDeployment();
   });
 
-  it("Verify application suspension", () => {
+  it("Verify API lifecycle change to Created state", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.demoteToCreated();
