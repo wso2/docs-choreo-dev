@@ -63,9 +63,12 @@ export class TestHelper {
     return Curl.getRequestComponentsDiscardPrevious(`${env}${pathParm}`);
   }
 
-  static testGraphQL(env: Enums.Environment, code: string) {
+  static testGraphQL(env: Enums.Environment, code: string, endpoint?: string) {
     cy.get('div[class="execute-button-wrap"]>button').should("be.visible");
     APITest.selectEnvironment(env);
+    if (endpoint) {
+      ComponentTestPage.selectEndpoint(endpoint);
+    }
     cy.wait(5000)
     cy.get('[data-testid="graphiql-container"]').within(() => {
       cy.get('[class="query-editor"]').within(() => {

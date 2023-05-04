@@ -29,6 +29,7 @@ import { ComponentDeployPage } from "../../support/console/pages/component/compo
 import { APISdk } from "../../support/devportal/pages/apis/api-sdk";
 import { DevPortalHelper } from "../../support/devportal/helpers/devportal-helper";
 import { Utils } from "../../support/commons/utils";
+import { ComponentListingPage } from "../../support/console/pages/component/component-listing-page";
 
 describe("API overview comment and rating scenario", () => {
   const API_Name = Utils.generateComponentName("oas");
@@ -97,11 +98,12 @@ describe("API overview comment and rating scenario", () => {
   });
 
   it("Verify suspending Dev deployed component", () => {
-    LoginPage.reLoginToChoreo();
+    LoginPage.login();
+    ChoreoHomePage.navigateToComponents();
+    ComponentListingPage.visitToAComponent(API_Name);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopDevContainer();
   });
-
 
   it("Verify suspending Prod deployed component", () => {
 

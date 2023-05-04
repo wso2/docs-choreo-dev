@@ -151,6 +151,9 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.navigatePermissionManagementWindow();
     ComponentAPILifecycle.managePermissions(permissions, API_NAME);
     ComponentAPILifecycle.manageLifecycle();
+  });
+
+  it("Verify connector publishing ", () => {
     ComponentAPILifecycle.publish(Enums.ConnectorAudience.PRIVATE).should(
       "be.visible"
     );
