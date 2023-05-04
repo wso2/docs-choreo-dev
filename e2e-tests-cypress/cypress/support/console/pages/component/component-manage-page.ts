@@ -67,8 +67,8 @@ export class ComponentAPILifecycle {
   }
 
   static demoteToCreated() {
-    cy.get('[data-testid="Demote to Created-lc-btn"]').click
-    cy.get(ComponentAPILifecycle.devportl_btn).should("not.be.enabled");
+    cy.get('[data-cyid="Demote to Created-lc-btn"]').should("be.visible").click();
+    cy.get(ComponentAPILifecycle.devportl_btn).should('be.disabled');
   }
 
   static goToDeveloperPortalWithoutLogin(idpUser: string = "") {
