@@ -46,7 +46,6 @@ export default defineConfig({
       return config;
     },
     specPattern: "cypress/e2e-smoke//./**/*.ts",
-    testIsolation: false
   },
   env: {
     FAIL_FAST_STRATEGY: "spec",
