@@ -86,7 +86,7 @@ nav:
       - Endpoint: choreo-concepts/endpoint.md
       - Data Planes: choreo-concepts/data-planes.md
       - Environments: choreo-concepts/environments.md
-    Develop Components:
+  - Develop Components:
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
       - Develop Integrations:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
