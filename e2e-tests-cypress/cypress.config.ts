@@ -45,8 +45,7 @@ export default defineConfig({
       config.env.enablePerspectiveView = process.env.enablePerspectiveView;
       return config;
     },
-    specPattern: "cypress/e2e-smoke//./**/*.ts",
-    testIsolation: false
+    specPattern: "cypress/e2e-smoke//./**/*.ts"
   },
   env: {
     FAIL_FAST_STRATEGY: "spec",
