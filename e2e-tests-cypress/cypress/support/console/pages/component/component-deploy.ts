@@ -76,16 +76,16 @@ export class ComponentDeployPage {
     cy.get("body").then((bdy) => {
       if (bdy.find('[data-testid="deployment-history-btn"]').length == 2) {
         cy.get('[data-cyid="btn-next"]').realClick();
+      } else {
+        for (var i = 0; i < numberOfNextPrompts; i++) {
+          cy.get('[data-cyid="btn-next"]').realClick();
+        }
       }
     });
 
     if (isAdditionalConfigs) {
       if (isManagedByAPIM) {
         Utils.interceptConfig();
-      }
-
-      for (var i = 0; i < numberOfNextPrompts; i++) {
-        cy.get('[data-cyid="btn-next"]').realClick();
       }
     }
 
