@@ -85,7 +85,7 @@ For the REST endpoint of the service to be invokable, you need to deploy it. To 
 1. In the left navigation menu, click **Deploy**.
 2. In the **Build Area** card, click **Deploy Manually**.       
 3. In the **Configure & Deploy** pane that opens, you can see the **Readinglist** endpoint ready to be deployed. Click the edit icon next to the **Readinglist** endpoint.
-4. Change the **Network Visibility** to **Public**. This allows you to expose the endpoint to your web application securely.
+4. Change the **Network Visibility** to **Public**. This allows you to securely expose the endpoint to your web application.
 5. Click **Update**.
 
     !!! info
@@ -97,52 +97,49 @@ For the REST endpoint of the service to be invokable, you need to deploy it. To 
 
 To test the **Readinglist** REST endpoint via the integrated OpenAPI Console in Choreo, follow the steps given below:
 
-1. In the left navigation menu, click **Test** and ensure you are in the **Console**.
+1. In the left navigation menu, click **Test**.
 2. In the **OpenAPI Console** pane that opens, select **Development** from the environment drop-down list.
 3. In the **Public Endpoint** list, select **Readinglist**.
 4. Expand the **GET** method and click **Try it out**.
 5. Click **Execute**.
-6. Check the **Server Response** section. You will receive Message like below.
-```json
-{
-  "error": "Bad Request",
-  "error_description": "Error while getting the JWT token"
-}
-```
-We need to enable passing the security context to the backend service through API management. Let's update API management functionality and test the service again.
+6. Check the **Server Response** section. You will see a response similar to the following:
+
+    ```json
+    {
+    "error": "Bad Request",
+    "error_description": "Error while getting the JWT token"
+    }
+    ```
+To fix the JWT error response, you must enable passing the security context to the backend service through API management.
+You can proceed to the next section to fix the JWT error and publish the service.
 
 ### Step 1.4: Publish the service
 
-Now you can publish the tested REST endpoint to make it available for the web application to consume.
+To fix the JWT error, retest the API, and publish the service, follow the steps given below:
 
-#### Step 1.4.1: Update the CORS configuration and fix JWT error
+#### Step 1.4.1: Update the CORS configuration and fix the JWT error
 
 Let's assume you deploy the web application in a cloud platform such as Vercel. In such a scenario, you would want to call the **Readinglist** backend service deployed in Choreo through the web application on a Vercel domain. By default, web browsers block such calls for security reasons. To enable the web application to call the backend service, you must update the CORS configuration as follows:
 
 1. In the left navigation menu, click **Manage**, and then click **Settings**.
 2. Under **API Settings**, click **Edit**.
-3. Enable the **CORS Configuration**.
+3. Click the **CORS Configuration** toggle to enable the setting.
 4. Select the **Access Control Allow Credentials** checkbox.
-5. Enable the **Pass Security Context To Backend** 
-6. Click **Save** 
+5. To allow passing security context to the backend service, click the **Pass Security Context To Backend** toggle to enable the setting.
+6. Click **Save**. 
 7. In the **Apply to Development** pane that opens, enter a meaningful message and click **Apply**.
-8. Navigate to Test tab and follow the instructions
 
-#### Step 1.4.2: Publish the service endpoint as a REST API
+Now you can retest the API to confirm that it works as expected. 
 
-To publish the service endpoint as a REST API, follow the steps given below:
+#### Step 1.4.2: Retest the API
 
-1. In the **Manage** view, click **Lifecycle**.
-2. Click **Publish** to publish the REST API to the Developer Portal. External applications can subscribe to the API via the Developer Portal.
-3. To access the Developer Portal, click **Go to DevPortal**.
+To retest the API, follow the steps given below:
 
-    The **Reading List Service** REST API opens in the Developer Portal.
-#### Step 1.4.3: Test the API again
-To test the service after fixing the JWT issue, navigate back to the Test tab
-1. In the **OpenAPI Console** pane that opens, select **Development** from the environment drop-down list.
-2. In the **Public Endpoint** list, select **Readinglist**.
-3. Expand the **POST** method and click **Try it out**.
-4. Update the request body so that the parameters have the values given below:
+1. In the left navigation menu, click **Test**.
+2. In the **OpenAPI Console** pane that opens, select **Development** from the environment drop-down list.
+3. In the **Public Endpoint** list, select **Readinglist**.
+4. Expand the **POST** method and click **Try it out**.
+5. Update the request body so that the parameters have the values given below:
 
     | **Parameter** | **Value**       |
     |---------------|-----------------|
@@ -165,6 +162,16 @@ To test the service after fixing the JWT issue, navigate back to the Test tab
     Check the **Server Response** section. On successful invocation, you will receive the `200` HTTP code.
 
 Similarly, you can expand and try out the **GET** and **DELETE** methods.
+
+#### Step 1.4.3: Publish the service endpoint as a REST API
+
+To publish the REST endpoint and make it available for web application to consume, follow the steps given below:
+
+1. In the **Manage** view, click **Lifecycle**.
+2. Click **Publish** to publish the REST API to the Developer Portal. External applications can subscribe to the API via the Developer Portal.
+3. To access the Developer Portal, click **Go to DevPortal**.
+
+    The **Reading List Service** REST API opens in the Developer Portal.
 
 ## Step 2: Consume the REST API
 
