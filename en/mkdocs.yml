@@ -15,7 +15,7 @@
 # under the License.
 
 # Project information
-site_name: Documentation
+site_name: ""
 site_description: Choreo Learning Portal
 site_author: WSO2
 site_url: https://wso2.com/choreo/docs
@@ -33,17 +33,16 @@ copyright: ©2023 WSO2 LLC.
 theme:
   name: material
   custom_dir: theme/material
-  logo: assets/img/choreo-logo.png
+  logo: assets/img/logo.png
   font:
     text: Montserrat
   favicon: assets/images/favicon.png
   features:    
+    - navigation.top
     - navigation.sections
     - content.code.copy
     - content.action.edit
     - content.action.view
-    - navigation.top 
-    - navigation.path
   language: 'en'
   palette:
 
@@ -73,7 +72,8 @@ strict: false
 # Navigation
 nav:
   - Home: index.md
-  - What is Choreo?: what-is-choreo.md
+  - Introduction:
+      - What is Choreo?: what-is-choreo.md
   - Quick Start Guides:
       - Build Your First Cloud Native Application with Choreo: quick-start-guides/build-your-first-cloud-native-application-with-choreo.md
       - Expose a Service as a Managed API with Choreo API Manager: quick-start-guides/expose-a-service-as-a-managed-api-with-choreo-api-manager.md
@@ -88,6 +88,8 @@ nav:
       - Environments: choreo-concepts/environments.md
   - Develop Components:
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
+      - Develop Services:
+          - REST API: develop-components/develop-services/rest-api.md
       - Develop Integrations:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
           - Develop an Event-Triggered Integration: develop-components/develop-integrations/develop-an-event-triggered-integration.md

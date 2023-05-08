@@ -533,6 +533,7 @@ all.min.css
 choreotheme.js
 fontawesome
 glightbox
+logo.png
  - theme/material/templates/home-page.html
 doctype
 html
