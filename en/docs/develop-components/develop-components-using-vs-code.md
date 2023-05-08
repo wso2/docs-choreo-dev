@@ -1,6 +1,6 @@
 # Develop Components Using VS Code
 
-The [Choreo VS Code extension]((https://marketplace.visualstudio.com/items?itemName=WSO2.choreo)) provides a wide range of project and component management capabilities to enhance the local development of projects and components in Choreo.
+The [Choreo VS Code extension](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo) provides a wide range of project and component management capabilities to enhance the local development of projects and components in Choreo.
 
 ## Prerequisites
 
