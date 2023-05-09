@@ -89,7 +89,7 @@ nav:
   - Develop Components:
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
       - Develop Services:
-          - REST API: develop-components/develop-services/develop-a-rest-api.md
+          - Develop a REST API: develop-components/develop-services/develop-a-rest-api.md
       - Develop Integrations:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
           - Develop an Event-Triggered Integration: develop-components/develop-integrations/develop-an-event-triggered-integration.md
