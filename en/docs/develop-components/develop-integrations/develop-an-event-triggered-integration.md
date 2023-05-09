@@ -23,10 +23,10 @@ Before you try out the steps in this guide, complete the following:
 
 ## Step 1: Create an event-triggered integration component
 
-1. Sign in to the Choreo Console at[ ](https://console.choreo.dev/ipaas)<https://console.choreo.dev/ipaas>. This opens the **Project Home** page. 
+1. Sign in to the Choreo Console at [https://console.choreo.dev/ipaas](https://console.choreo.dev/ipaas). This opens the **Project Home** page. 
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Go to the **Event-Triggered Integration** card and click **Create**.
-4. Enter a unique name and a description for the component. you can use the name and the description given below:
+4. Enter a unique name and a description for the component. You can use the name and description given below:
 
     | **Field**       | **Value**                             |
     |-----------------|---------------------------------------|
