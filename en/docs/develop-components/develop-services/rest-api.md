@@ -1,4 +1,4 @@
-# Create your first REST API
+# REST API
 
 Choreo is a platform that allows you to create and deploy applications in any language.  In this guide, you will use Choreo to create a service component that exposes a REST API in Go. You are not required to have any prior knowledge of the Go language to follow the guide. 
 
@@ -37,7 +37,7 @@ Let's get started!
 
 Let's create a containerized service component by following these steps:
 
-1. Sign in to the Choreo Console at https://console.choreo.dev.
+1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 2. Create a project to add the service component. You can follow the instructions under Prerequisites in the Connect Your Own GitHub Repository to Choreo guide.
 3. On the Components page, click Create on the Service card.
 4. Enter a unique name and a description of the service. For this guide, let's enter the following values:
@@ -78,7 +78,7 @@ Let's create a containerized service component by following these steps:
 
 You have successfully created a Service component from a Dockerfile. Now let's build and deploy the service.
 
-## Configure the service port with endpoints.
+## Step 2: Configure the service port with endpoints
 
 We expect to run our greeter service on port 9090. To securely expose the service through Choreo, we must provide the port and other required information to Choreo. In Choreo, we expose our services with endpoints. You can read more about endpoints in our [endpoint documentation](../../choreo-concepts/endpoint.md).
 
@@ -86,7 +86,7 @@ Choreo looks for an endpoints.yaml file inside the `.choreo` directory to config
 
 In our greeter sample, the endpoints.yaml file is at go/greeter/.choreo/endpoints.yaml. 
 
-## Build and deploy
+## Step 3: Build and deploy
 Now that we have connected the source repository, and configured the endpoint details, it's time to build and deploy the greeter service.
 
 To build and deploy the service, follow these steps:
