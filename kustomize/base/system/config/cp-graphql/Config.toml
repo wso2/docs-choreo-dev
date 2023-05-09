@@ -42,6 +42,7 @@ enableGithubOrgUserValidation = {{.ENABLE_GITHUB_ORG_USER_VALIDATION}}
 enableRBAC = {{.ENABLE_GRAPHQL_RBAC}}
 enableEventPublish = {{.ENABLE_GRAPHQL_EVENT_PUBLISH}}
 apimSecretPath = "/mnt/csi/secret-cp-graphql/APIM_REST_API_CONSUMER_SECRET"
+enableDBBasedNotifications = {{.ENABLE_DB_BASED_NOTIFICATIONS}}
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"

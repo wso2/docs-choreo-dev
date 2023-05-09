@@ -186,6 +186,8 @@ defaultRoles:
         - apim:api_key
         - environments:view_prod
         - environments:view_dev
+        - apim:prod_key_manage
+        - apim:sand_key_manage
     - name: External API Subscriber
       handle: external-api-subscriber
       description: External Users or Application Developers who search the Developer Portal to discover APIs and use them. They read the documentation and forums, rates/comments on the APIs, subscribes to APIs, obtain access tokens, and invokes the APIs
@@ -200,6 +202,8 @@ defaultRoles:
         - apim:app_import_export
         - apim:api_key
         - environments:view_prod
+        - apim:prod_key_manage
+        - apim:sand_key_manage
     - name: API Publisher
       handle: api-publisher
       description: Users who understand the technical aspects of the API (interfaces, documentation, versions, etc.) and create and publish APIs into the Developer Portal.
