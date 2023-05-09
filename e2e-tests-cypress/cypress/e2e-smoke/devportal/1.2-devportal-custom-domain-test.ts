@@ -37,25 +37,34 @@ import { Utils } from "../../support/commons/utils";
 const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
 const API_BASE_PATH = Utils.generateBasePath();
 const Filepath = "apis/generation_oas.yaml";
-const API_NAME = Utils.generateComponentName("oas")
+const API_NAME = Utils.generateComponentName("oas");
 const PROJECT_DESCRIPTION = "sample oas flow scenario";
 const PROJECT_NAME = Utils.generateProjectName();
-
 
 describe("Create and deploy a component to test developer portal with custom domain", () => {
   before(() => {
     ConsoleLoginPage.login();
   });
 
-  it("Create and deploy a component", () => {
+  it("Creating a project", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+  });
+
+  it("Create and deploy a component", () => {
     ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.createOpenApi(Filepath);
-    RestAPIProxyTemplate.enterAPIdetails(API_NAME, API_BASE_PATH, "", "", "","");
-    cy.task('setAPIName', API_NAME);
+    RestAPIProxyTemplate.enterAPIdetails(
+      API_NAME,
+      API_BASE_PATH,
+      "",
+      "",
+      "",
+      ""
+    );
+    cy.task("setAPIName", API_NAME);
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
-    APIDeployment.PromoteToProd()
+    APIDeployment.PromoteToProd();
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publishWithoutConnector().should("be.visible");

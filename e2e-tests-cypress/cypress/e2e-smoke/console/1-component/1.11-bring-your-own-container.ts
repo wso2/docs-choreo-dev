@@ -26,23 +26,24 @@ import { ProjectListingPage } from "../../../support/console/pages/projects/proj
 import { GitHub } from "../../../support/github/github";
 import { ByocComponent } from "../../../support/interfaces/byoc-component";
 
-const dp = Enums.Region.US;
-
 before(() => {
   LoginPage.login();
-  GitHub.deleteWebhooks("byor-greetings-app2")
 });
 
 after(() => {
   ChoreoHomePage.logout();
 });
 
-describe(`Verify BYOC functionality in region ${dp}`, () => {
+describe(`Verify BYOC functionality`, () => {
   const PROJECT_DESCRIPTION = "BYOC component";
   const PROJECT_NAME = Utils.generateProjectName();
   const REST_API_NAME = Utils.generateComponentName();
   const REPO_NAME = Utils.generateComponentName("repo");
   const RESOURCE_NAME = "movies";
+
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+  });
 
   it("Verify REST API component creation", () => {
     let componentData: ByocComponent = {
@@ -58,11 +59,12 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
       byocConfig: {
         dockerfilePath: "byoc-test/Dockerfile",
         dockerContext: "byoc-test",
-        srcGitRepoUrl: "https://github.com/choreo-test-apps/byor-greetings-app2",
+        srcGitRepoUrl:
+          "https://github.com/choreo-test-apps/byor-greetings-app2",
         srcGitRepoBranch: "main",
-      }
+      },
     };
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, dp);
+
     GraphQL.createComponent(
       PROJECT_NAME,
       REPO_NAME,

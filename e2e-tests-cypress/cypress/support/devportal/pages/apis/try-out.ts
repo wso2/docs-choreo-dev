@@ -11,13 +11,9 @@
  * associated services.
  */
 
-
-
 import { SHORT_TIME } from "../../../commons/timeouts";
 import { DEV_PORTAL_APP_TOKEN_GEN_URL } from "../../../commons/urls";
 import { Utils } from "../../../commons/utils";
-
-
 
 export class TryOut {
   static navigateToTryOutMenu() {
@@ -26,8 +22,8 @@ export class TryOut {
 
   static SelectApplication(applicationName: string) {
     cy.get('[data-testid="application-selector-wrapper"]').within(() => {
-      cy.get('[data-testid="application-selector"]>div').realClick()
-    })
+      cy.get('[data-testid="application-selector"]>div').realClick();
+    });
     cy.get(`[data-value="${applicationName}"]`).click().wait(1000);
   }
 
@@ -38,8 +34,8 @@ export class TryOut {
   }
 
   static SelectResource(httpMethod: string, path: string) {
-    cy.get('[data-testid="get-test-key-btn"]').should('be.enabled')
-    cy.wait(5000)
+    cy.get('[data-testid="get-test-key-btn"]').should("be.enabled");
+    cy.wait(5000);
     const pathVariable = `[data-path="/${path}"]`;
     cy.get(".swagger-ui").within(() => {
       cy.get(pathVariable).realClick();
@@ -47,16 +43,10 @@ export class TryOut {
   }
 
   static TryoutAPI() {
-    cy.get('[id*="operations-"] button')
-      .contains("Try it out")
-      .should("exist")
-      .realClick();
-    cy.get(".opblock-section-header").contains("Cancel").should("exist");
-  }
-
-  static TryoutApplication() {
-    cy.get(".try-out__btn").should("exist").click();
-    cy.get(".opblock-section-header").contains("Cancel").should("exist");
+    cy.get('[class="try-out"]').find("button").realClick();
+    cy.get('[class="try-out"]')
+      .contains(new RegExp(/Cancel/, "g"))
+      .should("exist");
   }
 
   static InputQueryParamater(paramName: string, paramValue: any) {

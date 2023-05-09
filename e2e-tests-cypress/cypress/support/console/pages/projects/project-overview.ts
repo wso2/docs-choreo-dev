@@ -82,10 +82,6 @@ export class ProjectOverviewPage {
       .get('[data-cyid="httpProxyApi"]')
       .get('[data-testid="project-template-list-httpProxyApi"]')
       .should("be.enabled")
-      .get('[data-cyid="httpApi"]')
-      .get('[data-testid="project-template-list-httpApi"]')
-      .should("be.enabled")
-      .get('[data-cyid="httpApi"]');
   }
 
   static addComponent() {

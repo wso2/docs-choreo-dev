@@ -346,7 +346,7 @@ export class GraphQL {
   static getComponentDeploymentStatus(env: string = "dev") {
     const { handle, uuid } = Cypress.env("userData");
     const { componentId, latestAPIVersionId, environmentId } = Cypress.env(env);
-    const query = GraphQLQueryBuilder.getComponentDeploymentStatus(
+    const query = GraphQLQueryBuilder.getComponentDeploymentStatusQuery(
       handle,
       uuid,
       componentId,

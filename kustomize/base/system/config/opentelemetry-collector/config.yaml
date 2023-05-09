@@ -81,5 +81,5 @@ service:
       exporters: [logging, eventhubexporter/telemetry]
     metrics/dns:
       receivers: [otlp]
-      processors: [attributes, filter/dns, publishingfailuredetection]
+      processors: [attributes, filter/dns]
       exporters: [logging, eventhubexporter/dns]

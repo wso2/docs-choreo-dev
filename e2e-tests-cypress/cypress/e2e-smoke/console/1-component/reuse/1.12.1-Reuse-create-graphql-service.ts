@@ -23,13 +23,10 @@ import { GitHub } from "../../../../support/github/github";
 import { ComponentData } from "../../../../support/interfaces/component-data";
 
 
-
-
 const dp = Enums.Region.US;
 
 before(() => {
   LoginPage.login();
-  GitHub.deleteWebhooks("gql-service");
 });
 after(() => {
   ChoreoHomePage.logout();

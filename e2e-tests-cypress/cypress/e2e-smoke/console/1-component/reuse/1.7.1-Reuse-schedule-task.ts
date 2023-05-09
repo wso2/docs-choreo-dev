@@ -11,8 +11,8 @@
  * associated services.
  */
 
-import { MEDIUM_TIME } from "../../../../support/commons/constants";
 import { Enums } from "../../../../support/commons/enums";
+import { MEDIUM_TIME } from "../../../../support/commons/timeouts";
 import { ComponentDeployPage } from "../../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../../support/console/pages/component/component-listing-page";
 import { ComponentObservePage } from "../../../../support/console/pages/component/component-observe-page";
@@ -32,7 +32,6 @@ describe("Create Reusable Schedule Trigger", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("schedule-trigger");
   });
 
   after(() => {
@@ -70,7 +69,7 @@ describe("Create Reusable Schedule Trigger", () => {
 
   it("Verify task execution in observability ", () => {
     ComponentOverviewPage.navigateToObserve();
-    ComponentObservePage.gotoLogs(MEDIUM_TIME);
+    ComponentObservePage.gotoLogs(MEDIUM_TIME.timeout);
   });
   it("Verify dev env logs", () => {
     ComponentObservePage.selectEnv(Enums.Environment.DEVELOPMENT);

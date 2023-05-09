@@ -27,18 +27,21 @@ import { ComponentData } from "../../../support/interfaces/component-data";
 
 describe("Verify webhook creation functionality", () => {
   const CONFIG = "pkKgDNr5vGND364IsHzwGM7O";
-  const WEBHOOK_NAME = Utils.generateComponentName()
+  const WEBHOOK_NAME = Utils.generateComponentName();
   const REPO_NAME = Utils.generateComponentName("repo");
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Slack Webhook";
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("slack-web-hook")
   });
 
   after(() => {
     ChoreoHomePage.logout();
+  });
+
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
   });
 
   it("Verify Webhook component creation", () => {
@@ -55,12 +58,13 @@ describe("Verify webhook creation functionality", () => {
       repositorySubPath: "",
       sampleTemplate: "",
     };
-    ProjectListingPage.createNewProject(
+
+    GraphQL.createComponent(
       PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.US
+      REPO_NAME,
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
     );
-    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
   it("Deploy the component", () => {
