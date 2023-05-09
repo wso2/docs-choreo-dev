@@ -25,6 +25,6 @@ To change the lifecycle state of an API via the Choreo Console, follow the instr
      You must have publishing privileges to manage the lifecycle states of a component.
 
 1. Sign in to the Choreo Console.
-2. In the component list, click on a component for which you want to manage the lifecycle.
+2. In the **Component Listing** pane, click on the component for which you want to manage the lifecycle.
 3. In the left navigation menu, click **Manage**, and then click **Lifecycle**.
 4. In the **Lifecycle Management** pane, you will see the lifecycle state transition diagram indicating the current lifecycle state of the component. Just above the lifecycle state transition diagram, The possible lifecycle states you can apply to the component are displayed just above the lifecycle state transition diagram. Click on a required lifecycle state to apply it to the component. For example, if a component is in the **Created** state, you can click either **Pre-release** or **Publish**.
