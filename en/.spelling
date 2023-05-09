@@ -37,6 +37,11 @@ settings.toml
 BALLERINA_CENTRAL_ACCESS_TOKEN
 WebApps
 cron
+deployment.toml
+subpath
+codebase
+libs
+work-with-the-micro-integrator-runtime-in-choreo
 project.md
 component.md
 endpoint.md

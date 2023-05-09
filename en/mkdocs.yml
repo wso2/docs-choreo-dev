@@ -88,6 +88,7 @@ nav:
       - Environments: choreo-concepts/environments.md
   - Develop Components:
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
+      - Work with the Micro Integrator Runtime in Choreo: develop-components/work-with-the-micro-integrator-runtime-in-choreo.md
       - Develop Services:
           - Develop a REST API: develop-components/develop-services/develop-a-rest-api.md
       - Develop Integrations:
