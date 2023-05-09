@@ -54,7 +54,7 @@ describe("API overview comment and rating scenario", () => {
   });
 
   it("Test in devportal", () => {
-    DevPortalHelper.createDeployHttpProxyComponent(API_Name);
+    DevPortalHelper.createDeployHttpProxyComponent(API_Name, PROJECT_NAME);
   });
 
   it("verify api in devportal", () => {
