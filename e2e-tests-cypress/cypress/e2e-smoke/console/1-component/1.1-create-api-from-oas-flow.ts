@@ -11,7 +11,6 @@
  * associated services.
  */
 
-
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
 import { APIDeployment } from "../../../support/console/pages/apis/api-deployment";
@@ -38,8 +37,6 @@ import { Subscriptions } from "../../../support/devportal/pages/applications/sub
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { generateAppName } from "../../../support/devportal/utils";
 
-
-
 describe("Choreo APIM publisher scenarios", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
@@ -58,12 +55,22 @@ describe("Choreo APIM publisher scenarios", () => {
     ChoreoHomePage.logout();
   });
 
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+  });
+
   it("Creating and publishing an API from open API specification", () => {
     cy.log("Starting API Creation using open API specification");
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.createOpenApi(Filepath);
-    RestAPIProxyTemplate.enterAPIdetails(API_NAME, API_BASE_PATH, "", "", "", "get");
+    RestAPIProxyTemplate.enterAPIdetails(
+      API_NAME,
+      API_BASE_PATH,
+      "",
+      "",
+      "",
+      "get"
+    );
   });
 
   it("Verify component deployment and endpoint configurations", () => {
@@ -196,7 +203,7 @@ describe("Choreo APIM publisher scenarios", () => {
     TryOut.SelectApplication(appName);
     TryOut.GenerateAccessToken();
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);
-    TryOut.TryoutApplication();
+    TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.ValidateResponse("200");
   });

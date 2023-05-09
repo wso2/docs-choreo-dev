@@ -36,11 +36,14 @@ describe("Verify project creation functionality", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("rest-api");
   });
 
   after(() => {
     ChoreoHomePage.logout();
+  });
+
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
   });
 
   it("Verify REST API component creation", () => {
@@ -57,11 +60,7 @@ describe("Verify project creation functionality", () => {
       repositorySubPath: "",
       sampleTemplate: "",
     };
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.US
-    );
+
     GraphQL.createComponent(
       PROJECT_NAME,
       REPO_NAME,
@@ -252,7 +251,9 @@ describe("Verify project creation functionality", () => {
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.changeLifeCycleToPublished(Enums.ConnectorAudience.PRIVATE);
+    ComponentAPILifecycle.changeLifeCycleToPublished(
+      Enums.ConnectorAudience.PRIVATE
+    );
   });
 
   it("Verify connector publishing ", () => {

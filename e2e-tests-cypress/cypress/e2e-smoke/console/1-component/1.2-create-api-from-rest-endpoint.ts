@@ -32,8 +32,6 @@ import { TestHelper } from "../../../support/console/pages/component/common/test
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
 
-const dp = Enums.Region.US;
-
 before(() => {
   LoginPage.login();
 });
@@ -41,7 +39,7 @@ after(() => {
   ChoreoHomePage.logout();
 });
 
-describe(`Verify proxy api functionality in region ${dp}`, () => {
+describe(`Verify proxy api functionality`, () => {
   const API_NAME = Utils.generateComponentName("CYE2E");
   const API_BASE_PATH = Utils.generateBasePath();
   const API_VERSION = "1.0.0";
@@ -56,8 +54,11 @@ describe(`Verify proxy api functionality in region ${dp}`, () => {
   const PROJECT_NAME = Utils.generateProjectName();
   const idpUser = "choreoe2etest";
 
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+  });
+
   it("Verify Rest API creation from existing endpoint", () => {
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, dp);
     ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.skipSource();
     RestAPIProxyTemplate.enterAPIdetails(
@@ -65,7 +66,8 @@ describe(`Verify proxy api functionality in region ${dp}`, () => {
       API_BASE_PATH,
       API_ENDPOINT,
       API_VERSION,
-      "*", "get"
+      "*",
+      "get"
     );
     APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
   });

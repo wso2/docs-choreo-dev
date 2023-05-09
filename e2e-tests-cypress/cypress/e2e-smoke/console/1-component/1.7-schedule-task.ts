@@ -11,7 +11,6 @@
  * associated services.
  */
 
-
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentObservePage } from "../../../support/console/pages/component/component-observe-page";
@@ -28,7 +27,7 @@ import { Utils } from "../../../support/commons/utils";
 import { MEDIUM_TIME } from "../../../support/commons/timeouts";
 
 describe("Create Schedule Trigger", () => {
-  const SCHEDULE_NAME = Utils.generateComponentName()
+  const SCHEDULE_NAME = Utils.generateComponentName();
   const EXPECTED_RESULT =
     '{"userId":1,"id":1,"title":"delectus aut autem","completed":false}';
   const REPO_NAME = Utils.generateComponentName("repo");
@@ -37,11 +36,18 @@ describe("Create Schedule Trigger", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("schedule-trigger");
   });
 
   after(() => {
     ChoreoHomePage.logout();
+  });
+
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(
+      PROJECT_NAME,
+      PROJECT_DESCRIPTION,
+      Enums.Region.EU
+    );
   });
 
   it("Verify Schedule Trigger component creation", () => {
@@ -58,11 +64,6 @@ describe("Create Schedule Trigger", () => {
       repositorySubPath: "",
       sampleTemplate: "",
     };
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.EU
-    );
 
     GraphQL.createComponent(
       PROJECT_NAME,

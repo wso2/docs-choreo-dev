@@ -64,6 +64,10 @@ describe("Verify internal API creation functionality", () => {
     ChoreoHomePage.logout();
   });
 
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+  });
+
   it("Verify Internal REST API component creation", () => {
     let componentData: ComponentData = {
       componentName: REST_API_NAME,
@@ -78,11 +82,7 @@ describe("Verify internal API creation functionality", () => {
       repositorySubPath: "",
       sampleTemplate: "",
     };
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.US
-    );
+
     GraphQL.createComponent(
       PROJECT_NAME,
       "",
@@ -205,7 +205,8 @@ describe("Verify internal API creation functionality", () => {
       PROXY_API_BASEPATH_DEV,
       DEV_INVOKE_URL,
       PROXY_API_VERSION_DEV,
-      "*", ""
+      "*",
+      ""
     );
   });
 
@@ -274,7 +275,8 @@ describe("Verify internal API creation functionality", () => {
       PROXY_API_BASEPATH_PROD,
       PROD_INVOKE_URL,
       PROXY_API_VERSION_PROD,
-      "*", ""
+      "*",
+      ""
     );
   });
 

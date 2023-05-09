@@ -38,6 +38,14 @@ describe("Verify MI REST API component in root", () => {
     ChoreoHomePage.logout();
   });
 
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(
+      PROJECT_NAME,
+      PROJECT_DESCRIPTION,
+      Enums.Region.EU
+    );
+  });
+
   it("Verify REST API component creation", () => {
     let componentData: IntegrationComponentData = {
       componentName: COMPONENT_NAME,
@@ -51,11 +59,7 @@ describe("Verify MI REST API component in root", () => {
       oasFilePath: "",
       srcGitRepoBranch: "with-response-message",
     };
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.EU
-    );
+
     GraphQL.createIntegrationComponent(componentData);
   });
 

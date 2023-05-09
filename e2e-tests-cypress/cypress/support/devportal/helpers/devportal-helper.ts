@@ -11,7 +11,6 @@
  * associated services.
  */
 
-
 import { Enums } from "../../commons/enums";
 import { Utils } from "../../commons/utils";
 import { GraphQLQueryBuilder } from "../../console/apis/gql-query-builder";
@@ -27,31 +26,32 @@ import { RestAPIProxyTemplate } from "../../console/pages/templates/rest-api-pro
 
 import { ComponentData } from "../../interfaces/component-data";
 
-
 export class DevPortalHelper {
-
-  static PROJECT_DESCRIPTION = "sample oas flow scenario";
-  static PROJECT_NAME = Utils.generateProjectName();
   static API_BASE_PATH = Utils.generateBasePath();
   static Filepath = "apis/generation_oas.yaml";
   static REPO_NAME = Utils.generateComponentName("repo");
 
-
-  static createDeployHttpProxyComponent(API_Name) {
-    ProjectListingPage.createNewProject(DevPortalHelper.PROJECT_NAME, DevPortalHelper.PROJECT_DESCRIPTION);
+  static createDeployHttpProxyComponent(API_Name, projectName) {
     ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.createOpenApi(DevPortalHelper.Filepath);
-    RestAPIProxyTemplate.enterAPIdetails(API_Name, DevPortalHelper.API_BASE_PATH, "", "", "", "");
+    RestAPIProxyTemplate.enterAPIdetails(
+      API_Name,
+      DevPortalHelper.API_BASE_PATH,
+      "",
+      "",
+      "",
+      ""
+    );
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(this.PROJECT_NAME, API_Name);
-    APIDeployment.PromoteToProd()
+    APIDeployment.DeployToDev(projectName, API_Name);
+    APIDeployment.PromoteToProd();
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
   }
 
-  static createDeployRestApiComponent(API_Name, description, projectName = DevPortalHelper.PROJECT_NAME) {
+  static createDeployRestApiComponent(API_Name, projectName) {
     let componentData: ComponentData = {
       componentName: API_Name,
       displayType: Enums.DisplayType.restAPI,
@@ -65,20 +65,19 @@ export class DevPortalHelper {
       repositorySubPath: "",
       sampleTemplate: "",
     };
-    ProjectListingPage.createNewProject(
-      projectName,
-      DevPortalHelper.PROJECT_DESCRIPTION,
-      Enums.Region.US
-    );
-    GraphQL.createComponent(projectName, DevPortalHelper.REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
-      .then(() => {
-        ComponentListingPage.visitToAComponent(API_Name);
-        ComponentOverviewPage.navigateToDeploy();
-        ComponentDeployPage.deployToDev();
-        ComponentOverviewPage.navigateToManage();
-        ComponentAPILifecycle.manageLifecycle();
-        ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
-      });
-  }
 
+    GraphQL.createComponent(
+      projectName,
+      DevPortalHelper.REPO_NAME,
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
+    ).then(() => {
+      ComponentListingPage.visitToAComponent(API_Name);
+      ComponentOverviewPage.navigateToDeploy();
+      ComponentDeployPage.deployToDev();
+      ComponentOverviewPage.navigateToManage();
+      ComponentAPILifecycle.manageLifecycle();
+      ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
+    });
+  }
 }

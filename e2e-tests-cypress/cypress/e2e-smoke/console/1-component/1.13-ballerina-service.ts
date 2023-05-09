@@ -30,7 +30,6 @@ import { ComponentData } from "../../../support/interfaces/component-data";
 
 before(() => {
   LoginPage.login();
-  GitHub.deleteWebhooks("byor-service-app1")
 });
 
 after(() => {
@@ -43,6 +42,10 @@ describe("Verify Ballerina service functionality", () => {
   const PROJECT_DESCRIPTION = "sample ballerina service scenario";
   const REPO_NAME = Utils.generateComponentName("repo");
   const ENDPOINT_NAME = "Readinglist";
+
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+  });
 
   it("Verify Ballerina service component creation", () => {
     let componentData: ComponentData = {
@@ -58,12 +61,13 @@ describe("Verify Ballerina service functionality", () => {
       repositorySubPath: "",
       sampleTemplate: "",
     };
-    ProjectListingPage.createNewProject(
+
+    GraphQL.createComponent(
       PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.US
+      REPO_NAME,
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
     );
-    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
   it("Verify component deployment with project level endpoint", () => {
@@ -142,11 +146,12 @@ describe("Verify Ballerina service functionality", () => {
   });
 
   it("Verify resource access without the token in dev", () => {
-    Curl.getRequestComponentsForService(`${Enums.Environment.DEVELOPMENT}Books`).then(
-      (curl) =>
-        Utils.sendGetRequest(curl.url).then((res) => {
-          expect(res.status).equal(200);
-        })
+    Curl.getRequestComponentsForService(
+      `${Enums.Environment.DEVELOPMENT}Books`
+    ).then((curl) =>
+      Utils.sendGetRequest(curl.url).then((res) => {
+        expect(res.status).equal(200);
+      })
     );
   });
 
@@ -168,7 +173,7 @@ describe("Verify Ballerina service functionality", () => {
   it("Verify usage plan change", () => {
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
-  })
+  });
 
   it("Verify suspending all component deployments", () => {
     ComponentOverviewPage.navigateToDeploy();
@@ -181,4 +186,4 @@ describe("Verify Ballerina service functionality", () => {
     ComponentAPILifecycle.selectEndpoint(ENDPOINT_NAME);
     ComponentAPILifecycle.demoteToCreated();
   });
-})
+});
