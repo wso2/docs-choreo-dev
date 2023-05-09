@@ -51,7 +51,7 @@ describe("Create and deploy a component to test developer portal with custom dom
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.createOpenApi(Filepath);
-    RestAPIProxyTemplate.enterAPIdetails(API_NAME, API_BASE_PATH, "", "", "","");
+    RestAPIProxyTemplate.enterAPIdetails(API_NAME, API_BASE_PATH, "", "", "", "");
     cy.task('setAPIName', API_NAME);
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
@@ -113,7 +113,7 @@ describe("Login and test developer portal with custom domain", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.SelectResource("GET", OPERATION_USERS);
-    TryOut.TryoutAPI();
+    TryOut.TryoutApplication();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
   });

@@ -175,7 +175,7 @@ describe(`Verify proxy api functionality in region ${dp}`, () => {
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.SelectResource(null, OPERATION_USERS);
-    TryOut.TryoutAPI();
+    TryOut.TryoutApplication();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
   });

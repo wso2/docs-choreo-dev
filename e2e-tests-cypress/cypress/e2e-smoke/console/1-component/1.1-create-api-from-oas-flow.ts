@@ -168,7 +168,7 @@ describe("Choreo APIM publisher scenarios", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);
-    TryOut.TryoutAPI();
+    TryOut.TryoutApplication();
     TryOut.ExecuteResourceFunction();
     TryOut.ValidateResponse("200");
   });

@@ -76,7 +76,7 @@ describe("API overview comment and rating scenario", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.SelectResource("GET", OPERATION_USERS);
-    TryOut.TryoutAPI();
+    TryOut.TryoutApplication();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
   });

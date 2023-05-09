@@ -46,14 +46,6 @@ export class TryOut {
     });
   }
 
-  static TryoutAPI() {
-    cy.get('[id*="operations-"] button')
-      .contains("Try it out")
-      .should("exist")
-      .realClick();
-    cy.get(".opblock-section-header").contains("Cancel").should("exist");
-  }
-
   static TryoutApplication() {
     cy.get(".try-out__btn").should("exist").click();
     cy.get(".opblock-section-header").contains("Cancel").should("exist");

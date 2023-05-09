@@ -113,10 +113,10 @@ export class ComponentAPILifecycle {
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').should("be.enabled").click();
     this.handleConnectorPublishPopup();
-    cy.get('[data-testid="published-connector-info"]').contains("You have already published a connector for this API.", 
+    cy.get('[data-testid="published-connector-info"]').contains("You have already published a connector for this API.",
       LONG_TIME);
     cy.get('[data-testid="connector-publish-wizard-title"]').should("not.exist");
-   }
+  }
 
   static publishToDevportal() {
     cy.get('[data-testid="Publish-lc-btn"]').click();
@@ -342,11 +342,9 @@ export class ComponentAPILifecycle {
 
   static deletePermission(permissionName: string) {
     cy.get(`[data-testid="scope-delete-btn-${permissionName}"]`).click();
-    cy.get('[data-testid="scope-delete-description"]').contains(
-      `Are you sure you want to Delete the permission (scope) "${permissionName}"?`
-    );
+    cy.contains(`Delete the permission (scope) "${permissionName}"?`);
     // Verify scope being used by how many resources
-    cy.get('[data-testid="scope-delete-delete-button"]').click();
+    cy.get('[data-cyid="btn-confirmation-dialog-red"]').click();
     cy.contains("Permission(Scope) deleted successfully");
   }
 
