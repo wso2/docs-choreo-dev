@@ -19,27 +19,27 @@ Before you try out this guide, complete the following:
 
     This creates the organization and opens the **Project Home** page of the default project created for you.
 
-
 ## Step 1: Create an integration as an API component
 
-1. Go to [https://console.choreo.dev/ipaas](https://console.choreo.dev/ipaas) and sign in. 
-2. On the **Project Home** page, go to the **+Integration as an API** card and click **Create**.
-3. Enter a unique name and a description for the component. For example, you can enter the name and the description given below:
+1. Go to [https://console.choreo.dev/ipaas](https://console.choreo.dev/ipaas) and sign in. This opens the **Project Home** page.
+2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step. 
+3. Go to the **Integration as an API** card and click **Create**.
+4. Enter a unique name and a description for the component. You can enter the name and description given below:
 
     | **Field**       | **Value**                        |
     |-----------------|----------------------------------|
     | **Name**        | `FirstIntegration`               |
     | **Description** | `First integration as a service` |
 
-4. Select **External** as the **Access Mode**, and click **Next**.
-5. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
-6. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+5. Select **External** as the **Access Mode**, and click **Next**.
+6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
+7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
 
-7. In the **Connect Repository** pane, enter the following information:
+8. In the **Connect Repository** pane, enter the following information:
 
     | **Field**             | **Description**                               |
     |-----------------------|-----------------------------------------------|
@@ -49,8 +49,8 @@ Before you try out this guide, complete the following:
     | **Build Preset**      | Click **Ballerina** because you are creating the REST API from a [Ballerina](https://ballerina.io/) project, and Choreo needs to run a Ballerina build to build it.|
     | **Project Path**      | Since the path is empty, select **Start with a sample**.  |
 
-8. Click **Next**. Choreo initializes the component with the sample implementation and sends a pull request to the GitHub repository you connected.
-9. Review and merge the pull request.
+9. Click **Next**. Choreo initializes the component with the sample implementation and sends a pull request to the GitHub repository you connected.
+10. Review and merge the pull request.
 
 ## Step 2: Implement the integration logic
 
