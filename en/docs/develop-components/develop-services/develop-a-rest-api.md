@@ -1,4 +1,4 @@
-# REST API
+# Develop a REST API
 
 Choreo is a platform that allows you to create and deploy applications in any language.  In this guide, you will use Choreo to create a service component that exposes a REST API in Go. You are not required to have any prior knowledge of the Go language to follow the guide. 
 
