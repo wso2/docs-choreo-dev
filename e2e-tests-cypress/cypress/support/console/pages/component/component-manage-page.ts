@@ -11,11 +11,9 @@
  * associated services.
  */
 
-
 import { Enums } from "../../../commons/enums";
 import { LONG_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
-
 
 export class ComponentAPILifecycle {
   static devportl_btn = '[data-testid="go-to-dev-portal-btn"]';
@@ -67,8 +65,10 @@ export class ComponentAPILifecycle {
   }
 
   static demoteToCreated() {
-    cy.get('[data-cyid="Demote to Created-lc-btn"]').should("be.visible").click();
-    cy.get(ComponentAPILifecycle.devportl_btn).should('be.disabled');
+    cy.get('[data-cyid="Demote to Created-lc-btn"]')
+      .should("be.visible")
+      .click();
+    cy.get(ComponentAPILifecycle.devportl_btn).should("be.disabled");
   }
 
   static goToDeveloperPortalWithoutLogin(idpUser: string = "") {
@@ -82,7 +82,9 @@ export class ComponentAPILifecycle {
   static selectUsagePlans(...plans) {
     cy.get('[data-testid="Usage plans"]').click();
     cy.get('[data-testid="checkbox-Unlimited"]').click();
-    plans.forEach((plan) => { cy.get(`[data-testid="checkbox-${plan}"]`).click() });
+    plans.forEach((plan) => {
+      cy.get(`[data-testid="checkbox-${plan}"]`).click();
+    });
     cy.get("button > span").contains("Save").click();
     cy.get('[data-testid="checkbox-Unlimited"]');
   }
@@ -102,7 +104,9 @@ export class ComponentAPILifecycle {
     });
   }
 
-  static changeLifeCycleToPublished(connectorAudience: Enums.ConnectorAudience) {
+  static changeLifeCycleToPublished(
+    connectorAudience: Enums.ConnectorAudience
+  ) {
     cy.get('[data-testid="Publish-lc-btn"]').click();
     cy.get('[aria-labelledby="confirmation-dialog"]').should("be.visible");
     cy.contains("Yes, Please").should("be.enabled").click();
@@ -113,10 +117,14 @@ export class ComponentAPILifecycle {
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').should("be.enabled").click();
     this.handleConnectorPublishPopup();
-    cy.get('[data-testid="published-connector-info"]').contains("You have already published a connector for this API.", 
-      LONG_TIME);
-    cy.get('[data-testid="connector-publish-wizard-title"]').should("not.exist");
-   }
+    cy.get('[data-testid="published-connector-info"]').contains(
+      "You have already published a connector for this API.",
+      LONG_TIME
+    );
+    cy.get('[data-testid="connector-publish-wizard-title"]').should(
+      "not.exist"
+    );
+  }
 
   static publishToDevportal() {
     cy.get('[data-testid="Publish-lc-btn"]').click();
@@ -267,7 +275,9 @@ export class ComponentAPILifecycle {
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
       .should("exist")
       .click();
-    cy.contains(`Successfully converted to an ${accessMode.toLowerCase()} API.`).should("be.visible");
+    cy.contains(
+      `Successfully converted to an ${accessMode.toLowerCase()} API.`
+    ).should("be.visible");
   }
 
   static managePermissions(permissions: string[], componentName: string) {
@@ -287,7 +297,9 @@ export class ComponentAPILifecycle {
   }
 
   static navigatePermissionManagementWindow() {
-    cy.get("h5").contains("You don't have any permissions (scopes) defined as yet");
+    cy.get("h5").contains(
+      "You don't have any permissions (scopes) defined as yet"
+    );
     cy.get('[data-testid="scope-add-icon-button"]').click();
   }
 
@@ -342,11 +354,10 @@ export class ComponentAPILifecycle {
 
   static deletePermission(permissionName: string) {
     cy.get(`[data-testid="scope-delete-btn-${permissionName}"]`).click();
-    cy.get('[data-testid="scope-delete-description"]').contains(
-      `Are you sure you want to Delete the permission (scope) "${permissionName}"?`
-    );
     // Verify scope being used by how many resources
-    cy.get('[data-testid="scope-delete-delete-button"]').click();
+    cy.get('[data-cyid="btn-confirmation-dialog-red"]')
+      .should("be.visible")
+      .click();
     cy.contains("Permission(Scope) deleted successfully");
   }
 
