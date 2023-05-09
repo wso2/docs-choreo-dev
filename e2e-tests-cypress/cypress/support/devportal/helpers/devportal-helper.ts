@@ -27,13 +27,11 @@ import { RestAPIProxyTemplate } from "../../console/pages/templates/rest-api-pro
 import { ComponentData } from "../../interfaces/component-data";
 
 export class DevPortalHelper {
-  static PROJECT_DESCRIPTION = "sample oas flow scenario";
-  static PROJECT_NAME = Utils.generateProjectName();
   static API_BASE_PATH = Utils.generateBasePath();
   static Filepath = "apis/generation_oas.yaml";
   static REPO_NAME = Utils.generateComponentName("repo");
 
-  static createDeployHttpProxyComponent(API_Name) {
+  static createDeployHttpProxyComponent(API_Name, projectName) {
     ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.createOpenApi(DevPortalHelper.Filepath);
     RestAPIProxyTemplate.enterAPIdetails(
@@ -45,7 +43,7 @@ export class DevPortalHelper {
       ""
     );
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(this.PROJECT_NAME, API_Name);
+    APIDeployment.DeployToDev(projectName, API_Name);
     APIDeployment.PromoteToProd();
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
@@ -53,11 +51,7 @@ export class DevPortalHelper {
     ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
   }
 
-  static createDeployRestApiComponent(
-    API_Name,
-    description,
-    projectName = DevPortalHelper.PROJECT_NAME
-  ) {
+  static createDeployRestApiComponent(API_Name, projectName) {
     let componentData: ComponentData = {
       componentName: API_Name,
       displayType: Enums.DisplayType.restAPI,
