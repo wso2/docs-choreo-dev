@@ -43,6 +43,10 @@ describe("Verify project creation functionality", () => {
     ChoreoHomePage.logout();
   });
 
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+  });
+
   it("Verify REST API component creation", () => {
     let componentData: ComponentData = {
       componentName: COMPONENT_NAME,
@@ -57,11 +61,7 @@ describe("Verify project creation functionality", () => {
       repositorySubPath: "",
       sampleTemplate: "",
     };
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.US
-    );
+
     GraphQL.createComponent(
       PROJECT_NAME,
       REPO_NAME,
@@ -252,7 +252,9 @@ describe("Verify project creation functionality", () => {
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.changeLifeCycleToPublished(Enums.ConnectorAudience.PRIVATE);
+    ComponentAPILifecycle.changeLifeCycleToPublished(
+      Enums.ConnectorAudience.PRIVATE
+    );
   });
 
   it("Verify connector publishing ", () => {

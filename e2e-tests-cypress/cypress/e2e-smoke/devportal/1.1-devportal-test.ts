@@ -30,9 +30,12 @@ import { APISdk } from "../../support/devportal/pages/apis/api-sdk";
 import { DevPortalHelper } from "../../support/devportal/helpers/devportal-helper";
 import { Utils } from "../../support/commons/utils";
 import { ComponentListingPage } from "../../support/console/pages/component/component-listing-page";
+import { ProjectListingPage } from "../../support/console/pages/projects/projects-listing-page";
 
 describe("API overview comment and rating scenario", () => {
   const API_Name = Utils.generateComponentName("oas");
+  const PROJECT_DESCRIPTION = "sample oas flow scenario";
+  const PROJECT_NAME = Utils.generateProjectName();
   const idpUser = "choreoe2etest";
   const OPERATION_USERS = "intensity";
   const appName = generateAppName("-e2etest");
@@ -40,25 +43,25 @@ describe("API overview comment and rating scenario", () => {
 
   before(() => {
     LoginPage.login();
-
   });
 
   after(() => {
     ChoreoHomePage.logout();
   });
 
-
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+  });
 
   it("Test in devportal", () => {
     DevPortalHelper.createDeployHttpProxyComponent(API_Name);
-
   });
 
   it("verify api in devportal", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.verifyAPIname().should("eq", API_Name);
     Apis.searchApiAndSelect(API_Name);
-  })
+  });
 
   it("Add and delete comment for the API", () => {
     ApiOverview.addCommentToApi("Test comment from Cypress Test Runner");
@@ -106,7 +109,6 @@ describe("API overview comment and rating scenario", () => {
   });
 
   it("Verify suspending Prod deployed component", () => {
-
     ComponentDeployPage.stopProdContainer();
   });
 });

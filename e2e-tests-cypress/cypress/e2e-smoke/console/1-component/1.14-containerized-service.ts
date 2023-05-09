@@ -27,7 +27,7 @@ import { ByocComponent } from "../../../support/interfaces/byoc-component";
 
 before(() => {
   LoginPage.login();
-  GitHub.deleteWebhooks("byoc-service-app")
+  GitHub.deleteWebhooks("byoc-service-app");
 });
 
 after(() => {
@@ -40,6 +40,10 @@ describe("Verify containerized service functionality", () => {
   const PROJECT_DESCRIPTION = "sample containerized service scenario";
   const REPO_NAME = Utils.generateComponentName("repo");
   const ENDPOINT_NAME = "Go Greeter";
+
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+  });
 
   it("Verify containerized service component creation", () => {
     let componentData: ByocComponent = {
@@ -57,14 +61,15 @@ describe("Verify containerized service functionality", () => {
         dockerContext: "",
         srcGitRepoUrl: "https://github.com/choreo-test-apps/byoc-service-app",
         srcGitRepoBranch: "main",
-      }
+      },
     };
-    ProjectListingPage.createNewProject(
+
+    GraphQL.createComponent(
       PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.US
+      REPO_NAME,
+      componentData,
+      GraphQLQueryBuilder.getBYOCComponentCreationQuery
     );
-    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getBYOCComponentCreationQuery)
   });
 
   it("Verify component deployment with public level endpoint", () => {
@@ -106,4 +111,4 @@ describe("Verify containerized service functionality", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });
-})
+});

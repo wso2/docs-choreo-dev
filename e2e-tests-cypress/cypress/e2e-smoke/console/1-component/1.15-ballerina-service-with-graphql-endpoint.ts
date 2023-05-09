@@ -25,8 +25,6 @@ import { ProjectListingPage } from "../../../support/console/pages/projects/proj
 import { GitHub } from "../../../support/github/github";
 import { ComponentData } from "../../../support/interfaces/component-data";
 
-const dp = Enums.Region.US;
-
 before(() => {
   LoginPage.login();
   GitHub.deleteWebhooks("gql-service");
@@ -35,16 +33,20 @@ after(() => {
   ChoreoHomePage.logout();
 });
 
-describe(`Graphql GQL service functionality in region ${dp}`, () => {
+describe(`Graphql GQL service functionality`, () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
   const TEST_QUERY = '{greeting(name:"John")}';
   const TEST_QUERY_RESPONSE = 'greeting": "Hello, John';
   const TEST_MUTATION = 'mutation{createUser(name:"John")}';
   const TEST_MUTATION_RESPONSE = 'createUser": "User created with name: John';
-  const COMPONENT_NAME = Utils.generateComponentName()
+  const COMPONENT_NAME = Utils.generateComponentName();
   const REPO_NAME = "graphql-service-sample";
   const ENDPOINT_NAME = "GraphQL Greet";
+
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+  });
 
   it("Verify GraphQL component creation", () => {
     let componentData: ComponentData = {
@@ -58,9 +60,9 @@ describe(`Graphql GQL service functionality in region ${dp}`, () => {
       initializeAsBallerinaProject: false,
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: "",
-      sampleTemplate: ""
+      sampleTemplate: "",
     };
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, dp);
+
     GraphQL.createComponent(
       PROJECT_NAME,
       REPO_NAME,
@@ -77,12 +79,20 @@ describe(`Graphql GQL service functionality in region ${dp}`, () => {
 
   it("Verify test functionality of GQL query in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testGraphQL(Enums.Environment.DEVELOPMENT,TEST_QUERY, ENDPOINT_NAME);
+    TestHelper.testGraphQL(
+      Enums.Environment.DEVELOPMENT,
+      TEST_QUERY,
+      ENDPOINT_NAME
+    );
     TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
   });
 
   it("Verify test functionality of GQL mutation in dev on swagger", () => {
-    TestHelper.testGraphQL(Enums.Environment.DEVELOPMENT, TEST_MUTATION, ENDPOINT_NAME);
+    TestHelper.testGraphQL(
+      Enums.Environment.DEVELOPMENT,
+      TEST_MUTATION,
+      ENDPOINT_NAME
+    );
     TestHelper.getGqlResult(TEST_MUTATION_RESPONSE);
   });
 
@@ -93,12 +103,20 @@ describe(`Graphql GQL service functionality in region ${dp}`, () => {
 
   it("Verify test functionality of GQL query in Prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testGraphQL(Enums.Environment.PRODUCTION, TEST_QUERY, ENDPOINT_NAME);
+    TestHelper.testGraphQL(
+      Enums.Environment.PRODUCTION,
+      TEST_QUERY,
+      ENDPOINT_NAME
+    );
     TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
   });
 
   it("Verify test functionality of GQL mutation in Prod on swagger", () => {
-    TestHelper.testGraphQL(Enums.Environment.PRODUCTION, TEST_MUTATION, ENDPOINT_NAME);
+    TestHelper.testGraphQL(
+      Enums.Environment.PRODUCTION,
+      TEST_MUTATION,
+      ENDPOINT_NAME
+    );
     TestHelper.getGqlResult(TEST_MUTATION_RESPONSE);
   });
 
