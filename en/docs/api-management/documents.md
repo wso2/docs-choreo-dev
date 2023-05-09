@@ -15,11 +15,11 @@ To add documentation for an API, follow the steps given below.
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 
-2. In the component list, click on the component for which you want to add documents. 
+2. In the **Component Listing** pane, click on the component for which you want to add documents. 
 
 3. In the left navigation menu, click **Manage** and then click **Documents**.
 
-4. Add a title for the document and provide the content in markdown syntax. 
+4. Specify a title for the document and provide the content in markdown syntax. 
    
 5. Click **Add** to save the document.
 
