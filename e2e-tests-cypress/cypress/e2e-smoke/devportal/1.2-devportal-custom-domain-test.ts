@@ -122,7 +122,7 @@ describe("Login and test developer portal with custom domain", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.SelectResource("GET", OPERATION_USERS);
-    TryOut.TryoutApplication();
+    TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
   });

@@ -382,7 +382,7 @@ describe("Verify internal API creation functionality", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.SelectResource(Enums.HTTPMethod.GET, "greeting");
-    TryOut.TryoutApplication();
+    TryOut.TryoutAPI();
     TryOut.InputQueryParamater(PARAM_NAME, PARAM_VALUE);
     TryOut.ExecuteResourceFunction();
     TryOut.ValidateResponse("200");

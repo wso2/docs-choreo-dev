@@ -354,16 +354,10 @@ export class ComponentAPILifecycle {
 
   static deletePermission(permissionName: string) {
     cy.get(`[data-testid="scope-delete-btn-${permissionName}"]`).click();
-<<<<<<< HEAD
-    cy.contains(`Delete the permission (scope) "${permissionName}"?`);
-    // Verify scope being used by how many resources
-    cy.get('[data-cyid="btn-confirmation-dialog-red"]').click();
-=======
     // Verify scope being used by how many resources
     cy.get('[data-cyid="btn-confirmation-dialog-red"]')
       .should("be.visible")
       .click();
->>>>>>> 7cd2d2db095d4ba1991a71397a0071dab9c2b660
     cy.contains("Permission(Scope) deleted successfully");
   }
 
