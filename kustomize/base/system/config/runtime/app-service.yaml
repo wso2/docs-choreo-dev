@@ -172,6 +172,12 @@ defaultRoles:
         - {{.PERMISSION_CONFIG_CREATE}}
         - {{.PERMISSION_CONFIG_DELETE}}
         - {{.PERMISSION_CONFIG_MANAGE}}
+        - {{.PERMISSION_COMPONENT_CREATE}}
+        - {{.PERMISSION_COMPONENT_CONFIG_VIEW}}
+        - {{.PERMISSION_COMPONENT_LOGS_VIEW}}
+        - {{.PERMISSION_COMPONENT_INIT_VIEW}}
+        - {{.PERMISSION_COMPONENT_FILE_VIEW}}
+        - {{.PERMISSION_COMPONENT_COMPONENT_MANAGE}}
     - name: API Subscriber
       handle: api-subscriber
       description: Users or Application Developers who search the Developer Portal to discover APIs and use them. They read the documentation and forums, rates/comments on the APIs, subscribes to APIs, obtain access tokens, and invokes the APIs
@@ -274,6 +280,8 @@ defaultRoles:
         - {{.PERMISSION_CUSTOM_DOMAIN_DELETE}}
         - {{.PERMISSION_CUSTOM_DOMAIN_UPDATE}}
         - {{.PERMISSION_CUSTOM_DOMAIN_MANAGE}}
+        - {{.PERMISSION_COMPONENT_TRIGGER}}
+        - {{.PERMISSION_COMPONENT_COMPONENT_MANAGE}}
     - name: Project Manager
       handle: project-manager
       description: Users who are involved in project management
@@ -301,6 +309,12 @@ defaultRoles:
         - {{.PERMISSION_CONFIG_CREATE}}
         - {{.PERMISSION_CONFIG_DELETE}}
         - {{.PERMISSION_CONFIG_MANAGE}}
+        - {{.PERMISSION_COMPONENT_CREATE}}
+        - {{.PERMISSION_COMPONENT_CONFIG_VIEW}}
+        - {{.PERMISSION_COMPONENT_LOGS_VIEW}}
+        - {{.PERMISSION_COMPONENT_INIT_VIEW}}
+        - {{.PERMISSION_COMPONENT_FILE_VIEW}}
+        - {{.PERMISSION_COMPONENT_COMPONENT_MANAGE}}
 roleBasedUserMgt:
   enabled: ${ROLE_BASED_USER_MGT_ENABLED}
 onPremKeySubscription:
