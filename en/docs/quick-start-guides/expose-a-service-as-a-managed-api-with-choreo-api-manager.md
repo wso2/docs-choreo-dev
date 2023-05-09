@@ -29,7 +29,7 @@ Follow the steps given below:
 3. Go to the **REST API Proxy** card and click **Create**.
 4. In the **Create API Proxy** pane that opens, click **Try with sample URL**.
 5. Click **Next**.
-6.  Update the populated API proxy details with the values given in the following table: 
+6. Update the populated API proxy details with the values given in the following table: 
 
     |  **Field**    | **Value**                                   |
     |---------------|---------------------------------------------|
@@ -39,7 +39,7 @@ Follow the steps given below:
     | **Target**    | `https://petstore3.swagger.io/api/v3` |
     |**Access Mode**| `External: API is publicly accessible`      |
 
-7.  Click **Create**.
+7. Click **Create**.
    
    This takes you to the **Develop** view, where you can see the operations of the REST API proxy.
 
