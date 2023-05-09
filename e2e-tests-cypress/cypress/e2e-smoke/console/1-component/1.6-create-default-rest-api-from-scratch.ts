@@ -28,7 +28,6 @@ import { Utils } from "../../../support/commons/utils";
 
 before(() => {
   LoginPage.login();
-  GitHub.deleteWebhooks("greeting-rest-api");
 });
 
 after(() => {

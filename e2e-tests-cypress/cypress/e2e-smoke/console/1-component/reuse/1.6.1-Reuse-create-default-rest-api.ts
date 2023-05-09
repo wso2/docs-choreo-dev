@@ -38,7 +38,6 @@ describe("Verify Reusable RestAPI functionality", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("greeting-rest-api");
   });
 
   after(() => {

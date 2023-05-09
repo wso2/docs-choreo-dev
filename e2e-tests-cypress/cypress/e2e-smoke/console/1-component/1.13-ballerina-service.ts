@@ -30,7 +30,6 @@ import { ComponentData } from "../../../support/interfaces/component-data";
 
 before(() => {
   LoginPage.login();
-  GitHub.deleteWebhooks("byor-service-app1");
 });
 
 after(() => {

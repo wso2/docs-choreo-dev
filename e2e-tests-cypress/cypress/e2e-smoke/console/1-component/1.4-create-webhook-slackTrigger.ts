@@ -34,7 +34,6 @@ describe("Verify webhook creation functionality", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("slack-web-hook");
   });
 
   after(() => {

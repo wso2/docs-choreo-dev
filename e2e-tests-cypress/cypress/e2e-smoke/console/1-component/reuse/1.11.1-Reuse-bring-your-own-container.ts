@@ -24,9 +24,6 @@ import { ProjectOverviewPage } from "../../../../support/console/pages/projects/
 import { ProjectListingPage } from "../../../../support/console/pages/projects/projects-listing-page";
 import { ByocComponent } from "../../../../support/interfaces/byoc-component";
 
-
-
-
 const dp = Enums.Region.US;
 
 before(() => {

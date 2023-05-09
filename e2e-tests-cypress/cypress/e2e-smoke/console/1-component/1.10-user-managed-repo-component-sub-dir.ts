@@ -38,7 +38,6 @@ describe("Verify BYOR functionality", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("byor-greetings-app2");
   });
 
   after(() => {

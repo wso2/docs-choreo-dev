@@ -36,7 +36,6 @@ describe("Create Schedule Trigger", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("schedule-trigger");
   });
 
   after(() => {

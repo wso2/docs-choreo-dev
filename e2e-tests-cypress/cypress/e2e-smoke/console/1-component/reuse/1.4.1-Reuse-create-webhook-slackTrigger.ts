@@ -32,7 +32,6 @@ describe("Create Reusable Webhook functionality", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("slack-web-hook")
   });
 
   after(() => {

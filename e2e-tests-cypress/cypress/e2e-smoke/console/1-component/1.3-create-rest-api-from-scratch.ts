@@ -36,7 +36,6 @@ describe("Verify project creation functionality", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("rest-api");
   });
 
   after(() => {

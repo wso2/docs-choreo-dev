@@ -27,7 +27,6 @@ import { ByocComponent } from "../../../support/interfaces/byoc-component";
 
 before(() => {
   LoginPage.login();
-  GitHub.deleteWebhooks("byoc-service-app");
 });
 
 after(() => {

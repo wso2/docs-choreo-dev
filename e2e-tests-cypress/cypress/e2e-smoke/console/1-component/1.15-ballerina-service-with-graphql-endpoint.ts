@@ -27,7 +27,6 @@ import { ComponentData } from "../../../support/interfaces/component-data";
 
 before(() => {
   LoginPage.login();
-  GitHub.deleteWebhooks("gql-service");
 });
 after(() => {
   ChoreoHomePage.logout();
