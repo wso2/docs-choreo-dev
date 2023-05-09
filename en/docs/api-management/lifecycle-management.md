@@ -17,7 +17,7 @@ The following lifecycle states are applicable to APIs in Choreo:
 | **DEPRECATED** | The old version of an API is moved to this state when a newer version of the API is PUBLISHED.| The API is deployed and is available to existing subscribers. New subscriptions are disabled. Existing subscribers can continue to use it as usual until the API is retired.|
 | **RETIRED** | The API is no longer in use when it is in this state.| The API is unpublished and deleted from the Developer Portal.|
 
-## Manage the lifecycle of an API¶
+## Manage the lifecycle of an API
 
 To change the lifecycle state of an API via the Choreo Console, follow the instructions given below:
 
