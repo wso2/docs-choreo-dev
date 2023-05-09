@@ -89,6 +89,7 @@ nav:
   - Develop Components:
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
       - Develop Services:
+          - Develop a service: develop-components/develop-services/develop-a-service.md
           - Develop a REST API: develop-components/develop-services/develop-a-rest-api.md
       - Develop Integrations:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
@@ -214,7 +215,7 @@ plugins:
           'develop/components/scheduled-trigger.md': 'https://wso2.com/choreo/docs'
           'develop/components/manual-trigger.md': 'https://wso2.com/choreo/docs'
           'develop/components/graphql-api.md': 'https://wso2.com/choreo/docs'
-          'develop/components/service.md': 'https://wso2.com/choreo/docs'
+          'develop/components/service.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/'
           'develop/manage-repository/connect-your-own-github-repository-to-choreo.md': 'https://wso2.com/choreo/docs'
           'develop/run-and-test/forecast-performance-metrics.md': 'https://wso2.com/choreo/docs'
           'develop/api-policies/policies.md': 'https://wso2.com/choreo/docs'
