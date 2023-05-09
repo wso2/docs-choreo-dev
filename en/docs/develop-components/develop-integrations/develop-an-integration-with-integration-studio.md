@@ -28,7 +28,7 @@ Before you try out the steps in this guide, complete the following:
 
 1. Sign in to [Choreo iPaaS](https://console.choreo.dev/ipaas)<https://console.choreo.dev/ipaas>. This opens the **Project Home** page in the Choreo Console. 
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
-3. Go to the **+Integration as an API** card and click **Create**.
+3. Go to the **Integration as an API** card and click **Create**.
 3. Enter a unique name and a description for the component. For example, you can enter the name and the description given below:
 
     | **Field**       | **Value**              |
