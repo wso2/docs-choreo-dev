@@ -1,32 +1,30 @@
 # Lifecycle Management
 
-Managing the API lifecycle is one of the main factors in API management. An API lifecycle has predefined states. These states represent the different stages the API transitions from creation to retirement. Choreo has six lifecycle states: created, pre-released, published, blocked, deprecated, and retired.
+API lifecycle management is an important aspect of API management. The API lifecycle consists of various states that an API passes through, from creation to retirement. In Choreo, there are six distinct lifecycle states: created, pre-released, published, blocked, deprecated, and retired.
+
+By leveraging the various lifecycle states, API managers can optimize the development process and ensure that subscribers have access to the latest and most reliable APIs.
 
 ## API lifecycle states
 
-The following lifecycle states are available in the default API lifecycle and applicable for APIs.
+The following lifecycle states are applicable to APIs in Choreo:
 
-|   **API Lifecycle State** |   **Use Case** |   **Action**  |
+| **API lifecycle state** | **Use case** | **Corresponding action** |
 |-----------------------|------------|-----------|
-|   **CREATED**         | The API is created but is not ready for consumption.| The API is not published. Therefore, it is not visible to subscribers in the Developer Portal.|
-|   **PRE-RELEASED**      | A prototype is created for early promotion and consumer testing. You can deploy a new API or a new version of an existing API as a prototype using the PRE-RELEASED state. It gives subscribers an early implementation of the API.|The API is published in the Developer Portal as a pre-release.|
-|   **PUBLISHED**       | The API is ready to be used by users in the Developer Portal.| The API is visible in the Developer Portal and available for subscription.|
-|   **BLOCKED**         | The API is temporarily blocked from being used. The API can be PUBLISHED from the BLOCKED state.| Access to the API is temporarily blocked. Runtime calls are blocked and the API is not shown in the Developer Portal anymore.|
-|   **DEPRECATED**      | The old version of the API is DEPRECATED when a newer version of the API is created and PUBLISHED.| When an API is deprecated, new subscriptions are disabled. However, the API is still deployed and is available at runtime to existing subscribers. Existing subscribers can continue to use it as usual until the API is retired.|
-|   **RETIRED**         | The API is no longer in use and has been moved to the RETIRED state.| The API is unpublished and deleted from the Developer Portal.|
+| **CREATED** | The API is created but is not ready for consumption.| The API is not visible to subscribers in the Developer Portal.|
+| **PRE-RELEASED** | A prototype is created for early promotion and consumer testing. You can deploy a new API or a new version of an existing API as a prototype to provide subscribers with an early implementation of the API.|The API is published to the Developer Portal as a pre-release.|
+| **PUBLISHED** | The API is ready for subscribers to view and subscribe to via the Developer Portal| The API is visible in the Developer Portal and is available for subscription.|
+| **BLOCKED** | Access to the API is temporarily blocked.| Runtime calls are blocked, and the API is not visible in the Developer Portal.|
+| **DEPRECATED** | The old version of an API is moved to this state when a newer version of the API is PUBLISHED.| The API is deployed and is available to existing subscribers. New subscriptions are disabled. Existing subscribers can continue to use it as usual until the API is retired.|
+| **RETIRED** | The API is no longer in use when it is in this state.| The API is unpublished and deleted from the Developer Portal.|
 
-## Manage API lifecycle
+## Manage the lifecycle of an API
 
-The lifecycle of an API can be managed by the users with publishing privileges, using the Choreo Console. 
+To change the lifecycle state of an API via the Choreo Console, follow the instructions given below:
 
-Follow the instructions below to manage the API lifecycle appropriately:
+!!! tip      
+     You must have publishing privileges to manage the lifecycle states of a component.
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
-
-2. Select and click on the API component you want to test from the components list. 
-
-3. in the left panel, click the **Manage** icon to open the test view.
-
-4. In the left pane, click **Lifecycle**.
-
-5. Click on the lifecycle state change buttons to change the lifecycle state.
+1. Sign in to the Choreo Console.
+2. In the **Component Listing** pane, click on the component for which you want to manage the lifecycle.
+3. In the left navigation menu, click **Manage**, and then click **Lifecycle**.
+4. In the **Lifecycle Management** pane, you will see the lifecycle state transition diagram indicating the current lifecycle state of the component. Just above the lifecycle state transition diagram, The possible lifecycle states you can apply to the component are displayed just above the lifecycle state transition diagram. Click on a required lifecycle state to apply it to the component. For example, if a component is in the **Created** state, you can click either **Pre-release** or **Publish**.

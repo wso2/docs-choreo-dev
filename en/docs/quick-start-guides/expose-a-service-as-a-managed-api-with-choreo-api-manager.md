@@ -24,13 +24,12 @@ To create a REST API proxy, you can either upload an OpenAPI specification or pr
 
 Follow the steps given below:
 
-1. On the **Project Home** page, go to the **REST API Proxy** card and click **Create**.
-
-2. In the **Create API Proxy** pane that opens, click **Try with sample URL**.
-
-3. Click **Next**.
-
-4.  Update the populated API proxy details with the values given in the following table: 
+1. Go to [https://console.choreo.dev/apim](https://console.choreo.dev/apim) and sign in. This opens the **Project Home** page.
+2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
+3. Go to the **REST API Proxy** card and click **Create**.
+4. In the **Create API Proxy** pane that opens, click **Try with sample URL**.
+5. Click **Next**.
+6. Update the populated API proxy details with the values given in the following table: 
 
     |  **Field**    | **Value**                                   |
     |---------------|---------------------------------------------|
@@ -40,7 +39,7 @@ Follow the steps given below:
     | **Target**    | `https://petstore3.swagger.io/api/v3` |
     |**Access Mode**| `External: API is publicly accessible`      |
 
-5.  Click **Create**.
+7. Click **Create**.
    
    This takes you to the **Develop** view, where you can see the operations of the REST API proxy.
 
