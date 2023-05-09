@@ -263,7 +263,7 @@ plugins:
           'administer/customize-the-developer-portal.md': 'https://wso2.com/choreo/docs/administer/customize-the-developer-portal/'
           'administer/configure-developer-portal-self-sign-up.md': 'https://wso2.com/choreo/docs/administer/configure-self-sign-up/'
           'administer/organization.md': 'https://wso2.com/choreo/docs/choreo-concepts/organization/'
-          'reference/connect-with-protected-third-party-applications.md': 'https://wso2.com/choreo/docs'	
+          'reference/connect-with-protected-third-party-applications.md': 'https://wso2.com/choreo/docs'
 extra_css:
   # - assets/lib/highlightjs/default.min.css
   # - assets/css/theme.css

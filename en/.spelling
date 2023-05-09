@@ -534,6 +534,7 @@ choreotheme.js
 fontawesome
 glightbox
 logo.png
+develop-a-rest-api
  - theme/material/templates/home-page.html
 doctype
 html
