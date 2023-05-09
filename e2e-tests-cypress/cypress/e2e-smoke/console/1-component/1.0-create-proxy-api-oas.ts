@@ -18,8 +18,6 @@ import { ProjectOverviewPage } from "../../../support/console/pages/projects/pro
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/rest-api-proxy-temp";
 
-
-
 describe("Create proxy api using existing url", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
@@ -35,9 +33,12 @@ describe("Create proxy api using existing url", () => {
     ChoreoHomePage.logout();
   });
 
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+  });
+
   it("Creating and publishing an API from open API specification", () => {
     cy.log("Starting API Creation using open API specification");
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.createOpenApi("", URL);
     RestAPIProxyTemplate.enterAPIdetails(

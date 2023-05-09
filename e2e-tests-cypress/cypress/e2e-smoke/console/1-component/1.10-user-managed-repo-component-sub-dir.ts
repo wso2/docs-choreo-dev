@@ -11,7 +11,6 @@
  * associated services.
  */
 
-
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
@@ -39,11 +38,15 @@ describe("Verify BYOR functionality", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("byor-greetings-app2")
+    GitHub.deleteWebhooks("byor-greetings-app2");
   });
 
   after(() => {
     ChoreoHomePage.logout();
+  });
+
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
   });
 
   it("Verify REST API component creation", () => {
@@ -54,18 +57,20 @@ describe("Verify BYOR functionality", () => {
       projectName: PROJECT_NAME,
       triggerChannels: "",
       triggerId: null,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/byor-greetings-app2/tree/main/test",
+      srcGitRepoUrl:
+        "https://github.com/choreo-test-apps/byor-greetings-app2/tree/main/test",
       repositorySubPath: "test",
       initializeAsBallerinaProject: false,
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       sampleTemplate: "",
     };
-    ProjectListingPage.createNewProject(
+
+    GraphQL.createComponent(
       PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.US
+      REPO_NAME,
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
     );
-    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
   it("Deploy component", () => {
@@ -100,8 +105,6 @@ describe("Verify BYOR functionality", () => {
       });
     });
   });
-
-
 
   it("Verify component promote to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
@@ -147,7 +150,6 @@ describe("Verify BYOR functionality", () => {
       });
     });
   });
-
 
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();

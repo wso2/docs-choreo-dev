@@ -25,14 +25,18 @@ import { GitHub } from "../../../support/github/github";
 import { ComponentData } from "../../../support/interfaces/component-data";
 
 describe("Verify manual trigger creation functionality", () => {
-  const MANUAL_NAME = Utils.generateComponentName()
+  const MANUAL_NAME = Utils.generateComponentName();
   const REPO_NAME = Utils.generateComponentName("repo");
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Manual Trigger";
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("manual-trigger")
+    GitHub.deleteWebhooks("manual-trigger");
+  });
+
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
   });
 
   it("Verify Manual Trigger component creation", () => {
@@ -49,12 +53,13 @@ describe("Verify manual trigger creation functionality", () => {
       repositorySubPath: "",
       sampleTemplate: "",
     };
-    ProjectListingPage.createNewProject(
+
+    GraphQL.createComponent(
       PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.US
+      REPO_NAME,
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
     );
-    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
   after(() => {
     ChoreoHomePage.logout();

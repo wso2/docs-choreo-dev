@@ -11,7 +11,6 @@
  * associated services.
  */
 
-
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
@@ -27,8 +26,6 @@ import { GitHub } from "../../../support/github/github";
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
 
-const dp = Enums.Region.US;
-
 before(() => {
   LoginPage.login();
   GitHub.deleteWebhooks("greeting-rest-api");
@@ -38,7 +35,7 @@ after(() => {
   ChoreoHomePage.logout();
 });
 
-describe(`Verify BYOR functionality in region ${dp}`, () => {
+describe(`Verify BYOR functionality`, () => {
   const PROJECT_DESCRIPTION = "Internal API Test";
   const PROJECT_NAME = Utils.generateProjectName();
   const REST_API_NAME = Utils.generateComponentName("byor");
@@ -55,6 +52,10 @@ describe(`Verify BYOR functionality in region ${dp}`, () => {
   const queryParameters1 = [{ key: PARAM_NAME, value: PARAM_VALUE }];
   const queryParameters2 = [{ key: PARAM_NAME1, value: PARAM_VALUE1 }];
 
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+  });
+
   it("Verify REST API component creation", () => {
     let componentData: ComponentData = {
       componentName: REST_API_NAME,
@@ -69,7 +70,7 @@ describe(`Verify BYOR functionality in region ${dp}`, () => {
       repositorySubPath: "",
       sampleTemplate: "",
     };
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, dp);
+
     GraphQL.createComponent(
       PROJECT_NAME,
       REPO_NAME,
