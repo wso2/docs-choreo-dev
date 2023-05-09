@@ -2,7 +2,7 @@
 
 WSO2 Micro Integrator (WSO2 MI) is a lightweight, high-performance integration runtime. It allows you to run integrations developed using WSO2 Integration Studio within the Choreo iPaaS platform. 
 
-The topics on this page walk you through the key aspects you need to understand to use the WSO2 MI runtime effectively in Choreo:
+The topics on this page walk you through the key aspects you need to understand to use the WSO2 MI runtime effectively in Choreo.
 
 ## Integration types
 
