@@ -28,7 +28,6 @@ import { ByocComponent } from "../../../support/interfaces/byoc-component";
 
 before(() => {
   LoginPage.login();
-  GitHub.deleteWebhooks("byor-greetings-app2");
 });
 
 after(() => {

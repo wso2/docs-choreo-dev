@@ -32,7 +32,6 @@ describe("Verify manual trigger creation functionality", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("manual-trigger");
   });
 
   it("Creating a project", () => {

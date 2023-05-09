@@ -30,7 +30,6 @@ describe("Verify Reusable Manual Trigger creation functionality", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("manual-trigger")
   });
 
   after(() => {
