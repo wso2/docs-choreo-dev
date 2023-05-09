@@ -47,7 +47,7 @@ In this step, you are playing the role of an API developer. You will create a se
 
 Follow the steps below to create the service:
 
-1. Go to [Choreo Console](https://console.choreo.dev/apim), and sign in. This opens the **Project Home** page.
+1. Go to [https://console.choreo.dev/cloud-native-app-developer](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the **Project Home** page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Go to the **Service** card and click **Create**.
 4. Enter a unique name and a description for the service. You can enter the name and description given below:
