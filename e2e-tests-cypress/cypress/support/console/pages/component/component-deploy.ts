@@ -78,20 +78,20 @@ export class ComponentDeployPage {
     cy.wait(10000);
     this.pollElement('[data-cyid="btn-promote"]').realClick();
 
-    cy.get("body").then((bdy) => {
-      if (bdy.find('[data-testid="deployment-history-btn"]').length == 2) {
-        cy.get('[data-cyid="btn-next"]').realClick();
-      } else {
-        for (var i = 0; i < numberOfNextPrompts; i++) {
-          cy.get('[data-cyid="btn-next"]').realClick();
-        }
-      }
-    });
-
     if (isAdditionalConfigs) {
-      if (isManagedByAPIM) {
-        Utils.interceptConfig();
-      }
+      cy.get("body").then((bdy) => {
+        if (bdy.find('[data-testid="deployment-history-btn"]').length == 2) {
+          cy.get('[data-cyid="btn-next"]').realClick();
+        } else {
+          for (var i = 0; i < numberOfNextPrompts; i++) {
+            cy.get('[data-cyid="btn-next"]').realClick();
+          }
+        }
+      });
+    }
+
+    if (isManagedByAPIM) {
+      Utils.interceptConfig();
     }
 
     cy.get('[data-testid="btn-stop"]', LONG_TIME)
@@ -250,7 +250,7 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-proxy"]').should("be.enabled").click();
     cy.contains("Configure & Deploy").should("be.visible");
     cy.get('[data-cyid="btn-next"]').should("be.enabled");
-    cy.get('[data-cyid="btn-next"]').should("exist").click();
+    Utils.getRenderedElement('[data-cyid="btn-next"]').click();
     cy.get('[data-cyid="deployment-status"]')
       .contains(DEPLOYMENT_SUCCESS)
       .should("be.visible");
