@@ -31,11 +31,7 @@ describe("Public access on devportal", () => {
   });
 
   it("Create and deploy a component", () => {
-    DevPortalHelper.createDeployRestApiComponent(
-      API_Name,
-      description,
-      projectName
-    );
+    DevPortalHelper.createDeployRestApiComponent(API_Name, projectName);
     ComponentAPILifecycle.selectSetting();
     ComponentAPILifecycle.verifyAPIVisibility("Private");
   });

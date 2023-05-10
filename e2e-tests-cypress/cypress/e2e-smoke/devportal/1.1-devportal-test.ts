@@ -54,7 +54,7 @@ describe("API overview comment and rating scenario", () => {
   });
 
   it("Test in devportal", () => {
-    DevPortalHelper.createDeployHttpProxyComponent(API_Name);
+    DevPortalHelper.createDeployHttpProxyComponent(API_Name, PROJECT_NAME);
   });
 
   it("verify api in devportal", () => {
@@ -102,6 +102,7 @@ describe("API overview comment and rating scenario", () => {
 
   it("Verify suspending Dev deployed component", () => {
     LoginPage.login();
+    ProjectListingPage.selectProject(PROJECT_NAME);
     ChoreoHomePage.navigateToComponents();
     ComponentListingPage.visitToAComponent(API_Name);
     ComponentOverviewPage.navigateToDeploy();
