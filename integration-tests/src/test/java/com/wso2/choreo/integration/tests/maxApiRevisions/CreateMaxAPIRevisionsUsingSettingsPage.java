@@ -673,26 +673,28 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
 
     @AfterClass
     public void afterClass() throws Exception {
-        String path = Constant.APIS_ENDPOINT.concat("/").concat(this.apiId)
-                .concat("/").concat("revisions")
-                .concat("/").concat(this.revisionIdToRestore)
-                .concat("?").concat(Constant.ORGANIZATION_ID).concat("=").concat(this.orgUuid);
+        if(this.revisionIdToRestore!=null){
+            String path = Constant.APIS_ENDPOINT.concat("/").concat(this.apiId)
+                    .concat("/").concat("revisions")
+                    .concat("/").concat(this.revisionIdToRestore)
+                    .concat("?").concat(Constant.ORGANIZATION_ID).concat("=").concat(this.orgUuid);
 
-        $(http()
-                .client(choreoTestClientForSTS)
-                .send()
-                .delete(path)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+            $(http()
+                    .client(choreoTestClientForSTS)
+                    .send()
+                    .delete(path)
+                    .message()
+                    .header(HttpHeaders.AUTHORIZATION, accessToken)
+                    .accept(String.valueOf(MediaType.APPLICATION_JSON)));
 
-        $(http()
-                .client(choreoTestClientForSTS)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON));
+            $(http()
+                    .client(choreoTestClientForSTS)
+                    .receive()
+                    .response(HttpStatus.OK)
+                    .message()
+                    .type(MessageType.JSON));
 
-        component.undeploy(accessToken, componentId, releaseId, orgHandle);
+            component.undeploy(accessToken, componentId, releaseId, orgHandle);
+        }
     }
 }
