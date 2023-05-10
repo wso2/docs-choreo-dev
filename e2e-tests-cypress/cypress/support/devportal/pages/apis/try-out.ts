@@ -117,4 +117,9 @@ export class TryOut {
       cy.log("Successfully generated an access token");
     });
   }
+
+  static selectEndpoint(endpoint: string) {
+    cy.get('[aria-haspopup="listbox"]').should("be.visible").click();
+    cy.get(`[data-cyid="endpoint-list-item-${endpoint}"]`).click();
+  }
 }

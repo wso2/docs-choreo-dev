@@ -80,6 +80,7 @@ describe("API overview comment and rating scenario", () => {
     ApiCredentials.generateCredentials(Enums.Environment.SANDBOX);
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
+    TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT)
     TryOut.SelectResource("GET", OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
@@ -90,6 +91,7 @@ describe("API overview comment and rating scenario", () => {
     ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
+    TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
     TryOut.SelectResource("GET", OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();

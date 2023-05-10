@@ -22,7 +22,6 @@ export class ApiCredentials {
     cy.get('[data-testid="credentials-item-link"]').click();
     cy.url().should("include", "/credentials");
     cy.log("Successfully navigated to credentials tab");
-    // cy.wait(3000);
   }
 
   static generateCredentials(env: Enums.Environment) {
