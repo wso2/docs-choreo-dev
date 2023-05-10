@@ -4,7 +4,6 @@ Choreo iPaaS simplifies the process of building, deploying, and managing integra
 
 In this quick start guide, you will learn how to create a simple integration scenario with Choreo iPaaS using Ballerina. You will call an HR endpoint to get an employee ID list, then call the employee details endpoint, aggregate the results, and send back a response. 
 
-
 ## Prerequisites
 
 Before you try out this guide, complete the following:
@@ -31,26 +30,30 @@ Before you try out this guide, complete the following:
     | **Name**        | `FirstIntegration`               |
     | **Description** | `First integration as a service` |
 
-5. Select **External** as the **Access Mode**, and click **Next**.
-6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
-7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+5. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
+6. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
 
-8. In the **Connect Repository** pane, enter the following information:
+7. In the **Connect Repository** pane, enter the following information:
 
-    | **Field**             | **Description**                               |
-    |-----------------------|-----------------------------------------------|
-    | **GitHub Account**    | Your account                                  |
+    | **Field**             | **Value**                                                                |
+    |-----------------------|--------------------------------------------------------------------------------|
+    | **GitHub Account**    | Your account                                                                   |
     | **GitHub Repository** | The repository you created by following the steps in the prerequisites section |
-    | **Branch**            | **`main`**                               |
-    | **Build Preset**      | Click **Ballerina** because you are creating the REST API from a [Ballerina](https://ballerina.io/) project, and Choreo needs to run a Ballerina build to build it.|
-    | **Project Path**      | Since the path is empty, select **Start with a sample**.  |
+    | **Branch**            | **`main`**                                                                     |
+    | **Build Preset**      | **Ballerina**.                                                           |
+    | **Project Path**      | Since the path is empty, select **Start with a sample**.                       | 
 
-9. Click **Next**. Choreo initializes the component with the sample implementation and sends a pull request to the GitHub repository you connected.
-10. Review and merge the pull request.
+	!!! tip
+    	    - **Build Preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset. 
+
+          - **Project Path** specifies the location of the project to build the component.
+
+8. Click **Create**. Choreo initializes the component with the sample implementation and sends a pull request to the GitHub repository you connected.
+9. Review and merge the pull request.
 
 ## Step 2: Implement the integration logic
 
@@ -133,7 +136,10 @@ To deploy the Ballerina integration, follow the steps given below:
 2. To resolve the failure, follow the steps given below:
    1. In the **Build Area** card, click **Configure & Deploy**.
    2. In the **Configure & Deploy** pane, add `https://samples.choreoapps.dev/company/hr` as the **hrEndpoint** configurable variable.
-   3. Click **Deploy**. This deploys the updated Ballerina integration to the development environment.
+   3. Click **Next**. you can see the endpoint ready to be deployed. 
+   4. Click the edit icon next to the endpoint.
+   5. Change the **Network Visibility** to **Public** and click **Update**.
+   4. Click **Deploy**. This deploys the updated Ballerina integration to the development environment.
 
       The **Development** card indicates the **Deployment Status** as **Active** when the Ballerina integration is deployed.
 
