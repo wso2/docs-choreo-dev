@@ -326,37 +326,19 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-promote"]', LONG_TIME).should("be.enabled").click();
     cy.get(`[data-testid="${endpointName}-endpoint"]`).should("be.visible");
     if (changeVisibility) {
-      cy.get(`[data-testid="${endpointName}-edit-btn"]`)
-        .should("be.visible")
-        .click();
-      cy.get('[data-testid="Public-visibility-option"]')
-        .should("be.visible")
-        .click();
+      cy.get(`[data-testid="${endpointName}-edit-btn"]`).should("be.visible").click();
+      cy.get('[data-testid="Public-visibility-option"]').should("be.visible").click();
       cy.get('[data-cyid="endpoint-submit-btn"]').click();
     }
     cy.get('[data-cyid="btn-next"]').click();
 
-    cy.get('[data-testid="btn-stop"]', LONG_TIME)
-      .should("have.length", 2)
-      .eq(1)
-      .should("be.visible");
-    cy.get('[data-cyid="deployment-status"]', LONG_TIME)
-      .should("have.length", 2)
-      .eq(1)
-      .contains("Active", LONG_TIME);
+    cy.get('[data-testid="btn-stop"]', LONG_TIME).should("have.length", 2).eq(1).should("be.visible");
+    cy.get('[data-cyid="deployment-status"]', LONG_TIME).should("have.length", 2).eq(1).contains("Active", LONG_TIME);
     cy.get('[data-cyid="btn-promote"]', LONG_TIME).should("not.be.disabled");
-    cy.get('[data-testid="Endpoints-env-artifact"]')
-      .should("have.length", 2)
-      .eq(1)
-      .should("be.visible");
-    cy.get('[data-testid="Endpoints-status"]', LONG_TIME)
-      .should("have.length", 2)
-      .eq(1)
-      .contains(DEPLOYMENT_PENDING, LONG_TIME)
-      .should("not.exist");
-    cy.get('[data-testid="Endpoints-status"]', LONG_TIME)
-      .should("have.length", 2)
-      .eq(1)
-      .contains(DEPLOYMENT_SUCCESS, LONG_TIME);
+    cy.get('[data-testid="Endpoints-env-artifact"]').should("have.length", 2).eq(1).should("be.visible");
+    cy.get('[data-testid="Endpoints-status"]', LONG_TIME).should("have.length", 2).eq(1)
+    .contains(DEPLOYMENT_PENDING, LONG_TIME).should("not.exist");
+    cy.get('[data-testid="Endpoints-status"]', LONG_TIME).should("have.length", 2).eq(1)
+      .contains("Active", LONG_TIME).should("exist");
   }
 }
