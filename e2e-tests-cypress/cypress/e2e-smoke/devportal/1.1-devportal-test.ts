@@ -102,6 +102,7 @@ describe("API overview comment and rating scenario", () => {
 
   it("Verify suspending Dev deployed component", () => {
     LoginPage.login();
+    ProjectListingPage.selectProject(PROJECT_NAME);
     ChoreoHomePage.navigateToComponents();
     ComponentListingPage.visitToAComponent(API_Name);
     ComponentOverviewPage.navigateToDeploy();
