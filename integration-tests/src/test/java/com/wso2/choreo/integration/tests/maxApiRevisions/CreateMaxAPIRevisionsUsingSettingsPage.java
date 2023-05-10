@@ -38,6 +38,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -120,6 +121,7 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
     @Test
     @CitrusTest
     public void getRevisionCount_CreateMaxAPIRevisionsUsingSettingsPage() throws Exception {
+        Assert.assertEquals(200, 300);
         environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, component);
         JsonArray deploymentArray = component.getDeployments(accessToken, orgHandle, orgUuid, versionId);
 
@@ -673,26 +675,28 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
 
     @AfterClass
     public void afterClass() throws Exception {
-        String path = Constant.APIS_ENDPOINT.concat("/").concat(this.apiId)
-                .concat("/").concat("revisions")
-                .concat("/").concat(this.revisionIdToRestore)
-                .concat("?").concat(Constant.ORGANIZATION_ID).concat("=").concat(this.orgUuid);
+        if(this.revisionIdToRestore!=null){
+            String path = Constant.APIS_ENDPOINT.concat("/").concat(this.apiId)
+                    .concat("/").concat("revisions")
+                    .concat("/").concat(this.revisionIdToRestore)
+                    .concat("?").concat(Constant.ORGANIZATION_ID).concat("=").concat(this.orgUuid);
 
-        $(http()
-                .client(choreoTestClientForSTS)
-                .send()
-                .delete(path)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+            $(http()
+                    .client(choreoTestClientForSTS)
+                    .send()
+                    .delete(path)
+                    .message()
+                    .header(HttpHeaders.AUTHORIZATION, accessToken)
+                    .accept(String.valueOf(MediaType.APPLICATION_JSON)));
 
-        $(http()
-                .client(choreoTestClientForSTS)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON));
+            $(http()
+                    .client(choreoTestClientForSTS)
+                    .receive()
+                    .response(HttpStatus.OK)
+                    .message()
+                    .type(MessageType.JSON));
 
-        component.undeploy(accessToken, componentId, releaseId, orgHandle);
+            component.undeploy(accessToken, componentId, releaseId, orgHandle);
+        }
     }
 }
