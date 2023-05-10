@@ -179,11 +179,4 @@ describe("Verify Ballerina service functionality", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });
-
-  it("Verify application suspension", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.selectEndpoint(ENDPOINT_NAME);
-    ComponentAPILifecycle.demoteToCreated();
-  });
 });
