@@ -54,17 +54,17 @@ To define resources for the REST API proxy, follow the steps given below:
 
 1. In the left navigation menu, click **Develop** and then click **Resources**.
 2. To add a new resource that can retrieve the department ID, follow the steps given below:
-   1. Select **GET** as the **HTTP Verb**.
-   2. Enter `/department/{departmentId}` as the URI pattern and click **+** to add the resource.
-   3. Click to expand the added resource and specify appropriate values for the **Operation ID** and **Description** fields. You can specify the values given in the following table:
+    1. Select **GET** as the **HTTP Verb**.
+    2. Enter `/department/{departmentId}` as the **URI Pattern** and click **+** to add the resource.
+    3. Click to expand the added resource and specify appropriate values for the **Operation ID** and **Description** fields. You can specify the values given in the following table:
 
-    | **Field**        | **Value**                            |
-    |------------------|--------------------------------------|
-    | **Operation ID** | `findDepartment`                     |
-    | **Description**  | `Find a department by Department ID` |
+        | **Field**        | **Value**                            |
+        |------------------|--------------------------------------|
+        | **Operation ID** | `findDepartment`                     |
+        | **Description**  | `Find a department by Department ID` |
 
-   4. To remove the five default resources that start with `/*`, click the delete icon corresponding to each resource. This marks the resources for deletion.
-   5. Click **Save**.
+    4. To remove the five default resources that start with `/*`, click the delete icon corresponding to each resource. This marks the resources for deletion.
+    5. Click **Save**.
 
 ## Step 3: Deploy the REST API proxy
 
@@ -80,7 +80,7 @@ Now you are ready to test the REST API proxy.
 
 ## Step 3: Test the REST API proxy
 
-Choreo allows you to test your REST API proxy using either the integrated OpenAPI Console, [cURL](../testing/test-apis-with-curl.md), or [Postman](../testing/test-apis-using-postman.md).
+Choreo allows you to test your REST API proxy using either the [integrated OpenAPI Console](../testing/test-rest-endpoints-via-the-openapi-console.md), [cURL](../testing/test-apis-with-curl.md), or [Postman](../testing/test-apis-using-postman.md).
 
 In this guide, you will use the OpenAPI Console to test the API proxy. 
 
@@ -126,12 +126,11 @@ To publish the REST API proxy to the Choreo Developer Portal, follow the steps g
 2. In the **Lifecycle Management** pane, click **Publish**. 
    A message appears where you can specify whether you want to publish a connector for this REST API proxy. Creating a connector for this REST API proxy makes it available in the Marketplace. In this guide, you will not publish a connector for the API.
 3. Click **No, Thanks**. 
-   You can observe that the API lifecycle state has changed to **Published**. 
-
+   This changes the API lifecycle state to **Published**. 
 
 ## Step 5: Invoke the REST API 
 
-To generate credentials for the published API and to invoke it via the Developer Portal, follow the steps below:
+To generate credentials for the published API and to invoke it via the Choreo Developer Portal, follow the steps below:
 
 1. To open the published API in the Choreo Developer Portal via the **Lifecycle Management** pane, click **Go to Devportal**. This takes you to the `HR API` in the Choreo Developer Portal.
 
@@ -140,17 +139,18 @@ To generate credentials for the published API and to invoke it via the Developer
     1. In the Developer Portal left navigation menu, click **Production** under **Credentials**.
     2. Click **Generate Credentials**. Choreo generates new tokens and populates the **Consumer Key** and **Consumer Secret** fields.
 
-    !!! tip
-          - If you want to test the REST API via an API test tool or through code, click **Generate Access Token** and copy the test token that is displayed. Alternatively, click **cURL** and copy the generated cURL command to use via a cURL client. You do not need to generate an access token if you are testing the API via the **Try Out** capability in the Choreo Developer Portal.
+        !!! tip
+             If you want to test the REST API via an API test tool or through code, click **Generate Access Token** and copy the test token that is displayed. Alternatively, click **cURL** and copy the generated cURL command to use via a cURL client. You do not need to generate an access token if you are testing the API via the **Try Out** capability in the Choreo Developer Portal.
  
-
 3. To invoke a resource via the **Try Out** capability in the Choreo Developer Portal, follow the steps given below:
 
     1. In the Developer Portal left navigation menu, click **Try Out**.
     2. In the **Endpoint** list, select **Development** as the environment to try out the API.
     3. To generate an access token to try out the API, click **Get Test Key**. This populates the **Access Token** field with a test key.
     4. Expand the `GET /department/{departmentId}` resource and click **Try it out**.
-    5. Enter `1` as the **departmentId** and click **Execute**.
+    5. Enter `1` as the **departmentId** and click **Execute**. You will see a response similar to the following:
+
+        ![Try out response](../assets/img/develop-components/develop-a-rest-api-proxy/try-out-response.png){.cInlineImage-full}
 
 Now, you have gained hands-on experience creating, deploying, testing, and publishing a REST API proxy using Choreo API Manager.
 
