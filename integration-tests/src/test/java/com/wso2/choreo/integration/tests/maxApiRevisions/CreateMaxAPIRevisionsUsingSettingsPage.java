@@ -38,7 +38,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -121,7 +120,6 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
     @Test
     @CitrusTest
     public void getRevisionCount_CreateMaxAPIRevisionsUsingSettingsPage() throws Exception {
-        Assert.assertEquals(200, 300);
         environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, component);
         JsonArray deploymentArray = component.getDeployments(accessToken, orgHandle, orgUuid, versionId);
 
