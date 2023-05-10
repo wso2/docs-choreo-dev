@@ -255,10 +255,17 @@ export class Utils {
   }
 
   // Ensure that element remains visible multiple times before returning to handle rerendering scenarios
-  static getRenderedElement(locator: string) {
+  static getRenderedElement(
+    locator: string,
+    waitTime: number = 200,
+    maxTries: number = 5
+  ) {
+    for (let i = 0; i < maxTries; i++) {
+      cy.get(locator).should("be.visible");
+      cy.wait(waitTime);
+    }
+
     return cy
-      .get(locator)
-      .should("be.visible")
       .get(locator)
       .should("be.visible")
       .get(locator)
