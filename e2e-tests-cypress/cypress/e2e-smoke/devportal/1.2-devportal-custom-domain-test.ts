@@ -33,6 +33,7 @@ import { APIDeployment } from "../../support/console/pages/apis/api-deployment";
 import { ProjectListingPage } from "../../support/console/pages/projects/projects-listing-page";
 import { ComponentAPILifecycle } from "../../support/console/pages/component/component-manage-page";
 import { Utils } from "../../support/commons/utils";
+import { Enums } from "../../support/commons/enums";
 
 const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
 const API_BASE_PATH = Utils.generateBasePath();
@@ -118,7 +119,7 @@ describe("Login and test developer portal with custom domain", () => {
 
   it("Generate credentials and tryout the API", () => {
     ApiCredentials.navigateCredentialsTab();
-    ApiCredentials.generateCredentials();
+    ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.SelectResource("GET", OPERATION_USERS);

@@ -22,9 +22,10 @@ export class TryOut {
 
   static SelectApplication(applicationName: string) {
     cy.get('[data-testid="application-selector-wrapper"]').within(() => {
-      cy.get('[data-testid="application-selector"]>div').realClick();
+      cy.get('[data-testid="application-selector"]>div').realClick().wait(2000);
+      cy.get(`[data-value="${applicationName}"]`).click().wait(1000);
     });
-    cy.get(`[data-value="${applicationName}"]`).click().wait(1000);
+   
   }
 
   static generateTestKeyAndVerify() {

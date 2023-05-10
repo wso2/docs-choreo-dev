@@ -173,11 +173,11 @@ describe(`Verify proxy api functionality`, () => {
   it("Test in devportal", () => {
     Apis.searchApiAndSelect(API_NAME, 2, API_NEW_VERSION);
     ApiCredentials.navigateCredentialsTab();
-    ApiCredentials.generateCredentials();
+    ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.SelectResource(null, OPERATION_USERS);
-    TryOut.TryoutApplication();
+    TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
   });

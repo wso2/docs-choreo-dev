@@ -171,7 +171,7 @@ describe("Choreo APIM publisher scenarios", () => {
     Apis.searchApiAndSelect(API_NAME, 1);
     // Validate the API call without the scope
     ApiCredentials.navigateCredentialsTab();
-    ApiCredentials.generateCredentials();
+    ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);

@@ -31,6 +31,7 @@ import { DevPortalHelper } from "../../support/devportal/helpers/devportal-helpe
 import { Utils } from "../../support/commons/utils";
 import { ComponentListingPage } from "../../support/console/pages/component/component-listing-page";
 import { ProjectListingPage } from "../../support/console/pages/projects/projects-listing-page";
+import { Enums } from "../../support/commons/enums";
 
 describe("API overview comment and rating scenario", () => {
   const API_Name = Utils.generateComponentName("oas");
@@ -73,13 +74,24 @@ describe("API overview comment and rating scenario", () => {
     ApiOverview.addRatings();
     ApiOverview.validateRating();
   });
-  it("Generate credentials and tryout the API", () => {
+
+  it("Generate sandbox credentials",()=>{
     ApiCredentials.navigateCredentialsTab();
-    ApiCredentials.generateCredentials();
+    ApiCredentials.generateCredentials(Enums.Environment.SANDBOX);
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.SelectResource("GET", OPERATION_USERS);
-    TryOut.TryoutApplication();
+    TryOut.TryoutAPI();
+    TryOut.ExecuteResourceFunction();
+    TryOut.GetResponse();
+  })
+  it("Generate production credentials and tryout the API", () => {
+    ApiCredentials.navigateCredentialsTab();
+    ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
+    TryOut.navigateToTryOutMenu();
+    TryOut.GenerateAccessToken();
+    TryOut.SelectResource("GET", OPERATION_USERS);
+    TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
   });
