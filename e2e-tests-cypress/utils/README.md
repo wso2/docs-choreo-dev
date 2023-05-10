@@ -20,6 +20,8 @@ _Args_
 ## 2. Removal of duplicate reusable components on Console
 This scenario is specific to components that are created in the _Default Project_ and subsequently reused in the following test runs. In a case where data duplication occurs due to an error in the automation tests, this script can be used for deleting the additional duplicate components which would otherwise remain, since there not cleaned up via the standard test data cleanup process.
 
+Note - Make sure to run the script inside the utils directory.
+
 - Usage
 
 ```
