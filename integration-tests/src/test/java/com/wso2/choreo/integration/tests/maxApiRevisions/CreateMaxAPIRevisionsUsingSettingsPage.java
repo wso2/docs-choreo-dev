@@ -29,6 +29,7 @@ import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
+import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
@@ -45,10 +46,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
@@ -66,6 +64,7 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
 
     private String accessToken;
     private String componentName;
+    private String projectName;
     private ChoreoComponent component;
     private String orgUuid;
     private String orgHandle;
@@ -109,12 +108,24 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
     @Test
     @CitrusTest
     public void getRevisionCount_CreateMaxAPIRevisionsUsingSettingsPage() throws Exception {
+        ChoreoOrganization org = TestContext.getTestOrg();
+        String projectName = "integration-test-project";
+
+        Optional<ChoreoProject> existingProject = org.getProjectByName(accessToken, projectName);
+        ChoreoProject project;
+        if (existingProject.isEmpty()) {
+            project = org.createProject(accessToken, projectName, projectName);
+        } else {
+            project = existingProject.get();
+        }
+
+        Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/rest-api").branch("main").subPath("").build();
+        GraphqlDTO dto = ComponentUtils.createRestApiComponentRequest(componentName, project, repo);
 
         // Access a reusable component which has a total of 18 revisions
-        component = ComponentUtils.getReusableComponent(this, accessToken, componentName.toLowerCase(),
-                citrusClients, ComponentFlavour.STANDARD);
+        component = ComponentUtils.getReusableComponent(this, accessToken, dto, project,
+                componentName.toLowerCase(), citrusClients, ComponentFlavour.STANDARD);
 
-        ChoreoOrganization org = component.getOrganization();
         orgUuid = org.getOrgUUID();
         orgHandle = org.getOrgHandle();
 

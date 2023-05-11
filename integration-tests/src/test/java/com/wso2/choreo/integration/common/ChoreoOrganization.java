@@ -67,7 +67,7 @@ public class ChoreoOrganization {
      */
 
 
-    Optional<ChoreoProject> getProjectByName(String accessToken, String name) throws ProjectRetrievalException {
+    public Optional<ChoreoProject> getProjectByName(String accessToken, String name) throws ProjectRetrievalException {
         loadProjects(accessToken);
 
         for (ChoreoProject project : projectMap.values()) {
@@ -105,7 +105,7 @@ public class ChoreoOrganization {
         }
     }
 
-    ChoreoProject createProject(String accessToken, String name, String description)
+    public ChoreoProject createProject(String accessToken, String name, String description)
             throws ProjectCreationException {
         String gqlQuery = getCreateProjectMutation(name, description);
 
