@@ -91,7 +91,7 @@ describe("API overview comment and rating scenario", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
-    TryOut.SelectResource("GET", OPERATION_USERS);
+    TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();

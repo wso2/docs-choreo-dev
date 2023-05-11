@@ -180,22 +180,11 @@ describe("Choreo APIM publisher scenarios", () => {
     TryOut.ValidateResponse(OK);
   });
 
-<<<<<<< HEAD
   it("Create application", () => {
     DevPortalHomePage.navigateToAppsPage();     // Create app
     AppsList.createAnApplication(appName);
     AppsList.generateCredentials(Enums.Environment.SANDBOX)
     AppsList.generateCredentials(Enums.Environment.PRODUCTION)
-=======
-  it("Create consumer application", () => {
-    // Create app
-    DevPortalHomePage.navigateToAppsPage();
-    AppsList.createAnApplication(appName);
-  });
-
-  it("Generate keys and Subscribe", () => {
-    Credentials.generateProductionKeys();
->>>>>>> 543454660d97116cd1f1070a441e372cb6b56de2
     Subscriptions.addSubscriptionToApplication(API_NAME);
     Subscriptions.validateResubscribingApi(API_NAME);
   });

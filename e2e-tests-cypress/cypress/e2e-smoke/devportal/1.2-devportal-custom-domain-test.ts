@@ -117,12 +117,23 @@ describe("Login and test developer portal with custom domain", () => {
     ApiOverview.validateRating();
   });
 
-  it("Generate credentials and tryout the API", () => {
+  it("Generate credentials and tryout the API in Sandbox env", () => {
     ApiCredentials.navigateCredentialsTab();
-    ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
+    ApiCredentials.generateCredentials(Enums.Environment.SANDBOX);
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT)
+    TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
+    TryOut.TryoutAPI();
+    TryOut.ExecuteResourceFunction();
+    TryOut.GetResponse();
+  });
+
+  it("Generate credentials and tryout the API in Prod env", () => {
+    ApiCredentials.navigateCredentialsTab();
+    TryOut.navigateToTryOutMenu();
+    TryOut.GenerateAccessToken();
+    TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
