@@ -264,6 +264,7 @@ plugins:
           'administer/connect-to-an-external-identity-provider.md': 'https://wso2.com/choreo/docs'
           'administer/configure-enterprise-login.md': 'https://wso2.com/choreo/docs'
           'administer/configure-developer-portal-self-sign-up.md': 'https://wso2.com/choreo/docs/administer/configure-self-sign-up/'
+          'administer/customize-developer-portal-domain.md': 'https://wso2.com/choreo/docs//administer/customize-the-developer-portal-domain/'
           'administer/organization.md': 'https://wso2.com/choreo/docs/choreo-concepts/organization/'
           'reference/connect-with-protected-third-party-applications.md': 'https://wso2.com/choreo/docs'
 extra_css:
