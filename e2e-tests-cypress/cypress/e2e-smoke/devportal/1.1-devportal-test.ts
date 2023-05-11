@@ -75,20 +75,19 @@ describe("API overview comment and rating scenario", () => {
     ApiOverview.validateRating();
   });
 
-  it("Generate sandbox credentials",()=>{
+  it("Tryout API in sandbox env", () => {
     ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials(Enums.Environment.SANDBOX);
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT)
-    TryOut.SelectResource("GET", OPERATION_USERS);
+    TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
   })
-  it("Generate production credentials and tryout the API", () => {
-    ApiCredentials.navigateCredentialsTab();
-    ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
+  it("Tryout API in prod env", () => {
+    ApiCredentials.navigateCredentialsTab()
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
@@ -105,7 +104,8 @@ describe("API overview comment and rating scenario", () => {
   it("Create a consumer application and tryout an API", () => {
     DevPortalHomePage.navigateToAppsPage();
     AppsList.createAnApplication(appName);
-    ProductionKeys.generateTestToken();
+    AppsList.generateCredentials(Enums.Environment.SANDBOX)
+    AppsList.generateCredentials(Enums.Environment.PRODUCTION)
     Subscriptions.addSubscriptionToApplication(API_Name);
     Subscriptions.validateResubscribingApi(API_Name);
   });

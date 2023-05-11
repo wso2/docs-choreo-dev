@@ -36,7 +36,7 @@ import { ProductionKeys } from "../../../support/devportal/pages/applications/pr
 import { Subscriptions } from "../../../support/devportal/pages/applications/subscriptions";
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { generateAppName } from "../../../support/devportal/utils";
-
+import {OK} from "../../../support/commons/http"
 describe("Choreo APIM publisher scenarios", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
@@ -166,25 +166,25 @@ describe("Choreo APIM publisher scenarios", () => {
     );
   });
 
-  it("Tryout published api", () => {
+  it("Tryout API in prod env", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.searchApiAndSelect(API_NAME, 1);
-    // Validate the API call without the scope
-    ApiCredentials.navigateCredentialsTab();
+    ApiCredentials.navigateCredentialsTab();  // Validate the API call without the scope
     ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
+    TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
-    TryOut.ValidateResponse("200");
+    TryOut.ValidateResponse(OK);
   });
 
   it("Create application", () => {
-    // Create app
-    DevPortalHomePage.navigateToAppsPage();
+    DevPortalHomePage.navigateToAppsPage();     // Create app
     AppsList.createAnApplication(appName);
-    ProductionKeys.generateTestToken();
+    AppsList.generateCredentials(Enums.Environment.SANDBOX)
+    AppsList.generateCredentials(Enums.Environment.PRODUCTION)
     Subscriptions.addSubscriptionToApplication(API_NAME);
     Subscriptions.validateResubscribingApi(API_NAME);
     // Edit App and assign the scope

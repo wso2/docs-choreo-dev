@@ -11,6 +11,8 @@
  * associated services.
  */
 
+import { Enums } from "../../../commons/enums";
+
 
 
 
@@ -38,6 +40,19 @@ export class AppsList {
         });
         cy.get('[data-testid="create-button"]').click();
         // App name visible
+    }
+
+    static generateCredentials(env: Enums.Environment) {
+        cy.get('[data-testid="link-production-keys"]').click();
+        if (env === Enums.Environment.SANDBOX) {
+            cy.get('[data-testid="sandbox-credentials-menu-item"]').click();
+        }
+        if (env === Enums.Environment.PRODUCTION) {
+            cy.get('[data-testid="production-credentials-menu-item"]').click();
+        }
+
+        cy.get('[data-testid="generate-oauth-key"]').should('be.visible').click();
+        cy.get('#consumer-key-text').invoke('val').should('not.be.empty')
     }
 
 }

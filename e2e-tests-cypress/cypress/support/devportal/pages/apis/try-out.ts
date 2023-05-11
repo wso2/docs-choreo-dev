@@ -73,7 +73,7 @@ export class TryOut {
     cy.log("API Tryout is successful!");
   }
 
-  static ValidateResponse(statusCode: string) {
+  static ValidateResponse(statusCode) {
     cy.get(".curl-command").should("exist");
     cy.get(".request-url").should("exist");
     cy.log("Response is successfully returned");
