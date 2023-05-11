@@ -22,7 +22,6 @@ import { TryOut } from "../../support/devportal/pages/apis/try-out";
 import { LoginPage } from "../../support/console/pages/login-page";
 import { ChoreoHomePage } from "../../support/console/pages/home/home-page";
 import { AppsList } from "../../support/devportal/pages/applications/apps-list";
-import { ProductionKeys } from "../../support/devportal/pages/applications/production-keys";
 import { Subscriptions } from "../../support/devportal/pages/applications/subscriptions";
 import { generateAppName } from "../../support/devportal/utils";
 import { ComponentDeployPage } from "../../support/console/pages/component/component-deploy";
@@ -31,6 +30,7 @@ import { DevPortalHelper } from "../../support/devportal/helpers/devportal-helpe
 import { Utils } from "../../support/commons/utils";
 import { ComponentListingPage } from "../../support/console/pages/component/component-listing-page";
 import { ProjectListingPage } from "../../support/console/pages/projects/projects-listing-page";
+import { Credentials } from "../../support/devportal/pages/applications/credentials";
 
 describe("API overview comment and rating scenario", () => {
   const API_Name = Utils.generateComponentName("oas");
@@ -88,10 +88,13 @@ describe("API overview comment and rating scenario", () => {
     APISdk.downloadSDK(sdkFile);
   });
 
-  it("Create a consumer application and tryout an API", () => {
+  it("Create a consumer application", () => {
     DevPortalHomePage.navigateToAppsPage();
     AppsList.createAnApplication(appName);
-    ProductionKeys.generateTestToken();
+  });
+
+  it("Generate keys and Subscribe", () => {
+    Credentials.generateProductionKeys();
     Subscriptions.addSubscriptionToApplication(API_Name);
     Subscriptions.validateResubscribingApi(API_Name);
   });

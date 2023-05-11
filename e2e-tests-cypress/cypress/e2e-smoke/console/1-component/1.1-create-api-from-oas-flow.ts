@@ -32,7 +32,7 @@ import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-crede
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { AppsList } from "../../../support/devportal/pages/applications/apps-list";
-import { ProductionKeys } from "../../../support/devportal/pages/applications/production-keys";
+import { Credentials } from "../../../support/devportal/pages/applications/credentials";
 import { Subscriptions } from "../../../support/devportal/pages/applications/subscriptions";
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { generateAppName } from "../../../support/devportal/utils";
@@ -180,17 +180,16 @@ describe("Choreo APIM publisher scenarios", () => {
     TryOut.ValidateResponse("200");
   });
 
-  it("Create application", () => {
+  it("Create consumer application", () => {
     // Create app
     DevPortalHomePage.navigateToAppsPage();
     AppsList.createAnApplication(appName);
-    ProductionKeys.generateTestToken();
+  });
+
+  it("Generate keys and Subscribe", () => {
+    Credentials.generateProductionKeys();
     Subscriptions.addSubscriptionToApplication(API_NAME);
     Subscriptions.validateResubscribingApi(API_NAME);
-    // Edit App and assign the scope
-    cy.get('[data-testid="applications-appbar-btn"]')
-      .should("be.visible")
-      .click();
   });
 
   it("Add permissions and tryout", () => {
