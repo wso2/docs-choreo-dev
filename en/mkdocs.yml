@@ -124,6 +124,9 @@ nav:
       - Generate Custom Reports: monitoring-and-insights/generate-custom-reports.md
       - Alerts:
           - Configure Alerts: monitoring-and-insights/alerts/configure-alerts.md
+      - Work with the Choreo Insights API:
+          - Access the Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
+          - Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md
   - Administer:
       - Configure a Custom Domain for APIs: administer/configure-a-custom-domain-for-apis.md
       - Developer Portal:
@@ -249,8 +252,8 @@ plugins:
           'observe-and-analyze/analyze/view-api-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/view-api-insights/'
           'observe-and-analyze/analyze/generate-custom-reports.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/generate-custom-reports/'
           'observe-and-analyze/analyze/configure-alerts.md': 'https://wso2.com/choreo/docs/alerts/configure-alerts/'
-          'observe-and-analyze/analyze/choreo-insights-api.md': 'https://wso2.com/choreo/docs'
-          'observe-and-analyze/analyze/programmatic-access-choreo-insights-api.md': 'https://wso2.com/choreo/docs'
+          'observe-and-analyze/analyze/choreo-insights-api.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api/'
+          'observe-and-analyze/analyze/programmatic-access-choreo-insights-api.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api/'
           'observe-and-analyze/analyze/dora-metrics/configure-cio-dashboard.md': 'https://wso2.com/choreo/docs'
           'observe-and-analyze/analyze/dora-metrics/view-dora-metrics.md': 'https://wso2.com/choreo/docs'
           'alerts.md': 'https://wso2.com/choreo/docs/alerts/configure-alerts/'
