@@ -22,7 +22,6 @@ import { LoginPage as ConsoleLoginPage } from "../../support/console/pages/login
 import { LoginPage as DevportalLoginPage } from "../../support/devportal/pages/login/login-page";
 import { ChoreoHomePage } from "../../support/console/pages/home/home-page";
 import { AppsList } from "../../support/devportal/pages/applications/apps-list";
-import { ProductionKeys } from "../../support/devportal/pages/applications/production-keys";
 import { Subscriptions } from "../../support/devportal/pages/applications/subscriptions";
 import { generateAppName } from "../../support/devportal/utils";
 import { APISdk } from "../../support/devportal/pages/apis/api-sdk";
@@ -33,6 +32,7 @@ import { APIDeployment } from "../../support/console/pages/apis/api-deployment";
 import { ProjectListingPage } from "../../support/console/pages/projects/projects-listing-page";
 import { ComponentAPILifecycle } from "../../support/console/pages/component/component-manage-page";
 import { Utils } from "../../support/commons/utils";
+import { Credentials } from "../../support/devportal/pages/applications/credentials";
 
 const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
 const API_BASE_PATH = Utils.generateBasePath();
@@ -134,12 +134,15 @@ describe("Login and test developer portal with custom domain", () => {
     });
   });
 
-  it("Create a consumer application and tryout an API", () => {
+  it("Create a consumer application", () => {
+    DevPortalHomePage.navigateToAppsPage();
+    AppsList.createAnApplication(appName);
+  });
+
+  it("Generate keys and Subscribe", () => {
+    Credentials.generateProductionKeys();
     cy.task("getAPIName").then((an) => {
       let API_Name = an as string;
-      DevPortalHomePage.navigateToAppsPage();
-      AppsList.createAnApplication(appName);
-      ProductionKeys.generateTestToken();
       Subscriptions.addSubscriptionToApplication(API_Name);
       Subscriptions.validateResubscribingApi(API_Name);
     });
