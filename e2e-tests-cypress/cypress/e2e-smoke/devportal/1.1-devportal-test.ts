@@ -30,11 +30,8 @@ import { DevPortalHelper } from "../../support/devportal/helpers/devportal-helpe
 import { Utils } from "../../support/commons/utils";
 import { ComponentListingPage } from "../../support/console/pages/component/component-listing-page";
 import { ProjectListingPage } from "../../support/console/pages/projects/projects-listing-page";
-<<<<<<< HEAD
 import { Enums } from "../../support/commons/enums";
-=======
 import { Credentials } from "../../support/devportal/pages/applications/credentials";
->>>>>>> 543454660d97116cd1f1070a441e372cb6b56de2
 
 describe("API overview comment and rating scenario", () => {
   const API_Name = Utils.generateComponentName("oas");

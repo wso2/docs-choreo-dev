@@ -33,6 +33,7 @@ import { ProjectListingPage } from "../../support/console/pages/projects/project
 import { ComponentAPILifecycle } from "../../support/console/pages/component/component-manage-page";
 import { Utils } from "../../support/commons/utils";
 import { Enums } from "../../support/commons/enums";
+import { Credentials } from "../../support/devportal/pages/applications/credentials";
 
 const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
 const API_BASE_PATH = Utils.generateBasePath();
