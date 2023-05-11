@@ -84,19 +84,33 @@ public class ComponentUtils {
 
     private static final String timestampRegexMatch = "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}Z|\\d{2}.\\d{2}Z|\\d{2}.\\d{3}Z|\\d{2}.\\d{4}Z|\\d{2}.\\d{5}Z|\\d{2}.\\d{6}Z|\\d{2}.\\d{7}Z)";
 
-    public static ChoreoComponent getReusableComponent(TestActionRunner runner, String accessToken, GraphqlDTO dto,
-            ChoreoProject project, String testName, Map<Endpoints, HttpClient> citrusClients, ComponentFlavour componentFlavour)
-            throws Exception {
+    public static ChoreoComponent getReusableComponent(TestActionRunner runner, String accessToken, Repository repo,
+                                                       String testName, Map<Endpoints, HttpClient> citrusClients,
+                                                       ComponentFlavour componentFlavour) throws Exception {
+
+        ChoreoOrganization org = TestContext.getTestOrg();
+        String projectName = "integration-test-project";
+
+        Optional<ChoreoProject> existingProject = org.getProjectByName(accessToken, projectName);
+        ChoreoProject project;
+        if (existingProject.isEmpty()) {
+            project = org.createProject(accessToken, projectName, projectName);
+        } else {
+            project = existingProject.get();
+        }
 
         String componentName = testName + "component";
         Optional<ChoreoComponent> component = project.getComponentByName(accessToken, componentName);
         ChoreoComponent restAPI;
 
         if (component.isEmpty()) {
+            GraphqlDTO dto = ComponentUtils.createRestApiComponentRequest(componentName, project, repo);
             restAPI = createComponent(runner, citrusClients, accessToken, dto, componentFlavour);
         } else {
             restAPI = component.get();
         }
+
+        restAPI.setOrganization(org);
 
         return restAPI;
     }
