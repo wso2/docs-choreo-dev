@@ -124,6 +124,9 @@ nav:
       - Generate Custom Reports: monitoring-and-insights/generate-custom-reports.md
       - Alerts:
           - Configure Alerts: monitoring-and-insights/alerts/configure-alerts.md
+      - Work with the Choreo Insights API:
+          - Access the Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
+          - Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md
   - Administer:
       - Configure a Custom Domain for APIs: administer/configure-a-custom-domain-for-apis.md
       - Developer Portal:
