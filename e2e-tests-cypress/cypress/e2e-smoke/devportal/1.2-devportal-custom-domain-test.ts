@@ -22,7 +22,6 @@ import { LoginPage as ConsoleLoginPage } from "../../support/console/pages/login
 import { LoginPage as DevportalLoginPage } from "../../support/devportal/pages/login/login-page";
 import { ChoreoHomePage } from "../../support/console/pages/home/home-page";
 import { AppsList } from "../../support/devportal/pages/applications/apps-list";
-import { ProductionKeys } from "../../support/devportal/pages/applications/production-keys";
 import { Subscriptions } from "../../support/devportal/pages/applications/subscriptions";
 import { generateAppName } from "../../support/devportal/utils";
 import { APISdk } from "../../support/devportal/pages/apis/api-sdk";
@@ -122,7 +121,8 @@ describe("Login and test developer portal with custom domain", () => {
     ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
-    TryOut.SelectResource("GET", OPERATION_USERS);
+    TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT)
+    TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
@@ -140,7 +140,8 @@ describe("Login and test developer portal with custom domain", () => {
       let API_Name = an as string;
       DevPortalHomePage.navigateToAppsPage();
       AppsList.createAnApplication(appName);
-      ProductionKeys.generateTestToken();
+      AppsList.generateCredentials(Enums.Environment.SANDBOX)
+      AppsList.generateCredentials(Enums.Environment.PRODUCTION)
       Subscriptions.addSubscriptionToApplication(API_Name);
       Subscriptions.validateResubscribingApi(API_Name);
     });

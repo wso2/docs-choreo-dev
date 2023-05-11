@@ -22,7 +22,6 @@ import { TryOut } from "../../support/devportal/pages/apis/try-out";
 import { LoginPage } from "../../support/console/pages/login-page";
 import { ChoreoHomePage } from "../../support/console/pages/home/home-page";
 import { AppsList } from "../../support/devportal/pages/applications/apps-list";
-import { ProductionKeys } from "../../support/devportal/pages/applications/production-keys";
 import { Subscriptions } from "../../support/devportal/pages/applications/subscriptions";
 import { generateAppName } from "../../support/devportal/utils";
 import { ComponentDeployPage } from "../../support/console/pages/component/component-deploy";
