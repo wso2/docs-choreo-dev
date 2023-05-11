@@ -135,7 +135,13 @@ describe("Login and test developer portal with custom domain", () => {
     });
   });
 
-  it("Create a consumer application and tryout an API", () => {
+  it("Create a consumer application", () => {
+    DevPortalHomePage.navigateToAppsPage();
+    AppsList.createAnApplication(appName);
+  });
+
+  it("Generate keys and Subscribe", () => {
+    Credentials.generateProductionKeys();
     cy.task("getAPIName").then((an) => {
       let API_Name = an as string;
       DevPortalHomePage.navigateToAppsPage();

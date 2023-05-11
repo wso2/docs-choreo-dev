@@ -11,12 +11,15 @@
  * associated services.
  */
 
-export const ONE_HOUR = 60 * 60 * 1000;
-
-export const DEPLOYMENT_SUCCESS = "Active";
-export const DEPLOYMENT_PENDING = "Pending";
-export const DEPLOYMENT_STOPPED = "Suspended";
-export const DEPLOYMENT_STATUS_V2_ACTIVE = "ACTIVE";
-export const DEPLOYMENT_STATUS_V2_ERROR = "ERROR";
-
-export const MIN_RENDERING_WAIT_TIME = 1500;
+export class Credentials {
+  static generateProductionKeys() {
+    cy.get('[data-testid="production-credentials-menu-item"]')
+      .should("be.visible")
+      .click();
+    cy.wait(2000);
+    cy.get('[data-testid="generate-token-btn"]').should("not.exist");
+    cy.get('[data-testid="generate-oauth-key"]').should("be.enabled").click();
+    cy.get('[data-testid="generate-token-btn"]').should("exist");
+    cy.wait(2000);
+  }
+}

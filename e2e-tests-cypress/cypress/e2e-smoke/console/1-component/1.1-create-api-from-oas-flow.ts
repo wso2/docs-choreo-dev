@@ -32,6 +32,10 @@ import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-crede
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { AppsList } from "../../../support/devportal/pages/applications/apps-list";
+<<<<<<< HEAD
+=======
+import { Credentials } from "../../../support/devportal/pages/applications/credentials";
+>>>>>>> 543454660d97116cd1f1070a441e372cb6b56de2
 import { Subscriptions } from "../../../support/devportal/pages/applications/subscriptions";
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { generateAppName } from "../../../support/devportal/utils";
@@ -179,17 +183,24 @@ describe("Choreo APIM publisher scenarios", () => {
     TryOut.ValidateResponse(OK);
   });
 
+<<<<<<< HEAD
   it("Create application", () => {
     DevPortalHomePage.navigateToAppsPage();     // Create app
     AppsList.createAnApplication(appName);
     AppsList.generateCredentials(Enums.Environment.SANDBOX)
     AppsList.generateCredentials(Enums.Environment.PRODUCTION)
+=======
+  it("Create consumer application", () => {
+    // Create app
+    DevPortalHomePage.navigateToAppsPage();
+    AppsList.createAnApplication(appName);
+  });
+
+  it("Generate keys and Subscribe", () => {
+    Credentials.generateProductionKeys();
+>>>>>>> 543454660d97116cd1f1070a441e372cb6b56de2
     Subscriptions.addSubscriptionToApplication(API_NAME);
     Subscriptions.validateResubscribingApi(API_NAME);
-    // Edit App and assign the scope
-    cy.get('[data-testid="applications-appbar-btn"]')
-      .should("be.visible")
-      .click();
   });
 
   it("Add permissions and tryout", () => {
