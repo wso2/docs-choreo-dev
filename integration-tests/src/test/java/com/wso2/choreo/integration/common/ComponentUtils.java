@@ -84,7 +84,8 @@ public class ComponentUtils {
 
     private static final String timestampRegexMatch = "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}Z|\\d{2}.\\d{2}Z|\\d{2}.\\d{3}Z|\\d{2}.\\d{4}Z|\\d{2}.\\d{5}Z|\\d{2}.\\d{6}Z|\\d{2}.\\d{7}Z)";
 
-    public static ChoreoComponent getReusableComponent(String accessToken, String testName) throws Exception {
+    public static ChoreoComponent getReusableComponent(TestActionRunner runner, String accessToken, String testName, Map<Endpoints, HttpClient> citrusClients,
+                                                       ComponentFlavour componentFlavour) throws Exception {
         ChoreoOrganization org = TestContext.getTestOrg();
         String projectName = "integration-test-project";
 
@@ -101,8 +102,9 @@ public class ComponentUtils {
         ChoreoComponent restAPI;
 
         if (component.isEmpty()) {
-            restAPI = project.createRestAPI(accessToken, componentName, org);
-            restAPI.setProjectId(project.getId());
+            Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/rest-api").branch("main").subPath("").build();
+            GraphqlDTO dto = ComponentUtils.createRestApiComponentRequest(componentName, project, repo);
+            restAPI = createComponent(runner, citrusClients, accessToken, dto, componentFlavour);
         } else {
             restAPI = component.get();
         }

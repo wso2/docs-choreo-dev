@@ -14,6 +14,7 @@
 package com.wso2.choreo.integration.tests.maxApiRevisions;
 
 
+import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
@@ -30,6 +31,8 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.revision.RevisionWrapper;
@@ -62,6 +65,7 @@ import static com.wso2.choreo.integration.config.Constant.REVISION_COUNT_BEFORE_
 public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSupport {
 
     private String accessToken;
+    private String componentName;
     private ChoreoComponent component;
     private String orgUuid;
     private String orgHandle;
@@ -99,11 +103,16 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
     @BeforeClass
     public void setup_CreateMaxAPIRevisionsUsingSettingsPage() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+        componentName = "maxApiRevisionsUsingSettingsPageV2";
+    }
 
-        String componentName = "maxApiRevisionsUsingSettingsPageV2";
+    @Test
+    @CitrusTest
+    public void getRevisionCount_CreateMaxAPIRevisionsUsingSettingsPage() throws Exception {
+        
         // Access a reusable component which has a total of 18 revisions
-        component = ComponentUtils.getReusableComponent(
-                TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(), componentName.toLowerCase());
+        component = ComponentUtils.getReusableComponent(this, accessToken, componentName.toLowerCase(), citrusClients,
+                ComponentFlavour.STANDARD);
 
         ChoreoOrganization org = component.getOrganization();
         orgUuid = org.getOrgUUID();
@@ -114,12 +123,6 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
         environmentId = component.getLatestAppEnvId(Constant.DEV_ENVIRONMENT);
         versionId = component.getLatestApiVersion().getId();
 
-
-    }
-
-    @Test
-    @CitrusTest
-    public void getRevisionCount_CreateMaxAPIRevisionsUsingSettingsPage() throws Exception {
         environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, component);
         JsonArray deploymentArray = component.getDeployments(accessToken, orgHandle, orgUuid, versionId);
 
@@ -137,7 +140,7 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
             ComponentUtils.deployComponent(this, citrusClients,
                     accessToken, component, environments, ComponentFlavour.STANDARD);
             revisionCount = revisionCount+1;
-            SleepUtil.sleep(60);
+            SleepUtil.sleep(10);
         }
     }
 
