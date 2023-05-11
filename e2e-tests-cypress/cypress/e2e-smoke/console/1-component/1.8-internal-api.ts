@@ -118,7 +118,7 @@ describe("Verify internal API creation functionality", () => {
 
   it("Verify REST API component promote to PROD", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteToProd(false);
+    ComponentDeployPage.promoteToProd(false, false);
   });
 
   it("Verify resource access without the token in PROD", () => {
