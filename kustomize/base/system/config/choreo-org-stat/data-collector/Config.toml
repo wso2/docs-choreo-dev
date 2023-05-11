@@ -36,3 +36,5 @@ enterpriseComponentBasedTierId = "4abe3757-86f6-47de-994f-f02fb0522e99"
 
 [script]
 dataDownload = {{.DATA_DOWNLOAD}}
+deploymentDataReset = {{.DEPLOYMENT_DATA_RESET}}
+componentDataReset = {{.COMPONENT_DATA_RESET}}
