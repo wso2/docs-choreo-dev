@@ -109,10 +109,10 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
     @Test
     @CitrusTest
     public void getRevisionCount_CreateMaxAPIRevisionsUsingSettingsPage() throws Exception {
-        
+
         // Access a reusable component which has a total of 18 revisions
-        component = ComponentUtils.getReusableComponent(this, accessToken, componentName.toLowerCase(), citrusClients,
-                ComponentFlavour.STANDARD);
+        component = ComponentUtils.getReusableComponent(this, accessToken, componentName.toLowerCase(),
+                citrusClients, ComponentFlavour.STANDARD);
 
         ChoreoOrganization org = component.getOrganization();
         orgUuid = org.getOrgUUID();
