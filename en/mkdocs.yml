@@ -122,8 +122,7 @@ nav:
       - Observability Overview: monitoring-and-insights/observability-overview.md
       - View API Insights: monitoring-and-insights/view-api-insights.md
       - Generate Custom Reports: monitoring-and-insights/generate-custom-reports.md
-      - Alerts:
-          - Configure Alerts: monitoring-and-insights/alerts/configure-alerts.md
+      - Configure Alerts: monitoring-and-insights/alerts/configure-alerts.md
       - Work with the Choreo Insights API:
           - Access the Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
           - Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md
@@ -241,7 +240,7 @@ plugins:
           'manage/api-management.md': 'https://wso2.com/choreo/docs/api-management/lifecycle-management/'
           'manage/lifecycle.md': 'https://wso2.com/choreo/docs/api-management/lifecycle-management/'
           'manage/api-security/pass-end-user-attributes-to-the-backend.md': 'https://wso2.com/choreo/docs/api-management/api-rate-limiting/'
-          'manage/api-rate-limiting.md': 'https://wso2.com/choreo/docs'
+          'manage/api-rate-limiting.md': 'https://wso2.com/choreo/docs/api-management/api-rate-limiting/'
           'consume/developer-portal.md': 'https://wso2.com/choreo/docs'
           'consume/manage-application.md': 'https://wso2.com/choreo/docs/consuming-services/manage-application/'
           'consume/manage-subscription.md': 'https://wso2.com/choreo/docs/consuming-services/manage-subscription/'
@@ -251,22 +250,19 @@ plugins:
           'observe-and-analyze/observe/root-cause-analysis.md': 'https://wso2.com/choreo/docs'
           'observe-and-analyze/analyze/view-api-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/view-api-insights/'
           'observe-and-analyze/analyze/generate-custom-reports.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/generate-custom-reports/'
-          'observe-and-analyze/analyze/configure-alerts.md': 'https://wso2.com/choreo/docs/alerts/configure-alerts/'
+          'observe-and-analyze/analyze/configure-alerts.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/alerts/configure-alerts/'
           'observe-and-analyze/analyze/choreo-insights-api.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api/'
           'observe-and-analyze/analyze/programmatic-access-choreo-insights-api.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api/'
           'observe-and-analyze/analyze/dora-metrics/configure-cio-dashboard.md': 'https://wso2.com/choreo/docs'
           'observe-and-analyze/analyze/dora-metrics/view-dora-metrics.md': 'https://wso2.com/choreo/docs'
-          'alerts.md': 'https://wso2.com/choreo/docs/alerts/configure-alerts/'
+          'alerts.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/alerts/configure-alerts/'
           'ipaas/get-started-with-choreo-ipaas.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-integration-with-choreo-ipaas/'
           'ipaas/ballerina/develop-integrations-with-ballerina.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-integration-with-choreo-ipaas/'
           'ipaas/ballerina/create-your-first-event-triggered-integration.md': 'https://wso2.com/choreo/docs/develop-integrations/develop-an-event-triggered-integration/'
           'ipaas/micro-integrator/develop-integrations-with-integration-studio.md': 'https://wso2.com/choreo/docs/develop-integrations/develop-an-integration-with-integration-studio/'
           'ipaas/micro-integrator/create-your-first-integration.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-integration-with-choreo-ipaas/'
           'administer/connect-to-an-external-identity-provider.md': 'https://wso2.com/choreo/docs'
-          'administer/configure-a-custom-domain-for-apis.md': 'https://wso2.com/choreo/docs/administer/configure-a-custom-domain-for-apis/'
           'administer/configure-enterprise-login.md': 'https://wso2.com/choreo/docs'
-          'administer/customize-developer-portal-domain.md': 'https://wso2.com/choreo/docs//administer/customize-the-developer-portal-domain/'
-          'administer/customize-the-developer-portal.md': 'https://wso2.com/choreo/docs/administer/customize-the-developer-portal/'
           'administer/configure-developer-portal-self-sign-up.md': 'https://wso2.com/choreo/docs/administer/configure-self-sign-up/'
           'administer/organization.md': 'https://wso2.com/choreo/docs/choreo-concepts/organization/'
           'reference/connect-with-protected-third-party-applications.md': 'https://wso2.com/choreo/docs'
