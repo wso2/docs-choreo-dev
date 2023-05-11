@@ -18,3 +18,5 @@ export const DEPLOYMENT_PENDING = "Pending";
 export const DEPLOYMENT_STOPPED = "Suspended";
 export const DEPLOYMENT_STATUS_V2_ACTIVE = "ACTIVE";
 export const DEPLOYMENT_STATUS_V2_ERROR = "ERROR";
+
+export const MIN_RENDERING_WAIT_TIME = 1500;

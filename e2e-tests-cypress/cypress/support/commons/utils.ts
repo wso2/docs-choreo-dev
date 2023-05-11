@@ -1,3 +1,5 @@
+import { MIN_RENDERING_WAIT_TIME } from "./constants";
+
 /*
  * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
@@ -257,15 +259,17 @@ export class Utils {
   // Ensure that element remains visible multiple times before returning to handle rerendering scenarios
   static getRenderedElement(
     locator: string,
-    waitTime: number = 200,
-    maxTries: number = 5
+    waitTime: number = MIN_RENDERING_WAIT_TIME
   ) {
-    for (let i = 0; i < maxTries; i++) {
-      cy.get(locator).should("be.visible");
-      cy.wait(waitTime);
+    // Setting a wait time lower than MIN_RENDERING_WAIT_TIME can cause flaky tests
+    if (waitTime < MIN_RENDERING_WAIT_TIME) {
+      waitTime = MIN_RENDERING_WAIT_TIME;
     }
+    cy.wait(waitTime);
 
     return cy
+      .get(locator)
+      .should("be.visible")
       .get(locator)
       .should("be.visible")
       .get(locator)
