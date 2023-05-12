@@ -32,7 +32,7 @@ export class ApiCredentials {
       url: DEV_PORTAL_APP_KEY_GEN_URL,
       times: 1,
     }).as("generateAppKey");
-    cy.contains(env).click()
+    cy.get(`[data-testid="${env.toLowerCase()}-credentials-menu-item"]`).click();
     cy.get('[data-testid="generate-creds-btn"]').click();
     cy.get('[data-testid="remove-creds-btn"]').should('be.visible')
     cy.get('#copy-textfield').invoke('val').should('not.be.empty')
