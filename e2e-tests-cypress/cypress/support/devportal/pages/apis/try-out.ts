@@ -11,8 +11,8 @@
  * associated services.
  */
 
-import { SHORT_TIME } from "../../../commons/timeouts";
-import { DEV_PORTAL_APP_TOKEN_GEN_URL } from "../../../commons/urls";
+import { MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
+import { DEV_PORTAL_APP_TOKEN_GEN_URL, DEV_PORTAL_URL } from "../../../commons/urls";
 import { Utils } from "../../../commons/utils";
 
 export class TryOut {
@@ -21,11 +21,9 @@ export class TryOut {
   }
 
   static SelectApplication(applicationName: string) {
-    cy.get('[data-testid="application-selector-wrapper"]').within(() => {
-      cy.get('[data-testid="application-selector"]>div').realClick().wait(2000);
-      cy.get(`[data-value="${applicationName}"]`).click().wait(1000);
-    });
-   
+    cy.get('[data-testid="application-selector"]').click().wait(5000)
+    cy.get(`[data-value="${applicationName}"]`).realHover().click().wait(1000);
+  
   }
 
   static generateTestKeyAndVerify() {
