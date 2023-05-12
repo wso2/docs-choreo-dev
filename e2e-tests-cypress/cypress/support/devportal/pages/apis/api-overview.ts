@@ -44,7 +44,7 @@ export class ApiOverview {
 
   static openRatings(): void {
     cy.log("Opening the rating box");
-    cy.xpath("//P[contains(text(),'Rating')]//../../div/button", MEDIUM_TIME).click();
+    cy.xpath("//P[contains(text(),'Rating')]//../../div/button", MEDIUM_TIME).click({ force: true });
   }
 
   static addRatings(): void {
