@@ -63,8 +63,11 @@ describe("API overview comment and rating scenario", () => {
     Apis.searchApiAndSelect(API_Name);
   });
 
-  it("Add and delete comment for the API", () => {
+  it("Add a comment for the API", () => {
     ApiOverview.addCommentToApi("Test comment from Cypress Test Runner");
+  });
+
+  it("Delete the comment for the API", () => {
     ApiOverview.deleteComment();
   });
 
