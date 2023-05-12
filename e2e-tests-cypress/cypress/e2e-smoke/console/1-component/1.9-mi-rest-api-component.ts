@@ -42,7 +42,7 @@ describe("Verify MI REST API component in root", () => {
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
       PROJECT_DESCRIPTION,
-      Enums.Region.EU
+      Enums.Region.US
     );
   });
 
