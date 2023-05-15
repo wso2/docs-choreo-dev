@@ -81,6 +81,9 @@ describe("API overview comment and rating scenario", () => {
   it("Tryout API in sandbox env", () => {
     ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials(Enums.Environment.SANDBOX);
+  })
+
+  it("Tryout API in Sandbox env", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT)
@@ -89,6 +92,8 @@ describe("API overview comment and rating scenario", () => {
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
   })
+
+  
   it("Tryout API in prod env", () => {
     ApiCredentials.navigateCredentialsTab()
     TryOut.navigateToTryOutMenu();

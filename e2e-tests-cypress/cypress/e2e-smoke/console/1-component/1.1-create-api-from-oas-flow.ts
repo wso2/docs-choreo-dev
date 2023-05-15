@@ -36,7 +36,7 @@ import { Credentials } from "../../../support/devportal/pages/applications/crede
 import { Subscriptions } from "../../../support/devportal/pages/applications/subscriptions";
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { generateAppName } from "../../../support/devportal/utils";
-import {OK} from "../../../support/commons/http"
+import { OK } from "../../../support/commons/http"
 describe("Choreo APIM publisher scenarios", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
@@ -195,14 +195,19 @@ describe("Choreo APIM publisher scenarios", () => {
     DevPortalHomePage.navigateToApisPage();
     Apis.searchApiAndSelect(API_NAME, 1);
     // DevPortalHomePage.navigateSelectAPI(API_NAME);
+
+  });
+
+  it('Verify "Try out" functionality in Dev portal', () => {
     TryOut.navigateToTryOutMenu();
     TryOut.SelectApplication(appName);
     TryOut.GenerateAccessToken();
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
-    TryOut.ValidateResponse("200");
-  });
+    TryOut.ValidateResponse(OK);
+  })
+
 
   it("Verify consumers", () => {
     LoginPage.reLoginToChoreo();
