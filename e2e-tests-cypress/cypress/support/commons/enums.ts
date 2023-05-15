@@ -33,6 +33,7 @@ export namespace Enums {
     DEVELOPMENT = "Development",
     PRODUCTION = "Production",
     STAGING = "Staging",
+    SANDBOX = "Sandbox"
   }
 
   export enum HTTPMethod {

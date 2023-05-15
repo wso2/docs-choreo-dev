@@ -13,6 +13,7 @@
 
 
 
+import { Enums } from "../../../commons/enums";
 import { VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { DEV_PORTAL_APP_KEY_GEN_URL } from "../../../commons/urls";
 
@@ -21,10 +22,9 @@ export class ApiCredentials {
     cy.get('[data-testid="credentials-item-link"]').click();
     cy.url().should("include", "/credentials");
     cy.log("Successfully navigated to credentials tab");
-    cy.wait(3000);
   }
 
-  static generateCredentials() {
+  static generateCredentials(env: Enums.Environment) {
     cy.log("Generating credentials");
 
     cy.intercept({
@@ -32,9 +32,10 @@ export class ApiCredentials {
       url: DEV_PORTAL_APP_KEY_GEN_URL,
       times: 1,
     }).as("generateAppKey");
-
+    cy.get(`[data-testid="${env.toLowerCase()}-credentials-menu-item"]`).click();
     cy.get('[data-testid="generate-creds-btn"]').click();
-
+    cy.get('[data-testid="remove-creds-btn"]').should('be.visible')
+    cy.get('#copy-textfield').invoke('val').should('not.be.empty')
     cy.wait("@generateAppKey", VERY_SHORT_TIME).then(() => {
       cy.get('[data-testid="generate-access-token-btn"]').should("exist");
       cy.log("Successfully generated credentials");

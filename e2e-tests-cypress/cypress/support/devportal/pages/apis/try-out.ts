@@ -11,8 +11,8 @@
  * associated services.
  */
 
-import { SHORT_TIME } from "../../../commons/timeouts";
-import { DEV_PORTAL_APP_TOKEN_GEN_URL } from "../../../commons/urls";
+import { MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
+import { DEV_PORTAL_APP_TOKEN_GEN_URL, DEV_PORTAL_URL } from "../../../commons/urls";
 import { Utils } from "../../../commons/utils";
 
 export class TryOut {
@@ -21,10 +21,9 @@ export class TryOut {
   }
 
   static SelectApplication(applicationName: string) {
-    cy.get('[data-testid="application-selector-wrapper"]').within(() => {
-      cy.get('[data-testid="application-selector"]>div').realClick();
-    });
-    cy.get(`[data-value="${applicationName}"]`).click().wait(1000);
+    cy.get('[data-testid="application-selector"]').click().wait(5000)
+    cy.get(`[data-value="${applicationName}"]`).realHover().click().wait(1000);
+  
   }
 
   static generateTestKeyAndVerify() {
@@ -72,7 +71,7 @@ export class TryOut {
     cy.log("API Tryout is successful!");
   }
 
-  static ValidateResponse(statusCode: string) {
+  static ValidateResponse(statusCode) {
     cy.get(".curl-command").should("exist");
     cy.get(".request-url").should("exist");
     cy.log("Response is successfully returned");
@@ -115,5 +114,10 @@ export class TryOut {
       cy.get("[data-testid=accessTokenInput]").should("not.be.empty");
       cy.log("Successfully generated an access token");
     });
+  }
+
+  static selectEndpoint(endpoint: string) {
+    cy.get('[aria-haspopup="listbox"]').should("be.visible").click();
+    cy.get(`[data-cyid="endpoint-list-item-${endpoint}"]`).click();
   }
 }

@@ -378,7 +378,7 @@ describe("Verify internal API creation functionality", () => {
     DevPortalHomePage.navigateToApisPage();
     DevPortalHomePage.navigateSelectAPI(REST_API_NAME);
     ApiCredentials.navigateCredentialsTab();
-    ApiCredentials.generateCredentials();
+    ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.SelectResource(Enums.HTTPMethod.GET, "greeting");
