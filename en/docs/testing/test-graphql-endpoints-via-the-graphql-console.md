@@ -15,7 +15,7 @@ Follow the steps below to test a GraphQL endpoint via the GraphQL Console:
 4. Select the required endpoint from the **Public Endpoint** list.
 
     !!! note 
-        The Public Endpoint list only includes GraphQL endpoints for which you have set the **Network Visibility** to **Public**.
+        The **Public Endpoint** list only includes GraphQL endpoints for which you have set the **Network Visibility** to **Public**.
 
 5. Enter the API path and the query or mutation you want to test.
 

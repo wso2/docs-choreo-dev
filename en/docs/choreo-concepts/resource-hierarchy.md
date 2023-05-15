@@ -1,4 +1,4 @@
-﻿# Resource Hierarchy
+# Resource Hierarchy
 
 The following diagram depicts the high-level resources and their relationships in Choreo.
 
@@ -13,7 +13,7 @@ Data planes are connected to the organization and are available for all the proj
 
 Choreo allows multiple Kubernetes clusters to be associated with an environment.
 
-This allows you to build highly resilient and resource-efficient solutions that utilize multiple clusters. Choreo handles the synchronization of your applications and workloads between associated clusters in an environment, making multi-cluster deployments possible with a click of a button.
+This allows you to build highly resilient and resource-efficient solutions that utilize multiple clusters. Choreo synchronizes your applications and workloads between associated clusters in an environment. This allows you to perform multi-cluster deployment with a single click.
 
 The following diagram depicts how multiple clusters associate with different environments:
 
