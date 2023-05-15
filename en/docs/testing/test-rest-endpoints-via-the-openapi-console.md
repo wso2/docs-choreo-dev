@@ -16,7 +16,7 @@ Follow the steps below to test a REST endpoint via the integrated OpenAPI Consol
 4. Select the required endpoint from the **Public Endpoint** list.
 
     !!! note 
-        The Public Endpoint list only includes REST endpoints for which you have set the **Network Visibility** to **Public**.
+        The **Public Endpoint** list only includes REST endpoints for which you have set the **Network Visibility** to **Public**.
 
 5. Expand the resource you want to test.
 
