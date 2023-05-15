@@ -170,17 +170,21 @@ describe(`Verify proxy api functionality`, () => {
     Apis.verifyInvokeUrl();
   });
 
-  it("Test in devportal", () => {
+  it("Generate credentials", () => {
     Apis.searchApiAndSelect(API_NAME, 2, API_NEW_VERSION);
     ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
+
+  });
+
+  it("Tryout application",()=>{
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.SelectResource(null, OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
-  });
+  })
 
   it("Verify application suspension", () => {
     LoginPage.reLoginToChoreo();

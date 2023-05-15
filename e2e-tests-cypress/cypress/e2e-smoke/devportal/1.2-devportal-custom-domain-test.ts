@@ -154,16 +154,36 @@ describe("Login and test developer portal with custom domain", () => {
 
   it("Generate keys and Subscribe", () => {
     Credentials.generateProductionKeys();
+    DevPortalHomePage.navigateToAppsPage();
+    AppsList.createAnApplication(appName);
+    AppsList.generateCredentials(Enums.Environment.SANDBOX)
+    AppsList.generateCredentials(Enums.Environment.PRODUCTION)
+  });
+
+
+  it("Generate credentials and tryout the API in Sandbox env", () => {
     cy.task("getAPIName").then((an) => {
       let API_Name = an as string;
-      DevPortalHomePage.navigateToAppsPage();
-      AppsList.createAnApplication(appName);
-      AppsList.generateCredentials(Enums.Environment.SANDBOX)
-      AppsList.generateCredentials(Enums.Environment.PRODUCTION)
       Subscriptions.addSubscriptionToApplication(API_Name);
       Subscriptions.validateResubscribingApi(API_Name);
-    });
-  });
+    })
+
+  })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   it("Delete a consumer application", () => {
     TryOut.DeleteApplication(appName);

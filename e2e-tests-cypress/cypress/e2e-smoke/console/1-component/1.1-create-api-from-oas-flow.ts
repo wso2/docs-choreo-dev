@@ -161,52 +161,66 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify connector publishing ", () => {
-    ComponentAPILifecycle.publish(Enums.ConnectorAudience.PRIVATE).should(
-      "be.visible"
-    );
+    ComponentAPILifecycle.publish(Enums.ConnectorAudience.PRIVATE).should("be.visible");
   });
 
-  it("Tryout API in prod env", () => {
+  it("Search application in devportal", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.searchApiAndSelect(API_NAME, 1);
+  })
+
+
+  it("Generate credentials for prod env", () => {
     ApiCredentials.navigateCredentialsTab();  // Validate the API call without the scope
     ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
+  });
+
+  it("Generate access token for PROD env", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
+  })
+
+  it("Tryout resource in PROD env",()=>{
     TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.ValidateResponse(OK);
-  });
+  }  )
 
-  it("Create application", () => {
+  it("Generate credentials for application", () => {
     DevPortalHomePage.navigateToAppsPage();     // Create app
     AppsList.createAnApplication(appName);
     AppsList.generateCredentials(Enums.Environment.SANDBOX)
     AppsList.generateCredentials(Enums.Environment.PRODUCTION)
+  });
+
+
+  it("Create application", () => {
     Subscriptions.addSubscriptionToApplication(API_NAME);
     Subscriptions.validateResubscribingApi(API_NAME);
-  });
+  })
 
   it("Add permissions and tryout", () => {
     AppsList.editAnApplication(appName, permissions[0]);
-    // Validate API call with scope
     DevPortalHomePage.navigateToApisPage();
     Apis.searchApiAndSelect(API_NAME, 1);
-    // DevPortalHomePage.navigateSelectAPI(API_NAME);
-
   });
 
-  it('Verify "Try out" functionality in Dev portal', () => {
+  it('Generate access token', () => {
     TryOut.navigateToTryOutMenu();
     TryOut.SelectApplication(appName);
     TryOut.GenerateAccessToken();
+
+  })
+
+  it('Tryout application', () => {
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.ValidateResponse(OK);
   })
+
 
 
   it("Verify consumers", () => {

@@ -78,14 +78,18 @@ describe("API overview comment and rating scenario", () => {
     ApiOverview.validateRating();
   });
 
-  it("Tryout API in sandbox env", () => {
+  it("Generate credentials for SANDBOX env", () => {
     ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials(Enums.Environment.SANDBOX);
   })
 
-  it("Tryout API in Sandbox env", () => {
+
+  it("Generate access token", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
+  })
+
+  it("Tryout API in Sandbox env", () => {
     TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT)
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
     TryOut.TryoutAPI();
@@ -93,17 +97,21 @@ describe("API overview comment and rating scenario", () => {
     TryOut.GetResponse();
   })
 
-  
-  it("Tryout API in prod env", () => {
+
+  it("Generate access token ", () => {
     ApiCredentials.navigateCredentialsTab()
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
+  });
+
+
+  it("Tryout API in prod env", () => {
     TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
-  });
+  })
 
   it("Verify the downloaded SDK file", () => {
     APISdk.downloadSDK(sdkFile);
