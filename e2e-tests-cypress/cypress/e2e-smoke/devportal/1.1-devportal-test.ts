@@ -120,11 +120,18 @@ describe("API overview comment and rating scenario", () => {
   it("Create a consumer application", () => {
     DevPortalHomePage.navigateToAppsPage();
     AppsList.createAnApplication(appName);
+
+  });
+
+  it("Generate subscription credentials",()=>{
     AppsList.generateCredentials(Enums.Environment.SANDBOX)
     AppsList.generateCredentials(Enums.Environment.PRODUCTION)
+  })
+
+  it("Add subscription",()=>{
     Subscriptions.addSubscriptionToApplication(API_Name);
     Subscriptions.validateResubscribingApi(API_Name);
-  });
+  })
 
   it("Delete a consumer application", () => {
     TryOut.DeleteApplication(appName);

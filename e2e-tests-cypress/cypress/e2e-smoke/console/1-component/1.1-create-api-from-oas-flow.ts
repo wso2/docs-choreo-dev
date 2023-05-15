@@ -191,12 +191,16 @@ describe("Choreo APIM publisher scenarios", () => {
   it("Generate credentials for application", () => {
     DevPortalHomePage.navigateToAppsPage();     // Create app
     AppsList.createAnApplication(appName);
-    AppsList.generateCredentials(Enums.Environment.SANDBOX)
-    AppsList.generateCredentials(Enums.Environment.PRODUCTION)
+  
   });
 
+  it("Generate credentials",()=>{
+    AppsList.generateCredentials(Enums.Environment.SANDBOX)
+    AppsList.generateCredentials(Enums.Environment.PRODUCTION)
+  })
 
-  it("Create application", () => {
+
+  it("Add subscription", () => {
     Subscriptions.addSubscriptionToApplication(API_NAME);
     Subscriptions.validateResubscribingApi(API_NAME);
   })

@@ -117,9 +117,12 @@ describe("Login and test developer portal with custom domain", () => {
     ApiOverview.validateRating();
   });
 
-  it("Generate credentials and tryout the API in Sandbox env", () => {
+  it("Generate credentials for  Sandbox env", () => {
     ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials(Enums.Environment.SANDBOX);
+  });
+
+  it("Generate access token for SANDBOX env", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT)
@@ -127,7 +130,7 @@ describe("Login and test developer portal with custom domain", () => {
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
-  });
+  })
 
   it("Generate credentials and tryout the API in Prod env", () => {
     ApiCredentials.navigateCredentialsTab();
@@ -148,14 +151,12 @@ describe("Login and test developer portal with custom domain", () => {
   });
 
   it("Create a consumer application", () => {
+    // Credentials.generateProductionKeys();
     DevPortalHomePage.navigateToAppsPage();
     AppsList.createAnApplication(appName);
   });
 
   it("Generate keys and Subscribe", () => {
-    Credentials.generateProductionKeys();
-    DevPortalHomePage.navigateToAppsPage();
-    AppsList.createAnApplication(appName);
     AppsList.generateCredentials(Enums.Environment.SANDBOX)
     AppsList.generateCredentials(Enums.Environment.PRODUCTION)
   });
