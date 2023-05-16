@@ -61,9 +61,82 @@ Here are some of the benefits of adding third-party JARs to the Micro Integrator
  - Optimized performance: By offering optimized implementations of common functions, third-party libraries can improve the performance of the Micro Integrator.
  - Efficient development: Developers can avoid re-implementing commonly used functions, reducing development time and increasing efficiency.
 
-To incorporate third-party libraries into your Micro Integrator project, create a new directory called `libs` at the root of your project. If your project root and GitHub repository root are not the same, place the `libs` directory in the project root. After adding the required JAR files to the `libs` directory, the Micro Integrator runtime will automatically include them when deploying the component. This process ensures that any dependencies needed by your integration flow are available at runtime.
+To incorporate third-party libraries into your Micro Integrator project, create a new directory called `libs` at the
+root of your project. If your project root and GitHub repository root are not the same, place the `libs` directory in
+the project root. After adding the required JAR files to the `libs` directory, the Micro Integrator runtime will
+automatically include them when deploying the component. This process ensures that any dependencies needed by your
+integration flow are available at runtime.
+
+In addition to `jar` libraries, you may also need to incorporate OSGi bundle JARs into your project. To do this,
+create another directory called `dropins` at the root of your project. Similarly, if the project root and GitHub
+repository root differ, place the `dropins` directory in the project root.
+
+Within the `dropins` directory, add the OSGi bundle JAR files. These bundles will be picked up by the OSGi runtime during
+deployment, enabling you to utilize their functionality within your Micro Integrator project.
 
 ![Libs directory](../assets/img/develop-components/micro-integrator/libs_dir.png)
+
+## Importing custom certificates to Micro Integrator
+
+The feature allows Choreo MI users to import certificates to the MI `client-truststore.jks` file. This is useful when
+users need to connect to servers or services that use SSL/TLS encryption and have self-signed or custom certificates
+that are not trusted by default. By importing the certificate to the MI client-truststore.jks file, MI clients can
+establish a secure connection with the server or service without encountering SSL/TLS errors or warnings.
+
+Before importing the certificate, you need to obtain the certificate file. This file can be in
+the PEM or DER format. You can obtain the certificate file from the server or service provider or by exporting it from a
+web browser. Certificates should be added to the `/wso2mi/certs/` folder. Therefore, users must ensure that the mount path
+for the certificate file follows this path
+
+1. Go to the Component page and click on the **Deploy** page for the component you want to add the certificate to.
+2. Click on the **Configs and Secrets** tab.
+3. Click **Create**.
+4. Select **ConfigMap** as the **Config Type** and **File Mount** as the **Mount Type**.
+5. Click **Next**.
+6. Specify the following values as mount configurations:
+
+    | **Field**       | **Value**                                              |                                    
+    |-----------------|--------------------------------------------------------|
+    | **Config Name** | An appropriate name for the certificate.             |
+    | **Mount path**  | `/wso2mi/certs/<filename>`. For example, `/wso2mi/certs/certificate.crt` |
+
+7. Click **Upload File** and attach the certificate.
+8. Click **Create**.
+
+## Working with sensitive data using MI Secure Vault
+
+MI Secure Vault is a feature that allows users to securely store sensitive data, such as passwords and tokens, and
+provide access to that data to MI Integrations. This feature provides an added layer of security to your integrations by
+reducing the risk of accidental exposure of sensitive data.
+
+To use MI Secure Vault to work with sensitive data, follow these steps:
+
+1. Go to the Component page and click on the **Deploy** page.
+2. Click on the **Configure and Deploy**.
+3. Click on the **Add Environment Configurations**
+4. Specify the following values as configurations:
+
+    | **Field**       | **Value**                                 |                                    
+    |-------------------------------------------|--------------------------------------------------------|
+    | **Name** | An appropriate name for the secret/alias. |
+    | **Value**       | Value for the secret                      |
+
+5. Click **Mark as a Secret**.
+6. Click **Add**.
+7. Click **Deploy**. 
+8. Once the secret has been created, you can access it in your integration code using the following syntax:
+
+```xml
+<property name="secret_value_1" expression="wso2:vault-lookup('user_pass')" scope="default" type="STRING"/>
+```
+This code retrieves the secret named "user_pass" from the MI Secure Vault and stores it in the property named "
+secret_value_1". You can then use this property in your integration code to access the secret value.
+
+You can refer to the [Accessing secrets](https://apim.docs.wso2.com/en/latest/install-and-setup/setup/mi-setup/security/encrypting_plain_text/#step-3-accessing-secrets)
+section of MI Secure Vault documentation for more information on these features. By using MI
+Secure Vault to store and access sensitive data in your integrations, you can ensure that your integrations
+remain secure and protect sensitive data from unauthorized access.
+
 
 ## Scan third-party libraries to identify security vulnerabilities
 
