@@ -30,6 +30,7 @@ import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-bui
 import { APIDevelop } from "../../../support/console/pages/apis/api-develop";
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
+import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 
 describe("Verify internal API creation functionality", () => {
   const REST_API_NAME = Utils.generateComponentName("internal");
@@ -376,7 +377,7 @@ describe("Verify internal API creation functionality", () => {
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     DevPortalHomePage.navigateToApisPage();
-    DevPortalHomePage.navigateSelectAPI(REST_API_NAME);
+    Apis.searchApiAndSelect(REST_API_NAME, 1);
     ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
     TryOut.navigateToTryOutMenu();

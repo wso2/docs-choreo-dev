@@ -12,19 +12,20 @@
  */
 
 
+import { cyGet } from "../../../commons/cy";
 import { Utils } from "../../../commons/utils";
 import { GraphQL } from "../../apis/graphql";
 
 
 export class APIDeployment {
   static DeployToDev(projectName: string, componentName: string) {
-    cy.get('[data-cyid="btn-deploy-proxy"]').should("not.be.disabled").click();
+ cyGet('[data-cyid="btn-deploy-proxy"]').should("not.be.disabled").click();
     Utils.interceptConfig();
-    cy.get('[data-cyid="btn-next"]').should("be.visible").click();
-    cy.get('[data-cyid="deployment-status"]')
+ cyGet('[data-cyid="btn-next"]').should("be.visible").click();
+ cyGet('[data-cyid="deployment-status"]')
       .contains("Active")
       .should("be.visible");
-    cy.get('[data-cyid*="promote"]').should("not.be.disabled");
+ cyGet('[data-cyid*="promote"]').should("not.be.disabled");
     GraphQL.getComponentInfo(projectName, componentName);
   }
 

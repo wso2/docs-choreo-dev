@@ -240,10 +240,7 @@ export class Utils {
   }
 
   static interceptConfig() {
-    cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/**`).as(
-      "config"
-    );
-    // cy.wait('@config', { timeout: 180000 })
+    cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/**`).as("config");
   }
   public static pollElement(locator: string) {
     return cy.get("body").then((bdy) => {
@@ -276,4 +273,5 @@ export class Utils {
       .should("be.visible")
       .get(locator);
   }
+
 }
