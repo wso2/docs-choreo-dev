@@ -69,39 +69,40 @@ integration flow are available at runtime.
 
 In addition to `jar` libraries, you may also need to incorporate OSGi bundle JARs into your project. To do this,
 create another directory called `dropins` at the root of your project. Similarly, if the project root and GitHub
-repository root differ, place the `dropins` directory in the project root.
-
-Within the `dropins` directory, add the OSGi bundle JAR files. These bundles will be picked up by the OSGi runtime during
-deployment, enabling you to utilize their functionality within your Micro Integrator project.
+repository root differ, place the `dropins` directory in the project root. Within the `dropins` directory, add the OSGi
+bundle JAR files. The OSGI runtime will pick up these bundles during deployment, enabling you to utilize their
+functionality within your Micro Integrator project.
 
 ![Libs directory](../assets/img/develop-components/micro-integrator/libs_dir.png)
 
-## Importing custom certificates to Micro Integrator
+## Importing custom certificates to MI
 
-The feature allows Choreo MI users to import certificates to the MI `client-truststore.jks` file. This is useful when
-users need to connect to servers or services that use SSL/TLS encryption and have self-signed or certificates issued by private CAs
-that are not trusted by default. By importing the certificate to the MI client-truststore.jks file, MI clients can
-establish a secure connection with the server or service without encountering SSL/TLS errors or warnings.
+The feature enables Choreo MI users to import certificates into the MI `client-truststore.jks` file. This functionality
+proves valuable when users need to establish connections with servers or services utilizing SSL/TLS encryption and
+possessing self-signed certificates or certificates issued by private certificate authorities (CAs) that are not
+automatically trusted. Importing the certificate to the MI `client-truststore.jks` file enables MI clients to establish secure connections with
+the server or service seamlessly, eliminating SSL/TLS errors or warnings.
 
-Before importing the certificate, you need to obtain the certificate file. This file can be in
-the PEM or DER format. You can obtain the certificate file from the server or service provider or by exporting it from a
-web browser. Certificates should be added to the `/wso2mi/certs/` folder. Therefore, users must ensure that the mount path
-for the certificate file follows this path
+Before importing the certificate, it is necessary to obtain the certificate file, which can be in PEM or DER format. You
+can get the certificate from the server or service provider or export it from a web browser. Certificates should be
+added to the `/wso2mi/certs/` folder. Users need to verify that the mount path for the certificate file aligns with this
+specific path.
 
-1. Go to the Component page and click on the **Deploy** page for the component you want to add the certificate to.
-2. Click on the **Configs and Secrets** tab.
-3. Click **Create**.
-4. Select **ConfigMap** as the **Config Type** and **File Mount** as the **Mount Type**.
-5. Click **Next**.
-6. Specify the following values as mount configurations:
+1. In the Choreo console, select the component you wish to add a certificate to.
+2. From the left navigation click **Deploy**.
+3. Click on the **Configs and Secrets** tab.
+4. Click **Create**.
+5. Select **ConfigMap** as the **Config Type** and **File Mount** as the **Mount Type**.
+6. Click **Next**.
+7. Specify the following values as mount configurations:
 
     | **Field**       | **Value**                                              |                                    
     |-----------------|--------------------------------------------------------|
     | **Config Name** | An appropriate name for the certificate.             |
     | **Mount path**  | `/wso2mi/certs/<filename>`. For example, `/wso2mi/certs/certificate.crt` |
 
-7. Click **Upload File** and attach the certificate.
-8. Click **Create**.
+8. Click **Upload File** and attach the certificate.
+9. Click **Create**.
 
 ## Working with sensitive data using MI Secure Vault
 
@@ -111,20 +112,21 @@ reducing the risk of accidental exposure of sensitive data.
 
 To use MI Secure Vault to work with sensitive data, follow these steps:
 
-1. Go to the Component page and click on the **Deploy** page.
-2. Click on the **Configure and Deploy**.
-3. Click on the **Add Environment Configurations**
-4. Specify the following values as configurations:
+1. Select the component from the Choreo Console.
+2. From the left navigation, click Deploy.
+3. Click on the **Configure and Deploy**.
+4. Click on the **Add Environment Configurations**
+5. Specify the following values as configurations:
 
     | **Field**       | **Value**                                 |                                    
     |-------------------------------------------|--------------------------------------------------------|
     | **Name** | An appropriate name for the secret/alias. |
     | **Value**       | Value for the secret                      |
 
-5. Click **Mark as a Secret**.
-6. Click **Add**.
-7. Click **Deploy**. 
-8. Once the secret has been created, you can access it in your integration code using the following syntax:
+6. Select **Mark as a Secret**.
+7. Click **Add**.
+8. Click **Deploy**.
+9. Once the secret has been created, you can access it in your integration code using the following syntax:
 
 ```xml
 <property name="secret_value_1" expression="wso2:vault-lookup('user_pass')" scope="default" type="STRING"/>
