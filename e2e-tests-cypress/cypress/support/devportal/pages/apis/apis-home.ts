@@ -77,9 +77,10 @@ export class Apis {
       .focus()
       .type(`${textApiName}{enter}`);
     if (version == "") {
-      cy.get(`[data-testid="apiCard-${textApiName}"`).click();
+      Utils.getRenderedElement(`[data-testid="apiCard-${textApiName}"`)
+        .click();
     } else {
-      cy.get(`[data-testid="apiCard-${textApiName}"`)
+      Utils.getRenderedElement(`[data-testid="apiCard-${textApiName}"`, 2000)
         .contains(`Version : ${version}`)
         .click();
     }
