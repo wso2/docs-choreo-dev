@@ -93,7 +93,7 @@ export class ComponentObservePage {
       "employee information not found in the hr-service";
     const emptyHistogramMessage =
       "No requests received during the selected time period";
-    const responseTimeRegexp = /\d+\sms/;
+    const responseTimeRegexp = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}[+-]\d{2}:\d{2}/;
     let d;
     let prevY;
     let finalX;
@@ -154,29 +154,18 @@ export class ComponentObservePage {
         ).should("not.exist");
 
         cy.log("Asserting the request list");
-        cy.get('[data-testid="request-table"]', SHORT_TIME).should(
+        cy.get('[data-testid="log-panel"]', SHORT_TIME).should(
           "exist"
         );
-        cy.get('[data-testid="request-information"]')
+        cy.get('[data-testid="log-panel-entry"]')
           .its("length")
           .should("be.gte", 1);
 
-        cy.get('[data-testid="request-information"]')
+        cy.get('[data-testid="log-panel-entry"]')
           .eq(0)
           .find("div>div")
           .then(($elements) => {
             expect($elements[0].textContent).to.match(responseTimeRegexp);
-            expect($elements[1].textContent).to.contain(":");
-            expect($elements[2].textContent).to.be.empty;
-          });
-
-        cy.get('[data-testid="request-information"]')
-          .eq(1)
-          .click()
-          .find("div>div")
-          .then(($elements) => {
-            expect($elements[0].textContent).to.match(responseTimeRegexp);
-            expect($elements[1].textContent).to.contain(":");
           });
       });
   }

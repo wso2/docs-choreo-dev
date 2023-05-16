@@ -32,6 +32,7 @@ import { APIDeployment } from "../../support/console/pages/apis/api-deployment";
 import { ProjectListingPage } from "../../support/console/pages/projects/projects-listing-page";
 import { ComponentAPILifecycle } from "../../support/console/pages/component/component-manage-page";
 import { Utils } from "../../support/commons/utils";
+import { Enums } from "../../support/commons/enums";
 import { Credentials } from "../../support/devportal/pages/applications/credentials";
 
 const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
@@ -116,12 +117,27 @@ describe("Login and test developer portal with custom domain", () => {
     ApiOverview.validateRating();
   });
 
-  it("Generate credentials and tryout the API", () => {
+  it("Generate credentials for  Sandbox env", () => {
     ApiCredentials.navigateCredentialsTab();
-    ApiCredentials.generateCredentials();
+    ApiCredentials.generateCredentials(Enums.Environment.SANDBOX);
+  });
+
+  it("Generate access token for SANDBOX env", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
-    TryOut.SelectResource("GET", OPERATION_USERS);
+    TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT)
+    TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
+    TryOut.TryoutAPI();
+    TryOut.ExecuteResourceFunction();
+    TryOut.GetResponse();
+  })
+
+  it("Generate credentials and tryout the API in Prod env", () => {
+    ApiCredentials.navigateCredentialsTab();
+    TryOut.navigateToTryOutMenu();
+    TryOut.GenerateAccessToken();
+    TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
+    TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
@@ -135,18 +151,40 @@ describe("Login and test developer portal with custom domain", () => {
   });
 
   it("Create a consumer application", () => {
+    // Credentials.generateProductionKeys();
     DevPortalHomePage.navigateToAppsPage();
     AppsList.createAnApplication(appName);
   });
 
   it("Generate keys and Subscribe", () => {
-    Credentials.generateProductionKeys();
+    AppsList.generateCredentials(Enums.Environment.SANDBOX)
+    AppsList.generateCredentials(Enums.Environment.PRODUCTION)
+  });
+
+
+  it("Generate credentials and tryout the API in Sandbox env", () => {
     cy.task("getAPIName").then((an) => {
       let API_Name = an as string;
       Subscriptions.addSubscriptionToApplication(API_Name);
       Subscriptions.validateResubscribingApi(API_Name);
-    });
-  });
+    })
+
+  })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   it("Delete a consumer application", () => {
     TryOut.DeleteApplication(appName);
