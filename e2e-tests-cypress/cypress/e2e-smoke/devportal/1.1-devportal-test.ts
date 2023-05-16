@@ -84,13 +84,10 @@ describe("API overview comment and rating scenario", () => {
   })
 
 
-  it("Generate access token", () => {
-    TryOut.navigateToTryOutMenu();
-    TryOut.GenerateAccessToken();
-  })
-
   it("Tryout API in Sandbox env", () => {
+    TryOut.navigateToTryOutMenu();
     TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT)
+    TryOut.GenerateAccessToken();
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();

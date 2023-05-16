@@ -127,8 +127,8 @@ describe("Login and test developer portal with custom domain", () => {
 
   it("Generate access token for SANDBOX env", () => {
     TryOut.navigateToTryOutMenu();
-    TryOut.GenerateAccessToken();
     TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT)
+    TryOut.GenerateAccessToken();
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
@@ -138,8 +138,8 @@ describe("Login and test developer portal with custom domain", () => {
   it("Generate credentials and tryout the API in Prod env", () => {
     ApiCredentials.navigateCredentialsTab();
     TryOut.navigateToTryOutMenu();
-    TryOut.GenerateAccessToken();
     TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
+    TryOut.GenerateAccessToken();
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
@@ -154,7 +154,6 @@ describe("Login and test developer portal with custom domain", () => {
   });
 
   it("Create a consumer application", () => {
-    // Credentials.generateProductionKeys();
     DevPortalHomePage.navigateToAppsPage();
     AppsList.createAnApplication(appName);
   });
