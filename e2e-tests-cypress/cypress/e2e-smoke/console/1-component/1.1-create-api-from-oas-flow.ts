@@ -175,13 +175,10 @@ describe("Choreo APIM publisher scenarios", () => {
     ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
   });
 
-  it("Generate access token for PROD env", () => {
-    TryOut.navigateToTryOutMenu();
-    TryOut.GenerateAccessToken();
-  })
-
   it("Tryout resource in PROD env",()=>{
+    TryOut.navigateToTryOutMenu();
     TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
+    TryOut.GenerateAccessToken();
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
