@@ -13,6 +13,7 @@
 
 
 
+import { cyGet } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
 import { VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { DEV_PORTAL_APP_KEY_GEN_URL } from "../../../commons/urls";
@@ -33,7 +34,7 @@ export class ApiCredentials {
       times: 1,
     }).as("generateAppKey");
     cy.get(`[data-testid="${env.toLowerCase()}-credentials-menu-item"]`).click();
-    cy.get('[data-testid="generate-creds-btn"]').click();
+    cyGet('[data-testid="generate-creds-btn"]').click();
     cy.get('[data-testid="remove-creds-btn"]').should('be.visible')
     cy.get('#copy-textfield').invoke('val').should('not.be.empty')
     cy.wait("@generateAppKey", VERY_SHORT_TIME).then(() => {
