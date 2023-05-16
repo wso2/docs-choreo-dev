@@ -79,7 +79,7 @@ deployment, enabling you to utilize their functionality within your Micro Integr
 ## Importing custom certificates to Micro Integrator
 
 The feature allows Choreo MI users to import certificates to the MI `client-truststore.jks` file. This is useful when
-users need to connect to servers or services that use SSL/TLS encryption and have self-signed or custom certificates
+users need to connect to servers or services that use SSL/TLS encryption and have self-signed or certificates issued by private CAs
 that are not trusted by default. By importing the certificate to the MI client-truststore.jks file, MI clients can
 establish a secure connection with the server or service without encountering SSL/TLS errors or warnings.
 
