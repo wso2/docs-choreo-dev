@@ -106,8 +106,11 @@ describe("Login and test developer portal with custom domain", () => {
     });
   });
 
-  it("Add and delete comment for the API", () => {
+  it("Add a comment for the API", () => {
     ApiOverview.addCommentToApi("Test comment from Cypress Test Runner");
+  });
+
+  it("Delete the comment for the API", () => {
     ApiOverview.deleteComment();
   });
 
