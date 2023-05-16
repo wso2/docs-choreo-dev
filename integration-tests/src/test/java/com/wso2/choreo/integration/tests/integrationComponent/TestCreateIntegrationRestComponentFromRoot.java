@@ -170,7 +170,8 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
     @Test(dependsOnMethods = {"invokeAPIDev_TestCreateIntegrationRestComponentFromRoot"})
     @CitrusTest
     public void componentPromotionToProd_TestCreateIntegrationRestComponentFromRoot() throws Exception {
-        // Retrieve the latest component.
+        // Retrieve the latest component
+
         testComponent = GraphQL.getComponentDetails(projectId, componentHandler, accessToken);
         String latestApiVersionId = testComponent.getLatestApiVersion().getId();
         String releaseIdForEnvironment = testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT);

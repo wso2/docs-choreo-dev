@@ -92,7 +92,7 @@ describe("Verify MI REST API component in root", () => {
     TestHelper.testOnCurl(
       Enums.Environment.PRODUCTION,
       Enums.HTTPMethod.GET,
-      RESOURCE_NAME
+      ""
     ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.body.message).equal(MATCHING_STRING);
