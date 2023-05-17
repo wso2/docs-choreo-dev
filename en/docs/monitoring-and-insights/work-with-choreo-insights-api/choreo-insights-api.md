@@ -2219,6 +2219,33 @@ The environment ID.
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>externalEnvId</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The external environment ID.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>internalEnvId</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The internal environment ID.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>sandboxEnvId</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The sandbox environment ID.
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -3823,10 +3850,19 @@ The organization by which the results need to be filtered. It is required to spe
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>environmentId</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 The environment ID by which the results need to be filtered. It is required to specify a value for this parameter.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>environmentIds</strong></td>
+<td valign="top">[<a href="#string">String</a>]</td>
+<td>
+
+The environment IDs by which the results need to be filtered. It is required to specify a value for this parameter.
 
 </td>
 </tr>
@@ -4420,11 +4456,20 @@ parameter.
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>envId</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 The ID of the environment by which the results need to be filtered. It is required to specify a value for this
 parameter.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>environmentIds</strong></td>
+<td valign="top">[<a href="#string">String</a>]</td>
+<td>
+
+The environment IDs by which the results need to be filtered. It is required to specify a value for this parameter.
 
 </td>
 </tr>
