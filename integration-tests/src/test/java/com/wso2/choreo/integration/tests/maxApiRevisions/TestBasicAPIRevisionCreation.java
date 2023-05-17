@@ -11,6 +11,7 @@ import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ComponentUtils;
+import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
@@ -60,7 +61,11 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
     @Autowired
     private HttpClient choreoTestClientForSTS;
 
-    @BeforeClass
+    @Autowired
+    Map<Endpoints, HttpClient> citrusClients;
+
+    @Test
+    @CitrusTest
     public void setup_TestBasicAPIRevisionCreation() throws IOException, TokenRetrievalException, NoLatestApiVersionFoundException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
@@ -79,7 +84,8 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
         choreoComponent = response.getEntity();
         Assert.assertEquals(response.getResponse().getStatusCode(), HttpStatus.OK.value());
 
-        choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandler(), accessToken);
+        HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
+        choreoComponent = GraphQL.getComponentDetails(this, cpProjectsClient, projectId,  choreoComponent.getHandler(), accessToken);
         Assert.assertNotNull(choreoComponent);
 
         environments = GraphQL.getComponentDeploymentEnvironment(projectId, accessToken);
@@ -98,7 +104,7 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
         Assert.assertEquals(res.getResponse().getStatusCode(), HttpStatus.OK.value());
     }
 
-    @Test
+    @Test(dependsOnMethods = {"setup_TestBasicAPIRevisionCreation"})
     @CitrusTest
     public void createNewRevision_TestBasicAPIRevisionCreation() throws Exception {
 
