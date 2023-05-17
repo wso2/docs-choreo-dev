@@ -11,22 +11,26 @@
  * associated services.
  */
 
-
 import { cyGet } from "../../../commons/cy";
-import { Utils } from "../../../commons/utils";
+import { VERY_SHORT_TIME } from "../../../commons/timeouts";
+import { PUBLISHER_API_KEYS_URL } from "../../../commons/urls";
 import { GraphQL } from "../../apis/graphql";
-
 
 export class APIDeployment {
   static DeployToDev(projectName: string, componentName: string) {
- cyGet('[data-cyid="btn-deploy-proxy"]').should("not.be.disabled").click();
-    Utils.interceptConfig();
- cyGet('[data-cyid="btn-next"]').should("be.visible").click();
- cyGet('[data-cyid="deployment-status"]')
-      .contains("Active")
-      .should("be.visible");
- cyGet('[data-cyid*="promote"]').should("not.be.disabled");
-    GraphQL.getComponentInfo(projectName, componentName);
+    cy.intercept({ method: "GET", url: PUBLISHER_API_KEYS_URL, times: 1 }).as(
+      "keys"
+    );
+    cyGet('[data-cyid="btn-deploy-proxy"]').should("not.be.disabled").click();
+
+    cy.wait("@keys", VERY_SHORT_TIME).then(() => {
+      cyGet('[data-cyid="btn-next"]').should("be.visible").click();
+      cyGet('[data-cyid="deployment-status"]')
+        .contains("Active")
+        .should("be.visible");
+      cyGet('[data-cyid*="promote"]').should("not.be.disabled");
+      GraphQL.getComponentInfo(projectName, componentName);
+    });
   }
 
   static PromoteToProd() {
