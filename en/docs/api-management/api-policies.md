@@ -378,6 +378,6 @@ This policy validates the request and response headers with the configured value
 
 #### Policy versioning
 
-When it comes to policy versioning in Choreo or mediation dependencies, it is important to consider the major version changes in the Ballerina language. For example, when transitioning from update 1 to update 2 requires a major version increment, which can introduce significant incompatibilities.
+When it comes to policy versioning in Choreo or mediation dependencies, it is important to consider the major version changes in the Ballerina language. For example, transitioning from update 1 to update 2 requires a major version increment, which can introduce significant incompatibilities.
 
 Therefore, to ensure compatibility, the recommended approach is to version the policy package in a manner that the major version gets upgraded when the Choreo/mediation dependency version is upgraded to a major version.  
