@@ -8,11 +8,13 @@ Choreo includes a set of default policies that address common use cases. You can
 
 In Choreo, when you attach a mediation policy to a proxy, the deployment is a two-step process.
 
-1. Deployment initiation 
-   If the component to which you want to attach the mediation policy is new, the system creates and commits a new repository with the mediation service code based on the attached policy. This new service is called the interceptor application. 
+1. Deployment initiation: 
 
-2. Deploying the API
-    Once the deployment initiation is complete, you can specify configuration values if any, and proceed to deploy. Choreo builds the generated interceptor application and pushes the Docker image to the Docker registry. Finally, Choreo deploys the interceptor application with the mediation service and the API Proxy.
+     If the component to which you want to attach the mediation policy is new, the system creates and commits a new repository with the mediation service code based on the attached policy. This new service is called the interceptor application. 
+
+2. Deploying the API:
+
+     Once the deployment initiation is complete, you can specify configuration values if any, and proceed to deploy. Choreo builds the generated interceptor application and pushes the Docker image to the Docker registry. Finally, Choreo deploys the interceptor application with the mediation service and the API Proxy.
 
 When a mediation policy is attached to a specific flow, the API invocation undergoes the following behavioral modification:
  
