@@ -266,11 +266,8 @@ export class ComponentAPILifecycle {
   }
 
   static updateAPIAccessMode(accessMode: string) {
-    Utils.pollElement('[data-testid="access-mode"]');
-    cy.get(`li[id*="Select"]`)
-      .contains(accessMode)
-      .should("exist")
-      .click({ force: true });
+    cy.get('[data-testid="access-mode"]').click();
+    cy.contains(accessMode).should("exist").realClick();
     cy.get('[data-testid="warning-banner"]').should("be.visible");
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
       .should("exist")

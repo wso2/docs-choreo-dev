@@ -39,7 +39,7 @@ import java.util.Map;
 public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpringSupport {
 
     public static final String MI_REST_API = "miRestApi";
-    public static final String API_INVOCATION_REQUEST_URI = "/HelloWorld";
+    public static final String API_INVOCATION_REQUEST_URI = "/";
     public static final String REST_API_EXPECTED_RESPONSE = "{\"Hello\":\"Integration\"}";
     private static String accessToken;
     private String orgHandle;
@@ -170,7 +170,8 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
     @Test(dependsOnMethods = {"invokeAPIDev_TestCreateIntegrationRestComponentFromRoot"})
     @CitrusTest
     public void componentPromotionToProd_TestCreateIntegrationRestComponentFromRoot() throws Exception {
-        // Retrieve the latest component.
+        // Retrieve the latest component
+
         testComponent = GraphQL.getComponentDetails(projectId, componentHandler, accessToken);
         String latestApiVersionId = testComponent.getLatestApiVersion().getId();
         String releaseIdForEnvironment = testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT);

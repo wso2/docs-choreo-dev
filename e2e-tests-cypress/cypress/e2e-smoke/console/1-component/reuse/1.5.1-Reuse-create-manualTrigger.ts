@@ -20,7 +20,6 @@ import { ChoreoHomePage } from "../../../../support/console/pages/home/home-page
 import { LoginPage } from "../../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../../support/console/pages/projects/projects-listing-page";
-import { GitHub } from "../../../../support/github/github";
 import { ComponentData } from "../../../../support/interfaces/component-data";
 
 

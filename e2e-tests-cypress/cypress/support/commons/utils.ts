@@ -1,3 +1,5 @@
+import { MIN_RENDERING_WAIT_TIME } from "./constants";
+
 /*
  * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
@@ -146,13 +148,13 @@ export class Utils {
     return false;
   }
 
-  private static sendRequest(request) {
+  private static sendRequest(request: any, retryCount: number = 0) {
     return cy.request(request).then((res) => {
       if (res.status > 205) {
-        while (this.TRY_COUNT > 0) {
+        while (retryCount < this.TRY_COUNT) {
           cy.wait(10000);
-          this.sendRequest(request);
-          this.TRY_COUNT--;
+          retryCount++;
+          this.sendRequest(request, retryCount);
         }
       }
       return cy.wrap({ body: res.body, status: res.status }, { log: false });
@@ -238,10 +240,7 @@ export class Utils {
   }
 
   static interceptConfig() {
-    cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/**`).as(
-      "config"
-    );
-    // cy.wait('@config', { timeout: 180000 })
+    cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/**`).as("config");
   }
   public static pollElement(locator: string) {
     return cy.get("body").then((bdy) => {
@@ -257,19 +256,22 @@ export class Utils {
   // Ensure that element remains visible multiple times before returning to handle rerendering scenarios
   static getRenderedElement(
     locator: string,
-    waitTime: number = 200,
-    maxTries: number = 5
+    waitTime: number = MIN_RENDERING_WAIT_TIME
   ) {
-    for (let i = 0; i < maxTries; i++) {
-      cy.get(locator).should("be.visible");
-      cy.wait(waitTime);
+    // Setting a wait time lower than MIN_RENDERING_WAIT_TIME can cause flaky tests
+    if (waitTime < MIN_RENDERING_WAIT_TIME) {
+      waitTime = MIN_RENDERING_WAIT_TIME;
     }
+    cy.wait(waitTime);
 
     return cy
       .get(locator)
       .should("be.visible")
       .get(locator)
       .should("be.visible")
+      .get(locator)
+      .should("be.visible")
       .get(locator);
   }
+
 }
