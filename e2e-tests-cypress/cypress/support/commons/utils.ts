@@ -148,13 +148,13 @@ export class Utils {
     return false;
   }
 
-  private static sendRequest(request) {
+  private static sendRequest(request: any, retryCount: number = 0) {
     return cy.request(request).then((res) => {
       if (res.status > 205) {
-        while (this.TRY_COUNT > 0) {
+        while (retryCount < this.TRY_COUNT) {
           cy.wait(10000);
-          this.sendRequest(request);
-          this.TRY_COUNT--;
+          retryCount++;
+          this.sendRequest(request, retryCount);
         }
       }
       return cy.wrap({ body: res.body, status: res.status }, { log: false });
