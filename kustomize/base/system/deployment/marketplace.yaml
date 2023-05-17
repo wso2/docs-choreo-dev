@@ -70,11 +70,22 @@ spec:
             - name: config
               mountPath: /home/ballerina/Config.toml
               subPath: Config.toml
+            - name: secret-choreo-marketplace
+              mountPath: "/mnt/csi/secret-choreo-marketplace"
+              readOnly: true
       restartPolicy: Always
       volumes:
         - name: config
           configMap:
             name: cm-file-choreo-marketplace
+        - name: secret-choreo-marketplace
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-choreo-marketplace
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
