@@ -118,6 +118,7 @@ nav:
       - Lifecycle Management: api-management/lifecycle-management.md
       - Documents: api-management/documents.md
       - API Rate Limiting: api-management/api-rate-limiting.md
+      - API Policies: api-management/api-policies.md
   - Monitoring and Insights:
       - Observability Overview: monitoring-and-insights/observability-overview.md
       - View API Insights: monitoring-and-insights/view-api-insights.md
@@ -222,9 +223,9 @@ plugins:
           'develop/components/service.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/'
           'develop/manage-repository/connect-your-own-github-repository-to-choreo.md': 'https://wso2.com/choreo/docs'
           'develop/run-and-test/forecast-performance-metrics.md': 'https://wso2.com/choreo/docs'
-          'develop/api-policies/policies.md': 'https://wso2.com/choreo/docs'
-          'develop/api-policies/create-a-policy.md': 'https://wso2.com/choreo/docs'
-          'develop/api-policies/attach-policies.md': 'https://wso2.com/choreo/docs'
+          'develop/api-policies/policies.md': 'https://wso2.com/choreo/docs/api-management/api-policies/'
+          'develop/api-policies/create-a-policy.md': 'https://wso2.com/choreo/docs/api-management/api-policies/'
+          'develop/api-policies/attach-policies.md': 'https://wso2.com/choreo/docs/api-management/api-policies/'
           'deploy/deploy-a-ballerina-application.md': 'https://wso2.com/choreo/docs'
           'deploy/deploy-a-containerized-application.md': 'https://wso2.com/choreo/docs'
           'deploy/devops/runtime.md': 'https://wso2.com/choreo/docs/devops-and-ci-cd/view-runtime-details/'
