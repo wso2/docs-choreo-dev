@@ -209,40 +209,6 @@ public class ChoreoProject {
         }
     }
 
-    /**
-     * Get details of created Choreo component
-     *
-     * @param name The name of the Choreo component
-     */
-    public Optional<ChoreoComponent> getComponentByName(String accessToken, String name) throws ComponentRetrieveException {
-        String gqlQuery = getComponentsQuery();
-
-        try {
-            JsonObject body = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
-
-            JsonArray components = body.getAsJsonObject().getAsJsonObject("data")
-                    .getAsJsonArray("components");
-
-            for (int i = 0; i < components.size(); ++i) {
-                JsonObject componentJson = components.get(i).getAsJsonObject();
-
-                String componentName = componentJson.get("name").isJsonNull() ? "" :
-                        componentJson.get("name").getAsString();
-
-                if (componentName.equals(name)) {
-                    String componentHandler = componentJson.get("handler").isJsonNull() ? "" :
-                            componentJson.get("handler").getAsString();
-
-                    return getComponentByHandler(accessToken, componentHandler);
-                }
-            }
-        } catch (GraphQLException e) {
-            throw new ComponentRetrieveException(e);
-        }
-
-        return Optional.empty();
-    }
-
     public Optional<ChoreoComponent> getComponentByHandler(String accessToken, String componentHandler) throws ComponentRetrieveException {
         String gqlQuery = getComponentQuery(componentHandler);
 

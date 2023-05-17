@@ -25,14 +25,8 @@ import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.apis.observability.ObservabilityService;
 import com.wso2.choreo.integration.apis.proxydeployer.ProxyDeployer;
-import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
-import com.wso2.choreo.integration.common.choreoproject.BalConfig;
-import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
-import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.ComponentRetrieveException;
-import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
-import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
-import com.wso2.choreo.integration.common.exceptions.ProjectRetrievalException;
+import com.wso2.choreo.integration.common.choreoproject.*;
+import com.wso2.choreo.integration.common.exceptions.*;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
@@ -100,7 +94,8 @@ public class ComponentUtils {
         }
 
         String componentName = testName + "component";
-        Optional<ChoreoComponent> component = project.getComponentByName(accessToken, componentName);
+        Optional<ChoreoComponent> component = ComponentUtils.getComponentByName(runner, accessToken, citrusClients,
+                project, componentName);
         ChoreoComponent restAPI;
 
         if (component.isEmpty()) {
@@ -115,19 +110,30 @@ public class ComponentUtils {
         return restAPI;
     }
 
-    public static ChoreoComponent getComponentFromProject(ChoreoProject project, String componentName,
-            String accessToken) throws ComponentRetrieveException {
-        ChoreoOrganization org = TestContext.getTestOrg();
-        Optional<ChoreoComponent> component = project.getComponentByName(accessToken, componentName);
+    public static Optional<ChoreoComponent> getComponentByName(TestActionRunner runner, String accessToken,
+            Map<Endpoints, HttpClient> citrusClients, ChoreoProject project, String componentName)
+            throws ComponentRetrieveException {
+        HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
 
-        if (component.isPresent()) {
-            ChoreoComponent restAPI = component.get();
-            restAPI.setOrganization(org);
-            return restAPI;
-        } else {
-            throw new RuntimeException(
-                    "Component named: " + componentName + "does not exist in " + project.getName() + " project");
+        try {
+            List<ChoreoComponent> components = GraphQL.getProjectComponents(runner, cpProjectsClient, project.getId(),
+                    accessToken);
+
+            for (int i = 0; i < components.size(); ++i) {
+                String name = components.get(i).getName();
+
+                if (componentName.equals(name)) {
+                    String componentHandler = components.get(i).getHandler();
+                    return Optional.of(GraphQL.getComponentDetails(runner, cpProjectsClient, project.getId(),
+                            componentHandler, accessToken));
+                }
+            }
+        } catch (IOException e) {
+            throw new ComponentRetrieveException("Component named: " + componentName + "does not exist in " +
+                    project.getName() + " project");
         }
+
+        return Optional.empty();
     }
 
     public static ChoreoProject getProjectByName(String projectName, String accessToken)

@@ -138,7 +138,7 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
             ComponentUtils.deployComponent(this, citrusClients,
                     accessToken, component, environments, ComponentFlavour.STANDARD);
             revisionCount = revisionCount+1;
-            SleepUtil.sleep(10);
+            SleepUtil.sleep(30);
         }
     }
 
