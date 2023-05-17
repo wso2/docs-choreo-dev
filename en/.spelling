@@ -11,6 +11,14 @@ lifecycle
 microservice
 choreo-concepts
 id_token
+RequestFlow
+ResponseFlow
+FaultFlow
+choreo-apim-mediation-fault-flow
+http
+choreo-apim-mediation-policy
+choreo-apim-mediation-request-flow
+choreo-apim-mediation-response-flow
 namespace
 pre-released
 pre-release
