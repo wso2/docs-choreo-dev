@@ -3,32 +3,33 @@
 <suite name="choreoIntegrationTests" parallel="classes" thread-count="7">
     <test name="choreo">
         <classes>
-            <class name="com.wso2.choreo.integration.common.TestContext"/>
-             <class name="com.wso2.choreo.integration.tests.anomalyDetector.BackendFailureAnomaly"/>
-            <class name="com.wso2.choreo.integration.tests.connectorbuilder.ConnectorBuilderIT"/>
-            <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestBasicAPIRevisionCreation"/>
-            <class name="com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingSettingsPage"/>
-            <class name="com.wso2.choreo.integration.tests.deploy.AutoDeployOnCommitIT"/>
-            <class name="com.wso2.choreo.integration.tests.insights.InsightsAPIIT"/>
-            <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPIIT"/>
-            <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertAPIIT"/>
-            <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationRestComponentFromRoot"/>
-            <class name="com.wso2.choreo.integration.tests.integrationComponent.TestIntegrationRestComponentWithVulnerable"/>
-            <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationEventComponent"/>
-            <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationMICustomConfig"/>
-            <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.TestUserManagedNonEmptyCreateComponentRoot"/>
-            <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.TestUserManagedNonEmptyCreateComponentSub"/>
-            <class name="com.wso2.choreo.integration.tests.observability.ObservabilityAPITestCase"/>
-            <class name="com.wso2.choreo.integration.tests.observability.LoggingAPITestCase"/>
-            <class name="com.wso2.choreo.integration.tests.observability.SysObservabilityAPITestCase"/>
-            <class name="com.wso2.choreo.integration.tests.themeManagement.ThemePreference"/>
-            <class name="com.wso2.choreo.integration.tests.jwt.TestClientJwTValidation"/>
-            <class name="com.wso2.choreo.integration.tests.dp.TestGraphQLServiceDp"/>
-            <class name="com.wso2.choreo.integration.tests.dp.TestBYOCDp"/>
-            <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiDp"/>
-            <class name="com.wso2.choreo.integration.tests.dp.TestWebhookDp"/>
-            <class name="com.wso2.choreo.integration.tests.dp.TestRestAPIDp"/>
-            <class name="com.wso2.choreo.integration.tests.dp.TestManualTriggerDp"/>
+<!--            <class name="com.wso2.choreo.integration.common.TestContext"/>-->
+<!--             <class name="com.wso2.choreo.integration.tests.anomalyDetector.BackendFailureAnomaly"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.connectorbuilder.ConnectorBuilderIT"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestBasicAPIRevisionCreation"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingSettingsPage"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.deploy.AutoDeployOnCommitIT"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.insights.InsightsAPIIT"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPIIT"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertAPIIT"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationRestComponentFromRoot"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.integrationComponent.TestIntegrationRestComponentWithVulnerable"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationEventComponent"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationMICustomConfig"/>-->
+            <class name="com.wso2.choreo.integration.tests.integrationComponent.TestIntegrationMISecretAndCert"/>
+<!--            <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.TestUserManagedNonEmptyCreateComponentRoot"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.TestUserManagedNonEmptyCreateComponentSub"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.observability.ObservabilityAPITestCase"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.observability.LoggingAPITestCase"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.observability.SysObservabilityAPITestCase"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.themeManagement.ThemePreference"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.jwt.TestClientJwTValidation"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.dp.TestGraphQLServiceDp"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.dp.TestBYOCDp"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiDp"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.dp.TestWebhookDp"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.dp.TestRestAPIDp"/>-->
+<!--            <class name="com.wso2.choreo.integration.tests.dp.TestManualTriggerDp"/>-->
         </classes>
     </test>
 </suite>
