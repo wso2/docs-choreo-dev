@@ -269,10 +269,14 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
         for (int i = 0; i < 10; i++) {
             DeploymentStatus statusResponse =  APICreator.checkDeploymentStatus(choreoComponent.getId(), versionId,
                     res.getRequestId(), accessToken);
-            if (Objects.equals(statusResponse.getStatus(), "completed")) {
-                break;
+            if (statusResponse.getStatus()!=null) {
+                if (Objects.equals(statusResponse.getStatus(), "completed")) {
+                    break;
+                }
+                SleepUtil.sleep(10);
+            } else {
+                throw new RuntimeException("Error in obtaining response for deployment status");
             }
-            SleepUtil.sleep(10);
         }
     }
 
