@@ -11,6 +11,8 @@
  * associated services.
  */
 
+import { Enums } from "../../../commons/enums";
+
 
 
 
@@ -30,6 +32,7 @@ export class AppsList {
     }
 
     static editAnApplication(appName: string, permissionName: string) {
+        cy.get('[data-testid="applications-appbar-btn"]').click()
         cy.get(`[data-testid="application-list-${appName}"]`).click();
         cy.get('[data-testid="appliation-edit-btn"]').click();
         cy.get('[data-testid="autocomplete-textfield"]').click();
@@ -40,5 +43,17 @@ export class AppsList {
         // App name visible
     }
 
-}
+    static generateCredentials(env: Enums.Environment) {
+        cy.get('[data-testid="link-production-keys"]').click();
+        if (env === Enums.Environment.SANDBOX) {
+            cy.get('[data-testid="sandbox-credentials-menu-item"]').click();
+        }
+        if (env === Enums.Environment.PRODUCTION) {
+            cy.get('[data-testid="production-credentials-menu-item"]').click();
+        }
 
+        cy.get('[data-testid="generate-oauth-key"]').should('be.visible').click();
+        cy.get('#consumer-key-text').invoke('val').should('not.be.empty')
+    }
+
+}

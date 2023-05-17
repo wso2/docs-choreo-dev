@@ -369,6 +369,33 @@ export class GraphQL {
     });
   }
 
+  static getServiceEndpointStatus(env: string = "dev") {
+    const { handle, uuid } = Cypress.env("userData");
+    const { componentId, latestAPIVersionId, releaseId } = Cypress.env(env);
+    const query = GraphQLQueryBuilder.getEndpointStatusQuery(
+      componentId,
+      latestAPIVersionId,
+      releaseId,
+    );
+
+    this.callGraphQL(query).then((res) => {
+      const { state } = res.body.componentEndpoints[0];
+      cy.log("state", state);
+      if (state === "ERROR") {
+        throw new Error(" Deployment Endpoint status is ERROR");
+      }
+      if (state === "Active") {
+        return;
+      } else {
+        if (this.count < 20) {
+          cy.wait(10000);
+          this.count++;
+          this.getServiceEndpointStatus();
+        }
+      }
+    });
+  }
+
   private static getPullRequests(componentId: string, repoName: string) {
     const query = {
       query: `query{

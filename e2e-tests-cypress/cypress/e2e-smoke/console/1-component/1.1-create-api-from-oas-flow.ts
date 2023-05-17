@@ -32,11 +32,11 @@ import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-crede
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { AppsList } from "../../../support/devportal/pages/applications/apps-list";
-import { ProductionKeys } from "../../../support/devportal/pages/applications/production-keys";
+import { Credentials } from "../../../support/devportal/pages/applications/credentials";
 import { Subscriptions } from "../../../support/devportal/pages/applications/subscriptions";
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { generateAppName } from "../../../support/devportal/utils";
-
+import { OK } from "../../../support/commons/http"
 describe("Choreo APIM publisher scenarios", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
@@ -161,52 +161,68 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify connector publishing ", () => {
-    ComponentAPILifecycle.publish(Enums.ConnectorAudience.PRIVATE).should(
-      "be.visible"
-    );
+    ComponentAPILifecycle.publish(Enums.ConnectorAudience.PRIVATE).should("be.visible");
   });
 
-  it("Tryout published api", () => {
+  it("Search application in devportal", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.searchApiAndSelect(API_NAME, 1);
-    // Validate the API call without the scope
-    ApiCredentials.navigateCredentialsTab();
-    ApiCredentials.generateCredentials();
+  })
+
+
+  it("Generate credentials for prod env", () => {
+    ApiCredentials.navigateCredentialsTab();  // Validate the API call without the scope
+    ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
+  });
+
+  it("Tryout resource in PROD env",()=>{
     TryOut.navigateToTryOutMenu();
+    TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
     TryOut.GenerateAccessToken();
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
-    TryOut.ValidateResponse("200");
+    TryOut.ValidateResponse(OK);
+  }  )
+
+  it("Generate credentials for application", () => {
+    DevPortalHomePage.navigateToAppsPage();     // Create app
+    AppsList.createAnApplication(appName);
+  
   });
 
-  it("Create application", () => {
-    // Create app
-    DevPortalHomePage.navigateToAppsPage();
-    AppsList.createAnApplication(appName);
-    ProductionKeys.generateTestToken();
+  it("Generate credentials",()=>{
+    AppsList.generateCredentials(Enums.Environment.SANDBOX)
+    AppsList.generateCredentials(Enums.Environment.PRODUCTION)
+  })
+
+
+  it("Add subscription", () => {
     Subscriptions.addSubscriptionToApplication(API_NAME);
     Subscriptions.validateResubscribingApi(API_NAME);
-    // Edit App and assign the scope
-    cy.get('[data-testid="applications-appbar-btn"]')
-      .should("be.visible")
-      .click();
-  });
+  })
 
   it("Add permissions and tryout", () => {
     AppsList.editAnApplication(appName, permissions[0]);
-    // Validate API call with scope
     DevPortalHomePage.navigateToApisPage();
     Apis.searchApiAndSelect(API_NAME, 1);
-    // DevPortalHomePage.navigateSelectAPI(API_NAME);
+  });
+
+  it('Generate access token', () => {
     TryOut.navigateToTryOutMenu();
     TryOut.SelectApplication(appName);
     TryOut.GenerateAccessToken();
+
+  })
+
+  it('Tryout application', () => {
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
-    TryOut.ValidateResponse("200");
-  });
+    TryOut.ValidateResponse(OK);
+  })
+
+
 
   it("Verify consumers", () => {
     LoginPage.reLoginToChoreo();

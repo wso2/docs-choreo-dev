@@ -15,6 +15,9 @@ export const ONE_HOUR = 60 * 60 * 1000;
 
 export const DEPLOYMENT_SUCCESS = "Active";
 export const DEPLOYMENT_PENDING = "Pending";
+export const DEPLOYMENT_PROCESSING = "Processing";
 export const DEPLOYMENT_STOPPED = "Suspended";
 export const DEPLOYMENT_STATUS_V2_ACTIVE = "ACTIVE";
 export const DEPLOYMENT_STATUS_V2_ERROR = "ERROR";
+
+export const MIN_RENDERING_WAIT_TIME = 1500;
