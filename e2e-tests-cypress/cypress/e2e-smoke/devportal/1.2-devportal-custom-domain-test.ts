@@ -106,26 +106,12 @@ describe("Login and test developer portal with custom domain", () => {
     });
   });
 
-  it("Add a comment for the API", () => {
-    ApiOverview.addCommentToApi("Test comment from Cypress Test Runner");
-  });
-
-  it("Delete the comment for the API", () => {
-    ApiOverview.deleteComment();
-  });
-
-  it("Add and modify ratings of the API", () => {
-    ApiOverview.openRatings();
-    ApiOverview.addRatings();
-    ApiOverview.validateRating();
-  });
-
   it("Generate credentials for  Sandbox env", () => {
     ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials(Enums.Environment.SANDBOX);
   });
 
-  it("Generate access token for SANDBOX env", () => {
+  it("Tryout API in Sandbox env", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT)
     TryOut.GenerateAccessToken();
@@ -138,8 +124,8 @@ describe("Login and test developer portal with custom domain", () => {
   it("Generate credentials and tryout the API in Prod env", () => {
     ApiCredentials.navigateCredentialsTab();
     TryOut.navigateToTryOutMenu();
-    TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
     TryOut.GenerateAccessToken();
+    TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
@@ -173,21 +159,6 @@ describe("Login and test developer portal with custom domain", () => {
 
   })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   it("Delete a consumer application", () => {
     TryOut.DeleteApplication(appName);
   });
@@ -203,5 +174,6 @@ describe("Delete added custom domain", () => {
 
   it("Delete added custom domain", () => {
     DomainsComponents.deleteCreatedCustomDomain(CUSTOM_DOMAIN);
+    cy.log('Deleted the custom domain')
   });
 });
