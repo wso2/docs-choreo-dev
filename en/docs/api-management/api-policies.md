@@ -72,7 +72,7 @@ To implement a policy, follow the steps given below:
 
 ### Prerequisites
 
-1. Set up [Ballerina 2201.2.0 or later](https://ballerina.io/learn/install-ballerina/set-up-ballerina/).
+1. Set up [Ballerina 2201.3.1](https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.3.1).
 2. Open the `~/.ballerina/settings.toml` file and ensure you have configured an access token to Ballerina Central. If you have not configured an access token, follow the steps given below to configure one: 
     1. Generate a token via [https://central.ballerina.io/dashboard?tab=token](https://central.ballerina.io/dashboard?tab=token).
     2. Download the generated `settings.toml` file and copy it to your local `~/.ballerina` directory.
