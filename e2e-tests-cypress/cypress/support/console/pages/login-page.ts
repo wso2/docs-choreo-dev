@@ -15,6 +15,7 @@
 
 
 
+import { cyGet } from "../../commons/cy";
 import { AUTH_HEADER, OK } from "../../commons/http";
 import { MEDIUM_TIME, SHORT_TIME } from "../../commons/timeouts";
 import { ORGS_URL, EP_USER_HOME_URL, VALIDATE_USER_URL } from "../../commons/urls";
@@ -78,7 +79,7 @@ export class LoginPage {
     this.setCookie(componentURL, "commonAuthId", common);
     cy.visit(componentURL);
     this.rejectCookies();
-    cy.get('[data-testid="header-user-profile-menu"]').should("be.visible");
+    cyGet('[data-testid="header-user-profile-menu"]').should("be.visible");
 
   }
 
@@ -190,10 +191,10 @@ export class LoginPage {
       .then((url) => {
         cy.log(`URL after login page load: ${url}`);
         if (url.includes(Cypress.env("idpURL") + "/authenticationendpoint")) {
-          cy.get('button[type="submit"]').should("be.visible", MEDIUM_TIME);
-          cy.get("#usernameUserInput").type(Cypress.env(envUsername));
-          cy.get(LoginPage.password).type(Cypress.env(envPassword), { log: false });
-          cy.get('button[type="submit"]').click();
+          cyGet('button[type="submit"]').should("be.visible", MEDIUM_TIME);
+          cyGet("#usernameUserInput").type(Cypress.env(envUsername));
+          cyGet(LoginPage.password).type(Cypress.env(envPassword), { log: false });
+          cyGet('button[type="submit"]').click();
         }
       });
   }

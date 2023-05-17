@@ -23,7 +23,3 @@ export const generateAppName = (name: string) => {
     return appNamePrefix + Date.now() + "-" + name;
 }
 
-Cypress.Commands.add('getByTestId', (selector) => {
-    return cy.get(`[data-testid=${selector}]`);
-});
-

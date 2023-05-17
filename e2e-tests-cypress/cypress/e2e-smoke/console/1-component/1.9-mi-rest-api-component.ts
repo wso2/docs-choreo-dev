@@ -27,7 +27,6 @@ describe("Verify MI REST API component in root", () => {
   const PROJECT_DESCRIPTION = "MI REST API Test";
   const PROJECT_NAME = Utils.generateProjectName();
   const COMPONENT_NAME = Utils.generateComponentName("miRest");
-  const RESOURCE_NAME = "HelloWorld";
   const MATCHING_STRING = "Hello Integration";
 
   before(() => {
@@ -42,7 +41,7 @@ describe("Verify MI REST API component in root", () => {
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
       PROJECT_DESCRIPTION,
-      Enums.Region.EU
+      Enums.Region.US
     );
   });
 
@@ -74,7 +73,7 @@ describe("Verify MI REST API component in root", () => {
     TestHelper.testOnCurl(
       Enums.Environment.DEVELOPMENT,
       Enums.HTTPMethod.GET,
-      RESOURCE_NAME
+      ""
     ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.body.message).equal(MATCHING_STRING);
@@ -93,7 +92,7 @@ describe("Verify MI REST API component in root", () => {
     TestHelper.testOnCurl(
       Enums.Environment.PRODUCTION,
       Enums.HTTPMethod.GET,
-      RESOURCE_NAME
+      ""
     ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.body.message).equal(MATCHING_STRING);

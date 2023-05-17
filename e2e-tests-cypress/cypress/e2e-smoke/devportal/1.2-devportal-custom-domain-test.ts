@@ -22,7 +22,6 @@ import { LoginPage as ConsoleLoginPage } from "../../support/console/pages/login
 import { LoginPage as DevportalLoginPage } from "../../support/devportal/pages/login/login-page";
 import { ChoreoHomePage } from "../../support/console/pages/home/home-page";
 import { AppsList } from "../../support/devportal/pages/applications/apps-list";
-import { ProductionKeys } from "../../support/devportal/pages/applications/production-keys";
 import { Subscriptions } from "../../support/devportal/pages/applications/subscriptions";
 import { generateAppName } from "../../support/devportal/utils";
 import { APISdk } from "../../support/devportal/pages/apis/api-sdk";
@@ -33,6 +32,8 @@ import { APIDeployment } from "../../support/console/pages/apis/api-deployment";
 import { ProjectListingPage } from "../../support/console/pages/projects/projects-listing-page";
 import { ComponentAPILifecycle } from "../../support/console/pages/component/component-manage-page";
 import { Utils } from "../../support/commons/utils";
+import { Enums } from "../../support/commons/enums";
+import { Credentials } from "../../support/devportal/pages/applications/credentials";
 
 const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
 const API_BASE_PATH = Utils.generateBasePath();
@@ -105,8 +106,11 @@ describe("Login and test developer portal with custom domain", () => {
     });
   });
 
-  it("Add and delete comment for the API", () => {
+  it("Add a comment for the API", () => {
     ApiOverview.addCommentToApi("Test comment from Cypress Test Runner");
+  });
+
+  it("Delete the comment for the API", () => {
     ApiOverview.deleteComment();
   });
 
@@ -116,12 +120,27 @@ describe("Login and test developer portal with custom domain", () => {
     ApiOverview.validateRating();
   });
 
-  it("Generate credentials and tryout the API", () => {
+  it("Generate credentials for  Sandbox env", () => {
     ApiCredentials.navigateCredentialsTab();
-    ApiCredentials.generateCredentials();
+    ApiCredentials.generateCredentials(Enums.Environment.SANDBOX);
+  });
+
+  it("Generate access token for SANDBOX env", () => {
     TryOut.navigateToTryOutMenu();
+    TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT)
     TryOut.GenerateAccessToken();
-    TryOut.SelectResource("GET", OPERATION_USERS);
+    TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
+    TryOut.TryoutAPI();
+    TryOut.ExecuteResourceFunction();
+    TryOut.GetResponse();
+  })
+
+  it("Generate credentials and tryout the API in Prod env", () => {
+    ApiCredentials.navigateCredentialsTab();
+    TryOut.navigateToTryOutMenu();
+    TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
+    TryOut.GenerateAccessToken();
+    TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
@@ -134,16 +153,40 @@ describe("Login and test developer portal with custom domain", () => {
     });
   });
 
-  it("Create a consumer application and tryout an API", () => {
+  it("Create a consumer application", () => {
+    DevPortalHomePage.navigateToAppsPage();
+    AppsList.createAnApplication(appName);
+  });
+
+  it("Generate keys and Subscribe", () => {
+    AppsList.generateCredentials(Enums.Environment.SANDBOX)
+    AppsList.generateCredentials(Enums.Environment.PRODUCTION)
+  });
+
+
+  it("Generate credentials and tryout the API in Sandbox env", () => {
     cy.task("getAPIName").then((an) => {
       let API_Name = an as string;
-      DevPortalHomePage.navigateToAppsPage();
-      AppsList.createAnApplication(appName);
-      ProductionKeys.generateTestToken();
       Subscriptions.addSubscriptionToApplication(API_Name);
       Subscriptions.validateResubscribingApi(API_Name);
-    });
-  });
+    })
+
+  })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   it("Delete a consumer application", () => {
     TryOut.DeleteApplication(appName);

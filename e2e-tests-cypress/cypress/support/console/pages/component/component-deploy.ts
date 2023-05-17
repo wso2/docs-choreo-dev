@@ -14,6 +14,7 @@
 import { GraphQL } from "../../apis/graphql";
 import {
   DEPLOYMENT_PENDING,
+  DEPLOYMENT_PROCESSING,
   DEPLOYMENT_STOPPED,
   DEPLOYMENT_SUCCESS,
 } from "../../../commons/constants";
@@ -313,9 +314,7 @@ export class ComponentDeployPage {
       .contains(DEPLOYMENT_SUCCESS, LONG_TIME)
       .should("be.visible");
     cy.get('[data-testid="Endpoints-env-artifact"]').should("be.visible");
-    cy.get('[data-testid="Endpoints-status"]', LONG_TIME)
-      .contains(DEPLOYMENT_PENDING, LONG_TIME)
-      .should("not.exist");
+    GraphQL.getServiceEndpointStatus();
     cy.get('[data-testid="Endpoints-status"]', LONG_TIME).contains(
       DEPLOYMENT_SUCCESS,
       LONG_TIME
