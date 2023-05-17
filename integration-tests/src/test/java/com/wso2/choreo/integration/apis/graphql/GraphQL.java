@@ -337,13 +337,6 @@ public class GraphQL extends ControlPlaneAPI {
         return ObjectMapperUtil.mapToCollection(Environment[].class, response.getRes(), "environments");
     }
 
-//    public static ChoreoComponent getComponentDetails(String projectId, String componentHandler, String accessToken) throws IOException {
-//        GraphqlDTO dto = GraphqlDTO.builder().componentHandler(componentHandler).projectId(projectId).build();
-//        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentInformation.mustache", dto);
-//        Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
-//        return ObjectMapperUtil.mapStringToObject(ChoreoComponent.class, response.getRes(), "component");
-//    }
-
     public static ObservabilityIdInformation getComponentObservabilityIdForReleaseId(String releaseId, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().releaseIds(releaseId).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getObservabilityIds.mustache", dto);
@@ -359,8 +352,8 @@ public class GraphQL extends ControlPlaneAPI {
         return HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
     }
 
-    public static List<ChoreoComponent> getProjectComponents(TestActionRunner runner, HttpClient client, String projectId,
-                                                String accessToken) throws IOException {
+    public static List<ChoreoComponent> getProjectComponents(TestActionRunner runner, HttpClient client,
+             String projectId, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().orgHandler(ORG_HANDLE).projectId(projectId).build();
         String queryString = ObjectMapperUtil.
                 mapObjectToString("templates/graphql/requests/getProjectComponents.mustache", dto);
@@ -384,15 +377,16 @@ public class GraphQL extends ControlPlaneAPI {
                 .message()
                 .type(MessageType.JSON)
                 .validate((message, context) -> {
-                    ChoreoComponent[] projectComponents = ObjectMapperUtil.mapToCollection(ChoreoComponent[].class, message.getPayload(String.class), "components");
+                    ChoreoComponent[] projectComponents = ObjectMapperUtil.mapToCollection(ChoreoComponent[].class,
+                            message.getPayload(String.class), "components");
                     componentsList.addAll(List.of(projectComponents));
                 }));
 
         return componentsList;
     }
 
-    public static ChoreoComponent getComponentDetails(TestActionRunner runner, HttpClient client, String projectId, String componentHandler,
-                                                             String accessToken) throws IOException {
+    public static ChoreoComponent getComponentDetails(TestActionRunner runner, HttpClient client, String projectId,
+              String componentHandler, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
         String queryString = ObjectMapperUtil.
                 mapObjectToString("templates/observability/graphql/queryForComponentInformation.mustache", dto);
@@ -416,7 +410,8 @@ public class GraphQL extends ControlPlaneAPI {
                 .message()
                 .type(MessageType.JSON)
                 .validate((message, context) -> {
-                    ChoreoComponent component = ObjectMapperUtil.mapStringToObject(ChoreoComponent.class, message.getPayload(String.class), "component");
+                    ChoreoComponent component = ObjectMapperUtil.mapStringToObject(ChoreoComponent.class,
+                            message.getPayload(String.class), "component");
                     componentArray[0] = component;
                 }));
 
@@ -437,7 +432,6 @@ public class GraphQL extends ControlPlaneAPI {
         return ObjectMapperUtil.mapToCollection(Commit[].class, response.getRes(), "commitHistory");
     }
 
-
     public static Status deployComponent(ChoreoComponent component, String accessToken) throws IOException, NoLatestCommitHashFoundException, NoLatestApiVersionFoundException, NoLatestAppEnvIdFoundException {
         Commit[] commits = getCommitHistory(component.getId(), accessToken);
         Commit latestCommit = Commit.getLatestCommit(List.of(commits));
@@ -448,7 +442,6 @@ public class GraphQL extends ControlPlaneAPI {
         return ObjectMapperUtil.mapStringToObject(Status.class, response.getRes(), "deployComponent");
 
     }
-
 
     public static ComponentStatusByVersion deploymentStatusByVersion(ChoreoComponent component, String accessToken)
             throws Exception {
