@@ -383,6 +383,8 @@ automations
 natively
 Configs
 ConfigMap
+OSGi
+CAs
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -590,3 +592,6 @@ Ballerina.toml
 Dependencies.toml
  - docs/deploy/deploy-a-containerized-application.md
 DB_PASS
+ - docs/develop-components/work-with-the-micro-integrator-runtime-in-choreo.md
+user_pass
+secret_value_1
