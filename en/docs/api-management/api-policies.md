@@ -48,8 +48,8 @@ Some of the default policies in Choreo require you to specify custom parameters 
 
 To see how to add environment-specific values and policy parameters when you attach a policy that requires such input, follow the steps given below:
 
-1. Follow [steps 1 to 6 in the Attach a policy section](#attach-a-policy). 
-2. Click on a policy that requires you to specify environment-specific parameters.
+1. Follow [steps 1 to 5 in the Attach a policy section](#attach-a-policy). 
+2. In the **Policy List** pane that opens, click on a policy that requires you to specify environment-specific parameters.
 3. Enter appropriate values for the parameters. If you want to make a parameter a configurable variable, enter the value in the `${<variableName>}` format. For example, `${name}`.
 
        ![Configure parameters](../assets/img/api-management/api-policies/configure-parameters.png)
