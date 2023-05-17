@@ -177,8 +177,8 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Tryout resource in PROD env",()=>{
     TryOut.navigateToTryOutMenu();
-    TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
     TryOut.GenerateAccessToken();
+    TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
@@ -191,11 +191,10 @@ describe("Choreo APIM publisher scenarios", () => {
   
   });
 
-  it("Generate credentials",()=>{
+  it("Generate credentials for sandbox and prod",()=>{
     AppsList.generateCredentials(Enums.Environment.SANDBOX)
     AppsList.generateCredentials(Enums.Environment.PRODUCTION)
   })
-
 
   it("Add subscription", () => {
     Subscriptions.addSubscriptionToApplication(API_NAME);
@@ -208,11 +207,10 @@ describe("Choreo APIM publisher scenarios", () => {
     Apis.searchApiAndSelect(API_NAME, 1);
   });
 
-  it('Generate access token', () => {
+  it('Generate access token for application', () => {
     TryOut.navigateToTryOutMenu();
     TryOut.SelectApplication(appName);
     TryOut.GenerateAccessToken();
-
   })
 
   it('Tryout application', () => {
@@ -221,8 +219,6 @@ describe("Choreo APIM publisher scenarios", () => {
     TryOut.ExecuteResourceFunction();
     TryOut.ValidateResponse(OK);
   })
-
-
 
   it("Verify consumers", () => {
     LoginPage.reLoginToChoreo();
