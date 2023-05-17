@@ -11,13 +11,15 @@
  * associated services.
  */
 
-import { MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
-import { DEV_PORTAL_APP_TOKEN_GEN_URL, DEV_PORTAL_URL } from "../../../commons/urls";
+import { SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
+import { DEV_PORTAL_APP_TOKEN_GEN_URL, DEV_PORTAL_URL, GRAPHQL_URL } from "../../../commons/urls";
 import { Utils } from "../../../commons/utils";
 
 export class TryOut {
   static navigateToTryOutMenu() {
     cy.get('[data-testid="tryout-item-link"]').click();
+    cy.intercept({ method: "POST", url: GRAPHQL_URL, times: 1 }).as ("endpoints");
+    cy.wait("@endpoints", VERY_SHORT_TIME);
   }
 
   static SelectApplication(applicationName: string) {
@@ -117,7 +119,7 @@ export class TryOut {
   }
 
   static selectEndpoint(endpoint: string) {
-    cy.get('[aria-haspopup="listbox"]').should("be.visible").click();
-    cy.get(`[data-cyid="endpoint-list-item-${endpoint}"]`).click();
+      cy.get('[aria-haspopup="listbox"]').should("be.visible").click();
+      cy.get(`[data-cyid="endpoint-list-item-${endpoint}"]`).click();
   }
 }
