@@ -65,6 +65,53 @@ export class GraphQLQueryBuilder {
     }
   }
 
+  static getEndpointStatusQuery(componentId: string, versionId: string, releaseId: string) {
+    return {
+      query: `query List {
+      componentEndpoints(
+        input: {
+          componentId: "${componentId}"
+          versionId: "${versionId}"
+        options: {
+          filter: {
+            releaseIds: ["${releaseId}"]
+          }
+        }
+      }) 
+        {
+          id
+          createdAt
+          updatedAt
+          releaseId
+          environmentId
+          displayName
+          port
+          type
+          apiContext
+          apiDefinitionPath
+          invokeUrl
+          visibility
+          hostName
+          apimId
+          apimRevisionId
+          apimName
+          projectUrl
+          organizationUrl
+          publicUrl
+          state
+          stateReason {
+            code
+            message
+            details
+            workerId
+          }
+          isDeleted
+          deletedAt
+        } 
+      }`
+    }
+  }
+
   static getComponentDeploymentStatusQuery(orgHandler: string, orgUuid: string, componentId: string, versionId: string, environmentId: string) {
     return {
       query: `query {
