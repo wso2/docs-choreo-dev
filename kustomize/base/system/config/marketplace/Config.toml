@@ -6,7 +6,7 @@ rudderUrl = "http://dp-rudder:80"
 healthCheckPort = 9091
 servicePort = 9090
 
-"{{.DEV_VALUES}}"
+{{.DEV_VALUES}}
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
