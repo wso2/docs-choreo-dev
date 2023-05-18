@@ -1,4 +1,5 @@
 import { MIN_RENDERING_WAIT_TIME } from "./constants";
+import { VERY_SHORT_TIME } from "./timeouts";
 
 /*
  * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
@@ -148,16 +149,28 @@ export class Utils {
     return false;
   }
 
-  private static sendRequest(request: any, retryCount: number = 0) {
-    return cy.request(request).then((res) => {
-      if (res.status > 205) {
-        while (retryCount < this.TRY_COUNT) {
-          cy.wait(10000);
-          retryCount++;
-          this.sendRequest(request, retryCount);
-        }
+  private static sendRequest(request: any, retryCount: number) {
+    return this.retryRequest(request).then((res) => {
+      if (res.retry && retryCount < this.TRY_COUNT) {
+        cy.wait(VERY_SHORT_TIME.timeout);
+        retryCount++;
+        this.sendRequest(request, retryCount);
       }
-      return cy.wrap({ body: res.body, status: res.status }, { log: false });
+    });
+  }
+
+  private static retryRequest(request: any) {
+    return cy.request(request).then((res) => {
+      let isRetry = false;
+      if (res.status > 205) {
+        isRetry = true;
+      }
+
+      return Promise.resolve({
+        body: res.body,
+        status: res.status,
+        retry: isRetry,
+      });
     });
   }
 
@@ -194,7 +207,8 @@ export class Utils {
       headers,
       failOnStatusCode: false,
     };
-    return this.sendRequest(request);
+    let retryCount = 0;
+    return this.sendRequest(request, retryCount);
   }
 
   static sendDeleteRequest(url: string, headers: any = {}, body?: any) {
@@ -240,7 +254,9 @@ export class Utils {
   }
 
   static interceptConfig() {
-    cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/**`).as("config");
+    cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/**`).as(
+      "config"
+    );
   }
   public static pollElement(locator: string) {
     return cy.get("body").then((bdy) => {
@@ -273,5 +289,4 @@ export class Utils {
       .should("be.visible")
       .get(locator);
   }
-
 }

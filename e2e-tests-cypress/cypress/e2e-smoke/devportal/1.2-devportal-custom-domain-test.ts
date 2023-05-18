@@ -112,20 +112,20 @@ describe("Login and test developer portal with custom domain", () => {
   });
 
   it("Tryout API in Sandbox env", () => {
-    TryOut.navigateToTryOutMenu();
-    TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT)
+    TryOut.navigateToTryOutMenu(true);
+    TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT);
     TryOut.GenerateAccessToken();
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
-  })
+  });
 
   it("Generate credentials and tryout the API in Prod env", () => {
     ApiCredentials.navigateCredentialsTab();
-    TryOut.navigateToTryOutMenu();
+    TryOut.navigateToTryOutMenu(true);
     TryOut.GenerateAccessToken();
-    TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
+    TryOut.selectEndpoint(Enums.Environment.PRODUCTION);
     TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
@@ -145,19 +145,17 @@ describe("Login and test developer portal with custom domain", () => {
   });
 
   it("Generate keys and Subscribe", () => {
-    AppsList.generateCredentials(Enums.Environment.SANDBOX)
-    AppsList.generateCredentials(Enums.Environment.PRODUCTION)
+    AppsList.generateCredentials(Enums.Environment.SANDBOX);
+    AppsList.generateCredentials(Enums.Environment.PRODUCTION);
   });
-
 
   it("Generate credentials and tryout the API in Sandbox env", () => {
     cy.task("getAPIName").then((an) => {
       let API_Name = an as string;
       Subscriptions.addSubscriptionToApplication(API_Name);
       Subscriptions.validateResubscribingApi(API_Name);
-    })
-
-  })
+    });
+  });
 
   it("Delete a consumer application", () => {
     TryOut.DeleteApplication(appName);
@@ -174,6 +172,6 @@ describe("Delete added custom domain", () => {
 
   it("Delete added custom domain", () => {
     DomainsComponents.deleteCreatedCustomDomain(CUSTOM_DOMAIN);
-    cy.log('Deleted the custom domain')
+    cy.log("Deleted the custom domain");
   });
 });
