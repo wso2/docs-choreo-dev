@@ -94,8 +94,7 @@ describe("API overview comment and rating scenario", () => {
     TryOut.GetResponse();
   })
 
-
-  it("Generate access token ", () => {
+  it("Generate access token for application", () => {
     ApiCredentials.navigateCredentialsTab()
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();

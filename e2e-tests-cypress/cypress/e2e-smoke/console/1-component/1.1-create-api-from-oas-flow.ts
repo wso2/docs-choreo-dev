@@ -178,8 +178,8 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Tryout resource in PROD env", () => {
     TryOut.navigateToTryOutMenu();
-    TryOut.selectEndpoint(Enums.Environment.PRODUCTION);
     TryOut.GenerateAccessToken();
+    TryOut.selectEndpoint(Enums.Environment.PRODUCTION);
     TryOut.SelectResource(OPERATION);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
@@ -207,15 +207,13 @@ describe("Choreo APIM publisher scenarios", () => {
     Apis.searchApiAndSelect(API_NAME, 1);
   });
 
-  it("Generate access token", () => {
+  it("Generate access token for application", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.SelectApplication(appName);
     TryOut.GenerateAccessToken();
   });
 
-  
-
-  it('Tryout application', () => {
+  it("Tryout application", () => {
     TryOut.SelectResource(OPERATION);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();

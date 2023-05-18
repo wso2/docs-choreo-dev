@@ -19,7 +19,7 @@ import {
   DEPLOYMENT_SUCCESS,
 } from "../../../commons/constants";
 import { Utils } from "../../../commons/utils";
-import { LONG_TIME, MEDIUM_TIME } from "../../../commons/timeouts";
+import { LONG_TIME, MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
 
 interface PromoteConfigs {
   settingButtonCount: number;
@@ -332,12 +332,12 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-next"]').click();
 
     cy.get('[data-testid="btn-stop"]', LONG_TIME).should("have.length", 2).eq(1).should("be.visible");
-    cy.get('[data-cyid="deployment-status"]', LONG_TIME).should("have.length", 2).eq(1).contains("Active", LONG_TIME);
+    cy.get('[data-cyid="deployment-status"]', SHORT_TIME).should("have.length", 2).eq(1).contains("Active", SHORT_TIME);
     cy.get('[data-cyid="btn-promote"]', LONG_TIME).should("not.be.disabled");
     cy.get('[data-testid="Endpoints-env-artifact"]').should("have.length", 2).eq(1).should("be.visible");
+    cy.get('[data-testid="Endpoints-status"]', SHORT_TIME).should("have.length", 2).eq(1)
+    .contains(DEPLOYMENT_PENDING, SHORT_TIME).should("not.exist");
     cy.get('[data-testid="Endpoints-status"]', LONG_TIME).should("have.length", 2).eq(1)
-    .contains(DEPLOYMENT_PENDING, LONG_TIME).should("not.exist");
-    cy.get('[data-testid="Endpoints-status"]', LONG_TIME).should("have.length", 2).eq(1)
-      .contains("Active", LONG_TIME).should("exist");
+      .contains("Active", SHORT_TIME).should("exist");
   }
 }
