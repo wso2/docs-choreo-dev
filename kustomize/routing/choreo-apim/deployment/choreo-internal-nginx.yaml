@@ -173,7 +173,7 @@ spec:
           emptyDir: { }
         - name: nginx-ca-cert
           configMap:
-            name: internal-nginx-ca-cert
+            name: nginx-ca-cert
         - name: nginx-lua-modules
           configMap:
             name: internal-nginx-lua-modules
