@@ -504,3 +504,7 @@ configMapGenerator:
     behavior: create
     files:
       - marketplace/Config.toml
+  - name: cm-file-audit-logging
+    behavior: create
+    files:
+      - audit-logging/Config.toml
