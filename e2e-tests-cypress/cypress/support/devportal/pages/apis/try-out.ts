@@ -20,12 +20,16 @@ import {
 import { Utils } from "../../../commons/utils";
 
 export class TryOut {
-  static navigateToTryOutMenu() {
+  static navigateToTryOutMenu(isWaitForEndpoints: boolean = false) {
+    if (isWaitForEndpoints) {
+      cy.intercept({ method: "POST", url: GRAPHQL_URL, times: 1 }).as(
+        "endpoints"
+      );
+    }
     cy.get('[data-testid="tryout-item-link"]').click();
-    cy.intercept({ method: "POST", url: GRAPHQL_URL, times: 1 }).as(
-      "endpoints"
-    );
-    cy.wait("@endpoints", VERY_SHORT_TIME);
+    if (isWaitForEndpoints) {
+      cy.wait("@endpoints", VERY_SHORT_TIME);
+    }
   }
 
   static SelectApplication(applicationName: string) {
