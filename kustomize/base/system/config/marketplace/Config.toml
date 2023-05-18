@@ -5,7 +5,6 @@ appServiceUrl = "http://app-service:8080"
 rudderUrl = "http://dp-rudder:80"
 healthCheckPort = 9091
 servicePort = 9090
-
 {{.DEV_VALUES}}
 
 [ballerina.log]
