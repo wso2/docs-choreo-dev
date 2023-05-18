@@ -180,7 +180,7 @@ describe("Choreo APIM publisher scenarios", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.selectEndpoint(Enums.Environment.PRODUCTION);
-    TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);
+    TryOut.SelectResource(OPERATION);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.ValidateResponse(OK);
@@ -218,8 +218,9 @@ describe("Choreo APIM publisher scenarios", () => {
     TryOut.SelectApplication(appName);
     TryOut.GenerateAccessToken();
   });
+
   it("Tryout application", () => {
-    TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);
+    TryOut.SelectResource(OPERATION);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.ValidateResponse(OK);

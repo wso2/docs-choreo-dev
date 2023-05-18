@@ -13,6 +13,7 @@
 
 
 
+import { cyGet } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
 import { SHORT_TIME } from "../../../commons/timeouts";
 import { GRAPHQL_URL } from "../../../commons/urls";
@@ -57,14 +58,14 @@ export class ProjectListingPage {
   static selectProject(projectName: string = "Default Project") {
     cy.get("body").then((bdy) => {
       if (bdy.find('[data-cyid="create-project-card"]').length > 0) {
-        cy.get('[data-cyid="search-icon"]').eq(0).click();
-        cy.get('[data-testid="search-field"]').type(`${projectName}{enter}`);
+        cyGet('[data-cyid="search-icon"]').eq(0).click();
+        cyGet('[data-testid="search-field"]').type(`${projectName}{enter}`);
         cy.contains(projectName).click();
       } else {
         Utils.getRenderedElement("#project-picker").click();
         cy.wait(3000);
-        cy.get('ul>li [placeholder="Search"]').type(`${projectName}{enter}`);
-        cy.get("ul>li>div>span>p").contains(projectName).click();
+        cyGet('ul>li [placeholder="Search"]').type(`${projectName}{enter}`);
+        cyGet("ul>li>div>span>p").contains(projectName).click();
       }
     });
   }
