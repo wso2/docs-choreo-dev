@@ -127,7 +127,10 @@ export class ComponentDeployPage {
   static promoteScheduleTask() {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[value="*/1 * * * *"]').should("have.length", 1).wait(2000);
-    cy.get('[data-cyid*="promote"]').should("be.enabled").eq(0).click();
+    Utils.getRenderedElement('[data-cyid*="promote"]')
+      .should("be.enabled")
+      .eq(0)
+      .click();
     cy.get('[data-cyid="btn-next"]').contains("Deploy").click();
     cy.get('[value="*/1 * * * *"]', LONG_TIME).should("have.length", 2);
   }
@@ -325,8 +328,12 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-promote"]', LONG_TIME).should("be.enabled").click();
     cy.get(`[data-testid="${endpointName}-endpoint"]`).should("be.visible");
     if (changeVisibility) {
-      cy.get(`[data-testid="${endpointName}-edit-btn"]`).should("be.visible").click();
-      cy.get('[data-testid="Public-visibility-option"]').should("be.visible").click();
+      cy.get(`[data-testid="${endpointName}-edit-btn"]`)
+        .should("be.visible")
+        .click();
+      cy.get('[data-testid="Public-visibility-option"]')
+        .should("be.visible")
+        .click();
       cy.get('[data-cyid="endpoint-submit-btn"]').click();
     }
     cy.get('[data-cyid="btn-next"]').click();
