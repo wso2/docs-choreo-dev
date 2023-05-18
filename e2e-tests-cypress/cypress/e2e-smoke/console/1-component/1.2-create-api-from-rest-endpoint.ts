@@ -180,7 +180,7 @@ describe(`Verify proxy api functionality`, () => {
   it("Tryout application",()=>{
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
-    TryOut.SelectResource(null, OPERATION_USERS);
+    TryOut.SelectResource(OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();

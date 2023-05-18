@@ -11,45 +11,68 @@
  * associated services.
  */
 
-import { MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
-import { DEV_PORTAL_APP_TOKEN_GEN_URL, DEV_PORTAL_URL } from "../../../commons/urls";
+import { cyGet } from "../../../commons/cy";
+import { SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
+import {
+  DEV_PORTAL_APP_TOKEN_GEN_URL,
+  DEV_PORTAL_SUBSCRIPTIONS_URL,
+  GRAPHQL_URL,
+} from "../../../commons/urls";
 import { Utils } from "../../../commons/utils";
 
 export class TryOut {
-  static navigateToTryOutMenu() {
+  static navigateToTryOutMenu(isWaitForEndpoints: boolean = false) {
+    if (isWaitForEndpoints) {
+      cy.intercept({ method: "POST", url: GRAPHQL_URL, times: 1 }).as(
+        "endpoints"
+      );
+    }
     cy.get('[data-testid="tryout-item-link"]').click();
+    if (isWaitForEndpoints) {
+      cy.wait("@endpoints", VERY_SHORT_TIME);
+    }
   }
 
   static SelectApplication(applicationName: string) {
-    cy.get('[data-testid="application-selector"]').click().wait(5000)
-    cy.get(`[data-value="${applicationName}"]`).realHover().click().wait(1000);
-  
+    cy.intercept({
+      method: "GET",
+      url: DEV_PORTAL_SUBSCRIPTIONS_URL,
+      times: 1,
+    }).as("subscriptions");
+
+    cy.wait("@subscriptions", VERY_SHORT_TIME).then(() => {
+      Utils.getRenderedElement('[data-testid="application-selector"]').click();
+      cy.get(`[data-value="${applicationName}"]`)
+        .realHover()
+        .click()
+        .wait(1000);
+    });
   }
 
   static generateTestKeyAndVerify() {
-    cy.get('[data-testid="get-test-key-btn"]').click({ force: true });
+    cyGet('[data-testid="get-test-key-btn"]').click({ force: true });
     cy.contains("Successfully created the access token").should("be.visible");
-    cy.get("#accessTokenInput").invoke("val").should("not.be.empty");
+    cyGet("#accessTokenInput").invoke("val").should("not.be.empty");
   }
 
-  static SelectResource(httpMethod: string, path: string) {
-    cy.get('[data-testid="get-test-key-btn"]').should("be.enabled");
-    cy.wait(5000);
+  static SelectResource(path: string) {
+    cyGet('[data-testid="get-test-key-btn"]').should("be.enabled");
+    // cy.wait(5000);
     const pathVariable = `[data-path="/${path}"]`;
-    cy.get(".swagger-ui").within(() => {
-      cy.get(pathVariable).realClick();
+    cyGet(".swagger-ui").within(() => {
+      cyGet(pathVariable).realClick();
     });
   }
 
   static TryoutAPI() {
-    cy.get('[class="try-out"]').find("button").realClick();
-    cy.get('[class="try-out"]')
+    cyGet('[class="try-out"]').find("button").realClick();
+    cyGet('[class="try-out"]')
       .contains(new RegExp(/Cancel/, "g"))
       .should("exist");
   }
 
   static InputQueryParamater(paramName: string, paramValue: any) {
-    cy.get(
+    cyGet(
       `tr[data-param-name="${paramName}"]>td[class="parameters-col_description"]>input`
     )
       .clear()
@@ -57,39 +80,39 @@ export class TryOut {
   }
 
   static ExecuteResourceFunction() {
-    cy.get(".execute-wrapper").realClick();
+    cyGet(".execute-wrapper").realClick();
     cy.log("Execution is successful");
   }
 
   static GetResponse() {
-    cy.get(".curl-command").should("exist");
-    cy.get(".request-url").should("exist");
+    cyGet(".curl-command").should("exist");
+    cyGet(".request-url").should("exist");
     cy.log("Response is successfully returned");
-    cy.get(
+    cyGet(
       ":nth-child(1) > .responses-table > tbody > .response > .response-col_status"
     ).should("have.text", "200");
     cy.log("API Tryout is successful!");
   }
 
   static ValidateResponse(statusCode) {
-    cy.get(".curl-command").should("exist");
-    cy.get(".request-url").should("exist");
+    cyGet(".curl-command").should("exist");
+    cyGet(".request-url").should("exist");
     cy.log("Response is successfully returned");
-    cy.get(
+    cyGet(
       ":nth-child(1) > .responses-table > tbody > .response > .response-col_status"
     ).should("contain", statusCode);
   }
 
   static DeleteApplication(appName: string) {
-    cy.get('[data-testid="applications-appbar-btn"]').click();
-    cy.get('[data-testid="search-btn"]').trigger("mouseover");
-    cy.get('[data-testid="search-app"] [placeholder="Search"]').type(appName);
+    cyGet('[data-testid="applications-appbar-btn"]').click();
+    cyGet('[data-testid="search-btn"]').trigger("mouseover");
+    cyGet('[data-testid="search-app"] [placeholder="Search"]').type(appName);
     cy.contains(appName).trigger("mouseover");
-    cy.get(`[data-testid="delete-btn-${appName}"]`)
+    cyGet(`[data-testid="delete-btn-${appName}"]`)
       .trigger("mouseover")
       .click();
-    cy.get('[data-testid="delete-dialog-ok-button"]').click();
-    cy.get('[data-testid="create-application-btn"]', { timeout: 50000 }).should(
+    cyGet('[data-testid="delete-dialog-ok-button"]').click();
+    cyGet('[data-testid="create-application-btn"]', SHORT_TIME).should(
       "be.visible"
     );
   }
@@ -111,13 +134,13 @@ export class TryOut {
       Utils.getRenderedElement('[data-testid="get-test-key-btn"]')
         .contains('role="progressbar"')
         .should("not.exist");
-      cy.get("[data-testid=accessTokenInput]").should("not.be.empty");
+      cyGet("[data-testid=accessTokenInput]").should("not.be.empty");
       cy.log("Successfully generated an access token");
     });
   }
 
   static selectEndpoint(endpoint: string) {
-    cy.get('[aria-haspopup="listbox"]').should("be.visible").click();
-    cy.get(`[data-cyid="endpoint-list-item-${endpoint}"]`).click();
+    cyGet('[aria-haspopup="listbox"]').should("be.visible").click();
+    cyGet(`[data-cyid="endpoint-list-item-${endpoint}"]`).click();
   }
 }

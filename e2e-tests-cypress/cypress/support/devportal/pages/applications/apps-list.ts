@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { cyGet } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
 
 
@@ -32,14 +33,14 @@ export class AppsList {
     }
 
     static editAnApplication(appName: string, permissionName: string) {
-        cy.get('[data-testid="applications-appbar-btn"]').click()
-        cy.get(`[data-testid="application-list-${appName}"]`).click();
-        cy.get('[data-testid="appliation-edit-btn"]').click();
-        cy.get('[data-testid="autocomplete-textfield"]').click();
-        cy.get('li[data-option-index="0"]').contains(permissionName).then((option) => {
+      cyGet('[data-testid="applications-appbar-btn"]').click()
+      cyGet(`[data-testid="application-list-${appName}"]`).click();
+      cyGet('[data-testid="appliation-edit-btn"]').click();
+      cyGet('[data-testid="autocomplete-textfield"]').click();
+      cyGet('li[data-option-index="0"]').contains(permissionName).then((option) => {
             option[0].click();
         });
-        cy.get('[data-testid="create-button"]').click();
+      cyGet('[data-testid="create-button"]').click();
         // App name visible
     }
 

@@ -34,7 +34,6 @@ after(() => {
 });
 
 describe(`Verify BYOC functionality in region ${dp}`, () => {
-
   const BYOC_NAME = "create-ReuseBYOC";
   const RESOURCE_NAME = "movies";
 
@@ -53,13 +52,17 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
       byocConfig: {
         dockerfilePath: "byoc-test/Dockerfile",
         dockerContext: "byoc-test",
-        srcGitRepoUrl: "https://github.com/choreo-test-apps/byor-greetings-app2",
+        srcGitRepoUrl:
+          "https://github.com/choreo-test-apps/byor-greetings-app2",
         srcGitRepoBranch: "main",
-      }
-
+      },
     };
     ProjectListingPage.selectProject();
-    ProjectOverviewPage.searchReuseComponent(componentData, "Default Project", true);
+    ProjectOverviewPage.searchReuseComponent(
+      componentData,
+      "Default Project",
+      true
+    );
   });
 
   it("Deploy component", () => {
@@ -67,7 +70,6 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployToDev();
   });
-
 
   it("Verify test functionality using Swagger UI in Dev", () => {
     TestHelper.testOnSwagger(Enums.Environment.DEVELOPMENT, RESOURCE_NAME).then(
@@ -118,5 +120,4 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });
-
 });
