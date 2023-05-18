@@ -19,7 +19,6 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.google.gson.JsonArray;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentUtils;
-import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
@@ -177,7 +176,8 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
         final String devApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId())
                 .replace("\"", "");
         String invokeUrlDev = invokeInformation.getInvokeUrl();
-        String res = "{\"Hello\":\"Choreo Micro Integrator 1.0.0\"}";
+        String res = "{\"ServerName\":\"Choreo Micro Integrator 1.0.0\",\"GreetingMsg\":\"Greeting from WSO2 Micro " +
+                "Integrator\"}";
         ComponentUtils.invokeApiGET(this, devApiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI, res);
     }
 
