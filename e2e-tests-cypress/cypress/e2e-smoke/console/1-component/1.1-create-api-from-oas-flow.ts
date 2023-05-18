@@ -213,7 +213,7 @@ describe("Choreo APIM publisher scenarios", () => {
     TryOut.GenerateAccessToken();
   });
 
-  })
+  
 
   it('Tryout application', () => {
     TryOut.SelectResource(OPERATION);
