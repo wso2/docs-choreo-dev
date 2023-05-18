@@ -166,7 +166,7 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
                     .concat("/metricsV2");
             DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
             $(repeatOnError()
-                    .until("i = 20")
+                    .until("i = 40")
                     .index("i")
                     .autoSleep(30000)
                     .actions(
