@@ -66,9 +66,9 @@ export class ComponentListingPage {
       .should("be.visible")
       .click();
 
-    cy.get("#filterByType").click().should("have.length", 1);
-    cy.contains("Select All").click();
-    cy.contains("Filter by type:").click();
+    cy.get('#filterByType').click().should('have.length', 1)
+    cy.contains('Select All').click()
+    cy.contains('Components Listing').click()
 
     cy.get("tr p").contains(componentName).should("be.visible").click();
     cy.get("[data-cyid=link-overview]").should("be.visible");

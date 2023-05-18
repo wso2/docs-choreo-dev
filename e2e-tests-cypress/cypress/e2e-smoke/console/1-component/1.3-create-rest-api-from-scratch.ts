@@ -273,5 +273,4 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });
-
 });

@@ -70,6 +70,7 @@ export class GraphQL {
         this.getDeployedComponentDetails(projectId, handler);
       });
     });
+    return cy.wrap({});
   }
   static deleteProjectsCreatedByTests(
     orgId: number,
