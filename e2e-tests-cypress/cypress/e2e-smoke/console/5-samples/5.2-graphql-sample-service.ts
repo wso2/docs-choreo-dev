@@ -38,7 +38,6 @@ describe("Graphql GQL service test", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteRepoContent(REPO_NAME);
   });
   after(() => {
     ChoreoHomePage.logout();

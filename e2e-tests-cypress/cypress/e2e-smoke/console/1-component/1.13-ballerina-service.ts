@@ -24,8 +24,6 @@ import { ComponentOverviewPage } from "../../../support/console/pages/component/
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-
-import { GitHub } from "../../../support/github/github";
 import { ComponentData } from "../../../support/interfaces/component-data";
 
 before(() => {
@@ -164,6 +162,44 @@ describe("Verify Ballerina service functionality", () => {
     );
   });
 
+      //new version creation 
+  it("Verify new version creation and deploy to dev", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.addNewVersion();
+    ComponentDeployPage.deployService(ENDPOINT_NAME, true);
+  });
+
+  it("Verify test functionality of root resource in dev on swagger for new version", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testManagedEndpoint(
+      Enums.Environment.DEVELOPMENT,
+      "Readinglist",
+      "Books",
+      "get"
+    ).then((res) => {
+      expect(res.response).to.be.eq("[]");
+      expect(res.statusCode).to.be.eq("200");
+    });
+  });
+
+  it("Verify new version promotion to prod", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.promoteService(ENDPOINT_NAME, true);
+  });
+
+  it("Verify test functionality of root resource in prod on swagger for new version", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testManagedEndpoint(
+      Enums.Environment.PRODUCTION,
+      "Readinglist",
+      "Books",
+      "get"
+    ).then((res) => {
+      expect(res.response).to.be.eq("[]");
+      expect(res.statusCode).to.be.eq("200");
+    });
+  });
+
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
@@ -180,3 +216,4 @@ describe("Verify Ballerina service functionality", () => {
     ComponentDeployPage.stopAllDeployment();
   });
 });
+

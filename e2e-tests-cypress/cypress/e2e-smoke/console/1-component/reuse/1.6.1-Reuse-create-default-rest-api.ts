@@ -24,8 +24,6 @@ import { ProjectOverviewPage } from "../../../../support/console/pages/projects/
 import { ProjectListingPage } from "../../../../support/console/pages/projects/projects-listing-page";
 import { ComponentData } from "../../../../support/interfaces/component-data";
 
-
-
 describe("Verify Reusable RestAPI functionality", () => {
   const PROJECT_NAME = "Default Project";
   const REST_API_NAME = "create-ReuseRestAPI-1.6.1";
@@ -126,7 +124,6 @@ describe("Verify Reusable RestAPI functionality", () => {
     });
   });
 
-  
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();

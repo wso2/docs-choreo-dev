@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { cyGet } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
 import { LONG_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
@@ -266,10 +267,10 @@ export class ComponentAPILifecycle {
   }
 
   static updateAPIAccessMode(accessMode: string) {
-    cy.get('[data-testid="access-mode"]').click();
+   cyGet('[data-testid="access-mode"]').click();
     cy.contains(accessMode).should("exist").realClick();
-    cy.get('[data-testid="warning-banner"]').should("be.visible");
-    cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
+   cyGet('[data-testid="warning-banner"]').should("be.visible");
+   cyGet('[data-cyid="btn-confirmation-dialog-blue"]')
       .should("exist")
       .click();
     cy.contains(
