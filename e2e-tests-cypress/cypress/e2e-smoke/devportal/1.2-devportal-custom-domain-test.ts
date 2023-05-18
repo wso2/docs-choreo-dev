@@ -115,7 +115,7 @@ describe("Login and test developer portal with custom domain", () => {
     TryOut.navigateToTryOutMenu(true);
     TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT);
     TryOut.GenerateAccessToken();
-    TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
+    TryOut.SelectResource( OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
@@ -125,8 +125,7 @@ describe("Login and test developer portal with custom domain", () => {
     ApiCredentials.navigateCredentialsTab();
     TryOut.navigateToTryOutMenu(true);
     TryOut.GenerateAccessToken();
-    TryOut.selectEndpoint(Enums.Environment.PRODUCTION);
-    TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION_USERS);
+    TryOut.SelectResource( OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
