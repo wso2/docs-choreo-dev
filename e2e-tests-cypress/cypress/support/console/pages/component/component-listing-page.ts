@@ -11,17 +11,14 @@
  * associated services.
  */
 
-
 import { Utils } from "../../../commons/utils";
 import { GraphQL } from "../../apis/graphql";
 
-
 export class ComponentListingPage {
-
   static deleteComponent(componentName: string) {
     cy.get(`tbody>tr`).should("be.visible").realHover();
     cy.get("button>span").contains("Delete").click();
-    cy.get('[name="confirmName"]').type(componentName)
+    cy.get('[name="confirmName"]').type(componentName);
     cy.get(".MuiDialogActions-spacing button")
       .should("be.enabled")
       .eq(1)
@@ -37,31 +34,31 @@ export class ComponentListingPage {
   }
 
   static getProductionEnvStats() {
-    cy.get('[name="env"]').click()
-    cy.contains('Production').click().wait(3000);
-    cy.get('[data-cyid="total-apis"]').should('have.text', '1');
-    cy.get('[data-cyid="total-traffic"]').should('have.text', '2');
-    cy.get('[data-cyid="avg-latency"]').invoke('text')
+    cy.get('[name="env"]').click();
+    cy.contains("Production").click().wait(3000);
+    cy.get('[data-cyid="total-apis"]').should("have.text", "1");
+    cy.get('[data-cyid="total-traffic"]').should("have.text", "2");
+    cy.get('[data-cyid="avg-latency"]')
+      .invoke("text")
       .then((text) => {
         const avgLatency = parseInt(text);
         expect(avgLatency).to.be.greaterThan(0);
       });
-    cy.get('[data-cyid="errors"]').should('have.text', '0');
-
+    cy.get('[data-cyid="errors"]').should("have.text", "0");
   }
 
   static getDevelopmentEnvStats() {
-    cy.get('[name="env"]').click()
-    cy.contains('Development').click().wait(3000);
-    cy.get('[data-cyid="total-apis"]').should('have.text', '1');
-    cy.get('[data-cyid="total-traffic"]').should('have.text', '2');
-    cy.get('[data-cyid="avg-latency"]').invoke('text')
+    cy.get('[name="env"]').click();
+    cy.contains("Development").click().wait(3000);
+    cy.get('[data-cyid="total-apis"]').should("have.text", "1");
+    cy.get('[data-cyid="total-traffic"]').should("have.text", "2");
+    cy.get('[data-cyid="avg-latency"]')
+      .invoke("text")
       .then((text) => {
         const avgLatency = parseInt(text);
         expect(avgLatency).to.be.greaterThan(0);
       });
-    cy.get('[data-cyid="errors"]').should('have.text', '0');
-
+    cy.get('[data-cyid="errors"]').should("have.text", "0");
   }
 
   static visitToAComponent(componentName: string) {
@@ -80,8 +77,7 @@ export class ComponentListingPage {
   }
 
   private static verifyDeletion() {
-
-    const { projectId } = Cypress.env("component")
+    const { projectId } = Cypress.env("component");
     GraphQL.getComponents(projectId).then((res) => {
       expect(res.status).to.be.equal(200);
       expect(res.components).to.be.empty;

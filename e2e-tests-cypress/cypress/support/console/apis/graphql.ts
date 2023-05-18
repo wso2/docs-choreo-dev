@@ -11,7 +11,11 @@
  * associated services.
  */
 
-import { DEPLOYMENT_STATUS_V2_ACTIVE, DEPLOYMENT_STATUS_V2_ERROR, ONE_HOUR } from "../../commons/constants";
+import {
+  DEPLOYMENT_STATUS_V2_ACTIVE,
+  DEPLOYMENT_STATUS_V2_ERROR,
+  ONE_HOUR,
+} from "../../commons/constants";
 import { AUTH_HEADER, OK } from "../../commons/http";
 import { Utils } from "../../commons/utils";
 import { GitHub } from "../../github/github";
@@ -26,8 +30,6 @@ import { ChoreoHomePage } from "../pages/home/home-page";
 import { APILifeCycleService } from "./api-life-cycle-service";
 import { BallerinaService } from "./bal-service";
 import { GraphQLQueryBuilder } from "./gql-query-builder";
-
-
 
 export const SUCCESS_STATUS_CODE = 200;
 export const NO_CONTENT_STATUS_CODE = 204;
@@ -68,12 +70,6 @@ export class GraphQL {
         this.getDeployedComponentDetails(projectId, handler);
       });
     });
-
-    ChoreoHomePage.navigateToMarketPlace();
-    ChoreoHomePage.navigateToComponents();
-    cy.get('#filterByType').click().should('have.length', 1)
-    cy.contains('Select All').click()
-    cy.get("tbody>tr p").should("be.visible");
     return cy.wrap({});
   }
   static deleteProjectsCreatedByTests(
@@ -254,27 +250,34 @@ export class GraphQL {
                         createIntegrationComponent(
                                  component: {
                                       name: "${componentData.componentName}",
-                                      displayName: "${componentData.componentName
-          }",
+                                      displayName: "${
+                                        componentData.componentName
+                                      }",
                                       description: "",
                                       orgId: ${orgId},
                                       orgHandler: "${Cypress.env(
-            "choreoOrgHandle"
-          )}",
+                                        "choreoOrgHandle"
+                                      )}",
                                       projectId: "${project["id"]}",
                                       labels: "",
-                                      componentType: "${componentData.componentType
-          }",
-                                      accessibility: "${componentData.accessibility
-          }",
-                                      srcGitRepoUrl: "${componentData.srcGitRepoUrl
-          }",
-                                      srcGitRepoBranch: "${componentData.srcGitRepoBranch
-          }",
-                                      repositorySubPath: "${componentData.repositorySubPath
-          }",
-                                      oasFilePath: "${componentData.oasFilePath
-          }"
+                                      componentType: "${
+                                        componentData.componentType
+                                      }",
+                                      accessibility: "${
+                                        componentData.accessibility
+                                      }",
+                                      srcGitRepoUrl: "${
+                                        componentData.srcGitRepoUrl
+                                      }",
+                                      srcGitRepoBranch: "${
+                                        componentData.srcGitRepoBranch
+                                      }",
+                                      repositorySubPath: "${
+                                        componentData.repositorySubPath
+                                      }",
+                                      oasFilePath: "${
+                                        componentData.oasFilePath
+                                      }"
                                       version: "1.0.0"
                                     } )
                                     { id,
@@ -307,8 +310,8 @@ export class GraphQL {
       const latestAPIVersion = av.find((a) => a.latest);
       const latestAPIVersionId = latestAPIVersion.id;
 
-      const apiInfo = { componentId, latestAPIVersionId }
-      Cypress.env("apiInfo", apiInfo)
+      const apiInfo = { componentId, latestAPIVersionId };
+      Cypress.env("apiInfo", apiInfo);
 
       const appENVS: AppEnvVersion[] = latestAPIVersion.appEnvVersions;
       appENVS.forEach((appEnv) => {
@@ -354,12 +357,19 @@ export class GraphQL {
       environmentId
     );
     this.callGraphQL(query).then((res) => {
-      const { deploymentStatus, deploymentStatusV2 } = res.body.componentDeployment;
+      const { deploymentStatus, deploymentStatusV2 } =
+        res.body.componentDeployment;
       cy.log(deploymentStatus, deploymentStatusV2);
-      if (deploymentStatusV2 === DEPLOYMENT_STATUS_V2_ERROR || deploymentStatus === DEPLOYMENT_STATUS_V2_ERROR) {
+      if (
+        deploymentStatusV2 === DEPLOYMENT_STATUS_V2_ERROR ||
+        deploymentStatus === DEPLOYMENT_STATUS_V2_ERROR
+      ) {
         throw new Error(" Deployment Failed");
       }
-      if (deploymentStatusV2 === DEPLOYMENT_STATUS_V2_ACTIVE && deploymentStatus === DEPLOYMENT_STATUS_V2_ACTIVE) {
+      if (
+        deploymentStatusV2 === DEPLOYMENT_STATUS_V2_ACTIVE &&
+        deploymentStatus === DEPLOYMENT_STATUS_V2_ACTIVE
+      ) {
         return;
       } else {
         if (this.count < 10) {
@@ -375,7 +385,7 @@ export class GraphQL {
     const query = GraphQLQueryBuilder.getEndpointStatusQuery(
       componentId,
       latestAPIVersionId,
-      releaseId,
+      releaseId
     );
 
     this.callGraphQL(query).then((res) => {
@@ -485,7 +495,9 @@ export class GraphQL {
   private static deprecateComponent(apiId: string, token: string) {
     const { uuid } = Cypress.env("userData");
     cy.log(`Current UUID ==> ${uuid}`);
-    const statusRequest = `${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/${apiId}/lifecycle-state?organizationId=${uuid}`;
+    const statusRequest = `${Cypress.env(
+      "apimSvcURL"
+    )}/api/am/publisher/v2/apis/${apiId}/lifecycle-state?organizationId=${uuid}`;
     const headers = { Authorization: `Bearer ${token}` };
     return Utils.sendGetRequest(statusRequest, headers).then((res) => {
       const { state } = res.body;
@@ -496,8 +508,7 @@ export class GraphQL {
   }
 
   private static sendDeprecateRetireRequest(apiId: string) {
-    APILifeCycleService.deprecateAPI(apiId)
-    APILifeCycleService.retireAPI(apiId)
+    APILifeCycleService.deprecateAPI(apiId);
+    APILifeCycleService.retireAPI(apiId);
   }
-
 }

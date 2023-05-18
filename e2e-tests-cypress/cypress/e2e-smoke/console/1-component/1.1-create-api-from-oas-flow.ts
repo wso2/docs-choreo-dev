@@ -36,7 +36,7 @@ import { Credentials } from "../../../support/devportal/pages/applications/crede
 import { Subscriptions } from "../../../support/devportal/pages/applications/subscriptions";
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { generateAppName } from "../../../support/devportal/utils";
-import { OK } from "../../../support/commons/http"
+import { OK } from "../../../support/commons/http";
 describe("Choreo APIM publisher scenarios", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
@@ -161,46 +161,45 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify connector publishing ", () => {
-    ComponentAPILifecycle.publish(Enums.ConnectorAudience.PRIVATE).should("be.visible");
+    ComponentAPILifecycle.publish(Enums.ConnectorAudience.PRIVATE).should(
+      "be.visible"
+    );
   });
 
   it("Search application in devportal", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.searchApiAndSelect(API_NAME, 1);
-  })
-
+  });
 
   it("Generate credentials for prod env", () => {
-    ApiCredentials.navigateCredentialsTab();  // Validate the API call without the scope
+    ApiCredentials.navigateCredentialsTab(); // Validate the API call without the scope
     ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
   });
 
-  it("Tryout resource in PROD env",()=>{
+  it("Tryout resource in PROD env", () => {
     TryOut.navigateToTryOutMenu();
-    TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
+    TryOut.selectEndpoint(Enums.Environment.PRODUCTION);
     TryOut.GenerateAccessToken();
     TryOut.SelectResource(OPERATION);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.ValidateResponse(OK);
-  }  )
-
-  it("Generate credentials for application", () => {
-    DevPortalHomePage.navigateToAppsPage();     // Create app
-    AppsList.createAnApplication(appName);
-  
   });
 
-  it("Generate credentials",()=>{
-    AppsList.generateCredentials(Enums.Environment.SANDBOX)
-    AppsList.generateCredentials(Enums.Environment.PRODUCTION)
-  })
+  it("Generate credentials for application", () => {
+    DevPortalHomePage.navigateToAppsPage(); // Create app
+    AppsList.createAnApplication(appName);
+  });
 
+  it("Generate credentials", () => {
+    AppsList.generateCredentials(Enums.Environment.SANDBOX);
+    AppsList.generateCredentials(Enums.Environment.PRODUCTION);
+  });
 
   it("Add subscription", () => {
     Subscriptions.addSubscriptionToApplication(API_NAME);
     Subscriptions.validateResubscribingApi(API_NAME);
-  })
+  });
 
   it("Add permissions and tryout", () => {
     AppsList.editAnApplication(appName, permissions[0]);
@@ -208,10 +207,11 @@ describe("Choreo APIM publisher scenarios", () => {
     Apis.searchApiAndSelect(API_NAME, 1);
   });
 
-  it('Generate access token', () => {
+  it("Generate access token", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.SelectApplication(appName);
     TryOut.GenerateAccessToken();
+  });
 
   })
 
@@ -220,9 +220,7 @@ describe("Choreo APIM publisher scenarios", () => {
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.ValidateResponse(OK);
-  })
-
-
+  });
 
   it("Verify consumers", () => {
     LoginPage.reLoginToChoreo();
