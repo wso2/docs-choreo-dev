@@ -24,6 +24,8 @@ export const DEV_PORTAL_APP_TOKEN_GEN_URL =
   "/applications/*/oauth-keys/*/generate-token?organizationId=*";
 export const DEV_PORTAL_APP_KEY_GEN_URL =
   DEV_PORTAL_URL + "/applications/*/generate-keys?organizationId=*";
+export const DEV_PORTAL_SUBSCRIPTIONS_URL =
+  DEV_PORTAL_URL + "/subscriptions/?apiId=*&organizationId=*";
 export const GRAPHQL_URL =
   Cypress.env("newAppSvcURL") + "/projects/1.0.0/graphql";
 export const EP_USER_HOME_URL = `${Cypress.env(
