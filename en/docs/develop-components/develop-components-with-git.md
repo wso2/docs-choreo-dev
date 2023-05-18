@@ -8,7 +8,7 @@ Once you have connected your Git repository to Choreo, you can build, deploy, an
 
 ## Authorize GitHub with Choreo 
 
-Authorizing Choreo as a GitHub application to GitHub provides GitHub the following permissions to perform the following actions on your behalf within the repository:
+Authorizing Choreo as a GitHub application to GitHub provides Choreo the following permissions to perform the respective actions on your behalf within the repository:
 
 |Permission   | Read| Write| Description                                   |
 |-------------|-----|------|-----------------------------------------------|
@@ -24,12 +24,12 @@ Authorizing Choreo as a GitHub application to GitHub provides GitHub the followi
 You can Authorize Choreo to Bitbucket by following the steps below:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
-2. Click **Settings** on the left navigation menu. 
-3. Click **Credentials** and under **Git Credentials**  click **+ Add Credentials**.
+2. Click on your profile and click **Settings**.
+3. Click **Credentials** and under **Git Credentials**, click **+ Add Credentials**.
 4. Select **Bitbucket** as the **Service Provider** and enter the credentials. 
 5. Click **+ Add**.
 
-Authorizing Choreo to Bitbucket provides Bitbucket the following permissions to perform the following actions on your behalf within the repository:
+Authorizing Choreo to Bitbucket provides Choreo the following permissions to perform the respective actions on your behalf within the repository:
 
 | Permission    | Read | Write | Description                                   |
 |---------------|------|-------|-----------------------------------------------|
