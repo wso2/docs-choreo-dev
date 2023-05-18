@@ -57,10 +57,9 @@ export class TryOut {
 
   static SelectResource(path: string) {
     cyGet('[data-testid="get-test-key-btn"]').should("be.enabled");
-    // cy.wait(5000);
     const pathVariable = `[data-path="/${path}"]`;
     cyGet(".swagger-ui").within(() => {
-      cyGet(pathVariable).realClick();
+      cyGet(pathVariable).should("have.length","1").realHover().realClick();
     });
   }
 
@@ -140,7 +139,7 @@ export class TryOut {
   }
 
   static selectEndpoint(endpoint: string) {
-    cyGet('[aria-haspopup="listbox"]').should("be.visible").click();
+    cyGet('[data-testid="endpoint-selector"]').click();
     cyGet(`[data-cyid="endpoint-list-item-${endpoint}"]`).click();
   }
 }

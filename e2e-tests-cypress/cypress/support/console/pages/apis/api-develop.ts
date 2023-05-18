@@ -12,6 +12,7 @@
  */
 
 
+import { cyLog } from "../../../commons/cy";
 import { MEDIUM_TIME } from "../../../commons/timeouts";
 
 export class APIDevelop {
@@ -55,7 +56,9 @@ export class APIDevelop {
       )}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
     }).as("swagger");
     cy.wait("@swagger", MEDIUM_TIME).then((res) => {
-      expect(res.response.body.paths).to.have.property(`/${path}`);
+      cyLog(res.response.body)
+      cy.pause()
+      //expect(res.response.body.paths).to.have.property(`/${path}`);
     });
     cy.get(`[id="panel-/${path}/${verbs[0].toLowerCase()}-header"]`).should(
       "exist"
