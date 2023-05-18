@@ -1,0 +1,8 @@
+resources:
+  - deployment
+  - hpa
+  - netpol
+  - pdb
+  - service
+
+namespace: choreo-apim
