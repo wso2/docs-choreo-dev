@@ -196,12 +196,6 @@ describe("Choreo APIM publisher scenarios", () => {
     AppsList.generateCredentials(Enums.Environment.PRODUCTION);
   });
 
-  it("Generate credentials",()=>{
-    AppsList.generateCredentials(Enums.Environment.SANDBOX)
-    AppsList.generateCredentials(Enums.Environment.PRODUCTION)
-  })
-
-
   it("Add subscription", () => {
     Subscriptions.addSubscriptionToApplication(API_NAME);
     Subscriptions.validateResubscribingApi(API_NAME);
