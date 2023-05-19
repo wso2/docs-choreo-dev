@@ -142,6 +142,9 @@ spec:
             - name: choreoapis-regional-wildcard-tls
               mountPath: /etc/nginx/ssl/choreo/e1-us-east-gateway
               readOnly: true
+            - name: choreoapps-regional-wildcard-tls
+              mountPath: /etc/nginx/ssl/choreo/webapps
+              readOnly: true
         - name: redis-subscribe
           image: choreocontrolplane.azurecr.io/choreoipaas/redis-subscribe:latest
           imagePullPolicy: Always
@@ -194,6 +197,9 @@ spec:
         - name: choreoapis-regional-wildcard-tls
           secret:
             secretName: choreoapis-regional-wildcard-tls # '*.e1-us-east-azure.preview-dv.choreoapis.dev'
+        - name: choreoapps-regional-wildcard-tls
+          secret:
+            secretName: choreoapps-regional-wildcard-tls # '*.e1-us-east-azure.preview-dv.choreoapps.dev'
         - name: secret-redis
           csi:
             driver: secrets-store.csi.k8s.io
