@@ -101,7 +101,7 @@ describe(`Verify proxy api functionality`, () => {
     });
   });
 
-  it.skip("Verify manage functionality", () => {
+  it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.configureSecuritySettings(
       true,
