@@ -11,7 +11,6 @@
  * associated services.
  */
 
-
 import { Enums } from "../../../../commons/enums";
 import { Utils } from "../../../../commons/utils";
 import { APITest } from "../../apis/api-test";
@@ -20,11 +19,15 @@ import { SwaggerUI } from "../UI-components/swagger-UI-component";
 import { ComponentOverviewPage } from "../component-overview-page";
 import { ComponentTestPage } from "../component-test-page";
 
-
 export class TestHelper {
-  static testOnSwagger(env: Enums.Environment, resourcePath: string, key: string = "", value: string = "") {
+  static testOnSwagger(
+    env: Enums.Environment,
+    resourcePath: string,
+    key: string = "",
+    value: string = ""
+  ) {
     APITest.testAPI();
-    cy.get('[data-cyid="OpenAPI Console"]').click()
+    cy.get('[data-cyid="OpenAPI Console"]').click();
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.getTestKey();
     SwaggerUI.invokeResource(resourcePath, key, value);
@@ -39,29 +42,43 @@ export class TestHelper {
     });
   }
 
-  static testOnCurl(env: Enums.Environment, httpMethod: Enums.HTTPMethod, pathParm: string, queryParameters1 = []) {
+  static testOnCurl(
+    env: Enums.Environment,
+    httpMethod: Enums.HTTPMethod,
+    pathParm: string,
+    queryParameters1 = []
+  ) {
     ComponentTestPage.selectCurl();
     Curl.selectCurlEnvironment(env);
     Curl.selectMethod(httpMethod);
-    if(pathParm != ''){
+    if (pathParm != "") {
       Curl.enterPathParameter(pathParm);
     }
     Curl.addQueryParameter(queryParameters1);
-    cy.get("textarea").invoke("text").then(curl => {
-      Cypress.env(`int_curl_${env}`, curl)
-    })
+    cy.get("textarea")
+      .invoke("text")
+      .then((curl) => {
+        Cypress.env(`int_curl_${env}`, curl);
+      });
     return Curl.getRequestComponents(`${env}${pathParm}`);
   }
 
-  static testOnCurlDiscardPrevious(env: Enums.Environment, httpMethod: Enums.HTTPMethod, pathParm: string, queryParameters1 = []) {
+  static testOnCurlDiscardPrevious(
+    env: Enums.Environment,
+    httpMethod: Enums.HTTPMethod,
+    pathParm: string,
+    queryParameters1 = []
+  ) {
     ComponentTestPage.selectCurl();
     Curl.selectCurlEnvironment(env);
     Curl.selectMethod(httpMethod);
     Curl.enterPathParameter(pathParm);
     Curl.addQueryParameter(queryParameters1);
-    cy.get("textarea").invoke("text").then(curl => {
-      Cypress.env(`int_curl_${env}`, curl)
-    })
+    cy.get("textarea")
+      .invoke("text")
+      .then((curl) => {
+        Cypress.env(`int_curl_${env}`, curl);
+      });
     return Curl.getRequestComponentsDiscardPrevious(`${env}${pathParm}`);
   }
 
@@ -71,46 +88,59 @@ export class TestHelper {
     if (endpoint) {
       ComponentTestPage.selectEndpoint(endpoint);
     }
-    cy.wait(5000)
-    cy.get('[data-testid="graphiql-container"]').within(() => {
-      cy.get('[class="query-editor"]').within(() => {
-        cy.get('span[cm-text]')
-          .eq(1)
-          .then($p => {
-            Utils.paste($p, code, false)
-            cy.wait(2000)
-          })
-      })
-    })
-    cy.get('div[class="toolbar"]>button').eq(0).click()
-    cy.get('div[class="execute-button-wrap"]>button').click()
+    cy.wait(5000);
+    Utils.getRenderedElement('[data-testid="graphiql-container"]').within(
+      () => {
+        cy.get('[class="query-editor"]').within(() => {
+          cy.get("span[cm-text]")
+            .eq(1)
+            .then(($p) => {
+              Utils.paste($p, code, false);
+              cy.wait(2000);
+            });
+        });
+      }
+    );
+    cy.get('div[class="toolbar"]>button').eq(0).click();
+    cy.get('div[class="execute-button-wrap"]>button').click();
   }
 
   static getGqlResult(expectedResponse: string = "") {
-    cy.wait(6000)
+    cy.wait(6000);
     cy.get('[class="result-window"]').within(() => {
       cy.get('[class="CodeMirror-sizer"]').within(() => {
-        cy.get('[class="CodeMirror-code"]').invoke('text').then(r => {
-          const response = r.replace('x', '').trim()
-          expect(response).to.be.contains(expectedResponse)
-        })
-      })
-    })
-    cy.wait(6000)
-    this.clearGQL()
+        cy.get('[class="CodeMirror-code"]')
+          .invoke("text")
+          .then((r) => {
+            const response = r.replace("x", "").trim();
+            expect(response).to.be.contains(expectedResponse);
+          });
+      });
+    });
+    cy.wait(6000);
+    this.clearGQL();
   }
 
   private static clearGQL() {
-    ComponentOverviewPage.navigateToDeploy()
-    cy.wait(6000)
-    ComponentOverviewPage.navigateToTest()
+    ComponentOverviewPage.navigateToDeploy();
+    cy.wait(6000);
+    ComponentOverviewPage.navigateToTest();
   }
 
   static testProjectLevelEndpoint() {
-    cy.get('[data-testid="no-public-endpoints-notification"]').should("be.visible");
+    cy.get('[data-testid="no-public-endpoints-notification"]').should(
+      "be.visible"
+    );
   }
 
-  static testManagedEndpoint(env: Enums.Environment, endpoint: string, resourcePath: string, method = "", key: string = "", value: string = "") {
+  static testManagedEndpoint(
+    env: Enums.Environment,
+    endpoint: string,
+    resourcePath: string,
+    method = "",
+    key: string = "",
+    value: string = ""
+  ) {
     cy.get('[data-cyid="Console"]').click();
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.selectEndpoint(endpoint);
