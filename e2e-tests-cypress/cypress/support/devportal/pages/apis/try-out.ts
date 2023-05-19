@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { realClick } from "cypress-real-events/commands/realClick";
 import { cyGet } from "../../../commons/cy";
 import { SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 import {
@@ -61,7 +62,7 @@ export class TryOut {
   }
 
   static TryoutAPI() {
-    cyGet('[class="try-out"]').find("button").realClick();
+    cyGet('[class="try-out"]').find("button").scrollIntoView().click();
     cyGet('[class="try-out"]')
       .contains(new RegExp(/Cancel/, "g"))
       .should("exist");
