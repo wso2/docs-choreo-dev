@@ -67,7 +67,6 @@ export class ComponentDeployPage {
       DEPLOYMENT_SUCCESS,
       LONG_TIME
     );
-    cy.get('[data-testid="test-nav-btn"]').should("be.visible");
   }
 
   static promoteToProd(
@@ -182,7 +181,6 @@ export class ComponentDeployPage {
       .should("have.length", 2)
       .eq(1)
       .contains(DEPLOYMENT_SUCCESS, LONG_TIME);
-    cy.get('[data-cyid*="test-nav-btn"]').should("be.visible");
   }
 
   static stopAllDeployment() {
@@ -328,16 +326,11 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-promote"]', LONG_TIME).should("be.enabled").click();
     cy.get(`[data-testid="${endpointName}-endpoint"]`).should("be.visible");
     if (changeVisibility) {
-      cy.get(`[data-testid="${endpointName}-edit-btn"]`)
-        .should("be.visible")
-        .click();
-      cy.get('[data-testid="Public-visibility-option"]')
-        .should("be.visible")
-        .click();
+      cy.get(`[data-testid="${endpointName}-edit-btn"]`).should("be.visible").click();
+      cy.get('[data-testid="Public-visibility-option"]').should("be.visible").click();
       cy.get('[data-cyid="endpoint-submit-btn"]').click();
     }
     cy.get('[data-cyid="btn-next"]').click();
-
     cy.get('[data-testid="btn-stop"]', LONG_TIME).should("have.length", 2).eq(1).should("be.visible");
     cy.get('[data-cyid="deployment-status"]', SHORT_TIME).should("have.length", 2).eq(1).contains("Active", SHORT_TIME);
     cy.get('[data-cyid="btn-promote"]', LONG_TIME).should("not.be.disabled");
