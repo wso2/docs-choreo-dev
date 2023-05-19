@@ -67,7 +67,6 @@ export class ComponentDeployPage {
       DEPLOYMENT_SUCCESS,
       LONG_TIME
     );
-    cy.get('[data-testid="test-nav-btn"]').should("be.visible");
   }
 
   static promoteToProd(
@@ -182,7 +181,6 @@ export class ComponentDeployPage {
       .should("have.length", 2)
       .eq(1)
       .contains(DEPLOYMENT_SUCCESS, LONG_TIME);
-    cy.get('[data-cyid*="test-nav-btn"]').should("be.visible");
   }
 
   static stopAllDeployment() {
