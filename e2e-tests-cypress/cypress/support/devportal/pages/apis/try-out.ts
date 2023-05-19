@@ -42,10 +42,7 @@ export class TryOut {
 
     cy.wait("@subscriptions", VERY_SHORT_TIME).then(() => {
       Utils.getRenderedElement('[data-testid="application-selector"]').click();
-      cy.get(`[data-value="${applicationName}"]`)
-        .realHover()
-        .click()
-        .wait(1000);
+      Utils.getRenderedElement(`[data-value="${applicationName}"]`).click().wait(1000);
     });
   }
 
