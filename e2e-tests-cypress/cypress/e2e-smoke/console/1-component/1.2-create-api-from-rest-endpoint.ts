@@ -31,6 +31,7 @@ import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
+import { OK } from "../../../support/commons/http";
 
 before(() => {
   LoginPage.login();
@@ -96,7 +97,7 @@ describe(`Verify proxy api functionality`, () => {
       Enums.Environment.PRODUCTION,
       OPERATION_USERS
     ).then((res) => {
-      expect(res.statusCode).to.be.equal("200");
+      expect(res.statusCode).to.be.equal("200")
     });
   });
 
