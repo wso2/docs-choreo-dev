@@ -56,9 +56,7 @@ export class APIDevelop {
       )}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
     }).as("swagger");
     cy.wait("@swagger", MEDIUM_TIME).then((res) => {
-      cyLog(res.response.body)
-      cy.pause()
-      //expect(res.response.body.paths).to.have.property(`/${path}`);
+      expect(res.response.body.paths).to.have.property(`/${path}`);
     });
     cy.get(`[id="panel-/${path}/${verbs[0].toLowerCase()}-header"]`).should(
       "exist"
