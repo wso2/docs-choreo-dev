@@ -291,7 +291,7 @@ configMapGenerator:
       - DATAPLANE_BLOCKED_CIDR_LIST=169.254.169.254/32
       - DATAPLANE_INGRESS_ALLOWED_NS_LABEL=userapp-ingress-allowed
       - CUSTOM_URL_CLUSTER_ISSUER=letsencrypt-prod
-      - CUSTOM_URL_SERVICE_NAME=choreo-nginx-internal
+      - CUSTOM_URL_SERVICE_NAME=choreo-nginx-service
       - CUSTOM_URL_SERVICE_PORT=9443
       - CUSTOM_URL_SERVICE_PATH=/
       - DEV_PORTAL_CLUSTER_ISSUER=letsencrypt-prod

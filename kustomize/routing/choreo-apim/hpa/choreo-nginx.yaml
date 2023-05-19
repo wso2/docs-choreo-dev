@@ -1,5 +1,5 @@
 # --------------------------------------------------------------------
-# Copyright (c) 2022, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+# Copyright (c) 2023, WSO2 Inc. (http://wso2.com) All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,12 +14,17 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: policy/v1
-kind: PodDisruptionBudget
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
 metadata:
-  name: choreo-nginx-pdb
+  annotations:
+    autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
+  name: choreo-nginx-hpa
 spec:
-  minAvailable: "50%"
-  selector:
-    matchLabels:
-      deployment: choreo-nginx
+  maxReplicas: 3
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: choreo-nginx-deployment
+  targetCPUUtilizationPercentage: 75

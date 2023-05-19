@@ -1,5 +1,5 @@
 # --------------------------------------------------------------------
-# Copyright (c) 2022, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+# Copyright (c) 2023, WSO2 Inc. (http://wso2.com) All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,8 +14,6 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-# Deployment for nginx
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -29,32 +27,44 @@ metadata:
     checkov.io/skip7: CKV_K8S_37=Temporarily suppressing till fixing
     checkov.io/skip8: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
     reloader.stakater.com/auto: "true"
-  name: choreo-nginx-deployment
+  labels:
+    choreo.component: internal-nginx
+  name: choreo-internal-nginx-deployment
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      deployment: choreo-internal-nginx
   template:
+    metadata:
+      labels:
+        deployment: choreo-internal-nginx
+        choreo.component: internal-nginx
+        antiaffinity: choreo-internal-nginx-deployment
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: deployment
-                    operator: In
-                    values:
-                      - choreo-nginx
-              topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       securityContext:
+        runAsUser: 10500
+        runAsGroup: 10500
         seccompProfile:
           type: RuntimeDefault
       containers:
         - name: nginx
+          envFrom:
+            - configMapRef:
+                name: internal-nginx-redis-config
+            - configMapRef:
+                name: nginx-feature-flags
           env:
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-redis
+                  key: REDIS_PASSWORD
           image: choreocontrolplane.azurecr.io/choreoipaas/openresty:latest
           imagePullPolicy: Always
           lifecycle:
@@ -71,7 +81,7 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop:
-                - ALL
+                - all
               add:
                 - NET_RAW
           ports:
@@ -98,6 +108,8 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 5
           volumeMounts:
+            - name: redis-subscribe-folder
+              mountPath: /mnt/redis
             - name: openresty-logs-folder
               mountPath: /usr/local/openresty/nginx/logs
             - name: openresty-run-path
@@ -116,7 +128,45 @@ spec:
               subPath: nginx.conf
             - name: nginx-vhosts
               mountPath: /etc/nginx/sites-enabled
+            - name: choreo-api-wildcard-tls
+              mountPath: /etc/nginx/ssl/choreo
+              readOnly: true
+            - name: choreo-api-gateway-wildcard-tls
+              mountPath: /etc/nginx/ssl/choreo/gateway
+              readOnly: true
+            - name: choreo-api-e1-us-east-azure-wildcard-tls
+              mountPath: /etc/nginx/ssl/choreo/e1-us-east-gateway
+              readOnly: true
+            - name: secret-redis
+              mountPath: /mnt/csi/secret-redis
+              readOnly: true
+        - name: redis-subscribe
+          image: choreocontrolplane.azurecr.io/choreoipaas/redis-subscribe:latest
+          imagePullPolicy: Always
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+              add:
+                - NET_RAW
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "256m"
+            limits:
+              memory: "128Mi"
+              cpu: "512m"
+          volumeMounts:
+            - name: redis-subscribe-folder
+              mountPath: /redis
       volumes:
+        - name: redis-subscribe-folder
+          emptyDir: { }
         - name: openresty-logs-folder
           emptyDir: { }
         - name: openresty-run-path
@@ -126,14 +176,41 @@ spec:
             name: nginx-ca-cert
         - name: nginx-lua-modules
           configMap:
-            name: nginx-lua-modules
+            name: internal-nginx-lua-modules
         - name: nginx-default-vhost
           configMap:
-            name: nginx-default-vhost
+            name: internal-nginx-default-vhost
         - name: nginx-config-file
           configMap:
-            name: nginx-config-file
+            name: internal-nginx-config-file
         - name: nginx-vhosts
           configMap:
-            name: nginx-vhosts
+            name: internal-nginx-vhosts
+        - name: choreo-api-wildcard-tls
+          secret:
+            secretName: dev-choreo-api-wildcard-tls
+        - name: choreo-api-gateway-wildcard-tls
+          secret:
+            secretName: dev-choreo-api-gateway-wildcard-tls
+        - name: choreo-api-e1-us-east-azure-wildcard-tls
+          secret:
+            secretName: dev-choreo-api-e1-us-east-azure-wildcard-tls
+        - name: secret-redis
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-redis
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       restartPolicy: Always
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - choreo-internal-nginx-deployment
+              topologyKey: kubernetes.io/hostname
