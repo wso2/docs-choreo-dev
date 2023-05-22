@@ -136,8 +136,28 @@ To clone the Choreo documentation GitHub repository and run the site on your loc
       ```shell
       $ pip3 install -r requirements.txt
       ```
+### Step 4 - Build Project
+1. To build the code navigate to the en folder and run the following command:
 
-### Step 4 - Run MkDocs
+    ```shell
+    $ ./serve.sh
+    ```
+This script will check spellings and incorrect links. 
+
+Incorrect Spellings will be highlighted in red. You can take one of the resolution paths:
+- You can choose the correct suggested spelling. 
+- "Ignore" will ignore that word and not ask about it again in the current run. If you re-run the command again though, it will appear.
+- "Add to file ignores" will ignore the word in this file only.
+- "Add to dictionary - case insensitive" will add to the dictionary for all files and match any case. E.g. with the word Microsoft both Microsoft and microsoft would match.
+- "Add to dictionary - case sensitive" will add to the dictionary for all files and match the case that has been used. E.g. with the word Microsoft, the word microsoft will not match.
+
+All exclusions will be stored in a .spelling file in the directory from which you run the command.
+
+Choose resolutions consciously.
+
+If there are no errors, proceed to the next step. 
+
+### Step 5 - Run MkDocs
 1. To start the server and view the site on your local server, run the following command:
 
     ```shell
