@@ -35,16 +35,11 @@ export class TryOut {
   }
 
   static SelectApplication(applicationName: string) {
-    cy.intercept({
-      method: "GET",
-      url: DEV_PORTAL_SUBSCRIPTIONS_URL,
-      times: 1,
-    }).as("subscriptions");
-
-    cy.wait("@subscriptions", VERY_SHORT_TIME).then(() => {
-      Utils.getRenderedElement('[data-testid="application-selector"]').click();
-      Utils.getRenderedElement(`[data-value="${applicationName}"]`).click().wait(1000);
-    });
+    Utils.getRenderedElement(
+      '[data-testid="application-selector"]',
+      3000
+    ).click();
+    Utils.getRenderedElement(`[data-value="${applicationName}"]`, 2000).click();
   }
 
   static generateTestKeyAndVerify() {
@@ -57,7 +52,7 @@ export class TryOut {
     cyGet('[data-testid="get-test-key-btn"]').should("be.enabled");
     const pathVariable = `[data-path="/${path}"]`;
     cyGet(".swagger-ui").within(() => {
-      cyGet(pathVariable).should("have.length","1").realHover().realClick();
+      cyGet(pathVariable).should("have.length", "1").realHover().realClick();
     });
   }
 
@@ -105,9 +100,7 @@ export class TryOut {
     cyGet('[data-testid="search-btn"]').trigger("mouseover");
     cyGet('[data-testid="search-app"] [placeholder="Search"]').type(appName);
     cy.contains(appName).trigger("mouseover");
-    cyGet(`[data-testid="delete-btn-${appName}"]`)
-      .trigger("mouseover")
-      .click();
+    cyGet(`[data-testid="delete-btn-${appName}"]`).trigger("mouseover").click();
     cyGet('[data-testid="delete-dialog-ok-button"]').click();
     cyGet('[data-testid="create-application-btn"]', SHORT_TIME).should(
       "be.visible"
