@@ -40,13 +40,6 @@ configMapGenerator:
       - APPSERVICE_GRPC_ADDRESS=app-service:8080
       - RUDDER_ADDRESS=http://dp-rudder:80
       - PROJECT_MANAGER_ADDRESS=http://dp-project-manager:80
-  - name: cm-frontend
-    behavior: create
-    literals:
-      - DISABLE_ON_PREMISE_APPS=true
-      - APIM_SAMPLE_URL=https://raw.githubusercontent.com/ballerina-platform/ballerinax-openapi-connectors/main/openapi/covid19/openapi.yaml
-      - SENTRY_DSN="https://48e24d50c8fb45d3adebfcfd8b1dd310@o350818.ingest.sentry.io/5808256"
-      - ANALYTICS_PORTAL_DOCUMENTATION="https://apim.docs.wso2.com/en/4.0.0/observe/api-manager-analytics/configure-analytics/configure-synapse-gateway/"
   - name: cm-email-service
     behavior: create
     literals:
