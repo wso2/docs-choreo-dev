@@ -20,6 +20,7 @@ import {
 } from "../../../commons/constants";
 import { Utils } from "../../../commons/utils";
 import { LONG_TIME, MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
+import { cyGet } from "../../../commons/cy";
 
 interface PromoteConfigs {
   settingButtonCount: number;
@@ -67,7 +68,7 @@ export class ComponentDeployPage {
       DEPLOYMENT_SUCCESS,
       LONG_TIME
     );
-    cy.get('[data-testid="test-nav-btn"]').should("be.visible");
+    cy.get('[data-cyid="link-test"]').should("be.visible");
   }
 
   static promoteToProd(
@@ -76,16 +77,14 @@ export class ComponentDeployPage {
     numberOfNextPrompts: number = 2
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.wait(10000);
-    this.pollElement('[data-cyid="btn-promote"]').realClick();
-
+    cyGet('[data-cyid="btn-promote"]').realClick();
     if (isAdditionalConfigs) {
-      cy.get("body").then((bdy) => {
+      cyGet("body").then((bdy) => {
         if (bdy.find('[data-testid="deployment-history-btn"]').length == 2) {
-          cy.get('[data-cyid="btn-next"]').realClick();
+          cyGet('[data-cyid="btn-next"]').realClick();
         } else {
           for (var i = 0; i < numberOfNextPrompts; i++) {
-            cy.get('[data-cyid="btn-next"]').realClick();
+            cyGet('[data-cyid="btn-next"]').realClick();
           }
         }
       });
@@ -95,15 +94,15 @@ export class ComponentDeployPage {
       Utils.interceptConfig();
     }
 
-    cy.get('[data-testid="btn-stop"]', LONG_TIME)
+    cyGet('[data-testid="btn-stop"]', LONG_TIME)
       .should("have.length", 2)
       .eq(1)
       .should("be.visible");
-    cy.get('[data-cyid="deployment-status"]', LONG_TIME)
+    cyGet('[data-cyid="deployment-status"]', LONG_TIME)
       .should("have.length", 2)
       .eq(1)
       .contains("Active", LONG_TIME);
-    cy.get('[data-cyid="btn-promote"]', LONG_TIME).should("not.be.disabled");
+    cyGet('[data-cyid="btn-promote"]', LONG_TIME).should("not.be.disabled");
   }
 
   static deployManualTriggerToDev() {
@@ -306,19 +305,19 @@ export class ComponentDeployPage {
         .click();
       cy.get('[data-cyid="endpoint-submit-btn"]').click();
     }
-    cy.get('[data-cyid="btn-next"]').click();
-    cy.get('[data-testid="btn-stop"]', MEDIUM_TIME).should("be.visible");
+    cyGet('[data-cyid="btn-next"]').click();
+    cyGet('[data-testid="btn-stop"]', MEDIUM_TIME).should("be.visible");
     GraphQL.getComponentDeploymentStatus();
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
     // to ensure rendering completes before checking the deployment status
     cy.wait(600);
-    cy.get('[data-testid="btn-stop"]', MEDIUM_TIME).should("be.visible");
-    cy.get('[data-cyid="deployment-status"]', LONG_TIME)
+    cyGet('[data-testid="btn-stop"]', MEDIUM_TIME).should("be.visible");
+    cyGet('[data-cyid="deployment-status"]', LONG_TIME)
       .contains(DEPLOYMENT_SUCCESS, LONG_TIME)
       .should("be.visible");
-    cy.get('[data-testid="Endpoints-env-artifact"]').should("be.visible");
+    cyGet('[data-testid="Endpoints-env-artifact"]').should("be.visible");
     GraphQL.getServiceEndpointStatus();
-    cy.get('[data-testid="Endpoints-status"]', LONG_TIME).contains(
+    cyGet('[data-testid="Endpoints-status"]', LONG_TIME).contains(
       DEPLOYMENT_SUCCESS,
       LONG_TIME
     );
