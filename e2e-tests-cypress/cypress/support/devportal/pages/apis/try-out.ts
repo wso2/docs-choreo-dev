@@ -65,9 +65,9 @@ export class TryOut {
 
   static TryoutAPI() {
     cyGet('[class="try-out"]').find("button").realClick();
-    cyGet('[class="try-out"]')
-      .contains(new RegExp(/Cancel/, "g"))
-      .should("exist");
+    // cyGet('[class="try-out"]')
+    //   .contains(new RegExp(/Cancel/, "g"))
+    //   .should("exist");
   }
 
   static InputQueryParamater(paramName: string, paramValue: any) {

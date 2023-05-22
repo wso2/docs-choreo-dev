@@ -32,7 +32,6 @@ import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-crede
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { AppsList } from "../../../support/devportal/pages/applications/apps-list";
-import { Credentials } from "../../../support/devportal/pages/applications/credentials";
 import { Subscriptions } from "../../../support/devportal/pages/applications/subscriptions";
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { generateAppName } from "../../../support/devportal/utils";

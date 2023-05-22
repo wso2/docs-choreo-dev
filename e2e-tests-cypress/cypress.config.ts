@@ -2,7 +2,7 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   projectId: "$CYPRESS_PROJECT_ID",
-  defaultCommandTimeout: 80000,
+  defaultCommandTimeout: 40000,
   pageLoadTimeout: 300000,
   responseTimeout: 300000,
   viewportHeight: 1000,
@@ -14,11 +14,13 @@ export default defineConfig({
   videoCompression: false,
   watchForFileChanges: false,
   chromeWebSecurity:false,
+ 
   e2e: {
     setupNodeEvents(on, config) {
       let apiName;
       let projectName;
       on("task", {
+        
         setAPIName(val) {
           return (apiName = val);
         },
@@ -45,6 +47,7 @@ export default defineConfig({
       config.env.enablePerspectiveView = process.env.enablePerspectiveView;
       return config;
     },
+    testIsolation: false,
     specPattern: "cypress/e2e-smoke//./**/*.ts",
   },
   env: {
@@ -53,6 +56,7 @@ export default defineConfig({
     FAIL_FAST_BAIL: 3,
     FAIL_FAST_PLUGIN: false,
   },
+
   retries: {
     // Configure retry attempts for `cypress run`
     // Default is 0
