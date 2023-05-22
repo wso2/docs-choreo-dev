@@ -306,7 +306,7 @@ export class ComponentDeployPage {
       cy.get('[data-cyid="endpoint-submit-btn"]').click();
     }
     cyGet('[data-cyid="btn-next"]').click();
-    cyGet('[data-testid="btn-stop"]', MEDIUM_TIME).should("be.visible");
+    cyGet('[data-testid="btn-stop"]', LONG_TIME).should("be.visible");
     GraphQL.getComponentDeploymentStatus();
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
     // to ensure rendering completes before checking the deployment status
