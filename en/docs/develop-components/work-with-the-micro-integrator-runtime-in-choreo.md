@@ -34,7 +34,7 @@ An integration project directory structure includes the following key components
 
 Optionally, you can include the following components in your integration project:
 
- - OpenAPI definition file: You can add the OpenAPI definition file to any location within the project. When creating a component, you'll need to define the path to this file. If the OpenAPI definition file is not provided, it will be generated automatically based on your integration project.
+ - OpenAPI definition file: You can add the OpenAPI definition file to any location within the project. When creating a component, you'll need to define the path to this file. Choreo will automatically generate an OpenAPI definition for you based on your integration project, if you don't provide one.
  - Java libraries: If your integration project requires additional Java libraries, you can add them to the libs directory located in the project root.
  - deployment.toml file: This optional configuration file allows you to customize the preconfigured settings of WSO2 MI instances running on Choreo. By including this file, you can tailor the behavior of your WSO2 MI instances to better suit your project's specific requirements.
 
@@ -42,7 +42,7 @@ Understanding the Integration Project directory structure is crucial for organiz
 
 ## OpenAPI support
 
-OpenAPI Support plays a crucial role in enhancing the functionality of integrations exposed as APIs. By providing an OpenAPI definition for your exposed integration, you can streamline testing and management processes, ensuring a more efficient and user-friendly experience. If you don't provide an OpenAPI definition, our system will automatically generate one for you, saving you time and effort.
+OpenAPI Support plays a crucial role in enhancing the functionality of integrations exposed as APIs. By providing an OpenAPI definition for your exposed integration, you can streamline testing and management processes, ensuring a more efficient and user-friendly experience. Choreo will automatically generate an OpenAPI definition for you based on your integration project, if you don't provide one, saving you time and effort.
 
 To incorporate OpenAPI support, store the OpenAPI definition file within the repository hosting your Integration Studio project. When creating the project, simply point to the file's location in the repository. If needed, you can change the location of the OpenAPI definition file later via the deploy page.
 
