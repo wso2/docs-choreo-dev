@@ -22,6 +22,7 @@ import { ComponentListingPage } from "../../../support/console/pages/component/c
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
+import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { ComponentData } from "../../../support/interfaces/component-data";
@@ -162,7 +163,7 @@ describe("Verify Ballerina service functionality", () => {
     );
   });
 
-      //new version creation 
+  //new version creation 
   it("Verify new version creation and deploy to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.addNewVersion();
@@ -209,6 +210,27 @@ describe("Verify Ballerina service functionality", () => {
   it("Verify usage plan change", () => {
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
+  });
+
+  it("Verify API insights for dev env", () => {
+    ChoreoHomePage.navigateToInsights();
+    InsightsPage.selectTimePeriod();
+    InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
+    InsightsPage.getTotalTraffic().should((value) => {
+      expect(Number(value)).gte(2);
+    });
+    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
+    InsightsPage.getAverageErrorRate().should("eq", "0");
+  });
+
+  it("Verify API insights for prod env", () => {
+    InsightsPage.selectTimePeriod();
+    InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
+    InsightsPage.getTotalTraffic().should((value) => {
+      expect(Number(value)).gte(2);
+    });
+    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
+    InsightsPage.getAverageErrorRate().should("eq", "0");
   });
 
   it("Verify suspending all component deployments", () => {
