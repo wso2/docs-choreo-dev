@@ -34,7 +34,7 @@ An integration project directory structure includes the following key components
 
 Optionally, you can include the following components in your integration project:
 
- - OpenAPI definition file: You can add the OpenAPI definition file to any location within the project. When creating a component, you'll need to define the path to this file.
+ - OpenAPI definition file: You can add the OpenAPI definition file to any location within the project. When creating a component, you'll need to define the path to this file. If the OpenAPI definition file is not provided, it will be generated automatically based on your integration project.
  - Java libraries: If your integration project requires additional Java libraries, you can add them to the libs directory located in the project root.
  - deployment.toml file: This optional configuration file allows you to customize the preconfigured settings of WSO2 MI instances running on Choreo. By including this file, you can tailor the behavior of your WSO2 MI instances to better suit your project's specific requirements.
 
