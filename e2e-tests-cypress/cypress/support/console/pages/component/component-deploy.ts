@@ -20,6 +20,7 @@ import {
 } from "../../../commons/constants";
 import { Utils } from "../../../commons/utils";
 import { LONG_TIME, MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
+import { APIDeployment } from "../apis/api-deployment";
 
 interface PromoteConfigs {
   settingButtonCount: number;
@@ -48,15 +49,19 @@ export class ComponentDeployPage {
     isManagedByAPIM: boolean = true
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
+    APIDeployment.RetryDevDeployment();
     cy.get('[data-cyid="btn-deploy-api"]', LONG_TIME)
       .should("be.enabled")
       .click();
+    
     if (isAdditionalConfigs) {
       if (isManagedByAPIM) {
         Utils.interceptConfig();
       }
       this.pollElement('[data-cyid="btn-next"]').click();
     }
+
+    APIDeployment.RetryDevDeployment();
     cy.get('[data-testid="btn-stop"]', MEDIUM_TIME).should("be.visible");
     GraphQL.getComponentDeploymentStatus();
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
