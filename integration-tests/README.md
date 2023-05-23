@@ -112,22 +112,22 @@ at Azure pipeline level.
 ## 5. Scenarios
 
 <table>
-	<thead>
-		<tr>
-			<th>test source</th>
-			<th>Scenario</th>
-			<th>Work flow</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>connectorbuilder</td>
-			<td>Publish a connector </td>
-			<td>
-				1) Publish a connector <br/>
-				2) Continuously check the status of publishing action<br/>
-				3) Retrieved the details of the published connector<br/>
-			</td>
+    <thead>
+        <tr>
+            <th>test source</th>
+            <th>Scenario</th>
+            <th>Work flow</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>connectorbuilder</td>
+            <td>Publish a connector</td>
+            <td>
+                1) Publish a connector <br/>
+                2) Continuously check the status of publishing action <br/>
+                3) Retrieved the details of the published connector <br/>
+            </td>
         </tr>
         <tr>
             <td>createAPIProxyFromScratch</td>
@@ -152,65 +152,65 @@ at Azure pipeline level.
             </td>
         </tr>
         <tr>
-			<td>createComponentIT</td>
-			<td>Create a component, check status and delete </td>
-			<td>
-				1) Create RESTAPI component <br/>
-				2) Check created component status<br/>
-				3) Delete the component<br/>
-			</td>
-		</tr>
+            <td>createComponentIT</td>
+            <td>Create a component, check status and delete</td>
+            <td>
+                1) Create RESTAPI component <br/>
+                2) Check created component status <br/>
+                3) Delete the component <br/>
+            </td>
+        </tr>
         <tr>
-			<td>oomAlertIT</td>
-			<td>Check OOM alert </td>
-			<td>
-				1) Verify OOM alert using IMAP <br/>
-			</td>
-		</tr>
+            <td>oomAlertIT</td>
+            <td>Check OOM alert</td>
+            <td>
+                1) Verify OOM alert using IMAP <br/>
+            </td>
+        </tr>
         <tr>
-			<td>deployIT</td>
-			<td>Deploy RestAPI component </td>
-			<td>
-				1) Verify RestAPI component deployment <br/>
-			</td>
-		</tr>
+            <td>deployIT</td>
+            <td>Deploy RestAPI component</td>
+            <td>
+                1) Verify RestAPI component deployment <br/>
+            </td>
+        </tr>
         <tr>
-			<td>addConfigurationsIT</td>
-			<td>Add Configurations </td>
-			<td>
-				1) Verify adding configurations to a component <br/>
-			</td>
-		</tr>
+            <td>addConfigurationsIT</td>
+            <td>Add Configurations</td>
+            <td>
+                1) Verify adding configurations to a component <br/>
+            </td>
+        </tr>
         <tr>
-			<td>createTriggerIT</td>
-			<td>Create webhook component and deploy </td>
-			<td>
-				1) Verify adding webhook component <br/>
+            <td>createTriggerIT</td>
+            <td>Create webhook component and deploy</td>
+            <td>
+                1) Verify adding webhook component <br/>
                 2) Verify retrieving the created component <br/>
                 3) Verify deploying the component <br/>
-			</td>
-		</tr>
+            </td>
+        </tr>
         <tr>
-			<td>insightsAPIIT</td>
-			<td>Get test environments and check insights metrics </td>
-			<td>
-				1) Verify test environments <br/>
+            <td>insightsAPIIT</td>
+            <td>Get test environments and check insights metrics</td>
+            <td>
+                1) Verify test environments <br/>
                 2) Verify invoke utility Operations <br/>
                 3) Verify insights overview results <br/>
-			</td>
-		</tr>
+            </td>
+        </tr>
         <tr>
-			<td>insightsAuthAPIIT</td>
-			<td>Get insights auth token </td>
-			<td>
-				1) Verify auth token <br/>
-			</td>
-		</tr>
+            <td>insightsAuthAPIIT</td>
+            <td>Get insights auth token</td>
+            <td>
+                1) Verify auth token <br/>
+            </td>
+        </tr>
         <tr>
-			<td>insightsAlertAPIIT</td>
-			<td>Verify the insights metrics in env list</td>
-			<td>
-				1) Verify get traffic <br/>
+            <td>insightsAlertAPIIT</td>
+            <td>Verify the insights metrics in env list</td>
+            <td>
+                1) Verify get traffic <br/>
                 2) Verify post traffic <br/>
                 3) Verify put traffic <br/>
                 4) Verify delete traffic <br/>
@@ -220,10 +220,10 @@ at Azure pipeline level.
                 8) Verify delete latency <br/>
             </td>
         <tr>
-			<td>createUserManagedComponent</td>
-			<td>Create BYOR component using GH,deploy,test and delete </td>
-			<td>
-				1) Verify creating user managed component <br/>
+            <td>createUserManagedComponent</td>
+            <td>Create BYOR component using GH,deploy,test and delete</td>
+            <td>
+                1) Verify creating user managed component <br/>
                 2) Verify created component status <br/>
                 3) Verify initial PR Generation <br/>
                 4) Verify PR merge <br/>
@@ -236,10 +236,10 @@ at Azure pipeline level.
             </td>
         </tr>
         <tr>
-			<td>createUserManagedComponentNonEmptyRoot</td>
-			<td>Create BYOR component with existing code in root directory using GH,deploy,test and delete </td>
-			<td>
-				1) Verify creating user managed component <br/>
+            <td>createUserManagedComponentNonEmptyRoot</td>
+            <td>Create BYOR component with existing code in root directory using GH,deploy,test and delete</td>
+            <td>
+                1) Verify creating user managed component <br/>
                 2) Verify created component status <br/>
                 3) Verify initial PR Generation <br/>
                 4) Verify PR merge <br/>
@@ -251,10 +251,10 @@ at Azure pipeline level.
             </td>
         </tr>
         <tr>
-			<td>createUserManagedComponentNonEmptySub</td>
-			<td>Create BYOR component with existing code in sub directory using GH,deploy,test and delete </td>
-			<td>
-				1) Verify creating user managed component <br/>
+            <td>createUserManagedComponentNonEmptySub</td>
+            <td>Create BYOR component with existing code in sub directory using GH,deploy,test and delete</td>
+            <td>
+                1) Verify creating user managed component <br/>
                 2) Verify created component status <br/>
                 3) Verify initial PR Generation <br/>
                 4) Verify PR merge <br/>
@@ -262,18 +262,18 @@ at Azure pipeline level.
                 6) Verify component deployment <br/>
                 7) Verify component deployment status <br/>
                 8) Verify API invocation <br/>
-               9) Verify component deletion  <br/>
+               9) Verify component deletion <br/>
             </td>
         </tr>
         <tr>
-			<td>createDeployInvokeWebhookIT</td>
-			<td>Create webhook component,deploy,test,observability logs and delete </td>
-			<td>
-				1) Verify creating user managed component <br/>
+            <td>createDeployInvokeWebhookIT</td>
+            <td>Create webhook component,deploy,test,observability logs and delete</td>
+            <td>
+                1) Verify creating user managed component <br/>
                 2) Verify created component status <br/>
                 3) Verify initial PR Generation <br/>
                 4) Verify PR merge <br/>
-                5) Verify getting sha of webhookBal  <br/>
+                5) Verify getting sha of webhookBal <br/>
                 6) Verify commit <br/>
                 7) Verify component retrieval <br/>
                 8) Verify component deployment <br/>
@@ -281,61 +281,61 @@ at Azure pipeline level.
                 10) Verify API invocation <br/>
                 11) Verify fetch observabilityId <br/>
                 12) Verify observabilityLogs <br/> 
-                13) Verify component deletion  <br/>
-                14) Verify github repo deletion  <br/>
+                13) Verify component deletion <br/>
+                14) Verify github repo deletion <br/>
             </td>
         </tr>
         <tr>
-			<td>observabilityAPITestCase</td>
-			<td>Verify observability metrics from a RESTAPI component </td>
-			<td>
-				1) Verify observability AST <br/>
+            <td>observabilityAPITestCase</td>
+            <td>Verify observability metrics from a RESTAPI component</td>
+            <td>
+                1) Verify observability AST <br/>
                 2) Verify observability metrics density <br/>
                 3) Verify observability metric density histogram <br/>
-                4) Verify observability stats<br/>
-                5) Verify observability trace list  <br/>
+                4) Verify observability stats <br/>
+                5) Verify observability trace list <br/>
                 6) Verify observability trace information <br/>
             </td>
         </tr>
         <tr>
-			<td>loggingAPITestCase</td>
-			<td>Verify observability metrics from a RESTAPI component </td>
-			<td>
-				1) Verify observability grouped logs <br/>
+            <td>loggingAPITestCase</td>
+            <td>Verify observability metrics from a RESTAPI component</td>
+            <td>
+                1) Verify observability grouped logs <br/>
                 2) Verify observability live logs <br/>
                 2) Verify observability logs download <br/>
             </td>
         </tr>
         <tr>
-			<td>sysObsAPITestCase</td>
-			<td>Verify observability metrics from a RESTAPI component </td>
-			<td>
-				1) Verify observability system metrics <br/>
+            <td>sysObsAPITestCase</td>
+            <td>Verify observability metrics from a RESTAPI component</td>
+            <td>
+                1) Verify observability system metrics <br/>
             </td>
         </tr>
         <tr>
-			<td>themeManagementTestCase</td>
-			<td>Update custom theme assets, palette and typography </td>
-			<td>
-				1) Verify updating assets <br/>
+            <td>themeManagementTestCase</td>
+            <td>Update custom theme assets, palette and typography</td>
+            <td>
+                1) Verify updating assets <br/>
                 2) Verify updating typography <br/>
                 3) Verify updating color palette <br/>
             </td>
         </tr>
         <tr>
-			<td>createMaxAPIRevisionsUsingDeployments</td>
-			<td>Create revision to exceed API revision limit reached with deployments </td>
-			<td>
-				1) Verify creating revision using a deployment to exceed API revision limit <br/>
+            <td>createMaxAPIRevisionsUsingDeployments</td>
+            <td>Create revision to exceed API revision limit reached with deployments</td>
+            <td>
+                1) Verify creating revision using a deployment to exceed API revision limit <br/>
                 2) Verify creating revision using Settings page to exceed API revision limit <br/>
                 3) Verify revision count after exceeding API revision limit <br/>
             </td>
         </tr>
         <tr>
-			<td>createMaxAPIRevisionsUsingSettingsPage</td>
-			<td>Create revision to exceed API revision limit reached with revision creation in Settings page </td>
-			<td>
-				1) Verify creating revision with a deployment to reach API revision limit <br/>
+            <td>createMaxAPIRevisionsUsingSettingsPage</td>
+            <td>Create revision to exceed API revision limit reached with revision creation in Settings page</td>
+            <td>
+                1) Verify creating revision with a deployment to reach API revision limit <br/>
                 2) Verify getting revision to delete <br/>
                 3) Verify deleting oldest undeployed revision <br/>
                 4) Verify creating backup revision for existing state <br/>
@@ -349,5 +349,5 @@ at Azure pipeline level.
                 12) Verify revision count after exceeding API revision limit <br/>
             </td>
         </tr>
-        </tbody>
+    </tbody>
 </table>
