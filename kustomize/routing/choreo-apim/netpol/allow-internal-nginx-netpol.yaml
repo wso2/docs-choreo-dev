@@ -1,5 +1,5 @@
 # --------------------------------------------------------------------
-# Copyright (c) 2022, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+# Copyright (c) 2023, WSO2 Inc. (http://wso2.com) All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,13 +14,17 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
-resources:
-  - choreo-apim
-  - choreodp-system
-  - clusterissuers
-
-commonLabels:
-  app: choreo-routing
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-internal-nginx-ingress-network-policy
+spec:
+  policyTypes:
+    - Ingress
+  ingress:
+    - ports:
+        - port: 9443
+          protocol: TCP
+  podSelector:
+    matchLabels:
+      choreo.component: internal-nginx
