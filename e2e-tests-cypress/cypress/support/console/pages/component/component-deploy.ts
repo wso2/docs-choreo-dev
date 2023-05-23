@@ -49,6 +49,7 @@ export class ComponentDeployPage {
     isManagedByAPIM: boolean = true
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
+    cy.get('[data-cyid="btn-deploy-api"]', SHORT_TIME).contains("Generating Configurations").should("not.exist")
     APIDeployment.RetryDevDeployment();
     cy.get('[data-cyid="btn-deploy-api"]', LONG_TIME)
       .should("be.enabled")

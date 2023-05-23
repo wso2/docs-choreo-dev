@@ -12,8 +12,9 @@
  */
 
 import { cyGet } from "../../../commons/cy";
-import { LONG_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
+import { LONG_TIME, SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { PUBLISHER_API_KEYS_URL } from "../../../commons/urls";
+import { Utils } from "../../../commons/utils";
 import { GraphQL } from "../../apis/graphql";
 
 export class APIDeployment {
@@ -21,6 +22,7 @@ export class APIDeployment {
     cy.intercept({ method: "GET", url: PUBLISHER_API_KEYS_URL, times: 1 }).as(
       "keys"
     );
+    cyGet('[data-cyid="btn-deploy-proxy"]', SHORT_TIME).contains("Generating Configurations").should("not.exist");
     this.RetryDevDeployment();
     cyGet('[data-cyid="btn-deploy-proxy"]').should("not.be.disabled").click();
 
