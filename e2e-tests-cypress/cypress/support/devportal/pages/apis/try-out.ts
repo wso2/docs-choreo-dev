@@ -51,7 +51,7 @@ export class TryOut {
   static SelectResource(path: string) {
     cyGet('[data-testid="get-test-key-btn"]').should("be.enabled");
     const pathVariable = `[data-path="/${path}"]`;
-    cyGet(".swagger-ui").within(() => {
+    Utils.getRenderedElement(".swagger-ui", 3000).within(() => {
       cyGet(pathVariable).should("have.length", "1").realHover().realClick();
     });
   }
@@ -130,7 +130,7 @@ export class TryOut {
   }
 
   static selectEndpoint(endpoint: string) {
-    cyGet('[data-testid="endpoint-selector"]').click();
+    Utils.getRenderedElement('[data-testid="endpoint-selector"]').click();
     cyGet(`[data-cyid="endpoint-list-item-${endpoint}"]`).click();
   }
 }
