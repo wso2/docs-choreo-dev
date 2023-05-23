@@ -15,9 +15,6 @@ You can execute integration tests against your own Choreo account in Dev using t
    - GITHUB_PAT
    - GMAIL_API_CS
    - GMAIL_API_REFRESH_TOKEN
-   - ANOMALY_DETECTION_PASSTHROUGH_CLIENT_SECRET
-   - ANOMALY_DETECTION_MAIL_IMAP_PASS
-   - ANOMALY_DETECTION_TEST_USER_PASSWORD
 
 
 ## 2. Run all tests
@@ -28,19 +25,20 @@ You can execute integration tests against your own Choreo account in Dev using t
 4. Note the access token is only valid for 1 hour, so you will need to get a new access token to run the tests after the expiry takes place
 
 ## 3. Run DP tests
-1. Navigate to the  `integration-tests` directory
+
+1. Navigate to the `integration-tests` directory
 2. run `sh dp-test-runner.sh <staging/prod> <staging-access-token/prod-access-token>`
 
-## 4. Run a specific test in InteliJ
+## 4. Run a specific test in IntelliJ
 
 1. Repeat the previous steps 1 to get you access_token.
 2. Right-click on the test you want to run and select the `Modify Run Configuration...` option.
 3. Go to `JVM Settings > VM Options` and enter the following before clicking on OK,
      `-ea -DToken=<Your access_token>`
-4. Now you can run the individual test through InteliJ
+4. Now you can run the individual test through IntelliJ
             
 
-## 3. Directory Structure
+## 5. Directory Structure
 
 ```
 integration-tests/src/test
@@ -62,7 +60,6 @@ integration-tests/src/test
        citrus-application.properties
        log4j.properties
        testng.xml
-
 ```
 
 **java/com/wso2/choreo/integration**
@@ -87,7 +84,7 @@ integration-tests/src/test
       - **/connectorbuilder** - connector publishing related Json payload templates
       - ...
 
-## 4. Adding a new test configuration
+## 6. Adding a new test configuration
 
 Test configurations are supported in 2 ways
 
@@ -124,15 +121,6 @@ at Azure pipeline level.
 	</thead>
 	<tbody>
 		<tr>
-			<td> quotaLimitIT </td>
-			<td>checking whether the quota is limited </td>
-			<td>
-				1) Deploy 5 reusable components<br/>
-				2) Check whether the quota has been reached<br/>
-				3) Stop the deployment of the components<br/>
-			</td>
-		</tr>
-		<tr>
 			<td>connectorbuilder</td>
 			<td>Publish a connector </td>
 			<td>
@@ -140,15 +128,6 @@ at Azure pipeline level.
 				2) Continuously check the status of publishing action<br/>
 				3) Retrieved the details of the published connector<br/>
 			</td>
-		</tr>
-        <tr>
-            <td>anomalyDetector (Temporarily disabled - https://github.com/wso2-enterprise/choreo/issues/13626)</td>
-            <td>Detecting a backend failure anomaly</td>
-            <td>
-                1) Invoke Passthrough Choreo component which has a backend that returns an HTTP error <br>
-                2) Check if an anomaly detection email is received
-            </td>
-        </tr>
        <tr>
             <td>createAPIProxyFromScratch</td>
             <td>Check valid and invalid APInames for proxy</td>
