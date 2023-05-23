@@ -234,6 +234,8 @@ describe("Verify Ballerina service functionality", () => {
   });
 
   it("Verify suspending all component deployments", () => {
+    ChoreoHomePage.navigateToComponents();
+    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });
