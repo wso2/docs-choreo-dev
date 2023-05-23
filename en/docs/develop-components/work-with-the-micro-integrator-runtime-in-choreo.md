@@ -42,7 +42,7 @@ Understanding the Integration Project directory structure is crucial for organiz
 
 ## OpenAPI support
 
-OpenAPI Support plays a crucial role in enhancing the functionality of integrations exposed as APIs. By providing an OpenAPI definition for your exposed integration, you can streamline testing and management processes, ensuring a more efficient and user-friendly experience.
+OpenAPI Support plays a crucial role in enhancing the functionality of integrations exposed as APIs. By providing an OpenAPI definition for your exposed integration, you can streamline testing and management processes, ensuring a more efficient and user-friendly experience. If you don't provide an OpenAPI definition, our system will automatically generate one for you, saving you time and effort.
 
 To incorporate OpenAPI support, store the OpenAPI definition file within the repository hosting your Integration Studio project. When creating the project, simply point to the file's location in the repository. If needed, you can change the location of the OpenAPI definition file later via the deploy page.
 
