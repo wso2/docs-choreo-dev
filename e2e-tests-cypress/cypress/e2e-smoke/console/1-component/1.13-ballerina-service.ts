@@ -163,7 +163,7 @@ describe("Verify Ballerina service functionality", () => {
     );
   });
 
-      //new version creation 
+  //new version creation 
   it("Verify new version creation and deploy to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.addNewVersion();
