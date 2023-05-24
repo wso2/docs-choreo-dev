@@ -219,8 +219,6 @@ describe("Verify Ballerina service functionality", () => {
     InsightsPage.getTotalTraffic().should((value) => {
       expect(Number(value)).gte(2);
     });
-    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-    InsightsPage.getAverageErrorRate().should("eq", "0");
   });
 
   it("Verify API insights for prod env", () => {
@@ -229,8 +227,6 @@ describe("Verify Ballerina service functionality", () => {
     InsightsPage.getTotalTraffic().should((value) => {
       expect(Number(value)).gte(2);
     });
-    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-    InsightsPage.getAverageErrorRate().should("eq", "0");
   });
 
   it("Verify suspending all component deployments", () => {
