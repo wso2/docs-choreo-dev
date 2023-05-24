@@ -19,3 +19,6 @@ choreoJwtJwksUrl = "{{.CHOREO_JWT_JWKS_URL}}"
 healthCheckServicePort = 9090
 [choreo.audit_logging.configs.azureLaWorkspaceIds]
 US = "{{.US_LA_WORKSPACE_ID}}"
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"
