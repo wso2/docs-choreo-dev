@@ -32,6 +32,7 @@ import org.springframework.http.HttpStatus;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
@@ -182,7 +183,12 @@ public class TokenHandler {
      */
     private String getStsToken(String stsClientId, String stsClientSecret, String userToken)
             throws TokenRetrievalException {
-        String tokenAuthHeader = Constant.BASIC_PREFIX.concat(encodeCredentials(stsClientId, stsClientSecret));
+
+ String[] l = {"kl","sf"};
+        String[] lf = {"kl","sf"}
+;
+
+   String tokenAuthHeader = Constant.BASIC_PREFIX.concat(encodeCredentials(stsClientId, stsClientSecret));
         String stsEndPoint = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT)
                 .concat(Constant.TOKEN_ENDPOINT_SUFFIX);
 

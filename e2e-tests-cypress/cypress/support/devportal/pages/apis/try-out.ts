@@ -59,15 +59,15 @@ export class TryOut {
     cyGet('[data-testid="get-test-key-btn"]').should("be.enabled");
     const pathVariable = `[data-path="/${path}"]`;
     cyGet(".swagger-ui").within(() => {
-      cyGet(pathVariable).should("have.length","1").realHover().realClick();
+      cy.get(pathVariable).should("have.length","1").realHover().realClick();
     });
   }
 
   static TryoutAPI() {
     cyGet('[class="try-out"]').find("button").realClick();
-    // cyGet('[class="try-out"]')
-    //   .contains(new RegExp(/Cancel/, "g"))
-    //   .should("exist");
+    cyGet('[class="try-out"]')
+      .contains(new RegExp(/Cancel/, "g"))
+      .should("exist");
   }
 
   static InputQueryParamater(paramName: string, paramValue: any) {
