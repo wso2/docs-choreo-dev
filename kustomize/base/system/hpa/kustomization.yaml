@@ -2,7 +2,6 @@ resources:
   - connector-builder.yaml
   - testbase.yaml
   - obsapi.yaml
-  - frontend.yaml
   - email-service.yaml
   - api-server.yaml
   - app-deployer.yaml

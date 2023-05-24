@@ -44,7 +44,7 @@ export class Apis {
     versionCount: number = 1,
     version: string = ""
   ) {
-    cy.get("[data-testid=apis-appbar-btn]").click({force:true});
+    cy.get("[data-testid=apis-appbar-btn]").click({ force: true });
 
     cy.intercept(
       "GET",

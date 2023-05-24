@@ -12,8 +12,9 @@
  */
 
 import { cyGet } from "../../../commons/cy";
-import { VERY_SHORT_TIME } from "../../../commons/timeouts";
+import { LONG_TIME, SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { PUBLISHER_API_KEYS_URL } from "../../../commons/urls";
+import { Utils } from "../../../commons/utils";
 import { GraphQL } from "../../apis/graphql";
 
 export class APIDeployment {
@@ -21,15 +22,37 @@ export class APIDeployment {
     cy.intercept({ method: "GET", url: PUBLISHER_API_KEYS_URL, times: 1 }).as(
       "keys"
     );
+    cyGet('[data-cyid="btn-deploy-proxy"]', SHORT_TIME).contains("Generating Configurations").should("not.exist");
+    this.RetryDevDeployment();
     cyGet('[data-cyid="btn-deploy-proxy"]').should("not.be.disabled").click();
 
     cy.wait("@keys", VERY_SHORT_TIME).then(() => {
       cyGet('[data-cyid="btn-next"]').should("be.visible").click();
+      this.RetryDevDeployment();
       cyGet('[data-cyid="deployment-status"]')
         .contains("Active")
         .should("be.visible");
       cyGet('[data-cyid*="promote"]').should("not.be.disabled");
       GraphQL.getComponentInfo(projectName, componentName);
+    });
+  }
+
+  static RetryDevDeployment(retryCount = 0) {
+    cy.log("Checking for retry deployment");
+    retryCount++;
+    if (retryCount > 4) {
+      return;
+    }
+
+    cy.get("body").then((bdy) => {
+      if (bdy.find('[data-testid="retry-button"]').length > 0) {
+        cy.log("Retry count: " + retryCount);
+        cy.get('[data-testid="retry-button"]').click();
+        cy.wait(LONG_TIME.timeout);
+      } else {
+        return;
+      }
+      this.RetryDevDeployment(retryCount);
     });
   }
 

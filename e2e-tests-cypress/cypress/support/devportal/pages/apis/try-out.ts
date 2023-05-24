@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { realClick } from "cypress-real-events/commands/realClick";
 import { cyGet } from "../../../commons/cy";
 import { SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 import {
@@ -34,19 +35,11 @@ export class TryOut {
   }
 
   static SelectApplication(applicationName: string) {
-    cy.intercept({
-      method: "GET",
-      url: DEV_PORTAL_SUBSCRIPTIONS_URL,
-      times: 1,
-    }).as("subscriptions");
-
-    cy.wait("@subscriptions", VERY_SHORT_TIME).then(() => {
-      Utils.getRenderedElement('[data-testid="application-selector"]').click();
-      cy.get(`[data-value="${applicationName}"]`)
-        .realHover()
-        .click()
-        .wait(1000);
-    });
+    Utils.getRenderedElement(
+      '[data-testid="application-selector"]',
+      3000
+    ).click();
+    Utils.getRenderedElement(`[data-value="${applicationName}"]`, 2000).click();
   }
 
   static generateTestKeyAndVerify() {
@@ -64,7 +57,7 @@ export class TryOut {
   }
 
   static TryoutAPI() {
-    cyGet('[class="try-out"]').find("button").realClick();
+    cyGet('[class="try-out"]').find("button").scrollIntoView().click();
     cyGet('[class="try-out"]')
       .contains(new RegExp(/Cancel/, "g"))
       .should("exist");
@@ -107,9 +100,7 @@ export class TryOut {
     cyGet('[data-testid="search-btn"]').trigger("mouseover");
     cyGet('[data-testid="search-app"] [placeholder="Search"]').type(appName);
     cy.contains(appName).trigger("mouseover");
-    cyGet(`[data-testid="delete-btn-${appName}"]`)
-      .trigger("mouseover")
-      .click();
+    cyGet(`[data-testid="delete-btn-${appName}"]`).trigger("mouseover").click();
     cyGet('[data-testid="delete-dialog-ok-button"]').click();
     cyGet('[data-testid="create-application-btn"]', SHORT_TIME).should(
       "be.visible"
@@ -139,7 +130,7 @@ export class TryOut {
   }
 
   static selectEndpoint(endpoint: string) {
-    cyGet('[data-testid="endpoint-selector"]').click();
+    Utils.getRenderedElement('[data-testid="endpoint-selector"]').click();
     cyGet(`[data-cyid="endpoint-list-item-${endpoint}"]`).click();
   }
 }

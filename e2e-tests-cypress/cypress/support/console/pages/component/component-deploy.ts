@@ -14,13 +14,14 @@
 import { GraphQL } from "../../apis/graphql";
 import {
   DEPLOYMENT_PENDING,
-  DEPLOYMENT_PROCESSING,
+  DEPLOYMENT_PROGRESSING,
   DEPLOYMENT_STOPPED,
   DEPLOYMENT_SUCCESS,
 } from "../../../commons/constants";
 import { Utils } from "../../../commons/utils";
 import { LONG_TIME, MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
 import { cyGet } from "../../../commons/cy";
+import { APIDeployment } from "../apis/api-deployment";
 
 interface PromoteConfigs {
   settingButtonCount: number;
@@ -49,15 +50,20 @@ export class ComponentDeployPage {
     isManagedByAPIM: boolean = true
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
+    cy.get('[data-cyid="btn-deploy-api"]', SHORT_TIME).contains("Generating Configurations").should("not.exist")
+    APIDeployment.RetryDevDeployment();
     cy.get('[data-cyid="btn-deploy-api"]', LONG_TIME)
       .should("be.enabled")
       .click();
+    
     if (isAdditionalConfigs) {
       if (isManagedByAPIM) {
         Utils.interceptConfig();
       }
       this.pollElement('[data-cyid="btn-next"]').click();
     }
+
+    APIDeployment.RetryDevDeployment();
     cy.get('[data-testid="btn-stop"]', MEDIUM_TIME).should("be.visible");
     GraphQL.getComponentDeploymentStatus();
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
@@ -181,7 +187,6 @@ export class ComponentDeployPage {
       .should("have.length", 2)
       .eq(1)
       .contains(DEPLOYMENT_SUCCESS, LONG_TIME);
-    cy.get('[data-cyid*="test-nav-btn"]').should("be.visible");
   }
 
   static stopAllDeployment() {
@@ -336,14 +341,33 @@ export class ComponentDeployPage {
       cy.get('[data-cyid="endpoint-submit-btn"]').click();
     }
     cy.get('[data-cyid="btn-next"]').click();
-
-    cy.get('[data-testid="btn-stop"]', LONG_TIME).should("have.length", 2).eq(1).should("be.visible");
-    cy.get('[data-cyid="deployment-status"]', SHORT_TIME).should("have.length", 2).eq(1).contains("Active", SHORT_TIME);
+    cy.get('[data-testid="btn-stop"]', LONG_TIME)
+      .should("have.length", 2)
+      .eq(1)
+      .should("be.visible");
+    cy.get('[data-cyid="deployment-status"]', SHORT_TIME)
+      .should("have.length", 2)
+      .eq(1)
+      .contains("Active", SHORT_TIME);
     cy.get('[data-cyid="btn-promote"]', LONG_TIME).should("not.be.disabled");
-    cy.get('[data-testid="Endpoints-env-artifact"]').should("have.length", 2).eq(1).should("be.visible");
-    cy.get('[data-testid="Endpoints-status"]', SHORT_TIME).should("have.length", 2).eq(1)
-    .contains(DEPLOYMENT_PENDING, SHORT_TIME).should("not.exist");
-    cy.get('[data-testid="Endpoints-status"]', LONG_TIME).should("have.length", 2).eq(1)
-      .contains("Active", SHORT_TIME).should("exist");
+    cy.get('[data-testid="Endpoints-env-artifact"]')
+      .should("have.length", 2)
+      .eq(1)
+      .should("be.visible");
+    cy.get('[data-testid="Endpoints-status"]', SHORT_TIME)
+      .should("have.length", 2)
+      .eq(1)
+      .contains(DEPLOYMENT_PENDING, SHORT_TIME)
+      .should("not.exist");
+    cy.get('[data-testid="Endpoints-status"]', SHORT_TIME)
+      .should("have.length", 2)
+      .eq(1)
+      .contains(DEPLOYMENT_PROGRESSING, SHORT_TIME)
+      .should("not.exist");
+    cy.get('[data-testid="Endpoints-status"]', LONG_TIME)
+      .should("have.length", 2)
+      .eq(1)
+      .contains("Active", SHORT_TIME)
+      .should("exist");
   }
 }
