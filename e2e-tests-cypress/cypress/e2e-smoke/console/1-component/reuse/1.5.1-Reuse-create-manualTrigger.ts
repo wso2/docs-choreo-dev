@@ -58,7 +58,7 @@ describe("Verify Reusable Manual Trigger creation functionality", () => {
   it("Verify component deployment", () => {
     ComponentListingPage.visitToAComponent(MANUAL_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployManualTriggerToDev();
+    ComponentDeployPage.deployToDev(false, false, true);
   });
 
   it("Verify component promotion to prod", () => {
