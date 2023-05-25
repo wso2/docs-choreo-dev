@@ -20,6 +20,7 @@ import { ComponentDeployPage } from "../../../support/console/pages/component/co
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
+import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { GitHub } from "../../../support/github/github";
@@ -106,7 +107,26 @@ describe("Verify containerized service functionality", () => {
     });
   });
 
+  it("Verify API insights for dev env", () => {
+    ChoreoHomePage.navigateToInsights();
+    InsightsPage.selectTimePeriod();
+    InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
+    InsightsPage.getTotalTraffic().should((value) => {
+      expect(Number(value)).gte(1);
+    });
+  });
+
+  it("Verify API insights for prod env", () => {
+    InsightsPage.selectTimePeriod();
+    InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
+    InsightsPage.getTotalTraffic().should((value) => {
+      expect(Number(value)).gte(1);
+    });
+  });
+
   it("Verify suspending all component deployments", () => {
+    ChoreoHomePage.navigateToComponents();
+    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });
