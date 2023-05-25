@@ -16,32 +16,39 @@ import { LoginPage } from "../login-page";
 
 
 export class ChoreoHomePage {
+  static navigateToHome() {
+    const { handle } = Cypress.env("userData");
+    cy.get(
+      `div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home"]`
+    ).click();
+  }
 
-    static navigateToHome() {
-        const { handle } = Cypress.env("userData");
-        cy.get(`div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home"]`).click();
-    }
+  static navigateToMarketPlace() {
+    cy.get('[data-testid="main-left-nav-item-Marketplace"]').click({
+      force: true,
+    });
+  }
 
-    static navigateToMarketPlace() {
-        cy.get('[data-testid="main-left-nav-item-Marketplace"]').click({ force: true })
-    }
+  static navigateToProjects() {
+    cy.get('[data-testid="main-left-nav-item-Project"]').click();
+  }
 
-    static navigateToProjects() {
-        cy.get('[data-testid="main-left-nav-item-Project"]').click();
-    }
+  static navigateToComponents() {
+    cy.get('[data-testid="main-left-nav-item-Components"]').click();
+  }
 
-    static navigateToComponents() {
-        cy.get('[data-testid="main-left-nav-item-Components"]').click()
+  static navigateToInsights() {
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.get('[data-cyid="usage-insights"]').click();
+    } else {
+      cy.get('[data-testid="main-left-nav-item-Insights"]').click();
     }
+  }
 
-    static navigateToInsights() {
-        cy.get('[data-testid="main-left-nav-item-Insights"]').click();
-    }
-
-    static isOrgHandleVisible(orgHandle: string) {
-        cy.get('[id="org-picker"]').click();
-        cy.get('[data-value="' + orgHandle + '"]');
-    }
+  static isOrgHandleVisible(orgHandle: string) {
+    cy.get('[id="org-picker"]').click();
+    cy.get('[data-value="' + orgHandle + '"]');
+  }
 
     static logout() {
         cy.request(Cypress.env("sign_out_url"));
