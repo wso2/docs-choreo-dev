@@ -47,7 +47,8 @@ export class ComponentDeployPage {
 
   static deployToDev(
     isAdditionalConfigs: boolean = true,
-    isManagedByAPIM: boolean = true
+    isManagedByAPIM: boolean = true,
+    isManualTrigger: boolean = false
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-deploy-api"]', SHORT_TIME).contains("Generating Configurations").should("not.exist")
@@ -64,6 +65,10 @@ export class ComponentDeployPage {
     }
 
     APIDeployment.RetryDevDeployment();
+    if (isManualTrigger) {
+      cy.get('[data-cyid="btn-promote"]', LONG_TIME).should("be.enabled");
+      return;
+    }
     cy.get('[data-testid="btn-stop"]', MEDIUM_TIME).should("be.visible");
     GraphQL.getComponentDeploymentStatus();
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
@@ -109,13 +114,6 @@ export class ComponentDeployPage {
       .eq(1)
       .contains("Active", LONG_TIME);
     cyGet('[data-cyid="btn-promote"]', LONG_TIME).should("not.be.disabled");
-  }
-
-  static deployManualTriggerToDev() {
-    window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-deploy-api"]', LONG_TIME)
-      .should("be.enabled")
-      .click();
   }
 
   static promoteManualTriggerToProd() {
