@@ -198,12 +198,7 @@ public class TokenHandler {
      */
     private String getStsToken(String stsClientId, String stsClientSecret, String userToken)
             throws TokenRetrievalException {
-
- String[] l = {"kl","sf"};
-        String[] lf = {"kl","sf"}
-;
-
-   String tokenAuthHeader = Constant.BASIC_PREFIX.concat(encodeCredentials(stsClientId, stsClientSecret));
+        String tokenAuthHeader = Constant.BASIC_PREFIX.concat(encodeCredentials(stsClientId, stsClientSecret));
         String stsEndPoint = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT)
                 .concat(Constant.TOKEN_ENDPOINT_SUFFIX);
 
