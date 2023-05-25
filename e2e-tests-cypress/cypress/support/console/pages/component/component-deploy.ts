@@ -320,6 +320,12 @@ export class ComponentDeployPage {
       .should("be.visible");
     cyGet('[data-testid="Endpoints-env-artifact"]').should("be.visible");
     GraphQL.getServiceEndpointStatus();
+    cyGet('[data-cyid="deployment-status"]', SHORT_TIME)
+      .contains(DEPLOYMENT_PENDING, SHORT_TIME)
+      .should("not.exist");
+    cyGet('[data-cyid="deployment-status"]', SHORT_TIME)
+      .contains(DEPLOYMENT_PROGRESSING, SHORT_TIME)
+      .should("not.exist");
     cyGet('[data-testid="Endpoints-status"]', LONG_TIME).contains(
       DEPLOYMENT_SUCCESS,
       LONG_TIME
