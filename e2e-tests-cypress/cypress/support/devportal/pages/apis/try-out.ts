@@ -52,7 +52,7 @@ export class TryOut {
     cyGet('[data-testid="get-test-key-btn"]').should("be.enabled");
     const pathVariable = `[data-path="/${path}"]`;
     Utils.getRenderedElement(".swagger-ui", 3000).within(() => {
-      cyGet(pathVariable).should("have.length", "1").realHover().realClick();
+      cy.get(pathVariable).should("have.length","1").realHover().realClick();
     });
   }
 

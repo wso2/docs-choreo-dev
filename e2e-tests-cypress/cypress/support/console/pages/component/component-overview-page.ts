@@ -24,7 +24,7 @@ export class ComponentOverviewPage {
 
   static navigateToTest(navigateViaLink:boolean=false) {
     if(navigateViaLink){
-      cy.get('[data-cyid="test-nav-btn"]').eq(0).click()
+      cy.get('[data-cyid="link-test"]').eq(0).click()
     }else{
       cy.contains("Test").should("be.visible").click({ force: true });
     }

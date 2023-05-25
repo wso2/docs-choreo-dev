@@ -126,7 +126,6 @@ describe("Verify Ballerina service functionality", () => {
     ComponentAPILifecycle.selectSetting();
     ComponentAPILifecycle.selectEndpoint(ENDPOINT_NAME);
     ComponentAPILifecycle.selectResources();
-
     ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("books");
@@ -137,6 +136,14 @@ describe("Verify Ballerina service functionality", () => {
     );
   });
 
+
+  it("Apply configs to prod", () => {
+    ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
+    ComponentAPILifecycle.editResource();
+    ComponentAPILifecycle.disableResourceSecurity("books");
+    ComponentAPILifecycle.applyConfiguration();
+  });
+
   it("Verify resource access without the token in dev", () => {
     Curl.getRequestComponentsForService(
       `${Enums.Environment.DEVELOPMENT}Books`
@@ -145,13 +152,6 @@ describe("Verify Ballerina service functionality", () => {
         expect(res.status).equal(200);
       })
     );
-  });
-
-  it("Apply configs to prod", () => {
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity("books");
-    ComponentAPILifecycle.applyConfiguration();
   });
 
   it("Verify resource access without the token in prod", () => {

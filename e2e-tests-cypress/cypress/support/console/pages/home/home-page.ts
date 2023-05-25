@@ -45,6 +45,9 @@ export class ChoreoHomePage {
 
     static logout() {
         cy.request(Cypress.env("sign_out_url"));
+        cy.clearAllSessionStorage()
+        cy.clearLocalStorage();
+        cy.clearAllCookies()
     }
 
     static navigateToSettings() {
