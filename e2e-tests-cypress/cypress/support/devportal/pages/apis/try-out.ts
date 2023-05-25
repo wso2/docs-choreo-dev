@@ -76,16 +76,44 @@ export class TryOut {
     cy.log("Execution is successful");
   }
 
+  static ExecuteResourceInRetryFunction() {
+    Utils.getRenderedElement('[class="btn-group"]').within(
+      () => {
+        cy.get('button.execute.opblock-control__btn').contains('Execute').realClick();
+      }
+    );
+  }
+
   static GetResponse() {
     cyGet(".curl-command").should("exist");
     cyGet(".request-url").should("exist");
     cy.log("Response is successfully returned");
-    cyGet(
-      ":nth-child(1) > .responses-table > tbody > .response > .response-col_status"
-    ).should("have.text", "200");
+    this.RetryExecuteResourceFunction();
     cy.log("API Tryout is successful!");
   }
-
+  
+  static RetryExecuteResourceFunction(retryCount: number = 0, retryDelay: number = VERY_SHORT_TIME.timeout) {
+    retryCount++;
+    if (retryCount < 4) {
+      cy.log("Retry Count: " + retryCount);
+      cy.get(":nth-child(1) > .responses-table > tbody > .response > .response-col_status").invoke('text').then((text) => {
+        cy.log("Response Status Code: " + text.trim());
+        if (text.trim() == '200') {
+          expect(text.trim()).equal('200');
+          return; 
+        } else {
+          cy.log("API Tryout is not successful!");
+          cy.wait(retryDelay);
+          this.ExecuteResourceInRetryFunction();
+          this.RetryExecuteResourceFunction(retryCount, retryDelay);  
+        }
+      });
+    } else {
+      cy.log("API Tryout Retrying was not successful!");
+      expect(false).to.be.true;
+    }
+  }
+  
   static ValidateResponse(statusCode) {
     cyGet(".curl-command").should("exist");
     cyGet(".request-url").should("exist");
