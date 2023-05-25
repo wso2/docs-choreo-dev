@@ -244,10 +244,10 @@ export class Utils {
     }
   }
 
-  static isPerspectiveViewEnabled() {
-    const enablePerspectiveView = Cypress.env("enablePerspectiveView");
-    if (enablePerspectiveView != null) {
-      return enablePerspectiveView == true || enablePerspectiveView == "true";
+  static isUnifiedMenuEnabled() {
+    const enableUnifiedMenu = Cypress.env("enableUnifiedMenu");
+    if (enableUnifiedMenu != null) {
+      return enableUnifiedMenu == true || enableUnifiedMenu == "true";
     }
 
     return false;

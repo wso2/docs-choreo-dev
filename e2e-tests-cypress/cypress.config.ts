@@ -13,14 +13,12 @@ export default defineConfig({
   videoUploadOnPasses: false,
   videoCompression: false,
   watchForFileChanges: false,
-  chromeWebSecurity:false,
- 
+  chromeWebSecurity: false,
   e2e: {
     setupNodeEvents(on, config) {
       let apiName;
       let projectName;
       on("task", {
-        
         setAPIName(val) {
           return (apiName = val);
         },
@@ -44,7 +42,7 @@ export default defineConfig({
       config.env.userName = process.env.userName;
       config.env.userEmail = process.env.userEmail;
       config.env.gitPAT = process.env.gitPAT;
-      config.env.enablePerspectiveView = process.env.enablePerspectiveView;
+      config.env.enableUnifiedMenu = process.env.enableUnifiedMenu;
       return config;
     },
     testIsolation: false,
@@ -56,7 +54,6 @@ export default defineConfig({
     FAIL_FAST_BAIL: 3,
     FAIL_FAST_PLUGIN: false,
   },
-
   retries: {
     // Configure retry attempts for `cypress run`
     // Default is 0
