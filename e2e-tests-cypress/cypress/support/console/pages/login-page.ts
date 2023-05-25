@@ -12,9 +12,6 @@
  */
 
 
-
-
-
 import { cyGet } from "../../commons/cy";
 import { AUTH_HEADER, OK } from "../../commons/http";
 import { MEDIUM_TIME, SHORT_TIME } from "../../commons/timeouts";
@@ -92,10 +89,11 @@ export class LoginPage {
     cy.get(signInButton).click();
     cy.get("#outlined-basic").type(Cypress.env("enterpriseIDPUsername"));
     cy.contains("Continue").click();
+    
     cy.get('input[id="username"]').should("be.visible", MEDIUM_TIME);
     cy.get(LoginPage.username).type(Cypress.env("enterpriseIDPUsername"));
     cy.get(LoginPage.password).type(Cypress.env("enterpriseIDPPassword"), { log: false });
-    cy.contains("Continue").click();
+    cy.contains("Continue").click({ force: true });
     cy.get('[data-testid="header-user-profile-menu"]', MEDIUM_TIME).should("be.visible");
     this.persistLogoutURL();
   }
