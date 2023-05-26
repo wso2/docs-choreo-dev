@@ -173,7 +173,7 @@ describe(`Verify proxy api functionality`, () => {
 
   it("Generate credentials for prod env", () => {
     Apis.searchApiAndSelect(API_NAME, 2, API_NEW_VERSION);
-    ApiCredentials.navigateCredentialsTab();
+    ApiCredentials.navigateToEnvironment(Enums.Environment.PRODUCTION);
     ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
 
   });
