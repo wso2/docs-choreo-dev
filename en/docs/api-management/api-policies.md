@@ -52,7 +52,7 @@ To deploy the API follow the steps below:
 
          ![Save and deploy values](../assets/img/api-management/api-policies/save-and-deploy.png){.cInlineImage-full}
 
- 11. Click **Save & Deploy**.
+11. Click **Save & Deploy**.
 
 ### Configure a policy to accept environment-specific parameters
 
