@@ -36,45 +36,22 @@ To attach a policy to the `Request`, `Response`, or `Error` flow of a REST API p
 4. From the list of resources, expand the resource to which you want to attach the policy. 
 5. Click **Attach Policy** in the respective flow for which you want to attach a policy.
 6. In the **Policy List** pane that opens, click on a required policy to view its details.
-7. To attach the policy, click **Add**.
+7. If the attached policy requires parameter configuration, on the policy pane enter the appropriate values and conifgure the parameters. To make a parameter a configurable variable, input the value in the `${<variableName>}` format. For example, you can use `${name}` as an example.
 
-    ![Add policy](../assets/img/api-management/api-policies/add-policy.png)
+    ![Configure parameters](../assets/img/api-management/api-policies/configure-parameters.png)
+ 
+8. To attach the policy, click **Add**.
 
-8. Click **Save**.
-
-After attaching an API Policy, it is necessary to deploy the API in order for the policy to become active within its corresponding flow. Some of the default policies in Choreo require you to specify custom parameters and values. If the policy you attached requires environment-specific or custom values for its parameters, you can indicate them during the API deployment process.
-
+After attaching an API Policy, it is necessary to deploy the API in order for the policy to become active within its corresponding flow. 
 To deploy the API follow the steps below: 
 
 9. In the left navigation menu, click **Deploy** and then click **Configure & Deploy**. Choreo performs the interceptor application generation step and opens the **Configure & Deploy** pane.
 
 10. In the **Configure & Deploy** pane, if you have any configurable variables that require values, specify appropriate values for them.
 
-         ![Save and deploy values](../assets/img/api-management/api-policies/save-and-deploy.png){.cInlineImage-full}
+     ![Save and deploy values](../assets/img/api-management/api-policies/save-and-deploy.png){.cInlineImage-full}
 
 11. Click **Save & Deploy**.
-
-### Configure a policy to accept environment-specific parameters
-
-Some of the default policies in Choreo require you to specify custom parameters and values. These parameters can be static values or environment-specific values. For example, the `Add Header` policy requires you to specify a header name and value if you want to attach it to a flow of a REST API proxy.  
-
-To see how to add environment-specific values and policy parameters when you attach a policy that requires such input, follow the steps given below:
-
-1. Follow [steps 1 to 5 in the Attach a policy section](#attach-a-policy). 
-2. In the **Policy List** pane that opens, click on a policy that requires you to specify environment-specific parameters.
-3. Enter appropriate values for the parameters. If you want to make a parameter a configurable variable, enter the value in the `${<variableName>}` format. For example, `${name}`.
-
-       ![Configure parameters](../assets/img/api-management/api-policies/configure-parameters.png)
-
-4. Click **Add** and then click **Save**.
-5. To deploy the component and specify an appropriate value for the configurable, follow the steps given below:
-    1. In the left navigation menu, click **Deploy** and then click **Configure & Deploy**. Choreo performs the interceptor application generation step and opens the **Configure & Deploy** pane.
-    2. In the **Configure & Deploy** pane, specify an appropriate value for the configurable variable.
-
-         ![Save and deploy values](../assets/img/api-management/api-policies/save-and-deploy.png){.cInlineImage-full}
-
-    3. Click **Save & Deploy**.
-
 
 ## Implement an API a policy
 
