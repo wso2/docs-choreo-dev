@@ -179,9 +179,12 @@ export class TestHelper {
   }
 
   private static selectCurl() {
-    const selector = '[data-cyid="curl"]';
+    let selector = '[data-cyid="curl"]';
     if (Utils.isUnifiedMenuEnabled()) {
       this.expandSecondaryMenu(selector);
+    } else {
+      APITest.testAPI();
+      selector = '[data-testid="cURL"]';
     }
     cy.get(selector).click();
   }

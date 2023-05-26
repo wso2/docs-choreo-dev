@@ -213,7 +213,11 @@ export class ComponentAPILifecycle {
   }
 
   static selectSetting() {
-    cy.get('[data-cyid="manage-settings"]').click();
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.get('[data-cyid="manage-settings"]').click();
+    } else {
+      cy.get('[data-testid="Settings"]').click();
+    }
   }
 
   static selectResources() {
@@ -255,11 +259,11 @@ export class ComponentAPILifecycle {
   }
 
   static selectConsumers() {
-    let selector = '[data-cyid="manage-consumer"]';
+    let selector = '[data-cyid="manage-consumers"]';
     if (Utils.isUnifiedMenuEnabled()) {
       this.expandSecondaryMenu(selector);
     } else {
-      selector = '[data-cyid="Consumer"]';
+      selector = '[data-cyid="Consumers"]';
     }
 
     cy.get(selector).click();
@@ -436,6 +440,9 @@ export class ComponentAPILifecycle {
     if (Utils.isUnifiedMenuEnabled()) {
       this.expandSecondaryMenu(selector);
     } else {
+      cy.get('[data-cyid="link-manage"]')
+        .should("be.visible")
+        .click({ force: true });
       selector = '[data-testid="Usage plans"]';
     }
 
@@ -447,6 +454,9 @@ export class ComponentAPILifecycle {
     if (Utils.isUnifiedMenuEnabled()) {
       this.expandSecondaryMenu(selector);
     } else {
+      cy.get('[data-cyid="link-manage"]')
+        .should("be.visible")
+        .click({ force: true });
       selector = '[data-testid="Settings"]';
     }
 
