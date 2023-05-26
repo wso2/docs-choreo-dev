@@ -16,7 +16,7 @@
 import { cyGet } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
 import { VERY_SHORT_TIME } from "../../../commons/timeouts";
-import { DEV_PORTAL_APP_KEY_GEN_URL } from "../../../commons/urls";
+import { DEV_PORTAL_APP_KEY_GEN_URL, DEV_PORTAL_SUBSCRIPTIONS_URL } from "../../../commons/urls";
 
 export class ApiCredentials {
   static navigateCredentialsTab() {
@@ -42,4 +42,22 @@ export class ApiCredentials {
       cy.log("Successfully generated credentials");
     });
   }
+
+  static navigateToEnvironment(env: Enums.Environment) {
+    cy.log("Navigating to environment: " + env);
+    cy.intercept({
+      method: "GET",
+      url: DEV_PORTAL_SUBSCRIPTIONS_URL,
+      times: 1,
+    }).as("navigate");
+    cy.wait("@navigate", VERY_SHORT_TIME).then(() => {
+      cy.get('[data-testid="credentials-item-link"]').should("be.visible").click();
+      cy.log("Successfully navigated to credentials tab");
+    });
+
+   
+  ;
+  }
+
+
 }
