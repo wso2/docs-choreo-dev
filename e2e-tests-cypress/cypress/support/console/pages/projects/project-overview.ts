@@ -72,7 +72,7 @@ export class ProjectOverviewPage {
     cy.contains("← Components").click();
   }
 
-  private static waitForTemplateCardsToLoad() {
+  static waitForTemplateCardsToLoad() {
     cy.get('[data-cyid="scheduleTask"]')
       .get('[data-testid="project-template-list-scheduleTask"]')
       .should("be.enabled")
