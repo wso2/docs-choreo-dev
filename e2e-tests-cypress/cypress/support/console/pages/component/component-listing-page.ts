@@ -62,16 +62,26 @@ export class ComponentListingPage {
   }
 
   static visitToAComponent(componentName: string) {
-    cy.get('[data-testid="main-left-nav-item-Components"]')
-      .should("be.visible")
-      .click();
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.get('[data-cyid="listing"]').should("be.visible").click();
+    } else {
+      cy.get('[data-testid="main-left-nav-item-Components"]')
+        .should("be.visible")
+        .click();
+    }
 
-    cy.get('#filterByType').click().should('have.length', 1)
-    cy.contains('Select All').click()
-    cy.contains('Components Listing').click()
+    cy.get("#filterByType").click().should("have.length", 1);
+    cy.contains("Select All").click();
+    cy.contains("Components Listing").click();
 
     cy.get("tr p").contains(componentName).should("be.visible").click();
-    cy.get("[data-cyid=link-overview]").should("be.visible");
+
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.get('[data-cyid="home"]').should("be.visible");
+    } else {
+      cy.get("[data-cyid=link-overview]").should("be.visible");
+    }
+
     Utils.saveComponentURL();
     cy.log("Successfully visited to the component");
   }

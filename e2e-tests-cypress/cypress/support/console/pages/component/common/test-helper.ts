@@ -26,8 +26,7 @@ export class TestHelper {
     key: string = "",
     value: string = ""
   ) {
-    APITest.testAPI();
-    cy.get('[data-cyid="OpenAPI Console"]').click();
+    this.selectOpenApiConsole();
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.getTestKey();
     SwaggerUI.invokeResource(resourcePath, key, value);
@@ -48,7 +47,7 @@ export class TestHelper {
     pathParm: string,
     queryParameters1 = []
   ) {
-    ComponentTestPage.selectCurl();
+    this.selectCurl();
     Curl.selectCurlEnvironment(env);
     Curl.selectMethod(httpMethod);
     if (pathParm != "") {
@@ -69,7 +68,7 @@ export class TestHelper {
     pathParm: string,
     queryParameters1 = []
   ) {
-    ComponentTestPage.selectCurl();
+    this.selectCurl();
     Curl.selectCurlEnvironment(env);
     Curl.selectMethod(httpMethod);
     Curl.enterPathParameter(pathParm);
@@ -156,5 +155,37 @@ export class TestHelper {
         });
       });
     });
+  }
+
+  private static expandSecondaryMenu(selector: string) {
+    cy.get("body").then((bdy) => {
+      // Secondary menu is collapsed
+      if (bdy.find(selector).length == 0) {
+        // Expand secondary menu
+        APITest.testAPI();
+      }
+    });
+  }
+
+  private static selectOpenApiConsole() {
+    let selector = '[data-cyid="openapi"]';
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.expandSecondaryMenu(selector);
+    } else {
+      selector = '[data-cyid="OpenAPI Console"]';
+      APITest.testAPI();
+    }
+    cy.get(selector).click();
+  }
+
+  private static selectCurl() {
+    let selector = '[data-cyid="curl"]';
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.expandSecondaryMenu(selector);
+    } else {
+      APITest.testAPI();
+      selector = '[data-testid="cURL"]';
+    }
+    cy.get(selector).click();
   }
 }

@@ -11,24 +11,25 @@
  * associated services.
  */
 
-
 import { Enums } from "../../../commons/enums";
-
-
-
+import { Utils } from "../../../commons/utils";
 
 export class ComponentTestPage {
   static selectCurl() {
-   cy.get('[data-testid="cURL"]').click();
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.get('[data-testid="cURL"]').click();
+    } else {
+      cy.get('[data-cyid="curl"]').click();
+    }
   }
 
   static getTestKey() {
-    cy.contains('Get Test Key').should('be.visible').click({ force: true });
+    cy.contains("Get Test Key").should("be.visible").click({ force: true });
   }
 
   static selectEnvironment(env: Enums.Environment) {
     cy.get('[data-testid="env"]>div[role="button"]').click();
-   cy.get('ul>li').contains(env).click();
+    cy.get("ul>li").contains(env).click();
   }
 
   static selectEndpoint(endpoint: string) {

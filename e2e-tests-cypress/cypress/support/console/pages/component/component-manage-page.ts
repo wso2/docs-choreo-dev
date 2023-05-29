@@ -18,6 +18,7 @@ import { Utils } from "../../../commons/utils";
 
 export class ComponentAPILifecycle {
   static devportl_btn = '[data-testid="go-to-dev-portal-btn"]';
+  private static MANAGE_MENU = '[data-cyid="link-manage"]';
 
   static republishConnector() {
     cy.get('[data-testid="republish-connector-btn"]').scrollIntoView().click();
@@ -33,7 +34,7 @@ export class ComponentAPILifecycle {
   }
 
   static manageLifecycle() {
-    cy.get('[data-testid="Lifecycle"]').click();
+    this.selectLifeCycle();
   }
   static verifyDevRevision() {
     return cy
@@ -81,7 +82,7 @@ export class ComponentAPILifecycle {
   }
 
   static selectUsagePlans(...plans) {
-    cy.get('[data-testid="Usage plans"]').click();
+    this.selectUsage();
     cy.get('[data-testid="checkbox-Unlimited"]').click();
     plans.forEach((plan) => {
       cy.get(`[data-testid="checkbox-${plan}"]`).click();
@@ -154,7 +155,7 @@ export class ComponentAPILifecycle {
     allowedHeaders: string[],
     allowedMethods: string[]
   ) {
-    cy.get('[data-testid="Settings"]').click();
+    this.selectSettings();
     cy.get('[data-testid="switch-cors-config"]');
     if (isCORSenable) {
       cy.contains("Edit").click();
@@ -212,7 +213,11 @@ export class ComponentAPILifecycle {
   }
 
   static selectSetting() {
-    cy.get('[data-testid="Settings"]').click();
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.get('[data-cyid="manage-settings"]').click();
+    } else {
+      cy.get('[data-testid="Settings"]').click();
+    }
   }
 
   static selectResources() {
@@ -254,7 +259,14 @@ export class ComponentAPILifecycle {
   }
 
   static selectConsumers() {
-    cy.get('[data-cyid="Consumers"]').click();
+    let selector = '[data-cyid="manage-consumers"]';
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.expandSecondaryMenu(selector);
+    } else {
+      selector = '[data-cyid="Consumers"]';
+    }
+
+    cy.get(selector).click();
   }
 
   static verifyConsumer(appName: string) {
@@ -303,10 +315,18 @@ export class ComponentAPILifecycle {
   }
 
   static selectPermissions() {
-    cy.get('[data-testid="Permissions"]').click();
+    let selector = '[data-cyid="manage-permissions"]';
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.expandSecondaryMenu(selector);
+    } else {
+      selector = '[data-testid="Permissions"]';
+    }
+
+    cy.get(selector).click();
   }
 
   static navigatePermissionManagementWindow() {
+    this.selectPermissions();
     cy.get("h5").contains(
       "You don't have any permissions (scopes) defined as yet"
     );
@@ -392,5 +412,54 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="Deploy as a Prototype-lc-btn"]').should("be.visible");
     cy.get('[data-testid="Demote to Created-lc-btn"]').should("be.visible");
     cy.get('[data-testid="Deprecate-lc-btn"]').should("be.visible");
+  }
+
+  private static expandSecondaryMenu(selector: string) {
+    cy.get("body").then((bdy) => {
+      // Secondary menu is collapsed
+      if (bdy.find(selector).length == 0) {
+        // Expand secondary menu
+        cy.get(this.MANAGE_MENU).should("be.visible").click();
+      }
+    });
+  }
+
+  private static selectLifeCycle() {
+    let selector = '[data-cyid="manage-lifecycle"]';
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.expandSecondaryMenu(selector);
+    } else {
+      selector = '[data-testid="Lifecycle"]';
+    }
+
+    cy.get(selector).click();
+  }
+
+  private static selectUsage() {
+    let selector = '[data-cyid="manage-usage"]';
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.expandSecondaryMenu(selector);
+    } else {
+      cy.get('[data-cyid="link-manage"]')
+        .should("be.visible")
+        .click({ force: true });
+      selector = '[data-testid="Usage plans"]';
+    }
+
+    cy.get(selector).click();
+  }
+
+  private static selectSettings() {
+    let selector = '[data-cyid="manage-settings"]';
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.expandSecondaryMenu(selector);
+    } else {
+      cy.get('[data-cyid="link-manage"]')
+        .should("be.visible")
+        .click({ force: true });
+      selector = '[data-testid="Settings"]';
+    }
+
+    cy.get(selector).click();
   }
 }
