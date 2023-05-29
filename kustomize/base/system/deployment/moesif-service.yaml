@@ -28,6 +28,9 @@ spec:
       containers:
         - name: moesif-service
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-moesif-service:latest # align  with info given in azure ci pipeline.
+          envFrom:
+            - configMapRef:
+                name: env-moesif-service
           ports:
             - containerPort: 8080      # To be used for internal service
               name: internal-http
