@@ -510,5 +510,5 @@ salesforceLeadPardotConfig:
     username: ${MAX_MIND_GEO_LOC_COUNTRY_USERNAME}
     password: ${MAX_MIND_GEO_LOC_COUNTRY_PASSWORD}
 nonCoporateEmailDomains:
-  enabled: true
+  enabled: ${NON_COPORATE_EMAIL_DOMAINS_ENABLED}
   domains: [ gmail.com, yahoo.com, hotmail.com, outlook.com, aol.com, icloud.com, mail.com, gmx.com, protonmail.com, hushmail.com, mailinator.com ]
