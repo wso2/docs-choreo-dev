@@ -12,12 +12,14 @@
  */
 
 import { cyGet } from "../../../commons/cy";
-import { LONG_TIME, SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
+import { LONG_TIME, SHORT_TIME, VERY_LONG_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { PUBLISHER_API_KEYS_URL } from "../../../commons/urls";
 import { Utils } from "../../../commons/utils";
 import { GraphQL } from "../../apis/graphql";
 
 export class APIDeployment {
+
+
   static DeployToDev(projectName: string, componentName: string) {
     cy.intercept({ method: "GET", url: PUBLISHER_API_KEYS_URL, times: 1 }).as(
       "keys"
@@ -35,6 +37,12 @@ export class APIDeployment {
       cyGet('[data-cyid*="promote"]').should("not.be.disabled");
       GraphQL.getComponentInfo(projectName, componentName);
     });
+  }
+
+  static deployProxyAPIToDev(){
+    cyGet('[data-testid="btn-deploy-proxy"]').should('be.enabled').click()
+    cy.get('button').contains('Save & Deploy',VERY_LONG_TIME).should('be.visible').click()
+    cyGet('[data-cyid="deployment-status"]>h6', VERY_LONG_TIME).should('contain','Active')
   }
 
   static RetryDevDeployment(retryCount = 0) {

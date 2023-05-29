@@ -12,7 +12,8 @@
  */
 
 
-import { cyLog } from "../../../commons/cy";
+import { cyGet, cyLog } from "../../../commons/cy";
+import { Enums } from "../../../commons/enums";
 import { MEDIUM_TIME } from "../../../commons/timeouts";
 
 export class APIDevelop {
@@ -44,6 +45,34 @@ export class APIDevelop {
     this.addResource(verbs, path);
   }
 
+
+  static addPolicy(resourcePath: string, verb: string, policy: Enums.PolicyType, policyName: string, policyType: string) {
+    const header = this.getHeader(resourcePath, verb.toUpperCase())
+    cyGet('[data-testid="Policies"]').click()
+    cyGet(header).eq(0).click();
+    cy.get('[data-key=".0"]').should('have.length.above',1).eq(1).click()
+    cy.contains(policy).click()
+    cyGet('[name*="Name"]').should("be.visible").type(policyName)
+    cyGet('[name*="Value"]').type(policyType)
+    cy.get('button').contains('Add').click()
+    cyGet(`[title="${policy}"]`).should('be.visible')
+    cy.get('button').contains('Save').click()
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   private static addResource(verbs: string[], path: string) {
     cy.get('[name="target"]').type(path);
     cy.get('[data-testid="add-btn"]').click();
@@ -73,8 +102,9 @@ export class APIDevelop {
   }
 
   private static generateOperationId(httpVerb: string[], resourcePath: string) {
+    cyLog(httpVerb)
     httpVerb.forEach((verb) => {
-      const header = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-header"]`;
+      const header = this.getHeader(resourcePath, verb.toLowerCase());
       const modifiedResourcePath = Cypress._.capitalize(resourcePath.replace(/\\/g, ""))
       const operationId = `${verb.toLowerCase()}${modifiedResourcePath}`;
 
@@ -84,5 +114,10 @@ export class APIDevelop {
         cy.get(`div>input[type="text"]`).eq(0).type(operationId)
       }))
     });
+  }
+
+
+  private static getHeader(resourcePath: string, verb: string) {
+    return `[id="panel-/${resourcePath}/${verb}-header"]`
   }
 }

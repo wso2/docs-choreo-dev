@@ -1,4 +1,5 @@
 import { MIN_RENDERING_WAIT_TIME } from "./constants";
+import { cyLog } from "./cy";
 import { VERY_SHORT_TIME } from "./timeouts";
 
 /*
@@ -151,6 +152,7 @@ export class Utils {
 
   private static sendRequest(request: any, retryCount: number) {
     return this.retryRequest(request).then((res) => {
+      cyLog(res)
       if (res.retry && retryCount < this.TRY_COUNT) {
         cy.wait(VERY_SHORT_TIME.timeout);
         retryCount++;
@@ -170,6 +172,7 @@ export class Utils {
         body: res.body,
         status: res.status,
         retry: isRetry,
+        headers: res.headers
       });
     });
   }

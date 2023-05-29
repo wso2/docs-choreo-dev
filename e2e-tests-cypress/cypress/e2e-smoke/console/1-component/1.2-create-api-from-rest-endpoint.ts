@@ -73,9 +73,16 @@ describe(`Verify proxy api functionality`, () => {
     APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
   });
 
+
+
+  it("Add policies to the resource", () => {
+    APIDevelop.addPolicy(OPERATION_USERS, Enums.HTTPMethod.GET, Enums.PolicyType.setHeader, "x-header-tst", "test")
+  })
+
   it("Verify component deployment to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
+   // APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
+   APIDeployment.deployProxyAPIToDev()
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -84,6 +91,20 @@ describe(`Verify proxy api functionality`, () => {
       OPERATION_USERS
     ).then((res) => {
       expect(res.statusCode).to.be.equal("200");
+    });
+  });
+
+
+
+  it("Verify test functionality using generated curl in Prod", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
+      "users"
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.status).equal(200);
+      });
     });
   });
 
@@ -129,6 +150,16 @@ describe(`Verify proxy api functionality`, () => {
     APIDevelop.addResources(OPERATION_POSTS, Enums.HTTPMethod.GET);
   });
 
+
+
+
+
+
+
+
+
+
+
   it("Deploy new version to Dev", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
@@ -159,6 +190,8 @@ describe(`Verify proxy api functionality`, () => {
     SwaggerUI.getResponseCode().should("eq", "200");
   });
 
+
+
   it("Publish the API to dev portal", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
@@ -178,7 +211,7 @@ describe(`Verify proxy api functionality`, () => {
 
   });
 
-  it("Tryout application",()=>{
+  it("Tryout application", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
     TryOut.SelectResource(OPERATION_USERS);

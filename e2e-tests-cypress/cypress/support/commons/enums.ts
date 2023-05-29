@@ -12,6 +12,14 @@
  */
 
 export namespace Enums {
+
+
+export enum PolicyType {
+  setHeader = "Set Header (2.0.0)"
+}
+
+
+
   export enum DisplayType {
     restAPI = "restAPI",
     proxy = "proxy",

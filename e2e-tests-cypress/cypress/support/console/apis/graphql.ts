@@ -16,6 +16,7 @@ import {
   DEPLOYMENT_STATUS_V2_ERROR,
   ONE_HOUR,
 } from "../../commons/constants";
+import { cyLog } from "../../commons/cy";
 import { AUTH_HEADER, OK } from "../../commons/http";
 import { Utils } from "../../commons/utils";
 import { GitHub } from "../../github/github";
@@ -143,6 +144,33 @@ export class GraphQL {
     });
   }
 
+
+  static getComponentByName(projectId: string, componentName: string) {
+    return this.getComponents(projectId).then((response) => {
+      if (response.status == OK) {
+        const component = response.components.find((c) => c.displayName === componentName);
+        cyLog(component)
+        return Promise.resolve(component);
+      }
+    })
+  }
+
+
+  static getProjectByName(projectName: string) {
+    return this.getProjects().then((response) => {
+      if (response.status == OK) {
+        const project: Project = response.projects.find((p) => p.name === projectName);
+        return Promise.resolve(project);
+      }
+
+      return Promise.resolve(null);
+    })
+  }
+
+
+
+
+
   private static deleteComponentsInProject(
     projectId: string,
     orgHandle: string,
@@ -176,7 +204,7 @@ export class GraphQL {
     };
 
     this.callGraphQL(query).then((response) => {
-      if (response.status === SUCCESS_STATUS_CODE) {
+      if (response.status === OK) {
         cy.log(`Successfully deleted Component  ${componentId}`);
       } else {
         cy.log(
@@ -250,34 +278,27 @@ export class GraphQL {
                         createIntegrationComponent(
                                  component: {
                                       name: "${componentData.componentName}",
-                                      displayName: "${
-                                        componentData.componentName
-                                      }",
+                                      displayName: "${componentData.componentName
+          }",
                                       description: "",
                                       orgId: ${orgId},
                                       orgHandler: "${Cypress.env(
-                                        "choreoOrgHandle"
-                                      )}",
+            "choreoOrgHandle"
+          )}",
                                       projectId: "${project["id"]}",
                                       labels: "",
-                                      componentType: "${
-                                        componentData.componentType
-                                      }",
-                                      accessibility: "${
-                                        componentData.accessibility
-                                      }",
-                                      srcGitRepoUrl: "${
-                                        componentData.srcGitRepoUrl
-                                      }",
-                                      srcGitRepoBranch: "${
-                                        componentData.srcGitRepoBranch
-                                      }",
-                                      repositorySubPath: "${
-                                        componentData.repositorySubPath
-                                      }",
-                                      oasFilePath: "${
-                                        componentData.oasFilePath
-                                      }"
+                                      componentType: "${componentData.componentType
+          }",
+                                      accessibility: "${componentData.accessibility
+          }",
+                                      srcGitRepoUrl: "${componentData.srcGitRepoUrl
+          }",
+                                      srcGitRepoBranch: "${componentData.srcGitRepoBranch
+          }",
+                                      repositorySubPath: "${componentData.repositorySubPath
+          }",
+                                      oasFilePath: "${componentData.oasFilePath
+          }"
                                       version: "1.0.0"
                                     } )
                                     { id,
