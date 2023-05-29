@@ -14,14 +14,11 @@
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
 import { APIDeployment } from "../../../support/console/pages/apis/api-deployment";
-import { APITest } from "../../../support/console/pages/apis/api-test";
-import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
@@ -36,6 +33,7 @@ import { Subscriptions } from "../../../support/devportal/pages/applications/sub
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { generateAppName } from "../../../support/devportal/utils";
 import { OK } from "../../../support/commons/http";
+
 describe("Choreo APIM publisher scenarios", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
@@ -111,16 +109,14 @@ describe("Choreo APIM publisher scenarios", () => {
     );
 
     // Verify that deployment has been updated by invoking the API without a token
-    APITest.testAPI();
-    ComponentTestPage.selectCurl();
-    Curl.selectCurlEnvironment(Enums.Environment.DEVELOPMENT);
-    Curl.selectMethod(Enums.HTTPMethod.GET);
-    Curl.enterPathParameter("intensity");
-    Curl.getRequestComponents(`${Enums.Environment.DEVELOPMENT}intensity`).then(
-      (curl) =>
-        Utils.sendGetRequest(curl.url).then((res) => {
-          expect(res.status).equal(200);
-        })
+    TestHelper.testOnCurl(
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
+      "intensity"
+    ).then((curl) =>
+      Utils.sendGetRequest(curl.url).then((res) => {
+        expect(res.status).equal(200);
+      })
     );
   });
 
@@ -150,10 +146,8 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify manage functionality", () => {
-    ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
-    ComponentAPILifecycle.selectPermissions();
     ComponentAPILifecycle.navigatePermissionManagementWindow();
     ComponentAPILifecycle.managePermissions(permissions, API_NAME);
     ComponentAPILifecycle.manageLifecycle();
@@ -235,7 +229,6 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify delete permissions", () => {
     LoginPage.reLoginToChoreo();
-    ComponentListingPage.visitToAComponent(API_NAME);
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectPermissions();
     permissions.forEach((permission) => {
@@ -270,8 +263,10 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Reset and undeploy component", () => {
-    ChoreoHomePage.navigateToComponents();
-    ComponentListingPage.visitToAComponent(API_NAME);
+    if (!Utils.isUnifiedMenuEnabled()) {
+      ChoreoHomePage.navigateToComponents();
+      ComponentListingPage.visitToAComponent(API_NAME);
+    }
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });
