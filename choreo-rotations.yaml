@@ -3,9 +3,9 @@ rotations:
     teams:
       - name: Platform Engineering
         members:
-          - chalithak@wso2.com
           - sachithka@wso2.com
           - shana@wso2.com
+          - chalithak@wso2.com
       - name: QA Engineering
         members:
           - isurupi@wso2.com
