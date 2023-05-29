@@ -12,7 +12,11 @@
  */
 
 import { cyGet } from "../../../commons/cy";
-import { LONG_TIME, SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
+import {
+  LONG_TIME,
+  SHORT_TIME,
+  VERY_SHORT_TIME,
+} from "../../../commons/timeouts";
 import { PUBLISHER_API_KEYS_URL } from "../../../commons/urls";
 import { Utils } from "../../../commons/utils";
 import { GraphQL } from "../../apis/graphql";
@@ -22,7 +26,9 @@ export class APIDeployment {
     cy.intercept({ method: "GET", url: PUBLISHER_API_KEYS_URL, times: 1 }).as(
       "keys"
     );
-    cyGet('[data-cyid="btn-deploy-proxy"]', SHORT_TIME).contains("Generating Configurations").should("not.exist");
+    cyGet('[data-cyid="btn-deploy-proxy"]', SHORT_TIME)
+      .contains("Generating Configurations")
+      .should("not.exist");
     this.RetryDevDeployment();
     cyGet('[data-cyid="btn-deploy-proxy"]').should("not.be.disabled").click();
 
@@ -48,7 +54,7 @@ export class APIDeployment {
       if (bdy.find('[data-testid="retry-button"]').length > 0) {
         cy.log("Retry count: " + retryCount);
         cy.get('[data-testid="retry-button"]').click();
-        cy.wait(LONG_TIME.timeout);
+        cy.wait(VERY_SHORT_TIME.timeout);
       } else {
         return;
       }
