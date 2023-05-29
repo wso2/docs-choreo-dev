@@ -15,7 +15,7 @@
 
 import { cyGet } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
-import { VERY_SHORT_TIME } from "../../../commons/timeouts";
+import { SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { DEV_PORTAL_APP_KEY_GEN_URL, DEV_PORTAL_SUBSCRIPTIONS_URL } from "../../../commons/urls";
 
 export class ApiCredentials {
@@ -44,20 +44,20 @@ export class ApiCredentials {
   }
 
   static navigateToEnvironment(env: Enums.Environment) {
+    cy.get('[id="backdrop-loader"]').should("not.exist");
     cy.log("Navigating to environment: " + env);
+    cy.log("DEV_PORTAL_SUBSCRIPTIONS_URL: " + DEV_PORTAL_SUBSCRIPTIONS_URL);
     cy.intercept({
       method: "GET",
       url: DEV_PORTAL_SUBSCRIPTIONS_URL,
       times: 1,
     }).as("navigate");
-    cy.wait("@navigate", VERY_SHORT_TIME).then(() => {
+    //Had to add this due to page loading delay
+    cy.wait(VERY_SHORT_TIME.timeout);
+    cy.get('[data-testid="production-credentials-menu-item"]').click();
+    cy.wait("@navigate", SHORT_TIME).then(() => {
       cy.get('[data-testid="credentials-item-link"]').should("be.visible").click();
       cy.log("Successfully navigated to credentials tab");
     });
-
-   
-  ;
   }
-
-
 }

@@ -339,7 +339,7 @@ describe(`Verify internal api functionality`, () => {
         ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
         DevPortalHomePage.navigateToApisPage();
         Apis.searchApiAndSelect(API_NAME, 1);
-        ApiCredentials.navigateCredentialsTab();
+        ApiCredentials.navigateToEnvironment(Enums.Environment.PRODUCTION);
         ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
         TryOut.navigateToTryOutMenu();
         TryOut.GenerateAccessToken();
