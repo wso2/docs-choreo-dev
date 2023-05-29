@@ -11,9 +11,8 @@
  * associated services.
  */
 
-
+import { Utils } from "../../../commons/utils";
 import { LoginPage } from "../login-page";
-
 
 export class ChoreoHomePage {
   static navigateToHome() {
@@ -50,42 +49,43 @@ export class ChoreoHomePage {
     cy.get('[data-value="' + orgHandle + '"]');
   }
 
-    static logout() {
-        cy.request(Cypress.env("sign_out_url"));
-        cy.clearAllSessionStorage()
-        cy.clearLocalStorage();
-        cy.clearAllCookies()
-    }
+  static logout() {
+    cy.request(Cypress.env("sign_out_url"));
+    cy.clearAllSessionStorage();
+    cy.clearLocalStorage();
+    cy.clearAllCookies();
+  }
 
-    static navigateToSettings() {
-        cy.get("#backdrop-loader").should("not.exist");
-        cy.get('[data-testid="header-user-profile-menu"]').click();
-        cy.get('[data-testid="header-user-profile-item-settings"]')
-            .should("be.visible")
-            .contains("Settings")
-            .click();
-    }
+  static navigateToSettings() {
+    cy.get("#backdrop-loader").should("not.exist");
+    cy.get('[data-testid="header-user-profile-menu"]').click();
+    cy.get('[data-testid="header-user-profile-item-settings"]')
+      .should("be.visible")
+      .contains("Settings")
+      .click();
+  }
 
-    static switchOrganization() {
-        if (Cypress.env("isPrivateOrg")) {
-            cy.get("#org-picker").click();
-            cy.get(`[data-value="${Cypress.env("privateOrgName")}"]`).click();
-            LoginPage.persistApimToken();
-        }
+  static switchOrganization() {
+    if (Cypress.env("isPrivateOrg")) {
+      cy.get("#org-picker").click();
+      cy.get(`[data-value="${Cypress.env("privateOrgName")}"]`).click();
+      LoginPage.persistApimToken();
     }
+  }
 
-    static changeToAPIPerspective() {
-        cy.get('#perspective-picker').click();
-        cy.get('.MuiList-root')
-            .should("be.visible")
-            .get(`[data-value="apim"]`).click();
-    }
+  static changeToAPIPerspective() {
+    cy.get("#perspective-picker").click();
+    cy.get(".MuiList-root")
+      .should("be.visible")
+      .get(`[data-value="apim"]`)
+      .click();
+  }
 
-    static changeToIDevPerspective() {
-        cy.get('[data-testid="perspective-pickerapim"]').click();
-        cy.get('.MuiList-root')
-            .should("be.visible")
-            .get(`[data-value="idevp"]`).click();
-    }
-
+  static changeToIDevPerspective() {
+    cy.get('[data-testid="perspective-pickerapim"]').click();
+    cy.get(".MuiList-root")
+      .should("be.visible")
+      .get(`[data-value="idevp"]`)
+      .click();
+  }
 }
