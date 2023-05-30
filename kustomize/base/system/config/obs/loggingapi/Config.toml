@@ -21,3 +21,8 @@ request_rate_limited = "RATE_LIMITED"
 route_not_found = "RESOURCE_NOT_FOUND"
 upstream_response_timeout = "SERVICE_TIMEOUT"
 cluster_not_found = "GATEWAY_ERROR"
+
+[choreo.loggingapi.envoyRespCodeExtendedStatusCodeLookupMap]
+502 = "BAD_GATEWAY"
+503 = "SERVICE_UNAVAILABLE"
+504 = "GATEWAY_TIMEOUT"
