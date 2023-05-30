@@ -27,8 +27,6 @@ import { ComponentData } from "../../../support/interfaces/component-data";
 
 
 describe("Verify project creation functionality", () => {
-  const queryParameters1 = [{ key: "number", value: "2" }];
-  const queryParameters2 = [{ key: "number", value: "5" }];
   const COMPONENT_NAME = "restapi-apim-" + Date.now();
   const REPO_NAME = Utils.generateComponentName("repo");
   const PROJECT_DESCRIPTION = "Covid stats project";
@@ -36,14 +34,17 @@ describe("Verify project creation functionality", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("rest-api")
   });
-
 
   after(() => {
     ChoreoHomePage.logout();
   });
 
+  it("Creating a project", () => {
+    ProjectListingPage.selectProject();
+    ChoreoHomePage.changeToAPIPerspective();
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+  });
 
   it("Verify REST API component creation", () => {
     let componentData: ComponentData = {
@@ -59,17 +60,14 @@ describe("Verify project creation functionality", () => {
       repositorySubPath: "",
       sampleTemplate: "",
     };
-    ProjectListingPage.selectProject();
-    ChoreoHomePage.changeToAPIPerspective();
-    ProjectListingPage.createNewProject(
+
+    GraphQL.createComponent(
       PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.US
+      REPO_NAME,
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
     );
-
-    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
-
 
   it("Verify component deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
@@ -91,7 +89,6 @@ describe("Verify project creation functionality", () => {
     });
   });
 
-
   it("Verify test functionality of isOdd resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
@@ -105,12 +102,10 @@ describe("Verify project creation functionality", () => {
     });
   });
 
-
   it("Verify component promote to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.promoteToProd();
   });
-
 
   it("Verify test functionality of root resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
@@ -125,7 +120,6 @@ describe("Verify project creation functionality", () => {
     });
   });
 
-
   it("Verify test functionality of isOdd resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
@@ -139,12 +133,10 @@ describe("Verify project creation functionality", () => {
     });
   });
 
-
   it("Verify suspending all component deployments", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });
-
 
   it("Verify project statistics getting updated", () => {
     ChoreoHomePage.logout();
