@@ -54,7 +54,7 @@ export class ApiCredentials {
     }).as("navigate");
     //Had to add this due to page loading delay
     cy.wait(VERY_SHORT_TIME.timeout);
-    cy.get('[data-testid="production-credentials-menu-item"]').click();
+    cy.get(`[data-testid="${env.toLowerCase()}-credentials-menu-item"]`).click();
     cy.wait("@navigate", SHORT_TIME).then(() => {
       cy.get('[data-testid="credentials-item-link"]').should("be.visible").click();
       cy.log("Successfully navigated to credentials tab");
