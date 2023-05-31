@@ -13,7 +13,6 @@
 
 package com.wso2.choreo.integration.tests.dp;
 
-import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
@@ -70,9 +69,6 @@ public class TestProxyApiDp extends TestBase {
     public Object[][] provideData() {
         return this.setUp();
     }
-
-    @Autowired
-    private HttpClient choreoProjectsTestClient;
 
     @BeforeClass
     public void setup_ProxyApiEUDpIT() throws IOException, TokenRetrievalException {
