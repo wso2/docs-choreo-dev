@@ -88,6 +88,7 @@ export class ComponentDeployPage {
     numberOfNextPrompts: number = 2
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
+    APIDeployment.RetryPromotionToProd();
     cyGet('[data-cyid="btn-promote"]').realClick();
     if (isAdditionalConfigs) {
       cyGet("body").then((bdy) => {
@@ -104,7 +105,8 @@ export class ComponentDeployPage {
     if (isManagedByAPIM) {
       Utils.interceptConfig();
     }
-
+    
+    APIDeployment.RetryPromotionToProd();
     cyGet('[data-testid="btn-stop"]', LONG_TIME)
       .should("have.length", 2)
       .eq(1)
