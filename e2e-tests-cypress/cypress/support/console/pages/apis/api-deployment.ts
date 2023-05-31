@@ -62,9 +62,31 @@ export class APIDeployment {
     });
   }
 
+  static RetryPromotionToProd(retryCount = 0) {
+    cy.log("Checking for retry for promotion to prod");
+    retryCount++;
+    if (retryCount > 4) {
+      return;
+    }
+
+    cy.get("body").then((bdy) => {
+      if (bdy.find('[data-testid="deployment-fetch-error"]').length > 0) {
+        cy.log("Retry count: " + retryCount);
+        cy.get('[data-testid="deployment-fetch-error"]').within(() => {
+          cy.get('[data-testid="retry-button"]').click();
+          cy.wait(VERY_SHORT_TIME.timeout);
+        });
+      } else {
+        return;
+      }
+        this.RetryPromotionToProd(retryCount);
+    });
+  }
+
   static PromoteToProd() {
     cy.get('[data-cyid*="promote"]').click();
     cy.get('[data-cyid="btn-next"]').should("be.visible").click();
+    this.RetryPromotionToProd();
     cy.get('[data-cyid="proxy-env-card-header"]>div>span')
       .contains("Production")
       .should("be.visible");
