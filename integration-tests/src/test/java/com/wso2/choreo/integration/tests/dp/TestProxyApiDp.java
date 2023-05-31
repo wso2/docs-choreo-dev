@@ -17,6 +17,7 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.apis.proxydeployer.ProxyDeployer;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
@@ -68,7 +69,6 @@ public class TestProxyApiDp extends TestBase {
     public Object[][] provideData() {
         return this.setUp();
     }
-
 
     @BeforeClass
     public void setup_ProxyApiEUDpIT() throws IOException, TokenRetrievalException {
@@ -213,21 +213,9 @@ public class TestProxyApiDp extends TestBase {
                 dp.getEnvironments().get(0).getId(),
                 orgId,
                 revisionUUID, buildId, apiId, accessToken, null, swaggerContent);
-        boolean requestSuccess = false;
-        DeploymentStatus deploymentStatus = null;
-        int count = 0;
-        while (!requestSuccess && count < 10) {
-            deploymentStatus = APICreator.checkDeploymentStatus(component.getId(),
-                    component.getLatestApiVersion().getId(),
-                    deploySettings.getRequestId(), accessToken);
-            if ("completed".equals(deploymentStatus.getStatus())) {
-                requestSuccess = true;
-            } else {
-                Thread.sleep(2000);
-                count++;
-            }
-        }
-        Assert.assertTrue(requestSuccess, "API is not deployed. " + deploySettings.getMessage());
+        HttpClient choreoEPClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
+        ProxyDeployer.getProxyAPIDeploymentStatus(this, choreoEPClient, accessToken, component.getId(),
+                component.getLatestApiVersion().getId(), deploySettings.getRequestId());
     }
 
     @Test(dependsOnMethods = {"testUpdateSwaggerWithOperationRateLimit_ProxyApiEUDpIT"}, dataProvider = "dps")
@@ -303,21 +291,9 @@ public class TestProxyApiDp extends TestBase {
                 dp.getEnvironments().get(0).getId(),
                 orgId,
                 revisionUUID, buildId, apiId, accessToken, apiPayload, null);
-        boolean requestSuccess = false;
-        DeploymentStatus deploymentStatus = null;
-        int count = 0;
-        while (!requestSuccess && count < 10) {
-            deploymentStatus = APICreator.checkDeploymentStatus(component.getId(),
-                    component.getLatestApiVersion().getId(),
-                    deploySettings.getRequestId(), accessToken);
-            if ("completed".equals(deploymentStatus.getStatus())) {
-                requestSuccess = true;
-            } else {
-                Thread.sleep(2000);
-                count++;
-            }
-        }
-        Assert.assertTrue(requestSuccess, "API is not deployed. " + deploySettings.getMessage());
+        HttpClient choreoEPClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
+        ProxyDeployer.getProxyAPIDeploymentStatus(this, choreoEPClient, accessToken, component.getId(),
+                component.getLatestApiVersion().getId(), deploySettings.getRequestId());
     }
 
     @Test(dependsOnMethods = {"testUpdateSwaggerWithAPIRateLimit_ProxyApiEUDpIT"}, dataProvider = "dps")
