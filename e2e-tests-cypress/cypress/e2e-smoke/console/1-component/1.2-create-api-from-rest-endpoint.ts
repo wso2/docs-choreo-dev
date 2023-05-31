@@ -31,6 +31,7 @@ import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
+import { OK } from "../../../support/commons/http";
 
 before(() => {
   LoginPage.login();
@@ -86,7 +87,7 @@ describe(`Verify proxy api functionality`, () => {
     });
   });
 
-  it("Verify prod invoke url", () => {
+  it("Verify prod promotion", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.PromoteToProd();
   });
@@ -96,7 +97,7 @@ describe(`Verify proxy api functionality`, () => {
       Enums.Environment.PRODUCTION,
       OPERATION_USERS
     ).then((res) => {
-      expect(res.statusCode).to.be.equal("200");
+      expect(res.statusCode).to.be.equal("200")
     });
   });
 
@@ -123,7 +124,7 @@ describe(`Verify proxy api functionality`, () => {
     );
   });
 
-  it("Add  a new version", () => {
+  it("Add a resource to new version", () => {
     ComponentOverviewPage.navigateToDevelop();
     APIDevelop.addResources(OPERATION_POSTS, Enums.HTTPMethod.GET);
   });
@@ -143,7 +144,7 @@ describe(`Verify proxy api functionality`, () => {
     SwaggerUI.getResponseCode().should("eq", "200");
   });
 
-  it("Verify new prod invoke url", () => {
+  it("Verify new version promotion to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.PromoteToProd();
   });
@@ -158,7 +159,7 @@ describe(`Verify proxy api functionality`, () => {
     SwaggerUI.getResponseCode().should("eq", "200");
   });
 
-  it("Publish the API", () => {
+  it("Publish the API to dev portal", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publishWithoutConnector();
@@ -170,7 +171,7 @@ describe(`Verify proxy api functionality`, () => {
     Apis.verifyInvokeUrl();
   });
 
-  it("Generate credentials", () => {
+  it("Generate credentials for prod env", () => {
     Apis.searchApiAndSelect(API_NAME, 2, API_NEW_VERSION);
     ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);

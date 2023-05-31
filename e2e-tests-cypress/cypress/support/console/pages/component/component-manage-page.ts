@@ -90,17 +90,31 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="checkbox-Unlimited"]');
   }
 
-  private static handleConnectorPublishPopup() {
+  private static handleConnectorPublishBehavior(retryCount = 0) {
+    retryCount++;
+
+    // Handle breaking out of recursion after retrying in case Choreo UI gets stuck
+    if (retryCount > 7) {
+      return;
+    }
+
     cy.get("body").then((bdy) => {
       if (
+        // Popup wizard
         bdy.find('[data-testid="connector-publish-wizard-title"]').length > 0
       ) {
         if (bdy.find('[data-testid="retry-btn"]').length > 0) {
           cy.get('button[aria-label="close"]').eq(1).click();
         } else {
           cy.wait(20000);
-          this.handleConnectorPublishPopup();
+          this.handleConnectorPublishBehavior(retryCount);
         }
+      } else if (
+        // Ongoing publishing label
+        bdy.find('[data-testid="connector-publishing-info"]').length > 0
+      ) {
+        cy.wait(20000);
+        this.handleConnectorPublishBehavior(retryCount);
       }
     });
   }
@@ -117,9 +131,9 @@ export class ComponentAPILifecycle {
   static publishConnector(connectorAudience: Enums.ConnectorAudience) {
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').should("be.enabled").click();
-    this.handleConnectorPublishPopup();
+    this.handleConnectorPublishBehavior();
     cy.get('[data-testid="published-connector-info"]').contains(
-      "You have already published a connector for this API.",
+      /You have already published a connector for this API.|Successfully published the connector to the Marketplace./,
       LONG_TIME
     );
     cy.get('[data-testid="connector-publish-wizard-title"]').should(
@@ -267,12 +281,10 @@ export class ComponentAPILifecycle {
   }
 
   static updateAPIAccessMode(accessMode: string) {
-   cyGet('[data-testid="access-mode"]').click();
+    cyGet('[data-testid="access-mode"]').click();
     cy.contains(accessMode).should("exist").realClick();
-   cyGet('[data-testid="warning-banner"]').should("be.visible");
-   cyGet('[data-cyid="btn-confirmation-dialog-blue"]')
-      .should("exist")
-      .click();
+    cyGet('[data-testid="warning-banner"]').should("be.visible");
+    cyGet('[data-cyid="btn-confirmation-dialog-blue"]').should("exist").click();
     cy.contains(
       `Successfully converted to an ${accessMode.toLowerCase()} API.`
     ).should("be.visible");
