@@ -97,17 +97,19 @@ public class TestRestAPIDp extends TestBase {
     @Test(dependsOnMethods = {"promote_TestRestAPIIT"}, dataProvider = "dps")
     @CitrusTest
     public void invokeAPIInDev_TestBYOCEUDataPlane(DataProviderWrapper dp) throws Exception {
-        KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken, dp.getApiId());
+        KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken, dp.getApiId(), "Development");
         ComponentUtils.invokeApiGET(this, keyData.getApikey(), dp.getDevInvokeUrl(), "/isOdd?number=34", "false");
-        dp.setKeyData(keyData);
+        dp.setDevKeyData(keyData);
     }
 
     @Test(dependsOnMethods = {"promote_TestRestAPIIT"}, dataProvider = "dps")
     @CitrusTest
     public void invokeAPIInProd_TestBYOCEUDataPlane(DataProviderWrapper dp) throws Exception {
+        KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken, dp.getApiId(), "Production");
         for (ComponentDeploymentStatusDTO statusDTO :dp.getPromoteStatusDTO()) {
-            ComponentUtils.invokeApiGET(this, dp.getKeyData().getApikey(), statusDTO.getInvokeUrl(), "/isOdd?number=34", "false");
+            ComponentUtils.invokeApiGET(this, keyData.getApikey(), statusDTO.getInvokeUrl(), "/isOdd?number=34", "false");
         }
+        dp.setProdKeyData(keyData);
     }
 
 }

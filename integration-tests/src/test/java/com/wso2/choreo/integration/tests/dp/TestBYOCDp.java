@@ -101,19 +101,21 @@ public class TestBYOCDp extends TestBase {
     @Test(dependsOnMethods = {"promote_TestBYOCEUDataPlane"}, dataProvider = "dps")
     @CitrusTest
     public void invokeAPIInDev_TestBYOCEUDataPlane(DataProviderWrapper dp) throws Exception {
-        KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken, dp.getApiId());
+        KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken, dp.getApiId(), "Development");
         String expectedResponse = TestHelper.getExpectedResponse();
         ComponentUtils.invokeApiGET(this, keyData.getApikey(), dp.getDevInvokeUrl(), "/movies", expectedResponse);
-        dp.setKeyData(keyData);
+        dp.setDevKeyData(keyData);
     }
 
     @Test(dependsOnMethods = {"invokeAPIInDev_TestBYOCEUDataPlane"}, dataProvider = "dps")
     @CitrusTest
     public void invokeAPIProd_TestBYOCEUDataPlane(DataProviderWrapper dp) throws Exception {
+        KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken, dp.getApiId(), "Production");
         String expectedResponse = TestHelper.getExpectedResponse();
         for (ComponentDeploymentStatusDTO statusDTO :dp.getPromoteStatusDTO()) {
-            ComponentUtils.invokeApiGET(this, dp.getKeyData().getApikey(), statusDTO.getInvokeUrl(), "/movies", expectedResponse);
+            ComponentUtils.invokeApiGET(this, keyData.getApikey(), statusDTO.getInvokeUrl(), "/movies", expectedResponse);
         }
+        dp.setProdKeyData(keyData);
     }
 
 }
