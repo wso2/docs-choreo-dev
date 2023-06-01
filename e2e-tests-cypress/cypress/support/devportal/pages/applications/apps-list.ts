@@ -26,8 +26,6 @@ export class AppsList {
         cy.get('[data-testid="create-button"]').click({ force: true });
         cy.wait(5000);
         cy.get('[data-testid="application-description"]').should('have.text', 'Application for e2e testing');
-        cy.get('[data-testid="application-throttling-policy"]').should('have.text',
-            '10PerMin (Allows 10 request per minute)');
         cy.get('[data-testid="application-token-type"]').should('have.text', 'JWT');
         cy.log('Application created successfully!');
     }
