@@ -293,10 +293,12 @@ export class ComponentDeployPage {
       cy.get('[data-testid="create-version-create"]').click();
       cy.get('[data-testid="dialog-close-icon"]').should("not.exist");
     });
-    cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
   }
 
   static deployService(endpointName: string, changeVisibility?: boolean) {
+    cy.get('[data-cyid="btn-deploy-api"]', SHORT_TIME).contains("Generating Configurations").should("not.exist")
+    APIDeployment.RetryDevDeployment();
+    cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
     cy.get('[data-cyid="btn-deploy-api"]', LONG_TIME)
       .should("be.enabled")
       .click();
@@ -311,6 +313,7 @@ export class ComponentDeployPage {
       cy.get('[data-cyid="endpoint-submit-btn"]').click();
     }
     cyGet('[data-cyid="btn-next"]').click();
+    APIDeployment.RetryDevDeployment();
     cyGet('[data-testid="btn-stop"]', LONG_TIME).should("be.visible");
     GraphQL.getComponentDeploymentStatus();
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
@@ -335,6 +338,7 @@ export class ComponentDeployPage {
   }
 
   static promoteService(endpointName: string, changeVisibility?: boolean) {
+    APIDeployment.RetryPromotionToProd();
     cy.get('[data-cyid="btn-promote"]', LONG_TIME).should("be.enabled").click();
     cy.get(`[data-testid="${endpointName}-endpoint"]`).should("be.visible");
     if (changeVisibility) {
@@ -347,6 +351,7 @@ export class ComponentDeployPage {
       cy.get('[data-cyid="endpoint-submit-btn"]').click();
     }
     cy.get('[data-cyid="btn-next"]').click();
+    APIDeployment.RetryPromotionToProd();
     cy.get('[data-testid="btn-stop"]', LONG_TIME)
       .should("have.length", 2)
       .eq(1)
