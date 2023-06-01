@@ -167,7 +167,8 @@ public class TestProxyApiDp extends TestBase {
     @CitrusTest
     public void testDevDeployment_ProxyApiEUDpIT(DataProviderWrapper dp) throws Exception {
         for (ProxyDeployment proxyDeployment : dp.getProxyDeployments()) {
-            KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken, dp.getProxyAPI().getId(), proxyDeployment.getEnvironment());
+            KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
+                    dp.getProxyAPI().getId(), proxyDeployment.getEnvironment());
             ComponentUtils.invokeApiGET(this, keyData.getApikey(), proxyDeployment.getInvokeUrl(), "/users", "{\"hello\": \"world\"}");
             if (proxyDeployment.getEnvironment().equals("Development")) {
                 dp.setDevKeyData(keyData);

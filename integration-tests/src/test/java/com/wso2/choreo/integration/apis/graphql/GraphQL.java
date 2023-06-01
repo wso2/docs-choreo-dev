@@ -864,9 +864,13 @@ public class GraphQL extends ControlPlaneAPI {
                                 .response(HttpStatus.OK)
                                 .message()
                                 .validate((message, context) -> {
-                                    JsonObject responseJson = new JsonParser().parse(message.getPayload(String.class)).getAsJsonObject();
-                                    String invokeUrl = responseJson.getAsJsonObject("data").getAsJsonObject("proxyDeployment").get("invokeUrl").getAsString();
-                                    String environment = responseJson.getAsJsonObject("data").getAsJsonObject("proxyDeployment").getAsJsonObject("environment").get("name").getAsString();
+                                    JsonObject responseJson = new JsonParser().parse(message.getPayload(String.class))
+                                            .getAsJsonObject();
+                                    String invokeUrl = responseJson.getAsJsonObject("data")
+                                            .getAsJsonObject("proxyDeployment").get("invokeUrl").getAsString();
+                                    String environment = responseJson.getAsJsonObject("data")
+                                            .getAsJsonObject("proxyDeployment").getAsJsonObject("environment")
+                                            .get("name").getAsString();
                                     proxyDeployment.setInvokeUrl(invokeUrl);
                                     proxyDeployment.setEnvironment(environment);
                                 })));

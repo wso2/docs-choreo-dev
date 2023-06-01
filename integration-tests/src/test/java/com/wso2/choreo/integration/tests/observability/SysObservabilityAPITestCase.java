@@ -141,8 +141,10 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"getObservabilityIds_SysObservabilityAPITestCase"})
     @CitrusTest
     public void invokeEP_SysObservabilityAPITestCase() throws Exception {
-        KeyData devKeyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken, apiId, "Development");
-        KeyData prodKeyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken, apiId, "Production");
+        KeyData devKeyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
+                apiId, "Development");
+        KeyData prodKeyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
+                apiId, "Production");
         String expectedResponse = TestHelper.getExpectedResponse();
         for (int i = 0; i < 5; ++i) {
             ComponentUtils.invokeApiGET(this, devKeyData.getApikey(), devInvokeURL, "/isOdd?number=12121", expectedResponse);
