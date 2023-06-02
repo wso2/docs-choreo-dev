@@ -19,6 +19,7 @@ import { SHORT_TIME } from "../../../commons/timeouts";
 import { GRAPHQL_URL } from "../../../commons/urls";
 import { Utils } from "../../../commons/utils";
 import { ChoreoHomePage } from "../home/home-page";
+import { ProjectOverviewPage } from "./project-overview";
 
 
 
@@ -53,6 +54,7 @@ export class ProjectListingPage {
     cy.contains(`Cloud Data Plane - ${dataPlane}`).click();
     Utils.getRenderedElement('[data-testid="create-version-create"]').click();
     cy.get('[data-testid="create-version-create"]').should("not.exist");
+    ProjectOverviewPage.waitForTemplateCardsToLoad()
   }
 
   static selectProject(projectName: string = "Default Project") {

@@ -190,12 +190,6 @@ public static DeploySettings deployRevision(String componentId, String versionId
         return ObjectMapperUtil.mapStringToObject(DeploySettings.class, response.getRes(), "");
     }
 
-    public static DeploymentStatus checkDeploymentStatus(String componentId, String versionId, String requestId, String accessToken) {
-        String url = PROXY_URI + componentId + "/versions/" + versionId + "/deployment-status" + "?requestId=" + requestId;
-        Response response = HttpClientUtil.httpGET(url,  accessToken, "");
-        return ObjectMapperUtil.mapStringToObject(DeploymentStatus.class, response.getRes(), "");
-    }
-
     public static String getSwagger(String apiId, String organizationId, String accessToken) {
         String url = APIS_ENDPOINT + "/" + apiId + "/swagger" + "?organizationId=" + organizationId;
         Response res = HttpClientUtil.httpGET(url,  accessToken, "");

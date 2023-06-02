@@ -18,7 +18,6 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
-import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -28,6 +27,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
 
 public class ProxyDeployer extends ControlPlaneAPI {
 
@@ -138,5 +138,32 @@ public class ProxyDeployer extends ControlPlaneAPI {
                         .response(HttpStatus.OK)
                         .message()
                         .type(MessageType.JSON)));
+    }
+
+    public static void getProxyAPIDeploymentStatus(TestActionRunner runner, HttpClient client, String accessToken,
+                                      String componentId, String versionId, String requestId) {
+        String resource = PROXY_RESOURCE + componentId + "/versions/" + versionId + "/deployment-status" + "?requestId=" + requestId;
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .get(resource)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                                .validate(jsonPath().expression("$.status", "completed")
+                                )));
     }
 }

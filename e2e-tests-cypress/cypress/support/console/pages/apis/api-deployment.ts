@@ -11,9 +11,18 @@
  * associated services.
  */
 
+<<<<<<< HEAD
 import { cyGet, cyLog } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
 import { LONG_TIME, SHORT_TIME, VERY_LONG_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
+=======
+import { cyGet } from "../../../commons/cy";
+import {
+  LONG_TIME,
+  SHORT_TIME,
+  VERY_SHORT_TIME,
+} from "../../../commons/timeouts";
+>>>>>>> 3e455fd0f76d5a82dc1b6c4079c32e26fe4d629c
 import { PUBLISHER_API_KEYS_URL } from "../../../commons/urls";
 import { GraphQL } from "../../apis/graphql";
 
@@ -24,7 +33,9 @@ export class APIDeployment {
     cy.intercept({ method: "GET", url: PUBLISHER_API_KEYS_URL, times: 1 }).as(
       "keys"
     );
-    cyGet('[data-cyid="btn-deploy-proxy"]', SHORT_TIME).contains("Generating Configurations").should("not.exist");
+    cyGet('[data-cyid="btn-deploy-proxy"]', SHORT_TIME)
+      .contains("Generating Configurations")
+      .should("not.exist");
     this.RetryDevDeployment();
     cyGet('[data-cyid="btn-deploy-proxy"]').should("not.be.disabled").click();
 
@@ -70,7 +81,7 @@ export class APIDeployment {
       if (bdy.find('[data-testid="retry-button"]').length > 0) {
         cy.log("Retry count: " + retryCount);
         cy.get('[data-testid="retry-button"]').click();
-        cy.wait(LONG_TIME.timeout);
+        cy.wait(VERY_SHORT_TIME.timeout);
       } else {
         return;
       }
@@ -78,7 +89,29 @@ export class APIDeployment {
     });
   }
 
+  static RetryPromotionToProd(retryCount = 0) {
+    cy.log("Checking for retry for promotion to prod");
+    retryCount++;
+    if (retryCount > 4) {
+      return;
+    }
+
+    cy.get("body").then((bdy) => {
+      if (bdy.find('[data-testid="deployment-fetch-error"]').length > 0) {
+        cy.log("Retry count: " + retryCount);
+        cy.get('[data-testid="deployment-fetch-error"]').within(() => {
+          cy.get('[data-testid="retry-button"]').click();
+          cy.wait(VERY_SHORT_TIME.timeout);
+        });
+      } else {
+        return;
+      }
+        this.RetryPromotionToProd(retryCount);
+    });
+  }
+
   static PromoteToProd() {
+<<<<<<< HEAD
     cy.get('[data-cyid*="promote"]').click().wait(5000);
     cy.get('body').then((bdy) => {
 
@@ -98,6 +131,11 @@ export class APIDeployment {
 
 
 
+=======
+    cy.get('[data-cyid*="promote"]').click();
+    cy.get('[data-cyid="btn-next"]').should("be.visible").click();
+    this.RetryPromotionToProd();
+>>>>>>> 3e455fd0f76d5a82dc1b6c4079c32e26fe4d629c
     cy.get('[data-cyid="proxy-env-card-header"]>div>span')
       .contains("Production")
       .should("be.visible");

@@ -124,9 +124,8 @@ describe("Verify Ballerina service functionality", () => {
   it("Apply configs to dev", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectSetting();
-    ComponentAPILifecycle.selectEndpoint(ENDPOINT_NAME);
-    ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
+    ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("books");
     ComponentAPILifecycle.applyConfiguration();
@@ -135,7 +134,6 @@ describe("Verify Ballerina service functionality", () => {
       Enums.Environment.DEVELOPMENT
     );
   });
-
 
   it("Apply configs to prod", () => {
     ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);

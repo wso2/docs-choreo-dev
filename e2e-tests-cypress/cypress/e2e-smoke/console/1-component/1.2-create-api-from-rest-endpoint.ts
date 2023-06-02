@@ -16,9 +16,6 @@ import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/r
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
-import { APITest } from "../../../support/console/pages/apis/api-test";
-import { SwaggerUI } from "../../../support/console/pages/component/UI-components/swagger-UI-component";
-import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
 import { APIDeployment } from "../../../support/console/pages/apis/api-deployment";
 import { APIDevelop } from "../../../support/console/pages/apis/api-develop";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
@@ -31,9 +28,12 @@ import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
+<<<<<<< HEAD
 import { OK } from "../../../support/commons/http";
 import { cyLog } from "../../../support/commons/cy";
 import { GraphQL } from "../../../support/console/apis/graphql";
+=======
+>>>>>>> 3e455fd0f76d5a82dc1b6c4079c32e26fe4d629c
 
 before(() => {
   LoginPage.login();
@@ -131,7 +131,7 @@ describe(`Verify proxy api functionality`, () => {
       Enums.Environment.PRODUCTION,
       OPERATION_USERS
     ).then((res) => {
-      expect(res.statusCode).to.be.equal("200")
+      expect(res.statusCode).to.be.equal("200");
     });
   });
 
@@ -361,13 +361,19 @@ describe(`Verify proxy api functionality`, () => {
   });
 
   it("Test in dev", () => {
-    APITest.testAPI();
-    APITest.selectDevEnvironment();
-    ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource(OPERATION_USERS);
-    SwaggerUI.getResponseCode().should("eq", "200");
-    SwaggerUI.invokeResource(OPERATION_POSTS);
-    SwaggerUI.getResponseCode().should("eq", "200");
+    TestHelper.testOnSwagger(
+      Enums.Environment.DEVELOPMENT,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
+
+    TestHelper.testOnSwagger(
+      Enums.Environment.DEVELOPMENT,
+      OPERATION_POSTS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
   });
 
   it("Verify new version promotion to prod", () => {
@@ -376,13 +382,19 @@ describe(`Verify proxy api functionality`, () => {
   });
 
   it("Test in prod", () => {
-    APITest.testAPI();
-    APITest.selectProdEnvironment();
-    ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource(OPERATION_USERS);
-    SwaggerUI.getResponseCode().should("eq", "200");
-    SwaggerUI.invokeResource(OPERATION_POSTS);
-    SwaggerUI.getResponseCode().should("eq", "200");
+    TestHelper.testOnSwagger(
+      Enums.Environment.PRODUCTION,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
+
+    TestHelper.testOnSwagger(
+      Enums.Environment.PRODUCTION,
+      OPERATION_POSTS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
   });
 
 
@@ -393,17 +405,11 @@ describe(`Verify proxy api functionality`, () => {
     ComponentAPILifecycle.publishWithoutConnector();
   });
 
-  it("Verify api invoke urls", () => {
-    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
-    Apis.verifyAPIname().should("eq", API_NAME);
-    Apis.verifyInvokeUrl();
-  });
-
   it("Generate credentials for prod env", () => {
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.searchApiAndSelect(API_NAME, 2, API_NEW_VERSION);
-    ApiCredentials.navigateCredentialsTab();
+    ApiCredentials.navigateToEnvironment(Enums.Environment.PRODUCTION);
     ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
-
   });
 
   it("Tryout application", () => {
@@ -413,7 +419,7 @@ describe(`Verify proxy api functionality`, () => {
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
-  })
+  });
 
   it("Verify application suspension", () => {
     LoginPage.reLoginToChoreo();

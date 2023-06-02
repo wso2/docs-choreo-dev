@@ -9,6 +9,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.apis.proxydeployer.ProxyDeployer;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
@@ -206,14 +207,9 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
         DeploySettings res = APICreator.deployRevision(choreoComponent.getId(), versionId, devEnv.getId(), orgUuid,
                 newRevisionId, buildId, apiId, accessToken);
         Assert.assertEquals(res.getMessage(), "Settings deployment started");
-        for (int i = 0; i < 10; i++) {
-            DeploymentStatus statusResponse =  APICreator.checkDeploymentStatus(choreoComponent.getId(), versionId,
-                    res.getRequestId(), accessToken);
-            if (Objects.equals(statusResponse.getStatus(), "completed")) {
-                break;
-            }
-            SleepUtil.sleep(10);
-        }
+        HttpClient choreoEPClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
+        ProxyDeployer.getProxyAPIDeploymentStatus(this, choreoEPClient, accessToken, choreoComponent.getId(),
+                choreoComponent.getLatestApiVersion().getId(), res.getRequestId());
     }
 
     @Test(dependsOnMethods = {"deployNewRevision_TestBasicAPIRevisionCreation"})
@@ -266,18 +262,9 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
         DeploySettings res = APICreator.deployRevision(choreoComponent.getId(), versionId, devEnv.getId(), orgUuid,
                 oldRevisionId, buildId, apiId, accessToken);
         Assert.assertEquals(res.getMessage(), "Settings deployment started");
-        for (int i = 0; i < 10; i++) {
-            DeploymentStatus statusResponse =  APICreator.checkDeploymentStatus(choreoComponent.getId(), versionId,
-                    res.getRequestId(), accessToken);
-            if (statusResponse.getStatus()!=null) {
-                if (Objects.equals(statusResponse.getStatus(), "completed")) {
-                    break;
-                }
-                SleepUtil.sleep(10);
-            } else {
-                throw new RuntimeException("Error in obtaining response for deployment status");
-            }
-        }
+        HttpClient choreoEPClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
+        ProxyDeployer.getProxyAPIDeploymentStatus(this, choreoEPClient, accessToken, choreoComponent.getId(),
+                choreoComponent.getLatestApiVersion().getId(), res.getRequestId());
     }
 
     @Test(dependsOnMethods = {"deployOldRevision_TestBasicAPIRevisionCreation"})
