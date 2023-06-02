@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { cyLog } from "../../../../commons/cy";
 import { Enums } from "../../../../commons/enums";
 import { Utils } from "../../../../commons/utils";
 import { APITest } from "../../apis/api-test";
@@ -26,6 +27,11 @@ export class TestHelper {
     key: string = "",
     value: string = ""
   ) {
+   
+
+
+
+
     APITest.testAPI();
     cy.get('[data-cyid="OpenAPI Console"]').click();
     ComponentTestPage.selectEnvironment(env);
@@ -46,7 +52,8 @@ export class TestHelper {
     env: Enums.Environment,
     httpMethod: Enums.HTTPMethod,
     pathParm: string,
-    queryParameters1 = []
+    queryParameters1 = [],
+    ...options: string[]
   ) {
     ComponentTestPage.selectCurl();
     Curl.selectCurlEnvironment(env);
@@ -58,7 +65,8 @@ export class TestHelper {
     cy.get("textarea")
       .invoke("text")
       .then((curl) => {
-        Cypress.env(`int_curl_${env}`, curl);
+        const crl = `${curl} ${options.toString()}`
+        Cypress.env(`int_curl_${env}`, crl);
       });
     return Curl.getRequestComponents(`${env}${pathParm}`);
   }

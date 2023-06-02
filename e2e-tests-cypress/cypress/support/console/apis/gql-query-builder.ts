@@ -244,4 +244,34 @@ export class GraphQLQueryBuilder {
 
   }
 
+
+
+  static getBuildsByVersionQuery(orgHandler: string, componentId: string, versionId: string) {
+
+    return {
+      query: `query {
+      buildsByVersion(
+        orgHandler: "${orgHandler}"
+        build: {
+          componentId: "${componentId}"
+          versionId: "${versionId}"
+    }
+      ) {
+        id,
+        createdDate,
+        versionId,
+        buildId,
+        commitHash,
+        commitMessage,
+        revisions {
+          revisionId,
+          createdDate,
+          description,
+          environments
+        }
+    }
+}`
+    }
+  }
+
 }

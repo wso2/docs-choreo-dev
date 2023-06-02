@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { get } from "cypress/types/lodash";
 import {
   DEPLOYMENT_STATUS_V2_ACTIVE,
   DEPLOYMENT_STATUS_V2_ERROR,
@@ -31,6 +32,7 @@ import { ChoreoHomePage } from "../pages/home/home-page";
 import { APILifeCycleService } from "./api-life-cycle-service";
 import { BallerinaService } from "./bal-service";
 import { GraphQLQueryBuilder } from "./gql-query-builder";
+import { Enums } from "../../commons/enums";
 
 export const SUCCESS_STATUS_CODE = 200;
 export const NO_CONTENT_STATUS_CODE = 204;
@@ -333,7 +335,7 @@ export class GraphQL {
 
       const apiInfo = { componentId, latestAPIVersionId };
       Cypress.env("apiInfo", apiInfo);
-
+      this.getBuildsByVersion(componentId, latestAPIVersionId)
       const appENVS: AppEnvVersion[] = latestAPIVersion.appEnvVersions;
       appENVS.forEach((appEnv) => {
         const { release } = appEnv;
@@ -346,11 +348,63 @@ export class GraphQL {
           releaseId: id,
           choreoEnv,
         };
-
         Cypress.env(choreoEnv, releaseData);
       });
     });
   }
+
+
+
+  static getBuildsByVersion(componentId: string, latestAPIVersionId: string) {
+
+    const { handle } = Cypress.env("userData");
+    const query = GraphQLQueryBuilder.getBuildsByVersionQuery(handle, componentId, latestAPIVersionId)
+    this.callGraphQL(query).then((res) => {
+      if (res.status === OK) {
+        const builds =  res.body.buildsByVersion as []
+        const { id, buildId, status } = builds[builds.length - 1]
+        const buildInfo = { id, buildId, status }
+        Cypress.env("buildInfo", buildInfo)
+
+      }
+    })
+  }
+
+
+  static getDeployStatus(stage: Enums.DeploymentStages, status: Enums.DeploymentStatus) {
+
+    const { componentId, latestAPIVersionId } = Cypress.env("apiInfo");
+    const { buildId } = Cypress.env("buildInfo")
+    const url = `https://app.preview-dv.choreo.dev/proxy/deployer/v1/components/${componentId}/versions/${latestAPIVersionId}/builds/${buildId}/status`
+
+    Utils.sendGetRequest(url, AUTH_HEADER()).then((res) => {
+
+      if (res.status === OK) {
+
+        const stageInfo = res.body.stageInfo as { stage: string, status: string }[]
+
+        const repoInit = stageInfo.find(s => s.stage === stage)
+        cyLog(repoInit)
+
+        if (repoInit) {
+          if (repoInit.status === status) {
+            cyLog("Repo Init Completed")
+          } else {
+            cy.wait(10000)
+            this.getDeployStatus(stage, status)
+          }
+        } else {
+          cy.wait(10000)
+          this.getDeployStatus(stage, status)
+        }
+      }
+    })
+  }
+
+
+
+
+
 
   static getComponentInfo(projectName: string, componentName: string) {
     this.getProjects().then((res) => {
