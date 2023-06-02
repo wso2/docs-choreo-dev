@@ -497,6 +497,48 @@ public class GraphQL extends ControlPlaneAPI {
         return ObjectMapperUtil.mapStringToObject(ProxyDeployment.class, response.getRes(), "proxyDeployment");
     }
 
+    public static String createBYOCEventTriggeredComponent(TestActionRunner runner, HttpClient client,
+                                                           String accessToken, GraphqlDTO graphqlDTO)
+            throws Exception {
+
+        graphqlDTO.setOrgId(ORG_ID);
+        graphqlDTO.setOrgHandler(ORG_HANDLE);
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/createIntegrationComponent/byocEventTriggeredComponentCreation.mustache", graphqlDTO);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        Map<String, String> responseParams = new HashMap<>();
+        responseParams.put("orgId", String.valueOf(ORG_ID));
+        responseParams.put("projectId", graphqlDTO.getProjectId());
+        responseParams.put("handler", ORG_HANDLE);
+        String expectedResponse = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/responses/createByocComponentSuccess.mustache", responseParams);
+
+        AtomicReference<CreateByocComponentResponseDTO> responseDTO = new AtomicReference<>();
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .body(expectedResponse)
+                .validate((message, context) -> {
+                    responseDTO.set(ObjectMapperUtil.mapStringToObject(CreateByocComponentResponseDTO.class,
+                            (String) message.getPayload(), "createByocComponent"));
+                }));
+
+        return responseDTO.get() == null ? null :  responseDTO.get().getHandle();
+    }
+
     /**
      * Create integration component with validations
      *
