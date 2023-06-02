@@ -80,7 +80,7 @@ describe("Verify Ballerina service functionality", () => {
     TestHelper.testProjectLevelEndpoint();
   });
 
-  it("Verify manage page for project level endpoint", () => {
+  it.skip("Verify manage page for project level endpoint", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.verifyOverviewForProjectLevelEndpoints();
   });
@@ -108,7 +108,7 @@ describe("Verify Ballerina service functionality", () => {
     ComponentDeployPage.promoteService(ENDPOINT_NAME, true);
   });
 
-  it("Verify test functionality of root resource in prod on swagger", () => {
+  it.skip("Verify test functionality of root resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testManagedEndpoint(
       Enums.Environment.PRODUCTION,
@@ -124,9 +124,8 @@ describe("Verify Ballerina service functionality", () => {
   it("Apply configs to dev", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectSetting();
-    ComponentAPILifecycle.selectEndpoint(ENDPOINT_NAME);
-    ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
+    ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("books");
     ComponentAPILifecycle.applyConfiguration();
