@@ -108,7 +108,7 @@ public class TestGraphQLServiceDp extends TestBase {
     @CitrusTest
     public void invokeQueryInDev_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
         KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                dp.getApiId(), Constant.Environment.Development.toString());
+                dp.getApiId(), dp.getEnvironments().get(0).getName());
         ComponentUtils.invokeApiPOST(this, keyData.getApikey(), dp.getDevInvokeUrl(), "/",
                 GqlServiceTestHelper.getGqlQueryRequest(), GqlServiceTestHelper.getGqlQueryResponse());
         dp.setDevKeyData(keyData);
@@ -118,7 +118,7 @@ public class TestGraphQLServiceDp extends TestBase {
     @CitrusTest
     public void invokeQueryInProd_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
         KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                dp.getApiId(), Constant.Environment.Production.toString());
+                dp.getApiId(), dp.getEnvironments().get(1).getName());
         for (ComponentDeploymentStatusDTO statusDTO : dp.getPromoteStatusDTO()) {
             ComponentUtils.invokeApiPOST(this, keyData.getApikey(), statusDTO.getInvokeUrl(), "/",
                     GqlServiceTestHelper.getGqlQueryRequest(), GqlServiceTestHelper.getGqlQueryResponse());

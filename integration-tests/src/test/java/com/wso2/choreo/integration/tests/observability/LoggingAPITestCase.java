@@ -108,9 +108,9 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void invokeEP_LoggingAPITestCase() throws Exception {
         KeyData devKeyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                apiId, Constant.Environment.Development.toString());
+                apiId, environments.get(0).getName());
         KeyData prodKeyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                apiId, Constant.Environment.Production.toString());
+                apiId, environments.get(1).getName());
         String expectedResponse = TestHelper.getExpectedResponse();
         for (int i = 0; i < 5; ++i) {
             ComponentUtils.invokeApiGET(this, devKeyData.getApikey(), devInvokeURL, "/isOdd?number=12121", expectedResponse);
