@@ -80,7 +80,7 @@ describe("Verify Ballerina service functionality", () => {
     TestHelper.testProjectLevelEndpoint();
   });
 
-  it.skip("Verify manage page for project level endpoint", () => {
+  it("Verify manage page for project level endpoint", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.verifyOverviewForProjectLevelEndpoints();
   });
@@ -108,7 +108,7 @@ describe("Verify Ballerina service functionality", () => {
     ComponentDeployPage.promoteService(ENDPOINT_NAME, true);
   });
 
-  it.skip("Verify test functionality of root resource in prod on swagger", () => {
+  it("Verify test functionality of root resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testManagedEndpoint(
       Enums.Environment.PRODUCTION,
@@ -134,7 +134,6 @@ describe("Verify Ballerina service functionality", () => {
       Enums.Environment.DEVELOPMENT
     );
   });
-
 
   it("Apply configs to prod", () => {
     ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
