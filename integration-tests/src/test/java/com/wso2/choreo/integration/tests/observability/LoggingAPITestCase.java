@@ -107,13 +107,16 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"promote_LoggingAPITestCase"})
     @CitrusTest
     public void invokeEP_LoggingAPITestCase() throws Exception {
-        KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken, apiId);
+        KeyData devKeyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
+                apiId, environments.get(0).getName());
+        KeyData prodKeyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
+                apiId, environments.get(1).getName());
         String expectedResponse = TestHelper.getExpectedResponse();
         for (int i = 0; i < 5; ++i) {
-            ComponentUtils.invokeApiGET(this, keyData.getApikey(), devInvokeURL, "/isOdd?number=12121", expectedResponse);
+            ComponentUtils.invokeApiGET(this, devKeyData.getApikey(), devInvokeURL, "/isOdd?number=12121", expectedResponse);
 
             for (ComponentDeploymentStatusDTO statusDTO : statusDTOs) {
-                ComponentUtils.invokeApiGET(this, keyData.getApikey(), statusDTO.getInvokeUrl(), "/isOdd?number=12121", expectedResponse);
+                ComponentUtils.invokeApiGET(this, prodKeyData.getApikey(), statusDTO.getInvokeUrl(), "/isOdd?number=12121", expectedResponse);
             }
         }
     }

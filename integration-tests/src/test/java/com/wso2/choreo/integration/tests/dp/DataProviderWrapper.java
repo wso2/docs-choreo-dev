@@ -26,7 +26,8 @@ public class DataProviderWrapper {
 
     private ChoreoComponent choreoComponent;
     private ChoreoProject choreoProject;
-    private KeyData keyData;
+    private KeyData devKeyData;
+    private KeyData prodKeyData;
     private String apiId;
     private Constant.Environment dev = Constant.Environment.Development;
     private Constant.Environment prd = Constant.Environment.Production;

@@ -107,26 +107,30 @@ public class TestGraphQLServiceDp extends TestBase {
     @Test(dependsOnMethods = {"promote_GraphQLServiceEUdpIT"}, dataProvider = "dps")
     @CitrusTest
     public void invokeQueryInDev_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
-        KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken, dp.getApiId());
+        KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
+                dp.getApiId(), dp.getEnvironments().get(0).getName());
         ComponentUtils.invokeApiPOST(this, keyData.getApikey(), dp.getDevInvokeUrl(), "/",
                 GqlServiceTestHelper.getGqlQueryRequest(), GqlServiceTestHelper.getGqlQueryResponse());
-        dp.setKeyData(keyData);
+        dp.setDevKeyData(keyData);
     }
 
     @Test(dependsOnMethods = {"invokeQueryInDev_GraphQLServiceEUdpIT"}, dataProvider = "dps")
     @CitrusTest
     public void invokeQueryInProd_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
+        KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
+                dp.getApiId(), dp.getEnvironments().get(1).getName());
         for (ComponentDeploymentStatusDTO statusDTO : dp.getPromoteStatusDTO()) {
-            ComponentUtils.invokeApiPOST(this, dp.getKeyData().getApikey(), statusDTO.getInvokeUrl(), "/",
+            ComponentUtils.invokeApiPOST(this, keyData.getApikey(), statusDTO.getInvokeUrl(), "/",
                     GqlServiceTestHelper.getGqlQueryRequest(), GqlServiceTestHelper.getGqlQueryResponse());
         }
+        dp.setProdKeyData(keyData);
     }
 
 
     @Test(dependsOnMethods = {"invokeQueryInProd_GraphQLServiceEUdpIT"}, dataProvider = "dps")
     @CitrusTest
     public void invokeMutationInDev_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
-        ComponentUtils.invokeApiPOST(this, dp.getKeyData().getApikey(), dp.getDevInvokeUrl(), "/",
+        ComponentUtils.invokeApiPOST(this, dp.getDevKeyData().getApikey(), dp.getDevInvokeUrl(), "/",
                 GqlServiceTestHelper.getGqlMutationRequest(), GqlServiceTestHelper.getGqlMutationResponse());
     }
 
@@ -134,7 +138,7 @@ public class TestGraphQLServiceDp extends TestBase {
     @CitrusTest
     public void invokeMutationInProd_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
         for (ComponentDeploymentStatusDTO statusDTO : dp.getPromoteStatusDTO()) {
-            ComponentUtils.invokeApiPOST(this, dp.getKeyData().getApikey(), statusDTO.getInvokeUrl(), "/",
+            ComponentUtils.invokeApiPOST(this, dp.getProdKeyData().getApikey(), statusDTO.getInvokeUrl(), "/",
                     GqlServiceTestHelper.getGqlMutationRequest(), GqlServiceTestHelper.getGqlMutationResponse());
         }
     }
