@@ -246,7 +246,122 @@
     {% endif %}
   </nav> 
 <br/>
-<div style="height: 250px; background-color: white;">
+  <!-- Navigation tabs (sticky) -->
+  {% if "navigation.tabs.sticky" in features %}
+    {% if "navigation.tabs" in features %}
+      {% include "partials/tabs.html" %}
+    {% endif %}
+  {% endif %}
+
+  {% endblock %}
+</header>
+<body>
+     
+      <div class="md-container" data-md-component="container">
+        <div style="height: 250px; background-color: white;">
+          <div style="height: 50px; background-color: white;" />
+              <br/>
+              <div class="section01" style="text-align: center; width: 70%; background-color: #F0F1FB;  flex-shrink: 0;min-width: 40%; max-height: 280px; max-width:100%; margin-left:10px; padding-top: 0.5rem; padding-bottom: 30px;  text-align: -webkit-center; margin:auto; margin-top: 1rem;margin-bottom: 1rem; ">
+                <h1 style="color: #545ce5; font-size: 1.5rem;">How can we help?</h1>
+                <div>
+                  <div class="md-search" data-md-component="search" role="dialog" style="background-color: #F0F1FB;  align-items:center; width: 100%;">
+                    <label class="md-search__overlay" for="__search"></label>
+                    <div class="md-search__inner-home" role="search" style="float: none; align-items: center; width: 750px; background-color: transparent;">
+                      <form class="md-search__form" name="search" style="background-color: #F0F1FB;">
+                  
+                        <!-- Search input -->
+                        <input
+                          type="text"
+                          class="md-search__input-home"
+                          name="query"
+                          aria-label="{{ lang.t('search.placeholder') }}"
+                          placeholder="Search for any topic in our documentation"
+                          style="color: #a8a39f; border: 1px solid #545ce5; background-color: white;"
+                          autocapitalize="off"
+                          autocorrect="off"
+                          autocomplete="off"
+                          spellcheck="false"
+                          width="100%"
+                          data-md-component="search-query"
+                          required      
+                        />
+                  
+                        <!-- Button to open search -->
+                        <label class="md-search__icon md-icon" for="__search" style="color: #a8a39f">
+                          {% include ".icons/material/magnify.svg" %}
+                          {% include ".icons/material/arrow-left.svg" %}
+                        </label>
+                  
+                        <!-- Search options -->
+                        <nav
+                          class="md-search__options"
+                          aria-label="{{ lang.t('search') }}"
+                        >
+                  
+                          <!-- Button to share search -->
+                          {% if "search.share" in features %}
+                            <a
+                              href="javascript:void(0)"
+                              class="md-search__icon md-icon"
+                              title="{{ lang.t('search.share') }}"
+                              aria-label="{{ lang.t('search.share') }}"
+                              data-clipboard
+                              data-clipboard-text=""
+                              data-md-component="search-share"
+                              tabindex="-1"
+                            >
+                              {% include ".icons/material/share-variant.svg" %}
+                            </a>
+                          {% endif %}
+                  
+                          <!-- Button to reset search -->
+                          <button
+                            type="reset"
+                            class="md-search__icon md-icon"
+                            title="{{ lang.t('search.reset') }}"
+                            aria-label="{{ lang.t('search.reset') }}"
+                            tabindex="-1"
+                          >
+                            {% include ".icons/material/close.svg" %}
+                          </button>
+                        </nav>
+                  
+                        <!-- Search suggestions -->
+                        {% if "search.suggest" in features %}
+                          <div
+                            class="md-search__suggest"
+                            data-md-component="search-suggest"
+                          ></div>
+                        {% endif %}
+                      </form>
+                      <div class="md-search__output">
+                        <div class="md-search__scrollwrap" data-md-scrollfix>
+                  
+                          <!-- Search results -->
+                          <div class="md-search-result" data-md-component="search-result">
+                            <div class="md-search-result__meta">
+                              {{ lang.t("search.result.initializer") }}
+                            </div>
+                            <ol class="md-search-result__list" role="presentation"></ol>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+          </div>
+          </div>
+        {% block hero %}{% endblock %}
+        {% block tabs %}
+          {% if "navigation.tabs.sticky" not in features %}
+            {% if "navigation.tabs" in features %}
+              {% include "partials/tabs.html" %}
+            {% endif %}
+          {% endif %}
+        {% endblock %}
+        {% block main_block %}
+        <main class="md-main" data-md-component="main">
+          <div style="height: 250px; background-color: white;">
 <div style="height: 50px; background-color: white;" />
     <br/>
     <div class="section01" style="text-align: center; width: 70%; background-color: #F0F1FB;  flex-shrink: 0;min-width: 40%; max-height: 280px; max-width:100%; margin-left:10px; padding-top: 0.5rem; padding-bottom: 30px;  text-align: -webkit-center; margin:auto; margin-top: 1rem;margin-bottom: 1rem; ">
@@ -339,29 +454,100 @@
         </div>
 </div>
 </div>
-  <!-- Navigation tabs (sticky) -->
-  {% if "navigation.tabs.sticky" in features %}
-    {% if "navigation.tabs" in features %}
-      {% include "partials/tabs.html" %}
-    {% endif %}
-  {% endif %}
-
-  {% endblock %}
-</header>
-<body>
-     
-      <div class="md-container" data-md-component="container">
-        {% block hero %}{% endblock %}
-        {% block tabs %}
-          {% if "navigation.tabs.sticky" not in features %}
-            {% if "navigation.tabs" in features %}
-              {% include "partials/tabs.html" %}
-            {% endif %}
-          {% endif %}
-        {% endblock %}
-        {% block main_block %}
-        <main class="md-main" data-md-component="main">
           <div class="md-main__inner md-grid">
+            <div style="height: 250px; background-color: white;">
+<div style="height: 50px; background-color: white;" />
+    <br/>
+    <div class="section01" style="text-align: center; width: 70%; background-color: #F0F1FB;  flex-shrink: 0;min-width: 40%; max-height: 280px; max-width:100%; margin-left:10px; padding-top: 0.5rem; padding-bottom: 30px;  text-align: -webkit-center; margin:auto; margin-top: 1rem;margin-bottom: 1rem; ">
+      <h1 style="color: #545ce5; font-size: 1.5rem;">How can we help?</h1>
+      <div>
+        <div class="md-search" data-md-component="search" role="dialog" style="background-color: #F0F1FB;  align-items:center; width: 100%;">
+          <label class="md-search__overlay" for="__search"></label>
+          <div class="md-search__inner" role="search" style="float: none; align-items: center; width: 750px; background-color: transparent;">
+            <form class="md-search__form" name="search" style="background-color: #F0F1FB;">
+        
+              <!-- Search input -->
+              <input
+                type="text"
+                class="md-search__input"
+                name="query"
+                aria-label="{{ lang.t('search.placeholder') }}"
+                placeholder="Search for any topic in our documentation"
+                style="color: #a8a39f; border: 1px solid #545ce5; background-color: white;"
+                autocapitalize="off"
+                autocorrect="off"
+                autocomplete="off"
+                spellcheck="false"
+                width="100%"
+                data-md-component="search-query"
+                required      
+              />
+        
+              <!-- Button to open search -->
+              <label class="md-search__icon md-icon" for="__search" style="color: #a8a39f">
+                {% include ".icons/material/magnify.svg" %}
+                {% include ".icons/material/arrow-left.svg" %}
+              </label>
+        
+              <!-- Search options -->
+              <nav
+                class="md-search__options"
+                aria-label="{{ lang.t('search') }}"
+              >
+        
+                <!-- Button to share search -->
+                {% if "search.share" in features %}
+                  <a
+                    href="javascript:void(0)"
+                    class="md-search__icon md-icon"
+                    title="{{ lang.t('search.share') }}"
+                    aria-label="{{ lang.t('search.share') }}"
+                    data-clipboard
+                    data-clipboard-text=""
+                    data-md-component="search-share"
+                    tabindex="-1"
+                  >
+                    {% include ".icons/material/share-variant.svg" %}
+                  </a>
+                {% endif %}
+        
+                <!-- Button to reset search -->
+                <button
+                  type="reset"
+                  class="md-search__icon md-icon"
+                  title="{{ lang.t('search.reset') }}"
+                  aria-label="{{ lang.t('search.reset') }}"
+                  tabindex="-1"
+                >
+                  {% include ".icons/material/close.svg" %}
+                </button>
+              </nav>
+        
+              <!-- Search suggestions -->
+              {% if "search.suggest" in features %}
+                <div
+                  class="md-search__suggest"
+                  data-md-component="search-suggest"
+                ></div>
+              {% endif %}
+            </form>
+            <div class="md-search__output">
+              <div class="md-search__scrollwrap" data-md-scrollfix>
+        
+                <!-- Search results -->
+                <div class="md-search-result" data-md-component="search-result">
+                  <div class="md-search-result__meta">
+                    {{ lang.t("search.result.initializer") }}
+                  </div>
+                  <ol class="md-search-result__list" role="presentation"></ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+</div>
+</div>
             {% block site_nav %}
               {% if nav %}
                 {% if page.meta and page.meta.hide %}
@@ -555,22 +741,7 @@
                                           <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5 0C18.1569 0 19.5 1.34315 19.5 3V21C19.5 22.6569 18.1569 24 16.5 24H3C1.34315 24 0 22.6569 0 21V3C0 1.34315 1.34315 0 3 0H16.5ZM16.5 1.5H3C2.23075 1.5 1.59674 2.07906 1.51009 2.82507L1.5 3V21C1.5 21.7693 2.07906 22.4033 2.82507 22.4899L3 22.5H16.5C17.2693 22.5 17.9033 21.9209 17.9899 21.1749L18 21V3C18 2.23075 17.4209 1.59674 16.6749 1.51009L16.5 1.5ZM5.25 6.0027C4.83579 6.0027 4.5 6.33849 4.5 6.7527C4.5 7.16691 4.83579 7.5027 5.25 7.5027H14.25C14.6642 7.5027 15 7.16691 15 6.7527C15 6.33849 14.6642 6.0027 14.25 6.0027H5.25ZM7.5 12.0493C7.5 11.6351 7.83579 11.2993 8.25 11.2993H14.25C14.6642 11.2993 15 11.6351 15 12.0493C15 12.4635 14.6642 12.7993 14.25 12.7993H8.25C7.83579 12.7993 7.5 12.4635 7.5 12.0493ZM5.25 11.2993C4.83579 11.2993 4.5 11.6351 4.5 12.0493C4.5 12.4635 4.83579 12.7993 5.25 12.7993C5.66421 12.7993 6 12.4635 6 12.0493C6 11.6351 5.66421 11.2993 5.25 11.2993ZM7.5 17.2805C7.5 16.8663 7.83579 16.5305 8.25 16.5305H14.25C14.6642 16.5305 15 16.8663 15 17.2805C15 17.6948 14.6642 18.0305 14.25 18.0305H8.25C7.83579 18.0305 7.5 17.6948 7.5 17.2805ZM5.25 16.5305C4.83579 16.5305 4.5 16.8663 4.5 17.2805C4.5 17.6948 4.83579 18.0305 5.25 18.0305C5.66421 18.0305 6 17.6948 6 17.2805C6 16.8663 5.66421 16.5305 5.25 16.5305Z" fill="#5567D5"/>
                                           </svg>                                          
                                       </div>
-                                      <!--div class="cText">
-                                        <a href="/"> Version components</a>
-                                      </div>
-                                      <div class="cIcon">
-                                        <svg width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5 0C18.1569 0 19.5 1.34315 19.5 3V21C19.5 22.6569 18.1569 24 16.5 24H3C1.34315 24 0 22.6569 0 21V3C0 1.34315 1.34315 0 3 0H16.5ZM16.5 1.5H3C2.23075 1.5 1.59674 2.07906 1.51009 2.82507L1.5 3V21C1.5 21.7693 2.07906 22.4033 2.82507 22.4899L3 22.5H16.5C17.2693 22.5 17.9033 21.9209 17.9899 21.1749L18 21V3C18 2.23075 17.4209 1.59674 16.6749 1.51009L16.5 1.5ZM5.25 6.0027C4.83579 6.0027 4.5 6.33849 4.5 6.7527C4.5 7.16691 4.83579 7.5027 5.25 7.5027H14.25C14.6642 7.5027 15 7.16691 15 6.7527C15 6.33849 14.6642 6.0027 14.25 6.0027H5.25ZM7.5 12.0493C7.5 11.6351 7.83579 11.2993 8.25 11.2993H14.25C14.6642 11.2993 15 11.6351 15 12.0493C15 12.4635 14.6642 12.7993 14.25 12.7993H8.25C7.83579 12.7993 7.5 12.4635 7.5 12.0493ZM5.25 11.2993C4.83579 11.2993 4.5 11.6351 4.5 12.0493C4.5 12.4635 4.83579 12.7993 5.25 12.7993C5.66421 12.7993 6 12.4635 6 12.0493C6 11.6351 5.66421 11.2993 5.25 11.2993ZM7.5 17.2805C7.5 16.8663 7.83579 16.5305 8.25 16.5305H14.25C14.6642 16.5305 15 16.8663 15 17.2805C15 17.6948 14.6642 18.0305 14.25 18.0305H8.25C7.83579 18.0305 7.5 17.6948 7.5 17.2805ZM5.25 16.5305C4.83579 16.5305 4.5 16.8663 4.5 17.2805C4.5 17.6948 4.83579 18.0305 5.25 18.0305C5.66421 18.0305 6 17.6948 6 17.2805C6 16.8663 5.66421 16.5305 5.25 16.5305Z" fill="#5567D5"/>
-                                          </svg>                                          
-                                      </div>
-                                      <div class="cText">
-                                        <a href="/"> Authentication and authorization</a>
-                                      </div>
-                                      <div class="cIcon">
-                                        <svg width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5 0C18.1569 0 19.5 1.34315 19.5 3V21C19.5 22.6569 18.1569 24 16.5 24H3C1.34315 24 0 22.6569 0 21V3C0 1.34315 1.34315 0 3 0H16.5ZM16.5 1.5H3C2.23075 1.5 1.59674 2.07906 1.51009 2.82507L1.5 3V21C1.5 21.7693 2.07906 22.4033 2.82507 22.4899L3 22.5H16.5C17.2693 22.5 17.9033 21.9209 17.9899 21.1749L18 21V3C18 2.23075 17.4209 1.59674 16.6749 1.51009L16.5 1.5ZM5.25 6.0027C4.83579 6.0027 4.5 6.33849 4.5 6.7527C4.5 7.16691 4.83579 7.5027 5.25 7.5027H14.25C14.6642 7.5027 15 7.16691 15 6.7527C15 6.33849 14.6642 6.0027 14.25 6.0027H5.25ZM7.5 12.0493C7.5 11.6351 7.83579 11.2993 8.25 11.2993H14.25C14.6642 11.2993 15 11.6351 15 12.0493C15 12.4635 14.6642 12.7993 14.25 12.7993H8.25C7.83579 12.7993 7.5 12.4635 7.5 12.0493ZM5.25 11.2993C4.83579 11.2993 4.5 11.6351 4.5 12.0493C4.5 12.4635 4.83579 12.7993 5.25 12.7993C5.66421 12.7993 6 12.4635 6 12.0493C6 11.6351 5.66421 11.2993 5.25 11.2993ZM7.5 17.2805C7.5 16.8663 7.83579 16.5305 8.25 16.5305H14.25C14.6642 16.5305 15 16.8663 15 17.2805C15 17.6948 14.6642 18.0305 14.25 18.0305H8.25C7.83579 18.0305 7.5 17.6948 7.5 17.2805ZM5.25 16.5305C4.83579 16.5305 4.5 16.8663 4.5 17.2805C4.5 17.6948 4.83579 18.0305 5.25 18.0305C5.66421 18.0305 6 17.6948 6 17.2805C6 16.8663 5.66421 16.5305 5.25 16.5305Z" fill="#5567D5"/>
-                                          </svg>                                          
-                                      </div-->
+    
                                       <div class="cText">
                                         <a href="devops-and-ci-cd/builds-and-deployments/"> DevOps and CI/CD</a>
                                       </div>
@@ -774,6 +945,7 @@
         padding-top: 2rem;
         padding-right: 2.5rem;
         height: 5rem;
+
 }
   .cContentContainer-first{
         display: grid;
