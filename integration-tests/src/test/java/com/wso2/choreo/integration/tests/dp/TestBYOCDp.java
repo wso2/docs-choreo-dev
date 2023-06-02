@@ -102,7 +102,7 @@ public class TestBYOCDp extends TestBase {
     @CitrusTest
     public void invokeAPIInDev_TestBYOCEUDataPlane(DataProviderWrapper dp) throws Exception {
         KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                dp.getApiId(), "Development");
+                dp.getApiId(), Constant.Environment.Development.toString());
         String expectedResponse = TestHelper.getExpectedResponse();
         ComponentUtils.invokeApiGET(this, keyData.getApikey(), dp.getDevInvokeUrl(), "/movies", expectedResponse);
         dp.setDevKeyData(keyData);
@@ -112,7 +112,7 @@ public class TestBYOCDp extends TestBase {
     @CitrusTest
     public void invokeAPIProd_TestBYOCEUDataPlane(DataProviderWrapper dp) throws Exception {
         KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                dp.getApiId(), "Production");
+                dp.getApiId(), Constant.Environment.Production.toString());
         String expectedResponse = TestHelper.getExpectedResponse();
         for (ComponentDeploymentStatusDTO statusDTO :dp.getPromoteStatusDTO()) {
             ComponentUtils.invokeApiGET(this, keyData.getApikey(), statusDTO.getInvokeUrl(), "/movies", expectedResponse);

@@ -170,7 +170,7 @@ public class TestProxyApiDp extends TestBase {
             KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
                     dp.getProxyAPI().getId(), proxyDeployment.getEnvironment());
             ComponentUtils.invokeApiGET(this, keyData.getApikey(), proxyDeployment.getInvokeUrl(), "/users", "{\"hello\": \"world\"}");
-            if (proxyDeployment.getEnvironment().equals("Development")) {
+            if (proxyDeployment.getEnvironment().equals(Constant.Environment.Development.toString())) {
                 dp.setDevKeyData(keyData);
             } else {
                 dp.setProdKeyData(keyData);

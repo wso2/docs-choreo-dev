@@ -98,7 +98,7 @@ public class TestRestAPIDp extends TestBase {
     @CitrusTest
     public void invokeAPIInDev_TestBYOCEUDataPlane(DataProviderWrapper dp) throws Exception {
         KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                dp.getApiId(), "Development");
+                dp.getApiId(), Constant.Environment.Development.toString());
         ComponentUtils.invokeApiGET(this, keyData.getApikey(), dp.getDevInvokeUrl(), "/isOdd?number=34", "false");
         dp.setDevKeyData(keyData);
     }
@@ -107,7 +107,7 @@ public class TestRestAPIDp extends TestBase {
     @CitrusTest
     public void invokeAPIInProd_TestBYOCEUDataPlane(DataProviderWrapper dp) throws Exception {
         KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                dp.getApiId(), "Production");
+                dp.getApiId(), Constant.Environment.Production.toString());
         for (ComponentDeploymentStatusDTO statusDTO :dp.getPromoteStatusDTO()) {
             ComponentUtils.invokeApiGET(this, keyData.getApikey(), statusDTO.getInvokeUrl(), "/isOdd?number=34", "false");
         }

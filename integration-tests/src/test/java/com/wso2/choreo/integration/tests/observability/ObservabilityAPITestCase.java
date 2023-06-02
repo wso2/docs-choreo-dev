@@ -124,9 +124,9 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void invokeEP_ObservabilityAPITestCase() throws Exception {
         KeyData devKeyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                apiId, "Development");
+                apiId, Constant.Environment.Development.toString());
         KeyData prodKeyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                apiId, "Production");
+                apiId, Constant.Environment.Production.toString());
         String expectedResponse = TestHelper.getExpectedResponse();
         for (int i = 0; i < REQUEST_COUNT; ++i) {
             ComponentUtils.invokeApiGET(this, devKeyData.getApikey(), devInvokeURL, "/isOdd?number=12121", expectedResponse);

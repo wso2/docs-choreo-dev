@@ -844,7 +844,8 @@ public class GraphQL extends ControlPlaneAPI {
         String queryString = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getProxyDeploymentDetails.mustache", graphqlDTO);
         String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
-        ProxyDeployment proxyDeployment = new ProxyDeployment();
+        AtomicReference<ProxyDeployment> proxyDeployment = new AtomicReference<>();
+
         // Poll deployment status
         runner.$(repeatOnError()
                 .until("i = 30")
@@ -864,6 +865,7 @@ public class GraphQL extends ControlPlaneAPI {
                                 .response(HttpStatus.OK)
                                 .message()
                                 .validate((message, context) -> {
+                                    ProxyDeployment pd = new ProxyDeployment();
                                     JsonObject responseJson = new JsonParser().parse(message.getPayload(String.class))
                                             .getAsJsonObject();
                                     String invokeUrl = responseJson.getAsJsonObject("data")
@@ -871,11 +873,12 @@ public class GraphQL extends ControlPlaneAPI {
                                     String environment = responseJson.getAsJsonObject("data")
                                             .getAsJsonObject("proxyDeployment").getAsJsonObject("environment")
                                             .get("name").getAsString();
-                                    proxyDeployment.setInvokeUrl(invokeUrl);
-                                    proxyDeployment.setEnvironment(environment);
+                                    pd.setInvokeUrl(invokeUrl);
+                                    pd.setEnvironment(environment);
+                                    proxyDeployment.set(pd);
                                 })));
 
-        return proxyDeployment;
+        return proxyDeployment.get();
     }
 
 
