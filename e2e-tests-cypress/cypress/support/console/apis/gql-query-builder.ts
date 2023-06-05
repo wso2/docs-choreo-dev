@@ -274,4 +274,30 @@ export class GraphQLQueryBuilder {
     }
   }
 
+
+
+
+
+  static getEnvironments(uuid: string, projectId: string) {
+    return {
+      query: `query {
+        environments(orgUuid:"${uuid}", type: "external",
+    projectId:"${projectId}"
+    ){
+          name,
+          id,
+          choreoEnv,
+          vhost,
+          apiEnvName,
+          isMigrating,
+          apimEnvId,
+          namespace,
+          sandboxVhost,
+          critical,
+          isPdp
+        }
+      }`
+    }
+  }
+
 }

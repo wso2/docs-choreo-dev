@@ -11,13 +11,9 @@
  * associated services.
  */
 
-<<<<<<< HEAD
 
 import { cyGet, cyLog } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
-=======
-import { cyLog } from "../../../commons/cy";
->>>>>>> 3e455fd0f76d5a82dc1b6c4079c32e26fe4d629c
 import { MEDIUM_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
 
@@ -64,7 +60,7 @@ export class APIDevelop {
     cy.get(buttons).contains('Attach Policy').click()
     cy.get('button').contains(policy).click()
     cyGet('[name*="Name"]').should("be.visible").type(policyName)
-    cyGet('[name*="Value"]').type(policyType)
+    cyGet('[name*="Value"]').clear().type(policyType)
     cy.get('button').contains('Add').click()
     cyGet(`[title="${policy}"]`).should('have.length', headerCount)
     cy.get('button').contains('Save').click()
@@ -105,15 +101,8 @@ export class APIDevelop {
   private static generateOperationId(httpVerb: string[], resourcePath: string) {
     cyLog(httpVerb)
     httpVerb.forEach((verb) => {
-<<<<<<< HEAD
       const header = this.getHeader(resourcePath, verb.toLowerCase());
       const modifiedResourcePath = Cypress._.capitalize(resourcePath.replace(/\\/g, ""))
-=======
-      const header = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-header"]`;
-      const modifiedResourcePath = Cypress._.capitalize(
-        resourcePath.replace(/\\/g, "")
-      );
->>>>>>> 3e455fd0f76d5a82dc1b6c4079c32e26fe4d629c
       const operationId = `${verb.toLowerCase()}${modifiedResourcePath}`;
 
       cy.get(header).click();
@@ -128,7 +117,6 @@ export class APIDevelop {
     });
   }
 
-<<<<<<< HEAD
 
   private static getHeader(resourcePath: string, verb: string) {
     return `[id="panel-/${resourcePath}/${verb}-header"]`
@@ -151,11 +139,14 @@ export class APIDevelop {
     if (headerName) {
       cyGet('[name*="Name"]').should("be.visible").type(headerName)
     }
-    cyGet('[name*="Value"]').type(headerValue)
+    cyGet('[name*="Value"]').clear().type(headerValue)
     cy.get('button:not([disabled])').contains('Save').click()
     cy.wait(1000)
     cy.get('button').contains('Save').click()
-=======
+  }
+
+
+
   private static selectDevelop() {
     let selector = '[data-cyid="develop-resources"]';
     if (Utils.isUnifiedMenuEnabled()) {
@@ -171,6 +162,6 @@ export class APIDevelop {
       selector = '[data-testid="develop-resources-header"]';
       cy.get(selector).contains("Resources").should("be.visible");
     }
->>>>>>> 3e455fd0f76d5a82dc1b6c4079c32e26fe4d629c
+
   }
 }

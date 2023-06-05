@@ -82,11 +82,18 @@ export namespace Enums {
   export enum DeploymentStages {
     CODE_GEN = "CODE_GEN",
     PROXY_DEPLOY = "PROXY_DEPLOY",
+    DEPLOY = "DEPLOY"
   }
 
 
-  export enum DeploymentStatus {
+  export enum ResponseStatus {
     success = "success",
     completed = "completed",
+    failed = "failed",
+    failure = "failure",
+    error = "error",
+    Error = "Error",
+    ERROR="ERROR",
+    Active="Active"
   }
 }

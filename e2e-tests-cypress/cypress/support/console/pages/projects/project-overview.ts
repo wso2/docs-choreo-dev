@@ -31,7 +31,7 @@ export class ProjectOverviewPage {
     GraphQL.getProjectByName(projectName).then((project) => {
       if (project) {
         GraphQL.getComponentByName(project.id, componentData.componentName).then((comps) => {
-          if (comps) {
+          if (!comps) {
             if (isComponentBYOC) {
               GraphQL.createComponent(
                 projectName,

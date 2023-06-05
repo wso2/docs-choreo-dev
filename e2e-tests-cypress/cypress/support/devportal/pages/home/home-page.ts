@@ -31,11 +31,7 @@ export class DevPortalHomePage {
     }
 
     static verifyDevportalHomePagePublicView(): void {
-<<<<<<< HEAD
         cyGet('[data-testid="applications-appbar-btn"]').should("not.exist");
-=======
-        cy.get('[data-testid="applications-appbar-btn"]').should("not.exist");
->>>>>>> 3e455fd0f76d5a82dc1b6c4079c32e26fe4d629c
         cyGet('[data-testid="login-button"]').should("exist");
         cyGet('[data-testid="home-appbar-btn"]').should("exist");
         cy.log("Successfully navigated to public devportal home page");

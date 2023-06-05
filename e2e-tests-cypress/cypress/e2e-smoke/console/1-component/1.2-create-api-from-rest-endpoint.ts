@@ -28,12 +28,9 @@ import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
-<<<<<<< HEAD
 import { OK } from "../../../support/commons/http";
 import { cyLog } from "../../../support/commons/cy";
 import { GraphQL } from "../../../support/console/apis/graphql";
-=======
->>>>>>> 3e455fd0f76d5a82dc1b6c4079c32e26fe4d629c
 
 before(() => {
   LoginPage.login();
@@ -224,6 +221,7 @@ describe(`Verify proxy api functionality`, () => {
     ).then((curl) => {
       cyLog(curl)
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        cyLog(res.headers)
         expect(res.status).equal(200);
         expect(res.headers).contain({ [HEADER_KEY_2]: HEADER_VALUE_2 });
       });
@@ -243,6 +241,13 @@ describe(`Verify proxy api functionality`, () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.deployProxyAPIToDev(PROJECT_NAME, API_NAME)
   });
+
+
+
+  it("Verify mediation component deployment  with updated policy", () => {
+    APIDeployment.verifyProxyDeployment(true)
+  })
+
 
   it("Verify test functionality using Swagger UI in Dev updated header value", () => {
     TestHelper.testOnSwagger(
@@ -264,6 +269,7 @@ describe(`Verify proxy api functionality`, () => {
       "-v"
     ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        cyLog(res.headers)
         expect(res.status).equal(200);
         expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE_3 });
       });
@@ -295,6 +301,7 @@ describe(`Verify proxy api functionality`, () => {
     ).then((curl) => {
       cyLog(curl)
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        cyLog(res.headers)
         expect(res.status).equal(200);
         expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE_3 });
       });

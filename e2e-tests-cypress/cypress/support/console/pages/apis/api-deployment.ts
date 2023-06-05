@@ -11,18 +11,10 @@
  * associated services.
  */
 
-<<<<<<< HEAD
-import { cyGet, cyLog } from "../../../commons/cy";
+
 import { Enums } from "../../../commons/enums";
 import { LONG_TIME, SHORT_TIME, VERY_LONG_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
-=======
 import { cyGet } from "../../../commons/cy";
-import {
-  LONG_TIME,
-  SHORT_TIME,
-  VERY_SHORT_TIME,
-} from "../../../commons/timeouts";
->>>>>>> 3e455fd0f76d5a82dc1b6c4079c32e26fe4d629c
 import { PUBLISHER_API_KEYS_URL } from "../../../commons/urls";
 import { GraphQL } from "../../apis/graphql";
 
@@ -55,12 +47,13 @@ export class APIDeployment {
   }
 
   static verifyProxyDeployment(isRedeployment = false) {
-    GraphQL.getDeployStatus(Enums.DeploymentStages.CODE_GEN, Enums.DeploymentStatus.success)
+    GraphQL.getDeployStatus(Enums.DeploymentStages.CODE_GEN, Enums.ResponseStatus.success)
     cy.get('button').contains('Save & Deploy', VERY_LONG_TIME).should('be.visible').click()
 
 
     if (isRedeployment) {
-      GraphQL.getDeployStatus(Enums.DeploymentStages.PROXY_DEPLOY, Enums.DeploymentStatus.completed)
+      GraphQL.getDeployStatus(Enums.DeploymentStages.DEPLOY, Enums.ResponseStatus.completed)
+      GraphQL.getDeployStatus(Enums.DeploymentStages.PROXY_DEPLOY, Enums.ResponseStatus.completed)
     }
 
 
@@ -111,7 +104,6 @@ export class APIDeployment {
   }
 
   static PromoteToProd() {
-<<<<<<< HEAD
     cy.get('[data-cyid*="promote"]').click().wait(5000);
     cy.get('body').then((bdy) => {
 
@@ -128,14 +120,9 @@ export class APIDeployment {
         }
       }
     })
+cy.wait(15000)
+GraphQL.getPrmotionStatus()
 
-
-
-=======
-    cy.get('[data-cyid*="promote"]').click();
-    cy.get('[data-cyid="btn-next"]').should("be.visible").click();
-    this.RetryPromotionToProd();
->>>>>>> 3e455fd0f76d5a82dc1b6c4079c32e26fe4d629c
     cy.get('[data-cyid="proxy-env-card-header"]>div>span')
       .contains("Production")
       .should("be.visible");

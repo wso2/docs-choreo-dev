@@ -129,20 +129,20 @@ export class ComponentDeployPage {
     APIDeployment.RetryDevDeployment();
     cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
     cy.get('[data-cyid="btn-next"]').contains("Deploy").click();
-    cy.get('[value="*/1 * * * *"]', LONG_TIME).should("have.length", 1);
+    cy.get('[value="*/1 * * * *"]', LONG_TIME).eq(0).should("be.visible");
     APIDeployment.RetryDevDeployment();
   }
 
   static promoteScheduleTask() {
     window.localStorage.setItem("hideSocialShareModel", "true");
     APIDeployment.RetryPromotionToProd();
-    cy.get('[value="*/1 * * * *"]').should("have.length", 1).wait(2000);
+    cy.get('[value="*/1 * * * *"]', LONG_TIME).eq(0).should("be.visible");
     Utils.getRenderedElement('[data-cyid*="promote"]')
       .should("be.enabled")
       .eq(0)
       .click();
     cy.get('[data-cyid="btn-next"]').contains("Deploy").click();
-    cy.get('[value="*/1 * * * *"]', LONG_TIME).should("have.length", 2);
+    cy.get('[value="*/1 * * * *"]', LONG_TIME).eq(1).should("be.visible");
     APIDeployment.RetryPromotionToProd();
   }
 

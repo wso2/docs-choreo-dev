@@ -27,17 +27,10 @@ export class TestHelper {
     key: string = "",
     value: string = ""
   ) {
-<<<<<<< HEAD
    
-
-
-
-
     APITest.testAPI();
     cy.get('[data-cyid="OpenAPI Console"]').click();
-=======
     this.selectOpenApiConsole();
->>>>>>> 3e455fd0f76d5a82dc1b6c4079c32e26fe4d629c
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.getTestKey();
     SwaggerUI.invokeResource(resourcePath, key, value);
