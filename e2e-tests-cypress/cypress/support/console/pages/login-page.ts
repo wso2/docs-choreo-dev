@@ -48,6 +48,7 @@ export class LoginPage {
 
   static login(doCleanup: boolean = false) {
     window.localStorage.setItem("seen", Date.now().toString());
+    Utils.setBrowserCookie();
     this.registerNetworkCallsForInterception();
     this.enterUserCredentials("choreoIDPUsername", "choreoIDPPassword");
     this.persistOrgs();
