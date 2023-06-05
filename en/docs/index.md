@@ -1,5 +1,5 @@
 ---
-template: templates/home-page.html
+template: templates/home-page-2.html
 ---
 
 <div class="container cHeaderTop cHomeContainer">

@@ -27,25 +27,26 @@ edit_uri: https://github.com/wso2/docs-choreo-dev/edit/dev/en/docs/
 dev_addr: localhost:8000
 
 # Copyright
-copyright: ©2023 WSO2 LLC.
+copyright: ©2023 WSO2 LLC. 
 
 # Configuration
 theme:
   name: material
   custom_dir: theme/material
-  logo: assets/img/logo.png
+  logo: assets/images/logo.png
   font:
     text: Montserrat
   favicon: assets/images/favicon.png
   features:    
-    - navigation.top
     - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
     - content.code.copy
     - content.action.edit
     - content.action.view
   language: 'en'
   palette:
-
     # Palette toggle for automatic mode
     - media: "(prefers-color-scheme)"
       toggle:
@@ -127,7 +128,7 @@ nav:
       - Configure Alerts: monitoring-and-insights/alerts/configure-alerts.md
       - Work with the Choreo Insights API:
           - Access the Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
-          - Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md
+          - Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md  
   - Administer:
       - Configure a Custom Domain for APIs: administer/configure-a-custom-domain-for-apis.md
       - Developer Portal:
@@ -291,10 +292,6 @@ extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/wso2
-    - icon: fontawesome/brands/twitter
-      link: https://twitter.com/wso2
-    - icon: fontawesome/brands/linkedin
-      link: https://www.linkedin.com/company/wso2
 #site_version: 1.0.0
 #base_path: http://localhost:8000
 
