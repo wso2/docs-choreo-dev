@@ -60,7 +60,11 @@ export class ComponentOverviewPage {
   }
 
   static navigateToObserve() {
-    cy.get("[data-cyid=link-observe]").click();
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.get('[data-cyid="observability"]').should("be.visible").click();
+    } else {
+      cy.get("[data-cyid=link-observe]").click();
+    }
   }
 
   static navigateToDevelop() {
