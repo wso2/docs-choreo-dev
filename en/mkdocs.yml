@@ -87,6 +87,7 @@ nav:
       - Endpoint: choreo-concepts/endpoint.md
       - Data Planes: choreo-concepts/data-planes.md
       - Environments: choreo-concepts/environments.md
+      - Choreo Marketplace: choreo-concepts/choreo-marketplace.md
   - Develop Components:
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
       - Work with the Micro Integrator Runtime in Choreo: develop-components/work-with-the-micro-integrator-runtime-in-choreo.md
@@ -248,7 +249,7 @@ plugins:
           'consume/manage-application.md': 'https://wso2.com/choreo/docs/consuming-services/manage-application/'
           'consume/manage-subscription.md': 'https://wso2.com/choreo/docs/consuming-services/manage-subscription/'
           'consume/test-api.md': 'https://wso2.com/choreo/docs/testing/test-rest-endpoints-via-the-openapi-console/'
-          'marketplace.md': 'https://wso2.com/choreo/docs'
+          'marketplace.md': 'https://wso2.com/choreo/docs/choreo-concepts/choreo-marketplace/'
           'observe-and-analyze/observe/observability-overview.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/observability-overview/'
           'observe-and-analyze/observe/root-cause-analysis.md': 'https://wso2.com/choreo/docs'
           'observe-and-analyze/analyze/view-api-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/view-api-insights/'

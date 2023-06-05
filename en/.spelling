@@ -16,6 +16,9 @@ ResponseFlow
 FaultFlow
 choreo-apim-mediation-fault-flow
 http
+Freemium
+checkboxes
+choreo-marketplace
 choreo-apim-mediation-policy
 choreo-apim-mediation-request-flow
 choreo-apim-mediation-response-flow
