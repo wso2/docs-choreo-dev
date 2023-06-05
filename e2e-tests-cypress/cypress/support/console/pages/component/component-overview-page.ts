@@ -29,7 +29,7 @@ export class ComponentOverviewPage {
     if (Utils.isUnifiedMenuEnabled()) {
       this.expandSecondaryMenu(
         '[data-cyid="link-test"]',
-        '[data-cyid="testConsole"]'
+        '[data-cyid="postman"]'
       );
     } else {
       cy.get('[data-cyid="link-test"]').should("be.visible").click();
