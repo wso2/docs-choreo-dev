@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { cyGet } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
 import { Utils } from "../../../commons/utils";
 
@@ -24,7 +25,7 @@ export class ComponentTestPage {
   }
 
   static getTestKey() {
-    cy.contains("Get Test Key").should("be.visible").click({ force: true });
+    cy.contains("Get Test Key").should("be.visible").click();
   }
 
   static selectEnvironment(env: Enums.Environment) {
@@ -33,7 +34,9 @@ export class ComponentTestPage {
   }
 
   static selectEndpoint(endpoint: string) {
-    cy.get('[data-cyid="select-endpoint"]>div[role="button"]').click();
-    cy.get('ul>li[role="option"]').contains(endpoint).click();
+    Utils.getRenderedElement(
+      '[data-cyid="select-endpoint"]>div[role="button"]'
+    ).click();
+    Utils.getRenderedElement('ul>li[role="option"]').contains(endpoint).click();
   }
 }

@@ -221,8 +221,6 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify deleting consumer app", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     TryOut.DeleteApplication(appName);
   });
@@ -243,23 +241,32 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify insight values for dev", () => {
     ChoreoHomePage.navigateToInsights();
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
-    InsightsPage.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(3);
-    });
-    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-    InsightsPage.getAverageErrorRate().should("eq", "0");
+
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.contains("Coming Soon").should("be.visible");
+    } else {
+      InsightsPage.selectTimePeriod();
+      InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
+      InsightsPage.getTotalTraffic().should((value) => {
+        expect(Number(value)).gte(3);
+      });
+      InsightsPage.getTotalErrorRequestCount().should("eq", "0");
+      InsightsPage.getAverageErrorRate().should("eq", "0");
+    }
   });
 
   it("Verify insight values for prod", () => {
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
-    InsightsPage.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(2);
-    });
-    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-    InsightsPage.getAverageErrorRate().should("eq", "0");
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.contains("Coming Soon").should("be.visible");
+    } else {
+      InsightsPage.selectTimePeriod();
+      InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
+      InsightsPage.getTotalTraffic().should((value) => {
+        expect(Number(value)).gte(2);
+      });
+      InsightsPage.getTotalErrorRequestCount().should("eq", "0");
+      InsightsPage.getAverageErrorRate().should("eq", "0");
+    }
   });
 
   it("Reset and undeploy component", () => {

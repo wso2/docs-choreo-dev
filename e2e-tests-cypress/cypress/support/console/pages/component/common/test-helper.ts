@@ -12,6 +12,7 @@
  */
 
 import { Enums } from "../../../../commons/enums";
+import { VERY_SHORT_TIME } from "../../../../commons/timeouts";
 import { Utils } from "../../../../commons/utils";
 import { APITest } from "../../apis/api-test";
 import { Curl } from "../UI-components/curl-component";
@@ -140,16 +141,48 @@ export class TestHelper {
     key: string = "",
     value: string = ""
   ) {
-    cy.get('[data-cyid="Console"]').click();
+    this.selectTestConsole();
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.selectEndpoint(endpoint);
     ComponentTestPage.getTestKey();
+    return this.invokeSwaggerResource(env, resourcePath, key, value, method);
+  }
+
+  private static invokeSwaggerResource(
+    env: string,
+    resourcePath: string,
+    key: string,
+    value: string,
+    method: string,
+    retryCount: number = 0,
+    retryDelay: number = VERY_SHORT_TIME.timeout
+  ) {
     SwaggerUI.invokeResource(resourcePath, key, value, method);
+
+    // This call is required to actually store the curl command in the env variable for later use
     Curl.getRequestComponentsForService(`${env}${resourcePath}`);
 
     return SwaggerUI.getResponseCode().then((res) => {
+      cy.log("Response code: " + res);
+      cy.log("Retry count: " + retryCount);
+      if (res != "200" && retryCount < 4) {
+        cy.log("Code is not 200, Retrying...");
+        retryCount++;
+        cy.wait(retryDelay);
+        this.invokeSwaggerResource(
+          env,
+          resourcePath,
+          key,
+          value,
+          method,
+          retryCount,
+          retryDelay
+        );
+      }
+
+      cy.log("Finished retrying");
       return SwaggerUI.GetResponse().then((r) => {
-        return cy.wrap({
+        return Promise.resolve({
           response: r,
           statusCode: res,
         });
@@ -185,6 +218,17 @@ export class TestHelper {
     } else {
       APITest.testAPI();
       selector = '[data-testid="cURL"]';
+    }
+    cy.get(selector).click();
+  }
+
+  private static selectTestConsole() {
+    let selector = '[data-cyid="testConsole"]';
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.expandSecondaryMenu(selector);
+    } else {
+      selector = '[data-cyid="Console"]';
+      APITest.testAPI();
     }
     cy.get(selector).click();
   }

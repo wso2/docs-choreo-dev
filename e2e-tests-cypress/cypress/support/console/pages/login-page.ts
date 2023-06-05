@@ -11,21 +11,21 @@
  * associated services.
  */
 
-
 import { cyGet } from "../../commons/cy";
 import { AUTH_HEADER, OK } from "../../commons/http";
 import { MEDIUM_TIME, SHORT_TIME } from "../../commons/timeouts";
-import { ORGS_URL, EP_USER_HOME_URL, VALIDATE_USER_URL } from "../../commons/urls";
+import {
+  ORGS_URL,
+  EP_USER_HOME_URL,
+  VALIDATE_USER_URL,
+} from "../../commons/urls";
 import { Utils } from "../../commons/utils";
 import { GraphQL } from "../apis/graphql";
 import { OnPremKeyService } from "../apis/on-prem-key-service";
 
-
-
-
 export class LoginPage {
-  static username = "#username"
-  static password = "#password"
+  static username = "#username";
+  static password = "#password";
 
   static acceptInviteAsInvitedUser(timestamp: string) {
     cy.intercept({
@@ -34,7 +34,10 @@ export class LoginPage {
       times: 1,
     }).as("token");
 
-    this.enterUserCredentials("choreoIDPInvitedUsername", "choreoIDPInvitedPassword");
+    this.enterUserCredentials(
+      "choreoIDPInvitedUsername",
+      "choreoIDPInvitedPassword"
+    );
     cy.wait("@token", MEDIUM_TIME).then((intercept) => {
       const header = intercept.request.headers["authorization"] as string;
       const token = header.replace("Bearer", "").trim();
@@ -51,11 +54,13 @@ export class LoginPage {
     this.persistLogoutURL();
     this.persistApimToken(doCleanup);
     this.persistCookies(`${Cypress.env("idpURL")}/commonauth`);
-    cy.get('[data-testid="header-user-profile-menu"]', MEDIUM_TIME).should("be.visible");
+    cy.get('[data-testid="header-user-profile-menu"]', MEDIUM_TIME).should(
+      "be.visible"
+    );
   }
 
   private static rejectCookies() {
-    const handler = "#onetrust-reject-all-handler"
+    const handler = "#onetrust-reject-all-handler";
     cy.wait(5000);
     cy.get("body").then((b) => {
       if (b.find(handler).length > 0) {
@@ -70,18 +75,21 @@ export class LoginPage {
     } else {
       componentURL = Cypress.env("componentURL");
     }
-    const common = Cypress.env(`commonAuthId`) != null ? Cypress.env(`commonAuthId`) : "authtoken";
+    const common =
+      Cypress.env(`commonAuthId`) != null
+        ? Cypress.env(`commonAuthId`)
+        : "authtoken";
     window.localStorage.setItem("seen", Date.now().toString());
     Utils.setBrowserCookie();
     this.setCookie(componentURL, "commonAuthId", common);
     cy.visit(componentURL);
     this.rejectCookies();
     cyGet('[data-testid="header-user-profile-menu"]').should("be.visible");
-
+    cy.get('[id="backdrop-loader"]').should("not.exist");
   }
 
   static enterpriseLogin() {
-    const signInButton = 'button[id="enterprise-sign-in"]'
+    const signInButton = 'button[id="enterprise-sign-in"]';
     window.localStorage.setItem("seen", Date.now().toString());
     Utils.setBrowserCookie();
     cy.visit(Cypress.env("enterpriseLoginUrl"));
@@ -89,12 +97,16 @@ export class LoginPage {
     cy.get(signInButton).click();
     cy.get("#outlined-basic").type(Cypress.env("enterpriseIDPUsername"));
     cy.contains("Continue").click();
-    
+
     cy.get('input[id="username"]').should("be.visible", MEDIUM_TIME);
     cy.get(LoginPage.username).type(Cypress.env("enterpriseIDPUsername"));
-    cy.get(LoginPage.password).type(Cypress.env("enterpriseIDPPassword"), { log: false });
+    cy.get(LoginPage.password).type(Cypress.env("enterpriseIDPPassword"), {
+      log: false,
+    });
     cy.contains("Continue").click({ force: true });
-    cy.get('[data-testid="header-user-profile-menu"]', MEDIUM_TIME).should("be.visible");
+    cy.get('[data-testid="header-user-profile-menu"]', MEDIUM_TIME).should(
+      "be.visible"
+    );
     this.persistLogoutURL();
   }
 
@@ -191,7 +203,9 @@ export class LoginPage {
         if (url.includes(Cypress.env("idpURL") + "/authenticationendpoint")) {
           cyGet('button[type="submit"]').should("be.visible", MEDIUM_TIME);
           cyGet("#usernameUserInput").type(Cypress.env(envUsername));
-          cyGet(LoginPage.password).type(Cypress.env(envPassword), { log: false });
+          cyGet(LoginPage.password).type(Cypress.env(envPassword), {
+            log: false,
+          });
           cyGet('button[type="submit"]').click();
         }
       });
@@ -217,13 +231,17 @@ export class LoginPage {
     const { handle } = Cypress.env("userData");
     this.getOnPremKeys(handle, AUTH_HEADER()).then((keys) => {
       keys.forEach((key) => {
-        Utils.sendPostRequest(OnPremKeyService.deleteOnPremKey(handle, key.handle), AUTH_HEADER(), "");
+        Utils.sendPostRequest(
+          OnPremKeyService.deleteOnPremKey(handle, key.handle),
+          AUTH_HEADER(),
+          ""
+        );
       });
     });
   }
 
   private static getOnPremKeys(handle: string, header: any) {
-    const url = OnPremKeyService.getOnPremKeys(handle)
+    const url = OnPremKeyService.getOnPremKeys(handle);
     return Utils.sendGetRequest(url, header).then((res) => {
       if (res.status == OK) {
         return res.body as { handle: string }[];
