@@ -36,7 +36,7 @@ To attach a policy to the `Request`, `Response`, or `Error` flow of a REST API p
 4. From the list of resources, expand the resource to which you want to attach the policy. 
 5. Click **Attach Policy** in the respective flow for which you want to attach a policy.
 6. In the **Policy List** pane that opens, click on a required policy to view its details.
-7. If the attached policy requires parameter configuration, on the policy pane enter the appropriate values and conifgure the parameters. To make a parameter a configurable variable, input the value in the `${<variableName>}` format. For example, you can use `${name}` as an example.
+7. If the attached policy requires parameter configuration, on the policy pane enter the appropriate values and configure the parameters. To make a parameter a configurable variable, input the value in the `${<variableName>}` format. For example, you can use `${name}` as an example.
 
     ![Configure parameters](../assets/img/api-management/api-policies/configure-parameters.png)
  
