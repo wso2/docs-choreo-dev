@@ -27,25 +27,26 @@ edit_uri: https://github.com/wso2/docs-choreo-dev/edit/dev/en/docs/
 dev_addr: localhost:8000
 
 # Copyright
-copyright: ©2023 WSO2 LLC.
+copyright: ©2023 WSO2 LLC. 
 
 # Configuration
 theme:
   name: material
   custom_dir: theme/material
-  logo: assets/img/logo.png
+  logo: assets/images/logo.png
   font:
     text: Montserrat
   favicon: assets/images/favicon.png
   features:    
-    - navigation.top
     - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
     - content.code.copy
     - content.action.edit
     - content.action.view
   language: 'en'
   palette:
-
     # Palette toggle for automatic mode
     - media: "(prefers-color-scheme)"
       toggle:
@@ -86,6 +87,7 @@ nav:
       - Endpoint: choreo-concepts/endpoint.md
       - Data Planes: choreo-concepts/data-planes.md
       - Environments: choreo-concepts/environments.md
+      - Choreo Marketplace: choreo-concepts/choreo-marketplace.md
   - Develop Components:
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
       - Work with the Micro Integrator Runtime in Choreo: develop-components/work-with-the-micro-integrator-runtime-in-choreo.md
@@ -127,7 +129,7 @@ nav:
       - Configure Alerts: monitoring-and-insights/alerts/configure-alerts.md
       - Work with the Choreo Insights API:
           - Access the Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
-          - Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md
+          - Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md  
   - Administer:
       - Configure a Custom Domain for APIs: administer/configure-a-custom-domain-for-apis.md
       - Developer Portal:
@@ -247,7 +249,7 @@ plugins:
           'consume/manage-application.md': 'https://wso2.com/choreo/docs/consuming-services/manage-application/'
           'consume/manage-subscription.md': 'https://wso2.com/choreo/docs/consuming-services/manage-subscription/'
           'consume/test-api.md': 'https://wso2.com/choreo/docs/testing/test-rest-endpoints-via-the-openapi-console/'
-          'marketplace.md': 'https://wso2.com/choreo/docs'
+          'marketplace.md': 'https://wso2.com/choreo/docs/choreo-concepts/choreo-marketplace/'
           'observe-and-analyze/observe/observability-overview.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/observability-overview/'
           'observe-and-analyze/observe/root-cause-analysis.md': 'https://wso2.com/choreo/docs'
           'observe-and-analyze/analyze/view-api-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/view-api-insights/'
@@ -291,10 +293,6 @@ extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/wso2
-    - icon: fontawesome/brands/twitter
-      link: https://twitter.com/wso2
-    - icon: fontawesome/brands/linkedin
-      link: https://www.linkedin.com/company/wso2
 #site_version: 1.0.0
 #base_path: http://localhost:8000
 
