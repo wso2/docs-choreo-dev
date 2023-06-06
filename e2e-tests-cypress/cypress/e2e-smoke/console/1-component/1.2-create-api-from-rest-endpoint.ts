@@ -28,6 +28,9 @@ import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
+import { OK } from "../../../support/commons/http";
+import { cyLog } from "../../../support/commons/cy";
+import { GraphQL } from "../../../support/console/apis/graphql";
 
 before(() => {
   LoginPage.login();
@@ -50,6 +53,11 @@ describe(`Verify proxy api functionality`, () => {
   const PROJECT_DESCRIPTION = "sample stats project";
   const PROJECT_NAME = Utils.generateProjectName();
   const idpUser = "choreoe2etest";
+  const HEADER_KEY = "x-header-test";
+  const HEADER_VALUE = "test";
+  const HEADER_KEY_2 = "x-header-test2";
+  const HEADER_VALUE_2 = "test2";
+  const HEADER_VALUE_3 = "test3";
 
   it("Creating a project", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
@@ -69,10 +77,20 @@ describe(`Verify proxy api functionality`, () => {
     APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
   });
 
+
+
+  it("Add first mediation policy to the resource", () => {
+    APIDevelop.addPolicy(OPERATION_USERS, Enums.HTTPMethod.GET, Enums.PolicyType.setHeader, HEADER_KEY, HEADER_VALUE)
+  })
+
   it("Verify component deployment to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
+    APIDeployment.deployProxyAPIToDev(PROJECT_NAME, API_NAME)
   });
+
+  it("Verify mediation component deployment", () => {
+    APIDeployment.verifyProxyDeployment()
+  })
 
   it("Verify test functionality using Swagger UI in Dev", () => {
     TestHelper.testOnSwagger(
@@ -80,6 +98,23 @@ describe(`Verify proxy api functionality`, () => {
       OPERATION_USERS
     ).then((res) => {
       expect(res.statusCode).to.be.equal("200");
+    });
+  });
+
+
+
+  it("Verify header values in dev", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
+      "users",
+      [],
+      "-v"
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.status).equal(200);
+        expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE });
+      });
     });
   });
 
@@ -96,6 +131,198 @@ describe(`Verify proxy api functionality`, () => {
       expect(res.statusCode).to.be.equal("200");
     });
   });
+
+
+  it("Verify header values in prod", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
+      "users",
+      [],
+      "-v"
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.status).equal(200);
+        expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE });
+      });
+    });
+  });
+
+
+  it("Verify adding second mediation policy", () => {
+    ComponentOverviewPage.navigateToDevelop();
+    APIDevelop.addPolicy(OPERATION_USERS, Enums.HTTPMethod.GET, Enums.PolicyType.setHeader, HEADER_KEY_2, HEADER_VALUE_2, 2);
+  })
+
+
+  it("Verify component deployment to dev with new policy", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.deployProxyAPIToDev(PROJECT_NAME, API_NAME)
+  });
+
+
+  it("Verify mediation component deployment  with new policy", () => {
+    APIDeployment.verifyProxyDeployment(true)
+  })
+
+
+
+
+
+
+  it("Verify test functionality using Swagger UI in Dev with new policy", () => {
+    TestHelper.testOnSwagger(
+      Enums.Environment.DEVELOPMENT,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
+  });
+
+
+
+  it("Verify test functionality using generated curl in dev with new policy", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
+      "users",
+      [],
+      "-v"
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.status).equal(200);
+        expect(res.headers).contain({ [HEADER_KEY_2]: HEADER_VALUE_2 });
+      });
+    });
+  });
+
+  it("Verify prod promotion with new policy", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.PromoteToProd();
+  });
+
+  it("Verify test functionality using Swagger UI in Prod with new policy", () => {
+    TestHelper.testOnSwagger(
+      Enums.Environment.PRODUCTION,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal("200")
+    });
+  });
+
+
+  it("Verify test functionality using generated curl in prod with new policy", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
+      "users",
+      [],
+      "-v"
+    ).then((curl) => {
+      cyLog(curl)
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        cyLog(res.headers)
+        expect(res.status).equal(200);
+        expect(res.headers).contain({ [HEADER_KEY_2]: HEADER_VALUE_2 });
+      });
+    });
+  });
+
+
+
+
+  it(("Verify mediation policy update functionality"), () => {
+    ComponentOverviewPage.navigateToDevelop();
+    APIDevelop.editHeader(OPERATION_USERS, Enums.HTTPMethod.GET, HEADER_VALUE_3)
+
+  })
+
+  it("Verify component deployment to dev with updated header value", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.deployProxyAPIToDev(PROJECT_NAME, API_NAME)
+  });
+
+
+
+  it("Verify mediation component deployment  with updated policy", () => {
+    APIDeployment.verifyProxyDeployment(true)
+  })
+
+
+  it("Verify test functionality using Swagger UI in Dev updated header value", () => {
+    TestHelper.testOnSwagger(
+      Enums.Environment.DEVELOPMENT,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
+  });
+
+
+
+  it("Verify test functionality using generated curl in dev with updated header value", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
+      "users",
+      [],
+      "-v"
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        cyLog(res.headers)
+        expect(res.status).equal(200);
+        expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE_3 });
+      });
+    });
+  });
+
+  it("Verify prod promotion with updated header value", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.PromoteToProd();
+  });
+
+  it("Verify test functionality using Swagger UI in Prod with updated header value", () => {
+    TestHelper.testOnSwagger(
+      Enums.Environment.PRODUCTION,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal("200")
+    });
+  });
+
+
+  it("Verify test functionality using generated curl in prod with updated header value", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
+      "users",
+      [],
+      "-v"
+    ).then((curl) => {
+      cyLog(curl)
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        cyLog(res.headers)
+        expect(res.status).equal(200);
+        expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE_3 });
+      });
+    });
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
@@ -125,9 +352,19 @@ describe(`Verify proxy api functionality`, () => {
     APIDevelop.addResources(OPERATION_POSTS, Enums.HTTPMethod.GET);
   });
 
+
+
+
+
+
+
+
+
+
+
   it("Deploy new version to Dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
+    APIDeployment.deployProxyAPIToDev(PROJECT_NAME, API_NAME)
   });
 
   it("Test in dev", () => {
@@ -166,6 +403,8 @@ describe(`Verify proxy api functionality`, () => {
       expect(res.statusCode).to.be.equal("200");
     });
   });
+
+
 
   it("Publish the API to dev portal", () => {
     ComponentOverviewPage.navigateToManage();

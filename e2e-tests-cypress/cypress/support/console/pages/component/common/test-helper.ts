@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { cyLog } from "../../../../commons/cy";
 import { Enums } from "../../../../commons/enums";
 import { VERY_SHORT_TIME } from "../../../../commons/timeouts";
 import { Utils } from "../../../../commons/utils";
@@ -27,6 +28,9 @@ export class TestHelper {
     key: string = "",
     value: string = ""
   ) {
+   
+    APITest.testAPI();
+    cy.get('[data-cyid="OpenAPI Console"]').click();
     this.selectOpenApiConsole();
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.getTestKey();
@@ -46,7 +50,8 @@ export class TestHelper {
     env: Enums.Environment,
     httpMethod: Enums.HTTPMethod,
     pathParm: string,
-    queryParameters1 = []
+    queryParameters1 = [],
+    ...options: string[]
   ) {
     this.selectCurl();
     Curl.selectCurlEnvironment(env);
@@ -58,7 +63,8 @@ export class TestHelper {
     cy.get("textarea")
       .invoke("text")
       .then((curl) => {
-        Cypress.env(`int_curl_${env}`, curl);
+        const crl = `${curl} ${options.toString()}`
+        Cypress.env(`int_curl_${env}`, crl);
       });
     return Curl.getRequestComponents(`${env}${pathParm}`);
   }
