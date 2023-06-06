@@ -45,3 +45,4 @@ resources:
   - cio-incident-configurator.yaml
   - crypto-key-service.yaml
   - metered-usage-handler.yaml
+  - obsmanager.yaml

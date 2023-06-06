@@ -1,0 +1,7 @@
+[ballerina.log]
+format = "json"
+level = "{{.LOG_LEVEL}}"
+
+[[ballerina.log.modules]]
+name = "choreo/obsmanager"
+level = "{{.LOG_LEVEL_OBSMANAGER}}"
