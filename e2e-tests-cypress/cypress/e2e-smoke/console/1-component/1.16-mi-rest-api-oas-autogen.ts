@@ -24,7 +24,7 @@ import { ProjectListingPage } from "../../../support/console/pages/projects/proj
 import { IntegrationComponentData } from "../../../support/interfaces/integration-component-data";
 
 describe("Verify MI REST API component OAS auto generation", () => {
-  const PROJECT_DESCRIPTION = "MI REST API Test";
+  const PROJECT_DESCRIPTION = "MI REST API OAS autogen Test";
   const PROJECT_NAME = Utils.generateProjectName();
   const COMPONENT_NAME = Utils.generateComponentName("miRest");
   const MATCHING_STRING = "Hello Integration";
@@ -99,10 +99,10 @@ describe("Verify MI REST API component OAS auto generation", () => {
     ComponentDeployPage.promoteToProd(true, false, 1);
   });
 
-  it("Verify test functionality of root resource in dev on swagger", () => {
+  it("Verify test functionality of root resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
-      Enums.Environment.DEVELOPMENT,
+      Enums.Environment.PRODUCTION,
       RESOURCE_NAME
     ).then((res) => {
       expect(res.response).to.include(MATCHING_STRING);
