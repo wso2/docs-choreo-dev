@@ -22,7 +22,6 @@ import { ComponentListingPage } from "../../../support/console/pages/component/c
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
-import { GitHub } from "../../../support/github/github";
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
 
@@ -103,7 +102,6 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality of isOdd resource in dev on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
       Enums.Environment.DEVELOPMENT,
       "isOdd",
@@ -135,7 +133,6 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality of root resource in prod on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
       Enums.Environment.PRODUCTION,
       "root",
@@ -162,7 +159,6 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality of isOdd resource in prod on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
       Enums.Environment.PRODUCTION,
       "isOdd",
@@ -249,7 +245,6 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify manage functionality", () => {
-    ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.changeLifeCycleToPublished(
       Enums.ConnectorAudience.PRIVATE
@@ -272,11 +267,5 @@ describe("Verify project creation functionality", () => {
   it("Verify suspending all component deployments", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
-  });
-
-  it("Verify API lifecycle change to Created state", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.demoteToCreated();
   });
 });

@@ -11,8 +11,6 @@
  * associated services.
  */
 
-
-
 export class SwaggerUI {
   static SelectResource(path: string, method: string = "") {
     const pathVariable = method
@@ -46,6 +44,7 @@ export class SwaggerUI {
   static ExecuteResourceFunction(resource = "-get") {
     cy.contains("Execute").focus().click();
     cy.get(`[class="curl-command"]`).should("be.visible");
+    cy.get('[class="loading-container"]').should("not.exist");
     cy.log("Execution is successful");
     cy.contains("Cancel").click();
   }

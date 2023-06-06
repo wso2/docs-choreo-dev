@@ -14,14 +14,11 @@
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
 import { APIDeployment } from "../../../support/console/pages/apis/api-deployment";
-import { APITest } from "../../../support/console/pages/apis/api-test";
-import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
@@ -32,10 +29,10 @@ import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-crede
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { AppsList } from "../../../support/devportal/pages/applications/apps-list";
-import { ProductionKeys } from "../../../support/devportal/pages/applications/production-keys";
 import { Subscriptions } from "../../../support/devportal/pages/applications/subscriptions";
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { generateAppName } from "../../../support/devportal/utils";
+import { OK } from "../../../support/commons/http";
 
 describe("Choreo APIM publisher scenarios", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
@@ -79,6 +76,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(Enums.Environment.DEVELOPMENT, "intensity").then(
       (res) => {
         expect(res.statusCode).to.be.equal("200");
@@ -112,16 +110,14 @@ describe("Choreo APIM publisher scenarios", () => {
     );
 
     // Verify that deployment has been updated by invoking the API without a token
-    APITest.testAPI();
-    ComponentTestPage.selectCurl();
-    Curl.selectCurlEnvironment(Enums.Environment.DEVELOPMENT);
-    Curl.selectMethod(Enums.HTTPMethod.GET);
-    Curl.enterPathParameter("intensity");
-    Curl.getRequestComponents(`${Enums.Environment.DEVELOPMENT}intensity`).then(
-      (curl) =>
-        Utils.sendGetRequest(curl.url).then((res) => {
-          expect(res.status).equal(200);
-        })
+    TestHelper.testOnCurl(
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
+      "intensity"
+    ).then((curl) =>
+      Utils.sendGetRequest(curl.url).then((res) => {
+        expect(res.status).equal(200);
+      })
     );
   });
 
@@ -131,6 +127,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(Enums.Environment.PRODUCTION, "intensity").then(
       (res) => {
         expect(res.statusCode).to.be.equal("200");
@@ -151,10 +148,8 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify manage functionality", () => {
-    ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
-    ComponentAPILifecycle.selectPermissions();
     ComponentAPILifecycle.navigatePermissionManagementWindow();
     ComponentAPILifecycle.managePermissions(permissions, API_NAME);
     ComponentAPILifecycle.manageLifecycle();
@@ -166,46 +161,58 @@ describe("Choreo APIM publisher scenarios", () => {
     );
   });
 
-  it("Tryout published api", () => {
+  it("Search application in devportal", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.searchApiAndSelect(API_NAME, 1);
-    // Validate the API call without the scope
-    ApiCredentials.navigateCredentialsTab();
-    ApiCredentials.generateCredentials();
-    TryOut.navigateToTryOutMenu();
-    TryOut.GenerateAccessToken();
-    TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);
-    TryOut.TryoutAPI();
-    TryOut.ExecuteResourceFunction();
-    TryOut.ValidateResponse("200");
   });
 
-  it("Create application", () => {
-    // Create app
-    DevPortalHomePage.navigateToAppsPage();
+  it("Generate credentials for prod env", () => {
+    ApiCredentials.navigateCredentialsTab(); // Validate the API call without the scope
+    ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
+  });
+
+  it("Tryout resource in PROD env", () => {
+    TryOut.navigateToTryOutMenu();
+    TryOut.GenerateAccessToken();
+    TryOut.selectEndpoint(Enums.Environment.PRODUCTION);
+    TryOut.SelectResource(OPERATION);
+    TryOut.TryoutAPI();
+    TryOut.ExecuteResourceFunction();
+    TryOut.ValidateResponse(OK);
+  });
+
+  it("Generate credentials for application", () => {
+    DevPortalHomePage.navigateToAppsPage(); // Create app
     AppsList.createAnApplication(appName);
-    ProductionKeys.generateTestToken();
+  });
+
+  it("Generate credentials", () => {
+    AppsList.generateCredentials(Enums.Environment.SANDBOX);
+    AppsList.generateCredentials(Enums.Environment.PRODUCTION);
+  });
+
+  it("Add subscription", () => {
     Subscriptions.addSubscriptionToApplication(API_NAME);
     Subscriptions.validateResubscribingApi(API_NAME);
-    // Edit App and assign the scope
-    cy.get('[data-testid="applications-appbar-btn"]')
-      .should("be.visible")
-      .click();
   });
 
   it("Add permissions and tryout", () => {
     AppsList.editAnApplication(appName, permissions[0]);
-    // Validate API call with scope
     DevPortalHomePage.navigateToApisPage();
     Apis.searchApiAndSelect(API_NAME, 1);
-    // DevPortalHomePage.navigateSelectAPI(API_NAME);
+  });
+
+  it("Generate access token for application", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.SelectApplication(appName);
     TryOut.GenerateAccessToken();
-    TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);
+  });
+
+  it("Tryout application", () => {
+    TryOut.SelectResource(OPERATION);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
-    TryOut.ValidateResponse("200");
+    TryOut.ValidateResponse(OK);
   });
 
   it("Verify consumers", () => {
@@ -216,15 +223,12 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify deleting consumer app", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     TryOut.DeleteApplication(appName);
   });
 
   it("Verify delete permissions", () => {
     LoginPage.reLoginToChoreo();
-    ComponentListingPage.visitToAComponent(API_NAME);
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectPermissions();
     permissions.forEach((permission) => {
@@ -239,28 +243,39 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify insight values for dev", () => {
     ChoreoHomePage.navigateToInsights();
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
-    InsightsPage.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(3);
-    });
-    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-    InsightsPage.getAverageErrorRate().should("eq", "0");
+
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.contains("Coming Soon").should("be.visible");
+    } else {
+      InsightsPage.selectTimePeriod();
+      InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
+      InsightsPage.getTotalTraffic().should((value) => {
+        expect(Number(value)).gte(3);
+      });
+      InsightsPage.getTotalErrorRequestCount().should("eq", "0");
+      InsightsPage.getAverageErrorRate().should("eq", "0");
+    }
   });
 
   it("Verify insight values for prod", () => {
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
-    InsightsPage.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(2);
-    });
-    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-    InsightsPage.getAverageErrorRate().should("eq", "0");
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.contains("Coming Soon").should("be.visible");
+    } else {
+      InsightsPage.selectTimePeriod();
+      InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
+      InsightsPage.getTotalTraffic().should((value) => {
+        expect(Number(value)).gte(2);
+      });
+      InsightsPage.getTotalErrorRequestCount().should("eq", "0");
+      InsightsPage.getAverageErrorRate().should("eq", "0");
+    }
   });
 
   it("Reset and undeploy component", () => {
-    ChoreoHomePage.navigateToComponents();
-    ComponentListingPage.visitToAComponent(API_NAME);
+    if (!Utils.isUnifiedMenuEnabled()) {
+      ChoreoHomePage.navigateToComponents();
+      ComponentListingPage.visitToAComponent(API_NAME);
+    }
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });

@@ -16,9 +16,6 @@ import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/r
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
-import { APITest } from "../../../support/console/pages/apis/api-test";
-import { SwaggerUI } from "../../../support/console/pages/component/UI-components/swagger-UI-component";
-import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
 import { APIDeployment } from "../../../support/console/pages/apis/api-deployment";
 import { APIDevelop } from "../../../support/console/pages/apis/api-develop";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
@@ -31,6 +28,9 @@ import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
+import { OK } from "../../../support/commons/http";
+import { cyLog } from "../../../support/commons/cy";
+import { GraphQL } from "../../../support/console/apis/graphql";
 
 before(() => {
   LoginPage.login();
@@ -53,6 +53,11 @@ describe(`Verify proxy api functionality`, () => {
   const PROJECT_DESCRIPTION = "sample stats project";
   const PROJECT_NAME = Utils.generateProjectName();
   const idpUser = "choreoe2etest";
+  const HEADER_KEY = "x-header-test";
+  const HEADER_VALUE = "test";
+  const HEADER_KEY_2 = "x-header-test2";
+  const HEADER_VALUE_2 = "test2";
+  const HEADER_VALUE_3 = "test3";
 
   it("Creating a project", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
@@ -72,12 +77,27 @@ describe(`Verify proxy api functionality`, () => {
     APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
   });
 
+  it("Add first mediation policy to the resource", () => {
+    APIDevelop.addPolicy(
+      OPERATION_USERS,
+      Enums.HTTPMethod.GET,
+      Enums.PolicyType.setHeader,
+      HEADER_KEY,
+      HEADER_VALUE
+    );
+  });
+
   it("Verify component deployment to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
+    APIDeployment.deployProxyAPIToDev(PROJECT_NAME, API_NAME);
+  });
+
+  it("Verify mediation component deployment", () => {
+    APIDeployment.verifyProxyDeployment();
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
       Enums.Environment.DEVELOPMENT,
       OPERATION_USERS
@@ -86,17 +106,202 @@ describe(`Verify proxy api functionality`, () => {
     });
   });
 
-  it("Verify prod invoke url", () => {
+  it("Verify header values in dev", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
+      "users",
+      [],
+      "-v"
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.status).equal(200);
+        expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE });
+      });
+    });
+  });
+
+  it("Verify prod promotion", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.PromoteToProd();
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
       Enums.Environment.PRODUCTION,
       OPERATION_USERS
     ).then((res) => {
       expect(res.statusCode).to.be.equal("200");
+    });
+  });
+
+  it("Verify header values in prod", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
+      "users",
+      [],
+      "-v"
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.status).equal(200);
+        expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE });
+      });
+    });
+  });
+
+  it("Verify adding second mediation policy", () => {
+    ComponentOverviewPage.navigateToDevelop();
+    APIDevelop.addPolicy(
+      OPERATION_USERS,
+      Enums.HTTPMethod.GET,
+      Enums.PolicyType.setHeader,
+      HEADER_KEY_2,
+      HEADER_VALUE_2,
+      2
+    );
+  });
+
+  it("Verify component deployment to dev with new policy", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.deployProxyAPIToDev(PROJECT_NAME, API_NAME);
+  });
+
+  it("Verify mediation component deployment  with new policy", () => {
+    APIDeployment.verifyProxyDeployment(true);
+  });
+
+  it("Verify test functionality using Swagger UI in Dev with new policy", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnSwagger(
+      Enums.Environment.DEVELOPMENT,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
+  });
+
+  it("Verify test functionality using generated curl in dev with new policy", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
+      "users",
+      [],
+      "-v"
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.status).equal(200);
+        expect(res.headers).contain({ [HEADER_KEY_2]: HEADER_VALUE_2 });
+      });
+    });
+  });
+
+  it("Verify prod promotion with new policy", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.PromoteToProd();
+  });
+
+  it("Verify test functionality using Swagger UI in Prod with new policy", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnSwagger(
+      Enums.Environment.PRODUCTION,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
+  });
+
+  it("Verify test functionality using generated curl in prod with new policy", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
+      "users",
+      [],
+      "-v"
+    ).then((curl) => {
+      cyLog(curl);
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        cyLog(res.headers);
+        expect(res.status).equal(200);
+        expect(res.headers).contain({ [HEADER_KEY_2]: HEADER_VALUE_2 });
+      });
+    });
+  });
+
+  it("Verify mediation policy update functionality", () => {
+    ComponentOverviewPage.navigateToDevelop();
+    APIDevelop.editHeader(
+      OPERATION_USERS,
+      Enums.HTTPMethod.GET,
+      HEADER_VALUE_3
+    );
+  });
+
+  it("Verify component deployment to dev with updated header value", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.deployProxyAPIToDev(PROJECT_NAME, API_NAME);
+  });
+
+  it("Verify mediation component deployment  with updated policy", () => {
+    APIDeployment.verifyProxyDeployment(true);
+  });
+
+  it("Verify test functionality using Swagger UI in Dev updated header value", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnSwagger(
+      Enums.Environment.DEVELOPMENT,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
+  });
+
+  it("Verify test functionality using generated curl in dev with updated header value", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
+      "users",
+      [],
+      "-v"
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        cyLog(res.headers);
+        expect(res.status).equal(200);
+        expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE_3 });
+      });
+    });
+  });
+
+  it("Verify prod promotion with updated header value", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.PromoteToProd();
+  });
+
+  it("Verify test functionality using Swagger UI in Prod with updated header value", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnSwagger(
+      Enums.Environment.PRODUCTION,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
+  });
+
+  it("Verify test functionality using generated curl in prod with updated header value", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
+      "users",
+      [],
+      "-v"
+    ).then((curl) => {
+      cyLog(curl);
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        cyLog(res.headers);
+        expect(res.status).equal(200);
+        expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE_3 });
+      });
     });
   });
 
@@ -123,60 +328,71 @@ describe(`Verify proxy api functionality`, () => {
     );
   });
 
-  it("Add  a new version", () => {
+  it("Add a resource to new version", () => {
     ComponentOverviewPage.navigateToDevelop();
     APIDevelop.addResources(OPERATION_POSTS, Enums.HTTPMethod.GET);
   });
 
   it("Deploy new version to Dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
+    APIDeployment.deployProxyAPIToDev(PROJECT_NAME, API_NAME);
   });
 
   it("Test in dev", () => {
-    APITest.testAPI();
-    APITest.selectDevEnvironment();
-    ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource(OPERATION_USERS);
-    SwaggerUI.getResponseCode().should("eq", "200");
-    SwaggerUI.invokeResource(OPERATION_POSTS);
-    SwaggerUI.getResponseCode().should("eq", "200");
+    TestHelper.testOnSwagger(
+      Enums.Environment.DEVELOPMENT,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
+
+    TestHelper.testOnSwagger(
+      Enums.Environment.DEVELOPMENT,
+      OPERATION_POSTS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
   });
 
-  it("Verify new prod invoke url", () => {
+  it("Verify new version promotion to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.PromoteToProd();
   });
 
   it("Test in prod", () => {
-    APITest.testAPI();
-    APITest.selectProdEnvironment();
-    ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource(OPERATION_USERS);
-    SwaggerUI.getResponseCode().should("eq", "200");
-    SwaggerUI.invokeResource(OPERATION_POSTS);
-    SwaggerUI.getResponseCode().should("eq", "200");
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnSwagger(
+      Enums.Environment.PRODUCTION,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
+
+    TestHelper.testOnSwagger(
+      Enums.Environment.PRODUCTION,
+      OPERATION_POSTS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
   });
 
-  it("Publish the API", () => {
+  it("Publish the API to dev portal", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publishWithoutConnector();
   });
 
-  it("Verify api invoke urls", () => {
+  it("Generate credentials for prod env", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
-    Apis.verifyAPIname().should("eq", API_NAME);
-    Apis.verifyInvokeUrl();
+    Apis.searchApiAndSelect(API_NAME, 2, API_NEW_VERSION);
+    ApiCredentials.navigateToEnvironment(Enums.Environment.PRODUCTION);
+    ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
   });
 
-  it("Test in devportal", () => {
-    Apis.searchApiAndSelect(API_NAME, 2, API_NEW_VERSION);
-    ApiCredentials.navigateCredentialsTab();
-    ApiCredentials.generateCredentials();
+  it("Tryout application", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
-    TryOut.SelectResource(null, OPERATION_USERS);
+    TryOut.SelectResource(OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();

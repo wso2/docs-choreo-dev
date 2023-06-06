@@ -19,6 +19,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.google.gson.JsonArray;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentUtils;
+import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -27,6 +28,7 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeClass;
@@ -34,12 +36,13 @@ import org.testng.annotations.Test;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpringSupport {
 
     public static final String MI_REST_API = "miRestApi";
-    public static final String API_INVOCATION_REQUEST_URI = "/HelloWorld";
+    public static final String API_INVOCATION_REQUEST_URI = "/";
     public static final String REST_API_EXPECTED_RESPONSE = "{\"Hello\":\"Integration\"}";
     private static String accessToken;
     private String orgHandle;
@@ -49,6 +52,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
     private String componentId;
     private static String componentHandler;
     private String githubOrg;
+    private List<Environment> environments;
 
     private static ChoreoComponent testComponent;
 
@@ -63,6 +67,9 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
 
     @Autowired
     private HttpClient choreoTestClientForSTS;
+
+    @Autowired
+    Map<Endpoints, HttpClient> citrusClients;
 
     @BeforeClass
     public void setup_TestCreateIntegrationRestComponentFromRoot()
@@ -160,8 +167,9 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
 
         final InvokeInformation invokeInformation = testComponent.getInvokeInformation(accessToken, MI_REST_API,
                 Constant.Environment.Development.name());
-        final String devApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId())
-                .replace("\"", "");
+        environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, testComponent);
+        final String devApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId(),
+                        environments.get(0).getName()).replace("\"", "");
         String invokeUrlDev = invokeInformation.getInvokeUrl();
         ComponentUtils.invokeApiGET(this, devApiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI,
                 REST_API_EXPECTED_RESPONSE);
@@ -171,7 +179,8 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
     @CitrusTest
     public void componentPromotionToProd_TestCreateIntegrationRestComponentFromRoot() throws Exception {
         // Retrieve the latest component.
-        testComponent = GraphQL.getComponentDetails(projectId, componentHandler, accessToken);
+        HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
+        testComponent = GraphQL.getComponentDetails(this, cpProjectsClient, projectId, componentHandler, accessToken);
         String latestApiVersionId = testComponent.getLatestApiVersion().getId();
         String releaseIdForEnvironment = testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT);
         String latestAppEnvId = testComponent.getLatestAppEnvId(Constant.PROD_ENVIRONMENT);
@@ -190,8 +199,8 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
 
         final InvokeInformation invokeInformation = testComponent.getInvokeInformation(accessToken, MI_REST_API,
                 Constant.Environment.Production.name());
-        final String prodApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId())
-                .replace("\"", "");
+        final String prodApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId(),
+                        environments.get(1).getName()).replace("\"", "");
         final String invokeUrlProd = invokeInformation.getInvokeUrl();
         ComponentUtils.invokeApiGET(this, prodApiKey, invokeUrlProd, API_INVOCATION_REQUEST_URI,
                 REST_API_EXPECTED_RESPONSE);

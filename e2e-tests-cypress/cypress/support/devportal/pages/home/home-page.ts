@@ -12,6 +12,7 @@
  */
 
 
+import { cyGet } from "../../../commons/cy";
 import { MEDIUM_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
 
@@ -30,9 +31,9 @@ export class DevPortalHomePage {
     }
 
     static verifyDevportalHomePagePublicView(): void {
-        cy.get('[data-testid="applications-appbar-btn"]').should("not.exist");
-        cy.get('[data-testid="login-button"]').should("exist");
-        cy.get('[data-testid="home-appbar-btn"]').should("exist");
+        cyGet('[data-testid="applications-appbar-btn"]').should("not.exist");
+        cyGet('[data-testid="login-button"]').should("exist");
+        cyGet('[data-testid="home-appbar-btn"]').should("exist");
         cy.log("Successfully navigated to public devportal home page");
     }
 

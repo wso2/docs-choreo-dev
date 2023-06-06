@@ -85,8 +85,9 @@ public class ApiManager extends ControlPlaneAPI {
 
     }
 
-    public static KeyData getApiKey(TestActionRunner runner, HttpClient client, String accessToken, String apiId) {
-        String resource = Constant.APIS_ENDPOINT + "/" + apiId + "/generate-key?organizationId=" + ORG_UUID;
+    public static KeyData getApiKey(TestActionRunner runner, HttpClient client, String accessToken, String apiId, String keyType) {
+        String resource = Constant.APIS_ENDPOINT + "/" + apiId + "/generate-key?organizationId=" + ORG_UUID +
+                "&keyType=" + keyType;
 
         AtomicReference<KeyData> keyData = new AtomicReference<>();
 

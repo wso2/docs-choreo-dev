@@ -55,7 +55,6 @@ public class Configuration {
             add(configYaml.authInfo);
             add(configYaml.common);
             add(configYaml.alerts);
-            add(configYaml.anomalyDetection);
             add(configYaml.insights);
             add(configYaml.themeManagement);
         }};

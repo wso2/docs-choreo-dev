@@ -12,6 +12,14 @@
  */
 
 export namespace Enums {
+
+
+  export enum PolicyType {
+    setHeader = "Set Header (2.0.0)"
+  }
+
+
+
   export enum DisplayType {
     restAPI = "restAPI",
     proxy = "proxy",
@@ -33,6 +41,7 @@ export namespace Enums {
     DEVELOPMENT = "Development",
     PRODUCTION = "Production",
     STAGING = "Staging",
+    SANDBOX = "Sandbox"
   }
 
   export enum HTTPMethod {
@@ -67,5 +76,24 @@ export namespace Enums {
   export enum RepoType {
     UserManagedEmpty = "UserManagedEmpty",
     UserManagedNonEmpty = "UserManagedNonEmpty",
+  }
+
+
+  export enum DeploymentStages {
+    CODE_GEN = "CODE_GEN",
+    PROXY_DEPLOY = "PROXY_DEPLOY",
+    DEPLOY = "DEPLOY"
+  }
+
+
+  export enum ResponseStatus {
+    success = "success",
+    completed = "completed",
+    failed = "failed",
+    failure = "failure",
+    error = "error",
+    Error = "Error",
+    ERROR="ERROR",
+    Active="Active"
   }
 }

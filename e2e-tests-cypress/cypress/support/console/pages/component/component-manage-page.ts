@@ -11,12 +11,14 @@
  * associated services.
  */
 
+import { cyGet } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
 import { LONG_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
 
 export class ComponentAPILifecycle {
   static devportl_btn = '[data-testid="go-to-dev-portal-btn"]';
+  private static MANAGE_MENU = '[data-cyid="link-manage"]';
 
   static republishConnector() {
     cy.get('[data-testid="republish-connector-btn"]').scrollIntoView().click();
@@ -32,7 +34,7 @@ export class ComponentAPILifecycle {
   }
 
   static manageLifecycle() {
-    cy.get('[data-testid="Lifecycle"]').click();
+    this.selectLifeCycle();
   }
   static verifyDevRevision() {
     return cy
@@ -80,7 +82,7 @@ export class ComponentAPILifecycle {
   }
 
   static selectUsagePlans(...plans) {
-    cy.get('[data-testid="Usage plans"]').click();
+    this.selectUsage();
     cy.get('[data-testid="checkbox-Unlimited"]').click();
     plans.forEach((plan) => {
       cy.get(`[data-testid="checkbox-${plan}"]`).click();
@@ -89,17 +91,31 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="checkbox-Unlimited"]');
   }
 
-  private static handleConnectorPublishPopup() {
+  private static handleConnectorPublishBehavior(retryCount = 0) {
+    retryCount++;
+
+    // Handle breaking out of recursion after retrying in case Choreo UI gets stuck
+    if (retryCount > 7) {
+      return;
+    }
+
     cy.get("body").then((bdy) => {
       if (
+        // Popup wizard
         bdy.find('[data-testid="connector-publish-wizard-title"]').length > 0
       ) {
         if (bdy.find('[data-testid="retry-btn"]').length > 0) {
           cy.get('button[aria-label="close"]').eq(1).click();
         } else {
           cy.wait(20000);
-          this.handleConnectorPublishPopup();
+          this.handleConnectorPublishBehavior(retryCount);
         }
+      } else if (
+        // Ongoing publishing label
+        bdy.find('[data-testid="connector-publishing-info"]').length > 0
+      ) {
+        cy.wait(20000);
+        this.handleConnectorPublishBehavior(retryCount);
       }
     });
   }
@@ -116,9 +132,9 @@ export class ComponentAPILifecycle {
   static publishConnector(connectorAudience: Enums.ConnectorAudience) {
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').should("be.enabled").click();
-    this.handleConnectorPublishPopup();
+    this.handleConnectorPublishBehavior();
     cy.get('[data-testid="published-connector-info"]').contains(
-      "You have already published a connector for this API.",
+      /You have already published a connector for this API.|Successfully published the connector to the Marketplace./,
       LONG_TIME
     );
     cy.get('[data-testid="connector-publish-wizard-title"]').should(
@@ -139,7 +155,7 @@ export class ComponentAPILifecycle {
     allowedHeaders: string[],
     allowedMethods: string[]
   ) {
-    cy.get('[data-testid="Settings"]').click();
+    this.selectSettings();
     cy.get('[data-testid="switch-cors-config"]');
     if (isCORSenable) {
       cy.contains("Edit").click();
@@ -197,7 +213,11 @@ export class ComponentAPILifecycle {
   }
 
   static selectSetting() {
-    cy.get('[data-testid="Settings"]').click();
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.get('[data-cyid="manage-settings"]').click();
+    } else {
+      cy.get('[data-testid="Settings"]').click();
+    }
   }
 
   static selectResources() {
@@ -239,7 +259,14 @@ export class ComponentAPILifecycle {
   }
 
   static selectConsumers() {
-    cy.get('[data-cyid="Consumers"]').click();
+    let selector = '[data-cyid="manage-consumers"]';
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.expandSecondaryMenu(selector);
+    } else {
+      selector = '[data-cyid="Consumers"]';
+    }
+
+    cy.get(selector).click();
   }
 
   static verifyConsumer(appName: string) {
@@ -266,15 +293,10 @@ export class ComponentAPILifecycle {
   }
 
   static updateAPIAccessMode(accessMode: string) {
-    Utils.pollElement('[data-testid="access-mode"]');
-    cy.get(`li[id*="Select"]`)
-      .contains(accessMode)
-      .should("exist")
-      .click({ force: true });
-    cy.get('[data-testid="warning-banner"]').should("be.visible");
-    cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
-      .should("exist")
-      .click();
+    cyGet('[data-testid="access-mode"]').click();
+    cy.contains(accessMode).should("exist").realClick();
+    cyGet('[data-testid="warning-banner"]').should("be.visible");
+    cyGet('[data-cyid="btn-confirmation-dialog-blue"]').should("exist").click();
     cy.contains(
       `Successfully converted to an ${accessMode.toLowerCase()} API.`
     ).should("be.visible");
@@ -293,10 +315,18 @@ export class ComponentAPILifecycle {
   }
 
   static selectPermissions() {
-    cy.get('[data-testid="Permissions"]').click();
+    let selector = '[data-cyid="manage-permissions"]';
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.expandSecondaryMenu(selector);
+    } else {
+      selector = '[data-testid="Permissions"]';
+    }
+
+    cy.get(selector).click();
   }
 
   static navigatePermissionManagementWindow() {
+    this.selectPermissions();
     cy.get("h5").contains(
       "You don't have any permissions (scopes) defined as yet"
     );
@@ -373,7 +403,10 @@ export class ComponentAPILifecycle {
 
   static selectEndpoint(endpoint: string) {
     cy.get('[data-cyid="endpoint-list"]').click();
-    cy.get('ul>li[role="option"]').contains(endpoint).click();
+    cy.get('[id="backdrop-loader"]').should("not.exist");
+    cy.get('[data-cyid="endpoint-list"]').within(() => {
+      cy.get(`input[value="${endpoint}"]`).click();
+    });
   }
 
   static publishServiceToMarketplace() {
@@ -382,5 +415,54 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="Deploy as a Prototype-lc-btn"]').should("be.visible");
     cy.get('[data-testid="Demote to Created-lc-btn"]').should("be.visible");
     cy.get('[data-testid="Deprecate-lc-btn"]').should("be.visible");
+  }
+
+  private static expandSecondaryMenu(selector: string) {
+    cy.get("body").then((bdy) => {
+      // Secondary menu is collapsed
+      if (bdy.find(selector).length == 0) {
+        // Expand secondary menu
+        cy.get(this.MANAGE_MENU).should("be.visible").click();
+      }
+    });
+  }
+
+  private static selectLifeCycle() {
+    let selector = '[data-cyid="manage-lifecycle"]';
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.expandSecondaryMenu(selector);
+    } else {
+      selector = '[data-testid="Lifecycle"]';
+    }
+
+    cy.get(selector).click();
+  }
+
+  private static selectUsage() {
+    let selector = '[data-cyid="manage-usage"]';
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.expandSecondaryMenu(selector);
+    } else {
+      cy.get('[data-cyid="link-manage"]')
+        .should("be.visible")
+        .click({ force: true });
+      selector = '[data-testid="Usage plans"]';
+    }
+
+    cy.get(selector).click();
+  }
+
+  private static selectSettings() {
+    let selector = '[data-cyid="manage-settings"]';
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.expandSecondaryMenu(selector);
+    } else {
+      cy.get('[data-cyid="link-manage"]')
+        .should("be.visible")
+        .click({ force: true });
+      selector = '[data-testid="Settings"]';
+    }
+
+    cy.get(selector).click();
   }
 }

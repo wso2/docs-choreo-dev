@@ -22,10 +22,9 @@ import { ComponentListingPage } from "../../../support/console/pages/component/c
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
+import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-
-import { GitHub } from "../../../support/github/github";
 import { ComponentData } from "../../../support/interfaces/component-data";
 
 before(() => {
@@ -125,10 +124,8 @@ describe("Verify Ballerina service functionality", () => {
   it("Apply configs to dev", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectSetting();
-    ComponentAPILifecycle.selectEndpoint(ENDPOINT_NAME);
-    ComponentAPILifecycle.selectResources();
-
     ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
+    ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("books");
     ComponentAPILifecycle.applyConfiguration();
@@ -164,6 +161,44 @@ describe("Verify Ballerina service functionality", () => {
     );
   });
 
+  //new version creation
+  it("Verify new version creation and deploy to dev", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.addNewVersion();
+    ComponentDeployPage.deployService(ENDPOINT_NAME, true);
+  });
+
+  it("Verify test functionality of root resource in dev on swagger for new version", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testManagedEndpoint(
+      Enums.Environment.DEVELOPMENT,
+      "Readinglist",
+      "Books",
+      "get"
+    ).then((res) => {
+      expect(res.response).to.be.eq("[]");
+      expect(res.statusCode).to.be.eq("200");
+    });
+  });
+
+  it("Verify new version promotion to prod", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.promoteService(ENDPOINT_NAME, true);
+  });
+
+  it("Verify test functionality of root resource in prod on swagger for new version", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testManagedEndpoint(
+      Enums.Environment.PRODUCTION,
+      "Readinglist",
+      "Books",
+      "get"
+    ).then((res) => {
+      expect(res.response).to.be.eq("[]");
+      expect(res.statusCode).to.be.eq("200");
+    });
+  });
+
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
@@ -175,15 +210,38 @@ describe("Verify Ballerina service functionality", () => {
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
   });
 
-  it("Verify suspending all component deployments", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
+  it("Verify API insights for dev env", () => {
+    ChoreoHomePage.navigateToInsights();
+
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.contains("Coming Soon").should("be.visible");
+    } else {
+      InsightsPage.selectTimePeriod();
+      InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
+      InsightsPage.getTotalTraffic().should((value) => {
+        expect(Number(value)).gte(2);
+      });
+    }
   });
 
-  it("Verify application suspension", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.selectEndpoint(ENDPOINT_NAME);
-    ComponentAPILifecycle.demoteToCreated();
+  it("Verify API insights for prod env", () => {
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.contains("Coming Soon").should("be.visible");
+    } else {
+      InsightsPage.selectTimePeriod();
+      InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
+      InsightsPage.getTotalTraffic().should((value) => {
+        expect(Number(value)).gte(2);
+      });
+    }
+  });
+
+  it("Verify suspending all component deployments", () => {
+    if (!Utils.isUnifiedMenuEnabled()) {
+      ChoreoHomePage.navigateToComponents();
+      ComponentListingPage.visitToAComponent(COMPONENT_NAME);
+    }
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopAllDeployment();
   });
 });

@@ -982,7 +982,7 @@ public class ChoreoComponent {
      * @param apiId       apiId for the deployed component
      * @return request body containing graphql query
      */
-    public String getAPIKeyForInvoke(String accessToken, String apiId) throws  IOException,
+    public String getAPIKeyForInvoke(String accessToken, String apiId, String keyType) throws  IOException,
             APIKeyGenerationCheckException, ApiKeyNotFoundException {
         String requestURI = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT)
                 .concat(Constant.APIS_ENDPOINT)
@@ -992,7 +992,9 @@ public class ChoreoComponent {
                 .concat("?")
                 .concat(Constant.ORGANIZATION_ID)
                 .concat("=")
-                .concat(organization.getOrgUUID());
+                .concat(organization.getOrgUUID())
+                .concat("&keyType=")
+                .concat(keyType);
         HttpPost request = new HttpPost(requestURI);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         StringEntity requestEntity = new StringEntity(

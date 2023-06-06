@@ -65,6 +65,53 @@ export class GraphQLQueryBuilder {
     }
   }
 
+  static getEndpointStatusQuery(componentId: string, versionId: string, releaseId: string) {
+    return {
+      query: `query List {
+      componentEndpoints(
+        input: {
+          componentId: "${componentId}"
+          versionId: "${versionId}"
+        options: {
+          filter: {
+            releaseIds: ["${releaseId}"]
+          }
+        }
+      }) 
+        {
+          id
+          createdAt
+          updatedAt
+          releaseId
+          environmentId
+          displayName
+          port
+          type
+          apiContext
+          apiDefinitionPath
+          invokeUrl
+          visibility
+          hostName
+          apimId
+          apimRevisionId
+          apimName
+          projectUrl
+          organizationUrl
+          publicUrl
+          state
+          stateReason {
+            code
+            message
+            details
+            workerId
+          }
+          isDeleted
+          deletedAt
+        } 
+      }`
+    }
+  }
+
   static getComponentDeploymentStatusQuery(orgHandler: string, orgUuid: string, componentId: string, versionId: string, environmentId: string) {
     return {
       query: `query {
@@ -195,6 +242,62 @@ export class GraphQLQueryBuilder {
                       }`,
     };
 
+  }
+
+
+
+  static getBuildsByVersionQuery(orgHandler: string, componentId: string, versionId: string) {
+
+    return {
+      query: `query {
+      buildsByVersion(
+        orgHandler: "${orgHandler}"
+        build: {
+          componentId: "${componentId}"
+          versionId: "${versionId}"
+    }
+      ) {
+        id,
+        createdDate,
+        versionId,
+        buildId,
+        commitHash,
+        commitMessage,
+        revisions {
+          revisionId,
+          createdDate,
+          description,
+          environments
+        }
+    }
+}`
+    }
+  }
+
+
+
+
+
+  static getEnvironments(uuid: string, projectId: string) {
+    return {
+      query: `query {
+        environments(orgUuid:"${uuid}", type: "external",
+    projectId:"${projectId}"
+    ){
+          name,
+          id,
+          choreoEnv,
+          vhost,
+          apiEnvName,
+          isMigrating,
+          apimEnvId,
+          namespace,
+          sandboxVhost,
+          critical,
+          isPdp
+        }
+      }`
+    }
   }
 
 }

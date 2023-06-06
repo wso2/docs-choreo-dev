@@ -2,7 +2,7 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   projectId: "$CYPRESS_PROJECT_ID",
-  defaultCommandTimeout: 80000,
+  defaultCommandTimeout: 40000,
   pageLoadTimeout: 300000,
   responseTimeout: 300000,
   viewportHeight: 1000,
@@ -13,7 +13,7 @@ export default defineConfig({
   videoUploadOnPasses: false,
   videoCompression: false,
   watchForFileChanges: false,
-  chromeWebSecurity:false,
+  chromeWebSecurity: false,
   e2e: {
     setupNodeEvents(on, config) {
       let apiName;
@@ -42,10 +42,11 @@ export default defineConfig({
       config.env.userName = process.env.userName;
       config.env.userEmail = process.env.userEmail;
       config.env.gitPAT = process.env.gitPAT;
-      config.env.enablePerspectiveView = process.env.enablePerspectiveView;
+      config.env.enableUnifiedMenu = process.env.enableUnifiedMenu;
       return config;
     },
-    specPattern: "cypress/e2e-smoke//./**/*.ts",
+    testIsolation: false,
+    specPattern: "cypress/e2e-smoke/**/*.ts",
   },
   env: {
     FAIL_FAST_STRATEGY: "spec",

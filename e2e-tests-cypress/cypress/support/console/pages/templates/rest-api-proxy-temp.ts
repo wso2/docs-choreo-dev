@@ -12,7 +12,9 @@
  */
 
 
+import { cyGet } from "../../../commons/cy";
 import { Utils } from "../../../commons/utils";
+import { ProxyAPI } from "../../../interfaces/proxy-api";
 
 
 export class RestAPIProxyTemplate {
@@ -32,6 +34,33 @@ export class RestAPIProxyTemplate {
 
     cy.get('[data-cyid="btn-next"]').should("be.visible").click();
   }
+
+
+
+
+  static createProxyApi(api: ProxyAPI) {
+    cy.get('[data-cyid="api-name"]').within(() =>
+      cy.get("input").clear().type(api.apiName)
+    );
+    cy.get('[data-cyid="api-version"]').clear().type(api.version);
+    cy.get('[data-cyid="api-basepath"]').within(() =>
+      cy.get("input").clear().type(api.apiBasePath)
+    );
+
+    cy.get('[data-cyid="api-endpoint"]').within(() =>
+      cy.get("input").clear().type(api.endpoint)
+    );
+    if(api.isInternal){
+      cyGet('[aria-label="Access Modes"]>div').eq(1).click();
+    }
+    cy.get('[data-cyid="btn-create"]').should("be.enabled").click();
+
+    cyGet('[data-testid="delete-all-operations-btn"]').should("be.visible");
+  }
+
+
+
+
 
   static enterAPIdetails(
     apiName: string,

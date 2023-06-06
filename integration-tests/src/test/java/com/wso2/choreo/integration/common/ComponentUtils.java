@@ -84,7 +84,10 @@ public class ComponentUtils {
 
     private static final String timestampRegexMatch = "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}Z|\\d{2}.\\d{2}Z|\\d{2}.\\d{3}Z|\\d{2}.\\d{4}Z|\\d{2}.\\d{5}Z|\\d{2}.\\d{6}Z|\\d{2}.\\d{7}Z)";
 
-    public static ChoreoComponent getReusableComponent(String accessToken, String testName) throws Exception {
+    public static ChoreoComponent getReusableComponent(TestActionRunner runner, String accessToken, Repository repo,
+                                                       String testName, Map<Endpoints, HttpClient> citrusClients,
+                                                       ComponentFlavour componentFlavour) throws Exception {
+
         ChoreoOrganization org = TestContext.getTestOrg();
         String projectName = "integration-test-project";
 
@@ -97,12 +100,13 @@ public class ComponentUtils {
         }
 
         String componentName = testName + "component";
-        Optional<ChoreoComponent> component = project.getComponentByName(accessToken, componentName);
+        Optional<ChoreoComponent> component = ComponentUtils.getComponentByName(runner, accessToken, citrusClients,
+                project, componentName);
         ChoreoComponent restAPI;
 
         if (component.isEmpty()) {
-            restAPI = project.createRestAPI(accessToken, componentName, org);
-            restAPI.setProjectId(project.getId());
+            GraphqlDTO dto = ComponentUtils.createRestApiComponentRequest(componentName, project, repo);
+            restAPI = createComponent(runner, citrusClients, accessToken, dto, componentFlavour);
         } else {
             restAPI = component.get();
         }
@@ -112,19 +116,30 @@ public class ComponentUtils {
         return restAPI;
     }
 
-    public static ChoreoComponent getComponentFromProject(ChoreoProject project, String componentName,
-            String accessToken) throws ComponentRetrieveException {
-        ChoreoOrganization org = TestContext.getTestOrg();
-        Optional<ChoreoComponent> component = project.getComponentByName(accessToken, componentName);
+    public static Optional<ChoreoComponent> getComponentByName(TestActionRunner runner, String accessToken,
+            Map<Endpoints, HttpClient> citrusClients, ChoreoProject project, String componentName)
+            throws ComponentRetrieveException {
+        HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
 
-        if (component.isPresent()) {
-            ChoreoComponent restAPI = component.get();
-            restAPI.setOrganization(org);
-            return restAPI;
-        } else {
-            throw new RuntimeException(
-                    "Component named: " + componentName + "does not exist in " + project.getName() + " project");
+        try {
+            List<ChoreoComponent> components = GraphQL.getProjectComponents(runner, cpProjectsClient, project.getId(),
+                    accessToken);
+
+            for (int i = 0; i < components.size(); ++i) {
+                String name = components.get(i).getName();
+
+                if (componentName.equals(name)) {
+                    String componentHandler = components.get(i).getHandler();
+                    return Optional.of(GraphQL.getComponentDetails(runner, cpProjectsClient, project.getId(),
+                            componentHandler, accessToken));
+                }
+            }
+        } catch (IOException e) {
+            throw new ComponentRetrieveException("Component named: " + componentName + "does not exist in " +
+                    project.getName() + " project");
         }
+
+        return Optional.empty();
     }
 
     public static ChoreoProject getProjectByName(String projectName, String accessToken)
@@ -509,7 +524,8 @@ public class ComponentUtils {
                 .concat("greeting")
                 .concat("?name=testUser");
         // Escaping the quotations
-        String apiKey = component.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId()).replace("\"", "");
+        String apiKey = component.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId(),
+                env.name()).replace("\"", "");
         HttpGet request = new HttpGet(requestURI);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
@@ -538,7 +554,8 @@ public class ComponentUtils {
                 .concat("greeting")
                 .concat("?name=testUser");
         // Escaping the quotations
-        String apiKey = component.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId()).replace("\"", "");
+        String apiKey = component.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId(),
+                env.name()).replace("\"", "");
         HttpGet request = new HttpGet(requestURI);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);

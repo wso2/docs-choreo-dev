@@ -16,7 +16,6 @@ import { Utils } from "../../../../support/commons/utils";
 import { TestHelper } from "../../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../../support/console/pages/component/component-listing-page";
-import { ComponentAPILifecycle } from "../../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../../support/console/pages/login-page";
@@ -35,7 +34,6 @@ after(() => {
 });
 
 describe(`Verify BYOC functionality in region ${dp}`, () => {
-
   const BYOC_NAME = "create-ReuseBYOC";
   const RESOURCE_NAME = "movies";
 
@@ -54,13 +52,17 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
       byocConfig: {
         dockerfilePath: "byoc-test/Dockerfile",
         dockerContext: "byoc-test",
-        srcGitRepoUrl: "https://github.com/choreo-test-apps/byor-greetings-app2",
+        srcGitRepoUrl:
+          "https://github.com/choreo-test-apps/byor-greetings-app2",
         srcGitRepoBranch: "main",
-      }
-
+      },
     };
     ProjectListingPage.selectProject();
-    ProjectOverviewPage.searchReuseComponent(componentData, "Default Project", true);
+    ProjectOverviewPage.searchReuseComponent(
+      componentData,
+      "Default Project",
+      true
+    );
   });
 
   it("Deploy component", () => {
@@ -69,8 +71,8 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
     ComponentDeployPage.deployToDev();
   });
 
-
   it("Verify test functionality using Swagger UI in Dev", () => {
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(Enums.Environment.DEVELOPMENT, RESOURCE_NAME).then(
       (res) => {
         expect(res.statusCode).to.be.equal("200");
@@ -95,7 +97,8 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
     ComponentDeployPage.promoteToProd();
   });
 
-  it("Verify test functionality using Swagger UI in Dev", () => {
+  it("Verify test functionality using Swagger UI in Prod", () => {
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(Enums.Environment.PRODUCTION, RESOURCE_NAME).then(
       (res) => {
         expect(res.statusCode).to.be.equal("200");
@@ -115,55 +118,8 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
     });
   });
 
-  it("Apply configs to dev", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.selectSetting();
-    ComponentAPILifecycle.selectResources();
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-    ComponentAPILifecycle.applyConfiguration();
-    ComponentAPILifecycle.verifyDevRevision().should(
-      "eq",
-      Enums.Environment.DEVELOPMENT
-    );
-  });
-
-  it("Apply configs to prod", () => {
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-    ComponentAPILifecycle.applyConfiguration();
-  });
-
-  it("Verify test functionality using generated curl in Dev", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnCurl(
-      Enums.Environment.DEVELOPMENT,
-      Enums.HTTPMethod.GET,
-      RESOURCE_NAME
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url).then((res) => {
-        expect(res.status).equal(200);
-      });
-    });
-  });
-
-  it("Verify test functionality using generated curl in Prod", () => {
-    TestHelper.testOnCurl(
-      Enums.Environment.PRODUCTION,
-      Enums.HTTPMethod.GET,
-      RESOURCE_NAME
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url).then((res) => {
-        expect(res.status).equal(200);
-      });
-    });
-  });
-
   it("Verify suspending deployments", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });
-
 });

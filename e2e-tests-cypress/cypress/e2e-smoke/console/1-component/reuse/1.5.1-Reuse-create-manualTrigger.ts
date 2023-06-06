@@ -20,7 +20,6 @@ import { ChoreoHomePage } from "../../../../support/console/pages/home/home-page
 import { LoginPage } from "../../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../../support/console/pages/projects/projects-listing-page";
-import { GitHub } from "../../../../support/github/github";
 import { ComponentData } from "../../../../support/interfaces/component-data";
 
 
@@ -59,7 +58,7 @@ describe("Verify Reusable Manual Trigger creation functionality", () => {
   it("Verify component deployment", () => {
     ComponentListingPage.visitToAComponent(MANUAL_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployManualTriggerToDev();
+    ComponentDeployPage.deployToDev(false, false, true);
   });
 
   it("Verify component promotion to prod", () => {

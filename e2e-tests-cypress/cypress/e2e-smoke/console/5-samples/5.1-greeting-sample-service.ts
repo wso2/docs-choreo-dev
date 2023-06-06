@@ -33,7 +33,6 @@ describe("Create Greeting sample in Choreo", () => {
   const REPO_NAME = "hello-world-sample";
   before(() => {
     LoginPage.login();
-    GitHub.deleteRepoContent(REPO_NAME);
   });
   after(() => {
     ChoreoHomePage.logout();
