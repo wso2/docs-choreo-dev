@@ -23,9 +23,13 @@ export class ChoreoHomePage {
   }
 
   static navigateToMarketPlace() {
-    cy.get('[data-testid="main-left-nav-item-Marketplace"]').click({
-      force: true,
-    });
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.contains("Coming Soon").should("be.visible");
+    } else {
+      cy.get('[data-testid="main-left-nav-item-Marketplace"]').click({
+        force: true,
+      });
+    }
   }
 
   static navigateToProjects() {
