@@ -244,4 +244,60 @@ export class GraphQLQueryBuilder {
 
   }
 
+
+
+  static getBuildsByVersionQuery(orgHandler: string, componentId: string, versionId: string) {
+
+    return {
+      query: `query {
+      buildsByVersion(
+        orgHandler: "${orgHandler}"
+        build: {
+          componentId: "${componentId}"
+          versionId: "${versionId}"
+    }
+      ) {
+        id,
+        createdDate,
+        versionId,
+        buildId,
+        commitHash,
+        commitMessage,
+        revisions {
+          revisionId,
+          createdDate,
+          description,
+          environments
+        }
+    }
+}`
+    }
+  }
+
+
+
+
+
+  static getEnvironments(uuid: string, projectId: string) {
+    return {
+      query: `query {
+        environments(orgUuid:"${uuid}", type: "external",
+    projectId:"${projectId}"
+    ){
+          name,
+          id,
+          choreoEnv,
+          vhost,
+          apiEnvName,
+          isMigrating,
+          apimEnvId,
+          namespace,
+          sandboxVhost,
+          critical,
+          isPdp
+        }
+      }`
+    }
+  }
+
 }

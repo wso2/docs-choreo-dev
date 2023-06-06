@@ -32,7 +32,7 @@ describe("Create Schedule Trigger", () => {
     '{"userId":1,"id":1,"title":"delectus aut autem","completed":false}';
   const REPO_NAME = Utils.generateComponentName("repo");
   const PROJECT_NAME = Utils.generateProjectName();
-  const PROJECT_DESCRIPTION = "Internal API Test";
+  const PROJECT_DESCRIPTION = "Schedule Trigger Test Project";
 
   before(() => {
     LoginPage.login();

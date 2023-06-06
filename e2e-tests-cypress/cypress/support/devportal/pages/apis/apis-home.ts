@@ -11,11 +11,10 @@
  * associated services.
  */
 
-
 import { Enums } from "../../../commons/enums";
 import { MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
-import { STANDARD_TIME_OUT } from "../../constants";
+
 
 export class Apis {
   static futureTime = 0;
@@ -27,14 +26,17 @@ export class Apis {
       .click();
     cy.log("Searching the API");
     cy.get("#outlined-search-bar-api-listing").clear();
-    cy.get("#outlined-search-bar-api-listing", SHORT_TIME).type(apiName + "{enter}");
+    cy.get("#outlined-search-bar-api-listing", SHORT_TIME).type(
+      apiName + "{enter}"
+    );
 
     cy.get(`[data-testid="apiCard-${apiName}"]`).should("be.visible").click();
     cy.log("Successfully navigated to Overview");
   }
 
   static verifyAPIname() {
-    return cy.get('[data-testid="txt-api-name"]', MEDIUM_TIME)
+    return cy
+      .get('[data-testid="txt-api-name"]', MEDIUM_TIME)
       .should("be.visible")
       .invoke("text");
   }
@@ -77,13 +79,18 @@ export class Apis {
       .focus()
       .type(`${textApiName}{enter}`);
     if (version == "") {
-      Utils.getRenderedElement(`[data-testid="apiCard-${textApiName}"`)
-        .click();
+      Utils.getRenderedElement(`[data-testid="apiCard-${textApiName}"`).click();
     } else {
       Utils.getRenderedElement(`[data-testid="apiCard-${textApiName}"`, 2000)
         .contains(`Version : ${version}`)
         .click();
     }
+
+    // Ensure API Overview page is loaded
+    cy.get('[data-testid="li-overview-item-link"]').should("be.visible");
+    cy.get('[data-testid="txt-api-name"]')
+      .contains(textApiName)
+      .should("be.visible");
   }
 
   private static getInvokeUrl() {

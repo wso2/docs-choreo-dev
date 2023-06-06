@@ -7,3 +7,8 @@ export const cyGet = (selector: string,config?:any) => {
 export const cyLog = (obj:any)=>{
     cy.log(JSON.stringify(obj))
 }
+
+
+export const type = (selector: string, value: string) => {
+    cyGet(selector).clear().type(value)
+}
