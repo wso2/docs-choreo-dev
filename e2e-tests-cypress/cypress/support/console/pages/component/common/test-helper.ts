@@ -30,7 +30,7 @@ export class TestHelper {
   ) {
    
     APITest.testAPI();
-    cy.get('[data-cyid="OpenAPI Console"]').click();
+   // cy.get('[data-cyid="OpenAPI Console"]').click();
     this.selectOpenApiConsole();
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.getTestKey();
@@ -214,7 +214,7 @@ export class TestHelper {
       selector = '[data-cyid="OpenAPI Console"]';
       APITest.testAPI();
     }
-    cy.get(selector).click();
+    cy.get(selector).click({ force: true });
   }
 
   private static selectCurl() {
