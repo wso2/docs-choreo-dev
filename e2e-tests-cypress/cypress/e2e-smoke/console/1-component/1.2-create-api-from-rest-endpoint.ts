@@ -311,19 +311,6 @@ describe(`Verify proxy api functionality`, () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.configureSecuritySettings(
@@ -354,18 +341,16 @@ describe(`Verify proxy api functionality`, () => {
 
 
 
-
-
-
-
-
-
-
-
   it("Deploy new version to Dev", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.deployProxyAPIToDev(PROJECT_NAME, API_NAME)
   });
+
+
+
+  it("Verify mediation component deployment  with updated policy", () => {
+    APIDeployment.verifyProxyDeployment(true)
+  })
 
   it("Test in dev", () => {
     TestHelper.testOnSwagger(

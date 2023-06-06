@@ -390,6 +390,7 @@ export class GraphQL {
       Utils.isError(deploymentStatus, "Proxy With Mediation Policy Deployment Failed")
       if (deploymentStatus !== 'ACTIVE') {
         this.getPrmotionStatus()
+        cy.wait(15000)
       }
       return
     })
