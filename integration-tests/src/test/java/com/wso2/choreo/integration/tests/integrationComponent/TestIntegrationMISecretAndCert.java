@@ -20,6 +20,7 @@ import com.google.gson.JsonArray;
 import com.wso2.choreo.integration.apis.devops.DevopsPortalApi;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentUtils;
+import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -28,6 +29,7 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
@@ -36,6 +38,7 @@ import org.testng.annotations.Test;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TestIntegrationMISecretAndCert extends TestNGCitrusSpringSupport {
@@ -50,6 +53,7 @@ public class TestIntegrationMISecretAndCert extends TestNGCitrusSpringSupport {
     private String componentId;
     private static String componentHandler;
     private String githubOrg;
+    private List<Environment> environments;
 
     private static ChoreoComponent testComponent;
 
@@ -58,6 +62,9 @@ public class TestIntegrationMISecretAndCert extends TestNGCitrusSpringSupport {
 
     @Autowired
     private HttpClient choreoProjectsTestClient;
+
+    @Autowired
+    Map<Endpoints, HttpClient> citrusClients;
 
     @BeforeClass
     public void setup() throws Exception {
@@ -194,8 +201,9 @@ public class TestIntegrationMISecretAndCert extends TestNGCitrusSpringSupport {
 
         final InvokeInformation invokeInformation = testComponent.getInvokeInformation(accessToken, MI_REST_API,
                 Constant.Environment.Development.name());
-        final String devApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId())
-                .replace("\"", "");
+        environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, testComponent);
+        final String devApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId(),
+                        environments.get(0).getName()).replace("\"", "");
         String invokeUrlDev = invokeInformation.getInvokeUrl();
         String res = "{\n" + "\"Info\": \"Integration with secrets\",\n" + "\"data\": [{\n" + "\"secret_key\": " +
                 "\"user_pass\",\n" + "\"secret_value\": \"user_pass_!@#$%\"\n" + "},\n" + "{\n" + "\"secret_key\": " +

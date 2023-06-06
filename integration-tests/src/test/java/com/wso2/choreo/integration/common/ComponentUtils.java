@@ -524,7 +524,8 @@ public class ComponentUtils {
                 .concat("greeting")
                 .concat("?name=testUser");
         // Escaping the quotations
-        String apiKey = component.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId()).replace("\"", "");
+        String apiKey = component.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId(),
+                env.name()).replace("\"", "");
         HttpGet request = new HttpGet(requestURI);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
@@ -553,7 +554,8 @@ public class ComponentUtils {
                 .concat("greeting")
                 .concat("?name=testUser");
         // Escaping the quotations
-        String apiKey = component.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId()).replace("\"", "");
+        String apiKey = component.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId(),
+                env.name()).replace("\"", "");
         HttpGet request = new HttpGet(requestURI);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
