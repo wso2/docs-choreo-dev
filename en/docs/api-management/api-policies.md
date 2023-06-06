@@ -53,7 +53,7 @@ To deploy the API follow the steps below:
 
 11. Click **Save & Deploy**.
 
-## Implement an API a policy
+## Implement an API policy
 
 Choreo allows you to implement an API policy as a Ballerina project and attach it to an API proxy component. 
 
