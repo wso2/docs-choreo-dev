@@ -173,7 +173,7 @@ export class Utils {
         body: res.body,
         status: res.status,
         retry: isRetry,
-        headers: res.headers
+        headers: res.headers,
       });
     });
   }
@@ -257,12 +257,15 @@ export class Utils {
     return false;
   }
 
+  static moveMouseAwayFromLeftMenu() {
+    cy.get("body").realMouseMove(250, 250);
+  }
+
   static interceptConfig() {
     cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/**`).as(
       "config"
     );
   }
-
 
   // Ensure that element remains visible multiple times before returning to handle rerendering scenarios
   static getRenderedElement(
@@ -285,10 +288,18 @@ export class Utils {
       .get(locator);
   }
 
-
   static isError(responseStatus: string, errorMessage: string) {
-    if (["failed", "failure", "error", "Error","ERROR"].includes(responseStatus)) {
-      throw Error(errorMessage)
+    if (
+      responseStatus in
+      [
+        Enums.ResponseStatus.failed,
+        Enums.ResponseStatus.failure,
+        Enums.ResponseStatus.error,
+        Enums.ResponseStatus.Error,
+        Enums.ResponseStatus.ERROR,
+      ]
+    ) {
+      throw Error(errorMessage);
     }
   }
 }
