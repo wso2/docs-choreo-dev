@@ -103,18 +103,14 @@ export class APIDeployment {
     });
   }
 
-
-
   static promoteToProd(projectName: string = "", componentName: string = "", hasMediationPolicy: boolean = false) {
-    cyGet('[data-cyid="btn-promote"]').should('be.enabled').click()
+    cyGet('[data-cyid="btn-promote"]').should('be.enabled').click();
     cy.get('button').contains("Cancel").should('be.visible')
-
 
     cy.get('body').then(bdy => {
       if (bdy.find('[data-cyid="btn-next"]').length > 0) {
         cy.get('[data-cyid="btn-next"]').should("be.visible").click();
       }
-
 
       if (bdy.find('[data-cyid="expand-more"]').length > 0) {
         cy.get('.ConfigForm').within(() => {
@@ -138,17 +134,5 @@ export class APIDeployment {
     cy.get('[data-cyid*="promote"]').should("not.be.disabled");
 
   }
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

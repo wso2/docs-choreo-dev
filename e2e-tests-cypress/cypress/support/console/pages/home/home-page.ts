@@ -61,12 +61,15 @@ export class ChoreoHomePage {
   }
 
   static navigateToSettings() {
-    cy.get("#backdrop-loader").should("not.exist");
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.get("#backdrop-loader").should("not.exist");
+      cy.get('[data-cyid="Default Project-close-button"]').should("be.visible").click();
+      cy.get('[data-cyid="settings"]').should("be.visible").click();
+    } else {
+      cy.get("#backdrop-loader").should("not.exist");
     cy.get('[data-testid="header-user-profile-menu"]').click();
-    cy.get('[data-testid="header-user-profile-item-settings"]')
-      .should("be.visible")
-      .contains("Settings")
-      .click();
+    cy.get('[data-testid="header-user-profile-item-settings"]').should("be.visible").contains("Settings").click();
+    }
   }
 
   static switchOrganization() {

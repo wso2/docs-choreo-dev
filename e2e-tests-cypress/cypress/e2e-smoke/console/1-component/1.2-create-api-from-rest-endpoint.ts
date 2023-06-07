@@ -172,11 +172,6 @@ describe(`Verify proxy api functionality`, () => {
     APIDeployment.verifyProxyDeployment(PROJECT_NAME,API_NAME,true)
   })
 
-
-
-
-
-
   it("Verify test functionality using Swagger UI in Dev with new policy", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
