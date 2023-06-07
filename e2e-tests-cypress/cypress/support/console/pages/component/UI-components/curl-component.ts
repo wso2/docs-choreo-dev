@@ -1,5 +1,6 @@
 
 
+import { cyGet } from "../../../../commons/cy";
 import { Enums } from "../../../../commons/enums";
 import { CurlData } from "../../../../interfaces/curl-data";
 
@@ -8,7 +9,7 @@ import { CurlData } from "../../../../interfaces/curl-data";
 
 export class Curl {
   static selectMethod(httpMethod: string) {
-    cy.get('[data-testid="curl-select-method"]').click();
+cyGet('[data-testid="curl-select-method"]').click();
     cy.get(`[data-testid="curl-${httpMethod.toLowerCase()}"]`).click();
   }
 

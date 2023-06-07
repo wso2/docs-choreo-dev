@@ -403,7 +403,10 @@ export class ComponentAPILifecycle {
 
   static selectEndpoint(endpoint: string) {
     cy.get('[data-cyid="endpoint-list"]').click();
-    cy.get('ul>li[role="option"]').contains(endpoint).click();
+    cy.get('[id="backdrop-loader"]').should("not.exist");
+    cy.get('[data-cyid="endpoint-list"]').within(() => {
+      cy.get(`input[value="${endpoint}"]`).click();
+    });
   }
 
   static publishServiceToMarketplace() {
