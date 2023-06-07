@@ -93,8 +93,8 @@ describe(`Verify proxy api functionality`, () => {
   });
 
   it("Verify mediation component deployment", () => {
-    APIDeployment.verifyProxyDeployment();
-  });
+    APIDeployment.verifyProxyDeployment(PROJECT_NAME,API_NAME)
+  })
 
   it("Verify test functionality using Swagger UI in Dev", () => {
     ComponentOverviewPage.navigateToTest();
@@ -123,7 +123,7 @@ describe(`Verify proxy api functionality`, () => {
 
   it("Verify prod promotion", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.PromoteToProd();
+    APIDeployment.promoteToProd(PROJECT_NAME,API_NAME,true);
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
@@ -169,8 +169,13 @@ describe(`Verify proxy api functionality`, () => {
   });
 
   it("Verify mediation component deployment  with new policy", () => {
-    APIDeployment.verifyProxyDeployment(true);
-  });
+    APIDeployment.verifyProxyDeployment(PROJECT_NAME,API_NAME,true)
+  })
+
+
+
+
+
 
   it("Verify test functionality using Swagger UI in Dev with new policy", () => {
     ComponentOverviewPage.navigateToTest();
@@ -199,7 +204,7 @@ describe(`Verify proxy api functionality`, () => {
 
   it("Verify prod promotion with new policy", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.PromoteToProd();
+    APIDeployment.promoteToProd(PROJECT_NAME,API_NAME,true);
   });
 
   it("Verify test functionality using Swagger UI in Prod with new policy", () => {
@@ -244,8 +249,9 @@ describe(`Verify proxy api functionality`, () => {
   });
 
   it("Verify mediation component deployment  with updated policy", () => {
-    APIDeployment.verifyProxyDeployment(true);
-  });
+    APIDeployment.verifyProxyDeployment(PROJECT_NAME,API_NAME,true)
+  })
+
 
   it("Verify test functionality using Swagger UI in Dev updated header value", () => {
     ComponentOverviewPage.navigateToTest();
@@ -275,7 +281,7 @@ describe(`Verify proxy api functionality`, () => {
 
   it("Verify prod promotion with updated header value", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.PromoteToProd();
+    APIDeployment.promoteToProd(PROJECT_NAME,API_NAME,true);
   });
 
   it("Verify test functionality using Swagger UI in Prod with updated header value", () => {
@@ -338,6 +344,10 @@ describe(`Verify proxy api functionality`, () => {
     APIDeployment.deployProxyAPIToDev(PROJECT_NAME, API_NAME);
   });
 
+  it("Verify mediation component deployment  with updated policy", () => {
+     APIDeployment.verifyProxyDeployment(PROJECT_NAME,API_NAME,true)
+  })
+
   it("Test in dev", () => {
     TestHelper.testOnSwagger(
       Enums.Environment.DEVELOPMENT,
@@ -356,7 +366,7 @@ describe(`Verify proxy api functionality`, () => {
 
   it("Verify new version promotion to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.PromoteToProd();
+    APIDeployment.promoteToProd(PROJECT_NAME,API_NAME,true);
   });
 
   it("Test in prod", () => {

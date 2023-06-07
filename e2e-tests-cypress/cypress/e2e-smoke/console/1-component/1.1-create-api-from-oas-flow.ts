@@ -123,7 +123,7 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify prod invoke url", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.PromoteToProd();
+    APIDeployment.promoteToProd();
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
