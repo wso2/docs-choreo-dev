@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { MENU_RENDERING_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
 import { LoginPage } from "../login-page";
 
@@ -37,12 +38,31 @@ export class ChoreoHomePage {
   }
 
   static navigateToComponents() {
-    cy.get('[data-testid="main-left-nav-item-Components"]').click();
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.get('[data-cyid="listing"]')
+        .realHover({ position: "left" })
+        .wait(MENU_RENDERING_TIME)
+        .click()
+        .wait(MENU_RENDERING_TIME);
+      Utils.moveMouseAwayFromLeftMenu();
+    } else {
+      cy.get('[data-testid="main-left-nav-item-Components"]').click();
+    }
   }
 
   static navigateToInsights() {
     if (Utils.isUnifiedMenuEnabled()) {
-      cy.get('[data-cyid="usage-insights"]').click();
+      cy.get('[data-cyid="usage-insights"]')
+        .realHover({ position: "left" })
+        .wait(MENU_RENDERING_TIME)
+        .click()
+        .wait(MENU_RENDERING_TIME);
+      Utils.moveMouseAwayFromLeftMenu();
+      cy.contains("Coming Soon").should("be.visible");
+      cy.get('[data-cyid="project-usage-insights"]')
+        .should("be.visible")
+        .click();
+      cy.get('[id="backdrop-loader"]').should("not.exist");
     } else {
       cy.get('[data-testid="main-left-nav-item-Insights"]').click();
     }

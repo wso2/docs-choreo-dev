@@ -160,6 +160,7 @@ export class TestHelper {
     retryCount: number = 0,
     retryDelay: number = VERY_SHORT_TIME.timeout
   ) {
+    cy.get('[id="circular-loader"]').should("not.exist");
     SwaggerUI.invokeResource(resourcePath, key, value, method);
 
     // This call is required to actually store the curl command in the env variable for later use
