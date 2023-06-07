@@ -28,6 +28,7 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeClass;
@@ -35,6 +36,7 @@ import org.testng.annotations.Test;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpringSupport {
@@ -50,6 +52,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
     private String componentId;
     private static String componentHandler;
     private String githubOrg;
+    private List<Environment> environments;
 
     private static ChoreoComponent testComponent;
 
@@ -164,8 +167,9 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
 
         final InvokeInformation invokeInformation = testComponent.getInvokeInformation(accessToken, MI_REST_API,
                 Constant.Environment.Development.name());
-        final String devApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId())
-                .replace("\"", "");
+        environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, testComponent);
+        final String devApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId(),
+                        environments.get(0).getName()).replace("\"", "");
         String invokeUrlDev = invokeInformation.getInvokeUrl();
         ComponentUtils.invokeApiGET(this, devApiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI,
                 REST_API_EXPECTED_RESPONSE);
@@ -195,8 +199,8 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
 
         final InvokeInformation invokeInformation = testComponent.getInvokeInformation(accessToken, MI_REST_API,
                 Constant.Environment.Production.name());
-        final String prodApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId())
-                .replace("\"", "");
+        final String prodApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId(),
+                        environments.get(1).getName()).replace("\"", "");
         final String invokeUrlProd = invokeInformation.getInvokeUrl();
         ComponentUtils.invokeApiGET(this, prodApiKey, invokeUrlProd, API_INVOCATION_REQUEST_URI,
                 REST_API_EXPECTED_RESPONSE);

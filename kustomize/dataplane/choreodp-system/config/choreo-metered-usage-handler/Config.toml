@@ -9,10 +9,10 @@ stripeConnectionUrl = "https://api.stripe.com"
 emailServiceUrl = "https://email-service"
 projectManagerUrl = "http://dp-project-manager:80/api/v1"
 kubecostApiUrl = "http://kubecost-cost-analyzer.kubecost.svc.cluster.local:9090/"
-kubecostApiMaxWaitInterval = 10.0
-kubecostApiRetryCount = 3
-kubecostApiInterval = 10.0
-kubecostApiBackoffFactor = 3.0
+kubecostApiMaxWaitInterval = 0.0
+kubecostApiRetryCount = 0
+kubecostApiInterval = 0.0
+kubecostApiBackoffFactor = 0.0
 
 [choreo.metered_usage_handler.db]
 dbUsername = "choreo_usage_db_user"

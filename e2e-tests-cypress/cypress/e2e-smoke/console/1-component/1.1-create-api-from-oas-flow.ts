@@ -76,6 +76,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(Enums.Environment.DEVELOPMENT, "intensity").then(
       (res) => {
         expect(res.statusCode).to.be.equal("200");
@@ -126,6 +127,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(Enums.Environment.PRODUCTION, "intensity").then(
       (res) => {
         expect(res.statusCode).to.be.equal("200");

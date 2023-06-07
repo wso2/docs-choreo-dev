@@ -91,6 +91,12 @@ configMapGenerator:
     literals:
       - APPSERVICE_GRPC_ADDRESS=http://app-service:8080
       - JWKS_ENDPOINT_PROTOCOL=https
+  - name: cm-obsmanager
+    behavior: create
+    literals:
+      - APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
+      - RUDDER_ADDRESS=http://dp-rudder:80
+      - PROJECT_MANAGER_ADDRESS=http://dp-project-manager:80
   - name: cm-loggingapi
     behavior: create
     literals:
@@ -357,6 +363,10 @@ configMapGenerator:
     behavior: create
     files:
       - obs/telemetry/Config.toml
+  - name: cm-file-obsmanager
+    behavior: create
+    files:
+      - obs/obsmanager/Config.toml
   - name: cm-file-loggingapi
     behavior: create
     files:
