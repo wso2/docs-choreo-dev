@@ -287,7 +287,7 @@ export class Utils {
 
 
   static isError(responseStatus: string, errorMessage: string) {
-    if (responseStatus in [Enums.ResponseStatus.failed, Enums.ResponseStatus.failure, Enums.ResponseStatus.error, Enums.ResponseStatus.Error,Enums.ResponseStatus.ERROR]) {
+    if (["failed", "failure", "error", "Error","ERROR"].includes(responseStatus)) {
       throw Error(errorMessage)
     }
   }

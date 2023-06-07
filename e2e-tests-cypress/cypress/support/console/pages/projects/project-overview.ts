@@ -59,52 +59,6 @@ export class ProjectOverviewPage {
   }
 
 
-  static createReuseProxyAPI(projectName: string = "Default Project",
-    apiName: string,
-    apiBasePath: string,
-    apiEndPoint: string,
-    apiVersion: string,
-    validateResourceName: string,
-    operation: string) {
-    GraphQL.getProjectByName(projectName).then((project) => {
-      if (project) {
-        GraphQL.getComponentByName(project.id, apiName).then((comps) => {
-          // cyLog(comps)
-          if (!comps) {
-            cyGet('[data-cyid="create-component"]').click()
-            ProjectOverviewPage.createHttpProxyAPI();
-            RestAPIProxyTemplate.skipSource();
-            RestAPIProxyTemplate.enterAPIdetails(
-              apiName,
-              apiBasePath,
-              apiEndPoint,
-              apiVersion,
-              validateResourceName,
-              operation
-            );
-            //     APIDevelop.addResources(path, verbs);
-            return Promise.resolve(true);
-          }
-
-          return Promise.resolve(false);
-        })
-      }
-    })
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   static createHttpProxyAPI() {
     this.waitForTemplateCardsToLoad();
     cy.get('[data-testid="project-template-list-httpProxyApi"]')
