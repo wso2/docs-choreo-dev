@@ -151,11 +151,6 @@ spec:
           ports:
             - containerPort: 18000
             - containerPort: 9843
-          startupProbe:
-            exec:
-              command: [ "sh", "check_health.sh", "startup" ]
-            failureThreshold: 30
-            periodSeconds: 10
           livenessProbe:
             exec:
               command: [ "sh", "check_health.sh", "liveness" ]
