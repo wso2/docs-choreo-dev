@@ -263,6 +263,8 @@ public class ComponentUtils {
             Orgs.waitForComponentCreationSuccess(runner, choreoClient, accessToken, responseDTO.get().getProjectId(),
                     responseDTO.get().getId());
 
+            GraphQL.handleConfigInit(runner, choreoClient, accessToken, responseDTO.get().getId());
+
             graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
                     .componentHandler(responseDTO.get().getHandler()).build();
         }
