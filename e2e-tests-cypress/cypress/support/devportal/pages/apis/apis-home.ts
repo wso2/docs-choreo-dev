@@ -15,7 +15,6 @@ import { Enums } from "../../../commons/enums";
 import { MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
 
-
 export class Apis {
   static futureTime = 0;
 
@@ -30,7 +29,7 @@ export class Apis {
       apiName + "{enter}"
     );
 
-    cy.get(`[data-testid="apiCard-${apiName}"]`).should("be.visible").click();
+    Utils.getRenderedElement(`[data-testid="apiCard-${apiName}"]`).click();
     cy.log("Successfully navigated to Overview");
   }
 
