@@ -89,7 +89,7 @@ public class ComponentUtils {
                                                        ComponentFlavour componentFlavour) throws Exception {
 
         ChoreoOrganization org = TestContext.getTestOrg();
-        String projectName = "integration-test-project";
+        String projectName = "integration-test-project-V2";
 
         Optional<ChoreoProject> existingProject = org.getProjectByName(accessToken, projectName);
         ChoreoProject project;
