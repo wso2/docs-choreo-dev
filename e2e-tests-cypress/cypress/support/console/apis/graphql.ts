@@ -497,31 +497,31 @@ export class GraphQL {
   }
 
   static getDeployedComponentDetails(projectId: string, handler: string) {
-    // const query = GraphQLQueryBuilder.getComponentDetails(projectId, handler);
-    // this.callGraphQL(query).then((res) => {
-    //   const component: Component = res.body.component;
-    //   const componentId = component.id;
-    //   const av: APIVersion[] = component.apiVersions;
-    //   const latestAPIVersion = av.find((a) => a.latest);
-    //   const latestAPIVersionId = latestAPIVersion.id;
+    const query = GraphQLQueryBuilder.getComponentDetails(projectId, handler);
+    this.callGraphQL(query).then((res) => {
+      const component: Component = res.body.component;
+      const componentId = component.id;
+      const av: APIVersion[] = component.apiVersions;
+      const latestAPIVersion = av.find((a) => a.latest);
+      const latestAPIVersionId = latestAPIVersion.id;
 
-    //   const apiInfo = { componentId, latestAPIVersionId };
-    //   Cypress.env("apiInfo", apiInfo);
-    //   const appENVS: AppEnvVersion[] = latestAPIVersion.appEnvVersions;
-    //   appENVS.forEach((appEnv) => {
-    //     const { release } = appEnv;
-    //     const { id, environmentId } = release;
-    //     const choreoEnv = release.metadata.choreoEnv;
-    //     let releaseData = {
-    //       componentId,
-    //       latestAPIVersionId,
-    //       environmentId,
-    //       releaseId: id,
-    //       choreoEnv,
-    //     };
-    //     Cypress.env(choreoEnv, releaseData);
-    //   });
-    // });
+      const apiInfo = { componentId, latestAPIVersionId };
+      Cypress.env("apiInfo", apiInfo);
+      const appENVS: AppEnvVersion[] = latestAPIVersion.appEnvVersions;
+      appENVS.forEach((appEnv) => {
+        const { release } = appEnv;
+        const { id, environmentId } = release;
+        const choreoEnv = release.metadata.choreoEnv;
+        let releaseData = {
+          componentId,
+          latestAPIVersionId,
+          environmentId,
+          releaseId: id,
+          choreoEnv,
+        };
+        Cypress.env(choreoEnv, releaseData);
+      });
+    });
   }
 
   static _getComponentInfo(projectName: string, componentName: string) {
@@ -612,28 +612,6 @@ cyLog(com)
         this._getServiceEndpointStatus(query)
       })
     })
-
-    // const { componentId, latestAPIVersionId, releaseId } = Cypress.env(env);
-    // const query = GraphQLQueryBuilder.getEndpointStatusQuery(
-    //   componentId,
-    //   latestAPIVersionId,
-    //   releaseId
-    // );
-
-    // this.callGraphQL(query).then((res) => {
-    //   const { state } = res.body.componentEndpoints[0];
-    //   cy.log("state", state);
-    //   Utils.isError(state, "Deployment Endpoint status is ERROR")
-    //   if (state === "Active") {
-    //     return;
-    //   } else {
-    //     if (this.count < 20) {
-    //       cy.wait(10000);
-    //       this.count++;
-    //       this.getServiceEndpointStatus();
-    //     }
-    //   }
-    // });
   }
 
 
