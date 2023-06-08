@@ -45,6 +45,7 @@ resources:
   - cdn-tls-synchronizer.yaml
   - choreo-metered-usage-handler-service.yaml
   - crypto-key-service.yaml
+  - obsmanager.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587,25,1433,6380

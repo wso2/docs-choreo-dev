@@ -172,6 +172,12 @@ defaultRoles:
         - {{.PERMISSION_CONFIG_CREATE}}
         - {{.PERMISSION_CONFIG_DELETE}}
         - {{.PERMISSION_CONFIG_MANAGE}}
+        - {{.PERMISSION_COMPONENT_CREATE}}
+        - {{.PERMISSION_COMPONENT_CONFIG_VIEW}}
+        - {{.PERMISSION_COMPONENT_LOGS_VIEW}}
+        - {{.PERMISSION_COMPONENT_INIT_VIEW}}
+        - {{.PERMISSION_COMPONENT_FILE_VIEW}}
+        - {{.PERMISSION_COMPONENT_COMPONENT_MANAGE}}
     - name: API Subscriber
       handle: api-subscriber
       description: Users or Application Developers who search the Developer Portal to discover APIs and use them. They read the documentation and forums, rates/comments on the APIs, subscribes to APIs, obtain access tokens, and invokes the APIs
@@ -223,25 +229,6 @@ defaultRoles:
         - environments:view_dev
         - environments:view_prod
         - choreo:log_view_non_prod
-    - name: Billing Admin
-      handle: billing-admin
-      description: Users who manage billing and subscription related stuffs.
-      tags:
-        - billing
-      permissions:
-        - billing:tier_view
-        - billing:org_manage
-        - billing:invoice_view
-        - billing:subscription_manage
-        - billing:payment_method_manage
-    - name: Env Manager
-      handle: env-manager
-      description: Users who have access to devportal environments
-      tags:
-        - environments
-      permissions:
-        - environments:view_prod
-        - environments:view_dev
     - name: Choreo DevOps
       handle: choreo-devops
       description: Users who are involved in deployment management
@@ -274,33 +261,8 @@ defaultRoles:
         - {{.PERMISSION_CUSTOM_DOMAIN_DELETE}}
         - {{.PERMISSION_CUSTOM_DOMAIN_UPDATE}}
         - {{.PERMISSION_CUSTOM_DOMAIN_MANAGE}}
-    - name: Project Manager
-      handle: project-manager
-      description: Users who are involved in project management
-      tags:
-        - projects
-      permissions:
-        - apim:api_manage
-        - apim:tier_manage
-        - choreo:project_manage
-        - choreo:component_manage
-        - apim:api_publish
-        - apim:document_manage
-        - apim:api_settings
-        - apim:subscription_view
-        - environments:view_dev
-        - environments:view_prod
-        - choreo:non_prod_env_manage
-        - choreo:log_view_non_prod
-        - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
-        - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
-        - {{.PERMISSION_GLOBAL_CONFIG_DELETE}}
-        - {{.PERMISSION_GLOBAL_CONFIG_UPDATE}}
-        - {{.PERMISSION_GLOBAL_CONFIG_MANAGE}}
-        - {{.PERMISSION_CONFIG_VIEW}}
-        - {{.PERMISSION_CONFIG_CREATE}}
-        - {{.PERMISSION_CONFIG_DELETE}}
-        - {{.PERMISSION_CONFIG_MANAGE}}
+        - {{.PERMISSION_COMPONENT_TRIGGER}}
+        - {{.PERMISSION_COMPONENT_COMPONENT_MANAGE}}
 roleBasedUserMgt:
   enabled: ${ROLE_BASED_USER_MGT_ENABLED}
 onPremKeySubscription:

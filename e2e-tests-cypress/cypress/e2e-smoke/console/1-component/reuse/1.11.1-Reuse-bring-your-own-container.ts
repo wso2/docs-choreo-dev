@@ -72,6 +72,7 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(Enums.Environment.DEVELOPMENT, RESOURCE_NAME).then(
       (res) => {
         expect(res.statusCode).to.be.equal("200");
@@ -97,6 +98,7 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(Enums.Environment.PRODUCTION, RESOURCE_NAME).then(
       (res) => {
         expect(res.statusCode).to.be.equal("200");

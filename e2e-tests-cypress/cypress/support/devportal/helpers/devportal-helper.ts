@@ -44,7 +44,7 @@ export class DevPortalHelper {
     );
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev(projectName, API_Name);
-    APIDeployment.PromoteToProd();
+    APIDeployment.promoteToProd();
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.manageLifecycle();

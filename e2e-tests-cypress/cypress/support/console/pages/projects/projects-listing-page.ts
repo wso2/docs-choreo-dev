@@ -11,17 +11,13 @@
  * associated services.
  */
 
-
-
 import { cyGet } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
-import { SHORT_TIME } from "../../../commons/timeouts";
+import { SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { GRAPHQL_URL } from "../../../commons/urls";
 import { Utils } from "../../../commons/utils";
 import { ChoreoHomePage } from "../home/home-page";
 import { ProjectOverviewPage } from "./project-overview";
-
-
 
 export class ProjectListingPage {
   static createNewProject(
@@ -30,9 +26,19 @@ export class ProjectListingPage {
     dataPlane: Enums.Region = Enums.Region.US
   ) {
     ChoreoHomePage.navigateToHome();
+    this.checkProjectCardCreation();
+    cy.get('[name="Name"]').clear().type(projectName);
+    cy.get('[name="Description"]').clear().type(description);
+    cy.get('[data-cyid="select-region"]').click();
+    cy.contains(`Cloud Data Plane - ${dataPlane}`).click();
+    Utils.getRenderedElement('[data-testid="create-version-create"]').click();
+    cy.get('[data-testid="create-version-create"]').should("not.exist");
+    ProjectOverviewPage.waitForTemplateCardsToLoad();
+  }
 
+  static checkProjectCardCreation() {
     cy.url().then((url) => {
-      if (url.includes("projects") && !url.includes("home")) {
+      if (url.includes("projects")) {
         Utils.getRenderedElement('[data-testid="project-picker"]').click();
         Utils.getRenderedElement('[data-cyid="btn-create-new"]').click();
       } else {
@@ -43,18 +49,37 @@ export class ProjectListingPage {
         }).as("queryComponents");
 
         cy.wait("@queryComponents", SHORT_TIME).then(() => {
-          Utils.getRenderedElement('[data-cyid="create-project-card"]').click();
+          this.getCreateNewProjectPopUp();
         });
       }
     });
+  }
 
-    cy.get('[name="Name"]').clear().type(projectName);
-    cy.get('[name="Description"]').clear().type(description);
-    cy.get('[data-cyid="select-region"]').click();
-    cy.contains(`Cloud Data Plane - ${dataPlane}`).click();
-    Utils.getRenderedElement('[data-testid="create-version-create"]').click();
-    cy.get('[data-testid="create-version-create"]').should("not.exist");
-    ProjectOverviewPage.waitForTemplateCardsToLoad()
+  static getCreateNewProjectPopUp(retryCount: number = 0) {
+    retryCount++;
+    if (retryCount > 10) {
+      return;
+    }
+
+    cy.get("body").then((bdy) => {
+      if (bdy.find('[data-cyid="create-project-card"]').length > 0) {
+        cy.get('[data-cyid="create-project-card"]').click();
+        cy.wait(VERY_SHORT_TIME.timeout);
+      } else {
+        cy.log("Retry count: " + retryCount);
+        this.getCreateNewProjectPopUp(retryCount);
+      }
+    });
+
+    cy.log("Verify the PopUP is displayed");
+    cy.get("body").then((bdy) => {
+      if (bdy.find('[data-testid="create-version-create"]').length > 0) {
+        cy.get('[data-testid="create-version-create"]').should("be.visible");
+        return;
+      } else {
+        this.getCreateNewProjectPopUp(retryCount);
+      }
+    });
   }
 
   static selectProject(projectName: string = "Default Project") {

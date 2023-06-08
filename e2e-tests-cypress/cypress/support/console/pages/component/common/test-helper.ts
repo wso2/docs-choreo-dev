@@ -28,9 +28,6 @@ export class TestHelper {
     key: string = "",
     value: string = ""
   ) {
-   
-    APITest.testAPI();
-    cy.get('[data-cyid="OpenAPI Console"]').click();
     this.selectOpenApiConsole();
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.getTestKey();
@@ -63,7 +60,7 @@ export class TestHelper {
     cy.get("textarea")
       .invoke("text")
       .then((curl) => {
-        const crl = `${curl} ${options.toString()}`
+        const crl = `${curl} ${options.toString()}`;
         Cypress.env(`int_curl_${env}`, crl);
       });
     return Curl.getRequestComponents(`${env}${pathParm}`);
@@ -163,6 +160,7 @@ export class TestHelper {
     retryCount: number = 0,
     retryDelay: number = VERY_SHORT_TIME.timeout
   ) {
+    cy.get('[id="circular-loader"]').should("not.exist");
     SwaggerUI.invokeResource(resourcePath, key, value, method);
 
     // This call is required to actually store the curl command in the env variable for later use
@@ -214,7 +212,7 @@ export class TestHelper {
       selector = '[data-cyid="OpenAPI Console"]';
       APITest.testAPI();
     }
-    cy.get(selector).click();
+    cy.get(selector).click({ force: true });
   }
 
   private static selectCurl() {
