@@ -72,7 +72,7 @@ describe("Verify Ballerina service functionality", () => {
   it("Verify component deployment with project level endpoint", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployService(ENDPOINT_NAME);
+    ComponentDeployPage.deployService(PROJECT_NAME,COMPONENT_NAME,ENDPOINT_NAME);
   });
 
   it("Verify test page for project level endpoint", () => {
@@ -87,7 +87,7 @@ describe("Verify Ballerina service functionality", () => {
 
   it("Verify component deployment with public level endpoint", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployService(ENDPOINT_NAME, true);
+    ComponentDeployPage.deployService(PROJECT_NAME,COMPONENT_NAME,ENDPOINT_NAME, true);
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
@@ -165,7 +165,7 @@ describe("Verify Ballerina service functionality", () => {
   it("Verify new version creation and deploy to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.addNewVersion();
-    ComponentDeployPage.deployService(ENDPOINT_NAME, true);
+    ComponentDeployPage.deployService(PROJECT_NAME,COMPONENT_NAME,ENDPOINT_NAME, true);
   });
 
   it("Verify test functionality of root resource in dev on swagger for new version", () => {

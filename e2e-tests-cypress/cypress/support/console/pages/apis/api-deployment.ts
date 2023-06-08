@@ -13,7 +13,7 @@
 
 
 import { Enums } from "../../../commons/enums";
-import { LONG_TIME, SHORT_TIME, VERY_LONG_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
+import { LONG_TIME, MEDIUM_TIME, SHORT_TIME, VERY_LONG_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { cyGet } from "../../../commons/cy";
 import { PUBLISHER_API_KEYS_URL } from "../../../commons/urls";
 import { GraphQL } from "../../apis/graphql";
@@ -107,28 +107,36 @@ export class APIDeployment {
 
   static promoteToProd(projectName: string = "", componentName: string = "", hasMediationPolicy: boolean = false) {
     cyGet('[data-cyid="btn-promote"]').should('be.enabled').click()
-    cy.get('button').contains("Cancel").should('be.visible')
+    cy.xpath('//span[text()="Configure & Deploy"]').should('have.length', 2)
 
+    
 
-    cy.get('body').then(bdy => {
-      if (bdy.find('[data-cyid="btn-next"]').length > 0) {
-        cy.get('[data-cyid="btn-next"]').should("be.visible").click();
-      }
-
-
-      if (bdy.find('[data-cyid="expand-more"]').length > 0) {
-        cy.get('.ConfigForm').within(() => {
-          cy.get('button').contains('Promote').click()  // Promote button
-        })
-      }
-    })
+      cy.wait(5000)
+      cy.get('body').then(bdy => {
+        if (bdy.find('[data-cyid="btn-next"]').length > 0) {
+          cy.get('[data-cyid="btn-next"]').should("be.visible").click();
+        }
+      })
+      cy.get('body').then(bdy => {
+        if (bdy.find('[data-cyid="expand-more"]').length > 0) {
+          cy.get('.ConfigForm').within(() => {
+            cy.get('button').contains('Promote').click()  // Promote button
+          })
+        }
+      })
+      cy.get('body').then(bdy => {
+        if (bdy.find('.ConfigForm').length > 0) {
+          cy.get('.ConfigForm').within(() => {
+            cy.get('button').contains('Promote').click()  // Promote button
+          })
+        }
+      })
+ 
 
     if (hasMediationPolicy) {
       cy.wait(15000)
       GraphQL.getPrmotionStatus(projectName, componentName)
     }
-
-
     cy.get('[data-cyid="proxy-env-card-header"]>div>span')
       .contains("Production")
       .should("be.visible");
