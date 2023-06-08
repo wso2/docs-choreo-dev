@@ -1,6 +1,6 @@
 # Configure Self-Sign-Up
 
-With Choreo, you can set up a self-sign-up page for your Developer Portal. The self-sign-up page allows users to create their accounts and gain access to your Developer Portal without requiring any manual intervention to create accounts or provide credentials.
+With Choreo, you can set up a self-sign-up page for your Developer Portal. The self-sign-up page allows users to easily access your Developer Portal and subscribe to APIs. When you configure self-sign-up, users can create their accounts and access your Developer Portal without any manual intervention from you.
 
 This page walks you through the steps to configure self-sign-up for your Developer Portal.
 
