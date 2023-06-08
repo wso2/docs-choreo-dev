@@ -105,7 +105,8 @@ export class APIDeployment {
 
   static promoteToProd(projectName: string = "", componentName: string = "", hasMediationPolicy: boolean = false) {
     cyGet('[data-cyid="btn-promote"]').should('be.enabled').click();
-    cy.get('button').contains("Cancel").should('be.visible')
+    this.RetryPromotionToProd();
+    cy.get('.ConfigForm', VERY_SHORT_TIME).should('be.visible')
 
     cy.get('body').then(bdy => {
       if (bdy.find('[data-cyid="btn-next"]').length > 0) {
@@ -124,7 +125,7 @@ export class APIDeployment {
       GraphQL.getPrmotionStatus(projectName, componentName)
     }
 
-
+    this.RetryPromotionToProd();
     cy.get('[data-cyid="proxy-env-card-header"]>div>span')
       .contains("Production")
       .should("be.visible");
