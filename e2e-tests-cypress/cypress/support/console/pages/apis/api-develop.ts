@@ -11,14 +11,12 @@
  * associated services.
  */
 
-
 import { cyGet, cyLog } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
 import { MEDIUM_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
 
 export class APIDevelop {
-
   static httpVerbs: string[] = [
     "GET",
     "POST",
@@ -47,25 +45,33 @@ export class APIDevelop {
     });
     this.addHTTPVerb(verbs);
     this.addResource(verbs, path);
-    
   }
 
+  static addPolicy(
+    resourcePath: string,
+    verb: string,
+    policy: Enums.PolicyType,
+    policyName: string,
+    policyType: string,
+    headerCount: number = 1
+  ) {
+    const header = this.getHeader(resourcePath, verb.toUpperCase());
 
-  static addPolicy(resourcePath: string, verb: string, policy: Enums.PolicyType, policyName: string, policyType: string, headerCount: number = 1) {
-    const header = this.getHeader(resourcePath, verb.toUpperCase())
-
-    const buttons = `[id="/${resourcePath}/${verb.toUpperCase()}/out-flow"] div[data-key] button`
-    cyGet('[data-testid="Policies"]').click()
+    const buttons = `[id="/${resourcePath}/${verb.toUpperCase()}/out-flow"] div[data-key] button`;
+    if (Utils.isUnifiedMenuEnabled()) {
+      cyGet('[data-cyid="develop-policies"]').click();
+    } else {
+      cyGet('[data-testid="Policies"]').click();
+    }
     cyGet(header).eq(0).click();
-    cy.get(buttons).contains('Attach Policy').click()
-    cy.get('button').contains(policy).click()
-    cyGet('[name*="Name"]').should("be.visible").type(policyName)
-    cyGet('[name*="Value"]').clear().type(policyType)
-    cy.get('button').contains('Add').click()
-    cyGet(`[title="${policy}"]`).should('have.length', headerCount)
-    cy.get('button').contains('Save').click()
+    cy.get(buttons).contains("Attach Policy").click();
+    cy.get("button").contains(policy).click();
+    cyGet('[name*="Name"]').should("be.visible").type(policyName);
+    cyGet('[name*="Value"]').clear().type(policyType);
+    cy.get("button").contains("Add").click();
+    cyGet(`[title="${policy}"]`).should("have.length", headerCount);
+    cy.get("button").contains("Save").click();
   }
-
 
   private static addResource(verbs: string[], path: string) {
     cy.get('[name="target"]').type(path);
@@ -99,10 +105,12 @@ export class APIDevelop {
   }
 
   private static generateOperationId(httpVerb: string[], resourcePath: string) {
-    cyLog(httpVerb)
+    cyLog(httpVerb);
     httpVerb.forEach((verb) => {
       const header = this.getHeader(resourcePath, verb.toLowerCase());
-      const modifiedResourcePath = Cypress._.capitalize(resourcePath.replace(/\\/g, ""))
+      const modifiedResourcePath = Cypress._.capitalize(
+        resourcePath.replace(/\\/g, "")
+      );
       const operationId = `${verb.toLowerCase()}${modifiedResourcePath}`;
 
       cy.get(header).click();
@@ -117,35 +125,33 @@ export class APIDevelop {
     });
   }
 
-
   private static getHeader(resourcePath: string, verb: string) {
-    return `[id="panel-/${resourcePath}/${verb}-header"]`
+    return `[id="panel-/${resourcePath}/${verb}-header"]`;
   }
-
-
-
 
   static deletePolicy(resourcePath: string, verb: string) {
-    const buttons = `[id="/${resourcePath}/${verb.toUpperCase()}/out-flow"] div[data-key] button`
+    const buttons = `[id="/${resourcePath}/${verb.toUpperCase()}/out-flow"] div[data-key] button`;
   }
 
-
-  static editHeader(resourcePath: string, verb: string, headerValue: string, headerName: string = "") {
-    const buttons = `[id="/${resourcePath}/${verb.toUpperCase()}/out-flow"] div[data-key] button`
-    const header = this.getHeader(resourcePath, verb.toUpperCase())
-    cyGet('[data-testid="Policies"]').click()
+  static editHeader(
+    resourcePath: string,
+    verb: string,
+    headerValue: string,
+    headerName: string = ""
+  ) {
+    const buttons = `[id="/${resourcePath}/${verb.toUpperCase()}/out-flow"] div[data-key] button`;
+    const header = this.getHeader(resourcePath, verb.toUpperCase());
+    cyGet('[data-testid="Policies"]').click();
     cyGet(header).eq(0).click();
-    cy.get(buttons).eq(0).click()
+    cy.get(buttons).eq(0).click();
     if (headerName) {
-      cyGet('[name*="Name"]').should("be.visible").type(headerName)
+      cyGet('[name*="Name"]').should("be.visible").type(headerName);
     }
-    cyGet('[name*="Value"]').clear().type(headerValue)
-    cy.get('button:not([disabled])').contains('Save').click()
-    cy.wait(1000)
-    cy.get('button').contains('Save').click()
+    cyGet('[name*="Value"]').clear().type(headerValue);
+    cy.get("button:not([disabled])").contains("Save").click();
+    cy.wait(1000);
+    cy.get("button").contains("Save").click();
   }
-
-
 
   private static selectDevelop() {
     let selector = '[data-cyid="develop-resources"]';
@@ -162,6 +168,5 @@ export class APIDevelop {
       selector = '[data-testid="develop-resources-header"]';
       cy.get(selector).contains("Resources").should("be.visible");
     }
-
   }
 }
