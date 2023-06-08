@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { cyLog } from "../../../../commons/cy";
+import { cyGet, cyLog } from "../../../../commons/cy";
 import { Enums } from "../../../../commons/enums";
 import { VERY_SHORT_TIME } from "../../../../commons/timeouts";
 import { Utils } from "../../../../commons/utils";
@@ -95,7 +95,7 @@ export class TestHelper {
     Utils.getRenderedElement('[data-testid="graphiql-container"]').within(
       () => {
         cy.get('[class="query-editor"]').within(() => {
-          cy.get("span[cm-text]")
+          cyGet("span[cm-text]")
             .eq(1)
             .then(($p) => {
               Utils.paste($p, code, false);
