@@ -248,7 +248,7 @@ export class ComponentAPILifecycle {
 
   static disableResourceSecurity(resource: string) {
     cy.get(`[id="panel-/${resource}/get-header"]`).scrollIntoView().click();
-    cy.get(`[data-cyid="tab-security-settings"]`).scrollIntoView().click();
+    cy.get(`[data-testid="security"]`).scrollIntoView().click();
   }
 
   static applyConfiguration() {

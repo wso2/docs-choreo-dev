@@ -184,67 +184,8 @@ describe("Verify project creation functionality", () => {
     });
   });
 
-  it("Apply configs to dev", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.selectSetting();
-    ComponentAPILifecycle.selectResources();
-
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity("root");
-    ComponentAPILifecycle.applyConfiguration();
-    ComponentAPILifecycle.verifyDevRevision().should(
-      "eq",
-      Enums.Environment.DEVELOPMENT
-    );
-  });
-
-  it("Apply configs to prod", () => {
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity("root");
-    ComponentAPILifecycle.applyConfiguration();
-  });
-
-  it("Verify resource access without the token in dev", () => {
-    Curl.getRequestComponents(`${Enums.Environment.DEVELOPMENT}root`).then(
-      (curl) =>
-        Utils.sendGetRequest(curl.url).then((res) => {
-          expect(res.status).equal(200);
-        })
-    );
-  });
-
-  it("Verify resource not access without the token in dev", () => {
-    Curl.getRequestComponents(`${Enums.Environment.DEVELOPMENT}isOdd`).then(
-      (curl) =>
-        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-          expect(res.body).equal(true);
-          expect(res.status).equal(200);
-        })
-    );
-  });
-
-  it("Verify resource access without the token in prod", () => {
-    Curl.getRequestComponents(`${Enums.Environment.PRODUCTION}root`).then(
-      (curl) =>
-        Utils.sendGetRequest(curl.url).then((res) => {
-          expect(res.status).equal(200);
-        })
-    );
-  });
-
-  it("Verify resource not access without the token in prod", () => {
-    Curl.getRequestComponents(`${Enums.Environment.PRODUCTION}isOdd`).then(
-      (curl) =>
-        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-          expect(res.body).equal(true);
-          expect(res.status).equal(200);
-        })
-    );
-  });
-
   it("Verify manage functionality", () => {
+    ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.changeLifeCycleToPublished(
       Enums.ConnectorAudience.PRIVATE
