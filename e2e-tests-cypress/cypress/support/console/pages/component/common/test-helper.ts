@@ -47,12 +47,13 @@ export class TestHelper {
       Curl.enterPathParameter(pathParm);
     }
     Curl.addQueryParameter(queryParameters1);
+    const curlKey = `int_curl_${env}_${httpMethod}_${pathParm}`;
     cy.get("textarea")
       .invoke("text")
       .then((curl) => {
-        Cypress.env(`int_curl_${env}`, curl);
+        Cypress.env(curlKey, curl);
       });
-    return Curl.getRequestComponents(`${env}${pathParm}`);
+    return Curl.getRequestComponents(curlKey);
   }
 
   static testOnCurlDiscardPrevious(
@@ -66,11 +67,6 @@ export class TestHelper {
     Curl.selectMethod(httpMethod);
     Curl.enterPathParameter(pathParm);
     Curl.addQueryParameter(queryParameters1);
-    cy.get("textarea")
-      .invoke("text")
-      .then((curl) => {
-        Cypress.env(`int_curl_${env}`, curl);
-      });
     return Curl.getRequestComponentsDiscardPrevious(`${env}${pathParm}`);
   }
 
