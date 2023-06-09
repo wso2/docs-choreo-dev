@@ -402,19 +402,6 @@ export class GraphQL {
       })
     })
 
-    // const { id } = Cypress.env(Enums.Environment.PRODUCTION);
-    // const { componentId, latestAPIVersionId } = Cypress.env("apiInfo")
-
-    // const url = `${PROXY_DEPLOYER_EP}/${componentId}/versions/${latestAPIVersionId}/deployments?environmentId=${id}&accessMode=external`
-    // Utils.sendGetRequest(url, AUTH_HEADER()).then(res => {
-    //   const { deploymentStatus } = res.body
-    //   Utils.isError(deploymentStatus, "Proxy With Mediation Policy Deployment Failed")
-    //   if (deploymentStatus !== 'ACTIVE') {
-    //     this.getPrmotionStatus(projectName, componentName)
-    //     cy.wait(15000)
-    //   }
-    //   return
-    // })
   }
 
   private static _getDeployStatus(url: string, stage: string, status: string) {
