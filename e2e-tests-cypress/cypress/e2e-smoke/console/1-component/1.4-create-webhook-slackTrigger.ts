@@ -83,13 +83,10 @@ describe("Verify webhook creation functionality", () => {
     cy.get('[data-testid="feature-disable-info"]').should("be.visible");
   });
 
-  it("Verify suspending Dev deployed component", () => {
+  it("Verify suspending all deployments", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopDevContainer();
-  });
-
-  it("Verify suspending Prod deployed component", () => {
-    ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopProdContainer();
   });
+
 });
