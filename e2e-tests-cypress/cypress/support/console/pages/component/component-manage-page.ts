@@ -15,6 +15,7 @@ import { cyGet } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
 import { LONG_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
+import { GraphQL } from "../../apis/graphql";
 
 export class ComponentAPILifecycle {
   static devportl_btn = '[data-testid="go-to-dev-portal-btn"]';
@@ -73,12 +74,20 @@ export class ComponentAPILifecycle {
     cy.get(ComponentAPILifecycle.devportl_btn).should("be.disabled");
   }
 
-  static goToDeveloperPortalWithoutLogin(idpUser: string = "") {
-    const { latestAPIVersionId } = Cypress.env("apiInfo");
+  static goToDeveloperPortalWithoutLogin(projectName: string, componentName: string, idpUser: string = "") {
+
     const loginUrl = Cypress.env("devportalLoginURL");
     const { uuid, handle } = Cypress.env("userData");
-    let devportalURL = `${loginUrl}/${handle}/apis/${latestAPIVersionId}?fidp=${idpUser}&orgUuid=${uuid}`;
-    cy.visit(devportalURL);
+    
+    GraphQL._getAPIInfo(projectName, componentName).then(res => {
+      const { latestVersionId } = res
+
+
+      let devportalURL = `${loginUrl}/${handle}/apis/${latestVersionId}?fidp=${idpUser}&orgUuid=${uuid}`;
+      cy.visit(devportalURL);
+    })
+
+
   }
 
   static selectUsagePlans(...plans) {

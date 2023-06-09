@@ -59,7 +59,7 @@ describe("API overview comment and rating scenario", () => {
   });
 
   it("verify api in devportal", () => {
-    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(PROJECT_NAME,API_Name,idpUser);
     Apis.verifyAPIname().should("eq", API_Name);
     Apis.searchApiAndSelect(API_Name);
   });

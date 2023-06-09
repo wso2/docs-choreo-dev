@@ -45,17 +45,17 @@ export class ComponentDeployPage {
     });
   }
 
-  static deployToDev(
+  static deployToDev(projectName:string, componentName:string,
     isAdditionalConfigs: boolean = true,
     isManagedByAPIM: boolean = true,
     isManualTrigger: boolean = false
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-deploy-api"]', SHORT_TIME)
+    cy.get('[data-cyid="btn-deploy-api"]', LONG_TIME)
       .contains("Generating Configurations")
       .should("not.exist");
     APIDeployment.RetryDevDeployment();
-    cy.get('[data-cyid="btn-deploy-api"]', LONG_TIME)
+   cyGet('[data-cyid="btn-deploy-api"]', LONG_TIME)
       .should("be.enabled")
       .click();
 
@@ -72,7 +72,7 @@ export class ComponentDeployPage {
       return;
     }
     cy.get('[data-testid="btn-stop"]', MEDIUM_TIME).should("be.visible");
-    GraphQL.getComponentDeploymentStatus();
+    GraphQL._getComponentDeploymentStatus(projectName,componentName);
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
     // to ensure rendering completes before checking the deployment status
     cy.wait(600);
@@ -308,10 +308,8 @@ export class ComponentDeployPage {
     });
   }
 
-  static deployService(endpointName: string, changeVisibility?: boolean) {
-    cy.get('[data-cyid="btn-deploy-api"]', MEDIUM_TIME)
-      .contains("Generating Configurations")
-      .should("not.exist");
+  static deployService(projectName:string, componentName:string,endpointName: string, changeVisibility?: boolean) {
+    cy.get('[data-cyid="btn-deploy-api"]', SHORT_TIME).contains("Generating Configurations").should("not.exist")
     APIDeployment.RetryDevDeployment();
     cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
     cy.get('[data-cyid="btn-deploy-api"]', LONG_TIME)
@@ -330,7 +328,7 @@ export class ComponentDeployPage {
     cyGet('[data-cyid="btn-next"]').click();
     APIDeployment.RetryDevDeployment();
     cyGet('[data-testid="btn-stop"]', LONG_TIME).should("be.visible");
-    GraphQL.getComponentDeploymentStatus();
+    GraphQL._getComponentDeploymentStatus(projectName,componentName);
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
     // to ensure rendering completes before checking the deployment status
     cy.wait(600);
@@ -339,7 +337,7 @@ export class ComponentDeployPage {
       .contains(DEPLOYMENT_SUCCESS, LONG_TIME)
       .should("be.visible");
     cyGet('[data-testid="Endpoints-env-artifact"]').should("be.visible");
-    GraphQL.getServiceEndpointStatus();
+    GraphQL.getServiceEndpointStatus(projectName,componentName);
     cyGet('[data-cyid="deployment-status"]', SHORT_TIME)
       .contains(DEPLOYMENT_PENDING, SHORT_TIME)
       .should("not.exist");

@@ -110,7 +110,7 @@ describe(`Verify internal api functionality`, () => {
 
     it("Deploy api to dev", () => {
         ComponentOverviewPage.navigateToDeploy();
-        APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
+        APIDeployment.DeployToDev();
     })
 
 
@@ -336,7 +336,7 @@ describe(`Verify internal api functionality`, () => {
     it("Verify API invocation in Devportal for external REST API component", () => {
         ComponentOverviewPage.navigateToManage();
         ComponentAPILifecycle.manageLifecycle();
-        ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+        ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(PROJECT_NAME,API_NAME,idpUser);
         DevPortalHomePage.navigateToApisPage();
         Apis.searchApiAndSelect(API_NAME, 1);
         ApiCredentials.navigateToEnvironment(Enums.Environment.PRODUCTION);

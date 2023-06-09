@@ -73,7 +73,7 @@ describe(`Graphql GQL service functionality`, () => {
   it("Verify component deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployService(ENDPOINT_NAME);
+    ComponentDeployPage.deployService(PROJECT_NAME,COMPONENT_NAME,ENDPOINT_NAME);
   });
 
   it("Verify test functionality of GQL query in dev on swagger", () => {

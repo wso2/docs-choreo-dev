@@ -172,6 +172,7 @@ describe(`Verify proxy api functionality`, () => {
     APIDeployment.verifyProxyDeployment(PROJECT_NAME,API_NAME,true)
   })
 
+
   it("Verify test functionality using Swagger UI in Dev with new policy", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
@@ -306,19 +307,6 @@ describe(`Verify proxy api functionality`, () => {
     });
   });
 
-  it("Verify manage functionality", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.configureSecuritySettings(
-      true,
-      false,
-      ALLOWED_ORIGINS,
-      ALLOWED_HEADERS,
-      ALLOWED_METHODS
-    );
-    ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
-  });
 
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDeploy();

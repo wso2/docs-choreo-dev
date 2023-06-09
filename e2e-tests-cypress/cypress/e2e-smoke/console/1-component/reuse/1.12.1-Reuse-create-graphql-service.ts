@@ -58,7 +58,7 @@ describe(`Graphql GQL service functionality in region ${dp}`, () => {
   it("Verify component deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployToDev();
+    ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME);
   });
 
 

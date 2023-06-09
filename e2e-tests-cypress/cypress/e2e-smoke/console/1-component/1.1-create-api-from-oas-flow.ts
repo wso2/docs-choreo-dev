@@ -72,7 +72,13 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify component deployment and endpoint configurations", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
+    APIDeployment.DeployToDev();
+  });
+
+
+  it("Verify prod invoke url", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.promoteToProd();
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -121,10 +127,7 @@ describe("Choreo APIM publisher scenarios", () => {
     );
   });
 
-  it("Verify prod invoke url", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.promoteToProd();
-  });
+
 
   it("Verify test functionality using Swagger UI in Prod", () => {
     ComponentOverviewPage.navigateToTest();
@@ -162,7 +165,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Search application in devportal", () => {
-    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(PROJECT_NAME,API_NAME,idpUser);
     Apis.searchApiAndSelect(API_NAME, 1);
   });
 
@@ -223,7 +226,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify deleting consumer app", () => {
-    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(PROJECT_NAME, API_NAME,idpUser);
     TryOut.DeleteApplication(appName);
   });
 
@@ -238,7 +241,7 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify redeployment after removing permissions", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
+    APIDeployment.DeployToDev();
   });
 
   it("Verify insight values for dev", () => {

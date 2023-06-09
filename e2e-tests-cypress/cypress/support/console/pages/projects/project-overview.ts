@@ -28,9 +28,7 @@ export class ProjectOverviewPage {
     isComponentBYOC: boolean = false
   ) {
     const REPO_NAME = Utils.generateComponentName("repo");
-    GraphQL.getProjectByName(projectName).then((project) => {
-      if (project) {
-        GraphQL.getComponentByName(project.id, componentData.componentName).then((comps) => {
+           GraphQL._getComponentByName(projectName, componentData.componentName).then((comps) => {
           if (!comps) {
             if (isComponentBYOC) {
               GraphQL.createComponent(
@@ -47,15 +45,8 @@ export class ProjectOverviewPage {
                 GraphQLQueryBuilder.getRestComponentCreationQuery
               );
             }
-          } else {
-            GraphQL.getComponentInfo(
-              projectName,
-              componentData.componentName
-            );
-          }
+          } 
         })
-      }
-    })
   }
 
 

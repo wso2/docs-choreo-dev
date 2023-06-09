@@ -66,7 +66,7 @@ describe("Verify MI REST API component OAS auto generation", () => {
   it("Deploy component", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployToDev(true, false);
+    ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME,true, false);
   });
 
   it("Verify test functionality of root resource in dev on curl", () => {

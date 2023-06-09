@@ -71,7 +71,7 @@ describe("Verify project creation functionality", () => {
   it("Verify component deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployToDev();
+    ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME);
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
