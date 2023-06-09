@@ -148,12 +148,11 @@ export class APIDeployment {
           })
         }
       })
- 
-
     if (hasMediationPolicy) {
       cy.wait(15000);
       GraphQL.getPrmotionStatus(projectName, componentName);
     }
+    this.RetryPromotionToProd();
     cy.get('[data-cyid="proxy-env-card-header"]>div>span')
       .contains("Production")
       .should("be.visible");

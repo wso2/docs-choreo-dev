@@ -328,7 +328,6 @@ export class GraphQL {
         expect(res.status).to.be.eq(200);
       });
     });
-    ChoreoHomePage.navigateToMarketPlace();
     ChoreoHomePage.navigateToComponents();
     cy.get("tbody>tr p").should("be.visible");
     return cy.wrap({});
