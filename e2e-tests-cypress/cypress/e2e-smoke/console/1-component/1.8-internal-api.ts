@@ -198,7 +198,7 @@ describe(`Verify internal api functionality`, () => {
     });
 
     it("Verify Add resource to 1st Proxy API", () => {
-        ComponentOverviewPage.navigateToDevelop();
+     
         APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
     });
 
@@ -240,11 +240,6 @@ describe(`Verify internal api functionality`, () => {
         });
     });
 
-
-
-
-
-
     it("Verify 2nd Proxy API creation using Internal API Prod endpoint", () => {
         ChoreoHomePage.navigateToHome();
         ProjectListingPage.selectProject(PROJECT_NAME);
@@ -256,7 +251,6 @@ describe(`Verify internal api functionality`, () => {
     });
 
     it("Verify Add resource to 2nd Proxy API", () => {
-        ComponentOverviewPage.navigateToDevelop();
         APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
     });
 
