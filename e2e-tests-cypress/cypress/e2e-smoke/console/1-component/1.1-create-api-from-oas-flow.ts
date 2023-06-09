@@ -72,7 +72,13 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify component deployment and endpoint configurations", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
+    APIDeployment.DeployToDev();
+  });
+
+
+  it("Verify prod invoke url", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.promoteToProd();
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -121,10 +127,7 @@ describe("Choreo APIM publisher scenarios", () => {
     );
   });
 
-  it("Verify prod invoke url", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.promoteToProd();
-  });
+
 
   it("Verify test functionality using Swagger UI in Prod", () => {
     ComponentOverviewPage.navigateToTest();
@@ -162,7 +165,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Search application in devportal", () => {
-    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(PROJECT_NAME,API_NAME,idpUser);
     Apis.searchApiAndSelect(API_NAME, 1);
   });
 
@@ -223,7 +226,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify deleting consumer app", () => {
-    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(PROJECT_NAME, API_NAME,idpUser);
     TryOut.DeleteApplication(appName);
   });
 
@@ -238,44 +241,33 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify redeployment after removing permissions", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
+    APIDeployment.DeployToDev();
   });
 
   it("Verify insight values for dev", () => {
     ChoreoHomePage.navigateToInsights();
-
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.contains("Coming Soon").should("be.visible");
-    } else {
-      InsightsPage.selectTimePeriod();
-      InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
-      InsightsPage.getTotalTraffic().should((value) => {
-        expect(Number(value)).gte(3);
-      });
-      InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-      InsightsPage.getAverageErrorRate().should("eq", "0");
-    }
+    InsightsPage.selectTimePeriod();
+    InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
+    InsightsPage.getTotalTraffic().should((value) => {
+      expect(Number(value)).gte(3);
+    });
+    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
+    InsightsPage.getAverageErrorRate().should("eq", "0");
   });
 
   it("Verify insight values for prod", () => {
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.contains("Coming Soon").should("be.visible");
-    } else {
-      InsightsPage.selectTimePeriod();
-      InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
-      InsightsPage.getTotalTraffic().should((value) => {
-        expect(Number(value)).gte(2);
-      });
-      InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-      InsightsPage.getAverageErrorRate().should("eq", "0");
-    }
+    InsightsPage.selectTimePeriod();
+    InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
+    InsightsPage.getTotalTraffic().should((value) => {
+      expect(Number(value)).gte(2);
+    });
+    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
+    InsightsPage.getAverageErrorRate().should("eq", "0");
   });
 
   it("Reset and undeploy component", () => {
-    if (!Utils.isUnifiedMenuEnabled()) {
-      ChoreoHomePage.navigateToComponents();
-      ComponentListingPage.visitToAComponent(API_NAME);
-    }
+    ChoreoHomePage.navigateToComponents();
+    ComponentListingPage.visitToAComponent(API_NAME);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });

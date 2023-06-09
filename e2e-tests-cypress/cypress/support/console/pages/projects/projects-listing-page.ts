@@ -11,8 +11,6 @@
  * associated services.
  */
 
-
-
 import { cyGet } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
 import { SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
@@ -20,8 +18,6 @@ import { GRAPHQL_URL } from "../../../commons/urls";
 import { Utils } from "../../../commons/utils";
 import { ChoreoHomePage } from "../home/home-page";
 import { ProjectOverviewPage } from "./project-overview";
-
-
 
 export class ProjectListingPage {
   static createNewProject(
@@ -37,12 +33,12 @@ export class ProjectListingPage {
     cy.contains(`Cloud Data Plane - ${dataPlane}`).click();
     Utils.getRenderedElement('[data-testid="create-version-create"]').click();
     cy.get('[data-testid="create-version-create"]').should("not.exist");
-    ProjectOverviewPage.waitForTemplateCardsToLoad()
+    ProjectOverviewPage.waitForTemplateCardsToLoad();
   }
 
   static checkProjectCardCreation() {
     cy.url().then((url) => {
-      if (url.includes("projects") && !url.includes("home")) {
+      if (url.includes("projects")) {
         Utils.getRenderedElement('[data-testid="project-picker"]').click();
         Utils.getRenderedElement('[data-cyid="btn-create-new"]').click();
       } else {

@@ -212,35 +212,24 @@ describe("Verify Ballerina service functionality", () => {
 
   it("Verify API insights for dev env", () => {
     ChoreoHomePage.navigateToInsights();
-
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.contains("Coming Soon").should("be.visible");
-    } else {
-      InsightsPage.selectTimePeriod();
-      InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
-      InsightsPage.getTotalTraffic().should((value) => {
-        expect(Number(value)).gte(2);
-      });
-    }
+    InsightsPage.selectTimePeriod();
+    InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
+    InsightsPage.getTotalTraffic().should((value) => {
+      expect(Number(value)).gte(2);
+    });
   });
 
   it("Verify API insights for prod env", () => {
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.contains("Coming Soon").should("be.visible");
-    } else {
-      InsightsPage.selectTimePeriod();
-      InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
-      InsightsPage.getTotalTraffic().should((value) => {
-        expect(Number(value)).gte(2);
-      });
-    }
+    InsightsPage.selectTimePeriod();
+    InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
+    InsightsPage.getTotalTraffic().should((value) => {
+      expect(Number(value)).gte(2);
+    });
   });
 
   it("Verify suspending all component deployments", () => {
-    if (!Utils.isUnifiedMenuEnabled()) {
-      ChoreoHomePage.navigateToComponents();
-      ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-    }
+    ChoreoHomePage.navigateToComponents();
+    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });

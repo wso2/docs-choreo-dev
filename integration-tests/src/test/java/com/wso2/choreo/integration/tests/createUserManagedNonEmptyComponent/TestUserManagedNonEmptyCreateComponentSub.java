@@ -109,7 +109,6 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
                                 .build();
                 CreateNewVersionResponseDTO response = ComponentUtils.createNewVersion(this, citrusClients, accessToken,
                                 dto);
-                Assert.assertEquals("2.0.0", response.getApiVersion());
                 Assert.assertEquals(response.getApiVersion(), "2.0.0");
         }
 

@@ -49,6 +49,7 @@ import java.util.Map;
         private final String repoName = "empty-repo";
         private static ChoreoComponent choreoComponent;
         private ChoreoProject project;
+
         @Autowired
         private HttpClient choreoTestClient;
 
@@ -61,6 +62,7 @@ import java.util.Map;
             accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
             project = GraphQL.createProject(accessToken);
         }
+
         @Test
         @CitrusTest
         public void createUserManagedComponentFor_AutoDeployOnCommitIT() throws Exception {
@@ -77,8 +79,9 @@ import java.util.Map;
         @Test(dependsOnMethods = {"createUserManagedComponentFor_AutoDeployOnCommitIT"})
         @CitrusTest
         public void handleConfigInit_AutoDeployOnCommitIT() throws Exception {
-            GraphQL.handleConfigInit(accessToken, choreoComponent.getId());
+            GraphQL.handleConfigInit(this, choreoTestClient, accessToken, choreoComponent.getId());
         }
+
         @Test(dependsOnMethods = {"handleConfigInit_AutoDeployOnCommitIT"})
         @CitrusTest
         public void mergeNewCode_AutoDeployOnCommitIT() throws IOException {
@@ -91,11 +94,13 @@ import java.util.Map;
             String encodedCode = Base64.getEncoder().encodeToString(srcCode.getBytes(StandardCharsets.UTF_8));
             GitHub.mergeNewCode(repoName, "service.bal", " change on DeployIT ", encodedCode);
         }
+
         @Test(dependsOnMethods = {"mergeNewCode_AutoDeployOnCommitIT"})
         @CitrusTest
         public void deploymentStatusByVersion_AutoDeployOnCommitIT() throws Exception {
             GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
         }
+
         @Test(dependsOnMethods = {"deploymentStatusByVersion_AutoDeployOnCommitIT"})
         @CitrusTest
         public void componentDevDeployment_AutoDeployOnCommitIT() throws Exception {

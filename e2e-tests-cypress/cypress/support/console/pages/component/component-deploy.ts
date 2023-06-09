@@ -45,18 +45,20 @@ export class ComponentDeployPage {
     });
   }
 
-  static deployToDev(
+  static deployToDev(projectName:string, componentName:string,
     isAdditionalConfigs: boolean = true,
     isManagedByAPIM: boolean = true,
     isManualTrigger: boolean = false
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-deploy-api"]', SHORT_TIME).contains("Generating Configurations").should("not.exist")
-    APIDeployment.RetryDevDeployment();
     cy.get('[data-cyid="btn-deploy-api"]', LONG_TIME)
+      .contains("Generating Configurations")
+      .should("not.exist");
+    APIDeployment.RetryDevDeployment();
+   cyGet('[data-cyid="btn-deploy-api"]', LONG_TIME)
       .should("be.enabled")
       .click();
-    
+
     if (isAdditionalConfigs) {
       if (isManagedByAPIM) {
         Utils.interceptConfig();
@@ -70,7 +72,7 @@ export class ComponentDeployPage {
       return;
     }
     cy.get('[data-testid="btn-stop"]', MEDIUM_TIME).should("be.visible");
-    GraphQL._getComponentDeploymentStatus();
+    GraphQL._getComponentDeploymentStatus(projectName,componentName);
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
     // to ensure rendering completes before checking the deployment status
     cy.wait(600);
@@ -105,7 +107,7 @@ export class ComponentDeployPage {
     if (isManagedByAPIM) {
       Utils.interceptConfig();
     }
-    
+
     APIDeployment.RetryPromotionToProd();
     cyGet('[data-testid="btn-stop"]', LONG_TIME)
       .should("have.length", 2)

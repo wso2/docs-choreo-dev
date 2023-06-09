@@ -1,6 +1,6 @@
 import { is } from "cypress/types/bluebird";
 import { cyGet } from "../../../commons/cy";
-import { MEDIUM_TIME } from "../../../commons/timeouts";
+import { MEDIUM_TIME, MENU_RENDERING_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
 
 /*
@@ -23,7 +23,12 @@ export class ComponentOverviewPage {
   }
 
   static navigateToDeploy() {
-    cy.get("[data-cyid=link-deploy]").click();
+    cy.get("[data-cyid=link-deploy]")
+      .realHover({ position: "left" })
+      .wait(200)
+      .click();
+    cy.get('[id="backdrop-loader"]').should("not.exist");
+    Utils.moveMouseAwayFromLeftMenu();
   }
 
   static navigateToTest() {
@@ -36,9 +41,11 @@ export class ComponentOverviewPage {
           '[data-cyid="curl"]'
         )
       );
+      Utils.moveMouseAwayFromLeftMenu();
     } else {
       cy.get('[data-cyid="link-test"]').should("be.visible").click();
     }
+    cy.get('[id="backdrop-loader"]').should("not.exist");
   }
 
   static navigateToOverview() {
@@ -59,6 +66,7 @@ export class ComponentOverviewPage {
         '[data-cyid="link-manage"]',
         new Array('[data-cyid="manage-overview"]')
       );
+      Utils.moveMouseAwayFromLeftMenu();
     } else {
       cy.get('[data-cyid="link-manage"]').should("be.visible").click();
     }
@@ -139,13 +147,22 @@ export class ComponentOverviewPage {
       // Sub menu is collapsed
       if (!isSubmenuExpanded) {
         // Expand sub menu
-        cy.get(mainMenuSelector).should("be.visible").click().wait(800);
+        cy.get(mainMenuSelector)
+          .should("be.visible")
+          .realHover({ position: "left" })
+          .wait(MENU_RENDERING_TIME)
+          .click()
+          .wait(MENU_RENDERING_TIME);
 
         // Click on anyone of the sub menus that are found first
         cy.get("body").then((bdy) => {
           for (const selector of subMenuSelectors) {
             if (bdy.find(selector).length > 0) {
-              cy.get(selector).should("be.visible").click();
+              cy.get(selector)
+                .should("be.visible")
+                .realHover({ position: "left" })
+                .wait(MENU_RENDERING_TIME)
+                .click();
               break;
             }
           }
@@ -153,8 +170,13 @@ export class ComponentOverviewPage {
       } else {
         // Sub menu is expanded but click to ensure that relevant page is loaded
         // in case we are navigating from a different page
-        cy.get(subMenuSelector).should("be.visible").click();
+        cy.get(subMenuSelector)
+          .should("be.visible")
+          .realHover({ position: "left" })
+          .wait(MENU_RENDERING_TIME)
+          .click();
       }
     });
   }
+
 }

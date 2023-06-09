@@ -36,6 +36,7 @@ after(() => {
 describe(`Verify BYOC functionality in region ${dp}`, () => {
   const BYOC_NAME = "create-ReuseBYOC";
   const RESOURCE_NAME = "movies";
+  const PROJECT_NAME="Default Project"
 
   it("Verify BYOC REST API component creation", () => {
     let componentData: ByocComponent = {
@@ -60,7 +61,7 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
     ProjectListingPage.selectProject();
     ProjectOverviewPage.searchReuseComponent(
       componentData,
-      "Default Project",
+      PROJECT_NAME,
       true
     );
   });
@@ -68,7 +69,7 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
   it("Deploy component", () => {
     ComponentListingPage.visitToAComponent(BYOC_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployToDev();
+    ComponentDeployPage.deployToDev(PROJECT_NAME,BYOC_NAME);
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {

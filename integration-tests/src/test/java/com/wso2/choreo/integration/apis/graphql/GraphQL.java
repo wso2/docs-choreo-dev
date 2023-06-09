@@ -278,15 +278,31 @@ public class GraphQL extends ControlPlaneAPI {
         return commitList;
     }
 
-    public static void handleConfigInit(String accessToken , String componentId) throws Exception {
-        Map<String, String> params = new HashMap<>();
-        params.put("componentId", componentId);
-        String srcCode = MessageUtils.generateStringFromTemplate(
-                "templates/graphql/requests/handleConfigInit.mustache", params);
-        Response response =  HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(srcCode), accessToken, "");
-        if(response.getStatusCode() != HttpStatus.OK.value()){
-            throw new ComponentCreationException(response.getStatusCode(),"Failed to init config");
-        }
+    public static void handleConfigInit(TestActionRunner runner, HttpClient client,
+                                        String accessToken , String componentId) throws Exception {
+        GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).build();
+        String queryString = ObjectMapperUtil.
+                mapObjectToString("templates/graphql/requests/handleConfigInit.mustache", dto);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate(jsonPath()
+                        .expression("$.data.handleConfigInit.success", "true")
+                ));
     }
 
     public static Response promoteComponent(ChoreoComponent component, String accessToken)

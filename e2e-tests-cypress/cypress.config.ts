@@ -42,7 +42,7 @@ export default defineConfig({
       config.env.userName = process.env.userName;
       config.env.userEmail = process.env.userEmail;
       config.env.gitPAT = process.env.gitPAT;
-      config.env.enableUnifiedMenu = process.env.enableUnifiedMenu;
+      config.env.enableUnifiedMenu = true;
       return config;
     },
     testIsolation: false,

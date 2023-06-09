@@ -72,7 +72,6 @@ export class GraphQL {
         if (componentData.initializeAsBallerinaProject) {
           this.getPullRequests(id, repoName);
         }
-        this.getDeployedComponentDetails(projectId, handler);
       });
     });
     return cy.wrap({});
@@ -155,10 +154,10 @@ export class GraphQL {
   }
 
   static _getComponentByName(projectName: string, componentName: string) {
-    this.getProjects().then((res) => {
+    return this.getProjects().then((res) => {
       const projects = res.projects;
       const project = projects.find((p) => p.name === projectName);
-      this.getComponents(project.id).then((resp) => {
+      return this.getComponents(project.id).then((resp) => {
         if (resp.status === SUCCESS_STATUS_CODE) {
           const comp: Component = resp.components.find((c) => c.displayName === componentName);
           if (!comp) {
@@ -327,7 +326,6 @@ export class GraphQL {
         const { id, projectId, handle } = res.body.createIntegrationComponent;
         Cypress.env("component", { id, projectId, handle });
         expect(res.status).to.be.eq(200);
-        this.getDeployedComponentDetails(projectId, handle);
       });
     });
     ChoreoHomePage.navigateToMarketPlace();
@@ -336,21 +334,7 @@ export class GraphQL {
     return cy.wrap({});
   }
 
-
-  private static _getAPIinfo(projectId: string, componentHandler: string) {
-    const query = GraphQLQueryBuilder.getComponentDetails(projectId, componentHandler);
-
-    return this.callGraphQL(query).then(res => {
-      const component: Component = res.body.component;
-      const componentId = component.id;
-      const latestVersion = component.apiVersions.find((a) => a.latest);
-      return Promise.resolve({
-        componentId,
-        latestVersionId: latestVersion.id
-      })
-    })
-  }
-  static getBuildsByVersion(componentId: string, latestAPIVersionId: string) {
+  static _getBuildsByVersion(componentId: string, latestAPIVersionId: string) {
 
     const { handle } = Cypress.env("userData");
     const query = GraphQLQueryBuilder.getBuildsByVersionQuery(handle, componentId, latestAPIVersionId)
@@ -365,67 +349,12 @@ export class GraphQL {
   static getDeployStatus(projectName: string, componentName: string, stage: Enums.DeploymentStages, status: Enums.ResponseStatus) {
     this._getAPIInfo(projectName, componentName).then(comp => {
       const { componentId, latestVersionId } = comp
-      this.getBuildsByVersion(componentId, latestVersionId).then(bv => {
+      this._getBuildsByVersion(componentId, latestVersionId).then(bv => {
         const { buildId } = bv
         const url = `${PROXY_DEPLOYER_EP}/${componentId}/versions/${latestVersionId}/builds/${buildId}/status`
         this._getDeployStatus(url, stage, status)
       })
     })
-  }
-
-  static _getAPIInfo(projectName: string, componentName: string) {
-    return this._getComponentInfo(projectName, componentName).then(comp => {
-      const { id } = comp.component
-      const latestVersion = comp.component.apiVersions.find((a) => a.latest);
-      return Promise.resolve({ componentId: id, latestVersionId: latestVersion.id })
-    })
-
-
-  }
-
-  static getPrmotionStatus(projectName: string, componentName: string) {
-
-
-    this._getProjectEnvironments(projectName).then(projEnvs => {
-      const envs = projEnvs as { name: string, id: string }[]
-      const { id } = envs.find(e => e.name === Enums.Environment.PRODUCTION)
-      this._getAPIInfo(projectName, componentName).then(comp => {
-        const { componentId, latestVersionId } = comp
-        const url = `${PROXY_DEPLOYER_EP}/${componentId}/versions/${latestVersionId}/deployments?environmentId=${id}&accessMode=external`
-        this._getPromotionStatus(url)
-      })
-    })
-
-
-
-
-
-
-    // this.getProjectByName(projectName).then(proj => {
-    //   const { id } = proj
-    //   this.getProjectEnvironments(id).then(projEnvs => {
-    //     const envs = projEnvs as { name: string, id: string }[]
-    //     const { id } = envs.find(e => e.name === Enums.Environment.PRODUCTION)
-    //     this._getAPIInfo(projectName, componentName).then(comp => {
-    //       const { componentId, latestVersionId } = comp
-    //       const url = `${PROXY_DEPLOYER_EP}/${componentId}/versions/${latestVersionId}/deployments?environmentId=${id}&accessMode=external`
-    //       this._getPromotionStatus(url)
-    //     })
-    //   })
-    // })
-  }
-
-  private static _getPromotionStatus(url: string) {
-    Utils.sendGetRequest(url, AUTH_HEADER()).then(res => {
-      const { deploymentStatus } = res.body
-      Utils.isError(deploymentStatus, "Proxy With Mediation Policy Deployment Failed")
-      if (deploymentStatus !== 'ACTIVE') {
-        cy.wait(15000)
-        this._getPromotionStatus(url)
-
-      }
-    })
-
   }
 
   private static _getDeployStatus(url: string, stage: string, status: string) {
@@ -450,13 +379,45 @@ export class GraphQL {
     })
   }
 
-  static getProjectEnvironments(projectId: string) {
-    const { uuid } = Cypress.env("userData");
-    const query = GraphQLQueryBuilder.getEnvironments(uuid, projectId)
-    return this.callGraphQL(query).then(res => {
-      return Promise.resolve(res.body.environments)
+  static _getAPIInfo(projectName: string, componentName: string) {
+    return this._getComponentInfo(projectName, componentName).then(comp => {
+      const { id } = comp.component
+      const latestVersion = comp.component.apiVersions.find((a) => a.latest)
+      return Promise.resolve({ componentId: id, latestVersionId: latestVersion.id })
+    })
+
+
+  }
+
+  static getPrmotionStatus(projectName: string, componentName: string) {
+
+
+    this._getProjectEnvironments(projectName).then(projEnvs => {
+      const envs = projEnvs as { name: string, id: string }[]
+      const { id } = envs.find(e => e.name === Enums.Environment.PRODUCTION)
+      this._getAPIInfo(projectName, componentName).then(comp => {
+        const { componentId, latestVersionId } = comp
+        const url = `${PROXY_DEPLOYER_EP}/${componentId}/versions/${latestVersionId}/deployments?environmentId=${id}&accessMode=external`
+        this._getPromotionStatus(url)
+      })
     })
   }
+
+  private static _getPromotionStatus(url: string) {
+    Utils.sendGetRequest(url, AUTH_HEADER()).then(res => {
+      const { deploymentStatus } = res.body
+      Utils.isError(deploymentStatus, "Proxy With Mediation Policy Deployment Failed")
+      if (deploymentStatus !== 'ACTIVE') {
+        cy.wait(15000)
+        this._getPromotionStatus(url)
+
+      }
+    })
+
+  }
+
+  
+
 
   static _getProjectEnvironments(projectName: string) {
     const { uuid } = Cypress.env("userData");
@@ -470,59 +431,7 @@ export class GraphQL {
     })
   }
 
-  static getComponentInfo(projectName: string, componentName: string) {
-    this.getProjects().then((res) => {
-      const projects = res.projects;
-      const project = projects.find((p) => p.name === projectName);
-      return this.getComponents(project.id).then((resp) => {
-        if (resp.status === SUCCESS_STATUS_CODE) {
-          const comp = resp.components.find((c) => c.displayName === componentName);
-
-          if (comp) {
-            this._getProjectEnvironments(projectName).then(res => {
-              this._getAPIinfo(project.id, comp.handler).then(info => {
-                const { componentId, latestVersionId } = info
-                return Promise.resolve({
-                  componentId,
-                  versionId: latestVersionId,
-                  projectEnv: res
-                })
-              })
-            })
-            this.getDeployedComponentDetails(project.id, comp.handler);
-          }
-        }
-      });
-    });
-  }
-
-  static getDeployedComponentDetails(projectId: string, handler: string) {
-    const query = GraphQLQueryBuilder.getComponentDetails(projectId, handler);
-    this.callGraphQL(query).then((res) => {
-      const component: Component = res.body.component;
-      const componentId = component.id;
-      const av: APIVersion[] = component.apiVersions;
-      const latestAPIVersion = av.find((a) => a.latest);
-      const latestAPIVersionId = latestAPIVersion.id;
-
-      const apiInfo = { componentId, latestAPIVersionId };
-      Cypress.env("apiInfo", apiInfo);
-      const appENVS: AppEnvVersion[] = latestAPIVersion.appEnvVersions;
-      appENVS.forEach((appEnv) => {
-        const { release } = appEnv;
-        const { id, environmentId } = release;
-        const choreoEnv = release.metadata.choreoEnv;
-        let releaseData = {
-          componentId,
-          latestAPIVersionId,
-          environmentId,
-          releaseId: id,
-          choreoEnv,
-        };
-        Cypress.env(choreoEnv, releaseData);
-      });
-    });
-  }
+ 
 
   static _getComponentInfo(projectName: string, componentName: string) {
     return this.getProjects().then(res => {
@@ -536,9 +445,6 @@ export class GraphQL {
           const query = GraphQLQueryBuilder.getComponentDetails(project.id, comp.handler);
           return this.callGraphQL(query).then(res => {
             const component: Component = res.body.component;
-       
-
-            cyLog(component)
             return Promise.resolve({
               component
             })
@@ -596,10 +502,9 @@ export class GraphQL {
       const projEnv = projEnvs.find(p => p.name === env)
 
       this._getComponentInfo(projectName, componentName).then(com => {
-        
-cyLog(com)
+
         const apiVersion = com.component.apiVersions.find(v => v.latest === true)
-      
+
         const appEnv = apiVersion.appEnvVersions.find(av => av.environmentId === projEnv.id)
 
 

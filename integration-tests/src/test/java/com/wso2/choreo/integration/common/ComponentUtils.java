@@ -89,7 +89,7 @@ public class ComponentUtils {
                                                        ComponentFlavour componentFlavour) throws Exception {
 
         ChoreoOrganization org = TestContext.getTestOrg();
-        String projectName = "integration-test-project";
+        String projectName = "integration-test-project-V2";
 
         Optional<ChoreoProject> existingProject = org.getProjectByName(accessToken, projectName);
         ChoreoProject project;
@@ -262,6 +262,8 @@ public class ComponentUtils {
 
             Orgs.waitForComponentCreationSuccess(runner, choreoClient, accessToken, responseDTO.get().getProjectId(),
                     responseDTO.get().getId());
+
+            GraphQL.handleConfigInit(runner, choreoClient, accessToken, responseDTO.get().getId());
 
             graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
                     .componentHandler(responseDTO.get().getHandler()).build();
