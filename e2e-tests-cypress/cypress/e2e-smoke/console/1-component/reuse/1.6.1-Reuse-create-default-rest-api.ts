@@ -62,7 +62,7 @@ describe("Verify Reusable RestAPI functionality", () => {
   it("Deploy component", () => {
     ComponentListingPage.visitToAComponent(REST_API_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployToDev();
+    ComponentDeployPage.deployToDev(PROJECT_NAME, REST_API_NAME);
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {

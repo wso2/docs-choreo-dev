@@ -38,8 +38,7 @@ export class TestHelper {
     env: Enums.Environment,
     httpMethod: Enums.HTTPMethod,
     pathParm: string,
-    queryParameters1 = [],
-    ...options: string[]
+    queryParameters1 = []
   ) {
     this.selectCurl();
     Curl.selectCurlEnvironment(env);
@@ -51,8 +50,7 @@ export class TestHelper {
     cy.get("textarea")
       .invoke("text")
       .then((curl) => {
-        const crl = `${curl} ${options.toString()}`;
-        Cypress.env(`int_curl_${env}`, crl);
+        Cypress.env(`int_curl_${env}`, curl);
       });
     return Curl.getRequestComponents(`${env}${pathParm}`);
   }

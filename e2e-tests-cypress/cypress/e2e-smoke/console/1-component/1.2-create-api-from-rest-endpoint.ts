@@ -89,7 +89,7 @@ describe(`Verify proxy api functionality`, () => {
 
   it("Verify component deployment to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.deployProxyAPIToDev(PROJECT_NAME, API_NAME);
+    APIDeployment.deployProxyAPIToDev();
   });
 
   it("Verify mediation component deployment", () => {
@@ -161,13 +161,12 @@ describe(`Verify proxy api functionality`, () => {
 
   it("Verify component deployment to dev with new policy", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.deployProxyAPIToDev(PROJECT_NAME, API_NAME);
+    APIDeployment.deployProxyAPIToDev();
   });
 
   it("Verify mediation component deployment  with new policy", () => {
     APIDeployment.verifyProxyDeployment(PROJECT_NAME, API_NAME, true);
   });
-
 
   it("Verify test functionality using Swagger UI in Dev with new policy", () => {
     ComponentOverviewPage.navigateToTest();
@@ -233,7 +232,7 @@ describe(`Verify proxy api functionality`, () => {
 
   it("Verify component deployment to dev with updated header value", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.deployProxyAPIToDev(PROJECT_NAME, API_NAME);
+    APIDeployment.deployProxyAPIToDev();
   });
 
   it("Verify mediation component deployment  with updated policy", () => {
@@ -294,7 +293,6 @@ describe(`Verify proxy api functionality`, () => {
     });
   });
 
-
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentOverviewPage.createNewVersion(API_NEW_VERSION, "");
@@ -311,7 +309,7 @@ describe(`Verify proxy api functionality`, () => {
 
   it("Deploy new version to Dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.deployProxyAPIToDev(PROJECT_NAME, API_NAME);
+    APIDeployment.deployProxyAPIToDev();
   });
 
   it("Verify mediation component deployment  with updated policy", () => {
@@ -363,7 +361,11 @@ describe(`Verify proxy api functionality`, () => {
   });
 
   it("Generate credentials for prod env", () => {
-    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(
+      PROJECT_NAME,
+      API_NAME,
+      idpUser
+    );
     Apis.searchApiAndSelect(API_NAME, 2, API_NEW_VERSION);
     ApiCredentials.navigateToEnvironment(Enums.Environment.PRODUCTION);
     ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
