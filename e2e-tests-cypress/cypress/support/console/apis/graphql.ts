@@ -327,7 +327,6 @@ export class GraphQL {
         this.getDeployedComponentDetails(projectId, handle);
       });
     });
-    ChoreoHomePage.navigateToMarketPlace();
     ChoreoHomePage.navigateToComponents();
     cy.get("tbody>tr p").should("be.visible");
     return cy.wrap({});
