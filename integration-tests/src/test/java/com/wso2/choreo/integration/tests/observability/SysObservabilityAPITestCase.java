@@ -179,7 +179,7 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
                                     .get(requestPath)
                                     .message()
                                     .queryParam("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)))
-                                    .queryParam("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)))
+                                    .queryParam("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).plusSeconds(10 * 60)))
                                     .queryParam("interval", "14")
                                     .queryParam("region", "US")
                                     .queryParam("releaseId", releaseId)
