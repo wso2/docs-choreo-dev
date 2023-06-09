@@ -141,7 +141,7 @@ export class APIDevelop {
   ) {
     const buttons = `[id="/${resourcePath}/${verb.toUpperCase()}/out-flow"] div[data-key] button`;
     const header = this.getHeader(resourcePath, verb.toUpperCase());
-    cyGet('[data-testid="Policies"]').click();
+    cyGet('[data-cyid="develop-policies"]').click();
     cyGet(header).eq(0).click();
     cy.get(buttons).eq(0).click();
     if (headerName) {

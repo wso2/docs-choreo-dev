@@ -31,16 +31,7 @@ export class TestHelper {
     this.selectOpenApiConsole();
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource(resourcePath, key, value);
-
-    return SwaggerUI.getResponseCode().then((res) => {
-      return SwaggerUI.GetResponse().then((r) => {
-        return cy.wrap({
-          response: r,
-          statusCode: res,
-        });
-      });
-    });
+    return this.invokeSwaggerResource(env, resourcePath, key, value, "");
   }
 
   static testOnCurl(

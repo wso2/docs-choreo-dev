@@ -93,8 +93,8 @@ describe(`Verify proxy api functionality`, () => {
   });
 
   it("Verify mediation component deployment", () => {
-    APIDeployment.verifyProxyDeployment(PROJECT_NAME,API_NAME)
-  })
+    APIDeployment.verifyProxyDeployment(PROJECT_NAME, API_NAME);
+  });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
     ComponentOverviewPage.navigateToTest();
@@ -110,9 +110,7 @@ describe(`Verify proxy api functionality`, () => {
     TestHelper.testOnCurl(
       Enums.Environment.DEVELOPMENT,
       Enums.HTTPMethod.GET,
-      "users",
-      [],
-      "-v"
+      OPERATION_USERS
     ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
@@ -123,7 +121,7 @@ describe(`Verify proxy api functionality`, () => {
 
   it("Verify prod promotion", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.promoteToProd(PROJECT_NAME,API_NAME,true);
+    APIDeployment.promoteToProd(PROJECT_NAME, API_NAME, true);
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
@@ -140,9 +138,7 @@ describe(`Verify proxy api functionality`, () => {
     TestHelper.testOnCurl(
       Enums.Environment.PRODUCTION,
       Enums.HTTPMethod.GET,
-      "users",
-      [],
-      "-v"
+      OPERATION_USERS
     ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
@@ -169,8 +165,8 @@ describe(`Verify proxy api functionality`, () => {
   });
 
   it("Verify mediation component deployment  with new policy", () => {
-    APIDeployment.verifyProxyDeployment(PROJECT_NAME,API_NAME,true)
-  })
+    APIDeployment.verifyProxyDeployment(PROJECT_NAME, API_NAME, true);
+  });
 
 
   it("Verify test functionality using Swagger UI in Dev with new policy", () => {
@@ -187,9 +183,7 @@ describe(`Verify proxy api functionality`, () => {
     TestHelper.testOnCurl(
       Enums.Environment.DEVELOPMENT,
       Enums.HTTPMethod.GET,
-      "users",
-      [],
-      "-v"
+      OPERATION_USERS
     ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
@@ -200,7 +194,7 @@ describe(`Verify proxy api functionality`, () => {
 
   it("Verify prod promotion with new policy", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.promoteToProd(PROJECT_NAME,API_NAME,true);
+    APIDeployment.promoteToProd(PROJECT_NAME, API_NAME, true);
   });
 
   it("Verify test functionality using Swagger UI in Prod with new policy", () => {
@@ -217,9 +211,7 @@ describe(`Verify proxy api functionality`, () => {
     TestHelper.testOnCurl(
       Enums.Environment.PRODUCTION,
       Enums.HTTPMethod.GET,
-      "users",
-      [],
-      "-v"
+      OPERATION_USERS
     ).then((curl) => {
       cyLog(curl);
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
@@ -245,9 +237,8 @@ describe(`Verify proxy api functionality`, () => {
   });
 
   it("Verify mediation component deployment  with updated policy", () => {
-    APIDeployment.verifyProxyDeployment(PROJECT_NAME,API_NAME,true)
-  })
-
+    APIDeployment.verifyProxyDeployment(PROJECT_NAME, API_NAME, true);
+  });
 
   it("Verify test functionality using Swagger UI in Dev updated header value", () => {
     ComponentOverviewPage.navigateToTest();
@@ -263,9 +254,7 @@ describe(`Verify proxy api functionality`, () => {
     TestHelper.testOnCurl(
       Enums.Environment.DEVELOPMENT,
       Enums.HTTPMethod.GET,
-      "users",
-      [],
-      "-v"
+      OPERATION_USERS
     ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         cyLog(res.headers);
@@ -277,7 +266,7 @@ describe(`Verify proxy api functionality`, () => {
 
   it("Verify prod promotion with updated header value", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.promoteToProd(PROJECT_NAME,API_NAME,true);
+    APIDeployment.promoteToProd(PROJECT_NAME, API_NAME, true);
   });
 
   it("Verify test functionality using Swagger UI in Prod with updated header value", () => {
@@ -294,9 +283,7 @@ describe(`Verify proxy api functionality`, () => {
     TestHelper.testOnCurl(
       Enums.Environment.PRODUCTION,
       Enums.HTTPMethod.GET,
-      "users",
-      [],
-      "-v"
+      OPERATION_USERS
     ).then((curl) => {
       cyLog(curl);
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
@@ -328,8 +315,8 @@ describe(`Verify proxy api functionality`, () => {
   });
 
   it("Verify mediation component deployment  with updated policy", () => {
-     APIDeployment.verifyProxyDeployment(PROJECT_NAME,API_NAME,true)
-  })
+    APIDeployment.verifyProxyDeployment(PROJECT_NAME, API_NAME, true);
+  });
 
   it("Test in dev", () => {
     TestHelper.testOnSwagger(
@@ -349,7 +336,7 @@ describe(`Verify proxy api functionality`, () => {
 
   it("Verify new version promotion to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.promoteToProd(PROJECT_NAME,API_NAME,true);
+    APIDeployment.promoteToProd(PROJECT_NAME, API_NAME, true);
   });
 
   it("Test in prod", () => {
