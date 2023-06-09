@@ -23,16 +23,6 @@ export class ChoreoHomePage {
     ).click();
   }
 
-  static navigateToMarketPlace() {
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.contains("Coming Soon").should("be.visible");
-    } else {
-      cy.get('[data-testid="main-left-nav-item-Marketplace"]').click({
-        force: true,
-      });
-    }
-  }
-
   static navigateToProjects() {
     cy.get('[data-testid="main-left-nav-item-Project"]').click();
   }
