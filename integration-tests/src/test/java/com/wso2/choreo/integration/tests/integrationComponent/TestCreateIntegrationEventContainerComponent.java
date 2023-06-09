@@ -39,6 +39,7 @@ import java.util.Map;
 public class TestCreateIntegrationEventContainerComponent extends TestNGCitrusSpringSupport {
 
     public static final String CONTAINERIZED_EVENT_HANDLER = "byocWebhook";
+    public static final String WS_URL = "wss://ws.postman-echo.com/raw/";
 
     private static String accessToken;
     private String orgHandle;
@@ -66,7 +67,7 @@ public class TestCreateIntegrationEventContainerComponent extends TestNGCitrusSp
     private HttpClient choreoTestClientForSTS;
 
     @BeforeClass
-    public void setup_TestCreateIntegrationEventComponent()
+    public void setup_TestCreateIntegrationEventContainerComponent()
             throws Exception {
 
         orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
@@ -81,10 +82,10 @@ public class TestCreateIntegrationEventContainerComponent extends TestNGCitrusSp
 
     @Test
     @CitrusTest
-    public void createComponent_TestCreateIntegrationEventComponent() throws Exception {
+    public void createComponent_TestCreateIntegrationEventContainerComponent() throws Exception {
 
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        final String repoName = "ipaas-containerized-rabbitmq-listener";
+        final String repoName = "ipaas-containerized-event-listener";
         final String repoBranch = "main";
         String srcGitHubURL = Constant.GITHUB_URL.concat(githubOrg).concat("/").concat(repoName);
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().apiName(componentName.toLowerCase()).orgId(Integer.parseInt(orgId)).
@@ -95,23 +96,20 @@ public class TestCreateIntegrationEventContainerComponent extends TestNGCitrusSp
                 graphqlDTO);
     }
 
-    @Test(dependsOnMethods = {"createComponent_TestCreateIntegrationEventComponent"})
+    @Test(dependsOnMethods = {"createComponent_TestCreateIntegrationEventContainerComponent"})
     @CitrusTest
-    public void componentRetrieval_TestCreateIntegrationEventComponent() throws Exception {
+    public void componentRetrieval_TestCreateIntegrationEventContainerComponent() throws Exception {
 
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
         testComponent = GraphQL.retrieveComponent(this, choreoProjectsTestClient, accessToken,
                 graphqlDTO);
     }
 
-    @Test(dependsOnMethods = {"componentRetrieval_TestCreateIntegrationEventComponent"})
+    @Test(dependsOnMethods = {"componentRetrieval_TestCreateIntegrationEventContainerComponent"})
     @CitrusTest
-    public void createEnvVariables_TestCreateIntegrationEventComponent() throws Exception {
+    public void createEnvVariables_TestCreateIntegrationEventContainerComponent() throws Exception {
 
-        varMap.put("HOST", "localhost");
-        varMap.put("VHOST", "localhost");
-        varMap.put("USERNAME", "test-user");
-        varMap.put("PASSWORD", "pass");
+        varMap.put("WS_URL", WS_URL);
         String devEnvId = testComponent.getLatestAppEnvId(Constant.DEV_ENVIRONMENT);
         String devReleaseId = testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT);
 
@@ -119,12 +117,12 @@ public class TestCreateIntegrationEventContainerComponent extends TestNGCitrusSp
                 DevopsPortalApi.createUpdateEnvVariables(this, accessToken, varMap, testComponent.getId(),
                         devEnvId, devReleaseId, orgUUID, projectId);
         Assert.assertEquals(createdEnvVariables.size(), varMap.size());
-        Assert.assertEquals(createdEnvVariables.get("HOST"), varMap.get("HOST"));
+        Assert.assertEquals(createdEnvVariables.get("WS_URL"), varMap.get("WS_URL"));
     }
 
-    @Test(dependsOnMethods = {"createEnvVariables_TestCreateIntegrationEventComponent"})
+    @Test(dependsOnMethods = {"createEnvVariables_TestCreateIntegrationEventContainerComponent"})
     @CitrusTest
-    public void componentDeployment_TestCreateIntegrationEventComponent() throws Exception {
+    public void componentDeployment_TestCreateIntegrationEventContainerComponent() throws Exception {
 
         JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
         String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
@@ -142,13 +140,76 @@ public class TestCreateIntegrationEventContainerComponent extends TestNGCitrusSp
         GraphQL.deployComponent(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 
-    @Test(dependsOnMethods = {"componentDeployment_TestCreateIntegrationEventComponent"})
+    @Test(dependsOnMethods = {"componentDeployment_TestCreateIntegrationEventContainerComponent"})
     @CitrusTest
-    public void deploymentStatusByVersion_TestCreateIntegrationEventComponent() throws Exception {
+    public void deploymentStatusByVersion_TestCreateIntegrationEventContainerComponent() throws Exception {
 
         String versionId = testComponent.getLatestApiVersion().getId();
 
         GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).latestVersionId(versionId).build();
         GraphQL.getDeploymentStatusByVersion(this, choreoProjectsTestClient, accessToken, dto);
+    }
+
+    @Test(dependsOnMethods = {"deploymentStatusByVersion_TestCreateIntegrationEventContainerComponent"})
+    @CitrusTest
+    public void componentDeploymentStatus_TestCreateIntegrationEventContainerComponent() throws Exception {
+
+        String versionId = testComponent.getLatestApiVersion().getId();
+        String devEnvIdToDeploy = testComponent.getLatestAppEnvId(Constant.DEV_ENVIRONMENT);
+
+        GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).orgHandler(orgHandle).orgUuid(orgUUID)
+                .versionId(versionId).environmentId(devEnvIdToDeploy).build();
+
+        JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
+        String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
+
+        Map<String, String> responseParams = new HashMap<>();
+        responseParams.put("environmentId", devEnvIdToDeploy);
+        responseParams.put("sha", latestCommitSha);
+        responseParams.put("versionId", versionId);
+
+        GraphQL.getComponentDeploymentStatus(this, choreoTestClient, accessToken, dto, responseParams);
+    }
+
+    @Test(dependsOnMethods = {"componentDeploymentStatus_TestCreateIntegrationEventContainerComponent"})
+    @CitrusTest
+    public void createEnvVariablesInProd_TestCreateIntegrationEventContainerComponent() throws Exception {
+
+        varMap.put("WS_URL", WS_URL);
+        String prodEnvId = testComponent.getLatestAppEnvId(Constant.PROD_ENVIRONMENT);
+        String prodReleaseId = testComponent.getReleaseIdForEnvironment(Constant.PROD_ENVIRONMENT);
+
+        Map<String, String> createdEnvVariables =
+                DevopsPortalApi.createUpdateEnvVariables(this, accessToken, varMap, testComponent.getId(),
+                        prodEnvId, prodReleaseId, orgUUID, projectId);
+        Assert.assertEquals(createdEnvVariables.size(), varMap.size());
+        Assert.assertEquals(createdEnvVariables.get("WS_URL"), varMap.get("WS_URL"));
+    }
+
+    @Test(dependsOnMethods = {"createEnvVariablesInProd_TestCreateIntegrationEventContainerComponent"})
+    @CitrusTest
+    public void componentPromotionToProd_TestCreateIntegrationEventContainerComponent() throws Exception {
+        // Retrieve the latest component.
+        testComponent = GraphQL.getComponentDetails(this, choreoProjectsTestClient, projectId, componentHandler, accessToken);
+        String latestApiVersionId = testComponent.getLatestApiVersion().getId();
+        String releaseIdForEnvironment = testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT);
+        String latestAppEnvId = testComponent.getLatestAppEnvId(Constant.PROD_ENVIRONMENT);
+
+        GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).apiVersionId(latestApiVersionId).
+                sourceReleaseId(releaseIdForEnvironment).targetEnvironmentId(latestAppEnvId).build();
+        GraphQL.promoteComponent(this, choreoTestClient, accessToken, dto);
+
+        testComponent.waitForComponentDeploymentSuccess(accessToken, orgHandle, orgUUID, latestApiVersionId,
+                latestAppEnvId);
+    }
+
+    @Test(dependsOnMethods = {"componentPromotionToProd_TestCreateIntegrationEventContainerComponent"})
+    @CitrusTest
+    public void undeployComponentDev_TestCreateIntegrationEventContainerComponent() throws Exception {
+
+        String devReleaseId = GraphQL.componentDeployment(testComponent, Constant.DEV_ENVIRONMENT, accessToken).getReleaseId();
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(orgHandle)
+                .componentType(CONTAINERIZED_EVENT_HANDLER).releaseId(devReleaseId).build();
+        GraphQL.stopDeployment(this, choreoTestClient, accessToken, graphqlDTO);
     }
 }
