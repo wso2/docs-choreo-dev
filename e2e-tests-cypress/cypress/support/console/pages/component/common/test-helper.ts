@@ -31,24 +31,14 @@ export class TestHelper {
     this.selectOpenApiConsole();
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource(resourcePath, key, value);
-
-    return SwaggerUI.getResponseCode().then((res) => {
-      return SwaggerUI.GetResponse().then((r) => {
-        return cy.wrap({
-          response: r,
-          statusCode: res,
-        });
-      });
-    });
+    return this.invokeSwaggerResource(env, resourcePath, key, value, "");
   }
 
   static testOnCurl(
     env: Enums.Environment,
     httpMethod: Enums.HTTPMethod,
     pathParm: string,
-    queryParameters1 = [],
-    ...options: string[]
+    queryParameters1 = []
   ) {
     this.selectCurl();
     Curl.selectCurlEnvironment(env);
@@ -60,8 +50,7 @@ export class TestHelper {
     cy.get("textarea")
       .invoke("text")
       .then((curl) => {
-        const crl = `${curl} ${options.toString()}`;
-        Cypress.env(`int_curl_${env}`, crl);
+        Cypress.env(`int_curl_${env}`, curl);
       });
     return Curl.getRequestComponents(`${env}${pathParm}`);
   }
