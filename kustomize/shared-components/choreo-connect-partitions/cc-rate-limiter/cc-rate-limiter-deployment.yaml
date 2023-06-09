@@ -59,7 +59,7 @@ spec:
             - -c
             - (timeout 50 sh -c "until nslookup periscope.choreo.dev; do echo waiting for dns; sleep 1; done"; exit 0) > /dev/null 2>&1
           image: choreocontrolplane.azurecr.io/init-container:1.0.0
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           resources: { }
           securityContext:
             allowPrivilegeEscalation: false
