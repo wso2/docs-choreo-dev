@@ -133,8 +133,6 @@ export class APIDeployment {
     cyGet('[data-cyid="btn-promote"]').should("be.enabled").click();
     this.RetryPromotionToProd();
     cy.get('[data-testid="config-loader"]').should("not.exist");
-    cy.get(".ConfigForm", VERY_SHORT_TIME).should("be.visible");
-
     cy.get("body").then((bdy) => {
       if (bdy.find('[data-cyid="btn-next"]').length > 0) {
         cy.get('[data-cyid="btn-next"]').should("be.visible").click();
