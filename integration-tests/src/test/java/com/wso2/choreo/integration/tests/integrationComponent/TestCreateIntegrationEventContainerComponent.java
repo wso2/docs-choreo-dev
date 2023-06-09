@@ -27,6 +27,7 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.graphql.CreateByocComponentResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -35,6 +36,7 @@ import org.testng.annotations.Test;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class TestCreateIntegrationEventContainerComponent extends TestNGCitrusSpringSupport {
 
@@ -88,12 +90,13 @@ public class TestCreateIntegrationEventContainerComponent extends TestNGCitrusSp
         final String repoName = "ipaas-containerized-event-listener";
         final String repoBranch = "main";
         String srcGitHubURL = Constant.GITHUB_URL.concat(githubOrg).concat("/").concat(repoName);
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().apiName(componentName.toLowerCase()).orgId(Integer.parseInt(orgId)).
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(componentName.toLowerCase()).orgId(Integer.parseInt(orgId)).
                 orgHandler(orgHandle).displayName(componentName).componentType(CONTAINERIZED_EVENT_HANDLER).
                 projectId(projectId).srcGitRepoUrl(srcGitHubURL).repositorySubPath("").
                 repositoryBranch(repoBranch).dockerfilePath("Dockerfile").build();
-        componentHandler = GraphQL.createBYOCEventTriggeredComponent(this, choreoProjectsTestClient, accessToken,
-                graphqlDTO);
+        Optional<CreateByocComponentResponseDTO> byocComponent = GraphQL.createBYOCComponent(this,
+                choreoProjectsTestClient, graphqlDTO, accessToken);
+        componentHandler = byocComponent.get().getHandle();
     }
 
     @Test(dependsOnMethods = {"createComponent_TestCreateIntegrationEventContainerComponent"})

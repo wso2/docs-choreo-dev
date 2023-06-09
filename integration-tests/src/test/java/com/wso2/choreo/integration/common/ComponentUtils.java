@@ -248,6 +248,7 @@ public class ComponentUtils {
         GraphqlDTO graphqlDTO;
 
         if (componentFlavour.equals(ComponentFlavour.BYOC)) {
+            dto.setComponentType("byocRestApi");
             Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createBYOCComponent(runner, cpProjectsClient,
                     dto, accessToken);
 
