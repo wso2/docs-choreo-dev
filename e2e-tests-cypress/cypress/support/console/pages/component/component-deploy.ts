@@ -51,12 +51,14 @@ export class ComponentDeployPage {
     isManualTrigger: boolean = false
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-deploy-api"]', SHORT_TIME).contains("Generating Configurations").should("not.exist")
+    cy.get('[data-cyid="btn-deploy-api"]', SHORT_TIME)
+      .contains("Generating Configurations")
+      .should("not.exist");
     APIDeployment.RetryDevDeployment();
     cy.get('[data-cyid="btn-deploy-api"]', LONG_TIME)
       .should("be.enabled")
       .click();
-    
+
     if (isAdditionalConfigs) {
       if (isManagedByAPIM) {
         Utils.interceptConfig();
@@ -105,7 +107,7 @@ export class ComponentDeployPage {
     if (isManagedByAPIM) {
       Utils.interceptConfig();
     }
-    
+
     APIDeployment.RetryPromotionToProd();
     cyGet('[data-testid="btn-stop"]', LONG_TIME)
       .should("have.length", 2)
@@ -307,7 +309,9 @@ export class ComponentDeployPage {
   }
 
   static deployService(endpointName: string, changeVisibility?: boolean) {
-    cy.get('[data-cyid="btn-deploy-api"]', SHORT_TIME).contains("Generating Configurations").should("not.exist")
+    cy.get('[data-cyid="btn-deploy-api"]', SHORT_TIME)
+      .contains("Generating Configurations")
+      .should("not.exist");
     APIDeployment.RetryDevDeployment();
     cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
     cy.get('[data-cyid="btn-deploy-api"]', LONG_TIME)

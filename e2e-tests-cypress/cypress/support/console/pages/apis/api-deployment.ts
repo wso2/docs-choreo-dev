@@ -46,14 +46,14 @@ export class APIDeployment {
 
   }
 
-  static verifyProxyDeployment(isRedeployment = false) {
-    GraphQL.getDeployStatus(Enums.DeploymentStages.CODE_GEN, Enums.ResponseStatus.success)
+  static verifyProxyDeployment(projectName: string, componentName: string, isRedeployment = false) {
+    GraphQL.getDeployStatus(projectName, componentName, Enums.DeploymentStages.CODE_GEN, Enums.ResponseStatus.success)
     cy.get('button').contains('Save & Deploy', VERY_LONG_TIME).should('be.visible').click()
 
 
     if (isRedeployment) {
-      GraphQL.getDeployStatus(Enums.DeploymentStages.DEPLOY, Enums.ResponseStatus.completed)
-      GraphQL.getDeployStatus(Enums.DeploymentStages.PROXY_DEPLOY, Enums.ResponseStatus.completed)
+      GraphQL.getDeployStatus(projectName, componentName, Enums.DeploymentStages.DEPLOY, Enums.ResponseStatus.completed)
+      GraphQL.getDeployStatus(projectName, componentName, Enums.DeploymentStages.PROXY_DEPLOY, Enums.ResponseStatus.completed)
     }
 
 
@@ -99,29 +99,31 @@ export class APIDeployment {
       } else {
         return;
       }
-        this.RetryPromotionToProd(retryCount);
+      this.RetryPromotionToProd(retryCount);
     });
   }
 
-  static PromoteToProd() {
-    cy.get('[data-cyid*="promote"]').click().wait(5000);
-    cy.get('body').then((bdy) => {
+  static promoteToProd(projectName: string = "", componentName: string = "", hasMediationPolicy: boolean = false) {
+    cyGet('[data-cyid="btn-promote"]').should('be.enabled').click();
+    cy.get('button').contains("Cancel").should('be.visible')
+
+    cy.get('body').then(bdy => {
+      if (bdy.find('[data-cyid="btn-next"]').length > 0) {
+        cy.get('[data-cyid="btn-next"]').should("be.visible").click();
+      }
 
       if (bdy.find('[data-cyid="expand-more"]').length > 0) {
-
-        if (bdy.find('[data-cyid="btn-next"]').length > 0) {
-          cy.get('[data-cyid="btn-next"]').should("be.visible").click();
-        }
-
-        if (bdy.text().includes('Promote')) {
-          cy.get('.ConfigForm').within(() => {
-            cy.contains('Promote').click()  // Promote button
-          })
-        }
+        cy.get('.ConfigForm').within(() => {
+          cy.get('button').contains('Promote').click()  // Promote button
+        })
       }
     })
-cy.wait(15000)
-GraphQL.getPrmotionStatus()
+
+    if (hasMediationPolicy) {
+      cy.wait(15000)
+      GraphQL.getPrmotionStatus(projectName, componentName)
+    }
+
 
     cy.get('[data-cyid="proxy-env-card-header"]>div>span')
       .contains("Production")
@@ -130,5 +132,7 @@ GraphQL.getPrmotionStatus()
       .should("have.length", 2)
     cyGet('[data-cyid="deployment-status"]>h6', VERY_LONG_TIME).eq(1).should('contain', 'Active')
     cy.get('[data-cyid*="promote"]').should("not.be.disabled");
+
   }
+
 }

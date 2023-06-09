@@ -1,5 +1,6 @@
+import { is } from "cypress/types/bluebird";
 import { cyGet } from "../../../commons/cy";
-import { MEDIUM_TIME } from "../../../commons/timeouts";
+import { MEDIUM_TIME, MENU_RENDERING_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
 
 /*
@@ -22,18 +23,29 @@ export class ComponentOverviewPage {
   }
 
   static navigateToDeploy() {
-    cy.get("[data-cyid=link-deploy]").click();
+    cy.get("[data-cyid=link-deploy]")
+      .realHover({ position: "left" })
+      .wait(200)
+      .click();
+    cy.get('[id="backdrop-loader"]').should("not.exist");
+    Utils.moveMouseAwayFromLeftMenu();
   }
 
   static navigateToTest() {
     if (Utils.isUnifiedMenuEnabled()) {
-      this.expandSecondaryMenu(
+      this.navigateToSubMenu(
         '[data-cyid="link-test"]',
-        '[data-cyid="postman"]'
+        new Array(
+          '[data-cyid="testConsole"]',
+          '[data-cyid="openapi"]',
+          '[data-cyid="curl"]'
+        )
       );
+      Utils.moveMouseAwayFromLeftMenu();
     } else {
       cy.get('[data-cyid="link-test"]').should("be.visible").click();
     }
+    cy.get('[id="backdrop-loader"]').should("not.exist");
   }
 
   static navigateToOverview() {
@@ -50,10 +62,11 @@ export class ComponentOverviewPage {
 
   static navigateToManage() {
     if (Utils.isUnifiedMenuEnabled()) {
-      this.expandSecondaryMenu(
+      this.navigateToSubMenu(
         '[data-cyid="link-manage"]',
-        '[data-cyid="manage-overview"]'
+        new Array('[data-cyid="manage-overview"]')
       );
+      Utils.moveMouseAwayFromLeftMenu();
     } else {
       cy.get('[data-cyid="link-manage"]').should("be.visible").click();
     }
@@ -68,7 +81,14 @@ export class ComponentOverviewPage {
   }
 
   static navigateToDevelop() {
-    cy.get('[data-cyid="link-develop"]').click();
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.navigateToSubMenu(
+        '[data-cyid="link-develop"]',
+        new Array('[data-cyid="develop-resources"]')
+      );
+    } else {
+      cy.get('[data-cyid="link-develop"]').click();
+    }
   }
 
   static navigateToDevPortal() {
@@ -110,20 +130,51 @@ export class ComponentOverviewPage {
     cy.get('[data-testid="dialog-close-icon"]').should("not.exist");
   }
 
-  private static expandSecondaryMenu(
+  private static navigateToSubMenu(
     mainMenuSelector: string,
-    subMenuSelector: string
+    subMenuSelectors: string[]
   ) {
     cy.get("body").then((bdy) => {
-      // Secondary menu is collapsed
-      if (bdy.find(subMenuSelector).length == 0) {
-        // Expand secondary menu
-        cy.get(mainMenuSelector).should("be.visible").click();
-        cy.get(subMenuSelector).should("be.visible").click();
+      let subMenuSelector: string;
+      let isSubmenuExpanded = false;
+      // Check if at least one of the sub menus are visible
+      for (subMenuSelector of subMenuSelectors) {
+        if (bdy.find(subMenuSelector).length > 0) {
+          isSubmenuExpanded = true;
+          break;
+        }
+      }
+      // Sub menu is collapsed
+      if (!isSubmenuExpanded) {
+        // Expand sub menu
+        cy.get(mainMenuSelector)
+          .should("be.visible")
+          .realHover({ position: "left" })
+          .wait(MENU_RENDERING_TIME)
+          .click()
+          .wait(MENU_RENDERING_TIME);
+
+        // Click on anyone of the sub menus that are found first
+        cy.get("body").then((bdy) => {
+          for (const selector of subMenuSelectors) {
+            if (bdy.find(selector).length > 0) {
+              cy.get(selector)
+                .should("be.visible")
+                .realHover({ position: "left" })
+                .wait(MENU_RENDERING_TIME)
+                .click();
+              break;
+            }
+          }
+        });
       } else {
-        // Secondary menu is expanded but click to ensure that relevant page is loaded
+        // Sub menu is expanded but click to ensure that relevant page is loaded
         // in case we are navigating from a different page
-        cy.get(subMenuSelector).should("be.visible").click();
+        cy.get(subMenuSelector)
+          .should("be.visible")
+          .realHover({ position: "left" })
+          .wait(MENU_RENDERING_TIME)
+          .click();
       }
     });
   }
