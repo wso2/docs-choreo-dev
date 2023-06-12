@@ -138,6 +138,7 @@
     background-image: url( '../img/home/background.svg' );
 }
 
+
   .cIcon {
     height: 18px;
     width: 18px;
@@ -181,10 +182,10 @@ visibility: hidden;
 }
 .md-search__input-home{
  background: #FFFFFF; 
- box-shadow: 0px 20px 20px rgba(203, 206, 219, 0.2); 
+ box-shadow: 5px 0px 20px 20px rgba(203, 206, 219, 0.2); 
  border-radius: 12px; 
  height:2.5rem; 
- width: 40rem; 
+ width: 40rem !important; 
  padding-left: 20px;
  font-size: 14px;
 }
@@ -240,7 +241,9 @@ h3{
 
 .md-search__form-home {
     border-radius: 0.5rem;
-    height: 2.5rem;
+    height: 3.5rem;
+    background-color: transparent !important;
+    box-shadow: none !important;
 }
 
 .md-search__form {
@@ -324,10 +327,10 @@ h3{
     font-size: 14px; 
     line-height: 0dvw; 
     text-align: center; 
-    color: #CBCEDB;
+    color: #a8a39f;
 }
 .md-search_label2{
-color: #40404B;
+color: #a8a39f;
 }
 
 
