@@ -70,15 +70,22 @@ export class ChoreoHomePage {
     cy.clearAllCookies();
   }
 
-  static navigateToSettings() {
+  static navigateToSettings(projectName?: string) {
     if (Utils.isUnifiedMenuEnabled()) {
+      let name = projectName;
+      if (typeof projectName === "undefined") {
+        name = "Default Project";
+      }
       cy.get("#backdrop-loader").should("not.exist");
-      cy.get('[data-cyid="Default Project-close-button"]').should("be.visible").click();
+      cy.get(`[data-cyid='${name}-close-button']`).should("be.visible").click();
       cy.get('[data-cyid="settings"]').should("be.visible").click();
     } else {
       cy.get("#backdrop-loader").should("not.exist");
-    cy.get('[data-testid="header-user-profile-menu"]').click();
-    cy.get('[data-testid="header-user-profile-item-settings"]').should("be.visible").contains("Settings").click();
+      cy.get('[data-testid="header-user-profile-menu"]').click();
+      cy.get('[data-testid="header-user-profile-item-settings"]')
+        .should("be.visible")
+        .contains("Settings")
+        .click();
     }
   }
 

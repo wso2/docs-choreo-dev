@@ -32,4 +32,4 @@ export const EP_USER_HOME_URL = `${Cypress.env(
   "baseUrl"
 )}/organizations/${Cypress.env("epuser")}/home?profile=default`;
 
-export const PROXY_DEPLOYER_EP = Cypress.env("proxyDeployerEP")
+export const PROXY_DEPLOYER_EP = Cypress.env("proxyDeployerEP");
