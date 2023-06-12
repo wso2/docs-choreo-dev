@@ -155,7 +155,7 @@ describe(`Verify internal api functionality`, () => {
 
     it("Verify resource access without the security in DEV", () => {
         ComponentOverviewPage.navigateToTest();
-        TestHelper.testOnCurlDiscardPrevious(
+        TestHelper.testOnCurl(
             Enums.Environment.DEVELOPMENT,
             Enums.HTTPMethod.GET,
             OPERATION_USERS
@@ -171,7 +171,7 @@ describe(`Verify internal api functionality`, () => {
 
     });
     it("Verify resource access without the security in PROD", () => {
-        TestHelper.testOnCurlDiscardPrevious(
+        TestHelper.testOnCurl(
             Enums.Environment.PRODUCTION,
             Enums.HTTPMethod.GET,
             OPERATION_USERS
@@ -198,7 +198,7 @@ describe(`Verify internal api functionality`, () => {
     });
 
     it("Verify Add resource to 1st Proxy API", () => {
-     
+
         APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
     });
 
@@ -210,16 +210,17 @@ describe(`Verify internal api functionality`, () => {
     // Invoke the Proxy API via curl, verify that Internal API is accessible to the Proxy API
     // by receiving a 200 response
     it("Verify 1st PROXY API resource access in DEV", () => {
-        ComponentOverviewPage.navigateToTest();
-        TestHelper.testOnCurlDiscardPrevious(
+
+        // ComponentOverviewPage.navigateToTest();  // Need to add UI
+        TestHelper._testOnCurl(
+            PROJECT_NAME,
+            externalProxy.apiName,
             Enums.Environment.DEVELOPMENT,
             Enums.HTTPMethod.GET,
-            OPERATION_USERS,
-        ).then((curl) => {
-            Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-                expect(res.status).equal(200);
-            });
-        });
+            OPERATION_USERS
+        ).then(res => {
+            expect(res.status).equal(200);
+        })
     });
 
     it("Verify 1st PROXY API component promote to PROD", () => {
@@ -228,16 +229,16 @@ describe(`Verify internal api functionality`, () => {
     });
 
     it("Verify 1st PROXY API resource access in PROD", () => {
-        ComponentOverviewPage.navigateToTest();
-        TestHelper.testOnCurlDiscardPrevious(
+
+        // ComponentOverviewPage.navigateToTest();
+        TestHelper._testOnCurl(
+            PROJECT_NAME,
+            externalProxy.apiName,
             Enums.Environment.PRODUCTION,
             Enums.HTTPMethod.GET,
-            OPERATION_USERS,
-        ).then((curl) => {
-            Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+            OPERATION_USERS).then(res => {
                 expect(res.status).equal(200);
-            });
-        });
+            })
     });
 
     it("Verify 2nd Proxy API creation using Internal API Prod endpoint", () => {
@@ -262,16 +263,20 @@ describe(`Verify internal api functionality`, () => {
     // Invoke the Proxy API via curl, verify that Internal API is accessible to the Proxy API
     // by receiving a 200 response
     it("Verify 2nd PROXY API resource access in DEV", () => {
-        ComponentOverviewPage.navigateToTest();
-        TestHelper.testOnCurlDiscardPrevious(
+
+        //ComponentOverviewPage.navigateToTest();
+
+        TestHelper._testOnCurl(
+            PROJECT_NAME,
+            externalProxyProd.apiName,
             Enums.Environment.DEVELOPMENT,
             Enums.HTTPMethod.GET,
-            OPERATION_USERS,
-        ).then((curl) => {
-            Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+            OPERATION_USERS
+        ).
+            then(res => {
                 expect(res.status).equal(200);
-            });
-        });
+            })
+
     });
 
     it("Verify 2nd PROXY API component promote to PROD", () => {
@@ -280,16 +285,20 @@ describe(`Verify internal api functionality`, () => {
     });
 
     it("Verify 2nd PROXY API resource access in PROD", () => {
-        ComponentOverviewPage.navigateToTest();
-        TestHelper.testOnCurlDiscardPrevious(
+
+        // ComponentOverviewPage.navigateToTest();
+        TestHelper._testOnCurl(
+            PROJECT_NAME,
+            externalProxyProd.apiName,
             Enums.Environment.PRODUCTION,
             Enums.HTTPMethod.GET,
-            OPERATION_USERS,
-        ).then((curl) => {
-            Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+            OPERATION_USERS
+        ).
+            then(res => {
                 expect(res.status).equal(200);
-            });
-        });
+            })
+
+
     });
 
 
@@ -303,34 +312,40 @@ describe(`Verify internal api functionality`, () => {
     });
 
     it("Verify resource access to external API in DEV", () => {
-        ComponentOverviewPage.navigateToTest();
-        TestHelper.testOnCurlDiscardPrevious(
+
+        // ComponentOverviewPage.navigateToTest();
+        TestHelper._testOnCurl(
+            PROJECT_NAME,
+            internalProxy.apiName,
             Enums.Environment.DEVELOPMENT,
             Enums.HTTPMethod.GET,
             OPERATION_USERS
-        ).then((curl) => {
-            Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        ).
+            then(res => {
                 expect(res.status).equal(200);
-            });
-        });
+            })
+
+
     });
 
     it("Verify resource access to external API in PROD", () => {
-        TestHelper.testOnCurlDiscardPrevious(
+        // ComponentOverviewPage.navigateToTest();
+        TestHelper._testOnCurl(
+            PROJECT_NAME,
+            internalProxy.apiName,
             Enums.Environment.PRODUCTION,
             Enums.HTTPMethod.GET,
             OPERATION_USERS
-        ).then((curl) => {
-            Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        ).
+            then(res => {
                 expect(res.status).equal(200);
-            });
-        });
+            })
     });
 
     it("Verify API invocation in Devportal for external REST API component", () => {
         ComponentOverviewPage.navigateToManage();
         ComponentAPILifecycle.manageLifecycle();
-        ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(PROJECT_NAME,API_NAME,idpUser);
+        ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(PROJECT_NAME, API_NAME, idpUser);
         DevPortalHomePage.navigateToApisPage();
         Apis.searchApiAndSelect(API_NAME, 1);
         ApiCredentials.navigateToEnvironment(Enums.Environment.PRODUCTION);

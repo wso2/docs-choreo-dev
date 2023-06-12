@@ -33,7 +33,7 @@ import { APILifeCycleService } from "./api-life-cycle-service";
 import { BallerinaService } from "./bal-service";
 import { GraphQLQueryBuilder } from "./gql-query-builder";
 import { Enums } from "../../commons/enums";
-import { PROXY_DEPLOYER_EP } from "../../commons/urls";
+import { PROXY_DEPLOYER_EP, PUBLISHER_URL } from "../../commons/urls";
 import { ProjectEnvironment } from "../../interfaces/choreo-components/project-environments";
 
 export const SUCCESS_STATUS_CODE = 200;
@@ -415,7 +415,7 @@ export class GraphQL {
 
   }
 
-  
+
 
 
   static _getProjectEnvironments(projectName: string) {
@@ -430,7 +430,7 @@ export class GraphQL {
     })
   }
 
- 
+
 
   static _getComponentInfo(projectName: string, componentName: string) {
     return this.getProjects().then(res => {
@@ -564,45 +564,7 @@ export class GraphQL {
     token: string
   ) {
     cy.log(`changeComponentLifeCycle ==> Project Id ${projectId}`);
-    const query = {
-      query: `query{    component(      projectId: "${projectId}"      componentHandler: "${componentHandler}"    )
-{      id,
- name,
- handler,
- description,
- displayType,
- displayName,
- ownerName,
- orgId,
- orgHandler,
- version,
- labels,
- createdAt,
- updatedAt,
- projectId,
- apiId,
- repository{
- nameApp,
- nameConfig,
- branch,
- branchApp,
- organizationApp,
- organizationConfig,
- isUserManage      },
- apiVersions{
- apiVersion,
- proxyName,
- proxyUrl,
- proxyId,
- id,
- state,
- latest,
- branch,
- appEnvVersions{
- environmentId,
- releaseId,
- release{ id, metadata{choreoEnv},environmentId,environment,gitHash,gitOpsHash,}}}}}`,
-    };
+    const query = GraphQLQueryBuilder.getLifeCycleChangeQuery(projectId,componentHandler)
 
     this.callGraphQL(query).then((res) => {
       if (res.status === SUCCESS_STATUS_CODE) {
@@ -639,5 +601,43 @@ export class GraphQL {
   private static sendDeprecateRetireRequest(apiId: string) {
     APILifeCycleService.deprecateAPI(apiId);
     APILifeCycleService.retireAPI(apiId);
+  }
+
+
+
+  static _getProxyDeployment(projectName: string, componentName: string, environment: Enums.Environment) {
+
+    const { handle, uuid } = Cypress.env("userData");
+    return GraphQL._getProjectEnvironments(projectName).then(env => {
+      const { id } = env.find(e => e.name === environment)
+      return GraphQL._getAPIInfo(projectName, componentName).then(comp => {
+        const { componentId, latestVersionId } = comp
+
+        const query = GraphQLQueryBuilder.getPrxoyDeployments(handle, uuid, componentId, latestVersionId, id) 
+
+        return this.callGraphQL(query).then(res => {
+          const { invokeUrl, apiId } = res.body.proxyDeployment
+ 
+          return Promise.resolve({ invokeUrl, apiId, uuid })
+        })
+      })
+    })
+  }
+
+
+  static _getAuthHeaderKey(projectName: string, componentName: string, environment: Enums.Environment) {
+
+    return this._getProxyDeployment(projectName, componentName, environment).then(proxy => {
+
+      const { invokeUrl, apiId, uuid } = proxy
+      const url = `${PUBLISHER_URL}/apis/${apiId}/generate-key?organizationId=${uuid}&keyType=${environment}`
+  
+      return Utils.sendPostRequest(url, AUTH_HEADER(),"").then(res => {
+        const { apikey } = res.body
+
+        return Promise.resolve({ invokeUrl, apikey })
+      })
+    })
+
   }
 }

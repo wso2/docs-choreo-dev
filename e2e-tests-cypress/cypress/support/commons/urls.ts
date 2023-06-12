@@ -15,13 +15,9 @@ export const VALIDATE_USER_URL =
   Cypress.env("newAppSvcURL") + "/users-mgt/1.0.0/validate/user";
 export const ORGS_URL = Cypress.env("appSvcURL") + "/orgs/*";
 export const PUBLISHER_URL = Cypress.env("apimSvcURL") + "/api/am/publisher/v2";
-export const PUBLISHER_API_KEYS_URL =
-  PUBLISHER_URL + "/apis/*/environments/*/keys?organizationId=*";
-export const DEV_PORTAL_URL =
-  Cypress.env("apimSvcURL") + "/api/am/devportal/v2";
-export const DEV_PORTAL_APP_TOKEN_GEN_URL =
-  DEV_PORTAL_URL +
-  "/applications/*/oauth-keys/*/generate-token?organizationId=*";
+export const PUBLISHER_API_KEYS_URL = PUBLISHER_URL + "/apis/*/environments/*/keys?organizationId=*";
+export const DEV_PORTAL_URL = Cypress.env("apimSvcURL") + "/api/am/devportal/v2";
+export const DEV_PORTAL_APP_TOKEN_GEN_URL = DEV_PORTAL_URL + "/applications/*/oauth-keys/*/generate-token?organizationId=*";
 export const DEV_PORTAL_APP_KEY_GEN_URL =
   DEV_PORTAL_URL + "/applications/*/generate-keys?organizationId=*";
 export const DEV_PORTAL_SUBSCRIPTIONS_URL =

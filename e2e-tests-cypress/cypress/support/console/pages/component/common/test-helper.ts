@@ -11,10 +11,12 @@
  * associated services.
  */
 
+import { fromCallback } from "cypress/types/bluebird";
 import { cyGet, cyLog } from "../../../../commons/cy";
 import { Enums } from "../../../../commons/enums";
 import { VERY_SHORT_TIME } from "../../../../commons/timeouts";
 import { Utils } from "../../../../commons/utils";
+import { GraphQL } from "../../../apis/graphql";
 import { APITest } from "../../apis/api-test";
 import { Curl } from "../UI-components/curl-component";
 import { SwaggerUI } from "../UI-components/swagger-UI-component";
@@ -34,11 +36,44 @@ export class TestHelper {
     return this.invokeSwaggerResource(env, resourcePath, key, value, "");
   }
 
+
+
+  static _testOnCurl(projectName: string, componentName: string, environment: Enums.Environment, httpMethod: Enums.HTTPMethod,
+    pathParm: string,
+    queryParameters1?: { key: string, value: string }[]) {
+    return GraphQL._getAuthHeaderKey(projectName, componentName, environment).then(res => {
+
+      const { invokeUrl, apikey } = res
+
+      let query = "";
+      let url = "";
+
+
+      if (queryParameters1) {
+        for (let index = 0; index < queryParameters1.length; index++) {
+          const element = queryParameters1[index];
+          query = query + `${element.key}=${element.value}&`
+        }
+        url = `${invokeUrl}/${pathParm}?${query.trim()}`
+      } else {
+        url = `${invokeUrl}/${pathParm}`
+      }
+
+      return Utils.sendGetRequest(url, { "api-key": apikey }).then(res => {
+        cyLog(res)
+        return Promise.resolve(res)
+      })
+    })
+  }
+
+
+  
   static testOnCurl(
     env: Enums.Environment,
     httpMethod: Enums.HTTPMethod,
     pathParm: string,
-    queryParameters1 = []
+    queryParameters1 = [],
+    apiName?: string
   ) {
     this.selectCurl();
     Curl.selectCurlEnvironment(env);
@@ -47,7 +82,7 @@ export class TestHelper {
       Curl.enterPathParameter(pathParm);
     }
     Curl.addQueryParameter(queryParameters1);
-    const curlKey = `int_curl_${env}_${httpMethod}_${pathParm}`;
+    const curlKey = `int_curl_${env}_${httpMethod}_${apiName}`;
     cy.get("textarea")
       .invoke("text")
       .then((curl) => {
