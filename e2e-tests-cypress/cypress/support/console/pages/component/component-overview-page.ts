@@ -159,10 +159,7 @@ export class ComponentOverviewPage {
           for (const selector of subMenuSelectors) {
             if (bdy.find(selector).length > 0) {
               cy.get(selector)
-                .should("be.visible")
-                .realHover({ position: "left" })
-                .wait(MENU_RENDERING_TIME)
-                .click();
+                .should("be.visible").realHover({ position: "left" }).wait(MENU_RENDERING_TIME).click({ force: true });
               break;
             }
           }
