@@ -153,7 +153,6 @@ export class Utils {
 
   private static sendRequest(request: any, retryCount: number) {
     return this.retryRequest(request).then((res) => {
-
       if (res.retry && retryCount < this.TRY_COUNT) {
         cy.wait(VERY_SHORT_TIME.timeout);
         retryCount++;
