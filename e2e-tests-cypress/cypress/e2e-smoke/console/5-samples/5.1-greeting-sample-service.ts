@@ -67,7 +67,7 @@ describe("Create Greeting sample in Choreo", () => {
     ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME);
   });
 
-  it.skip("Verify component promote to prod", () => {
+  it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
   });
 
@@ -87,7 +87,7 @@ describe("Create Greeting sample in Choreo", () => {
     ComponentDeployPage.stopDevContainer();
   });
 
-  it.skip("Verify suspending Prod deployed component", () => {
+  it("Verify suspending Prod deployed component", () => {
     ComponentDeployPage.stopProdContainer();
   });
   it("Verify component deletion", () => {
