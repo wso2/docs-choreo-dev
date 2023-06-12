@@ -30,14 +30,16 @@ export class Curl {
     cy.get('[data-cyid="item-env-name"]').contains(env).click();
   }
 
-  static getRequestComponents(env: string) {
-    const curlData = Cypress.env(`${env}`);
+  static getRequestComponents(env?: string) {
     let curl: CurlData = {
       method: "",
       url: "",
       headers: { "api-key": "" },
     };
-    if (curlData) {
+
+    if (typeof env !== "undefined") {
+      const curlData = Cypress.env(`${env}`);
+
       curl.headers = curlData["headers"];
       curl.method = curlData["method"];
       curl.url = curlData["url"];

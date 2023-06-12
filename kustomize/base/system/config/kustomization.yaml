@@ -208,6 +208,7 @@ configMapGenerator:
       - SECRET_MANAGER_URL=http://dp-secret-manager/api/v1
       - RUDDER_URL=http://dp-rudder/api/v1/
       - PROJECT_MANAGER_URL=http://dp-project-manager:80
+      - CICD_URL=http://dp-cicd:80
       - SERVER_PORT=3200
       - DB_USERNAME=choreo_cloud_manager_admin_db_user
       - DB_NAME=choreo_cloud_manager_db

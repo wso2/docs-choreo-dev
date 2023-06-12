@@ -14,10 +14,7 @@
 
 
 import { Enums } from "../../../commons/enums";
-
-
-
-
+import { LONG_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 
 
 export class InsightsPage {
@@ -29,7 +26,7 @@ export class InsightsPage {
   }
 
   static selectTimePeriod(timePeriod: string = "Past 15 minutes") {
-    cy.get('div[class*="analytics"]>button').eq(0).click().wait(2000);
+    cy.get('[div[class*="analytics"]>button"]', VERY_SHORT_TIME).eq(0).click();
     cy.get('ul>div').contains(timePeriod).click();
     cy.get('.recharts-layer>path[fill*="url"]')
 
