@@ -1,91 +1,12 @@
-
+{% extends "base.html" %}
 {% import "partials/language.html" as lang with context %}
 <!doctype html>
 <html lang="{{ lang.t('language') }}" class="no-js">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-    {% block site_meta %}
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      {% if page.meta and page.meta.description %}
-        <meta name="description" content="{{ page.meta.description }}">
-      {% elif config.site_description %}
-        <meta name="description" content="{{ config.site_description }}">
-      {% endif %}
-      {% if page.meta and page.meta.author %}
-        <meta name="author" content="{{ page.meta.author }}">
-      {% elif config.site_author %}
-        <meta name="author" content="{{ config.site_author }}">
-      {% endif %}
-      {% if page.canonical_url %}
-        <link rel="canonical" href="{{ page.canonical_url }}">
-      {% endif %}
-      {% if page.previous_page %}
-        <link rel="prev" href="{{ page.previous_page.url | url }}">
-      {% endif %}
-      {% if page.next_page %}
-        <link rel="next" href="{{ page.next_page.url | url }}">
-      {% endif %}
-      <link rel="icon" href="{{ config.theme.favicon | url }}">
-      <meta name="generator" content="mkdocs-{{ mkdocs_version }}, mkdocs-material-9.1.2">
-    {% endblock %}
-    {% block htmltitle %}
-      {% if page.meta and page.meta.title %}
-        <title style="color: blue;">{{ page.meta.title }} - {{ config.site_name }}</title>
-      {% elif page.title and not page.is_homepage %}
-        <title>{{ page.title | striptags }} - {{ config.site_name }}</title>
-      {% else %}
-        <title>{{ config.site_name }}</title>
-      {% endif %}
-    {% endblock %}
-    {% block styles %}
-      <link rel="stylesheet" href="{{ '../assets/stylesheets/main.7bf56d0a.min.css' | url }}">
-      {% if config.theme.palette %}
-        {% set palette = config.theme.palette %}
-        <link rel="stylesheet" href="{{ '../assets/stylesheets/palette.a0c5b2b5.min.css' | url }}">
-      {% endif %}
-      {% include "partials/icons.html" %}
-    {% endblock %}
-    {% block libs %}{% endblock %}
-    {% block fonts %}
-      {% if config.theme.font != false %}
-        {% set text = config.theme.font.text | d("Roboto", true) %}
-        {% set code = config.theme.font.code | d("Roboto Mono", true) %}
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Added the font from google fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap" rel="stylesheet">
-        <style>:root{--md-text-font:"{{ text }}";--md-code-font:"{{ code }}"}</style>
-      {% endif %}
-    {% endblock %}
-    {% for path in config.extra_css %}
-      <link rel="stylesheet" href="{{ path | url }}">
-    {% endfor %}
-    {% include "partials/javascripts/base.html" %}
-    {% block analytics %}
-      {% include "partials/integrations/analytics.html" %}
-    {% endblock %}
-    {% if page.meta and page.meta.meta %}
-      {% for tag in page.meta.meta %}
-        <meta {% for key, value in tag.items() %} {{ key }}="{{value}}" {% endfor %}>
-      {% endfor %}
-    {% endif %}
-    {% block extrahead %}{% endblock %}
-  </head>
-{% set features = config.theme.features or [] %}
-{#-
-  This file was automatically generated - do not edit
--#}
-{% set class = "md-header" %}
-{% if "navigation.tabs.sticky" in features %}
-  {% set class = class ~ " md-header--shadow md-header--lifted" %}
-{% elif "navigation.tabs" not in features %}
-  {% set class = class ~ " md-header--shadow" %}
-{% endif %}
-<header class="{{ class }}" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="{{ lang.t('header') }}">
+  {% block header %}  
+  {% set class = "md-header" %}
+<header class="{{ class }}" data-md-component="header" style="height: 13.5rem; position: relative;">
+  <nav class="md-header__inner md-grid md-header--shadow-nav" aria-label="{{ lang.t('header') }}" "
+  ">
     <a href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}" title="{{ config.site_name | e }}" class="md-header__button md-logo" aria-label="{{ config.site_name }}" data-md-component="logo">
       {% include "partials/logo.html" %}
     </a>
@@ -129,7 +50,6 @@
             </ul>
           </div>
         </div>
-      
       </div>
     {% endif %}
     <div class="md-header__source">
@@ -141,41 +61,130 @@
       {% include "partials/tabs.html" %}
     {% endif %}
   {% endif %}
-</header>
-<body>
-  <div class="md-container-home data-md-component="container">
-    <section class="mdx-container">
-      <div class="md-grid md-typeset">
-        <div class="section01" style="display: block;  text-align: center; width: 70%;  flex-shrink: 0;min-width: 40%; max-height: 280px; max-width:100%; margin-left:10px; padding-top: 0.5rem; text-align: -webkit-center; margin:auto; margin-top: 1rem;margin-bottom: 1rem; ">
-          <h1 style="font-weight: 700; font-size: 43px; line-height: 48px; padding-top: 2.5rem;">How can we help?</h1>
-         </div> 
-          <div class="md-search" data-md-component="search" role="dialog" style="align-items:center; width: 100%; height: 100%;">
-            <label class="md-search__overlay" for="__search"></label>
-            <div class="md-search__inner-home" role="search" style="float: none; align-items: center; background-color: transparent;">
-              <form class="md-search__form-home" name="search" style="background-color: #F0F1FB;">
-          
-                <!-- Search input -->
-                <input
-                  type="text"
-                  class="md-search__input-home"
-                  name="query"
-                  aria-label="{{ lang.t('search.placeholder') }}"
-                  placeholder="Search for any topic in our documentation"
-                  autocapitalize="off"
-                  autocorrect="off"
-                  autocomplete="off"
-                  spellcheck="false"
-                  padding-left="10px"
-                  width="100%"
-                  data-md-component="search-query"
-                  required      
-                />
-                <label class="md-search_label"> For example, </label>
-                <label class="md-search_label md-search_label2"> REST API, REST API Proxy, Services, iPaas, DevOps </label>
-            </div>              
+  {% if "material/search" in config.plugins %}
+  <label class="md-header__button md-icon" for="__search">
+    {% include ".icons/material/magnify.svg" %}
+  </label>
+{% endif %} 
+ <section class="md-section">
+    <div class="md-grid md-typeset">
+      <div class="section01" style="display: block;  text-align: center; width: 70%;  flex-shrink: 0;min-width: 40%; max-height: 280px; max-width:100%; margin-left:10px; padding-top: 0.5rem; text-align: -webkit-center; margin:auto; margin-top: 1rem;margin-bottom: 1rem; ">
+        <h1 style="font-weight: 700; font-size: 43px; line-height: 48px; padding-top: 2.5rem;">How can we help?</h1>
+       </div> 
+       <div class="md-search" data-md-component="search" role="dialog" style="align-items:center; width: 100%; height: 100%;">
+        <label class="md-search__overlay" for="__search"></label>
+        <div class="md-search__inner md-search__inner-home" role="search" style="float: none; align-items: center; background-color: transparent;">
+          <form class="md-search__form md-search__form-home" name="search" style="background-color: #F0F1FB;">
+           
+            <!-- Search input -->
+            <input
+              type="text"
+              class="md-search__input md-search__input-home"
+              name="query"
+              id="search_input"
+              aria-label="{{ lang.t('search.placeholder') }}"
+              placeholder="Search for any topic in our documentation"
+              autocapitalize="off"
+              autocorrect="off"
+              autocomplete="off"
+              spellcheck="false"
+              padding-left="10px"
+              data-md-component="search-query"
+              required      
+            />
+            <br/>
+            <label class="md-search_label" for="search_input"> For example, </label>
+            <label class="md-search_label md-search_label2" for="search_input"> REST API, REST API Proxy, Services, iPaas, DevOps </label>
+            <br />
+            <!-- Search options -->
+            <nav
+              class="md-search__options"
+              aria-label="{{ lang.t('search') }}"
+              style="width: inherit;"
+            >
+
+              <!-- Button to share search -->
+              {% if "search.share" in features %}
+                <a
+                  href="javascript:void(0)"
+                  class="md-search__icon md-icon"
+                  title="{{ lang.t('search.share') }}"
+                  aria-label="{{ lang.t('search.share') }}"
+                  data-clipboard
+                  data-clipboard-text=""
+                  data-md-component="search-share"
+                  tabindex="-1"
+                >
+                  {% include ".icons/material/share-variant.svg" %}
+                </a>
+              {% endif %}
+
+              <!-- Button to reset search -->
+              <button
+                type="reset"
+                class="md-search__icon md-icon"
+                title="{{ lang.t('search.reset') }}"
+                aria-label="{{ lang.t('search.reset') }}"
+                tabindex="-1"
+              >
+                {% include ".icons/material/close.svg" %}
+              </button>
+            </nav>
+
+      <!-- Search suggestions -->
+          {% if "search.suggest" in features %}
+            <div
+              class="md-search__suggest"
+              data-md-component="search-suggest"
+            ></div>
+          {% endif %}
+          </form>
+          <div class="md-search__output" style="width: 40rem !important;">
+      <div class="md-search__scrollwrap"  style="width: inherit;" data-md-scrollfix>
+
+        <!-- Search results -->
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta" style=" padding-top: 1rem;">
+            {{ lang.t("search.result.initializer") }}
           </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
       </div>
-   </section>
+          </div>
+        </div>              
+      </div>
+    </div>
+ </section>
+ <style>
+  .md-header {
+    box-shadow: none !important;
+}
+
+.md-header--shadow{
+  box-shadow: none !important;
+  transition: none !important;
+}
+
+.md-header--shadow-nav{
+    box-shadow: 0 0 0.2rem #0000001a, 0 0.2rem 0.4rem #0003;
+    transition: transform .25s cubic-bezier(.1,.7,.1,1),box-shadow .25s;
+}
+
+[data-md-toggle=search]:checked~.md-header .md-search_label {
+  visibility: hidden;
+}
+
+.md-section{
+   background-image: url('assets/img/home/background.svg') !important;
+   background-position-y: -24rem;
+}
+</style>
+</header>
+{% endblock %}
+{% block main_block %}
+<main class="md-main" data-md-component="main">
+
+  <div class="md-container-home data-md-component="container">
   <div style="height: 5rem;"></div>
   <div class="row md_home_link_container_row">
     <div class="md_home_column column">
@@ -197,7 +206,7 @@
                   </svg>                                                           
               </div>
               <div class="cText" >
-                <a href="quick-start-guides/expose-a-service-as-a-managed-api-with-choreo-api-manager/">Expose a Service as a Managed API </a>
+                <a href="quick-start-guides/build-your-first-cloud-native-application-with-choreo/"> Build Your First Cloud Native Application With Choreo</a> 
               </div>
               </div>
           </div>
@@ -224,7 +233,7 @@
                 </svg>                                                        
             </div>
             <div class="cText">
-              <a href="quick-start-guides/build-your-first-cloud-native-application-with-choreo/"> Build Your First Cloud Native Application With Choreo</a> 
+              <a href="quick-start-guides/expose-a-service-as-a-managed-api-with-choreo-api-manager/">Expose a Service as a Managed API </a>
             </div>
           </div>       
             <div class="iconTextcontainer last_in_card">
@@ -466,14 +475,11 @@
     </div>
      <!-- end of column 3-->
           </div>
-          </div>
-        </div>
-      </div>  
-    </div>  
-</div>
+  </div>
+  </main>
+{% endblock %}
 {% block footer %}
 {% include "partials/footer_home.html" %}
 {% endblock %}
-</body>
 
 </html>
