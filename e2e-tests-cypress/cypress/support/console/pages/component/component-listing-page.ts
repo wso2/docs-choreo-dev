@@ -11,13 +11,15 @@
  * associated services.
  */
 
+import { cyGet } from "../../../commons/cy";
+import { MEDIUM_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
 import { GraphQL } from "../../apis/graphql";
 
 export class ComponentListingPage {
   static deleteComponent(componentName: string) {
-    cy.get(`tbody>tr`).should("be.visible").realHover();
-    cy.get("button>span").contains("Delete").click();
+    cyGet(`tbody>tr`).should("be.visible").realHover();
+    cy.get('[title="Delete Component"]').should("exist").click();
     cy.get('[name="confirmName"]').type(componentName);
     cy.get(".MuiDialogActions-spacing button")
       .should("be.enabled")

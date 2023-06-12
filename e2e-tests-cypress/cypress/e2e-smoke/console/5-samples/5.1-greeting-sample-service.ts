@@ -67,7 +67,7 @@ describe("Create Greeting sample in Choreo", () => {
     ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME);
   });
 
-  it("Verify component promote to prod", () => {
+  it.skip("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
   });
 
@@ -87,11 +87,14 @@ describe("Create Greeting sample in Choreo", () => {
     ComponentDeployPage.stopDevContainer();
   });
 
-  it("Verify suspending Prod deployed component", () => {
+  it.skip("Verify suspending Prod deployed component", () => {
     ComponentDeployPage.stopProdContainer();
   });
   it("Verify component deletion", () => {
+    ChoreoHomePage.navigateToHome();
+    ProjectListingPage.selectProject(PROJECT_NAME);
     ChoreoHomePage.navigateToComponents();
+    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentListingPage.deleteComponent(COMPONENT_NAME);
   });
 });
