@@ -28,25 +28,25 @@ export class ProjectOverviewPage {
     isComponentBYOC: boolean = false
   ) {
     const REPO_NAME = Utils.generateComponentName("repo");
-           GraphQL._getComponentByName(projectName, componentData.componentName).then((comps) => {
-          if (!comps) {
-            if (isComponentBYOC) {
-              GraphQL.createComponent(
-                projectName,
-                REPO_NAME,
-                componentData,
-                GraphQLQueryBuilder.getBYOCComponentCreationQuery
-              );
-            } else {
-              GraphQL.createComponent(
-                projectName,
-                REPO_NAME,
-                componentData,
-                GraphQLQueryBuilder.getRestComponentCreationQuery
-              );
-            }
-          } 
-        })
+    GraphQL._getComponentByName(projectName, componentData.componentName).then((comps) => {
+      if (comps.displayName != componentData.componentName) {
+        if (isComponentBYOC) {
+          GraphQL.createComponent(
+            projectName,
+            REPO_NAME,
+            componentData,
+            GraphQLQueryBuilder.getBYOCComponentCreationQuery
+          );
+        } else {
+          GraphQL.createComponent(
+            projectName,
+            REPO_NAME,
+            componentData,
+            GraphQLQueryBuilder.getRestComponentCreationQuery
+          );
+        }
+      }
+    })
   }
 
 

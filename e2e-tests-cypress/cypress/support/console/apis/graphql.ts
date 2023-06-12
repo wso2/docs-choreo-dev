@@ -35,6 +35,7 @@ import { GraphQLQueryBuilder } from "./gql-query-builder";
 import { Enums } from "../../commons/enums";
 import { PROXY_DEPLOYER_EP } from "../../commons/urls";
 import { ProjectEnvironment } from "../../interfaces/choreo-components/project-environments";
+import { VERY_SHORT_TIME } from "../../commons/timeouts";
 
 export const SUCCESS_STATUS_CODE = 200;
 export const NO_CONTENT_STATUS_CODE = 204;
@@ -160,9 +161,6 @@ export class GraphQL {
       return this.getComponents(project.id).then((resp) => {
         if (resp.status === SUCCESS_STATUS_CODE) {
           const comp: Component = resp.components.find((c) => c.displayName === componentName);
-          if (!comp) {
-            return Promise.reject(new Error(`${componentName} is not in ${projectName}`))
-          }
           return Promise.resolve(comp)
         }
         return Promise.reject(new Error("Error Component Fetching Failed !!"))
@@ -519,7 +517,7 @@ export class GraphQL {
   }
 
 
-  private static _getServiceEndpointStatus(query) {
+  private static _getServiceEndpointStatus(query, count = 0) {
     this.callGraphQL(query).then(res => {
       const { state } = res.body.componentEndpoints[0];
       Utils.isError(state, "Deployment Endpoint status is ERROR")
@@ -527,9 +525,9 @@ export class GraphQL {
         return;
       } else {
         if (this.count < 20) {
-          cy.wait(10000);
-          this.count++;
-          this._getServiceEndpointStatus(query)
+          cy.wait(VERY_SHORT_TIME.timeout);
+          count++;
+          this._getServiceEndpointStatus(query, count)
         }
       }
     })
