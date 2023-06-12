@@ -47,13 +47,8 @@ export class TestHelper {
       Curl.enterPathParameter(pathParm);
     }
     Curl.addQueryParameter(queryParameters1);
-    const curlKey = `int_curl_${env}_${httpMethod}_${pathParm}`;
-    cy.get("textarea")
-      .invoke("text")
-      .then((curl) => {
-        Cypress.env(curlKey, curl);
-      });
-    return Curl.getRequestComponents(curlKey);
+
+    return Curl.getRequestComponents();
   }
 
   static testOnCurlDiscardPrevious(
@@ -171,9 +166,11 @@ export class TestHelper {
 
       cy.log("Finished retrying");
       return SwaggerUI.GetResponse().then((r) => {
-        return Promise.resolve({
-          response: r,
-          statusCode: res,
+        return SwaggerUI.getResponseCode().then((res) => {
+          return Promise.resolve({
+            response: r,
+            statusCode: res,
+          });
         });
       });
     });
