@@ -404,7 +404,8 @@ pnpm
 Nodejs
 package.json
 npm
-
+mTLS
+OpenSSL
 
  - docs/references/upgrading-from-the-previous-version.md
 DefaultProject
@@ -566,6 +567,7 @@ glightbox
 logo.png
 develop-a-rest-api
 develop-a-grpc-service
+configuring-mutual-tls-between-components
  - theme/material/templates/home-page.html
 doctype
 html
@@ -623,3 +625,5 @@ process.env
 index.html
 config.js
 window.config
+ - docs/develop-components/configuring-mutual-tls-between-components.md
+service-to-service-mtls
