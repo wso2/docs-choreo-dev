@@ -52,7 +52,7 @@ export class ComponentDeployPage {
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-deploy-api"]', LONG_TIME)
-      .contains("Generating Configurations")
+      .contains("Generating Configurations", LONG_TIME)
       .should("not.exist");
     APIDeployment.RetryDevDeployment();
    cyGet('[data-cyid="btn-deploy-api"]', LONG_TIME)
