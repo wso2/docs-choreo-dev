@@ -43,7 +43,7 @@
     --md-primary-fg-color-header-text-active: #545cec;
     --md-default-bg-color: #ffffff;
     --md-typeset-a-color: var(--md-primary-fg-color);
-    --md-hjs-color: white;
+    --md-hjs-color: #36464e;
     --md-hjs-attr-color: #1aab5b;
     --md-hjs-other-color: #a31515;
     --md-default-fg-color: black;
@@ -66,6 +66,8 @@
 .hljs-addition, .hljs-attribute, .hljs-literal, .hljs-section, .hljs-string, .hljs-template-tag, .hljs-template-variable, .hljs-title, .hljs-type{
     color: var(--md-hjs-other-color);
 }
+
+
 .banner-link {
     width: 711px;
     height: 363px;

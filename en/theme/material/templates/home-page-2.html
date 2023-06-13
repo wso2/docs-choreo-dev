@@ -3,6 +3,12 @@
 <!doctype html>
 <html lang="{{ lang.t('language') }}" class="no-js">
   {% block header %}  
+  {% if not palette is mapping %}
+  {% set palette = palette %}
+{% endif %}
+{% set scheme  = "default" %}
+{% set primary = "" %}
+{% set accent  = "" %}
   {% set class = "md-header" %}
 <header class="{{ class }}" data-md-component="header" style="height: 13.5rem; position: relative;">
   <nav class="md-header__inner md-grid md-header--shadow-nav" aria-label="{{ lang.t('header') }}" "
@@ -182,6 +188,14 @@
 </header>
 {% endblock %}
 {% block main_block %}
+{% if not palette is mapping %}
+{% set palette = palette %}
+{% endif %}
+{% set scheme  = "default" %}
+{% set primary = "" %}
+{% set accent  = "" %}
+{% block palette%}
+{% endblock %}
 <main class="md-main" data-md-component="main">
 
   <div class="md-container-home data-md-component="container">
