@@ -1,16 +1,30 @@
 .md-tabs__link--active {
     font-weight: 600;
 }
-.md-typeset h1 {
-  margin: 0 0 0 0;
-},
-.md-typeset h2,
-.md-typeset h3,
-.md-typeset h4,
-.md-typeset h5,
-.md-typeset h6 {
-    font-weight: 600;
+
+.md-typeset h1{
+    color: rgb(107, 101, 101);
+    font-weight: 500;
 }
+
+.md-typeset h2 {
+    font-weight: 500;
+    letter-spacing: -.01em;
+}
+
+.md-typeset h3 {
+    font-weight: 500;
+    color: #5a5856;
+}
+
+.md-typeset a{
+    color: #3841ec !important;
+}
+
+.md-nav__item .md-nav__link--active {
+    color:  #3841ec !important;
+}
+
 /*
 * Footer styles
 */
