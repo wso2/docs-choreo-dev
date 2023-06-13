@@ -397,6 +397,12 @@ ConfigMap
 OSGi
 CAs
 Bitbucket
+Vue
+Vue.js.
+pnpm
+Nodejs
+package.json
+npm
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -607,3 +613,11 @@ DB_PASS
  - docs/develop-components/work-with-the-micro-integrator-runtime-in-choreo.md
 user_pass
 secret_value_1
+ - docs/develop-components/develop-a-web-application.md
+Javascript-based
+choreo-sample-apps
+ReactSPA
+process.env
+index.html
+config.js
+window.config

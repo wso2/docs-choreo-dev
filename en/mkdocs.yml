@@ -99,6 +99,7 @@ nav:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
           - Develop an Event-Triggered Integration: develop-components/develop-integrations/develop-an-event-triggered-integration.md
           - Develop a Scheduled Integration: develop-components/develop-integrations/develop-a-scheduled-integration.md
+      - Develop a Web Application: develop-components/develop-a-web-application.md       
       - Develop Components With Git: develop-components/develop-components-with-git.md  
   - DevOps and CI/CD: 
       - Builds and Deployments: devops-and-ci-cd/builds-and-deployments.md
