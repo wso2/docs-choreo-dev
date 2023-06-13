@@ -41,7 +41,6 @@ export class APIDeployment {
         .eq(0)
         .should("contain", "Active");
       cyGet('[data-cyid*="promote"]').should("not.be.disabled");
-
     });
   }
 
@@ -125,30 +124,34 @@ export class APIDeployment {
     });
   }
 
- 
-  static promoteToProd(projectName: string = "", componentName: string = "", hasMediationPolicy: boolean = false) {
-    cyGet('[data-cyid="btn-promote"]').should('be.enabled').click()
-    cy.xpath('//span[text()="Configure & Deploy"]').should('have.length', 2)
-      cy.wait(5000)
-      cy.get('body').then(bdy => {
-        if (bdy.find('[data-cyid="btn-next"]').length > 0) {
-          cy.get('[data-cyid="btn-next"]').should("be.visible").click();
-        }
-      })
-      cy.get('body').then(bdy => {
-        if (bdy.find('[data-cyid="expand-more"]').length > 0) {
-          cy.get('.ConfigForm').within(() => {
-            cy.get('button').contains('Promote').click()  // Promote button
-          })
-        }
-      })
-      cy.get('body').then(bdy => {
-        if (bdy.find('.ConfigForm').length > 0) {
-          cy.get('.ConfigForm').within(() => {
-            cy.get('button').contains('Promote').click()  // Promote button
-          })
-        }
-      })
+  static promoteToProd(
+    projectName: string = "",
+    componentName: string = "",
+    hasMediationPolicy: boolean = false
+  ) {
+    cyGet('[data-cyid="btn-promote"]').should("be.enabled").click();
+    cy.xpath('//span[text()="Configure & Deploy"]').should("have.length", 2);
+    cy.wait(5000);
+    cy.contains('role="progressbar"').should("not.exist");
+    cy.get("body").then((bdy) => {
+      if (bdy.find('[data-cyid="btn-next"]').length > 0) {
+        cy.get('[data-cyid="btn-next"]').should("be.visible").click();
+      }
+    });
+    cy.get("body").then((bdy) => {
+      if (bdy.find('[data-cyid="expand-more"]').length > 0) {
+        cy.get(".ConfigForm").within(() => {
+          cy.get("button").contains("Promote").click(); // Promote button
+        });
+      }
+    });
+    cy.get("body").then((bdy) => {
+      if (bdy.find(".ConfigForm").length > 0) {
+        cy.get(".ConfigForm").within(() => {
+          cy.get("button").contains("Promote").click(); // Promote button
+        });
+      }
+    });
     if (hasMediationPolicy) {
       cy.wait(15000);
       GraphQL.getPrmotionStatus(projectName, componentName);
