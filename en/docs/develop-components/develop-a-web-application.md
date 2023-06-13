@@ -64,7 +64,7 @@ Follow the steps below to create a sample Web Application component and deploy i
     | **GitHub Account**            | Your account       |
     | **GitHub Repository**         | choreo-sample-apps |
     | **Branch**                    | **`main`**         |
-    | **Build Preset**              | ReastSPA           |
+    | **Build Preset**              | ReactSPA           |
     | **Build Context Path**        | web-apps/react-spa |
     | **Build Command**             | npm run build      |
     | **Build output directory**    | build              |
@@ -117,7 +117,7 @@ To create a short URL for your Web Application, follow the steps below:
 
 For web apps with a backend server, Choreo allows you to mount runtime configurations and secrets as environment variables and/or file mounts for a specific environment. Alternatively, you can also inject them into the client app during SSR or when serving static content.
 
-However, in the case of SPAs that run completely on the browser, Choreo does not support ‘baking-in’ environment variables or other configs. This is because Choreo follows a multi-environment deployment model, where configuration should be kept separate from the build and injected at runtime.For example, in most React SPA frameworks, the process.env stub is available during build time. However, it does not actually read in variables from the runtime. Instead, it is baked into the final JavaScript output during the build process. 
+However, in the case of SPAs that run completely on the browser, Choreo does not support ‘baking-in’ environment variables or other configurations. This is because Choreo follows a multi-environment deployment model, where configuration should be kept separate from the build and injected at runtime. For example, in most React SPA frameworks, the process.env stub is available during build time. However, it does not actually read in variables from the runtime. Instead, it is baked into the final JavaScript output during the build process. 
 
 For managing runtime configurations, Choreo recommends the following approach (this is a React example, but will be generally applicable for other SPA frameworks).
 
@@ -141,7 +141,7 @@ Follow the steps below to manage runtime configurations for the React applicatio
         },
     };
     ```
-2. In your index.html file inside the public directory , add a script tag as follows to include the config.js file inside the <body> tag, so that this config.js file will be accessible via javascript at runtime.
+2. In your index.html file inside the public directory , add a script tag as follows to include the config.js file inside the <body> tag, so that this config.js file will be accessible via JavaScript at runtime.
 
     ```
     <!DOCTYPE html>
