@@ -1,15 +1,16 @@
 # Develop a Web Application
 
 A Web Application is an application program that is hosted on a server and serves ingress traffic through the browser. In Choreo, you can deploy a web application by creating a Web Application component and connecting it to a Git repository that includes the implementation of the Web Application. A Web Application can be one of the following:
-    - Single Page Applications (SPAs) like React, Angular, Vue, Svelte, etc.
-    - Web servers that serve static content or provide server-side rendering/static site generation (SSR/SSG).
-    - Static content, such as websites and other static resources that do not require a backend. These resources are usually just static HTML/JS/CSS files that need to be hosted.
+
+- Single Page Applications (SPAs) like React, Angular, Vue, Svelte, etc.
+- Web servers that serve static content or provide server-side rendering/static site generation (SSR/SSG).
+- Static content, such as websites and other static resources that do not require a backend. These resources are usually just static HTML/JS/CSS files that need to be hosted.
 
 ## Prerequisites
 
 1. To deploy a web application component, you will need a GitHub account with a repository that contains a web application. Fork the [Choreo sample apps repository](https://github.com/wso2/choreo-sample-apps/), which contains the sample for this guide.
 2. The Choreo GitHub App requires the following permissions:
-    - Read access to issues and metadata
+    - Read access to issues and metadata.
     - Read and write access to code, pull requests, and repository hooks.
 
 ## Creating a web application  
@@ -17,25 +18,25 @@ A Web Application is an application program that is hosted on a server and serve
 You can create a Web Application in Choreo as follows:
 
 1. Build and deploy a SPA from source code.
-   - Create a Web Application component by linking your repository that includes the Web Application source code.
-   - Select the relevant build preset. Default presets include React, Angular, and Vue.js. If you’re using a different SPA framework, you can try one of these presets as the configurations can be overridden to support most Javascript-based SPAs.
-   - Enter the build command based on the your package manager. NPM, yarn, and pnpm are supported and the relevant package manager is run based on the dependency lock file in your repository (defaults to NPM if no lock file is present).
-   - Specify the build output directory.
-   - Specify the NodeJs version. Choreo does not pick the Nodejs version from the package.json engine property. The required Node version must be explicitly set in the build configuration.
+    - Create a Web Application component by linking your repository that includes the Web Application source code.
+    - Select the relevant build preset. Default presets include React, Angular, and Vue.js. If you’re using a different SPA framework, you can try one of these presets as the configurations can be overridden to support most Javascript-based SPAs.
+    - Enter the build command based on the your package manager. NPM, yarn, and pnpm are supported and the relevant package manager is run based on the dependency lock file in your repository (defaults to NPM if no lock file is present).
+    - Specify the build output directory.
+    - Specify the NodeJs version. Choreo does not pick the Nodejs version from the package.json engine property. The required Node version must be explicitly set in the build configuration.
 
     Once you create the Web Application component, Choreo will automatically generate a build pipeline for your Single Page Application and deploy it.
 
- 2. Bring your Dockerfile
+ 2. Bring your Dockerfile.
     - Create a Web Application component by linking your repository that includes the Dockerfile to your containerized web application.
     - Commit a Dockerfile to the connected git repository to have full control over your build process.
     
      This option is recommended if you are deploying a web server and not just a SPA (or a SPA with a more complex build process). 
 
- 3. Static Websites
+ 3. Host static Websites.
      - To simply host some static web contents, create a Web Application component by linking your repository that includes the required static assets. 
      - Select the **Static Websites** preset. 
      
-     This preset does not trigger a ‘build’ process unlike the SPA presets, the files are taken from the path specified in the repository served as-is.   
+     This preset does not trigger a ‘build’ process unlike the SPA presets, the files are taken from the path specified in the repository and served as it is.   
 
 Let's follow an example on how you can build and deploy a SPA from source code. 
 
@@ -79,7 +80,7 @@ You have successfully created a Web Application component from the source code. 
 Deploying the component initiates the build pipeline, and upon completion, your application will become accessible in your Development environment through a generated URL. Choreo takes care of automatic TLS/SSL management for your apps.
 
     !!! note
-       The deployment of the Web Application component may require some time. You can monitor the progress by observing the logs. Once the deployment is finished, the deployment status in the corresponding environment card will change to **Active**.
+        The deployment of the Web Application component may require some time. You can monitor the progress by observing the logs. Once the deployment is finished, the deployment status in the corresponding environment card will change to **Active**.
 
 
 2. Check the deployment progress by observing the console logs on the right of the page.
@@ -92,7 +93,7 @@ Deploying the component initiates the build pipeline, and upon completion, your 
     !!! info
         If you have Choreo environments on a private data plane, you can ignore these vulnerabilities and proceed with the deployment.
 
-The DevOps configurations related to scaling, health checks and configuration & secret management are available to all Web Application components regardless of how they were created, similar to other Choreo components. 
+    The DevOps configurations related to scaling, health checks and configuration & secret management are available to all Web Application components regardless of how they were created, similar to other Choreo components. 
 
 3. To access your Web application, copy the **Web App URL** on the environment card and paste it in a browser. You will see your React App that you created. 
 
@@ -180,9 +181,9 @@ Now you can deploy your component.
 
 The following limitations are specific to the Choreo Cloud Data Plane:
 
-Request size limit, including headers, cookies, and payloads: 256KB
-Response body size limit: 20MB
-Only one open port is permitted per web application. While you can have multiple ports open for project-level communication within a data plane, incoming traffic from the internet can only be directed to one port. This differs from the Service type components, which support multiple endpoints.
+   - Request size limit, including headers, cookies, and payloads: 256KB
+   - Response body size limit: 20MB
+   - Only one open port is permitted per web application. While you can have multiple ports open for project-level communication within a data plane, incoming traffic from the internet can only be directed to one port. This differs from the Service type components, which support multiple endpoints.
 
 ## Troubleshooting Web Application
 
@@ -191,5 +192,5 @@ Only one open port is permitted per web application. While you can have multiple
     If you encounter a blank page or a 502 error after deploying your web application, it typically indicates that the wrong directory is being served. To resolve this issue, please follow these steps:
 
     - Double-check the build output directory, especially if you are using a Dockerfile-less preset. Ensure that the specified output directory matches the actual output directory generated during the build process. For example, make sure you enter public/ as the output directory if it is indeed public/ and not build/.
-    
+
 By verifying and correcting the output directory alignment, you should be able to address the issue of seeing a blank page or experiencing a 502 error after deploying your web application.
