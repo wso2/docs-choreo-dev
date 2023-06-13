@@ -71,7 +71,7 @@ describe("Create and deploy a component to test developer portal with custom dom
   });
 
   it("Add a developer portal custom domain", () => {
-    ChoreoHomePage.navigateToSettings();
+    ChoreoHomePage.navigateToSettings(PROJECT_NAME);
     DomainsComponents.navigateToDomainsSettings();
     DomainsComponents.navigateToDevPortalCustomDomain();
     DomainsComponents.deleteDevportalDomainIfExists(CUSTOM_DOMAIN);
@@ -114,7 +114,7 @@ describe("Login and test developer portal with custom domain", () => {
     TryOut.navigateToTryOutMenu(true);
     TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT);
     TryOut.GenerateAccessToken();
-    TryOut.SelectResource( OPERATION_USERS);
+    TryOut.SelectResource(OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
@@ -124,7 +124,7 @@ describe("Login and test developer portal with custom domain", () => {
     ApiCredentials.navigateCredentialsTab();
     TryOut.navigateToTryOutMenu(true);
     TryOut.GenerateAccessToken();
-    TryOut.SelectResource( OPERATION_USERS);
+    TryOut.SelectResource(OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();

@@ -16,15 +16,13 @@
 import { OK } from "../../../../commons/http";
 import { Utils } from "../../../../commons/utils";
 
-
-
 export class OrganizationComponent {
   static navigateToMembers() {
-    cy.get('[data-cyid="members"]').click();
+    cy.get('[data-cyid="nav-link-members"]').click();
   }
 
   static navigateToRoles() {
-    cy.get('[data-cy="/organization/roles"]').click();
+    cy.get('[data-cyid="nav-link-roles"]').click();
   }
 
   static navigateToRoleMapping() {
@@ -195,6 +193,7 @@ export class OrganizationComponent {
   }
 
   static deleteCreatedRole(roleName: string) {
+    cy.get('[data-cyid="btn-create-role"]').should("be.visible");
     cy.get('[data-cyid="search-app"]').clear().type(roleName);
     cy.contains("td", roleName).should("be.visible");
     this.deleteSelectedRole(roleName);
