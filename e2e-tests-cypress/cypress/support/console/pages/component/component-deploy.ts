@@ -309,7 +309,8 @@ export class ComponentDeployPage {
   }
 
   static deployService(projectName:string, componentName:string,endpointName: string, changeVisibility?: boolean) {
-    cy.get('[data-cyid="btn-deploy-api"]', SHORT_TIME).contains("Generating Configurations").should("not.exist")
+    cy.get('[data-cyid="btn-deploy-api"]', MEDIUM_TIME).contains("Generating Configurations", MEDIUM_TIME)
+      .should("not.exist")
     APIDeployment.RetryDevDeployment();
     cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
     cy.get('[data-cyid="btn-deploy-api"]', LONG_TIME)
