@@ -21,14 +21,15 @@ import {
 import { cyGet } from "../../../commons/cy";
 import { PUBLISHER_API_KEYS_URL } from "../../../commons/urls";
 import { GraphQL } from "../../apis/graphql";
+import { MEDIUM_TIME } from "../../../commons/timeouts";
 
 export class APIDeployment {
   static DeployToDev() {
     cy.intercept({ method: "GET", url: PUBLISHER_API_KEYS_URL, times: 1 }).as(
       "keys"
     );
-    cyGet('[data-cyid="btn-deploy-proxy"]', SHORT_TIME)
-      .contains("Generating Configurations")
+    cyGet('[data-cyid="btn-deploy-proxy"]', MEDIUM_TIME)
+      .contains("Generating Configurations", MEDIUM_TIME)
       .should("not.exist");
     this.RetryDevDeployment();
     cyGet('[data-cyid="btn-deploy-proxy"]').should("not.be.disabled").click();
