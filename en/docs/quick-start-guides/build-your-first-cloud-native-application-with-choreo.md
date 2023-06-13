@@ -27,15 +27,15 @@ Before you try out this guide, complete the following:
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
 
-    This creates the organization and opens the **Project Home** page of the default project created for you.
+    This creates the organization and opens the home page of the default project created for you.
 
     !!! info "Enable Asgardeo as the key manager"
          
          If you created your organization in Choreo before the 21st of February 2023, and you have not already enabled Asgardeo as the key manager, follow these steps to enable Asgardeo as the default key manager:
 
-         1. In the Choreo Console, click your username in the top right corner.
-         2. In the drop-down menu, click **Settings**.
-         3. In **Settings**, click **API Management** and then click **Enable Asgardeo Key Manager**.
+         1. In the Choreo Console, go to the top navigation menu and click **Organization**. This takes you to the organization's home page.
+         2. In the left navigation menu, click **Settings**.
+         3. Click the **API Management** tab and then click **Enable Asgardeo Key Manager**.
          4. In the confirmation dialog that opens, click **Yes**.
 
 
@@ -47,7 +47,7 @@ In this step, you are playing the role of an API developer. You will create a se
 
 Follow the steps below to create the service:
 
-1. Go to [https://console.choreo.dev/cloud-native-app-developer](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the **Project Home** page.
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Go to the **Service** card and click **Create**.
 4. Enter a unique name and a description for the service. You can enter the name and description given below:
@@ -73,7 +73,7 @@ Follow the steps below to create the service:
     | **GitHub Repository** | **`choreo-examples`** |
     | **Branch**            | **`main`**                               |
     | **Build Preset**      | Click **Ballerina** because you are creating the REST API from a [Ballerina](https://ballerina.io/) project, and Choreo needs to run a Ballerina build to build it.|
-    | **Path**              | **`cloud-native-app-developer/reading-list-service`**                    |
+    | **Project Path**              | **`cloud-native-app-developer/reading-list-service`**                    |
 
 9. Click **Create**. This initializes the service with the implementation from your GitHub repository and takes you to the **Overview** page of the component.
 
@@ -96,7 +96,7 @@ For the REST endpoint of the service to be invokable, you need to deploy it. To 
 
 To test the **Readinglist** REST endpoint via the integrated OpenAPI Console in Choreo, follow the steps given below:
 
-1. In the left navigation menu, click **Test**.
+1. In the left navigation menu, click **Test** and then click **Console**.
 2. In the **OpenAPI Console** pane that opens, select **Development** from the environment drop-down list.
 3. In the **Public Endpoint** list, select **Readinglist**.
 4. Expand the **GET** method and click **Try it out**.
@@ -114,17 +114,17 @@ You can proceed to the next section to fix the JWT error and publish the service
 
 ### Step 1.4: Publish the service
 
-To fix the JWT error, retest the API, and publish the service, follow the steps given below:
+To fix the JWT error and publish the service, follow the steps given below:
 
 #### Step 1.4.1: Update the CORS configuration and fix the JWT error
 
 Let's assume you deploy the web application in a cloud platform such as Vercel. In such a scenario, you would want to call the **Readinglist** backend service deployed in Choreo through the web application on a Vercel domain. By default, web browsers block such calls for security reasons. To enable the web application to call the backend service, you must update the CORS configuration as follows:
 
-1. In the left navigation menu, click **Manage**, and then click **Settings**.
+1. In the left navigation menu, click **Manage** and then click **Settings**.
 2. Under **API Settings**, click **Edit**.
 3. Click the **CORS Configuration** toggle to enable the setting.
-4. Select the **Access Control Allow Credentials** checkbox.
-5. To allow passing security context to the backend service, click the **Pass Security Context To Backend** toggle to enable the setting.
+4. To allow cross-origin calls to send credentials, select the **Access Control Allow Credentials** checkbox.
+5. To allow passing security context to the backend service, click the **Pass Security Context To Backend** toggle.
 6. Click **Save**. 
 7. In the **Apply to Development** pane that opens, enter a meaningful message and click **Apply**.
 
@@ -134,7 +134,7 @@ Now you can retest the API to confirm that it works as expected.
 
 To retest the API, follow the steps given below:
 
-1. In the left navigation menu, click **Test**.
+1. In the left navigation menu, click **Test** and then click **Console**.
 2. In the **OpenAPI Console** pane that opens, select **Development** from the environment drop-down list.
 3. In the **Public Endpoint** list, select **Readinglist**.
 4. Expand the **POST** method and click **Try it out**.
@@ -164,11 +164,11 @@ Similarly, you can expand and try out the **GET** and **DELETE** methods.
 
 #### Step 1.4.3: Publish the service endpoint as a REST API
 
-To publish the REST endpoint and make it available for web application to consume, follow the steps given below:
+To publish the REST endpoint and make it available for web applications to consume, follow the steps given below:
 
-1. In the **Manage** view, click **Lifecycle**.
-2. Click **Publish** to publish the REST API to the Developer Portal. External applications can subscribe to the API via the Developer Portal.
-3. To access the Developer Portal, click **Go to DevPortal**.
+1. In the left navigation menu, click **Manage** and then click **Lifecycle**.
+2. In the **Lifecycle Management** pane, click **Publish**. This publishes the REST API to the Developer Portal so that external applications can subscribe to the API.
+3. To open the REST API in the Developer Portal via the **Lifecycle Management** pane, click **Go to DevPortal**.
 
     The **Reading List Service** REST API opens in the Developer Portal.
 
@@ -187,8 +187,8 @@ An application in the Developer Portal is a logical representation of a physical
 To create an application to consume the **Reading List Service** REST API, follow the steps given below:
 
 1. In the top menu of the Developer Portal, click **Applications**.
-2. Click **Create**.
-3. Enter a name for the application (for example, `readingListApp` and click **Create**. This creates the application and takes you to the application overview page.
+2. Click **+ Create**.
+3. Enter a name for the application (for example, `readingListApp`) and click **Create**. This creates the application and takes you to the application overview page.
 4. On the left navigation menu, click **Production** under **Credentials**.
 5. Click **Generate Credentials**. This generates credentials for the application.
 
