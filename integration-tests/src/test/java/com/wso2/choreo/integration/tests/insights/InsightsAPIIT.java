@@ -22,21 +22,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.wso2.choreo.integration.common.TestContext;
-import com.wso2.choreo.integration.common.exceptions.AddConfigurationsException;
-import com.wso2.choreo.integration.common.exceptions.ApiLifecycleChangeException;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationException;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationStatusCheckException;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationTimeoutException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentFailureException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentStatusCheckException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentTimeoutException;
-import com.wso2.choreo.integration.common.exceptions.ComponentRetrieveException;
-import com.wso2.choreo.integration.common.exceptions.GetCommitHistoryException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
-import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
+import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.exceptions.ProjectRetrievalException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
@@ -71,20 +58,17 @@ import static org.hamcrest.Matchers.greaterThan;
 public class InsightsAPIIT extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private static String orgUUID;
-    private static String environmentId;
+    private static String externalEnvId;
+    private static String internalEnvId;
+    private static String sandboxEnvId;
+    private List<ChoreoProject> projects;
 
 
     @Autowired
     private HttpClient choreoCPTestClient;
 
     @BeforeClass
-    public void beforeClass()
-            throws IOException, InterruptedException, ProjectCreationException, GetCommitHistoryException,
-            NoLatestCommitHashFoundException, AddConfigurationsException, NoLatestAppEnvIdFoundException,
-            ComponentCreationStatusCheckException, ComponentDeploymentException,
-            ComponentDeploymentStatusCheckException, ComponentCreationException, ComponentRetrieveException,
-            ApiLifecycleChangeException, ComponentCreationTimeoutException, ComponentDeploymentTimeoutException,
-            NoLatestApiVersionFoundException, ComponentDeploymentFailureException, TokenRetrievalException {
+    public void beforeClass() throws IOException, TokenRetrievalException, ProjectRetrievalException {
 
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
@@ -97,6 +81,9 @@ public class InsightsAPIIT extends TestNGCitrusSpringSupport {
                 "query($orgFilter: OrgFilter!) {" +
                 "   listEnvironments(org: $orgFilter) {" +
                 "       id" +
+                "       externalEnvId" +
+                "       internalEnvId" +
+                "       sandboxEnvId" +
                 "       name" +
                 "       type" +
                 "   }" +
@@ -137,7 +124,9 @@ public class InsightsAPIIT extends TestNGCitrusSpringSupport {
                     List<Environment> environmentList = gson.fromJson(environments.toString(), collectionType);
                     for (Environment env : environmentList) {
                         if (env.getType().equals("CHOREO") && env.getName().equals("Development")) {
-                            environmentId = env.getId();
+                            externalEnvId = env.getExternalEnvId();
+                            internalEnvId = env.getInternalEnvId();
+                            sandboxEnvId = env.getSandboxEnvId();
                             break;
                         }
                     }
@@ -180,7 +169,9 @@ public class InsightsAPIIT extends TestNGCitrusSpringSupport {
         Writer writer = new StringWriter();
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("orgId", orgUUID);
-        queryParams.put("environmentId", environmentId);
+        queryParams.put("externalEnvId", externalEnvId);
+        queryParams.put("internalEnvId", internalEnvId);
+        queryParams.put("sandboxEnvId", sandboxEnvId);
         queryParams.put("tenant", "carbon.super");
         mustache.execute(writer, queryParams).flush();
         String graphQlVariables = writer.toString();
@@ -242,7 +233,9 @@ public class InsightsAPIIT extends TestNGCitrusSpringSupport {
         queryParams.put("from", sixMonthsAgoDateTimeAtUTC.toString());
         queryParams.put("to", currentDateTimeAtUTC.toString());
         queryParams.put("orgId", orgUUID);
-        queryParams.put("environmentId", environmentId);
+        queryParams.put("externalEnvId", externalEnvId);
+        queryParams.put("internalEnvId", internalEnvId);
+        queryParams.put("sandboxEnvId", sandboxEnvId);
         queryParams.put("tenant", "carbon.super");
         mustache.execute(writer, queryParams).flush();
         String graphQlVariables = writer.toString();
