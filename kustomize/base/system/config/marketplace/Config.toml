@@ -7,7 +7,7 @@ rudderUrl = "http://dp-rudder:80"
 healthCheckPort = 9091
 servicePort = 9090
 
-gitHubSecretPath = "/mnt/csi/secret-cp-graphql/CHOREO-MARKETPLACE-GITHUB-TOKEN"
+gitHubSecretPath = "/mnt/csi/secret-choreo-marketplace/CHOREO-MARKETPLACE-GITHUB-TOKEN"
 gitHubGqlServiceUrl = "https://api.github.com/graphql"
 gitHubIdlStoreRepoOwner = "ballerina-platform"
 gitHubIdlStoreRepoName = "openapi-connectors"

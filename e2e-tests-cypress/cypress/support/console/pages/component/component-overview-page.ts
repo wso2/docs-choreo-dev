@@ -24,9 +24,11 @@ export class ComponentOverviewPage {
 
   static navigateToDeploy() {
     cy.get("[data-cyid=link-deploy]")
+      .should("be.visible")
       .realHover({ position: "left" })
-      .wait(200)
-      .click();
+      .wait(MENU_RENDERING_TIME)
+      .click()
+      .wait(MENU_RENDERING_TIME);
     cy.get('[id="backdrop-loader"]').should("not.exist");
     Utils.moveMouseAwayFromLeftMenu();
   }
@@ -96,6 +98,7 @@ static navigateProxyResources(){
         '[data-cyid="link-develop"]',
         new Array('[data-cyid="develop-resources"]')
       );
+      Utils.moveMouseAwayFromLeftMenu();
     } else {
       cy.get('[data-cyid="link-develop"]').click();
     }
@@ -172,7 +175,7 @@ static navigateProxyResources(){
                 .should("be.visible")
                 .realHover({ position: "left" })
                 .wait(MENU_RENDERING_TIME)
-                .click();
+                .click({ force: true });
               break;
             }
           }
@@ -188,5 +191,4 @@ static navigateProxyResources(){
       }
     });
   }
-
 }
