@@ -242,14 +242,23 @@ public class TestProxyApiDp extends TestBase {
         }
         boolean isRateLimitExceeded = false;
         int count = 0;
-        for (int i=0; i< 8; i++) {
-            Response dev = HttpClientUtil.httpGET(devURL, "", dp.getDevKeyData().getApikey());
-            count++;
-            if (dev.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value()) {
-                isRateLimitExceeded = true;
+        long starttime = 0;
+        long endtime = 0;
+        while (isRateLimitExceeded == false) {
+            starttime = System.currentTimeMillis();
+            for (int i = 0; i < 8; i++) {
+                Response dev = HttpClientUtil.httpGET(devURL, "", dp.getDevKeyData().getApikey());
+                count++;
+                if (dev.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value()) {
+                    isRateLimitExceeded = true;
+                    break;
+                }
+                Thread.sleep(500);
+            }
+            endtime = System.currentTimeMillis();
+            if (endtime / 60000 == starttime / 60000) {
                 break;
             }
-            Thread.sleep(500);
         }
         Assert.assertTrue(isRateLimitExceeded, "Requests are not rate limited");
         Assert.assertTrue(count > 5, "Requests are not rate limited at the desired count " + count);
@@ -341,14 +350,23 @@ public class TestProxyApiDp extends TestBase {
         }
         boolean isRateLimitExceeded = false;
         int count = 0;
-        for (int i=0; i< 15; i++) {
-            Response dev = HttpClientUtil.httpGET(devURL, "", dp.getDevKeyData().getApikey());
-            count++;
-            if (dev.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value()) {
-                isRateLimitExceeded = true;
+        long starttime = 0;
+        long endtime = 0;
+        while (isRateLimitExceeded == false) {
+            starttime = System.currentTimeMillis();
+            for (int i=0; i< 15; i++) {
+                Response dev = HttpClientUtil.httpGET(devURL, "", dp.getDevKeyData().getApikey());
+                count++;
+                if (dev.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value()) {
+                    isRateLimitExceeded = true;
+                    break;
+                }
+                Thread.sleep(500);
+            }
+            endtime = System.currentTimeMillis();
+            if (endtime / 60000 == starttime / 60000) {
                 break;
             }
-            Thread.sleep(500);
         }
         Assert.assertTrue(isRateLimitExceeded, "Requests are not rate limited");
         Assert.assertTrue(count > 10, "Requests are not rate limited at the desired method");
