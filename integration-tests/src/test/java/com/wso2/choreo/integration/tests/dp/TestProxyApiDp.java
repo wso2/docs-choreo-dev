@@ -232,18 +232,23 @@ public class TestProxyApiDp extends TestBase {
     @CitrusTest
     public void testDevDeploymentAfterOperationRateLimitUpdate_ProxyApiEUDpIT(DataProviderWrapper dp)
             throws InterruptedException {
+
         // To give a time to deploy the API.
         Thread.sleep(10000);
         String devURL = dp.getProxyDeployments().get(0).getInvokeUrl() + "/users";
+
         // Rate limiting counter resets based on the system clock.
         long timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
         if (timeRemainingTillNextMinute < 15000) {
             Thread.sleep(timeRemainingTillNextMinute + 5000);
         }
+
         boolean isRateLimitExceeded = false;
         int count = 0;
         long starttime = 0;
         long endtime = 0;
+
+        // Repeat the check until the rate limit is exceeded or all requests are sent within the same minute
         while (isRateLimitExceeded == false) {
             starttime = System.currentTimeMillis();
             for (int i = 0; i < 8; i++) {
@@ -256,10 +261,13 @@ public class TestProxyApiDp extends TestBase {
                 Thread.sleep(500);
             }
             endtime = System.currentTimeMillis();
+
+            // Break the loop if all requests are sent within the same minute
             if (endtime / 60000 == starttime / 60000) {
                 break;
             }
         }
+
         Assert.assertTrue(isRateLimitExceeded, "Requests are not rate limited");
         Assert.assertTrue(count > 5, "Requests are not rate limited at the desired count " + count);
         timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
@@ -340,18 +348,23 @@ public class TestProxyApiDp extends TestBase {
     @Test(dependsOnMethods = {"deployProxyAPIAfterAPIRateLimitUpdate_ProxyApiEUDpIT"}, dataProvider = "dps")
     @CitrusTest
     public void testDevDeploymentAfterAPIRateLimitUpdate_ProxyApiEUDpIT(DataProviderWrapper dp) throws IOException, InterruptedException {
+
         // To give a time to deploy the API.
         Thread.sleep(10000);
         String devURL = dp.getProxyDeployments().get(0).getInvokeUrl() + "/users";
+
         // Rate limiting counter resets based on the system clock.
         long timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
         if (timeRemainingTillNextMinute < 15000) {
             Thread.sleep(timeRemainingTillNextMinute + 5000);
         }
+
         boolean isRateLimitExceeded = false;
         int count = 0;
         long starttime = 0;
         long endtime = 0;
+
+        // Repeat the check until the rate limit is exceeded or all requests are sent within the same minute
         while (isRateLimitExceeded == false) {
             starttime = System.currentTimeMillis();
             for (int i=0; i< 15; i++) {
@@ -364,10 +377,13 @@ public class TestProxyApiDp extends TestBase {
                 Thread.sleep(500);
             }
             endtime = System.currentTimeMillis();
+
+            // Break the loop if all requests are sent within the same minute
             if (endtime / 60000 == starttime / 60000) {
                 break;
             }
         }
+
         Assert.assertTrue(isRateLimitExceeded, "Requests are not rate limited");
         Assert.assertTrue(count > 10, "Requests are not rate limited at the desired method");
         timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
