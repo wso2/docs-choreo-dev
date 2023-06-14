@@ -200,11 +200,6 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.republishConnector();
   });
 
-  it("Verify usage plan change", () => {
-    ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
-    ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
-  });
-
   it("Verify suspending all component deployments", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();

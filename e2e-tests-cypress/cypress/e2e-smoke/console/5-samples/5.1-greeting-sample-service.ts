@@ -94,7 +94,6 @@ describe("Create Greeting sample in Choreo", () => {
     ChoreoHomePage.navigateToHome();
     ProjectListingPage.selectProject(PROJECT_NAME);
     ChoreoHomePage.navigateToComponents();
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentListingPage.deleteComponent(COMPONENT_NAME);
   });
 });
