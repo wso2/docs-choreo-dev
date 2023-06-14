@@ -87,7 +87,7 @@ spec:
             httpGet:
               path: /service/healthz
               port: email-port
-              scheme: HTTP
+              scheme: HTTPS
           livenessProbe:
             initialDelaySeconds: 10
             timeoutSeconds: 15
@@ -97,7 +97,7 @@ spec:
             httpGet:
               path: /service/healthz
               port: email-port
-              scheme: HTTP
+              scheme: HTTPS
           volumeMounts:
             - name: secret-email-service
               mountPath: "/mnt/csi/secret-email-service"
