@@ -12,7 +12,7 @@
  */
 
 import { Enums } from "../../../commons/enums";
-import { LONG_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
+import { LONG_TIME, MEDIUM_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 
 export class InsightsPage {
   static selectEnvironment(env: Enums.Environment) {
@@ -22,7 +22,7 @@ export class InsightsPage {
   }
 
   static selectTimePeriod(timePeriod: string = "Past 15 minutes") {
-    cy.get('[data-testid="date-picker"]', VERY_SHORT_TIME).click();
+    cy.get('[data-testid="date-picker"]', MEDIUM_TIME).click();
     cy.get("ul>div").contains(timePeriod).click();
     cy.get('.recharts-layer>path[fill*="url"]');
   }
