@@ -34,9 +34,6 @@ export class LoginPage {
   }
 
   static visitToDevportalOrgPublicApis(): void {
-    cy.clearAllCookies()
-    cy.clearLocalStorage()
-    cy.clearAllSessionStorage()
     const loginURL = Cypress.env("devportalLoginURL") + "/" + handle;
     cy.visit(loginURL);
     cy.get('[data-testid="home-appbar-btn"]').should("exist");
