@@ -191,6 +191,6 @@ The following limitations are specific to the Choreo Cloud Data Plane:
 
     If you encounter a blank page or a 502 error after deploying your web application, it typically indicates that the wrong directory is being served. To resolve this issue, follow these steps:
 
-    - Double-check the build output directory, especially if you are using a Dockerfile-less preset. Ensure that the specified output directory matches the actual output directory generated during the build process. For example, erronously if you have entered `public/` as the output directory when it should have been `build/`.
+    - Double-check the build output directory, especially if you are using a Dockerfile-less preset. Ensure that the specified output directory matches the actual output directory generated during the build process. For example, erroneously if you have entered `public/` as the output directory when it should have been `build/`.
 
 By verifying and correcting the output directory alignment, you should be able to address the issue of seeing a blank page or experiencing a 502 error after deploying your web application.
