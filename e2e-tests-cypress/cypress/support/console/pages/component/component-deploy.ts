@@ -151,7 +151,7 @@ export class ComponentDeployPage {
   static configureAndDeploy(configValue: string) {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.wait(VERY_SHORT_TIME.timeout);
-    cyGet('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
+    cyGet('[data-cyid="btn-deploy-api"]', LONG_TIME).should("be.enabled").click();
     cy.contains("Deploy").should("be.visible").click();
     this.addConfiguration(configValue);
     cy.get('[data-testid="btn-stop"]', LONG_TIME).should("be.visible");
