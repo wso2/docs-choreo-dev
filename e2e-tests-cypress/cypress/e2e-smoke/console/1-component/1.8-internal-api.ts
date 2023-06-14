@@ -35,6 +35,7 @@ import { OK } from "../../../support/commons/http";
 import { ProxyAPI } from "../../../support/interfaces/proxy-api";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
+import { cyLog } from "../../../support/commons/cy";
 
 
 before(() => {
@@ -154,21 +155,22 @@ describe(`Verify internal api functionality`, () => {
     });
 
     it("Verify resource access without the security in DEV", () => {
-        ComponentOverviewPage.navigateToTest();
-        TestHelper.testOnCurl(
+
+
+        TestHelper.invokeAPI(
+            PROJECT_NAME,
+            internalProxy.apiName,
             Enums.Environment.DEVELOPMENT,
             Enums.HTTPMethod.GET,
-            OPERATION_USERS
-        ).then((curl) => {
-            cy.get("#filled-disabled")
-                .eq(0)
-                .invoke("attr", "value")
-                .then((invokeUrl) => {
-                    DEV_INVOKE_URL = invokeUrl;
-                });
-            expect(Utils.isHostResolvable(curl.url) == false);
-        });
-
+            OPERATION_USERS,
+            [],
+            false
+        ).then(res => {
+            
+            cyLog(res)
+            DEV_INVOKE_URL = res.invokeUrl
+           expect(res.status).equal(404);
+        })
     });
     it("Verify resource access without the security in PROD", () => {
         TestHelper.testOnCurl(
@@ -212,7 +214,7 @@ describe(`Verify internal api functionality`, () => {
     it("Verify 1st PROXY API resource access in DEV", () => {
 
         // ComponentOverviewPage.navigateToTest();  // Need to add UI
-        TestHelper._testOnCurl(
+        TestHelper.invokeAPI(
             PROJECT_NAME,
             externalProxy.apiName,
             Enums.Environment.DEVELOPMENT,
@@ -231,7 +233,7 @@ describe(`Verify internal api functionality`, () => {
     it("Verify 1st PROXY API resource access in PROD", () => {
 
         // ComponentOverviewPage.navigateToTest();
-        TestHelper._testOnCurl(
+        TestHelper.invokeAPI(
             PROJECT_NAME,
             externalProxy.apiName,
             Enums.Environment.PRODUCTION,
@@ -266,7 +268,7 @@ describe(`Verify internal api functionality`, () => {
 
         //ComponentOverviewPage.navigateToTest();
 
-        TestHelper._testOnCurl(
+        TestHelper.invokeAPI(
             PROJECT_NAME,
             externalProxyProd.apiName,
             Enums.Environment.DEVELOPMENT,
@@ -287,7 +289,7 @@ describe(`Verify internal api functionality`, () => {
     it("Verify 2nd PROXY API resource access in PROD", () => {
 
         // ComponentOverviewPage.navigateToTest();
-        TestHelper._testOnCurl(
+        TestHelper.invokeAPI(
             PROJECT_NAME,
             externalProxyProd.apiName,
             Enums.Environment.PRODUCTION,
@@ -314,7 +316,7 @@ describe(`Verify internal api functionality`, () => {
     it("Verify resource access to external API in DEV", () => {
 
         // ComponentOverviewPage.navigateToTest();
-        TestHelper._testOnCurl(
+        TestHelper.invokeAPI(
             PROJECT_NAME,
             internalProxy.apiName,
             Enums.Environment.DEVELOPMENT,
@@ -330,7 +332,7 @@ describe(`Verify internal api functionality`, () => {
 
     it("Verify resource access to external API in PROD", () => {
         // ComponentOverviewPage.navigateToTest();
-        TestHelper._testOnCurl(
+        TestHelper.invokeAPI(
             PROJECT_NAME,
             internalProxy.apiName,
             Enums.Environment.PRODUCTION,

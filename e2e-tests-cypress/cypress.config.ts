@@ -1,3 +1,4 @@
+import axios from "axios";
 import { defineConfig } from "cypress";
 
 export default defineConfig({
@@ -34,6 +35,25 @@ export default defineConfig({
         getChoreoProjectName() {
           return projectName;
         },
+
+        sendRequest(request) {
+          return axios.request(request).then(res => {
+            console.log(JSON.stringify(res));
+            
+            return {
+              body: res.data,
+              status: res.status,
+              config: res.config,
+              headers: res.headers,
+              statusText: res.statusText,
+              request: res.request
+            }
+          }).catch(c => {
+            console.log(JSON.stringify(c));
+            
+            return c
+          })
+        }
       });
       require("cypress-fail-fast/plugin")(on, config);
       config.env.choreoIDPUsername = process.env.choreoIDPUsername;

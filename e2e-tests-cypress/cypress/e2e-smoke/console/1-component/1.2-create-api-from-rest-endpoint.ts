@@ -212,9 +212,9 @@ describe(`Verify proxy api functionality`, () => {
       Enums.HTTPMethod.GET,
       OPERATION_USERS
     ).then((curl) => {
-      cyLog(curl);
+  
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        cyLog(res.headers);
+   
         expect(res.status).equal(200);
         expect(res.headers).contain({ [HEADER_KEY_2]: HEADER_VALUE_2 });
       });
@@ -256,7 +256,7 @@ describe(`Verify proxy api functionality`, () => {
       OPERATION_USERS
     ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        cyLog(res.headers);
+   
         expect(res.status).equal(200);
         expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE_3 });
       });
@@ -284,9 +284,9 @@ describe(`Verify proxy api functionality`, () => {
       Enums.HTTPMethod.GET,
       OPERATION_USERS
     ).then((curl) => {
-      cyLog(curl);
+  
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        cyLog(res.headers);
+   
         expect(res.status).equal(200);
         expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE_3 });
       });
@@ -303,7 +303,7 @@ describe(`Verify proxy api functionality`, () => {
   });
 
   it("Add a resource to new version", () => {
-    ComponentOverviewPage.navigateToDevelop();
+    ComponentOverviewPage.navigateProxyResources();
     APIDevelop.addResources(OPERATION_POSTS, Enums.HTTPMethod.GET);
   });
 

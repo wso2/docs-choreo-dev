@@ -28,7 +28,7 @@ export class APIDevelop {
   ];
 
   static addResources(path: string, ...verbs) {
-    this.selectDevelop();
+     this.selectDevelop();
     cy.get('[id="backdrop-loader"]').should("not.exist");
     cy.get("body").then((body) => {
       if (
@@ -105,7 +105,7 @@ export class APIDevelop {
   }
 
   private static generateOperationId(httpVerb: string[], resourcePath: string) {
-    cyLog(httpVerb);
+
     httpVerb.forEach((verb) => {
       const header = this.getHeader(resourcePath, verb.toLowerCase());
       const modifiedResourcePath = Cypress._.capitalize(

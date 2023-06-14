@@ -80,6 +80,16 @@ export class ComponentOverviewPage {
     }
   }
 
+
+
+static navigateProxyResources(){
+  cy.xpath('//div[@id="root"]/div/div/div/div[2]/div[1]').realHover().wait(2000)
+  cyGet('[data-cyid="link-develop"]').should('be.visible').click()
+  cyGet('[data-cyid="develop-resources"]')
+  cy.xpath('//div[@id="root"]/div/div/div/div[2]').realHover({position:"right"})
+}
+
+
   static navigateToDevelop() {
     if (Utils.isUnifiedMenuEnabled()) {
       this.navigateToSubMenu(

@@ -173,7 +173,7 @@ export class GraphQL {
     return this.getProjects().then((response) => {
       if (response.status === OK) {
         const project: Project = response.projects.find((p) => p.name === projectName);
-        cyLog(project)
+
 
         return Promise.resolve(project);
       }
@@ -360,6 +360,8 @@ export class GraphQL {
         const stageInfo = res.body.stageInfo as { stage: string, status: string }[]
 
         const deploymentStage = stageInfo.find(s => s.stage === stage)
+
+        cyLog(deploymentStage)
         if (deploymentStage) {
           Utils.isError(deploymentStage.status, `Proxy With Mediation Policy Deployment Failed At ${deploymentStage.stage}`)
           if (deploymentStage.status === status) {
@@ -438,8 +440,10 @@ export class GraphQL {
       return this.getComponents(project.id).then(resp => {
 
         if (resp.status === SUCCESS_STATUS_CODE) {
+cyLog(resp)
+          cyLog(componentName)
           const comp: Component = resp.components.find((c) => c.displayName === componentName);
-          const query = GraphQLQueryBuilder.getComponentDetails(project.id, comp.handler);
+         const query = GraphQLQueryBuilder.getComponentDetails(project.id, comp.handler);
           return this.callGraphQL(query).then(res => {
             const component: Component = res.body.component;
             return Promise.resolve({
