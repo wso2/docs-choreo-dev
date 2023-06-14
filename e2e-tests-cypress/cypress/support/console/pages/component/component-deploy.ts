@@ -159,10 +159,7 @@ export class ComponentDeployPage {
     // to ensure rendering completes before checking the deployment status
     cy.wait(VERY_SHORT_TIME.timeout);
     cy.get('[data-testid="btn-stop"]').should("be.visible");
-    cy.get('[data-cyid="deployment-status"]', LONG_TIME).contains(
-      DEPLOYMENT_SUCCESS,
-      LONG_TIME
-    );
+    cy.get('[data-cyid="deployment-status"]', LONG_TIME).contains(DEPLOYMENT_SUCCESS,LONG_TIME);
   }
 
   static addConfiguration(value: string) {
