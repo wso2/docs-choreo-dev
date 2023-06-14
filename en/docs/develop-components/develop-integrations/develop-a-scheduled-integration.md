@@ -42,7 +42,7 @@ Before you try out the steps in this guide, complete the following:
 
 ## Step 1: Create a scheduled integration component
 
-1. Sign in to [Choreo iPaaS](https://console.choreo.dev/ipaas). This opens the **Project Home** page in the Choreo Console. 
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page. 
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Go to the **Scheduled Integration** card and click **Create**.
 4. Enter a unique name and a description for the component. You can use the name and description given below:
@@ -52,7 +52,8 @@ Before you try out the steps in this guide, complete the following:
     | **Name**        | `WeatherToEmail`                 |
     | **Description** | `My first scheduled integration` |
 
-5. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
+5. Click **Next**.
+6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
 6. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-examples](https://github.com/wso2/choreo-examples) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
@@ -80,7 +81,7 @@ Before you try out the steps in this guide, complete the following:
 
 To deploy the integration, follow the steps given below:
 
-1. In the Choreo Console left navigation menu, click **Deploy**.
+1. In the left navigation menu, click **Deploy**.
 2. In the **Build Area** card, click **Configure & Deploy**.
 3. In the **Configure & Deploy** pane, specify values as follows for the configurable variables:
 
@@ -123,7 +124,7 @@ If the integration ran successfully, you should receive an email similar to the 
 
 The observability view in Choreo displays graphs that depict details such as throughput, latency, diagnostic data, and logs to identify and troubleshoot anomalies in components you deploy.
 
-To visualize and monitor the performance of the scheduled integration component you deployed, click **Observe** in the left navigation menu. You can observe the following:
+To visualize and monitor the performance of the scheduled integration component you deployed, click **Observability** in the left navigation menu. You can observe the following:
 
  - The throughput and latencies of requests served over a given period.
  - The logs that are generated over a given period.
