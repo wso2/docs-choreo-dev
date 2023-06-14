@@ -5,7 +5,7 @@ metadata:
   labels:
     choreo.component: github-offline-runners-cleaner
 spec:
-  schedule: 0 */12 * * *
+  schedule: 0 */6 * * *
   successfulJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
   jobTemplate:
