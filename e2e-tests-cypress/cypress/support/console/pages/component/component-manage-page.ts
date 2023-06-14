@@ -229,7 +229,10 @@ export class ComponentAPILifecycle {
   }
 
   static selectEnvironment(env: Enums.Environment) {
-    cy.get('[data-cyid="environment-selector"]').should("be.visible").click();
+    cy.get('[data-cyid="environment-selector"]')
+      .should("be.visible")
+      .scrollIntoView()
+      .click();
     cy.get(`[data-value="${env}"]`).click();
     cy.get('[data-cyid="environment-selector"]>div>div')
       .invoke("text")
@@ -247,7 +250,7 @@ export class ComponentAPILifecycle {
   }
 
   static disableResourceSecurity(resource: string) {
-    cy.get(`[id="panel-/${resource}/get-header"]`).scrollIntoView().click();
+    cyGet(`[id="panel-/${resource}/get-header"]`).scrollIntoView().click();
     cy.get(`[data-testid="security"]`).scrollIntoView().click();
   }
 
