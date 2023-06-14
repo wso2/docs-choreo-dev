@@ -23,10 +23,10 @@
     --md-primary-fg-color: white;
     --md-primary-fg-color-header: white;
     --md-primary-fg-color-header-text: #f5f6f7;
-    --md-primary-fg-color-header-text-active: #259dc9;
-    --md-accent-fg-color: #3d8fca;
+    --md-primary-fg-color-header-text-active: #545cec;
+    --md-accent-fg-color: #545cec;
     --md-default-bg-color: #23272f;
-    --md-typeset-a-color: #75c9e7;
+    --md-typeset-a-color: #545cec;
     --md-banner: url(../img/banner-for-blue-alt-dark.png) no-repeat left top;
     --md-hjs-color: rgb(186, 186, 255);
     --md-hjs-attr-color: #96ffc5;
@@ -41,6 +41,7 @@
     --md-primary-fg-color-header: #f5f6f7;
     --md-primary-fg-color-header-text: black;
     --md-primary-fg-color-header-text-active: #545cec;
+    --md-accent-fg-color: #545cec;
     --md-default-bg-color: #ffffff;
     --md-typeset-a-color: var(--md-primary-fg-color);
     --md-hjs-color: #36464e;
