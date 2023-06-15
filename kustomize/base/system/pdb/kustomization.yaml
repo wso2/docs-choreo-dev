@@ -22,7 +22,6 @@ resources:
   - email-service.yaml
   - loggingapi.yaml
   - marketplace.yaml
-  - multivariate-anomaly-detector-notification-manager.yaml
   - negotiator.yaml
   - obsapi.yaml
   - orgremover.yaml

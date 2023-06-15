@@ -24,7 +24,6 @@ resources:
   - loggingapi.yaml
   - marketplace.yaml
   - moesif-service.yaml
-  - multivariate-anomaly-detector-notification-manager.yaml
   - negotiator.yaml
   - obsapi.yaml
   - orgremover.yaml
