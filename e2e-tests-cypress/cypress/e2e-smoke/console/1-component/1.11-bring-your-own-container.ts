@@ -73,9 +73,12 @@ describe(`Verify BYOC functionality`, () => {
     );
   });
 
-  it("Deploy component", () => {
+  it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(REST_API_NAME);
     ComponentOverviewPage.navigateToDeploy();
+  });
+
+  it("Deploy component", () => {
     ComponentDeployPage.deployToDev(PROJECT_NAME,REST_API_NAME);
   });
 

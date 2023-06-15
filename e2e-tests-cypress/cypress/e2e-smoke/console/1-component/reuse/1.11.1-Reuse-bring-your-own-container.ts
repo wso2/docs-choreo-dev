@@ -66,9 +66,12 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
     );
   });
 
-  it("Deploy component", () => {
+  it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(BYOC_NAME);
     ComponentOverviewPage.navigateToDeploy();
+  });
+
+  it("Deploy component", () => {
     ComponentDeployPage.deployToDev(PROJECT_NAME,BYOC_NAME);
   });
 

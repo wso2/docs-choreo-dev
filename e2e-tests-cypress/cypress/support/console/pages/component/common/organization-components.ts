@@ -136,7 +136,7 @@ export class OrganizationComponent {
 
   private static addRoles(roles: string[]) {
     roles.forEach((v) => {
-      cy.get("ul>li>div>span").each((e) => {
+      Utils.getRenderedElement("ul>li>div>span").each((e) => {
         if (e.text() === v) {
           cy.wrap(e).scrollIntoView().click();
         }

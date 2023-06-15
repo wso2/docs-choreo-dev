@@ -244,11 +244,14 @@ describe("Choreo APIM publisher scenarios", () => {
     InsightsPage.getTotalErrorRequestCount().should("eq", "0");
     InsightsPage.getAverageErrorRate().should("eq", "0");
   });
-
-  it("Reset and undeploy component", () => {
+  
+  it("Navigate to deployment", () => {
     ChoreoHomePage.navigateToComponents();
     ComponentListingPage.visitToAComponent(API_NAME);
     ComponentOverviewPage.navigateToDeploy();
+  });
+
+  it("Reset and undeploy component", () => {
     ComponentDeployPage.stopAllDeployment();
   });
 });

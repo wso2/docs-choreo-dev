@@ -54,11 +54,14 @@ describe("Verify Ballerina service functionality", () => {
     };
     ProjectListingPage.selectProject();
     ProjectOverviewPage.searchReuseComponent(componentData);
-});
+  });
 
-  it("Verify component deployment with public level endpoint", () => {
+  it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
+  });
+
+  it("Verify component deployment with public level endpoint", () => {
     ComponentDeployPage.deployService(PROJECT_NAME,COMPONENT_NAME,ENDPOINT_NAME, true);
   });
 
