@@ -41,7 +41,6 @@ export class ChoreoHomePage {
   }
 
   static navigateToInsights() {
-    cy.reload();
     if (Utils.isUnifiedMenuEnabled()) {
       cy.get('[data-cyid="usage-insights"]')
         .realHover({ position: "left" })
