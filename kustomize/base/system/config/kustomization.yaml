@@ -514,3 +514,13 @@ configMapGenerator:
     behavior: create
     files:
       - audit-logging/Config.toml
+  - name: cm-dp-helmhub
+    behavior: create
+    literals:
+      - PORT=8080
+      - ARTIFACT_HUB_URL='https://artifacthub.io/api/v1'
+      - RUDDER_URL="http://dp-rudder"
+      - MIZZEN_URL="http://dp-mizzen"
+      - MSSQL_PORT=1433
+      - MSSQL_USER=choreo_helmhub_db_user
+      - MSSQL_DBNAME=choreo_helmhub_db

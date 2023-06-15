@@ -41,6 +41,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-dp-helmhub
+            - configMapRef:
+                name: cm-dp-helmhub
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
