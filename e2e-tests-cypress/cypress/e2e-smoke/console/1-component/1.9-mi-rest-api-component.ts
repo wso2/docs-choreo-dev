@@ -62,9 +62,12 @@ describe("Verify MI REST API component in root", () => {
     GraphQL.createIntegrationComponent(componentData);
   });
 
-  it("Deploy component", () => {
+  it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
+  });
+
+  it("Deploy component", () => {
     ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME,true, false);
   });
 

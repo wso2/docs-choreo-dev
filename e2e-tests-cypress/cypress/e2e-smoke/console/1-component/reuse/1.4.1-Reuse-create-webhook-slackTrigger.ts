@@ -55,9 +55,12 @@ describe("Create Reusable Webhook functionality", () => {
     ProjectOverviewPage.searchReuseComponent(componentData);
   });
 
-  it("Deploy the component", () => {
+  it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(WEBHOOK_NAME);
     ComponentOverviewPage.navigateToDeploy();
+  });
+
+  it("Deploy the component", () => {
     ComponentDeployPage.configureAndDeploy(CONFIG);
   });
 

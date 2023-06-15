@@ -73,9 +73,12 @@ describe("Create Schedule Trigger", () => {
     );
   });
 
-  it("Verify component deployment", () => {
+  it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(SCHEDULE_NAME);
     ComponentOverviewPage.navigateToDeploy();
+  });
+
+  it("Verify component deployment", () => {
     ComponentDeployPage.deployScheduleTask();
   });
 

@@ -54,10 +54,12 @@ describe(`Graphql GQL service functionality in region ${dp}`, () => {
     ProjectOverviewPage.searchReuseComponent(componentData);
   });
 
-
-  it("Verify component deployment", () => {
+  it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
+  });
+
+  it("Verify component deployment", () => {
     ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME);
   });
 
