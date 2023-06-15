@@ -6,6 +6,7 @@ resources:
   - api-server.yaml
   - app-deployer.yaml
   - app-service.yaml
+  - audit-logging.yaml
   - telemetry.yaml
   - sys-obsapi.yaml
   - negotiator.yaml
