@@ -45,3 +45,4 @@ resources:
   - crypto-key-service.yaml
   - metered-usage-handler.yaml
   - obsmanager.yaml
+  - dp-helmhub.yaml

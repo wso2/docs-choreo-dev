@@ -43,3 +43,4 @@ resources:
   - cdn-tls-synchronizer.yaml
   - crypto-key-service.yaml
   - obsmanager.yaml
+  - dp-helmhub.yaml
