@@ -71,7 +71,7 @@ describe("Create and deploy a component to test developer portal with custom dom
   });
 
   it("Add a developer portal custom domain", () => {
-    ChoreoHomePage.navigateToSettings(PROJECT_NAME);
+    ChoreoHomePage.navigateToSettings();
     DomainsComponents.navigateToDomainsSettings();
     DomainsComponents.navigateToDevPortalCustomDomain();
     DomainsComponents.deleteDevportalDomainIfExists(CUSTOM_DOMAIN);
