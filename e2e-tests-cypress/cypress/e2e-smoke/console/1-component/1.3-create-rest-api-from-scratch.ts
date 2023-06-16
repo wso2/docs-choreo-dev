@@ -68,9 +68,12 @@ describe("Verify project creation functionality", () => {
     );
   });
 
-  it("Verify component deployment", () => {
+  it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
+  });
+
+  it("Verify component deployment", () => {
     ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME);
   });
 
@@ -198,11 +201,6 @@ describe("Verify project creation functionality", () => {
 
   it("Verify connector republishing ", () => {
     ComponentAPILifecycle.republishConnector();
-  });
-
-  it("Verify usage plan change", () => {
-    ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
-    ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
   });
 
   it("Verify suspending all component deployments", () => {

@@ -56,9 +56,12 @@ describe("Create Reusable Schedule Trigger", () => {
     ProjectOverviewPage.searchReuseComponent(componentData);
   });
 
-  it("Verify component deployment", () => {
+  it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(SCHEDULE_NAME);
     ComponentOverviewPage.navigateToDeploy();
+  });
+
+  it("Verify component deployment", () => {
     ComponentDeployPage.deployScheduleTask();
   });
 

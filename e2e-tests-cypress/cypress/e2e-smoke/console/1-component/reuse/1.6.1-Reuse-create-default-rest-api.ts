@@ -59,9 +59,12 @@ describe("Verify Reusable RestAPI functionality", () => {
     ProjectOverviewPage.searchReuseComponent(componentData);
   });
 
+  it("Navigate to deployment", () => {
+    ComponentListingPage.visitToAComponent(REST_API_NAME)
+    ComponentOverviewPage.navigateToDeploy()
+  });
+
   it("Deploy component", () => {
-    ComponentListingPage.visitToAComponent(REST_API_NAME);
-    ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployToDev(PROJECT_NAME, REST_API_NAME);
   });
 

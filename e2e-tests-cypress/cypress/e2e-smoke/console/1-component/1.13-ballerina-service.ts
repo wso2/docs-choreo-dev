@@ -69,9 +69,12 @@ describe("Verify Ballerina service functionality", () => {
     );
   });
 
-  it("Verify component deployment with project level endpoint", () => {
+  it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
+  });
+
+  it("Verify component deployment with project level endpoint", () => {
     ComponentDeployPage.deployService(PROJECT_NAME,COMPONENT_NAME,ENDPOINT_NAME);
   });
 

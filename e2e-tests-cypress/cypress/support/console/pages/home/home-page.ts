@@ -17,10 +17,7 @@ import { LoginPage } from "../login-page";
 
 export class ChoreoHomePage {
   static navigateToHome() {
-    const { handle } = Cypress.env("userData");
-    cy.get(
-      `div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home"]`
-    ).click();
+    cy.get('[data-cyid="organization-home"]').click();
   }
 
   static navigateToProjects() {
@@ -70,14 +67,11 @@ export class ChoreoHomePage {
     cy.clearAllCookies();
   }
 
-  static navigateToSettings(projectName?: string) {
+  static navigateToSettings() {
     if (Utils.isUnifiedMenuEnabled()) {
-      let name = projectName;
-      if (typeof projectName === "undefined") {
-        name = "Default Project";
-      }
       cy.get("#backdrop-loader").should("not.exist");
-      cy.get(`[data-cyid='${name}-close-button']`).should("be.visible").click();
+      this.navigateToHome();
+      cy.get("#backdrop-loader").should("not.exist");
       cy.get('[data-cyid="settings"]').should("be.visible").click();
     } else {
       cy.get("#backdrop-loader").should("not.exist");

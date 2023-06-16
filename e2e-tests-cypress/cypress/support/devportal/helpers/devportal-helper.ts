@@ -74,7 +74,7 @@ export class DevPortalHelper {
     ).then(() => {
       ComponentListingPage.visitToAComponent(API_Name);
       ComponentOverviewPage.navigateToDeploy();
-      ComponentDeployPage.deployToDev(projectName,componentData.displayName);
+      ComponentDeployPage.deployToDev(projectName, API_Name);
       ComponentOverviewPage.navigateToManage();
       ComponentAPILifecycle.manageLifecycle();
       ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
