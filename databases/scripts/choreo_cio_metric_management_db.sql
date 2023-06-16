@@ -66,4 +66,3 @@ BEGIN
     );
 END
 GO
-
