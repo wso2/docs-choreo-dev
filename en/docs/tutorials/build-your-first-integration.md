@@ -1,4 +1,4 @@
-# Build your first Integration
+# Build Your First Integration
 
 Choreo simplifies the process of building, deploying, and managing integration components, making it easier to integrate APIs, microservices, applications, and data across different languages and formats.
 
