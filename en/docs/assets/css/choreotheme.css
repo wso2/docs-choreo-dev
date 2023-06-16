@@ -130,7 +130,7 @@
 
   .md-nav {
     font-size: 0.7rem;
-    padding-left: 1.5rem;
+    padding-left: 0.5rem;
   }
 
  
@@ -213,10 +213,6 @@ visibility: hidden;
 .md-search__inner{
     background-color: white;
   }
-
-h3{
-  display: inline;
-}
 
 .cIcon path{
   fill: #545ce5;

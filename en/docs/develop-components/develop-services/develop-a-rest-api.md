@@ -37,7 +37,7 @@ Let's get started!
 
 Let's create a containerized service component by following these steps:
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the project home page.
 2. Create a project to add the service component. You can follow the instructions under Prerequisites in the Connect Your Own GitHub Repository to Choreo guide.
 3. On the Components page, click Create on the Service card.
 4. Enter a unique name and a description of the service. For this guide, let's enter the following values:
