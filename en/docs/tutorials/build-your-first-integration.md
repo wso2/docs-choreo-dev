@@ -1,12 +1,12 @@
 # Build your first Integration
 
-Choreo iPaaS simplifies the process of building, deploying, and managing integration components, making it easier to integrate APIs, microservices, applications, and data across different languages and formats.
+Choreo simplifies the process of building, deploying, and managing integration components, making it easier to integrate APIs, microservices, applications, and data across different languages and formats.
 
-In this quick start guide, you will learn how to create a simple integration scenario with Choreo iPaaS using Ballerina. You will call an HR endpoint to get an employee ID list, then call the employee details endpoint, aggregate the results, and send back a response. 
+In this tutorial, you will learn how to create a simple integration scenario with Choreo using Ballerina. You will call an HR endpoint to get an employee ID list, then call the employee details endpoint, aggregate the results, and send back a response. 
 
 ## Prerequisites
 
-Before you try out this guide, complete the following:
+Before you try out this tutorial, complete the following:
 
 1. Create an empty public repository in your GitHub account to save the component implementation.
 2. If you are signing in to the Choreo Console for the first time, create an organization as follows:
@@ -184,4 +184,4 @@ To publish the integration component, follow the steps given below:
 
 In the Choreo Developer Portal, you can view your published integration component, manage subscriptions for it, and generate access tokens for testing purposes.
 
-Now you have successfully created, implemented, deployed, tested, observed, and published a Ballerina-based integration component using Choreo iPaaS.
+Now you have successfully created, implemented, deployed, tested, observed, and published a Ballerina-based integration component using Choreo.
