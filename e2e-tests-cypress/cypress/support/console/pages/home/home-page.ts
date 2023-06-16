@@ -106,4 +106,14 @@ export class ChoreoHomePage {
       .get(`[data-value="idevp"]`)
       .click();
   }
+
+  static goToMarketplacePage() {
+    const Url = Cypress.env("baseUrl");
+    const { handle } = Cypress.env("userData");
+    
+      let marketplaceURL = `${Url}/organizations/${handle}/marketplace`;
+      cy.visit(marketplaceURL);
+    
+  }
+
 }

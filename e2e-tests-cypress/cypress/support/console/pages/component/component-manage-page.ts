@@ -86,8 +86,6 @@ export class ComponentAPILifecycle {
       let devportalURL = `${loginUrl}/${handle}/apis/${latestVersionId}?fidp=${idpUser}&orgUuid=${uuid}`;
       cy.visit(devportalURL);
     })
-
-
   }
 
   static selectUsagePlans(...plans) {
