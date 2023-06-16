@@ -344,35 +344,42 @@ export class GraphQL {
     })
   }
   static getDeployStatus(projectName: string, componentName: string, stage: Enums.DeploymentStages, status: Enums.ResponseStatus) {
+    const upperTime = Date.now() + 360000
     this._getAPIInfo(projectName, componentName).then(comp => {
       const { componentId, latestVersionId } = comp
       this._getBuildsByVersion(componentId, latestVersionId).then(bv => {
         const { buildId } = bv
         const url = `${PROXY_DEPLOYER_EP}/${componentId}/versions/${latestVersionId}/builds/${buildId}/status`
-        this._getDeployStatus(url, stage, status)
+        this._getDeployStatus(url, stage, status, upperTime)
       })
     })
   }
 
-  private static _getDeployStatus(url: string, stage: string, status: string) {
+  private static _getDeployStatus(url: string, stage: string, status: string, upperTime: number) {
     Utils.sendGetRequest(url, AUTH_HEADER()).then((res) => {
       if (res.status === OK) {
         const stageInfo = res.body.stageInfo as { stage: string, status: string }[]
 
         const deploymentStage = stageInfo.find(s => s.stage === stage)
 
+        cyLog(`Time diff ${upperTime-Date.now()}`)
         cyLog(deploymentStage)
-        if (deploymentStage) {
-          Utils.isError(deploymentStage.status, `Proxy With Mediation Policy Deployment Failed At ${deploymentStage.stage}`)
-          if (deploymentStage.status === status) {
-            return
+        if (Date.now() < upperTime) {
+          if (deploymentStage) {
+            Utils.isError(deploymentStage.status, `Proxy With Mediation Policy Deployment Failed At ${deploymentStage.stage}`)
+            if (deploymentStage.status === status) {
+              return
+            } else {
+              cy.wait(10000)
+              this._getDeployStatus(url, stage, status, upperTime)
+            }
           } else {
             cy.wait(10000)
-            this._getDeployStatus(url, stage, status)
+            this._getDeployStatus(url, stage, status, upperTime)
           }
         } else {
-          cy.wait(10000)
-          this._getDeployStatus(url, stage, status)
+          cyLog(`Upper time exceeded with status ${deploymentStage}`)
+
         }
       }
     })
@@ -440,10 +447,10 @@ export class GraphQL {
       return this.getComponents(project.id).then(resp => {
 
         if (resp.status === SUCCESS_STATUS_CODE) {
-cyLog(resp)
+          cyLog(resp)
           cyLog(componentName)
           const comp: Component = resp.components.find((c) => c.displayName === componentName);
-         const query = GraphQLQueryBuilder.getComponentDetails(project.id, comp.handler);
+          const query = GraphQLQueryBuilder.getComponentDetails(project.id, comp.handler);
           return this.callGraphQL(query).then(res => {
             const component: Component = res.body.component;
             return Promise.resolve({
@@ -566,7 +573,7 @@ cyLog(resp)
     token: string
   ) {
     cy.log(`changeComponentLifeCycle ==> Project Id ${projectId}`);
-    const query = GraphQLQueryBuilder.getLifeCycleChangeQuery(projectId,componentHandler)
+    const query = GraphQLQueryBuilder.getLifeCycleChangeQuery(projectId, componentHandler)
 
     this.callGraphQL(query).then((res) => {
       if (res.status === SUCCESS_STATUS_CODE) {
@@ -615,11 +622,11 @@ cyLog(resp)
       return GraphQL._getAPIInfo(projectName, componentName).then(comp => {
         const { componentId, latestVersionId } = comp
 
-        const query = GraphQLQueryBuilder.getPrxoyDeployments(handle, uuid, componentId, latestVersionId, id) 
+        const query = GraphQLQueryBuilder.getPrxoyDeployments(handle, uuid, componentId, latestVersionId, id)
 
         return this.callGraphQL(query).then(res => {
           const { invokeUrl, apiId } = res.body.proxyDeployment
- 
+
           return Promise.resolve({ invokeUrl, apiId, uuid })
         })
       })
@@ -633,8 +640,8 @@ cyLog(resp)
 
       const { invokeUrl, apiId, uuid } = proxy
       const url = `${PUBLISHER_URL}/apis/${apiId}/generate-key?organizationId=${uuid}&keyType=${environment}`
-  
-      return Utils.sendPostRequest(url, AUTH_HEADER(),"").then(res => {
+
+      return Utils.sendPostRequest(url, AUTH_HEADER(), "").then(res => {
         const { apikey } = res.body
 
         return Promise.resolve({ invokeUrl, apikey })

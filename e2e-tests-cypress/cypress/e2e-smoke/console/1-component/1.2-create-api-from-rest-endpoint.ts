@@ -90,12 +90,10 @@ describe(`Verify proxy api functionality`, () => {
   it("Verify component deployment to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.deployProxyAPIToDev();
-  });
-
-  it("Verify mediation component deployment", () => {
     APIDeployment.verifyProxyDeployment(PROJECT_NAME, API_NAME);
   });
 
+ 
   it("Verify test functionality using Swagger UI in Dev", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
@@ -212,9 +210,7 @@ describe(`Verify proxy api functionality`, () => {
       Enums.HTTPMethod.GET,
       OPERATION_USERS
     ).then((curl) => {
-  
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-   
         expect(res.status).equal(200);
         expect(res.headers).contain({ [HEADER_KEY_2]: HEADER_VALUE_2 });
       });
@@ -256,7 +252,6 @@ describe(`Verify proxy api functionality`, () => {
       OPERATION_USERS
     ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-   
         expect(res.status).equal(200);
         expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE_3 });
       });
@@ -284,14 +279,23 @@ describe(`Verify proxy api functionality`, () => {
       Enums.HTTPMethod.GET,
       OPERATION_USERS
     ).then((curl) => {
-  
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-   
+        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
         expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE_3 });
       });
     });
   });
+
+
+// // delete policies
+// it("Veriy detion of policy",()=>{
+//   ComponentOverviewPage.navigateToDevelop();
+//   APIDevelop.deletePolicy(
+//     OPERATION_USERS,
+//     Enums.HTTPMethod.GET
+//   );
+// })
+
 
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDeploy();
