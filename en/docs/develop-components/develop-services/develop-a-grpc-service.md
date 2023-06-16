@@ -124,7 +124,7 @@ To build and deploy the service, follow these steps:
 
 1. In the left navigation menu, click **Deploy**.
 
-2.On the Deploy page, click **Deploy Manually**.
+2. On the Deploy page, click **Deploy Manually**.
 
     !!! note
         Deploying the service component may take a while. You can track the progress by observing the logs. Once the deployment is complete, the deployment status changes to **Active** in the corresponding environment card.
