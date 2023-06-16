@@ -42,7 +42,7 @@ Let's follow an example on how you can build and deploy a SPA from source code.
 
 Follow the steps below to create a sample Web Application component and deploy it in Choreo:
 
-1. Go to [https://console.choreo.dev/login/](https://console.choreo.dev/login/) and sign in. This opens the **Project Home** page.
+1. Sign in to the Choreo Console at [https://console.choreo.dev/login/](https://console.choreo.dev/login/). This opens the **Project Home** page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Go to the **Web Application** card and click **Create**.
 4. This opens the **Create a Web Application** pane, where you can give your component a name and a description. Enter the relevant information and click **Next**.
