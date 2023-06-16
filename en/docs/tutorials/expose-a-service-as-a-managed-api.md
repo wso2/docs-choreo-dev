@@ -24,7 +24,7 @@ To create a REST API proxy, you can either upload an OpenAPI specification or pr
 
 Follow the steps given below:
 
-1. Go to [https://console.choreo.dev/apim](https://console.choreo.dev/apim) and sign in. This opens the **Project Home** page.
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Go to the **REST API Proxy** card and click **Create**.
 4. In the **Create API Proxy** pane that opens, click **Try with sample URL**.
@@ -41,7 +41,7 @@ Follow the steps given below:
 
 7. Click **Create**.
    
-   This takes you to the **Develop** view, where you can see the operations of the REST API proxy.
+   This takes you to the **Resources** pane, where you can see the operations of the REST API proxy.
 
 ## Step 2: Deploy the REST API proxy
 
@@ -66,10 +66,10 @@ In this guide, you will use the OpenAPI Console.
 
 To test the REST API proxy via the OpenAPI Console, follow the steps given below:
 
-1. In the left navigation menu, click **Test**.
+1. In the left navigation menu, click **Test** and then click **OpenAPI Console**.
 
     !!! tip
-          Since the REST API proxy is secured when it is deployed, you will need a key to invoke it. Choreo automatically generates a key when you navigate to the **Test** view.
+          Since the REST API proxy is secured when it is deployed, you will need a key to invoke it. Choreo automatically generates a key when you navigate to the **OpenAPI Console** pane.
 
 2. In the **OpenAPI Console** pane, select **Development** from the environment drop-down list.
    
@@ -77,7 +77,7 @@ To test the REST API proxy via the OpenAPI Console, follow the steps given below
 
 4. Select **available** as the status and click **Execute**. You will see a response similar to the following:
 
-    ![API proxy response](../assets/img/quick-start-guides/api-proxy-response.png){.cInlineImage-full}
+    ![API proxy response](../assets/img/tutorials/api-proxy-response.png)
 
    This indicates that your REST API proxy is working as expected.
 
