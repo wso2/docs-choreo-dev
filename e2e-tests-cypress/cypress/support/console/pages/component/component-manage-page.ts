@@ -86,8 +86,16 @@ export class ComponentAPILifecycle {
       let devportalURL = `${loginUrl}/${handle}/apis/${latestVersionId}?fidp=${idpUser}&orgUuid=${uuid}`;
       cy.visit(devportalURL);
     })
+  }
 
+  static goToMarketplacePage() {
 
+    const Url = Cypress.env("baseUrl");
+    const { handle } = Cypress.env("userData");
+    
+      let marketplaceURL = `${Url}/organizations/${handle}/marketplace`;
+      cy.visit(marketplaceURL);
+    
   }
 
   static selectUsagePlans(...plans) {
