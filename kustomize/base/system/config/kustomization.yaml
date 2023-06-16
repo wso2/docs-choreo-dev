@@ -461,6 +461,7 @@ configMapGenerator:
       - MIZZEN_URL=http://dp-mizzen
       - CLOUD_MANAGER_SERVICE_URL=http://dp-cloud-manager:80
       - LOGAPI_URL=http://loggingapi:9097
+      - SECRET_MANAGER_URL=http://dp-secret-manager:80
   - name: cm-file-crypto-key-service
     behavior: create
     files:
