@@ -24,7 +24,9 @@ export class SwaggerUI {
           )}"]>div>div>div>div>div>button`
         ).length == 0
       ) {
-        cy.get(pathVariable).click();
+        if (b.find(`[class="try-out"]`).length == 0) {
+          cy.get(pathVariable).click();
+        }
       }
     });
   }
