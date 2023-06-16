@@ -34,7 +34,7 @@ describe("Verify the functionality in Choreo Marketplace", () => {
   });
 
   it("Verify Choreo filter functionality", () => {
-    ComponentAPILifecycle.goToMarketplacePage();
+    ChoreoHomePage.goToMarketplacePage();
     Marketplace.filterByChoreo();
     Marketplace.clearSelectedFilters();
   });

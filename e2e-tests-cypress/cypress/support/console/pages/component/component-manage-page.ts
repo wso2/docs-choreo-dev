@@ -88,16 +88,6 @@ export class ComponentAPILifecycle {
     })
   }
 
-  static goToMarketplacePage() {
-
-    const Url = Cypress.env("baseUrl");
-    const { handle } = Cypress.env("userData");
-    
-      let marketplaceURL = `${Url}/organizations/${handle}/marketplace`;
-      cy.visit(marketplaceURL);
-    
-  }
-
   static selectUsagePlans(...plans) {
     this.selectUsage();
     cy.get('[data-testid="checkbox-Unlimited"]').click();
