@@ -20,7 +20,7 @@ Before you try out this guide, complete the following:
 
 ## Step 1: Create an integration as an API component
 
-1. Go to [https://console.choreo.dev/ipaas](https://console.choreo.dev/ipaas) and sign in. This opens the **Project Home** page.
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the **Project Home** page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step. 
 3. Go to the **Integration as an API** card and click **Create**.
 4. Enter a unique name and a description for the component. You can enter the name and description given below:
@@ -30,14 +30,15 @@ Before you try out this guide, complete the following:
     | **Name**        | `FirstIntegration`               |
     | **Description** | `First integration as a service` |
 
-5. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
-6. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+5. Click **Next**.
+6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
+7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
 
-7. In the **Connect Repository** pane, enter the following information:
+8. In the **Connect Repository** pane, enter the following information:
 
     | **Field**             | **Value**                                                                |
     |-----------------------|--------------------------------------------------------------------------------|
@@ -52,8 +53,8 @@ Before you try out this guide, complete the following:
 
           - **Project Path** specifies the location of the project to build the component.
 
-8. Click **Create**. Choreo initializes the component with the sample implementation and sends a pull request to the GitHub repository you connected.
-9. Review and merge the pull request.
+9. Click **Create**. Choreo initializes the component with the sample implementation and sends a pull request to the GitHub repository you connected.
+10. Review and merge the pull request.
 
 ## Step 2: Implement the integration logic
 
@@ -147,8 +148,8 @@ To deploy the Ballerina integration, follow the steps given below:
 
 To test the Ballerina integration, follow the steps given below:
 
-1. In the Choreo Console left navigation menu, click **Test**.
-2. In the **OpenAPI Console** pane that opens, select **Development** from the environment drop-down list.
+1. In the Choreo Console left navigation menu, click **Test** and then click **OpenAPI Console**
+2. In the **OpenAPI Console** pane, select **Development** from the environment drop-down list.
 3. Click to expand the **POST /employees** operation.
 4. Click **Try it out** and enter the following as the request body:
 
@@ -164,7 +165,7 @@ Choreo also allows you to test your integration using cURL and Postman.
 
 ## Step 5: Observe the Ballerina integration
 
-To observe the Ballerina integration, click **Observe** in the Choreo Console left navigation menu. 
+To observe the Ballerina integration, click **Observability** in the Choreo Console left navigation menu. 
 
 On the **Observe** page, you can see various graphs and charts that display the performance metrics of your integration, such as throughput and latency. These metrics can help you monitor and analyze the behavior of your integration.
 
@@ -183,4 +184,4 @@ To publish the integration component, follow the steps given below:
 
 In the Choreo Developer Portal, you can view your published integration component, manage subscriptions for it, and generate access tokens for testing purposes.
 
-Congratulations! You have successfully created, implemented, deployed, tested, observed, and published a Ballerina-based integration component using Choreo iPaaS.
+Now you have successfully created, implemented, deployed, tested, observed, and published a Ballerina-based integration component using Choreo iPaaS.
