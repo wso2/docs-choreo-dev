@@ -198,6 +198,8 @@ configMapGenerator:
       - RUDDER_API_URL=http://dp-rudder
       - AZURE_LOGS_TABLE=GithubWorkflowLogs
       - PROJECT_MANAGER_API_URL=http://dp-project-manager
+      - BUILDPACKS_BUILDER_IMAGE="choreocontrolplane.azurecr.io/choreoipaas/choreo-buildpacks/builder:alpine"
+      - BUILDPACKS_DOCKER_ACR="choreocontrolplane.azurecr.io"
   - name: cm-runner-cleaner
     behavior: create
     literals:
