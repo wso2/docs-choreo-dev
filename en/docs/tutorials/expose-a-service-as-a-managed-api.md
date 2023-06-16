@@ -1,12 +1,12 @@
 # Expose a Service as a Managed API
 
-Choreo API Manager simplifies securely exposing existing services as managed APIs. It also allows you to effectively manage all aspects of an API's lifecycle, security, throttling, and governance so that you can focus more on service development. 
+Choreo simplifies securely exposing existing services as managed APIs. It also allows you to effectively manage all aspects of an API's lifecycle, security, throttling, and governance so that you can focus more on service development. 
 
-In this quick start guide, you will use Choreo API Manager to expose a service as a REST API proxy and publish it to the Choreo Developer Portal for application developers to consume.
+In this tutorial, you will use Choreo to expose a service as a REST API proxy and publish it to the Choreo Developer Portal for application developers to consume.
 
 ## Prerequisites
 
-Before you try out this guide, complete the following:
+Before you try out this tutorial, complete the following:
 
 - If you are signing in to the Choreo Console for the first time, create an organization as follows:
 
@@ -20,7 +20,7 @@ Before you try out this guide, complete the following:
 
 ## Step 1: Create a REST API proxy
 
-To create a REST API proxy, you can either upload an OpenAPI specification or provide an OpenAPI specification URL. In this quick start guide, you will use a URL of a sample OpenAPI specification. 
+To create a REST API proxy, you can either upload an OpenAPI specification or provide an OpenAPI specification URL. In this tutorial, you will use a URL of a sample OpenAPI specification. 
 
 Follow the steps given below:
 
@@ -132,4 +132,4 @@ To generate credentials for the published API and to invoke it via the Developer
     4. Expand the `GET /pet/findByStatus` operation and click **Try it out**.
     5. Select **available** as the status and click **Execute**.
 
-Congratulations! You have successfully created, deployed, tested, and published a REST API proxy using Choreo API Manager.
+Now you have successfully created, deployed, tested, and published a REST API proxy using Choreo.
