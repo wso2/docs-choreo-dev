@@ -148,7 +148,7 @@ To deploy the Ballerina integration, follow the steps given below:
 
 To test the Ballerina integration, follow the steps given below:
 
-1. In the Choreo Console left navigation menu, click **Test** and then click **OpenAPI Console**.
+1. In the Choreo Console left navigation menu, click **Test** and then click **Console**.
 2. In the **OpenAPI Console** pane, select **Development** from the environment drop-down list.
 3. Click to expand the **POST /employees** operation.
 4. Click **Try it out** and enter the following as the request body:
