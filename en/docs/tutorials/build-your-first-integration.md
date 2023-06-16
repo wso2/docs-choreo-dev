@@ -1,4 +1,4 @@
-# Build your first Integration with Choreo iPaaS
+# Build your first Integration
 
 Choreo iPaaS simplifies the process of building, deploying, and managing integration components, making it easier to integrate APIs, microservices, applications, and data across different languages and formats.
 
