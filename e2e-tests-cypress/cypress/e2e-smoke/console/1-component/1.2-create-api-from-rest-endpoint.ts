@@ -284,16 +284,6 @@ describe(`Verify proxy api functionality`, () => {
   });
 
 
-// // delete policies
-// it("Veriy detion of policy",()=>{
-//   ComponentOverviewPage.navigateToDevelop();
-//   APIDevelop.deletePolicy(
-//     OPERATION_USERS,
-//     Enums.HTTPMethod.GET
-//   );
-// })
-
-
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentOverviewPage.createNewVersion(API_NEW_VERSION, "");
