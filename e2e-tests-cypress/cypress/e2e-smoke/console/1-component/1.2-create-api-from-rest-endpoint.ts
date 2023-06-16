@@ -90,12 +90,10 @@ describe(`Verify proxy api functionality`, () => {
   it("Verify component deployment to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.deployProxyAPIToDev();
-  });
-
-  it("Verify mediation component deployment", () => {
     APIDeployment.verifyProxyDeployment(PROJECT_NAME, API_NAME);
   });
 
+ 
   it("Verify test functionality using Swagger UI in Dev", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
@@ -162,11 +160,10 @@ describe(`Verify proxy api functionality`, () => {
   it("Verify component deployment to dev with new policy", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.deployProxyAPIToDev();
-  });
-
-  it("Verify mediation component deployment  with new policy", () => {
     APIDeployment.verifyProxyDeployment(PROJECT_NAME, API_NAME, true);
   });
+
+
 
   it("Verify test functionality using Swagger UI in Dev with new policy", () => {
     ComponentOverviewPage.navigateToTest();
@@ -212,9 +209,7 @@ describe(`Verify proxy api functionality`, () => {
       Enums.HTTPMethod.GET,
       OPERATION_USERS
     ).then((curl) => {
-      cyLog(curl);
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        cyLog(res.headers);
         expect(res.status).equal(200);
         expect(res.headers).contain({ [HEADER_KEY_2]: HEADER_VALUE_2 });
       });
@@ -233,11 +228,9 @@ describe(`Verify proxy api functionality`, () => {
   it("Verify component deployment to dev with updated header value", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.deployProxyAPIToDev();
-  });
-
-  it("Verify mediation component deployment with updated policy", () => {
     APIDeployment.verifyProxyDeployment(PROJECT_NAME, API_NAME, true);
   });
+
 
   it("Verify test functionality using Swagger UI in Dev with updated header value", () => {
     ComponentOverviewPage.navigateToTest();
@@ -256,7 +249,6 @@ describe(`Verify proxy api functionality`, () => {
       OPERATION_USERS
     ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        cyLog(res.headers);
         expect(res.status).equal(200);
         expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE_3 });
       });
@@ -284,14 +276,13 @@ describe(`Verify proxy api functionality`, () => {
       Enums.HTTPMethod.GET,
       OPERATION_USERS
     ).then((curl) => {
-      cyLog(curl);
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        cyLog(res.headers);
+        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
         expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE_3 });
       });
     });
   });
+
 
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDeploy();
@@ -303,18 +294,16 @@ describe(`Verify proxy api functionality`, () => {
   });
 
   it("Add a resource to new version", () => {
-    ComponentOverviewPage.navigateToDevelop();
+    ComponentOverviewPage.navigateProxyResources();
     APIDevelop.addResources(OPERATION_POSTS, Enums.HTTPMethod.GET);
   });
 
   it("Deploy new version to Dev", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.deployProxyAPIToDev();
-  });
-
-  it("Verify mediation component deployment with updated policy", () => {
     APIDeployment.verifyProxyDeployment(PROJECT_NAME, API_NAME, true);
   });
+
 
   it("Verify test functionality using Swagger UI in dev", () => {
     TestHelper.testOnSwagger(

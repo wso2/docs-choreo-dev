@@ -305,7 +305,7 @@ export class ComponentAPILifecycle {
   }
 
   static updateAPIAccessMode(accessMode: string) {
-    cyGet('[data-testid="access-mode"]').click();
+    cyGet('[data-testid="access-mode"]',LONG_TIME).should('be.visible').click();
     cy.contains(accessMode).should("exist").realClick();
     cyGet('[data-testid="warning-banner"]').should("be.visible");
     cyGet('[data-cyid="btn-confirmation-dialog-blue"]').should("exist").click();

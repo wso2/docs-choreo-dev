@@ -105,7 +105,7 @@ export class APIDevelop {
   }
 
   private static generateOperationId(httpVerb: string[], resourcePath: string) {
-    cyLog(httpVerb);
+
     httpVerb.forEach((verb) => {
       const header = this.getHeader(resourcePath, verb.toLowerCase());
       const modifiedResourcePath = Cypress._.capitalize(
@@ -131,6 +131,22 @@ export class APIDevelop {
 
   static deletePolicy(resourcePath: string, verb: string) {
     const buttons = `[id="/${resourcePath}/${verb.toUpperCase()}/out-flow"] div[data-key] button`;
+    const k = `[id="/${resourcePath}/${verb.toUpperCase()}/out-flow"] div[data-key]`;
+    const header = this.getHeader(resourcePath, verb.toUpperCase());
+    cyGet('[data-cyid="develop-policies"]').click();
+    cyGet(header).eq(1).click();
+
+
+
+    cyGet(k).each(e => {
+      if (e.find('button').length == 2) {
+        e.find('button').eq(1)
+        cy.wrap(e).find('button').eq(1).click()
+        cyGet('div[role="dialog"] button').should('be.visible').eq(2).click()
+      }
+    })
+
+    // cyGet('div[role="dialog"] button').should('be.visible').eq(2).click()
   }
 
   static editHeader(

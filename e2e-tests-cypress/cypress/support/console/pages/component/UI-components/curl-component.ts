@@ -1,4 +1,4 @@
-import { cyGet } from "../../../../commons/cy";
+import { cyGet, cyLog } from "../../../../commons/cy";
 import { Enums } from "../../../../commons/enums";
 import { CurlData } from "../../../../interfaces/curl-data";
 

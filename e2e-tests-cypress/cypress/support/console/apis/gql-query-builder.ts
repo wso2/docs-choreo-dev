@@ -300,4 +300,86 @@ export class GraphQLQueryBuilder {
     }
   }
 
+
+  static getPrxoyDeployments(orgHandle: string, orgUUID: string, componentId: string, versionId: string, environmentId: string) {
+    return {
+      query: `query {
+        proxyDeployment(
+          orgHandler: "${orgHandle}"
+          orgUuid:"${orgUUID}"
+          componentId: "${componentId}"
+          versionId: "${versionId}"
+          environmentId: "${environmentId}"
+        ) {
+          apiId,
+          environment {
+            choreoEnv,
+            name,
+            id
+          },
+          lifecycleStatus,
+          version,
+          invokeUrl,
+          endpoint,
+          sandboxEndpoint,
+          apiRevision {
+            id,
+            displayName,
+            createdTime
+          },
+          build {
+            id
+            baseRevisionId
+            deployedRevisionId
+          },
+          deployedTime,
+          successDeployedTime
+        }
+      }`
+    }
+  }
+
+
+
+  static getLifeCycleChangeQuery(projectId: string, componentHandler: string) {
+    return {
+      query: `query{    component(      projectId: "${projectId}"      componentHandler: "${componentHandler}"    )
+{      id,
+ name,
+ handler,
+ description,
+ displayType,
+ displayName,
+ ownerName,
+ orgId,
+ orgHandler,
+ version,
+ labels,
+ createdAt,
+ updatedAt,
+ projectId,
+ apiId,
+ repository{
+ nameApp,
+ nameConfig,
+ branch,
+ branchApp,
+ organizationApp,
+ organizationConfig,
+ isUserManage      },
+ apiVersions{
+ apiVersion,
+ proxyName,
+ proxyUrl,
+ proxyId,
+ id,
+ state,
+ latest,
+ branch,
+ appEnvVersions{
+ environmentId,
+ releaseId,
+ release{ id, metadata{choreoEnv},environmentId,environment,gitHash,gitOpsHash,}}}}}`,
+    };
+  }
 }
