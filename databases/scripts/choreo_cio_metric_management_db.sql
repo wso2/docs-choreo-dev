@@ -55,3 +55,14 @@ BEGIN
     );
 END
 GO
+
+-- ServiceNow config table
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='servicenow_incident_secret_configs' and xtype='U')
+BEGIN
+    CREATE TABLE servicenow_incident_secret_configs (
+        org_id VARCHAR(128) NOT NULL,
+        servicenow_instance_secret VARCHAR(128) NOT NULL,
+        PRIMARY KEY (org_id)
+    );
+END
+GO
