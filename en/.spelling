@@ -564,6 +564,7 @@ fontawesome
 glightbox
 logo.png
 develop-a-rest-api
+develop-a-grpc-service
  - theme/material/templates/home-page.html
 doctype
 html
