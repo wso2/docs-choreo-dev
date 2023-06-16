@@ -1,4 +1,4 @@
-# Expose a Service as a Managed API with Choreo API Manager
+# Expose a Service as a Managed API
 
 Choreo API Manager simplifies securely exposing existing services as managed APIs. It also allows you to effectively manage all aspects of an API's lifecycle, security, throttling, and governance so that you can focus more on service development. 
 
