@@ -25,7 +25,7 @@ Before you try out the steps in this guide, complete the following:
 
 ## Step 1: Create the integration component
 
-1. Sign in to [Choreo](https://console.choreo.dev/). This opens the **Project Home** page in the Choreo Console. 
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Go to the **Integration as an API** card and click **Create**.
 4. In the **General Details** pane, enter a unique name and a description for the component. You can enter the name and description given below:
@@ -36,7 +36,7 @@ Before you try out the steps in this guide, complete the following:
     | **Description** | `Hello World REST API` |
 
 5. Click **Next**.
-6. In the **Authorization** pane, To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
+6. In the **Authorization** pane, click **Authorize with GitHub** to allow Choreo to connect to your GitHub account.
 7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
@@ -61,8 +61,8 @@ To deploy the integration component to the development environment, follow the s
 
 1. In the Choreo Console left navigation menu, click **Deploy**.
 2. In the **Build Area** card, click **Deploy Manually**.
-3. In the first step of the **Configure & Deploy** pane, click **Next**. 
-4. In the second step of the **Configure & Deploy** pane, click **Deploy**. 
+3. In the **Configure & Deploy** pane, click **Next**. This displays details of the endpoint ready to be deployed.
+4. Click **Deploy**. This deploys the integration component to the development environment.
 The **Development** card indicates the **Deployment Status** as **Active** when the integration is successfully deployed.
 
     !!! tip
@@ -75,21 +75,20 @@ Now you can test the integration.
 
 ## Step 3: Test the integration
 
-Choreo allows you to test your integration using either the integrated OpenAPI Console, Postman.
+Choreo allows you to test your integration using either the integrated OpenAPI Console or Postman.
 
 In this guide, you will test the integration using the OpenAPI Console. Follow the steps given below:
 
 !!! note
-      - For instructions on how to test using cURL, see [Test REST Endpoints via the OpenAPI Console](../../testing/test-rest-endpoints-via-the-openapi-console.md).
       - For instructions on how to test using Postman, see [Test with Postman](../../testing/test-apis-using-postman.md).
 
-1. In the Choreo Console left navigation menu, and then click **Test**. Then click **Console**.
+1. In the Choreo Console left navigation menu, click **Test** and then click **Console**.
 2. In the **OpenAPI Console** pane that opens, select **Development** from the environment drop-down list.
-3. Click to expand the **GET /integrations** operation.
+3. Click to expand the **GET /integration** operation.
 4. Click **Try it out** and then click **Execute**. This sends a request to your deployed integration.
 5. Go to the **Response body** section and observe the response returned by the integration. If the integration works as expected, you should see a response similar to the following:
 
-    `{"Hello":"Integration"}`
+    `{"Hello" : "Integration"}`
 
 ## Step 4: Observe the integration
 
