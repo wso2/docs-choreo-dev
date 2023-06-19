@@ -218,7 +218,7 @@ plugins:
           'get-started/tutorials/create-your-first-webhook.md': 'https://wso2.com/choreo/docs'
           'get-started/tutorials/create-your-first-integration-as-an-api.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-integration-with-choreo-ipaas/'
           'get-started/tutorials/create-your-first-event-triggered-integration.md': 'https://wso2.com/choreo/docs/develop-components/develop-integrations/develop-an-event-triggered-integration/'
-          'get-started/tutorials/secure-an-api-with-role-based-access-control.md': 'https://wso2.com/choreo/docs'
+          'get-started/tutorials/secure-an-api-with-role-based-access-control.md': 'https://wso2.com/choreo/docs/tutorials/secure-an-api-with-role-based-access-control/'
           'get-started/tutorials/create-your-first-containerized-service-component.md': 'https://wso2.com/choreo/docs'
           'get-started/tutorials/deploy-a-containerized-application-as-an-event-triggered-integration.md': 'https://wso2.com/choreo/docs'
           'develop/components/rest-api.md': 'https://wso2.com/choreo/docs'
@@ -275,8 +275,8 @@ plugins:
           'administer/customize-developer-portal-domain.md': 'https://wso2.com/choreo/docs/administer/customize-the-developer-portal-domain/'
           'administer/organization.md': 'https://wso2.com/choreo/docs/choreo-concepts/organization/'
           'reference/connect-with-protected-third-party-applications.md': 'https://wso2.com/choreo/docs'
-          'build-your-first-integration-with-choreo-ipaas.md': 'https://wso2.com/choreo/docs/tutorials/build-your-first-integration/'
-          'expose-a-service-as-a-managed-api-with-choreo-api-manager.md': 'https://wso2.com/choreo/docs/tutorials/expose-a-service-as-a-managed-api/'
+          'quick-start-guides/build-your-first-integration-with-choreo-ipaas.md': 'https://wso2.com/choreo/docs/tutorials/build-your-first-integration/'
+          'quick-start-guides/expose-a-service-as-a-managed-api-with-choreo-api-manager.md': 'https://wso2.com/choreo/docs/tutorials/expose-a-service-as-a-managed-api/'
 extra_css:
   # - assets/lib/highlightjs/default.min.css
   # - assets/css/theme.css
