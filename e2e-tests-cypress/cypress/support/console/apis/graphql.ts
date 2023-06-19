@@ -462,16 +462,13 @@ export class GraphQL {
     })
   }
 
-  static _getComponentDeploymentStatus(projectName: string = "", componentName: string = "") {
+  static _getComponentDeploymentStatus(projectName: string = "", componentName: string = "", count: number = 0) {
     const { handle, uuid } = Cypress.env("userData");
-
+    count++;
     this._getProjectEnvironments(projectName).then(projEnvs => {
-
       const envs = projEnvs as { name: string, id: string }[]
       const { id } = envs.find(e => e.name === Enums.Environment.DEVELOPMENT)
-
       this._getAPIInfo(projectName, componentName).then(info => {
-
         const { componentId, latestVersionId } = info
         const query = GraphQLQueryBuilder.getComponentDeploymentStatusQuery(
           handle,
@@ -489,14 +486,16 @@ export class GraphQL {
           ) {
             throw new Error(" Deployment Failed");
           }
+
           if (
             deploymentStatusV2 === ACTIVE &&
             deploymentStatus === ACTIVE
           ) {
             return;
           } else {
-            if (this.count < 10) {
-              this._getComponentDeploymentStatus(projectName, componentName);
+            if (count < 10) {
+              cy.wait(VERY_SHORT_TIME.timeout)
+              this._getComponentDeploymentStatus(projectName, componentName, count);
             }
           }
         });

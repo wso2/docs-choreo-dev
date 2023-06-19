@@ -95,7 +95,7 @@ export class APIDeployment {
       if (bdy.find('[data-testid="retry-button"]').length > 0) {
         cy.log("Retry count: " + retryCount);
         cy.get('[data-testid="retry-button"]').click();
-        cy.wait(VERY_SHORT_TIME.timeout);
+        cy.wait(LONG_TIME.timeout);
       } else {
         return;
       }
@@ -115,7 +115,7 @@ export class APIDeployment {
         cy.log("Retry count: " + retryCount);
         cy.get('[data-testid="deployment-fetch-error"]').within(() => {
           cy.get('[data-testid="retry-button"]').click();
-          cy.wait(VERY_SHORT_TIME.timeout);
+          cy.wait(LONG_TIME.timeout);
         });
       } else {
         return;
