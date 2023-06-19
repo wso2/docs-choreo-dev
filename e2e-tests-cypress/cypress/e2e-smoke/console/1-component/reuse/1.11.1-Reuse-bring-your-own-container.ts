@@ -72,7 +72,7 @@ describe(`Verify BYOC functionality in region ${dp}`, () => {
   });
 
   it("Deploy component", () => {
-    ComponentDeployPage.deployToDev(PROJECT_NAME,BYOC_NAME);
+    ComponentDeployPage.reDeployToDev();
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {

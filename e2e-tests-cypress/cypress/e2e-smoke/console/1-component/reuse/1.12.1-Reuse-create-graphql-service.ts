@@ -60,7 +60,7 @@ describe(`Graphql GQL service functionality in region ${dp}`, () => {
   });
 
   it("Verify component deployment", () => {
-    ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME);
+    ComponentDeployPage.reDeployToDev();
   });
 
 

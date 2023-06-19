@@ -61,7 +61,7 @@ describe("Verify Reusable Manual Trigger creation functionality", () => {
   });
 
   it("Verify component deployment", () => {
-    ComponentDeployPage.deployToDev(PROJECT_NAME,MANUAL_NAME,false, false, true);
+    ComponentDeployPage.reDeployToDev(false, false, true);
   });
 
   it("Verify component promotion to prod", () => {
