@@ -75,10 +75,12 @@ nav:
   - Home: index.md
   - Introduction:
       - What is Choreo?: what-is-choreo.md
-  - Quick Start Guides:
+  - Quick Start Guide:
       - Build Your First Cloud Native Application with Choreo: quick-start-guides/build-your-first-cloud-native-application-with-choreo.md
-      - Expose a Service as a Managed API with Choreo API Manager: quick-start-guides/expose-a-service-as-a-managed-api-with-choreo-api-manager.md
-      - Build Your First Integration with Choreo iPaaS: quick-start-guides/build-your-first-integration-with-choreo-ipaas.md
+  - Tutorials:
+      - Expose a Service as a Managed API: tutorials/expose-a-service-as-a-managed-api.md
+      - Build Your First Integration: tutorials/build-your-first-integration.md
+      - Secure an API with Role-Based Access Control: tutorials/secure-an-api-with-role-based-access-control.md
   - Choreo Concepts:
       - Resource Hierarchy: choreo-concepts/resource-hierarchy.md
       - Organization: choreo-concepts/organization.md
@@ -94,6 +96,7 @@ nav:
       - Develop Services:
           - Develop a service: develop-components/develop-services/develop-a-service.md
           - Develop a REST API: develop-components/develop-services/develop-a-rest-api.md
+          - Develop a gRPC Service: develop-components/develop-services/develop-a-grpc-service.md
       - Develop a REST API Proxy: develop-components/develop-a-rest-api-proxy.md
       - Develop Integrations:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
@@ -269,9 +272,11 @@ plugins:
           'administer/connect-to-an-external-identity-provider.md': 'https://wso2.com/choreo/docs'
           'administer/configure-enterprise-login.md': 'https://wso2.com/choreo/docs'
           'administer/configure-developer-portal-self-sign-up.md': 'https://wso2.com/choreo/docs/administer/configure-self-sign-up/'
-          'administer/customize-developer-portal-domain.md': 'https://wso2.com/choreo/docs//administer/customize-the-developer-portal-domain/'
+          'administer/customize-developer-portal-domain.md': 'https://wso2.com/choreo/docs/administer/customize-the-developer-portal-domain/'
           'administer/organization.md': 'https://wso2.com/choreo/docs/choreo-concepts/organization/'
           'reference/connect-with-protected-third-party-applications.md': 'https://wso2.com/choreo/docs'
+          'build-your-first-integration-with-choreo-ipaas.md': 'https://wso2.com/choreo/docs/tutorials/build-your-first-integration/'
+          'expose-a-service-as-a-managed-api-with-choreo-api-manager.md': 'https://wso2.com/choreo/docs/tutorials/expose-a-service-as-a-managed-api/'
 extra_css:
   # - assets/lib/highlightjs/default.min.css
   # - assets/css/theme.css

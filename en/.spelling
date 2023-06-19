@@ -17,6 +17,7 @@ FaultFlow
 choreo-apim-mediation-fault-flow
 http
 Freemium
+userID
 checkboxes
 choreo-marketplace
 choreo-apim-mediation-policy
@@ -40,8 +41,8 @@ readingListApp
 ORGANIZATION_ID
 Petstore
 build-your-first-cloud-native-application-with-choreo
-expose-a-service-as-a-managed-api-with-choreo-api-manager
-build-your-first-integration-with-choreo-ipaas
+expose-a-service-as-a-managed-api
+build-your-first-integration
 devops-and-ci-cd
 autoscale-component-replicas
 test-rest-endpoints-via-the-openapi-console
@@ -564,6 +565,7 @@ fontawesome
 glightbox
 logo.png
 develop-a-rest-api
+develop-a-grpc-service
  - theme/material/templates/home-page.html
 doctype
 html
