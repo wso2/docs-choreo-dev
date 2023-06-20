@@ -32,6 +32,7 @@ import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
 import com.wso2.choreo.integration.models.proxyapi.ProxyDeployment;
 import com.wso2.choreo.integration.models.response.Response;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
@@ -176,46 +177,20 @@ public class TestProxyApiDpWithOperationRateLimit extends TestBase {
     @Test(dependsOnMethods = {"setKeyData_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
     @CitrusTest
     public void testDevDeployment_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp)
-            throws InterruptedException {
+            throws Exception {
 
         // To give a time to deploy the API.
         Thread.sleep(30000);
         String devURL = dp.getProxyDeployments().get(0).getInvokeUrl() + "/users";
 
-        // Rate limiting counter resets based on the system clock.
-        long timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
-        if (timeRemainingTillNextMinute < 15000) {
-            Thread.sleep(timeRemainingTillNextMinute + 5000);
-        }
-
-        boolean isRateLimitExceeded = false;
-        int count = 0;
-        long startTime;
-        long endTime;
-
-        // Repeat the check until the rate limit is exceeded or all requests are sent within the same minute
-        while (!isRateLimitExceeded) {
-            startTime = System.currentTimeMillis();
-            for (int i = 0; i < 8; i++) {
-                Response dev = HttpClientUtil.httpGET(devURL, "", dp.getDevKeyData().getApikey());
-                count++;
-                if (dev.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value()) {
-                    isRateLimitExceeded = true;
-                    break;
-                }
-                Thread.sleep(500);
-            }
-            endTime = System.currentTimeMillis();
-
-            // Break the loop if all requests are sent within the same minute
-            if (endTime / 60000 == startTime / 60000) {
-                break;
-            }
-        }
+        Pair<Boolean, Integer> pair = ComponentUtils.testDeploymentWithRateLimit(devURL, dp.getDevKeyData().getApikey(),8);
+        Boolean isRateLimitExceeded = pair.getLeft();
+        int count = pair.getRight();
 
         Assert.assertTrue(isRateLimitExceeded, "Requests are not rate limited");
         Assert.assertTrue(count > 5, "Requests are not rate limited at the desired count " + count);
-        timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
+
+        long timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
         Thread.sleep(timeRemainingTillNextMinute + 5000);
         Response dev = HttpClientUtil.httpGET(devURL, "", dp.getDevKeyData().getApikey());
         Assert.assertEquals(dev.getStatusCode(), HttpStatus.OK.value(), "Rate limit counter did not reset");
