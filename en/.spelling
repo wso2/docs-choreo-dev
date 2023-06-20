@@ -565,6 +565,7 @@ glightbox
 logo.png
 develop-a-rest-api
 develop-a-grpc-service
+develop-a-ballerina-rest-api
  - theme/material/templates/home-page.html
 doctype
 html
