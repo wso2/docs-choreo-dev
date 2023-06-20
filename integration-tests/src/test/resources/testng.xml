@@ -12,6 +12,7 @@
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPIIT"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertAPIIT"/>
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationRestComponentFromRoot"/>
+            <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateMiMultiRestEndpointServiceFromSubPath"/>
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestIntegrationRestComponentWithVulnerable"/>
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationEventComponent"/>
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationMICustomConfig"/>
