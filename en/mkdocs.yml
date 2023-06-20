@@ -105,6 +105,7 @@ nav:
           - Develop a Scheduled Integration: develop-components/develop-integrations/develop-a-scheduled-integration.md
       - Develop a Web Application: develop-components/develop-a-web-application.md       
       - Develop Components With Git: develop-components/develop-components-with-git.md  
+      - Configure Mutual TLS Between Components: develop-components/configure-mutual-tls-between-components.md
   - DevOps and CI/CD: 
       - Builds and Deployments: devops-and-ci-cd/builds-and-deployments.md
       - Manage Configurations and Secrets: devops-and-ci-cd/manage-configurations-and-secrets.md
