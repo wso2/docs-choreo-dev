@@ -33,6 +33,7 @@ import com.wso2.choreo.integration.common.exceptions.ComponentRetrieveException;
 import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
 import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.ProjectRetrievalException;
+import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
@@ -52,6 +53,7 @@ import com.wso2.choreo.integration.models.proxyapi.Build;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
 import com.wso2.choreo.integration.models.proxyapi.ProxyDeployment;
+import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.revision.RevisionWrapper;
 import com.wso2.choreo.integration.models.webhook.Trigger;
 import org.apache.commons.lang3.tuple.Pair;
@@ -1011,6 +1013,43 @@ public class ComponentUtils {
         }
 
         return deploymentStatus;
+    }
+
+    public static Pair<Boolean, Integer> testDeploymentWithRateLimit(String invokeURL, String apiKey,
+                                                                    int repititionCount) throws Exception {
+
+        // Rate limiting counter resets based on the system clock.
+        long timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
+        if (timeRemainingTillNextMinute < 15000) {
+            Thread.sleep(timeRemainingTillNextMinute + 5000);
+        }
+
+        boolean isRateLimitExceeded = false;
+        int count = 0;
+        long startTime;
+        long endTime;
+
+        // Repeat the check until the rate limit is exceeded or all requests are sent within the same minute
+        while (!isRateLimitExceeded) {
+            startTime = System.currentTimeMillis();
+            for (int i = 0; i < repititionCount; i++) {
+                Response dev = HttpClientUtil.httpGET(invokeURL, "", apiKey);
+                count++;
+                if (dev.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value()) {
+                    isRateLimitExceeded = true;
+                    break;
+                }
+                Thread.sleep(500);
+            }
+            endTime = System.currentTimeMillis();
+
+            // Break the loop if all requests are sent within the same minute
+            if (endTime / 60000 == startTime / 60000) {
+                break;
+            }
+        }
+
+        return Pair.of(isRateLimitExceeded, count);
     }
 
 }
