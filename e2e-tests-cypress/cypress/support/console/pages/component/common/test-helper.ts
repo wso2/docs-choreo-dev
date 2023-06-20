@@ -14,7 +14,7 @@
 import { fromCallback } from "cypress/types/bluebird";
 import { cyGet, cyLog } from "../../../../commons/cy";
 import { Enums } from "../../../../commons/enums";
-import { VERY_SHORT_TIME } from "../../../../commons/timeouts";
+import { SHORT_TIME, VERY_SHORT_TIME } from "../../../../commons/timeouts";
 import { Utils } from "../../../../commons/utils";
 import { GraphQL } from "../../../apis/graphql";
 import { APITest } from "../../apis/api-test";
@@ -169,6 +169,7 @@ export class TestHelper {
     value: string = ""
   ) {
     this.selectTestConsole();
+    cy.wait(5000)
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.selectEndpoint(endpoint);
     ComponentTestPage.getTestKey();
