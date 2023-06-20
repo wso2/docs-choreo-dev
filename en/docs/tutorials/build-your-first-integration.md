@@ -20,7 +20,7 @@ Before you try out this tutorial, complete the following:
 
 ## Step 1: Create an integration as an API component
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the **Project Home** page.
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step. 
 3. Go to the **Integration as an API** card and click **Create**.
 4. Enter a unique name and a description for the component. You can enter the name and description given below:
@@ -137,8 +137,8 @@ To deploy the Ballerina integration, follow the steps given below:
 2. To resolve the failure, follow the steps given below:
    1. In the **Build Area** card, click **Configure & Deploy**.
    2. In the **Configure & Deploy** pane, add `https://samples.choreoapps.dev/company/hr` as the **hrEndpoint** configurable variable.
-   3. Click **Next**. you can see the endpoint ready to be deployed. 
-   4. Click the edit icon next to the endpoint.
+   3. Click **Next**. This displays details of the endpoint ready to be deployed. 
+   4. Click the edit icon next to the endpoint name.
    5. Change the **Network Visibility** to **Public** and click **Update**.
    4. Click **Deploy**. This deploys the updated Ballerina integration to the development environment.
 
@@ -158,10 +158,7 @@ To test the Ballerina integration, follow the steps given below:
 5. Click **Execute**. This sends a request to your deployed integration.
 6. Observe the response returned by the integration in the **Response body** section. If the integration works as expected, you should see a successful response with the aggregated employee data.
 
-Choreo also allows you to test your integration using cURL and Postman.
-
-  - For instructions on how to test using cURL, see [Test with cURL](../testing/test-apis-with-curl.md).
-  - For instructions on how to test using Postman, see [Test with Postman](../testing/test-apis-using-postman.md).
+Choreo also allows you to test your integration using Postman. For instructions, see [Test with Postman](../testing/test-apis-using-postman.md).
 
 ## Step 5: Observe the Ballerina integration
 
