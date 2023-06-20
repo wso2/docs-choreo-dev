@@ -94,9 +94,10 @@ nav:
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
       - Work with the Micro Integrator Runtime in Choreo: develop-components/work-with-the-micro-integrator-runtime-in-choreo.md
       - Develop Services:
-          - Develop a service: develop-components/develop-services/develop-a-service.md
+          - Develop a Service: develop-components/develop-services/develop-a-service.md
           - Develop a REST API: develop-components/develop-services/develop-a-rest-api.md
           - Develop a gRPC Service: develop-components/develop-services/develop-a-grpc-service.md
+          - Develop a Ballerina REST API:  develop-components/develop-services/develop-a-ballerina-rest-api.md
       - Develop a REST API Proxy: develop-components/develop-a-rest-api-proxy.md
       - Develop Integrations:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
