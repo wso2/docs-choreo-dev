@@ -15,6 +15,13 @@ import { VERY_SHORT_TIME } from "./timeouts";
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
+
+interface MatchResponse {
+  expectedCode: number;
+  expectedHeaders?: Record<string, string>;
+  expectedBody?: string;
+}
+
 export class Utils {
   static oldProjectNamePrefix = "automationtestproject";
   static projectNamePrefix = "autotest";
@@ -177,6 +184,69 @@ export class Utils {
     });
   }
 
+  private static sendRequestAndMatch(
+    request: any,
+    match: MatchResponse,
+    retryCount: number = 0
+  ) {
+    cy.request(request).then((res) => {
+      if (!this.isMatched(res, match)) {
+        if (retryCount < this.TRY_COUNT) {
+          cy.wait(VERY_SHORT_TIME.timeout);
+          retryCount++;
+          this.sendRequestAndMatch(request, match, retryCount);
+        } else {
+          expect(res.status).equal(match.expectedCode);
+
+          if (typeof match.expectedHeaders !== "undefined") {
+            for (const [key, value] of Object.entries(match.expectedHeaders)) {
+              expect(res.headers[key]).equal(value);
+            }
+          }
+
+          if (typeof match.expectedBody !== "undefined") {
+            expect(res.body).equal(match.expectedBody);
+          }
+        }
+      } else {
+        expect(res.status).equal(match.expectedCode);
+
+        if (typeof match.expectedHeaders !== "undefined") {
+          for (const [key, value] of Object.entries(match.expectedHeaders)) {
+            expect(res.headers[key]).equal(value);
+          }
+        }
+
+        if (typeof match.expectedBody !== "undefined") {
+          expect(res.body).equal(match.expectedBody);
+        }
+      }
+    });
+  }
+
+  private static isMatched(res: any, match: MatchResponse) {
+    if (res.status !== match.expectedCode) {
+      return false;
+    }
+
+    if (
+      typeof match.expectedBody !== "undefined" &&
+      match.expectedBody !== res.body
+    ) {
+      return false;
+    }
+
+    if (typeof match.expectedHeaders !== "undefined") {
+      for (const [key, value] of Object.entries(match.expectedHeaders)) {
+        if (res.headers[key] !== value) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   static sendPostRequest(url: string, headers, body) {
     const request = {
       method: "POST",
@@ -212,6 +282,21 @@ export class Utils {
     };
     let retryCount = 0;
     return this.sendRequest(request, retryCount);
+  }
+
+  static sendGetRequestAndMatch(
+    url: string,
+    headers: any,
+    match: MatchResponse
+  ) {
+    const request = {
+      method: "GET",
+      url,
+      headers,
+      failOnStatusCode: false,
+    };
+
+    this.sendRequestAndMatch(request, match);
   }
 
   static sendDeleteRequest(url: string, headers: any = {}, body?: any) {
@@ -288,7 +373,8 @@ export class Utils {
   }
 
   static isError(responseStatus: string, errorMessage: string) {
-    if (["failed", "failure", "error", "Error", "ERROR"].includes(responseStatus)
+    if (
+      ["failed", "failure", "error", "Error", "ERROR"].includes(responseStatus)
     ) {
       throw Error(errorMessage);
     }
