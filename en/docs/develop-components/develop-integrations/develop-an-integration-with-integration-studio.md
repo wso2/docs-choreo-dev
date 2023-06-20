@@ -22,23 +22,22 @@ Before you try out the steps in this guide, complete the following:
        This creates the organization and opens the **Project Home** page of the default project created for you.
 
  - Fork the [Choreo examples repository](https://github.com/wso2/choreo-examples), which contains the sample integration for this guide.
- - Download and install [WSO2 Integration Studio](https://wso2.com/micro-integrator/) locally.
 
 ## Step 1: Create the integration component
 
-1. Sign in to [Choreo iPaaS](https://console.choreo.dev/ipaas). This opens the **Project Home** page in the Choreo Console. 
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Go to the **Integration as an API** card and click **Create**.
-3. Enter a unique name and a description for the component. You can enter the name and description given below:
+4. In the **General Details** pane, enter a unique name and a description for the component. You can enter the name and description given below:
 
     | **Field**       | **Value**              |
     |-----------------|------------------------|
     | **Name**        | `Hello World`          |
     | **Description** | `Hello World REST API` |
 
-4. Select **External** as the **Access Mode**, and click **Next**.
-5. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
-6. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+5. Click **Next**.
+6. In the **Authorization** pane, click **Authorize with GitHub** to allow Choreo to connect to your GitHub account.
+7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
@@ -52,9 +51,7 @@ Before you try out the steps in this guide, complete the following:
     | **GitHub Repository** | The repository you created by following the steps in the prerequisites section |
     | **Branch**            | **`main`**                               |
     | **Build Preset**      | Click **WSO2 MI** because you are creating the REST API from a [WSO2 Integration Studio](https://wso2.com/micro-integrator/) project|
-    | **Access Mode**       | To make the REST API publicly accessible, leave the selection unchanged as **External**.  |
     | **Project Path**      | `ipaas/micro-integrator/hello-world-api` |
-    | **OpenAPI File Path** | `ipaas/micro-integrator/hello-world-api/openapi.yaml` |
 
 8. Click **Create**. Choreo initializes the component with the sample integration.
 
@@ -63,8 +60,13 @@ Before you try out the steps in this guide, complete the following:
 To deploy the integration component to the development environment, follow the steps given below:
 
 1. In the Choreo Console left navigation menu, click **Deploy**.
-2. In the **Build Area** card, click **Configure & Deploy**.
-3. In the **Configure & Deploy** pane, click **Deploy**. The **Development** card indicates the **Deployment Status** as **Active** when the integration is successfully deployed.
+2. In the **Build Area** card, click **Deploy Manually**.
+3. In the **Configure & Deploy** pane, click **Next**. This displays details of the endpoint ready to be deployed.
+4. Click **Deploy**. This deploys the integration component to the development environment.
+The **Development** card indicates the **Deployment Status** as **Active** when the integration is successfully deployed.
+
+    !!! tip
+         Choreo uses [endpoints](../../choreo-concepts/endpoint.md) to expose **Integration as an API** component to the network. You can read more about configuring endpoints in [Endpoints in Integration as an API Component](https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/#what-are-endpoints-in-service-components).
 
     !!! tip
          Automatic deployment is enabled for the component by default. Therefore, you are required to perform only the first deployment manually.
@@ -73,27 +75,26 @@ Now you can test the integration.
 
 ## Step 3: Test the integration
 
-Choreo allows you to test your integration using either the integrated OpenAPI Console, cURL, or Postman.
+Choreo allows you to test your integration using either the integrated OpenAPI Console or Postman.
 
 In this guide, you will test the integration using the OpenAPI Console. Follow the steps given below:
 
 !!! note
-      - For instructions on how to test using cURL, see [Test with cURL](../../testing/test-apis-with-curl.md).
       - For instructions on how to test using Postman, see [Test with Postman](../../testing/test-apis-using-postman.md).
 
-1. In the Choreo Console left navigation menu, click **Test**.
+1. In the Choreo Console left navigation menu, click **Test** and then click **Console**.
 2. In the **OpenAPI Console** pane that opens, select **Development** from the environment drop-down list.
-3. Click to expand the **GET /HelloWorld** operation.
+3. Click to expand the **GET /integration** operation.
 4. Click **Try it out** and then click **Execute**. This sends a request to your deployed integration.
 5. Go to the **Response body** section and observe the response returned by the integration. If the integration works as expected, you should see a response similar to the following:
 
-    `{"Hello":"Integration"}`
+    `{"Hello" : "Integration"}`
 
 ## Step 4: Observe the integration
 
 The observability view in Choreo displays graphs that depict details such as throughput, latency, diagnostic data, and logs to identify and troubleshoot anomalies in components you deploy.
 
-To visualize and monitor the performance of the integration component you deployed, click **Observe** in the left navigation menu. You can observe the following:
+To visualize and monitor the performance of the integration component you deployed, click **Observability** in the left navigation menu. You can observe the following:
 
  - The throughput and latencies of requests served over a given period.
  - The logs that are generated over a given period.
