@@ -1,0 +1,223 @@
+/*
+ * Copyright (c) 2022, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ *
+ * This software is the property of WSO2 Inc. and its suppliers, if any.
+ * Dissemination of any information or reproduction of any material contained
+ * herein is strictly forbidden, unless permitted by WSO2 in accordance with
+ * the WSO2 Commercial License available at http://wso2.com/licenses.
+ * For specific language governing the permissions and limitations under
+ * this license, please see the license as well as any agreement you’ve
+ * entered into with WSO2 governing the purchase of this software and any
+ * associated services.
+ */
+
+package com.wso2.choreo.integration.tests.dp;
+
+import com.consol.citrus.annotations.CitrusTest;
+import com.consol.citrus.http.client.HttpClient;
+import com.wso2.choreo.integration.apis.apimanager.ApiManager;
+import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.common.APICreator;
+import com.wso2.choreo.integration.common.ComponentUtils;
+import com.wso2.choreo.integration.common.Endpoints;
+import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
+import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.common.utils.HttpClientUtil;
+import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.apimanager.KeyData;
+import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
+import com.wso2.choreo.integration.models.proxyapi.ProxyDeployment;
+import com.wso2.choreo.integration.models.response.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+public class TestProxyApiDpWithOperationRateLimit extends TestBase {
+    private static String accessToken;
+
+    @Autowired
+    Map<Endpoints, HttpClient> citrusClients;
+
+    @DataProvider(name = "dps")
+    public Object[][] provideData() {
+        return this.setUp();
+    }
+
+    @BeforeClass
+    public void setup_ProxyApiDpWithOperationRateLimit() throws IOException, TokenRetrievalException {
+        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+    }
+
+    @Test(dataProvider = "dps")
+    @CitrusTest
+    public void creteProject_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) throws IOException {
+        String firstAPIName = Constant.DEFAULT_API_NAME.concat(String.valueOf(new Date().getTime()));
+        String firstContext = APICreator.generateContext(firstAPIName);
+        ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
+        dp.setChoreoProject(project);
+        dp.setFirstName(firstAPIName);
+        dp.setContext(firstContext);
+        Assert.assertEquals(project.getRegion(), dp.getRegion());
+    }
+
+    @Test(dependsOnMethods = {"creteProject_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
+    @CitrusTest
+    public void verifyAPIName_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) throws IOException {
+        Response response = APICreator.validateAPIName(dp.getFirstName(), accessToken);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test(dependsOnMethods = {"verifyAPIName_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
+    @CitrusTest
+    public void createAPI_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) throws Exception {
+        ProxyAPI proxyAPI = ComponentUtils.createApiProxy(this, citrusClients, accessToken, dp.getFirstName());
+        dp.setProxyAPI(proxyAPI);
+        Assert.assertNotNull(proxyAPI.getId());
+    }
+
+    @Test(dependsOnMethods = {"createAPI_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
+    @CitrusTest
+    public void testCreateComponentForProxyAPI_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp)
+            throws Exception {
+        GraphqlDTO dto = ComponentUtils.createProxyComponentRequest(dp.getFirstName(), dp.getChoreoProject(),
+                dp.getProxyAPI().getId());
+
+        ChoreoComponent choreoComponent = ComponentUtils.createProxyComponent(this, citrusClients,
+                accessToken, dto);
+
+        dp.setChoreoComponent(choreoComponent);
+    }
+
+    @Test(dependsOnMethods = {"testCreateComponentForProxyAPI_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
+    @CitrusTest
+    public void testExistingAPI_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) throws IOException {
+        Response response = APICreator.validateAPIName(dp.getFirstName(), accessToken);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
+    }
+
+    @Test(dependsOnMethods = {"testExistingAPI_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
+    @CitrusTest
+    public void testAPIBasePathValidationForAPIProxyCreation_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp)
+            throws IOException {
+
+        // Create a unique API Name.
+        String secondAPIName = Constant.DEFAULT_API_NAME.concat(String.valueOf(new Date().getTime()));
+        Response response = APICreator.createAPI(secondAPIName, dp.getFirstName(), accessToken).getResponse();
+        dp.setSecondName(secondAPIName);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.CREATED.value());
+
+    }
+
+    @Test(dependsOnMethods = {"testAPIBasePathValidationForAPIProxyCreation_ProxyApiDpWithOperationRateLimit"},
+            dataProvider = "dps")
+    @CitrusTest
+    public void testUpdateSwagger_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) throws IOException {
+        String swaggerFileName = "templates/graphql/requests/proxyAPIUpdateRequestWithMethodRateLimit.mustache";
+        Response response = APICreator.updateAPIWithSwaggerFile(dp.getProxyAPI(), swaggerFileName, accessToken);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
+    }
+
+    @Test(dependsOnMethods = {"testUpdateSwagger_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
+    @CitrusTest
+    public void getDeploymentEnvironment_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) throws Exception {
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients,
+                accessToken, dp.getChoreoComponent());
+        dp.setEnvironments(environments);
+    }
+
+    @Test(dependsOnMethods = {"getDeploymentEnvironment_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
+    @CitrusTest
+    public void deployProxyAPI_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) throws Exception {
+        dp.setProxyAPIBuild(ComponentUtils.deployProxyComponent(this, citrusClients, accessToken,
+                dp.getChoreoComponent(), dp.getEnvironments()));
+    }
+
+    @Test(dependsOnMethods = {"deployProxyAPI_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
+    @CitrusTest
+    public void promoteProxyAPI_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) throws Exception {
+        ComponentUtils.promoteProxyComponent(this, citrusClients, accessToken, dp.getChoreoComponent(),
+                dp.getEnvironments(), dp.getProxyAPIBuild());
+    }
+
+    @Test(dependsOnMethods = {"promoteProxyAPI_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
+    @CitrusTest
+    public void componentDevDeploymentStatus_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp)
+            throws Exception {
+        dp.setProxyDeployments(ComponentUtils.getProxyDeployments(this, citrusClients, accessToken,
+                dp.getChoreoComponent(), dp.getEnvironments()));
+    }
+
+    @Test(dependsOnMethods = {"componentDevDeploymentStatus_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
+    @CitrusTest
+    public void setKeyData_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) {
+        for (ProxyDeployment proxyDeployment : dp.getProxyDeployments()) {
+            KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
+                    dp.getProxyAPI().getId(), proxyDeployment.getEnvironment());
+            if (proxyDeployment.getEnvironment().equals(dp.getEnvironments().get(0).getName())) {
+                dp.setDevKeyData(keyData);
+            } else {
+                dp.setProdKeyData(keyData);
+            }
+        }
+    }
+
+    @Test(dependsOnMethods = {"setKeyData_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
+    @CitrusTest
+    public void testDevDeployment_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp)
+            throws InterruptedException {
+
+        // To give a time to deploy the API.
+        Thread.sleep(30000);
+        String devURL = dp.getProxyDeployments().get(0).getInvokeUrl() + "/users";
+
+        // Rate limiting counter resets based on the system clock.
+        long timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
+        if (timeRemainingTillNextMinute < 15000) {
+            Thread.sleep(timeRemainingTillNextMinute + 5000);
+        }
+
+        boolean isRateLimitExceeded = false;
+        int count = 0;
+        long startTime;
+        long endTime;
+
+        // Repeat the check until the rate limit is exceeded or all requests are sent within the same minute
+        while (!isRateLimitExceeded) {
+            startTime = System.currentTimeMillis();
+            for (int i = 0; i < 8; i++) {
+                Response dev = HttpClientUtil.httpGET(devURL, "", dp.getDevKeyData().getApikey());
+                count++;
+                if (dev.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value()) {
+                    isRateLimitExceeded = true;
+                    break;
+                }
+                Thread.sleep(500);
+            }
+            endTime = System.currentTimeMillis();
+
+            // Break the loop if all requests are sent within the same minute
+            if (endTime / 60000 == startTime / 60000) {
+                break;
+            }
+        }
+
+        Assert.assertTrue(isRateLimitExceeded, "Requests are not rate limited");
+        Assert.assertTrue(count > 5, "Requests are not rate limited at the desired count " + count);
+        timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
+        Thread.sleep(timeRemainingTillNextMinute + 5000);
+        Response dev = HttpClientUtil.httpGET(devURL, "", dp.getDevKeyData().getApikey());
+        Assert.assertEquals(dev.getStatusCode(), HttpStatus.OK.value(), "Rate limit counter did not reset");
+    }
+}
