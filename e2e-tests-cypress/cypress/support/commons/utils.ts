@@ -153,7 +153,6 @@ export class Utils {
 
   private static sendRequest(request: any, retryCount: number) {
     return this.retryRequest(request).then((res) => {
-
       if (res.retry && retryCount < this.TRY_COUNT) {
         cy.wait(VERY_SHORT_TIME.timeout);
         retryCount++;
@@ -289,15 +288,7 @@ export class Utils {
   }
 
   static isError(responseStatus: string, errorMessage: string) {
-    if (
-      responseStatus in
-      [
-        Enums.ResponseStatus.failed,
-        Enums.ResponseStatus.failure,
-        Enums.ResponseStatus.error,
-        Enums.ResponseStatus.Error,
-        Enums.ResponseStatus.ERROR,
-      ]
+    if (["failed", "failure", "error", "Error", "ERROR"].includes(responseStatus)
     ) {
       throw Error(errorMessage);
     }

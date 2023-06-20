@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: audit-logging
+  namespace: choreo-system
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: audit-logging

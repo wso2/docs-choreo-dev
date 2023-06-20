@@ -1,0 +1,123 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+    checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=Temporarily suppressing till fixing
+  labels:
+    choreo.component: audit-logging
+  name: audit-logging
+  namespace: choreo-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: audit-logging
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        choreo.component: audit-logging
+        antiaffinity: audit-logging
+      annotations:
+        linkerd.io/inject: disabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: audit-logging
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-audit-logging:latest
+          env:
+            - name: STS_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-audit-logging
+                  key: CHOREO_STS_CLIENT_SECRET
+            - name: AZURE_LA_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-audit-logging
+                  key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
+          ports:
+            - containerPort: 8080
+              name: service-port
+            - containerPort: 8090
+              name: listener-port
+            - containerPort: 9090      # To be used for readiness/liveness probes (internal)
+              name: health-port
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health-port
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health-port
+              path: /liveness
+          resources:
+            limits:
+              cpu: 500m
+              memory: 768Mi
+            requests:
+              cpu: 300m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
+            - name: secret-audit-logging
+              mountPath: "/mnt/csi/secret-audit-logging"
+              readOnly: true
+            - name: mount-ballerina-internal-log
+              mountPath: ballerina-internal.log
+      restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: cm-file-audit-logging
+        - name: secret-audit-logging
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-audit-logging
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        # Volume mounts for system functionalities
+        - name: mount-ballerina-internal-log
+          emptyDir: {}
+      serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - audit-logging
+              topologyKey: kubernetes.io/hostname

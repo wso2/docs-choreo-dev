@@ -15,6 +15,7 @@
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestIntegrationRestComponentWithVulnerable"/>
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationEventComponent"/>
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationMICustomConfig"/>
+            <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationEventContainerComponent"/>
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestIntegrationMISecretAndCert"/>
             <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.TestUserManagedNonEmptyCreateComponentRoot"/>
             <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.TestUserManagedNonEmptyCreateComponentSub"/>

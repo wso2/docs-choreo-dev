@@ -11,13 +11,9 @@
  * associated services.
  */
 
-
-
 export class DomainsComponents {
-
-
   static navigateToDomainsSettings() {
-    cy.get('[data-cy="/domains"]').click();
+    cy.get('[data-cyid="nav-link-domains"]').click();
   }
 
   static navigateToDevPortalCustomDomain() {
@@ -39,7 +35,7 @@ export class DomainsComponents {
   }
 
   private static deleteSelectedDomain(domainName: string) {
-    cy.get('tbody>tr').dblclick();
+    cy.get("tbody>tr").dblclick();
     cy.contains("Delete").click({ force: true });
     cy.log("Deleting the created Domain");
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]').click();

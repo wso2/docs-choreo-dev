@@ -52,6 +52,28 @@ spec:
         runAsGroup: 10500
         seccompProfile:
           type: RuntimeDefault
+      initContainers:
+        - name: init-container
+          command:
+            - sh
+            - -c
+            - (timeout 50 sh -c "until nslookup periscope.choreo.dev; do echo waiting for dns; sleep 1; done"; exit 0) > /dev/null 2>&1
+          image: choreocontrolplane.azurecr.io/init-container:1.0.0
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "0.1"
+            limits:
+              memory: "512Mi"
+              cpu: "0.3"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
       containers:
         - name: choreo-connect-rate-limiter
           volumeMounts:

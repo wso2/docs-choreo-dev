@@ -72,10 +72,13 @@ describe("Verify BYOR functionality", () => {
     );
   });
 
-  it("Deploy component", () => {
+  it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(REST_API_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployToDev();
+  });
+
+  it("Deploy component", () => {
+    ComponentDeployPage.deployToDev(PROJECT_NAME,REST_API_NAME);
   });
 
   it("Verify test functionality of root resource on swagger in dev", () => {

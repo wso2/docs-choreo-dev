@@ -11,10 +11,12 @@
  * associated services.
  */
 
-import { cyLog } from "../../../../commons/cy";
+import { fromCallback } from "cypress/types/bluebird";
+import { cyGet, cyLog } from "../../../../commons/cy";
 import { Enums } from "../../../../commons/enums";
 import { VERY_SHORT_TIME } from "../../../../commons/timeouts";
 import { Utils } from "../../../../commons/utils";
+import { GraphQL } from "../../../apis/graphql";
 import { APITest } from "../../apis/api-test";
 import { Curl } from "../UI-components/curl-component";
 import { SwaggerUI } from "../UI-components/swagger-UI-component";
@@ -31,24 +33,56 @@ export class TestHelper {
     this.selectOpenApiConsole();
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource(resourcePath, key, value);
-
-    return SwaggerUI.getResponseCode().then((res) => {
-      return SwaggerUI.GetResponse().then((r) => {
-        return cy.wrap({
-          response: r,
-          statusCode: res,
-        });
-      });
-    });
+    return this.invokeSwaggerResource(env, resourcePath, key, value, "");
   }
+
+
+
+  static invokeAPI(projectName: string, componentName: string, environment: Enums.Environment, httpMethod: Enums.HTTPMethod,
+    pathParm: string,
+    queryParameters1?: { key: string, value: string }[], enableHeaders: boolean = true) {
+    return GraphQL._getAuthHeaderKey(projectName, componentName, environment).then(res => {
+
+      const { invokeUrl, apikey } = res
+
+      let query = "";
+      let url = "";
+
+
+      if (queryParameters1) {
+        for (let index = 0; index < queryParameters1.length; index++) {
+          const element = queryParameters1[index];
+          query = query + `${element.key}=${element.value}&`
+        }
+        url = `${invokeUrl}/${pathParm}?${query.trim()}`
+      } else {
+        url = `${invokeUrl}/${pathParm}`
+      }
+
+
+      if (enableHeaders) {
+        return Utils.sendGetRequest(url, { "api-key": apikey }).then(res => {
+          const { body, status, headers } = res
+          return Promise.resolve({ invokeUrl, apikey, body, status, headers })
+        })
+      }
+
+      return Utils.sendGetRequest(url).then(res => {
+
+        const { body, status, headers } = res
+        return Promise.resolve({ invokeUrl, apikey, body, status, headers })
+      })
+    })
+  }
+
+
 
   static testOnCurl(
     env: Enums.Environment,
     httpMethod: Enums.HTTPMethod,
     pathParm: string,
     queryParameters1 = [],
-    ...options: string[]
+    apiName?: string
   ) {
     this.selectCurl();
     Curl.selectCurlEnvironment(env);
@@ -57,13 +91,8 @@ export class TestHelper {
       Curl.enterPathParameter(pathParm);
     }
     Curl.addQueryParameter(queryParameters1);
-    cy.get("textarea")
-      .invoke("text")
-      .then((curl) => {
-        const crl = `${curl} ${options.toString()}`;
-        Cypress.env(`int_curl_${env}`, crl);
-      });
-    return Curl.getRequestComponents(`${env}${pathParm}`);
+
+    return Curl.getRequestComponents();
   }
 
   static testOnCurlDiscardPrevious(
@@ -77,11 +106,6 @@ export class TestHelper {
     Curl.selectMethod(httpMethod);
     Curl.enterPathParameter(pathParm);
     Curl.addQueryParameter(queryParameters1);
-    cy.get("textarea")
-      .invoke("text")
-      .then((curl) => {
-        Cypress.env(`int_curl_${env}`, curl);
-      });
     return Curl.getRequestComponentsDiscardPrevious(`${env}${pathParm}`);
   }
 
@@ -95,7 +119,7 @@ export class TestHelper {
     Utils.getRenderedElement('[data-testid="graphiql-container"]').within(
       () => {
         cy.get('[class="query-editor"]').within(() => {
-          cy.get("span[cm-text]")
+          cyGet("span[cm-text]")
             .eq(1)
             .then(($p) => {
               Utils.paste($p, code, false);
@@ -186,9 +210,11 @@ export class TestHelper {
 
       cy.log("Finished retrying");
       return SwaggerUI.GetResponse().then((r) => {
-        return Promise.resolve({
-          response: r,
-          statusCode: res,
+        return SwaggerUI.getResponseCode().then((res) => {
+          return Promise.resolve({
+            response: r,
+            statusCode: res,
+          });
         });
       });
     });

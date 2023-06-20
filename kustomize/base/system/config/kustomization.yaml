@@ -198,6 +198,8 @@ configMapGenerator:
       - RUDDER_API_URL=http://dp-rudder
       - AZURE_LOGS_TABLE=GithubWorkflowLogs
       - PROJECT_MANAGER_API_URL=http://dp-project-manager
+      - BUILDPACKS_BUILDER_IMAGE="choreocontrolplane.azurecr.io/choreoipaas/choreo-buildpacks/builder:alpine"
+      - BUILDPACKS_DOCKER_ACR="choreocontrolplane.azurecr.io"
   - name: cm-runner-cleaner
     behavior: create
     literals:
@@ -208,6 +210,7 @@ configMapGenerator:
       - SECRET_MANAGER_URL=http://dp-secret-manager/api/v1
       - RUDDER_URL=http://dp-rudder/api/v1/
       - PROJECT_MANAGER_URL=http://dp-project-manager:80
+      - CICD_URL=http://dp-cicd:80
       - SERVER_PORT=3200
       - DB_USERNAME=choreo_cloud_manager_admin_db_user
       - DB_NAME=choreo_cloud_manager_db
@@ -435,6 +438,7 @@ configMapGenerator:
       - CIO_ADX_DB="cio-metrics"
       - USER_SERVICE_ENDPOINT="http://app-service:8080"
       - PROJECT_MANAGER_ENDPOINT="http://dp-project-manager:80"
+      - API_SERVER_ENDPOINT="http://api-server"
   - name: cm-file-cio-event-collector
     behavior: create
     files:
@@ -460,6 +464,7 @@ configMapGenerator:
       - MIZZEN_URL=http://dp-mizzen
       - CLOUD_MANAGER_SERVICE_URL=http://dp-cloud-manager:80
       - LOGAPI_URL=http://loggingapi:9097
+      - SECRET_MANAGER_URL=http://dp-secret-manager:80
   - name: cm-file-crypto-key-service
     behavior: create
     files:
@@ -513,3 +518,13 @@ configMapGenerator:
     behavior: create
     files:
       - audit-logging/Config.toml
+  - name: cm-dp-helmhub
+    behavior: create
+    literals:
+      - PORT=8080
+      - ARTIFACT_HUB_URL='https://artifacthub.io/api/v1'
+      - RUDDER_URL="http://dp-rudder"
+      - MIZZEN_URL="http://dp-mizzen"
+      - MSSQL_PORT=1433
+      - MSSQL_USER=choreo_helmhub_db_user
+      - MSSQL_DBNAME=choreo_helmhub_db

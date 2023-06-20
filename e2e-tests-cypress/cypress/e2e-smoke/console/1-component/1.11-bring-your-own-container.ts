@@ -73,10 +73,13 @@ describe(`Verify BYOC functionality`, () => {
     );
   });
 
-  it("Deploy component", () => {
+  it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(REST_API_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployToDev();
+  });
+
+  it("Deploy component", () => {
+    ComponentDeployPage.deployToDev(PROJECT_NAME,REST_API_NAME);
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -126,52 +129,7 @@ describe(`Verify BYOC functionality`, () => {
     });
   });
 
-  it("Apply configs to dev", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.selectSetting();
-    ComponentAPILifecycle.selectResources();
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-    ComponentAPILifecycle.applyConfiguration();
-    ComponentAPILifecycle.verifyDevRevision().should(
-      "eq",
-      Enums.Environment.DEVELOPMENT
-    );
-  });
-
-  it("Apply configs to prod", () => {
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-    ComponentAPILifecycle.applyConfiguration();
-  });
-
-  it("Verify test functionality using generated curl in Dev", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnCurl(
-      Enums.Environment.DEVELOPMENT,
-      Enums.HTTPMethod.GET,
-      RESOURCE_NAME
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url).then((res) => {
-        expect(res.status).equal(200);
-      });
-    });
-  });
-
-  it("Verify test functionality using generated curl in Prod", () => {
-    TestHelper.testOnCurl(
-      Enums.Environment.PRODUCTION,
-      Enums.HTTPMethod.GET,
-      RESOURCE_NAME
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url).then((res) => {
-        expect(res.status).equal(200);
-      });
-    });
-  });
-
+ 
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();

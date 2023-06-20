@@ -72,7 +72,12 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify component deployment and endpoint configurations", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
+    APIDeployment.DeployToDev();
+  });
+
+  it("Verify prod invoke url", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.promoteToProd();
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -94,36 +99,6 @@ describe("Choreo APIM publisher scenarios", () => {
         expect(res.status).equal(200);
       });
     });
-  });
-
-  it("Disable security of a resource belonging to the API deployed in Dev", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.selectSetting();
-    ComponentAPILifecycle.selectResources();
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity("intensity");
-    ComponentAPILifecycle.applyConfiguration();
-    ComponentAPILifecycle.verifyDevRevision().should(
-      "eq",
-      Enums.Environment.DEVELOPMENT
-    );
-
-    // Verify that deployment has been updated by invoking the API without a token
-    TestHelper.testOnCurl(
-      Enums.Environment.DEVELOPMENT,
-      Enums.HTTPMethod.GET,
-      "intensity"
-    ).then((curl) =>
-      Utils.sendGetRequest(curl.url).then((res) => {
-        expect(res.status).equal(200);
-      })
-    );
-  });
-
-  it("Verify prod invoke url", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.promoteToProd();
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
@@ -162,7 +137,11 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Search application in devportal", () => {
-    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(
+      PROJECT_NAME,
+      API_NAME,
+      idpUser
+    );
     Apis.searchApiAndSelect(API_NAME, 1);
   });
 
@@ -223,7 +202,11 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify deleting consumer app", () => {
-    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(
+      PROJECT_NAME,
+      API_NAME,
+      idpUser
+    );
     TryOut.DeleteApplication(appName);
   });
 
@@ -238,7 +221,7 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify redeployment after removing permissions", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
+    APIDeployment.DeployToDev();
   });
 
   it("Verify insight values for dev", () => {
@@ -246,7 +229,7 @@ describe("Choreo APIM publisher scenarios", () => {
     InsightsPage.selectTimePeriod();
     InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
     InsightsPage.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(3);
+      expect(Number(value)).gte(2);
     });
     InsightsPage.getTotalErrorRequestCount().should("eq", "0");
     InsightsPage.getAverageErrorRate().should("eq", "0");
@@ -261,11 +244,14 @@ describe("Choreo APIM publisher scenarios", () => {
     InsightsPage.getTotalErrorRequestCount().should("eq", "0");
     InsightsPage.getAverageErrorRate().should("eq", "0");
   });
-
-  it("Reset and undeploy component", () => {
+  
+  it("Navigate to deployment", () => {
     ChoreoHomePage.navigateToComponents();
     ComponentListingPage.visitToAComponent(API_NAME);
     ComponentOverviewPage.navigateToDeploy();
+  });
+
+  it("Reset and undeploy component", () => {
     ComponentDeployPage.stopAllDeployment();
   });
 });

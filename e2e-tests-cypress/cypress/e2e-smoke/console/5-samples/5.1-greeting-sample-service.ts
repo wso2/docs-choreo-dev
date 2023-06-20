@@ -61,10 +61,13 @@ describe("Create Greeting sample in Choreo", () => {
     GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
 
-  it("Verify component deployment", () => {
+  it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployToDev();
+  });
+
+  it("Verify component deployment", () => {
+    ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME);
   });
 
   it("Verify component promote to prod", () => {
@@ -91,6 +94,8 @@ describe("Create Greeting sample in Choreo", () => {
     ComponentDeployPage.stopProdContainer();
   });
   it("Verify component deletion", () => {
+    ChoreoHomePage.navigateToHome();
+    ProjectListingPage.selectProject(PROJECT_NAME);
     ChoreoHomePage.navigateToComponents();
     ComponentListingPage.deleteComponent(COMPONENT_NAME);
   });

@@ -17,10 +17,7 @@ import { LoginPage } from "../login-page";
 
 export class ChoreoHomePage {
   static navigateToHome() {
-    const { handle } = Cypress.env("userData");
-    cy.get(
-      `div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home"]`
-    ).click();
+    cy.get('[data-cyid="organization-home"]').click();
   }
 
   static navigateToProjects() {
@@ -73,12 +70,16 @@ export class ChoreoHomePage {
   static navigateToSettings() {
     if (Utils.isUnifiedMenuEnabled()) {
       cy.get("#backdrop-loader").should("not.exist");
-      cy.get('[data-cyid="Default Project-close-button"]').should("be.visible").click();
+      this.navigateToHome();
+      cy.get("#backdrop-loader").should("not.exist");
       cy.get('[data-cyid="settings"]').should("be.visible").click();
     } else {
       cy.get("#backdrop-loader").should("not.exist");
-    cy.get('[data-testid="header-user-profile-menu"]').click();
-    cy.get('[data-testid="header-user-profile-item-settings"]').should("be.visible").contains("Settings").click();
+      cy.get('[data-testid="header-user-profile-menu"]').click();
+      cy.get('[data-testid="header-user-profile-item-settings"]')
+        .should("be.visible")
+        .contains("Settings")
+        .click();
     }
   }
 
@@ -105,4 +106,14 @@ export class ChoreoHomePage {
       .get(`[data-value="idevp"]`)
       .click();
   }
+
+  static goToMarketplacePage() {
+    const Url = Cypress.env("baseUrl");
+    const { handle } = Cypress.env("userData");
+    
+      let marketplaceURL = `${Url}/organizations/${handle}/marketplace`;
+      cy.visit(marketplaceURL);
+    
+  }
+
 }

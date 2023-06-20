@@ -44,7 +44,7 @@ describe("Public access on devportal", () => {
   });
 
   it("Update the API visibility to public", () => {
-    ConsoleLoginPage.visitToHomePage();
+    ConsoleLoginPage.visitToHomePage()
     ProjectListingPage.selectProject(projectName as string);
     ComponentListingPage.visitToAComponent(API_Name as string);
     ComponentOverviewPage.navigateToManage();

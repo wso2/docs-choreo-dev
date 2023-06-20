@@ -4,13 +4,14 @@ metadata:
   annotations:
     autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
   labels:
-    choreo.component: multivariate-anomaly-detector-notification-manager
-  name: multivariate-anomaly-detector-notification-manager
+    choreo.component: dp-helmhub
+  name: dp-helmhub
+  namespace: choreo-system
 spec:
   maxReplicas: 3
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: multivariate-anomaly-detector-notification-manager
+    name: dp-helmhub
   targetCPUUtilizationPercentage: 75

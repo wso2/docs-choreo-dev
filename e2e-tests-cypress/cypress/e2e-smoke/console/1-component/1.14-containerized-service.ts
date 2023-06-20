@@ -72,10 +72,13 @@ describe("Verify containerized service functionality", () => {
     );
   });
 
-  it("Verify component deployment with public level endpoint", () => {
+  it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployService(ENDPOINT_NAME);
+  });
+
+  it("Verify component deployment with public level endpoint", () => {
+    ComponentDeployPage.deployService(PROJECT_NAME,COMPONENT_NAME,ENDPOINT_NAME);
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
