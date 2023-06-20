@@ -567,7 +567,7 @@ glightbox
 logo.png
 develop-a-rest-api
 develop-a-grpc-service
-configuring-mutual-tls-between-components
+configure-mutual-tls-between-components
  - theme/material/templates/home-page.html
 doctype
 html
@@ -625,5 +625,5 @@ process.env
 index.html
 config.js
 window.config
- - docs/develop-components/configuring-mutual-tls-between-components.md
+ - docs/develop-components/configure-mutual-tls-between-components.md
 service-to-service-mtls
