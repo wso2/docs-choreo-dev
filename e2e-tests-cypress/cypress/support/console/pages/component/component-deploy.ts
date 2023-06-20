@@ -377,7 +377,7 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api"]', LONG_TIME)
       .should("be.enabled")
       .click();
-    cy.get(`[data-testid="${endpointName}-endpoint"]`).should("be.visible");
+    cy.get(`[data-cyid="${endpointName}-endpoint-accordion"]`).should("be.visible");
     if (changeVisibility) {
       cy.get(`[data-testid="${endpointName}-edit-btn"]`)
         .should("be.visible")
@@ -430,7 +430,7 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api"]', LONG_TIME)
       .should("be.enabled")
       .click();
-    cy.get(`[data-testid="${endpointName}-endpoint"]`).should("be.visible");
+    cy.get(`[data-cyid="${endpointName}-endpoint-accordion"]`).should("be.visible");
     if (changeVisibility) {
       cy.get(`[data-testid="${endpointName}-edit-btn"]`)
         .should("be.visible")
@@ -467,7 +467,7 @@ export class ComponentDeployPage {
   static promoteService(endpointName: string, changeVisibility?: boolean) {
     APIDeployment.RetryPromotionToProd();
     cy.get('[data-cyid="btn-promote"]', LONG_TIME).should("be.enabled").click();
-    cy.get(`[data-testid="${endpointName}-endpoint"]`).should("be.visible");
+    cy.get(`[data-cyid="${endpointName}-endpoint-accordion"]`).should("be.visible");
     if (changeVisibility) {
       cy.get(`[data-testid="${endpointName}-edit-btn"]`)
         .should("be.visible")
