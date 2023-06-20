@@ -73,6 +73,13 @@
       {% endfor %}
     {% endif %}
     {% block extrahead %}{% endblock %}
+
+    <!-- CookiePro cookie consent notice start -->
+    <script type="text/javascript" src="https://cookie-cdn.cookiepro.com/consent/486163bc-a8c5-40d8-b185-c707cc718a23-test/OtAutoBlock.js" ></script>
+    <script src="https://cookie-cdn.cookiepro.com/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="486163bc-a8c5-40d8-b185-c707cc718a23-test" ></script>
+    <script src="https://wso2.com//sites/all/themes/wso2_d7/js/cookie-revoke.js"></script>
+    <!-- CookiePro cookies consent notice end -->
+    
   </head>
   {% set direction = config.theme.direction or lang.t("direction") %}
   {% if config.theme.palette %}
