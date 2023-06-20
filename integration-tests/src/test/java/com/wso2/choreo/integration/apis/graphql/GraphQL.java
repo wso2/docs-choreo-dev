@@ -22,12 +22,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.ComponentUtils;
-import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.ControlPlaneAPIs;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationException;
 import com.wso2.choreo.integration.common.exceptions.ComponentRetrieveException;
 import com.wso2.choreo.integration.common.exceptions.GraphQLException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
@@ -42,6 +40,7 @@ import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.componentstatusbyversion.ComponentStatusByVersion;
+import com.wso2.choreo.integration.models.endpoints.Endpoint;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.graphql.CreateByocComponentResponseDTO;
@@ -73,7 +72,7 @@ import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatO
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
-
+import static org.hamcrest.Matchers.greaterThan;
 
 /**
  * Implements GraphQL API calls and their response validations.
@@ -1101,5 +1100,165 @@ public class GraphQL extends ControlPlaneAPI {
                 }));
 
         return commitList;
+    }
+
+    /**
+     * Generate component endpoints
+     * @param runner TestActionRunner
+     * @param client HttpClient
+     * @param accessToken Access token
+     * @param requestParams Request parameters
+     * @throws IOException If an error occurs while reading the request template file
+     */
+    public static void generateEndpoints(TestActionRunner runner, HttpClient client, String accessToken,
+                                         Map<String, String> requestParams) throws IOException {
+
+        final String queryString = ComponentUtils.generateStringFromTemplate(
+                "templates/endpoints/GenerateEndpoints.mustache", requestParams);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(10000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .body(requestBody)
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
+                        http().client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .validate(jsonPath()
+                                        .expression("$.data.generateComponentEndpoints.size()",
+                                                greaterThan(0)))
+                )
+        );
+    }
+
+    /**
+     * Get endpoints of a component
+     * @param runner TestActionRunner
+     * @param client HttpClient
+     * @param accessToken Access token
+     * @param requestParams Request parameters
+     * @return List of component endpoints
+     * @throws IOException If an error occurs while reading the request template file
+     */
+    public static List<Endpoint> getEndpoints(TestActionRunner runner, HttpClient client, String accessToken,
+                                              Map<String, String> requestParams) throws IOException {
+
+        final String queryString = ComponentUtils.generateStringFromTemplate(
+                "templates/endpoints/GetEndpoints.mustache", requestParams);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+        List<Endpoint> endpoints = new ArrayList<>();
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .body(requestBody)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+
+        runner.$(http().client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .validate((message, context) -> {
+                            Endpoint[] endpointArray = ObjectMapperUtil.mapToCollection(Endpoint[].class,
+                                    message.getPayload(String.class), "componentEndpoints");
+                            endpoints.addAll(List.of(endpointArray));
+                        }
+                )
+        );
+        return endpoints;
+    }
+
+    /**
+     * Update Component Endpoint
+     * @param runner TestActionRunner
+     * @param client HttpClient
+     * @param accessToken Access Token
+     * @param requestParams Request Parameters
+     * @return Updated Endpoint
+     * @throws IOException If an error occurs while reading the request template file
+     */
+    public static Endpoint updateEndpoint(TestActionRunner runner, HttpClient client, String accessToken,
+                                                Map<String, String> requestParams) throws IOException {
+
+        final String queryString = ComponentUtils.generateStringFromTemplate(
+                "templates/endpoints/UpdateEndpoint.mustache", requestParams);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+        Endpoint[] endpoints = new Endpoint[1];
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .body(requestBody)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+
+        runner.$(http().client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .validate((message, context) -> {
+                            Endpoint endpoint = ObjectMapperUtil.mapStringToObject(Endpoint.class,
+                                    message.getPayload(String.class), "updateComponentEndpoint");
+                            endpoints[0] = endpoint;
+                        }
+                )
+        );
+        return endpoints[0];
+    }
+
+    /**
+     * Promote component endpoints
+     *
+     * @param runner TestActionRunner
+     * @param client HttpClient
+     * @param accessToken Access token
+     * @param requestParams Request parameters
+     * @return Promoted Endpoints List
+     * @throws IOException If an error occurs while reading the request template file
+     */
+    public static List<Endpoint> promoteEndpoints(TestActionRunner runner, HttpClient client, String accessToken,
+                                              Map<String, String> requestParams) throws IOException {
+
+        final String queryString = ComponentUtils.generateStringFromTemplate(
+                "templates/endpoints/PromoteComponentEndpoints.mustache", requestParams);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+        List<Endpoint> endpoints = new ArrayList<>();
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .body(requestBody)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+
+        runner.$(http().client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .validate((message, context) -> {
+                            Endpoint[] endpointArray = ObjectMapperUtil.mapToCollection(Endpoint[].class,
+                                    message.getPayload(String.class), "promoteComponentEndpoints");
+                            endpoints.addAll(List.of(endpointArray));
+                        }
+                )
+        );
+        return endpoints;
     }
 }

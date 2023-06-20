@@ -1,0 +1,40 @@
+mutation GenerateEndpoints {
+    generateComponentEndpoints(
+        input: {
+            componentId: "{{componentId}}",
+            versionId: "{{versionId}}",
+            releaseId: "{{releaseId}}",
+            commitHash: "{{commitHash}}",
+        }
+    ) {
+    id
+    createdAt
+    updatedAt
+    releaseId
+    port
+    environmentId
+    displayName
+    invokeUrl
+    hostName
+    protocol
+    apiContext
+    apiDefinitionPath
+    visibility
+    type
+    apimId
+    apimRevisionId
+    apimName
+    projectUrl
+    organizationUrl
+    publicUrl
+    state
+    stateReason {
+    code
+    message
+    details
+    workerId
+    }
+    isDeleted
+    deletedAt
+    }
+}

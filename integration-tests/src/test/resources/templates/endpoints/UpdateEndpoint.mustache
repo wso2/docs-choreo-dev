@@ -1,0 +1,43 @@
+mutation Update {
+updateComponentEndpoint(
+input: {
+componentId: "{{componentId}}",
+versionId: "{{versionId}}",
+releaseId: "{{releaseId}}",
+endpointId: "{{endpointId}}",
+displayName: "{{displayName}}",
+apiContext: "{{apiContext}}",
+apiDefinitionPath: "{{apiDefinitionPath}}",
+visibility: "{{visibility}}"
+}
+) {
+id
+createdAt
+updatedAt
+releaseId
+environmentId
+displayName
+port
+type
+apiContext
+apiDefinitionPath
+invokeUrl
+visibility
+hostName
+apimId
+apimRevisionId
+apimName
+projectUrl
+organizationUrl
+publicUrl
+state
+stateReason {
+code
+message
+details
+workerId
+}
+isDeleted
+deletedAt
+}
+}
