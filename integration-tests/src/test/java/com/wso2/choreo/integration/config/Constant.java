@@ -119,6 +119,28 @@ public final class Constant {
         Development,
         Production
     }
+
+    public enum AppType{
+        MI_API_SERVICE("miApiService"),
+        MI_EVENT_HANDLER("miEventHandler");
+
+        public final String value;
+        AppType(String value) {
+            this.value = value;
+        }
+    }
+
+    public enum EndpointVisibility{
+        PUBLIC("Public"),
+        Project("Project"),
+        ORGANIZATION("Organization");
+
+        public final String value;
+        EndpointVisibility(String value) {
+            this.value = value;
+        }
+    }
+
     // Alert related const
     public static final class ALERT {
         public static final String NOTIFICATION_SERVICE_RESOURCE = "/notification-service/1.0.0/publishAlerts";

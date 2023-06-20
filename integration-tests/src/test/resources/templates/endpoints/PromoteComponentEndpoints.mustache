@@ -1,0 +1,39 @@
+mutation PromoteEndpoints {
+  promoteComponentEndpoints(
+    input: {
+      componentId: "{{componentId}}"
+      versionId: "{{versionId}}"
+      sourceReleaseId: "{{sourceReleaseId}}"
+      targetEnvironmentId: "{{targetEnvironmentId}}"
+    }
+  ) {
+    id
+    createdAt
+    updatedAt
+    releaseId
+    environmentId
+    displayName
+    port
+    type
+    apiContext
+    apiDefinitionPath
+    invokeUrl
+    visibility
+    hostName
+    apimId
+    apimRevisionId
+    apimName
+    projectUrl
+    organizationUrl
+    publicUrl
+    state
+    stateReason {
+      code
+      message
+      details
+      workerId
+    }
+    isDeleted
+    deletedAt
+  }
+}
