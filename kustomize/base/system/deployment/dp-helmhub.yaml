@@ -43,6 +43,8 @@ spec:
                 name: env-dp-helmhub
             - configMapRef:
                 name: cm-dp-helmhub
+            - secretRef:
+                name: secret-dp-helmhub
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
