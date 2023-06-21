@@ -12,7 +12,7 @@ Choreo defines endpoints by combining port binding, protocol, endpoint name, net
 | Schema | specifies the structure and format of the data exchanged through the endpoint. |
 | Context (HTTP and GraphQL only) | A context path that you add to the endpoint's URL for routing purposes. |
 
-## Configuring endpoints
+## Configure endpoints
 
 The method of defining endpoints depends on the build preset. There are three build presets the supports defining endpoints: 
 
@@ -20,20 +20,20 @@ The method of defining endpoints depends on the build preset. There are three bu
 - Dockerfile
 - WSO2 MI
 
-### Configuring endpoints using the Dockerfile build-preset
+### Configure endpoints with the Dockerfile build-preset
 
 When you build a service component using the Dockerfile build-preset, you can configure the endpoint details with the endpoints.yaml configuration file. You must place this file inside the `.choreo` directory at the build context path and commit it to the source repository.
 
 See [Understanding the endpoints.yaml file](#understanding-the-endpointsyaml-file) to learn about the endpoints.yaml file.
 
-### Configuring endpoints using the Ballerina build-preset
+### Configure endpoints with the Ballerina build-preset
 
 When you create a service component with the `Ballerina preset`, Choreo automatically detects the endpoint details for REST API and GraphQL endpoints. You can override the auto-generated endpoint configuration by providing the endpoints.yaml file in the source directory
 
 See [Understanding the endpoints.yaml file](#understanding-the-endpointsyaml-file) to learn about the endpoints.yaml file.
 
 
-### Configuring endpoints using the WSO2 MI build-preset
+### Configure endpoints with the WSO2 MI build-preset
 
 WSO2 MI build preset is where you can deploy Integrations developed with WSO2 Micro Integrator as an API. In this preset, you have three different ways to define endpoints. Choreo gives priory to the definition of endpoints in the below-mentioned order. 
 
@@ -50,7 +50,7 @@ If endpoints.yaml is not provided and if the source Micro Integrator project has
 3. **Provide default endpoints**
 If endpoints.yaml is not provided and if the source Micro Integrator project doesn't have APIs, Choreo generates a default endpoint which will expose the default micro integrator port (8290) with `Project` visibility and wildcard context.
 
-### Understanding the endpoints.yaml file
+### Learn the endpoints.yaml file
 
 The endpoints.yaml file has a specific structure and contains the following details:
 
@@ -59,10 +59,10 @@ The endpoints.yaml file has a specific structure and contains the following deta
 | **version**          | Required     | The version of the endpoints.yaml file.                                           |
 | **name**             | Required     | A unique name for the endpoint, which Choreo will use to generate the managed API.|
 | **port**             | Required     | The numeric port value that gets exposed via this endpoint.                      |
-| **type**             | Required     | Currently MI support only for REST type.                                         |
+| **type**             | Required     | The type of traffic this endpoint is accepting, such as `REST`, `GraphQL`, or `gRPC`.Currently the MI preset supports only the `REST` type.                                         |
 | **networkVisibility**| Required     | The network level visibility of this endpoint, which defaults to `Project` if not specified. Accepted values are `Project`, `Organization`, or `Public`.|
 | **context**          | Required     | The context (base path) of the API that Choreo exposes via this endpoint.        |
-| **schemaFilePath**   | Required     | The swagger definition file path. Defaults to the wildcard route if not provided. this field should be a relative path to the project path.|
+| **schemaFilePath**   | Required     | The swagger definition file path. Defaults to the wildcard route if not provided. this field should be a relative path to the project path when using the MI build preset.For REST endpoint types when using the Ballerina or Dockerfile preset, this field should be a relative path to the component root or Docker context .|
 
 #### Sample endpoints.yaml
 
@@ -106,7 +106,7 @@ endpoints:
   schemaFilePath: greeting_openapi.yaml
 ```
 
-## Exposing endpoint as managed APIs
+## Expose endpoint as managed APIs
 
 Exposing endpoints as managed APIs is crucial to ensure secure and controlled access to the services being exposed. When a user wants to expose their written service to the outside world or to the organization at large, there is an inherent security risk involved. To mitigate this risk, Choreo platform is build with an internal (access within organization only) or external (publicly accessible) gateway that is protected with Choreo API management making the services secure by design.
 
