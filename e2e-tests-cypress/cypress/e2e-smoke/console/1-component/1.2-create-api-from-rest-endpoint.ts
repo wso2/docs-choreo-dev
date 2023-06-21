@@ -93,7 +93,6 @@ describe(`Verify proxy api functionality`, () => {
     APIDeployment.verifyProxyDeployment(PROJECT_NAME, API_NAME);
   });
 
- 
   it("Verify test functionality using Swagger UI in Dev", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
@@ -110,10 +109,11 @@ describe(`Verify proxy api functionality`, () => {
       Enums.HTTPMethod.GET,
       OPERATION_USERS
     ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(200);
-        expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE });
-      });
+      const expected = {
+        expectedCode: OK,
+        expectedHeaders: { [HEADER_KEY]: HEADER_VALUE },
+      };
+      Utils.sendGetRequestAndMatch(curl.url, curl.headers, expected);
     });
   });
 
@@ -138,10 +138,11 @@ describe(`Verify proxy api functionality`, () => {
       Enums.HTTPMethod.GET,
       OPERATION_USERS
     ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(200);
-        expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE });
-      });
+      const expected = {
+        expectedCode: OK,
+        expectedHeaders: { [HEADER_KEY]: HEADER_VALUE },
+      };
+      Utils.sendGetRequestAndMatch(curl.url, curl.headers, expected);
     });
   });
 
@@ -163,8 +164,6 @@ describe(`Verify proxy api functionality`, () => {
     APIDeployment.verifyProxyDeployment(PROJECT_NAME, API_NAME, true);
   });
 
-
-
   it("Verify test functionality using Swagger UI in Dev with new policy", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
@@ -181,10 +180,11 @@ describe(`Verify proxy api functionality`, () => {
       Enums.HTTPMethod.GET,
       OPERATION_USERS
     ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(200);
-        expect(res.headers).contain({ [HEADER_KEY_2]: HEADER_VALUE_2 });
-      });
+      const expected = {
+        expectedCode: OK,
+        expectedHeaders: { [HEADER_KEY_2]: HEADER_VALUE_2 },
+      };
+      Utils.sendGetRequestAndMatch(curl.url, curl.headers, expected);
     });
   });
 
@@ -209,10 +209,11 @@ describe(`Verify proxy api functionality`, () => {
       Enums.HTTPMethod.GET,
       OPERATION_USERS
     ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(200);
-        expect(res.headers).contain({ [HEADER_KEY_2]: HEADER_VALUE_2 });
-      });
+      const expected = {
+        expectedCode: OK,
+        expectedHeaders: { [HEADER_KEY_2]: HEADER_VALUE_2 },
+      };
+      Utils.sendGetRequestAndMatch(curl.url, curl.headers, expected);
     });
   });
 
@@ -231,7 +232,6 @@ describe(`Verify proxy api functionality`, () => {
     APIDeployment.verifyProxyDeployment(PROJECT_NAME, API_NAME, true);
   });
 
-
   it("Verify test functionality using Swagger UI in Dev with updated header value", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
@@ -248,10 +248,11 @@ describe(`Verify proxy api functionality`, () => {
       Enums.HTTPMethod.GET,
       OPERATION_USERS
     ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(200);
-        expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE_3 });
-      });
+      const expected = {
+        expectedCode: OK,
+        expectedHeaders: { [HEADER_KEY]: HEADER_VALUE_3 },
+      };
+      Utils.sendGetRequestAndMatch(curl.url, curl.headers, expected);
     });
   });
 
@@ -276,13 +277,13 @@ describe(`Verify proxy api functionality`, () => {
       Enums.HTTPMethod.GET,
       OPERATION_USERS
     ).then((curl) => {
-        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(200);
-        expect(res.headers).contain({ [HEADER_KEY]: HEADER_VALUE_3 });
-      });
+      const expected = {
+        expectedCode: OK,
+        expectedHeaders: { [HEADER_KEY]: HEADER_VALUE_3 },
+      };
+      Utils.sendGetRequestAndMatch(curl.url, curl.headers, expected);
     });
   });
-
 
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDeploy();
@@ -303,7 +304,6 @@ describe(`Verify proxy api functionality`, () => {
     APIDeployment.deployProxyAPIToDev();
     APIDeployment.verifyProxyDeployment(PROJECT_NAME, API_NAME, true);
   });
-
 
   it("Verify test functionality using Swagger UI in dev", () => {
     TestHelper.testOnSwagger(

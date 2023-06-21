@@ -53,31 +53,10 @@ export class APIDeployment {
     componentName: string,
     isRedeployment = false
   ) {
-    GraphQL.getDeployStatus(
-      projectName,
-      componentName,
-      Enums.DeploymentStages.CODE_GEN,
-      Enums.ResponseStatus.success
-    );
     cy.get("button")
       .contains("Save & Deploy", VERY_LONG_TIME)
       .should("be.visible")
       .click();
-
-    if (isRedeployment) {
-      GraphQL.getDeployStatus(
-        projectName,
-        componentName,
-        Enums.DeploymentStages.DEPLOY,
-        Enums.ResponseStatus.completed
-      );
-      GraphQL.getDeployStatus(
-        projectName,
-        componentName,
-        Enums.DeploymentStages.PROXY_DEPLOY,
-        Enums.ResponseStatus.completed
-      );
-    }
 
     cyGet('[data-cyid="deployment-status"]>h6', VERY_LONG_TIME)
       .eq(0)

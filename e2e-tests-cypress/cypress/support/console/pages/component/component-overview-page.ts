@@ -82,15 +82,16 @@ export class ComponentOverviewPage {
     }
   }
 
-
-
-static navigateProxyResources(){
-  cy.xpath('//div[@id="root"]/div/div/div/div[2]/div[1]').realHover().wait(2000)
-  cyGet('[data-cyid="link-develop"]').should('be.visible').click()
-  cyGet('[data-cyid="develop-resources"]')
-  cy.xpath('//div[@id="root"]/div/div/div/div[2]').realHover({position:"right"})
-}
-
+  static navigateProxyResources() {
+    cy.xpath('//div[@id="root"]/div/div/div/div[2]/div[1]')
+      .realHover()
+      .wait(2000);
+    cyGet('[data-cyid="link-develop"]').should("be.visible").click();
+    cyGet('[data-cyid="develop-resources"]');
+    cy.xpath('//div[@id="root"]/div/div/div/div[2]').realHover({
+      position: "right",
+    });
+  }
 
   static navigateToDevelop() {
     if (Utils.isUnifiedMenuEnabled()) {
@@ -123,7 +124,9 @@ static navigateProxyResources(){
   }
 
   private static createNewVersionApiProxy(version: string) {
-    cy.contains("Create new version", MEDIUM_TIME);
+    cy.get("[data-testid=create-version-create]", MEDIUM_TIME).should(
+      "be.visible"
+    );
 
     cy.get('[data-cyid="text-field-new-version"]').within(() => {
       cy.get("input").clear().type(version);
