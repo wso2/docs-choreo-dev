@@ -38,6 +38,7 @@ export class ComponentOverviewPage {
       this.navigateToSubMenu(
         '[data-cyid="link-test"]',
         new Array(
+          '[data-cyid="graphql"]',
           '[data-cyid="testConsole"]',
           '[data-cyid="openapi"]',
           '[data-cyid="curl"]'

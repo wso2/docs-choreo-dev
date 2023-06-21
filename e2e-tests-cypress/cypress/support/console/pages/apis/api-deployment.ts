@@ -71,9 +71,9 @@ export class APIDeployment {
     }
 
     cy.get("body").then((bdy) => {
-      if (bdy.find('[data-testid="retry-button"]').length > 0) {
+      if (bdy.find('[data-testid="retry-btn"]').length > 0) {
         cy.log("Retry count: " + retryCount);
-        cy.get('[data-testid="retry-button"]').click();
+        cy.get('[data-testid="retry-btn"]').click();
         cy.wait(LONG_TIME.timeout);
       } else {
         return;
@@ -93,7 +93,7 @@ export class APIDeployment {
       if (bdy.find('[data-testid="deployment-fetch-error"]').length > 0) {
         cy.log("Retry count: " + retryCount);
         cy.get('[data-testid="deployment-fetch-error"]').within(() => {
-          cy.get('[data-testid="retry-button"]').click();
+          cy.get('[data-testid="retry-btn"]').click();
           cy.wait(LONG_TIME.timeout);
         });
       } else {
