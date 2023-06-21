@@ -66,7 +66,7 @@ To deploy the integration component to the development environment, follow the s
 The **Development** card indicates the **Deployment Status** as **Active** when the integration is successfully deployed.
 
     !!! tip
-         Choreo uses [endpoints](../../choreo-concepts/endpoint.md) to expose **Integration as an API** component to the network. You can read more about configuring endpoints in [Configure Endoints)[../configure-endspoints.md].
+         Choreo uses [endpoints](../../choreo-concepts/endpoint.md) to expose **Integration as an API** component to the network. You can read more about configuring endpoints in [Configure Endoints](../configure-endpoints.md).
 
     !!! tip
          Automatic deployment is enabled for the component by default. Therefore, you are required to perform only the first deployment manually.

@@ -62,7 +62,7 @@ The endpoints.yaml file has a specific structure and contains the following deta
 | **type**             | Required     | The type of traffic this endpoint is accepting, such as `REST`, `GraphQL`, or `gRPC`.Currently the MI preset supports only the `REST` type.                                         |
 | **networkVisibility**| Required     | The network level visibility of this endpoint, which defaults to `Project` if not specified. Accepted values are `Project`, `Organization`, or `Public`.|
 | **context**          | Required     | The context (base path) of the API that Choreo exposes via this endpoint.        |
-| **schemaFilePath**   | Required     | The swagger definition file path. Defaults to the wildcard route if not provided. this field should be a relative path to the project path when using the MI build preset.For REST endpoint types when using the Ballerina or Dockerfile preset, this field should be a relative path to the component root or Docker context .|
+| **schemaFilePath**   | Required     | The swagger definition file path. Defaults to the wildcard route if not provided. this field should be a relative path to the project path when using the MI build preset. For REST endpoint types when using the Ballerina or Dockerfile preset, this field should be a relative path to the component root or Docker context .|
 
 #### Sample endpoints.yaml
 
