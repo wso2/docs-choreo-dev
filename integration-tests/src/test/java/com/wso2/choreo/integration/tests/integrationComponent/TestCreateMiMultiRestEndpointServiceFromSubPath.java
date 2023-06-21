@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ * Copyright (c) 2023, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
  *
  * This software is the property of WSO2 Inc. and its suppliers, if any.
  * Dissemination of any information or reproduction of any material contained
@@ -10,7 +10,6 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-
 package com.wso2.choreo.integration.tests.integrationComponent;
 
 import com.consol.citrus.annotations.CitrusTest;
@@ -40,11 +39,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpringSupport {
+public class TestCreateMiMultiRestEndpointServiceFromSubPath extends TestNGCitrusSpringSupport {
 
     public static final String COMPONENT_TYPE = Constant.AppType.MI_API_SERVICE.value;
-    public static final String API_INVOCATION_REQUEST_URI = "/";
+    public static final String API_INVOCATION_REQUEST_URI = "/integration";
     public static final String REST_API_EXPECTED_RESPONSE = "{\"Hello\":\"Integration\"}";
+    public static final String REST_API_CONTEXT = "/HelloWorld";
     private static String accessToken;
     private String orgHandle;
     private String orgId;
@@ -75,7 +75,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
     Map<Endpoints, HttpClient> citrusClients;
 
     @BeforeClass
-    public void setup_TestCreateIntegrationRestComponentFromRoot()
+    public void setup_TestCreateMiMultiRestEndpointServiceFromSubPath()
             throws Exception {
 
         orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
@@ -90,33 +90,34 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
 
     @Test
     @CitrusTest
-    public void createComponent_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+    public void createComponent_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
 
         // Creating component
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        final String repoName = "synaps-api-project-sample";
+        final String repoName = "ipaas-multi-mi-project";
         final String repoBranch = "main";
+        final String subPath = "mi-hello-multiple-api";
         String srcGitHubURL = Constant.GITHUB_URL.concat(githubOrg).concat("/").concat(repoName);
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().apiName(componentName.toLowerCase()).orgId(Integer.parseInt(orgId)).
                 orgHandler(orgHandle).displayName(componentName).componentType(COMPONENT_TYPE).
-                projectId(projectId).srcGitRepoUrl(srcGitHubURL).repositorySubPath("").
+                projectId(projectId).srcGitRepoUrl(srcGitHubURL).repositorySubPath(subPath).
                 repositoryBranch(repoBranch).build();
         componentHandler = GraphQL.createIntegrationComponent(this, choreoProjectsTestClient, accessToken,
                 graphqlDTO);
     }
 
-    @Test(dependsOnMethods = {"createComponent_TestCreateIntegrationRestComponentFromRoot"})
+    @Test(dependsOnMethods = {"createComponent_TestCreateMiMultiRestEndpointServiceFromSubPath"})
     @CitrusTest
-    public void componentRetrieval_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+    public void componentRetrieval_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
 
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
         testComponent = GraphQL.retrieveComponent(this, choreoTestClient, accessToken,
                 graphqlDTO);
     }
 
-    @Test(dependsOnMethods = {"componentRetrieval_TestCreateIntegrationRestComponentFromRoot"})
+    @Test(dependsOnMethods = {"componentRetrieval_TestCreateMiMultiRestEndpointServiceFromSubPath"})
     @CitrusTest
-    public void generateEndpointsDev_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+    public void generateEndpointsDev_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
         Map<String,String> argMap = new HashMap<>();
         argMap.put("componentId", testComponent.getId());
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
@@ -125,25 +126,25 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         GraphQL.generateEndpoints(this, choreoTestClient, accessToken, argMap);
     }
 
-    @Test(dependsOnMethods = {"generateEndpointsDev_TestCreateIntegrationRestComponentFromRoot"})
+    @Test(dependsOnMethods = {"generateEndpointsDev_TestCreateMiMultiRestEndpointServiceFromSubPath"})
     @CitrusTest
-    public void getEndpointsDev_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+    public void getEndpointsDev_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
         Map<String,String> argMap = new HashMap<>();
         argMap.put("componentId", testComponent.getId());
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
         argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
         endpoints = GraphQL.getEndpoints(this, choreoTestClient, accessToken, argMap);
-        Assert.assertEquals(endpoints.size(), 1);
+        Assert.assertEquals(endpoints.size(), 2);
     }
 
-    @Test(dependsOnMethods = {"getEndpointsDev_TestCreateIntegrationRestComponentFromRoot"})
+    @Test(dependsOnMethods = {"getEndpointsDev_TestCreateMiMultiRestEndpointServiceFromSubPath"})
     @CitrusTest
-    public void updateEndpointsDev_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+    public void updateEndpointsDev_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
         Map<String,String> argMap = new HashMap<>();
         argMap.put("componentId", testComponent.getId());
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
         argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
-        final Endpoint endpoint = endpoints.get(0);
+        final Endpoint endpoint = IntegrationComponentTestHelper.getEndpointForContext(endpoints, REST_API_CONTEXT);
         argMap.put("endpointId", endpoint.getId());
         argMap.put("displayName", endpoint.getDisplayName());
         argMap.put("apiContext", endpoint.getApiContext());
@@ -153,9 +154,9 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         endpoints.set(0, updatedEndpoint);
     }
 
-    @Test(dependsOnMethods = {"updateEndpointsDev_TestCreateIntegrationRestComponentFromRoot"})
+    @Test(dependsOnMethods = {"updateEndpointsDev_TestCreateMiMultiRestEndpointServiceFromSubPath"})
     @CitrusTest
-    public void componentDeployment_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+    public void componentDeployment_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
 
         JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
         String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
@@ -173,18 +174,18 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         GraphQL.deployComponent(this, choreoTestClient, accessToken, graphqlDTO);
     }
 
-    @Test(dependsOnMethods = {"componentDeployment_TestCreateIntegrationRestComponentFromRoot"})
+    @Test(dependsOnMethods = {"componentDeployment_TestCreateMiMultiRestEndpointServiceFromSubPath"})
     @CitrusTest
-    public void deploymentStatusByVersion_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+    public void deploymentStatusByVersion_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
 
         String versionId = testComponent.getLatestApiVersion().getId();
         GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).latestVersionId(versionId).build();
         GraphQL.getDeploymentStatusByVersion(this, choreoProjectsTestClient, accessToken, dto);
     }
 
-    @Test(dependsOnMethods = {"deploymentStatusByVersion_TestCreateIntegrationRestComponentFromRoot"})
+    @Test(dependsOnMethods = {"deploymentStatusByVersion_TestCreateMiMultiRestEndpointServiceFromSubPath"})
     @CitrusTest
-    public void componentDeploymentStatus_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+    public void componentDeploymentStatus_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
 
         String versionId = testComponent.getLatestApiVersion().getId();
         String devEnvIdToDeploy = testComponent.getLatestAppEnvId(Constant.DEV_ENVIRONMENT);
@@ -203,34 +204,33 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         GraphQL.getComponentDeploymentStatus(this, choreoTestClient, accessToken, dto, responseParams);
     }
 
-    @Test(dependsOnMethods = {"componentDeploymentStatus_TestCreateIntegrationRestComponentFromRoot"})
+    @Test(dependsOnMethods = {"componentDeploymentStatus_TestCreateMiMultiRestEndpointServiceFromSubPath"})
     @CitrusTest
-    public void getEndpointsDevAfterDeploy_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+    public void getEndpointsDevAfterDeploy_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
         Map<String,String> argMap = new HashMap<>();
         argMap.put("componentId", testComponent.getId());
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
         argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
         endpoints = GraphQL.getEndpoints(this, choreoTestClient, accessToken, argMap);
-        Assert.assertEquals(endpoints.size(), 1);
+        Assert.assertEquals(endpoints.size(), 2);
     }
 
-
-    @Test(dependsOnMethods = {"getEndpointsDevAfterDeploy_TestCreateIntegrationRestComponentFromRoot"})
+    @Test(dependsOnMethods = {"getEndpointsDevAfterDeploy_TestCreateMiMultiRestEndpointServiceFromSubPath"})
     @CitrusTest
-    public void invokeAPIDev_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+    public void invokeAPIDev_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
 
-        Endpoint endpoint = endpoints.get(0);
+        final Endpoint endpoint = IntegrationComponentTestHelper.getEndpointForContext(endpoints, REST_API_CONTEXT);
         environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, testComponent);
         final String devApiKey = testComponent.getAPIKeyForInvoke(accessToken, endpoint.getApimId(),
-                        environments.get(0).getName()).replace("\"", "");
+                environments.get(0).getName()).replace("\"", "");
         String invokeUrlDev = endpoint.getPublicUrl();
         ComponentUtils.invokeApiGET(this, devApiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI,
                 REST_API_EXPECTED_RESPONSE);
     }
 
-    @Test(dependsOnMethods = {"invokeAPIDev_TestCreateIntegrationRestComponentFromRoot"})
+    @Test(dependsOnMethods = {"invokeAPIDev_TestCreateMiMultiRestEndpointServiceFromSubPath"})
     @CitrusTest
-    public void promoteEndpointsProd_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+    public void promoteEndpointsProd_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
         Map<String,String> argMap = new HashMap<>();
         argMap.put("componentId", testComponent.getId());
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
@@ -239,9 +239,9 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         GraphQL.promoteEndpoints(this, choreoTestClient, accessToken, argMap);
     }
 
-    @Test(dependsOnMethods = {"promoteEndpointsProd_TestCreateIntegrationRestComponentFromRoot"})
+    @Test(dependsOnMethods = {"promoteEndpointsProd_TestCreateMiMultiRestEndpointServiceFromSubPath"})
     @CitrusTest
-    public void componentPromotionToProd_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+    public void componentPromotionToProd_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
         // Retrieve the latest component.
         HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
         testComponent = GraphQL.getComponentDetails(this, cpProjectsClient, projectId, componentHandler, accessToken);
@@ -257,9 +257,9 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
                 latestAppEnvId);
     }
 
-    @Test(dependsOnMethods = {"componentPromotionToProd_TestCreateIntegrationRestComponentFromRoot"})
+    @Test(dependsOnMethods = {"componentPromotionToProd_TestCreateMiMultiRestEndpointServiceFromSubPath"})
     @CitrusTest
-    public void getEndpointsProdAfterDeploy_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+    public void getEndpointsProdAfterDeploy_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
         Map<String,String> argMap = new HashMap<>();
         argMap.put("componentId", testComponent.getId());
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
@@ -268,24 +268,24 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         GraphQL.validateEndpointDeployment(this, choreoTestClient, accessToken, argMap);
 
         endpoints = GraphQL.getEndpoints(this, choreoTestClient, accessToken, argMap);
-        Assert.assertEquals(endpoints.size(), 1);
+        Assert.assertEquals(endpoints.size(), 2);
     }
 
-    @Test(dependsOnMethods = {"getEndpointsProdAfterDeploy_TestCreateIntegrationRestComponentFromRoot"})
+    @Test(dependsOnMethods = {"getEndpointsProdAfterDeploy_TestCreateMiMultiRestEndpointServiceFromSubPath"})
     @CitrusTest
-    public void invokeAPIProd_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+    public void invokeAPIProd_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
 
-        final Endpoint endpoint = endpoints.get(0);
+        final Endpoint endpoint = IntegrationComponentTestHelper.getEndpointForContext(endpoints, REST_API_CONTEXT);
         final String prodApiKey = testComponent.getAPIKeyForInvoke(accessToken, endpoint.getApimId(),
-                        environments.get(1).getName()).replace("\"", "");
+                environments.get(1).getName()).replace("\"", "");
         final String invokeUrlProd = endpoint.getPublicUrl();
         ComponentUtils.invokeApiGET(this, prodApiKey, invokeUrlProd, API_INVOCATION_REQUEST_URI,
                 REST_API_EXPECTED_RESPONSE);
     }
 
-    @Test(dependsOnMethods = {"invokeAPIProd_TestCreateIntegrationRestComponentFromRoot"})
+    @Test(dependsOnMethods = {"invokeAPIProd_TestCreateMiMultiRestEndpointServiceFromSubPath"})
     @CitrusTest
-    public void undeployComponentDev_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+    public void undeployComponentDev_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
 
         String devReleaseId = GraphQL.componentDeployment(testComponent, Constant.DEV_ENVIRONMENT, accessToken).getReleaseId();
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(orgHandle)
@@ -293,9 +293,9 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         GraphQL.stopDeployment(this, choreoTestClient, accessToken, graphqlDTO);
     }
 
-    @Test(dependsOnMethods = {"undeployComponentDev_TestCreateIntegrationRestComponentFromRoot"})
+    @Test(dependsOnMethods = {"undeployComponentDev_TestCreateMiMultiRestEndpointServiceFromSubPath"})
     @CitrusTest
-    public void undeployComponentProd_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+    public void undeployComponentProd_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
 
         String prodReleaseId = GraphQL.componentDeployment(testComponent, Constant.PROD_ENVIRONMENT, accessToken)
                 .getReleaseId();

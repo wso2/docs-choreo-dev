@@ -72,6 +72,7 @@ import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatO
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
+import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.hamcrest.Matchers.greaterThan;
 
 /**
@@ -1260,5 +1261,46 @@ public class GraphQL extends ControlPlaneAPI {
                 )
         );
         return endpoints;
+    }
+
+    /**
+     * Validate endpoint deployment
+     * @param runner TestActionRunner
+     * @param client HttpClient
+     * @param accessToken Access token
+     * @param requestParams Request parameters
+     * @throws IOException If an error occurs while reading the request template file
+     */
+    public static void validateEndpointDeployment(TestActionRunner runner, HttpClient client, String accessToken,
+                                         Map<String, String> requestParams) throws IOException {
+
+        final String queryString = ComponentUtils.generateStringFromTemplate(
+                "templates/endpoints/GetEndpoints.mustache", requestParams);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(10000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .body(requestBody)
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
+                        http().client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .validate(jsonPath()
+                                        .expression("$.data.componentEndpoints.size()",
+                                                greaterThan(0))
+                                        .expression("$.data.componentEndpoints[0].state",
+                                                comparesEqualTo("Active")))
+                )
+        );
     }
 }
