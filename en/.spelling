@@ -628,3 +628,8 @@ config.js
 window.config
  - docs/develop-components/configure-mutual-tls-between-components.md
 service-to-service-mtls
+ - docs/develop-components/configure-endpoints-body.md
+endpoints.yaml
+choreo
+networkVisibility
+schemaFilePath
