@@ -28,6 +28,12 @@ spec:
       containers:
         - name: cp-graphql
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-cp-graphql:latest
+          env:
+            - name: KEYSTORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-cp-graphql
+                  key: KEYSTORE_PASSWORD
           ports:
             - containerPort: 9090
               name: gql-port
@@ -80,6 +86,12 @@ spec:
             - name: secret-idp
               mountPath: "/mnt/csi/secret-idp"
               readOnly: true
+            - name: secret-cp-graphql
+              mountPath: /home/ballerina/security/choreo-cp-graphql-keystore.pfx
+              subPath: BAL_KEYSTORE
+              readOnly: true
+            - name: keystore
+              mountPath: /home/ballerina/keystore
       restartPolicy: Always
       volumes:
         - name: config
@@ -101,6 +113,8 @@ spec:
               secretProviderClass: secret-idp
             nodePublishSecretRef:
               name: csi-secret-store-azure
+        - name: keystore
+          emptyDir: {}
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
