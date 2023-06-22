@@ -1030,6 +1030,7 @@ public class ComponentUtils {
 
         // Repeat the check until the rate limit is exceeded or all requests are sent within the same minute
         while (!isRateLimitExceeded) {
+            count = 0;
             startTime = System.currentTimeMillis();
             for (int i = 0; i < repititionCount; i++) {
                 Response dev = HttpClientUtil.httpGET(invokeURL, "", apiKey);
