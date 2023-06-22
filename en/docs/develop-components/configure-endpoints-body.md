@@ -14,7 +14,7 @@ Choreo defines endpoints by combining port binding, protocol, endpoint name, net
 
 ## Configure endpoints
 
-The method of defining endpoints depends on the build preset. There are three build presets the supports defining endpoints: 
+The method of defining endpoints depends on the build preset. There are three build presets that supports defining endpoints: 
 
 - Ballerina
 - Dockerfile
