@@ -45,6 +45,12 @@ spec:
                 name: cm-dp-helmhub
             - secretRef:
                 name: secret-dp-helmhub
+          env:
+            - name: MSSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-dp-helmhub
+                  key: MSSQL_PASSWORD
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
@@ -77,6 +83,19 @@ spec:
             httpGet:
               path: /healthz
               port: http-port
+          volumeMounts:
+            - name: secret-dp-helmhub
+              mountPath: /mnt/csi/secret-dp-helmhub
+              readOnly: true
+      volumes:
+        - name: secret-dp-helmhub
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-dp-helmhub
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
       affinity:
