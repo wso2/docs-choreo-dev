@@ -459,6 +459,8 @@ choreoDemoOrg:
   enable: ${IS_CHOREO_DEMO_ORG_ENABLED}
   demoOrgId: ${DEMO_ORG_ID}
   role: ${DEMO_ORG_ROLE}
+  demoOrgHandle: ${DEMO_ORG_HANDLE}
+  demoOrgUUID: ${DEMO_ORG_UUID}
 salesforceLeadPardotConfig:
   enable: {{.SALESFORCE_LEAD_VIA_PARDOT_ENABLED}}
   pardot:
