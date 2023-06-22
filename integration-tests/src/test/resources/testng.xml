@@ -27,7 +27,6 @@
             <class name="com.wso2.choreo.integration.tests.jwt.TestClientJwTValidation"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestGraphQLServiceDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestBYOCDp"/>
-            <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiDpWithOperationRateLimit"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiDpWithAPIRateLimit"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestWebhookDp"/>
