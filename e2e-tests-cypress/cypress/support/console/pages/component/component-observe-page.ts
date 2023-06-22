@@ -11,38 +11,50 @@
  * associated services.
  */
 
-import { Utils } from "../../utils";
-import { Enums } from "../../enums";
+import { Enums } from "../../../commons/enums";
+import { SHORT_TIME } from "../../../commons/timeouts";
+import { Utils } from "../../../commons/utils";
+
 
 export class ComponentObservePage {
-
   static gotoLogs(timeToWait = 0) {
     cy.wait(timeToWait);
     cy.get('[data-testid="panel-Logs-btn"]').should("be.visible").click();
   }
 
   static selectEnv(env: Enums.Environment) {
-    cy.get("#environment-selector").should("be.visible").click();
-    cy.get("#menu->div>ul>li").contains(env).click({ force: true });
-  }
+    let index = 0;
+    if (env == Enums.Environment.DEVELOPMENT) {
+      index = 1;
+    }
 
-  static verifyTextInLogs(text: string) {
-    cy.get('[data-testid="log-panel-entry"]', { timeout: 180000 }).should('be.visible').each(($e) => {
-      let log = $e
-        .text()
-        .replace("ballerina: sending metrics to Choreo", "")
-        .trim()
-        .toString();
-      if (log.includes(text)) {
-        const exactText = log.slice(log.indexOf("{"), log.indexOf("}") + 1);
-        expect(text).to.be.eq(exactText);
-      }
+    cy.get('[data-cyid="environment-selector"]').should("be.visible").click();
+    cy.get(`#environment-selector-label-option-${index}`).click({
+      force: true,
     });
   }
 
+  static verifyTextInLogs(text: string) {
+    cy.get('[data-testid="log-panel-entry"]', { timeout: 180000 })
+      .should("be.visible")
+      .each(($e) => {
+        let log = $e
+          .text()
+          .replace("ballerina: sending metrics to Choreo", "")
+          .trim()
+          .toString();
+        if (log.includes(text)) {
+          const exactText = log.slice(log.indexOf("{"), log.indexOf("}") + 1);
+          expect(text).to.be.eq(exactText);
+        }
+      });
+  }
+
   static navigateToSampleApp() {
-    const observabilityViewUrl = Cypress.env("loginURL").replace("login?fidp=choreoe2etest", "") + "observe/sample";
-    Utils.setBrowserCookie()
+    const observabilityViewUrl =
+      Cypress.env("loginURL").replace("login?fidp=choreoe2etest", "") +
+      "observe/sample";
+    Utils.setBrowserCookie();
     cy.visit(observabilityViewUrl);
     cy.url().should("eq", observabilityViewUrl);
     cy.get('[data-testid="backdrop-loader"]').should("not.exist");
@@ -59,14 +71,21 @@ export class ComponentObservePage {
     cy.get("#log-search").should("be.visible");
     cy.get("#log-search").type(commonLogLine.substring(0, 13));
     cy.get('[data-testid="log-search-btn"]').click();
-    cy.contains('[data-testid="log-panel-entry"]', commonLogLine).should( "exist");
+    cy.contains('[data-testid="log-panel-entry"]', commonLogLine).should(
+      "exist"
+    );
 
     cy.log("Asserting mandatory log entry by providing a search phrase");
     cy.get('[data-testid="log-search"]').clear();
     cy.get('[data-testid="log-search"]').type(commonLogLine);
     cy.get('[data-testid="log-search-btn"]').click();
-    cy.contains('[data-testid="log-panel-entry"]', commonLogLine).should("exist");
-    cy.contains('[data-testid="log-panel"]',employeeInfoNotFoundLogEntry).should("not.exist");
+    cy.contains('[data-testid="log-panel-entry"]', commonLogLine).should(
+      "exist"
+    );
+    cy.contains(
+      '[data-testid="log-panel"]',
+      employeeInfoNotFoundLogEntry
+    ).should("not.exist");
   }
 
   static verifyObserveOverview() {
@@ -74,7 +93,7 @@ export class ComponentObservePage {
       "employee information not found in the hr-service";
     const emptyHistogramMessage =
       "No requests received during the selected time period";
-    const responseTimeRegexp = /\d+\sms/;
+    const responseTimeRegexp = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}[+-]\d{2}:\d{2}/;
     let d;
     let prevY;
     let finalX;
@@ -83,10 +102,20 @@ export class ComponentObservePage {
     cy.get(".worker-line").should("exist");
     cy.get('[data-testid="preloader"]').should("not.exist");
 
-    cy.contains('[data-testid="histogram-throughput"]',emptyHistogramMessage).should("not.exist");
-    cy.contains('[data-testid="histogram-response-time"]',emptyHistogramMessage).should("not.exist");
-    cy.get('[data-testid="histogram-throughput"]').get("g.recharts-layer.recharts-area").should("exist");
-    cy.get('[data-testid="histogram-response-time"]').get("g.recharts-layer.recharts-area").should("exist");
+    cy.contains(
+      '[data-testid="histogram-throughput"]',
+      emptyHistogramMessage
+    ).should("not.exist");
+    cy.contains(
+      '[data-testid="histogram-response-time"]',
+      emptyHistogramMessage
+    ).should("not.exist");
+    cy.get('[data-testid="histogram-throughput"]')
+      .get("g.recharts-layer.recharts-area")
+      .should("exist");
+    cy.get('[data-testid="histogram-response-time"]')
+      .get("g.recharts-layer.recharts-area")
+      .should("exist");
 
     cy.log("Asserting the default log panel");
     cy.get('[data-testid="log-panel"]').should("exist");
@@ -104,39 +133,46 @@ export class ComponentObservePage {
           const arr = v.split(",");
           if (prevY !== undefined && prevY !== arr[1]) {
             //Added margins to the coordinates manually
-            finalX = arr[0]+95;
-            finalY = arr[1]-30;
+            finalX = arr[0] + 95;
+            finalY = arr[1] - 30;
             break;
           }
           prevY = arr[1];
         }
 
-        cy.get('[data-testid="histogram-throughput"]').find("svg").click(Math.round(finalX), Math.round(finalY));
+        cy.get('[data-testid="histogram-throughput"]')
+          .find("svg")
+          .click(Math.round(finalX), Math.round(finalY));
         cy.get('[data-testid="preloader"]').should("not.exist");
 
-        cy.log("Asserting the log panel after clicking on the very first point in the latency graph");
-        cy.contains('[data-testid="log-panel"]',employeeInfoNotFoundLogEntry).should("not.exist");
+        cy.log(
+          "Asserting the log panel after clicking on the very first point in the latency graph"
+        );
+        cy.contains(
+          '[data-testid="log-panel"]',
+          employeeInfoNotFoundLogEntry
+        ).should("not.exist");
 
         cy.log("Asserting the request list");
-        cy.get('[data-testid="request-table"]', { timeout: 60000 }).should("exist");
-        cy.get('[data-testid="request-information"]').its("length").should("be.gte", 1);
+        cy.get('[data-testid="log-panel"]', SHORT_TIME).should(
+          "exist"
+        );
+        cy.get('[data-testid="log-panel-entry"]')
+          .its("length")
+          .should("be.gte", 1);
 
-        cy.get('[data-testid="request-information"]').eq(0).find("div>div").then(($elements) => {
+        cy.get('[data-testid="log-panel-entry"]')
+          .eq(0)
+          .find("div>div")
+          .then(($elements) => {
             expect($elements[0].textContent).to.match(responseTimeRegexp);
-            expect($elements[1].textContent).to.contain(":");
-            expect($elements[2].textContent).to.be.empty;
           });
-       
-         cy.get('[data-testid="request-information"]').eq(1).click().find('div>div').then(($elements) => {
-             expect($elements[0].textContent).to.match(responseTimeRegexp);
-             expect($elements[1].textContent).to.contain(':');
-         });
       });
   }
 
   static verifyDiagnosticView() {
     const timestampRegex =
-      /(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/\d{4}\s([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/;
+      /\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2}:\d{2}/;
     const numberOfBins = 5;
 
     cy.log("Waiting for the diagram to be rendered");
@@ -144,7 +180,9 @@ export class ComponentObservePage {
     cy.get('[data-testid="diagnostics-view-tab"]').should("be.visible");
 
     cy.log("Accessing the diagnostics view");
-    cy.get('[data-testid="diagnostics-view-tab"]').click().then(() => {
+    cy.get('[data-testid="diagnostics-view-tab"]')
+      .click()
+      .then(() => {
         cy.get('[data-testid="time-interval-loader"]').should("not.exist");
         cy.get('[data-testid="logs-loader"]').should("not.exist");
         cy.get('[data-testid="error-graph-loader"]').should("not.exist");
@@ -164,11 +202,19 @@ export class ComponentObservePage {
         cy.get('[data-testid="time-interval-5"]').should("not.exist");
         cy.get('[data-testid="logs-partition-5"]').should("not.exist");
         cy.log("Verifying whether all the graphs are rendered");
-        cy.get('[data-testid="error-graph"]', { timeout: 60000 }).should("exist");
-        cy.get('[data-testid="throughput-graph"]', { timeout: 60000 }).should("exist");
-        cy.get('[data-testid="latency-graph"]', { timeout: 60000 }).should("exist");
-        cy.get('[data-testid="cpu-graph"]', { timeout: 60000 }).should("exist");
-        cy.get('[data-testid="memory-graph"]', { timeout: 60000 }).should("exist");
+        cy.get('[data-testid="error-graph"]', SHORT_TIME).should(
+          "exist"
+        );
+        cy.get('[data-testid="throughput-graph"]', SHORT_TIME).should(
+          "exist"
+        );
+        cy.get('[data-testid="latency-graph"]', SHORT_TIME).should(
+          "exist"
+        );
+        cy.get('[data-testid="cpu-graph"]', SHORT_TIME).should("exist");
+        cy.get('[data-testid="memory-graph"]', SHORT_TIME).should(
+          "exist"
+        );
 
         cy.log("Scroll the graph and check selector repositioning");
         cy.get('[data-testid="diagnostics-view-slider"]').should("be.visible");
@@ -180,13 +226,19 @@ export class ComponentObservePage {
         cy.get('[data-testid="flame-graph-btn"]').click();
         cy.get('[data-testid="flame-graph-loader"]').should("not.exist");
 
-        cy.get('[data-testid="flame-graph-message-container"]', {timeout: 60000,}).should("be.visible");
+        cy.get('[data-testid="flame-graph-message-container"]', {
+          timeout: 60000,
+        }).should("be.visible");
 
         cy.get('[data-testid="flame-graph"]').should("exist");
         cy.get('[data-testid="latencies-for-flame-graph"]').should("exist");
-        cy.log("Close the flame graph and navigate to the diagnostics view again");
+        cy.log(
+          "Close the flame graph and navigate to the diagnostics view again"
+        );
         cy.get('[data-testid="flame-graph-close-btn"]').should("be.visible");
-        cy.get('[data-testid="flame-graph-close-btn"]').click().then(() => {
+        cy.get('[data-testid="flame-graph-close-btn"]')
+          .click()
+          .then(() => {
             cy.get('[data-testid="cpu-graph-loader"]').should("not.exist");
             cy.get('[data-testid="cpu-graph"]').should("exist");
           });

@@ -1,0 +1,13 @@
+{
+  "columns": [
+    {
+      "name": "TimeGenerated",
+      "type": "datetime"
+    },
+    {
+      "name": "Logs",
+      "type": "dynamic"
+    }
+  ],
+  "rows": "@ignore@"
+}

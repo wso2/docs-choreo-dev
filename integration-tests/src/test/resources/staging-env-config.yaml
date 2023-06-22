@@ -1,9 +1,11 @@
+dps:
+  REGIONS: EU,US
 accountInfo:
   TEST_USER_EMAIL: choreo-integration-test-user-stage@wso2.com@carbon.super
   #TEST_USER_PASSWORD:
-  #TEST_CHOREO_ORG_ID:
+  TEST_CHOREO_ORG_ID:
   TEST_CHOREO_ORG_HANDLE: choreointegrationtestuserstage
-  #TEST_CHOREO_ORG_UUID:
+  TEST_CHOREO_ORG_UUID:
 authInfo:
   STS_ENDPOINT: https://sts.st.choreo.dev
   #STS_CLIENT_ID:
@@ -32,21 +34,6 @@ alerts:
   #ALERT_MAIL_IMAP_PASS:
   ALERT_ORG_UUID: 29990a7a-98f0-4757-88c3-7f54c0d4b47a
   ALERT_RELEASE_ID: f13c83b7-18fa-4f77-a3c0-38dfb6e70784
-anomalyDetection:
-  #ANOMALY_DETECTION_MAIL_IMAP_PASS:
-  ANOMALY_DETECTION_PASSTHROUGH_CLIENT_ID: uncnHszy9dBGcayoTimmPY_2QW4a
-  #ANOMALY_DETECTION_PASSTHROUGH_CLIENT_SECRET:
-  ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_ID: 6f451faf-3470-4ef6-ba72-5106e9732da0
-  ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_NAME: stageintegrationtestpassthroughservice
-  ANOMALY_DETECTION_PASSTHROUGH_RELEASE_ID: ab89197a-0ebb-4824-886c-a1156611bc42
-  ANOMALY_DETECTION_PASSTHROUGH_INVOKE_URL: https://b8fb26a4-a72f-4c2a-96ee-3c556e0fd6bb-prod.e1-us-east-azure.st.choreoapis.dev/usbc/stageintegrationtestpassthroughservice/1.0.0
-  ANOMALY_DETECTION_PASSTHROUGH_VERSION_ID: 53f66744-5046-4792-8938-6a03f92a8887
-  ANOMALY_DETECTION_PROJECT_ID: 2d175c77-98e4-42ed-a688-25aef3fbb7b3
-  ANOMALY_DETECTION_TEST_CHOREO_ORG_ID: 1567
-  ANOMALY_DETECTION_TEST_CHOREO_ORG_UUID: b8fb26a4-a72f-4c2a-96ee-3c556e0fd6bb
-  ANOMALY_DETECTION_TEST_USER_EMAIL: choreoanomalydetectortest@gmail.com@carbon.super
-  ANOMALY_DETECTION_TEST_CHOREO_ORG_HANDLE: choreoanomalydetectorteststageaeuhd
-  #ANOMALY_DETECTION_TEST_USER_PASSWORD:
 themeManagement:
   THEME_ENDPOINT: https://apis.st.choreo.dev
   CDN_THEME_ENDPOINT: https://choreostgdevportalcdn96.blob.core.windows.net/

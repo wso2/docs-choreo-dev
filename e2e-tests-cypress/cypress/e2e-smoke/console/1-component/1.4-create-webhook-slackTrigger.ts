@@ -11,9 +11,10 @@
  * associated services.
  */
 
+import { Enums } from "../../../support/commons/enums";
+import { Utils } from "../../../support/commons/utils";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
-import { Enums } from "../../../support/console/enums";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
@@ -21,24 +22,26 @@ import { ComponentOverviewPage } from "../../../support/console/pages/component/
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { Utils } from "../../../support/console/utils";
 import { GitHub } from "../../../support/github/github";
 import { ComponentData } from "../../../support/interfaces/component-data";
 
 describe("Verify webhook creation functionality", () => {
   const CONFIG = "pkKgDNr5vGND364IsHzwGM7O";
-  const WEBHOOK_NAME = "create-webhook-slackTrigger-1.4";
+  const WEBHOOK_NAME = Utils.generateComponentName();
   const REPO_NAME = Utils.generateComponentName("repo");
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Slack Webhook";
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("slack-web-hook")
   });
 
   after(() => {
     ChoreoHomePage.logout();
+  });
+
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
   });
 
   it("Verify Webhook component creation", () => {
@@ -55,17 +58,21 @@ describe("Verify webhook creation functionality", () => {
       repositorySubPath: "",
       sampleTemplate: "",
     };
-    ProjectListingPage.createNewProject(
+
+    GraphQL.createComponent(
       PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.US
+      REPO_NAME,
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
     );
-    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
+  });
+
+  it("Navigate to deployment", () => {
+    ComponentListingPage.visitToAComponent(WEBHOOK_NAME);
+    ComponentOverviewPage.navigateToDeploy();
   });
 
   it("Deploy the component", () => {
-    ComponentListingPage.visitToAComponent(WEBHOOK_NAME);
-    ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.configureAndDeploy(CONFIG);
   });
 
@@ -79,13 +86,10 @@ describe("Verify webhook creation functionality", () => {
     cy.get('[data-testid="feature-disable-info"]').should("be.visible");
   });
 
-  it("Verify suspending Dev deployed component", () => {
+  it("Verify suspending all deployments", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopDevContainer();
-  });
-
-  it("Verify suspending Prod deployed component", () => {
-    ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopProdContainer();
   });
+
 });

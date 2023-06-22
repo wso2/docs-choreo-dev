@@ -134,4 +134,9 @@ public class GitHub extends ControlPlaneAPI {
         String request = ObjectMapperUtil.mapToString(requestBodyMap);
         return HttpClientUtil.httpPUT(requestURI, request, AUTH_HEADER, "");
     }
+    
+    public static Response deleteBranch(String orgName, String repoName, String branchName) throws IOException {
+        String requestURI = GH_URL + "/repos/" + orgName + "/" + repoName + "/git/refs/heads/" + branchName;
+        return HttpClientUtil.httpDELETE(requestURI, AUTH_HEADER, "");
+    }
 }

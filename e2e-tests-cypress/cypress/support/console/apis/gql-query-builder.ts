@@ -1,7 +1,6 @@
-import { AbsComponent } from "../../interfaces/abs-component";
 import { ByocComponent } from "../../interfaces/byoc-component"
 import { ComponentData } from "../../interfaces/component-data";
-import { Enums } from "../enums";
+
 
 export class GraphQLQueryBuilder {
 
@@ -66,7 +65,54 @@ export class GraphQLQueryBuilder {
     }
   }
 
-  static getComponentDeploymentStatus(orgHandler: string, orgUuid: string, componentId: string, versionId: string, environmentId: string) {
+  static getEndpointStatusQuery(componentId: string, versionId: string, releaseId: string) {
+    return {
+      query: `query List {
+      componentEndpoints(
+        input: {
+          componentId: "${componentId}"
+          versionId: "${versionId}"
+        options: {
+          filter: {
+            releaseIds: ["${releaseId}"]
+          }
+        }
+      }) 
+        {
+          id
+          createdAt
+          updatedAt
+          releaseId
+          environmentId
+          displayName
+          port
+          type
+          apiContext
+          apiDefinitionPath
+          invokeUrl
+          visibility
+          hostName
+          apimId
+          apimRevisionId
+          apimName
+          projectUrl
+          organizationUrl
+          publicUrl
+          state
+          stateReason {
+            code
+            message
+            details
+            workerId
+          }
+          isDeleted
+          deletedAt
+        } 
+      }`
+    }
+  }
+
+  static getComponentDeploymentStatusQuery(orgHandler: string, orgUuid: string, componentId: string, versionId: string, environmentId: string) {
     return {
       query: `query {
                          componentDeployment(
@@ -125,15 +171,15 @@ export class GraphQLQueryBuilder {
           orgHandler: "${byocComponent.handle}",
           projectId: "${projectId}",
           labels: "",
-          componentType: "${Enums.ComponentType.BYOC_REST_API}",
-          port: 80,
-          oasFilePath: "byoc-test/oas.yaml",
+          componentType: "${byocComponent.componentType}",
+          port: ${byocComponent.port},
+          oasFilePath: "${byocComponent.oasFilePath}",
           accessibility: "${byocComponent.accessibility}",
           byocConfig: {
-            dockerfilePath:  "byoc-test/Dockerfile",
-            dockerContext:"byoc-test",
-            srcGitRepoUrl:"https://github.com/choreo-test-apps/byor-greetings-app2",
-            srcGitRepoBranch: "main"
+            dockerfilePath:  "${byocComponent.byocConfig.dockerfilePath}",
+            dockerContext:"${byocComponent.byocConfig.dockerContext}",
+            srcGitRepoUrl:"${byocComponent.byocConfig.srcGitRepoUrl}",
+            srcGitRepoBranch: "${byocComponent.byocConfig.srcGitRepoBranch}",
           }
         }
       ) 
@@ -198,4 +244,142 @@ export class GraphQLQueryBuilder {
 
   }
 
+
+
+  static getBuildsByVersionQuery(orgHandler: string, componentId: string, versionId: string) {
+
+    return {
+      query: `query {
+      buildsByVersion(
+        orgHandler: "${orgHandler}"
+        build: {
+          componentId: "${componentId}"
+          versionId: "${versionId}"
+    }
+      ) {
+        id,
+        createdDate,
+        versionId,
+        buildId,
+        commitHash,
+        commitMessage,
+        revisions {
+          revisionId,
+          createdDate,
+          description,
+          environments
+        }
+    }
+}`
+    }
+  }
+
+
+
+
+
+  static getEnvironments(uuid: string, projectId: string) {
+    return {
+      query: `query {
+        environments(orgUuid:"${uuid}", type: "external",
+    projectId:"${projectId}"
+    ){
+          name,
+          id,
+          choreoEnv,
+          vhost,
+          apiEnvName,
+          isMigrating,
+          apimEnvId,
+          namespace,
+          sandboxVhost,
+          critical,
+          isPdp
+        }
+      }`
+    }
+  }
+
+
+  static getPrxoyDeployments(orgHandle: string, orgUUID: string, componentId: string, versionId: string, environmentId: string) {
+    return {
+      query: `query {
+        proxyDeployment(
+          orgHandler: "${orgHandle}"
+          orgUuid:"${orgUUID}"
+          componentId: "${componentId}"
+          versionId: "${versionId}"
+          environmentId: "${environmentId}"
+        ) {
+          apiId,
+          environment {
+            choreoEnv,
+            name,
+            id
+          },
+          lifecycleStatus,
+          version,
+          invokeUrl,
+          endpoint,
+          sandboxEndpoint,
+          apiRevision {
+            id,
+            displayName,
+            createdTime
+          },
+          build {
+            id
+            baseRevisionId
+            deployedRevisionId
+          },
+          deployedTime,
+          successDeployedTime
+        }
+      }`
+    }
+  }
+
+
+
+  static getLifeCycleChangeQuery(projectId: string, componentHandler: string) {
+    return {
+      query: `query{    component(      projectId: "${projectId}"      componentHandler: "${componentHandler}"    )
+{      id,
+ name,
+ handler,
+ description,
+ displayType,
+ displayName,
+ ownerName,
+ orgId,
+ orgHandler,
+ version,
+ labels,
+ createdAt,
+ updatedAt,
+ projectId,
+ apiId,
+ repository{
+ nameApp,
+ nameConfig,
+ branch,
+ branchApp,
+ organizationApp,
+ organizationConfig,
+ isUserManage      },
+ apiVersions{
+ apiVersion,
+ proxyName,
+ proxyUrl,
+ proxyId,
+ id,
+ state,
+ latest,
+ branch,
+ appEnvVersions{
+ environmentId,
+ releaseId,
+ release{ id, metadata{choreoEnv},environmentId,environment,gitHash,gitOpsHash,}}}}}`,
+    };
+  }
 }

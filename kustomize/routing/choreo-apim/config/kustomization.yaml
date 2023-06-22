@@ -1,0 +1,25 @@
+configMapGenerator:
+  - name: nginx-lua-modules
+    behavior: create
+    files:
+      - cache.lua
+      - split.lua
+      - util.lua
+  - name: internal-nginx-lua-modules
+    behavior: create
+    files:
+      - cache.lua
+      - split.lua
+      - util.lua=internal-util.lua
+  - name: nginx-ca-cert
+    behavior: create
+    files:
+      - ca-certs.pem
+  - name: nginx-default-vhost
+    behavior: create
+    files:
+      - default.conf
+  - name: internal-nginx-default-vhost
+    behavior: create
+    files:
+      - default.conf=internal-default.conf

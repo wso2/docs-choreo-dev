@@ -19,6 +19,7 @@ query{
         projectId,
         apiId,
         httpBased,
+        isMigrationCompleted,
         repository{
           nameApp,
           nameConfig,
@@ -27,7 +28,17 @@ query{
           organizationApp,
           organizationConfig,
           isUserManage,
-          appSubPath
+          appSubPath,
+          byocBuildConfig {
+            id,
+            isMainContainer,
+            containerId,
+            componentId,
+            repositoryId,
+            dockerContext,
+            dockerfilePath,
+            oasFilePath,
+          }
         },
         apiVersions{
           apiVersion,

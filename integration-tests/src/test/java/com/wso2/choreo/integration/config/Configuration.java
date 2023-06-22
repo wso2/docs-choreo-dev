@@ -16,6 +16,7 @@ package com.wso2.choreo.integration.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
@@ -49,11 +50,11 @@ public class Configuration {
                         getResource(testConfig)).toURI()), ConfigYaml.class);
 
         List<Map<String, String>> yamlConfigCollection = new ArrayList<>() {{
+            add(configYaml.dps);
             add(configYaml.accountInfo);
             add(configYaml.authInfo);
             add(configYaml.common);
             add(configYaml.alerts);
-            add(configYaml.anomalyDetection);
             add(configYaml.insights);
             add(configYaml.themeManagement);
         }};
@@ -89,6 +90,7 @@ public class Configuration {
                 }
             }
         }
+
 
     }
 

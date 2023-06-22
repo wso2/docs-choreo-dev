@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_38=Required by LinkerD
+  labels:
+    choreo.component: choreo-marketplace
+  name: choreo-marketplace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: choreo-marketplace
+  strategy: { }
+  template:
+    metadata:
+      labels:
+        choreo.component: choreo-marketplace
+        antiaffinity: choreo-marketplace
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: choreo-marketplace
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-marketplace:latest
+          ports:
+            - containerPort: 9090
+              name: service-port
+            - containerPort: 9091      # To be used for readiness/liveness probes (internal)
+              name: health-port
+          readinessProbe:
+            initialDelaySeconds: 60
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health-port
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health-port
+              path: /liveness
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: 300m
+              memory: 768Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
+            - name: secret-choreo-marketplace
+              mountPath: "/mnt/csi/secret-choreo-marketplace"
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: cm-file-choreo-marketplace
+        - name: secret-choreo-marketplace
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-choreo-marketplace
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - choreo-marketplace
+              topologyKey: kubernetes.io/hostname

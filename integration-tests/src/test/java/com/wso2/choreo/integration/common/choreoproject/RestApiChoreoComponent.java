@@ -62,7 +62,8 @@ public class RestApiChoreoComponent extends ChoreoComponent {
                 .concat("greeting")
                 .concat("?name=testUser");
         // Escaping the quotations
-        String apiKey = getAPIKeyForInvoke(accessToken, invokeInformation.getApiId()).replace("\"", "");
+        String apiKey = getAPIKeyForInvoke(accessToken, invokeInformation.getApiId(),
+                environment).replace("\"", "");
         int iteration = 0;
         HttpGet request = new HttpGet(requestURI);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);

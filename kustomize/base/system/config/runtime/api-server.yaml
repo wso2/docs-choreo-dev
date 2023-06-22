@@ -51,6 +51,7 @@ upstream:
   dp-cicd: dp-cicd:80
   dp-rudder: dp-rudder:80
   organization-management: organization-management:8080
+  marketing-content-storage-url: ${MARKETING_CONTENT_STORAGE_URL}
 redis:
   host: ${REDIS_HOST}
   port: 6380

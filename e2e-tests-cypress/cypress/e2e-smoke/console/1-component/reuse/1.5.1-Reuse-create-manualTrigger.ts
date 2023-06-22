@@ -11,7 +11,8 @@
  * associated services.
  */
 
-import { Enums } from "../../../../support/console/enums";
+
+import { Enums } from "../../../../support/commons/enums";
 import { ComponentDeployPage } from "../../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../../support/console/pages/component/component-listing-page";
 import { ComponentOverviewPage } from "../../../../support/console/pages/component/component-overview-page";
@@ -19,7 +20,6 @@ import { ChoreoHomePage } from "../../../../support/console/pages/home/home-page
 import { LoginPage } from "../../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../../support/console/pages/projects/projects-listing-page";
-import { GitHub } from "../../../../support/github/github";
 import { ComponentData } from "../../../../support/interfaces/component-data";
 
 
@@ -29,7 +29,6 @@ describe("Verify Reusable Manual Trigger creation functionality", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("manual-trigger")
   });
 
   after(() => {
@@ -56,10 +55,13 @@ describe("Verify Reusable Manual Trigger creation functionality", () => {
     ProjectOverviewPage.searchReuseComponent(componentData);
   });
 
-  it("Verify component deployment", () => {
+  it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(MANUAL_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployManualTriggerToDev();
+  });
+
+  it("Verify component deployment", () => {
+    ComponentDeployPage.reDeployToDev(false, false, true);
   });
 
   it("Verify component promotion to prod", () => {

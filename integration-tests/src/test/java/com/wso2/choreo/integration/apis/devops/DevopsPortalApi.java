@@ -15,6 +15,7 @@ package com.wso2.choreo.integration.apis.devops;
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.message.MessageType;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
@@ -28,6 +29,7 @@ import org.springframework.http.MediaType;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 /**
@@ -62,8 +64,11 @@ public class DevopsPortalApi extends ControlPlaneAPI {
         payloadMap.put("data", varMap);
         String payload = ObjectMapperUtil.mapObjectToString(payloadMap);
 
-        runner.$(http()
-                .client(DEVOPS_ENDPOINT)
+        runner.$(repeatOnError()
+                .until("i = 12")
+                .index("i")
+                .autoSleep(5000)
+                .actions((http().client(DEVOPS_ENDPOINT)
                 .send()
                 .put(url)
                 .queryParam("organization_id", orgUuid)
@@ -73,7 +78,7 @@ public class DevopsPortalApi extends ControlPlaneAPI {
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(payload)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)))));
 
         runner.$(http()
                 .client(DEVOPS_ENDPOINT)
@@ -111,17 +116,18 @@ public class DevopsPortalApi extends ControlPlaneAPI {
         final Map<String, String> envVariableMap = new HashMap<>();
         final String url = "/components/integration/" + componentId + "/release/" + releaseId + "/environment-variables";
 
-        runner.$(http()
-                .client(DEVOPS_ENDPOINT)
-                .send()
-                .get(url)
-                .queryParam("organization_id", orgUuid)
-                .queryParam("project_id", projectId)
-                .queryParam("env_id", environmentId)
+        runner.$(repeatOnError()
+                .until("i = 12")
+                .index("i")
+                .autoSleep(5000)
+                .actions((http().client(DEVOPS_ENDPOINT).send().get(url)
+                                .queryParam("organization_id", orgUuid)
+                                .queryParam("project_id", projectId)
+                                .queryParam("env_id", environmentId)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)))));
 
         runner.$(http()
                 .client(DEVOPS_ENDPOINT)
@@ -139,5 +145,58 @@ public class DevopsPortalApi extends ControlPlaneAPI {
                     envVariableMap.putAll(map);
                 }));
         return envVariableMap;
+    }
+
+    /**
+     * Create or update secret for component
+     * @param runner Test action runner
+     * @param accessToken Access token
+     * @param varMap Environment Variables Map
+     * @param componentId Component ID
+     * @param environmentId Environment ID which the variables are applied to
+     * @param releaseId Release ID
+     * @param orgUuid Organization UUID
+     * @param projectId Project ID
+     * @return Created or updated secrets
+     */
+    public static JsonArray createOrUpdateMiSecret(TestActionRunner runner, String accessToken,
+            Map<String, String> varMap, String componentId,
+            String environmentId, String releaseId, String orgUuid,
+            String projectId) {
+
+        final JsonArray secrets = new JsonArray();
+
+        final String url = "/components/integration/" + componentId + "/release/" + releaseId + "/secrets";
+        Map<String, Map<String, String>> payloadMap = new HashMap<>();
+        payloadMap.put("data", varMap);
+        String payload = ObjectMapperUtil.mapObjectToString(payloadMap);
+
+        runner.$(repeatOnError()
+                .until("i = 12")
+                .index("i")
+                .autoSleep(5000)
+                .actions((http().client(DEVOPS_ENDPOINT)
+                        .send()
+                        .put(url)
+                        .queryParam("organization_id", orgUuid)
+                        .queryParam("project_id", projectId)
+                        .queryParam("env_id", environmentId)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(payload)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)))));
+
+        runner.$(http()
+                .client(DEVOPS_ENDPOINT)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .body(new ClassPathResource("templates/createIntegrationComponent/environment_variable_response.json"))
+                .validate((message, context) -> {
+                    secrets.addAll(new JsonParser().parse((String) message.getPayload()).getAsJsonArray());
+                }));
+        return secrets;
     }
 }

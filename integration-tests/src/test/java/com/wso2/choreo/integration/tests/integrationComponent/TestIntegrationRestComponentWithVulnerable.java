@@ -132,7 +132,6 @@ public class TestIntegrationRestComponentWithVulnerable extends TestNGCitrusSpri
         GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).latestVersionId(versionId).build();
         GraphQL.getDeploymentStatusOfFailureByVersion(this, choreoProjectsTestClient, accessToken, dto);
         runId = GraphQL.getRunId(this, choreoProjectsTestClient, accessToken, dto);
-        System.out.println(runId);
         Assert.assertNotNull(runId);
     }
 

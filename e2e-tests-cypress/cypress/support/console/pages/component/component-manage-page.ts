@@ -11,11 +11,15 @@
  * associated services.
  */
 
-import { Enums } from "../../enums";
-
+import { cyGet } from "../../../commons/cy";
+import { Enums } from "../../../commons/enums";
+import { LONG_TIME } from "../../../commons/timeouts";
+import { Utils } from "../../../commons/utils";
+import { GraphQL } from "../../apis/graphql";
 
 export class ComponentAPILifecycle {
   static devportl_btn = '[data-testid="go-to-dev-portal-btn"]';
+  private static MANAGE_MENU = '[data-cyid="link-manage"]';
 
   static republishConnector() {
     cy.get('[data-testid="republish-connector-btn"]').scrollIntoView().click();
@@ -31,7 +35,7 @@ export class ComponentAPILifecycle {
   }
 
   static manageLifecycle() {
-    cy.get('[data-testid="Lifecycle"]').click();
+    this.selectLifeCycle();
   }
   static verifyDevRevision() {
     return cy
@@ -41,7 +45,8 @@ export class ComponentAPILifecycle {
   }
 
   static publish(audience: Enums.ConnectorAudience) {
-    this.publishToMarketplace(audience);
+    this.changeLifeCycleToPublished(audience);
+    this.publishConnector(audience);
     return cy
       .get(ComponentAPILifecycle.devportl_btn)
       .focus()
@@ -63,47 +68,81 @@ export class ComponentAPILifecycle {
   }
 
   static demoteToCreated() {
-    cy.get('[data-testid="Demote to Created-lc-btn"]').click();
-    cy.get(ComponentAPILifecycle.devportl_btn).should("not.be.enabled");
+    cy.get('[data-cyid="Demote to Created-lc-btn"]')
+      .should("be.visible")
+      .click();
+    cy.get(ComponentAPILifecycle.devportl_btn).should("be.disabled");
   }
 
+  static goToDeveloperPortalWithoutLogin(projectName: string, componentName: string, idpUser: string = "") {
 
-  static goToDeveloperPortalWithoutLogin(idpUser: string = "") {
+    const loginUrl = Cypress.env("devportalLoginURL");
+    const { uuid, handle } = Cypress.env("userData");
+    
+    GraphQL._getAPIInfo(projectName, componentName).then(res => {
+      const { latestVersionId } = res
 
-    let devportalURL = Cypress.env("devportalURL")
-    cy.get("[data-cyid=go-to-dev-portal-btn]")
-      .parent()
-      .invoke("attr", "href")
-      .then((href) => {
-      
-        cy.log(devportalURL)
-        if (!devportalURL) {
-          devportalURL = href + "&fidp=" + idpUser
-          Cypress.env("devportalURL", devportalURL)
-        }
-        cy.visit(devportalURL)
-      });
+
+      let devportalURL = `${loginUrl}/${handle}/apis/${latestVersionId}?fidp=${idpUser}&orgUuid=${uuid}`;
+      cy.visit(devportalURL);
+    })
   }
 
   static selectUsagePlans(...plans) {
-    cy.get('[data-testid="Usage plans"]').click();
+    this.selectUsage();
     cy.get('[data-testid="checkbox-Unlimited"]').click();
-    plans.forEach((plan) => { const pln = `[data-testid="checkbox-${plan}"]`; cy.get(pln).click(); });
+    plans.forEach((plan) => {
+      cy.get(`[data-testid="checkbox-${plan}"]`).click();
+    });
     cy.get("button > span").contains("Save").click();
     cy.get('[data-testid="checkbox-Unlimited"]');
   }
 
+  private static handleConnectorPublishBehavior(retryCount = 0) {
+    retryCount++;
 
-  static publishToMarketplace(connectorAudience: Enums.ConnectorAudience) {
+    // Handle breaking out of recursion after retrying in case Choreo UI gets stuck
+    if (retryCount > 7) {
+      return;
+    }
+
+    cy.get("body").then((bdy) => {
+      if (
+        // Popup wizard
+        bdy.find('[data-testid="connector-publish-wizard-title"]').length > 0
+      ) {
+        if (bdy.find('[data-testid="retry-btn"]').length > 0) {
+          cy.get('button[aria-label="close"]').eq(1).click();
+        } else {
+          cy.wait(20000);
+          this.handleConnectorPublishBehavior(retryCount);
+        }
+      } else if (
+        // Ongoing publishing label
+        bdy.find('[data-testid="connector-publishing-info"]').length > 0
+      ) {
+        cy.wait(20000);
+        this.handleConnectorPublishBehavior(retryCount);
+      }
+    });
+  }
+
+  static changeLifeCycleToPublished(
+    connectorAudience: Enums.ConnectorAudience
+  ) {
     cy.get('[data-testid="Publish-lc-btn"]').click();
     cy.get('[aria-labelledby="confirmation-dialog"]').should("be.visible");
     cy.contains("Yes, Please").should("be.enabled").click();
     cy.get('[data-testid="publish-btn"]').should("be.enabled");
+  }
+
+  static publishConnector(connectorAudience: Enums.ConnectorAudience) {
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').should("be.enabled").click();
-    cy.wait(1000);
+    this.handleConnectorPublishBehavior();
     cy.get('[data-testid="published-connector-info"]').contains(
-      "You have already published a connector for this API.", { timeout: 300000 }
+      /You have already published a connector for this API.|Successfully published the connector to the Marketplace./,
+      LONG_TIME
     );
     cy.get('[data-testid="connector-publish-wizard-title"]').should(
       "not.exist"
@@ -123,7 +162,7 @@ export class ComponentAPILifecycle {
     allowedHeaders: string[],
     allowedMethods: string[]
   ) {
-    cy.get('[data-testid="Settings"]').click();
+    this.selectSettings();
     cy.get('[data-testid="switch-cors-config"]');
     if (isCORSenable) {
       cy.contains("Edit").click();
@@ -181,7 +220,11 @@ export class ComponentAPILifecycle {
   }
 
   static selectSetting() {
-    cy.get('[data-testid="Settings"]').click();
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.get('[data-cyid="manage-settings"]').click();
+    } else {
+      cy.get('[data-testid="Settings"]').click();
+    }
   }
 
   static selectResources() {
@@ -193,7 +236,10 @@ export class ComponentAPILifecycle {
   }
 
   static selectEnvironment(env: Enums.Environment) {
-    cy.get('[data-cyid="environment-selector"]').should("be.visible").click();
+    cy.get('[data-cyid="environment-selector"]')
+      .should("be.visible")
+      .scrollIntoView()
+      .click();
     cy.get(`[data-value="${env}"]`).click();
     cy.get('[data-cyid="environment-selector"]>div>div')
       .invoke("text")
@@ -211,23 +257,26 @@ export class ComponentAPILifecycle {
   }
 
   static disableResourceSecurity(resource: string) {
-    cy.get(`[id="panel-/${resource}/get-header"]`).scrollIntoView().click();
-    cy.get(`[id="panel-/${resource}/get-content"] [data-testid="security"]`)
-      .scrollIntoView()
-      .click();
+    cyGet(`[id="panel-/${resource}/get-header"]`).scrollIntoView().click();
+    cy.get(`[data-testid="security"]`).scrollIntoView().click();
   }
 
   static applyConfiguration() {
     cy.get('[data-cyid="btn-save-settings"]').click();
     cy.get("button").contains("Apply").click().wait(2000);
     cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
-    cy.get("#panel1a-header").should("be.visible");
-    cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
     cy.wait(4000);
   }
 
   static selectConsumers() {
-    cy.get('[data-cyid="Consumers"]').click();
+    let selector = '[data-cyid="manage-consumers"]';
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.expandSecondaryMenu(selector);
+    } else {
+      selector = '[data-cyid="Consumers"]';
+    }
+
+    cy.get(selector).click();
   }
 
   static verifyConsumer(appName: string) {
@@ -235,64 +284,72 @@ export class ComponentAPILifecycle {
   }
 
   static verifyAPIVisibility(visibility: string) {
-    cy.get('[data-cyid="dropdown-api-visibility-selector"]')
-      .should("exist")
-      .should("have.text", visibility);
+    cy.get('div[role="combobox"]>div>div>input')
+      .eq(1)
+      .invoke("val")
+      .should("eq", visibility);
     cy.log("Successfully verified the API visibility", visibility);
   }
 
   static updateAPIVisibility(visibility: string) {
     cy.get('[data-cyid="tab-security-settings"]').should("be.visible");
     cy.wait(5000);
-    cy.get('[data-cyid="dropdown-api-visibility-selector"]').click();
-    cy.get(`[data-cyid="item-${visibility.toUpperCase()}"]`).focus().click();
+    cy.get('div[role="combobox"]').eq(1).click();
+    cy.get(`ul[id="Select List-popup"]>li`).contains(visibility).click();
     cy.get('[data-testid="info-banner"]').should("be.visible");
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]').wait(100).realClick();
     this.verifyAPIVisibility(visibility);
     cy.log("Successfully updated the API visibility");
   }
 
-
-
   static updateAPIAccessMode(accessMode: string) {
-    cy.get('[data-cyid="dropdown-api-access-mode-selector"]>div')
-      .should("be.visible")
-      .click({ force: true });
-    cy.get(`[data-cyid="item-${accessMode}"]`)
-      .should("exist")
-      .click({ force: true });
-    cy.get('[data-testid="warning-banner"]').should("be.visible");
-    cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
-      .should("exist")
-      .click();
-    cy.contains(`Successfully converted to an ${accessMode} API.`).should(
-      "be.visible"
-    );
+    cyGet('[data-testid="access-mode"]',LONG_TIME).should('be.visible').click();
+    cy.contains(accessMode).should("exist").realClick();
+    cyGet('[data-testid="warning-banner"]').should("be.visible");
+    cyGet('[data-cyid="btn-confirmation-dialog-blue"]').should("exist").click();
+    cy.contains(
+      `Successfully converted to an ${accessMode.toLowerCase()} API.`
+    ).should("be.visible");
   }
 
   static managePermissions(permissions: string[], componentName: string) {
-    permissions.forEach((permission) => { this.addPermission(permission) });
+    permissions.forEach((permission) => {
+      this.addPermission(permission);
+    });
     this.applyAllPermissionsToResources(permissions);
     this.saveAndDeployPermissions(componentName);
-    this.deleteAllPermissionsFromReources();
+    this.deleteAllPermissionsFromResources();
     this.saveAndDeployPermissions(componentName);
     this.selectPermission(permissions[0]);
     this.saveAndDeployPermissions(componentName);
   }
 
   static selectPermissions() {
-    cy.get('[data-testid="Permissions"]').click();
+    let selector = '[data-cyid="manage-permissions"]';
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.expandSecondaryMenu(selector);
+    } else {
+      selector = '[data-testid="Permissions"]';
+    }
+
+    cy.get(selector).click();
   }
 
   static navigatePermissionManagementWindow() {
-    cy.get("h5").contains("You don't have any permissions (scopes) defined as yet");
+    this.selectPermissions();
+    cy.get("h5").contains(
+      "You don't have any permissions (scopes) defined as yet"
+    );
     cy.get('[data-testid="scope-add-icon-button"]').click();
   }
 
   static addPermission(permissionName: string) {
     cy.get('[data-testid="scope-add-new-btn"]').should("be.disabled");
     cy.get('[data-testid="scope-text-input"]').type(permissionName);
-    cy.get('[data-testid="scope-add-new-btn"]').should("be.enabled").click().wait(1000);
+    cy.get('[data-testid="scope-add-new-btn"]')
+      .should("be.enabled")
+      .click()
+      .wait(1000);
     cy.contains("Permission(Scope) created successfully");
     cy.get('[data-testid="scope-select-all-btn"]').should("be.visible");
     cy.get(`[data-testid="scope-item-${permissionName}"]`).should("be.visible");
@@ -313,15 +370,13 @@ export class ComponentAPILifecycle {
       .should("have.length", permissions.length * 3);
   }
 
-  static deleteAllPermissionsFromReources() {
+  static deleteAllPermissionsFromResources() {
     cy.get('[data-testid="scope-delete-all-btn"]').click();
     // This can be enabled after fixing the bug in the autocomplete
     // https://github.com/wso2-enterprise/choreo/issues/17547
 
     // this.verifyDeleteAllPermissionsFromReources();
   }
-
-
 
   static selectPermission(permissionName: string) {
     cy.get(`[data-testid="scope-item-checkbox-${permissionName}"]`).click();
@@ -331,19 +386,18 @@ export class ComponentAPILifecycle {
     // This can be enabled after fixing the bug in the autocomplete
     // https://github.com/wso2-enterprise/choreo/issues/17521
 
-    // cy.get('[data-testid="autocomplete-textfield"]').click();
-    // cy.get('li[data-option-index="0"]').contains(permissionName).then((option) => {
+    //cy.get('[data-testid="autocomplete-textfield"]').click();
+    //cy.get('li[data-option-index="0"]').contains(permissionName).then((option) => {
     //   option[0].click();
     // });
   }
 
   static deletePermission(permissionName: string) {
     cy.get(`[data-testid="scope-delete-btn-${permissionName}"]`).click();
-    cy.get('[data-testid="scope-delete-description"]').contains(
-      `Are you sure you want to Delete the permission (scope) "${permissionName}"?`
-    );
     // Verify scope being used by how many resources
-    cy.get('[data-testid="scope-delete-delete-button"]').click();
+    cy.get('[data-cyid="btn-confirmation-dialog-red"]')
+      .should("be.visible")
+      .click();
     cy.contains("Permission(Scope) deleted successfully");
   }
 
@@ -351,5 +405,74 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="scope-save-and-deploy-btn"]').click();
     cy.contains("Permissions(Scopes) assigned successfully").wait(1000);
     cy.contains(`Deployed the component ${componentName}`).wait(10000);
+  }
+
+  static verifyOverviewForProjectLevelEndpoints() {
+    cy.get('[data-testid="no-endpoints-notification"]').should("be.visible");
+  }
+
+  static selectEndpoint(endpoint: string) {
+    cy.get('[data-cyid="endpoint-list"]').click();
+    cy.get('[id="backdrop-loader"]').should("not.exist");
+    cy.get('[data-cyid="endpoint-list"]').within(() => {
+      cy.get(`input[value="${endpoint}"]`).click();
+    });
+  }
+
+  static publishServiceToMarketplace() {
+    cy.get('[data-testid="Publish-lc-btn"]').click();
+    cy.get('[data-testid="Block-lc-btn"]').should("be.visible");
+    cy.get('[data-testid="Deploy as a Prototype-lc-btn"]').should("be.visible");
+    cy.get('[data-testid="Demote to Created-lc-btn"]').should("be.visible");
+    cy.get('[data-testid="Deprecate-lc-btn"]').should("be.visible");
+  }
+
+  private static expandSecondaryMenu(selector: string) {
+    cy.get("body").then((bdy) => {
+      // Secondary menu is collapsed
+      if (bdy.find(selector).length == 0) {
+        // Expand secondary menu
+        cy.get(this.MANAGE_MENU).should("be.visible").click();
+      }
+    });
+  }
+
+  private static selectLifeCycle() {
+    let selector = '[data-cyid="manage-lifecycle"]';
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.expandSecondaryMenu(selector);
+    } else {
+      selector = '[data-testid="Lifecycle"]';
+    }
+
+    cy.get(selector).click();
+  }
+
+  private static selectUsage() {
+    let selector = '[data-cyid="manage-usage"]';
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.expandSecondaryMenu(selector);
+    } else {
+      cy.get('[data-cyid="link-manage"]')
+        .should("be.visible")
+        .click({ force: true });
+      selector = '[data-testid="Usage plans"]';
+    }
+
+    cy.get(selector).click();
+  }
+
+  private static selectSettings() {
+    let selector = '[data-cyid="manage-settings"]';
+    if (Utils.isUnifiedMenuEnabled()) {
+      this.expandSecondaryMenu(selector);
+    } else {
+      cy.get('[data-cyid="link-manage"]')
+        .should("be.visible")
+        .click({ force: true });
+      selector = '[data-testid="Settings"]';
+    }
+
+    cy.get(selector).click();
   }
 }

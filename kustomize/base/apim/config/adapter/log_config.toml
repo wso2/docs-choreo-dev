@@ -24,4 +24,8 @@ logLevel = "INFO"
 [accessLogs]
 enable = true
 logfile = "/dev/stdout"
-format = "[%START_TIME%] '%REQ(:METHOD)% %REQ(X-ENVOY-ORIGINAL-PATH?:PATH)% %PROTOCOL%' %RESPONSE_CODE% %RESPONSE_FLAGS% %BYTES_RECEIVED% %BYTES_SENT% %DURATION% %RESP(X-ENVOY-UPSTREAM-SERVICE-TIME)% '%REQ(X-FORWARDED-FOR)%' '%REQ(USER-AGENT)%' '%REQ(X-REQUEST-ID)%' '%REQ(:AUTHORITY)%' '%UPSTREAM_HOST%'\n"
+
+# "secondaryLogFormat" is the log format that is append after "reservedLogFormat". This can be used by dev for debug purpose.
+# For example: secondaryLogFormat = "'%REQUEST_TX_DURATION%' '%RESPONSE_TX_DURATION%'"
+# Find the default values of "reservedLogFormat" from https://github.com/wso2/product-microgateway/blob/choreo/resources/conf/log_config.toml
+secondaryLogFormat = ""

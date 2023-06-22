@@ -11,19 +11,62 @@
  * associated services.
  */
 
+
+
+import { cyGet } from "../../../commons/cy";
+import { Enums } from "../../../commons/enums";
+import { SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
+import {
+  DEV_PORTAL_APP_KEY_GEN_URL,
+  DEV_PORTAL_SUBSCRIPTIONS_URL,
+} from "../../../commons/urls";
+
 export class ApiCredentials {
   static navigateCredentialsTab() {
     cy.get('[data-testid="credentials-item-link"]').click();
     cy.url().should("include", "/credentials");
     cy.log("Successfully navigated to credentials tab");
-    cy.wait(3000);
   }
 
-  static generateCredentials() {
+  static generateCredentials(env: Enums.Environment) {
     cy.log("Generating credentials");
-    cy.get('[data-testid="generate-creds-btn"]').click();
-    cy.wait(3000);
-    cy.get('[data-testid="generate-access-token-btn"]').should("exist");
-    cy.log("Successfully generated credentials");
+
+    cy.intercept({
+      method: "POST",
+      url: DEV_PORTAL_APP_KEY_GEN_URL,
+      times: 1,
+    }).as("generateAppKey");
+    cy.get(
+      `[data-testid="${env.toLowerCase()}-credentials-menu-item"]`
+    ).click();
+    cyGet('[data-testid="generate-creds-btn"]').click();
+    cy.get('[data-testid="remove-creds-btn"]').should("be.visible");
+    cy.get("#copy-textfield").invoke("val").should("not.be.empty");
+    cy.wait("@generateAppKey", VERY_SHORT_TIME).then(() => {
+      cy.get('[data-testid="generate-access-token-btn"]').should("exist");
+      cy.log("Successfully generated credentials");
+    });
+  }
+
+  static navigateToEnvironment(env: Enums.Environment) {
+    cy.get('[id="backdrop-loader"]').should("not.exist");
+    cy.log("Navigating to environment: " + env);
+    cy.log("DEV_PORTAL_SUBSCRIPTIONS_URL: " + DEV_PORTAL_SUBSCRIPTIONS_URL);
+    cy.intercept({
+      method: "GET",
+      url: DEV_PORTAL_SUBSCRIPTIONS_URL,
+      times: 1,
+    }).as("navigate");
+    //Had to add this due to page loading delay
+    cy.wait(VERY_SHORT_TIME.timeout);
+    cy.get(
+      `[data-testid="${env.toLowerCase()}-credentials-menu-item"]`
+    ).click();
+    cy.wait("@navigate", SHORT_TIME).then(() => {
+      cy.get('[data-testid="credentials-item-link"]')
+        .should("be.visible")
+        .click();
+      cy.log("Successfully navigated to credentials tab");
+    });
   }
 }

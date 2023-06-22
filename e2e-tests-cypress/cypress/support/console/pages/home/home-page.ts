@@ -11,67 +11,109 @@
  * associated services.
  */
 
-
+import { MENU_RENDERING_TIME } from "../../../commons/timeouts";
+import { Utils } from "../../../commons/utils";
 import { LoginPage } from "../login-page";
 
-
 export class ChoreoHomePage {
+  static navigateToHome() {
+    cy.get('[data-cyid="organization-home"]').click();
+  }
 
-    static navigateToHome() {
-        const { handle } = Cypress.env("current_org");
-        cy.get(`div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home"]`).click();
-    }
+  static navigateToProjects() {
+    cy.get('[data-testid="main-left-nav-item-Project"]').click();
+  }
 
-    static navigateToMarketPlace() {
-        cy.get('[data-testid="main-left-nav-item-Marketplace"]').click();
+  static navigateToComponents() {
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.get('[data-cyid="listing"]')
+        .realHover({ position: "left" })
+        .wait(MENU_RENDERING_TIME)
+        .click()
+        .wait(MENU_RENDERING_TIME);
+      Utils.moveMouseAwayFromLeftMenu();
+    } else {
+      cy.get('[data-testid="main-left-nav-item-Components"]').click();
     }
+  }
 
-    static navigateToProjects() {
-        cy.get('[data-testid="main-left-nav-item-Project"]').click();
+  static navigateToInsights() {
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.get('[data-cyid="usage-insights"]')
+        .realHover({ position: "left" })
+        .wait(MENU_RENDERING_TIME)
+        .click()
+        .wait(MENU_RENDERING_TIME);
+      Utils.moveMouseAwayFromLeftMenu();
+      cy.contains("Coming Soon").should("be.visible");
+      cy.get('[data-cyid="project-usage-insights"]')
+        .should("be.visible")
+        .click();
+      cy.get('[id="backdrop-loader"]').should("not.exist");
+    } else {
+      cy.get('[data-testid="main-left-nav-item-Insights"]').click();
     }
+  }
 
-    static navigateToInsights() {
-        cy.get('[data-testid="main-left-nav-item-Insights"]').click();
-    }
+  static isOrgHandleVisible(orgHandle: string) {
+    cy.get('[id="org-picker"]').click();
+    cy.get('[data-value="' + orgHandle + '"]');
+  }
 
-    static isOrgHandleVisible(orgHandle: string) {
-        cy.get('[id="org-picker"]').click();
-        cy.get('[data-value="' + orgHandle + '"]');
-    }
+  static logout() {
+    cy.request(Cypress.env("sign_out_url"));
+    cy.clearAllSessionStorage();
+    cy.clearLocalStorage();
+    cy.clearAllCookies();
+  }
 
-    static logout() {
-        cy.request(Cypress.env("sign_out_url"));
+  static navigateToSettings() {
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.get("#backdrop-loader").should("not.exist");
+      this.navigateToHome();
+      cy.get("#backdrop-loader").should("not.exist");
+      cy.get('[data-cyid="settings"]').should("be.visible").click();
+    } else {
+      cy.get("#backdrop-loader").should("not.exist");
+      cy.get('[data-testid="header-user-profile-menu"]').click();
+      cy.get('[data-testid="header-user-profile-item-settings"]')
+        .should("be.visible")
+        .contains("Settings")
+        .click();
     }
+  }
 
-    static navigateToSettings() {
-        cy.get("#backdrop-loader").should("not.exist");
-        cy.get('[data-testid="header-user-profile-menu"]').click();
-        cy.get('[data-testid="header-user-profile-item-settings"]')
-            .should("be.visible")
-            .contains("Settings")
-            .click();
+  static switchOrganization() {
+    if (Cypress.env("isPrivateOrg")) {
+      cy.get("#org-picker").click();
+      cy.get(`[data-value="${Cypress.env("privateOrgName")}"]`).click();
+      LoginPage.persistApimToken();
     }
+  }
 
-    static switchOrganization() {
-        if (Cypress.env("isPrivateOrg")) {
-            cy.get("#org-picker").click();
-            cy.get(`[data-value="${Cypress.env("privateOrgName")}"]`).click();
-            LoginPage.persistApimToken();
-        }
-    }
+  static changeToAPIPerspective() {
+    cy.get("#perspective-picker").click();
+    cy.get(".MuiList-root")
+      .should("be.visible")
+      .get(`[data-value="apim"]`)
+      .click();
+  }
 
-    static changeToAPIPerspective() {
-        cy.get('[data-testid="perspective-pickeridevp"]').click();
-        cy.get('.MuiList-root')
-            .should("be.visible")
-            .get(`[data-value="apim"]`).click();
-    }
+  static changeToIDevPerspective() {
+    cy.get('[data-testid="perspective-pickerapim"]').click();
+    cy.get(".MuiList-root")
+      .should("be.visible")
+      .get(`[data-value="idevp"]`)
+      .click();
+  }
 
-    static changeToIDevPerspective() {
-        cy.get('[data-testid="perspective-pickerapim"]').click();
-        cy.get('.MuiList-root')
-            .should("be.visible")
-            .get(`[data-value="idevp"]`).click();
-    }
+  static goToMarketplacePage() {
+    const Url = Cypress.env("baseUrl");
+    const { handle } = Cypress.env("userData");
+    
+      let marketplaceURL = `${Url}/organizations/${handle}/marketplace`;
+      cy.visit(marketplaceURL);
+    
+  }
 
 }

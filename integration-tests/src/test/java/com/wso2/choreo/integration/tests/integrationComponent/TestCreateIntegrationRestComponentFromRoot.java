@@ -19,6 +19,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.google.gson.JsonArray;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentUtils;
+import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -27,19 +28,22 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
-import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
+import com.wso2.choreo.integration.models.endpoints.Endpoint;
+import com.wso2.choreo.integration.models.environments.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpringSupport {
 
-    public static final String MI_REST_API = "miRestApi";
-    public static final String API_INVOCATION_REQUEST_URI = "/HelloWorld";
+    public static final String COMPONENT_TYPE = Constant.AppType.MI_API_SERVICE.value;
+    public static final String API_INVOCATION_REQUEST_URI = "/";
     public static final String REST_API_EXPECTED_RESPONSE = "{\"Hello\":\"Integration\"}";
     private static String accessToken;
     private String orgHandle;
@@ -49,6 +53,9 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
     private String componentId;
     private static String componentHandler;
     private String githubOrg;
+    private List<Environment> environments;
+
+    private List<Endpoint> endpoints;
 
     private static ChoreoComponent testComponent;
 
@@ -63,6 +70,9 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
 
     @Autowired
     private HttpClient choreoTestClientForSTS;
+
+    @Autowired
+    Map<Endpoints, HttpClient> citrusClients;
 
     @BeforeClass
     public void setup_TestCreateIntegrationRestComponentFromRoot()
@@ -88,7 +98,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         final String repoBranch = "main";
         String srcGitHubURL = Constant.GITHUB_URL.concat(githubOrg).concat("/").concat(repoName);
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().apiName(componentName.toLowerCase()).orgId(Integer.parseInt(orgId)).
-                orgHandler(orgHandle).displayName(componentName).componentType(MI_REST_API).
+                orgHandler(orgHandle).displayName(componentName).componentType(COMPONENT_TYPE).
                 projectId(projectId).srcGitRepoUrl(srcGitHubURL).repositorySubPath("").
                 repositoryBranch(repoBranch).build();
         componentHandler = GraphQL.createIntegrationComponent(this, choreoProjectsTestClient, accessToken,
@@ -105,6 +115,45 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
     }
 
     @Test(dependsOnMethods = {"componentRetrieval_TestCreateIntegrationRestComponentFromRoot"})
+    @CitrusTest
+    public void generateEndpointsDev_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+        Map<String,String> argMap = new HashMap<>();
+        argMap.put("componentId", testComponent.getId());
+        argMap.put("versionId", testComponent.getLatestApiVersion().getId());
+        argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+        argMap.put("commitHash", testComponent.getLatestCommitHash(testComponent.getCommitHistory(accessToken)));
+        GraphQL.generateEndpoints(this, choreoTestClient, accessToken, argMap);
+    }
+
+    @Test(dependsOnMethods = {"generateEndpointsDev_TestCreateIntegrationRestComponentFromRoot"})
+    @CitrusTest
+    public void getEndpointsDev_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+        Map<String,String> argMap = new HashMap<>();
+        argMap.put("componentId", testComponent.getId());
+        argMap.put("versionId", testComponent.getLatestApiVersion().getId());
+        argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+        endpoints = GraphQL.getEndpoints(this, choreoTestClient, accessToken, argMap);
+        Assert.assertEquals(endpoints.size(), 1);
+    }
+
+    @Test(dependsOnMethods = {"getEndpointsDev_TestCreateIntegrationRestComponentFromRoot"})
+    @CitrusTest
+    public void updateEndpointsDev_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+        Map<String,String> argMap = new HashMap<>();
+        argMap.put("componentId", testComponent.getId());
+        argMap.put("versionId", testComponent.getLatestApiVersion().getId());
+        argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+        final Endpoint endpoint = endpoints.get(0);
+        argMap.put("endpointId", endpoint.getId());
+        argMap.put("displayName", endpoint.getDisplayName());
+        argMap.put("apiContext", endpoint.getApiContext());
+        argMap.put("apiDefinitionPath", endpoint.getApiDefinitionPath());
+        argMap.put("visibility", Constant.EndpointVisibility.PUBLIC.value);
+        Endpoint updatedEndpoint = GraphQL.updateEndpoint(this, choreoTestClient, accessToken, argMap);
+        endpoints.set(0, updatedEndpoint);
+    }
+
+    @Test(dependsOnMethods = {"updateEndpointsDev_TestCreateIntegrationRestComponentFromRoot"})
     @CitrusTest
     public void componentDeployment_TestCreateIntegrationRestComponentFromRoot() throws Exception {
 
@@ -156,22 +205,46 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
 
     @Test(dependsOnMethods = {"componentDeploymentStatus_TestCreateIntegrationRestComponentFromRoot"})
     @CitrusTest
+    public void getEndpointsDevAfterDeploy_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+        Map<String,String> argMap = new HashMap<>();
+        argMap.put("componentId", testComponent.getId());
+        argMap.put("versionId", testComponent.getLatestApiVersion().getId());
+        argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+        endpoints = GraphQL.getEndpoints(this, choreoTestClient, accessToken, argMap);
+        Assert.assertEquals(endpoints.size(), 1);
+    }
+
+
+    @Test(dependsOnMethods = {"getEndpointsDevAfterDeploy_TestCreateIntegrationRestComponentFromRoot"})
+    @CitrusTest
     public void invokeAPIDev_TestCreateIntegrationRestComponentFromRoot() throws Exception {
 
-        final InvokeInformation invokeInformation = testComponent.getInvokeInformation(accessToken, MI_REST_API,
-                Constant.Environment.Development.name());
-        final String devApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId())
-                .replace("\"", "");
-        String invokeUrlDev = invokeInformation.getInvokeUrl();
+        Endpoint endpoint = endpoints.get(0);
+        environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, testComponent);
+        final String devApiKey = testComponent.getAPIKeyForInvoke(accessToken, endpoint.getApimId(),
+                        environments.get(0).getName()).replace("\"", "");
+        String invokeUrlDev = endpoint.getPublicUrl();
         ComponentUtils.invokeApiGET(this, devApiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI,
                 REST_API_EXPECTED_RESPONSE);
     }
 
     @Test(dependsOnMethods = {"invokeAPIDev_TestCreateIntegrationRestComponentFromRoot"})
     @CitrusTest
+    public void promoteEndpointsProd_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+        Map<String,String> argMap = new HashMap<>();
+        argMap.put("componentId", testComponent.getId());
+        argMap.put("versionId", testComponent.getLatestApiVersion().getId());
+        argMap.put("sourceReleaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+        argMap.put("targetEnvironmentId", environments.get(1).getId());
+        GraphQL.promoteEndpoints(this, choreoTestClient, accessToken, argMap);
+    }
+
+    @Test(dependsOnMethods = {"promoteEndpointsProd_TestCreateIntegrationRestComponentFromRoot"})
+    @CitrusTest
     public void componentPromotionToProd_TestCreateIntegrationRestComponentFromRoot() throws Exception {
         // Retrieve the latest component.
-        testComponent = GraphQL.getComponentDetails(projectId, componentHandler, accessToken);
+        HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
+        testComponent = GraphQL.getComponentDetails(this, cpProjectsClient, projectId, componentHandler, accessToken);
         String latestApiVersionId = testComponent.getLatestApiVersion().getId();
         String releaseIdForEnvironment = testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT);
         String latestAppEnvId = testComponent.getLatestAppEnvId(Constant.PROD_ENVIRONMENT);
@@ -186,13 +259,26 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
 
     @Test(dependsOnMethods = {"componentPromotionToProd_TestCreateIntegrationRestComponentFromRoot"})
     @CitrusTest
+    public void getEndpointsProdAfterDeploy_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+        Map<String,String> argMap = new HashMap<>();
+        argMap.put("componentId", testComponent.getId());
+        argMap.put("versionId", testComponent.getLatestApiVersion().getId());
+        argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.PROD_ENVIRONMENT));
+
+        GraphQL.validateEndpointDeployment(this, choreoTestClient, accessToken, argMap);
+
+        endpoints = GraphQL.getEndpoints(this, choreoTestClient, accessToken, argMap);
+        Assert.assertEquals(endpoints.size(), 1);
+    }
+
+    @Test(dependsOnMethods = {"getEndpointsProdAfterDeploy_TestCreateIntegrationRestComponentFromRoot"})
+    @CitrusTest
     public void invokeAPIProd_TestCreateIntegrationRestComponentFromRoot() throws Exception {
 
-        final InvokeInformation invokeInformation = testComponent.getInvokeInformation(accessToken, MI_REST_API,
-                Constant.Environment.Production.name());
-        final String prodApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId())
-                .replace("\"", "");
-        final String invokeUrlProd = invokeInformation.getInvokeUrl();
+        final Endpoint endpoint = endpoints.get(0);
+        final String prodApiKey = testComponent.getAPIKeyForInvoke(accessToken, endpoint.getApimId(),
+                        environments.get(1).getName()).replace("\"", "");
+        final String invokeUrlProd = endpoint.getPublicUrl();
         ComponentUtils.invokeApiGET(this, prodApiKey, invokeUrlProd, API_INVOCATION_REQUEST_URI,
                 REST_API_EXPECTED_RESPONSE);
     }
@@ -203,7 +289,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
 
         String devReleaseId = GraphQL.componentDeployment(testComponent, Constant.DEV_ENVIRONMENT, accessToken).getReleaseId();
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(orgHandle)
-                .componentType(MI_REST_API).releaseId(devReleaseId).build();
+                .componentType(COMPONENT_TYPE).releaseId(devReleaseId).build();
         GraphQL.stopDeployment(this, choreoTestClient, accessToken, graphqlDTO);
     }
 
@@ -214,7 +300,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         String prodReleaseId = GraphQL.componentDeployment(testComponent, Constant.PROD_ENVIRONMENT, accessToken)
                 .getReleaseId();
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(orgHandle)
-                .componentType(MI_REST_API).releaseId(prodReleaseId).build();
+                .componentType(COMPONENT_TYPE).releaseId(prodReleaseId).build();
         GraphQL.stopDeployment(this, choreoTestClient, accessToken, graphqlDTO);
     }
 }

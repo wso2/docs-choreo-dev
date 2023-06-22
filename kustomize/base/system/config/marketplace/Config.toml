@@ -1,0 +1,19 @@
+[choreo_marketplace.common]
+projectApiUrl = "http://cp-graphql:9090/graphql"
+devPortalUrl = "{{.DEV_PORTAL_URL}}/api/am/devportal/v2"
+appServiceUrl = "http://app-service:8080"
+rudderUrl = "http://dp-rudder:80"
+
+healthCheckPort = 9091
+servicePort = 9090
+
+gitHubSecretPath = "/mnt/csi/secret-choreo-marketplace/CHOREO-MARKETPLACE-GITHUB-TOKEN"
+gitHubGqlServiceUrl = "https://api.github.com/graphql"
+gitHubIdlStoreRepoOwner = "ballerina-platform"
+gitHubIdlStoreRepoName = "openapi-connectors"
+gitHubIdlStoreRepoFolderPath = "idl-store:APIs/"
+gitHubIdlStoreUrl = "https://raw.githubusercontent.com/ballerina-platform/openapi-connectors/idl-store/APIs"
+saasApiReloadInterval = 3600.0
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"

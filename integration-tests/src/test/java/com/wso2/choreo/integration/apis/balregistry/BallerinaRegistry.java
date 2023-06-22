@@ -28,9 +28,6 @@ public class BallerinaRegistry extends ControlPlaneAPI {
 
         log.info("Total number of connectors: " + packkages.length);
 
-        log.info("First Connector: " + packkages[0].toString());
-
-
         int numberOfConnectorsDeleted = 0;
         for (Package aPackage : packkages) {
             String moduleName = aPackage.getName();

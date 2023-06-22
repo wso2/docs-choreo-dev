@@ -18,7 +18,7 @@ import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -33,8 +33,23 @@ import org.springframework.http.HttpStatus;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
+
+import static com.wso2.choreo.integration.config.Constant.APIM_SCOPES;
+import static com.wso2.choreo.integration.config.Constant.COMPONENT_MANAGEMENT_SCOPES;
+import static com.wso2.choreo.integration.config.Constant.CONFIG_MANAGEMENT_SCOPES;
+import static com.wso2.choreo.integration.config.Constant.CUSTOM_DOMAIN_SCOPES;
+import static com.wso2.choreo.integration.config.Constant.DEVOPS_SCOPES;
+import static com.wso2.choreo.integration.config.Constant.DEV_PORTAL_SCOPES;
+import static com.wso2.choreo.integration.config.Constant.ENTERPRISE_USER_MANAGEMENT_SCOPES;
+import static com.wso2.choreo.integration.config.Constant.ENVIRONMENT_MANAGEMENT_SCOPES;
+import static com.wso2.choreo.integration.config.Constant.OBSERVABILITY_MANAGEMENT_SCOPES;
+import static com.wso2.choreo.integration.config.Constant.ON_PREM_KEY_SCOPES;
+import static com.wso2.choreo.integration.config.Constant.ORG_MANAGEMENT_SCOPES;
+import static com.wso2.choreo.integration.config.Constant.PROJECT_MANAGEMENT_SCOPES;
+import static com.wso2.choreo.integration.config.Constant.USER_MANAGEMENT_SCOPES;
 
 /**
  * Handles retrieving a OAuth token to test API calls.
@@ -197,7 +212,9 @@ public class TokenHandler {
         urlParameters.add(new BasicNameValuePair("subject_token_type", Constant.SUBJECT_TOKEN_TYPE));
         urlParameters.add(new BasicNameValuePair("requested_token_type", Constant.REQUESTED_TOKEN_TYPE));
         urlParameters.add(new BasicNameValuePair("orgHandle", testChoreoOrgHandle));
-        urlParameters.add(new BasicNameValuePair("scope", Constant.OAUTH_SCOPES));
+        urlParameters.add(new BasicNameValuePair("scope", getOAuthScopes()));
+        urlParameters.add(new BasicNameValuePair("client_id", stsClientId));
+
 
         try {
             request.setEntity(new UrlEncodedFormEntity(urlParameters));
@@ -250,4 +267,19 @@ public class TokenHandler {
         String payload = new String(Base64.getDecoder().decode(splits[1]));
         tokenExpiryTime = new JsonParser().parse(payload).getAsJsonObject().getAsJsonPrimitive("exp").getAsLong();
     }
+
+
+    private static String getOAuthScopes() {
+        List<String[]> scopes = Arrays.asList(APIM_SCOPES, USER_MANAGEMENT_SCOPES, ENTERPRISE_USER_MANAGEMENT_SCOPES, CONFIG_MANAGEMENT_SCOPES, CUSTOM_DOMAIN_SCOPES, ON_PREM_KEY_SCOPES, ORG_MANAGEMENT_SCOPES, COMPONENT_MANAGEMENT_SCOPES, DEV_PORTAL_SCOPES, DEVOPS_SCOPES, ENVIRONMENT_MANAGEMENT_SCOPES, PROJECT_MANAGEMENT_SCOPES, OBSERVABILITY_MANAGEMENT_SCOPES);
+        StringBuilder stringBuilder = new StringBuilder();
+        scopes.forEach(strings -> {
+            for (String key:strings
+            ) {
+                stringBuilder.append(key).append(" ");
+            }
+        });
+        return stringBuilder.toString().trim();
+    }
+
+
 }

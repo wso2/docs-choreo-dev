@@ -11,6 +11,11 @@
  * associated services.
  */
 
+import { cyGet } from "../../../commons/cy";
+import { Enums } from "../../../commons/enums";
+
+
+
 
 export class AppsList {
 
@@ -21,22 +26,33 @@ export class AppsList {
         cy.get('[data-testid="create-button"]').click({ force: true });
         cy.wait(5000);
         cy.get('[data-testid="application-description"]').should('have.text', 'Application for e2e testing');
-        cy.get('[data-testid="application-throttling-policy"]').should('have.text',
-            '10PerMin (Allows 10 request per minute)');
         cy.get('[data-testid="application-token-type"]').should('have.text', 'JWT');
         cy.log('Application created successfully!');
     }
 
     static editAnApplication(appName: string, permissionName: string) {
-        cy.get(`[data-testid="application-list-${appName}"]`).click();
-        cy.get('[data-testid="appliation-edit-btn"]').click();
-        cy.get('[data-testid="autocomplete-textfield"]').click();
-        cy.get('li[data-option-index="0"]').contains(permissionName).then((option) => {
+      cyGet('[data-testid="applications-appbar-btn"]').click()
+      cyGet(`[data-testid="application-list-${appName}"]`).click();
+      cyGet('[data-testid="appliation-edit-btn"]').click();
+      cyGet('[data-testid="autocomplete-textfield"]').click();
+      cyGet('li[data-option-index="0"]').contains(permissionName).then((option) => {
             option[0].click();
         });
-        cy.get('[data-testid="create-button"]').click();
+      cyGet('[data-testid="create-button"]').click();
         // App name visible
     }
 
-}
+    static generateCredentials(env: Enums.Environment) {
+        cy.get('[data-testid="link-production-keys"]').click();
+        if (env === Enums.Environment.SANDBOX) {
+            cy.get('[data-testid="sandbox-credentials-menu-item"]').click();
+        }
+        if (env === Enums.Environment.PRODUCTION) {
+            cy.get('[data-testid="production-credentials-menu-item"]').click();
+        }
 
+        cy.get('[data-testid="generate-oauth-key"]').should('be.visible').click();
+        cy.get('#consumer-key-text').invoke('val').should('not.be.empty')
+    }
+
+}

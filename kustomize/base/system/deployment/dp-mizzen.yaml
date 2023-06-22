@@ -26,6 +26,7 @@ spec:
         config.linkerd.io/skip-inbound-ports: "8081"
     spec:
       automountServiceAccountToken: true
+      terminationGracePeriodSeconds: 10
       securityContext:
         seccompProfile:
           type: RuntimeDefault
@@ -36,9 +37,9 @@ spec:
           resources:
             limits:
               cpu: 1
-              memory: 768Mi
+              memory: 1Gi
             requests:
-              cpu: 500m
+              cpu: 1
               memory: 512Mi
           envFrom:
             - configMapRef:
@@ -84,19 +85,19 @@ spec:
               name: ws-port
               protocol: TCP
           readinessProbe:
-            initialDelaySeconds: 5
-            timeoutSeconds: 15
-            periodSeconds: 10
-            failureThreshold: 3
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+            periodSeconds: 30
+            failureThreshold: 1
             successThreshold: 1
             httpGet:
               path: /healthz
               port: http-port
           livenessProbe:
             initialDelaySeconds: 10
-            timeoutSeconds: 15
-            periodSeconds: 30
-            failureThreshold: 3
+            timeoutSeconds: 5
+            periodSeconds: 10
+            failureThreshold: 1
             successThreshold: 1
             httpGet:
               path: /healthz

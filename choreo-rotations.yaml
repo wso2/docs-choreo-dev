@@ -1,0 +1,29 @@
+rotations:
+  - subject: Choreo release rotation
+    teams:
+      - name: Platform Engineering
+        members:
+          - sachithka@wso2.com
+          - shana@wso2.com
+          - chalithak@wso2.com
+      - name: QA Engineering
+        members:
+          - isurupi@wso2.com
+          - dasun@wso2.com
+      - name: Site Reliability Engineering
+        members:
+          - chiranga@wso2.com
+    endMessage: "Please contact above team regarding Choreo releases within above dates"
+    notifications:
+      - choreo_release_chat
+      - choreo_team_chat
+  - subject: cost analysis rotation
+    teams:
+      - name: Platform Engineering
+        members:
+          - sachithka@wso2.com
+          - shana@wso2.com
+          - chalithak@wso2.com
+    endMessage: "Please contact above person regarding cost analysis within above dates"
+    notifications:
+      - choreo_pe_chat

@@ -23,22 +23,16 @@ import java.util.Map;
 public class ConfigYaml {
     @JsonProperty("accountInfo")
     Map<String, String> accountInfo;
-
     @JsonProperty("authInfo")
     Map<String, String> authInfo;
-
     @JsonProperty("common")
     Map<String, String> common;
-
     @JsonProperty("insights")
     Map<String, String> insights;
-
     @JsonProperty("alerts")
     Map<String, String> alerts;
-
-    @JsonProperty("anomalyDetection")
-    Map<String, String> anomalyDetection;
-
     @JsonProperty("themeManagement")
     Map<String, String> themeManagement;
+    @JsonProperty("dps")
+    Map<String, String> dps;
 }

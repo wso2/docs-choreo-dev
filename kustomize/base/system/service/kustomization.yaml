@@ -5,6 +5,7 @@ resources:
   - api-server.yaml
   - app-deployer.yaml
   - app-service.yaml
+  - audit-logging.yaml
   - connector-builder.yaml
   - connectords.yaml
   - console-next.yaml
@@ -20,10 +21,9 @@ resources:
   - dp-secret-manager.yaml
   - dp-utility-api.yaml
   - email-service.yaml
-  - frontend.yaml
   - loggingapi.yaml
+  - marketplace.yaml
   - moesif-service.yaml
-  - multivariate-anomaly-detector-notification-manager.yaml
   - negotiator.yaml
   - obsapi.yaml
   - orgremover.yaml
@@ -34,10 +34,6 @@ resources:
   - telemetry.yaml
   - test-assistant.yaml
   - testbase.yaml
-  - workspace-manager.yaml
-  - shared-image-viewer.yaml
-  - image-share-service.yaml
-  - devops-portal.yaml
   - devops-portal-api.yaml
   - organization-management.yaml
   - choreo-apim-proxy-deployer-service.yaml
@@ -46,3 +42,7 @@ resources:
   - cio-event-collector-service.yaml
   - cio-query-api-service.yaml
   - cio-incident-configurator.yaml
+  - crypto-key-service.yaml
+  - metered-usage-handler.yaml
+  - obsmanager.yaml
+  - dp-helmhub.yaml

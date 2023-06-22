@@ -1,4 +1,5 @@
-import { Utils } from "../console/utils";
+import { Utils } from "../commons/utils";
+
 
 export class GitHub {
 

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: crypto-key-service
+    choreo.dataplane: "true"
+  name: crypto-key-service
+spec:
+  ports:
+    - name: crypto-key-service-port
+      port: 9091
+      protocol: TCP
+      targetPort: http-port
+  selector:
+    choreo.component: crypto-key-service

@@ -18,20 +18,16 @@ import { OnPremkeyComponent } from "../../../support/console/pages/component/com
 /// <reference types="cypress" />
 
 describe("Generate on-prem keys", () => {
-  before(()=>{
-    LoginPage.login()
-  })
-  after(()=>{
-    ChoreoHomePage.logout()
-  })
-  
-  beforeEach(() => {
-    ChoreoHomePage.navigateToSettings();
-    OnPremkeyComponent.navigateToOpPremKeySettings()
+  before(() => {
+    LoginPage.login();
+  });
+  after(() => {
+    ChoreoHomePage.logout();
   });
 
-
   it("generate on-prem key", () => {
+    ChoreoHomePage.navigateToSettings();
+    OnPremkeyComponent.navigateToOpPremKeySettings();
     OnPremkeyComponent.generateOnPremKey();
   });
 
@@ -46,6 +42,4 @@ describe("Generate on-prem keys", () => {
   it("delete on-prem key", () => {
     OnPremkeyComponent.deleteOnPremKey();
   });
-
-
 });

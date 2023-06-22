@@ -11,79 +11,86 @@
  * associated services.
  */
 
+import { cyGet } from "../../../commons/cy";
+import { MEDIUM_TIME } from "../../../commons/timeouts";
+import { Utils } from "../../../commons/utils";
 import { GraphQL } from "../../apis/graphql";
-import { Utils } from "../../utils";
 
 export class ComponentListingPage {
-  
   static deleteComponent(componentName: string) {
-    cy.get(`tbody>tr`).should("be.visible").realHover();
-    cy.get("button>span").contains("Delete").click();
-    cy.get('[data-testid="confirm-name"]').within(()=>{
-      cy.get('input').type(componentName)
-    })
-    cy.get(".MuiDialogActions-spacing button")
-      .should("be.enabled")
-      .eq(1)
-      .click();
+    cyGet(`tbody>tr`).should("be.visible").realHover();
+
+    cy.get('[data-cyid="btn-contained"]').should("be.visible").click();
+    cy.get('[name="confirmName"]').type(componentName);
+    cy.get(".MuiDialogActions-spacing button").should("be.enabled").eq(1).click();
     cy.get(".MuiDialog-container").should("not.exist");
     this.verifyDeletion();
   }
 
-  static visitToProjectOverview(){
-    cy.get('[data-testid="main-left-nav-item-Project"]')
-    .should("be.visible")
-    .click();
-  }
-
-  static getProductionEnvStats(){
-  cy.get('[name="env"]')
-  .click()
-  cy.contains('Production').click().wait(3000);
-  cy.get('[data-cyid="total-apis"]').should('have.text','1');
-  cy.get('[data-cyid="total-traffic"]').should('have.text','2');
-  cy.get('[data-cyid="avg-latency"]').invoke('text')
-  .then((text) => {
-    const avgLatency = parseInt(text);
-    expect(avgLatency).to.be.greaterThan(0);
-  });
-  cy.get('[data-cyid="errors"]').should('have.text','0');
-
-  }
-
-  static getDevelopmentEnvStats(){
-    cy.get('[name="env"]')
-    .click()
-    cy.contains('Development').click().wait(3000);
-   
-  cy.get('[data-cyid="total-apis"]').should('have.text','1');
-  cy.get('[data-cyid="total-traffic"]').should('have.text','2');
-  cy.get('[data-cyid="avg-latency"]').invoke('text')
-  .then((text) => {
-    const avgLatency = parseInt(text);
-    expect(avgLatency).to.be.greaterThan(0);
-  });
-  cy.get('[data-cyid="errors"]').should('have.text','0');
-
-    }
-  
-  static visitToAComponent(componentName: string) {
+  static visitToProjectOverview() {
     cy.get('[data-testid="main-left-nav-item-Project"]')
       .should("be.visible")
       .click();
+  }
+
+  static getProductionEnvStats() {
+    cy.get('[name="env"]').click();
+    cy.contains("Production").click().wait(3000);
+    cy.get('[data-cyid="total-apis"]').should("have.text", "1");
+    cy.get('[data-cyid="total-traffic"]').should("have.text", "2");
+    cy.get('[data-cyid="avg-latency"]')
+      .invoke("text")
+      .then((text) => {
+        const avgLatency = parseInt(text);
+        expect(avgLatency).to.be.greaterThan(0);
+      });
+    cy.get('[data-cyid="errors"]').should("have.text", "0");
+  }
+
+  static getDevelopmentEnvStats() {
+    cy.get('[name="env"]').click();
+    cy.contains("Development").click().wait(3000);
+    cy.get('[data-cyid="total-apis"]').should("have.text", "1");
+    cy.get('[data-cyid="total-traffic"]').should("have.text", "2");
+    cy.get('[data-cyid="avg-latency"]')
+      .invoke("text")
+      .then((text) => {
+        const avgLatency = parseInt(text);
+        expect(avgLatency).to.be.greaterThan(0);
+      });
+    cy.get('[data-cyid="errors"]').should("have.text", "0");
+  }
+
+  static visitToAComponent(componentName: string) {
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.get('[data-cyid="listing"]').should("be.visible").click();
+    } else {
+      cy.get('[data-testid="main-left-nav-item-Components"]')
+        .should("be.visible")
+        .click();
+    }
+
+    cy.get("#filterByType").click().should("have.length", 1);
+    cy.contains("Select All").click();
+    cy.contains("Components Listing").click();
+
     cy.get("tr p").contains(componentName).should("be.visible").click();
-    cy.get("[data-cyid=link-overview]").should("be.visible");
+
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.get('[data-cyid="home"]').should("be.visible");
+    } else {
+      cy.get("[data-cyid=link-overview]").should("be.visible");
+    }
+
     Utils.saveComponentURL();
     cy.log("Successfully visited to the component");
   }
 
   private static verifyDeletion() {
-    cy.url().then((url) => {
-      const projectID = url.split("projects/")[1].split("?")[0];
-      GraphQL.getComponents(projectID).then((res) => {
-        expect(res.status).to.be.equal(200);
-        expect(res.components).to.be.empty;
-      });
+    const { projectId } = Cypress.env("component");
+    GraphQL.getComponents(projectId).then((res) => {
+      expect(res.status).to.be.equal(200);
+      expect(res.components).to.be.empty;
     });
   }
 }

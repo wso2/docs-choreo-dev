@@ -3,10 +3,6 @@ configMapGenerator:
     behavior: create
     literals:
       - TEMP_DATA_DIR=/temp-data-dir/
-  - name: env-workspace-manager-shared # shared workspace-manager configs across environments
-    behavior: create
-    literals:
-      - WORKSPACE_BALLERINA_VERSION=swan-lake-beta3
   - name: cm-choreo-testbase-db
     behavior: create
     literals:
@@ -15,6 +11,10 @@ configMapGenerator:
       - CHOREO_DB_PORT=1433
       - CHOREO_DB_USERNAME=choreo_testbase_db_user
       - CHOREO_DB_DRIVER=sqlserver
+  - name: cm-admin-api
+    behavior: create
+    literals:
+      - MAX_HEADER_SIZE=64000
   - name: cm-testbase
     behavior: create
     literals:
@@ -40,13 +40,6 @@ configMapGenerator:
       - APPSERVICE_GRPC_ADDRESS=app-service:8080
       - RUDDER_ADDRESS=http://dp-rudder:80
       - PROJECT_MANAGER_ADDRESS=http://dp-project-manager:80
-  - name: cm-frontend
-    behavior: create
-    literals:
-      - DISABLE_ON_PREMISE_APPS=true
-      - APIM_SAMPLE_URL=https://raw.githubusercontent.com/ballerina-platform/ballerinax-openapi-connectors/main/openapi/covid19/openapi.yaml
-      - SENTRY_DSN="https://48e24d50c8fb45d3adebfcfd8b1dd310@o350818.ingest.sentry.io/5808256"
-      - ANALYTICS_PORTAL_DOCUMENTATION="https://apim.docs.wso2.com/en/4.0.0/observe/api-manager-analytics/configure-analytics/configure-synapse-gateway/"
   - name: cm-email-service
     behavior: create
     literals:
@@ -98,6 +91,12 @@ configMapGenerator:
     literals:
       - APPSERVICE_GRPC_ADDRESS=http://app-service:8080
       - JWKS_ENDPOINT_PROTOCOL=https
+  - name: cm-obsmanager
+    behavior: create
+    literals:
+      - APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
+      - RUDDER_ADDRESS=http://dp-rudder:80
+      - PROJECT_MANAGER_ADDRESS=http://dp-project-manager:80
   - name: cm-loggingapi
     behavior: create
     literals:
@@ -133,15 +132,12 @@ configMapGenerator:
     literals:
       - PORT=8080
       - SERVICE_RUDDER_URL=http://dp-rudder
-      - SENTRY_DSN=https://5bc6ca6a627941518c1323e51d7a1985@o350818.ingest.sentry.io/5597771
       - REDIS_TLS=1
       - MSSQL_PORT=1443
       - MSSQL_USERNAME=choreo_mizzen_admin_db_user
       - MSSQL_DATABASE=choreo_mizzen_db
-      - SERVICE_BUS_REQUEST_TOPIC=dp-mizzen-request
-      - SERVICE_BUS_RESPONSE_QUEUE=dp-mizzen-response
       - REDIS_PORT=6380
-      - AGENT_IMAGE_URL=""
+      - NODE_OPTIONS="--max-http-header-size=65000"
   - name: cm-multivariate-anomaly-detector-notification-manager
     behavior: create
     literals:
@@ -202,12 +198,19 @@ configMapGenerator:
       - RUDDER_API_URL=http://dp-rudder
       - AZURE_LOGS_TABLE=GithubWorkflowLogs
       - PROJECT_MANAGER_API_URL=http://dp-project-manager
+      - BUILDPACKS_BUILDER_IMAGE="choreocontrolplane.azurecr.io/choreoipaas/choreo-buildpacks/builder:alpine"
+      - BUILDPACKS_DOCKER_ACR="choreocontrolplane.azurecr.io"
+  - name: cm-runner-cleaner
+    behavior: create
+    literals:
+      - CLOUD_MANAGER_API_URL=http://dp-cloud-manager
   - name: cm-dp-cloud-manager
     behavior: create
     literals:
       - SECRET_MANAGER_URL=http://dp-secret-manager/api/v1
       - RUDDER_URL=http://dp-rudder/api/v1/
       - PROJECT_MANAGER_URL=http://dp-project-manager:80
+      - CICD_URL=http://dp-cicd:80
       - SERVER_PORT=3200
       - DB_USERNAME=choreo_cloud_manager_admin_db_user
       - DB_NAME=choreo_cloud_manager_db
@@ -258,6 +261,7 @@ configMapGenerator:
       - ASB_DELETE_QUEUE_NAME=delete-manager
       - API_SERVER_URL=http://api-server
       - GCHAT_URL=https://chat.googleapis.com
+      - APP_SERVICE_URL=app-service:8080
   - name: cm-logsarchiver
     behavior: create
     literals:
@@ -290,7 +294,7 @@ configMapGenerator:
       - DATAPLANE_BLOCKED_CIDR_LIST=169.254.169.254/32
       - DATAPLANE_INGRESS_ALLOWED_NS_LABEL=userapp-ingress-allowed
       - CUSTOM_URL_CLUSTER_ISSUER=letsencrypt-prod
-      - CUSTOM_URL_SERVICE_NAME=choreo-nginx-internal
+      - CUSTOM_URL_SERVICE_NAME=choreo-nginx-service
       - CUSTOM_URL_SERVICE_PORT=9443
       - CUSTOM_URL_SERVICE_PATH=/
       - DEV_PORTAL_CLUSTER_ISSUER=letsencrypt-prod
@@ -315,11 +319,6 @@ configMapGenerator:
       - REACT_APP_AUTHENTICATOR_GITHUB=GithubAuthenticator
       - REACT_APP_AUTHENTICATOR_ANONYMOUS=OpenIDConnectAuthenticator
       - REACT_APP_AUTHENTICATOR_ENTERPRISE=EnterpriseIDPAuthenticator
-  - name: cm-workspace-manager-cp
-    behavior: create
-    literals:
-      - CSM_DB_NAME=choreo_codeserver_db
-      - CSM_DB_USERNAME=choreo_codeserver_db_user
   - name: cm-userapps-image-deleter
     behavior: create
     literals:
@@ -335,10 +334,6 @@ configMapGenerator:
       - TLS_KEY_PATH=/mnt/tls.key
       - TLS_CERT_PATH=/mnt/tls.crt
       - KEYVAULT_NAME=shared-fe-apps-cdn-60
-  - name: cm-file-lowcode-parser
-    behavior: create
-    files:
-      - lowcode-parser/application.properties
   - name: cm-file-devops-portal-api
     behavior: create
     files:
@@ -375,6 +370,10 @@ configMapGenerator:
     behavior: create
     files:
       - obs/telemetry/Config.toml
+  - name: cm-file-obsmanager
+    behavior: create
+    files:
+      - obs/obsmanager/Config.toml
   - name: cm-file-loggingapi
     behavior: create
     files:
@@ -407,10 +406,6 @@ configMapGenerator:
     behavior: create
     files:
       - runtime/app-deployer.yaml
-  - name: cm-file-workspace-manager
-    behavior: create
-    files:
-      - runtime/workspace-manager.yaml
   - name: cm-file-step-enforcer
     behavior: create
     files:
@@ -441,6 +436,9 @@ configMapGenerator:
     behavior: create
     literals:
       - CIO_ADX_DB="cio-metrics"
+      - USER_SERVICE_ENDPOINT="http://app-service:8080"
+      - PROJECT_MANAGER_ENDPOINT="http://dp-project-manager:80"
+      - API_SERVER_ENDPOINT="http://api-server"
   - name: cm-file-cio-event-collector
     behavior: create
     files:
@@ -465,6 +463,8 @@ configMapGenerator:
       - USER_SERVICE_URL=http://app-service:8080
       - MIZZEN_URL=http://dp-mizzen
       - CLOUD_MANAGER_SERVICE_URL=http://dp-cloud-manager:80
+      - LOGAPI_URL=http://loggingapi:9097
+      - SECRET_MANAGER_URL=http://dp-secret-manager:80
   - name: cm-file-crypto-key-service
     behavior: create
     files:
@@ -500,3 +500,31 @@ configMapGenerator:
     behavior: create
     files:
       - choreo-org-stat/data-publisher/application.properties
+  - name: cm-file-choreo-metered-usage-handler-service
+    behavior: create
+    files:
+      - choreo-metered-usage-handler-service/Config.toml
+  - name: cm-dp-secret-manager
+    behavior: create
+    literals:
+      - MIZZEN_URL="http://dp-mizzen"
+      - KV_RESOLVER_INTERNAL_SVC_URL="http://dp-kv-resolver"
+      - CLOUD_MANAGER_URL="http://dp-cloud-manager"
+  - name: cm-file-choreo-marketplace
+    behavior: create
+    files:
+      - marketplace/Config.toml
+  - name: cm-file-audit-logging
+    behavior: create
+    files:
+      - audit-logging/Config.toml
+  - name: cm-dp-helmhub
+    behavior: create
+    literals:
+      - PORT=8080
+      - ARTIFACT_HUB_URL='https://artifacthub.io/api/v1'
+      - RUDDER_URL="http://dp-rudder"
+      - MIZZEN_URL="http://dp-mizzen"
+      - MSSQL_PORT=1433
+      - MSSQL_USER=choreo_helmhub_db_user
+      - MSSQL_DBNAME=choreo_helmhub_db

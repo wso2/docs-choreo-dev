@@ -11,12 +11,12 @@
  * associated services.
  */
 
+import { Utils } from "../../../support/commons/utils";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/rest-api-proxy-temp";
-import { Utils } from "../../../support/console/utils";
 
 describe("Create proxy api using existing url", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
@@ -33,9 +33,12 @@ describe("Create proxy api using existing url", () => {
     ChoreoHomePage.logout();
   });
 
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+  });
+
   it("Creating and publishing an API from open API specification", () => {
     cy.log("Starting API Creation using open API specification");
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.createOpenApi("", URL);
     RestAPIProxyTemplate.enterAPIdetails(
@@ -43,7 +46,8 @@ describe("Create proxy api using existing url", () => {
       API_BASE_PATH,
       `${URL}/v2`,
       "1.0.0",
-      "pet"
+      "pet/{petId}",
+      ""
     );
   });
 });

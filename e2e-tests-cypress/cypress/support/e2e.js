@@ -18,6 +18,7 @@ import "cypress-fail-fast";
 
 
 Cypress.on("uncaught:exception", (err, runnable) => {
+
   return false;
 });
 

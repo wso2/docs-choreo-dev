@@ -19,3 +19,4 @@ resources:
   - opentelemetry-agent-service.yaml
   - opentelemetry-agent-hpa.yaml
   - opentelemetry-agent-pdb.yaml
+  - opentelemetry-agent-rbac.yaml

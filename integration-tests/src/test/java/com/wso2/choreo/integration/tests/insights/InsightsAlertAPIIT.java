@@ -22,23 +22,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
-import com.wso2.choreo.integration.common.exceptions.AddConfigurationsException;
-import com.wso2.choreo.integration.common.exceptions.ApiLifecycleChangeException;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationException;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationStatusCheckException;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationTimeoutException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentFailureException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentStatusCheckException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentTimeoutException;
-import com.wso2.choreo.integration.common.exceptions.ComponentRetrieveException;
-import com.wso2.choreo.integration.common.exceptions.GetCommitHistoryException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
-import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
@@ -50,6 +34,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -80,7 +65,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
     private static String trafficAlertConfigurationId;
     private static String latencyAlertConfigurationId;
     private static String apiName;
-    private static String environmentId;
+    private static String externalEnvId;
     private static final String tenant = "carbon.super";
     private static final java.net.http.HttpClient client = java.net.http.HttpClient.newHttpClient();
 
@@ -88,14 +73,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
     private HttpClient choreoCPTestClient;
 
     @BeforeClass
-    public void beforeClass()
-            throws IOException, InterruptedException, ProjectCreationException, GetCommitHistoryException,
-            NoLatestCommitHashFoundException, AddConfigurationsException, NoLatestAppEnvIdFoundException,
-            ComponentCreationStatusCheckException, ComponentDeploymentException,
-            ComponentDeploymentStatusCheckException,
-            ComponentCreationException, ComponentRetrieveException, ApiLifecycleChangeException,
-            ComponentCreationTimeoutException, ComponentDeploymentTimeoutException, NoLatestApiVersionFoundException,
-            ComponentDeploymentFailureException, TokenRetrievalException {
+    public void beforeClass() throws IOException, InterruptedException, TokenRetrievalException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
 
@@ -106,15 +84,19 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
                 .toString();
         apiName = "TestInsightsAlertAPI" + generatedString;
 
-        environmentId = getEnvironmentId(orgUuid, accessToken);
+        getEnvironmentIds(orgUuid, accessToken);
     }
 
-    public static String getEnvironmentId(String orgUUID, String accessToken) throws IOException, InterruptedException {
-        String requestURI = Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT) + "/" + INSIGHTS_API_RESOURCE;
+    public static void getEnvironmentIds(String orgUUID, String accessToken) throws IOException, InterruptedException {
+        String requestURI =
+                Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT) + "/" + INSIGHTS_API_RESOURCE;
         String graphQlQuery =
                 "query($orgFilter: OrgFilter!) {" +
                         "   listEnvironments(org: $orgFilter) {" +
                         "       id" +
+                        "       externalEnvId" +
+                        "       internalEnvId" +
+                        "       sandboxEnvId" +
                         "       name" +
                         "       type" +
                         "   }" +
@@ -142,11 +124,10 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
         List<Environment> environmentList = gson.fromJson(environments.toString(), collectionType);
         for (Environment env : environmentList) {
             if (env.getType().equals("CHOREO") && env.getName().equals("Development")) {
-                environmentId = env.getId();
+                externalEnvId = env.getExternalEnvId();
                 break;
             }
         }
-        return environmentId;
     }
 
     @Test
@@ -157,7 +138,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
                 .send()
                 .get(INSIGHTS_TRAFFIC_ALERT_API_RESOURCE)
                 .queryParam("organization", orgUuid)
-                .queryParam("environment", environmentId)
+                .queryParam("environment", externalEnvId)
                 .queryParam("tenant", tenant)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
@@ -181,7 +162,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
                 .send()
                 .post(INSIGHTS_TRAFFIC_ALERT_API_RESOURCE)
                 .queryParam("organization", orgUuid)
-                .queryParam("environment", environmentId)
+                .queryParam("environment", externalEnvId)
                 .queryParam("tenant", tenant)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
@@ -219,7 +200,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
                 .send()
                 .put(INSIGHTS_TRAFFIC_ALERT_API_RESOURCE + "/" + trafficAlertConfigurationId)
                 .queryParam("organization", orgUuid)
-                .queryParam("environment", environmentId)
+                .queryParam("environment", externalEnvId)
                 .queryParam("tenant", tenant)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
@@ -259,7 +240,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
                 .send()
                 .delete(INSIGHTS_TRAFFIC_ALERT_API_RESOURCE + "/" + trafficAlertConfigurationId)
                 .queryParam("organization", orgUuid)
-                .queryParam("environment", environmentId)
+                .queryParam("environment", externalEnvId)
                 .queryParam("tenant", tenant)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
@@ -283,7 +264,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
                 .send()
                 .get(INSIGHTS_LATENCY_ALERT_API_RESOURCE)
                 .queryParam("organization", orgUuid)
-                .queryParam("environment", environmentId)
+                .queryParam("environment", externalEnvId)
                 .queryParam("tenant", tenant)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
@@ -307,7 +288,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
                 .send()
                 .post(INSIGHTS_LATENCY_ALERT_API_RESOURCE)
                 .queryParam("organization", orgUuid)
-                .queryParam("environment", environmentId)
+                .queryParam("environment", externalEnvId)
                 .queryParam("tenant", tenant)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
@@ -345,7 +326,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
                 .send()
                 .put(INSIGHTS_LATENCY_ALERT_API_RESOURCE + "/" + latencyAlertConfigurationId)
                 .queryParam("organization", orgUuid)
-                .queryParam("environment", environmentId)
+                .queryParam("environment", externalEnvId)
                 .queryParam("tenant", tenant)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
@@ -386,7 +367,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
                 .send()
                 .delete(INSIGHTS_LATENCY_ALERT_API_RESOURCE + "/" + latencyAlertConfigurationId)
                 .queryParam("organization", orgUuid)
-                .queryParam("environment", environmentId)
+                .queryParam("environment", externalEnvId)
                 .queryParam("tenant", tenant)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)

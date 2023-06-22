@@ -114,15 +114,15 @@ spec:
             - configMapRef:
                 name: env-cc-enforcer
           env:
-            - name: tm_admin_pwd
-              valueFrom:
-                secretKeyRef:
-                  key: SUPER_ADMIN_PSWD
-                  name: secret-apim
             - name: analytics_authToken
               valueFrom:
                 secretKeyRef:
                   key: ANALYTICS_AUTH_TOKEN
+                  name: secret-mgw-analytics
+            - name: moesif_ms_auth_pwd
+              valueFrom:
+                secretKeyRef:
+                  key: MOESIF_MS_AUTH_PWD
                   name: secret-mgw-analytics
           resources:
             requests:
@@ -166,6 +166,9 @@ spec:
               name: mgw-common-cert-vol
               readOnly: true
               subPath: mg.pem
+            - name: secret-cc-rate-limiter-cert
+              mountPath: /home/wso2/security/truststore/rate-limiter.pem
+              subPath: RATE_LIMITER_KEYSTORE_CERT
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router:latest
           imagePullPolicy: Always
           securityContext:
@@ -257,6 +260,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-cc-deployment
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-cc-rate-limiter-cert
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cc-rate-limiter-cert
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always

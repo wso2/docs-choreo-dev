@@ -11,13 +11,19 @@
  * associated services.
  */
 
-import { Utils } from "../../../utils";
+import { Utils } from "../../../../commons/utils";
+
+
 
 export class OnPremkeyComponent {
   static keyName = Utils.generateKeyName("key");
 
   static navigateToOpPremKeySettings() {
-    cy.get('[data-cy="/onpremkeys"]').click();
+    if (Utils.isUnifiedMenuEnabled()) {
+      cy.get('[data-cyid="nav-link-on-prem-keys"]').click();
+    } else {
+      cy.get('[data-cy="/onpremkeys"]').click();
+    }
   }
 
   static generateOnPremKey() {
@@ -69,5 +75,5 @@ export class OnPremkeyComponent {
       .click();
   }
 
- 
+
 }

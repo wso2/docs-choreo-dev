@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class ProxyDeployment {
-
     private String invokeUrl;
+    private String environment;
 }

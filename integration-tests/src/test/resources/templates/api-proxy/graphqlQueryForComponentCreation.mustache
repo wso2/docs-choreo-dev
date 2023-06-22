@@ -1,7 +1,7 @@
 mutation{
     createComponent(
         component: {
-            name: "{{apiName}}",
+            name: "{{name}}",
             orgId: {{orgId}},
             orgHandler: "{{orgHandler}}",
             displayName: "{{displayName}}",
@@ -15,7 +15,13 @@ mutation{
             triggerChannels: "",
             triggerID: null,
             httpBase: true,
-            sampleTemplate: ""
+            sampleTemplate: "",
+            accessibility: "external",
+            repositorySubPath: "",
+            repositoryType: "",
+            repositoryBranch: "",
+            initializeAsBallerinaProject: false,
+            enableCellDiagram: false
         }
     ){        id, orgId, projectId, handler      }
 }

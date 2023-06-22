@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: dp-helmhub
+  name: dp-helmhub
+  namespace: choreo-system
+spec:
+  ports:
+    - name: dp-helmhub-port
+      port: 80
+      protocol: TCP
+      targetPort: http-port
+  selector:
+    choreo.component: dp-helmhub

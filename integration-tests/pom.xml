@@ -16,11 +16,12 @@
     <log4j2.version>2.17.2</log4j2.version>
     <citrus.version>3.1.1</citrus.version>
     <system.under.test.mode>embedded</system.under.test.mode>
-    <jackson.version>2.13.3</jackson.version>
+    <jackson.version>2.14.2</jackson.version>
     <javax.mail.version>1.6.2</javax.mail.version>
     <google-api-gmail.version>v1-rev20211108-1.32.1</google-api-gmail.version>
     <google-oauth-client-jetty.version>1.32.1</google-oauth-client-jetty.version>
     <google-api-client.version>1.33.0</google-api-client.version>
+    <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
   </properties>
 
   <build>
@@ -55,7 +56,8 @@
             <system.under.test.mode>${system.under.test.mode}</system.under.test.mode>
           </systemProperties>
           <suiteXmlFiles>
-            <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+            <!--suppress UnresolvedMavenProperty -->
+            <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
           </suiteXmlFiles>
         </configuration>
         <executions>
@@ -214,6 +216,11 @@
       <groupId>com.github.spullara.mustache.java</groupId>
       <artifactId>compiler</artifactId>
       <version>0.9.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.12.0</version>
     </dependency>
     <dependency>
       <groupId>com.consol.citrus</groupId>

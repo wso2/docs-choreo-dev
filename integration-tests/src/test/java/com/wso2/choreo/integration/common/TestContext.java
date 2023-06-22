@@ -13,10 +13,8 @@
 
 package com.wso2.choreo.integration.common;
 
-import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
-import com.wso2.choreo.integration.config.Constant;
 import org.apache.commons.lang.StringUtils;
 import org.testng.annotations.BeforeSuite;
 

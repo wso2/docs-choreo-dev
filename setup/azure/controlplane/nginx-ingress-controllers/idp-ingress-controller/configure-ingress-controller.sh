@@ -21,7 +21,7 @@ helm registry login choreocontrolplane.azurecr.io --username "${HELM_ACR_USERNAM
 helm pull oci://choreocontrolplane.azurecr.io/helm/ingress-nginx --version 4.2.1
 
 echo "--- Installing IDP Nginx Ingress using Helm 3..."
-helm upgrade --install "${IDP_NAMESPACE}-nginx-ingress" ingress-nginx-4.2.1.tgz \
+helm upgrade --install "${IDP_NAMESPACE}" ingress-nginx-4.2.1.tgz \
   --namespace "${IDP_NAMESPACE}-nginx-ingress" \
   --version 4.2.1 \
   --set controller.replicaCount=2 \
@@ -49,7 +49,7 @@ helm upgrade --install "${IDP_NAMESPACE}-nginx-ingress" ingress-nginx-4.2.1.tgz 
   --set controller.admissionWebhooks.enabled=false \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-resource-group=${LOADBALANCER_IP_RG}" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal=true" \
-  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET_NAME}" \
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET}" \
   --set controller.extraVolumeMounts[0].name="log4j-lua-conf-script-volume-mount" \
   --set controller.extraVolumeMounts[0].mountPath="/var/lib/lua-charts" \
   --set controller.extraVolumes[0].name="log4j-lua-conf-script-volume-mount" \

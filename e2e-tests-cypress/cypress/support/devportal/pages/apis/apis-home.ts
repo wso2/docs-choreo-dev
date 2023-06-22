@@ -10,31 +10,32 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { Enums } from "../../../console/enums";
-import { Utils } from "../../../console/utils";
-import { STANDARD_TIME_OUT } from "../../constants";
+
+import { Enums } from "../../../commons/enums";
+import { MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
+import { Utils } from "../../../commons/utils";
 
 export class Apis {
   static futureTime = 0;
 
   static navigateToApiOverview(apiName: string): void {
     cy.log("Navigating to Overview");
-    cy.get('[data-testid="apis-appbar-btn"]', { timeout: STANDARD_TIME_OUT })
+    cy.get('[data-testid="apis-appbar-btn"]', SHORT_TIME)
       .should("be.visible")
       .click();
     cy.log("Searching the API");
     cy.get("#outlined-search-bar-api-listing").clear();
-    cy.get("#outlined-search-bar-api-listing", {
-      timeout: STANDARD_TIME_OUT,
-    }).type(apiName + "{enter}");
+    cy.get("#outlined-search-bar-api-listing", SHORT_TIME).type(
+      apiName + "{enter}"
+    );
 
-    cy.get(`[data-testid="apiCard-${apiName}"]`).should("be.visible").click();
+    Utils.getRenderedElement(`[data-testid="apiCard-${apiName}"]`).click();
     cy.log("Successfully navigated to Overview");
   }
 
   static verifyAPIname() {
     return cy
-      .get('[data-testid="txt-api-name"]', { timeout: 120000 })
+      .get('[data-testid="txt-api-name"]', MEDIUM_TIME)
       .should("be.visible")
       .invoke("text");
   }
@@ -44,21 +45,21 @@ export class Apis {
     versionCount: number = 1,
     version: string = ""
   ) {
-    cy.get("[data-testid=apis-appbar-btn]").click();
+    cy.get("[data-testid=apis-appbar-btn]").click({ force: true });
 
     cy.intercept(
       "GET",
       `${Cypress.env("apimSvcURL")}/api/am/devportal/v2/apis?organizationId=*`
     ).as("apis");
 
-    cy.wait("@apis", { timeout: 40000 }).then((intercept) => {
+    cy.wait("@apis", SHORT_TIME).then((intercept) => {
       const splitArr = intercept.request.url.split("apis?");
       const url = `${splitArr[0]}apis?query=name:${textApiName}&${splitArr[1]}`;
       const header = intercept.request.headers.authorization;
 
       Cypress.env("devportal_auth", header);
 
-      this.futureTime = Date.now() + 600000;
+      this.futureTime = Date.now() + 60000;
       this.verifyAPI(url, header, versionCount);
     });
     this.searchAPI(textApiName, version);
@@ -77,12 +78,18 @@ export class Apis {
       .focus()
       .type(`${textApiName}{enter}`);
     if (version == "") {
-      cy.get(`[data-testid="apiCard-${textApiName}"`).click();
+      Utils.getRenderedElement(`[data-testid="apiCard-${textApiName}"`).click();
     } else {
-      cy.get(`[data-testid="apiCard-${textApiName}"`)
+      Utils.getRenderedElement(`[data-testid="apiCard-${textApiName}"`, 2000)
         .contains(`Version : ${version}`)
         .click();
     }
+
+    // Ensure API Overview page is loaded
+    cy.get('[data-testid="li-overview-item-link"]').should("be.visible");
+    cy.get('[data-testid="txt-api-name"]')
+      .contains(textApiName)
+      .should("be.visible");
   }
 
   private static getInvokeUrl() {

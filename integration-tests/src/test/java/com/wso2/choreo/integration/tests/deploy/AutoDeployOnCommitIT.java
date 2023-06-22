@@ -23,9 +23,12 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.utils.FileUtil;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.code.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -46,6 +49,7 @@ import java.util.Map;
         private final String repoName = "empty-repo";
         private static ChoreoComponent choreoComponent;
         private ChoreoProject project;
+
         @Autowired
         private HttpClient choreoTestClient;
 
@@ -58,17 +62,15 @@ import java.util.Map;
             accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
             project = GraphQL.createProject(accessToken);
         }
+
         @Test
         @CitrusTest
         public void createUserManagedComponentFor_AutoDeployOnCommitIT() throws Exception {
             String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-            GraphqlDTO dto = GraphqlDTO.builder().
-                    name(componentName).
-                    triggerID("null").
-                    srcGitRepoUrl("https://github.com/choreo-test-apps/" + repoName).
-                    projectId(project.getId()).
-                    displayType(Constant.displayType.restAPI.name()).
-                    build();
+
+            Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/empty-repo").branch("main").subPath("").build();
+            GraphqlDTO dto = ComponentUtils.createRestApiComponentRequest(componentName, project, repo);
+
             choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                     ComponentFlavour.STANDARD);
             Assert.assertNotNull(choreoComponent.getId());
@@ -77,8 +79,9 @@ import java.util.Map;
         @Test(dependsOnMethods = {"createUserManagedComponentFor_AutoDeployOnCommitIT"})
         @CitrusTest
         public void handleConfigInit_AutoDeployOnCommitIT() throws Exception {
-            GraphQL.handleConfigInit(accessToken, choreoComponent.getId());
+            GraphQL.handleConfigInit(this, choreoTestClient, accessToken, choreoComponent.getId());
         }
+
         @Test(dependsOnMethods = {"handleConfigInit_AutoDeployOnCommitIT"})
         @CitrusTest
         public void mergeNewCode_AutoDeployOnCommitIT() throws IOException {
@@ -91,11 +94,13 @@ import java.util.Map;
             String encodedCode = Base64.getEncoder().encodeToString(srcCode.getBytes(StandardCharsets.UTF_8));
             GitHub.mergeNewCode(repoName, "service.bal", " change on DeployIT ", encodedCode);
         }
+
         @Test(dependsOnMethods = {"mergeNewCode_AutoDeployOnCommitIT"})
         @CitrusTest
         public void deploymentStatusByVersion_AutoDeployOnCommitIT() throws Exception {
             GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
         }
+
         @Test(dependsOnMethods = {"deploymentStatusByVersion_AutoDeployOnCommitIT"})
         @CitrusTest
         public void componentDevDeployment_AutoDeployOnCommitIT() throws Exception {

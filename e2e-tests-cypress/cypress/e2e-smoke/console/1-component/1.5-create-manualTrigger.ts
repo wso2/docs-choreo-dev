@@ -11,28 +11,31 @@
  * associated services.
  */
 
+import { Enums } from "../../../support/commons/enums";
+import { Utils } from "../../../support/commons/utils";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
-import { Enums } from "../../../support/console/enums";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { Utils } from "../../../support/console/utils";
 import { GitHub } from "../../../support/github/github";
 import { ComponentData } from "../../../support/interfaces/component-data";
 
 describe("Verify manual trigger creation functionality", () => {
-  const MANUAL_NAME = "create-manualTrigger";
+  const MANUAL_NAME = Utils.generateComponentName();
   const REPO_NAME = Utils.generateComponentName("repo");
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Manual Trigger";
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("manual-trigger")
+  });
+
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
   });
 
   it("Verify Manual Trigger component creation", () => {
@@ -49,21 +52,25 @@ describe("Verify manual trigger creation functionality", () => {
       repositorySubPath: "",
       sampleTemplate: "",
     };
-    ProjectListingPage.createNewProject(
+
+    GraphQL.createComponent(
       PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.US
+      REPO_NAME,
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
     );
-    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
   });
   after(() => {
     ChoreoHomePage.logout();
   });
 
-  it("Verify component deployment", () => {
+  it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(MANUAL_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployManualTriggerToDev();
+  });
+
+  it("Verify component deployment", () => {
+    ComponentDeployPage.deployToDev(PROJECT_NAME,MANUAL_NAME,false, false, true);
   });
 
   it("Verify component promotion to prod", () => {

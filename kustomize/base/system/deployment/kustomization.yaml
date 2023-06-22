@@ -5,6 +5,7 @@ resources:
   - api-server.yaml
   - app-deployer.yaml
   - app-service.yaml
+  - audit-logging.yaml
   - connector-builder.yaml
   - connectords.yaml
   - console-next.yaml
@@ -20,10 +21,9 @@ resources:
   - dp-secret-manager.yaml
   - dp-utility-api.yaml
   - email-service.yaml
-  - frontend.yaml
   - loggingapi.yaml
+  - marketplace.yaml
   - moesif-service.yaml
-  - multivariate-anomaly-detector-notification-manager.yaml
   - negotiator.yaml
   - obsapi.yaml
   - orgremover.yaml
@@ -34,10 +34,6 @@ resources:
   - telemetry.yaml
   - test-assistant.yaml
   - testbase.yaml
-  - workspace-manager.yaml
-  - shared-image-viewer.yaml
-  - image-share-service.yaml
-  - devops-portal.yaml
   - devops-portal-api.yaml
   - organization-management.yaml
   - choreo-apim-proxy-deployer.yaml
@@ -47,6 +43,10 @@ resources:
   - cio-query-api-service.yaml
   - cio-incident-configurator.yaml
   - cdn-tls-synchronizer.yaml
+  - choreo-metered-usage-handler-service.yaml
+  - crypto-key-service.yaml
+  - obsmanager.yaml
+  - dp-helmhub.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587,25,1433,6380

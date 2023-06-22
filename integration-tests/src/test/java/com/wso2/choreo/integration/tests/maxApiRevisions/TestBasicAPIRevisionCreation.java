@@ -9,8 +9,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.apis.proxydeployer.ProxyDeployer;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ComponentUtils;
+import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
@@ -60,7 +62,11 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
     @Autowired
     private HttpClient choreoTestClientForSTS;
 
-    @BeforeClass
+    @Autowired
+    Map<Endpoints, HttpClient> citrusClients;
+
+    @Test
+    @CitrusTest
     public void setup_TestBasicAPIRevisionCreation() throws IOException, TokenRetrievalException, NoLatestApiVersionFoundException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
@@ -79,7 +85,8 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
         choreoComponent = response.getEntity();
         Assert.assertEquals(response.getResponse().getStatusCode(), HttpStatus.OK.value());
 
-        choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandler(), accessToken);
+        HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
+        choreoComponent = GraphQL.getComponentDetails(this, cpProjectsClient, projectId,  choreoComponent.getHandler(), accessToken);
         Assert.assertNotNull(choreoComponent);
 
         environments = GraphQL.getComponentDeploymentEnvironment(projectId, accessToken);
@@ -98,8 +105,8 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
         Assert.assertEquals(res.getResponse().getStatusCode(), HttpStatus.OK.value());
     }
 
-    @Test
-    @CitrusTest(name = "Create new revision")
+    @Test(dependsOnMethods = {"setup_TestBasicAPIRevisionCreation"})
+    @CitrusTest
     public void createNewRevision_TestBasicAPIRevisionCreation() throws Exception {
 
         Map<String, Object> responseParams = new HashMap<>();
@@ -147,7 +154,7 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = {"createNewRevision_TestBasicAPIRevisionCreation"})
-    @CitrusTest(name = "Verify if the new revision is listed")
+    @CitrusTest
     public void verifyCreateNewRevision_TestBasicAPIRevisionCreation() throws Exception {
         Map<String, Object> responseParams = new HashMap<>();
         responseParams.put("REVISION_COUNT", 2);
@@ -194,24 +201,19 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = {"verifyCreateNewRevision_TestBasicAPIRevisionCreation"})
-    @CitrusTest(name = "Deploy new revision")
+    @CitrusTest
     public void deployNewRevision_TestBasicAPIRevisionCreation() throws Exception {
         String buildId = proxyAPIBuild.getBuilds()[0].getBuildId();
         DeploySettings res = APICreator.deployRevision(choreoComponent.getId(), versionId, devEnv.getId(), orgUuid,
                 newRevisionId, buildId, apiId, accessToken);
         Assert.assertEquals(res.getMessage(), "Settings deployment started");
-        for (int i = 0; i < 10; i++) {
-            DeploymentStatus statusResponse =  APICreator.checkDeploymentStatus(choreoComponent.getId(), versionId,
-                    res.getRequestId(), accessToken);
-            if (Objects.equals(statusResponse.getStatus(), "completed")) {
-                break;
-            }
-            SleepUtil.sleep(10);
-        }
+        HttpClient choreoEPClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
+        ProxyDeployer.getProxyAPIDeploymentStatus(this, choreoEPClient, accessToken, choreoComponent.getId(),
+                choreoComponent.getLatestApiVersion().getId(), res.getRequestId());
     }
 
     @Test(dependsOnMethods = {"deployNewRevision_TestBasicAPIRevisionCreation"})
-    @CitrusTest(name = "Verify deploy new revision")
+    @CitrusTest
     public void verifyDeployNewRevision_TestBasicAPIRevisionCreation() throws Exception {
         Map<String, Object> responseParams = new HashMap<>();
         responseParams.put("REVISION_COUNT", 3);
@@ -254,24 +256,19 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = {"verifyDeployNewRevision_TestBasicAPIRevisionCreation"})
-    @CitrusTest(name = "Re deploy old revision")
+    @CitrusTest
     public void deployOldRevision_TestBasicAPIRevisionCreation() throws Exception {
         String buildId = proxyAPIBuild.getBuilds()[0].getBuildId();
         DeploySettings res = APICreator.deployRevision(choreoComponent.getId(), versionId, devEnv.getId(), orgUuid,
                 oldRevisionId, buildId, apiId, accessToken);
         Assert.assertEquals(res.getMessage(), "Settings deployment started");
-        for (int i = 0; i < 10; i++) {
-            DeploymentStatus statusResponse =  APICreator.checkDeploymentStatus(choreoComponent.getId(), versionId,
-                    res.getRequestId(), accessToken);
-            if (Objects.equals(statusResponse.getStatus(), "completed")) {
-                break;
-            }
-            SleepUtil.sleep(10);
-        }
+        HttpClient choreoEPClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
+        ProxyDeployer.getProxyAPIDeploymentStatus(this, choreoEPClient, accessToken, choreoComponent.getId(),
+                choreoComponent.getLatestApiVersion().getId(), res.getRequestId());
     }
 
     @Test(dependsOnMethods = {"deployOldRevision_TestBasicAPIRevisionCreation"})
-    @CitrusTest(name = "Verify redeploy old revision")
+    @CitrusTest
     public void verifyRedeployOldRevision_TestBasicAPIRevisionCreation() throws Exception {
         Map<String, Object> responseParams = new HashMap<>();
         responseParams.put("REVISION_COUNT", 4);

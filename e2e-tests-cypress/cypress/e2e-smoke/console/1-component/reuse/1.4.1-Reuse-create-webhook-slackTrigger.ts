@@ -11,7 +11,8 @@
  * associated services.
  */
 
-import { Enums } from "../../../../support/console/enums";
+
+import { Enums } from "../../../../support/commons/enums";
 import { ComponentDeployPage } from "../../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../../support/console/pages/component/component-listing-page";
 import { ComponentAPILifecycle } from "../../../../support/console/pages/component/component-manage-page";
@@ -20,7 +21,6 @@ import { ChoreoHomePage } from "../../../../support/console/pages/home/home-page
 import { LoginPage } from "../../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../../support/console/pages/projects/projects-listing-page";
-import { GitHub } from "../../../../support/github/github";
 import { ComponentData } from "../../../../support/interfaces/component-data";
 
 
@@ -31,7 +31,6 @@ describe("Create Reusable Webhook functionality", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("slack-web-hook")
   });
 
   after(() => {
@@ -54,16 +53,19 @@ describe("Create Reusable Webhook functionality", () => {
     };
     ProjectListingPage.selectProject();
     ProjectOverviewPage.searchReuseComponent(componentData);
-   });
+  });
 
-  it("Deploy the component", () => {
+  it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(WEBHOOK_NAME);
     ComponentOverviewPage.navigateToDeploy();
+  });
+
+  it("Deploy the component", () => {
     ComponentDeployPage.configureAndDeploy(CONFIG);
   });
 
   it("Component promotion to prod", () => {
-    ComponentDeployPage.promoteWebHookToProd(CONFIG);
+    ComponentDeployPage.promoteWebHookToProd(CONFIG, false);
   });
 
   it("Verify manage functionality", () => {

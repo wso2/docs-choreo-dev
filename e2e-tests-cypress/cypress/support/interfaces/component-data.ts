@@ -1,4 +1,5 @@
-import { Enums } from "../console/enums";
+
+import { Enums } from "../commons/enums";
 import { AbsComponent } from "./abs-component";
 
 export interface ComponentData extends AbsComponent {

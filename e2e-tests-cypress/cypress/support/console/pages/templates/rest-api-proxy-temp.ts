@@ -1,5 +1,3 @@
-import { Utils } from "../../utils";
-
 /*
  * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
@@ -12,9 +10,14 @@ import { Utils } from "../../utils";
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
+
+
+import { cyGet } from "../../../commons/cy";
+import { Utils } from "../../../commons/utils";
+import { ProxyAPI } from "../../../interfaces/proxy-api";
+
+
 export class RestAPIProxyTemplate {
-
-
   static skipSource() {
     cy.get('[data-cyid="btn-skip-src"]').should("be.visible").click();
   }
@@ -32,31 +35,77 @@ export class RestAPIProxyTemplate {
     cy.get('[data-cyid="btn-next"]').should("be.visible").click();
   }
 
+
+
+
+  static createProxyApi(api: ProxyAPI) {
+    cy.get('[data-cyid="api-name"]').within(() =>
+      cy.get("input").clear().type(api.apiName)
+    );
+    cy.get('[data-cyid="api-version"]').clear().type(api.version);
+    cy.get('[data-cyid="api-basepath"]').within(() =>
+      cy.get("input").clear().type(api.apiBasePath)
+    );
+
+    cy.get('[data-cyid="api-endpoint"]').within(() =>
+      cy.get("input").clear().type(api.endpoint)
+    );
+    if(api.isInternal){
+      cyGet('[aria-label="Access Modes"]>div').eq(1).click();
+    }
+    cy.get('[data-cyid="btn-create"]').should("be.enabled").click();
+
+    cyGet('[data-testid="delete-all-operations-btn"]').should("be.visible");
+  }
+
+
+
+
+
   static enterAPIdetails(
     apiName: string,
     apiBasePath: string,
     endpoint: string,
     version: string = "",
-    validateResourceName: string = ""
+    validateResourceName: string = "",
+    operation: string
   ) {
-    cy.get('[data-cyid="api-name"]').within(() => cy.get('input').clear().type(apiName));
+    cy.get('[data-cyid="api-name"]').within(() =>
+      cy.get("input").clear().type(apiName)
+    );
 
     if (version) {
       cy.get('[data-cyid="api-version"]').clear().type(version);
     }
 
-    cy.get('[data-cyid="api-basepath"]').within(() => cy.get('input').clear().type(apiBasePath));
+    cy.get('[data-cyid="api-basepath"]').within(() =>
+      cy.get("input").clear().type(apiBasePath)
+    );
 
     if (endpoint) {
-      cy.get('[data-cyid="api-endpoint"]').within(() => cy.get('input').clear().type(endpoint));
+      cy.get('[data-cyid="api-endpoint"]').within(() =>
+        cy.get("input").clear().type(endpoint)
+      );
     }
     cy.get('[data-cyid="btn-create"]').should("be.enabled").click();
 
-    let resourceIdentifier = "resource-/intensity";
+    let resourceIdentifier = "panel-/intensity/get-header";
     if (validateResourceName) {
-      resourceIdentifier = "resource-/" + validateResourceName;
+      resourceIdentifier = "panel-/" + validateResourceName + "/get-header";
     }
-    cy.get(`[data-testid="${resourceIdentifier}"]`);
+    let isResourceFound = false;
+
+    cy.get(`[data-testid="operation"]`)
+      .each((item, index, list) => {
+        let resourceId = Cypress.$(item).attr("id");
+        if (resourceId === resourceIdentifier) {
+          isResourceFound = true;
+        }
+      })
+      .then(() => {
+        expect(isResourceFound).to.be.true;
+      });
+
     Utils.saveComponentURL();
   }
 }

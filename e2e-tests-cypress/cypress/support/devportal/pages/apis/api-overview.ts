@@ -10,7 +10,8 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { MEDIUM_TIME_OUT } from "../../constants";
+
+import { MEDIUM_TIME } from "../../../commons/timeouts";
 
 export class ApiOverview {
   static addCommentToApi(apiComment: string): void {
@@ -19,11 +20,7 @@ export class ApiOverview {
     cy.wait(500);
     cy.get('[name="newComment"]').type(apiComment).wait(200);
     cy.get("[data-testid=btn-add-comment").click();
-    cy.get('[data-testid="txt-comments-count"]').should(
-      "have.text",
-      "Comments (1)",
-      { timeout: MEDIUM_TIME_OUT }
-    );
+    cy.get('[data-testid="txt-comments-count"]').should("have.text", "Comments (1)", MEDIUM_TIME);
     cy.get("[data-testid=txt-no-comments]").should("not.exist");
     cy.log("Comment added successfully");
   }
@@ -31,7 +28,7 @@ export class ApiOverview {
   static deleteComment(): void {
     cy.log("Deleting the comment");
     cy.get("table > tbody > tr:first").within(() => {
-      cy.get('[data-testid="btn-delete-comment"]',{timeout:180000}).should('be.visible').click({ force: true });
+      cy.get('[data-testid="btn-delete-comment"]', MEDIUM_TIME).should('be.visible').click({ force: true });
     });
     cy.get('[class="MuiPopover-root"]')
       .get("button")
@@ -47,7 +44,7 @@ export class ApiOverview {
 
   static openRatings(): void {
     cy.log("Opening the rating box");
-    cy.xpath("//P[contains(text(),'Rating')]//../../div/button",{timeout:100000}).click();
+    cy.xpath("//P[contains(text(),'Rating')]//../../div/button", MEDIUM_TIME).click({ force: true });
   }
 
   static addRatings(): void {
@@ -62,7 +59,7 @@ export class ApiOverview {
     cy.get('[for="hover-feedback-3"]').click({ force: true });
     cy.get('[class="MuiPopover-root"]').click({ force: true });
     cy.log("Changed the rate to 3 stars");
-    cy.get(".MuiPopover-root").realClick({clickCount:2});
+    cy.get(".MuiPopover-root").realClick({ clickCount: 2 });
   }
 
   static validateRating(): void {

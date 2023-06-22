@@ -11,36 +11,43 @@
  * associated services.
  */
 
-import { LONG_TIME } from "../../../support/console/constants";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentObservePage } from "../../../support/console/pages/component/component-observe-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { Enums } from "../../../support/console/enums";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { Utils } from "../../../support/console/utils";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GitHub } from "../../../support/github/github";
+import { Enums } from "../../../support/commons/enums";
+import { Utils } from "../../../support/commons/utils";
+import { MEDIUM_TIME } from "../../../support/commons/timeouts";
 
 describe("Create Schedule Trigger", () => {
-  const SCHEDULE_NAME = "create-ScheduleTrigger-1.7";
+  const SCHEDULE_NAME = Utils.generateComponentName();
   const EXPECTED_RESULT =
     '{"userId":1,"id":1,"title":"delectus aut autem","completed":false}';
   const REPO_NAME = Utils.generateComponentName("repo");
   const PROJECT_NAME = Utils.generateProjectName();
-  const PROJECT_DESCRIPTION = "Internal API Test";
+  const PROJECT_DESCRIPTION = "Schedule Trigger Test Project";
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("schedule-trigger")
   });
 
   after(() => {
     ChoreoHomePage.logout();
+  });
+
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(
+      PROJECT_NAME,
+      PROJECT_DESCRIPTION,
+      Enums.Region.EU
+    );
   });
 
   it("Verify Schedule Trigger component creation", () => {
@@ -57,18 +64,21 @@ describe("Create Schedule Trigger", () => {
       repositorySubPath: "",
       sampleTemplate: "",
     };
-    ProjectListingPage.createNewProject(
+
+    GraphQL.createComponent(
       PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.EU
+      REPO_NAME,
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
     );
-    
-    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
+  });
+
+  it("Navigate to deployment", () => {
+    ComponentListingPage.visitToAComponent(SCHEDULE_NAME);
+    ComponentOverviewPage.navigateToDeploy();
   });
 
   it("Verify component deployment", () => {
-    ComponentListingPage.visitToAComponent(SCHEDULE_NAME);
-    ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployScheduleTask();
   });
 
@@ -78,7 +88,7 @@ describe("Create Schedule Trigger", () => {
 
   it("Verify task execution in observability ", () => {
     ComponentOverviewPage.navigateToObserve();
-    ComponentObservePage.gotoLogs(LONG_TIME);
+    ComponentObservePage.gotoLogs(MEDIUM_TIME.timeout);
   });
   it("Verify dev env logs", () => {
     ComponentObservePage.selectEnv(Enums.Environment.DEVELOPMENT);

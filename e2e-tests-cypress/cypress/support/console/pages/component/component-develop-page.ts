@@ -11,6 +11,8 @@
  * associated services.
  */
 
+ 
+
 
 
 export class ComponentDevelopPage {
@@ -19,16 +21,14 @@ export class ComponentDevelopPage {
     cy.get('[id="backdrop-loader"').should("not.exist");
     cy.get('[data-testid="delete-all-operations-btn"]').click();
     this.checkHTTPVerb(verbs);
-    cy.get("#operation-target").type(path);
+    cy.type("#operation-target").type(path);
     cy.get('[data-testid="add-btn"]').click();
   }
 
   private static checkHTTPVerb(verbs: string[]) {
-    cy.get("#mui-component-select-verbs").click();
+    cy.get("#verb-selector").click();
     verbs.forEach((verb) => {
-      cy.get(
-        `[data-testid="checkbox-${verb.toUpperCase()}"]>span>input `
-      ).check();
+      cy.get(`[data-testid="checkbox-${verb.toUpperCase()}"]>span>input`).click();
     });
     cy.get("body").type("{esc}");
   }
@@ -41,13 +41,12 @@ export class ComponentDevelopPage {
     dataType: string
   ) {
     cy.get(`[id="panel-/${path}/${verb.toLowerCase()}-header"`).click();
-    cy.get("#mui-component-select-in").eq(0).click();
-    cy.get(`[data-value="${type}"]`).click();
+    cy.get("#in").eq(0).click();
+    cy.contains(type).click()
     cy.get("#parameter-name").focus().type(name);
-    cy.get("#mui-component-select-type").eq(0).click();
-    cy.get(`[data-value="${dataType}"]`).click();
-    // cy.get('[data-testid="checkbox-required"]>span>input').check();
-    cy.contains("Add").click();
+    cy.get("#type").eq(0).click();
+    cy.contains(dataType).click()
+    cy.get('[aria-label="add"]').click();
   }
   static saveResource() {
     cy.get("button").contains("Save").click({ force: true });

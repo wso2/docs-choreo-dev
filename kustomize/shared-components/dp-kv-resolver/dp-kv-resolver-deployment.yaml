@@ -52,13 +52,13 @@ spec:
             - --v=10
           ports:
             - containerPort: 8443
-              name: https
+              name: proxy-port
           livenessProbe:
             tcpSocket:
-              port: 8443
+              port: proxy-port
           readinessProbe:
             tcpSocket:
-              port: 8443
+              port: proxy-port
           resources:
             requests:
               cpu: 150m
@@ -79,16 +79,23 @@ spec:
             - --leader-elect
           command:
             - /manager
+          ports:
+            - containerPort: 9090
+              name: api-port
+              protocol: TCP
+            - containerPort: 8081
+              name: probe-port
+              protocol: TCP
           livenessProbe:
             httpGet:
               path: /healthz
-              port: 8081
+              port: probe-port
             initialDelaySeconds: 15
             periodSeconds: 20
           readinessProbe:
             httpGet:
               path: /readyz
-              port: 8081
+              port: probe-port
             initialDelaySeconds: 5
             periodSeconds: 10
           resources:

@@ -39,13 +39,14 @@ receivers:
         endpoint: 0.0.0.0:4317
 
 processors:
+  k8smetadataoverlay:
   filter:
     metrics:
       include:
         match_type: regexp
         resource_attributes:
-          - Key: namespace.flow
-            Value: (dp-.*|.*-->dp-.*)
+          - key: namespace.flow
+            value: (dp-.*|.*-->dp-.*)
 
 exporters:
   otlp:
@@ -60,5 +61,5 @@ service:
   pipelines:
     metrics:
       receivers: [otlp]
-      processors: [filter]
+      processors: [k8smetadataoverlay, filter]
       exporters: [otlp]

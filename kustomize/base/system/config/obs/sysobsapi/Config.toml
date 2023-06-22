@@ -10,3 +10,4 @@ level = "{{.LOG_LEVEL_SYSOBSAPI}}"
 [choreo.sysobsapi.laWorkspaceIds]
 US = "{{.US_LA_WORKSPACE_ID}}"
 EU = "{{.EU_LA_WORKSPACE_ID}}"
+IND = "{{.IND_LA_WORKSPACE_ID}}"

@@ -11,52 +11,89 @@
  * associated services.
  */
 
-
-import { Enums } from "../../enums";
+import { cyGet } from "../../../commons/cy";
+import { Enums } from "../../../commons/enums";
+import { SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
+import { GRAPHQL_URL } from "../../../commons/urls";
+import { Utils } from "../../../commons/utils";
 import { ChoreoHomePage } from "../home/home-page";
-
+import { ProjectOverviewPage } from "./project-overview";
 
 export class ProjectListingPage {
   static createNewProject(
     projectName: string,
     description: string,
-    dataPlane: Enums.Region = Enums.Region.US,
-    perspective:Enums.Perspective = Enums.Perspective.IDEVP
-    
+    dataPlane: Enums.Region = Enums.Region.US
   ) {
     ChoreoHomePage.navigateToHome();
-
-    if (perspective === Enums.Perspective.APIM) {
-      cy.get(`[data-cyid="${perspective}"]`).then(($el) => {
-        cy.get('[data-testid="project-picker"]').click();
-        cy.get('[data-cyid="btn-create-new"]').click().wait(3000);
-      });
-    }
-    else {
-    cy.get('[data-cyid="create-project-card"]').click().wait(3000);
-    }
-    
+    this.checkProjectCardCreation();
     cy.get('[name="Name"]').clear().type(projectName);
     cy.get('[name="Description"]').clear().type(description);
     cy.get('[data-cyid="select-region"]').click();
-    cy.get(`[data-value="${dataPlane}"]`).click();
-    cy.get('[data-testid="create-version-create"]').click();
+    cy.contains(`Cloud Data Plane - ${dataPlane}`).click();
+    Utils.getRenderedElement('[data-testid="create-version-create"]').click();
     cy.get('[data-testid="create-version-create"]').should("not.exist");
+    ProjectOverviewPage.waitForTemplateCardsToLoad();
   }
 
+  static checkProjectCardCreation() {
+    cy.url().then((url) => {
+      if (url.includes("projects")) {
+        Utils.getRenderedElement('[data-testid="project-picker"]').click();
+        Utils.getRenderedElement('[data-cyid="btn-create-new"]').click();
+      } else {
+        cy.intercept({
+          method: "POST",
+          url: GRAPHQL_URL,
+          times: 10,
+        }).as("queryComponents");
 
+        cy.wait("@queryComponents", SHORT_TIME).then(() => {
+          this.getCreateNewProjectPopUp();
+        });
+      }
+    });
+  }
+
+  static getCreateNewProjectPopUp(retryCount: number = 0) {
+    retryCount++;
+    if (retryCount > 10) {
+      return;
+    }
+
+    cy.get("body").then((bdy) => {
+      if (bdy.find('[data-cyid="create-project-card"]').length > 0) {
+        cy.get('[data-cyid="create-project-card"]').click();
+        cy.wait(VERY_SHORT_TIME.timeout);
+      } else {
+        cy.log("Retry count: " + retryCount);
+        this.getCreateNewProjectPopUp(retryCount);
+      }
+    });
+
+    cy.log("Verify the PopUP is displayed");
+    cy.get("body").then((bdy) => {
+      if (bdy.find('[data-testid="create-version-create"]').length > 0) {
+        cy.get('[data-testid="create-version-create"]').should("be.visible");
+        return;
+      } else {
+        this.getCreateNewProjectPopUp(retryCount);
+      }
+    });
+  }
 
   static selectProject(projectName: string = "Default Project") {
-
-    cy.get('[data-cyid="search-icon"]').eq(1).click()
-    cy.get('[data-cyid="search-field"]').within(() => {
-      cy.get('input').type(projectName)
-    })
-    cy.get(`a[href*="organizations/${Cypress.env("choreoOrgHandle")}/projects"]`).each(d => {
-      if (d.find('h4').text() === projectName) {
-        cy.wrap(d).click()
-        return;
+    cy.get("body").then((bdy) => {
+      if (bdy.find('[data-cyid="create-project-card"]').length > 0) {
+        cyGet('[data-cyid="search-icon"]').eq(0).click();
+        cyGet('[data-testid="search-field"]').type(`${projectName}{enter}`);
+        cy.contains(projectName).click();
+      } else {
+        Utils.getRenderedElement("#project-picker").click();
+        cy.wait(3000);
+        cyGet('ul>li [placeholder="Search"]').type(`${projectName}{enter}`);
+        cyGet("ul>li>div>span>p").contains(projectName).click();
       }
-    })
+    });
   }
 }

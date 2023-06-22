@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
@@ -12,28 +11,24 @@
  * associated services.
  */
 
-
-
-
-import { Enums } from "../../enums";
+import { Enums } from "../../../commons/enums";
+import { LONG_TIME, MEDIUM_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 
 export class InsightsPage {
   static selectEnvironment(env: Enums.Environment) {
     cy.contains("Environment").should("be.visible");
     cy.contains("Environment").next().click();
     cy.contains(env).click();
-
   }
 
   static selectTimePeriod(timePeriod: string = "Past 15 minutes") {
-    cy.get('div[class*="analytics"]>button').eq(0).click().wait(2000);
-    cy.get('ul>div').contains(timePeriod).click();
-    cy.get('.recharts-layer>path[fill*="url"]')
-
+    cy.get('[data-testid="date-picker"]', MEDIUM_TIME).click();
+    cy.get("ul>div").contains(timePeriod).click();
+    cy.get('.recharts-layer>path[fill*="url"]');
   }
 
   static getTotalTraffic() {
-    cy.get('.recharts-area')
+    cy.get(".recharts-area");
     cy.contains("Total Traffic").should("be.visible");
     return cy.get("main").find("span>span").eq(0).invoke("text");
   }

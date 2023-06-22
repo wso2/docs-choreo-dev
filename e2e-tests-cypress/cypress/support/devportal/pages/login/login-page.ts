@@ -10,7 +10,8 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { LONG_TIME_OUT, STANDARD_TIME_OUT } from "../../constants";
+
+import { SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 const handle = Cypress.env("choreoOrgHandle");
 const idpParam = "?fidp=choreoe2etest";
 const devportalLoginURL = Cypress.env("devportalLoginURL") + "/" + handle + idpParam;
@@ -19,15 +20,17 @@ export class LoginPage {
   static loginToDevportal(devportalUrl = ''): void {
     const loginURL = devportalUrl ? devportalUrl + "/" + handle + idpParam : devportalLoginURL;
     cy.visit(loginURL);
-    cy.get('button[type="submit"]', { timeout: STANDARD_TIME_OUT }).should(
-      "be.visible"
-    );
-    cy.get("#usernameUserInput").type(Cypress.env("choreoIDPUsername"));
-    cy.get("#password").type(Cypress.env("choreoIDPPassword"), { log: false });
-    cy.get('button[type="submit"]').click();
-    cy.get("[data-testid=home-appbar-btn]", { timeout: LONG_TIME_OUT }).should(
-      "be.visible"
-    );
+    cy.wait(3000)
+      .url(SHORT_TIME)
+      .then((url) => {
+        if (url.includes(Cypress.env("idpURL") + "/authenticationendpoint")) {
+          cy.get('button[type="submit"]', VERY_SHORT_TIME).should("be.visible");
+          cy.get("#usernameUserInput").type(Cypress.env("choreoIDPUsername"));
+          cy.get("#password").type(Cypress.env("choreoIDPPassword"), { log: false });
+          cy.get('button[type="submit"]').click();
+        }
+      });
+    cy.get("[data-testid=home-appbar-btn]", VERY_SHORT_TIME).should("be.visible");
   }
 
   static visitToDevportalOrgPublicApis(): void {

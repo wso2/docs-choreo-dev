@@ -1,2 +1,2 @@
-# resources:
-#   - choreo-infrastructure-cost-collector.yaml
+resources:
+  - choreo-infrastructure-cost-collector.yaml

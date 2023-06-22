@@ -11,47 +11,57 @@
  * associated services.
  */
 
+import { version } from "chai";
+import { Enums } from "../../../commons/enums";
+import { Utils } from "../../../commons/utils";
 import { AbsComponent } from "../../../interfaces/abs-component";
 import { GraphQLQueryBuilder } from "../../apis/gql-query-builder";
 import { GraphQL } from "../../apis/graphql";
-import { Utils } from "../../utils";
+import { APIDevelop } from "../apis/api-develop";
+import { RestAPIProxyTemplate } from "../templates/rest-api-proxy-temp";
+import { cyGet, cyLog } from "../../../commons/cy";
 
 export class ProjectOverviewPage {
-
-  static searchReuseComponent(componentData: AbsComponent, projectName: string = "Default Project") {
-
+  static searchReuseComponent(
+    componentData: AbsComponent,
+    projectName: string = "Default Project",
+    isComponentBYOC: boolean = false
+  ) {
     const REPO_NAME = Utils.generateComponentName("repo");
-    GraphQL.getProjects().then(res => {
-      const projects = res.projects
-      if (projects.length > 0) {
-        const project = projects.find(p => p.name === projectName)
-        GraphQL.getComponents(project.id).then(comps => {
-          if (comps.status === 200) {
-            const component = comps.components.find(c => c.displayName.trim() === componentData.componentName.trim())
-            if (component == undefined) {
-              GraphQL.createComponent(projectName, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
-            } else {
-              GraphQL.getComponentInfo(projectName, componentData.componentName)
-            }
-          }
-        })
+    GraphQL._getComponentByName(projectName, componentData.componentName).then((comps) => {
+      if (comps.displayName != componentData.componentName) {
+        if (isComponentBYOC) {
+          GraphQL.createComponent(
+            projectName,
+            REPO_NAME,
+            componentData,
+            GraphQLQueryBuilder.getBYOCComponentCreationQuery
+          );
+        } else {
+          GraphQL.createComponent(
+            projectName,
+            REPO_NAME,
+            componentData,
+            GraphQLQueryBuilder.getRestComponentCreationQuery
+          );
+        }
       }
     })
   }
+
 
   static createHttpProxyAPI() {
     this.waitForTemplateCardsToLoad();
     cy.get('[data-testid="project-template-list-httpProxyApi"]')
       .should("be.visible")
       .click();
-
   }
 
   static navigateToComponents() {
-    cy.contains('← Components').click()
+    cy.contains("← Components").click();
   }
 
-  private static waitForTemplateCardsToLoad() {
+  static waitForTemplateCardsToLoad() {
     cy.get('[data-cyid="scheduleTask"]')
       .get('[data-testid="project-template-list-scheduleTask"]')
       .should("be.enabled")
@@ -61,13 +71,11 @@ export class ProjectOverviewPage {
       .get('[data-cyid="httpProxyApi"]')
       .get('[data-testid="project-template-list-httpProxyApi"]')
       .should("be.enabled")
-      .get('[data-cyid="httpApi"]')
-      .get('[data-testid="project-template-list-httpApi"]')
-      .should("be.enabled")
-      .get('[data-cyid="httpApi"]');
   }
 
   static addComponent() {
     cy.get('[data-cyid="create-component"]').click();
   }
+
+
 }

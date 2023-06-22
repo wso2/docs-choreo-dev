@@ -27,9 +27,21 @@ exporters:
     loglevel: info 
     sampling_initial: 5
     sampling_thereafter: 200
-  eventhubexporter:
-    topic: {{.EVENTHUB_EXPORTER_TOPIC}}
-    encoding: adx_json
+  eventhubexporter/telemetry:
+    topic: {{.EVENTHUB_EXPORTER_METRIC_TOPIC}}
+    encoding: pixie_telemetry
+    brokers:
+      - {{.EVENTHUB_EXPORTER_BROCKERS}}
+    protocol_version: 2.0.0
+    auth:
+      sasl:
+        username: ConnectionString
+        password: ${EVENT_HUB_CONNECTION_STRING}
+        mechanism: PLAIN
+        insecure: false
+  eventhubexporter/dns:
+    topic: {{.EVENTHUB_EXPORTER_DNS_TOPIC}}
+    encoding: pixie_dns
     brokers:
       - {{.EVENTHUB_EXPORTER_BROCKERS}}
     protocol_version: 2.0.0
@@ -46,11 +58,28 @@ processors:
       - key: dataplaneId
         from_context: auth.subject
         action: insert
+  filter/telemetry:
+      metrics:
+        include:
+          match_type: strict
+          metric_names:
+            - request_latency_nanoseconds
+  filter/dns:
+        metrics:
+          include:
+            match_type: strict
+            metric_names:
+              - dns_events
+  publishingfailuredetection:
 
 service:
   extensions: [choreosts, health_check/liveness, health_check/readiness]
   pipelines:
-    metrics:
+    metrics/telemetry:
       receivers: [otlp]
-      processors: [attributes]
-      exporters: [logging, eventhubexporter]
+      processors: [attributes, filter/telemetry, publishingfailuredetection]
+      exporters: [logging, eventhubexporter/telemetry]
+    metrics/dns:
+      receivers: [otlp]
+      processors: [attributes, filter/dns]
+      exporters: [logging, eventhubexporter/dns]

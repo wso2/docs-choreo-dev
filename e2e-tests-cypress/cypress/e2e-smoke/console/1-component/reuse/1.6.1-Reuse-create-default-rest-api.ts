@@ -11,7 +11,8 @@
  * associated services.
  */
 
-import { Enums } from "../../../../support/console/enums";
+import { Enums } from "../../../../support/commons/enums";
+import { Utils } from "../../../../support/commons/utils";
 import { TestHelper } from "../../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../../support/console/pages/component/component-listing-page";
@@ -21,14 +22,10 @@ import { ChoreoHomePage } from "../../../../support/console/pages/home/home-page
 import { LoginPage } from "../../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../../support/console/pages/projects/projects-listing-page";
-import { Utils } from "../../../../support/console/utils";
-import { GitHub } from "../../../../support/github/github";
 import { ComponentData } from "../../../../support/interfaces/component-data";
 
-
 describe("Verify Reusable RestAPI functionality", () => {
-
-  const PROJECT_NAME = "Default Project"
+  const PROJECT_NAME = "Default Project";
   const REST_API_NAME = "create-ReuseRestAPI-1.6.1";
   const RESOURCE_NAME = "greeting";
   const PARAM_NAME = "name";
@@ -38,7 +35,6 @@ describe("Verify Reusable RestAPI functionality", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("greeting-rest-api")
   });
 
   after(() => {
@@ -63,14 +59,17 @@ describe("Verify Reusable RestAPI functionality", () => {
     ProjectOverviewPage.searchReuseComponent(componentData);
   });
 
+  it("Navigate to deployment", () => {
+    ComponentListingPage.visitToAComponent(REST_API_NAME)
+    ComponentOverviewPage.navigateToDeploy()
+  });
+
   it("Deploy component", () => {
-    ComponentListingPage.visitToAComponent(REST_API_NAME);
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployToDev();
+    ComponentDeployPage.reDeployToDev();
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
-    ComponentOverviewPage.navigateToTest(true);
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
       Enums.Environment.DEVELOPMENT,
       RESOURCE_NAME,
@@ -128,69 +127,15 @@ describe("Verify Reusable RestAPI functionality", () => {
     });
   });
 
-  it("Apply configs to dev", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.selectSetting();
-    ComponentAPILifecycle.selectResources();
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-    ComponentAPILifecycle.applyConfiguration();
-    ComponentAPILifecycle.verifyDevRevision().should("eq", Enums.Environment.DEVELOPMENT);
-  });
-
-  it("Apply configs to prod", () => {
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-    ComponentAPILifecycle.applyConfiguration();
-  });
-
-  it("Verify resource access without the token in dev", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnCurl(
-      Enums.Environment.DEVELOPMENT,
-      Enums.HTTPMethod.GET,
-      RESOURCE_NAME,
-      queryParameters1
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(MATCHING_STRING);
-        expect(res.status).equal(200);
-      });
-    });
-  });
-
-  it("Verify resource access without the token in prod", () => {
-    TestHelper.testOnCurl(
-      Enums.Environment.PRODUCTION,
-      Enums.HTTPMethod.GET,
-      RESOURCE_NAME
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(MATCHING_STRING);
-        expect(res.status).equal(200);
-      });
-    });
-  });
-
-  it("Verify manage functionality and Publish Connector", () => {
+  it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publish(Enums.ConnectorAudience.PRIVATE).should("be.visible");
-  });
-
-  it("Verify connector republishing", () => {
-    ComponentAPILifecycle.republishConnector();
-    ComponentAPILifecycle.demoteToCreated();
-  });
-
-  it("Verify settings configuration", () => {
-    ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
-    ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
+    ComponentAPILifecycle.publishToDevportal();
   });
 
   it("Verify suspending Prod deployed component", () => {
+    ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.demoteToCreated();
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });

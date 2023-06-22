@@ -15,32 +15,34 @@ import { ComponentDeployPage } from "../../../support/console/pages/component/co
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
-import { Enums } from "../../../support/console/enums";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { Utils } from "../../../support/console/utils";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
-import { GitHub } from "../../../support/github/github";
+import { Enums } from "../../../support/commons/enums";
+import { Utils } from "../../../support/commons/utils";
 
 describe("Verify project creation functionality", () => {
   const queryParameters1 = [{ key: "number", value: "2" }];
   const queryParameters2 = [{ key: "number", value: "5" }];
-  const COMPONENT_NAME = "create-rest-api-from-scratch-1.3";
+  const COMPONENT_NAME = Utils.generateComponentName();
   const REPO_NAME = Utils.generateComponentName("repo");
   const PROJECT_DESCRIPTION = "Covid stats project";
   const PROJECT_NAME = Utils.generateProjectName();
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteWebhooks("rest-api")
   });
 
   after(() => {
     ChoreoHomePage.logout();
+  });
+
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
   });
 
   it("Verify REST API component creation", () => {
@@ -57,18 +59,22 @@ describe("Verify project creation functionality", () => {
       repositorySubPath: "",
       sampleTemplate: "",
     };
-    ProjectListingPage.createNewProject(
+
+    GraphQL.createComponent(
       PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.US
+      REPO_NAME,
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
     );
-    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
+  });
+
+  it("Navigate to deployment", () => {
+    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
+    ComponentOverviewPage.navigateToDeploy();
   });
 
   it("Verify component deployment", () => {
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployToDev();
+    ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME);
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
@@ -83,7 +89,6 @@ describe("Verify project creation functionality", () => {
       expect(res.statusCode).to.be.eq("200");
     });
   });
-
 
   it("Verify test functionality using generated curl in Dev", () => {
     TestHelper.testOnCurl(
@@ -100,7 +105,6 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality of isOdd resource in dev on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
       Enums.Environment.DEVELOPMENT,
       "isOdd",
@@ -111,7 +115,6 @@ describe("Verify project creation functionality", () => {
       expect(res.statusCode).to.be.eq("200");
     });
   });
-
 
   it("Verify test functionality using generated curl in dev", () => {
     TestHelper.testOnCurl(
@@ -132,10 +135,7 @@ describe("Verify project creation functionality", () => {
     ComponentDeployPage.promoteToProd();
   });
 
-
-
   it("Verify test functionality of root resource in prod on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
       Enums.Environment.PRODUCTION,
       "root",
@@ -146,8 +146,6 @@ describe("Verify project creation functionality", () => {
       expect(res.statusCode).to.be.eq("200");
     });
   });
-
-
 
   it("Verify test functionality using generated curl in Prod", () => {
     TestHelper.testOnCurl(
@@ -163,10 +161,7 @@ describe("Verify project creation functionality", () => {
     });
   });
 
-
-
   it("Verify test functionality of isOdd resource in prod on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
       Enums.Environment.PRODUCTION,
       "isOdd",
@@ -177,8 +172,6 @@ describe("Verify project creation functionality", () => {
       expect(res.statusCode).to.be.eq("200");
     });
   });
-
- 
 
   it("Verify test functionality using generated curl in prod", () => {
     TestHelper.testOnCurl(
@@ -194,89 +187,24 @@ describe("Verify project creation functionality", () => {
     });
   });
 
-  it("Apply configs to dev", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.selectSetting();
-    ComponentAPILifecycle.selectResources();
-
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity("root");
-    ComponentAPILifecycle.applyConfiguration(    );
-    ComponentAPILifecycle.verifyDevRevision().should(
-      "eq",
-      Enums.Environment.DEVELOPMENT
-    );
-  });
-
-  it("Apply configs to prod", () => {
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity("root");
-    ComponentAPILifecycle.applyConfiguration();
-  });
-
-  it("Verify resource access without the token in dev", () => {
-    Curl.getRequestComponents(`${Enums.Environment.DEVELOPMENT}root`).then(
-      (curl) =>
-        Utils.sendGetRequest(curl.url).then((res) => {
-          expect(res.status).equal(200);
-        })
-    );
-  });
-
-  it("Verify resource not access without the token in dev", () => {
-    Curl.getRequestComponents(`${Enums.Environment.DEVELOPMENT}isOdd`).then(
-      (curl) =>
-        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-          expect(res.body).equal(true);
-          expect(res.status).equal(200);
-        })
-    );
-  });
-
-  it("Verify resource access without the token in prod", () => {
-    Curl.getRequestComponents(`${Enums.Environment.PRODUCTION}root`).then(
-      (curl) =>
-        Utils.sendGetRequest(curl.url).then((res) => {
-          expect(res.status).equal(200);
-        })
-    );
-  });
-
-  it("Verify resource not access without the token in prod", () => {
-    Curl.getRequestComponents(`${Enums.Environment.PRODUCTION}isOdd`).then(
-      (curl) =>
-        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-          expect(res.body).equal(true);
-          expect(res.status).equal(200);
-        })
-    );
-  });
-
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publishToMarketplace(Enums.ConnectorAudience.PRIVATE);
+    ComponentAPILifecycle.changeLifeCycleToPublished(
+      Enums.ConnectorAudience.PRIVATE
+    );
   });
 
-  it("Verify connector republishing ",()=>{
-    ComponentAPILifecycle.republishConnector();
-  })
+  it("Verify connector publishing ", () => {
+    ComponentAPILifecycle.publishConnector(Enums.ConnectorAudience.PRIVATE);
+  });
 
-  it("Verify usage plan change",()=>{
-    ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
-    ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
-  })
+  it("Verify connector republishing ", () => {
+    ComponentAPILifecycle.republishConnector();
+  });
 
   it("Verify suspending all component deployments", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
-  });
-
-  it("Verify application suspension", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.demoteToCreated();
   });
 });

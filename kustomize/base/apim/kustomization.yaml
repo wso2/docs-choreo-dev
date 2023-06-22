@@ -25,6 +25,5 @@ resources:
   - pdb
   - rbac
   - netpol
-  - tm
 
 namespace: choreo-apim

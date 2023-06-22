@@ -11,15 +11,15 @@
  * associated services.
  */
 
+import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { Marketplace } from "../../../support/console/pages/marketplace/marketplace-page";
-import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 
 describe("Verify the functionality in Choreo Marketplace", () => {
-  const MAIN_CATEGORY1 = "Business Intelligence";
+  const MAIN_CATEGORY1 = "Business Management";
   const MAIN_CATEGORY2 = "Marketing";
-  const SUB_CATEGORY = "Ads & Conversion";
+  const SUB_CATEGORY = "Social Media Accounts";
   const CONNECTOR = "Slack";
   const TRIGGER = "GitHub";
   const FREE = "Cost/Free";
@@ -28,15 +28,13 @@ describe("Verify the functionality in Choreo Marketplace", () => {
 
   before(() => {
     LoginPage.login();
-    ChoreoHomePage.switchOrganization();
   });
   after(() => {
     ChoreoHomePage.logout();
   });
 
   it("Verify Choreo filter functionality", () => {
-    ProjectListingPage.selectProject();
-    ChoreoHomePage.navigateToMarketPlace();
+    ChoreoHomePage.goToMarketplacePage();
     Marketplace.filterByChoreo();
     Marketplace.clearSelectedFilters();
   });

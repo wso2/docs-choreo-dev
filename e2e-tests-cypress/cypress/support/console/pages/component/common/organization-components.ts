@@ -13,17 +13,16 @@
 
 /// <reference types="cypress" />
 
-import { Utils } from "../../../utils";
+import { OK } from "../../../../commons/http";
+import { Utils } from "../../../../commons/utils";
 
 export class OrganizationComponent {
-
-
   static navigateToMembers() {
-    cy.get('[data-cyid="members"]').click();
+    cy.get('[data-cyid="nav-link-members"]').click();
   }
 
   static navigateToRoles() {
-    cy.get('[data-cy="/organization/roles"]').click();
+    cy.get('[data-cyid="nav-link-roles"]').click();
   }
 
   static navigateToRoleMapping() {
@@ -31,11 +30,11 @@ export class OrganizationComponent {
   }
 
   static verifyEmailIsNotDisplayed(email: string) {
-    cy.get(`td[value="${email}"]`).should("not.exist");
+    cy.contains(email).should("not.exist");
   }
 
   static verifyEmailIsDisplayed(email: string) {
-    cy.get(`td[value="${email}"]`).should("exist");
+    cy.contains(email).should("be.visible");
   }
 
   static verifyGroupNameIsDisplayed(groupName: string) {
@@ -46,7 +45,7 @@ export class OrganizationComponent {
     cy.get(`td[value="${groupName}"]`).should("not.exist");
   }
 
-  static inviteMembers(email: string, ...roles) {
+  static inviteMembers(email: string, ...roles: string[]) {
     cy.wait(300);
     cy.get('[data-cyid="invite-members"]').click();
     cy.wait(300);
@@ -82,7 +81,7 @@ export class OrganizationComponent {
 
   static deleteMember(email: string) {
     cy.contains("td", email).trigger("mouseover");
-    cy.get("tr>td>div>button").click();
+    cy.get("tr>td>div>button").click({ force: true });
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
       .contains("Delete")
       .click();
@@ -114,7 +113,7 @@ export class OrganizationComponent {
         )}/v2/orgs/${handle}/users/${idpId}`;
 
         Utils.sendDeleteRequest(deleteUserRequest, headers).then((res) => {
-          if (res.status === 200) {
+          if (res.status === OK) {
             cy.log("Deleted Invited User");
           } else {
             cy.log("User Has Not Invited Or Error");
@@ -122,7 +121,7 @@ export class OrganizationComponent {
         });
       }
       Utils.sendDeleteRequest(deletePendingInvitation, headers).then((res) => {
-        if (res.status === 200) {
+        if (res.status === OK) {
           cy.log("Deleted Invited User");
         } else {
           cy.log("User Has Not Invited Or Error");
@@ -137,7 +136,7 @@ export class OrganizationComponent {
 
   private static addRoles(roles: string[]) {
     roles.forEach((v) => {
-      cy.get("ul>li>div>span").each((e) => {
+      Utils.getRenderedElement("ul>li>div>span").each((e) => {
         if (e.text() === v) {
           cy.wrap(e).scrollIntoView().click();
         }
@@ -172,10 +171,8 @@ export class OrganizationComponent {
 
   static addMembertoRole(roleName: string) {
     cy.get('[data-cyid="search-app"]').clear().type(roleName);
-    cy.get(
-      '[class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"]'
-    ).should("contain", roleName);
-    cy.contains("td", roleName).click();
+    cy.get('[data-cyid="roles-table-rows"]').should("contain", roleName);
+    cy.get('[data-cyid="roles-table-rows"]').contains("td", roleName).click();
     cy.get('[data-cyid="btn-add-member-to-role"]').click();
     cy.get('[data-cyid="select_members_to_role"]').click();
 
@@ -196,6 +193,7 @@ export class OrganizationComponent {
   }
 
   static deleteCreatedRole(roleName: string) {
+    cy.get('[data-cyid="btn-create-role"]').should("be.visible");
     cy.get('[data-cyid="search-app"]').clear().type(roleName);
     cy.contains("td", roleName).should("be.visible");
     this.deleteSelectedRole(roleName);
@@ -203,10 +201,6 @@ export class OrganizationComponent {
 
   static deleteRoleIfExists(roleName: string) {
     cy.get('[data-cyid="search-app"]').clear().type(roleName);
-    cy.wait(2000);
-    cy.get('[data-testid="table-roles"]')
-      .contains("progressbar")
-      .should("not.exist");
     cy.get("td").then(($role) => {
       if (!$role.text().includes("No records to display")) {
         cy.contains("td", roleName).should("be.visible");

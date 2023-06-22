@@ -1,0 +1,197 @@
+{
+    "name": "{{apiName}}",
+    "description": "",
+    "context": "{{basePath}}",
+    "version": "2.0.0",
+    "provider": "choreo_dev_apim_admin",
+    "lifeCycleStatus": "CREATED",
+    "wsdlInfo": null,
+    "wsdlUrl": null,
+    "responseCachingEnabled": false,
+    "cacheTimeout": 300,
+    "hasThumbnail": false,
+    "isDefaultVersion": false,
+    "isRevision": true,
+    "enableBackendJWT": false,
+    "revisionedApiId": "{{apiId}}",
+    "revisionId": {{revisionId}},
+    "enableSchemaValidation": false,
+    "type": "HTTP",
+    "audience": null,
+    "transport": [
+        "http",
+        "https"
+    ],
+    "tags": [],
+    "policies": [
+        "Unlimited"
+    ],
+    "throttlingLimit": {
+        "requestCount": 5,
+        "unit": "MINUTE"
+    },
+    "authorizationHeader": "Authorization",
+    "securityScheme": [
+        "oauth2",
+        "oauth_basic_auth_api_key_mandatory"
+    ],
+    "maxTps": null,
+    "visibility": "PRIVATE",
+    "visibleRoles": [
+        ""
+    ],
+    "visibleTenants": [],
+    "mediationPolicies": [],
+    "subscriptionAvailability": "CURRENT_TENANT",
+    "subscriptionAvailableTenants": [
+        ""
+    ],
+    "additionalProperties": [
+        {
+            "name": "projectId",
+            "value": "db932f6c-7aca-42cb-8f24-d55eda0543a0",
+            "display": true
+        },
+        {
+            "name": "accessibility",
+            "value": "external",
+            "display": true
+        },
+        {
+            "name": "application",
+            "value": "automationtestcomponent1679546000190",
+            "display": false
+        },
+        {
+            "name": "org",
+            "value": "virajgamage",
+            "display": false
+        },
+        {
+            "name": "applicationId",
+            "value": "959c8e62-74f6-405a-9263-fb8ed61b746f",
+            "display": false
+        }
+    ],
+    "additionalPropertiesMap": {
+        "projectId__display": {
+            "name": "projectId",
+            "value": "db932f6c-7aca-42cb-8f24-d55eda0543a0",
+            "display": false
+        },
+        "accessibility__display": {
+            "name": "accessibility",
+            "value": "external",
+            "display": false
+        },
+        "application": {
+            "name": "application",
+            "value": "automationtestcomponent1679546000190",
+            "display": false
+        },
+        "org": {
+            "name": "org",
+            "value": "virajgamage",
+            "display": false
+        },
+        "applicationId": {
+            "name": "applicationId",
+            "value": "959c8e62-74f6-405a-9263-fb8ed61b746f",
+            "display": false
+        }
+    },
+    "monetization": null,
+    "accessControl": "NONE",
+    "accessControlRoles": [],
+    "businessInformation": {
+        "businessOwner": null,
+        "businessOwnerEmail": null,
+        "technicalOwner": null,
+        "technicalOwnerEmail": null
+    },
+    "corsConfiguration": {
+        "corsConfigurationEnabled": true,
+        "accessControlAllowOrigins": [
+            "*"
+        ],
+        "accessControlAllowCredentials": false,
+        "accessControlAllowHeaders": [
+            "authorization",
+            "Access-Control-Allow-Origin",
+            "Content-Type",
+            "SOAPAction",
+            "apikey",
+            "API-Key",
+            "testKey"
+        ],
+        "accessControlAllowMethods": [
+            "GET",
+            "PUT",
+            "POST",
+            "DELETE",
+            "PATCH",
+            "OPTIONS"
+        ]
+    },
+    "websubSubscriptionConfiguration": {
+        "enable": false,
+        "secret": "",
+        "signingAlgorithm": "SHA1",
+        "signatureHeader": "x-hub-signature"
+    },
+    "workflowStatus": null,
+    "createdTime": "1679546061243",
+    "lastUpdatedTime": "2023-03-23 04:35:41.205",
+    "endpointConfig": {
+        "endpoint_type": "http",
+        "production_endpoints": {
+            "url": "http://resource-name.ns-name.svc.cluster.local:9090/"
+        }
+    },
+    "endpointImplementationType": "ENDPOINT",
+    "scopes": [],
+    "scopePrefix": null,
+    "operations": [
+        {
+            "id": "",
+            "target": "/greeting",
+            "verb": "GET",
+            "authType": "Application & Application User",
+            "throttlingPolicy": "Unlimited",
+            "throttlingLimit": {
+                "requestCount": -1,
+                "unit": "MINUTE"
+            },
+            "scopes": [],
+            "usedProductIds": [],
+            "amznResourceName": null,
+            "amznResourceTimeout": null,
+            "payloadSchema": null,
+            "uriMapping": null,
+            "operationPolicies": {
+                "request": [],
+                "response": [],
+                "fault": []
+            }
+        }
+    ],
+    "threatProtectionPolicies": null,
+    "categories": [],
+    "keyManagers": [
+        "all"
+    ],
+    "serviceInfo": null,
+    "advertiseInfo": {
+        "advertised": false,
+        "apiExternalProductionEndpoint": null,
+        "apiExternalSandboxEndpoint": null,
+        "originalDevPortalUrl": null,
+        "apiOwner": "choreo_dev_apim_admin",
+        "vendor": "WSO2"
+    },
+    "gatewayVendor": "wso2",
+    "gatewayType": "wso2/synapse",
+    "asyncTransportProtocols": [
+        ""
+    ]
+}

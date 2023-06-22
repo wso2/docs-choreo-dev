@@ -1,4 +1,5 @@
-import { Enums } from "../console/enums";
+
+import { Enums } from "../commons/enums";
 import { AbsComponent } from "./abs-component";
 import { ByocConfig } from "./byco-config";
 
@@ -9,7 +10,7 @@ export interface ByocComponent extends AbsComponent {
     projectId: string,
     labels: string,
     componentType: string,
-    port?: 80,
+    port?: number,
     oasFilePath: string,
     accessibility: Enums.Accessibility,
     byocConfig?: ByocConfig

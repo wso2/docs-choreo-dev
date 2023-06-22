@@ -102,6 +102,8 @@ spec:
             - name: secret-email-service
               mountPath: "/mnt/csi/secret-email-service"
               readOnly: true
+            - name: tmp
+              mountPath: /tmp
       volumes:
         - name: secret-email-service
           csi:
@@ -111,6 +113,8 @@ spec:
               secretProviderClass: secret-email-service
             nodePublishSecretRef:
               name: csi-secret-store-azure
+        - name: tmp
+          emptyDir: {}
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
       affinity:

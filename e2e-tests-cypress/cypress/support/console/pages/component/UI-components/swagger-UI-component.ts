@@ -11,34 +11,44 @@
  * associated services.
  */
 
-
 export class SwaggerUI {
-  static SelectResource(path: string) {
-    const pathVariable = `[data-path="/${path}"]`;
-    cy.get('body').then(b => {
-      if (b.find(`div[id*="${SwaggerUI.getModifiedResourceName(path)}"]>div>div>div>div>div>button`).length == 0) {
-        cy.get(pathVariable).click()
+  static SelectResource(path: string, method: string = "") {
+    const pathVariable = method
+      ? `[id="operations-default-${method}${path}"]`
+      : `[data-path="/${path}"]`;
+    cy.get("body").then((b) => {
+      if (
+        b.find(
+          `div[id*="${SwaggerUI.getModifiedResourceName(
+            path
+          )}"]>div>div>div>div>div>button`
+        ).length == 0
+      ) {
+        if (b.find(`[class="try-out"]`).length == 0) {
+          cy.get(pathVariable).click();
+        }
       }
-    })
+    });
   }
 
   static TryoutAPI(resource: string = "-get") {
-    cy.get(`div[id*="${SwaggerUI.getModifiedResourceName(resource)}"]>div>div>div>div>div>button`).focus().click()
-    cy.get(`div[id*="${SwaggerUI.getModifiedResourceName(resource)}"]>div>div>div>div>div>button[class*="cancel"]`).should("be.visible")
-
+    cy.contains("Try it out").should("be.visible").click();
+    cy.contains("Cancel").should("be.visible");
   }
 
   private static getModifiedResourceName(resource: string = "-get") {
-    return Cypress._.capitalize(resource)
+    if (resource.includes("/")) {
+      return resource.replace("/", "_");
+    }
+    return Cypress._.capitalize(resource);
   }
 
   static ExecuteResourceFunction(resource = "-get") {
-
-
-    cy.get(`div[id*="${SwaggerUI.getModifiedResourceName(resource)}"]>div>div>div>button[class*="execute"]`).focus().click();
-    cy.get(`div[id*="${SwaggerUI.getModifiedResourceName(resource)}"]>div>div>div>div>div>div>div[class="curl-command"]`).should("be.visible")
+    cy.contains("Execute").focus().click();
+    cy.get(`[class="curl-command"]`).should("be.visible");
+    cy.get('[class="loading-container"]').should("not.exist");
     cy.log("Execution is successful");
-    cy.get(`div[id*="${SwaggerUI.getModifiedResourceName(resource)}"]>div>div>div>div>div>button[class*="cancel"]`).click()
+    cy.contains("Cancel").click();
   }
 
   static GetResponse() {
@@ -58,11 +68,17 @@ export class SwaggerUI {
     cy.get(`[placeholder="${placeholder}"]`).clear().type(value);
   }
 
-  static invokeResource(resource: string, key: string = "", value: string = "") {
-    this.SelectResource(resource);
+  static invokeResource(
+    resource: string,
+    key: string = "",
+    value: string = "",
+    method: string = ""
+  ) {
+    this.SelectResource(resource, method);
     this.TryoutAPI(resource);
-    if (key) { this.enterValue(key, value); }
+    if (key) {
+      this.enterValue(key, value);
+    }
     this.ExecuteResourceFunction(resource);
-
   }
 }
