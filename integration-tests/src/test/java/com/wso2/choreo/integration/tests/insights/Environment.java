@@ -16,6 +16,9 @@ package com.wso2.choreo.integration.tests.insights;
 public class Environment {
 
     private String id;
+    private String externalEnvId;
+    private String internalEnvId;
+    private String sandboxEnvId;
     private String name;
     private String type;
 
@@ -29,5 +32,17 @@ public class Environment {
 
     public String getType() {
         return type;
+    }
+
+    public String getExternalEnvId() {
+        return externalEnvId;
+    }
+
+    public String getInternalEnvId() {
+        return internalEnvId;
+    }
+
+    public String getSandboxEnvId() {
+        return sandboxEnvId;
     }
 }

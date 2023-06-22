@@ -334,6 +334,7 @@ public class GraphQL extends ControlPlaneAPI {
         graphqlDTO.setSrcGitRepoUrl(srcGitHubURL);
         graphqlDTO.setOrgId(ORG_ID);
         graphqlDTO.setOrgHandler(ORG_HANDLE);
+        graphqlDTO.setComponentType("byocRestApi");
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/createBYOCcomponent.mustache", graphqlDTO);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         return ObjectMapperUtil.mapStringToObject(ChoreoComponent.class, response.getRes(), "createByocComponent");

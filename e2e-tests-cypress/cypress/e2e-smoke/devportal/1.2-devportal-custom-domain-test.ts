@@ -15,7 +15,6 @@
 import { DomainsComponents } from "../../support/console/pages/component/common/domains-components";
 import { DevPortalHomePage } from "../../support/devportal/pages/home/home-page";
 import { Apis } from "../../support/devportal/pages/apis/apis-home";
-import { ApiOverview } from "../../support/devportal/pages/apis/api-overview";
 import { ApiCredentials } from "../../support/devportal/pages/apis/apis-credentials";
 import { TryOut } from "../../support/devportal/pages/apis/try-out";
 import { LoginPage as ConsoleLoginPage } from "../../support/console/pages/login-page";
@@ -64,7 +63,7 @@ describe("Create and deploy a component to test developer portal with custom dom
     );
     cy.task("setAPIName", API_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(PROJECT_NAME, API_NAME);
+    APIDeployment.DeployToDev();
     APIDeployment.promoteToProd();
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
@@ -115,7 +114,7 @@ describe("Login and test developer portal with custom domain", () => {
     TryOut.navigateToTryOutMenu(true);
     TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT);
     TryOut.GenerateAccessToken();
-    TryOut.SelectResource( OPERATION_USERS);
+    TryOut.SelectResource(OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
@@ -125,7 +124,7 @@ describe("Login and test developer portal with custom domain", () => {
     ApiCredentials.navigateCredentialsTab();
     TryOut.navigateToTryOutMenu(true);
     TryOut.GenerateAccessToken();
-    TryOut.SelectResource( OPERATION_USERS);
+    TryOut.SelectResource(OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();

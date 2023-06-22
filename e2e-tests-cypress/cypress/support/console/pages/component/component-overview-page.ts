@@ -24,9 +24,11 @@ export class ComponentOverviewPage {
 
   static navigateToDeploy() {
     cy.get("[data-cyid=link-deploy]")
+      .should("be.visible")
       .realHover({ position: "left" })
-      .wait(200)
-      .click();
+      .wait(MENU_RENDERING_TIME)
+      .click()
+      .wait(MENU_RENDERING_TIME);
     cy.get('[id="backdrop-loader"]').should("not.exist");
     Utils.moveMouseAwayFromLeftMenu();
   }
@@ -80,12 +82,23 @@ export class ComponentOverviewPage {
     }
   }
 
+
+
+static navigateProxyResources(){
+  cy.xpath('//div[@id="root"]/div/div/div/div[2]/div[1]').realHover().wait(2000)
+  cyGet('[data-cyid="link-develop"]').should('be.visible').click()
+  cyGet('[data-cyid="develop-resources"]')
+  cy.xpath('//div[@id="root"]/div/div/div/div[2]').realHover({position:"right"})
+}
+
+
   static navigateToDevelop() {
     if (Utils.isUnifiedMenuEnabled()) {
       this.navigateToSubMenu(
         '[data-cyid="link-develop"]',
         new Array('[data-cyid="develop-resources"]')
       );
+      Utils.moveMouseAwayFromLeftMenu();
     } else {
       cy.get('[data-cyid="link-develop"]').click();
     }
@@ -162,7 +175,7 @@ export class ComponentOverviewPage {
                 .should("be.visible")
                 .realHover({ position: "left" })
                 .wait(MENU_RENDERING_TIME)
-                .click();
+                .click({ force: true });
               break;
             }
           }

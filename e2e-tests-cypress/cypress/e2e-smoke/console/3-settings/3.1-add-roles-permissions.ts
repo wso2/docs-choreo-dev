@@ -41,7 +41,7 @@ describe("Add roles and permissions", () => {
   });
 
   it("Delete created role", () => {
-    ChoreoHomePage.navigateToSettings();
+    OrganizationComponent.navigateToMembers();
     OrganizationComponent.navigateToRoles();
     OrganizationComponent.deleteCreatedRole(roleName);
   });

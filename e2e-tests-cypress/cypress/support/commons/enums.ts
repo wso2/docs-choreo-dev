@@ -94,6 +94,6 @@ export namespace Enums {
     error = "error",
     Error = "Error",
     ERROR="ERROR",
-    Active="Active"
+    Active="Active",
   }
 }

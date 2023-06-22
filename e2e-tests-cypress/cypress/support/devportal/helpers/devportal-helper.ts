@@ -43,7 +43,7 @@ export class DevPortalHelper {
       ""
     );
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev(projectName, API_Name);
+    APIDeployment.DeployToDev();
     APIDeployment.promoteToProd();
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
@@ -74,7 +74,7 @@ export class DevPortalHelper {
     ).then(() => {
       ComponentListingPage.visitToAComponent(API_Name);
       ComponentOverviewPage.navigateToDeploy();
-      ComponentDeployPage.deployToDev();
+      ComponentDeployPage.deployToDev(projectName, API_Name);
       ComponentOverviewPage.navigateToManage();
       ComponentAPILifecycle.manageLifecycle();
       ComponentAPILifecycle.publishWithoutConnector().should("be.visible");

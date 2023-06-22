@@ -55,10 +55,13 @@ describe("Verify Reusable Manual Trigger creation functionality", () => {
     ProjectOverviewPage.searchReuseComponent(componentData);
   });
 
-  it("Verify component deployment", () => {
+  it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(MANUAL_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployToDev(false, false, true);
+  });
+
+  it("Verify component deployment", () => {
+    ComponentDeployPage.reDeployToDev(false, false, true);
   });
 
   it("Verify component promotion to prod", () => {

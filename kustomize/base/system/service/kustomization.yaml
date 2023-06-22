@@ -24,7 +24,6 @@ resources:
   - loggingapi.yaml
   - marketplace.yaml
   - moesif-service.yaml
-  - multivariate-anomaly-detector-notification-manager.yaml
   - negotiator.yaml
   - obsapi.yaml
   - orgremover.yaml
@@ -46,3 +45,4 @@ resources:
   - crypto-key-service.yaml
   - metered-usage-handler.yaml
   - obsmanager.yaml
+  - dp-helmhub.yaml

@@ -6,6 +6,7 @@ resources:
   - api-server.yaml
   - app-deployer.yaml
   - app-service.yaml
+  - audit-logging.yaml
   - telemetry.yaml
   - sys-obsapi.yaml
   - negotiator.yaml
@@ -25,7 +26,6 @@ resources:
   - cp-graphql.yaml
   - console-next.yaml
   - marketplace.yaml
-  - multivariate-anomaly-detector-notification-manager.yaml
   - alert-notification-service.yaml
   - alert-configuration-service.yaml
   - delete-manager.yaml
@@ -44,3 +44,4 @@ resources:
   - cdn-tls-synchronizer.yaml
   - crypto-key-service.yaml
   - obsmanager.yaml
+  - dp-helmhub.yaml
