@@ -43,8 +43,6 @@ spec:
                 name: env-dp-helmhub
             - configMapRef:
                 name: cm-dp-helmhub
-            - secretRef:
-                name: secret-dp-helmhub
           env:
             - name: MSSQL_PASSWORD
               valueFrom:
