@@ -569,6 +569,7 @@ develop-a-rest-api
 develop-a-grpc-service
 develop-a-ballerina-rest-api
 configure-mutual-tls-between-components
+develop-a-ballerina-graphql-api
  - theme/material/templates/home-page.html
 doctype
 html
