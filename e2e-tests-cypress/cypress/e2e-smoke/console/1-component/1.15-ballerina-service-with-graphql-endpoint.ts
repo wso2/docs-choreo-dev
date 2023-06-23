@@ -33,7 +33,7 @@ after(() => {
 });
 
 describe(`Graphql GQL service functionality`, () => {
-  const PROJECT_DESCRIPTION = "sample oas flow scenario";
+  const PROJECT_DESCRIPTION = "ballerina service with graphql endpoint";
   const PROJECT_NAME = Utils.generateProjectName();
   const TEST_QUERY = '{greeting(name:"John")}';
   const TEST_QUERY_RESPONSE = 'greeting": "Hello, John';
