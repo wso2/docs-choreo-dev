@@ -41,6 +41,7 @@ choreoManagedRepoComponentEnabledOrgs = "{{.CHOREO_MANAGED_REPO_COMPONENT_ENABLE
 enableGithubOrgUserValidation = {{.ENABLE_GITHUB_ORG_USER_VALIDATION}}
 enableRBAC = {{.ENABLE_GRAPHQL_RBAC}}
 enableEventPublish = {{.ENABLE_GRAPHQL_EVENT_PUBLISH}}
+enableEventPublisherMTLS = {{.ENABLE_GRAPHQL_EVENT_PUBLISHER_MTLS}}
 apimSecretPath = "/mnt/csi/secret-cp-graphql/APIM_REST_API_CONSUMER_SECRET"
 enableDBBasedNotifications = {{.ENABLE_DB_BASED_NOTIFICATIONS}}
 invokeUrlOrgIdPrefixExcludedOrgs = "{{.INVOKE_URL_ORG_ID_PREFIX_EXCLUDED_ORGS}}"
