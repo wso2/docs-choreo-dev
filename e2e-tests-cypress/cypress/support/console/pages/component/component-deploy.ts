@@ -204,16 +204,19 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api"]', LONG_TIME)
       .contains("Generating Configurations", LONG_TIME)
       .should("not.exist");
+    APIDeployment.RetryDevDeployment();
     cyGet('[data-cyid="btn-deploy-api"]', LONG_TIME)
       .should("be.enabled")
       .click();
     cy.contains("Deploy").should("be.visible").click();
     this.addConfiguration(configValue);
+    APIDeployment.RetryDevDeployment();
     cy.get('[data-testid="btn-stop"]', LONG_TIME).should("be.visible");
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
     // to ensure rendering completes before checking the deployment status
     cy.wait(VERY_SHORT_TIME.timeout);
     cy.get('[data-testid="btn-stop"]').should("be.visible");
+    APIDeployment.RetryDevDeployment();
     cy.get('[data-cyid="deployment-status"]', LONG_TIME).contains(
       DEPLOYMENT_SUCCESS,
       LONG_TIME
