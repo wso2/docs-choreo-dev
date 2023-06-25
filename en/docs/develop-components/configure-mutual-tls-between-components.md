@@ -26,3 +26,9 @@ The method of reading mTLS certificates from a component may vary depending on i
 ## Sample for mTLS Communication
 
 You can find step-by-step instructions on deploying two components in Choreo that utilize mTLS communication in the sample [service-to-service-mtls](https://github.com/wso2/choreo-sample-apps/tree/main/go/service-to-service-mtls).
+
+## Configure TLS Between Components
+
+TLS (Transport Layer Security) provides secure and private communication channels between a client and a server, similar to mTLS. However, unlike mTLS, TLS does not require the client to present a certificate to the server, resulting in the absence of mutual authentication between the client and the server. Nonetheless, the main objective of TLS remains ensuring the confidentiality of data transmitted between the client and server, preventing unauthorized tampering. TLS serves as a fundamental protocol for securing internet communications, offering encryption, integrity, and server authentication. On the other hand, mTLS enhances TLS by introducing client-side authentication, facilitating mutual verification of identities between the client and server.
+
+When configuring TLS between components, you can follow similar steps as for mTLS mentioned above, with the exception that generating a client certificate is not necessary and the client component only needs to have the root certificate to verify the server's identity.
