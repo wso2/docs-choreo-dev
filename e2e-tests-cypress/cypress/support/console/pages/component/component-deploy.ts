@@ -102,7 +102,7 @@ export class ComponentDeployPage {
     isManualTrigger: boolean = false
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-deploy-api"]', LONG_TIME)
+    cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
       .contains("Generating Configurations", LONG_TIME)
       .should("not.exist");
     APIDeployment.RetryDevDeployment();
