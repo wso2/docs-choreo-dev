@@ -388,9 +388,9 @@ export class ComponentDeployPage {
       cy.get('[data-testid="Public-visibility-option"]')
         .should("be.visible")
         .click();
-      cy.get('[data-cyid="endpoint-submit-btn"]').click();
+      cy.get('[data-cyid="endpoint-submit-btn-button"]').click();
     }
-    cyGet('[data-cyid="btn-next"]').click();
+    cyGet('[data-cyid="btn-next-button"]').click();
     APIDeployment.RetryDevDeployment();
     cyGet('[data-testid="btn-stop"]', LONG_TIME).should("be.visible");
     GraphQL._getComponentDeploymentStatus(projectName, componentName);
@@ -478,9 +478,9 @@ export class ComponentDeployPage {
       cy.get('[data-testid="Public-visibility-option"]')
         .should("be.visible")
         .click();
-      cy.get('[data-cyid="endpoint-submit-btn"]').click();
+      cy.get('[data-cyid="endpoint-submit-btn-button"]').click();
     }
-    cy.get('[data-cyid="btn-next"]').click();
+    cy.get('[data-cyid="btn-next-button"]').click();
     APIDeployment.RetryPromotionToProd();
     cy.get('[data-testid="btn-stop"]', LONG_TIME)
       .should("have.length", 2)
