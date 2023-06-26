@@ -131,7 +131,7 @@ export class OrganizationComponent {
   }
 
   static selectPendingInvitation() {
-    cy.get('[data-cyid="pending-invitation"]').click();
+    cy.get('[data-testid="pending-invitation"]').click();
   }
 
   private static addRoles(roles: string[]) {
