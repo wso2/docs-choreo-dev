@@ -114,7 +114,7 @@ export class ComponentDeployPage {
       if (isManagedByAPIM) {
         Utils.interceptConfig();
       }
-      this.pollElement('[data-cyid="btn-next"]').click();
+      this.pollElement('[data-cyid="btn-next-button"]').click();
     }
 
     APIDeployment.RetryDevDeployment();
@@ -149,7 +149,7 @@ export class ComponentDeployPage {
           cyGet('[data-cyid="btn-next"]').realClick();
         } else {
           for (var i = 0; i < numberOfNextPrompts; i++) {
-            cyGet('[data-cyid="btn-next"]').realClick();
+            cyGet('[data-cyid="btn-next-button"]').realClick();
           }
         }
       });
