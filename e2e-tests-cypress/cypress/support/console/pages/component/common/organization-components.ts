@@ -131,7 +131,7 @@ export class OrganizationComponent {
   }
 
   static selectPendingInvitation() {
-    cy.get('[data-cyid="pending-invitation"]').click();
+    cy.get('[data-testid="pending-invitation"]').click();
   }
 
   private static addRoles(roles: string[]) {
@@ -149,7 +149,7 @@ export class OrganizationComponent {
     roleDescription: string,
     roleTag: string
   ) {
-    cy.get('[data-cyid="btn-create-role"]').click();
+    cy.get('[data-cyid="btn-create-role-button"]').click();
     cy.contains("Create Role").should("be.visible");
     cy.log("Creating a Role");
     cy.get('[data-cyid="text-field-role-name"]').type(roleName);
