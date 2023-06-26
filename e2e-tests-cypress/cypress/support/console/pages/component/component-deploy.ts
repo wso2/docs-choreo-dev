@@ -102,7 +102,7 @@ export class ComponentDeployPage {
     isManualTrigger: boolean = false
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-deploy-api"]', LONG_TIME)
+    cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
       .contains("Generating Configurations", LONG_TIME)
       .should("not.exist");
     APIDeployment.RetryDevDeployment();
@@ -323,7 +323,7 @@ export class ComponentDeployPage {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.wait(4000);
     APIDeployment.RetryDevDeployment();
-    cy.get('[data-cyid="btn-deploy-proxy"]').should("be.enabled").click();
+    cy.get('[data-cyid="btn-deploy-proxy-button"]').should("be.enabled").click();
     cy.contains("Configure & Deploy").should("be.visible");
     cy.get('[data-cyid="btn-next"]').should("be.enabled");
     Utils.getRenderedElement('[data-cyid="btn-next"]').click();
