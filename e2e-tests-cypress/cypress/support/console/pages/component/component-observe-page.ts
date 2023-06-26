@@ -28,7 +28,7 @@ export class ComponentObservePage {
       index = 1;
     }
 
-    cy.get('[data-cyid="environment-selector"]').should("be.visible").click();
+    cy.get('[data-cyid="environment-selector-select"]').should("be.visible").click();
     cy.get(`#environment-selector-label-option-${index}`).click({
       force: true,
     });

@@ -180,8 +180,8 @@ export class ComponentDeployPage {
   static deployScheduleTask() {
     window.localStorage.setItem("hideSocialShareModel", "true");
     APIDeployment.RetryDevDeployment();
-    cy.get('[data-cyid="btn-deploy-api-button"]').should("be.enabled").click();
-    cy.get('[data-cyid="btn-next"]').contains("Deploy").click();
+    cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME).should("be.enabled").click();
+    cy.get('[data-cyid="btn-next-button"]').contains("Deploy").click();
     cy.get('[value="*/1 * * * *"]', LONG_TIME).eq(0).should("be.visible");
     APIDeployment.RetryDevDeployment();
   }
@@ -194,7 +194,7 @@ export class ComponentDeployPage {
       .should("be.enabled")
       .eq(0)
       .click();
-    cy.get('[data-cyid="btn-next"]').contains("Deploy").click();
+    cy.get('[data-cyid="btn-next-button"]').contains("Deploy").click();
     cy.get('[value="*/1 * * * *"]', LONG_TIME).eq(1).should("be.visible");
     APIDeployment.RetryPromotionToProd();
   }
