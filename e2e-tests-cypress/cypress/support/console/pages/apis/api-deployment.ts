@@ -108,7 +108,7 @@ export class APIDeployment {
     componentName: string = "",
     hasMediationPolicy: boolean = false
   ) {
-    cyGet('[data-cyid="btn-promote"]').should("be.enabled").click();
+    cyGet('[data-cyid="btn-promote-button"]').should("be.enabled").click();
     cy.xpath('//span[text()="Configure & Deploy"]').should("have.length", 2);
     cy.wait(5000);
     cy.contains('role="progressbar"').should("not.exist");
