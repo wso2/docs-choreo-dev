@@ -28,11 +28,11 @@ export class APIDeployment {
     cy.intercept({ method: "GET", url: PUBLISHER_API_KEYS_URL, times: 1 }).as(
       "keys"
     );
-    cyGet('[data-cyid="btn-deploy-proxy"]', MEDIUM_TIME)
+    cyGet('[data-cyid="btn-deploy-proxy-button"]', MEDIUM_TIME)
       .contains("Generating Configurations", MEDIUM_TIME)
       .should("not.exist");
     this.RetryDevDeployment();
-    cyGet('[data-cyid="btn-deploy-proxy"]').should("not.be.disabled").click();
+    cyGet('[data-cyid="btn-deploy-proxy-button"]').should("not.be.disabled").click();
 
     cy.wait("@keys", VERY_SHORT_TIME).then(() => {
       cyGet('[data-cyid="btn-next"]').should("be.visible").click();

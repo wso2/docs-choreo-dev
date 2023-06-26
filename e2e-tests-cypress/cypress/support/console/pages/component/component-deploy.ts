@@ -323,7 +323,7 @@ export class ComponentDeployPage {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.wait(4000);
     APIDeployment.RetryDevDeployment();
-    cy.get('[data-cyid="btn-deploy-proxy"]').should("be.enabled").click();
+    cy.get('[data-cyid="btn-deploy-proxy-button"]').should("be.enabled").click();
     cy.contains("Configure & Deploy").should("be.visible");
     cy.get('[data-cyid="btn-next"]').should("be.enabled");
     Utils.getRenderedElement('[data-cyid="btn-next"]').click();

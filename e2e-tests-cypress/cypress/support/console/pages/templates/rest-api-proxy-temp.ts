@@ -24,7 +24,7 @@ export class RestAPIProxyTemplate {
 
   static createOpenApi(filepath: string = "", url: string = "") {
     if (filepath) {
-      cy.get('[data-cyid="btn-upload"]').click();
+      cy.get('[data-cyid="btn-upload-button"]').click();
       cy.get('input[type="file"]').attachFile(filepath);
     }
 
@@ -32,7 +32,7 @@ export class RestAPIProxyTemplate {
       cy.get('[data-cyid="txt-oas-url"]').should("be.visible").type(url);
     }
 
-    cy.get('[data-cyid="btn-next"]').should("be.visible").click();
+    cy.get('[data-cyid="btn-next-button"]').should("be.visible").click();
   }
 
 
@@ -87,7 +87,7 @@ export class RestAPIProxyTemplate {
         cy.get("input").clear().type(endpoint)
       );
     }
-    cy.get('[data-cyid="btn-create"]').should("be.enabled").click();
+    cy.get('[data-cyid="btn-create-button"]').should("be.enabled").click();
 
     let resourceIdentifier = "panel-/intensity/get-header";
     if (validateResourceName) {
