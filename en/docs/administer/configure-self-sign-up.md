@@ -39,11 +39,11 @@ To configure self-sign-up, follow the steps given below:
 2. When you receive a response, sign in to [Asgardeo](https://console.asgardeo.io/) using the same credentials that you used to sign in to Choreo.
 3. In the Asgardeo Console, click **View all applications**.
 
-    ![View all applications](../assets/img/administer/self-sign-up/view-all-applications.png){.cInlineImage-full}
+    ![View all applications](../assets/img/administer/self-sign-up/view-all-applications.png)
 
     You will see an application named **WSO2_LOGIN_FOR_CHOREO_DEV_PORTAL**. 
 
-    ![Applications](../assets/img/administer/self-sign-up/application.png){.cInlineImage-full}
+    ![Applications](../assets/img/administer/self-sign-up/application.png)
 
 4. Click on the application to edit it and enter your organization’s Developer Portal URL as the **Access URL** of the application. For example, `https://devportal.choreo.dev/starkindustries`.
 5. Click **Update**.
@@ -54,35 +54,38 @@ To configure self-sign-up, follow the steps given below:
 
     1. Click the **User Attributes** tab.
     2. To add the email as a mandatory user attribute, select **Email** and click the arrow to expand the section. Then, select the **Requested** and **Mandatory** checkboxes.
+
+        ![Email attribute](../assets/img/administer/self-sign-up/email-attribute.png)
+
     3. To add the first name and last name as optional attributes, select **Profile** and click the arrow to expand the section. Then, select the **Requested** checkbox for the **First Name** and the **Last Name** attributes.
 
-        ![User attributes](../assets/img/administer/self-sign-up/user-attributes.png){.cInlineImage-half}
+        ![Profile attribute](../assets/img/administer/self-sign-up/profile-attribute.png)
 
     4. Click **Update**.
 
 7. To add the user attributes as OpenID Connect scopes, follow these steps:
 
-    1. In the top navigation menu, click **Manage** and then click **Scopes** in the left navigation menu.
+    1. In the Asgardeo Console left navigation menu, click **Scopes**.
     2. In the **OpenID Connect Scopes** pane, click **OpenID** to edit it.
     3. Click **+ New Attribute**.
     4. Select **Email**, **First Name**, and **Last Name** as the attributes to associate with the OpenID scope.
     5. Click **Save** and then click **Save Changes**.
 
-        ![Save attributes as scopes](../assets/img/administer/self-sign-up/save-attributes-as-scopes.png){.cInlineImage-full}
+        ![Save attributes as scopes](../assets/img/administer/self-sign-up/save-attributes-as-scopes.png)
 
 8. To configure basic authentication as the sign-in method, follow these steps:
 
-    1. In the top navigation menu, click **Develop**.
+    1. In the Asgardeo Console left navigation menu, click **Applications**.
     2. In the **Applications** pane, click the **WSO2_LOGIN_FOR_CHOREO_DEV_PORTAL** application to edit it.
     3. Click the **Sign-in Method** tab and then click **Start with default configuration**.
 
-        ![Add sign-in method](../assets/img/administer/self-sign-up/add-sign-in-method.png){.cInlineImage-full}
+        ![Add sign-in method](../assets/img/administer/self-sign-up/add-sign-in-method.png)
 
     4. Click **Update**.
 
 9.  To configure self-registration, follow these steps:
 
-    1. In the top navigation menu, click **Manage** and then click **Self Registration** in the left navigation menu.
+    1. In the Asgardeo Console left navigation menu, click **Self Registration**.
     2. In the **Self Registration** pane, click **Configure**.
     3. To enable self-registration, turn on the toggle.
     4. Select **Account verification**. This displays a confirmation message to enable account verification. 
@@ -90,7 +93,7 @@ To configure self-sign-up, follow the steps given below:
     6. Specify an appropriate value in the **Account verification link expiry time** field.
     7. Click **Update**. 
      
-        ![Configure self-registration](../assets/img/administer/self-sign-up/configure-self-registration.png){.cInlineImage-full}
+        ![Configure self-registration](../assets/img/administer/self-sign-up/configure-self-registration.png)
 
 Once you complete these steps, you will see a sign up link similar to the following in your Developer Portal:
 
@@ -98,7 +101,7 @@ Once you complete these steps, you will see a sign up link similar to the follow
  
 Users can click **LOGIN/SIGN UP** and then click **Create an account** to sign up to access your Developer Portal.
 
-![Create an account](../assets/img/administer/self-sign-up/create-an-account.png){.cInlineImage-small} 
+![Create an account](../assets/img/administer/self-sign-up/create-an-account.png)
 
 ## Manage new users
 
