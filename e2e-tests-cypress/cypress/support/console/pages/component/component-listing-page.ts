@@ -20,7 +20,7 @@ export class ComponentListingPage {
   static deleteComponent(componentName: string) {
     cyGet(`tbody>tr`).should("be.visible").realHover();
 
-    cy.get('[data-cyid="btn-contained"]').should("be.visible").click();
+    cy.get('[data-cyid="btn-contained-button"]').should("be.visible").click();
     cy.get('[name="confirmName"]').type(componentName);
     cy.get(".MuiDialogActions-spacing button").should("be.enabled").eq(1).click();
     cy.get(".MuiDialog-container").should("not.exist");
