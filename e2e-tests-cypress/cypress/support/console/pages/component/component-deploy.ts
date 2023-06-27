@@ -147,7 +147,7 @@ export class ComponentDeployPage {
     if (isAdditionalConfigs) {
       cyGet("body").then((bdy) => {
         if (bdy.find('[data-testid="deployment-history-btn"]').length == 2) {
-          cyGet('[data-cyid="btn-next"]').realClick();
+          cyGet('[data-cyid="btn-next-button"]').realClick();
         } else {
           for (var i = 0; i < numberOfNextPrompts; i++) {
             cyGet('[data-cyid="btn-next-button"]').realClick();
@@ -241,7 +241,7 @@ export class ComponentDeployPage {
       invokeUrlIndex: 0,
     });
     if (isNewComponent) {
-      cy.get('[data-cyid="btn-next"]').click();
+      cy.get('[data-cyid="btn-next-button"]').click();
       this.addConfiguration(configValue);
     } else {
       cy.get(".ConfigForm button")
@@ -326,8 +326,8 @@ export class ComponentDeployPage {
     APIDeployment.RetryDevDeployment();
     cy.get('[data-cyid="btn-deploy-proxy-button"]').should("be.enabled").click();
     cy.contains("Configure & Deploy").should("be.visible");
-    cy.get('[data-cyid="btn-next"]').should("be.enabled");
-    Utils.getRenderedElement('[data-cyid="btn-next"]').click();
+    cy.get('[data-cyid="btn-next-button"]').should("be.enabled");
+    Utils.getRenderedElement('[data-cyid="btn-next-button"]').click();
     APIDeployment.RetryDevDeployment();
     cy.get('[data-cyid="deployment-status"]')
       .contains(DEPLOYMENT_SUCCESS)
