@@ -13,6 +13,7 @@
 
 import { GraphQL } from "../../apis/graphql";
 import {
+  DEPLOYMENT_ERROR,
   DEPLOYMENT_PENDING,
   DEPLOYMENT_PROGRESSING,
   DEPLOYMENT_STOPPED,
@@ -441,7 +442,7 @@ export class ComponentDeployPage {
       cy.get('[data-testid="Public-visibility-option"]')
         .should("be.visible")
         .click();
-      cy.get('[data-cyid="endpoint-submit-btn"]').click();
+      cy.get('[data-cyid="endpoint-submit-btn-button"]').click();
     }
     cyGet('[data-cyid="btn-next-button"]').click();
     APIDeployment.RetryDevDeployment();
@@ -467,10 +468,10 @@ export class ComponentDeployPage {
     );
   }
 
-  static promoteService(endpointName: string, changeVisibility?: boolean) {
+  static promoteService(endpointName: string, changeVisibility?: boolean, count = 0) {
     APIDeployment.RetryPromotionToProd();
     cy.get('[data-cyid="btn-promote-button"]', LONG_TIME).should("be.enabled").click();
-    cy.get(`[data-cyid="${endpointName}-endpoint-accordion"]`).should("be.visible");
+    cy.get(`[data-cyid="${endpointName}-endpoint-accordion"]`, SHORT_TIME).should("be.visible");
     if (changeVisibility) {
       cy.get(`[data-testid="${endpointName}-edit-btn"]`)
         .should("be.visible")
@@ -482,6 +483,16 @@ export class ComponentDeployPage {
     }
     cy.get('[data-cyid="btn-next-button"]').click();
     APIDeployment.RetryPromotionToProd();
+    if (count > 0 ) {
+      cy.get('[data-testid="Endpoints-status"]', LONG_TIME)
+      .should("have.length", 2)
+      .eq(1)
+      .then(($statusElement) => {
+        if ($statusElement.text().includes(DEPLOYMENT_ERROR)) {
+          cy.wait(SHORT_TIME.timeout)
+        }
+      });
+    }
     cy.get('[data-testid="btn-stop"]', LONG_TIME)
       .should("have.length", 2)
       .eq(1)
@@ -508,7 +519,19 @@ export class ComponentDeployPage {
     cy.get('[data-testid="Endpoints-status"]', LONG_TIME)
       .should("have.length", 2)
       .eq(1)
-      .contains("Active", SHORT_TIME)
+      .then(($statusElement) => {
+        if ($statusElement.text().includes(DEPLOYMENT_ERROR)) {
+          count++;
+          if (count > 3){
+            return;
+          }
+          this.promoteService(endpointName, changeVisibility, count);
+        }
+      });
+    cy.get('[data-testid="Endpoints-status"]', SHORT_TIME)
+      .should("have.length", 2)
+      .eq(1)
+      .contains(DEPLOYMENT_SUCCESS, SHORT_TIME)
       .should("exist");
   }
 }
