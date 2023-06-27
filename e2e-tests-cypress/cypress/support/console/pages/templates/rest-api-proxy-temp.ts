@@ -48,7 +48,7 @@ export class RestAPIProxyTemplate {
     if (api.isInternal) {
       cyGet('[aria-label="Access Modes"]>div').eq(1).click();
     }
-    cy.get('[data-cyid="btn-create"]').should("be.enabled").click();
+    cy.get('[data-cyid="btn-create-button"]').should("be.enabled").click();
 
     cyGet('[data-testid="delete-all-operations-btn"]').should("be.visible");
   }
