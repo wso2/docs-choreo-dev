@@ -173,7 +173,7 @@ export class OrganizationComponent {
     cy.get('[data-cyid="search-app"]').clear().type(roleName);
     cy.get('[data-cyid="roles-table-rows"]').should("contain", roleName);
     cy.get('[data-cyid="roles-table-rows"]').contains("td", roleName).click();
-    cy.get('[data-cyid="btn-add-member-to-role"]').click();
+    cy.get('[data-cyid="btn-add-member-to-role-button"]').click();
     cy.get('[data-cyid="select_members_to_role"]').click();
 
     const userData = Cypress.env("userData");
@@ -193,7 +193,7 @@ export class OrganizationComponent {
   }
 
   static deleteCreatedRole(roleName: string) {
-    cy.get('[data-cyid="btn-create-role"]').should("be.visible");
+    cy.get('[data-cyid="btn-create-role-button"]').should("be.visible");
     cy.get('[data-cyid="search-app"]').clear().type(roleName);
     cy.contains("td", roleName).should("be.visible");
     this.deleteSelectedRole(roleName);
