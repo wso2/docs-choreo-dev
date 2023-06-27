@@ -69,7 +69,7 @@ export class ComponentDeployPage {
       if (isManagedByAPIM) {
         Utils.interceptConfig();
       }
-      this.pollElement('[data-cyid="btn-next"]').click();
+      this.pollElement('[data-cyid="btn-next-button"]').click();
     }
 
     APIDeployment.RetryDevDeployment();
@@ -443,7 +443,7 @@ export class ComponentDeployPage {
         .click();
       cy.get('[data-cyid="endpoint-submit-btn"]').click();
     }
-    cyGet('[data-cyid="btn-next"]').click();
+    cyGet('[data-cyid="btn-next-button"]').click();
     APIDeployment.RetryDevDeployment();
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
     // to ensure rendering completes before checking the deployment status
