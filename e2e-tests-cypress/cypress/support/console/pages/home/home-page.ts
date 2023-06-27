@@ -108,10 +108,8 @@ export class ChoreoHomePage {
   static goToMarketplacePage() {
     const Url = Cypress.env("baseUrl");
     const { handle } = Cypress.env("userData");
-    
-      let marketplaceURL = `${Url}/organizations/${handle}/marketplace`;
-      cy.visit(marketplaceURL);
-    
-  }
 
+    let marketplaceURL = `${Url}/organizations/${handle}/marketplace`;
+    cy.visit(marketplaceURL);
+  }
 }

@@ -11,15 +11,13 @@
  * associated services.
  */
 
-
 import { cyGet } from "../../../commons/cy";
 import { Utils } from "../../../commons/utils";
 import { ProxyAPI } from "../../../interfaces/proxy-api";
 
-
 export class RestAPIProxyTemplate {
   static skipSource() {
-    cy.get('[data-cyid="btn-skip-src"]').should("be.visible").click();
+    cy.get('[data-cyid="btn-skip-src-button"]').should("be.visible").click();
   }
 
   static createOpenApi(filepath: string = "", url: string = "") {
@@ -35,9 +33,6 @@ export class RestAPIProxyTemplate {
     cy.get('[data-cyid="btn-next-button"]').should("be.visible").click();
   }
 
-
-
-
   static createProxyApi(api: ProxyAPI) {
     cy.get('[data-cyid="api-name"]').within(() =>
       cy.get("input").clear().type(api.apiName)
@@ -50,17 +45,13 @@ export class RestAPIProxyTemplate {
     cy.get('[data-cyid="api-endpoint"]').within(() =>
       cy.get("input").clear().type(api.endpoint)
     );
-    if(api.isInternal){
+    if (api.isInternal) {
       cyGet('[aria-label="Access Modes"]>div').eq(1).click();
     }
     cy.get('[data-cyid="btn-create"]').should("be.enabled").click();
 
     cyGet('[data-testid="delete-all-operations-btn"]').should("be.visible");
   }
-
-
-
-
 
   static enterAPIdetails(
     apiName: string,
