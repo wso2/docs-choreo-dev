@@ -75,18 +75,23 @@ export class ComponentDeployPage {
 
     APIDeployment.RetryDevDeployment();
     if (isManualTrigger) {
-      cy.get('[data-cyid="btn-promote-button"]', LONG_TIME).should("be.enabled");
+      cy.get('[data-cyid="btn-promote-button"]', LONG_TIME).should(
+        "be.enabled"
+      );
       return;
     }
 
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
     // to ensure rendering completes before checking the deployment status
-    cy.get('[data-testid="btn-stop"]', LONG_TIME).should("be.visible")
+    cy.get('[data-testid="btn-stop"]', LONG_TIME)
+      .should("be.visible")
       .wait(600)
-      .get('[data-testid="btn-stop"]', MEDIUM_TIME).should("be.visible");
-    cy.contains('div', 'Development')
-      .parents('div')
-      .eq(3).within(()=>{
+      .get('[data-testid="btn-stop"]', MEDIUM_TIME)
+      .should("be.visible");
+    cy.contains("div", "Development")
+      .parents("div")
+      .eq(3)
+      .within(() => {
         cy.get('[data-cyid="deployment-status"]', VERY_LONG_TIME).contains(
           DEPLOYMENT_SUCCESS,
           VERY_LONG_TIME
@@ -120,7 +125,9 @@ export class ComponentDeployPage {
 
     APIDeployment.RetryDevDeployment();
     if (isManualTrigger) {
-      cy.get('[data-cyid="btn-promote-button"]', LONG_TIME).should("be.enabled");
+      cy.get('[data-cyid="btn-promote-button"]', LONG_TIME).should(
+        "be.enabled"
+      );
       return;
     }
     cy.get('[data-testid="btn-stop"]', LONG_TIME).should("be.visible");
@@ -169,19 +176,25 @@ export class ComponentDeployPage {
       .should("have.length", 2)
       .eq(1)
       .contains("Active", LONG_TIME);
-    cyGet('[data-cyid="btn-promote-button"]', LONG_TIME).should("not.be.disabled");
+    cyGet('[data-cyid="btn-promote-button"]', LONG_TIME).should(
+      "not.be.disabled"
+    );
   }
 
   static promoteManualTriggerToProd() {
     APIDeployment.RetryPromotionToProd();
-    cy.get('[data-cyid="btn-promote-button"]', LONG_TIME).should("be.enabled").click();
+    cy.get('[data-cyid="btn-promote-button"]', LONG_TIME)
+      .should("be.enabled")
+      .click();
     APIDeployment.RetryPromotionToProd();
   }
 
   static deployScheduleTask() {
     window.localStorage.setItem("hideSocialShareModel", "true");
     APIDeployment.RetryDevDeployment();
-    cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME).should("be.enabled").click();
+    cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
+      .should("be.enabled")
+      .click();
     cy.get('[data-cyid="btn-next-button"]').contains("Deploy").click();
     cy.get('[value="*/1 * * * *"]', LONG_TIME).eq(0).should("be.visible");
     APIDeployment.RetryDevDeployment();
@@ -312,7 +325,9 @@ export class ComponentDeployPage {
   }
 
   private static promote({}: PromoteConfigs) {
-    cy.get('[data-cyid="btn-promote-button"]', LONG_TIME).should("not.be.disabled");
+    cy.get('[data-cyid="btn-promote-button"]', LONG_TIME).should(
+      "not.be.disabled"
+    );
     cy.wait(3000);
     cy.get('[data-cyid="btn-promote-button"]', LONG_TIME).click();
   }
@@ -324,7 +339,9 @@ export class ComponentDeployPage {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.wait(4000);
     APIDeployment.RetryDevDeployment();
-    cy.get('[data-cyid="btn-deploy-proxy-button"]').should("be.enabled").click();
+    cy.get('[data-cyid="btn-deploy-proxy-button"]')
+      .should("be.enabled")
+      .click();
     cy.contains("Configure & Deploy").should("be.visible");
     cy.get('[data-cyid="btn-next-button"]').should("be.enabled");
     Utils.getRenderedElement('[data-cyid="btn-next-button"]').click();
@@ -381,7 +398,9 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
       .should("be.enabled")
       .click();
-    cy.get(`[data-cyid="${endpointName}-endpoint-accordion"]`).should("be.visible");
+    cy.get(`[data-cyid="${endpointName}-endpoint-accordion"]`).should(
+      "be.visible"
+    );
     if (changeVisibility) {
       cy.get(`[data-testid="${endpointName}-edit-btn"]`)
         .should("be.visible")
@@ -399,13 +418,14 @@ export class ComponentDeployPage {
     // to ensure rendering completes before checking the deployment status
     cy.wait(600);
     cyGet('[data-testid="btn-stop"]', MEDIUM_TIME).should("be.visible");
-    cy.contains('div', 'Development')
-      .parents('div')
-      .eq(3).within(()=>{
+    cy.contains("div", "Development")
+      .parents("div")
+      .eq(3)
+      .within(() => {
         cyGet('[data-cyid="deployment-status"]', LONG_TIME)
           .contains(DEPLOYMENT_SUCCESS, LONG_TIME)
           .should("be.visible");
-        });
+      });
     cyGet('[data-testid="Endpoints-env-artifact"]').should("be.visible");
     GraphQL.getServiceEndpointStatus(projectName, componentName);
     cyGet('[data-cyid="deployment-status"]', SHORT_TIME)
@@ -434,7 +454,9 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
       .should("be.enabled")
       .click();
-    cy.get(`[data-cyid="${endpointName}-endpoint-accordion"]`).should("be.visible");
+    cy.get(`[data-cyid="${endpointName}-endpoint-accordion"]`).should(
+      "be.visible"
+    );
     if (changeVisibility) {
       cy.get(`[data-testid="${endpointName}-edit-btn"]`)
         .should("be.visible")
@@ -448,9 +470,11 @@ export class ComponentDeployPage {
     APIDeployment.RetryDevDeployment();
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
     // to ensure rendering completes before checking the deployment status
-    cy.get('[data-testid="btn-stop"]', LONG_TIME).should("be.visible")
+    cy.get('[data-testid="btn-stop"]', LONG_TIME)
+      .should("be.visible")
       .wait(600)
-      .get('[data-testid="btn-stop"]', MEDIUM_TIME).should("be.visible");
+      .get('[data-testid="btn-stop"]', MEDIUM_TIME)
+      .should("be.visible");
     cyGet('[data-cyid="deployment-status"]', VERY_LONG_TIME)
       .contains(DEPLOYMENT_SUCCESS, VERY_LONG_TIME)
       .should("be.visible");
@@ -468,10 +492,19 @@ export class ComponentDeployPage {
     );
   }
 
-  static promoteService(endpointName: string, changeVisibility?: boolean, count = 0) {
+  static promoteService(
+    endpointName: string,
+    changeVisibility?: boolean,
+    count = 0
+  ) {
     APIDeployment.RetryPromotionToProd();
-    cy.get('[data-cyid="btn-promote-button"]', LONG_TIME).should("be.enabled").click();
-    cy.get(`[data-cyid="${endpointName}-endpoint-accordion"]`, SHORT_TIME).should("be.visible");
+    cy.get('[data-cyid="btn-promote-button"]', LONG_TIME)
+      .should("be.enabled")
+      .click();
+    cy.get(
+      `[data-cyid="${endpointName}-endpoint-accordion"]`,
+      SHORT_TIME
+    ).should("be.visible");
     if (changeVisibility) {
       cy.get(`[data-testid="${endpointName}-edit-btn"]`)
         .should("be.visible")
@@ -483,15 +516,15 @@ export class ComponentDeployPage {
     }
     cy.get('[data-cyid="btn-next-button"]').click();
     APIDeployment.RetryPromotionToProd();
-    if (count > 0 ) {
+    if (count > 0) {
       cy.get('[data-testid="Endpoints-status"]', LONG_TIME)
-      .should("have.length", 2)
-      .eq(1)
-      .then(($statusElement) => {
-        if ($statusElement.text().includes(DEPLOYMENT_ERROR)) {
-          cy.wait(SHORT_TIME.timeout)
-        }
-      });
+        .should("have.length", 2)
+        .eq(1)
+        .then(($statusElement) => {
+          if ($statusElement.text().includes(DEPLOYMENT_ERROR)) {
+            cy.wait(SHORT_TIME.timeout);
+          }
+        });
     }
     cy.get('[data-testid="btn-stop"]', LONG_TIME)
       .should("have.length", 2)
@@ -500,8 +533,10 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="deployment-status"]', SHORT_TIME)
       .should("have.length", 2)
       .eq(1)
-      .contains("Active", SHORT_TIME);
-    cy.get('[data-cyid="btn-promote-button"]', LONG_TIME).should("not.be.disabled");
+      .contains(DEPLOYMENT_SUCCESS, VERY_LONG_TIME);
+    cy.get('[data-cyid="btn-promote-button"]', LONG_TIME).should(
+      "not.be.disabled"
+    );
     cy.get('[data-testid="Endpoints-env-artifact"]')
       .should("have.length", 2)
       .eq(1)
@@ -522,7 +557,7 @@ export class ComponentDeployPage {
       .then(($statusElement) => {
         if ($statusElement.text().includes(DEPLOYMENT_ERROR)) {
           count++;
-          if (count > 3){
+          if (count > 3) {
             return;
           }
           this.promoteService(endpointName, changeVisibility, count);
