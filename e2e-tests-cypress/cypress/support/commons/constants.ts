@@ -17,6 +17,7 @@ export const DEPLOYMENT_SUCCESS = "Active";
 export const DEPLOYMENT_PENDING = "Pending";
 export const DEPLOYMENT_PROGRESSING = "Progressing";
 export const DEPLOYMENT_STOPPED = "Suspended";
+export const DEPLOYMENT_ERROR = "Error";
 export const ACTIVE = "ACTIVE";
 export const ERROR = "ERROR";
 
