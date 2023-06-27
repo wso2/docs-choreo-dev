@@ -63,6 +63,7 @@ export class ChoreoHomePage {
     cy.clearAllSessionStorage();
     cy.clearLocalStorage();
     cy.clearAllCookies();
+    cy.clearAllLocalStorage();
   }
 
   static navigateToSettings() {

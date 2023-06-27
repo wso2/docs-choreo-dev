@@ -29,6 +29,7 @@ export class InsightsPage {
 
   static getTotalTraffic() {
     cy.get(".recharts-area");
+    cy.wait(VERY_SHORT_TIME.timeout)
     cy.contains("Total Traffic").should("be.visible");
     return cy.get("main").find("span>span").eq(0).invoke("text");
   }
