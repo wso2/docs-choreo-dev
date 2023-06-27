@@ -58,8 +58,18 @@ export class APIDeployment {
       .should("be.visible")
       .click();
 
-    cyGet('[data-cyid="deployment-status"]>h6', VERY_LONG_TIME)
-      .eq(0)
+    cy.contains("Deploying the Interceptor App", LONG_TIME).should(
+      "be.visible"
+    );
+
+    cy.contains("Summary of Deploying the proxy", LONG_TIME).should("exist");
+
+    cy.contains("In Progress", LONG_TIME)
+      .should("not.exist")
+      .wait(VERY_SHORT_TIME.timeout);
+
+    cy.get('[data-cyid="deployment-status"]>h6', VERY_LONG_TIME)
+      .eq(0, VERY_LONG_TIME)
       .should("contain", "Active");
   }
 

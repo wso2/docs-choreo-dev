@@ -42,15 +42,7 @@ export class ProjectListingPage {
         Utils.getRenderedElement('[data-testid="project-picker"]').click();
         Utils.getRenderedElement('[data-cyid="btn-create-new"]').click();
       } else {
-        cy.intercept({
-          method: "POST",
-          url: GRAPHQL_URL,
-          times: 10,
-        }).as("queryComponents");
-
-        cy.wait("@queryComponents", SHORT_TIME).then(() => {
-          this.getCreateNewProjectPopUp();
-        });
+        this.getCreateNewProjectPopUp();
       }
     });
   }
