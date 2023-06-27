@@ -35,7 +35,7 @@ export class APIDeployment {
     cyGet('[data-cyid="btn-deploy-proxy-button"]').should("not.be.disabled").click();
 
     cy.wait("@keys", VERY_SHORT_TIME).then(() => {
-      cyGet('[data-cyid="btn-next"]').should("be.visible").click();
+      cyGet('[data-cyid="btn-next-button"]').should("be.visible").click();
       this.RetryDevDeployment();
       cyGet('[data-cyid="deployment-status"]>h6', VERY_LONG_TIME)
         .eq(0)
@@ -113,8 +113,8 @@ export class APIDeployment {
     cy.wait(5000);
     cy.contains('role="progressbar"').should("not.exist");
     cy.get("body").then((bdy) => {
-      if (bdy.find('[data-cyid="btn-next"]').length > 0) {
-        cy.get('[data-cyid="btn-next"]').should("be.visible").click();
+      if (bdy.find('[data-cyid="btn-next-button"]').length > 0) {
+        cy.get('[data-cyid="btn-next-button"]').should("be.visible").click();
       }
     });
     cy.get("body").then((bdy) => {
