@@ -60,9 +60,9 @@ export class DomainsComponents {
     cy.get('[data-cyid="text-field-domain-name"]').type(domainName);
     cy.get('[data-cyid="btn-verify-domain"]').click({ force: true });
     cy.get('[data-cyid="btn-verify-domain"]').should("not.exist");
-    cy.get('[data-cyid="btn-next-button"]').should("exist");
+    cy.get('[data-cyid="btn-next"]').should("exist");
     cy.log("Verified the CNAME mapping availability");
-    cy.get('[data-cyid="btn-next-button"]').click({ force: true });
+    cy.get('[data-cyid="btn-next"]').click({ force: true });
     cy.contains("Select TLS Certificate Provider").should("be.visible");
     cy.get('[data-cyid="lets-encrypt-certificate-tile"]').click();
     cy.get('[data-cyid="btn-add"]').should("be.visible").click({ force: true });
