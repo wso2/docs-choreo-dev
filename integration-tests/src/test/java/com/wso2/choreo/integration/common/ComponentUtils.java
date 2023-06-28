@@ -847,12 +847,10 @@ public class ComponentUtils {
 
     }
 
-    public static void createNewVersion(TestActionRunner runner,
-            Map<Endpoints, HttpClient> citrusClients,
+    public static void createNewVersion(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
             String accessToken, GraphqlDTO graphqlDTO) throws Exception {
         HttpClient choreoProjectsTestClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
-        GraphQL.createNewVersion(runner, choreoProjectsTestClient, accessToken,
-                graphqlDTO);
+        GraphQL.createNewVersion(runner, choreoProjectsTestClient, accessToken, graphqlDTO);
         Orgs.createdComponentStatus(graphqlDTO.getProjectId(), graphqlDTO.getComponentId(), accessToken);
     }
 

@@ -1042,9 +1042,8 @@ public class GraphQL extends ControlPlaneAPI {
         return observabilityIds;
     }
     
-    public static void createNewVersion(TestActionRunner runner,
-                    HttpClient choreoProjectsTestClient, String accessToken,
-                    GraphqlDTO graphqlDTO) throws IOException {
+    public static void createNewVersion(TestActionRunner runner, HttpClient choreoProjectsTestClient,
+                                        String accessToken, GraphqlDTO graphqlDTO) throws IOException {
 
             String queryString = ObjectMapperUtil.mapObjectToString(
                             "templates/graphql/requests/createNewVersion.mustache", graphqlDTO);
