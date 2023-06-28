@@ -847,14 +847,13 @@ public class ComponentUtils {
 
     }
 
-    public static CreateNewVersionResponseDTO createNewVersion(TestActionRunner runner,
+    public static void createNewVersion(TestActionRunner runner,
             Map<Endpoints, HttpClient> citrusClients,
             String accessToken, GraphqlDTO graphqlDTO) throws Exception {
         HttpClient choreoProjectsTestClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
-        CreateNewVersionResponseDTO response = GraphQL.createNewVersion(runner, choreoProjectsTestClient, accessToken,
+        GraphQL.createNewVersion(runner, choreoProjectsTestClient, accessToken,
                 graphqlDTO);
         Orgs.createdComponentStatus(graphqlDTO.getProjectId(), graphqlDTO.getComponentId(), accessToken);
-        return response;
     }
 
     public static SyntaxTree verifyObservabilityAST(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,

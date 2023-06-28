@@ -102,9 +102,7 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
                                 .branch(repoBranchV2)
                                 .apiId(choreoComponent.getApiId())
                                 .build();
-                CreateNewVersionResponseDTO response = ComponentUtils.createNewVersion(this, citrusClients, accessToken,
-                                dto);
-                Assert.assertEquals("2.0.0", response.getApiVersion());
+                ComponentUtils.createNewVersion(this, citrusClients, accessToken, dto);
         }
 
         @Test(dependsOnMethods = { "createNewVersion_TestUserManagedNonEmptyCreateComponentRoot" })

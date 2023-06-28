@@ -533,6 +533,8 @@ public class GraphQL extends ControlPlaneAPI {
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
         final String[] componentHandlerArray = new String[1];
+
+
         runner.$(http()
                 .client(client)
                 .send()
@@ -1042,7 +1044,7 @@ public class GraphQL extends ControlPlaneAPI {
         return observabilityIds;
     }
     
-    public static CreateNewVersionResponseDTO createNewVersion(TestActionRunner runner,
+    public static void createNewVersion(TestActionRunner runner,
                     HttpClient choreoProjectsTestClient, String accessToken,
                     GraphqlDTO graphqlDTO) throws IOException {
 
@@ -1066,12 +1068,7 @@ public class GraphQL extends ControlPlaneAPI {
                 .message()
                 .type(MessageType.JSON)
                 .body(new ClassPathResource("templates/graphql/responses/createNewVersionSuccess.json"))
-                .validate((message, context) -> {
-                        mapStringToObject.set(ObjectMapperUtil.mapStringToObject(
-                                CreateNewVersionResponseDTO.class, message.getPayload(String.class),
-                                        "createVersion"));
-                }));
-            return mapStringToObject.get();
+                .validate(json()));
     }
     
     public static List<Commit> getCommitHistory(TestActionRunner runner, HttpClient client, String componentId,
