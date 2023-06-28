@@ -23,7 +23,7 @@ A project is a logical grouping of related components to help you to organize yo
 A component is a workload designed to run on Choreo. Examples of components include integrations, APIs, microservices, manual/scheduled jobs, web apps, and triggers.
 
 ### Q: What is the difference between an internal and external API?
- In Choreo, you can publish an API as an internal or an external API.  A user or an application can access an external API publicly over the internet whereas an internal API is only accessible through other components within the same organization. 
+In Choreo, you can publish an API as an internal or an external API. A user or an application can access an external API publicly over the internet, whereas an internal API is only accessible through other components within the same organization. 
 
 ### Q: What is a connector in Choreo Marketplace?
 A connector is a reusable Ballerina package that simplifies connecting to external or internal systems and APIs, such as Salesforce, SAP, GitHub, and Twilio. You can use the connectors available in the Choreo marketplace to implement your integration use cases.  Connectors can be created and published by both WSO2 and Choreo users.
@@ -62,10 +62,10 @@ WSO2 uses a range of security controls and design patterns to protect against se
 
 ## Data Planes
 
-### Q: What is a Choreo Control Plane?
+### Q: What is a Choreo control plane?
 The Choreo control plane is a centralized management component that oversees and coordinates the workloads deployed by customers. It provides a unified point of control and visibility for the organization, allowing administrators to manage, monitor, and orchestrate the organization’s resources efficiently.
 
-### Q: What is a Data Plane?
+### Q: What is a data plane?
 A data plane in Choreo is a computing environment designed for running customer workloads. These environments are hosted in either a dedicated cloud infrastructure owned by the customer (private data planes) or on public cloud infrastructure owned by WSO2, also known as the Choreo Data Plane.
 
 ### Q: I am a Pay-As-You-Go (PAYG) customer using the Choreo Cloud Data Plane. How many environments do I get?
