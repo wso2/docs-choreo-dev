@@ -1064,8 +1064,7 @@ public class GraphQL extends ControlPlaneAPI {
                 .response(HttpStatus.OK)
                 .message()
                 .type(MessageType.JSON)
-                .body(new ClassPathResource("templates/graphql/responses/createNewVersionSuccess.json"))
-                .validate(json()));
+                .body(new ClassPathResource("templates/graphql/responses/createNewVersionSuccess.json")));
     }
     
     public static List<Commit> getCommitHistory(TestActionRunner runner, HttpClient client, String componentId,
