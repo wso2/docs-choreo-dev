@@ -21,6 +21,7 @@ echo "----------------------------------------"
 function print_usage {
     echo -e "Usage: $0 [options]\n";
     echo -e "Options:\n"
+    echo "--environment           - Choreo environment (supported values: dev, stg or prod)";
     echo "--container-registry    - Azure Container Registry identifier hosting the Neuvector deployment artifacts (Defaults to \"choreocontrolplane.azurecr.io\")";
     echo "--registry-username     - Azure Container Registry login user name";
     echo "--registry-password     - Azure Container Registry login user password";
@@ -47,6 +48,7 @@ function log_error() {
 }
 
 # Global variables
+environment="dev"
 container_reg_identifier="choreocontrolplane.azurecr.io"
 container_reg_username=""
 container_reg_password=""
@@ -59,6 +61,10 @@ wallarm_svc_lb_rg=""
 for arg in "$@"
 do
     case ${arg} in
+        --environment=*)
+        environment="${arg#*=}"
+        shift
+        ;;
         --container-registry=*)
         container_reg_identifier="${arg#*=}"
         shift
@@ -100,10 +106,8 @@ do
 done
 
 # Check if the mandatory input have been provided
-[[ -z "${container_reg_identifier}" ]] && print_usage
 [[ -z "${container_reg_username}" ]] && print_usage
 [[ -z "${container_reg_password}" ]] && print_usage
-[[ -z "${helm_chart_version}" ]] && print_usage
 [[ -z "${wallarm_node_token}" ]] && print_usage
 [[ -z "${wallarm_svc_lb_ip}" ]] && print_usage
 [[ -z "${wallarm_svc_lb_subnet}" ]] && print_usage
@@ -113,6 +117,11 @@ done
 IP_PATTERN='^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$'
 ! [[ -z "${wallarm_svc_lb_ip}" ]] && ! [[ "${wallarm_svc_lb_ip}" =~ ${IP_PATTERN} ]] && print_usage
 
+# Check if cloud provider is supported
+if ! [[ "$environment" = "dev" ]] && ! [[ "$environment" = "stg" ]] && ! [[ "$environment" = "prod" ]]; then
+  log_error ">> Not a supported environment - $environment !"
+fi
+
 HELM_VERSION=$(helm version --short)
 HELM_MAJOR_VERSION=$(echo ${HELM_VERSION} | awk '{print $NF}' | cut -d '.' -f 1)
 
@@ -121,7 +130,6 @@ if [[ $HELM_MAJOR_VERSION -eq "v3" ]]; then
 else
   log_error "Required: Helm client version needs to be 3.x.x."
 fi
-
 
 # Login to the Azure Container Registry hosting the Wallarm-NGINX Helm chart
 if helm registry login "${container_reg_identifier}" --username "${container_reg_username}" --password "${container_reg_password}";
@@ -158,16 +166,23 @@ rm custom-values-tmp.yaml
 # For Wallarm Tarantool
 if kubectl patch deployments.apps wallarm-ingress-controller-wallarm-tarantool --patch-file wallarm-controller-tarantool-patch.yaml -n wallarm-ingress ;
 then
-  log_info "Successful application of Kubernetes resource patches for Wallarm Tarantool"
+  log_info "Successfully applied Kubernetes resource patches for Wallarm Tarantool"
 else
   log_error "Failed to apply Kubernetes resource patches for Wallarm Tarantool"
 fi
 
-if kubectl apply --recursive -f netpols;
+if kubectl apply --recursive -f netpols/common;
 then
-  log_info "Successful deployment of Kubernetes Network Policies for Wallarm-NGINX Ingress Controller"
+  log_info "Successfully deployed Kubernetes Network Policies for Wallarm-NGINX Ingress Controller"
 else
   log_error "Failed to deploy Kubernetes Network Policies for Wallarm-NGINX Ingress Controller"
+fi
+
+if kubectl apply --recursive -f "netpols/common/${environment}";
+then
+  log_info "Successfully deployed ${environment} specific Kubernetes Network Policies for Wallarm-NGINX Ingress Controller"
+else
+  log_error "Failed to deploy ${environment} specific Kubernetes Network Policies for Wallarm-NGINX Ingress Controller"
 fi
 
 log_info "Wallarm-NGINX Ingress Controller successfully installed!!!"
