@@ -77,7 +77,7 @@ do
         container_reg_password="${arg#*=}"
         shift
         ;;
-	      --chart-version=*)
+	--chart-version=*)
         helm_chart_version="${arg#*=}"
         shift
         ;;
@@ -178,7 +178,7 @@ else
   log_error "Failed to deploy Kubernetes Network Policies for Wallarm-NGINX Ingress Controller"
 fi
 
-if kubectl apply --recursive -f "netpols/common/${environment}";
+if kubectl apply --recursive -f "netpols/${environment}";
 then
   log_info "Successfully deployed ${environment} specific Kubernetes Network Policies for Wallarm-NGINX Ingress Controller"
 else
