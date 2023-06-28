@@ -528,12 +528,9 @@ public class GraphQL extends ControlPlaneAPI {
                                                     GraphqlDTO graphqlDTO) throws IOException {
 
         String queryString = ObjectMapperUtil.mapObjectToString(
-                "templates/createIntegrationComponent/IntegrationComponentCreation.mustache",
-                graphqlDTO);
+                "templates/createIntegrationComponent/IntegrationComponentCreation.mustache", graphqlDTO);
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
-
         final String[] componentHandlerArray = new String[1];
-
 
         runner.$(http()
                 .client(client)
@@ -559,6 +556,7 @@ public class GraphQL extends ControlPlaneAPI {
                             .getAsJsonObject("createIntegrationComponent");
                     componentHandlerArray[0] = component.get("handle").getAsString();
                 }));
+
         return componentHandlerArray[0];
     }
 
