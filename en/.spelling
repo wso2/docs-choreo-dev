@@ -415,6 +415,7 @@ failover
 PoC
 IDevP
 
+
  - docs/references/upgrading-from-the-previous-version.md
 DefaultProject
 console.choreo.dev.

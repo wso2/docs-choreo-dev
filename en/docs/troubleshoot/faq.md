@@ -41,7 +41,7 @@ You can find information about our support plans, including `free`, `basic`, and
 If you have a log monitoring product or service, such as Azure Monitor, you can use it together with Choreo. Note: The log monitoring tool is not included in the infrastructure cost.
 
 ### Q: What source control software does Choreo support?
-Choreo currently supports GitHub and BitBucket. Support for GitLab is on our roadmap. 
+Choreo currently supports GitHub and Bitbucket. Support for GitLab is on our roadmap. 
 
 ### Q: What is Ballerina?
 Ballerina is an open-source programming language designed for the cloud. It simplifies the process of using, combining, and creating network services. When you use Ballerina to write integrations in Choreo, you can save time and deliver 2-3x faster. To learn more, check out https://ballerina.io/.
