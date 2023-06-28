@@ -406,6 +406,14 @@ package.json
 npm
 mTLS
 OpenSSL
+namespaces
+GitLab
+roadmap
+Subprocessor
+subprocessors
+failover
+PoC
+IDevP
 
  - docs/references/upgrading-from-the-previous-version.md
 DefaultProject
@@ -570,6 +578,7 @@ develop-a-grpc-service
 develop-a-ballerina-rest-api
 configure-mutual-tls-between-components
 develop-a-ballerina-graphql-api
+faq.md
  - theme/material/templates/home-page.html
 doctype
 html
@@ -634,3 +643,5 @@ endpoints.yaml
 choreo
 networkVisibility
 schemaFilePath
+ - docs/troubleshoot/faq.md
+2-3x
