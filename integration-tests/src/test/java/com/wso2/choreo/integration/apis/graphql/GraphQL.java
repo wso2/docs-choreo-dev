@@ -528,11 +528,10 @@ public class GraphQL extends ControlPlaneAPI {
                                                     GraphqlDTO graphqlDTO) throws IOException {
 
         String queryString = ObjectMapperUtil.mapObjectToString(
-                "templates/createIntegrationComponent/IntegrationComponentCreation.mustache",
-                graphqlDTO);
+                "templates/createIntegrationComponent/IntegrationComponentCreation.mustache", graphqlDTO);
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
-
         final String[] componentHandlerArray = new String[1];
+
         runner.$(http()
                 .client(client)
                 .send()
@@ -557,6 +556,7 @@ public class GraphQL extends ControlPlaneAPI {
                             .getAsJsonObject("createIntegrationComponent");
                     componentHandlerArray[0] = component.get("handle").getAsString();
                 }));
+
         return componentHandlerArray[0];
     }
 
@@ -1042,9 +1042,8 @@ public class GraphQL extends ControlPlaneAPI {
         return observabilityIds;
     }
     
-    public static CreateNewVersionResponseDTO createNewVersion(TestActionRunner runner,
-                    HttpClient choreoProjectsTestClient, String accessToken,
-                    GraphqlDTO graphqlDTO) throws IOException {
+    public static void createNewVersion(TestActionRunner runner, HttpClient choreoProjectsTestClient,
+                                        String accessToken, GraphqlDTO graphqlDTO) throws IOException {
 
             String queryString = ObjectMapperUtil.mapObjectToString(
                             "templates/graphql/requests/createNewVersion.mustache", graphqlDTO);
@@ -1065,13 +1064,7 @@ public class GraphQL extends ControlPlaneAPI {
                 .response(HttpStatus.OK)
                 .message()
                 .type(MessageType.JSON)
-                .body(new ClassPathResource("templates/graphql/responses/createNewVersionSuccess.json"))
-                .validate((message, context) -> {
-                        mapStringToObject.set(ObjectMapperUtil.mapStringToObject(
-                                CreateNewVersionResponseDTO.class, message.getPayload(String.class),
-                                        "createVersion"));
-                }));
-            return mapStringToObject.get();
+                .body(new ClassPathResource("templates/graphql/responses/createNewVersionSuccess.json")));
     }
     
     public static List<Commit> getCommitHistory(TestActionRunner runner, HttpClient client, String componentId,
