@@ -339,8 +339,8 @@ export class ComponentDeployPage {
     APIDeployment.RetryPromotionToProd();
     cy.get('[data-cyid="btn-promote-button"]').should("be.enabled").click();
     cy.contains("Configure & Deploy").should("be.visible");
-    cy.get('[data-cyid="btn-next"]').should("be.enabled");
-    cy.get('[data-cyid="btn-next"]').should("exist").click();
+    cy.get('[data-cyid="btn-next-button"]').should("be.enabled");
+    cy.get('[data-cyid="btn-next-button"]').should("exist").click();
     APIDeployment.RetryPromotionToProd();
     cy.get('[data-cyid="proxy-env-card-header"]>div>span')
       .contains("Production")

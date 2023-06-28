@@ -74,8 +74,6 @@ export class ProjectOverviewPage {
   }
 
   static addComponent() {
-    cy.get('[data-cyid="create-component"]').click();
+    cy.get('[data-cyid="create-component-button"]').click();
   }
-
-
 }
