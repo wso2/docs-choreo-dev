@@ -52,4 +52,5 @@ clusterName = "choreo-dev-dataplane-aks-cluster"
 dataDownload = {{.DATA_DOWNLOAD}}
 deploymentDataReset = {{.DEPLOYMENT_DATA_RESET}}
 componentDataReset = {{.COMPONENT_DATA_RESET}}
-freeSubscriptionDataDownload = {{.FREE_SUBSCRIPTION_DATA_DOWNLOAD}}
+activeOrgsDataDownload = {{.ACTIVE_ORGS_DATA_DOWNLOAD}}
+activeOrgsDataDownloadManualRun = {{.ACTIVE_ORGS_DATA_DOWNLOAD_MANUAL_RUN}}
