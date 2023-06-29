@@ -71,7 +71,7 @@ export class ComponentListingPage {
     }
 
     cy.get("#filterByType").click().should("have.length", 1);
-    cy.contains("Select All").click();
+    cy.get('[data-cyid="undefined-multi-select-all-button-button"]').click()
     cy.contains("Components Listing").click();
 
     cy.get("tr p").contains(componentName).should("be.visible").click();
