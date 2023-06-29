@@ -28,27 +28,28 @@ export class ProjectOverviewPage {
     isComponentBYOC: boolean = false
   ) {
     const REPO_NAME = Utils.generateComponentName("repo");
-    GraphQL._getComponentByName(projectName, componentData.componentName).then((comps) => {
-      if (comps.displayName != componentData.componentName) {
-        if (isComponentBYOC) {
-          GraphQL.createComponent(
-            projectName,
-            REPO_NAME,
-            componentData,
-            GraphQLQueryBuilder.getBYOCComponentCreationQuery
-          );
-        } else {
-          GraphQL.createComponent(
-            projectName,
-            REPO_NAME,
-            componentData,
-            GraphQLQueryBuilder.getRestComponentCreationQuery
-          );
+    GraphQL._getComponentByName(projectName, componentData.componentName).then(
+      (comps) => {
+        if (comps.displayName != componentData.componentName) {
+          if (isComponentBYOC) {
+            GraphQL.createComponent(
+              projectName,
+              REPO_NAME,
+              componentData,
+              GraphQLQueryBuilder.getBYOCComponentCreationQuery
+            );
+          } else {
+            GraphQL.createComponent(
+              projectName,
+              REPO_NAME,
+              componentData,
+              GraphQLQueryBuilder.getRestComponentCreationQuery
+            );
+          }
         }
       }
-    })
+    );
   }
-
 
   static createHttpProxyAPI() {
     this.waitForTemplateCardsToLoad();
@@ -62,15 +63,12 @@ export class ProjectOverviewPage {
   }
 
   static waitForTemplateCardsToLoad() {
-    cy.get('[data-cyid="scheduleTask"]')
-      .get('[data-testid="project-template-list-scheduleTask"]')
+    cy.get('[data-testid="project-template-list-scheduleTask"]')
       .should("be.enabled")
-      .get('[data-cyid="manualTrigger"]')
       .get('[data-testid="project-template-list-manualTrigger"]')
       .should("be.enabled")
-      .get('[data-cyid="httpProxyApi"]')
       .get('[data-testid="project-template-list-httpProxyApi"]')
-      .should("be.enabled")
+      .should("be.enabled");
   }
 
   static addComponent() {
