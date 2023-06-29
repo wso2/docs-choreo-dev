@@ -402,24 +402,24 @@ export class GraphQL {
       this._getAPIInfo(projectName, componentName).then(comp => {
         const { componentId, latestVersionId } = comp
         const url = `${PROXY_DEPLOYER_EP}/${componentId}/versions/${latestVersionId}/deployments?environmentId=${id}&accessMode=external`
-        this._getPromotionStatus(url)
+        this._getPromotionStatus(url);
       })
     })
   }
 
   private static _getPromotionStatus(url: string, count = 0) {
     if (count > 60) {
-      return
+      return;
     }
     Utils.sendGetRequest(url, AUTH_HEADER()).then(res => {
       const { deploymentStatus } = res.body
       Utils.isError(deploymentStatus, "Proxy With Mediation Policy Deployment Failed")
       if (deploymentStatus !== 'ACTIVE') {
-        cy.wait(15000)
-        count++
-        this._getPromotionStatus(url, count)
+        cy.wait(15000);
+        count++;
+        this._getPromotionStatus(url, count);
       }
-      return
+      return;
     })
 
   }

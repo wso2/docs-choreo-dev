@@ -13,7 +13,7 @@
 
 import { cyGet } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
-import { VERY_SHORT_TIME } from "../../../commons/timeouts";
+import { SHORT_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
 
 export class ComponentTestPage {
@@ -26,7 +26,7 @@ export class ComponentTestPage {
   }
 
   static getTestKey() {
-    cy.contains("Get Test Key", VERY_SHORT_TIME).should("be.visible").click();
+    cy.contains("Get Test Key", SHORT_TIME).should("be.visible").click();
   }
 
   static selectEnvironment(env: Enums.Environment) {
