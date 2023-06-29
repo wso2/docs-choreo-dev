@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { MENU_RENDERING_TIME } from "../../../commons/timeouts";
+import { MENU_RENDERING_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
 import { LoginPage } from "../login-page";
 
@@ -107,10 +107,6 @@ export class ChoreoHomePage {
   }
 
   static goToMarketplacePage() {
-    const Url = Cypress.env("baseUrl");
-    const { handle } = Cypress.env("userData");
-
-    let marketplaceURL = `${Url}/organizations/${handle}/marketplace`;
-    cy.visit(marketplaceURL);
+    cy.get('[data-cyid="marketplace-link"]', VERY_SHORT_TIME).invoke('removeAttr', 'target').click();
   }
 }
