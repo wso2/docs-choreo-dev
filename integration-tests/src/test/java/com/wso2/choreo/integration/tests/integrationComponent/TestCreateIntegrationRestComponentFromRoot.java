@@ -93,7 +93,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
     public void createComponent_TestCreateIntegrationRestComponentFromRoot() throws Exception {
 
         // Creating component
-        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String componentName = "atc".concat(String.valueOf(new Date().getTime()));
         final String repoName = "synaps-api-project-sample";
         final String repoBranch = "main";
         String srcGitHubURL = Constant.GITHUB_URL.concat(githubOrg).concat("/").concat(repoName);
