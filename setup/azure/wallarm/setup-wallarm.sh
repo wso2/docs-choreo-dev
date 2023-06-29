@@ -77,7 +77,7 @@ do
         container_reg_password="${arg#*=}"
         shift
         ;;
-	--chart-version=*)
+        --chart-version=*)
         helm_chart_version="${arg#*=}"
         shift
         ;;
@@ -115,7 +115,7 @@ done
 
 # Validate user input
 IP_PATTERN='^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$'
-! [[ -z "${wallarm_svc_lb_ip}" ]] && ! [[ "${wallarm_svc_lb_ip}" =~ ${IP_PATTERN} ]] && print_usage
+[[ -n "${wallarm_svc_lb_ip}" ]] && ! [[ "${wallarm_svc_lb_ip}" =~ ${IP_PATTERN} ]] && print_usage
 
 # Check if cloud provider is supported
 if ! [[ "$environment" = "dev" ]] && ! [[ "$environment" = "stg" ]] && ! [[ "$environment" = "prod" ]]; then
@@ -123,7 +123,7 @@ if ! [[ "$environment" = "dev" ]] && ! [[ "$environment" = "stg" ]] && ! [[ "$en
 fi
 
 HELM_VERSION=$(helm version --short)
-HELM_MAJOR_VERSION=$(echo ${HELM_VERSION} | awk '{print $NF}' | cut -d '.' -f 1)
+HELM_MAJOR_VERSION=$(echo "${HELM_VERSION}" | awk '{print $NF}' | cut -d '.' -f 1)
 
 if [[ $HELM_MAJOR_VERSION -eq "v3" ]]; then
   log_info "Helm client version used: $HELM_VERSION"
@@ -148,14 +148,12 @@ sed -i "s/INTERNAL_LB_IP/$wallarm_svc_lb_ip/g" custom-values-tmp.yaml
 sed -i "s/WALLARM_NODE_TOKEN/$wallarm_node_token/g" custom-values-tmp.yaml
 
 # Install/Upgrade Wallarm-NGINX Ingress Controller deployment
-helm upgrade wallarm-ingress oci://choreocontrolplane.azurecr.io/helm/wallarm-ingress \
+if ! helm upgrade wallarm-ingress oci://choreocontrolplane.azurecr.io/helm/wallarm-ingress \
     --version "${helm_chart_version}" \
     -n wallarm-ingress \
     -f custom-values-tmp.yaml \
     --create-namespace \
-    --install
-
-if [ $? != 0 ];
+    --install;
 then
   log_error "Failed to install/upgrade the Helm chart for Wallarm-NGINX Ingress Controller"
 fi
