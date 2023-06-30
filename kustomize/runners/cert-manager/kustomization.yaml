@@ -1,0 +1,21 @@
+helmCharts:
+  - name: cert-manager
+    includeCRDs: true
+    valuesInline:
+      cainjector:
+        image:
+          repository: choreocontrolplane.azurecr.io/jetstack/cert-manager-cainjector
+        replicaCount: 2
+      image:
+        repository: choreocontrolplane.azurecr.io/jetstack/cert-manager-controller
+      installCRDs: true
+      replicaCount: 2
+      webhook:
+        image:
+          repository: choreocontrolplane.azurecr.io/jetstack/cert-manager-webhook
+        replicaCount: 2
+    releaseName: cert-manager
+    version: v1.12.0
+    repo: https://charts.jetstack.io
+
+namespace: cert-manager
