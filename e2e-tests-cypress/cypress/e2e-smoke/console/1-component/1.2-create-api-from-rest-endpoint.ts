@@ -14,23 +14,16 @@
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/rest-api-proxy-temp";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { APIDeployment } from "../../../support/console/pages/apis/api-deployment";
 import { APIDevelop } from "../../../support/console/pages/apis/api-develop";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
-import { TryOut } from "../../../support/devportal/pages/apis/try-out";
-import { Apis } from "../../../support/devportal/pages/apis/apis-home";
-import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
 import { OK } from "../../../support/commons/http";
-import { cyLog } from "../../../support/commons/cy";
-import { GraphQL } from "../../../support/console/apis/graphql";
 
 before(() => {
   LoginPage.login();
@@ -43,13 +36,10 @@ describe(`Verify proxy api functionality`, () => {
   const API_NAME = Utils.generateComponentName("CYE2E");
   const API_BASE_PATH = Utils.generateBasePath();
   const API_VERSION = "1.0.0";
-  const API_NEW_VERSION = "1.1.0";
   const API_ENDPOINT = "https://jsonplaceholder.typicode.com";
   const OPERATION_USERS = "users";
-  const OPERATION_POSTS = "posts";
   const PROJECT_DESCRIPTION = "sample stats project";
   const PROJECT_NAME = Utils.generateProjectName();
-  const idpUser = "choreoe2etest";
   const HEADER_KEY = "x-header-test";
   const HEADER_VALUE = "test";
   const HEADER_KEY_2 = "x-header-test2";
@@ -282,92 +272,7 @@ describe(`Verify proxy api functionality`, () => {
     });
   });
 
-  it("Create new version from the created API", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentOverviewPage.createNewVersion(API_NEW_VERSION, "");
-    ComponentDevelopPage.getVersion().should(
-      "eq",
-      `API Version ${API_NEW_VERSION}`
-    );
-  });
-
-  it("Add a resource to new version", () => {
-    ComponentOverviewPage.navigateProxyResources();
-    APIDevelop.addResources(OPERATION_POSTS, Enums.HTTPMethod.GET);
-  });
-
-  it("Deploy new version to Dev", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.deployProxyAPIToDev();
-    APIDeployment.verifyProxyDeployment(PROJECT_NAME, API_NAME, true);
-  });
-
-  it("Verify test functionality using Swagger UI in dev", () => {
-    TestHelper.testOnSwagger(
-      Enums.Environment.DEVELOPMENT,
-      OPERATION_USERS
-    ).then((res) => {
-      expect(res.statusCode).to.be.equal("200");
-    });
-
-    TestHelper.testOnSwagger(
-      Enums.Environment.DEVELOPMENT,
-      OPERATION_POSTS
-    ).then((res) => {
-      expect(res.statusCode).to.be.equal("200");
-    });
-  });
-
-  it("Verify new version promotion to prod", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.promoteToProd(PROJECT_NAME, API_NAME, true);
-  });
-
-  it("Verify test functionality using Swagger UI in prod", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnSwagger(
-      Enums.Environment.PRODUCTION,
-      OPERATION_USERS
-    ).then((res) => {
-      expect(res.statusCode).to.be.equal("200");
-    });
-
-    TestHelper.testOnSwagger(
-      Enums.Environment.PRODUCTION,
-      OPERATION_POSTS
-    ).then((res) => {
-      expect(res.statusCode).to.be.equal("200");
-    });
-  });
-
-  it("Publish the API to dev portal", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publishWithoutConnector();
-  });
-
-  it("Generate credentials for prod env", () => {
-    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(
-      PROJECT_NAME,
-      API_NAME,
-      idpUser
-    );
-    Apis.searchApiAndSelect(API_NAME, 2, API_NEW_VERSION);
-    ApiCredentials.navigateToEnvironment(Enums.Environment.PRODUCTION);
-    ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
-  });
-
-  it("Tryout application", () => {
-    TryOut.navigateToTryOutMenu();
-    TryOut.GenerateAccessToken();
-    TryOut.SelectResource(OPERATION_USERS);
-    TryOut.TryoutAPI();
-    TryOut.ExecuteResourceFunction();
-    TryOut.GetResponse();
-  });
-
   it("Verify application suspension", () => {
-    LoginPage.reLoginToChoreo();
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });

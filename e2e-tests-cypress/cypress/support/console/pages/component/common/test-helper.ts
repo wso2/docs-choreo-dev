@@ -215,6 +215,7 @@ export class TestHelper {
       cy.log("Finished retrying");
       return SwaggerUI.GetResponse().then((r) => {
         return SwaggerUI.getResponseCode().then((res) => {
+          SwaggerUI.closeResource(resourcePath);
           return Promise.resolve({
             response: r,
             statusCode: res,
