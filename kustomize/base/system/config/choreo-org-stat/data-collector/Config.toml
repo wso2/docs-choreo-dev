@@ -44,9 +44,9 @@ azureTenantId = "{{.AZURE_TENANT_ID}}"
 logAnalyticsResource = "https://api.loganalytics.io"
 logAnalyticsWorkspaceId = "{{.LOG_ANALYTICS_WORKSPACE_ID}}"
 adxResource = "https://choreononprodanadx.eastus2.kusto.windows.net" 
-adxQueryDb = "dev-apim-analytics"
-clusterNameSpace = "dev-choreo-system"
-clusterName = "choreo-dev-dataplane-aks-cluster"
+adxQueryDb = "{{.ADX_QUERY_DB}}"
+clusterNameSpace = "{{.CLUSTER_NAME_SPACE}}"
+clusterName = "{{.CLUSTER_NAME}}"
 
 [script]
 dataDownload = {{.DATA_DOWNLOAD}}
