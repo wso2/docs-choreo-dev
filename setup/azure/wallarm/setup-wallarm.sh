@@ -129,7 +129,7 @@ fi
 HELM_VERSION=$(helm version --short)
 HELM_MAJOR_VERSION=$(echo "${HELM_VERSION}" | awk '{print $NF}' | cut -d '.' -f 1)
 
-if [[ $HELM_MAJOR_VERSION -eq "v3" ]]; then
+if [[ $HELM_MAJOR_VERSION = "v3" ]]; then
   log_info "Helm client version used: $HELM_VERSION"
 else
   log_error "Required: Helm client version needs to be 3.x.x."
