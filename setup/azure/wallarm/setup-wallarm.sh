@@ -12,6 +12,10 @@
 
 # Setup Wallarm-NGINX Ingress Controller installation
 
+# Disable Shell check SC2317 as the highlighted block will be reached in case the user does not pass
+# an unsupported argument
+# shellcheck disable=SC2317
+
 echo "----------------------------------------"
 echo "| Wallarm Ingress Controller Deployment |"
 echo "----------------------------------------"
