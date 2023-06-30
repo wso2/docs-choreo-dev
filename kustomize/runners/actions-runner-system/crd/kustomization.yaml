@@ -70,3 +70,5 @@ commonAnnotations:
   checkov.io/skip14: CKV_K8S_38=Managed by ARC
   checkov.io/skip15: CKV_K8S_40=Managed by ARC
   checkov.io/skip16: CKV_K8S_155=Managed by ARC
+  checkov.io/skip17: CKV2_K8S_5=Managed by ARC
+  checkov.io/skip18: CKV2_K8S_6=Managed by ARC
