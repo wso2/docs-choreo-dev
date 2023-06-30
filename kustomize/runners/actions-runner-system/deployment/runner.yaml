@@ -3,7 +3,7 @@ kind: RunnerDeployment
 metadata:
   name: runners
 spec:
-  replicas: 0
+  replicas: 1
   template:
     spec:
       organization: choreo-userapps-gitops-dev
