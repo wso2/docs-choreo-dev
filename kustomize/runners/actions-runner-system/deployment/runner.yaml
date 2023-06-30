@@ -3,10 +3,10 @@ kind: RunnerDeployment
 metadata:
   name: runners
 spec:
-  replicas: 0
+  replicas: 1
   template:
     spec:
-      organization: choreo-userapps-gitops-dev
+      organization: choreo-userapps-gitops-prod
       image: choreocontrolplane.azurecr.io/choreoipaas/gh-runner:latest
       resources:
         limits:
