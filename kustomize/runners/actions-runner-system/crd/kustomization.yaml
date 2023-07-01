@@ -2,20 +2,20 @@ helmCharts:
   - name: actions-runner-controller
     includeCRDs: true
     valuesInline:
-      additionalVolumes:
-        - name: controller-manager-secret
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: controller-manager-secret
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-      additionalVolumeMounts:
-        - name: controller-manager-secret
-          mountPath: /mnt/csi/secrets/controller-manager-secret
+      # additionalVolumes:
+      #   - name: controller-manager-secret
+      #     csi:
+      #       driver: secrets-store.csi.k8s.io
+      #       readOnly: true
+      #       volumeAttributes:
+      #         secretProviderClass: controller-manager-secret
+      #       nodePublishSecretRef:
+      #         name: csi-secret-store-azure
+      # additionalVolumeMounts:
+      #   - name: controller-manager-secret
+      #     mountPath: /mnt/csi/secrets/controller-manager-secret
       authSecret:
-        name: controller-manager-secret
+        name: controller-manager
         create: false
       githubWebhookServer:
         enabled: true
@@ -52,7 +52,7 @@ helmCharts:
           key: ghrunner
           operator: Exists
     releaseName: actions-runner-controller
-    version: 0.23.3
+    version: 0.20.2
     repo: https://actions-runner-controller.github.io/actions-runner-controller
 
 commonAnnotations:
@@ -75,3 +75,4 @@ commonAnnotations:
   checkov.io/skip17: CKV2_K8S_5=Managed by ARC
   checkov.io/skip18: CKV2_K8S_6=Managed by ARC
   kapp.k14s.io/disable-original: ""
+  kapp.k14s.io/disable-default-label-scoping-rules: ""
