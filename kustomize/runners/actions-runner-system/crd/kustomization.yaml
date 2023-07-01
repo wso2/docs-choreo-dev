@@ -35,10 +35,12 @@ helmCharts:
         actionsRunnerRepositoryAndTag: choreocontrolplane.azurecr.io/summerwind/actions-runner:latest
         dindSidecarRepositoryAndTag: choreocontrolplane.azurecr.io/docker:dind
         repository: choreocontrolplane.azurecr.io/summerwind/actions-runner-controller
+        tag: v0.25.2
       metrics:
         proxy:
           image:
             repository: choreocontrolplane.azurecr.io/brancz/kube-rbac-proxy
+            tag: v0.13.0
       nodeSelector:
         execution-mode: ghrunner
       podDisruptionBudget:
