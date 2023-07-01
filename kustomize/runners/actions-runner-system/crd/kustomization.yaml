@@ -52,7 +52,7 @@ helmCharts:
           key: ghrunner
           operator: Exists
     releaseName: actions-runner-controller
-    version: 0.25.2
+    version: 0.20.2
     repo: https://actions-runner-controller.github.io/actions-runner-controller
 
 commonAnnotations:
