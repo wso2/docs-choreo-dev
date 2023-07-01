@@ -25,10 +25,14 @@ export class SwaggerUI {
         ).length == 0
       ) {
         if (b.find(`[class="try-out"]`).length == 0) {
-          cy.get(pathVariable).click();
+          cy.get(pathVariable).scrollIntoView().click();
         }
       }
     });
+  }
+
+  static closeResource(path: string) {
+    cy.get(`[data-path="/${path}"]`).scrollIntoView().click();
   }
 
   static TryoutAPI(resource: string = "-get") {

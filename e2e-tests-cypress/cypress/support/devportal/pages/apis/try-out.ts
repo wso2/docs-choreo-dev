@@ -52,7 +52,7 @@ export class TryOut {
     cyGet('[data-testid="get-test-key-btn"]').should("be.enabled");
     const pathVariable = `[data-path="/${path}"]`;
     Utils.getRenderedElement(".swagger-ui", 3000).within(() => {
-      cy.get(pathVariable).should("have.length","1").realHover().realClick();
+      cy.get(pathVariable).should("have.length", "1").realHover().realClick();
     });
   }
 
@@ -72,16 +72,18 @@ export class TryOut {
   }
 
   static ExecuteResourceFunction() {
-    cyGet(".execute-wrapper").realClick();
+    cyGet(".execute-wrapper").within(() => {
+      cy.get("button").click({ force: true });
+    });
     cy.log("Execution is successful");
   }
 
   static ExecuteResourceInRetryFunction() {
-    Utils.getRenderedElement('[class="btn-group"]').within(
-      () => {
-        cy.get('button.execute.opblock-control__btn').contains('Execute').realClick();
-      }
-    );
+    Utils.getRenderedElement('[class="btn-group"]').within(() => {
+      cy.get("button.execute.opblock-control__btn")
+        .contains("Execute")
+        .realClick();
+    });
   }
 
   static GetResponse() {
@@ -91,29 +93,36 @@ export class TryOut {
     this.RetryExecuteResourceFunction();
     cy.log("API Tryout is successful!");
   }
-  
-  static RetryExecuteResourceFunction(retryCount: number = 0, retryDelay: number = VERY_SHORT_TIME.timeout) {
+
+  static RetryExecuteResourceFunction(
+    retryCount: number = 0,
+    retryDelay: number = VERY_SHORT_TIME.timeout
+  ) {
     retryCount++;
     if (retryCount < 4) {
       cy.log("Retry Count: " + retryCount);
-      cy.get(":nth-child(1) > .responses-table > tbody > .response > .response-col_status").invoke('text').then((text) => {
-        cy.log("Response Status Code: " + text.trim());
-        if (text.trim() == '200') {
-          expect(text.trim()).equal('200');
-          return; 
-        } else {
-          cy.log("API Tryout is not successful!");
-          cy.wait(retryDelay);
-          this.ExecuteResourceInRetryFunction();
-          this.RetryExecuteResourceFunction(retryCount, retryDelay);  
-        }
-      });
+      cy.get(
+        ":nth-child(1) > .responses-table > tbody > .response > .response-col_status"
+      )
+        .invoke("text")
+        .then((text) => {
+          cy.log("Response Status Code: " + text.trim());
+          if (text.trim() == "200") {
+            expect(text.trim()).equal("200");
+            return;
+          } else {
+            cy.log("API Tryout is not successful!");
+            cy.wait(retryDelay);
+            this.ExecuteResourceInRetryFunction();
+            this.RetryExecuteResourceFunction(retryCount, retryDelay);
+          }
+        });
     } else {
       cy.log("API Tryout Retrying was not successful!");
       expect(false).to.be.true;
     }
   }
-  
+
   static ValidateResponse(statusCode) {
     cyGet(".curl-command").should("exist");
     cyGet(".request-url").should("exist");
@@ -146,7 +155,9 @@ export class TryOut {
     Utils.getRenderedElement('[data-testid="get-test-key-btn"]').should(
       "be.enabled"
     );
-    Utils.getRenderedElement('[data-testid="get-test-key-btn"]').click();
+    Utils.getRenderedElement('[data-testid="get-test-key-btn"]').click({
+      force: true,
+    });
 
     cy.wait("@generateAppToken", SHORT_TIME).then(() => {
       Utils.getRenderedElement('[data-testid="get-test-key-btn"]')
