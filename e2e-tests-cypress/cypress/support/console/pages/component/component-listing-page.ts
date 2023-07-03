@@ -22,7 +22,10 @@ export class ComponentListingPage {
 
     cy.get('[data-cyid="btn-contained-button"]').should("be.visible").click();
     cy.get('[name="confirmName"]').type(componentName);
-    cy.get(".MuiDialogActions-spacing button").should("be.enabled").eq(1).click();
+    cy.get(".MuiDialogActions-spacing button")
+      .should("be.enabled")
+      .eq(1)
+      .click();
     cy.get(".MuiDialog-container").should("not.exist");
     this.verifyDeletion();
   }
@@ -71,7 +74,9 @@ export class ComponentListingPage {
     }
 
     cy.get("#filterByType").click().should("have.length", 1);
-    cy.get('[data-cyid="undefined-multi-select-all-button-button"]').click()
+    cy.get(
+      '[data-cyid="project-components-multi-select-all-button-button"]'
+    ).click();
     cy.contains("Components Listing").click();
 
     cy.get("tr p").contains(componentName).should("be.visible").click();
