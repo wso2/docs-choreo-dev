@@ -29,13 +29,13 @@ Before you try out the steps in this guide, complete the following:
          
          To work with the sample repository, it is important to familiarize yourself with the repository file structure. The sample code for this guide is in the `<sample-repository-dir>/ipaas/ballerina/weather-to-email-integration` directory. To understand how the functionality is implemented, you must read the code comments. The following table describes what you will find in each file in the repository:
 
-          | **File path**         | **File content**                                                           |
-          |-----------------------|----------------------------------------------------------------------------|
-          | **Ballerina.toml**    | Contains metadata about the project                                        |
-          | **Dependencies.toml** | Lists the dependencies required for the project                            |
-          | **main.bal**          | Contains the entry point of the project, including the main function       |
-          | **types.bal**         | Contains custom data types used in the project                             |
-          | **utils.bal**         | Contains utility functions and helper functions used in the project        |
+          | **File path**         | **File content**                                                     |
+          | --------------------- | -------------------------------------------------------------------- |
+          | **Ballerina.toml**    | Contains metadata about the project                                  |
+          | **Dependencies.toml** | Lists the dependencies required for the project                      |
+          | **main.bal**          | Contains the entry point of the project, including the main function |
+          | **types.bal**         | Contains custom data types used in the project                       |
+          | **utils.bal**         | Contains utility functions and helper functions used in the project  |
           
  - Go to [OpenWeatherMap](https://openweathermap.org/) and sign up to obtain an API key. For details on how to obtain an API key, see the [OpenWeatherMap documentation](https://openweathermap.org/appid#signup).
 
@@ -48,7 +48,7 @@ Before you try out the steps in this guide, complete the following:
 4. Enter a unique name and a description for the component. You can use the name and description given below:
 
     | **Field**       | **Value**                        |
-    |-----------------|----------------------------------|
+    | --------------- | -------------------------------- |
     | **Name**        | `WeatherToEmail`                 |
     | **Description** | `My first scheduled integration` |
 
@@ -62,13 +62,13 @@ Before you try out the steps in this guide, complete the following:
 
 8. In the **Connect Repository** pane, enter the following information:
 
-    | **Field**             | **Description**                               |
-    |-----------------------|-----------------------------------------------|
-    | **GitHub Account**    | Your account                                  |
-    | **GitHub Repository** | `choreo-examples`                             |
-    | **Branch**            | **`main`**                                    |
-    | **Build Preset**      | **Ballerina**                                 | 
-    | **Project Path**      | `ipaas/ballerina/weather-to-email-integration`| 
+    | **Field**             | **Description**                                |
+    | --------------------- | ---------------------------------------------- |
+    | **GitHub Account**    | Your account                                   |
+    | **GitHub Repository** | `choreo-examples`                              |
+    | **Branch**            | **`main`**                                     |
+    | **Build Preset**      | **Ballerina**                                  |
+    | **Project Path**      | `ipaas/ballerina/weather-to-email-integration` |
 
 	!!! tip
     	    - **Build Preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset. 
@@ -88,24 +88,24 @@ To deploy the integration, follow the steps given below:
     !!! tip
         The configurable variables populated here are defined in the sample Ballerina project used in this guide. To learn how to declare configurable variables in Ballerina, see the [Ballerina documentation on declaring configurable variables](https://ballerina.io/learn/by-example/configurable-variables/). If configurable variables are detected in a connected Ballerina project, Choreo prompts for the respective values during component deployment.
 
-    | **Field**     | **Value**                                                              |
-    |---------------|------------------------------------------------------------------------|
-    | **apiKey**    | The API key you obtained in the prerequisites section                  |
-    | **latitude**  | Latitude of the location to get the weather forecast                   |
-    | **longitude** | Longitude of the location to get the weather forecast                  |
-    | **email**     | the email address to receive the formatted weather forecast information|
+    | **Field**     | **Value**                                                               |
+    | ------------- | ----------------------------------------------------------------------- |
+    | **apiKey**    | The API key you obtained in the prerequisites section                   |
+    | **latitude**  | Latitude of the location to get the weather forecast                    |
+    | **longitude** | Longitude of the location to get the weather forecast                   |
+    | **email**     | The email address to receive the formatted weather forecast information |
 
 4.  Click **Next**. 
 5.  In this step, you must define a schedule for the integration. In this guide, let's say you want to receive the weather information daily at 8.00 AM UTC. Enter values as follows to configure the schedule:
 
-    | **Field**        | **Value**   |
-    |------------------|-------------|
-    | **Select Range** | **Day**     |
-    | **Every**        | `1`         |
-    | **At**           | `08:00`     |
+    | **Field**            | **Value**                                             |
+    | -------------------- | ----------------------------------------------------- |
+    | **Select Time Zone** | Select a time zone to schedule the integration        |
+    | **Select Range**     | **Day**                                               |
+    | **Every**            | `1`                                                   |
+    | **At**               | `08:00`                                               |
     
     !!! tip
-         - Choreo scheduling is based on Coordinated Universal Time (UTC).  Therefore, when you define a schedule, it is important to convert the required time to UTC to ensure accurate scheduling.
          - When you develop a scheduled integration, you can define a schedule depending on your requirement. If you want to test and verify the integration immediately, you can schedule the deployment to run in just a few minutes after you create it. However, to avoid unnecessary expenses, make sure you reschedule or stop the deployment once you test and verify.
 
 6. Click **Deploy**. This deploys the scheduled integration to the development environment and indicates the **Scheduled Status** as **Active** in the **Development** card.
