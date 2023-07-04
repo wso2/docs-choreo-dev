@@ -54,7 +54,7 @@ helmCharts:
     releaseName: actions-runner-controller
     namespace: actions-runner-system
     version: 0.20.2
-    repo: https://actions-runner-controller.github.io/actions-runner-controller
+    repo: oci://choreocontrolplane.azurecr.io/helm
 
 commonAnnotations:
   checkov.io/skip1: CKV_K8S_AZURE_WSO2_2=Managed by ARC
