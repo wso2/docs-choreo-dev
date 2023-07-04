@@ -93,7 +93,7 @@ To deploy the integration, follow the steps given below:
     | **apiKey**    | The API key you obtained in the prerequisites section                   |
     | **latitude**  | Latitude of the location to get the weather forecast                    |
     | **longitude** | Longitude of the location to get the weather forecast                   |
-    | **email**     | the email address to receive the formatted weather forecast information |
+    | **email**     | The email address to receive the formatted weather forecast information |
 
 4.  Click **Next**. 
 5.  In this step, you must define a schedule for the integration. In this guide, let's say you want to receive the weather information daily at 8.00 AM UTC. Enter values as follows to configure the schedule:
