@@ -98,15 +98,14 @@ To deploy the integration, follow the steps given below:
 4.  Click **Next**. 
 5.  In this step, you must define a schedule for the integration. In this guide, let's say you want to receive the weather information daily at 8.00 AM UTC. Enter values as follows to configure the schedule:
 
-    | **Field**            | **Value**                 |
-    | -------------------- | ------------------------- |
-    | **Select Time Zone** | **Select your time zone** |
-    | **Select Range**     | **Day**                   |
-    | **Every**            | `1`                       |
-    | **At**               | `08:00`                   |
+    | **Field**            | **Value**                                             |
+    | -------------------- | ----------------------------------------------------- |
+    | **Select Time Zone** | Select a time zone to schedule the integration        |
+    | **Select Range**     | **Day**                                               |
+    | **Every**            | `1`                                                   |
+    | **At**               | `08:00`                                               |
     
     !!! tip
-         - For time zone, select the time zone where you want to schedule the integration.
          - When you develop a scheduled integration, you can define a schedule depending on your requirement. If you want to test and verify the integration immediately, you can schedule the deployment to run in just a few minutes after you create it. However, to avoid unnecessary expenses, make sure you reschedule or stop the deployment once you test and verify.
 
 6. Click **Deploy**. This deploys the scheduled integration to the development environment and indicates the **Scheduled Status** as **Active** in the **Development** card.
