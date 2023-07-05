@@ -1,3 +1,4 @@
 resources:
   - actions-runner-system
   - cert-manager
+  - namespace
