@@ -108,6 +108,7 @@ nav:
       - Develop Components With Git: develop-components/develop-components-with-git.md  
       - Configure Mutual TLS Between Components: develop-components/configure-mutual-tls-between-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
+      - Deploy a Containerized Application: develop-components/deploy-a-containerized-application.md
   - Authentication and Authorization:
       - Pass End-User Attributes to Upstream Services: authentication-and-authorization/pass-end-user-attributes-to-upstream-services.md
   - DevOps and CI/CD: 
