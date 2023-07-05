@@ -60,6 +60,14 @@ This is a detailed list of all subprocessors used by WSO2, including their name,
 ### Q: How do we secure WSO2 Private and Public Clouds?
 WSO2 uses a range of security controls and design patterns to protect against several threats, including internal attacks, software supply chain attacks, service and platform attacks, and more. Find out more regarding this [here](https://wso2.cachefly.net/wso2/sites/all/2023/pdf/securing-wso2-private-and-public-clouds.pdf).
 
+### Q: How can I connect a Choreo component with a protected third-party application?
+To connect your Choreo component with a protected third-party application, add the following public IP ranges to the allowlist. These IP ranges are assigned by Choreo as client IPs:
+
+ - 20.22.170.144/28
+ - 20.22.170.176/28
+
+By including these IP ranges, you ensure that Choreo can establish a secure connection and overcome any firewall restrictions. This enables seamless communication between your Choreo component and the protected third-party application, especially when using connectors for external databases like MySQL, MSSQL, PGSQL, Oracle DB, etc.
+
 ## Data Planes
 
 ### Q: What is a Choreo control plane?
