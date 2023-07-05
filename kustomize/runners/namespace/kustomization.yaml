@@ -1,0 +1,3 @@
+resources:
+  - actions-runner-system.yaml
+  - cert-manager.yaml
