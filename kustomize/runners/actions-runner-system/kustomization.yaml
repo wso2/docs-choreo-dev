@@ -1,5 +1,5 @@
 resources:
-  - crd
+  - ../../../helm/actions-runner-controller
   - deployment
   - hpa
 
