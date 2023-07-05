@@ -214,7 +214,7 @@ public class TestWebhookDp extends TestBase {
         }
     }
 
-    @Test(dataProvider = "dps", dependsOnMethods = {"testLiveLogs_CreateDeployInvokeWebhookIT"})
+    @Test(dependsOnMethods = {"testLiveLogs_CreateDeployInvokeWebhookIT"}, dataProvider = "dps")
     @CitrusTest
     public void testGroupedLogs_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
         for (Environment env : dp.getEnvironments()) {
@@ -222,7 +222,7 @@ public class TestWebhookDp extends TestBase {
         }
     }
 
-    @Test(dependsOnMethods = {"testGroupedLogs_CreateDeployInvokeWebhookIT"}, alwaysRun = true, dataProvider = "dps")
+    @Test(dependsOnMethods = {"testGroupedLogs_CreateDeployInvokeWebhookIT"}, dataProvider = "dps")
     @CitrusTest
     public void deleteWebhookComponent_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
         Response res = GraphQL.deleteComponent(dp.getChoreoComponent().getId(), dp.getChoreoProject().getId(), accessToken);
