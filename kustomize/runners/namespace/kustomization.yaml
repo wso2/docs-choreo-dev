@@ -1,3 +1,4 @@
 resources:
   - actions-runner-system.yaml
   - cert-manager.yaml
+  - csi-secret-store-driver.yaml
