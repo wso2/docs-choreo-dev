@@ -213,8 +213,15 @@ describe("Verify Ballerina service functionality", () => {
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
   });
 
+  it("Navigate to component usage insights", () => {
+    ChoreoHomePage.navigateToComponentUsageInsights();
+  });
+
+  it("Navigate to project usage insights", () => {
+    ChoreoHomePage.navigateToProjectUsageInsights();
+  });
+
   it("Verify API insights for dev env", () => {
-    ChoreoHomePage.navigateToInsights();
     InsightsPage.selectTimePeriod();
     InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
     InsightsPage.getTotalTraffic().should((value) => {
