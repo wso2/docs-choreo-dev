@@ -37,20 +37,19 @@ export class ChoreoHomePage {
     }
   }
 
-  static navigateToInsights() {
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.get('[data-cyid="usage-insights"]')
-        .realHover({ position: "left" })
-        .wait(MENU_RENDERING_TIME)
-        .click()
-        .wait(MENU_RENDERING_TIME);
-      Utils.moveMouseAwayFromLeftMenu();
-      cy.contains("Coming Soon").should("be.visible");
-      cy.get('[data-cyid="project-usage-insights-button"]').should("be.visible").click();
-      cy.get('[id="backdrop-loader"]').should("not.exist");
-    } else {
-      cy.get('[data-testid="main-left-nav-item-Insights"]').click();
-    }
+  static navigateToComponentUsageInsights() {
+    cy.get('[data-cyid="usage-insights"]')
+      .realHover({ position: "left" })
+      .wait(MENU_RENDERING_TIME)
+      .click()
+      .wait(MENU_RENDERING_TIME);
+    Utils.moveMouseAwayFromLeftMenu();
+    cy.contains("Coming Soon").should("be.visible");
+  }
+
+  static navigateToProjectUsageInsights() {
+    cy.get('[data-cyid="project-usage-insights-button"]').should("be.visible").click();
+    cy.get('[id="backdrop-loader"]').should("not.exist");
   }
 
   static isOrgHandleVisible(orgHandle: string) {

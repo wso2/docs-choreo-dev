@@ -224,8 +224,15 @@ describe("Choreo APIM publisher scenarios", () => {
     APIDeployment.DeployToDev();
   });
 
+  it("Navigate to component usage insights", () => {
+    ChoreoHomePage.navigateToComponentUsageInsights();
+  });
+
+  it("Navigate to project usage insights", () => {
+    ChoreoHomePage.navigateToProjectUsageInsights();
+  });
+
   it("Verify insight values for dev", () => {
-    ChoreoHomePage.navigateToInsights();
     InsightsPage.selectTimePeriod();
     InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
     InsightsPage.getTotalTraffic().should((value) => {
