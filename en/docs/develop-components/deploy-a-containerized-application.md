@@ -7,7 +7,6 @@ Choreo supports deploying containerized applications for the following component
 - Service
 - Scheduled Trigger
 - Manual Trigger
-- REST API
 - Webhook
 
 ## Connect your repository to Choreo
@@ -36,16 +35,16 @@ To connect your GitHub repository to Choreo, you should authorize the [Choreo Ap
     You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. Choreo needs write access only to send pull requests to a user repository. Choreo does not directly push any changes to a repository.
 
 After granting access to the required repositories, you can choose a repository and an associated branch to connect to the Choreo component.
-For the containerized application deployments, you should select the **Dockerfile** as the **Build Preset** and provide **Dockerfile Path** and [**Docker Context Path**](https://docs.docker.com/build/building/context/#path-context) for the docker build.
+For the containerized application deployments, you should select the **Dockerfile** as the **Build Preset** and provide **Dockerfile Path** and [**Docker Context Path**](https://docs.docker.com/build/building/context/#path-context) for the Docker build.
 
 ![Connected Dockerfile Repository](../assets/img/develop-components/deploy/create-component-connected-repo.png){.cInlineImage-full}
 
-The following table describes the individual fields in the **Connect Repository** form.
+The following table describes the individual fields in the **Connect Repository** pane.
 
 | **Field**               | **Description**                                                                                                                                                                      |
 |-------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **GitHub Account**      | Your GitHub account or organization. If you want to add another GitHub account, you can expand the list and click **+ Add**.                                                            |
-| **GitHub Repository**   | Depending on the repository access you provided, the drop down will show available repositories to be connected.                                                                                  |
+| **GitHub Repository**   | Depending on the repository access you provided, the list will show available repositories to be connected.                                                                                  |
 | **Branch**              | The branch of the repository.                                                                                                                                                         |
 | **Build Preset**        | Determines the implementation of the component: Ballerina or any other language as a Docker container.                                                                                |
 | **Dockerfile Path**     | The path to your Dockerfile. This path is defined relative to the repository root.<br/>For example, if the Dockerfile is at the repository root, the value for this field is `/Dockerfile`. |
@@ -58,14 +57,14 @@ The following table describes the individual fields in the **Connect Repository*
  
     - Fields marked with **\*** are not visible for all component types.
 
-    - To successfully build your container with Choreo, it is essential to explicitly define a User ID (`UID`) under the `USER` instruction in your Dockerfile. You can refer the [sample Dockerfile](https://github.com/wso2/choreo-sample-apps/blob/main/go/rest-api/Dockerfile) for guidance.
+    - To successfully build your container with Choreo, it is essential to explicitly define a User ID (`UID`) under the `USER` instruction in your Dockerfile. You can refer to the [sample Dockerfile](https://github.com/wso2/choreo-sample-apps/blob/main/go/rest-api/Dockerfile) for guidance.
 
     - To ensure that the defined USER instruction is valid, it must conform to the following conditions:
         
         - A valid User ID is a numeric value between 10000-20000, such as `10001` or `10500`.
-        - Usernames are not considered valid and should not be used. For example, `my-custom-user-12221` or `my-custom-user` are  invalid User IDs.
+        - Usernames are not considered valid and should not be used. For example, `my-custom-user-12221` or `my-custom-user` are invalid User IDs.
 
-## Deploy the Containerized component
+## Deploy the containerized component
 
 Choreo will automatically apply deployment configurations and settings based on the component type you select during creation.
 For example, if you select the **Service** component type, Choreo will deploy it as a Kubernetes deployment with appropriate scaling configurations.
@@ -80,12 +79,12 @@ After clicking the **Create** button, you can select the confidentiality of the 
 
 ![Create Configuration Mount Page](../assets/img/develop-components/deploy/deploy-app-config-type-mount-page.png){.cInlineImage-full}
 
-#### Configuration Types
+#### Configuration types
 
 * **ConfigMap**: Stores non-confidential data as key-value pairs.
 * **Secret**: Stores and manages sensitive information, such as passwords, OAuth tokens, and ssh keys as key-value pairs.
 
-#### Mount Types
+#### Mount types
 
 * **Environment Variables**: Mounts the selected ConfigMap or Secret as an environment variable in the container.
 * **File Mount**: Mounts the selected ConfigMap or Secret as a file in the container. Here, the key is the file name, and the value is the file content.
@@ -105,7 +104,7 @@ For more information about these configurations, see Choreo's [DevOps capabiliti
 
 You can configure the **Endpoints** to expose your service using the **Service** Component in Choreo. See [Service Component](../develop-components/develop-services/develop-a-service.md) for more information. 
 
-### Build, Deploy and Promote
+### Build, deploy and promote
 
 After adding the application configuration, you can build and deploy it by clicking the **Deploy Manually** button. Choreo will start the build process with the selected commit in the **Build Area**. 
 
