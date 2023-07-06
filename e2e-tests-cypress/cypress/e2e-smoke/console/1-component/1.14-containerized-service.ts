@@ -86,7 +86,9 @@ describe("Verify containerized service functionality", () => {
     TestHelper.testManagedEndpoint(
       Enums.Environment.DEVELOPMENT,
       ENDPOINT_NAME,
-      "greeter/greet"
+      "greeter/greet",
+      "",
+      "operations-greeting-get_greeter_greet"
     ).then((res) => {
       expect(res.response).to.be.eq("Hello, Stranger!\n\n");
       expect(res.statusCode).to.be.eq("200");
@@ -103,7 +105,9 @@ describe("Verify containerized service functionality", () => {
     TestHelper.testManagedEndpoint(
       Enums.Environment.PRODUCTION,
       ENDPOINT_NAME,
-      "greeter/greet"
+      "greeter/greet",
+      "",
+      "operations-greeting-get_greeter_greet"
     ).then((res) => {
       expect(res.response).to.be.eq("Hello, Stranger!\n\n");
       expect(res.statusCode).to.be.eq("200");

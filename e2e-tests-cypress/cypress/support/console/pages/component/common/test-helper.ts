@@ -34,7 +34,7 @@ export class TestHelper {
     cy.wait(5000); // Attempting to select the environment too quickly causes wrong environment to be selected
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.getTestKey();
-    return this.invokeSwaggerResource(env, resourcePath, key, value, "");
+    return this.invokeSwaggerResource(env, resourcePath, key, value, "", "");
   }
 
   static invokeAPI(
@@ -168,6 +168,7 @@ export class TestHelper {
     endpoint: string,
     resourcePath: string,
     method = "",
+    parentComponentId,
     key: string = "",
     value: string = ""
   ) {
@@ -176,7 +177,7 @@ export class TestHelper {
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.selectEndpoint(endpoint);
     ComponentTestPage.getTestKey();
-    return this.invokeSwaggerResource(env, resourcePath, key, value, method);
+    return this.invokeSwaggerResource(env, resourcePath, key, value, method, parentComponentId);
   }
 
   private static invokeSwaggerResource(
@@ -185,6 +186,7 @@ export class TestHelper {
     key: string,
     value: string,
     method: string,
+    parentComponentId: string,
     retryCount: number = 0,
     retryDelay: number = VERY_SHORT_TIME.timeout
   ) {
@@ -207,6 +209,7 @@ export class TestHelper {
           key,
           value,
           method,
+          parentComponentId,
           retryCount,
           retryDelay
         );
@@ -215,7 +218,7 @@ export class TestHelper {
       cy.log("Finished retrying");
       return SwaggerUI.GetResponse().then((r) => {
         return SwaggerUI.getResponseCode().then((res) => {
-          SwaggerUI.closeResource(resourcePath);
+          SwaggerUI.closeResource(resourcePath, parentComponentId);
           return Promise.resolve({
             response: r,
             statusCode: res,

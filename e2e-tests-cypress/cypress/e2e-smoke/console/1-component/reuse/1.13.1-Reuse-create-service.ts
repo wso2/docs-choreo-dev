@@ -70,8 +70,9 @@ describe("Verify Ballerina service functionality", () => {
     TestHelper.testManagedEndpoint(
       Enums.Environment.DEVELOPMENT,
       "Readinglist",
-      "Books",
-      "get"
+      "books",
+      "get",
+      "operations-default-getBooks"
     ).then((res) => {
       expect(res.response).to.be.eq("[]");
       expect(res.statusCode).to.be.eq("200");
@@ -88,8 +89,9 @@ describe("Verify Ballerina service functionality", () => {
     TestHelper.testManagedEndpoint(
       Enums.Environment.PRODUCTION,
       "Readinglist",
-      "Books",
-      "get"
+      "books",
+      "get",
+      "operations-default-getBooks"
     ).then((res) => {
       expect(res.response).to.be.eq("[]");
       expect(res.statusCode).to.be.eq("200");
