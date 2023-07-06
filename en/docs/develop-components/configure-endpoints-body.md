@@ -41,7 +41,7 @@ WSO2 MI build preset is where you can deploy integrations developed with WSO2 Mi
 This is the most flexible method to define endpoints. You can configure the endpoint details with the `endpoints.yaml` configuration file. Place this file in the .choreo directory in the project path of the component. 
 If the Micro Integrator project has inbound endpoints, you can expose them via different endpoints using the `endpoints.yaml`
 
-See [Understanding the endpoints.yaml file](#learn-the-endpointsyaml-file) to learn about the `endpoints.yaml` file.
+    See [Understanding the endpoints.yaml file](#learn-the-endpointsyaml-file) to learn about the `endpoints.yaml` file.
 
 
 2. **Auto generating endpoints**
