@@ -28,14 +28,14 @@ export class APIDeployment {
     cy.intercept({ method: "GET", url: PUBLISHER_API_KEYS_URL, times: 1 }).as(
       "keys"
     );
-    cyGet('[data-cyid="btn-deploy-proxy"]', MEDIUM_TIME)
+    cyGet('[data-cyid="btn-deploy-proxy-button"]', MEDIUM_TIME)
       .contains("Generating Configurations", MEDIUM_TIME)
       .should("not.exist");
     this.RetryDevDeployment();
-    cyGet('[data-cyid="btn-deploy-proxy"]').should("not.be.disabled").click();
+    cyGet('[data-cyid="btn-deploy-proxy-button"]').should("not.be.disabled").click();
 
     cy.wait("@keys", VERY_SHORT_TIME).then(() => {
-      cyGet('[data-cyid="btn-next"]').should("be.visible").click();
+      cyGet('[data-cyid="btn-next-button"]').should("be.visible").click();
       this.RetryDevDeployment();
       cyGet('[data-cyid="deployment-status"]>h6', VERY_LONG_TIME)
         .eq(0)
@@ -58,8 +58,18 @@ export class APIDeployment {
       .should("be.visible")
       .click();
 
-    cyGet('[data-cyid="deployment-status"]>h6', VERY_LONG_TIME)
-      .eq(0)
+    cy.contains("Deploying the Interceptor App", LONG_TIME).should(
+      "be.visible"
+    );
+
+    cy.contains("Summary of Deploying the proxy", LONG_TIME).should("exist");
+
+    cy.contains("In Progress", LONG_TIME)
+      .should("not.exist")
+      .wait(VERY_SHORT_TIME.timeout);
+
+    cy.get('[data-cyid="deployment-status"]>h6', VERY_LONG_TIME)
+      .eq(0, VERY_LONG_TIME)
       .should("contain", "Active");
   }
 
@@ -108,13 +118,13 @@ export class APIDeployment {
     componentName: string = "",
     hasMediationPolicy: boolean = false
   ) {
-    cyGet('[data-cyid="btn-promote"]').should("be.enabled").click();
+    cyGet('[data-cyid="btn-promote-button"]').should("be.enabled").click();
     cy.xpath('//span[text()="Configure & Deploy"]').should("have.length", 2);
     cy.wait(5000);
     cy.contains('role="progressbar"').should("not.exist");
     cy.get("body").then((bdy) => {
-      if (bdy.find('[data-cyid="btn-next"]').length > 0) {
-        cy.get('[data-cyid="btn-next"]').should("be.visible").click();
+      if (bdy.find('[data-cyid="btn-next-button"]').length > 0) {
+        cy.get('[data-cyid="btn-next-button"]').should("be.visible").click();
       }
     });
     cy.get("body").then((bdy) => {

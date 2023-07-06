@@ -3,8 +3,8 @@ kind: HorizontalRunnerAutoscaler
 metadata:
   name: runner-deployment-autoscaler
 spec:
-  minReplicas: 20
-  maxReplicas: 30
+  minReplicas: 50
+  maxReplicas: 70
   scaleTargetRef:
     name: runners
   scaleUpTriggers:

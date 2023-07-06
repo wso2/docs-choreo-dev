@@ -98,8 +98,9 @@ describe("Verify Ballerina service functionality", () => {
     TestHelper.testManagedEndpoint(
       Enums.Environment.DEVELOPMENT,
       "Readinglist",
-      "Books",
-      "get"
+      "books",
+      "get",
+      "operations-default-getBooks"
     ).then((res) => {
       expect(res.response).to.be.eq("[]");
       expect(res.statusCode).to.be.eq("200");
@@ -116,8 +117,9 @@ describe("Verify Ballerina service functionality", () => {
     TestHelper.testManagedEndpoint(
       Enums.Environment.PRODUCTION,
       "Readinglist",
-      "Books",
-      "get"
+      "books",
+      "get",
+      "operations-default-getBooks"
     ).then((res) => {
       expect(res.response).to.be.eq("[]");
       expect(res.statusCode).to.be.eq("200");
@@ -176,8 +178,9 @@ describe("Verify Ballerina service functionality", () => {
     TestHelper.testManagedEndpoint(
       Enums.Environment.DEVELOPMENT,
       "Readinglist",
-      "Books",
-      "get"
+      "books",
+      "get",
+      "operations-default-getBooks"
     ).then((res) => {
       expect(res.response).to.be.eq("[]");
       expect(res.statusCode).to.be.eq("200");
@@ -194,8 +197,9 @@ describe("Verify Ballerina service functionality", () => {
     TestHelper.testManagedEndpoint(
       Enums.Environment.PRODUCTION,
       "Readinglist",
-      "Books",
-      "get"
+      "books",
+      "get",
+      "operations-default-getBooks"
     ).then((res) => {
       expect(res.response).to.be.eq("[]");
       expect(res.statusCode).to.be.eq("200");
@@ -213,8 +217,15 @@ describe("Verify Ballerina service functionality", () => {
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
   });
 
+  it("Navigate to component usage insights", () => {
+    ChoreoHomePage.navigateToComponentUsageInsights();
+  });
+
+  it("Navigate to project usage insights", () => {
+    ChoreoHomePage.navigateToProjectUsageInsights();
+  });
+
   it("Verify API insights for dev env", () => {
-    ChoreoHomePage.navigateToInsights();
     InsightsPage.selectTimePeriod();
     InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
     InsightsPage.getTotalTraffic().should((value) => {

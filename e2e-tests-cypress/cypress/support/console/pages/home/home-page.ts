@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { MENU_RENDERING_TIME } from "../../../commons/timeouts";
+import { MENU_RENDERING_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
 import { LoginPage } from "../login-page";
 
@@ -37,22 +37,19 @@ export class ChoreoHomePage {
     }
   }
 
-  static navigateToInsights() {
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.get('[data-cyid="usage-insights"]')
-        .realHover({ position: "left" })
-        .wait(MENU_RENDERING_TIME)
-        .click()
-        .wait(MENU_RENDERING_TIME);
-      Utils.moveMouseAwayFromLeftMenu();
-      cy.contains("Coming Soon").should("be.visible");
-      cy.get('[data-cyid="project-usage-insights"]')
-        .should("be.visible")
-        .click();
-      cy.get('[id="backdrop-loader"]').should("not.exist");
-    } else {
-      cy.get('[data-testid="main-left-nav-item-Insights"]').click();
-    }
+  static navigateToComponentUsageInsights() {
+    cy.get('[data-cyid="usage-insights"]')
+      .realHover({ position: "left" })
+      .wait(MENU_RENDERING_TIME)
+      .click()
+      .wait(MENU_RENDERING_TIME);
+    Utils.moveMouseAwayFromLeftMenu();
+    cy.contains("Coming Soon").should("be.visible");
+  }
+
+  static navigateToProjectUsageInsights() {
+    cy.get('[data-cyid="project-usage-insights-button"]').should("be.visible").click();
+    cy.get('[id="backdrop-loader"]').should("not.exist");
   }
 
   static isOrgHandleVisible(orgHandle: string) {
@@ -65,6 +62,7 @@ export class ChoreoHomePage {
     cy.clearAllSessionStorage();
     cy.clearLocalStorage();
     cy.clearAllCookies();
+    cy.clearAllLocalStorage();
   }
 
   static navigateToSettings() {
@@ -108,12 +106,6 @@ export class ChoreoHomePage {
   }
 
   static goToMarketplacePage() {
-    const Url = Cypress.env("baseUrl");
-    const { handle } = Cypress.env("userData");
-    
-      let marketplaceURL = `${Url}/organizations/${handle}/marketplace`;
-      cy.visit(marketplaceURL);
-    
+    cy.get('[data-cyid="marketplace-link"]', VERY_SHORT_TIME).invoke('removeAttr', 'target').click();
   }
-
 }
