@@ -27,7 +27,7 @@ import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
 
 describe("Create Greeting sample in Choreo", () => {
-  const PROJECT_DESCRIPTION = "sample oas flow scenario";
+  const PROJECT_DESCRIPTION = "sample greeting service";
   const PROJECT_NAME = Utils.generateProjectName();
   const COMPONENT_NAME = Utils.generateComponentName()
   const REPO_NAME = "hello-world-sample";

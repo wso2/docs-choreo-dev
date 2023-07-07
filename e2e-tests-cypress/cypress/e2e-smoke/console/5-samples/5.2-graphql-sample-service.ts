@@ -28,7 +28,7 @@ import { GitHub } from "../../../support/github/github";
 import { ComponentData } from "../../../support/interfaces/component-data";
 
 describe("Graphql GQL service test", () => {
-  const PROJECT_DESCRIPTION = "sample oas flow scenario";
+  const PROJECT_DESCRIPTION = "sample gql service";
   const PROJECT_NAME = Utils.generateProjectName();
   const TEST_QUERY = '{greeting(name:"John")}';
   const TEST_QUERY_RESPONSE = 'greeting": "Hello, John';
