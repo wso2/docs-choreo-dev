@@ -17,7 +17,7 @@ export class DomainsComponents {
   }
 
   static navigateToDevPortalCustomDomain() {
-    cy.get('[data-cy="/domains/devportal"]').click();
+    cy.get('[data-cyid="nav-link-devportal-domains"]').click();
   }
 
   static deleteDevportalDomainIfExists(domainName: string) {
