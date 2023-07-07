@@ -33,8 +33,25 @@ payAGStepBasedTierId = "01ebea43-be76-1d7a-b410-2d1b873c57af"
 enterpriseStepBasedTierId = "01ec1f84-ce3d-122e-ac9b-f10c95fd72da"
 payAGComponentBasedTierId = "352dd60e-8e14-4bb3-9dab-395a16fbfe88"
 enterpriseComponentBasedTierId = "4abe3757-86f6-47de-994f-f02fb0522e99"
+freePayAGStepBasedTierID = "01ebea3a-7735-10be-b3c0-ba95f991e877"
+freePayAGComponentBasedTierId = "8de71e7a-adc2-4de4-a1b4-5b79d450f3ff"
+
+[freeSubscription]
+azureClientId = "{{.AZURE_CLIENT_ID}}"
+azureClientSecret_file_path = "/mnt/csi/secret-choreo-org-stat-data-pipeline/AZURE_CLIENT_SECRET" 
+azureHost = "https://login.microsoftonline.com"
+azureTenantId = "{{.AZURE_TENANT_ID}}"
+logAnalyticsResource = "https://api.loganalytics.io"
+logAnalyticsWorkspaceId = "{{.LOG_ANALYTICS_WORKSPACE_ID}}"
+adxResource = "https://choreononprodanadx.eastus2.kusto.windows.net" 
+adxQueryDb = "{{.ADX_QUERY_DB}}"
+clusterNameSpace = "{{.CLUSTER_NAME_SPACE}}"
+clusterName = "{{.CLUSTER_NAME}}"
 
 [script]
 dataDownload = {{.DATA_DOWNLOAD}}
 deploymentDataReset = {{.DEPLOYMENT_DATA_RESET}}
 componentDataReset = {{.COMPONENT_DATA_RESET}}
+activeOrgsDataDownload = {{.ACTIVE_ORGS_DATA_DOWNLOAD}}
+activeOrgsDataDownloadManualRun = {{.ACTIVE_ORGS_DATA_DOWNLOAD_MANUAL_RUN}}
+
