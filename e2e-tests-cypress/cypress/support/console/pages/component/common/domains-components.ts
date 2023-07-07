@@ -13,7 +13,7 @@
 
 export class DomainsComponents {
   static navigateToDomainsSettings() {
-    cy.get('[data-cyid="nav-link-domains"]').click();
+    cy.get('[data-cyid="nav-link-domains-link-tabs-link-tab"]').click();
   }
 
   static navigateToDevPortalCustomDomain() {
