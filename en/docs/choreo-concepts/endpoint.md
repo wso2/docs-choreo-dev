@@ -5,4 +5,4 @@ An Endpoint is a network-exposed function that resides within a component. In Ch
 Each endpoint exposed in a component is considered a single API. Therefore, Choreo allows you to do API management per endpoint for a given component. For example, you can perform lifecycle management and configure security settings per endpoint in a given component.
 
 
-See (Configure Endpoints )[../develop-components/configure-endpoints.md] to learn how to configure endpoints when developing components in Choreo. 
+See [Configure Endpoints](../develop-components/configure-endpoints.md) to learn how to configure endpoints when developing components in Choreo. 
