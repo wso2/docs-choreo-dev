@@ -38,7 +38,7 @@ freePayAGComponentBasedTierId = "8de71e7a-adc2-4de4-a1b4-5b79d450f3ff"
 
 [activeOrgs]
 azureClientId = "{{.AZURE_CLIENT_ID}}"
-azureClientSecret_file_path = "/mnt/csi/secret-choreo-org-stat-data-pipeline/AZURE_CLIENT_SECRET" 
+azureClientSecret_file_path = "/mnt/csi/secret-choreo-org-stat-data-collector/AZURE_CLIENT_SECRET"
 azureHost = "https://login.microsoftonline.com"
 azureTenantId = "{{.AZURE_TENANT_ID}}"
 logAnalyticsResource = "https://api.loganalytics.io"
