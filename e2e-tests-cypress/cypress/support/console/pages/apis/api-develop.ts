@@ -47,6 +47,38 @@ export class APIDevelop {
     this.addResource(verbs, path);
   }
 
+  static removeResources(resourceIds: string[]) {
+    this.selectDevelop();
+    cy.get('[id="backdrop-loader"]').should("not.exist");
+    cy.get("body").then((body) => {
+      const opCount = body.find('[data-testid="operation"]').length;
+
+      for (let i = 0; i < opCount; i++) {
+        cy.get('[data-testid="operation"]')
+          .eq(i)
+          .invoke("attr", "id")
+          .then((id) => {
+            resourceIds.forEach((resourceId) => {
+              if (id === resourceId) {
+                cy.get('[data-testid="operation"]')
+                  .eq(i)
+                  .within(() => {
+                    cy.get('[data-cyid="delete-icon-button"]').click();
+                  });
+              }
+            });
+          });
+      }
+    });
+
+    cy.get('[data-cyid="get-save-button-button"]')
+      .should("be.enabled")
+      .contains("Save")
+      .click({ force: true });
+
+    cy.get('[id="backdrop-loader"]').should("not.exist");
+  }
+
   static addPolicy(
     resourcePath: string,
     verb: string,
@@ -74,7 +106,7 @@ export class APIDevelop {
   }
 
   private static addResource(verbs: string[], path: string) {
-    cy.get('[name="target"]').type(path);
+    cy.get('[name="target"]').type(path, { parseSpecialCharSequences: false });
     cy.get('[data-testid="add-btn"]').click();
     this.generateOperationId(verbs, path);
     cy.get("button")
@@ -105,7 +137,6 @@ export class APIDevelop {
   }
 
   private static generateOperationId(httpVerb: string[], resourcePath: string) {
-
     httpVerb.forEach((verb) => {
       const header = this.getHeader(resourcePath, verb.toLowerCase());
       const modifiedResourcePath = Cypress._.capitalize(
@@ -119,7 +150,9 @@ export class APIDevelop {
         .parent()
         .then((p) =>
           cy.wrap(p).within(() => {
-            cy.get(`div>input[type="text"]`).eq(0).type(operationId);
+            cy.get(`div>input[type="text"]`)
+              .eq(0)
+              .type(operationId, { parseSpecialCharSequences: false });
           })
         );
     });
@@ -136,15 +169,13 @@ export class APIDevelop {
     cyGet('[data-cyid="develop-policies"]').click();
     cyGet(header).eq(1).click();
 
-
-
-    cyGet(k).each(e => {
-      if (e.find('button').length == 2) {
-        e.find('button').eq(1)
-        cy.wrap(e).find('button').eq(1).click()
-        cyGet('div[role="dialog"] button').should('be.visible').eq(2).click()
+    cyGet(k).each((e) => {
+      if (e.find("button").length == 2) {
+        e.find("button").eq(1);
+        cy.wrap(e).find("button").eq(1).click();
+        cyGet('div[role="dialog"] button').should("be.visible").eq(2).click();
       }
-    })
+    });
 
     // cyGet('div[role="dialog"] button').should('be.visible').eq(2).click()
   }

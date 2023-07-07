@@ -14,7 +14,7 @@
 export class SwaggerUI {
   static SelectResource(path: string, method: string = "") {
     const pathVariable = method
-      ? `[id="operations-default-${method}${path}"]`
+      ? `[id="operations-default-${method}${this.capitalizeFirstLetter(path)}"]`
       : `[data-path="/${path}"]`;
     cy.get("body").then((b) => {
       if (
@@ -25,10 +25,32 @@ export class SwaggerUI {
         ).length == 0
       ) {
         if (b.find(`[class="try-out"]`).length == 0) {
-          cy.get(pathVariable).click();
+          cy.get(pathVariable).scrollIntoView().click();
         }
       }
     });
+  }
+
+  private static capitalizeFirstLetter(str: string): string {
+    if (str.length === 0) {
+      return str;
+    }
+  
+    const firstLetter = str.charAt(0).toUpperCase();
+    const remainingLetters = str.slice(1);
+    return firstLetter + remainingLetters;
+  }
+  
+
+  static closeResource(path: string, parentComponentId: string) {
+    if (parentComponentId == "") {
+      cy.get(`[data-path="/${path}"]`).scrollIntoView().click();
+    } else {
+    cy.get(`[id="${parentComponentId}"]`)
+      .within(() => {
+        cy.get(`[data-path="/${path}"]`).scrollIntoView().click();
+      });
+    }
   }
 
   static TryoutAPI(resource: string = "-get") {

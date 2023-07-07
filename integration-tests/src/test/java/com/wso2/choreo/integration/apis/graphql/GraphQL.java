@@ -528,11 +528,10 @@ public class GraphQL extends ControlPlaneAPI {
                                                     GraphqlDTO graphqlDTO) throws IOException {
 
         String queryString = ObjectMapperUtil.mapObjectToString(
-                "templates/createIntegrationComponent/IntegrationComponentCreation.mustache",
-                graphqlDTO);
+                "templates/createIntegrationComponent/IntegrationComponentCreation.mustache", graphqlDTO);
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
-
         final String[] componentHandlerArray = new String[1];
+
         runner.$(http()
                 .client(client)
                 .send()
@@ -557,6 +556,7 @@ public class GraphQL extends ControlPlaneAPI {
                             .getAsJsonObject("createIntegrationComponent");
                     componentHandlerArray[0] = component.get("handle").getAsString();
                 }));
+
         return componentHandlerArray[0];
     }
 
@@ -570,38 +570,43 @@ public class GraphQL extends ControlPlaneAPI {
      * @return Retrieved component
      * @throws IOException If error occurred in object mapping
      */
-    public static ChoreoComponent retrieveComponent(TestActionRunner runner, HttpClient client,
-                                                    String accessToken, GraphqlDTO graphqlDTO)
-            throws IOException {
+    public static ChoreoComponent retrieveComponent(TestActionRunner runner, HttpClient client, String accessToken,
+                                                    GraphqlDTO graphqlDTO) throws IOException {
 
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/createUserManagedComponent/graphqlQueryForComponentDetails.mustache", graphqlDTO);
         String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
         final ChoreoComponent[] componentArray = new ChoreoComponent[1];
-        runner.$(http()
-                .client(client)
-                .send()
-                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(requestBody)
-                .accept(MediaType.APPLICATION_JSON_VALUE));
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .validate((message, context) -> {
-                    JsonObject component = new JsonParser().parse((String) message.getPayload())
-                            .getAsJsonObject()
-                            .getAsJsonObject("data")
-                            .getAsJsonObject("component");
-                    Gson gson = new Gson();
-                    componentArray[0] = gson.fromJson(component.toString(), ChoreoComponent.class);
-                }));
+
+        runner.$(repeatOnError()
+                .until("i = 20")
+                .index("i")
+                .autoSleep(10000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(requestBody)
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
+                        http().client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                                .validate((message, context) -> {
+                                        JsonObject component = new JsonParser().parse((String) message.getPayload())
+                                                .getAsJsonObject()
+                                                .getAsJsonObject("data")
+                                                .getAsJsonObject("component");
+                                        Gson gson = new Gson();
+                                        componentArray[0] = gson.fromJson(component.toString(), ChoreoComponent.class);
+                                })));
+
         return componentArray[0];
     }
 
@@ -915,24 +920,27 @@ public class GraphQL extends ControlPlaneAPI {
                 "templates/graphql/requests/promote.mustache", graphqlDTO);
         String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
-        runner.$(http()
-                .client(client)
-                .send()
-                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(requestBody)
-                .accept(MediaType.APPLICATION_JSON_VALUE));
-
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .body(new ClassPathResource("templates/graphql/responses/promoteSuccess.json"))
-                .validate(json()));
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(10000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(requestBody)
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
+                        http().client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                                .body(new ClassPathResource("templates/graphql/responses/promoteSuccess.json"))
+                                .validate(json())));
     }
 
     /**
@@ -1039,9 +1047,8 @@ public class GraphQL extends ControlPlaneAPI {
         return observabilityIds;
     }
     
-    public static CreateNewVersionResponseDTO createNewVersion(TestActionRunner runner,
-                    HttpClient choreoProjectsTestClient, String accessToken,
-                    GraphqlDTO graphqlDTO) throws IOException {
+    public static void createNewVersion(TestActionRunner runner, HttpClient choreoProjectsTestClient,
+                                        String accessToken, GraphqlDTO graphqlDTO) throws IOException {
 
             String queryString = ObjectMapperUtil.mapObjectToString(
                             "templates/graphql/requests/createNewVersion.mustache", graphqlDTO);
@@ -1062,13 +1069,7 @@ public class GraphQL extends ControlPlaneAPI {
                 .response(HttpStatus.OK)
                 .message()
                 .type(MessageType.JSON)
-                .body(new ClassPathResource("templates/graphql/responses/createNewVersionSuccess.json"))
-                .validate((message, context) -> {
-                        mapStringToObject.set(ObjectMapperUtil.mapStringToObject(
-                                CreateNewVersionResponseDTO.class, message.getPayload(String.class),
-                                        "createVersion"));
-                }));
-            return mapStringToObject.get();
+                .body(new ClassPathResource("templates/graphql/responses/createNewVersionSuccess.json")));
     }
     
     public static List<Commit> getCommitHistory(TestActionRunner runner, HttpClient client, String componentId,

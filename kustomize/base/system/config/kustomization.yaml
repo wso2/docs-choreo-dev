@@ -319,6 +319,7 @@ configMapGenerator:
       - REACT_APP_AUTHENTICATOR_GITHUB=GithubAuthenticator
       - REACT_APP_AUTHENTICATOR_ANONYMOUS=OpenIDConnectAuthenticator
       - REACT_APP_AUTHENTICATOR_ENTERPRISE=EnterpriseIDPAuthenticator
+      - REACT_CHOREO_HOME_PAGE='https://wso2.com/choreo/'
   - name: cm-userapps-image-deleter
     behavior: create
     literals:

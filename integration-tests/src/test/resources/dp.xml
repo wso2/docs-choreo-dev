@@ -6,7 +6,8 @@
             <class name="com.wso2.choreo.integration.common.TestContext"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestGraphQLServiceDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestBYOCDp"/>
-            <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiDpWithAPIRateLimit"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiDpWithOperationRateLimit"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestWebhookDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestRestAPIDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestManualTriggerDp"/>

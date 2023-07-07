@@ -1,0 +1,5 @@
+resources:
+  - ../../../helm/cert-manager
+  - choreo-dev-letsencrypt-prod.yaml
+
+namespace: cert-manager

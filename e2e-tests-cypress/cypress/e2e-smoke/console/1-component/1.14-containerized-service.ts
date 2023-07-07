@@ -86,7 +86,9 @@ describe("Verify containerized service functionality", () => {
     TestHelper.testManagedEndpoint(
       Enums.Environment.DEVELOPMENT,
       ENDPOINT_NAME,
-      "greeter/greet"
+      "greeter/greet",
+      "",
+      "operations-greeting-get_greeter_greet"
     ).then((res) => {
       expect(res.response).to.be.eq("Hello, Stranger!\n\n");
       expect(res.statusCode).to.be.eq("200");
@@ -103,15 +105,24 @@ describe("Verify containerized service functionality", () => {
     TestHelper.testManagedEndpoint(
       Enums.Environment.PRODUCTION,
       ENDPOINT_NAME,
-      "greeter/greet"
+      "greeter/greet",
+      "",
+      "operations-greeting-get_greeter_greet"
     ).then((res) => {
       expect(res.response).to.be.eq("Hello, Stranger!\n\n");
       expect(res.statusCode).to.be.eq("200");
     });
   });
 
+  it("Navigate to component usage insights", () => {
+    ChoreoHomePage.navigateToComponentUsageInsights();
+  });
+
+  it("Navigate to project usage insights", () => {
+    ChoreoHomePage.navigateToProjectUsageInsights();
+  });
+
   it("Verify API insights for dev env", () => {
-    ChoreoHomePage.navigateToInsights();
     InsightsPage.selectTimePeriod();
     InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
     InsightsPage.getTotalTraffic().should((value) => {

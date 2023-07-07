@@ -58,6 +58,7 @@ export class LoginPage {
     cy.get('[data-testid="header-user-profile-menu"]', MEDIUM_TIME).should(
       "be.visible"
     );
+    cy.get('[id="backdrop-loader"]').should("not.exist");
   }
 
   private static rejectCookies() {

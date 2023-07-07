@@ -13,11 +13,11 @@
 
 export class DomainsComponents {
   static navigateToDomainsSettings() {
-    cy.get('[data-cyid="nav-link-domains"]').click();
+    cy.get('[data-cyid="nav-link-domains-link-tabs-link-tab"]').click();
   }
 
   static navigateToDevPortalCustomDomain() {
-    cy.get('[data-cy="/domains/devportal"]').click();
+    cy.get('[data-cyid="nav-link-devportal-domains"]').click();
   }
 
   static deleteDevportalDomainIfExists(domainName: string) {
@@ -54,7 +54,7 @@ export class DomainsComponents {
   }
 
   static createDevportalDomain(domainName: string) {
-    cy.get('[data-cyid="btn-add-domain"]').click();
+    cy.get('[data-cyid="btn-add-domain-button"]').click();
     cy.contains("Create Custom Domain").should("be.visible");
     cy.log("Creating a dev portal custom domain");
     cy.get('[data-cyid="text-field-domain-name"]').type(domainName);

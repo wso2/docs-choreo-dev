@@ -1,0 +1,6 @@
+resources:
+  - ../../../helm/actions-runner-controller
+  - deployment
+  - hpa
+
+namespace: actions-runner-system

@@ -1,0 +1,57 @@
+helmCharts:
+  - name: csi-secrets-store-provider-azure
+    includeCRDs: true
+    valuesInline:
+      linux:
+        image:
+          repository: choreocontrolplane.azurecr.io/oss/azure/secrets-store/provider-azure
+      secrets-store-csi-driver:
+        syncSecret:
+          enabled: true
+        linux:
+          livenessProbeImage:
+            repository: choreocontrolplane.azurecr.io/oss/kubernetes-csi/livenessprobe
+          registrarImage:
+            repository: choreocontrolplane.azurecr.io/oss/kubernetes-csi/csi-node-driver-registrar
+          image:
+            repository: choreocontrolplane.azurecr.io/oss/kubernetes-csi/secrets-store/driver
+          driver:
+            resources:
+              requests:
+                memory: 200Mi
+              limits:
+                memory: 400Mi
+    releaseName: csi-secrets-store-provider-azure
+    namespace: csi-secret-store-driver
+    version: 1.2.0
+    repo: oci://choreocontrolplane.azurecr.io/helm
+
+commonAnnotations:
+  kapp.k14s.io/disable-original: ""
+  kapp.k14s.io/disable-default-label-scoping-rules: ""
+  checkov.io/skip1: CKV_K8S_AZURE_WSO2_2=Managed by csi-secret-store-provider-azure
+  checkov.io/skip2: CKV2_K8S_5=Managed by csi-secret-store-provider-azure
+  checkov.io/skip3: CKV2_K8S_6=Managed by csi-secret-store-provider-azure
+  checkov.io/skip4: CKV_K8S_8=Managed by csi-secret-store-provider-azure
+  checkov.io/skip5: CKV_K8S_9=Managed by csi-secret-store-provider-azure
+  checkov.io/skip6: CKV_K8S_10=Managed by csi-secret-store-provider-azure
+  checkov.io/skip7: CKV_K8S_11=Managed by csi-secret-store-provider-azure
+  checkov.io/skip8: CKV_K8S_12=Managed by csi-secret-store-provider-azure
+  checkov.io/skip9: CKV_K8S_13=Managed by csi-secret-store-provider-azure
+  checkov.io/skip10: CKV_K8S_16=Managed by csi-secret-store-provider-azure
+  checkov.io/skip11: CKV_K8S_19=Managed by csi-secret-store-provider-azure
+  checkov.io/skip12: CKV_K8S_20=Managed by csi-secret-store-provider-azure
+  checkov.io/skip13: CKV_K8S_22=Managed by csi-secret-store-provider-azure
+  checkov.io/skip14: CKV_K8S_23=Managed by csi-secret-store-provider-azure
+  checkov.io/skip15: CKV_K8S_28=Managed by csi-secret-store-provider-azure
+  checkov.io/skip16: CKV_K8S_29=Managed by csi-secret-store-provider-azure
+  checkov.io/skip17: CKV_K8S_30=Managed by csi-secret-store-provider-azure
+  checkov.io/skip18: CKV_K8S_31=Managed by csi-secret-store-provider-azure
+  checkov.io/skip19: CKV_K8S_37=Managed by csi-secret-store-provider-azure
+  checkov.io/skip20: CKV_K8S_38=Managed by csi-secret-store-provider-azure
+  checkov.io/skip21: CKV_K8S_40=Managed by csi-secret-store-provider-azure
+
+patches:
+  - path: job-remover.yaml
+    target:
+      kind: Job

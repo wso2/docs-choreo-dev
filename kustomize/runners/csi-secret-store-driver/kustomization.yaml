@@ -1,0 +1,4 @@
+resources:
+  - ../../../helm/csi-secrets-store-provider-azure
+
+namespace: csi-secret-store-driver

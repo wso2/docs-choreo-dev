@@ -29,7 +29,7 @@ export class ProjectListingPage {
     this.checkProjectCardCreation();
     cy.get('[name="Name"]').clear().type(projectName);
     cy.get('[name="Description"]').clear().type(description);
-    cy.get('[data-cyid="select-region"]').click();
+    cy.get('[data-cyid="select-region-select"]').click();
     cy.contains(`Cloud Data Plane - ${dataPlane}`).click();
     Utils.getRenderedElement('[data-testid="create-version-create"]').click();
     cy.get('[data-testid="create-version-create"]').should("not.exist");
@@ -42,15 +42,7 @@ export class ProjectListingPage {
         Utils.getRenderedElement('[data-testid="project-picker"]').click();
         Utils.getRenderedElement('[data-cyid="btn-create-new"]').click();
       } else {
-        cy.intercept({
-          method: "POST",
-          url: GRAPHQL_URL,
-          times: 10,
-        }).as("queryComponents");
-
-        cy.wait("@queryComponents", SHORT_TIME).then(() => {
-          this.getCreateNewProjectPopUp();
-        });
+        this.getCreateNewProjectPopUp();
       }
     });
   }

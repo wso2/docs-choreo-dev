@@ -27,6 +27,9 @@ describe("Verify the functionality in Choreo Marketplace", () => {
   const PAID = "Cost/Paid";
 
   before(() => {
+    cy.clearAllSessionStorage();
+    cy.clearAllCookies();
+    cy.clearAllLocalStorage()
     LoginPage.login();
   });
   after(() => {
