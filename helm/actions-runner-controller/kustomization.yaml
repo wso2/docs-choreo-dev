@@ -32,15 +32,15 @@ helmCharts:
             key: ghrunner
             operator: Exists
       image:
-        actionsRunnerRepositoryAndTag: choreocontrolplane.azurecr.io/summerwind/actions-runner:latest
-        dindSidecarRepositoryAndTag: choreocontrolplane.azurecr.io/dind:latest
+        actionsRunnerRepositoryAndTag: choreocontrolplane.azurecr.io/summerwind/actions-runner:v2.305.0-ubuntu-20.04-462d044-20230707-1606
+        dindSidecarRepositoryAndTag: choreocontrolplane.azurecr.io/docker:dind-20230707-1606
         repository: choreocontrolplane.azurecr.io/summerwind/actions-runner-controller
         tag: v0.25.2
       metrics:
         proxy:
           image:
             repository: choreocontrolplane.azurecr.io/brancz/kube-rbac-proxy
-            tag: v0.13.0
+            tag: v0.14.2-20230707-1606
       nodeSelector:
         execution-mode: ghrunner
       podDisruptionBudget:
