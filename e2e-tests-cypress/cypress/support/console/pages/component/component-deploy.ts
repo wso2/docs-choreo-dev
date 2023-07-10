@@ -218,6 +218,9 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
       .contains("Generating Configurations", LONG_TIME)
       .should("not.exist");
+    cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
+      .contains("Loading Configurations", LONG_TIME)
+      .should("not.exist");
     APIDeployment.RetryDevDeployment();
     cyGet('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
       .should("be.enabled")
