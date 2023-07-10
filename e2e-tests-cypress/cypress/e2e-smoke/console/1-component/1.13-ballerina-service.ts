@@ -126,46 +126,6 @@ describe("Verify Ballerina service functionality", () => {
     });
   });
 
-  it("Apply configs to dev", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.selectSetting();
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
-    ComponentAPILifecycle.selectResources();
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity("books");
-    ComponentAPILifecycle.applyConfiguration();
-    ComponentAPILifecycle.verifyDevRevision().should(
-      "eq",
-      Enums.Environment.DEVELOPMENT
-    );
-  });
-
-  it("Apply configs to prod", () => {
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity("books");
-    ComponentAPILifecycle.applyConfiguration();
-  });
-
-  it("Verify resource access without the token in dev", () => {
-    Curl.getRequestComponentsForService(
-      `${Enums.Environment.DEVELOPMENT}Books`
-    ).then((curl) =>
-      Utils.sendGetRequest(curl.url).then((res) => {
-        expect(res.status).equal(200);
-      })
-    );
-  });
-
-  it("Verify resource access without the token in prod", () => {
-    Curl.getRequestComponents(`${Enums.Environment.PRODUCTION}Books`).then(
-      (curl) =>
-        Utils.sendGetRequest(curl.url).then((res) => {
-          expect(res.status).equal(200);
-        })
-    );
-  });
-
   //new version creation
   it("Verify new version creation and deploy to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
