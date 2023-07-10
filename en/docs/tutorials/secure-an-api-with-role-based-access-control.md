@@ -53,6 +53,7 @@ This creates the organization and opens the home page of the default project cre
 
             Enabling Asgardeo as the default key manager has the following effects:
 
+             - Once the Asgardeo Key Manager is enabled, it will act as the default key manager. You cannot disable, change, or remove it.
              - Existing applications created via the Developer Portal in your organization will continue to function as usual. However, any new application you create within the organization will use Asgardeo as the key manager.
              - New grant types such as **Password**, **Authorization Code**, **PKCE**, and **Implicit**, which were not available in Choreo will become available.
              - The capability to add an external IdP will be disabled because Asgardeo does not support token exchange. However, you can use the [federation capabilities of Asgardeo](https://wso2.com/asgardeo/docs/get-started/asgardeo-use-cases/#identity-federation) to achieve similar functionality.
