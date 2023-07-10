@@ -16,10 +16,31 @@ import { Utils } from "../../../commons/utils";
  * associated services.
  */
 export class ComponentOverviewPage {
-  static goBack() {
-    cy.get('[data-testid="main-left-nav-item-Project"]')
-      .should("be.visible")
-      .click();
+  static goBackToProject() {
+    cy.get('[data-cyid="project-picker-button"]').should("be.visible").click();
+  }
+
+  static copyURL(env: string) {
+    cy.get("body").then((body) => {
+      const endpointCount = body.find(
+        '[data-cyid="text-field-endpoint"]'
+      ).length;
+
+      for (let i = 0; i < endpointCount; i++) {
+        cy.get('[data-cyid="text-field-endpoint"]')
+          .eq(i)
+          .within(() => {
+            cy.get("input")
+              .invoke("val")
+              .then((text) => {
+                if (text.toString().includes(env)) {
+                  cy.log(`url of ${env}: `, text.toString());
+                  cy.wrap(text).as(env);
+                }
+              });
+          });
+      }
+    });
   }
 
   static navigateToDeploy() {
@@ -52,15 +73,15 @@ export class ComponentOverviewPage {
   }
 
   static navigateToOverview() {
-    cy.get("[data-cyid=link-overview]").should("be.visible").click();
-    cy.intercept({
-      method: "POST",
-      url: `/insights/1.0.0/query-api`,
-      times: 1,
-    }).as("insights");
-    cy.wait("@insights", { timeout: 180000 }).then(() => {
-      cy.get("[data-cyid=copy-release-details-btn]").should("be.visible");
-    });
+    cy.get('[data-cyid="home"]')
+      .realHover({ position: "left" })
+      .wait(MENU_RENDERING_TIME)
+      .click({ force: true })
+      .wait(MENU_RENDERING_TIME);
+    cy.get('[id="backdrop-loader"]').should("not.exist");
+    Utils.moveMouseAwayFromLeftMenu();
+
+    cy.get("[data-cyid=create-time]").should("be.visible");
   }
 
   static navigateToManage() {

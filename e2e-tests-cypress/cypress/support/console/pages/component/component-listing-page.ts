@@ -88,6 +88,8 @@ export class ComponentListingPage {
     }
 
     Utils.saveComponentURL();
+    cy.get('[id="backdrop-loader"]').should("not.exist");
+    cy.get("[data-cyid=create-time]").should("be.visible");
     cy.log("Successfully visited to the component");
   }
 

@@ -359,13 +359,16 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-next-button"]').should("be.enabled");
     cy.get('[data-cyid="btn-next-button"]').should("exist").click();
     APIDeployment.RetryPromotionToProd();
+    cy.get('[id="circular-loader"]').should("not.exist");
+    cy.get('[data-testid="config-loader"]').should("not.exist");
+
     cy.get('[data-cyid="proxy-env-card-header"]>div>span')
       .contains("Production")
       .should("be.visible");
     cy.get('[data-cyid="deployment-status"]')
       .should("have.length", 2)
       .eq(1)
-      .contains(DEPLOYMENT_SUCCESS)
+      .contains(DEPLOYMENT_SUCCESS, LONG_TIME)
       .should("be.visible");
     cy.get('[data-cyid*="promote"]').should("not.be.disabled");
   }

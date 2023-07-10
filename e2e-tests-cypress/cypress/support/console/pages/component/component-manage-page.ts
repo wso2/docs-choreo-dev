@@ -68,22 +68,26 @@ export class ComponentAPILifecycle {
   }
 
   static demoteToCreated() {
-    cy.get('[data-cyid="Demote to Created-lc-btn-button"]').should("be.visible").click();
+    cy.get('[data-cyid="Demote to Created-lc-btn-button"]')
+      .should("be.visible")
+      .click();
     cy.get(ComponentAPILifecycle.devportl_btn).should("be.disabled");
   }
 
-  static goToDeveloperPortalWithoutLogin(projectName: string, componentName: string, idpUser: string = "") {
-
+  static goToDeveloperPortalWithoutLogin(
+    projectName: string,
+    componentName: string,
+    idpUser: string = ""
+  ) {
     const loginUrl = Cypress.env("devportalLoginURL");
     const { uuid, handle } = Cypress.env("userData");
-    
-    GraphQL._getAPIInfo(projectName, componentName).then(res => {
-      const { latestVersionId } = res
 
+    GraphQL._getAPIInfo(projectName, componentName).then((res) => {
+      const { latestVersionId } = res;
 
       let devportalURL = `${loginUrl}/${handle}/apis/${latestVersionId}?fidp=${idpUser}&orgUuid=${uuid}`;
       cy.visit(devportalURL);
-    })
+    });
   }
 
   static selectUsagePlans(...plans) {
@@ -247,7 +251,7 @@ export class ComponentAPILifecycle {
   }
 
   static selectRevision(env: Enums.Environment) {
-    cy.get('[data-cyid="selected-revision"]').click();
+    cy.get('[testid="selected-revision-link"]').click();
     cy.get('[data-testid="revision-history-header"]').should("be.visible");
     cy.get('[data-cyid*="revision-list-item"]')
       .contains(env)
@@ -301,7 +305,9 @@ export class ComponentAPILifecycle {
   }
 
   static updateAPIAccessMode(accessMode: string) {
-    cyGet('[data-testid="access-mode"]',LONG_TIME).should('be.visible').click();
+    cyGet('[data-testid="access-mode"]', LONG_TIME)
+      .should("be.visible")
+      .click();
     cy.contains(accessMode).should("exist").realClick();
     cyGet('[data-testid="warning-banner"]').should("be.visible");
     cyGet('[data-cyid="btn-confirmation-dialog-blue"]').should("exist").click();
