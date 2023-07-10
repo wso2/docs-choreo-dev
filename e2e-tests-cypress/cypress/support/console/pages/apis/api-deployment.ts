@@ -22,6 +22,10 @@ import { cyGet } from "../../../commons/cy";
 import { PUBLISHER_API_KEYS_URL } from "../../../commons/urls";
 import { GraphQL } from "../../apis/graphql";
 import { MEDIUM_TIME } from "../../../commons/timeouts";
+import {
+  DEPLOYMENT_STOPPED,
+  DEPLOYMENT_SUCCESS,
+} from "../../../commons/constants";
 
 export class APIDeployment {
   static DeployToDev() {
@@ -32,15 +36,26 @@ export class APIDeployment {
       .contains("Generating Configurations", MEDIUM_TIME)
       .should("not.exist");
     this.RetryDevDeployment();
-    cyGet('[data-cyid="btn-deploy-proxy-button"]').should("not.be.disabled").click();
+
+    cyGet('[data-cyid="btn-deploy-proxy-button"]')
+      .should("not.be.disabled")
+      .click();
 
     cy.wait("@keys", VERY_SHORT_TIME).then(() => {
       cyGet('[data-cyid="btn-next-button"]').should("be.visible").click();
       this.RetryDevDeployment();
+      cy.get('[id="circular-loader"]').should("not.exist");
+
       cyGet('[data-cyid="deployment-status"]>h6', VERY_LONG_TIME)
         .eq(0)
-        .should("contain", "Active");
+        .should("not.contain", DEPLOYMENT_STOPPED);
+
+      cyGet('[data-cyid="deployment-status"]>h6', VERY_LONG_TIME)
+        .eq(0)
+        .should("contain", DEPLOYMENT_SUCCESS);
+
       cyGet('[data-cyid*="promote"]').should("not.be.disabled");
+      cy.get('[id="circular-loader"]').should("not.exist");
     });
   }
 

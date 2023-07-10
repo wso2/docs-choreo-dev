@@ -37,352 +37,307 @@ import { ComponentListingPage } from "../../../support/console/pages/component/c
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { cyLog } from "../../../support/commons/cy";
 
-
 before(() => {
-    LoginPage.login();
+  LoginPage.login();
 });
 after(() => {
-    ChoreoHomePage.logout();
+  ChoreoHomePage.logout();
 });
 
-
 describe(`Verify internal api functionality`, () => {
-    const API_NAME = Utils.generateComponentName("CYE2E");
-    const API_BASE_PATH = Utils.generateBasePath();
-    const API_VERSION = "1.0.0";
+  const API_NAME = Utils.generateComponentName("CYE2E");
+  const API_BASE_PATH = Utils.generateBasePath();
+  const API_VERSION = "1.0.0";
 
-    const API_ENDPOINT = "https://jsonplaceholder.typicode.com";
-    const OPERATION_USERS = "users";
-    const PROJECT_DESCRIPTION = "sample stats project";
-    const PROJECT_NAME = Utils.generateProjectName();
+  const API_ENDPOINT = "https://jsonplaceholder.typicode.com";
+  const OPERATION_USERS = "users";
+  const PROJECT_DESCRIPTION = "sample stats project";
+  const PROJECT_NAME = Utils.generateProjectName();
 
-    let DEV_INVOKE_URL = "";
-    let PROD_INVOKE_URL = "";
+  const DEV_INVOKE_URL_TEXT = "dev-internal";
+  const PROD_INVOKE_URL_TEXT = "prod-internal";
 
+  let DEV_INVOKE_URL = "";
+  let PROD_INVOKE_URL = "";
 
-    const PROXY_API_NAME_DEV = Utils.generateComponentName("dev");
-    const PROXY_API_VERSION_DEV = "1.0.0";
-    const PROXY_API_BASEPATH_DEV = `/${PROXY_API_NAME_DEV}`;
-    const PROXY_API_NAME_PROD = Utils.generateComponentName("prod");
-    const PROXY_API_BASEPATH_PROD = `/${PROXY_API_NAME_PROD}`;
-    const ACCESS_MODE_EXTERNAL = "External";
-    const idpUser = "choreoe2etest";
+  const PROXY_API_NAME_DEV = Utils.generateComponentName("dev");
+  const PROXY_API_VERSION_DEV = "1.0.0";
+  const PROXY_API_BASEPATH_DEV = `/${PROXY_API_NAME_DEV}`;
+  const PROXY_API_NAME_PROD = Utils.generateComponentName("prod");
+  const PROXY_API_BASEPATH_PROD = `/${PROXY_API_NAME_PROD}`;
+  const ACCESS_MODE_EXTERNAL = "External";
+  const idpUser = "choreoe2etest";
 
-    const internalProxy: ProxyAPI = {
-        apiName: API_NAME,
-        apiBasePath: API_BASE_PATH,
-        version: API_VERSION,
-        endpoint: API_ENDPOINT,
-        isInternal: true,
-    }
+  const internalProxy: ProxyAPI = {
+    apiName: API_NAME,
+    apiBasePath: API_BASE_PATH,
+    version: API_VERSION,
+    endpoint: API_ENDPOINT,
+    isInternal: true,
+  };
 
-    const externalProxy: ProxyAPI = {
-        apiName: PROXY_API_NAME_DEV,
-        apiBasePath: PROXY_API_BASEPATH_DEV,
-        version: PROXY_API_VERSION_DEV,
-        endpoint: API_ENDPOINT,
-        isInternal: false,
-    }
+  const externalProxy: ProxyAPI = {
+    apiName: PROXY_API_NAME_DEV,
+    apiBasePath: PROXY_API_BASEPATH_DEV,
+    version: PROXY_API_VERSION_DEV,
+    endpoint: API_ENDPOINT,
+    isInternal: false,
+  };
 
-    const externalProxyProd: ProxyAPI = {
-        apiName: PROXY_API_NAME_PROD,
-        apiBasePath: PROXY_API_BASEPATH_PROD,
-        version: PROXY_API_VERSION_DEV,
-        endpoint: API_ENDPOINT,
-        isInternal: false,
-    }
+  const externalProxyProd: ProxyAPI = {
+    apiName: PROXY_API_NAME_PROD,
+    apiBasePath: PROXY_API_BASEPATH_PROD,
+    version: PROXY_API_VERSION_DEV,
+    endpoint: API_ENDPOINT,
+    isInternal: false,
+  };
 
+  it("Creating a project", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+  });
 
-    it("Creating a project", () => {
-        ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+  it("Verify Rest API creation from existing endpoint", () => {
+    ProjectOverviewPage.createHttpProxyAPI();
+    RestAPIProxyTemplate.skipSource();
+    RestAPIProxyTemplate.createProxyApi(internalProxy);
+  });
+
+  it("Add resource endpoints", () => {
+    APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
+  });
+
+  it("Deploy api to dev", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.DeployToDev();
+  });
+
+  it("Verify REST API component promote to PROD", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.promoteProxyApiToProd();
+  });
+
+  it("Apply disable security config in DEV", () => {
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.selectSetting();
+    ComponentAPILifecycle.selectResources();
+    ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
+    ComponentAPILifecycle.selectRevision(Enums.Environment.DEVELOPMENT);
+    ComponentAPILifecycle.editResource();
+    ComponentAPILifecycle.selectResources();
+    ComponentAPILifecycle.disableResourceSecurity(OPERATION_USERS);
+    ComponentAPILifecycle.applyConfiguration();
+    ComponentAPILifecycle.verifyDevRevision().should(
+      "eq",
+      Enums.Environment.DEVELOPMENT
+    );
+  });
+
+  it("Deploy to Dev after security change", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.DeployToDev();
+  });
+
+  it("Apply disable security config in PROD", () => {
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.selectSetting();
+    ComponentAPILifecycle.selectResources();
+    ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
+    ComponentAPILifecycle.selectRevision(Enums.Environment.PRODUCTION);
+    ComponentAPILifecycle.editResource();
+    ComponentAPILifecycle.selectResources();
+    ComponentAPILifecycle.disableResourceSecurity(OPERATION_USERS);
+    ComponentAPILifecycle.applyConfiguration();
+  });
+
+  it("Promote to Prod after security change", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.promoteProxyApiToProd();
+  });
+
+  it("Copy endpoint url", () => {
+    ComponentOverviewPage.navigateToOverview();
+    ComponentOverviewPage.copyURL(DEV_INVOKE_URL_TEXT);
+    ComponentOverviewPage.copyURL(PROD_INVOKE_URL_TEXT);
+
+    cy.get<string>(`@${DEV_INVOKE_URL_TEXT}`).then((devUrl) => {
+      expect(Utils.isHostResolvable(devUrl) != true); // Verify that the internal API is not accessible
+      DEV_INVOKE_URL = devUrl;
     });
 
-    it("Verify Rest API creation from existing endpoint", () => {
-        ProjectOverviewPage.createHttpProxyAPI();
-        RestAPIProxyTemplate.skipSource();
-        RestAPIProxyTemplate.createProxyApi(internalProxy);
-
+    cy.get<string>(`@${PROD_INVOKE_URL_TEXT}`).then((prodUrl) => {
+      expect(Utils.isHostResolvable(prodUrl) != true); // Verify that the internal API is not accessible
+      PROD_INVOKE_URL = prodUrl;
     });
+  });
 
-    it("Add resource endpoints", () => {
-        APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
-    })
+  // Proxy API with dev endpoint
+  it("Verify 1st Proxy API creation using Internal API DEV endpoint", () => {
+    ComponentOverviewPage.goBackToProject();
+    ProjectOverviewPage.addComponent();
+    ProjectOverviewPage.createHttpProxyAPI();
+    RestAPIProxyTemplate.skipSource();
+    externalProxy.endpoint = DEV_INVOKE_URL;
+    RestAPIProxyTemplate.createProxyApi(externalProxy);
+  });
 
+  it("Verify Add resource to 1st Proxy API", () => {
+    APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
+  });
 
-    it("Deploy api to dev", () => {
-        ComponentOverviewPage.navigateToDeploy();
-        APIDeployment.DeployToDev();
-    })
+  it("Verify 1st PROXY API component deployment", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.DeployToDev();
+  });
 
-
-    it("Verify REST API component promote to PROD", () => {
-        ComponentOverviewPage.navigateToDeploy();
-        ComponentDeployPage.promoteProxyApiToProd();
+  // Invoke the Proxy API via curl, verify that Internal API is accessible to the Proxy API
+  // by receiving a 200 response
+  it("Verify 1st PROXY API resource access in DEV", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnSwagger(
+      Enums.Environment.DEVELOPMENT,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal(OK.toString());
     });
+  });
 
+  it("Verify 1st PROXY API component promote to PROD", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.promoteProxyApiToProd();
+  });
 
-
-    it("Publish the API", () => {
-        ComponentOverviewPage.navigateToManage();
-        ComponentAPILifecycle.manageLifecycle();
-        ComponentAPILifecycle.publishWithoutConnector();
+  it("Verify 1st PROXY API resource access in PROD", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnSwagger(
+      Enums.Environment.PRODUCTION,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal(OK.toString());
     });
+  });
 
-    it("Apply disable security config in DEV", () => {
-        ComponentOverviewPage.navigateToManage();
-        ComponentAPILifecycle.selectSetting();
-        ComponentAPILifecycle.selectResources();
-        ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
-        ComponentAPILifecycle.selectRevision(Enums.Environment.DEVELOPMENT);
-        ComponentAPILifecycle.editResource();
-        ComponentAPILifecycle.selectResources();
-        ComponentAPILifecycle.disableResourceSecurity(OPERATION_USERS);
-        ComponentAPILifecycle.applyConfiguration();
-        ComponentAPILifecycle.verifyDevRevision().should(
-            "eq",
-            Enums.Environment.DEVELOPMENT
-        );
+  it("Verify 2nd Proxy API creation using Internal API Prod endpoint", () => {
+    ComponentOverviewPage.goBackToProject();
+    ProjectOverviewPage.addComponent();
+    ProjectOverviewPage.createHttpProxyAPI();
+    RestAPIProxyTemplate.skipSource();
+    externalProxyProd.endpoint = PROD_INVOKE_URL;
+    RestAPIProxyTemplate.createProxyApi(externalProxyProd);
+  });
+
+  it("Verify Add resource to 2nd Proxy API", () => {
+    APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
+  });
+
+  it("Verify 2nd PROXY API component deployment", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.DeployToDev();
+  });
+
+  // Invoke the Proxy API via curl, verify that Internal API is accessible to the Proxy API
+  // by receiving a 200 response
+  it("Verify 2nd PROXY API resource access in DEV", () => {
+    TestHelper.invokeAPI(
+      PROJECT_NAME,
+      externalProxyProd.apiName,
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.status).equal(200);
     });
+  });
 
+  it("Verify 2nd PROXY API component promote to PROD", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.promoteProxyApiToProd();
+  });
 
-    it("Apply disable security config in PROD", () => {
-        ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
-        ComponentAPILifecycle.selectRevision(Enums.Environment.PRODUCTION);
-        ComponentAPILifecycle.editResource();
-        ComponentAPILifecycle.selectResources();
-        ComponentAPILifecycle.disableResourceSecurity(OPERATION_USERS);
-        ComponentAPILifecycle.applyConfiguration();
+  it("Verify 2nd PROXY API resource access in PROD", () => {
+    TestHelper.invokeAPI(
+      PROJECT_NAME,
+      externalProxyProd.apiName,
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.status).equal(200);
     });
+  });
 
-    it("Verify resource access without the security in DEV", () => {
+  it("Verify change access to Internal API to External ", () => {
+    ComponentOverviewPage.goBackToProject();
+    ComponentListingPage.visitToAComponent(API_NAME);
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.selectSetting();
+    ComponentAPILifecycle.updateAPIAccessMode(ACCESS_MODE_EXTERNAL);
+  });
 
-
-        TestHelper.invokeAPI(
-            PROJECT_NAME,
-            internalProxy.apiName,
-            Enums.Environment.DEVELOPMENT,
-            Enums.HTTPMethod.GET,
-            OPERATION_USERS,
-            [],
-            false
-        ).then(res => {
-            
-            cyLog(res)
-            DEV_INVOKE_URL = res.invokeUrl
-           expect(res.status).equal(404);
-        })
+  it("Verify resource access to external API in DEV", () => {
+    TestHelper.invokeAPI(
+      PROJECT_NAME,
+      internalProxy.apiName,
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.status).equal(200);
     });
-    it("Verify resource access without the security in PROD", () => {
-        TestHelper.testOnCurl(
-            Enums.Environment.PRODUCTION,
-            Enums.HTTPMethod.GET,
-            OPERATION_USERS
-        ).then((curl) => {
-            cy.get("#filled-disabled")
-                .eq(0)
-                .invoke("attr", "value")
-                .then((invokeUrl) => {
-                    PROD_INVOKE_URL = invokeUrl;
-                });
-            expect(Utils.isHostResolvable(curl.url) == false);
-        });
+  });
+
+  it("Verify resource access to external API in PROD", () => {
+    TestHelper.invokeAPI(
+      PROJECT_NAME,
+      internalProxy.apiName,
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.status).equal(200);
     });
+  });
 
-    // Proxy API with dev endpoint
-    it("Verify 1st Proxy API creation using Internal API DEV endpoint", () => {
-        ChoreoHomePage.navigateToHome();
-        ProjectListingPage.selectProject(PROJECT_NAME);
-        ProjectOverviewPage.addComponent();
-        ProjectOverviewPage.createHttpProxyAPI();
-        RestAPIProxyTemplate.skipSource();
-        externalProxy.endpoint = DEV_INVOKE_URL;
-        RestAPIProxyTemplate.createProxyApi(externalProxy);
-    });
+  it("Verify API invocation in Devportal for external REST API component", () => {
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.publishWithoutConnector();
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(
+      PROJECT_NAME,
+      API_NAME,
+      idpUser
+    );
+    DevPortalHomePage.navigateToApisPage();
+    Apis.searchApiAndSelect(API_NAME, 1);
+    ApiCredentials.navigateToEnvironment(Enums.Environment.PRODUCTION);
+    ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
+    TryOut.navigateToTryOutMenu();
+    TryOut.GenerateAccessToken();
+    TryOut.SelectResource(OPERATION_USERS);
+    TryOut.TryoutAPI();
+    TryOut.ExecuteResourceFunction();
+    TryOut.ValidateResponse("200");
+  });
 
-    it("Verify Add resource to 1st Proxy API", () => {
+  // Suspend prod/dev deployed Internal REST API
+  it("Verify suspending Internal REST API component", () => {
+    LoginPage.reLoginToChoreo();
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopAllDeployment();
+  });
 
-        APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
-    });
+  // Suspend prod/dev deployed PROXY API for dev URL
+  it("Verify suspending PROXY API for DEV URL component", () => {
+    ComponentOverviewPage.goBackToProject();
+    ComponentListingPage.visitToAComponent(PROXY_API_NAME_DEV);
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopAllDeployment();
+  });
 
-    it("Verify 1st PROXY API component deployment", () => {
-        ComponentOverviewPage.navigateToDeploy();
-        ComponentDeployPage.configureAndDeployProxyApiToDev();
-    });
-
-    // Invoke the Proxy API via curl, verify that Internal API is accessible to the Proxy API
-    // by receiving a 200 response
-    it("Verify 1st PROXY API resource access in DEV", () => {
-
-        // ComponentOverviewPage.navigateToTest();  // Need to add UI
-        TestHelper.invokeAPI(
-            PROJECT_NAME,
-            externalProxy.apiName,
-            Enums.Environment.DEVELOPMENT,
-            Enums.HTTPMethod.GET,
-            OPERATION_USERS
-        ).then(res => {
-            expect(res.status).equal(200);
-        })
-    });
-
-    it("Verify 1st PROXY API component promote to PROD", () => {
-        ComponentOverviewPage.navigateToDeploy();
-        ComponentDeployPage.promoteProxyApiToProd();
-    });
-
-    it("Verify 1st PROXY API resource access in PROD", () => {
-
-        // ComponentOverviewPage.navigateToTest();
-        TestHelper.invokeAPI(
-            PROJECT_NAME,
-            externalProxy.apiName,
-            Enums.Environment.PRODUCTION,
-            Enums.HTTPMethod.GET,
-            OPERATION_USERS).then(res => {
-                expect(res.status).equal(200);
-            })
-    });
-
-    it("Verify 2nd Proxy API creation using Internal API Prod endpoint", () => {
-        ChoreoHomePage.navigateToHome();
-        ProjectListingPage.selectProject(PROJECT_NAME);
-        ProjectOverviewPage.addComponent();
-        ProjectOverviewPage.createHttpProxyAPI();
-        RestAPIProxyTemplate.skipSource();
-        externalProxyProd.endpoint = PROD_INVOKE_URL;
-        RestAPIProxyTemplate.createProxyApi(externalProxyProd);
-    });
-
-    it("Verify Add resource to 2nd Proxy API", () => {
-        APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
-    });
-
-    it("Verify 1st PROXY API component deployment", () => {
-        ComponentOverviewPage.navigateToDeploy();
-        ComponentDeployPage.configureAndDeployProxyApiToDev();
-    });
-
-    // Invoke the Proxy API via curl, verify that Internal API is accessible to the Proxy API
-    // by receiving a 200 response
-    it("Verify 2nd PROXY API resource access in DEV", () => {
-
-        //ComponentOverviewPage.navigateToTest();
-
-        TestHelper.invokeAPI(
-            PROJECT_NAME,
-            externalProxyProd.apiName,
-            Enums.Environment.DEVELOPMENT,
-            Enums.HTTPMethod.GET,
-            OPERATION_USERS
-        ).
-            then(res => {
-                expect(res.status).equal(200);
-            })
-
-    });
-
-    it("Verify 2nd PROXY API component promote to PROD", () => {
-        ComponentOverviewPage.navigateToDeploy();
-        ComponentDeployPage.promoteProxyApiToProd();
-    });
-
-    it("Verify 2nd PROXY API resource access in PROD", () => {
-
-        // ComponentOverviewPage.navigateToTest();
-        TestHelper.invokeAPI(
-            PROJECT_NAME,
-            externalProxyProd.apiName,
-            Enums.Environment.PRODUCTION,
-            Enums.HTTPMethod.GET,
-            OPERATION_USERS
-        ).
-            then(res => {
-                expect(res.status).equal(200);
-            })
-
-
-    });
-
-
-    it("Verify change access to Internal API to External ", () => {
-        ChoreoHomePage.navigateToHome();
-        ProjectListingPage.selectProject(PROJECT_NAME);
-        ComponentListingPage.visitToAComponent(API_NAME);
-        ComponentOverviewPage.navigateToManage();
-        ComponentAPILifecycle.selectSetting();
-        ComponentAPILifecycle.updateAPIAccessMode(ACCESS_MODE_EXTERNAL);
-    });
-
-    it("Verify resource access to external API in DEV", () => {
-
-        // ComponentOverviewPage.navigateToTest();
-        TestHelper.invokeAPI(
-            PROJECT_NAME,
-            internalProxy.apiName,
-            Enums.Environment.DEVELOPMENT,
-            Enums.HTTPMethod.GET,
-            OPERATION_USERS
-        ).
-            then(res => {
-                expect(res.status).equal(200);
-            })
-
-
-    });
-
-    it("Verify resource access to external API in PROD", () => {
-        // ComponentOverviewPage.navigateToTest();
-        TestHelper.invokeAPI(
-            PROJECT_NAME,
-            internalProxy.apiName,
-            Enums.Environment.PRODUCTION,
-            Enums.HTTPMethod.GET,
-            OPERATION_USERS
-        ).
-            then(res => {
-                expect(res.status).equal(200);
-            })
-    });
-
-    it("Verify API invocation in Devportal for external REST API component", () => {
-        ComponentOverviewPage.navigateToManage();
-        ComponentAPILifecycle.manageLifecycle();
-        ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(PROJECT_NAME, API_NAME, idpUser);
-        DevPortalHomePage.navigateToApisPage();
-        Apis.searchApiAndSelect(API_NAME, 1);
-        ApiCredentials.navigateToEnvironment(Enums.Environment.PRODUCTION);
-        ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
-        TryOut.navigateToTryOutMenu();
-        TryOut.GenerateAccessToken();
-        TryOut.SelectResource(OPERATION_USERS);
-        TryOut.TryoutAPI();
-        TryOut.ExecuteResourceFunction();
-        TryOut.ValidateResponse("200");
-    });
-
-    // Suspend prod/dev deployed Internal REST API
-    it("Verify suspending Internal REST API component", () => {
-        LoginPage.reLoginToChoreo();
-        ComponentOverviewPage.navigateToDeploy();
-        ComponentDeployPage.stopAllDeployment();
-    });
-
-    // Suspend prod/dev deployed PROXY API for dev URL
-    it("Verify suspending PROXY API for DEV URL component", () => {
-        ChoreoHomePage.navigateToHome();
-        ProjectListingPage.selectProject(PROJECT_NAME);
-        ComponentListingPage.visitToAComponent(PROXY_API_NAME_DEV);
-        ComponentOverviewPage.navigateToDeploy();
-        ComponentDeployPage.stopAllDeployment();
-    });
-
-    // Suspend prod/dev deployed PROXY API for prod URL
-    it("Verify suspending PROXY API for PROD URL component", () => {
-        ChoreoHomePage.navigateToHome();
-        ProjectListingPage.selectProject(PROJECT_NAME);
-        ComponentListingPage.visitToAComponent(PROXY_API_NAME_PROD);
-        ComponentOverviewPage.navigateToDeploy();
-        ComponentDeployPage.stopAllDeployment();
-    });
-
-})
+  // Suspend prod/dev deployed PROXY API for prod URL
+  it("Verify suspending PROXY API for PROD URL component", () => {
+    ComponentOverviewPage.goBackToProject();
+    ComponentListingPage.visitToAComponent(PROXY_API_NAME_PROD);
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopAllDeployment();
+  });
+});
