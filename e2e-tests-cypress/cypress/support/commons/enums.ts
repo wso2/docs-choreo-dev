@@ -70,7 +70,8 @@ export namespace Enums {
 
   export enum ComponentType {
     MI_REST_API = "miRestApi",
-    BYOC_REST_API = "byocRestApi"
+    BYOC_REST_API = "byocRestApi",
+    MI_API_SERVICE = "miApiService"
   }
 
   export enum RepoType {
