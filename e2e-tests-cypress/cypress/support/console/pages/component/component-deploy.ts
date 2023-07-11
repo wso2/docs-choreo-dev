@@ -394,7 +394,8 @@ export class ComponentDeployPage {
     projectName: string,
     componentName: string,
     endpointName: string,
-    changeVisibility?: boolean
+    changeVisibility?: boolean,
+    configSetupStepAvailable = false
   ) {
     cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
       .contains("Generating Configurations", LONG_TIME)
@@ -404,6 +405,10 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
       .should("be.enabled")
       .click();
+    if(configSetupStepAvailable){
+      cy.wait(20000);
+      cy.get('[data-cyid="btn-next-button"]').contains("Next").click();
+    }
     cy.get(`[data-cyid="${endpointName}-endpoint-accordion"]`).should(
       "be.visible"
     );
@@ -450,7 +455,8 @@ export class ComponentDeployPage {
     projectName: string,
     componentName: string,
     endpointName: string,
-    changeVisibility?: boolean
+    changeVisibility?: boolean,
+    configSetupStepAvailable = false
   ) {
     cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
       .contains("Generating Configurations", LONG_TIME)
@@ -460,6 +466,9 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
       .should("be.enabled")
       .click();
+    if(configSetupStepAvailable){
+      cy.get('[data-cyid="btn-next-button"]').contains("Next").click();
+    }
     cy.get(`[data-cyid="${endpointName}-endpoint-accordion"]`).should(
       "be.visible"
     );
@@ -501,12 +510,16 @@ export class ComponentDeployPage {
   static promoteService(
     endpointName: string,
     changeVisibility?: boolean,
-    count = 0
+    count = 0,
+    configSetupStepAvailable = false
   ) {
     APIDeployment.RetryPromotionToProd();
     cy.get('[data-cyid="btn-promote-button"]', LONG_TIME)
       .should("be.enabled")
       .click();
+    if(configSetupStepAvailable){
+      cy.get('[data-cyid="btn-next-button"]').contains("Next").click();
+    }
     cy.get(
       `[data-cyid="${endpointName}-endpoint-accordion"]`,
       SHORT_TIME

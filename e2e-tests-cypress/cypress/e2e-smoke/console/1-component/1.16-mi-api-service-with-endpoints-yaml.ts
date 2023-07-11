@@ -23,11 +23,13 @@ import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { IntegrationComponentData } from "../../../support/interfaces/integration-component-data";
 
-describe("Verify MI REST API component in root", () => {
-  const PROJECT_DESCRIPTION = "MI REST API Test";
+describe("Verify MI API SERVICE with endpoints yaml", () => {
+  const PROJECT_DESCRIPTION = "MI API SERVICE Endpoints yaml";
   const PROJECT_NAME = Utils.generateProjectName();
-  const COMPONENT_NAME = Utils.generateComponentName("miRest");
+  const COMPONENT_NAME = Utils.generateComponentName("miApiService");
   const MATCHING_STRING = "Hello Integration";
+  const RESOURCE_NAME = "message";
+  const ENDPOINT_NAME = "HelloWorld";
 
   before(() => {
     LoginPage.login();
@@ -48,15 +50,14 @@ describe("Verify MI REST API component in root", () => {
   it("Verify REST API component creation", () => {
     let componentData: IntegrationComponentData = {
       componentName: COMPONENT_NAME,
-      componentType: Enums.ComponentType.MI_REST_API,
+      componentType: Enums.ComponentType.MI_API_SERVICE,
       accessibility: Enums.Accessibility.EXTERNAL,
       projectName: PROJECT_NAME,
       srcGitRepoUrl:
         "https://github.com/choreo-test-apps/synaps-api-project-sample",
-      repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: "",
       oasFilePath: "",
-      srcGitRepoBranch: "with-response-message",
+      srcGitRepoBranch: "with-endpoints-yaml",
     };
 
     GraphQL.createIntegrationComponent(componentData);
@@ -67,40 +68,40 @@ describe("Verify MI REST API component in root", () => {
     ComponentOverviewPage.navigateToDeploy();
   });
 
-  it("Deploy component", () => {
-    ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME,true, false);
+  it("Verify component deployment with endpoints yaml", () => {
+    ComponentDeployPage.deployService(PROJECT_NAME,COMPONENT_NAME,ENDPOINT_NAME, false, true);
   });
 
-  it("Verify test functionality of root resource in dev on curl", () => {
+  it("Verify test functionality of root resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnCurl(
+    TestHelper.testManagedEndpoint(
       Enums.Environment.DEVELOPMENT,
-      Enums.HTTPMethod.GET,
+      ENDPOINT_NAME,
+      RESOURCE_NAME,
+      "",
       ""
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body.message).equal(MATCHING_STRING);
-        expect(res.status).equal(200);
-      });
+    ).then((res) => {
+      expect(res.response).to.include(MATCHING_STRING);
+      expect(res.statusCode).to.be.eq("200");
     });
   });
 
   it("Verify component promote to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteToProd(true, false, 1);
+    ComponentDeployPage.promoteService(ENDPOINT_NAME, false, 0, true);
   });
 
-  it("Verify test functionality of root resource in prod on curl", () => {
+  it("Verify test functionality of root resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnCurl(
+    TestHelper.testManagedEndpoint(
       Enums.Environment.PRODUCTION,
-      Enums.HTTPMethod.GET,
+      ENDPOINT_NAME,
+      RESOURCE_NAME,
+      "",
       ""
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body.message).equal(MATCHING_STRING);
-        expect(res.status).equal(200);
-      });
+    ).then((res) => {
+      expect(res.response).to.include(MATCHING_STRING);
+      expect(res.statusCode).to.be.eq("200");
     });
   });
 

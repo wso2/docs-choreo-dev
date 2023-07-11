@@ -4,7 +4,6 @@ export interface IntegrationComponentData extends AbsComponent {
   projectName: string;
   componentName: string;
   srcGitRepoUrl: string;
-  repositoryType: string;
   oasFilePath: string;
   repositorySubPath: string;
   accessibility: string;

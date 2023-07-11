@@ -17,18 +17,19 @@ import { GraphQL } from "../../../support/console/apis/graphql";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
+import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { IntegrationComponentData } from "../../../support/interfaces/integration-component-data";
 
-describe("Verify MI REST API component OAS auto generation", () => {
-  const PROJECT_DESCRIPTION = "MI REST API OAS autogen Test";
+describe("Verify MI API SERVICE component in root", () => {
+  const PROJECT_DESCRIPTION = "MI API SERVICE Test";
   const PROJECT_NAME = Utils.generateProjectName();
-  const COMPONENT_NAME = Utils.generateComponentName("miRest");
+  const COMPONENT_NAME = Utils.generateComponentName("miApiService");
   const MATCHING_STRING = "Hello Integration";
-  const RESOURCE_NAME = "message";
+  const ENDPOINT_NAME = "HelloWorld";
 
   before(() => {
     LoginPage.login();
@@ -49,15 +50,14 @@ describe("Verify MI REST API component OAS auto generation", () => {
   it("Verify REST API component creation", () => {
     let componentData: IntegrationComponentData = {
       componentName: COMPONENT_NAME,
-      componentType: Enums.ComponentType.MI_REST_API,
+      componentType: Enums.ComponentType.MI_API_SERVICE,
       accessibility: Enums.Accessibility.EXTERNAL,
       projectName: PROJECT_NAME,
       srcGitRepoUrl:
         "https://github.com/choreo-test-apps/synaps-api-project-sample",
-      repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: "",
       oasFilePath: "",
-      srcGitRepoBranch: "oas-autogen",
+      srcGitRepoBranch: "with-response-message",
     };
 
     GraphQL.createIntegrationComponent(componentData);
@@ -65,32 +65,31 @@ describe("Verify MI REST API component OAS auto generation", () => {
 
   it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-    ComponentOverviewPage.navigateToDeploy();;
+    ComponentOverviewPage.navigateToDeploy();
   });
 
-  it("Deploy component", () => {
-    ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME,true, false);
+  it("Verify component deployment with project level endpoint", () => {
+    ComponentDeployPage.deployService(PROJECT_NAME,COMPONENT_NAME,ENDPOINT_NAME, false, true);
   });
 
-  it("Verify test functionality of root resource in dev on curl", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnCurl(
-      Enums.Environment.DEVELOPMENT,
-      Enums.HTTPMethod.GET,
-      RESOURCE_NAME
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body.message).equal(MATCHING_STRING);
-        expect(res.status).equal(200);
-      });
-    });
+  it("Verify manage page for project level endpoint", () => {
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.verifyOverviewForProjectLevelEndpoints();
+  });
+
+  it("Verify component deployment with public level endpoint", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.deployService(PROJECT_NAME,COMPONENT_NAME,ENDPOINT_NAME, true, true);
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnSwagger(
+    TestHelper.testManagedEndpoint(
       Enums.Environment.DEVELOPMENT,
-      RESOURCE_NAME
+      ENDPOINT_NAME,
+      "",
+      "",
+      ""
     ).then((res) => {
       expect(res.response).to.include(MATCHING_STRING);
       expect(res.statusCode).to.be.eq("200");
@@ -99,14 +98,17 @@ describe("Verify MI REST API component OAS auto generation", () => {
 
   it("Verify component promote to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteToProd(true, false, 1);
+    ComponentDeployPage.promoteService(ENDPOINT_NAME, true, 0, true);
   });
 
-  it("Verify test functionality of root resource in prod on swagger", () => {
+  it("Verify test functionality of root resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnSwagger(
+    TestHelper.testManagedEndpoint(
       Enums.Environment.PRODUCTION,
-      RESOURCE_NAME
+      ENDPOINT_NAME,
+      "",
+      "",
+      ""
     ).then((res) => {
       expect(res.response).to.include(MATCHING_STRING);
       expect(res.statusCode).to.be.eq("200");
