@@ -142,7 +142,7 @@ export class ComponentAPILifecycle {
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').should("be.enabled").click();
     this.handleConnectorPublishBehavior();
-    cy.get('[data-testid="published-connector-info"]').contains(
+    cy.get('[data-testid="published-connector-info"]', LONG_TIME).contains(
       /You have already published a connector for this API.|Successfully published the connector to the Marketplace./,
       LONG_TIME
     );
