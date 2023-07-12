@@ -57,8 +57,9 @@ Let's configure Choreo to publish events to Moesif.
         Be sure to **not have a project selected**. If you have a project selected, close the project list on the header of the Choreo Console.
 
 3. Click the **API Management** tab, and click **Moesif Dashboard**.
-4. Paste the **Application Id** you copied. 
-5. Click **Add**.
+4. Select the environment you want to publish data for.
+5. Paste the **Application Id** you copied. 
+6. Click **Add**.
 
 Once you successfully add the key, you will see a delete option next to it. Currently, you can only configure one API key. If you need to add a new API key, you need to delete the existing key and add the new one. 
 
