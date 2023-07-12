@@ -415,6 +415,8 @@ subprocessors
 failover
 PoC
 IDevP
+Moesif
+www.moesif.com
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -581,6 +583,8 @@ develop-a-ballerina-rest-api
 configure-mutual-tls-between-components
 develop-a-ballerina-graphql-api
 faq.md
+Moesif.md
+integrate-choreo-with-moesif
  - theme/material/templates/home-page.html
 doctype
 html
