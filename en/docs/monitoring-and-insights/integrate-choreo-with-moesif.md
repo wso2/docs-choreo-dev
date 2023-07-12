@@ -39,7 +39,7 @@ If you are a new user, follow the steps below to register an organization and ge
 
 ### Step 1.2: Access the API key in Moesif as an existing user
 
-If you are an existing user with a registered organization, or you do not have API Key for the organization you created,  follow the steps below to access the generated API key:
+If you are an existing user with a registered organization, or you do not have an API key for the organization you created,  follow the steps below to access the generated API key:
 
 1. Go to [https://www.moesif.com/](https://www.moesif.com/).
 2. Click on your profile in the bottom left corner, and navigate to the **API Keys** page.
