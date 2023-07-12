@@ -19,7 +19,7 @@ If you are a new user, follow the steps below to register an organization and ge
 
 1. Go to [https://www.moesif.com/](https://www.moesif.com/).
 2. Click **Sign Up** and select an authentication option and proceed. 
-3. In the **Get Started** page, add meaningful values to the fields and create a new organization. 
+3. On the **Get Started** page, enter meaningful values for the fields and create a new organization. 
 
     | Field                 |  Description                                            |
     |-----------------------|---------------------------------------------------------|
