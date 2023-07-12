@@ -20,5 +20,11 @@ export const DEPLOYMENT_STOPPED = "Suspended";
 export const DEPLOYMENT_ERROR = "Error";
 export const ACTIVE = "ACTIVE";
 export const ERROR = "ERROR";
+export const CONFIG_KEY = "config";
+export const CONFIG_VALUE = "config-value";
+export const SECRET_KEY = "secret";
+export const SECRET_VALUE = "secret-value";
+export const MOUNT_PATH = "/app/configs/config.json";
+export const CONFIG_FILE = "{\n\t\"name\": \"testUser\"";
 
 export const MIN_RENDERING_WAIT_TIME = 1500;
