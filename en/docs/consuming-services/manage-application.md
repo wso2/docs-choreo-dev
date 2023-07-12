@@ -12,10 +12,10 @@ To create an application in the Choreo Developer Portal, follow the steps given 
 
 1. Sign in to the [Choreo Developer Portal](https://devportal.choreo.dev).   
 2. Click **Applications**. and then click **+Create**.
-3. Enter the application name and select the usage policy. Optionally, add the application description. 
+3. Enter a name and description for the application. 
 4. Click **Create**.
 
-This creates the application and opens the application overview page. You can view the throttling tier, the token type, workflow status, and the application owner of the API. 
+This creates the application and opens the application overview page. You can view details such as the token type, workflow status, and the application owner of the API. 
 
 ## Step 2: Generate keys
 
@@ -33,7 +33,7 @@ You can generate keys and tokens to invoke production and non-production endpoin
     The capability to access production endpoints depends on your role. If you have permission to access production endpoints, you can generate keys and tokens to invoke production endpoints.
 
 1. In the [Choreo Developer Portal](https://devportal.choreo.dev) header, click **Applications**.
-2. In the **My Applications** page, click on the application for which you want to generate keys and tokens.
+2. On the **My Applications** page, click on the application for which you want to generate keys and tokens.
 3. In the left navigation menu, click the required environment under **Credentials**. This opens the **Application Keys** pane of the specific environment.
 4. Click to expand **Advanced Configurations** and review the options.
     - **Grant Types**: Select the grant types to use when generating the access token.
@@ -92,9 +92,9 @@ The password grant is primarily used in scenarios where the client application i
 
 ## Revoke access tokens
 
-Revoking JWT access tokens can be challenging due to the self-validating nature. Once a token is issued, it contains all the necessary information within itself to validate its authenticity, without requiring additional server-side lookups or interactions.
+Revoking JWT access tokens can be challenging due to their self-validating nature. Once a token is issued, it contains all the necessary information within itself to validate its authenticity, without requiring additional server-side lookups or interactions.
 
-It is recommended to use an expiry time which is not more than 900 seconds.
+It is recommended to use an expiry time that is not more than 900 seconds.
 
 In traditional session-based authentication, the server can easily revoke a session by invalidating its associated session ID. However, in the case of JWTs, there is no central authority that maintains a list of valid or invalid tokens. As a result, revoking a JWT token requires the use of blacklisting or whitelisting techniques, which can add additional complexity to the authentication flow and may not always be foolproof.
 
