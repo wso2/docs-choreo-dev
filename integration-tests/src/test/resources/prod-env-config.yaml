@@ -17,7 +17,7 @@ authInfo:
   #CP_APP_CLIENT_SECRET:
 common:
   CHOREO_ENDPOINT: https://app.choreo.dev
-  CHOREO_CP_PROJECTS_ENDPOINT: https://apis.choreo.dev/projects/1.0.0
+  CHOREO_NEW_APP_SERVICE_ENDPOINT: https://apis.choreo.dev
   CHOREO_CP_GW_ENDPOINT: https://choreocontrolplane.choreo.dev/93tu
   BAL_REGISTRY_URL: https://api.central.ballerina.io/2.0/registry
   GITHUB_ENDPOINT: https://api.github.com

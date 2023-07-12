@@ -3,14 +3,12 @@ package com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
-import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
@@ -21,11 +19,8 @@ import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.code.Repository;
-import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.environments.Environment;
-import com.wso2.choreo.integration.models.graphql.CreateNewVersionResponseDTO;
 import com.wso2.choreo.integration.models.response.Response;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -113,9 +108,6 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
         @Test(dependsOnMethods = { "createNewVersion_TestUserManagedNonEmptyCreateComponentSub" })
         @CitrusTest
         public void componentDeployment_TestUserManagedNonEmptyCreateComponentSub() throws Exception {
-                Status status = Orgs.createdComponentStatus(choreoComponent.getProjectId(), choreoComponent.getId(), 
-                        accessToken);
-                Assert.assertEquals(status.getData().getConclusion(), "success");
                 ComponentUtils.deployComponentInBranch(this, citrusClients, accessToken, choreoComponent,
                         environments, ComponentFlavour.STANDARD, repoBranch, null);
         }

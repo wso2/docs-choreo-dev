@@ -38,7 +38,7 @@ public final class Constant {
     public static final String[] PROJECT_MANAGEMENT_SCOPES = {"choreo:project_manage"};
     public static final String[] OBSERVABILITY_MANAGEMENT_SCOPES = {"choreo:log_view_prod", "choreo:log_view_non_prod", "scope3", "scope4"};
 
-    public static final String GRAPHQL_ENDPOINT_SUFFIX = "/graphql";
+    public static final String GRAPHQL_ENDPOINT_SUFFIX = "/projects/1.0.0/graphql";
     public static final String TEST_PROJECT_NAME_PREFIX = "automationtestproject";
     public static final String TEST_OLD_PROJECT_NAME_PREFIX = "testproject"; // Prefix used to create tests earlier before update the format to TEST_PROJECT_NAME_PREFIX
     public static final String TEST_COMPONENT_NAME = "automationtestcomponent";

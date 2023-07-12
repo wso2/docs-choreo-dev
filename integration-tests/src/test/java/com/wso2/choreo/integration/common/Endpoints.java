@@ -18,7 +18,7 @@ package com.wso2.choreo.integration.common;
  */
 public enum Endpoints {
     CHOREO_ENDPOINT,
-    CHOREO_CP_PROJECTS_ENDPOINT,
+    CHOREO_NEW_APP_SERVICE_ENDPOINT,
     STS_ENDPOINT,
     CHOREO_CP_GW_ENDPOINT,
     INSIGHTS_ENDPOINT,
