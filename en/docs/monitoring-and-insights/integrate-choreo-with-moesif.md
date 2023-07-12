@@ -24,12 +24,12 @@ If you are a new user, follow the steps below to register an organization and ge
     | Field                 |  Description                                            |
     |-----------------------|---------------------------------------------------------|
     | **Organization Name** |  The name of your company or team.                      |
-    | **Application Name**  | An application represents one project or environment.   |
+    | **Application Name**  | The name of your application that represents one project or environment.   |
 
  4. Click **Next**.
  5. On the **Overview** page, click **Next**.
 
-     This opens the **Quick Install** page. As there is no data, we cannot proceed. Let's configure Moesif to receive data from Choreo. 
+     This opens the **Quick Install** page. As there is no data, you cannot proceed. Let's configure Moesif to receive data from Choreo. 
 
  6. Select a **WSO2 Choreo** as the **Server Integration**
  7. Copy the **Application Id**. 
