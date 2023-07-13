@@ -76,16 +76,61 @@ export class APIDeployment {
     cy.contains("Deploying the Interceptor App", LONG_TIME).should(
       "be.visible"
     );
-
-    cy.contains("Summary of Deploying the proxy", LONG_TIME).should("exist");
-
-    cy.contains("In Progress", LONG_TIME)
-      .should("not.exist")
-      .wait(VERY_SHORT_TIME.timeout);
-
+    this.waitForDevDeployment();
     cy.get('[data-cyid="deployment-status"]>h6', VERY_LONG_TIME)
       .eq(0, VERY_LONG_TIME)
       .should("contain", "Active");
+  }
+
+  static waitForDevDeployment(retryCount = 0) {
+    cy.log("Waiting for proxy deployment");
+    if (retryCount > 15) {
+      return;
+    }
+
+    retryCount++;
+    cy.get("body").then((body) => {
+      const element = body
+        .find('[data-cyid="deployment-status"]>h6')
+        .filter((index, el) => {
+          return el.textContent.trim() === "Active";
+        });
+
+      if (element.length > 0) {
+        let isNewDeployment = false;
+        body.find('[data-cyid="env-base-card"]').each((index, element) => {
+          const isProductionCard = element.innerText.includes('Production');
+          if (!isProductionCard) {
+            const timeElement = element.querySelector('[data-cyid="proxy-deployed-time"]>span>p');
+            console.log(timeElement)
+            if (timeElement) {
+              const deployedTime = timeElement.textContent.trim();
+              const timeRegex = /^(\d+)\s+(minute|second)s?\s+ago$/;
+              const match = deployedTime.match(timeRegex);
+              if (match) {
+                const time = parseInt(match[1]);
+                const unit = match[2];
+                if ((unit === "minute" && time <= retryCount) || (unit === "second" && time < 60)) {
+                  cy.log("Deployed time is less than " + retryCount +" minute(s) or 60 seconds");
+                  isNewDeployment = true;
+                  return;
+                }
+              } else {
+                cy.log("Unable to extract deployed time");
+              }
+            } else {
+              cy.log("Skipping env card without deployed time");
+            }
+          }
+        });
+    
+        if (isNewDeployment) {
+          return;
+        }
+      }
+      cy.wait(SHORT_TIME.timeout);
+      this.waitForDevDeployment(retryCount);
+    });
   }
 
   static RetryDevDeployment(retryCount = 0) {
