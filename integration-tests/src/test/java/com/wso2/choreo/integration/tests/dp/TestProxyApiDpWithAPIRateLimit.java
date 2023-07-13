@@ -17,34 +17,23 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
-import com.wso2.choreo.integration.apis.proxydeployer.ProxyDeployer;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
-import com.wso2.choreo.integration.config.ConfigDefinition;
-import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.ApiDTO;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
-import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.environments.Environment;
-import com.wso2.choreo.integration.models.proxyapi.DeploySettings;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
-import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
 import com.wso2.choreo.integration.models.proxyapi.ProxyDeployment;
-import com.wso2.choreo.integration.models.response.ProxyResponse;
 import com.wso2.choreo.integration.models.response.Response;
-import com.wso2.choreo.integration.models.revision.DeploymentInfo;
-import com.wso2.choreo.integration.models.revision.Revision;
-import com.wso2.choreo.integration.models.revision.RevisionWrapper;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -181,10 +170,10 @@ public class TestProxyApiDpWithAPIRateLimit extends TestBase {
     public void setKeyData_ProxyApiDpWithAPIRateLimit(DataProviderWrapper dp) throws Exception {
         for (ProxyDeployment proxyDeployment : dp.getProxyDeployments()) {
             KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                    dp.getProxyAPI().getId(), proxyDeployment.getEnvironment());
+                    dp.getProxyAPI().getId(), ComponentUtils.getKeyType(proxyDeployment.getEnvironment(), dp.getEnvironments()));
             ComponentUtils.invokeApiGET(this, keyData.getApikey(), proxyDeployment.getInvokeUrl(),
                     "/users", "{\"hello\": \"world\"}");
-            if (proxyDeployment.getEnvironment().equals(dp.getEnvironments().get(0).getName())) {
+            if (proxyDeployment.getEnvironment().getId().equals(dp.getEnvironments().get(0).getId())) {
                 dp.setDevKeyData(keyData);
             } else {
                 dp.setProdKeyData(keyData);

@@ -42,6 +42,7 @@ import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.componentstatusbyversion.ComponentStatusByVersion;
 import com.wso2.choreo.integration.models.endpoints.Endpoint;
 import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.environments.ProxyEnvironment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.graphql.CreateByocComponentResponseDTO;
 import com.wso2.choreo.integration.models.graphql.CreateComponentResponseDTO;
@@ -883,9 +884,10 @@ public class GraphQL extends ControlPlaneAPI {
                                             .getAsJsonObject();
                                     String invokeUrl = responseJson.getAsJsonObject("data")
                                             .getAsJsonObject("proxyDeployment").get("invokeUrl").getAsString();
-                                    String environment = responseJson.getAsJsonObject("data")
-                                            .getAsJsonObject("proxyDeployment").getAsJsonObject("environment")
-                                            .get("name").getAsString();
+                                    String envStringObject = responseJson.getAsJsonObject("data")
+                                            .getAsJsonObject("proxyDeployment").getAsJsonObject("environment").toString();
+                                    ProxyEnvironment environment = ObjectMapperUtil.mapStringToObject(ProxyEnvironment.class,
+                                            envStringObject, "");
                                     pd.setInvokeUrl(invokeUrl);
                                     pd.setEnvironment(environment);
                                     proxyDeployment.set(pd);

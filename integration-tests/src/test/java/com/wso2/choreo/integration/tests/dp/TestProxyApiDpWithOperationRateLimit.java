@@ -165,8 +165,8 @@ public class TestProxyApiDpWithOperationRateLimit extends TestBase {
     public void setKeyData_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) {
         for (ProxyDeployment proxyDeployment : dp.getProxyDeployments()) {
             KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                    dp.getProxyAPI().getId(), proxyDeployment.getEnvironment());
-            if (proxyDeployment.getEnvironment().equals(dp.getEnvironments().get(0).getName())) {
+                    dp.getProxyAPI().getId(), ComponentUtils.getKeyType(proxyDeployment.getEnvironment(), dp.getEnvironments()));
+            if (proxyDeployment.getEnvironment().getId().equals(dp.getEnvironments().get(0).getId())) {
                 dp.setDevKeyData(keyData);
             } else {
                 dp.setProdKeyData(keyData);

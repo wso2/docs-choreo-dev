@@ -43,6 +43,7 @@ import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.environments.ProxyEnvironment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.graphql.CreateByocComponentResponseDTO;
 import com.wso2.choreo.integration.models.graphql.CreateComponentResponseDTO;
@@ -1044,6 +1045,26 @@ public class ComponentUtils {
         }
 
         return Pair.of(isRateLimitExceeded, count);
+    }
+
+    public static String getKeyType(ProxyEnvironment proxyEnvironment, List<Environment> choreoEnvironment) {
+        String envMappingId = proxyEnvironment.getId();
+
+        for (Environment environment : choreoEnvironment) {
+            if (environment.getId().equals(envMappingId)) {
+                return getKeyType(environment);
+            }
+        }
+
+        return "";
+    }
+
+    public static String getKeyType(Environment environment) {
+        if (environment.isCritical()) {
+            return "Production";
+        }
+
+        return "Development";
     }
 
 }
