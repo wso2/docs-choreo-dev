@@ -2,18 +2,16 @@
 
 Choreo is a SaaS application development suite that allows you to effortlessly build, deploy, monitor, and manage your cloud native applications.
 
-In this quick start guide, you will explore how to expose a service endpoint as a REST API via Choreo and securely consume the API from a web application. 
+In this quick start guide, you will explore how to expose a service endpoint as a REST API via Choreo and securely consume the API from a web application.
 You will build a simple reading list web application with a sign-in page and functionality to interact with a secure backend REST API. You will use Asgardeo, WSO2's Identity as a Service (IDaaS) solution, to secure user authentication to the web application. The application will allow users to sign in and view the reading list. On signing in, a user can add books to a reading list and delete books from the reading list. The application will also allow users to sign out of the application.
-
 
 This guide walks you through the following steps:
 
 - Develop, deploy, and test a service component.
-- Publish the service endpoint as a REST API for your web application to consume. 
+- Publish the service endpoint as a REST API for your web application to consume.
 - Expose the REST API via Choreo API management.
 - Securely consume the published REST API via your web application.
 - Deploy your web application and use Asgardeo as the IDaaS provider to secure user authentication to the web application.
- 
 
 ## Prerequisites
 
@@ -30,7 +28,7 @@ Before you try out this guide, complete the following:
     This creates the organization and opens the home page of the default project created for you.
 
     !!! info "Enable Asgardeo as the key manager"
-         
+
          If you created your organization in Choreo before the 21st of February 2023, and you have not already enabled Asgardeo as the key manager, follow these steps to enable Asgardeo as the default key manager:
 
          1. In the Choreo Console, go to the top navigation menu and click **Organization**. This takes you to the organization's home page.
@@ -82,13 +80,13 @@ Follow the steps below to create the service:
 For the REST endpoint of the service to be invokable, you need to deploy it. To deploy the service, follow the steps given below:
 
 1. In the left navigation menu, click **Deploy**.
-2. In the **Build Area** card, click **Deploy Manually**.       
+2. In the **Build Area** card, click **Deploy Manually**.
 3. In the **Configure & Deploy** pane that opens, you can see the **Readinglist** endpoint ready to be deployed. Click the edit icon next to the **Readinglist** endpoint.
 4. Change the **Network Visibility** to **Public**. This allows you to securely expose the endpoint to your web application.
 5. Click **Update**.
 
     !!! info
-         In this example, you deploy a Ballerina service as a REST endpoint. Therefore, the REST endpoint is generated automatically. If you deploy a non-Ballerina service, you must manually add the REST endpoint and set the network visibility to **Public**.   
+         In this example, you deploy a Ballerina service as a REST endpoint. Therefore, the REST endpoint is generated automatically. If you deploy a non-Ballerina service, you must manually add the REST endpoint and set the network visibility to **Public**.
 
 6. Click **Deploy**. This deploys the REST endpoint of the service to the development environment.
 
@@ -116,19 +114,17 @@ You can proceed to the next section to fix the JWT error and publish the service
 
 To fix the JWT error and publish the service, follow the steps given below:
 
-#### Step 1.4.1: Update the CORS configuration and fix the JWT error
-
-Let's assume you deploy the web application in a cloud platform such as Vercel. In such a scenario, you would want to call the **Readinglist** backend service deployed in Choreo through the web application on a Vercel domain. By default, web browsers block such calls for security reasons. To enable the web application to call the backend service, you must update the CORS configuration as follows:
+#### Step 1.4.1: Fix the JWT error
 
 1. In the left navigation menu, click **Manage** and then click **Settings**.
 2. Under **API Settings**, click **Edit**.
 3. Click the **CORS Configuration** toggle to enable the setting.
 4. To allow cross-origin calls to send credentials, select the **Access Control Allow Credentials** checkbox.
-5. To allow passing security context to the backend service, click the **Pass Security Context To Backend** toggle.
-6. Click **Save**. 
+5. To allow passing the JWT to the backend service, enable the **Pass Security Context To Backend** toggle.
+6. Click **Save**.
 7. In the **Apply to Development** pane that opens, enter a meaningful message and click **Apply**.
 
-Now you can retest the API to confirm that it works as expected. 
+Now you can retest the API to confirm that it works as expected.
 
 #### Step 1.4.2: Retest the API
 
@@ -155,7 +151,7 @@ To retest the API, follow the steps given below:
         "title": "Dracula"
       }
     ```
-   
+
 6. Click **Execute**.
 
     Check the **Server Response** section. On successful invocation, you will receive the `200` HTTP code.
@@ -178,7 +174,7 @@ You have published the **Reading List Service** REST API to the Developer Portal
 
 In the previous steps, you played the role of backend developer and developed a service. In this step, you will play the role of the web application developer who consumes the service.
 
-To consume the **Reading List Service** REST API, you must create an application, subscribe it to the REST API, generate keys, and invoke the API.
+To consume the **Reading List Service** REST API, you must create an application, subscribe application to the REST API, generate keys, and invoke the API.
 
 ### Step 2.1: Create an application
 
@@ -206,54 +202,114 @@ Now your application has subscribed to the **Reading List Service** REST API.
 
 At the moment, any user can invoke the **Reading List Service** REST API via the **readingListApp** application (i.e., using its token) and update the reading list. However, if a user sends a request to retrieve the reading list, the response will also show entries by other users. To allow multiple users to use the application and maintain personal reading lists, you need a front-end application that allows each user to sign in with a unique user ID.
 
-In this step, let's deploy a predesigned front-end application. This application is designed to personalize the reading lists based on the user ID that it obtains from its identity provider. To enable the application to obtain the user ID, let's configure Asgardeo as the identity provider.
+Let's deploy a frontend application to consume the API. This application is designed to personalize the reading lists based on the user ID that it obtains from its identity provider.
 
-#### Step 2.3.1: Configure Asgardeo to integrate with your application
+#### Step 2.3.1: Create a web application component
+
+To host the front-end application in Choreo, you must create a web application component. To create a web application component, follow the steps given below.
+
+1. Navigate to the project of the reading list application that you created in the previous steps.
+2. Select **Create** on the component listing section
+3. Select **Web Application** as the component type.
+4. Enter a unique name and a description for the web application. You can enter the name and description given below:
+
+    | **Field**       | **Value**               |
+    |-----------------|-------------------------|
+    | **Name**        | `Reading List Web App`  |
+    | **Description** | `Frontend application for the reading list service` |
+
+5. Click **Next**.
+6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
+7. In the **Connect Repository** pane, enter the following information:
+
+    | **Field**             | **Description**                               |
+    |-----------------------|-----------------------------------------------|
+    | **GitHub Account**    | Your account                                  |
+    | **GitHub Repository** | **`choreo-examples`** |
+    | **Branch**            | **`main`**                               |
+    | **Build Preset**      | Click **React SPA** since the frontend is a React application built with Vite|
+    | **Project Path**              | **`cloud-native-app-developer/reading-list-front-end`** |
+    | **Build Command**     | **`npm install && npm run build`**             |
+    | **Build Output**      | **`dist`**                                    |
+    | **Node Version**      | **`18`**                                      |
+
+9. Click **Create**. This initializes the service with the implementation from your GitHub repository and takes you to the **Overview** page of the component.
+
+#### Step 2.3.2: Deploy the web application component
+
+Once the web application component is created, you can deploy it to the Choreo runtime. To deploy the web application component, follow the steps given below.
+
+1. Click **Deploy** in the left menu of component page.
+2. Select **Deploy Manually**.
+3. Wait until the deployment is completed. This may take a few minutes. Once deployed copy the web app URL from the development environment in the deploy page.
+4. If you navigate to the web app URL, you will get to a web page with the login button.
+5. Since we haven't configured our web app to work with the service and identity provider, you will not be able to login.
+
+We will configure the web app in the next step.
+
+#### Step 2.3.3: Configure Asgardeo to integrate with your application
 
 Choreo uses Asgardeo as the identity provider for Choreo applications. When you create an application in the Choreo Developer Portal, it automatically creates a corresponding application in Asgardeo. You can go to the Asgardeo application to specify the configurations required for end users to sign in to the front-end application.
 
 1. Access Asgardeo at [https://console.asgardeo.io/](https://console.asgardeo.io/) and sign in with the same credentials with which you signed in to Choreo.
-2. Make sure you are in the same organization that you were when you created the application in the Choreo Developer Portal. You can click the **Organization** list in the Asgardeo Console top menu and ensure you are in the correct organization.  
+2. Make sure you are in the same organization that you were when you created the application in the Choreo Developer Portal. You can click the **Organization** list in the Asgardeo Console top menu and ensure you are in the correct organization.
 3. In the Asgardeo Console, click **Develop** and then click **Applications**. You will see the **readingListApp** that is automatically created.
 4. Click on the application to edit it.
 5. Click the **Protocol** tab and apply the following changes:
 
     1. Under **Allowed grant types**, select **Code**.
     2. Select the **Public client** checkbox.
-    3. In the **Authorized redirect URLs** field, enter `http://localhost:5173` and click the **+** icon to add the entry.
+    3. In the **Authorized redirect URLs** field, enter the web app URL you copied earlier and click the **+** icon to add the entry.
+    4. Add another `http://localhost:5173` following the above steps for authorized redirect URLs.
 
         !!! note
-               The `http://localhost:5173` entry is to try out the web application locally. When you deploy your web application to Vercel, you must add the Vercel web application URL as an authorized redirect URL. 
+               The `http://localhost:5173` entry is to try out the web application locally.
 
     4. In the **Allowed origins** field, add the same URLs that you added as authorized redirect URLs.
     5. Under **Access Token**, select **JWT** as the **Token type**.
     6. Click **Update**.
 
-#### Step 2.3.2: Configure the front-end application
+#### Step 2.3.4: Configure the front-end application
 
-In this step, you must define the ports it needs to run on, add the endpoint to the **Reading List Service** REST API, etc. 
+In this step, you are adding the configurations needed for the web app to successfully invoke the **Reading List Service** REST API. This configurations needs to be updated for each environment you deploy the web app. Here you will be updating the configurations for the development environment.
 
-To configure the front-end application, follow the steps given below:
+!!! note
+        The web application is reading the environment specific configurations from the `window` object at runtime. This is done by the `config.js` file in the root of the web application. In this section we are mounting the `config.js` file for the development environment. You will need to do the same for other environments as well when you deploy your web application to multiple environments.
 
-1. Clone your fork of [https://github.com/wso2/choreo-examples](https://github.com/wso2/choreo-examples).
-2. Open the cloned repository using an IDE such as Visual Studio Code, and make the following changes:
+To configure the front-end application, follow the steps given below.
 
-    1. Expand the `cloud-native-app-developer` folder. Then expand the `reading-list-front-end` folder, and click the `.env.development` file.
+1. While in the web application component page. Click and expand **Dev Ops** in the left menu.
+2. Select **Configs and Secrets** sub menu.
+3. Select **Create**.
+4. Select Below Mount Configuration options and click **Next**.
 
-    2. Enter values for the parameters in the `.env.development` file, as specified in the following table:
+    | **Field**             | **Description**                               |
+    |-----------------------|-----------------------------------------------|
+    | **Config Type**       | **Config Map**                                |
+    | **Mount Type**        | **File Mount**                                |
 
-        | **Parameter**            | **Value to specify** |
-        |--------------------------------------------------|----------------------------|
-        | `VITE_REDIRECT_URL`                     | Specify `http://localhost:5173` to try out the web application locally. When you deploy on Vercel, specify the Vercel web application URL.         |
-        | `VITE_ASGARDEO_CLIENT_ID`             | Copy the **Client ID** from the **Protocol** tab of the **readingListApp** application in Asgardeo and paste the value.       |
-        | `VITE_ASGARDEO_BASE_URL`                    | Specify the Asgardeo API URL with your organization name. i.e., `https://api.asgardeo.io/t/<ORG_NAME>`.                 |
-        | `VITE_CHOREO_BACKEND_URL`                         | Go to the **Reading List Service** component overview page in the Choreo Console and copy the **Public URL** under **Endpoints**. Make sure you copy the URL from the specific environment you want.                 |
+5. Copy the config details as a JSON file as shown below.
 
-    3. Save the changes.
+    ```javascript
+    window.config = {
+        redirectUrl: "<web-app-url>",
+        asgardeoClientId: "<asgardeo-client-id>",
+        asgardeoBaseUrl: "https://api.asgardeo.io/t/<your-org-name>",
+        choreoApiUrl: "<reading-list-service-url>",
+    };
+    ```
+6. Fill the placeholders with the values you copied from the previous steps as mentioned in the table below.
 
-Now you have configured your front-end application. Next, you must configure Asgardeo as the identity provider for your application.
+    | **Field**             | **Description**                               |
+    |-----------------------|-----------------------------------------------|
+    | **redirectUrl**       | The web app URL you copied earlier. |
+    | **asgardeoClientId**  | The **Client ID** from the **Protocol** tab of the **readingListApp** application in the Asgardeo Console. |
+    | **asgardeoBaseUrl**   | Specify the Asgardeo API URL with your organization name. i.e., `https://api.asgardeo.io/t/<ORG_NAME>`.      |
+    | **choreoApiUrl**      | The reading list service URL |
 
-#### Step 2.3.3: Create a user in Asgardeo
+7. Click **Create**.
+
+#### Step 2.3.5: Create a user in Asgardeo
 
 To sign in to the **readingListApp** application and create private reading lists, the end users require user IDs. End users can self-register these user IDs in Asgardeo or request an Asgardeo user with administrative privileges to register them. For more information, see [Asgardeo Documentation - Manage users](https://wso2.com/asgardeo/docs/guides/users/manage-customers/#onboard-a-user).
 
@@ -274,38 +330,22 @@ To define a user for the **readingListApp** application, follow the steps given 
 7. In the email you receive from Asgardeo (with the subject **Here is your new account in the organization <ORGANIZATION_ID>**), click **Set Password**.
 8. In the **Enter new password** and **Confirm password** fields, enter a password that complies with the given criteria, and then click **Proceed**.
 
-!!! tip 
+!!! tip
     You can create multiple users to test your front-end application.
 
-#### Step 2.3.4: Invoke the REST API
+#### Step 2.3.6: Login and test the front-end application
 
-To run the front-end application and send requests to the **Reading List Service** REST API via it, follow the steps given below:
+To test front-end application and send requests to the **Reading List Service** REST API via it, follow the steps given below:
 
-!!! info
-    To render the front-end application as a web application, you can use the [Node Package Manager](https://www.npmjs.com) software.
-
-1. In a new terminal, navigate to the `choreo-reading-list-application-example/reading-list-front-end` directory in the clone of your GitHub repository.
-2. Issue the following commands in the given order:
-
-    - `npm i`
-
-        This command installs the latest [Node Package Manager](https://www.npmjs.com) version in the local directory where you have the front-end application.
-
-    - `npm run dev`
-
-        This command runs the front-end application as a web application.
-
-    The front-end application will start running at `http://localhost:5173/`.
-
-3. Access the front-end application via `http://localhost:5173/`.
-4. Click **Login**, and sign in with the credentials of a user that you created in Asgardeo.
-5. To allow your application to access your Choreo account, select the **User Account** checkbox and click **Allow**.
+1. Access the front-end application via it's web URL mentioned in the web application overview page.
+2. Click **Login**, and sign in with the credentials of a user that you created in Asgardeo.
+**Allow**.
 
     The application opens as follows.
 
     ![Front-end application](../assets/img/quick-start-guides/front-end-application.png){.cInlineImage-half}
 
-6. Add three new reading items with different statuses.
+4. Add three new reading items with different statuses.
 
     For example, the details can be as follows:
 
