@@ -15,12 +15,10 @@ import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
-import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { WebappComponent } from "../../../support/interfaces/choreo-components/webapp-component";
@@ -34,11 +32,11 @@ after(() => {
 });
 
 describe("Verify containerized service functionality", () => {
-  const COMPONENT_NAME = Utils.generateComponentName("containerized-service");
+  const COMPONENT_NAME = Utils.generateComponentName("WebApp-service");
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Webapp SPA service";
   const REPO_NAME = Utils.generateComponentName("repo");
-  const ENDPOINT_NAME = "Go Greeter";
+
 
   it("Creating a project", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
@@ -68,7 +66,7 @@ describe("Verify containerized service functionality", () => {
       PROJECT_NAME,
       REPO_NAME,
       componentData,
-      GraphQLQueryBuilder.getBYOCComponentCreationQuery
+      GraphQLQueryBuilder.getWebAppComponentCreationQuery
     );
   });
 
@@ -77,66 +75,23 @@ describe("Verify containerized service functionality", () => {
     ComponentOverviewPage.navigateToDeploy();
   });
 
-  it("Verify component deployment with public level endpoint", () => {
-    ComponentDeployPage.deployService(PROJECT_NAME,COMPONENT_NAME,ENDPOINT_NAME);
-  });
-
-  it("Verify test functionality of root resource in dev on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testManagedEndpoint(
-      Enums.Environment.DEVELOPMENT,
-      ENDPOINT_NAME,
-      "greeter/greet",
-      "",
-      "operations-greeting-get_greeter_greet"
-    ).then((res) => {
-      expect(res.response).to.be.eq("Hello, Stranger!\n\n");
-      expect(res.statusCode).to.be.eq("200");
-    });
+  it("Verify component deployment to dev", () => {
+    ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME);
   });
 
   it("Verify component promote to prod", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteService(ENDPOINT_NAME);
+    ComponentDeployPage.promoteToProd();
   });
 
-  it("Verify test functionality of root resource in prod on swagger", () => {
+  it("Verify test page is disabled", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testManagedEndpoint(
-      Enums.Environment.PRODUCTION,
-      ENDPOINT_NAME,
-      "greeter/greet",
-      "",
-      "operations-greeting-get_greeter_greet"
-    ).then((res) => {
-      expect(res.response).to.be.eq("Hello, Stranger!\n\n");
-      expect(res.statusCode).to.be.eq("200");
-    });
+    cy.get('[data-cyid="link-test"]').should('be.disabled')
   });
 
-  it("Navigate to component usage insights", () => {
-    ChoreoHomePage.navigateToComponentUsageInsights();
+  it("Verify manage page is disabled", () => {
+    cy.get('[data-cyid="link-manage"]').should('be.disabled')
   });
 
-  it("Navigate to project usage insights", () => {
-    ChoreoHomePage.navigateToProjectUsageInsights();
-  });
-
-  it("Verify API insights for dev env", () => {
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
-    InsightsPage.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(1);
-    });
-  });
-
-  it("Verify API insights for prod env", () => {
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
-    InsightsPage.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(1);
-    });
-  });
 
   it("Verify suspending all component deployments", () => {
     ChoreoHomePage.navigateToComponents();
