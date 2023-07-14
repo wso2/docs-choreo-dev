@@ -417,6 +417,8 @@ PoC
 IDevP
 Moesif
 www.moesif.com
+frontend
+Vite
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -585,6 +587,7 @@ develop-a-ballerina-graphql-api
 faq.md
 Moesif.md
 integrate-choreo-with-moesif
+configure-cio-dashboard.md
  - theme/material/templates/home-page.html
 doctype
 html
@@ -653,3 +656,8 @@ schemaFilePath
 2-3x
  - docs/develop-components/deploy-a-containerized-application.md
 DB_PASS
+ - docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo.md
+redirectUrl
+asgardeoClientId
+asgardeoBaseUrl
+choreoApiUrl

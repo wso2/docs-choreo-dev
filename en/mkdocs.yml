@@ -141,6 +141,9 @@ nav:
       - Work with the Choreo Insights API:
           - Access the Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
           - Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md 
+      - Engineering Insights:
+          - Configure CIO Dashboard: monitoring-and-insights/engineering-insights/configure-cio-dashboard.md
+          - View DORA Metrics: monitoring-and-insights/engineering-insights/view-dora-metrics.md    
       - Integrate Choreo with Moesif: monitoring-and-insights/integrate-choreo-with-moesif.md     
   - Administer:
       - Configure a Custom Domain for APIs: administer/configure-a-custom-domain-for-apis.md
