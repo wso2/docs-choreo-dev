@@ -288,7 +288,7 @@ To configure the front-end application, follow the steps given below.
     | **Config Type**       | **Config Map**                                |
     | **Mount Type**        | **File Mount**                                |
 
-5. Copy the config details as a json file as shown below.
+5. Copy the config details as a JSON file as shown below.
 
     ```javascript
     window.config = {
@@ -305,7 +305,7 @@ To configure the front-end application, follow the steps given below.
     | **redirectUrl**       | The web app URL you copied earlier. |
     | **asgardeoClientId**  | The **Client ID** from the **Protocol** tab of the **readingListApp** application in the Asgardeo Console. |
     | **asgardeoBaseUrl**   | Specify the Asgardeo API URL with your organization name. i.e., `https://api.asgardeo.io/t/<ORG_NAME>`.      |
-    | **choreoApiUrl**      | The reading list service url |
+    | **choreoApiUrl**      | The reading list service URL |
 
 7. Click **Create**.
 
