@@ -1,0 +1,7 @@
+configMapGenerator:
+  - name: sample-config
+    behavior: create
+    literals:
+      - key=value
+
+namespace: choreo-observability
