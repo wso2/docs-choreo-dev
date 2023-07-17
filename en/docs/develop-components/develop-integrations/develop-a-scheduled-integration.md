@@ -27,7 +27,7 @@ Before you try out the steps in this guide, complete the following:
     
     !!! info "Repository file structure"
          
-         To work with the sample repository, it is important to familiarize yourself with the repository file structure. The sample code for this guide is in the `<sample-repository-dir>/ipaas/ballerina/weather-to-email-integration` directory. To understand how the functionality is implemented, you must read the code comments. The following table describes what you will find in each file in the repository:
+         To work with the sample repository, it is important to familiarize yourself with the repository file structure. The sample code for this guide is in the `<sample-repository-dir>/integrations/ballerina/weather-to-email-integration` directory. To understand how the functionality is implemented, you must read the code comments. The following table describes what you will find in each file in the repository:
 
           | **File path**         | **File content**                                                     |
           | --------------------- | -------------------------------------------------------------------- |
@@ -68,7 +68,7 @@ Before you try out the steps in this guide, complete the following:
     | **GitHub Repository** | `choreo-examples`                              |
     | **Branch**            | **`main`**                                     |
     | **Build Preset**      | **Ballerina**                                  |
-    | **Project Path**      | `ipaas/ballerina/weather-to-email-integration` |
+    | **Project Path**      | `integrations/ballerina/weather-to-email-integration` |
 
 	!!! tip
     	    - **Build Preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset. 
