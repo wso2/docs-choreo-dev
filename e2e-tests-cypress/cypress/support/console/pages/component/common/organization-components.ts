@@ -158,9 +158,9 @@ export class OrganizationComponent {
     cy.get('[data-cyid="btn-role-create"]').click({ force: true });
 
     cy.get(
-      '[data-cyid="checkbox-role-permission-APIM-PUBLISHER"]>span>input'
+      '[data-cyid="role-permission-apim-publisher-check-box"]>span>input'
     ).check();
-    cy.get('[data-cyid="checkbox-role-permission-APIM-SUBSCRIBER"]>span>input')
+    cy.get('[data-cyid="role-permission-apim-subscriber-check-box"]>span>input')
       .focus()
       .check();
 
@@ -177,14 +177,8 @@ export class OrganizationComponent {
     cy.get('[data-cyid="select_members_to_role"]').click();
 
     const userData = Cypress.env("userData");
-    let displayName = userData["displayName"];
-
-    if (displayName.includes("@")) {
-      displayName = displayName.split("@")[0];
-    }
-
-    cy.get(`[data-cyid^="${displayName}"]`).click({ force: true });
-
+    let email = userData["userEmail"];
+    cy.get(`[data-cyid$="(${email})"]`).click({ force: true });
     cy.get("body").type("{esc}");
     cy.get('[data-cyid="btn-add-member"]').click();
     cy.get('[data-cyid="btn-add-member"]').should("not.exist");
