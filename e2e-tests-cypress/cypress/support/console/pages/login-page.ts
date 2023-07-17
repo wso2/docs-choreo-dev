@@ -30,8 +30,8 @@ export class LoginPage {
 
   static acceptInviteAsInvitedUser(timestamp: string) {
     cy.intercept({
-      method: "GET",
-      url: ORGS_URL,
+      method: "POST",
+      url: GRAPHQL_URL,
       times: 1,
     }).as("token");
 
