@@ -59,7 +59,7 @@ public class TestProxyApiDpWithAPIRateLimit extends TestBase {
     }
 
     @BeforeClass
-    public void setup_ProxyApiDpWithAPIRateLimit() throws IOException, TokenRetrievalException {
+    public void setup_ProxyApiDpWithAPIRateLimit() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     }
 

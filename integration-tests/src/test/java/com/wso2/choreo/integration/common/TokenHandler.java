@@ -13,12 +13,14 @@
 
 package com.wso2.choreo.integration.common;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -30,31 +32,24 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
-
-import static com.wso2.choreo.integration.config.Constant.APIM_SCOPES;
-import static com.wso2.choreo.integration.config.Constant.COMPONENT_MANAGEMENT_SCOPES;
-import static com.wso2.choreo.integration.config.Constant.CONFIG_MANAGEMENT_SCOPES;
-import static com.wso2.choreo.integration.config.Constant.CUSTOM_DOMAIN_SCOPES;
-import static com.wso2.choreo.integration.config.Constant.DEVOPS_SCOPES;
-import static com.wso2.choreo.integration.config.Constant.DEV_PORTAL_SCOPES;
-import static com.wso2.choreo.integration.config.Constant.ENTERPRISE_USER_MANAGEMENT_SCOPES;
-import static com.wso2.choreo.integration.config.Constant.ENVIRONMENT_MANAGEMENT_SCOPES;
-import static com.wso2.choreo.integration.config.Constant.OBSERVABILITY_MANAGEMENT_SCOPES;
-import static com.wso2.choreo.integration.config.Constant.ON_PREM_KEY_SCOPES;
-import static com.wso2.choreo.integration.config.Constant.ORG_MANAGEMENT_SCOPES;
-import static com.wso2.choreo.integration.config.Constant.PROJECT_MANAGEMENT_SCOPES;
-import static com.wso2.choreo.integration.config.Constant.USER_MANAGEMENT_SCOPES;
+import java.util.Objects;
 
 /**
  * Handles retrieving a OAuth token to test API calls.
  */
 public class TokenHandler {
+
+    static class Scopes {
+        @JsonProperty("scopes")
+        List<String> scopes;
+    }
 
     public static class Builder {
         private String asgardeoClientId;
@@ -132,7 +127,7 @@ public class TokenHandler {
      * @throws IOException             if an IO error occurs when sending or receiving request
      * @throws TokenRetrievalException if token retrieval fails
      */
-    public String getTestTokenForCPAPIs() throws TokenRetrievalException, IOException {
+    public String getTestTokenForCPAPIs() throws TokenRetrievalException, IOException, URISyntaxException {
         if (!isManualMode) {
             if (!isTokenValid()) {
                 synchronized (TokenHandler.class) {
@@ -197,7 +192,7 @@ public class TokenHandler {
      * @throws IOException
      */
     private String getStsToken(String stsClientId, String stsClientSecret, String userToken)
-            throws TokenRetrievalException {
+            throws TokenRetrievalException, URISyntaxException, IOException {
         String tokenAuthHeader = Constant.BASIC_PREFIX.concat(encodeCredentials(stsClientId, stsClientSecret));
         String stsEndPoint = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT)
                 .concat(Constant.TOKEN_ENDPOINT_SUFFIX);
@@ -269,16 +264,26 @@ public class TokenHandler {
     }
 
 
-    private static String getOAuthScopes() {
-        List<String[]> scopes = Arrays.asList(APIM_SCOPES, USER_MANAGEMENT_SCOPES, ENTERPRISE_USER_MANAGEMENT_SCOPES, CONFIG_MANAGEMENT_SCOPES, CUSTOM_DOMAIN_SCOPES, ON_PREM_KEY_SCOPES, ORG_MANAGEMENT_SCOPES, COMPONENT_MANAGEMENT_SCOPES, DEV_PORTAL_SCOPES, DEVOPS_SCOPES, ENVIRONMENT_MANAGEMENT_SCOPES, PROJECT_MANAGEMENT_SCOPES, OBSERVABILITY_MANAGEMENT_SCOPES);
+    private static String getOAuthScopes() throws URISyntaxException, IOException {
+        List<String> scopes = readScopesFromConfig();
+
         StringBuilder stringBuilder = new StringBuilder();
-        scopes.forEach(strings -> {
-            for (String key:strings
-            ) {
-                stringBuilder.append(key).append(" ");
-            }
-        });
+        for (String scope : scopes) {
+            stringBuilder.append(scope).append(" ");
+        }
+
         return stringBuilder.toString().trim();
+    }
+
+    private static List<String> readScopesFromConfig() throws URISyntaxException, IOException {
+        String scopesYaml = Configuration.getConfig(ConfigDefinition.TOKEN_SCOPES);
+
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+        mapper.findAndRegisterModules();
+        Scopes scopes = mapper.readValue(new File(Objects.requireNonNull(TokenHandler.class.getClassLoader().
+                getResource(scopesYaml)).toURI()), Scopes.class);
+
+        return  scopes.scopes;
     }
 
 

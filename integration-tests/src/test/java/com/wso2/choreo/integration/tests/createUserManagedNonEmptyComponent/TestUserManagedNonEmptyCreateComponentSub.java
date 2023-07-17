@@ -11,8 +11,6 @@ import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
@@ -59,8 +57,7 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
         Map<Endpoints, HttpClient> citrusClients;
 
         @BeforeClass
-        public void setup_TestUserManagedNonEmptyCreateComponentSub()
-                        throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
+        public void setup_TestUserManagedNonEmptyCreateComponentSub() throws Exception {
                 accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
                 orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
                 orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);

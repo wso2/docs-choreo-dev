@@ -23,8 +23,6 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.ProjectRetrievalException;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +66,7 @@ public class InsightsAPIIT extends TestNGCitrusSpringSupport {
     private HttpClient choreoCPTestClient;
 
     @BeforeClass
-    public void beforeClass() throws IOException, TokenRetrievalException, ProjectRetrievalException {
+    public void beforeClass() throws Exception {
 
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);

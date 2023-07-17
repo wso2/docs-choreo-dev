@@ -23,7 +23,6 @@ import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
@@ -57,7 +56,7 @@ public class TestProxyApiDpWithOperationRateLimit extends TestBase {
     }
 
     @BeforeClass
-    public void setup_ProxyApiDpWithOperationRateLimit() throws IOException, TokenRetrievalException {
+    public void setup_ProxyApiDpWithOperationRateLimit() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     }
 

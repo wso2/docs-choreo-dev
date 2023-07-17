@@ -245,14 +245,13 @@ public class ComponentUtils {
     public static ChoreoComponent createComponent(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
             String accessToken, GraphqlDTO dto,
             ComponentFlavour componentFlavour) throws Exception {
-        HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        HttpClient choreoClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
+        HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
         GraphqlDTO graphqlDTO;
 
         if (componentFlavour.equals(ComponentFlavour.BYOC)) {
             dto.setComponentType("byocRestApi");
-            Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createBYOCComponent(runner, cpProjectsClient,
+            Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createBYOCComponent(runner, appServiceClient,
                     dto, accessToken);
 
             graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
@@ -262,18 +261,18 @@ public class ComponentUtils {
                     "templates/graphql/requests/createUserManagedComponent.mustache", dto);
 
             Optional<CreateComponentResponseDTO> responseDTO = GraphQL.createUserManagedComponent(runner,
-                    cpProjectsClient, queryString, dto.getProjectId(), accessToken);
+                    appServiceClient, queryString, dto.getProjectId(), accessToken);
 
-            Component.waitForComponentCreationSuccess(runner, choreoClient, accessToken, responseDTO.get().getProjectId(),
+            Component.waitForComponentCreationSuccess(runner, appServiceClient, accessToken, responseDTO.get().getProjectId(),
                     responseDTO.get().getId());
 
-            GraphQL.handleConfigInit(runner, choreoClient, accessToken, responseDTO.get().getId());
+            GraphQL.handleConfigInit(runner, appServiceClient, accessToken, responseDTO.get().getId());
 
             graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
                     .componentHandler(responseDTO.get().getHandler()).build();
         }
 
-        return GraphQL.retrieveComponent(runner, cpProjectsClient, accessToken,
+        return GraphQL.retrieveComponent(runner, appServiceClient, accessToken,
                 graphqlDTO);
     }
 
