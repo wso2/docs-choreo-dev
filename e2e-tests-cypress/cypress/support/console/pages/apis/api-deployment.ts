@@ -98,9 +98,7 @@ export class APIDeployment {
 
       if (element.length > 0) {
         let isNewDeployment = false;
-        body.find('[data-cyid="env-base-card"]').each((index, element) => {
-          const isProductionCard = element.innerText.includes('Production');
-          if (!isProductionCard) {
+        body.find('[data-cyid="env-baseDevelopment-card"]').each((index, element) => {
             const timeElement = element.querySelector('[data-cyid="proxy-deployed-time"]>span>p');
             console.log(timeElement)
             if (timeElement) {
@@ -122,8 +120,7 @@ export class APIDeployment {
               cy.log("Skipping env card without deployed time");
             }
           }
-        });
-    
+        );
         if (isNewDeployment) {
           return;
         }
