@@ -1,10 +1,10 @@
 # Develop a Scheduled Integration
 
-Choreo iPaaS is a versatile integration platform that allows you to create various types of integrations depending on your requirement. 
+Choreo is a versatile integration platform that allows you to create various types of integrations depending on your requirement. 
 
-If you have a requirement to automatically run a specific integration at regular intervals, you can use Choreo iPaaS to develop a scheduled integration.  This type of integration can automate the synchronization of data between different systems at specified intervals, reducing errors and improving productivity by eliminating the need for manual intervention.
+If you have a requirement to automatically run a specific integration at regular intervals, you can use Choreo to develop a scheduled integration.  This type of integration can automate the synchronization of data between different systems at specified intervals, reducing errors and improving productivity by eliminating the need for manual intervention.
 
-This guide walks you through the steps to develop, deploy, test, and observe a scheduled integration using Choreo iPaaS.  
+This guide walks you through the steps to develop, deploy, test, and observe a scheduled integration using Choreo.  
 
 In this guide, you will:
 
