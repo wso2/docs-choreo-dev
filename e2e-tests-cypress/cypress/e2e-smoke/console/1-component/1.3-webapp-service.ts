@@ -53,7 +53,7 @@ describe("Verify containerized service functionality", () => {
       projectId: "",
       byocWebAppsConfig: {
         dockerContext: "",
-        srcGitRepoUrl: "https://github.com/byorfeature/choreo-examples",
+        srcGitRepoUrl: "https://github.com/choreo-test-apps/web-apps",
         srcGitRepoBranch: "main",
         webAppType: "React",
         webAppBuildCommand: "npm run build",
@@ -84,14 +84,12 @@ describe("Verify containerized service functionality", () => {
   });
 
   it("Verify test page is disabled", () => {
-    ComponentOverviewPage.navigateToTest();
     cy.get('[data-cyid="link-test"]').should('be.disabled')
   });
 
   it("Verify manage page is disabled", () => {
     cy.get('[data-cyid="link-manage"]').should('be.disabled')
   });
-
 
   it("Verify suspending all component deployments", () => {
     ChoreoHomePage.navigateToComponents();
