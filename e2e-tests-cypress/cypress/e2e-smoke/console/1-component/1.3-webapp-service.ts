@@ -42,7 +42,7 @@ describe("Verify containerized service functionality", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
   });
 
-  it("Verify containerized service component creation", () => {
+  it("Verify Webapp service component creation", () => {
     let componentData: WebappComponent = {
       name: COMPONENT_NAME,
       displayName: COMPONENT_NAME,
@@ -52,7 +52,7 @@ describe("Verify containerized service functionality", () => {
       labels: "",
       projectId: "",
       byocWebAppsConfig: {
-        dockerContext: "",
+        dockerContext: "react-spa",
         srcGitRepoUrl: "https://github.com/choreo-test-apps/web-apps",
         srcGitRepoBranch: "main",
         webAppType: "React",
