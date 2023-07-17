@@ -18,6 +18,7 @@ import {
   ORGS_URL,
   EP_USER_HOME_URL,
   VALIDATE_USER_URL,
+  GRAPHQL_URL,
 } from "../../commons/urls";
 import { Utils } from "../../commons/utils";
 import { GraphQL } from "../apis/graphql";
@@ -29,8 +30,8 @@ export class LoginPage {
 
   static acceptInviteAsInvitedUser(timestamp: string) {
     cy.intercept({
-      method: "GET",
-      url: ORGS_URL,
+      method: "POST",
+      url: GRAPHQL_URL,
       times: 1,
     }).as("token");
 
@@ -137,10 +138,10 @@ export class LoginPage {
   private static registerNetworkCallsForInterception() {
     cy.intercept("GET", VALIDATE_USER_URL).as("org");
     cy.intercept({
-      method: "GET",
-      url: ORGS_URL,
+      method: "POST",
+      url: GRAPHQL_URL,
       times: 1,
-    }).as("orgs");
+    }).as("gql");
   }
 
   private static persistOrgs() {
@@ -175,7 +176,7 @@ export class LoginPage {
   }
 
   static persistApimToken(doCleanup: boolean = false) {
-    cy.wait("@orgs", MEDIUM_TIME).then((intercept) => {
+    cy.wait("@gql", MEDIUM_TIME).then((intercept) => {
       const header = intercept.request.headers["authorization"] as string;
       const token = header.replace("Bearer", "").trim();
       const { orgId, handle } = Cypress.env("userData");
