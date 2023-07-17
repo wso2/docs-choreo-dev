@@ -405,7 +405,7 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
       .should("be.enabled")
       .click();
-    if(configSetupStepAvailable){
+    if (configSetupStepAvailable) {
       cy.wait(20000);
       cy.get('[data-cyid="btn-next-button"]').contains("Next").click();
     }
@@ -466,7 +466,7 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
       .should("be.enabled")
       .click();
-    if(configSetupStepAvailable){
+    if (configSetupStepAvailable) {
       cy.get('[data-cyid="btn-next-button"]').contains("Next").click();
     }
     cy.get(`[data-cyid="${endpointName}-endpoint-accordion"]`).should(
@@ -517,7 +517,7 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-promote-button"]', LONG_TIME)
       .should("be.enabled")
       .click();
-    if(configSetupStepAvailable){
+    if (configSetupStepAvailable) {
       cy.get('[data-cyid="btn-next-button"]').contains("Next").click();
     }
     cy.get(
@@ -587,5 +587,33 @@ export class ComponentDeployPage {
       .eq(1)
       .contains(DEPLOYMENT_SUCCESS, SHORT_TIME)
       .should("exist");
+  }
+
+  static initiateServiceDeployment(visibilityLevel: string) {
+    cyGet('[data-testid="btn-deploy-api"]', LONG_TIME).should("be.enabled");
+    cyGet('[data-testid="btn-deploy-api"]', LONG_TIME).click();
+    cyGet('[data-testid="Readinglist-edit-btn"]', LONG_TIME).should(
+      "be.visible"
+    );
+    cy.get(`[data-cyid="${visibilityLevel}-chip"]`, LONG_TIME).should(
+      "be.visible"
+    );
+  }
+
+  static getVisibilityLevel(visibilityLevel: string) {
+    return cy
+      .get(`[data-cyid="${visibilityLevel}-chip"]`, LONG_TIME)
+      .invoke("text");
+  }
+
+  static deployServiceWithVisibilityLevel() {
+    cyGet('[data-testid="btn-next"]', LONG_TIME).should("be.enabled");
+    cyGet('[data-testid="btn-next"]', LONG_TIME).click();
+  }
+
+  static verifyDeploymentStatusOfService(projectName, componentName) {
+    cyGet('[data-testid="btn-stop"]', LONG_TIME).should("be.visible");
+    GraphQL._getComponentDeploymentStatus(projectName, componentName);
+    return cyGet('[data-cyid="deployment-status"]>h6').invoke("text");
   }
 }
