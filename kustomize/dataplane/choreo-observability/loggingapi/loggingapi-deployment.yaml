@@ -31,6 +31,8 @@ spec:
                 name: loggingapi-cm
             - configMapRef:
                 name: loggingapi-env
+            - secretRef:
+                name: loggingapi-secret
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-logging-dp:latest
           securityContext:
             runAsUser: 10500
