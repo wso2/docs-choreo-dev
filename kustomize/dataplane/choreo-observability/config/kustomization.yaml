@@ -9,11 +9,12 @@
 #
 # --------------------------------------------------------------------------------------
 
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
-resources:
-  - loggingapi
-  - config
-
-namespace: choreo-observability
+configMapGenerator:
+  - name: loggingapi-cm-file
+    behavior: create
+    files:
+      - loggingapi/Config.toml
+  - name: loggingapi-cm
+    behavior: create
+    literals:
+      - AZURE_LA_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
