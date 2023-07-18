@@ -13,11 +13,17 @@
 
 import { GraphQL } from "../../apis/graphql";
 import {
+  CONFIG_FILE,
+  CONFIG_KEY,
+  CONFIG_VALUE,
   DEPLOYMENT_ERROR,
   DEPLOYMENT_PENDING,
   DEPLOYMENT_PROGRESSING,
   DEPLOYMENT_STOPPED,
   DEPLOYMENT_SUCCESS,
+  MOUNT_PATH,
+  SECRET_KEY,
+  SECRET_VALUE,
 } from "../../../commons/constants";
 import { Utils } from "../../../commons/utils";
 import {
@@ -393,12 +399,29 @@ export class ComponentDeployPage {
     });
   }
 
+  private static configByocComponent() {
+    cy.get('[data-testid="config-name-input"]').type(CONFIG_KEY);
+    cy.get('[data-testid="config-value-input"]').type(CONFIG_VALUE);
+    cy.get('[data-cyid="editable-key-value-input-primary-button-button"]').click();
+    cy.get('[data-cyid="configurations-config-accordion-summary"]').should("be.visible");
+    cy.get('[data-testid="config-name-input"]').type(SECRET_KEY);
+    cy.get('[data-testid="config-value-input"]').type(SECRET_VALUE);
+    cy.get('[data-testid="config-is-secret-checkbox"]').click();
+    cy.get('[data-cyid="editable-key-value-input-primary-button-button"]').click();
+    cy.get('[data-cyid="secrets-config-accordion-summary"]').should("be.visible");
+    cy.get('[data-testid="btn-next"]').click();
+    cy.get('[data-cyid="mount-path"]').type(MOUNT_PATH);
+    cy.get('[class="view-lines monaco-mouse-cursor-text"]').type(CONFIG_FILE);
+    cy.get('[data-testid="btn-next"]').click();
+  }
+
   static deployService(
     projectName: string,
     componentName: string,
     endpointName: string,
     changeVisibility?: boolean,
-    configSetupStepAvailable = false
+    configSetupStepAvailable = false,
+    configEnvVars = false,
   ) {
     cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
       .contains("Generating Configurations", LONG_TIME)
@@ -411,6 +434,9 @@ export class ComponentDeployPage {
     if(configSetupStepAvailable){
       cy.wait(20000);
       cy.get('[data-cyid="btn-next-button"]').contains("Next").click();
+    }
+    if (configEnvVars) {
+      this.configByocComponent();
     }
     cy.get(`[data-cyid="${endpointName}-endpoint-accordion"]`).should(
       "be.visible"
@@ -514,7 +540,8 @@ export class ComponentDeployPage {
     endpointName: string,
     changeVisibility?: boolean,
     count = 0,
-    configSetupStepAvailable = false
+    configSetupStepAvailable = false,
+    configEnvVars = false,
   ) {
     APIDeployment.RetryPromotionToProd();
     cy.get('[data-cyid="btn-promote-button"]', LONG_TIME)
@@ -522,6 +549,9 @@ export class ComponentDeployPage {
       .click();
     if(configSetupStepAvailable){
       cy.get('[data-cyid="btn-next-button"]').contains("Next").click();
+    }
+    if (configEnvVars) {
+      this.configByocComponent();
     }
     cy.get(
       `[data-cyid="${endpointName}-endpoint-accordion"]`,
