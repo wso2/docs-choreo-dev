@@ -97,9 +97,9 @@ export class OrganizationComponent {
       authorization: `Bearer ${token}`,
     };
     const deletePendingInvitation = `${Cypress.env(
-      "appSvcURL"
-    )}/v2/orgs/${handle}/invitations?email=${email}`;
-    const getUsers = `${Cypress.env("appSvcURL")}/v2/orgs/${handle}/users`;
+      "newAppSvcURL"
+    )}/users-mgt/1.0.0/orgs/${handle}/invitations?email=${email}`;
+    const getUsers = `${Cypress.env("newAppSvcURL")}/users-mgt/1.0.0/orgs/${handle}/users`;
 
     Utils.sendGetRequest(getUsers, headers).then((res) => {
       const list = res.body.list as [];
@@ -109,8 +109,8 @@ export class OrganizationComponent {
       if (user) {
         const { idpId } = user;
         const deleteUserRequest = `${Cypress.env(
-          "appSvcURL"
-        )}/v2/orgs/${handle}/users/${idpId}`;
+          "newAppSvcURL"
+        )}/users-mgt/1.0.0/orgs/${handle}/users/${idpId}`;
 
         Utils.sendDeleteRequest(deleteUserRequest, headers).then((res) => {
           if (res.status === OK) {
