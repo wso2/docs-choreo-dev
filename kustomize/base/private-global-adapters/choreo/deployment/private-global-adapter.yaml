@@ -122,6 +122,16 @@ spec:
                 secretKeyRef:
                   key: PRIVATE_GLOBAL_ADAPTER_PASSWORD
                   name: secret-private-ga-choreo-credentials
+            - name: moesif_ms_auth_pwd
+              valueFrom:
+                secretKeyRef:
+                  key: MOESIF_MS_AUTH_PWD
+                  name: secret-private-ga-choreo-credentials
+            - name: moesif_ms_url
+              valueFrom:
+                configMapKeyRef:
+                  key: MOESIF_MS_URL
+                  name: cc-ga-conf-choreo
             - name: ga_db_pwd
               valueFrom:
                 secretKeyRef:
