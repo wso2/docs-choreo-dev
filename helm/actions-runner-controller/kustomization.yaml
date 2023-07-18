@@ -2,18 +2,18 @@ helmCharts:
   - name: actions-runner-controller
     includeCRDs: true
     valuesInline:
-      # additionalVolumes:
-      #   - name: controller-manager-secret
-      #     csi:
-      #       driver: secrets-store.csi.k8s.io
-      #       readOnly: true
-      #       volumeAttributes:
-      #         secretProviderClass: controller-manager-secret
-      #       nodePublishSecretRef:
-      #         name: csi-secret-store-azure
-      # additionalVolumeMounts:
-      #   - name: controller-manager-secret
-      #     mountPath: /mnt/csi/secrets/controller-manager-secret
+#      additionalVolumes:
+#       - name: controller-manager-secret
+#         csi:
+#           driver: secrets-store.csi.k8s.io
+#           readOnly: true
+#           volumeAttributes:
+#             secretProviderClass: controller-manager-secret
+#           nodePublishSecretRef:
+#             name: csi-secret-store-azure
+#      additionalVolumeMounts:
+#       - name: controller-manager-secret
+#         mountPath: /mnt/csi/secrets/controller-manager-secret
       authSecret:
         name: controller-manager
         create: false
@@ -32,15 +32,15 @@ helmCharts:
             key: ghrunner
             operator: Exists
       image:
-        actionsRunnerRepositoryAndTag: choreocontrolplane.azurecr.io/summerwind/actions-runner:v2.305.0-ubuntu-20.04-462d044-20230707-1606
-        dindSidecarRepositoryAndTag: choreocontrolplane.azurecr.io/docker:dind-20230707-1606
+        actionsRunnerRepositoryAndTag: choreocontrolplane.azurecr.io/summerwind/actions-runner:v2.305.0-ubuntu-20.04-462d044-20230713-1631
+        dindSidecarRepositoryAndTag: choreocontrolplane.azurecr.io/docker:dind-20230713-1631
         repository: choreocontrolplane.azurecr.io/summerwind/actions-runner-controller
-        tag: v0.25.2
+        tag: v0.27.4-20230713-1631
       metrics:
         proxy:
           image:
             repository: choreocontrolplane.azurecr.io/brancz/kube-rbac-proxy
-            tag: v0.14.2-20230707-1606
+            tag: v0.13.1-20230713-1631
       nodeSelector:
         execution-mode: ghrunner
       podDisruptionBudget:
@@ -53,7 +53,7 @@ helmCharts:
           operator: Exists
     releaseName: actions-runner-controller
     namespace: actions-runner-system
-    version: 0.20.2
+    version: 0.23.3
     repo: oci://choreocontrolplane.azurecr.io/helm
 
 commonAnnotations:

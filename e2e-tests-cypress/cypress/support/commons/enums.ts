@@ -30,6 +30,7 @@ export namespace Enums {
     byocRestApi = "byocRestApi",
     ballerinaService = "ballerinaService",
     byocService = "byocService",
+    byocWebAppsDockerfileLess = "byocWebAppsDockerfileLess",
   }
 
   export enum Accessibility {

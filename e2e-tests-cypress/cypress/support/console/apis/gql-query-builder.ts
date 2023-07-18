@@ -1,4 +1,5 @@
 import { ByocComponent } from "../../interfaces/byoc-component"
+import { WebappComponent } from "../../interfaces/choreo-components/webapp-component";
 import { ComponentData } from "../../interfaces/component-data";
 
 
@@ -180,6 +181,59 @@ export class GraphQLQueryBuilder {
             dockerContext:"${byocComponent.byocConfig.dockerContext}",
             srcGitRepoUrl:"${byocComponent.byocConfig.srcGitRepoUrl}",
             srcGitRepoBranch: "${byocComponent.byocConfig.srcGitRepoBranch}",
+          }
+        }
+      ) 
+      {
+        id,
+        createdAt,
+        updatedAt,
+        name,
+        handle,
+        organizationId,
+        projectId,
+        orgHandle,
+        type,
+        description,
+        imageRegistryId,
+        imageRegistry {
+            id,
+            createdAt,
+            updatedAt,
+            cloudConnectorId,
+            imageRepositoryName
+        },
+        componentType,
+        httpBased
+      }
+    }`
+    }
+
+  }
+
+
+  static getWebAppComponentCreationQuery(byocComponent: WebappComponent, projectId: string) {
+    return {
+      query: `mutation {
+      createByocComponent(
+        component: {
+          name: "${byocComponent.name}",
+          displayName: "${byocComponent.displayName}",
+          description: "${byocComponent.description}",
+          orgId: ${byocComponent.orgId},
+          orgHandler: "${byocComponent.handle}",
+          projectId: "${projectId}",
+          labels: "",
+          componentType: "${byocComponent.componentType}",
+          accessibility: "${byocComponent.accessibility}",
+          byocWebAppsConfig: {
+            dockerContext:  "${byocComponent.byocWebAppsConfig.dockerContext}",
+            srcGitRepoUrl: "${byocComponent.byocWebAppsConfig.srcGitRepoUrl}",
+            srcGitRepoBranch: "${byocComponent.byocWebAppsConfig.srcGitRepoBranch}",
+            webAppType: "${byocComponent.byocWebAppsConfig.webAppType}",
+            webAppBuildCommand: "${byocComponent.byocWebAppsConfig.webAppBuildCommand}",
+            webAppPackageManagerVersion: "${byocComponent.byocWebAppsConfig.webAppPackageManagerVersion}",
+            webAppOutputDirectory: "${byocComponent.byocWebAppsConfig.webAppOutputDirectory}",
           }
         }
       ) 

@@ -23,7 +23,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.wso2.choreo.integration.common.TestContext;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -73,7 +72,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
     private HttpClient choreoCPTestClient;
 
     @BeforeClass
-    public void beforeClass() throws IOException, InterruptedException, TokenRetrievalException {
+    public void beforeClass() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
 

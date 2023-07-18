@@ -42,7 +42,7 @@ public abstract class AbstractChoreoComponentBuilder {
         this.project = project;
         this.org = org;
         choreoEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_ENDPOINT);
-        choreoCpProjectsEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_CP_PROJECTS_ENDPOINT);
+        choreoCpProjectsEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_NEW_APP_SERVICE_ENDPOINT);
     }
 
     /**

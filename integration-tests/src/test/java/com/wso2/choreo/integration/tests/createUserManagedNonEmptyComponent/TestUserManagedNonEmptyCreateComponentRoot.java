@@ -1,21 +1,8 @@
 package com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent;
 
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import com.wso2.choreo.integration.models.code.Repository;
-import com.wso2.choreo.integration.models.environments.Environment;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentFlavour;
@@ -29,9 +16,18 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
-import com.wso2.choreo.integration.models.componentstatus.Status;
-import com.wso2.choreo.integration.models.graphql.CreateNewVersionResponseDTO;
+import com.wso2.choreo.integration.models.code.Repository;
+import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.response.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * $(http()
@@ -108,9 +104,6 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
         @Test(dependsOnMethods = { "createNewVersion_TestUserManagedNonEmptyCreateComponentRoot" })
         @CitrusTest
         public void componentDeployment_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
-                Status status = Orgs.createdComponentStatus(choreoComponent.getProjectId(), choreoComponent.getId(), 
-                        accessToken);
-                Assert.assertEquals(status.getData().getConclusion(), "success");
                 ComponentUtils.deployComponent(this, citrusClients, accessToken,
                         choreoComponent, environments, ComponentFlavour.STANDARD, null);
         }

@@ -70,10 +70,14 @@ export class Utils {
     );
   }
 
-  static acceptEmailInviteToOrg(token: string, timestamp: string) {
+  static acceptEmailInviteToOrg(token: string, timestamp: string, retryCount = 0) {
     const headerString = btoa(
       `${Utils.MAIL_READER_CLIENT_ID}:${Utils.MAIL_READER_CLIENT_SECRET}`
     );
+    cy.wait(5000);
+    if (retryCount > 5) {
+      return;
+    }
     this.sendPostRequest(
       Utils.MAIL_READER_TOKEN_URL,
       { Authorization: `Basic ${headerString}` },
@@ -83,7 +87,7 @@ export class Utils {
       this.sendGetRequest(Utils.MAIL_READER_SVC_URL + timestamp, {
         Authorization: `Bearer ${accessToken}`,
       }).then((res) => {
-        if (res.status == 200) {
+        if (res.status == 200 && res.body != '') {
           const rawMailContent = res.body;
           //const decodedMail = atob(rawMailContent);
           const decodedMail = window.atob(rawMailContent);
@@ -117,6 +121,8 @@ export class Utils {
           });
         } else {
           cy.log(`Error while reading email: ${res.status}`);
+          retryCount++;
+          this.acceptEmailInviteToOrg(token, timestamp, retryCount); 
         }
       });
     });

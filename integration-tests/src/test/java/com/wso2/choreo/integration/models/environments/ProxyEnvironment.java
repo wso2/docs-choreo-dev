@@ -1,7 +1,7 @@
 /*
- *  Copyright (c) 2023, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ *  Copyright (c) 2023, WSO2 LLC. (http://www.wso2.com). All Rights Reserved.
  *
- *  This software is the property of WSO2 Inc. and its suppliers, if any.
+ *  This software is the property of WSO2 LLC. and its suppliers, if any.
  *  Dissemination of any information or reproduction of any material contained
  *  herein is strictly forbidden, unless permitted by WSO2 in accordance with
  *  the WSO2 Commercial License available at http://wso2.com/licenses.
@@ -11,18 +11,13 @@
  *  associated services.
  */
 
-package com.wso2.choreo.integration.common;
+package com.wso2.choreo.integration.models.environments;
 
-/**
- * Citrus endpoint definitions.
- */
-public enum Endpoints {
-    CHOREO_ENDPOINT,
-    CHOREO_NEW_APP_SERVICE_ENDPOINT,
-    STS_ENDPOINT,
-    CHOREO_CP_GW_ENDPOINT,
-    INSIGHTS_ENDPOINT,
-    GITHUB_ENDPOINT,
-    THEME_ENDPOINT,
-    CDN_THEME_ENDPOINT
+import lombok.Data;
+
+@Data
+public class ProxyEnvironment {
+    private String id;
+    private String name;
+    private String choreoEnv;
 }
