@@ -1,8 +1,8 @@
 # Develop an Event-Triggered Integration
 
-An event-triggered integration executes predefined actions in response to specific events. Choreo iPaaS simplifies the process of creating and deploying such integrations.
+An event-triggered integration executes predefined actions in response to specific events. Choreo simplifies the process of creating and deploying such integrations.
 
-This guide walks you through the steps to create and deploy an event-triggered integration using Ballerina and Choreo iPaaS. 
+This guide walks you through the steps to create and deploy an event-triggered integration using Ballerina and Choreo. 
 
 In this guide, you will build a simple integration that sends an email notification whenever a new issue is created in a GitHub repository.
 
