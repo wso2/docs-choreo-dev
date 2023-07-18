@@ -105,7 +105,8 @@ export class ComponentDeployPage {
     componentName: string,
     isAdditionalConfigs: boolean = true,
     isManagedByAPIM: boolean = true,
-    isManualTrigger: boolean = false
+    isManualTrigger: boolean = false,
+    isWebApp: boolean = false
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
@@ -120,7 +121,9 @@ export class ComponentDeployPage {
       if (isManagedByAPIM) {
         Utils.interceptConfig();
       }
-      this.pollElement('[data-cyid="btn-next-button"]').click();
+      if (!isWebApp) {
+        this.pollElement('[data-cyid="btn-next-button"]').click();
+      }
     }
 
     APIDeployment.RetryDevDeployment();
