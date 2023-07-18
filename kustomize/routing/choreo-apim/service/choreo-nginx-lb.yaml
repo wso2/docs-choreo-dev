@@ -22,7 +22,7 @@ metadata:
     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
   selector:
-    deployment: choreo-nginx
+    deployment: choreo-nginx-v2
   ports:
     - port: 443
       targetPort: 9443
