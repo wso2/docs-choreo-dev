@@ -1,6 +1,6 @@
 # Develop an Integration with Integration Studio
 
-The seamless integration of APIs, microservices, applications, and data across different languages and formats requires the ability to expose integrations as APIs. Choreo iPaaS simplifies building, deploying, and managing integration components, making it easy for you to quickly expose integrations as APIs.
+The seamless integration of APIs, microservices, applications, and data across different languages and formats requires the ability to expose integrations as APIs. Choreo simplifies building, deploying, and managing integration components, making it easy for you to quickly expose integrations as APIs.
 
 This guide walks you through the steps to expose an integration you created in WSO2 Integration Studio as an API in Choreo. 
 
