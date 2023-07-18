@@ -1,0 +1,155 @@
+/*
+ * Copyright (c) 2023, WSO2 LLC. (http://www.wso2.com). All Rights Reserved.
+ *
+ * This software is the property of WSO2 LLC. and its suppliers, if any.
+ * Dissemination of any information or reproduction of any material contained
+ * herein is strictly forbidden, unless permitted by WSO2 in accordance with
+ * the WSO2 Commercial License available at http://wso2.com/licenses.
+ * For specific language governing the permissions and limitations under
+ * this license, please see the license as well as any agreement you’ve
+ * entered into with WSO2 governing the purchase of this software and any
+ * associated services.
+ */
+
+package com.wso2.choreo.integration.apis.component;
+
+import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.http.client.HttpClient;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.apis.ControlPlaneAPI;
+import com.wso2.choreo.integration.common.MessageUtils;
+import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
+import com.wso2.choreo.integration.models.commithistory.Commit;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
+import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
+
+@Log4j2
+public class Component extends ControlPlaneAPI {
+    private static final String CONTEXT = "/component-mgt/1.0.0";
+
+    public static void triggerConfigurableGeneration(TestActionRunner runner, HttpClient client,
+                                                     ChoreoComponent component, List<Commit> commitHistory, String branchName) throws Exception {
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+        String componentId = component.getId();
+        String latestVersionId = component.getLatestApiVersion().getId();
+        String latestCommitSha = component.getLatestCommitHash(commitHistory.toArray(Commit[]::new));
+        String orgHandle = component.getOrgHandler();
+        String projectId = component.getProjectId();
+
+        String configGenerationTriggerURI = CONTEXT.concat("/orgs/").concat(orgHandle).concat("/projects/")
+                .concat(projectId).concat("/triggers/").concat("configurable-generation");
+        Map<String, Object> requestBodyMap = new HashMap<>() {
+            {
+                put("componentId", componentId);
+                put("versionId", latestVersionId);
+                put("branch", branchName);
+                put("sha", latestCommitSha);
+            }
+        };
+
+        String configurationsRequestBody = MessageUtils.generateJson(requestBodyMap).replace("required",
+                "isRequired");
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(configGenerationTriggerURI)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                .body(configurationsRequestBody),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.OK)));
+    }
+
+
+    public static void waitForComponentCreationSuccess(TestActionRunner runner, HttpClient client, String accessToken,
+                                                       String projectId,
+                                                       String componentId) {
+        runner.$(repeatOnError()
+                .until("i = 50")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .get(CONTEXT.concat("/orgs/")
+                                        .concat(ORG_HANDLE)
+                                        .concat("/projects/")
+                                        .concat(projectId)
+                                        .concat("/components/")
+                                        .concat(componentId)
+                                        .concat("/init/status"))
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .body(new ClassPathResource(
+                                        "templates/createComponent/get_create_status_success.json"))
+                                .validate(json()
+                                        .ignore("$.message"))));
+    }
+
+    public static JsonArray getDeploymentBuildSteps(TestActionRunner runner, HttpClient client, String accessToken, String projectId,
+                                                    String componentId, String runId) {
+        AtomicReference<JsonArray> steps = new AtomicReference<>(new JsonArray());
+        runner.$(repeatOnError()
+                .until("i = 10")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .get(CONTEXT.concat("/orgs/")
+                                        .concat(ORG_HANDLE)
+                                        .concat("/projects/")
+                                        .concat(projectId)
+                                        .concat("/components/")
+                                        .concat(componentId)
+                                        .concat("/run/")
+                                        .concat(runId)
+                                        .concat("/logs"))
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .validate((message, context) -> {
+                                    String payload = message.getPayload(String.class);
+                                    JsonObject dataJsonObject = new JsonParser().parse(payload).getAsJsonObject().getAsJsonObject("data");
+                                    steps.set(dataJsonObject.getAsJsonObject("build").getAsJsonArray("steps"));
+                                })));
+
+        return steps.get();
+
+    }
+}

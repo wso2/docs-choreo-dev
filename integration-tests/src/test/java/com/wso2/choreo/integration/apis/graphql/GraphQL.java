@@ -17,6 +17,7 @@ package com.wso2.choreo.integration.apis.graphql;
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -24,9 +25,6 @@ import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.choreoproject.ControlPlaneAPIs;
-import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
-import com.wso2.choreo.integration.common.exceptions.ComponentRetrieveException;
 import com.wso2.choreo.integration.common.exceptions.GraphQLException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
@@ -35,6 +33,8 @@ import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.common.utils.SleepUtil;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.commithistory.Commit;
@@ -42,6 +42,7 @@ import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.componentstatusbyversion.ComponentStatusByVersion;
 import com.wso2.choreo.integration.models.endpoints.Endpoint;
 import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.environments.ProxyEnvironment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.graphql.CreateByocComponentResponseDTO;
 import com.wso2.choreo.integration.models.graphql.CreateComponentResponseDTO;
@@ -51,13 +52,19 @@ import com.wso2.choreo.integration.models.proxyapi.ProxyDeployment;
 import com.wso2.choreo.integration.models.response.ProxyResponse;
 import com.wso2.choreo.integration.models.response.Response;
 import lombok.extern.log4j.Log4j2;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -67,11 +74,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
+import static com.wso2.choreo.integration.config.Constant.GRAPHQL_ENDPOINT_SUFFIX;
 import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.hamcrest.Matchers.greaterThan;
 
@@ -152,21 +159,6 @@ public class GraphQL extends ControlPlaneAPI {
 
 
 
-
-    private static Optional<ChoreoComponent> getComponentByHandler(String accessToken, String componentHandler, String id) throws ComponentRetrieveException {
-        String gqlQuery = getComponentQuery(componentHandler,id);
-
-        try {
-            JsonObject body = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
-
-            JsonObject componentJson = body.getAsJsonObject().getAsJsonObject("data")
-                    .getAsJsonObject("component");
-
-            return Optional.of(new Gson().fromJson(componentJson.toString(), (Type) RestApiChoreoComponent.class));
-        } catch (GraphQLException e) {
-            throw new ComponentRetrieveException(e);
-        }
-    }
 
     public static Optional<CreateComponentResponseDTO> createUserManagedComponent(TestActionRunner runner, HttpClient client,
                                                                         String queryString, String projectId,
@@ -892,9 +884,10 @@ public class GraphQL extends ControlPlaneAPI {
                                             .getAsJsonObject();
                                     String invokeUrl = responseJson.getAsJsonObject("data")
                                             .getAsJsonObject("proxyDeployment").get("invokeUrl").getAsString();
-                                    String environment = responseJson.getAsJsonObject("data")
-                                            .getAsJsonObject("proxyDeployment").getAsJsonObject("environment")
-                                            .get("name").getAsString();
+                                    String envStringObject = responseJson.getAsJsonObject("data")
+                                            .getAsJsonObject("proxyDeployment").getAsJsonObject("environment").toString();
+                                    ProxyEnvironment environment = ObjectMapperUtil.mapStringToObject(ProxyEnvironment.class,
+                                            envStringObject, "");
                                     pd.setInvokeUrl(invokeUrl);
                                     pd.setEnvironment(environment);
                                     proxyDeployment.set(pd);
@@ -1303,5 +1296,52 @@ public class GraphQL extends ControlPlaneAPI {
                                                 comparesEqualTo("Active")))
                 )
         );
+    }
+
+    /**
+     * This non Citrus based implementation is to be used in cases where the Citrus framework is yet to be initialized,
+     * such as in the BeforeSuite
+     *
+     * @param accessToken
+     * @param gqlQuery
+     * @return
+     * @throws GraphQLException
+     */
+    public static JsonObject callGraphQL(String accessToken, String gqlQuery) throws GraphQLException {
+        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+            {
+                put("query", gqlQuery);
+            }
+        };
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
+
+            String choreoCpProjectsEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+            HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat(GRAPHQL_ENDPOINT_SUFFIX));
+
+            request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, accessToken);
+
+            StringEntity requestEntity = new StringEntity(
+                    requestBody,
+                    ContentType.APPLICATION_JSON);
+            request.setEntity(requestEntity);
+
+            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                 CloseableHttpResponse response = httpClient.execute(request)) {
+                int statusCode = response.getStatusLine().getStatusCode();
+                String responseBody = EntityUtils.toString(response.getEntity());
+
+                log.debug(responseBody);
+                if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                    throw new GraphQLException(statusCode, responseBody);
+                }
+
+                return new JsonParser().parse(responseBody).getAsJsonObject();
+            }
+        } catch (IOException e) {
+            throw new GraphQLException(e);
+        }
     }
 }

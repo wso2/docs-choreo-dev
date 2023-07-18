@@ -243,8 +243,8 @@ public class TestCreateMiMultiRestEndpointServiceFromSubPath extends TestNGCitru
     @CitrusTest
     public void componentPromotionToProd_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
         // Retrieve the latest component.
-        HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_CP_PROJECTS_ENDPOINT);
-        testComponent = GraphQL.getComponentDetails(this, cpProjectsClient, projectId, componentHandler, accessToken);
+        HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        testComponent = GraphQL.getComponentDetails(this, appServiceClient, projectId, componentHandler, accessToken);
         String latestApiVersionId = testComponent.getLatestApiVersion().getId();
         String releaseIdForEnvironment = testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT);
         String latestAppEnvId = testComponent.getLatestAppEnvId(Constant.PROD_ENVIRONMENT);

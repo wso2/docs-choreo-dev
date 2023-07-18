@@ -19,8 +19,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.wso2.choreo.integration.apis.Orgs;
+import com.wso2.choreo.integration.apis.component.Component;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
@@ -137,11 +136,8 @@ public class TestIntegrationRestComponentWithVulnerable extends TestNGCitrusSpri
 
     @Test(dependsOnMethods = { "deploymentStatusByVersion_TestMIIntegrationsWithVulnerableJars" })
     @CitrusTest
-    public void checkVulnarabilityScan_TestMIIntegrationsWithVulnerableJars() throws Exception {
-
-        String response = Orgs.getDeploymentLogs(accessToken, orgHandle, projectId, componentId, runId);
-        JsonObject dataJsonObject = new JsonParser().parse(response).getAsJsonObject().getAsJsonObject("data");
-        JsonArray stepJsonArray = dataJsonObject.getAsJsonObject("build").getAsJsonArray("steps");
+    public void checkVulnarabilityScan_TestMIIntegrationsWithVulnerableJars() {
+        JsonArray stepJsonArray = Component.getDeploymentBuildSteps(this, choreoProjectsTestClient, accessToken, projectId, componentId, runId);
         for (JsonElement element : stepJsonArray) {
             JsonObject jsonObject = element.getAsJsonObject();
             String stepName = jsonObject.get("name").getAsString();
