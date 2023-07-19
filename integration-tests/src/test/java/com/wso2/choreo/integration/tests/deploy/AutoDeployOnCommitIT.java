@@ -51,9 +51,6 @@ import java.util.Map;
         private ChoreoProject project;
 
         @Autowired
-        private HttpClient choreoTestClient;
-
-        @Autowired
         Map<Endpoints, HttpClient> citrusClients;
 
         @BeforeClass
@@ -79,13 +76,13 @@ import java.util.Map;
         @Test(dependsOnMethods = {"createUserManagedComponentFor_AutoDeployOnCommitIT"})
         @CitrusTest
         public void handleConfigInit_AutoDeployOnCommitIT() throws Exception {
-            GraphQL.handleConfigInit(this, choreoTestClient, accessToken, choreoComponent.getId());
+            HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+            GraphQL.handleConfigInit(this, appServiceClient, accessToken, choreoComponent.getId());
         }
 
         @Test(dependsOnMethods = {"handleConfigInit_AutoDeployOnCommitIT"})
         @CitrusTest
         public void mergeNewCode_AutoDeployOnCommitIT() throws IOException {
-            String serviceBal = FileUtil.readFileEncodedContent("src/test/resources/templates/autodeploy/service.bal");
             String timeStamp = String.valueOf(new Date().getTime());
             Map<String, String> params = new HashMap<>();
             params.put("timeStamp", timeStamp);
