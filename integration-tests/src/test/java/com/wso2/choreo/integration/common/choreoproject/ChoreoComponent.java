@@ -344,7 +344,7 @@ public class ChoreoComponent {
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(requestBodyMap);
 
-        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat("/graphql"));
+        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX));
 
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
 
@@ -396,7 +396,7 @@ public class ChoreoComponent {
                 requestParams);
         String requestBody = MessageUtils.generateGQLPayload(graphQuery);
 
-        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat("/graphql"));
+        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX));
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         StringEntity requestEntity = new StringEntity(
                 requestBody,
@@ -441,7 +441,7 @@ public class ChoreoComponent {
                 requestParams);
         String requestBody = MessageUtils.generateGQLPayload(graphQuery);
 
-        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat("/graphql"));
+        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX));
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         StringEntity requestEntity = new StringEntity(
                 requestBody,
@@ -1278,7 +1278,7 @@ public class ChoreoComponent {
 
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
-        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat("/graphql"));
+        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX));
 
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
 
@@ -1309,7 +1309,7 @@ public class ChoreoComponent {
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
 
-        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat("/graphql"));
+        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX));
 
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
 
