@@ -1,5 +1,0 @@
-resources:
-  - actions-runner-system
-  - cert-manager
-  - csi-secret-store-driver
-  - namespace
