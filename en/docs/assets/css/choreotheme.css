@@ -388,6 +388,13 @@ color: #a8a39f;
     }
 }
 
+@-moz-document url-prefix() { 
+    .md-search {
+       margin-left:25%;
+       margin-top: -30px;
+    }
+  }
+
 .cInlineImage-xsmall {
     display: inline-block;
     text-align: center;
