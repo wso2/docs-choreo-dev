@@ -14,11 +14,9 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  annotations:
-    autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
   labels:
     choreo.component: dp-kv-resolver
   name: dp-kv-resolver
@@ -29,4 +27,12 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: dp-kv-resolver
-  targetCPUUtilizationPercentage: 75
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 75
+    - type: Resource
+      resource:
+        name: memory
+        targetAverageUtilization: 75
