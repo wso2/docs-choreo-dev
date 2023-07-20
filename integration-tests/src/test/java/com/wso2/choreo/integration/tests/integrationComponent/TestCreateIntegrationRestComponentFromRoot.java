@@ -110,8 +110,9 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
     public void componentRetrieval_TestCreateIntegrationRestComponentFromRoot() throws Exception {
 
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
-        testComponent = GraphQL.retrieveComponent(this, choreoTestClient, accessToken,
+        testComponent = GraphQL.retrieveComponent(this, choreoProjectsTestClient, accessToken,
                 graphqlDTO);
+
     }
 
     @Test(dependsOnMethods = {"componentRetrieval_TestCreateIntegrationRestComponentFromRoot"})
