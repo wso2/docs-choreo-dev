@@ -3,15 +3,7 @@
 ## General
 
 ### Q: What is Choreo?
-Choreo is your SaaS application development suite designed to accelerate the creation of digital experiences. With Choreo you can build, deploy, monitor, and manage your cloud-native applications while increasing developer productivity, allowing you to focus on innovation.
-
-Choreo consists of five profiles:
-
-- **Internal Developer Platform**: A full lifecycle cloud-native application development platform to create, deploy, run, and govern APIs, integrations, and microservices on Kubernetes. Enable organization-wide productivity via self-service teams, governance and security, enterprise marketplaces, and business metrics.
-- **API Manager**:  A complete platform for enterprise-grade API-first development to create, deploy, run, and manage APIs and services, which integrate perfectly into your development practices with multiple environments. Deploy to the Choreo cloud or any private cloud within minutes.
-- **iPaaS**: A developer-friendly platform for writing real integrations as code or low-code. Create scheduled tasks, reusable APIs, or event-driven integrations. Build, deploy, run, and observe in a seamless serverless, multi-cloud, and multi-environment setup.
-- **Cloud Native App Developer**: Design, develop, deploy, and operate your backend APIs, services, integrations, and more with any programming language.
-- **DevOps**: Release and manage applications on Kubernetes without compromising on security, reliability, or governance, across any cloud.
+Choreo is an internal developer platform designed to accelerate the creation of digital experiences. With Choreo, you can effortlessly  build, deploy, monitor, and manage your cloud native applications. Our goal is to  enhance developer productivity and enable innovation.
 
 ### Q: What is an organization in Choreo?
 An organization is a logical grouping of users and their resources. It may represent a company, community, or a single user. Users can belong to multiple organizations, and each organization can have different roles assigned to its users to control access to Choreo features.
@@ -106,8 +98,8 @@ A Developer plan allows you to try out Choreo’s capabilities at no cost. It’
 ### Q: How do I calculate the infrastructure costs?
 Calculating infrastructure costs depends on the type of workload you want to manage. Here are a few examples:
 
-- **Example 1**: Managing existing APIs with Choreo API Manager as an API proxy with simple mediation; no additional infrastructure costs.
-- **Example 2**: Managing existing APIs with Choreo API Manager as an API proxy with complex mediation and policies; Choreo will deploy 1 x container to handle these mediation and policies at approximately USD$57.25 per month per API.
+- **Example 1**: Managing existing APIs as an API proxy with simple mediation; no additional infrastructure costs.
+- **Example 2**: Managing existing APIs as an API proxy with complex mediation and policies; Choreo will deploy 1 x container to handle these mediation and policies at approximately USD$57.25 per month per API.
 - **Example 3**: Creating, deploying, and managing a new API or integration within Choreo; pay for 1 x component + infrastructure cost. Each container deployed will be approximately USD$57.25 per month on the default configuration provided by Choreo. Additional resources will be charged based on the type of resource required.
 - **Example 4**: Creating, deploying, and managing a microservice; the same approach as example 3.
 
@@ -128,28 +120,3 @@ You can start by using a basic plan or contact us for an Enterprise Support plan
 
 ### Q: I want to upgrade from PAYG to an Enterprise subscription. Will there be an outage during the upgrade?
 No, there are no outages when upgrading a plan.
-
-## Choreo Internal Developer Platform
-
-### Q: What is the Choreo Internal Developer Platform?
-Choreo Internal Developer Platform (IDevP) is a full-lifecycle cloud-native application development platform to create, deploy, run, and govern APIs, integrations, and microservices on Kubernetes. Enable organization-wide productivity via self-service teams, governance and security, enterprise marketplaces, and business metrics.
-
-## Choreo API Manager
-
-### Q: What is Choreo API Manager?
-Choreo API Manager is a complete platform for enterprise-grade API-first development to create, deploy, run, and manage APIs and services, which integrate perfectly into your development practices with multiple environments. Deploy to the Choreo cloud or any private cloud within minutes.
-
-## Choreo iPaaS
-
-### Q: What is Choreo iPaaS?
-Choreo iPaaS is a developer-friendly platform for writing real integrations as code or low-code. With Choreo iPaaS you can create scheduled tasks, reusable APIs, or event-driven integrations. Build, deploy, run, and observe in a seamless serverless, multi-cloud, and multi-environment setup.
-
-## Choreo Cloud Native App Developer
-
-### Q: What is Choreo Cloud Native App Developer?
-Choreo Cloud Native App Developer (CNAD) allows you to design, develop, deploy, and operate your backend APIs, services, integrations, and more with any programming language.
-
-## Choreo DevOps
-
-### Q: What is Choreo DevOps?
-Choreo DevOps allows you to release and manage applications on Kubernetes without compromising security, reliability, or governance across any cloud.
