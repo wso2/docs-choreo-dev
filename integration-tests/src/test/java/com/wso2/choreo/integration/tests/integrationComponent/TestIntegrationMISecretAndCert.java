@@ -142,14 +142,8 @@ public class TestIntegrationMISecretAndCert extends TestNGCitrusSpringSupport {
         String devEnvIdToDeploy = testComponent.getLatestAppEnvId(Constant.DEV_ENVIRONMENT);
         String branch = testComponent.getRepository().getBranch();
 
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder()
-                .componentId(componentId)
-                .latestVersionId(latestVersionId)
-                .devEnvIdToDeploy(devEnvIdToDeploy)
-                .branch(branch)
-                .sha(latestCommitSha)
-                .shaDate("")
-                .build();
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).latestVersionId(latestVersionId)
+                .devEnvIdToDeploy(devEnvIdToDeploy).branch(branch).sha(latestCommitSha).shaDate("").build();
 
         // Deploy component
         GraphQL.deployComponent(this, choreoTestClient, accessToken, graphqlDTO);

@@ -15,7 +15,7 @@ rebaseRules:
     sources: [ existing, new ]
     resourceMatchers:
       - apiVersionKindMatcher:
-          apiVersion: autoscaling/v1
+          apiVersion: autoscaling/v2
           kind: HorizontalPodAutoscaler
 
   - path: [ metadata, annotations, autoscaling.alpha.kubernetes.io/conditions ]
@@ -23,7 +23,7 @@ rebaseRules:
     sources: [ existing, new ]
     resourceMatchers:
       - apiVersionKindMatcher:
-          apiVersion: autoscaling/v1
+          apiVersion: autoscaling/v2
           kind: HorizontalPodAutoscaler
 
   - paths:
