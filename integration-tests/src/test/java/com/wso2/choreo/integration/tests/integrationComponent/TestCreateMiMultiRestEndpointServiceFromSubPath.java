@@ -111,7 +111,7 @@ public class TestCreateMiMultiRestEndpointServiceFromSubPath extends TestNGCitru
     public void componentRetrieval_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
 
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
-        testComponent = GraphQL.retrieveComponent(this, choreoTestClient, accessToken,
+        testComponent = GraphQL.retrieveComponent(this, choreoProjectsTestClient, accessToken,
                 graphqlDTO);
     }
 

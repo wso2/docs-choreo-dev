@@ -41,7 +41,7 @@ import java.util.Map;
 
 public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSupport {
 
-    public static final String MI_REST_API = "miRestApi";
+    public static final String MI_REST_API = "miApiService";
     public static final String API_INVOCATION_REQUEST_URI = "/serverinfo";
     private static String accessToken;
     private String orgHandle;
@@ -104,11 +104,9 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
     @CitrusTest
     public void componentRetrieval() throws Exception {
 
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder()
-                .projectId(projectId)
-                .componentHandler(componentHandler)
-                .build();
-        testComponent = GraphQL.retrieveComponent(this, choreoTestClient, accessToken, graphqlDTO);
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
+        testComponent = GraphQL.retrieveComponent(this, choreoProjectsTestClient, accessToken,
+                graphqlDTO);
     }
 
     @Test(dependsOnMethods = { "componentRetrieval" })
@@ -134,7 +132,7 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
                 .build();
 
         // Deploy component
-        GraphQL.deployComponent(this, choreoTestClient, accessToken, graphqlDTO);
+        GraphQL.deployComponent(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 
     @Test(dependsOnMethods = { "componentDeployment" })
@@ -148,6 +146,7 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
                 .build();
         GraphQL.getDeploymentStatusByVersion(this, choreoProjectsTestClient, accessToken, dto);
     }
+
 
     @Test(dependsOnMethods = { "deploymentStatusByVersion" })
     @CitrusTest

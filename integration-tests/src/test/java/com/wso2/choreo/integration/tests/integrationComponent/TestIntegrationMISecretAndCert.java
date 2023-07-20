@@ -106,11 +106,9 @@ public class TestIntegrationMISecretAndCert extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void componentRetrieval() throws Exception {
 
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder()
-                .projectId(projectId)
-                .componentHandler(componentHandler)
-                .build();
-        testComponent = GraphQL.retrieveComponent(this, choreoTestClient, accessToken, graphqlDTO);
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
+        testComponent = GraphQL.retrieveComponent(this, choreoProjectsTestClient, accessToken,
+                graphqlDTO);
     }
 
     @Test(dependsOnMethods = { "componentRetrieval" })
