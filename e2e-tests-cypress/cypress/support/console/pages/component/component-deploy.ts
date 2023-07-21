@@ -553,7 +553,7 @@ export class ComponentDeployPage {
     changeVisibility?: boolean,
     count = 0,
     configSetupStepAvailable = false,
-    configEnvVars = false,
+    configEnvVars = false
   ) {
     APIDeployment.RetryPromotionToProd();
     cy.get('[data-cyid="btn-promote-button"]', LONG_TIME)
@@ -568,7 +568,7 @@ export class ComponentDeployPage {
     }
 
     if (count > 0) {
-      cy.get('[data-cyid="btn-next-button"]').contains("Next").click();
+      cy.get('[data-cyid="btn-next-button"]').click();
     }
 
     cy.get(
