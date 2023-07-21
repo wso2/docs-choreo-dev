@@ -5,29 +5,30 @@ helmCharts:
       linux:
         image:
           repository: choreocontrolplane.azurecr.io/oss/azure/secrets-store/provider-azure
+          tag: v1.4.1
       secrets-store-csi-driver:
         syncSecret:
           enabled: true
         linux:
           livenessProbeImage:
             repository: choreocontrolplane.azurecr.io/oss/kubernetes-csi/livenessprobe
+            tag: v2.10.0
           registrarImage:
             repository: choreocontrolplane.azurecr.io/oss/kubernetes-csi/csi-node-driver-registrar
+            tag: v2.8.0
           image:
             repository: choreocontrolplane.azurecr.io/oss/kubernetes-csi/secrets-store/driver
-          driver:
-            resources:
-              requests:
-                memory: 200Mi
-              limits:
-                memory: 400Mi
+            tag: v1.3.3
+          crds:
+            image:
+              repository: choreocontrolplane.azurecr.io/oss/kubernetes-csi/secrets-store/driver-crds
+              tag: v1.3.3
     releaseName: csi-secrets-store-provider-azure
     namespace: csi-secret-store-driver
-    version: 1.2.0
+    version: 1.4.3
     repo: oci://choreocontrolplane.azurecr.io/helm
 
 commonAnnotations:
-  kapp.k14s.io/disable-original: ""
   kapp.k14s.io/disable-default-label-scoping-rules: ""
   checkov.io/skip1: CKV_K8S_AZURE_WSO2_2=Managed by csi-secret-store-provider-azure
   checkov.io/skip2: CKV2_K8S_5=Managed by csi-secret-store-provider-azure
