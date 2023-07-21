@@ -49,12 +49,12 @@ export class OrganizationComponent {
     cy.wait(300);
     cy.get('[data-cyid="invite-members"]').click();
     cy.wait(300);
-    cy.get('[data-cyid="chip-email-addresses"] div div input')
-      .should("be.visible")
-      .type(email);
-    cy.get('[data-cyid="chip-email-addresses"] div div input')
-      .should("be.visible")
-      .type("{enter}");
+    cy.get('[data-cyid="tag-email-addresses"]').within(() => {
+      cy.get('input[type="text"]')
+        .should("be.visible")
+        .type(email)
+        .type("{enter}");
+    });
     cy.get('[data-cyid="select-roles"]').click();
     this.addRoles(roles);
     cy.get("body").type("{esc}");
@@ -99,7 +99,9 @@ export class OrganizationComponent {
     const deletePendingInvitation = `${Cypress.env(
       "newAppSvcURL"
     )}/users-mgt/1.0.0/orgs/${handle}/invitations?email=${email}`;
-    const getUsers = `${Cypress.env("newAppSvcURL")}/users-mgt/1.0.0/orgs/${handle}/users`;
+    const getUsers = `${Cypress.env(
+      "newAppSvcURL"
+    )}/users-mgt/1.0.0/orgs/${handle}/users`;
 
     Utils.sendGetRequest(getUsers, headers).then((res) => {
       const list = res.body.list as [];
