@@ -6,6 +6,12 @@ helmCharts:
         image:
           repository: choreocontrolplane.azurecr.io/oss/azure/secrets-store/provider-azure
           tag: v1.4.1
+        tolerations:
+          - operator: Exists
+          - key: ghrunner
+            operator: Equal
+            value: "true"
+            effect: NoSchedule
       secrets-store-csi-driver:
         syncSecret:
           enabled: true
@@ -23,6 +29,11 @@ helmCharts:
             image:
               repository: choreocontrolplane.azurecr.io/oss/kubernetes-csi/secrets-store/driver-crds
               tag: v1.3.3
+          tolerations:
+            - key: ghrunner
+              operator: Equal
+              value: "true"
+              effect: NoSchedule
     releaseName: csi-secrets-store-provider-azure
     namespace: csi-secret-store-driver
     version: 1.4.3
