@@ -171,7 +171,7 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
         responseParams.put("sha", latestCommitSha);
         responseParams.put("versionId", versionId);
 
-        GraphQL.getComponentDeploymentStatus(this, choreoTestClient, accessToken, dto, responseParams);
+        GraphQL.getComponentDeploymentStatus(this, choreoProjectsTestClient, accessToken, dto, responseParams);
     }
 
     @Test(dependsOnMethods = { "componentDeploymentStatus" })

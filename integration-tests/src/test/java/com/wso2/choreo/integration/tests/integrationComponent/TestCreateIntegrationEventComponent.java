@@ -201,7 +201,7 @@ public class TestCreateIntegrationEventComponent extends TestNGCitrusSpringSuppo
         responseParams.put("sha", latestCommitSha);
         responseParams.put("versionId", versionId);
 
-        GraphQL.getComponentDeploymentStatus(this, choreoTestClient, accessToken, dto, responseParams);
+        GraphQL.getComponentDeploymentStatus(this, choreoProjectsTestClient, accessToken, dto, responseParams);
     }
 
     @Test(dependsOnMethods = {"componentDeploymentStatus_TestCreateIntegrationEventComponent"})
@@ -211,6 +211,6 @@ public class TestCreateIntegrationEventComponent extends TestNGCitrusSpringSuppo
         String devReleaseId = GraphQL.componentDeployment(testComponent, Constant.DEV_ENVIRONMENT, accessToken).getReleaseId();
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(orgHandle)
                 .componentType(MI_EVENT_HANDLER).releaseId(devReleaseId).build();
-        GraphQL.stopDeployment(this, choreoTestClient, accessToken, graphqlDTO);
+        GraphQL.stopDeployment(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 }

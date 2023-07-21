@@ -171,7 +171,7 @@ public class TestCreateIntegrationEventContainerComponent extends TestNGCitrusSp
         responseParams.put("sha", latestCommitSha);
         responseParams.put("versionId", versionId);
 
-        GraphQL.getComponentDeploymentStatus(this, choreoTestClient, accessToken, dto, responseParams);
+        GraphQL.getComponentDeploymentStatus(this, choreoProjectsTestClient, accessToken, dto, responseParams);
     }
 
     @Test(dependsOnMethods = {"componentDeploymentStatus_TestCreateIntegrationEventContainerComponent"})
@@ -200,7 +200,7 @@ public class TestCreateIntegrationEventContainerComponent extends TestNGCitrusSp
 
         GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).apiVersionId(latestApiVersionId).
                 sourceReleaseId(releaseIdForEnvironment).targetEnvironmentId(latestAppEnvId).build();
-        GraphQL.promoteComponent(this, choreoTestClient, accessToken, dto);
+        GraphQL.promoteComponent(this, choreoProjectsTestClient, accessToken, dto);
 
         testComponent.waitForComponentDeploymentSuccess(accessToken, orgHandle, orgUUID, latestApiVersionId,
                 latestAppEnvId);
@@ -213,6 +213,6 @@ public class TestCreateIntegrationEventContainerComponent extends TestNGCitrusSp
         String devReleaseId = GraphQL.componentDeployment(testComponent, Constant.DEV_ENVIRONMENT, accessToken).getReleaseId();
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(orgHandle)
                 .componentType(CONTAINERIZED_EVENT_HANDLER).releaseId(devReleaseId).build();
-        GraphQL.stopDeployment(this, choreoTestClient, accessToken, graphqlDTO);
+        GraphQL.stopDeployment(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 }

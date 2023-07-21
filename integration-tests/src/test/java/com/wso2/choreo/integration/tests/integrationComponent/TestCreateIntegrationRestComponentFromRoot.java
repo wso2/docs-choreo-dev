@@ -123,7 +123,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
         argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
         argMap.put("commitHash", testComponent.getLatestCommitHash(testComponent.getCommitHistory(accessToken)));
-        GraphQL.generateEndpoints(this, choreoTestClient, accessToken, argMap);
+        GraphQL.generateEndpoints(this, choreoProjectsTestClient, accessToken, argMap);
     }
 
     @Test(dependsOnMethods = {"generateEndpointsDev_TestCreateIntegrationRestComponentFromRoot"})

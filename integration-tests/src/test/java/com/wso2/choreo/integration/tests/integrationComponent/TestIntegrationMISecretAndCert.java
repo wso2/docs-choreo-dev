@@ -146,7 +146,7 @@ public class TestIntegrationMISecretAndCert extends TestNGCitrusSpringSupport {
                 .devEnvIdToDeploy(devEnvIdToDeploy).branch(branch).sha(latestCommitSha).shaDate("").build();
 
         // Deploy component
-        GraphQL.deployComponent(this, choreoTestClient, accessToken, graphqlDTO);
+        GraphQL.deployComponent(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 
     @Test(dependsOnMethods = { "componentDeployment" })
@@ -184,7 +184,7 @@ public class TestIntegrationMISecretAndCert extends TestNGCitrusSpringSupport {
         responseParams.put("sha", latestCommitSha);
         responseParams.put("versionId", versionId);
 
-        GraphQL.getComponentDeploymentStatus(this, choreoTestClient, accessToken, dto, responseParams);
+        GraphQL.getComponentDeploymentStatus(this, choreoProjectsTestClient, accessToken, dto, responseParams);
     }
 
     @Test(dependsOnMethods = { "componentDeploymentStatus" })
@@ -215,7 +215,7 @@ public class TestIntegrationMISecretAndCert extends TestNGCitrusSpringSupport {
                 .componentType(MI_REST_API)
                 .releaseId(devReleaseId)
                 .build();
-        GraphQL.stopDeployment(this, choreoTestClient, accessToken, graphqlDTO);
+        GraphQL.stopDeployment(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 
 }
