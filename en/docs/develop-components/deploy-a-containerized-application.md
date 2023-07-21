@@ -121,7 +121,7 @@ Once the build process is complete, Choreo will deploy the application automatic
 
 By default, Choreo utilizes the Aqua Trivy (OSS) image vulnerability scanner to detect security vulnerabilities in all Dockerfile-based build pipelines. The scanner will fail the pipeline if any **CRITICAL** CVEs (Common Vulnerabilities and Exposures) are detected. CVEs of other severity levels are recorded but does not fail the pipeline.
 
-If you cannot fix a critical CVE immediately, you can opt to ignore it. To ignore a critical CVE add a **trivyignore** `(<docker-build-context-path>/.trivyignore)` file to your build context path. In the file, add the CVEs you need the pipeline to ignore, one entry per line as follows:
+If you cannot fix a critical CVE immediately, you can opt to ignore it. To ignore a critical CVE, add a `trivyignore` (`<docker-build-context-path>/.trivyignore`) file to your build context path. In the file, add the CVEs you need the pipeline to ignore, one entry per line as follows:
 
 ```
 CVE-2023-xxxx
