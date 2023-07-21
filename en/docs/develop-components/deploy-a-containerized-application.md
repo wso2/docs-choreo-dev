@@ -104,7 +104,7 @@ For more information about these configurations, see Choreo's [DevOps capabiliti
 
 You can configure the **Endpoints** to expose your service using the **Service** Component in Choreo. See [Service Component](../develop-components/develop-services/develop-a-service.md) for more information. 
 
-### Build, deploy and promote
+### Build, deploy, and promote
 
 After adding the application configuration, you can build and deploy it by clicking the **Deploy Manually** button. Choreo will start the build process with the selected commit in the **Build Area**. 
 
@@ -116,3 +116,21 @@ Choreo scans your Dockerfile for security vulnerabilities during the build phase
 ![Build Logs Panel](../assets/img/develop-components/deploy/build-deploy-page-logs.png){.cInlineImage-full}
 
 Once the build process is complete, Choreo will deploy the application automatically to the Development environment. To promote the build to higher environments, you can click the **Promote** button. The number of environment cards visible on the page may vary depending on your environment configurations.
+
+### Troubleshoot security vulnerability scan failures (Trivy)
+
+By default, Choreo utilizes the Aqua Trivy (OSS) image vulnerability scanner to detect security vulnerabilities in all Dockerfile-based build pipelines. The scanner will fail the pipeline if any **CRITICAL** CVEs (Common Vulnerabilities and Exposures) are detected. CVEs of other severity levels are recorded but does not fail the pipeline.
+
+If you cannot fix a critical CVE immediately, you can opt to ignore it. To ignore a critical CVE, add a `trivyignore` (`<docker-build-context-path>/.trivyignore`) file to your build context path. In the file, add the CVEs you need the pipeline to ignore, one entry per line as follows:
+
+```
+CVE-2023-xxxx
+CVE-2023-yyyy
+```
+
+You can add comments in the file by using `#` in front of the comment as follows: 
+
+```
+# comments can be added like this
+CVE-2023-xxxx
+```
