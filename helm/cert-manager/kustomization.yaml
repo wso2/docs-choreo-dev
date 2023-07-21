@@ -15,17 +15,20 @@ helmCharts:
       cainjector:
         image:
           repository: choreocontrolplane.azurecr.io/jetstack/cert-manager-cainjector
+          tag: v1.12.2
         replicaCount: 2
       image:
         repository: choreocontrolplane.azurecr.io/jetstack/cert-manager-controller
+        tag: v1.12.2
       installCRDs: true
       replicaCount: 2
       webhook:
         image:
           repository: choreocontrolplane.azurecr.io/jetstack/cert-manager-webhook
+          tag: v1.12.2
         replicaCount: 2
     releaseName: cert-manager
-    version: v1.8.0
+    version: v1.12.2
     namespace: cert-manager
     repo: oci://choreocontrolplane.azurecr.io/helm
 
