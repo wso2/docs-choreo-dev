@@ -21,12 +21,16 @@ export class ComponentListingPage {
     cyGet(`tbody>tr`).should("be.visible").realHover();
 
     cy.get('[data-cyid="btn-contained-button"]').should("be.visible").click();
-    cy.get('[name="confirmName"]').type(componentName);
-    cy.get(".MuiDialogActions-spacing button")
-      .should("be.enabled")
-      .eq(1)
-      .click();
-    cy.get(".MuiDialog-container").should("not.exist");
+    cy.get('[data-cyid="delete-confirmation-cancel-button-button"]').should(
+      "be.enabled"
+    );
+    cy.get('[data-cyid="confirm-name"]').within(() => {
+      cy.get("input").type(componentName).type("{enter}");
+    });
+
+    cy.get('[data-cyid="delete-confirmation-dialog-content"]').should(
+      "not.exist"
+    );
     this.verifyDeletion();
   }
 
