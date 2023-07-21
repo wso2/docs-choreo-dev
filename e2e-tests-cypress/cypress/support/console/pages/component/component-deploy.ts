@@ -314,6 +314,10 @@ export class ComponentDeployPage {
     });
   }
 
+  public static stopSingleDevContainer() {
+    this.stopContainer(0, 1);
+  }
+
   public static stopDevContainer() {
     if (Cypress.env("isPrivateOrg")) {
       this.stopContainer(0, 3);
@@ -555,7 +559,7 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-promote-button"]', LONG_TIME)
       .should("be.enabled")
       .click();
-    if(configSetupStepAvailable){
+    if (configSetupStepAvailable) {
       cy.get('[data-cyid="btn-next-button"]').contains("Next").click();
     }
 
