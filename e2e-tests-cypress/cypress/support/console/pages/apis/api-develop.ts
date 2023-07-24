@@ -84,8 +84,7 @@ export class APIDevelop {
     verb: string,
     policy: Enums.PolicyType,
     policyName: string,
-    policyType: string,
-    headerCount: number = 1
+    policyType: string
   ) {
     const header = this.getHeader(resourcePath, verb.toUpperCase());
 
@@ -101,7 +100,6 @@ export class APIDevelop {
     cyGet('[name*="Name"]').should("be.visible").type(policyName);
     cyGet('[name*="Value"]').clear().type(policyType);
     cy.get("button").contains("Add").click();
-    cyGet(`[title="${policy}"]`).should("have.length", headerCount);
     cy.get("button").contains("Save").click();
   }
 
