@@ -656,6 +656,8 @@ schemaFilePath
 2-3x
  - docs/develop-components/deploy-a-containerized-application.md
 DB_PASS
+CVEs
+trivyignore
  - docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo.md
 redirectUrl
 asgardeoClientId
