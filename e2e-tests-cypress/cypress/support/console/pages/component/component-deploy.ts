@@ -232,16 +232,15 @@ export class ComponentDeployPage {
       .should("not.exist");
     APIDeployment.RetryDevDeployment();
     cyGet('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
-      .should("be.enabled")
-      .click();
-    cy.contains("Deploy").should("be.visible").click();
+      .should("be.enabled");
+    cy.contains("Configure & Deploy", LONG_TIME).should("be.visible").click();
     this.addConfiguration(configValue);
     APIDeployment.RetryDevDeployment();
     cy.get('[data-testid="btn-stop"]', LONG_TIME).should("be.visible");
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
     // to ensure rendering completes before checking the deployment status
     cy.wait(VERY_SHORT_TIME.timeout);
-    cy.get('[data-testid="btn-stop"]').should("be.visible");
+    cy.get('[data-testid="btn-stop"]', LONG_TIME).should("be.visible");
     APIDeployment.RetryDevDeployment();
     cy.get('[data-cyid="deployment-status"]', LONG_TIME).contains(
       DEPLOYMENT_SUCCESS,
@@ -250,7 +249,7 @@ export class ComponentDeployPage {
   }
 
   static addConfiguration(value: string) {
-    cy.get(".ConfigForm").should("be.visible");
+    cy.get(".ConfigForm", MEDIUM_TIME).should("be.visible");
     cy.get(".ConfigForm div input").type(value);
     cy.get('.ConfigForm button[type="submit"]').click();
   }
@@ -269,7 +268,7 @@ export class ComponentDeployPage {
       cy.get('[data-cyid="btn-next-button"]').click();
       this.addConfiguration(configValue);
     } else {
-      cy.get(".ConfigForm button")
+      cy.get('[data-cyid="btn-submit-configform"]')
         .contains("Promote")
         .should("have.length", 1)
         .click();
