@@ -140,8 +140,7 @@ describe(`Verify proxy api functionality`, () => {
       Enums.HTTPMethod.GET,
       Enums.PolicyType.setHeader,
       HEADER_KEY_2,
-      HEADER_VALUE_2,
-      2
+      HEADER_VALUE_2
     );
   });
 
