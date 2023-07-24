@@ -15,7 +15,7 @@ The following are some of the cutting-edge capabilities of Choreo:
 
  - Seamless deployment:
     - **CI/CD**: Eliminate manual builds and unreliable deployments with Choreo's industry-standard CI/CD tooling, providing complete control and flexibility.
-    - **Multi-cloud Kubernetes**: Deliver cloud-native applications across Azure, AWS, GCP, or your Kubernetes clusters with ease.
+    - **Multi-cloud Kubernetes**: Easily deliver cloud native applications across Azure, AWS, GCP, or your Kubernetes clusters.
     - **Configuration management**: Centralize configuration parameters, sensitive credentials, and secrets across deployment environments via an intuitive interface.
 
  - Effortless management of APIs, integrations, microservices, and web applications:
@@ -26,7 +26,7 @@ The following are some of the cutting-edge capabilities of Choreo:
  - Reusable digital assets:
     - **Discover assets**: Accelerate delivery times by finding and reusing digital assets developed by others via Choreo's library of over 400 connectors.
     - **Control visibility and sharing**: Publish your digital assets to a shared marketplace for consumption by internal or external stakeholders, managed by role-based access control.
-    - **Enterprise Marketplace**: Choreo's secure enterprise marketplace that fosters transparency and efficiency with granular access control for publishers and consumers.
+    - **Enterprise Marketplace**: Choreo's secure enterprise marketplace fosters transparency and efficiency with granular access control for publishers and consumers.
 
  - Comprehensive observability:
     - **Performance predictions**: Optimize your applications by leveraging Choreo's performance predictions based on historical and real-time system data.
