@@ -44,8 +44,6 @@ spec:
               envFrom:
                 - configMapRef:
                     name: env-dp-cicd
-                - configMapRef:
-                    name: cm-build-status-cleaner
               resources:
                 limits:
                   cpu: 300m

@@ -204,13 +204,6 @@ configMapGenerator:
     behavior: create
     literals:
       - CLOUD_MANAGER_API_URL=http://dp-cloud-manager
-  - name: cm-build-status-cleaner
-    behavior: create
-    literals:
-      - DB_NAME=choreo_cicd_db
-      - DB_PORT=1433
-      - DB_USERNAME=choreo_cicd_admin_db_user
-      - DB_HOST=choreo-dev-ctrl-plane-mssql.database.windows.net
   - name: cm-dp-cloud-manager
     behavior: create
     literals:
