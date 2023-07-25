@@ -1,0 +1,5256 @@
+{
+	"info": {
+		"_postman_id": "5edb0a14-6d4d-4ecb-8867-1e4236142bb7",
+		"name": "Components API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26391121",
+		"_collection_link": "https://winter-robot-282301.postman.co/workspace/Team-Workspace~be988dda-7505-4bca-8709-415b9b5bf44c/collection/26391121-5edb0a14-6d4d-4ecb-8867-1e4236142bb7?action=share&creator=26391121&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "{componentId}",
+			"item": [
+				{
+					"name": "release",
+					"item": [
+						{
+							"name": "{releaseId}",
+							"item": [
+								{
+									"name": "volume-mount",
+									"item": [
+										{
+											"name": "get volume mounts by release id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"key": "Authorization",
+														"value": "{{token}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/volume-mount?organization_id={{organization_id}}&project_id={{project_id}}",
+													"host": [
+														"{{baseUrl_Component}}"
+													],
+													"path": [
+														":componentId",
+														"release",
+														":releaseId",
+														"volume-mount"
+													],
+													"query": [
+														{
+															"key": "organization_id",
+															"value": "{{organization_id}}"
+														},
+														{
+															"key": "project_id",
+															"value": "{{project_id}}"
+														}
+													],
+													"variable": [
+														{
+															"key": "componentId",
+															"value": "{{componentId}}"
+														},
+														{
+															"key": "releaseId",
+															"value": "{{release_id}}"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Ok",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "application/json"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/:componentId/release/:releaseId/volume-mount",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"volume-mount"
+															],
+															"variable": [
+																{
+																	"key": "componentId"
+																},
+																{
+																	"key": "releaseId"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{}"
+												},
+												{
+													"name": "Internal server error",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "text/plain"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/:componentId/release/:releaseId/volume-mount",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"volume-mount"
+															],
+															"variable": [
+																{
+																	"key": "componentId"
+																},
+																{
+																	"key": "releaseId"
+																}
+															]
+														}
+													},
+													"status": "Internal Server Error",
+													"code": 500,
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": "<string>"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "svc-config",
+									"item": [
+										{
+											"name": "get svc krm for release",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"key": "Authorization",
+														"value": "{{token}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/svc-config?organization_id={{organization_id}}&project_id={{project_id}}",
+													"host": [
+														"{{baseUrl_Component}}"
+													],
+													"path": [
+														":componentId",
+														"release",
+														":releaseId",
+														"svc-config"
+													],
+													"query": [
+														{
+															"key": "organization_id",
+															"value": "{{organization_id}}"
+														},
+														{
+															"key": "project_id",
+															"value": "{{project_id}}"
+														}
+													],
+													"variable": [
+														{
+															"key": "componentId",
+															"value": "{{componentId}}"
+														},
+														{
+															"key": "releaseId",
+															"value": "{{release_id}}"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Ok",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "application/json"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/:componentId/release/:releaseId/svc-config",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"svc-config"
+															],
+															"variable": [
+																{
+																	"key": "componentId"
+																},
+																{
+																	"key": "releaseId"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{}"
+												},
+												{
+													"name": "Internal server error",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "text/plain"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/:componentId/release/:releaseId/svc-config",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"svc-config"
+															],
+															"variable": [
+																{
+																	"key": "componentId"
+																},
+																{
+																	"key": "releaseId"
+																}
+															]
+														}
+													},
+													"status": "Internal Server Error",
+													"code": 500,
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": "<string>"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "hpa",
+									"item": [
+										{
+											"name": "{hpaId}",
+											"item": [
+												{
+													"name": "metric",
+													"item": [
+														{
+															"name": "{metricId}",
+															"item": [
+																{
+																	"name": "update a hpa metric by id",
+																	"event": [
+																		{
+																			"listen": "test",
+																			"script": {
+																				"exec": [
+																					"pm.test(\"Status code is 200\", function () {",
+																					"    pm.response.to.have.status(200);",
+																					"});"
+																				],
+																				"type": "text/javascript"
+																			}
+																		}
+																	],
+																	"request": {
+																		"method": "PUT",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "*/*"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			},
+																			{
+																				"key": "Authorization",
+																				"value": "{{token}}",
+																				"type": "text"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n    \"ID\": \"{{metric_id}}\",\n    \"organization_id\": \"{{organization_id}}\",\n    \"project_id\": \"{{project_id}}\",\n    \"hpa_id\": \"{{hpa_id}}\",\n    \"type\": \"Resource\",\n    \"rule\": {\n        \"resource\": {\n            \"name\": \"cpu\",\n            \"value\": \"60\",\n            \"type\": \"utilization\"\n        }\n    }\n}",
+																			"options": {
+																				"raw": {
+																					"language": "json"
+																				}
+																			}
+																		},
+																		"url": {
+																			"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/hpa/:hpaId/metric/:metricId?organization_id={{organization_id}}&project_id={{project_id}}",
+																			"host": [
+																				"{{baseUrl_Component}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"hpa",
+																				":hpaId",
+																				"metric",
+																				":metricId"
+																			],
+																			"query": [
+																				{
+																					"key": "organization_id",
+																					"value": "{{organization_id}}"
+																				},
+																				{
+																					"key": "project_id",
+																					"value": "{{project_id}}"
+																				}
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId",
+																					"value": "{{componentId}}"
+																				},
+																				{
+																					"key": "releaseId",
+																					"value": "{{release_id}}"
+																				},
+																				{
+																					"key": "hpaId",
+																					"value": "{{hpa_id}}"
+																				},
+																				{
+																					"key": "metricId",
+																					"value": "{{metric_id}}"
+																				}
+																			]
+																		}
+																	},
+																	"response": [
+																		{
+																			"name": "Ok",
+																			"originalRequest": {
+																				"method": "PUT",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "*/*"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "application/json"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/:componentId/release/:releaseId/hpa/:hpaId/metric/:metricId",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						":componentId",
+																						"release",
+																						":releaseId",
+																						"hpa",
+																						":hpaId",
+																						"metric",
+																						":metricId"
+																					],
+																					"variable": [
+																						{
+																							"key": "componentId"
+																						},
+																						{
+																							"key": "releaseId"
+																						},
+																						{
+																							"key": "hpaId"
+																						},
+																						{
+																							"key": "metricId"
+																						}
+																					]
+																				}
+																			},
+																			"status": "OK",
+																			"code": 200,
+																			"_postman_previewlanguage": "json",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "application/json"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "{}"
+																		},
+																		{
+																			"name": "Internal server error",
+																			"originalRequest": {
+																				"method": "PUT",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "*/*"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "text/plain"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/:componentId/release/:releaseId/hpa/:hpaId/metric/:metricId",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						":componentId",
+																						"release",
+																						":releaseId",
+																						"hpa",
+																						":hpaId",
+																						"metric",
+																						":metricId"
+																					],
+																					"variable": [
+																						{
+																							"key": "componentId"
+																						},
+																						{
+																							"key": "releaseId"
+																						},
+																						{
+																							"key": "hpaId"
+																						},
+																						{
+																							"key": "metricId"
+																						}
+																					]
+																				}
+																			},
+																			"status": "Internal Server Error",
+																			"code": 500,
+																			"_postman_previewlanguage": "text",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "text/plain"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "<string>"
+																		}
+																	]
+																},
+																{
+																	"name": "delete a hpa metric by id",
+																	"event": [
+																		{
+																			"listen": "test",
+																			"script": {
+																				"exec": [
+																					"pm.test(\"Status code is 200\", function () {",
+																					"    pm.response.to.have.status(200);",
+																					"});"
+																				],
+																				"type": "text/javascript"
+																			}
+																		}
+																	],
+																	"request": {
+																		"method": "DELETE",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "*/*"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			},
+																			{
+																				"key": "Authorization",
+																				"value": "{{token}}",
+																				"type": "text"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																		},
+																		"url": {
+																			"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/hpa/:hpaId/metric/:metricId?organization_id={{organization_id}}&project_id={{project_id}}",
+																			"host": [
+																				"{{baseUrl_Component}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"hpa",
+																				":hpaId",
+																				"metric",
+																				":metricId"
+																			],
+																			"query": [
+																				{
+																					"key": "organization_id",
+																					"value": "{{organization_id}}"
+																				},
+																				{
+																					"key": "project_id",
+																					"value": "{{project_id}}"
+																				}
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId",
+																					"value": "{{componentId}}"
+																				},
+																				{
+																					"key": "releaseId",
+																					"value": "{{release_id}}"
+																				},
+																				{
+																					"key": "hpaId",
+																					"value": "{{hpa_id}}"
+																				},
+																				{
+																					"key": "metricId",
+																					"value": "{{metric_id}}"
+																				}
+																			]
+																		}
+																	},
+																	"response": [
+																		{
+																			"name": "Ok",
+																			"originalRequest": {
+																				"method": "DELETE",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "*/*"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "application/json"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/:componentId/release/:releaseId/hpa/:hpaId/metric/:metricId",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						":componentId",
+																						"release",
+																						":releaseId",
+																						"hpa",
+																						":hpaId",
+																						"metric",
+																						":metricId"
+																					],
+																					"variable": [
+																						{
+																							"key": "componentId"
+																						},
+																						{
+																							"key": "releaseId"
+																						},
+																						{
+																							"key": "hpaId"
+																						},
+																						{
+																							"key": "metricId"
+																						}
+																					]
+																				}
+																			},
+																			"status": "OK",
+																			"code": 200,
+																			"_postman_previewlanguage": "json",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "application/json"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "{}"
+																		},
+																		{
+																			"name": "Internal server error",
+																			"originalRequest": {
+																				"method": "DELETE",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "*/*"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "text/plain"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/:componentId/release/:releaseId/hpa/:hpaId/metric/:metricId",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						":componentId",
+																						"release",
+																						":releaseId",
+																						"hpa",
+																						":hpaId",
+																						"metric",
+																						":metricId"
+																					],
+																					"variable": [
+																						{
+																							"key": "componentId"
+																						},
+																						{
+																							"key": "releaseId"
+																						},
+																						{
+																							"key": "hpaId"
+																						},
+																						{
+																							"key": "metricId"
+																						}
+																					]
+																				}
+																			},
+																			"status": "Internal Server Error",
+																			"code": 500,
+																			"_postman_previewlanguage": "text",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "text/plain"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "<string>"
+																		}
+																	]
+																}
+															]
+														},
+														{
+															"name": "get hpa metrics by hpa id",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 200\", function () {",
+																			"    pm.response.to.have.status(200);",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Accept",
+																		"value": "application/json"
+																	},
+																	{
+																		"key": "Authorization",
+																		"value": "{{token}}",
+																		"type": "text"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/hpa/:hpaId/metric?organization_id={{organization_id}}&project_id={{project_id}}",
+																	"host": [
+																		"{{baseUrl_Component}}"
+																	],
+																	"path": [
+																		":componentId",
+																		"release",
+																		":releaseId",
+																		"hpa",
+																		":hpaId",
+																		"metric"
+																	],
+																	"query": [
+																		{
+																			"key": "organization_id",
+																			"value": "{{organization_id}}"
+																		},
+																		{
+																			"key": "project_id",
+																			"value": "{{project_id}}"
+																		}
+																	],
+																	"variable": [
+																		{
+																			"key": "componentId",
+																			"value": "{{componentId}}"
+																		},
+																		{
+																			"key": "releaseId",
+																			"value": "{{release_id}}"
+																		},
+																		{
+																			"key": "hpaId",
+																			"value": "{{hpa_id}}"
+																		}
+																	]
+																}
+															},
+															"response": [
+																{
+																	"name": "Ok",
+																	"originalRequest": {
+																		"method": "GET",
+																		"header": [
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			}
+																		],
+																		"url": {
+																			"raw": "{{baseUrl}}/:componentId/release/:releaseId/hpa/:hpaId/metric",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"hpa",
+																				":hpaId",
+																				"metric"
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId"
+																				},
+																				{
+																					"key": "releaseId"
+																				},
+																				{
+																					"key": "hpaId"
+																				}
+																			]
+																		}
+																	},
+																	"status": "OK",
+																	"code": 200,
+																	"_postman_previewlanguage": "json",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "application/json"
+																		}
+																	],
+																	"cookie": [],
+																	"body": "{}"
+																},
+																{
+																	"name": "Internal server error",
+																	"originalRequest": {
+																		"method": "GET",
+																		"header": [
+																			{
+																				"key": "Accept",
+																				"value": "text/plain"
+																			}
+																		],
+																		"url": {
+																			"raw": "{{baseUrl}}/:componentId/release/:releaseId/hpa/:hpaId/metric",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"hpa",
+																				":hpaId",
+																				"metric"
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId"
+																				},
+																				{
+																					"key": "releaseId"
+																				},
+																				{
+																					"key": "hpaId"
+																				}
+																			]
+																		}
+																	},
+																	"status": "Internal Server Error",
+																	"code": 500,
+																	"_postman_previewlanguage": "text",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "text/plain"
+																		}
+																	],
+																	"cookie": [],
+																	"body": "<string>"
+																}
+															]
+														},
+														{
+															"name": "create a hpa metric for a hpa",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 201\", function () {",
+																			"    pm.response.to.have.status(201);",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [
+																	{
+																		"key": "Content-Type",
+																		"value": "*/*"
+																	},
+																	{
+																		"key": "Accept",
+																		"value": "application/json"
+																	},
+																	{
+																		"key": "Authorization",
+																		"value": "{{token}}",
+																		"type": "text"
+																	}
+																],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n    \"organization_id\": \"{{organization_id}}\",\n    \"project_id\": \"{{project_id}}\",\n    \"hpa_id\": \"{{hpa_id}}\",\n    \"type\": \"Resource\",\n    \"rule\": {\n        \"resource\": {\n            \"name\": \"memory\",\n            \"value\": \"175Mi\",\n            \"type\": \"value\"\n        }\n    }\n}",
+																	"options": {
+																		"raw": {
+																			"language": "json"
+																		}
+																	}
+																},
+																"url": {
+																	"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/hpa/:hpaId/metric?organization_id={{organization_id}}&project_id={{project_id}}",
+																	"host": [
+																		"{{baseUrl_Component}}"
+																	],
+																	"path": [
+																		":componentId",
+																		"release",
+																		":releaseId",
+																		"hpa",
+																		":hpaId",
+																		"metric"
+																	],
+																	"query": [
+																		{
+																			"key": "organization_id",
+																			"value": "{{organization_id}}"
+																		},
+																		{
+																			"key": "project_id",
+																			"value": "{{project_id}}"
+																		}
+																	],
+																	"variable": [
+																		{
+																			"key": "componentId",
+																			"value": "{{componentId}}"
+																		},
+																		{
+																			"key": "releaseId",
+																			"value": "{{release_id}}"
+																		},
+																		{
+																			"key": "hpaId",
+																			"value": "{{hpa_id}}"
+																		}
+																	]
+																}
+															},
+															"response": [
+																{
+																	"name": "Created",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "*/*"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																		},
+																		"url": {
+																			"raw": "{{baseUrl}}/:componentId/release/:releaseId/hpa/:hpaId/metric",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"hpa",
+																				":hpaId",
+																				"metric"
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId"
+																				},
+																				{
+																					"key": "releaseId"
+																				},
+																				{
+																					"key": "hpaId"
+																				}
+																			]
+																		}
+																	},
+																	"status": "Created",
+																	"code": 201,
+																	"_postman_previewlanguage": "json",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "application/json"
+																		}
+																	],
+																	"cookie": [],
+																	"body": "{}"
+																},
+																{
+																	"name": "Internal server error",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "*/*"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "text/plain"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																		},
+																		"url": {
+																			"raw": "{{baseUrl}}/:componentId/release/:releaseId/hpa/:hpaId/metric",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"hpa",
+																				":hpaId",
+																				"metric"
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId"
+																				},
+																				{
+																					"key": "releaseId"
+																				},
+																				{
+																					"key": "hpaId"
+																				}
+																			]
+																		}
+																	},
+																	"status": "Internal Server Error",
+																	"code": 500,
+																	"_postman_previewlanguage": "text",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "text/plain"
+																		}
+																	],
+																	"cookie": [],
+																	"body": "<string>"
+																}
+															]
+														}
+													]
+												},
+												{
+													"name": "update a hpa by id",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {",
+																	"    pm.response.to.have.status(200);",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "PUT",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "*/*"
+															},
+															{
+																"key": "Accept",
+																"value": "application/json"
+															},
+															{
+																"key": "Authorization",
+																"value": "{{token}}",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"ID\": \"{{hpa_id}}\",\n    \"app_environment_id\": \"{{app_env_id}}\",\n    \"organization_id\": \"{{organization_id}}\",\n    \"project_id\": \"{{project_id}}\",\n    \"version\": \"v2beta1\",\n    \"min\": 1,\n    \"max\": 2\n}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/hpa/:hpaId?organization_id={{organization_id}}&project_id={{project_id}}",
+															"host": [
+																"{{baseUrl_Component}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"hpa",
+																":hpaId"
+															],
+															"query": [
+																{
+																	"key": "organization_id",
+																	"value": "{{organization_id}}"
+																},
+																{
+																	"key": "project_id",
+																	"value": "{{project_id}}"
+																}
+															],
+															"variable": [
+																{
+																	"key": "componentId",
+																	"value": "{{componentId}}"
+																},
+																{
+																	"key": "releaseId",
+																	"value": "{{release_id}}"
+																},
+																{
+																	"key": "hpaId",
+																	"value": "{{hpa_id}}"
+																}
+															]
+														}
+													},
+													"response": [
+														{
+															"name": "Ok",
+															"originalRequest": {
+																"method": "PUT",
+																"header": [
+																	{
+																		"key": "Content-Type",
+																		"value": "*/*"
+																	},
+																	{
+																		"key": "Accept",
+																		"value": "application/json"
+																	}
+																],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/:componentId/release/:releaseId/hpa/:hpaId",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		":componentId",
+																		"release",
+																		":releaseId",
+																		"hpa",
+																		":hpaId"
+																	],
+																	"variable": [
+																		{
+																			"key": "componentId"
+																		},
+																		{
+																			"key": "releaseId"
+																		},
+																		{
+																			"key": "hpaId"
+																		}
+																	]
+																}
+															},
+															"status": "OK",
+															"code": 200,
+															"_postman_previewlanguage": "json",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "application/json"
+																}
+															],
+															"cookie": [],
+															"body": "{}"
+														},
+														{
+															"name": "Internal server error",
+															"originalRequest": {
+																"method": "PUT",
+																"header": [
+																	{
+																		"key": "Content-Type",
+																		"value": "*/*"
+																	},
+																	{
+																		"key": "Accept",
+																		"value": "text/plain"
+																	}
+																],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/:componentId/release/:releaseId/hpa/:hpaId",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		":componentId",
+																		"release",
+																		":releaseId",
+																		"hpa",
+																		":hpaId"
+																	],
+																	"variable": [
+																		{
+																			"key": "componentId"
+																		},
+																		{
+																			"key": "releaseId"
+																		},
+																		{
+																			"key": "hpaId"
+																		}
+																	]
+																}
+															},
+															"status": "Internal Server Error",
+															"code": 500,
+															"_postman_previewlanguage": "text",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "text/plain"
+																}
+															],
+															"cookie": [],
+															"body": "<string>"
+														}
+													]
+												}
+											]
+										},
+										{
+											"name": "get hpa by release id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"key": "Authorization",
+														"value": "{{token}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/hpa?organization_id={{organization_id}}&project_id={{project_id}}",
+													"host": [
+														"{{baseUrl_Component}}"
+													],
+													"path": [
+														":componentId",
+														"release",
+														":releaseId",
+														"hpa"
+													],
+													"query": [
+														{
+															"key": "organization_id",
+															"value": "{{organization_id}}"
+														},
+														{
+															"key": "project_id",
+															"value": "{{project_id}}"
+														}
+													],
+													"variable": [
+														{
+															"key": "componentId",
+															"value": "{{componentId}}"
+														},
+														{
+															"key": "releaseId",
+															"value": "{{release_id}}"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Ok",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "application/json"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/:componentId/release/:releaseId/hpa",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"hpa"
+															],
+															"variable": [
+																{
+																	"key": "componentId"
+																},
+																{
+																	"key": "releaseId"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{}"
+												},
+												{
+													"name": "Internal server error",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "text/plain"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/:componentId/release/:releaseId/hpa",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"hpa"
+															],
+															"variable": [
+																{
+																	"key": "componentId"
+																},
+																{
+																	"key": "releaseId"
+																}
+															]
+														}
+													},
+													"status": "Internal Server Error",
+													"code": 500,
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": "<string>"
+												}
+											]
+										},
+										{
+											"name": "create a hpa for a release",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "*/*"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"key": "Authorization",
+														"value": "{{token}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"organization_id\": \"{{organization_id}}\",\n    \"project_id\": \"{{project_id}}\",\n    \"version\": \"v2beta1\",\n    \"app_environment_id\": \"{{app_env_id}}\",\n    \"min\": 1,\n    \"max\": 1\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/hpa?organization_id={{organization_id}}&project_id={{project_id}}",
+													"host": [
+														"{{baseUrl_Component}}"
+													],
+													"path": [
+														":componentId",
+														"release",
+														":releaseId",
+														"hpa"
+													],
+													"query": [
+														{
+															"key": "organization_id",
+															"value": "{{organization_id}}"
+														},
+														{
+															"key": "project_id",
+															"value": "{{project_id}}"
+														}
+													],
+													"variable": [
+														{
+															"key": "componentId",
+															"value": "{{componentId}}"
+														},
+														{
+															"key": "releaseId",
+															"value": "{{release_id}}"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Created",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "*/*"
+															},
+															{
+																"key": "Accept",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/:componentId/release/:releaseId/hpa",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"hpa"
+															],
+															"variable": [
+																{
+																	"key": "componentId"
+																},
+																{
+																	"key": "releaseId"
+																}
+															]
+														}
+													},
+													"status": "Created",
+													"code": 201,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{}"
+												},
+												{
+													"name": "Internal server error",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "*/*"
+															},
+															{
+																"key": "Accept",
+																"value": "text/plain"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/:componentId/release/:releaseId/hpa",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"hpa"
+															],
+															"variable": [
+																{
+																	"key": "componentId"
+																},
+																{
+																	"key": "releaseId"
+																}
+															]
+														}
+													},
+													"status": "Internal Server Error",
+													"code": 500,
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": "<string>"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "health-check",
+									"item": [
+										{
+											"name": "get healthchecks for a release",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"key": "Authorization",
+														"value": "{{token}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/health-check?organization_id={{organization_id}}&project_id={{project_id}}",
+													"host": [
+														"{{baseUrl_Component}}"
+													],
+													"path": [
+														":componentId",
+														"release",
+														":releaseId",
+														"health-check"
+													],
+													"query": [
+														{
+															"key": "organization_id",
+															"value": "{{organization_id}}"
+														},
+														{
+															"key": "project_id",
+															"value": "{{project_id}}"
+														}
+													],
+													"variable": [
+														{
+															"key": "componentId",
+															"value": "{{componentId}}"
+														},
+														{
+															"key": "releaseId",
+															"value": "{{release_id}}"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Ok",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "application/json"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/:componentId/release/:releaseId/health-check",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"health-check"
+															],
+															"variable": [
+																{
+																	"key": "componentId"
+																},
+																{
+																	"key": "releaseId"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{}"
+												},
+												{
+													"name": "Internal server error",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "text/plain"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/:componentId/release/:releaseId/health-check",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"health-check"
+															],
+															"variable": [
+																{
+																	"key": "componentId"
+																},
+																{
+																	"key": "releaseId"
+																}
+															]
+														}
+													},
+													"status": "Internal Server Error",
+													"code": 500,
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": "<string>"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "deploy-history",
+									"item": [
+										{
+											"name": "get deploy history of release",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"key": "Authorization",
+														"value": "{{token}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/deploy-history?organization_id={{organization_id}}&project_id={{project_id}}",
+													"host": [
+														"{{baseUrl_Component}}"
+													],
+													"path": [
+														":componentId",
+														"release",
+														":releaseId",
+														"deploy-history"
+													],
+													"query": [
+														{
+															"key": "organization_id",
+															"value": "{{organization_id}}"
+														},
+														{
+															"key": "project_id",
+															"value": "{{project_id}}"
+														}
+													],
+													"variable": [
+														{
+															"key": "componentId",
+															"value": "{{componentId}}"
+														},
+														{
+															"key": "releaseId",
+															"value": "{{release_id}}"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Ok",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "application/json"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/:componentId/release/:releaseId/deploy-history",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"deploy-history"
+															],
+															"variable": [
+																{
+																	"key": "componentId"
+																},
+																{
+																	"key": "releaseId"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{}"
+												},
+												{
+													"name": "Internal server error",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "text/plain"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/:componentId/release/:releaseId/deploy-history",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"deploy-history"
+															],
+															"variable": [
+																{
+																	"key": "componentId"
+																},
+																{
+																	"key": "releaseId"
+																}
+															]
+														}
+													},
+													"status": "Internal Server Error",
+													"code": 500,
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": "<string>"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "deploy-deployment",
+									"item": [
+										{
+											"name": "redeploy release by id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "*/*"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"key": "Authorization",
+														"value": "{{token}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/deploy-deployment?organization_id={{organization_id}}&project_id={{project_id}}",
+													"host": [
+														"{{baseUrl_Component}}"
+													],
+													"path": [
+														":componentId",
+														"release",
+														":releaseId",
+														"deploy-deployment"
+													],
+													"query": [
+														{
+															"key": "organization_id",
+															"value": "{{organization_id}}"
+														},
+														{
+															"key": "project_id",
+															"value": "{{project_id}}"
+														}
+													],
+													"variable": [
+														{
+															"key": "componentId",
+															"value": "{{componentId}}"
+														},
+														{
+															"key": "releaseId",
+															"value": "{{release_id}}"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Created",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "*/*"
+															},
+															{
+																"key": "Accept",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/:componentId/release/:releaseId/deploy-deployment",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"deploy-deployment"
+															],
+															"variable": [
+																{
+																	"key": "componentId"
+																},
+																{
+																	"key": "releaseId"
+																}
+															]
+														}
+													},
+													"status": "Created",
+													"code": 201,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{}"
+												},
+												{
+													"name": "Internal server error",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "*/*"
+															},
+															{
+																"key": "Accept",
+																"value": "text/plain"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/:componentId/release/:releaseId/deploy-deployment",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"deploy-deployment"
+															],
+															"variable": [
+																{
+																	"key": "componentId"
+																},
+																{
+																	"key": "releaseId"
+																}
+															]
+														}
+													},
+													"status": "Internal Server Error",
+													"code": 500,
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": "<string>"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "deploy-config",
+									"item": [
+										{
+											"name": "get workload krm for release",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"key": "Authorization",
+														"value": "{{token}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/deploy-config?organization_id={{organization_id}}&project_id={{project_id}}",
+													"host": [
+														"{{baseUrl_Component}}"
+													],
+													"path": [
+														":componentId",
+														"release",
+														":releaseId",
+														"deploy-config"
+													],
+													"query": [
+														{
+															"key": "organization_id",
+															"value": "{{organization_id}}"
+														},
+														{
+															"key": "project_id",
+															"value": "{{project_id}}"
+														}
+													],
+													"variable": [
+														{
+															"key": "componentId",
+															"value": "{{componentId}}"
+														},
+														{
+															"key": "releaseId",
+															"value": "{{release_id}}"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Ok",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "application/json"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/:componentId/release/:releaseId/deploy-config",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"deploy-config"
+															],
+															"variable": [
+																{
+																	"key": "componentId"
+																},
+																{
+																	"key": "releaseId"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{}"
+												},
+												{
+													"name": "Internal server error",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "text/plain"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/:componentId/release/:releaseId/deploy-config",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"deploy-config"
+															],
+															"variable": [
+																{
+																	"key": "componentId"
+																},
+																{
+																	"key": "releaseId"
+																}
+															]
+														}
+													},
+													"status": "Internal Server Error",
+													"code": 500,
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": "<string>"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "container",
+									"item": [
+										{
+											"name": "{containerId}",
+											"item": [
+												{
+													"name": "volume-mount",
+													"item": [
+														{
+															"name": "{mountId}",
+															"item": [
+																{
+																	"name": "update a volume mount by id",
+																	"event": [
+																		{
+																			"listen": "test",
+																			"script": {
+																				"exec": [
+																					"pm.test(\"Status code is 200\", function () {",
+																					"    pm.response.to.have.status(200);",
+																					"});"
+																				],
+																				"type": "text/javascript"
+																			}
+																		}
+																	],
+																	"request": {
+																		"method": "PUT",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "*/*"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			},
+																			{
+																				"key": "Authorization",
+																				"value": "{{token}}",
+																				"type": "text"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n    \"mountPath\": \"/tmp\",\n    \"readOnly\": false\n}",
+																			"options": {
+																				"raw": {
+																					"language": "json"
+																				}
+																			}
+																		},
+																		"url": {
+																			"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/container/:containerId/volume-mount/:mountId?organization_id={{organization_id}}&project_id={{project_id}}",
+																			"host": [
+																				"{{baseUrl_Component}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"container",
+																				":containerId",
+																				"volume-mount",
+																				":mountId"
+																			],
+																			"query": [
+																				{
+																					"key": "organization_id",
+																					"value": "{{organization_id}}"
+																				},
+																				{
+																					"key": "project_id",
+																					"value": "{{project_id}}"
+																				}
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId",
+																					"value": "{{componentId}}"
+																				},
+																				{
+																					"key": "releaseId",
+																					"value": "{{release_id}}"
+																				},
+																				{
+																					"key": "containerId",
+																					"value": "{{container_id}}"
+																				},
+																				{
+																					"key": "mountId",
+																					"value": "{{volume_mount_id}}"
+																				}
+																			]
+																		}
+																	},
+																	"response": [
+																		{
+																			"name": "Ok",
+																			"originalRequest": {
+																				"method": "PUT",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "*/*"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "application/json"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/volume-mount/:mountId",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						":componentId",
+																						"release",
+																						":releaseId",
+																						"container",
+																						":containerId",
+																						"volume-mount",
+																						":mountId"
+																					],
+																					"variable": [
+																						{
+																							"key": "componentId"
+																						},
+																						{
+																							"key": "releaseId"
+																						},
+																						{
+																							"key": "containerId"
+																						},
+																						{
+																							"key": "mountId"
+																						}
+																					]
+																				}
+																			},
+																			"status": "OK",
+																			"code": 200,
+																			"_postman_previewlanguage": "json",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "application/json"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "{}"
+																		},
+																		{
+																			"name": "Internal server error",
+																			"originalRequest": {
+																				"method": "PUT",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "*/*"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "text/plain"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/volume-mount/:mountId",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						":componentId",
+																						"release",
+																						":releaseId",
+																						"container",
+																						":containerId",
+																						"volume-mount",
+																						":mountId"
+																					],
+																					"variable": [
+																						{
+																							"key": "componentId"
+																						},
+																						{
+																							"key": "releaseId"
+																						},
+																						{
+																							"key": "containerId"
+																						},
+																						{
+																							"key": "mountId"
+																						}
+																					]
+																				}
+																			},
+																			"status": "Internal Server Error",
+																			"code": 500,
+																			"_postman_previewlanguage": "text",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "text/plain"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "<string>"
+																		}
+																	]
+																},
+																{
+																	"name": "delete a volume mount by id",
+																	"event": [
+																		{
+																			"listen": "test",
+																			"script": {
+																				"exec": [
+																					"pm.test(\"Status code is 200\", function () {",
+																					"    pm.response.to.have.status(200);",
+																					"});"
+																				],
+																				"type": "text/javascript"
+																			}
+																		}
+																	],
+																	"request": {
+																		"method": "DELETE",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "*/*"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			},
+																			{
+																				"key": "Authorization",
+																				"value": "{{token}}",
+																				"type": "text"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																		},
+																		"url": {
+																			"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/container/:containerId/volume-mount/:mountId?organization_id={{organization_id}}&project_id={{project_id}}",
+																			"host": [
+																				"{{baseUrl_Component}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"container",
+																				":containerId",
+																				"volume-mount",
+																				":mountId"
+																			],
+																			"query": [
+																				{
+																					"key": "organization_id",
+																					"value": "{{organization_id}}"
+																				},
+																				{
+																					"key": "project_id",
+																					"value": "{{project_id}}"
+																				}
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId",
+																					"value": "{{componentId}}"
+																				},
+																				{
+																					"key": "releaseId",
+																					"value": "{{release_id}}"
+																				},
+																				{
+																					"key": "containerId",
+																					"value": "{{container_id}}"
+																				},
+																				{
+																					"key": "mountId",
+																					"value": "{{volume_mount_id}}"
+																				}
+																			]
+																		}
+																	},
+																	"response": [
+																		{
+																			"name": "Ok",
+																			"originalRequest": {
+																				"method": "DELETE",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "*/*"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "application/json"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/volume-mount/:mountId",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						":componentId",
+																						"release",
+																						":releaseId",
+																						"container",
+																						":containerId",
+																						"volume-mount",
+																						":mountId"
+																					],
+																					"variable": [
+																						{
+																							"key": "componentId"
+																						},
+																						{
+																							"key": "releaseId"
+																						},
+																						{
+																							"key": "containerId"
+																						},
+																						{
+																							"key": "mountId"
+																						}
+																					]
+																				}
+																			},
+																			"status": "OK",
+																			"code": 200,
+																			"_postman_previewlanguage": "json",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "application/json"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "{}"
+																		},
+																		{
+																			"name": "Internal server error",
+																			"originalRequest": {
+																				"method": "DELETE",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "*/*"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "text/plain"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/volume-mount/:mountId",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						":componentId",
+																						"release",
+																						":releaseId",
+																						"container",
+																						":containerId",
+																						"volume-mount",
+																						":mountId"
+																					],
+																					"variable": [
+																						{
+																							"key": "componentId"
+																						},
+																						{
+																							"key": "releaseId"
+																						},
+																						{
+																							"key": "containerId"
+																						},
+																						{
+																							"key": "mountId"
+																						}
+																					]
+																				}
+																			},
+																			"status": "Internal Server Error",
+																			"code": 500,
+																			"_postman_previewlanguage": "text",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "text/plain"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "<string>"
+																		}
+																	]
+																}
+															]
+														},
+														{
+															"name": "create a volume mount for a container",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 201\", function () {",
+																			"    pm.response.to.have.status(201);",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [
+																	{
+																		"key": "Content-Type",
+																		"value": "*/*"
+																	},
+																	{
+																		"key": "Accept",
+																		"value": "application/json"
+																	},
+																	{
+																		"key": "Authorization",
+																		"value": "{{token}}",
+																		"type": "text"
+																	}
+																],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n    \"app_volume_id\": \"{{app_volume_id}}\",\n    \"mountPath\": \"/\"\n}",
+																	"options": {
+																		"raw": {
+																			"language": "json"
+																		}
+																	}
+																},
+																"url": {
+																	"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/container/:containerId/volume-mount?organization_id={{organization_id}}&project_id={{project_id}}",
+																	"host": [
+																		"{{baseUrl_Component}}"
+																	],
+																	"path": [
+																		":componentId",
+																		"release",
+																		":releaseId",
+																		"container",
+																		":containerId",
+																		"volume-mount"
+																	],
+																	"query": [
+																		{
+																			"key": "organization_id",
+																			"value": "{{organization_id}}"
+																		},
+																		{
+																			"key": "project_id",
+																			"value": "{{project_id}}"
+																		}
+																	],
+																	"variable": [
+																		{
+																			"key": "componentId",
+																			"value": "{{componentId}}"
+																		},
+																		{
+																			"key": "releaseId",
+																			"value": "{{release_id}}"
+																		},
+																		{
+																			"key": "containerId",
+																			"value": "{{container_id}}"
+																		}
+																	]
+																}
+															},
+															"response": [
+																{
+																	"name": "Created",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "*/*"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																		},
+																		"url": {
+																			"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/volume-mount",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"container",
+																				":containerId",
+																				"volume-mount"
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId"
+																				},
+																				{
+																					"key": "releaseId"
+																				},
+																				{
+																					"key": "containerId"
+																				}
+																			]
+																		}
+																	},
+																	"status": "Created",
+																	"code": 201,
+																	"_postman_previewlanguage": "json",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "application/json"
+																		}
+																	],
+																	"cookie": [],
+																	"body": "{}"
+																},
+																{
+																	"name": "Internal server error",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "*/*"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "text/plain"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																		},
+																		"url": {
+																			"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/volume-mount",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"container",
+																				":containerId",
+																				"volume-mount"
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId"
+																				},
+																				{
+																					"key": "releaseId"
+																				},
+																				{
+																					"key": "containerId"
+																				}
+																			]
+																		}
+																	},
+																	"status": "Internal Server Error",
+																	"code": 500,
+																	"_postman_previewlanguage": "text",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "text/plain"
+																		}
+																	],
+																	"cookie": [],
+																	"body": "<string>"
+																}
+															]
+														}
+													]
+												},
+												{
+													"name": "health-check",
+													"item": [
+														{
+															"name": "{healthCheckId}",
+															"item": [
+																{
+																	"name": "update a healthcheck by id",
+																	"event": [
+																		{
+																			"listen": "test",
+																			"script": {
+																				"exec": [
+																					"pm.test(\"Status code is 200\", function () {",
+																					"    pm.response.to.have.status(200);",
+																					"});"
+																				],
+																				"type": "text/javascript"
+																			}
+																		}
+																	],
+																	"request": {
+																		"method": "PUT",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "*/*"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			},
+																			{
+																				"key": "Authorization",
+																				"value": "{{token}}",
+																				"type": "text"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n    \"container_id\": \"{{container_id}}\",\n    \"app_environment_id\": \"{{app_env_id}}\",\n    \"organization_id\": \"{{organization_id}}\",\n    \"project_id\": \"{{project_id}}\",\n    \"probes\": {\n        \"liveness_probe\": {\n            \"type\": \"httpGet\",\n            \"probe\": {\n                \"initialDelaySeconds\": 10,\n                \"periodSeconds\": 30,\n                \"successThreshold\": 1,\n                \"timeoutSeconds\": 10,\n                \"failureThreshold\": 3,\n                \"httpGet\": {\n                    \"path\": \"/\",\n                    \"port\": 8080\n                },\n                \"tcpSocket\": {},\n                \"exec\": {}\n            }\n        },\n        \"readiness_probe\": {\n            \"probe\": {\n                \"exec\": {\n                    \"command\": []\n                },\n                \"tcpSocket\": {\n                    \"port\": 0\n                },\n                \"httpGet\": {\n                    \"httpHeaders\": [],\n                    \"path\": \"/\",\n                    \"port\": 8080\n                },\n                \"failureThreshold\": 3,\n                \"initialDelaySeconds\": 10,\n                \"periodSeconds\": 30,\n                \"successThreshold\": 1,\n                \"timeoutSeconds\": 10\n            },\n            \"type\": \"httpGet\"\n        }\n    }\n}",
+																			"options": {
+																				"raw": {
+																					"language": "json"
+																				}
+																			}
+																		},
+																		"url": {
+																			"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/container/:containerId/health-check/:healthCheckId?organization_id={{organization_id}}&project_id={{project_id}}",
+																			"host": [
+																				"{{baseUrl_Component}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"container",
+																				":containerId",
+																				"health-check",
+																				":healthCheckId"
+																			],
+																			"query": [
+																				{
+																					"key": "organization_id",
+																					"value": "{{organization_id}}"
+																				},
+																				{
+																					"key": "project_id",
+																					"value": "{{project_id}}"
+																				}
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId",
+																					"value": "{{componentId}}"
+																				},
+																				{
+																					"key": "releaseId",
+																					"value": "{{release_id}}"
+																				},
+																				{
+																					"key": "containerId",
+																					"value": "{{container_id}}"
+																				},
+																				{
+																					"key": "healthCheckId",
+																					"value": "{{healthcheck_id}}"
+																				}
+																			]
+																		}
+																	},
+																	"response": [
+																		{
+																			"name": "Ok",
+																			"originalRequest": {
+																				"method": "PUT",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "*/*"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "application/json"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/health-check/:healthCheckId",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						":componentId",
+																						"release",
+																						":releaseId",
+																						"container",
+																						":containerId",
+																						"health-check",
+																						":healthCheckId"
+																					],
+																					"variable": [
+																						{
+																							"key": "componentId"
+																						},
+																						{
+																							"key": "releaseId"
+																						},
+																						{
+																							"key": "containerId"
+																						},
+																						{
+																							"key": "healthCheckId"
+																						}
+																					]
+																				}
+																			},
+																			"status": "OK",
+																			"code": 200,
+																			"_postman_previewlanguage": "json",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "application/json"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "{}"
+																		},
+																		{
+																			"name": "Internal server error",
+																			"originalRequest": {
+																				"method": "PUT",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "*/*"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "text/plain"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/health-check/:healthCheckId",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						":componentId",
+																						"release",
+																						":releaseId",
+																						"container",
+																						":containerId",
+																						"health-check",
+																						":healthCheckId"
+																					],
+																					"variable": [
+																						{
+																							"key": "componentId"
+																						},
+																						{
+																							"key": "releaseId"
+																						},
+																						{
+																							"key": "containerId"
+																						},
+																						{
+																							"key": "healthCheckId"
+																						}
+																					]
+																				}
+																			},
+																			"status": "Internal Server Error",
+																			"code": 500,
+																			"_postman_previewlanguage": "text",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "text/plain"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "<string>"
+																		}
+																	]
+																},
+																{
+																	"name": "delete a healthcheck by id",
+																	"event": [
+																		{
+																			"listen": "test",
+																			"script": {
+																				"exec": [
+																					"pm.test(\"Status code is 200\", function () {",
+																					"    pm.response.to.have.status(200);",
+																					"});"
+																				],
+																				"type": "text/javascript"
+																			}
+																		}
+																	],
+																	"request": {
+																		"method": "DELETE",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "*/*"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			},
+																			{
+																				"key": "Authorization",
+																				"value": "{{token}}",
+																				"type": "text"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																		},
+																		"url": {
+																			"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/container/:containerId/health-check/:healthCheckId?organization_id={{organization_id}}&project_id={{project_id}}",
+																			"host": [
+																				"{{baseUrl_Component}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"container",
+																				":containerId",
+																				"health-check",
+																				":healthCheckId"
+																			],
+																			"query": [
+																				{
+																					"key": "organization_id",
+																					"value": "{{organization_id}}"
+																				},
+																				{
+																					"key": "project_id",
+																					"value": "{{project_id}}"
+																				}
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId",
+																					"value": "{{componentId}}"
+																				},
+																				{
+																					"key": "releaseId",
+																					"value": "{{release_id}}"
+																				},
+																				{
+																					"key": "containerId",
+																					"value": "{{container_id}}"
+																				},
+																				{
+																					"key": "healthCheckId",
+																					"value": "{{healthcheck_id}}"
+																				}
+																			]
+																		}
+																	},
+																	"response": [
+																		{
+																			"name": "Ok",
+																			"originalRequest": {
+																				"method": "DELETE",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "*/*"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "application/json"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/health-check/:healthCheckId",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						":componentId",
+																						"release",
+																						":releaseId",
+																						"container",
+																						":containerId",
+																						"health-check",
+																						":healthCheckId"
+																					],
+																					"variable": [
+																						{
+																							"key": "componentId"
+																						},
+																						{
+																							"key": "releaseId"
+																						},
+																						{
+																							"key": "containerId"
+																						},
+																						{
+																							"key": "healthCheckId"
+																						}
+																					]
+																				}
+																			},
+																			"status": "OK",
+																			"code": 200,
+																			"_postman_previewlanguage": "json",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "application/json"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "{}"
+																		},
+																		{
+																			"name": "Internal server error",
+																			"originalRequest": {
+																				"method": "DELETE",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "*/*"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "text/plain"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/health-check/:healthCheckId",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						":componentId",
+																						"release",
+																						":releaseId",
+																						"container",
+																						":containerId",
+																						"health-check",
+																						":healthCheckId"
+																					],
+																					"variable": [
+																						{
+																							"key": "componentId"
+																						},
+																						{
+																							"key": "releaseId"
+																						},
+																						{
+																							"key": "containerId"
+																						},
+																						{
+																							"key": "healthCheckId"
+																						}
+																					]
+																				}
+																			},
+																			"status": "Internal Server Error",
+																			"code": 500,
+																			"_postman_previewlanguage": "text",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "text/plain"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "<string>"
+																		}
+																	]
+																}
+															]
+														},
+														{
+															"name": "create a healthcheck for a container",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 201\", function () {",
+																			"    pm.response.to.have.status(201);",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [
+																	{
+																		"key": "Content-Type",
+																		"value": "*/*"
+																	},
+																	{
+																		"key": "Accept",
+																		"value": "application/json"
+																	},
+																	{
+																		"key": "Authorization",
+																		"value": "{{token}}",
+																		"type": "text"
+																	}
+																],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n    \"container_id\": \"{{container_id}}\",\n    \"app_environment_id\": \"{{app_env_id}}\",\n    \"organization_id\": \"{{organization_id}}\",\n    \"project_id\": \"{{project_id}}\",\n    \"probes\": {\n        \"liveness_probe\": {\n            \"probe\": {\n                \"exec\": {\n                    \"command\": []\n                },\n                \"tcpSocket\": {\n                    \"port\": 0\n                },\n                \"httpGet\": {\n                    \"httpHeaders\": [],\n                    \"path\": \"/\",\n                    \"port\": 8080\n                },\n                \"failureThreshold\": 3,\n                \"initialDelaySeconds\": 10,\n                \"periodSeconds\": 30,\n                \"successThreshold\": 1,\n                \"timeoutSeconds\": 10\n            },\n            \"type\": \"httpGet\"\n        },\n        \"readiness_probe\": {}\n    }\n}",
+																	"options": {
+																		"raw": {
+																			"language": "json"
+																		}
+																	}
+																},
+																"url": {
+																	"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/container/:containerId/health-check?organization_id={{organization_id}}&project_id={{project_id}}",
+																	"host": [
+																		"{{baseUrl_Component}}"
+																	],
+																	"path": [
+																		":componentId",
+																		"release",
+																		":releaseId",
+																		"container",
+																		":containerId",
+																		"health-check"
+																	],
+																	"query": [
+																		{
+																			"key": "organization_id",
+																			"value": "{{organization_id}}"
+																		},
+																		{
+																			"key": "project_id",
+																			"value": "{{project_id}}"
+																		}
+																	],
+																	"variable": [
+																		{
+																			"key": "componentId",
+																			"value": "{{componentId}}"
+																		},
+																		{
+																			"key": "releaseId",
+																			"value": "{{release_id}}"
+																		},
+																		{
+																			"key": "containerId",
+																			"value": "{{container_id}}"
+																		}
+																	]
+																}
+															},
+															"response": [
+																{
+																	"name": "Created",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "*/*"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																		},
+																		"url": {
+																			"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/health-check",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"container",
+																				":containerId",
+																				"health-check"
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId"
+																				},
+																				{
+																					"key": "releaseId"
+																				},
+																				{
+																					"key": "containerId"
+																				}
+																			]
+																		}
+																	},
+																	"status": "Created",
+																	"code": 201,
+																	"_postman_previewlanguage": "json",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "application/json"
+																		}
+																	],
+																	"cookie": [],
+																	"body": "{}"
+																},
+																{
+																	"name": "Internal server error",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "*/*"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "text/plain"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																		},
+																		"url": {
+																			"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/health-check",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"container",
+																				":containerId",
+																				"health-check"
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId"
+																				},
+																				{
+																					"key": "releaseId"
+																				},
+																				{
+																					"key": "containerId"
+																				}
+																			]
+																		}
+																	},
+																	"status": "Internal Server Error",
+																	"code": 500,
+																	"_postman_previewlanguage": "text",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "text/plain"
+																		}
+																	],
+																	"cookie": [],
+																	"body": "<string>"
+																}
+															]
+														}
+													]
+												},
+												{
+													"name": "config-mount",
+													"item": [
+														{
+															"name": "{mountId}",
+															"item": [
+																{
+																	"name": "update a config mount by id",
+																	"event": [
+																		{
+																			"listen": "test",
+																			"script": {
+																				"exec": [
+																					"pm.test(\"Status code is 200\", function () {",
+																					"    pm.response.to.have.status(200);",
+																					"});"
+																				],
+																				"type": "text/javascript"
+																			}
+																		}
+																	],
+																	"request": {
+																		"method": "PUT",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "*/*"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			},
+																			{
+																				"key": "Authorization",
+																				"value": "{{token}}",
+																				"type": "text"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n    \"ID\": \"{{mount_id}}\",\n    \"CreatedAt\": \"2023-07-05T10:19:21.1539404Z\",\n    \"UpdatedAt\": \"2023-07-05T10:19:21.2543068Z\",\n    \"configmap_id\": \"\",\n    \"configmap\": null,\n    \"secret_id\": null,\n    \"secret\": null,\n    \"container_id\": \"{{container_id}}\",\n    \"container\": null,\n    \"app_environment_id\": \"{{app_env_id}}\",\n    \"app_environment\": null,\n    \"mount_path\": \"\",\n    \"key_override\": \"\",\n    \"config_key\": \"\",\n    \"mount_type\": \"ENVFile\",\n    \"status\": true,\n    \"mount_permissions\": \"0000\",\n    \"copied_from\": null,\n    \"deploy_changes\": true\n}",
+																			"options": {
+																				"raw": {
+																					"language": "json"
+																				}
+																			}
+																		},
+																		"url": {
+																			"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/container/:containerId/config-mount/:mountId?organization_id={{organization_id}}&project_id={{project_id}}",
+																			"host": [
+																				"{{baseUrl_Component}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"container",
+																				":containerId",
+																				"config-mount",
+																				":mountId"
+																			],
+																			"query": [
+																				{
+																					"key": "organization_id",
+																					"value": "{{organization_id}}"
+																				},
+																				{
+																					"key": "project_id",
+																					"value": "{{project_id}}"
+																				}
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId",
+																					"value": "{{componentId}}"
+																				},
+																				{
+																					"key": "releaseId",
+																					"value": "{{release_id}}"
+																				},
+																				{
+																					"key": "containerId",
+																					"value": "{{container_id}}"
+																				},
+																				{
+																					"key": "mountId",
+																					"value": "{{mount_id}}"
+																				}
+																			]
+																		}
+																	},
+																	"response": [
+																		{
+																			"name": "Ok",
+																			"originalRequest": {
+																				"method": "PUT",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "*/*"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "application/json"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/config-mount/:mountId",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						":componentId",
+																						"release",
+																						":releaseId",
+																						"container",
+																						":containerId",
+																						"config-mount",
+																						":mountId"
+																					],
+																					"variable": [
+																						{
+																							"key": "componentId"
+																						},
+																						{
+																							"key": "releaseId"
+																						},
+																						{
+																							"key": "containerId"
+																						},
+																						{
+																							"key": "mountId"
+																						}
+																					]
+																				}
+																			},
+																			"status": "OK",
+																			"code": 200,
+																			"_postman_previewlanguage": "json",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "application/json"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "{}"
+																		},
+																		{
+																			"name": "Internal server error",
+																			"originalRequest": {
+																				"method": "PUT",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "*/*"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "text/plain"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/config-mount/:mountId",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						":componentId",
+																						"release",
+																						":releaseId",
+																						"container",
+																						":containerId",
+																						"config-mount",
+																						":mountId"
+																					],
+																					"variable": [
+																						{
+																							"key": "componentId"
+																						},
+																						{
+																							"key": "releaseId"
+																						},
+																						{
+																							"key": "containerId"
+																						},
+																						{
+																							"key": "mountId"
+																						}
+																					]
+																				}
+																			},
+																			"status": "Internal Server Error",
+																			"code": 500,
+																			"_postman_previewlanguage": "text",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "text/plain"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "<string>"
+																		}
+																	]
+																},
+																{
+																	"name": "delete a config mount by id",
+																	"event": [
+																		{
+																			"listen": "test",
+																			"script": {
+																				"exec": [
+																					"pm.test(\"Status code is 200\", function () {",
+																					"    pm.response.to.have.status(200);",
+																					"});"
+																				],
+																				"type": "text/javascript"
+																			}
+																		}
+																	],
+																	"request": {
+																		"method": "DELETE",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "*/*"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			},
+																			{
+																				"key": "Authorization",
+																				"value": "{{token}}",
+																				"type": "text"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																		},
+																		"url": {
+																			"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/container/:containerId/config-mount/:mountId?organization_id={{organization_id}}&project_id={{project_id}}",
+																			"host": [
+																				"{{baseUrl_Component}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"container",
+																				":containerId",
+																				"config-mount",
+																				":mountId"
+																			],
+																			"query": [
+																				{
+																					"key": "organization_id",
+																					"value": "{{organization_id}}"
+																				},
+																				{
+																					"key": "project_id",
+																					"value": "{{project_id}}"
+																				}
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId",
+																					"value": "{{componentId}}"
+																				},
+																				{
+																					"key": "releaseId",
+																					"value": "{{release_id}}"
+																				},
+																				{
+																					"key": "containerId",
+																					"value": "{{container_id}}"
+																				},
+																				{
+																					"key": "mountId",
+																					"value": "{{mount_id}}"
+																				}
+																			]
+																		}
+																	},
+																	"response": [
+																		{
+																			"name": "Ok",
+																			"originalRequest": {
+																				"method": "DELETE",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "*/*"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "application/json"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/config-mount/:mountId",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						":componentId",
+																						"release",
+																						":releaseId",
+																						"container",
+																						":containerId",
+																						"config-mount",
+																						":mountId"
+																					],
+																					"variable": [
+																						{
+																							"key": "componentId"
+																						},
+																						{
+																							"key": "releaseId"
+																						},
+																						{
+																							"key": "containerId"
+																						},
+																						{
+																							"key": "mountId"
+																						}
+																					]
+																				}
+																			},
+																			"status": "OK",
+																			"code": 200,
+																			"_postman_previewlanguage": "json",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "application/json"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "{}"
+																		},
+																		{
+																			"name": "Internal server error",
+																			"originalRequest": {
+																				"method": "DELETE",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "*/*"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "text/plain"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/config-mount/:mountId",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						":componentId",
+																						"release",
+																						":releaseId",
+																						"container",
+																						":containerId",
+																						"config-mount",
+																						":mountId"
+																					],
+																					"variable": [
+																						{
+																							"key": "componentId"
+																						},
+																						{
+																							"key": "releaseId"
+																						},
+																						{
+																							"key": "containerId"
+																						},
+																						{
+																							"key": "mountId"
+																						}
+																					]
+																				}
+																			},
+																			"status": "Internal Server Error",
+																			"code": 500,
+																			"_postman_previewlanguage": "text",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "text/plain"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "<string>"
+																		}
+																	]
+																}
+															]
+														},
+														{
+															"name": "create a config mount by id",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 200\", function () {",
+																			"    pm.response.to.have.status(200);",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Accept",
+																		"value": "application/json"
+																	},
+																	{
+																		"key": "Authorization",
+																		"value": "{{token}}",
+																		"type": "text"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/container/:containerId/config-mount?organization_id={{organization_id}}&project_id={{project_id}}",
+																	"host": [
+																		"{{baseUrl_Component}}"
+																	],
+																	"path": [
+																		":componentId",
+																		"release",
+																		":releaseId",
+																		"container",
+																		":containerId",
+																		"config-mount"
+																	],
+																	"query": [
+																		{
+																			"key": "organization_id",
+																			"value": "{{organization_id}}"
+																		},
+																		{
+																			"key": "project_id",
+																			"value": "{{project_id}}"
+																		}
+																	],
+																	"variable": [
+																		{
+																			"key": "componentId",
+																			"value": "{{componentId}}"
+																		},
+																		{
+																			"key": "releaseId",
+																			"value": "{{release_id}}"
+																		},
+																		{
+																			"key": "containerId",
+																			"value": "{{container_id}}"
+																		}
+																	]
+																}
+															},
+															"response": [
+																{
+																	"name": "Ok",
+																	"originalRequest": {
+																		"method": "GET",
+																		"header": [
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			}
+																		],
+																		"url": {
+																			"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/config-mount",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"container",
+																				":containerId",
+																				"config-mount"
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId"
+																				},
+																				{
+																					"key": "releaseId"
+																				},
+																				{
+																					"key": "containerId"
+																				}
+																			]
+																		}
+																	},
+																	"status": "OK",
+																	"code": 200,
+																	"_postman_previewlanguage": "json",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "application/json"
+																		}
+																	],
+																	"cookie": [],
+																	"body": "{}"
+																},
+																{
+																	"name": "Internal server error",
+																	"originalRequest": {
+																		"method": "GET",
+																		"header": [
+																			{
+																				"key": "Accept",
+																				"value": "text/plain"
+																			}
+																		],
+																		"url": {
+																			"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/config-mount",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"container",
+																				":containerId",
+																				"config-mount"
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId"
+																				},
+																				{
+																					"key": "releaseId"
+																				},
+																				{
+																					"key": "containerId"
+																				}
+																			]
+																		}
+																	},
+																	"status": "Internal Server Error",
+																	"code": 500,
+																	"_postman_previewlanguage": "text",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "text/plain"
+																		}
+																	],
+																	"cookie": [],
+																	"body": "<string>"
+																}
+															]
+														},
+														{
+															"name": "create a config mount for a container",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 201\", function () {",
+																			"    pm.response.to.have.status(201);",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [
+																	{
+																		"key": "Content-Type",
+																		"value": "*/*"
+																	},
+																	{
+																		"key": "Accept",
+																		"value": "application/json"
+																	},
+																	{
+																		"key": "Authorization",
+																		"value": "{{token}}",
+																		"type": "text"
+																	}
+																],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n    \"mount_type\": \"ENVFile\",\n    \"mount_permissions\": \"0000\",\n    \"configmap_id\": \"{{configmap_id}}\",\n    \"secret_id\": null,\n    \"mount_path\": \"\",\n    \"config_key\": \"\",\n    \"deploy_changes\": true,\n    \"container_id\": \"{{container_id}}\",\n    \"app_environment_id\": \"{{app_env_id}}\"\n}",
+																	"options": {
+																		"raw": {
+																			"language": "json"
+																		}
+																	}
+																},
+																"url": {
+																	"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/container/:containerId/config-mount?organization_id={{organization_id}}&project_id={{project_id}}",
+																	"host": [
+																		"{{baseUrl_Component}}"
+																	],
+																	"path": [
+																		":componentId",
+																		"release",
+																		":releaseId",
+																		"container",
+																		":containerId",
+																		"config-mount"
+																	],
+																	"query": [
+																		{
+																			"key": "organization_id",
+																			"value": "{{organization_id}}"
+																		},
+																		{
+																			"key": "project_id",
+																			"value": "{{project_id}}"
+																		}
+																	],
+																	"variable": [
+																		{
+																			"key": "componentId",
+																			"value": "{{componentId}}"
+																		},
+																		{
+																			"key": "releaseId",
+																			"value": "{{release_id}}"
+																		},
+																		{
+																			"key": "containerId",
+																			"value": "{{container_id}}"
+																		}
+																	]
+																}
+															},
+															"response": [
+																{
+																	"name": "Created",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "*/*"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																		},
+																		"url": {
+																			"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/config-mount",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"container",
+																				":containerId",
+																				"config-mount"
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId"
+																				},
+																				{
+																					"key": "releaseId"
+																				},
+																				{
+																					"key": "containerId"
+																				}
+																			]
+																		}
+																	},
+																	"status": "Created",
+																	"code": 201,
+																	"_postman_previewlanguage": "json",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "application/json"
+																		}
+																	],
+																	"cookie": [],
+																	"body": "{}"
+																},
+																{
+																	"name": "Internal server error",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "*/*"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "text/plain"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																		},
+																		"url": {
+																			"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId/config-mount",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				":componentId",
+																				"release",
+																				":releaseId",
+																				"container",
+																				":containerId",
+																				"config-mount"
+																			],
+																			"variable": [
+																				{
+																					"key": "componentId"
+																				},
+																				{
+																					"key": "releaseId"
+																				},
+																				{
+																					"key": "containerId"
+																				}
+																			]
+																		}
+																	},
+																	"status": "Internal Server Error",
+																	"code": 500,
+																	"_postman_previewlanguage": "text",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "text/plain"
+																		}
+																	],
+																	"cookie": [],
+																	"body": "<string>"
+																}
+															]
+														}
+													]
+												},
+												{
+													"name": "update a container by id",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {",
+																	"    pm.response.to.have.status(200);",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "PUT",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "*/*"
+															},
+															{
+																"key": "Accept",
+																"value": "application/json"
+															},
+															{
+																"key": "Authorization",
+																"value": "{{token}}",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"cpu\": 100,\n    \"memory\": 350,\n    \"image_pull_policy\": \"IfNotPresent\",\n    \"args\": [],\n    \"command\": [],\n    \"image_registry_id\": \"{{image_registry_id}}\",\n    \"image_id\": \"{{image_id}}\",\n    \"custom_image\": \"\",\n    \"app_environment_id\": \"{{app_env_id}}\",\n    \"ports\": [\n        {\n            \"port\": 8080,\n            \"service_port\": 8080,\n            \"protocol\": \"TCP\"\n        }\n    ],\n    \"cpu_limit\": 500,\n    \"memory_limit\": 1024,\n    \"limit_disabled\": false\n}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/container/:containerId?organization_id={{organization_id}}&project_id={{project_id}}",
+															"host": [
+																"{{baseUrl_Component}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"container",
+																":containerId"
+															],
+															"query": [
+																{
+																	"key": "organization_id",
+																	"value": "{{organization_id}}"
+																},
+																{
+																	"key": "project_id",
+																	"value": "{{project_id}}"
+																}
+															],
+															"variable": [
+																{
+																	"key": "componentId",
+																	"value": "{{componentId}}"
+																},
+																{
+																	"key": "releaseId",
+																	"value": "{{release_id}}"
+																},
+																{
+																	"key": "containerId",
+																	"value": "{{container_id}}"
+																}
+															]
+														}
+													},
+													"response": [
+														{
+															"name": "Ok",
+															"originalRequest": {
+																"method": "PUT",
+																"header": [
+																	{
+																		"key": "Content-Type",
+																		"value": "*/*"
+																	},
+																	{
+																		"key": "Accept",
+																		"value": "application/json"
+																	}
+																],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		":componentId",
+																		"release",
+																		":releaseId",
+																		"container",
+																		":containerId"
+																	],
+																	"variable": [
+																		{
+																			"key": "componentId"
+																		},
+																		{
+																			"key": "releaseId"
+																		},
+																		{
+																			"key": "containerId"
+																		}
+																	]
+																}
+															},
+															"status": "OK",
+															"code": 200,
+															"_postman_previewlanguage": "json",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "application/json"
+																}
+															],
+															"cookie": [],
+															"body": "{}"
+														},
+														{
+															"name": "Internal server error",
+															"originalRequest": {
+																"method": "PUT",
+																"header": [
+																	{
+																		"key": "Content-Type",
+																		"value": "*/*"
+																	},
+																	{
+																		"key": "Accept",
+																		"value": "text/plain"
+																	}
+																],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/:componentId/release/:releaseId/container/:containerId",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		":componentId",
+																		"release",
+																		":releaseId",
+																		"container",
+																		":containerId"
+																	],
+																	"variable": [
+																		{
+																			"key": "componentId"
+																		},
+																		{
+																			"key": "releaseId"
+																		},
+																		{
+																			"key": "containerId"
+																		}
+																	]
+																}
+															},
+															"status": "Internal Server Error",
+															"code": 500,
+															"_postman_previewlanguage": "text",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "text/plain"
+																}
+															],
+															"cookie": [],
+															"body": "<string>"
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "cdp-webapp-short-url",
+									"item": [
+										{
+											"name": "set cdp short url for webapp by release by id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "*/*"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"key": "Authorization",
+														"value": "{{token}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId/cdp-webapp-short-url?organization_id={{organization_id}}&project_id={{project_id}}",
+													"host": [
+														"{{baseUrl_Component}}"
+													],
+													"path": [
+														":componentId",
+														"release",
+														":releaseId",
+														"cdp-webapp-short-url"
+													],
+													"query": [
+														{
+															"key": "organization_id",
+															"value": "{{organization_id}}"
+														},
+														{
+															"key": "project_id",
+															"value": "{{project_id}}"
+														}
+													],
+													"variable": [
+														{
+															"key": "componentId",
+															"value": "{{webapp_component_id}}"
+														},
+														{
+															"key": "releaseId",
+															"value": "{{webapp_cp_release_id}}"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Ok",
+													"originalRequest": {
+														"method": "PUT",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "*/*"
+															},
+															{
+																"key": "Accept",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/:componentId/release/:releaseId/cdp-webapp-short-url",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"cdp-webapp-short-url"
+															],
+															"variable": [
+																{
+																	"key": "componentId"
+																},
+																{
+																	"key": "releaseId"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{}"
+												},
+												{
+													"name": "Internal server error",
+													"originalRequest": {
+														"method": "PUT",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "*/*"
+															},
+															{
+																"key": "Accept",
+																"value": "text/plain"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/:componentId/release/:releaseId/cdp-webapp-short-url",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":componentId",
+																"release",
+																":releaseId",
+																"cdp-webapp-short-url"
+															],
+															"variable": [
+																{
+																	"key": "componentId"
+																},
+																{
+																	"key": "releaseId"
+																}
+															]
+														}
+													},
+													"status": "Internal Server Error",
+													"code": 500,
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": "<string>"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "get release by id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl_Component}}/:componentId/release/:releaseId?organization_id={{organization_id}}&project_id={{project_id}}",
+											"host": [
+												"{{baseUrl_Component}}"
+											],
+											"path": [
+												":componentId",
+												"release",
+												":releaseId"
+											],
+											"query": [
+												{
+													"key": "organization_id",
+													"value": "{{organization_id}}"
+												},
+												{
+													"key": "project_id",
+													"value": "{{project_id}}"
+												}
+											],
+											"variable": [
+												{
+													"key": "componentId",
+													"value": "{{componentId}}"
+												},
+												{
+													"key": "releaseId",
+													"value": "{{release_id}}"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Ok",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/:componentId/release/:releaseId",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														":componentId",
+														"release",
+														":releaseId"
+													],
+													"variable": [
+														{
+															"key": "componentId"
+														},
+														{
+															"key": "releaseId"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										},
+										{
+											"name": "Internal server error",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/:componentId/release/:releaseId",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														":componentId",
+														"release",
+														":releaseId"
+													],
+													"variable": [
+														{
+															"key": "componentId"
+														},
+														{
+															"key": "releaseId"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": "<string>"
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "get Componentid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl_Component}}/:componentId?organization_id={{organization_id}}&project_id={{project_id}}",
+							"host": [
+								"{{baseUrl_Component}}"
+							],
+							"path": [
+								":componentId"
+							],
+							"query": [
+								{
+									"key": "organization_id",
+									"value": "{{organization_id}}"
+								},
+								{
+									"key": "project_id",
+									"value": "{{project_id}}"
+								}
+							],
+							"variable": [
+								{
+									"key": "componentId",
+									"value": "{{componentId}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/:componentId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":componentId"
+									],
+									"variable": [
+										{
+											"key": "componentId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						},
+						{
+							"name": "Internal server error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/:componentId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":componentId"
+									],
+									"variable": [
+										{
+											"key": "componentId"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": "<string>"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "byoci",
+			"item": [
+				{
+					"name": "webhook",
+					"item": [
+						{
+							"name": "registries",
+							"item": [
+								{
+									"name": "get Byoci Webhook Registries",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl_Component}}/byoci/webhook/registries?organization_id={{organization_id}}&project_id={{project_id}}",
+											"host": [
+												"{{baseUrl_Component}}"
+											],
+											"path": [
+												"byoci",
+												"webhook",
+												"registries"
+											],
+											"query": [
+												{
+													"key": "organization_id",
+													"value": "{{organization_id}}"
+												},
+												{
+													"key": "project_id",
+													"value": "{{project_id}}"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Ok",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/byoci/webhook/registries",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"byoci",
+														"webhook",
+														"registries"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										},
+										{
+											"name": "Internal server error",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/byoci/webhook/registries",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"byoci",
+														"webhook",
+														"registries"
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": "<string>"
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "/",
+			"item": [
+				{
+					"name": "get",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl_Component}}/?organization_id={{organization_id}}&project_id={{project_id}}",
+							"host": [
+								"{{baseUrl_Component}}"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "organization_id",
+									"value": "{{organization_id}}"
+								},
+								{
+									"key": "project_id",
+									"value": "{{project_id}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						},
+						{
+							"name": "Internal server error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": "<string>"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server",
+			"value": ""
+		},
+		{
+			"key": "port",
+			"value": "config:port"
+		},
+		{
+			"key": "baseUrl",
+			"value": "{{server}}:{{port}}/api/v1/components"
+		}
+	]
+}

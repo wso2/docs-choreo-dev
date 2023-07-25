@@ -1,0 +1,754 @@
+{
+	"info": {
+		"_postman_id": "8d5e9671-256c-467a-895d-d5f28db509de",
+		"name": "Api V1 Clusters",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26391121",
+		"_collection_link": "https://winter-robot-282301.postman.co/workspace/Team-Workspace~be988dda-7505-4bca-8709-415b9b5bf44c/collection/26391121-8d5e9671-256c-467a-895d-d5f28db509de?action=share&creator=26391121&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "{clusterId}",
+			"item": [
+				{
+					"name": "query",
+					"item": [
+						{
+							"name": "{apiVersion}",
+							"item": [
+								{
+									"name": "{kind}",
+									"item": [
+										{
+											"name": "get Clusterid Query Apiversion Kind",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"key": "Authorization",
+														"value": "{{token}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl_clusters}}/:clusterId/query/:apiVersion/:kind?organization_id={{organization_id}}&project_id={{project_id}}&namespace={{namespace}}&name=&labelSelector=&fieldSelector=&limit=0",
+													"host": [
+														"{{baseUrl_clusters}}"
+													],
+													"path": [
+														":clusterId",
+														"query",
+														":apiVersion",
+														":kind"
+													],
+													"query": [
+														{
+															"key": "organization_id",
+															"value": "{{organization_id}}",
+															"description": "(Required) "
+														},
+														{
+															"key": "project_id",
+															"value": "{{project_id}}"
+														},
+														{
+															"key": "namespace",
+															"value": "{{namespace}}"
+														},
+														{
+															"key": "name",
+															"value": ""
+														},
+														{
+															"key": "labelSelector",
+															"value": ""
+														},
+														{
+															"key": "fieldSelector",
+															"value": ""
+														},
+														{
+															"key": "limit",
+															"value": "0"
+														}
+													],
+													"variable": [
+														{
+															"key": "clusterId",
+															"value": "{{cluster_id}}"
+														},
+														{
+															"key": "apiVersion",
+															"value": "{{apiVersion}}"
+														},
+														{
+															"key": "kind",
+															"value": "{{kind}}"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Ok",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "application/json"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/:clusterId/query/:apiVersion/:kind?organization_id=<string>&project_id=<string>&namespace=<string>&name=<string>&labelSelector=<string>&fieldSelector=<string>&limit=<long>",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":clusterId",
+																"query",
+																":apiVersion",
+																":kind"
+															],
+															"query": [
+																{
+																	"key": "organization_id",
+																	"value": "<string>",
+																	"description": "(Required) "
+																},
+																{
+																	"key": "project_id",
+																	"value": "<string>"
+																},
+																{
+																	"key": "namespace",
+																	"value": "<string>"
+																},
+																{
+																	"key": "name",
+																	"value": "<string>"
+																},
+																{
+																	"key": "labelSelector",
+																	"value": "<string>"
+																},
+																{
+																	"key": "fieldSelector",
+																	"value": "<string>"
+																},
+																{
+																	"key": "limit",
+																	"value": "<long>"
+																}
+															],
+															"variable": [
+																{
+																	"key": "clusterId"
+																},
+																{
+																	"key": "apiVersion"
+																},
+																{
+																	"key": "kind"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{}"
+												},
+												{
+													"name": "NotFound",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/:clusterId/query/:apiVersion/:kind?organization_id=<string>&project_id=<string>&namespace=<string>&name=<string>&labelSelector=<string>&fieldSelector=<string>&limit=<long>",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":clusterId",
+																"query",
+																":apiVersion",
+																":kind"
+															],
+															"query": [
+																{
+																	"key": "organization_id",
+																	"value": "<string>",
+																	"description": "(Required) "
+																},
+																{
+																	"key": "project_id",
+																	"value": "<string>"
+																},
+																{
+																	"key": "namespace",
+																	"value": "<string>"
+																},
+																{
+																	"key": "name",
+																	"value": "<string>"
+																},
+																{
+																	"key": "labelSelector",
+																	"value": "<string>"
+																},
+																{
+																	"key": "fieldSelector",
+																	"value": "<string>"
+																},
+																{
+																	"key": "limit",
+																	"value": "<long>"
+																}
+															],
+															"variable": [
+																{
+																	"key": "clusterId"
+																},
+																{
+																	"key": "apiVersion"
+																},
+																{
+																	"key": "kind"
+																}
+															]
+														}
+													},
+													"status": "Not Found",
+													"code": 404,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": [],
+													"body": ""
+												},
+												{
+													"name": "Internal server error",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "text/plain"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/:clusterId/query/:apiVersion/:kind?organization_id=<string>&project_id=<string>&namespace=<string>&name=<string>&labelSelector=<string>&fieldSelector=<string>&limit=<long>",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																":clusterId",
+																"query",
+																":apiVersion",
+																":kind"
+															],
+															"query": [
+																{
+																	"key": "organization_id",
+																	"value": "<string>",
+																	"description": "(Required) "
+																},
+																{
+																	"key": "project_id",
+																	"value": "<string>"
+																},
+																{
+																	"key": "namespace",
+																	"value": "<string>"
+																},
+																{
+																	"key": "name",
+																	"value": "<string>"
+																},
+																{
+																	"key": "labelSelector",
+																	"value": "<string>"
+																},
+																{
+																	"key": "fieldSelector",
+																	"value": "<string>"
+																},
+																{
+																	"key": "limit",
+																	"value": "<long>"
+																}
+															],
+															"variable": [
+																{
+																	"key": "clusterId"
+																},
+																{
+																	"key": "apiVersion"
+																},
+																{
+																	"key": "kind"
+																}
+															]
+														}
+													},
+													"status": "Internal Server Error",
+													"code": 500,
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": "<string>"
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "pod",
+					"item": [
+						{
+							"name": "logs",
+							"item": [
+								{
+									"name": "post Clusterid Pod Logs",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 201\", function () {",
+													"    pm.response.to.have.status(201);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"stream\": false,\n    \"namespace\": \"{{namespace}}\",\n    \"podName\": \"{{pod_name}}\",\n    \"containerName\": \"{{container_name}}\",\n    \"previous\": false\n}\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl_clusters}}/:clusterId/pod/logs?organization_id={{organization_id}}&project_id={{project_id}}",
+											"host": [
+												"{{baseUrl_clusters}}"
+											],
+											"path": [
+												":clusterId",
+												"pod",
+												"logs"
+											],
+											"query": [
+												{
+													"key": "organization_id",
+													"value": "{{organization_id}}",
+													"description": "(Required) "
+												},
+												{
+													"key": "project_id",
+													"value": "{{project_id}}"
+												}
+											],
+											"variable": [
+												{
+													"key": "clusterId",
+													"value": "{{cluster_id}}"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Created",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "*/*"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/:clusterId/pod/logs?organization_id=<string>&project_id=<string>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														":clusterId",
+														"pod",
+														"logs"
+													],
+													"query": [
+														{
+															"key": "organization_id",
+															"value": "<string>",
+															"description": "(Required) "
+														},
+														{
+															"key": "project_id",
+															"value": "<string>"
+														}
+													],
+													"variable": [
+														{
+															"key": "clusterId"
+														}
+													]
+												}
+											},
+											"status": "Created",
+											"code": 201,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										},
+										{
+											"name": "NotFound",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "*/*"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/:clusterId/pod/logs?organization_id=<string>&project_id=<string>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														":clusterId",
+														"pod",
+														"logs"
+													],
+													"query": [
+														{
+															"key": "organization_id",
+															"value": "<string>",
+															"description": "(Required) "
+														},
+														{
+															"key": "project_id",
+															"value": "<string>"
+														}
+													],
+													"variable": [
+														{
+															"key": "clusterId"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Internal server error",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "*/*"
+													},
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/:clusterId/pod/logs?organization_id=<string>&project_id=<string>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														":clusterId",
+														"pod",
+														"logs"
+													],
+													"query": [
+														{
+															"key": "organization_id",
+															"value": "<string>",
+															"description": "(Required) "
+														},
+														{
+															"key": "project_id",
+															"value": "<string>"
+														}
+													],
+													"variable": [
+														{
+															"key": "clusterId"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": "<string>"
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "dataplanes",
+			"item": [
+				{
+					"name": "get Dataplanes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl_clusters}}/dataplanes?org_id={{org_int_id}}&project_id={{project_id}}",
+							"host": [
+								"{{baseUrl_clusters}}"
+							],
+							"path": [
+								"dataplanes"
+							],
+							"query": [
+								{
+									"key": "org_id",
+									"value": "{{org_int_id}}",
+									"description": "(Required) "
+								},
+								{
+									"key": "project_id",
+									"value": "{{project_id}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/dataplanes?org_id=<long>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"dataplanes"
+									],
+									"query": [
+										{
+											"key": "org_id",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						},
+						{
+							"name": "Internal server error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/dataplanes?org_id=<long>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"dataplanes"
+									],
+									"query": [
+										{
+											"key": "org_id",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": "<string>"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server",
+			"value": ""
+		},
+		{
+			"key": "port",
+			"value": "config:port"
+		},
+		{
+			"key": "baseUrl",
+			"value": "{{server}}:{{port}}/api/v1/clusters"
+		}
+	]
+}
