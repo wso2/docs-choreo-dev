@@ -47,7 +47,7 @@ Follow the steps below to create the service:
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Go to the **Service** card and click **Create**.
-4. Enter a unique name and a description for the service. You can enter the name and description given below:
+4. Enter a unique name and a description of the service. You can enter the name and description given below:
 
     | **Field**       | **Value**               |
     |-----------------|-------------------------|
@@ -207,9 +207,9 @@ Let's deploy a front-end application to consume the API. This application is des
 
 To host the front-end application in Choreo, you must create a web application component. To create a web application component, follow the steps given below.
 
-1. Navigate to the project of the reading list application that you created in the previous steps.
-2. Select **Create** on the component listing section
-3. Select **Web Application** as the component type.
+1. On the Choreo console, select the project of the reading list application that you created in the previous steps, from the project list located on the header.
+2. Click **Create** under the **Component Listing** section to create a new component.
+3. On the **Web Application** card, click **Create**.
 4. Enter a unique name and a description for the web application. You can enter the name and description given below:
 
     | **Field**       | **Value**               |
@@ -227,33 +227,23 @@ To host the front-end application in Choreo, you must create a web application c
     | **GitHub Repository** | **`choreo-examples`** |
     | **Branch**            | **`main`**                               |
     | **Build Preset**      | Click **React SPA** since the frontend is a React application built with Vite|
-    | **Project Path**              | **`cloud-native-app-developer/reading-list-front-end`** |
+    | **Build Context Path**              | **`cloud-native-app-developer/reading-list-front-end`** |
     | **Build Command**     | **`npm install && npm run build`**             |
     | **Build Output**      | **`dist`**                                    |
     | **Node Version**      | **`18`**                                      |
 
 9. Click **Create**. This initializes the service with the implementation from your GitHub repository and takes you to the **Overview** page of the component.
 
-#### Step 2.3.2: Deploy the web application component
+Let's consume the service through the web app. Choreo services are by default secured. To consume a service in Choreo you need an access token. Let's configure the web application to connect to an IdP (For this guide, let's use Asgardeo) to generate an access token for a user. 
 
-Once the web application component is created, you can deploy it to the Choreo runtime. To deploy the web application component, follow the steps given below.
+#### Step 2.3.2: Configure Asgardeo (IdP) to integrate with your application
 
-1. Click **Deploy** in the left menu of the component page.
-2. Select **Deploy Manually**.
-3. Wait until the deployment is completed. This may take a few minutes. Once deployed copy the web app URL from the development environment in the deploy page.
-4. If you navigate to the web app URL, you will get to a web page with the login button.
-5. Since we haven't configured our web app to work with the service and identity provider, you will not be able to log in.
-
-We will configure the web app in the next step.
-
-#### Step 2.3.3: Configure Asgardeo to integrate with your application
-
-Choreo uses Asgardeo as the identity provider for Choreo applications. When you create an application in the Choreo Developer Portal, it automatically creates a corresponding application in Asgardeo. You can go to the Asgardeo application to specify the configurations required for end users to sign in to the front-end application.
+Choreo uses Asgardeo as the default identity provider for Choreo applications. When you create an application in the Choreo Developer Portal, it automatically creates a corresponding application in Asgardeo. You can go to the Asgardeo application to specify the configurations required for end users to sign in to the front-end application.
 
 1. Access Asgardeo at [https://console.asgardeo.io/](https://console.asgardeo.io/) and sign in with the same credentials with which you signed in to Choreo.
 2. Make sure you are in the same organization that you were when you created the application in the Choreo Developer Portal. You can click the **Organization** list in the Asgardeo Console top menu and ensure you are in the correct organization.
-3. In the Asgardeo Console, click **Develop** and then click **Applications**. You will see the **readingListApp** that is automatically created.
-4. Click on the application to edit it.
+3. In the Asgardeo Console's left navigation, click **Applications**. You will see the **readingListApp** that is automatically created.
+4. Click on the edit icon to edit the application.
 5. Click the **Protocol** tab and apply the following changes:
 
     1. Under **Allowed grant types**, select **Code**.
@@ -264,18 +254,18 @@ Choreo uses Asgardeo as the identity provider for Choreo applications. When you 
     5. Under **Access Token**, select **JWT** as the **Token type**.
     6. Click **Update**.
 
-#### Step 2.3.4: Configure the front-end application
+#### Step 2.3.3: Configure the front-end application
 
 In this step, you are adding the configurations needed for the web app to successfully invoke the **Reading List Service** REST API. These configurations need to be updated for each environment you deploy the web app. Here you will be updating the configurations for the development environment.
 
 !!! note
-        The web application is reading the environment specific configurations from the `window` object at runtime. This is done by the `config.js` file in the root of the web application. In this section, we are mounting the `config.js` file for the development environment. You will need to do the same for other environments as well when you deploy your web application to multiple environments.
+        The web application is reading the environment-specific configurations from the `window` object at runtime. This is done via the `config.js` file in the root of the web application. In this section, we are mounting the `config.js` file for the development environment. You will need to do the same for other environments as well when you deploy your web application to multiple environments.
 
 To configure the front-end application, follow the steps given below.
 
 1. While on the web application component page. Click and expand **Dev Ops** in the left menu.
 2. Select **Configs and Secrets** sub menu.
-3. Select **Create**.
+3. Select **+Create**.
 4. Select the below mount configuration options and click **Next**.
 
     | **Field**             | **Description**                               |
@@ -287,7 +277,7 @@ To configure the front-end application, follow the steps given below.
 
     | **Field**             | **Description**                               |
     |-----------------------|-----------------------------------------------|
-    | **Config Name**       | **Web App Config**                            |
+    | **Config Name**       | **web-app-config**                            |
     | **Mount Path**        | **/app/config.js**                            |
 
 6. Copy the config details as a JSON file as shown below into the text area.
@@ -307,9 +297,20 @@ To configure the front-end application, follow the steps given below.
     | **redirectUrl**       | The web app URL you copied earlier. |
     | **asgardeoClientId**  | The **Client ID** from the **Protocol** tab of the **readingListApp** application in the Asgardeo Console. |
     | **asgardeoBaseUrl**   | Specify the Asgardeo API URL with your organization name. i.e., `https://api.asgardeo.io/t/<ORG_NAME>`.      |
-    | **choreoApiUrl**      | The reading list service URL. Copy the Public URL of the "Reading List Service" component from the endpoint table in the overview page for the relevant environment |
+    | **choreoApiUrl**      | The reading list service URL. Copy the Public URL of the **Reading List Service** component from the endpoint table in the overview page for the relevant environment |
 
 8. Click **Create**.
+
+#### Step 2.3.4: Deploy the web application component
+
+Once the web application component is created, you can deploy it to the Choreo runtime. To deploy the web application component, follow the steps below:
+
+1. In the left menu, click **Deploy**.
+2. In the **Build Area** card, click **Deploy Manually**. The deployment may take a few minutes to complete.
+3. Once the web application is deployed, copy the **Web App URL** from the development environment card.
+4. Navigate to the web app URL. You can verify that the web app is successfully hosted. 
+
+Next, let's create a user to access the web application. 
 
 #### Step 2.3.5: Create a user in Asgardeo
 
@@ -319,8 +320,8 @@ In this step, you play the role of an Asgardeo user with administrative privileg
 
 To define a user for the **readingListApp** application, follow the steps given below:
 
-1. Go to the [Asgardeo Console](https://console.asgardeo.io/), click **Manage** and then click **Users**.
-2. On the **Users** page, click **Add User**.
+1. Go to the [Asgardeo Console](https://console.asgardeo.io/) and click **Users**.
+2. On the **Users** page, click **+ New User**.
 3. In the **Add User** dialog, enter values for **Username (Email)**, **First Name**, and **Last Name**.
 4. Under **Select the method to set the user password**, select **Invite the user to set the user password**, and make sure you select **Invite Via Email**.
 
@@ -335,11 +336,11 @@ To define a user for the **readingListApp** application, follow the steps given 
 !!! tip
     You can create multiple users to test your front-end application.
 
-#### Step 2.3.6: Login and test the front-end application
+#### Step 2.3.6: Log in and test the front-end application
 
-To test front-end application and send requests to the **Reading List Service** REST API via it, follow the steps given below:
+To test the front-end application and send requests to the **Reading List Service** REST API via it, follow the steps given below:
 
-1. Access the front-end application via it's web URL mentioned in the web application overview page.
+1. Access the front-end application via its web URL mentioned in the web application overview page.
 2. Click **Login**, and sign in with the credentials of a user that you created in Asgardeo.
 **Allow**.
 
