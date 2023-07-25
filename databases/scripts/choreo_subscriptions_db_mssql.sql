@@ -146,8 +146,12 @@ INSERT INTO quota (tier_id,attribute_name,threshold) VALUES
 GO
 
 INSERT INTO tierV2 (id,name,description,is_paid,created_at,is_internal) VALUES
-	 (N'8de71e7a-adc2-4de4-a1b4-5b79d450f3ff',N'Free',N'Free tier to tryout choreo with component based pricing',0,1667189541440,0),
+	 (N'8de71e7a-adc2-4de4-a1b4-5b79d450f3ff',N'Developer',N'Developer tier to tryout choreo with component based pricing',0,1667189541440,0),
 	 (N'352dd60e-8e14-4bb3-9dab-395a16fbfe88',N'Pay As You Go',N'Tier for paid users with component based pricing',1,1667189541440,0),
      (N'9819cdd6-d2df-47cb-8954-8c1a80cb06cc',N'Choreo Support',N'Choreo support plan with component based pricing',1,1667189541440,0),
-	 (N'4abe3757-86f6-47de-994f-f02fb0522e99',N'Enterprise',N'Tier for enterprise users with component based pricing',1,1667189541440,1);
+	 (N'4abe3757-86f6-47de-994f-f02fb0522e99',N'Enterprise',N'Tier for enterprise users with component based pricing',1,1667189541440,1),
+     (N'41e29802-f4bb-456c-a92e-b14cca67c4bb',N'Developer',N'Developer Paid tier for users adding payment methods with component based pricing',1,1689683632,0),
+	 (N'c971b211-bc44-4f35-90ad-4d62b313b466',N'Pay As You Go',N'New PAYG tier for paid users with component based pricing',1,1689683632,0),
+     (N'ac5b54f5-d665-4515-ae17-95eac201ecaa',N'Developer Infrastructure',N'Tier for infrastructure costs associated with Developer Paid users',1,1689683632,0),
+     (N'd3bd7035-162d-49dd-8b20-2f8bf095a889',N'Pay As You Go Infrastructure',N'Tier for infrastructure costs associated with new PAYG users',1,1689683632,0);
 GO
