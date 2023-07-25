@@ -94,7 +94,7 @@ spec:
             - name: secret-private-ga-choreo
               mountPath: /mnt/csi/secret-private-ga-choreo
               readOnly: true
-          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connect-global-adapter:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connect-global-adapter-v2:latest
           imagePullPolicy: Always
           securityContext:
             allowPrivilegeEscalation: false
