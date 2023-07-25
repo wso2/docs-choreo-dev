@@ -1,6 +1,6 @@
 # Build Your First Cloud Native Application with Choreo
 
-Choreo is a SaaS application development suite that allows you to effortlessly build, deploy, monitor, and manage your cloud native applications.
+Choreo is a SaaS application development suite that allows you to effortlessly build, deploy, monitor, and manage your cloud-native applications.
 
 In this quick start guide, you will explore how to expose a service endpoint as a REST API via Choreo and securely consume the API from a web application.
 You will build a simple reading list web application with a sign-in page and functionality to interact with a secure backend REST API. You will use Asgardeo, WSO2's Identity as a Service (IDaaS) solution, to secure user authentication to the web application. The application will allow users to sign in and view the reading list. On signing in, a user can add books to a reading list and delete books from the reading list. The application will also allow users to sign out of the application.
@@ -35,7 +35,6 @@ Before you try out this guide, complete the following:
          2. In the left navigation menu, click **Settings**.
          3. Click the **API Management** tab and then click **Enable Asgardeo Key Manager**.
          4. In the confirmation dialog that opens, click **Yes**.
-
 
 ## Step 1: Create a service component and publish it as a REST API
 
@@ -174,7 +173,7 @@ You have published the **Reading List Service** REST API to the Developer Portal
 
 In the previous steps, you played the role of backend developer and developed a service. In this step, you will play the role of the web application developer who consumes the service.
 
-To consume the **Reading List Service** REST API, you must create an application, subscribe application to the REST API, generate keys, and invoke the API.
+To consume the **Reading List Service** REST API, you must create an application, subscribe the application to the REST API, generate keys, and invoke the API.
 
 ### Step 2.1: Create an application
 
@@ -202,7 +201,7 @@ Now your application has subscribed to the **Reading List Service** REST API.
 
 At the moment, any user can invoke the **Reading List Service** REST API via the **readingListApp** application (i.e., using its token) and update the reading list. However, if a user sends a request to retrieve the reading list, the response will also show entries by other users. To allow multiple users to use the application and maintain personal reading lists, you need a front-end application that allows each user to sign in with a unique user ID.
 
-Let's deploy a frontend application to consume the API. This application is designed to personalize the reading lists based on the user ID that it obtains from its identity provider.
+Let's deploy a front-end application to consume the API. This application is designed to personalize the reading lists based on the user ID that it obtains from its identity provider.
 
 #### Step 2.3.1: Create a web application component
 
@@ -239,11 +238,11 @@ To host the front-end application in Choreo, you must create a web application c
 
 Once the web application component is created, you can deploy it to the Choreo runtime. To deploy the web application component, follow the steps given below.
 
-1. Click **Deploy** in the left menu of component page.
+1. Click **Deploy** in the left menu of the component page.
 2. Select **Deploy Manually**.
 3. Wait until the deployment is completed. This may take a few minutes. Once deployed copy the web app URL from the development environment in the deploy page.
 4. If you navigate to the web app URL, you will get to a web page with the login button.
-5. Since we haven't configured our web app to work with the service and identity provider, you will not be able to login.
+5. Since we haven't configured our web app to work with the service and identity provider, you will not be able to log in.
 
 We will configure the web app in the next step.
 
@@ -260,54 +259,57 @@ Choreo uses Asgardeo as the identity provider for Choreo applications. When you 
     1. Under **Allowed grant types**, select **Code**.
     2. Select the **Public client** checkbox.
     3. In the **Authorized redirect URLs** field, enter the web app URL you copied earlier and click the **+** icon to add the entry.
-    4. Add another `http://localhost:5173` following the above steps for authorized redirect URLs.
-
-        !!! note
-               The `http://localhost:5173` entry is to try out the web application locally.
-
+    4. Add another `http://localhost:5173` following the above steps for authorized redirect URLs. The `http://localhost:5173` entry is to try out the web application locally. You can remove this entry when you deploy the web application to a production environment.
     4. In the **Allowed origins** field, add the same URLs that you added as authorized redirect URLs.
     5. Under **Access Token**, select **JWT** as the **Token type**.
     6. Click **Update**.
 
 #### Step 2.3.4: Configure the front-end application
 
-In this step, you are adding the configurations needed for the web app to successfully invoke the **Reading List Service** REST API. This configurations needs to be updated for each environment you deploy the web app. Here you will be updating the configurations for the development environment.
+In this step, you are adding the configurations needed for the web app to successfully invoke the **Reading List Service** REST API. These configurations need to be updated for each environment you deploy the web app. Here you will be updating the configurations for the development environment.
 
 !!! note
-        The web application is reading the environment specific configurations from the `window` object at runtime. This is done by the `config.js` file in the root of the web application. In this section we are mounting the `config.js` file for the development environment. You will need to do the same for other environments as well when you deploy your web application to multiple environments.
+        The web application is reading the environment specific configurations from the `window` object at runtime. This is done by the `config.js` file in the root of the web application. In this section, we are mounting the `config.js` file for the development environment. You will need to do the same for other environments as well when you deploy your web application to multiple environments.
 
 To configure the front-end application, follow the steps given below.
 
-1. While in the web application component page. Click and expand **Dev Ops** in the left menu.
+1. While on the web application component page. Click and expand **Dev Ops** in the left menu.
 2. Select **Configs and Secrets** sub menu.
 3. Select **Create**.
-4. Select Below Mount Configuration options and click **Next**.
+4. Select the below mount configuration options and click **Next**.
 
     | **Field**             | **Description**                               |
     |-----------------------|-----------------------------------------------|
     | **Config Type**       | **Config Map**                                |
     | **Mount Type**        | **File Mount**                                |
 
-5. Copy the config details as a JSON file as shown below.
+5. Provide the below values for mount configuration
+
+    | **Field**             | **Description**                               |
+    |-----------------------|-----------------------------------------------|
+    | **Config Name**       | **Web App Config**                            |
+    | **Mount Path**        | **/app/config.js**                            |
+
+6. Copy the config details as a JSON file as shown below into the text area.
 
     ```javascript
     window.config = {
         redirectUrl: "<web-app-url>",
         asgardeoClientId: "<asgardeo-client-id>",
         asgardeoBaseUrl: "https://api.asgardeo.io/t/<your-org-name>",
-        choreoApiUrl: "<reading-list-service-url>",
+        choreoApiUrl: "<reading-list-service-url>"
     };
     ```
-6. Fill the placeholders with the values you copied from the previous steps as mentioned in the table below.
+7. Fill the placeholders with the values you copied from the previous steps as mentioned in the table below.
 
     | **Field**             | **Description**                               |
     |-----------------------|-----------------------------------------------|
     | **redirectUrl**       | The web app URL you copied earlier. |
     | **asgardeoClientId**  | The **Client ID** from the **Protocol** tab of the **readingListApp** application in the Asgardeo Console. |
     | **asgardeoBaseUrl**   | Specify the Asgardeo API URL with your organization name. i.e., `https://api.asgardeo.io/t/<ORG_NAME>`.      |
-    | **choreoApiUrl**      | The reading list service URL |
+    | **choreoApiUrl**      | The reading list service URL. Copy the Public URL of the "Reading List Service" component from the endpoint table in the overview page for the relevant environment |
 
-7. Click **Create**.
+8. Click **Create**.
 
 #### Step 2.3.5: Create a user in Asgardeo
 
@@ -361,7 +363,7 @@ To test front-end application and send requests to the **Reading List Service** 
     2. Enter values for the **Name**, **Author**, and **Status** fields.
     3. Click **Save**.
 
-    Three tabs open for each status. To delete a reading list item, you can click **Delete**.
+    Three tabs are open for each status. To delete a reading list item, you can click **Delete**.
 
 To verify whether the reading list is personalized for each user, you can sign in as a different user. The reading list items you entered above will not appear for the other user.
 
