@@ -28,7 +28,7 @@ See [Understanding the endpoints.yaml file](#learn-the-endpointsyaml-file) to le
 
 ### Configure endpoints with the Ballerina build-preset
 
-When you create a service component with the `Ballerina preset`, Choreo automatically detects the endpoint details for REST API and GraphQL endpoints. You can override the auto-generated endpoint configuration by providing the `endpoints.yaml` file in the source directory
+When you create a service component with the `Ballerina preset`, Choreo automatically detects the endpoint details for REST APIs. You can override the auto-generated endpoint configuration by providing the `endpoints.yaml` file in the source directory
 
 See [Understanding the endpoints.yaml file](#learn-the-endpointsyaml-file) to learn about the `endpoints.yaml` file.
 
