@@ -73,6 +73,8 @@ export class APIDeployment {
       .should("be.visible")
       .click();
 
+    this.RetryDevDeployment();
+
     cy.contains("Deploying the Interceptor App", LONG_TIME).should(
       "be.visible"
     );
@@ -88,6 +90,8 @@ export class APIDeployment {
       return;
     }
 
+    this.RetryDevDeployment();
+
     retryCount++;
     cy.get("body").then((body) => {
       const element = body
@@ -99,7 +103,7 @@ export class APIDeployment {
       if (element.length > 0) {
         let isNewDeployment = false;
         body
-          .find('[data-cyid="env-baseDevelopment-card"]')
+          .find('[data-cyid="env-baseDevelopment-env-card"]')
           .each((index, element) => {
             const timeElement = element.querySelector(
               '[data-cyid="proxy-deployed-time"]>span>p'
