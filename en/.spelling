@@ -662,4 +662,7 @@ trivyignore
 redirectUrl
 asgardeoClientId
 asgardeoBaseUrl
+usr
+nginx
+html
 choreoApiUrl
