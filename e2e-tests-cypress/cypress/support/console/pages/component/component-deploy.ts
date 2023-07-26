@@ -13,6 +13,7 @@
 
 import { GraphQL } from "../../apis/graphql";
 import {
+  BUILD_FAILED,
   CONFIG_FILE,
   CONFIG_KEY,
   CONFIG_VALUE,
@@ -391,7 +392,9 @@ export class ComponentDeployPage {
 
   static addNewVersion(branch: string = "feature", version: string = "1.1") {
     cy.get('[data-cyid="version-picker"]').click();
-    cy.get('[data-cyid="btn-create-version"]').should("be.visible").click();
+    cy.get('[data-cyid="btn-create-version-button"]')
+      .should("be.visible")
+      .click();
     cy.get('[role="dialog"]').within(() => {
       cy.get('[data-testid*="feature"]').click();
     });
@@ -439,8 +442,8 @@ export class ComponentDeployPage {
       .contains("Generating Configurations", LONG_TIME)
       .should("not.exist");
     APIDeployment.RetryDevDeployment();
-    cy.get('[data-cyid="btn-deploy-api-button"]').should("be.enabled").click();
-    cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
+    cyGet('[data-cyid="btn-deploy-api-button"]').should("be.enabled").click();
+    cyGet('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
       .should("be.enabled")
       .click();
     if (configSetupStepAvailable) {
@@ -479,17 +482,53 @@ export class ComponentDeployPage {
           .should("be.visible");
       });
     cyGet('[data-testid="Endpoints-env-artifact"]').should("be.visible");
-    GraphQL.getServiceEndpointStatus(projectName, componentName);
+    this.verifyEndpointIsDeployed();
     cyGet('[data-cyid="deployment-status"]', SHORT_TIME)
       .contains(DEPLOYMENT_PENDING, SHORT_TIME)
       .should("not.exist");
     cyGet('[data-cyid="deployment-status"]', SHORT_TIME)
       .contains(DEPLOYMENT_PROGRESSING, SHORT_TIME)
       .should("not.exist");
-    cyGet('[data-testid="Endpoints-status"]', LONG_TIME).contains(
-      DEPLOYMENT_SUCCESS,
-      LONG_TIME
-    );
+  }
+
+  private static verifyEndpointIsDeployed() {
+    for (var i = 0; i < 5; i++) {
+      let isEndpointLoaded = false;
+      cy.get("body", { log: false }).then((body) => {
+        if (body.find('[data-cyid="Endpoints-status-chip"]').length > 0) {
+          cy.get('[data-cyid="Endpoints-status-chip"]', { log: false }).then(
+            ($statusElement) => {
+              let statusText = $statusElement.children().eq(0).text();
+
+              const waitTime = 5000 * (i + 1);
+              if (
+                statusText.includes(DEPLOYMENT_PENDING) ||
+                statusText.includes(DEPLOYMENT_PROGRESSING)
+              ) {
+                cy.get('[data-cyid="commit-history-detail-box"]')
+                  .eq(0)
+                  .contains(BUILD_FAILED)
+                  .should("not.exist");
+                cy.log(
+                  `Endpoint is ${statusText}, check back in ${
+                    waitTime / 1000
+                  } seconds`
+                );
+                cy.wait(waitTime, { log: false });
+              } else {
+                isEndpointLoaded = true;
+              }
+            }
+          );
+        }
+      });
+
+      if (isEndpointLoaded) {
+        break;
+      }
+    }
+
+    cyGet('[data-cyid="Endpoints-status-chip"]').contains(DEPLOYMENT_SUCCESS);
   }
 
   static reDeployService(
@@ -535,7 +574,7 @@ export class ComponentDeployPage {
       .contains(DEPLOYMENT_SUCCESS, VERY_LONG_TIME)
       .should("be.visible");
     cyGet('[data-testid="Endpoints-env-artifact"]').should("be.visible");
-    GraphQL.getServiceEndpointStatus(projectName, componentName);
+    this.verifyEndpointIsDeployed();
     cyGet('[data-cyid="deployment-status"]', SHORT_TIME)
       .contains(DEPLOYMENT_PENDING, SHORT_TIME)
       .should("not.exist");
@@ -560,15 +599,11 @@ export class ComponentDeployPage {
       .should("be.enabled")
       .click();
     if (configSetupStepAvailable) {
-      cy.get('[data-cyid="btn-next-button"]').contains("Next").click();
+      cy.get('[data-cyid="btn-next-button"]').click();
     }
 
     if (configEnvVars) {
       this.configByocComponent();
-    }
-
-    if (count > 0) {
-      cy.get('[data-cyid="btn-next-button"]').click();
     }
 
     cy.get(

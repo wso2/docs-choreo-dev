@@ -98,9 +98,13 @@ export class APIDeployment {
 
       if (element.length > 0) {
         let isNewDeployment = false;
-        body.find('[data-cyid="env-baseDevelopment-card"]').each((index, element) => {
-            const timeElement = element.querySelector('[data-cyid="proxy-deployed-time"]>span>p');
-            console.log(timeElement)
+        body
+          .find('[data-cyid="env-baseDevelopment-card"]')
+          .each((index, element) => {
+            const timeElement = element.querySelector(
+              '[data-cyid="proxy-deployed-time"]>span>p'
+            );
+            console.log(timeElement);
             if (timeElement) {
               const deployedTime = timeElement.textContent.trim();
               const timeRegex = /^(\d+)\s+(minute|second)s?\s+ago$/;
@@ -108,8 +112,15 @@ export class APIDeployment {
               if (match) {
                 const time = parseInt(match[1]);
                 const unit = match[2];
-                if ((unit === "minute" && time <= retryCount) || (unit === "second" && time < 60)) {
-                  cy.log("Deployed time is less than " + retryCount +" minute(s) or 60 seconds");
+                if (
+                  (unit === "minute" && time <= retryCount) ||
+                  (unit === "second" && time < 60)
+                ) {
+                  cy.log(
+                    "Deployed time is less than " +
+                      retryCount +
+                      " minute(s) or 60 seconds"
+                  );
                   isNewDeployment = true;
                   return;
                 }
@@ -119,8 +130,7 @@ export class APIDeployment {
             } else {
               cy.log("Skipping env card without deployed time");
             }
-          }
-        );
+          });
         if (isNewDeployment) {
           return;
         }
@@ -130,23 +140,25 @@ export class APIDeployment {
     });
   }
 
-  static RetryDevDeployment(retryCount = 0) {
-    cy.log("Checking for retry deployment");
-    retryCount++;
-    if (retryCount > 4) {
-      return;
-    }
+  static RetryDevDeployment() {
+    cy.contains('role="progressbar"').should("not.exist");
 
-    cy.get("body").then((bdy) => {
-      if (bdy.find('[data-testid="retry-btn"]').length > 0) {
-        cy.log("Retry count: " + retryCount);
-        cy.get('[data-testid="retry-btn"]').click();
-        cy.wait(LONG_TIME.timeout);
-      } else {
-        return;
-      }
-      this.RetryDevDeployment(retryCount);
-    });
+    cy.log("Checking for retry deployment");
+    for (let i = 0; i < 4; i++) {
+      cy.get("body", { log: false }).then((bdy) => {
+        if (bdy.find('[data-testid="retry-btn"]').eq(0).length > 0) {
+          cy.get('[data-testid="retry-btn"]').eq(0).click();
+          cy.wait(LONG_TIME.timeout);
+        } else if (
+          bdy.find('[data-cyid="card-body-not-deployed"]').eq(0).length > 0
+        ) {
+          // New deployment or new version deployment
+          cy.wait(3000, { log: false });
+        } else {
+          return;
+        }
+      });
+    }
   }
 
   static RetryPromotionToProd(retryCount = 0) {
@@ -155,6 +167,8 @@ export class APIDeployment {
     if (retryCount > 4) {
       return;
     }
+
+    cy.contains('role="progressbar"').should("not.exist");
 
     cy.get("body").then((bdy) => {
       if (bdy.find('[data-testid="deployment-fetch-error"]').length > 0) {

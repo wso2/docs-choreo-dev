@@ -136,7 +136,7 @@ export class ComponentOverviewPage {
 
   static createNewVersion(version: string, newBranch: string) {
     cy.get('[data-cyid="version-picker"]').click();
-    cy.get("[data-cyid=btn-create-version]").click();
+    cy.get("[data-cyid=btn-create-version-button]").click();
 
     if (newBranch) {
       this.createNewVersionRestApi(version, newBranch);

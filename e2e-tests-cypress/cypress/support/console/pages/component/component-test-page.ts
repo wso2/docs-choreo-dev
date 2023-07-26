@@ -36,9 +36,7 @@ export class ComponentTestPage {
   }
 
   static selectEndpoint(endpoint: string) {
-    Utils.getRenderedElement(
-      '[data-cyid="select-endpoint"]>div[role="button"]'
-    ).click();
+    Utils.getRenderedElement('[data-cyid="select-endpoint-select"]').click();
     Utils.getRenderedElement('ul>li[role="option"]').contains(endpoint).click();
   }
 }
