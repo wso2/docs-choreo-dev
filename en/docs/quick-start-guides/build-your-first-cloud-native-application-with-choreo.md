@@ -234,7 +234,7 @@ To host the front-end application in Choreo, you must create a web application c
 
 9. Click **Create**. This initializes the service with the implementation from your GitHub repository and takes you to the **Overview** page of the component.
 
-Let's consume the service through the web app. Choreo services are by default secured. To consume a service in Choreo you need an access token. Let's configure the web application to connect to an IdP (For this guide, let's use Asgardeo) to generate an access token for a user. 
+Let's consume the service through the web app. Choreo services are by default secured. To consume a service in Choreo you need an access token. Let's configure the web application to connect to an IdP (For this guide, let's use Asgardeo) to generate an access token for a user.
 
 #### Step 2.3.2: Configure Asgardeo (IdP) to integrate with your application
 
@@ -249,7 +249,6 @@ Choreo uses Asgardeo as the default identity provider for Choreo applications. W
     1. Under **Allowed grant types**, select **Code**.
     2. Select the **Public client** checkbox.
     3. In the **Authorized redirect URLs** field, enter the web app URL you copied earlier and click the **+** icon to add the entry.
-    4. Add another `http://localhost:5173` following the above steps for authorized redirect URLs. The `http://localhost:5173` entry is to try out the web application locally. You can remove this entry when you deploy the web application to a production environment.
     4. In the **Allowed origins** field, add the same URLs that you added as authorized redirect URLs.
     5. Under **Access Token**, select **JWT** as the **Token type**.
     6. Click **Update**.
@@ -277,8 +276,8 @@ To configure the front-end application, follow the steps given below.
 
     | **Field**             | **Description**                               |
     |-----------------------|-----------------------------------------------|
-    | **Config Name**       | **web-app-config**                            |
-    | **Mount Path**        | **/app/config.js**                            |
+    | **Config Name**       | **Web App Config**                            |
+    | **Mount Path**        | **/usr/share/nginx/html/config.js**. Every config that needs to be exposed through the web server should be placed inside `/usr/share/nginx/html/`                          |
 
 6. Copy the config details as a JSON file as shown below into the text area.
 
@@ -308,9 +307,9 @@ Once the web application component is created, you can deploy it to the Choreo r
 1. In the left menu, click **Deploy**.
 2. In the **Build Area** card, click **Deploy Manually**. The deployment may take a few minutes to complete.
 3. Once the web application is deployed, copy the **Web App URL** from the development environment card.
-4. Navigate to the web app URL. You can verify that the web app is successfully hosted. 
+4. Navigate to the web app URL. You can verify that the web app is successfully hosted.
 
-Next, let's create a user to access the web application. 
+Next, let's create a user to access the web application.
 
 #### Step 2.3.5: Create a user in Asgardeo
 
