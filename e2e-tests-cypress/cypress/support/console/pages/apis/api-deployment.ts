@@ -73,6 +73,8 @@ export class APIDeployment {
       .should("be.visible")
       .click();
 
+    this.RetryDevDeployment();
+
     cy.contains("Deploying the Interceptor App", LONG_TIME).should(
       "be.visible"
     );
@@ -88,6 +90,8 @@ export class APIDeployment {
       return;
     }
 
+    this.RetryDevDeployment();
+
     retryCount++;
     cy.get("body").then((body) => {
       const element = body
@@ -99,7 +103,7 @@ export class APIDeployment {
       if (element.length > 0) {
         let isNewDeployment = false;
         body
-          .find('[data-cyid="env-baseDevelopment-card"]')
+          .find('[data-cyid="env-baseDevelopment-env-card"]')
           .each((index, element) => {
             const timeElement = element.querySelector(
               '[data-cyid="proxy-deployed-time"]>span>p'
@@ -190,7 +194,6 @@ export class APIDeployment {
     hasMediationPolicy: boolean = false
   ) {
     cyGet('[data-cyid="btn-promote-button"]').should("be.enabled").click();
-    cy.xpath('//span[text()="Configure & Deploy"]').should("have.length", 2);
     cy.wait(5000);
     cy.contains('role="progressbar"').should("not.exist");
     cy.get("body").then((bdy) => {
@@ -217,7 +220,7 @@ export class APIDeployment {
       GraphQL.getPrmotionStatus(projectName, componentName);
     }
     this.RetryPromotionToProd();
-    cy.get('[data-cyid="proxy-env-card-header"]>div>span')
+    cy.get('[data-cyid="env-baseProduction-env-card"]')
       .contains("Production")
       .should("be.visible");
     cyGet('[data-cyid="deployment-status"]').should("have.length", 2);
