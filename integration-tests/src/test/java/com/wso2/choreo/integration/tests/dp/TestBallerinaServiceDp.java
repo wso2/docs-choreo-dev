@@ -35,7 +35,6 @@ public class TestBallerinaServiceDp extends TestBase {
     private String orgHandle;
     private ChoreoComponent choreoComponent;
     private String componentId;
-    private List<Endpoint> endpoints;
     private List<Environment> environments;
     public static final String API_INVOCATION_REQUEST_URI = "/books";
     public static final String REST_API_EXPECTED_RESPONSE = "[]";
@@ -77,74 +76,23 @@ public class TestBallerinaServiceDp extends TestBase {
                 choreoComponent);
         componentId = choreoComponent.getId();
 
-        dp.setChoreoProject(project);
-        dp.setChoreoComponent(choreoComponent);
         Assert.assertEquals(project.getRegion(), dp.getRegion());
         Assert.assertNotNull(componentId);
     }
 
     @Test(dependsOnMethods = {"createComponent_TestBallerinaServiceDp"}, dataProvider = "dps")
     @CitrusTest
-    public void generateEndpointsDev_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
-        Map<String,String> argMap = new HashMap<>();
-        argMap.put("componentId", componentId);
-        argMap.put("versionId", choreoComponent.getLatestApiVersion().getId());
-        argMap.put("releaseId", choreoComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
-        argMap.put("commitHash", choreoComponent.getLatestCommitHash(choreoComponent.getCommitHistory(accessToken)));
-        GraphQL.generateEndpoints(this, appServiceClient, accessToken, argMap);
-    }
-
-    @Test(dependsOnMethods = {"generateEndpointsDev_TestBallerinaServiceDp"}, dataProvider = "dps")
-    @CitrusTest
-    public void getEndpointsDev_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
-        Map<String,String> argMap = new HashMap<>();
-        argMap.put("componentId", componentId);
-        argMap.put("versionId", choreoComponent.getLatestApiVersion().getId());
-        argMap.put("releaseId", choreoComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
-        endpoints = GraphQL.getEndpoints(this, appServiceClient, accessToken, argMap);
-        Assert.assertEquals(endpoints.size(), 1);
-    }
-
-    @Test(dependsOnMethods = {"getEndpointsDev_TestBallerinaServiceDp"}, dataProvider = "dps")
-    @CitrusTest
-    public void updateEndpointsDev_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
-        Map<String,String> argMap = new HashMap<>();
-        argMap.put("componentId", componentId);
-        argMap.put("versionId", choreoComponent.getLatestApiVersion().getId());
-        argMap.put("releaseId", choreoComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
-        final Endpoint endpoint = endpoints.get(0);
-        argMap.put("endpointId", endpoint.getId());
-        argMap.put("displayName", endpoint.getDisplayName());
-        argMap.put("apiContext", endpoint.getApiContext());
-        argMap.put("apiDefinitionPath", endpoint.getApiDefinitionPath());
-        argMap.put("visibility", Constant.EndpointVisibility.PUBLIC.value);
-        Endpoint updatedEndpoint = GraphQL.updateEndpoint(this, appServiceClient, accessToken, argMap);
-        endpoints.set(0, updatedEndpoint);
-    }
-
-    @Test(dependsOnMethods = {"updateEndpointsDev_TestBallerinaServiceDp"}, dataProvider = "dps")
-    @CitrusTest
-    public void componentDeploymentDev_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
+    public void deployComponent_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
         ComponentUtils.deployComponent(this, citrusClients, accessToken, choreoComponent, environments,
                 ComponentFlavour.STANDARD);
         SleepUtil.sleep(30);
     }
 
-    @Test(dependsOnMethods = {"componentDeploymentDev_TestBallerinaServiceDp"}, dataProvider = "dps")
-    @CitrusTest
-    public void getEndpointsDevAfterDeploy_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
-        Map<String,String> argMap = new HashMap<>();
-        argMap.put("componentId", componentId);
-        argMap.put("versionId", choreoComponent.getLatestApiVersion().getId());
-        argMap.put("releaseId", choreoComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
-        endpoints = GraphQL.getEndpoints(this, appServiceClient, accessToken, argMap);
-        Assert.assertEquals(endpoints.size(), 1);
-    }
-
-   @Test(dependsOnMethods = {"getEndpointsDevAfterDeploy_TestBallerinaServiceDp"}, dataProvider = "dps")
+   @Test(dependsOnMethods = {"deployComponent_TestBallerinaServiceDp"}, dataProvider = "dps")
     @CitrusTest
     public void invokeAPIDev_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
-        Endpoint endpoint = endpoints.get(0);
+        Endpoint endpoint = ComponentUtils.getEndpoints(this, citrusClients, accessToken,
+                choreoComponent, Constant.DEV_ENVIRONMENT).get(0);
         String devApiKey = choreoComponent.getAPIKeyForInvoke(accessToken, endpoint.getApimId(),
                 environments.get(0).getName()).replace("\"", "");
         String invokeUrlDev = endpoint.getPublicUrl();
@@ -154,39 +102,17 @@ public class TestBallerinaServiceDp extends TestBase {
 
     @Test(dependsOnMethods = {"invokeAPIDev_TestBallerinaServiceDp"}, dataProvider = "dps")
     @CitrusTest
-    public void promoteEndpointsProd_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
-        Map<String,String> argMap = new HashMap<>();
-        argMap.put("componentId", componentId);
-        argMap.put("versionId", choreoComponent.getLatestApiVersion().getId());
-        argMap.put("sourceReleaseId", choreoComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
-        argMap.put("targetEnvironmentId", environments.get(1).getId());
-        GraphQL.promoteEndpoints(this, appServiceClient, accessToken, argMap);
-    }
-
-    @Test(dependsOnMethods = {"promoteEndpointsProd_TestBallerinaServiceDp"}, dataProvider = "dps")
-    @CitrusTest
-    public void promoteComponentProd_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
+    public void promoteComponent_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
         ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent, environments,
                 ComponentFlavour.STANDARD);
         SleepUtil.sleep(30);
     }
 
-    @Test(dependsOnMethods = {"promoteComponentProd_TestBallerinaServiceDp"}, dataProvider = "dps")
-    @CitrusTest
-    public void getEndpointsProdAfterDeploy_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
-        Map<String,String> argMap = new HashMap<>();
-        argMap.put("componentId", componentId);
-        argMap.put("versionId", choreoComponent.getLatestApiVersion().getId());
-        argMap.put("releaseId", choreoComponent.getReleaseIdForEnvironment(Constant.PROD_ENVIRONMENT));
-        GraphQL.validateEndpointDeployment(this, appServiceClient, accessToken, argMap);
-        endpoints = GraphQL.getEndpoints(this, appServiceClient, accessToken, argMap);
-        Assert.assertEquals(endpoints.size(), 1);
-    }
-
-    @Test(dependsOnMethods = {"getEndpointsProdAfterDeploy_TestBallerinaServiceDp"}, dataProvider = "dps")
+    @Test(dependsOnMethods = {"promoteComponent_TestBallerinaServiceDp"}, dataProvider = "dps")
     @CitrusTest
     public void invokeAPIProd_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
-        Endpoint endpoint = endpoints.get(0);
+        Endpoint endpoint = ComponentUtils.getEndpoints(this, citrusClients, accessToken,
+                choreoComponent, Constant.PROD_ENVIRONMENT).get(0);
         String prodApiKey = choreoComponent.getAPIKeyForInvoke(accessToken, endpoint.getApimId(),
                 environments.get(1).getName()).replace("\"", "");
         String invokeUrlProd = endpoint.getPublicUrl();

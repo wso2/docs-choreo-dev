@@ -42,6 +42,7 @@ import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.commithistory.Commit;
+import com.wso2.choreo.integration.models.endpoints.Endpoint;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.environments.ProxyEnvironment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
@@ -67,6 +68,7 @@ import org.hamcrest.core.StringRegularExpression;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.testng.Assert;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -326,6 +328,35 @@ public class ComponentUtils {
             BalConfig... balconfigs) throws Exception {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
+        if (component.getDisplayType().equals(Constant.displayType.ballerinaService.name())) {
+            Map<String,String> argMap = new HashMap<>();
+            argMap.put("componentId", component.getId());
+            argMap.put("versionId", component.getLatestApiVersion().getId());
+            argMap.put("releaseId", component.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+            argMap.put("commitHash", component.getLatestCommitHash(component.getCommitHistory(accessToken)));
+            GraphQL.generateEndpoints(runner, appServiceClient, accessToken, argMap);
+
+            argMap = new HashMap<>();
+            argMap.put("componentId", component.getId());
+            argMap.put("versionId", component.getLatestApiVersion().getId());
+            argMap.put("releaseId", component.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+            List<Endpoint> endpoints = GraphQL.getEndpoints(runner, appServiceClient, accessToken, argMap);
+            Endpoint endpoint = endpoints.get(0);
+            Assert.assertEquals(endpoints.size(), 1);
+
+            argMap = new HashMap<>();
+            argMap.put("componentId", component.getId());
+            argMap.put("versionId", component.getLatestApiVersion().getId());
+            argMap.put("releaseId", component.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+            argMap.put("endpointId", endpoint.getId());
+            argMap.put("displayName", endpoint.getDisplayName());
+            argMap.put("apiContext", endpoint.getApiContext());
+            argMap.put("apiDefinitionPath", endpoint.getApiDefinitionPath());
+            argMap.put("visibility", Constant.EndpointVisibility.PUBLIC.value);
+            Endpoint updatedEndpoint = GraphQL.updateEndpoint(runner, appServiceClient, accessToken, argMap);
+            endpoints.set(0, updatedEndpoint);
+        }
+
         List<Commit> commitHistory = GraphQL.getCommitHistory(runner, appServiceClient, component.getId(), accessToken);
 
         if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
@@ -461,6 +492,15 @@ public class ComponentUtils {
             List<Environment> environments, ComponentFlavour componentFlavour,
             BalConfig... balconfigs) throws Exception {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+
+        if (component.getDisplayType().equals(Constant.displayType.ballerinaService.name())) {
+            Map<String, String> argMap = new HashMap<>();
+            argMap.put("componentId", component.getId());
+            argMap.put("versionId", component.getLatestApiVersion().getId());
+            argMap.put("sourceReleaseId", component.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+            argMap.put("targetEnvironmentId", environments.get(1).getId());
+            GraphQL.promoteEndpoints(runner, appServiceClient, accessToken, argMap);
+        }
 
         List<Commit> commitHistory = GraphQL.getCommitHistory(runner, appServiceClient, component.getId(), accessToken);
 
@@ -693,6 +733,20 @@ public class ComponentUtils {
         return GraphQL.getEnvironments(runner, cpProjectsClient, accessToken, graphqlDTO);
     }
 
+    public static List<Endpoint> getEndpoints(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+            String accessToken, ChoreoComponent component, String environment) throws Exception {
+        HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+
+        Map<String,String> argMap = new HashMap<>();
+        argMap.put("componentId", component.getId());
+        argMap.put("versionId", component.getLatestApiVersion().getId());
+        argMap.put("releaseId", component.getReleaseIdForEnvironment(environment));
+        GraphQL.validateEndpointDeployment(runner, appServiceClient, accessToken, argMap);
+        List<Endpoint> endpoints = GraphQL.getEndpoints(runner, appServiceClient, accessToken, argMap);
+        Assert.assertEquals(endpoints.size(), 1);
+
+        return endpoints;
+    }
     private static Pair<Environment, String> getEnvironmentWithReleaseId(TestActionRunner runner,
             Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component,
             Constant.Environment env)
