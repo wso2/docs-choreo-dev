@@ -48,4 +48,5 @@ helm upgrade --install "${CRYPTO_SERVICE_INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NA
   --set controller.admissionWebhooks.enabled=false \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-resource-group=${LOADBALANCER_IP_RG}" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal=true" \
-  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET}"
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET}" \
+  --set "controller.extraArgs.enable-ssl-passthrough="
