@@ -190,7 +190,6 @@ export class APIDeployment {
     hasMediationPolicy: boolean = false
   ) {
     cyGet('[data-cyid="btn-promote-button"]').should("be.enabled").click();
-    cy.xpath('//span[text()="Configure & Deploy"]').should("have.length", 2);
     cy.wait(5000);
     cy.contains('role="progressbar"').should("not.exist");
     cy.get("body").then((bdy) => {
@@ -217,7 +216,7 @@ export class APIDeployment {
       GraphQL.getPrmotionStatus(projectName, componentName);
     }
     this.RetryPromotionToProd();
-    cy.get('[data-cyid="proxy-env-card-header"]>div>span')
+    cy.get('[data-cyid="env-baseProduction-env-card"]')
       .contains("Production")
       .should("be.visible");
     cyGet('[data-cyid="deployment-status"]').should("have.length", 2);

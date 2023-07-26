@@ -126,7 +126,7 @@ export class APIDevelop {
   }
 
   private static addHTTPVerb(verbs: string[]) {
-    cy.get("#verb-selector").click();
+    cy.get('[data-cyid="verb-selector-multi-select"]').click();
     verbs.forEach((verb) => {
       let id = `verb-selector-option-${this.httpVerbs.indexOf(verb)}`;
       cy.get(`#${id}`).click().wait(1000);
