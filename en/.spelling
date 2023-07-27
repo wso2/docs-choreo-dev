@@ -666,3 +666,5 @@ usr
 nginx
 html
 choreoApiUrl
+ - docs/api-management/api-policies.md
+Ballerina.toml
