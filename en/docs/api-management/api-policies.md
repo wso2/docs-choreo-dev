@@ -180,7 +180,7 @@ In this guide, you are not going to make any changes to the `Fault` flow. Theref
  
  Choreo supports publishing a policy as a private custom policy. Publishing a policy as a private custom policy makes the policy inaccessible outside of the organization. To publish a policy as a private custom policy, change the visibility to `private` prior to pushing the package to Ballerina central as follows:
 
- 1. Open the Ballerina.toml file of your policy. 
+ 1. Open the `Ballerina.toml` file of your policy. 
  2. Set the visibility to **private** by adding the configuration `visibility="private"`. For example:
 
      ```
