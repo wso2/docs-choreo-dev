@@ -2,8 +2,6 @@ package com.wso2.choreo.integration.tests.dp;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
@@ -26,7 +24,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.io.FileReader;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +43,6 @@ public class TestBallerinaServiceDp extends TestBase {
 
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
-
 
     @DataProvider(name = "dps")
     public Object[][] provideData() {
