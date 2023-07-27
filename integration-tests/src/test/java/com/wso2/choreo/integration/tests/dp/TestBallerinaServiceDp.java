@@ -18,6 +18,7 @@ import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.endpoints.Endpoint;
 import com.wso2.choreo.integration.models.environments.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -25,7 +26,6 @@ import org.testng.annotations.Test;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,13 +36,13 @@ public class TestBallerinaServiceDp extends TestBase {
     private ChoreoComponent choreoComponent;
     private String componentId;
     private List<Environment> environments;
-    public static final String API_INVOCATION_REQUEST_URI = "/books";
-    public static final String REST_API_EXPECTED_RESPONSE = "[]";
+    private String API_INVOCATION_REQUEST_URI;
+    private String REST_API_EXPECTED_RESPONSE;
+
     private HttpClient appServiceClient;
 
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
-
 
     @DataProvider(name = "dps")
     public Object[][] provideData() {
@@ -59,6 +59,9 @@ public class TestBallerinaServiceDp extends TestBase {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        API_INVOCATION_REQUEST_URI = "/books";
+        REST_API_EXPECTED_RESPONSE = new String(new ClassPathResource(
+                "templates/ballerinaService/ballerinaServiceResponse.json").getInputStream().readAllBytes());
     }
 
     @Test(dataProvider = "dps")
@@ -69,7 +72,7 @@ public class TestBallerinaServiceDp extends TestBase {
         Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/byor-service-app1").
                 branch("main").subPath("").build();
 
-        GraphqlDTO dto = ComponentUtils.createServiceComponentRequest(componentName, project, repo);
+        GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
         environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
