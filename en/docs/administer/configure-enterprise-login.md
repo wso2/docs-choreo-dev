@@ -119,7 +119,9 @@ Before you proceed with the configuration, make sure you complete the following:
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console, go to the top navigation menu and click **Organization**. This takes you to the organization's home page.
 3. In the left navigation menu, click **Settings**.
-4. In the **Organization** tab, click **Role Mapping**. 
+4. In the **Organization** tab, click **Role Mapping**.
+    ![Role mapping](../assets/img/administer/enterprise-login/role-mapping.png)
+ 
 5. To add a new role mapping, click **+ Add Mapping**. 
 6. In the **Groups** field, enter the exact name you configured in the enterprise IdP. Next, select the applicable roles to map from the **Roles** list.
    
