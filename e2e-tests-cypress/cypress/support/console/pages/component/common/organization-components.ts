@@ -222,7 +222,7 @@ export class OrganizationComponent {
 
   private static deleteSelectedMapping(groupName: string) {
     cy.contains("td", groupName).trigger("mouseover");
-    cy.get('[data-cyid="btn-delete-mapping"]').click();
+    cy.get('[data-cyid="btn-delete-mapping-button"]').click();
     cy.log("Deleting the created Mapping");
     cy.get('[data-cyid="btn-confirmation-dialog-red"]').click();
     cy.contains("td", groupName).should("not.exist");
@@ -242,7 +242,7 @@ export class OrganizationComponent {
 
   private static updateSelectedMapping(groupName: string, roles: string[]) {
     cy.contains("td", groupName).trigger("mouseover");
-    cy.get('[data-cyid="btn-edit-mapping"]').click();
+    cy.get('[data-cyid="btn-edit-mapping-button"]').click();
     cy.get('[data-cyid="text-field-update-group-name"]').should("be.visible");
     cy.get('[data-cyid="select-roles"]').should("be.visible").click();
     cy.wait(3000);
