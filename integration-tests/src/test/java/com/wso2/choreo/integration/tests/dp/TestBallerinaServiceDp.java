@@ -36,8 +36,8 @@ public class TestBallerinaServiceDp extends TestBase {
     private ChoreoComponent choreoComponent;
     private String componentId;
     private List<Environment> environments;
-    public static final String API_INVOCATION_REQUEST_URI = "/books";
-    public static final String REST_API_EXPECTED_RESPONSE = "[]";
+    public static final String API_INVOCATION_REQUEST_URI = "/isOdd?number=12121";
+    public static final String REST_API_EXPECTED_RESPONSE = "true";
     private HttpClient appServiceClient;
 
     @Autowired
@@ -66,10 +66,10 @@ public class TestBallerinaServiceDp extends TestBase {
     public void createComponent_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
         ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/byor-service-app1").
+        Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/rest-api").
                 branch("main").subPath("").build();
 
-        GraphqlDTO dto = ComponentUtils.createServiceComponentRequest(componentName, project, repo);
+        GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
         environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
