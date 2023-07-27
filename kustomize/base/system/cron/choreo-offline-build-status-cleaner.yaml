@@ -44,6 +44,8 @@ spec:
               envFrom:
                 - configMapRef:
                     name: cm-dp-cicd
+                - configMapRef:
+                    name: cm-dp-cicd
               resources:
                 limits:
                   cpu: 300m
