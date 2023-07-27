@@ -196,7 +196,7 @@ public class ComponentUtils {
                 build();
     }
 
-    public static GraphqlDTO createServiceComponentRequest(String name, ChoreoProject project, Repository repo) {
+    public static GraphqlDTO createBallerinaServiceComponentRequest(String name, ChoreoProject project, Repository repo) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
 
