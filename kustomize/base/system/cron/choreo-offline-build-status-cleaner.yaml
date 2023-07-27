@@ -43,7 +43,7 @@ spec:
                       name: secret-dp-cicd
               envFrom:
                 - configMapRef:
-                    name: env-dp-cicd
+                    name: cm-dp-cicd
               resources:
                 limits:
                   cpu: 300m
