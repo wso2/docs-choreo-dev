@@ -58,13 +58,13 @@ To deploy the API follow the steps below:
 Choreo allows you to implement an API policy as a Ballerina project and attach it to an API proxy component. 
 
 !!! info
-    Supported Ballerina versions: between 2201.3.1 and 2201.5.1.
+    Supported Ballerina versions: 2201.5.1 
 
 To implement a policy, follow the steps given below: 
 
 ### Prerequisites
 
-1. Set up [Ballerina 2201.3.1](https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.3.1).
+1. Set up [ Ballerina 2201.5.1](https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.5.1).
 2. Open the `~/.ballerina/settings.toml` file and ensure you have configured an access token to Ballerina Central. If you have not configured an access token, follow the steps given below to configure one: 
     1. Generate a token via [https://central.ballerina.io/dashboard?tab=token](https://central.ballerina.io/dashboard?tab=token).
     2. Download the generated `Settings.toml` file and copy it to your local `~/.ballerina` directory.
