@@ -57,6 +57,9 @@ To deploy the API follow the steps below:
 
 Choreo allows you to implement an API policy as a Ballerina project and attach it to an API proxy component. 
 
+!!! info
+    Supported Ballerina versions: between 2201.3.1 and 2201.5.1.
+
 To implement a policy, follow the steps given below: 
 
 ### Prerequisites
@@ -64,7 +67,7 @@ To implement a policy, follow the steps given below:
 1. Set up [Ballerina 2201.3.1](https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.3.1).
 2. Open the `~/.ballerina/settings.toml` file and ensure you have configured an access token to Ballerina Central. If you have not configured an access token, follow the steps given below to configure one: 
     1. Generate a token via [https://central.ballerina.io/dashboard?tab=token](https://central.ballerina.io/dashboard?tab=token).
-    2. Download the generated `settings.toml` file and copy it to your local `~/.ballerina` directory.
+    2. Download the generated `Settings.toml` file and copy it to your local `~/.ballerina` directory.
     
 Alternatively, you can set the access token via the `BALLERINA_CENTRAL_ACCESS_TOKEN` environment variable.
 
@@ -94,6 +97,9 @@ To create a Ballerina project for the mediation policy using `mediation.template
 ![Ballerina project](../assets/img/api-management/api-policies/ballerina-project.png){.cInlineImage-xsmall}
 
 Depending on your requirement, you can modify the `Ballerina.toml` and the `Package.md` files of the generated project. For example, you can update the org, package, package version, API documentation content, keywords, etc.
+
+!!! note
+    Make sure you update the org value to your organization name to successfully publish to Ballerina central.
 
 ![Ballerina toml](../assets/img/api-management/api-policies/ballerina-toml.png){.cInlineImage-half}
 
@@ -169,6 +175,25 @@ In this guide, you are not going to make any changes to the `Fault` flow. Theref
 
 !!! note 
     The  **@mediation:RequestFlow**, **@mediation:ResponseFlow**, and **@mediation:FaultFlow** annotations are bound with the keywords in the `Ballerina.toml`. Therefore, the changes you make to the policy stubs should reflect in the `Ballerina.toml` file. For example, if the policy is applicable only on the request and response paths, you can remove the  **@mediation:FaultFlow** annotation from the policy. Then, you **MUST** also remove the **choreo-apim-mediation-fault-flow** keyword from the generated `Ballerina.toml` file. If you do not do so, the Ballerina compiler will show an error at compile time.
+
+#### Publish as a private custom policy
+ 
+ Choreo supports publishing a policy as a private custom policy. Publishing a policy as a private custom policy makes the policy inaccessible outside of the organization. To publish a policy as a private custom policy, change the visibility to `private` prior to pushing the package to Ballerina central as follows:
+
+ 1. Open the `Ballerina.toml` file of your policy. 
+ 2. Set the visibility to **private** by adding the configuration `visibility="private"`. For example:
+
+     ```
+     [package]
+        org = "orgName"
+        name = "packageName"
+        version = "1.0.2"
+        export = ["packageName"]
+        distribution = "2201.5.1"
+        keywords = ["choreo-apim-mediation-policy","choreo-apim-mediation-request-flow","choreo-apim-mediation-response-flow","choreo-apim-mediation-fault-flow"]
+        visibility = "private"
+     ```
+ 3. Package and publish your policy to Ballerina central.     
 
 #### Best practices 
 
