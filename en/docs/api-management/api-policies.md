@@ -191,7 +191,7 @@ In this guide, you are not going to make any changes to the `Fault` flow. Theref
         export = ["packageName"]
         distribution = "2201.5.1"
         keywords = ["choreo-apim-mediation-policy","choreo-apim-mediation-request-flow","choreo-apim-mediation-response-flow","choreo-apim-mediation-fault-flow"]
-        visibility="private"
+        visibility = "private"
      ```
  3. Package and publish your policy to Ballerina central.     
 
