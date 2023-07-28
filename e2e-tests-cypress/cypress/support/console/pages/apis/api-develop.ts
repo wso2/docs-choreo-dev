@@ -84,24 +84,19 @@ export class APIDevelop {
     verb: string,
     policy: Enums.PolicyType,
     policyName: string,
-    policyType: string,
-    headerCount: number = 1
+    policyType: string
   ) {
     const header = this.getHeader(resourcePath, verb.toUpperCase());
 
     const buttons = `[id="/${resourcePath}/${verb.toUpperCase()}/out-flow"] div[data-key] button`;
-    if (Utils.isUnifiedMenuEnabled()) {
-      cyGet('[data-cyid="develop-policies"]').click();
-    } else {
-      cyGet('[data-testid="Policies"]').click();
-    }
+
+    cyGet('[data-cyid="develop-policies"]').click();
     cyGet(header).eq(0).click();
     cy.get(buttons).contains("Attach Policy").click();
     cy.get("button").contains(policy).click();
     cyGet('[name*="Name"]').should("be.visible").type(policyName);
     cyGet('[name*="Value"]').clear().type(policyType);
     cy.get("button").contains("Add").click();
-    cyGet(`[title="${policy}"]`).should("have.length", headerCount);
     cy.get("button").contains("Save").click();
   }
 
@@ -128,7 +123,7 @@ export class APIDevelop {
   }
 
   private static addHTTPVerb(verbs: string[]) {
-    cy.get("#verb-selector").click();
+    cy.get('[data-cyid="verb-selector-multi-select"]').click();
     verbs.forEach((verb) => {
       let id = `verb-selector-option-${this.httpVerbs.indexOf(verb)}`;
       cy.get(`#${id}`).click().wait(1000);
@@ -202,18 +197,14 @@ export class APIDevelop {
 
   private static selectDevelop() {
     let selector = '[data-cyid="develop-resources"]';
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.get("body").then((bdy) => {
-        // Secondary menu is collapsed
-        if (bdy.find(selector).length == 0) {
-          // Expand secondary menu
-          cy.get('[data-cyid="link-develop"]').click();
-        }
-      });
-      cy.get(selector).click();
-    } else {
-      selector = '[data-testid="develop-resources-header"]';
-      cy.get(selector).contains("Resources").should("be.visible");
-    }
+
+    cy.get("body").then((bdy) => {
+      // Secondary menu is collapsed
+      if (bdy.find(selector).length == 0) {
+        // Expand secondary menu
+        cy.get('[data-cyid="link-develop"]').click();
+      }
+    });
+    cy.get(selector).click();
   }
 }

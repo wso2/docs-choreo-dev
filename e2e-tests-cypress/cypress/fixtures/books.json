@@ -1,0 +1,21 @@
+[
+    {
+      "book_id": "01ee2c40-6344-117e-963d-5b5fa299dfd4",
+      "title": "A Tour To Mars",
+      "author": "John Carter",
+      "status": "reading"
+    },
+    {
+      "book_id": "01ee2c40-6344-117e-a255-56730a9fb1a3",
+      "title": "Dead Men",
+      "author": "Frank Smith",
+      "status": "read"
+    },
+    {
+      "book_id": "01ee2c40-6344-117e-9d1b-94058a6d95d7",
+      "title": "The Bucther",
+      "author": "Jude Silvester",
+      "status": "to_read"
+    }
+  ]
+  

@@ -76,24 +76,22 @@ describe("Verify containerized service functionality", () => {
   });
 
   it("Verify component deployment to dev", () => {
-    ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME);
+    ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME, true, true, false, true);
   });
 
   it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd();
+    ComponentDeployPage.promoteToProd(false);
   });
 
   it("Verify test page is disabled", () => {
-    cy.get('[data-cyid="link-test"]').should('be.disabled')
+    cy.get('[data-cyid="link-test"]').should('have.attr', 'disabled')
   });
 
   it("Verify manage page is disabled", () => {
-    cy.get('[data-cyid="link-manage"]').should('be.disabled')
+    cy.get('[data-cyid="link-manage"]').should('have.attr', 'disabled')
   });
 
   it("Verify suspending all component deployments", () => {
-    ChoreoHomePage.navigateToComponents();
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });

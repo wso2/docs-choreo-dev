@@ -40,11 +40,11 @@ spec:
                     name: cm-cio-internal-metric-collector
               resources:
                 limits:
-                  cpu: 300m
-                  memory: 256Mi
+                  cpu: 1
+                  memory: 768Mi
                 requests:
-                  cpu: 150m
-                  memory: 128Mi
+                  cpu: 500m
+                  memory: 512Mi
               volumeMounts:
                 - name: config
                   mountPath: /home/ballerina/Config.toml

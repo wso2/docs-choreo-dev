@@ -1,14 +1,13 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: choreo-dev-letsencrypt-prod
+  name: choreo-dev-wildcard-domain-letsencrypt-prod
 spec:
   acme:
-    email: techops@wso2.com
-    preferredChain: ""
-    privateKeySecretRef:
-      name: choreo-dev-letsencrypt-prod
     server: https://acme-v02.api.letsencrypt.org/directory
+    email: techops@wso2.com
+    privateKeySecretRef:
+      name: choreo-dev-wildcard-domain-letsencrypt-prod
     solvers:
       - dns01:
           azureDNS:

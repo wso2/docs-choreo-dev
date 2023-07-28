@@ -1625,7 +1625,7 @@ CREATE TABLE [dbo].[permission]
     [id] [int] IDENTITY(1,1) NOT NULL ,
     [handle][varchar](255) NOT NULL,
     [display_name][varchar](255) NOT NULL,
-    [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BC','AI','BILLING','ACCOUNT-MANAGE','CONFIGURATIONS-MANAGEMENT','CUSTOM-DOMAINS','ON-PREM-KEYS','USER-MANAGEMENT','ORGANIZATION-MANAGEMENT')),
+    [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BC','AI','BILLING','ACCOUNT-MANAGE','CONFIGURATIONS-MANAGEMENT','CUSTOM-DOMAINS','LOG-MANAGEMENT','ON-PREM-KEYS','USER-MANAGEMENT','ORGANIZATION-MANAGEMENT')),
     [description] [varchar](255) NULL,
     [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -2085,3 +2085,5 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Up
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Self Signup Configs','urn:choreocontrolplane:organizationmanagement:self_signup_config_update','ORGANIZATION-MANAGEMENT','Update Self Signup Configs');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Production Application Credentials','apim:prod_key_manage','APIM-SUBSCRIBER','View, generate and update production credentials of an application');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Sandbox Application Credentials','apim:sand_key_manage','APIM-SUBSCRIBER','View, generate and update sandbox credentials of an application');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Audit Logs','urn:choreocontrolplane:choreoauditloggingapi:audit_logs_view','LOG-MANAGEMENT','View audit logs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Audit Logs','urn:choreocontrolplane:choreoauditloggingapi:audit_logs_manage', 'LOG-MANAGEMENT','Manage audit logs');

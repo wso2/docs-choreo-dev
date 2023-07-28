@@ -14,11 +14,9 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  annotations:
-    autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
   name: choreo-nginx-v2-hpa
 spec:
   maxReplicas: 3
@@ -27,4 +25,16 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: choreo-nginx-deployment-v2
-  targetCPUUtilizationPercentage: 75
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 75
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 75

@@ -94,7 +94,7 @@ spec:
             - name: secret-private-ga-choreo
               mountPath: /mnt/csi/secret-private-ga-choreo
               readOnly: true
-          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connect-global-adapter:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connect-global-adapter-v2:latest
           imagePullPolicy: Always
           securityContext:
             allowPrivilegeEscalation: false
@@ -122,6 +122,16 @@ spec:
                 secretKeyRef:
                   key: PRIVATE_GLOBAL_ADAPTER_PASSWORD
                   name: secret-private-ga-choreo-credentials
+            - name: moesif_ms_auth_pwd
+              valueFrom:
+                secretKeyRef:
+                  key: MOESIF_MS_AUTH_PWD
+                  name: secret-private-ga-choreo-credentials
+            - name: moesif_ms_url
+              valueFrom:
+                configMapKeyRef:
+                  key: MOESIF_MS_URL
+                  name: cc-ga-conf-choreo
             - name: ga_db_pwd
               valueFrom:
                 secretKeyRef:

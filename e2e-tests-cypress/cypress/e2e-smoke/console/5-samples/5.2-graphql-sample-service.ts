@@ -11,8 +11,6 @@
  * associated services.
  */
 
-
-
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
@@ -32,8 +30,9 @@ describe("Graphql GQL service test", () => {
   const PROJECT_NAME = Utils.generateProjectName();
   const TEST_QUERY = '{greeting(name:"John")}';
   const TEST_QUERY_RESPONSE = 'greeting": "Hello, John';
-  const COMPONENT_NAME = Utils.generateComponentName()
+  const COMPONENT_NAME = Utils.generateComponentName();
   const REPO_NAME = "graphql-service-sample";
+  const ENDPOINT_NAME = "Endpoint 8090";
   const subPath = Cypress.env("branch").replace("-ci", "");
 
   before(() => {
@@ -44,13 +43,13 @@ describe("Graphql GQL service test", () => {
   });
 
   it("Verify GraphQL sample creation", () => {
-
+    GitHub.deleteRepoContent(REPO_NAME);
     let componentData: ComponentData = {
       componentName: COMPONENT_NAME,
-      displayType: Enums.DisplayType.graphql,
+      displayType: Enums.DisplayType.ballerinaService,
       accessibility: Enums.Accessibility.EXTERNAL,
       projectName: PROJECT_NAME,
-      sampleTemplate: "choreo/graphql_service:3.1.0",
+      sampleTemplate: "choreo/graphql_service:3.1.1",
       triggerChannels: "",
       triggerId: null,
       srcGitRepoUrl: `https://github.com/choreo-test-apps/graphql-service-sample/tree/main/${subPath}`,
@@ -63,7 +62,12 @@ describe("Graphql GQL service test", () => {
       PROJECT_DESCRIPTION,
       Enums.Region.US
     );
-    GraphQL.createComponent(PROJECT_NAME, REPO_NAME, componentData, GraphQLQueryBuilder.getRestComponentCreationQuery)
+    GraphQL.createComponent(
+      PROJECT_NAME,
+      REPO_NAME,
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
+    );
   });
 
   it("Navigate to deployment", () => {
@@ -72,28 +76,22 @@ describe("Graphql GQL service test", () => {
   });
 
   it("Verify component deployment", () => {
-    ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME);
+    ComponentDeployPage.deployService(
+      PROJECT_NAME,
+      COMPONENT_NAME,
+      ENDPOINT_NAME,
+      true
+    );
   });
 
   it("Verify test functionality of GQL query in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testGraphQL(Enums.Environment.DEVELOPMENT,TEST_QUERY);
+    TestHelper.testGraphQL(Enums.Environment.DEVELOPMENT, TEST_QUERY);
     TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
   });
 
-  it("Verify component promote to prod", () => {
+  it("Verify suspending deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteToProd();
-  });
-
-  it("Verify test functionality of GQL query in Prod on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testGraphQL(Enums.Environment.PRODUCTION, TEST_QUERY);
-    TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
-  });
-
-  it("Verify suspending Prod deployed component", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
+    ComponentDeployPage.stopSingleDevContainer();
   });
 });

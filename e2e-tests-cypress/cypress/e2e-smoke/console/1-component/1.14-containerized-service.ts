@@ -78,7 +78,7 @@ describe("Verify containerized service functionality", () => {
   });
 
   it("Verify component deployment with public level endpoint", () => {
-    ComponentDeployPage.deployService(PROJECT_NAME,COMPONENT_NAME,ENDPOINT_NAME);
+    ComponentDeployPage.deployService(PROJECT_NAME,COMPONENT_NAME,ENDPOINT_NAME,false,false,true);
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
@@ -97,7 +97,7 @@ describe("Verify containerized service functionality", () => {
 
   it("Verify component promote to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteService(ENDPOINT_NAME);
+    ComponentDeployPage.promoteService(ENDPOINT_NAME, false, 0, false, true);
   });
 
   it("Verify test functionality of root resource in prod on swagger", () => {

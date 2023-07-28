@@ -11,7 +11,6 @@
  * associated services.
  */
 
-import { Enums } from "../../../commons/enums";
 import {
   LONG_TIME,
   SHORT_TIME,
@@ -23,6 +22,9 @@ import { PUBLISHER_API_KEYS_URL } from "../../../commons/urls";
 import { GraphQL } from "../../apis/graphql";
 import { MEDIUM_TIME } from "../../../commons/timeouts";
 import {
+  BUILD_FAILED,
+  BUILD_PARTIAL,
+  BUILD_SUCCESS,
   DEPLOYMENT_STOPPED,
   DEPLOYMENT_SUCCESS,
 } from "../../../commons/constants";
@@ -40,6 +42,8 @@ export class APIDeployment {
     cyGet('[data-cyid="btn-deploy-proxy-button"]')
       .should("not.be.disabled")
       .click();
+
+    this.RetryDevDeployment();
 
     cy.wait("@keys", VERY_SHORT_TIME).then(() => {
       cyGet('[data-cyid="btn-next-button"]').should("be.visible").click();
@@ -63,23 +67,26 @@ export class APIDeployment {
     cyGet('[data-testid="btn-deploy-proxy"]').should("be.enabled").click();
   }
 
-  static verifyProxyDeployment(
-    projectName: string,
-    componentName: string,
-    isRedeployment = false
-  ) {
-    cy.get("button")
-      .contains("Save & Deploy", VERY_LONG_TIME)
+  static verifyProxyDeployment(buildCount: number) {
+    // For every deployment, there will be 2 new build statuses in the DOM, even though only one is visible
+    buildCount = buildCount + 2;
+
+    this.checkBuildStatus(buildCount);
+
+    cy.get('[data-cyid="btn-submit-configform"]', VERY_LONG_TIME)
       .should("be.visible")
       .click();
 
-    cy.contains("Deploying the Interceptor App", LONG_TIME).should(
-      "be.visible"
-    );
+    this.RetryDevDeployment();
+
+    this.checkBuildStatus(buildCount);
+
     this.waitForDevDeployment();
     cy.get('[data-cyid="deployment-status"]>h6', VERY_LONG_TIME)
       .eq(0, VERY_LONG_TIME)
       .should("contain", "Active");
+
+    return buildCount;
   }
 
   static waitForDevDeployment(retryCount = 0) {
@@ -87,6 +94,15 @@ export class APIDeployment {
     if (retryCount > 15) {
       return;
     }
+
+    cy.get('[data-cyid="default-build-card"]').within(() => {
+      cy.get('[data-cyid="map-build-status"]')
+        .eq(0)
+        .contains(BUILD_FAILED)
+        .should("not.exist");
+    });
+
+    this.RetryDevDeployment();
 
     retryCount++;
     cy.get("body").then((body) => {
@@ -98,9 +114,13 @@ export class APIDeployment {
 
       if (element.length > 0) {
         let isNewDeployment = false;
-        body.find('[data-cyid="env-baseDevelopment-card"]').each((index, element) => {
-            const timeElement = element.querySelector('[data-cyid="proxy-deployed-time"]>span>p');
-            console.log(timeElement)
+        body
+          .find('[data-cyid="env-baseDevelopment-env-card"]')
+          .each((index, element) => {
+            const timeElement = element.querySelector(
+              '[data-cyid="proxy-deployed-time"]>span>p'
+            );
+            console.log(timeElement);
             if (timeElement) {
               const deployedTime = timeElement.textContent.trim();
               const timeRegex = /^(\d+)\s+(minute|second)s?\s+ago$/;
@@ -108,8 +128,15 @@ export class APIDeployment {
               if (match) {
                 const time = parseInt(match[1]);
                 const unit = match[2];
-                if ((unit === "minute" && time <= retryCount) || (unit === "second" && time < 60)) {
-                  cy.log("Deployed time is less than " + retryCount +" minute(s) or 60 seconds");
+                if (
+                  (unit === "minute" && time <= retryCount) ||
+                  (unit === "second" && time < 60)
+                ) {
+                  cy.log(
+                    "Deployed time is less than " +
+                      retryCount +
+                      " minute(s) or 60 seconds"
+                  );
                   isNewDeployment = true;
                   return;
                 }
@@ -119,8 +146,7 @@ export class APIDeployment {
             } else {
               cy.log("Skipping env card without deployed time");
             }
-          }
-        );
+          });
         if (isNewDeployment) {
           return;
         }
@@ -130,23 +156,46 @@ export class APIDeployment {
     });
   }
 
-  static RetryDevDeployment(retryCount = 0) {
-    cy.log("Checking for retry deployment");
-    retryCount++;
-    if (retryCount > 4) {
-      return;
-    }
+  private static checkBuildStatus(deploymentIteration: number) {
+    cy.log("Checking Build Status");
 
-    cy.get("body").then((bdy) => {
-      if (bdy.find('[data-testid="retry-btn"]').length > 0) {
-        cy.log("Retry count: " + retryCount);
-        cy.get('[data-testid="retry-btn"]').click();
-        cy.wait(LONG_TIME.timeout);
-      } else {
-        return;
-      }
-      this.RetryDevDeployment(retryCount);
+    // Ensure that the new build process has been triggered
+    cy.get('[data-cyid="default-build-card"]').within(() => {
+      cy.get('[data-cyid="map-build-status"]', MEDIUM_TIME)
+        .should("be.visible")
+        .and("have.length", deploymentIteration);
     });
+
+    const regex = new RegExp(`(${BUILD_SUCCESS}|^${BUILD_PARTIAL})`, "gm");
+
+    // Check if the latest build has reached a completed state
+    cy.get('[data-cyid="default-build-card"]').within(() => {
+      cy.get('[data-cyid="map-build-status"]')
+        .eq(0)
+        .contains(regex, VERY_LONG_TIME)
+        .should("be.visible");
+    });
+  }
+
+  static RetryDevDeployment() {
+    cy.contains('role="progressbar"').should("not.exist");
+
+    cy.log("Checking for retry deployment");
+    for (let i = 0; i < 4; i++) {
+      cy.get("body", { log: false }).then((bdy) => {
+        if (bdy.find('[data-testid="retry-btn"]').eq(0).length > 0) {
+          cy.get('[data-testid="retry-btn"]').eq(0).click();
+          cy.wait(LONG_TIME.timeout);
+        } else if (
+          bdy.find('[data-cyid="card-body-not-deployed"]').eq(0).length > 0
+        ) {
+          // New deployment or new version deployment
+          cy.wait(3000, { log: false });
+        } else {
+          return;
+        }
+      });
+    }
   }
 
   static RetryPromotionToProd(retryCount = 0) {
@@ -155,6 +204,8 @@ export class APIDeployment {
     if (retryCount > 4) {
       return;
     }
+
+    cy.contains('role="progressbar"').should("not.exist");
 
     cy.get("body").then((bdy) => {
       if (bdy.find('[data-testid="deployment-fetch-error"]').length > 0) {
@@ -176,7 +227,6 @@ export class APIDeployment {
     hasMediationPolicy: boolean = false
   ) {
     cyGet('[data-cyid="btn-promote-button"]').should("be.enabled").click();
-    cy.xpath('//span[text()="Configure & Deploy"]').should("have.length", 2);
     cy.wait(5000);
     cy.contains('role="progressbar"').should("not.exist");
     cy.get("body").then((bdy) => {
@@ -203,7 +253,7 @@ export class APIDeployment {
       GraphQL.getPrmotionStatus(projectName, componentName);
     }
     this.RetryPromotionToProd();
-    cy.get('[data-cyid="proxy-env-card-header"]>div>span')
+    cy.get('[data-cyid="env-baseProduction-env-card"]')
       .contains("Production")
       .should("be.visible");
     cyGet('[data-cyid="deployment-status"]').should("have.length", 2);

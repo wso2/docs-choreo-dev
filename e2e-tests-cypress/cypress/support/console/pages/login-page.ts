@@ -60,6 +60,23 @@ export class LoginPage {
       "be.visible"
     );
     cy.get('[id="backdrop-loader"]').should("not.exist");
+    this.handleTermsOfUse();
+  }
+
+  private static handleTermsOfUse() {
+    for (let i = 0; i < 5; i++) {
+      cy.get("body", { log: false }).then((body) => {
+        if (body.find('[data-testid="Welcome to Choreo!"]').length > 0) {
+          cy.get('[data-cyid="btn-confirmation-dialog-blue"]').click();
+          cy.get('[data-cyid="btn-confirmation-dialog-blue"]').should(
+            "not.exist"
+          );
+          return;
+        } else {
+          cy.wait(1000, { log: false });
+        }
+      });
+    }
   }
 
   private static rejectCookies() {
@@ -89,6 +106,7 @@ export class LoginPage {
     this.rejectCookies();
     cyGet('[data-testid="header-user-profile-menu"]').should("be.visible");
     cy.get('[id="backdrop-loader"]').should("not.exist");
+    this.handleTermsOfUse();
   }
 
   static enterpriseLogin() {

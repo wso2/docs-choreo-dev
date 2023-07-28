@@ -21,12 +21,16 @@ export class ComponentListingPage {
     cyGet(`tbody>tr`).should("be.visible").realHover();
 
     cy.get('[data-cyid="btn-contained-button"]').should("be.visible").click();
-    cy.get('[name="confirmName"]').type(componentName);
-    cy.get(".MuiDialogActions-spacing button")
-      .should("be.enabled")
-      .eq(1)
-      .click();
-    cy.get(".MuiDialog-container").should("not.exist");
+    cy.get('[data-cyid="delete-confirmation-cancel-button-button"]').should(
+      "be.enabled"
+    );
+    cy.get('[data-cyid="confirm-name"]').within(() => {
+      cy.get("input").type(componentName).type("{enter}");
+    });
+
+    cy.get('[data-cyid="delete-confirmation-dialog-content"]').should(
+      "not.exist"
+    );
     this.verifyDeletion();
   }
 
@@ -65,13 +69,7 @@ export class ComponentListingPage {
   }
 
   static visitToAComponent(componentName: string) {
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.get('[data-cyid="listing"]').should("be.visible").click();
-    } else {
-      cy.get('[data-testid="main-left-nav-item-Components"]')
-        .should("be.visible")
-        .click();
-    }
+    cy.get('[data-cyid="listing"]').should("be.visible").click();
 
     cy.get("#filterByType").click().should("have.length", 1);
     cy.get(
@@ -81,12 +79,7 @@ export class ComponentListingPage {
 
     cy.get("tr p").contains(componentName).should("be.visible").click();
 
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.get('[data-cyid="home"]').should("be.visible");
-    } else {
-      cy.get("[data-cyid=link-overview]").should("be.visible");
-    }
-
+    cy.get('[data-cyid="home"]').should("be.visible");
     Utils.saveComponentURL();
     cy.get('[id="backdrop-loader"]').should("not.exist");
     cy.get("[data-cyid=create-time]").should("be.visible");

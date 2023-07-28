@@ -12,7 +12,7 @@
  */
 
 import { Enums } from "../../../commons/enums";
-import { LONG_TIME, MEDIUM_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
+import { LONG_TIME, MEDIUM_TIME, SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 
 export class InsightsPage {
   static selectEnvironment(env: Enums.Environment) {
@@ -28,10 +28,19 @@ export class InsightsPage {
   }
 
   static getTotalTraffic() {
-    cy.get(".recharts-area");
-    cy.wait(VERY_SHORT_TIME.timeout)
-    cy.contains("Total Traffic").should("be.visible");
-    return cy.get("main").find("span>span").eq(0).invoke("text");
+    return cy.get("body").then((bdy) => {
+      if (bdy.find(".recharts-area").length > 0) {
+        cy.get(".recharts-area");
+        cy.wait(VERY_SHORT_TIME.timeout)
+        cy.contains("Total Traffic").should("be.visible");
+        return cy.get("main").find("span>span").eq(0).invoke("text");
+      } else {
+        cy.reload()
+        cy.wait(SHORT_TIME.timeout);
+        InsightsPage.selectTimePeriod();
+        return this.getTotalTraffic();
+      }
+    });
   }
 
   static getTotalErrorRequestCount() {

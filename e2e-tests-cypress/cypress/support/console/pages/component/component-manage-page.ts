@@ -222,11 +222,7 @@ export class ComponentAPILifecycle {
   }
 
   static selectSetting() {
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.get('[data-cyid="manage-settings"]').click();
-    } else {
-      cy.get('[data-testid="Settings"]').click();
-    }
+    cy.get('[data-cyid="manage-settings"]').click();
   }
 
   static selectResources() {
@@ -234,7 +230,7 @@ export class ComponentAPILifecycle {
   }
 
   static editResource() {
-    cy.get('[data-cyid="btn-edit-settings"]').click();
+    cy.get('[data-cyid="btn-edit-settings-button"]').click();
   }
 
   static selectEnvironment(env: Enums.Environment) {
@@ -266,18 +262,14 @@ export class ComponentAPILifecycle {
   static applyConfiguration() {
     cy.get('[data-cyid="btn-save-settings"]').click();
     cy.get("button").contains("Apply").click().wait(2000);
-    cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
+    cy.get('[data-cyid="btn-delete-settings-button"]').should("be.visible");
     cy.wait(4000);
   }
 
   static selectConsumers() {
     let selector = '[data-cyid="manage-consumers"]';
-    if (Utils.isUnifiedMenuEnabled()) {
-      this.expandSecondaryMenu(selector);
-    } else {
-      selector = '[data-cyid="Consumers"]';
-    }
 
+    this.expandSecondaryMenu(selector);
     cy.get(selector).click();
   }
 
@@ -330,12 +322,8 @@ export class ComponentAPILifecycle {
 
   static selectPermissions() {
     let selector = '[data-cyid="manage-permissions"]';
-    if (Utils.isUnifiedMenuEnabled()) {
-      this.expandSecondaryMenu(selector);
-    } else {
-      selector = '[data-testid="Permissions"]';
-    }
 
+    this.expandSecondaryMenu(selector);
     cy.get(selector).click();
   }
 
@@ -443,39 +431,22 @@ export class ComponentAPILifecycle {
 
   private static selectLifeCycle() {
     let selector = '[data-cyid="manage-lifecycle"]';
-    if (Utils.isUnifiedMenuEnabled()) {
-      this.expandSecondaryMenu(selector);
-    } else {
-      selector = '[data-testid="Lifecycle"]';
-    }
 
+    this.expandSecondaryMenu(selector);
     cy.get(selector).click();
   }
 
   private static selectUsage() {
     let selector = '[data-cyid="manage-usage"]';
-    if (Utils.isUnifiedMenuEnabled()) {
-      this.expandSecondaryMenu(selector);
-    } else {
-      cy.get('[data-cyid="link-manage"]')
-        .should("be.visible")
-        .click({ force: true });
-      selector = '[data-testid="Usage plans"]';
-    }
 
+    this.expandSecondaryMenu(selector);
     cy.get(selector).click();
   }
 
   private static selectSettings() {
     let selector = '[data-cyid="manage-settings"]';
-    if (Utils.isUnifiedMenuEnabled()) {
-      this.expandSecondaryMenu(selector);
-    } else {
-      cy.get('[data-cyid="link-manage"]')
-        .should("be.visible")
-        .click({ force: true });
-      selector = '[data-testid="Settings"]';
-    }
+
+    this.expandSecondaryMenu(selector);
 
     cy.get(selector).click();
   }

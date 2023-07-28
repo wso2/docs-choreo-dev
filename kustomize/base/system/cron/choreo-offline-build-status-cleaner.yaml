@@ -1,0 +1,69 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cicd-offline-build-status-cleaner
+  labels:
+    choreo.component: cicd-offline-build-status-cleaner
+spec:
+  schedule: 0 */6 * * *
+  successfulJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+            linkerd.io/inject: disabled # https://github.com/linkerd/linkerd2/issues/2833
+          labels:
+            choreo.component: cicd-offline-build-status-cleaner
+        spec:
+          automountServiceAccountToken: false
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+          containers:
+            - name: cicd-offline-build-status-cleaner
+              image: choreocontrolplane.azurecr.io/choreoipaas/dp-cicd-build-status-cleaner:latest
+              securityContext:
+                runAsUser: 10500
+                runAsGroup: 10500
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - all
+              env:
+                - name: DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: DB_PASSWORD
+                      name: secret-dp-cicd
+              envFrom:
+                - configMapRef:
+                    name: cm-dp-cicd
+                - configMapRef:
+                    name: env-dp-cicd
+              resources:
+                limits:
+                  cpu: 300m
+                  memory: 512Mi
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+              volumeMounts:
+                - mountPath: /mnt/csi/secret-dp-cicd
+                  name: secret-dp-cicd
+                  readOnly: true
+          volumes:
+            - name: secret-dp-cicd
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: secret-dp-cicd
+                nodePublishSecretRef:
+                  name: csi-secret-store-azure
+          serviceAccountName: sa-choreo-default
