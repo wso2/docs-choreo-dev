@@ -7,6 +7,8 @@ helmCharts:
           namespace: cert-manager
       clusterResourceNamespace: cert-manager
       fullnameOverride: cert-manager
+      podDisruptionBudget:
+        enabled: true
       extraArgs:
         - --dns01-recursive-nameservers-only
         - --dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53
@@ -17,6 +19,8 @@ helmCharts:
           repository: choreocontrolplane.azurecr.io/jetstack/cert-manager-cainjector
           tag: v1.12.2
         replicaCount: 2
+        podDisruptionBudget:
+          enabled: true
       image:
         repository: choreocontrolplane.azurecr.io/jetstack/cert-manager-controller
         tag: v1.12.2
@@ -27,6 +31,8 @@ helmCharts:
           repository: choreocontrolplane.azurecr.io/jetstack/cert-manager-webhook
           tag: v1.12.2
         replicaCount: 2
+        podDisruptionBudget:
+          enabled: true
     releaseName: cert-manager
     version: v1.12.2
     namespace: cert-manager
