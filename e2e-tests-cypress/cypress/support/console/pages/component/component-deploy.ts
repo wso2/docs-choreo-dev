@@ -232,8 +232,9 @@ export class ComponentDeployPage {
       .contains("Loading Configurations", LONG_TIME)
       .should("not.exist");
     APIDeployment.RetryDevDeployment();
-    cyGet('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
-      .should("be.enabled");
+    cyGet('[data-cyid="btn-deploy-api-button"]', LONG_TIME).should(
+      "be.enabled"
+    );
     cy.contains("Configure & Deploy", LONG_TIME).should("be.visible").click();
     this.addConfiguration(configValue);
     APIDeployment.RetryDevDeployment();
@@ -378,7 +379,7 @@ export class ComponentDeployPage {
     cy.get('[id="circular-loader"]').should("not.exist");
     cy.get('[data-testid="config-loader"]').should("not.exist");
 
-    cy.get('[data-cyid="proxy-env-card-header"]>div>span')
+    cy.get('[data-cyid="env-baseProduction-env-card"]')
       .contains("Production")
       .should("be.visible");
     cy.get('[data-cyid="deployment-status"]')

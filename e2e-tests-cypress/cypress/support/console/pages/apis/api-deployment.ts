@@ -43,6 +43,8 @@ export class APIDeployment {
       .should("not.be.disabled")
       .click();
 
+    this.RetryDevDeployment();
+
     cy.wait("@keys", VERY_SHORT_TIME).then(() => {
       cyGet('[data-cyid="btn-next-button"]').should("be.visible").click();
       this.RetryDevDeployment();

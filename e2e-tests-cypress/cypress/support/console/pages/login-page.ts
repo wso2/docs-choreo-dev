@@ -106,6 +106,7 @@ export class LoginPage {
     this.rejectCookies();
     cyGet('[data-testid="header-user-profile-menu"]').should("be.visible");
     cy.get('[id="backdrop-loader"]').should("not.exist");
+    this.handleTermsOfUse();
   }
 
   static enterpriseLogin() {
