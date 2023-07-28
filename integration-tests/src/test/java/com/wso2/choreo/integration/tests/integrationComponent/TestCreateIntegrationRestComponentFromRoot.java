@@ -44,7 +44,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
 
     public static final String COMPONENT_TYPE = Constant.AppType.MI_API_SERVICE.value;
     public static final String API_INVOCATION_REQUEST_URI = "/";
-    public static final String REST_API_EXPECTED_RESPONSE = "{\"Hello\":\"Integration\"}";
+    public static final String REST_API_EXPECTED_RESPONSE = "{\"message\": \"Hello Integration\"}";
     private static String accessToken;
     private String orgHandle;
     private String orgId;
@@ -133,7 +133,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         argMap.put("componentId", testComponent.getId());
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
         argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
-        endpoints = GraphQL.getEndpoints(this, choreoTestClient, accessToken, argMap);
+        endpoints = GraphQL.getEndpoints(this, choreoProjectsTestClient, accessToken, argMap);
         Assert.assertEquals(endpoints.size(), 1);
     }
 
@@ -150,7 +150,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         argMap.put("apiContext", endpoint.getApiContext());
         argMap.put("apiDefinitionPath", endpoint.getApiDefinitionPath());
         argMap.put("visibility", Constant.EndpointVisibility.PUBLIC.value);
-        Endpoint updatedEndpoint = GraphQL.updateEndpoint(this, choreoTestClient, accessToken, argMap);
+        Endpoint updatedEndpoint = GraphQL.updateEndpoint(this, choreoProjectsTestClient, accessToken, argMap);
         endpoints.set(0, updatedEndpoint);
     }
 
@@ -171,7 +171,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
                 .devEnvIdToDeploy(devEnvIdToDeploy).branch(branch).sha(latestCommitSha).shaDate("").build();
 
         // Deploy component
-        GraphQL.deployComponent(this, choreoTestClient, accessToken, graphqlDTO);
+        GraphQL.deployComponent(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 
     @Test(dependsOnMethods = {"componentDeployment_TestCreateIntegrationRestComponentFromRoot"})
@@ -201,7 +201,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         responseParams.put("sha", latestCommitSha);
         responseParams.put("versionId", versionId);
 
-        GraphQL.getComponentDeploymentStatus(this, choreoTestClient, accessToken, dto, responseParams);
+        GraphQL.getComponentDeploymentStatus(this, choreoProjectsTestClient, accessToken, dto, responseParams);
     }
 
     @Test(dependsOnMethods = {"componentDeploymentStatus_TestCreateIntegrationRestComponentFromRoot"})
@@ -211,7 +211,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         argMap.put("componentId", testComponent.getId());
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
         argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
-        endpoints = GraphQL.getEndpoints(this, choreoTestClient, accessToken, argMap);
+        endpoints = GraphQL.getEndpoints(this, choreoProjectsTestClient, accessToken, argMap);
         Assert.assertEquals(endpoints.size(), 1);
     }
 
@@ -237,7 +237,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
         argMap.put("sourceReleaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
         argMap.put("targetEnvironmentId", environments.get(1).getId());
-        GraphQL.promoteEndpoints(this, choreoTestClient, accessToken, argMap);
+        GraphQL.promoteEndpoints(this, choreoProjectsTestClient, accessToken, argMap);
     }
 
     @Test(dependsOnMethods = {"promoteEndpointsProd_TestCreateIntegrationRestComponentFromRoot"})
@@ -252,7 +252,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
 
         GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).apiVersionId(latestApiVersionId).
                 sourceReleaseId(releaseIdForEnvironment).targetEnvironmentId(latestAppEnvId).build();
-        GraphQL.promoteComponent(this, choreoTestClient, accessToken, dto);
+        GraphQL.promoteComponent(this, choreoProjectsTestClient, accessToken, dto);
 
         testComponent.waitForComponentDeploymentSuccess(accessToken, orgHandle, orgUUID, latestApiVersionId,
                 latestAppEnvId);
@@ -266,9 +266,9 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
         argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.PROD_ENVIRONMENT));
 
-        GraphQL.validateEndpointDeployment(this, choreoTestClient, accessToken, argMap);
+        GraphQL.validateEndpointDeployment(this, choreoProjectsTestClient, accessToken, argMap);
 
-        endpoints = GraphQL.getEndpoints(this, choreoTestClient, accessToken, argMap);
+        endpoints = GraphQL.getEndpoints(this, choreoProjectsTestClient, accessToken, argMap);
         Assert.assertEquals(endpoints.size(), 1);
     }
 
@@ -291,7 +291,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         String devReleaseId = GraphQL.componentDeployment(testComponent, Constant.DEV_ENVIRONMENT, accessToken).getReleaseId();
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(orgHandle)
                 .componentType(COMPONENT_TYPE).releaseId(devReleaseId).build();
-        GraphQL.stopDeployment(this, choreoTestClient, accessToken, graphqlDTO);
+        GraphQL.stopDeployment(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 
     @Test(dependsOnMethods = {"undeployComponentDev_TestCreateIntegrationRestComponentFromRoot"})
@@ -302,6 +302,6 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
                 .getReleaseId();
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(orgHandle)
                 .componentType(COMPONENT_TYPE).releaseId(prodReleaseId).build();
-        GraphQL.stopDeployment(this, choreoTestClient, accessToken, graphqlDTO);
+        GraphQL.stopDeployment(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 }
