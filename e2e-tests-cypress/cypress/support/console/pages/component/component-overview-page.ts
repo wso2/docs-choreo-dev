@@ -55,20 +55,17 @@ export class ComponentOverviewPage {
   }
 
   static navigateToTest() {
-    if (Utils.isUnifiedMenuEnabled()) {
-      this.navigateToSubMenu(
-        '[data-cyid="link-test"]',
-        new Array(
-          '[data-cyid="graphql"]',
-          '[data-cyid="testConsole"]',
-          '[data-cyid="openapi"]',
-          '[data-cyid="curl"]'
-        )
-      );
-      Utils.moveMouseAwayFromLeftMenu();
-    } else {
-      cy.get('[data-cyid="link-test"]').should("be.visible").click();
-    }
+    this.navigateToSubMenu(
+      '[data-cyid="link-test"]',
+      new Array(
+        '[data-cyid="graphql"]',
+        '[data-cyid="testConsole"]',
+        '[data-cyid="openapi"]',
+        '[data-cyid="curl"]'
+      )
+    );
+    Utils.moveMouseAwayFromLeftMenu();
+
     cy.get('[id="backdrop-loader"]').should("not.exist");
   }
 
@@ -85,23 +82,15 @@ export class ComponentOverviewPage {
   }
 
   static navigateToManage() {
-    if (Utils.isUnifiedMenuEnabled()) {
-      this.navigateToSubMenu(
-        '[data-cyid="link-manage"]',
-        new Array('[data-cyid="manage-overview"]')
-      );
-      Utils.moveMouseAwayFromLeftMenu();
-    } else {
-      cy.get('[data-cyid="link-manage"]').should("be.visible").click();
-    }
+    this.navigateToSubMenu(
+      '[data-cyid="link-manage"]',
+      new Array('[data-cyid="manage-overview"]')
+    );
+    Utils.moveMouseAwayFromLeftMenu();
   }
 
   static navigateToObserve() {
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.get('[data-cyid="observability"]').should("be.visible").click();
-    } else {
-      cy.get("[data-cyid=link-observe]").click();
-    }
+    cy.get('[data-cyid="observability"]').should("be.visible").click();
   }
 
   static navigateProxyResources() {
@@ -116,15 +105,11 @@ export class ComponentOverviewPage {
   }
 
   static navigateToDevelop() {
-    if (Utils.isUnifiedMenuEnabled()) {
-      this.navigateToSubMenu(
-        '[data-cyid="link-develop"]',
-        new Array('[data-cyid="develop-resources"]')
-      );
-      Utils.moveMouseAwayFromLeftMenu();
-    } else {
-      cy.get('[data-cyid="link-develop"]').click();
-    }
+    this.navigateToSubMenu(
+      '[data-cyid="link-develop"]',
+      new Array('[data-cyid="develop-resources"]')
+    );
+    Utils.moveMouseAwayFromLeftMenu();
   }
 
   static navigateToDevPortal() {
