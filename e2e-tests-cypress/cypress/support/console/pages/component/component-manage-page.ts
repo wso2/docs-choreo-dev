@@ -234,7 +234,7 @@ export class ComponentAPILifecycle {
   }
 
   static editResource() {
-    cy.get('[data-cyid="btn-edit-settings"]').click();
+    cy.get('[data-cyid="btn-edit-settings-button"]').click();
   }
 
   static selectEnvironment(env: Enums.Environment) {
@@ -266,7 +266,7 @@ export class ComponentAPILifecycle {
   static applyConfiguration() {
     cy.get('[data-cyid="btn-save-settings"]').click();
     cy.get("button").contains("Apply").click().wait(2000);
-    cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
+    cy.get('[data-cyid="btn-delete-settings-button"]').should("be.visible");
     cy.wait(4000);
   }
 

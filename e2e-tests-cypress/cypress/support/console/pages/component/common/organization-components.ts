@@ -47,7 +47,7 @@ export class OrganizationComponent {
 
   static inviteMembers(email: string, ...roles: string[]) {
     cy.wait(300);
-    cy.get('[data-cyid="invite-members"]').click();
+    cy.get('[data-cyid="invite-members-button"]').click();
     cy.wait(300);
     cy.get('[data-cyid="tag-email-addresses"]').within(() => {
       cy.get('input[type="text"]')
@@ -58,8 +58,8 @@ export class OrganizationComponent {
     cy.get('[data-cyid="select-roles"]').click();
     this.addRoles(roles);
     cy.get("body").type("{esc}");
-    cy.get('[data-cyid="btn-invite"]').click({ force: true });
-    cy.get('[data-cyid="btn-invite"]').should("not.exist");
+    cy.get('[data-cyid="btn-invite-button"]').click({ force: true });
+    cy.get('[data-cyid="btn-invite-button"]').should("not.exist");
     cy.log("Invitation sent successfully");
   }
 
@@ -157,7 +157,7 @@ export class OrganizationComponent {
     cy.get('[data-cyid="text-field-role-name"]').type(roleName);
     cy.get('[data-cyid="text-field-role-description"]').type(roleDescription);
     cy.get('[data-cyid="chip-role-tag"]').type(roleTag + "{enter}");
-    cy.get('[data-cyid="btn-role-create"]').click({ force: true });
+    cy.get('[data-cyid="btn-role-create-button"]').click({ force: true });
 
     cy.get(
       '[data-cyid="role-permission-apim-publisher-check-box"]>span>input'
@@ -167,8 +167,8 @@ export class OrganizationComponent {
       .check();
 
     cy.log("Created Roles APIM-PUBLISHER and APIM-SUBSCRIBER");
-    cy.get('[data-cyid="btn-create"]').click();
-    cy.get('[data-cyid="btn-create"]').should("not.exist");
+    cy.get('[data-cyid="btn-create-button"]').click();
+    cy.get('[data-cyid="btn-create-button"]').should("not.exist");
   }
 
   static addMembertoRole(roleName: string) {
@@ -182,8 +182,8 @@ export class OrganizationComponent {
     let email = userData["userEmail"];
     cy.get(`[data-cyid$="(${email})"]`).click({ force: true });
     cy.get("body").type("{esc}");
-    cy.get('[data-cyid="btn-add-member"]').click();
-    cy.get('[data-cyid="btn-add-member"]').should("not.exist");
+    cy.get('[data-cyid="btn-add-member-button"]').click();
+    cy.get('[data-cyid="btn-add-member-button"]').should("not.exist");
     cy.contains("td", userData["userEmail"]).should("be.visible");
     cy.log("Member added to the role successfully");
   }
