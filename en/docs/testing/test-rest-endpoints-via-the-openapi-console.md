@@ -27,7 +27,6 @@ Follow the steps below to test a REST endpoint via the integrated OpenAPI Consol
 9. Click **Execute**. You can see the response body under **Responses**.
 
     !!! note
-        If the response payload size is large, there could be a delay in displaying the response. In such scenarios, you can
-        consider Postman or cURL testing options to test your APIs as explained in the documentation.   
-
+        When dealing with large response payloads, using Postman or cURL for testing APIs as explained in the documentation, can help avoid delays in displaying responses.
+   
      ![OpenAPI Console](../assets/img/testing/openapi-console.png){.cInlineImage-full}
