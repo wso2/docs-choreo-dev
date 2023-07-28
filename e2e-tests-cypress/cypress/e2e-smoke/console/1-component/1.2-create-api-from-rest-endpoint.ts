@@ -45,6 +45,7 @@ describe(`Verify proxy api functionality`, () => {
   const HEADER_KEY_2 = "x-header-test2";
   const HEADER_VALUE_2 = "test2";
   const HEADER_VALUE_3 = "test3";
+  let buildCount = 0;
 
   it("Creating a project", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
@@ -77,7 +78,7 @@ describe(`Verify proxy api functionality`, () => {
   it("Verify component deployment to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.deployProxyAPIToDev();
-    APIDeployment.verifyProxyDeployment(PROJECT_NAME, API_NAME);
+    buildCount = APIDeployment.verifyProxyDeployment(buildCount);
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -147,7 +148,7 @@ describe(`Verify proxy api functionality`, () => {
   it("Verify component deployment to dev with new policy", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.deployProxyAPIToDev();
-    APIDeployment.verifyProxyDeployment(PROJECT_NAME, API_NAME, true);
+    buildCount = APIDeployment.verifyProxyDeployment(buildCount);
   });
 
   it("Verify test functionality using Swagger UI in Dev with new policy", () => {
@@ -215,7 +216,7 @@ describe(`Verify proxy api functionality`, () => {
   it("Verify component deployment to dev with updated header value", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.deployProxyAPIToDev();
-    APIDeployment.verifyProxyDeployment(PROJECT_NAME, API_NAME, true);
+    buildCount = APIDeployment.verifyProxyDeployment(buildCount);
   });
 
   it("Verify test functionality using Swagger UI in Dev with updated header value", () => {
