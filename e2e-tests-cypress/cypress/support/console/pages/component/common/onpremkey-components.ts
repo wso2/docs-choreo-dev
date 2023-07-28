@@ -17,11 +17,7 @@ export class OnPremkeyComponent {
   static keyName = Utils.generateKeyName("key");
 
   static navigateToOpPremKeySettings() {
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.get('[data-cyid="nav-link-on-prem-keys-link-tabs-link-tab"]').click();
-    } else {
-      cy.get('[data-cy="/onpremkeys"]').click();
-    }
+    cy.get('[data-cyid="nav-link-on-prem-keys-link-tabs-link-tab"]').click();
   }
 
   static generateOnPremKey() {

@@ -18,11 +18,7 @@ import { Utils } from "../../../commons/utils";
 
 export class ComponentTestPage {
   static selectCurl() {
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.get('[data-testid="cURL"]').click();
-    } else {
-      cy.get('[data-cyid="curl"]').click();
-    }
+    cy.get('[data-testid="cURL"]').click();
   }
 
   static getTestKey() {

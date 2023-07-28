@@ -89,11 +89,8 @@ export class APIDevelop {
     const header = this.getHeader(resourcePath, verb.toUpperCase());
 
     const buttons = `[id="/${resourcePath}/${verb.toUpperCase()}/out-flow"] div[data-key] button`;
-    if (Utils.isUnifiedMenuEnabled()) {
-      cyGet('[data-cyid="develop-policies"]').click();
-    } else {
-      cyGet('[data-testid="Policies"]').click();
-    }
+
+    cyGet('[data-cyid="develop-policies"]').click();
     cyGet(header).eq(0).click();
     cy.get(buttons).contains("Attach Policy").click();
     cy.get("button").contains(policy).click();
@@ -200,18 +197,14 @@ export class APIDevelop {
 
   private static selectDevelop() {
     let selector = '[data-cyid="develop-resources"]';
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.get("body").then((bdy) => {
-        // Secondary menu is collapsed
-        if (bdy.find(selector).length == 0) {
-          // Expand secondary menu
-          cy.get('[data-cyid="link-develop"]').click();
-        }
-      });
-      cy.get(selector).click();
-    } else {
-      selector = '[data-testid="develop-resources-header"]';
-      cy.get(selector).contains("Resources").should("be.visible");
-    }
+
+    cy.get("body").then((bdy) => {
+      // Secondary menu is collapsed
+      if (bdy.find(selector).length == 0) {
+        // Expand secondary menu
+        cy.get('[data-cyid="link-develop"]').click();
+      }
+    });
+    cy.get(selector).click();
   }
 }

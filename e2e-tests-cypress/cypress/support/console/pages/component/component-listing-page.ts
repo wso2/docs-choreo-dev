@@ -69,13 +69,7 @@ export class ComponentListingPage {
   }
 
   static visitToAComponent(componentName: string) {
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.get('[data-cyid="listing"]').should("be.visible").click();
-    } else {
-      cy.get('[data-testid="main-left-nav-item-Components"]')
-        .should("be.visible")
-        .click();
-    }
+    cy.get('[data-cyid="listing"]').should("be.visible").click();
 
     cy.get("#filterByType").click().should("have.length", 1);
     cy.get(
@@ -85,12 +79,7 @@ export class ComponentListingPage {
 
     cy.get("tr p").contains(componentName).should("be.visible").click();
 
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.get('[data-cyid="home"]').should("be.visible");
-    } else {
-      cy.get("[data-cyid=link-overview]").should("be.visible");
-    }
-
+    cy.get('[data-cyid="home"]').should("be.visible");
     Utils.saveComponentURL();
     cy.get('[id="backdrop-loader"]').should("not.exist");
     cy.get("[data-cyid=create-time]").should("be.visible");
