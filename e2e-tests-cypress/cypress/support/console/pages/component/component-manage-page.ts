@@ -299,7 +299,7 @@ export class ComponentAPILifecycle {
     cy.get('div[role="combobox"]').eq(1).click();
     cy.get(`ul[id="Select List-popup"]>li`).contains(visibility).click();
     cy.get('[data-testid="info-banner"]').should("be.visible");
-    cy.get('[data-cyid="btn-confirmation-dialog-blue"]').wait(100).realClick();
+    cy.get('[data-cyid="btn-confirmation-dialog-blue-button"]').wait(100).realClick();
     this.verifyAPIVisibility(visibility);
     cy.log("Successfully updated the API visibility");
   }
@@ -310,7 +310,7 @@ export class ComponentAPILifecycle {
       .click();
     cy.contains(accessMode).should("exist").realClick();
     cyGet('[data-testid="warning-banner"]').should("be.visible");
-    cyGet('[data-cyid="btn-confirmation-dialog-blue"]').should("exist").click();
+    cyGet('[data-cyid="btn-confirmation-dialog-blue-button"]').should("exist").click();
     cy.contains(
       `Successfully converted to an ${accessMode.toLowerCase()} API.`
     ).should("be.visible");
@@ -399,7 +399,7 @@ export class ComponentAPILifecycle {
   static deletePermission(permissionName: string) {
     cy.get(`[data-testid="scope-delete-btn-${permissionName}"]`).click();
     // Verify scope being used by how many resources
-    cy.get('[data-cyid="btn-confirmation-dialog-red"]')
+    cy.get('[data-cyid="btn-confirmation-dialog-red-button"]')
       .should("be.visible")
       .click();
     cy.contains("Permission(Scope) deleted successfully");
