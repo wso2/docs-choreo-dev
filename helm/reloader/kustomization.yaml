@@ -34,7 +34,7 @@ helmCharts:
         readOnlyRootFileSystem: true
     releaseName: reloader
     namespace: reloader
-    version: v0.0.58
+    version: v1.0.33
     repo: oci://choreocontrolplane.azurecr.io/helm
 
 commonAnnotations:
