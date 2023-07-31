@@ -5,6 +5,9 @@
       },
       { 
         "pattern": "^https:\/\/choreocontrolplane.choreo.dev\/93tu\/insights\/1.0.0\/query-api" 
+      },
+      {
+       "pattern" :"^https:\/\/<instanceID>.service-now.com\/"
       }
     ]
 }
