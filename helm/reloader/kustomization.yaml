@@ -14,6 +14,10 @@ helmCharts:
             runAsUser: 65534
             seccompProfile:
               type: RuntimeDefault
+          image:
+            name: choreocontrolplane.azurecr.io/stakater/reloader
+            tag: v1.0.33
+            pullPolicy: Always
           containerSecurityContext:
             capabilities:
               drop:
@@ -28,10 +32,6 @@ helmCharts:
               cpu: "10m"
               memory: "128Mi"
         readOnlyRootFileSystem: true
-        image:
-          name: choreocontrolplane.azurecr.io/stakater/reloader
-          tag: v1.0.33
-          pullPolicy: Always
     releaseName: reloader
     namespace: reloader
     version: 1.0.33
