@@ -24,7 +24,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: choreo-nginx-deployment-v2
+    name: choreo-nginx-v2-deployment
   metrics:
     - type: Resource
       resource:
