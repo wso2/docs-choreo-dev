@@ -4,12 +4,11 @@ helmCharts:
     valuesInline:
       fullnameOverride: reloader
       reloader:
-        enableHA: true
         deployment:
           annotations:
             checkov.io/skip1: CKV_K8S_AZURE_WSO2_2=Managed by reloader
             checkov.io/skip2: CKV_K8S_38=Managed by reloader
-          replicas: 2
+          replicas: 1
           securityContext:
             runAsNonRoot: true
             runAsUser: 65534
@@ -33,9 +32,6 @@ helmCharts:
           name: choreocontrolplane.azurecr.io/stakater/reloader
           tag: v1.0.33
           pullPolicy: Always
-        podDisruptionBudget:
-          enabled: true
-          minAvailable: 1
     releaseName: reloader
     namespace: reloader
     version: 1.0.33
