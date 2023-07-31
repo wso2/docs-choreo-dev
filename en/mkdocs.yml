@@ -133,6 +133,7 @@ nav:
       - Documents: api-management/documents.md
       - API Rate Limiting: api-management/api-rate-limiting.md
       - API Policies: api-management/api-policies.md
+      - Control API Visibility: api-management/control-api-visibility.md
   - Monitoring and Insights:
       - Observability Overview: monitoring-and-insights/observability-overview.md
       - View API Insights: monitoring-and-insights/view-api-insights.md
