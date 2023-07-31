@@ -14,57 +14,55 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
+# Deployment for nginx
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    checkov.io/skip1: CKV_K8S_8=Suppressing since the sidecar should be only run once after container starts
-    checkov.io/skip2: CKV_K8S_9=Readiness probe not required
-    checkov.io/skip3: CKV_K8S_20=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_22=Risk Accepted
-    checkov.io/skip5: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
-    checkov.io/skip6: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip7: CKV_K8S_37=Temporarily suppressing till fixing
-    checkov.io/skip8: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
-    reloader.stakater.com/auto: "true"
-  labels:
-    choreo.component: internal-nginx-v2
-  name: choreo-internal-nginx-deployment-v2
+    checkov.io/skip1: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
+    secret.reloader.stakater.com/reload: "choreoapps-regional-wildcard-tls,choreoapis-regional-wildcard-tls,choreoapis-wildcard-tls"
+  name: choreo-nginx-v2-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      deployment: choreo-internal-nginx-v2
+      deployment: choreo-nginx-v2
+      choreo.component: nginx
   template:
     metadata:
       labels:
-        deployment: choreo-internal-nginx-v2
-        choreo.component: internal-nginx-v2
-        antiaffinity: choreo-internal-nginx-deployment-v2
+        deployment: choreo-nginx-v2
+        choreo.component: nginx
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: deployment
+                    operator: In
+                    values:
+                      - choreo-nginx
+              topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       securityContext:
-        runAsUser: 10500
-        runAsGroup: 10500
         seccompProfile:
           type: RuntimeDefault
       containers:
         - name: nginx
-          envFrom:
-            - configMapRef:
-                name: internal-nginx-redis-config
-            - configMapRef:
-                name: nginx-feature-flags
           env:
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-            - name: REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: secret-redis
-                  key: REDIS_PASSWORD
+          envFrom:
+            - configMapRef:
+                name: redis-config
+            - secretRef:
+                name: secret-redis
+            - configMapRef:
+                name: nginx-feature-flags
           image: choreocontrolplane.azurecr.io/choreoipaas/openresty:latest
           imagePullPolicy: Always
           lifecycle:
@@ -81,7 +79,7 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop:
-                - all
+                - ALL
               add:
                 - NET_RAW
           ports:
@@ -108,10 +106,10 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 5
           volumeMounts:
-            - name: redis-subscribe-folder
-              mountPath: /mnt/redis
             - name: openresty-logs-folder
               mountPath: /usr/local/openresty/nginx/logs
+            - name: redis-subscribe-folder
+              mountPath: /mnt/redis
             - name: openresty-run-path
               mountPath: /var/run/openresty
             - name: nginx-ca-cert
@@ -128,14 +126,17 @@ spec:
               subPath: nginx.conf
             - name: nginx-vhosts
               mountPath: /etc/nginx/sites-enabled
+            - name: secret-redis
+              mountPath: /mnt/csi/secret-redis
+              readOnly: true
             - name: choreoapis-wildcard-tls
               mountPath: /etc/nginx/ssl/choreo
               readOnly: true
             - name: choreoapis-regional-wildcard-tls
               mountPath: /etc/nginx/ssl/choreo/e1-us-east-gateway
               readOnly: true
-            - name: secret-redis
-              mountPath: /mnt/csi/secret-redis
+            - name: choreoapps-regional-wildcard-tls
+              mountPath: /etc/nginx/ssl/choreo/webapps
               readOnly: true
         - name: redis-subscribe
           image: choreocontrolplane.azurecr.io/choreoipaas/redis-subscribe:latest
@@ -148,7 +149,7 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop:
-                - all
+                - ALL
               add:
                 - NET_RAW
           resources:
@@ -162,33 +163,36 @@ spec:
             - name: redis-subscribe-folder
               mountPath: /redis
       volumes:
-        - name: redis-subscribe-folder
-          emptyDir: { }
         - name: openresty-logs-folder
           emptyDir: { }
         - name: openresty-run-path
+          emptyDir: { }
+        - name: redis-subscribe-folder
           emptyDir: { }
         - name: nginx-ca-cert
           configMap:
             name: nginx-ca-cert
         - name: nginx-lua-modules
           configMap:
-            name: internal-nginx-lua-modules
+            name: nginx-lua-modules
         - name: nginx-default-vhost
           configMap:
-            name: internal-nginx-default-vhost
+            name: nginx-default-vhost
         - name: nginx-config-file
           configMap:
-            name: internal-nginx-config-file
+            name: nginx-config-file
         - name: nginx-vhosts
           configMap:
-            name: internal-nginx-vhosts-v2
+            name: nginx-vhosts-v2
         - name: choreoapis-wildcard-tls
           secret:
-            secretName: internal-choreoapis-wildcard-tls # '*.internal.preview-dv.choreoapis.dev'
+            secretName: choreoapis-wildcard-tls # '*.preview-dv.choreoapis.dev'
         - name: choreoapis-regional-wildcard-tls
           secret:
-            secretName: internal-choreoapis-regional-wildcard-tls # '*.e1-us-east-azure.internal.preview-dv.choreoapis.dev'
+            secretName: choreoapis-regional-wildcard-tls # '*.e1-us-east-azure.preview-dv.choreoapis.dev'
+        - name: choreoapps-regional-wildcard-tls
+          secret:
+            secretName: choreoapps-regional-wildcard-tls # '*.e1-us-east-azure.preview-dv.choreoapps.dev'
         - name: secret-redis
           csi:
             driver: secrets-store.csi.k8s.io
@@ -198,13 +202,3 @@ spec:
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: antiaffinity
-                    operator: In
-                    values:
-                      - choreo-internal-nginx-deployment
-              topologyKey: kubernetes.io/hostname
