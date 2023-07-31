@@ -49,9 +49,10 @@ describe(`Verify internal api functionality`, () => {
   const API_BASE_PATH = Utils.generateBasePath();
   const API_VERSION = "1.0.0";
 
-  const API_ENDPOINT = "https://jsonplaceholder.typicode.com";
+  const API_ENDPOINT =
+    "https://9f3f5ca2-c1f2-43e7-afbe-a15714138b57-dev.e1-us-east-azure.choreoapis.dev/ppcb/users/endpoint-9090-803/1.0.0";
   const OPERATION_USERS = "users";
-  const PROJECT_DESCRIPTION = "sample stats project";
+  const PROJECT_DESCRIPTION = "Internal API Proxy for REST Endpoint";
   const PROJECT_NAME = Utils.generateProjectName();
 
   const DEV_INVOKE_URL_TEXT = "dev-internal";
@@ -132,11 +133,6 @@ describe(`Verify internal api functionality`, () => {
     );
   });
 
-  it("Deploy to Dev after security change", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
-  });
-
   it("Apply disable security config in PROD", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectSetting();
@@ -147,11 +143,6 @@ describe(`Verify internal api functionality`, () => {
     ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.disableResourceSecurity(OPERATION_USERS);
     ComponentAPILifecycle.applyConfiguration();
-  });
-
-  it("Promote to Prod after security change", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteProxyApiToProd();
   });
 
   it("Copy endpoint url", () => {
@@ -189,6 +180,10 @@ describe(`Verify internal api functionality`, () => {
     APIDeployment.DeployToDev();
   });
 
+  it("Verify 1st PROXY API component promote to PROD", () => {
+    ComponentDeployPage.promoteProxyApiToProd();
+  });
+
   // Invoke the Proxy API via curl, verify that Internal API is accessible to the Proxy API
   // by receiving a 200 response
   it("Verify 1st PROXY API resource access in DEV", () => {
@@ -201,13 +196,7 @@ describe(`Verify internal api functionality`, () => {
     });
   });
 
-  it("Verify 1st PROXY API component promote to PROD", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteProxyApiToProd();
-  });
-
   it("Verify 1st PROXY API resource access in PROD", () => {
-    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
       Enums.Environment.PRODUCTION,
       OPERATION_USERS
@@ -234,6 +223,10 @@ describe(`Verify internal api functionality`, () => {
     APIDeployment.DeployToDev();
   });
 
+  it("Verify 2nd PROXY API component promote to PROD", () => {
+    ComponentDeployPage.promoteProxyApiToProd();
+  });
+
   // Invoke the Proxy API via curl, verify that Internal API is accessible to the Proxy API
   // by receiving a 200 response
   it("Verify 2nd PROXY API resource access in DEV", () => {
@@ -246,11 +239,6 @@ describe(`Verify internal api functionality`, () => {
     ).then((res) => {
       expect(res.status).equal(200);
     });
-  });
-
-  it("Verify 2nd PROXY API component promote to PROD", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteProxyApiToProd();
   });
 
   it("Verify 2nd PROXY API resource access in PROD", () => {
