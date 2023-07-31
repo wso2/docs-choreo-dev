@@ -6,7 +6,28 @@ helmCharts:
       reloader:
         enableHA: true
         deployment:
+          annotations:
+            checkov.io/skip1: CKV_K8S_AZURE_WSO2_2=Managed by reloader
+            checkov.io/skip2: CKV_K8S_38=Managed by reloader
           replicas: 2
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+            seccompProfile:
+              type: RuntimeDefault
+          containerSecurityContext:
+            capabilities:
+              drop:
+                - ALL
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "512Mi"
+            requests:
+              cpu: "10m"
+              memory: "128Mi"
         readOnlyRootFileSystem: true
         image:
           name: choreocontrolplane.azurecr.io/stakater/reloader
