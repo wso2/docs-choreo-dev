@@ -7,6 +7,11 @@ helmCharts:
         enableHA: true
         deployment:
           replicas: 2
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+            seccompProfile:
+              type: RuntimeDefault
         readOnlyRootFileSystem: true
         image:
           name: choreocontrolplane.azurecr.io/stakater/reloader
