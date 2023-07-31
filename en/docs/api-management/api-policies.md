@@ -58,7 +58,7 @@ To deploy the API follow the steps below:
 Choreo allows you to implement an API policy as a Ballerina project and attach it to an API proxy component. 
 
 !!! info
-    Supported Ballerina versions: 2201.5.1 
+    Supported Ballerina version: 2201.5.1 
 
 To implement a policy, follow the steps given below: 
 

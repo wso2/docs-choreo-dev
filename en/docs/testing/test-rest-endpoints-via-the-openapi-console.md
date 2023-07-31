@@ -11,19 +11,22 @@ Follow the steps below to test a REST endpoint via the integrated OpenAPI Consol
 
 3. Click **Test** in the left navigation menu and then click **Console**. This opens the **OpenAPI Console** pane.
 
-3. In the **OpenAPI Console** pane, select the environment from the drop-down list.
+4. In the **OpenAPI Console** pane, select the environment from the drop-down list.
 
-4. Select the required endpoint from the **Public Endpoint** list.
+5. Select the required endpoint from the **Public Endpoint** list.
 
     !!! note 
         The **Public Endpoint** list only includes REST endpoints for which you have set the **Network Visibility** to **Public**.
 
-5. Expand the resource you want to test.
+6. Expand the resource you want to test.
 
-6. Click **Try it out**.
+7. Click **Try it out**.
 
-7. Enter values for parameters if applicable.
+8. Enter values for parameters if applicable.
 
-8. Click **Execute**. You can see the response body under **Responses**.
+9. Click **Execute**. You can see the response body under **Responses**.
 
+    !!! note
+        When dealing with large response payloads, using Postman or cURL for testing APIs as explained in the documentation, can help avoid delays in displaying responses.
+   
      ![OpenAPI Console](../assets/img/testing/openapi-console.png){.cInlineImage-full}

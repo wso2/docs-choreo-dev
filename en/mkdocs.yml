@@ -148,6 +148,7 @@ nav:
       - Integrate Choreo with Moesif: monitoring-and-insights/integrate-choreo-with-moesif.md     
   - Administer:
       - Configure a Custom Domain for APIs: administer/configure-a-custom-domain-for-apis.md
+      - Configure Enterprise Login: administer/configure-enterprise-login.md
       - Developer Portal:
           - Customize the Developer Portal: administer/customize-the-developer-portal.md
           - Configure Self-Sign-Up: administer/configure-self-sign-up.md
@@ -285,7 +286,6 @@ plugins:
           'ipaas/micro-integrator/develop-integrations-with-integration-studio.md': 'https://wso2.com/choreo/docs/develop-integrations/develop-an-integration-with-integration-studio/'
           'ipaas/micro-integrator/create-your-first-integration.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-integration-with-choreo-ipaas/'
           'administer/connect-to-an-external-identity-provider.md': 'https://wso2.com/choreo/docs'
-          'administer/configure-enterprise-login.md': 'https://wso2.com/choreo/docs'
           'administer/configure-developer-portal-self-sign-up.md': 'https://wso2.com/choreo/docs/administer/configure-self-sign-up/'
           'administer/customize-developer-portal-domain.md': 'https://wso2.com/choreo/docs/administer/customize-the-developer-portal-domain/'
           'administer/organization.md': 'https://wso2.com/choreo/docs/choreo-concepts/organization/'
