@@ -91,7 +91,6 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     public void deployComponent_LoggingAPITestCase() throws Exception {
         ComponentUtils.deployComponent(this, citrusClients, accessToken, choreoComponent,
                 environments, ComponentFlavour.STANDARD);
-        SleepUtil.sleep(30);
     }
 
     @Test(dependsOnMethods = {"deployComponent_LoggingAPITestCase"})
@@ -99,7 +98,6 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     public void promoteComponent_LoggingAPITestCase() throws Exception {
         ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent,
                 environments, ComponentFlavour.STANDARD);
-        SleepUtil.sleep(30);
     }
 
     @Test(dependsOnMethods = {"promoteComponent_LoggingAPITestCase"})
