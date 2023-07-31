@@ -588,6 +588,7 @@ faq.md
 Moesif.md
 integrate-choreo-with-moesif
 configure-cio-dashboard.md
+control-api-visibility
  - theme/material/templates/home-page.html
 doctype
 html
