@@ -2,6 +2,7 @@ resources:
   - clusterrole.yaml
   - clusterrolebinding.yaml
   - deployment.yaml
+  - namespace.yaml
   - serviceaccount.yaml
 
 namespace: reloader
