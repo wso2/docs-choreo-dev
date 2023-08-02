@@ -70,7 +70,11 @@ export class Utils {
     );
   }
 
-  static acceptEmailInviteToOrg(token: string, timestamp: string, retryCount = 0) {
+  static acceptEmailInviteToOrg(
+    token: string,
+    timestamp: string,
+    retryCount = 0
+  ) {
     const headerString = btoa(
       `${Utils.MAIL_READER_CLIENT_ID}:${Utils.MAIL_READER_CLIENT_SECRET}`
     );
@@ -87,7 +91,7 @@ export class Utils {
       this.sendGetRequest(Utils.MAIL_READER_SVC_URL + timestamp, {
         Authorization: `Bearer ${accessToken}`,
       }).then((res) => {
-        if (res.status == 200 && res.body != '') {
+        if (res.status == 200 && res.body != "") {
           const rawMailContent = res.body;
           //const decodedMail = atob(rawMailContent);
           const decodedMail = window.atob(rawMailContent);
@@ -122,7 +126,7 @@ export class Utils {
         } else {
           cy.log(`Error while reading email: ${res.status}`);
           retryCount++;
-          this.acceptEmailInviteToOrg(token, timestamp, retryCount); 
+          this.acceptEmailInviteToOrg(token, timestamp, retryCount);
         }
       });
     });
@@ -376,6 +380,48 @@ export class Utils {
       .get(locator)
       .should("be.visible")
       .get(locator);
+  }
+
+  static clickOnOptionalElement(
+    locator: string,
+    timeout: number,
+    elementIndex: number = 0
+  ) {
+    let isElementPresent = false;
+    let elementCount = 0;
+    cy.get("body", { log: false }).then((body) => {
+      elementCount = body.find(locator).eq(elementIndex).length;
+      if (elementCount > 0) {
+        isElementPresent = true;
+        cy.get(locator).eq(elementIndex).click();
+      }
+    });
+
+    cy.wait(2000, { log: false }); // Wait for the element to be removed from DOM
+    cy.get("body", { log: false }).then((body) => {
+      let updatedElementCount = body.find(locator).eq(elementIndex).length;
+      if (updatedElementCount < elementCount) {
+        cy.wait(timeout, { log: false });
+      }
+    });
+
+    return isElementPresent;
+  }
+
+  static waitIfOptionalElementPresent(
+    locator: string,
+    timeout: number,
+    elementCount: number = 1
+  ) {
+    let isElementPresent = false;
+    cy.get("body", { log: false }).then((body) => {
+      if (body.find(locator).length == elementCount) {
+        isElementPresent = true;
+        cy.wait(timeout, { log: false });
+      }
+    });
+
+    return isElementPresent;
   }
 
   static isError(responseStatus: string, errorMessage: string) {
