@@ -67,8 +67,8 @@ export class LoginPage {
     for (let i = 0; i < 5; i++) {
       cy.get("body", { log: false }).then((body) => {
         if (body.find('[data-testid="Welcome to Choreo!"]').length > 0) {
-          cy.get('[data-cyid="btn-confirmation-dialog-blue"]').click();
-          cy.get('[data-cyid="btn-confirmation-dialog-blue"]').should(
+          cy.get('[data-cyid="confirmation-dialog-primary-action-button"]').click();
+          cy.get('[data-cyid="confirmation-dialog-primary-action-button"]').should(
             "not.exist"
           );
           return;
