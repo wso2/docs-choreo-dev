@@ -36,9 +36,10 @@ describe(`Verify proxy api functionality`, () => {
   const API_NAME = Utils.generateComponentName("CYE2E");
   const API_BASE_PATH = Utils.generateBasePath();
   const API_VERSION = "1.0.0";
-  const API_ENDPOINT = "https://jsonplaceholder.typicode.com";
+  const API_ENDPOINT =
+    "https://9f3f5ca2-c1f2-43e7-afbe-a15714138b57-dev.e1-us-east-azure.choreoapis.dev/ppcb/users/endpoint-9090-803/1.0.0";
   const OPERATION_USERS = "users";
-  const PROJECT_DESCRIPTION = "sample stats project";
+  const PROJECT_DESCRIPTION = "API Proxy for REST Endpoint";
   const PROJECT_NAME = Utils.generateProjectName();
   const HEADER_KEY = "x-header-test";
   const HEADER_VALUE = "test";

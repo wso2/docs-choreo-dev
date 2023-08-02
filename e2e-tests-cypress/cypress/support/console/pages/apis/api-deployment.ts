@@ -28,6 +28,7 @@ import {
   DEPLOYMENT_STOPPED,
   DEPLOYMENT_SUCCESS,
 } from "../../../commons/constants";
+import { Utils } from "../../../commons/utils";
 
 export class APIDeployment {
   static DeployToDev() {
@@ -159,11 +160,23 @@ export class APIDeployment {
   private static checkBuildStatus(deploymentIteration: number) {
     cy.log("Checking Build Status");
 
+    Utils.clickOnOptionalElement(
+      '[data-testid="Retry-button-button"]',
+      VERY_SHORT_TIME.timeout
+    );
+
     // Ensure that the new build process has been triggered
     cy.get('[data-cyid="default-build-card"]').within(() => {
       cy.get('[data-cyid="map-build-status"]', MEDIUM_TIME)
         .should("be.visible")
         .and("have.length", deploymentIteration);
+    });
+
+    cy.get('[data-cyid="default-build-card"]').within(() => {
+      cy.get('[data-cyid="map-build-status"]')
+        .eq(0)
+        .contains(BUILD_FAILED)
+        .should("not.exist");
     });
 
     const regex = new RegExp(`(${BUILD_SUCCESS}|^${BUILD_PARTIAL})`, "gm");
@@ -182,20 +195,24 @@ export class APIDeployment {
 
     cy.log("Checking for retry deployment");
     for (let i = 0; i < 4; i++) {
-      cy.get("body", { log: false }).then((bdy) => {
-        if (bdy.find('[data-testid="retry-btn"]').eq(0).length > 0) {
-          cy.get('[data-testid="retry-btn"]').eq(0).click();
-          cy.wait(LONG_TIME.timeout);
-        } else if (
-          bdy.find('[data-cyid="card-body-not-deployed"]').eq(0).length > 0
-        ) {
-          // New deployment or new version deployment
-          cy.wait(3000, { log: false });
-        } else {
-          return;
-        }
-      });
+      Utils.clickOnOptionalElement(
+        '[data-testid="retry-btn"]',
+        LONG_TIME.timeout
+      );
+
+      Utils.clickOnOptionalElement(
+        '[data-cyid="refresh-button-button"]',
+        SHORT_TIME.timeout
+      );
+
+      Utils.waitIfOptionalElementPresent(
+        '[data-cyid="card-body-not-deployed"]',
+        3000
+      );
     }
+
+    cy.get('[data-testid="retry-btn"]').should("not.exist");
+    cy.get('[data-cyid="refresh-button-button"]').should("not.exist");
   }
 
   static RetryPromotionToProd(retryCount = 0) {
@@ -226,6 +243,7 @@ export class APIDeployment {
     componentName: string = "",
     hasMediationPolicy: boolean = false
   ) {
+    this.RetryPromotionToProd();
     cyGet('[data-cyid="btn-promote-button"]').should("be.enabled").click();
     cy.wait(5000);
     cy.contains('role="progressbar"').should("not.exist");

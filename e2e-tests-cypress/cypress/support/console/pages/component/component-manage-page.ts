@@ -260,7 +260,7 @@ export class ComponentAPILifecycle {
   }
 
   static applyConfiguration() {
-    cy.get('[data-cyid="btn-save-settings"]').click();
+    cy.get('[data-cyid="btn-save-settings-button"]').click();
     cy.get("button").contains("Apply").click().wait(2000);
     cy.get('[data-cyid="btn-delete-settings-button"]').should("be.visible");
     cy.wait(4000);
