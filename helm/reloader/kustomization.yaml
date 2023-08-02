@@ -1,40 +1,35 @@
 helmCharts:
   - name: reloader
-    includeCRDs: true
     valuesInline:
-      fullnameOverride: reloader
       reloader:
         deployment:
+          replicas: 1
           annotations:
             checkov.io/skip1: CKV_K8S_AZURE_WSO2_2=Managed by reloader
             checkov.io/skip2: CKV_K8S_38=Managed by reloader
-          replicas: 1
-          securityContext:
-            runAsNonRoot: true
-            runAsUser: 65534
-            seccompProfile:
-              type: RuntimeDefault
           image:
-            name: choreocontrolplane.azurecr.io/stakater/reloader
-            tag: v0.0.58
+            name: "choreocontrolplane.azurecr.io/stakater/reloader"
+            tag: "v1.0.32"
             pullPolicy: Always
           containerSecurityContext:
             capabilities:
               drop:
-                - ALL
-            allowPrivilegeEscalation: false
+              - ALL
             readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
           resources:
             limits:
               cpu: "100m"
-              memory: "512Mi"
+              memory: "1Gi"
             requests:
               cpu: "10m"
               memory: "128Mi"
-        readOnlyRootFileSystem: true
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
     releaseName: reloader
     namespace: reloader
-    version: 1.0.33
+    version: 1.0.32
     repo: oci://choreocontrolplane.azurecr.io/helm
 
 commonAnnotations:
