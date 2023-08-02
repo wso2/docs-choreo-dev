@@ -8,8 +8,8 @@ helmCharts:
             checkov.io/skip1: CKV_K8S_AZURE_WSO2_2=Managed by reloader
             checkov.io/skip2: CKV_K8S_38=Managed by reloader
           image:
-            name: "choreocontrolplane.azurecr.io/stakater/reloader"
-            tag: "v1.0.32"
+            name: choreocontrolplane.azurecr.io/stakater/reloader
+            tag: v0.0.58
             pullPolicy: Always
           containerSecurityContext:
             capabilities:
