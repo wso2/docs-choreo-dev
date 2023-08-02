@@ -38,7 +38,7 @@ export class DomainsComponents {
     cy.get("tbody>tr").dblclick();
     cy.contains("Delete").click({ force: true });
     cy.log("Deleting the created Domain");
-    cy.get('[data-cyid="btn-confirmation-dialog-blue"]').click();
+    cy.get('[data-cyid="confirmation-dialog-primary-action-button"]').click();
     cy.get('[data-cyid="search-app"]').should("be.visible");
     cy.contains("td", domainName).should("not.exist");
     cy.log("Domain deleted successfully");

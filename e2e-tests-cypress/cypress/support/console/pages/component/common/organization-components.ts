@@ -82,7 +82,7 @@ export class OrganizationComponent {
   static deleteMember(email: string) {
     cy.contains("td", email).trigger("mouseover");
     cy.get("tr>td>div>button").click({ force: true });
-    cy.get('[data-cyid="btn-confirmation-dialog-blue-button"]')
+    cy.get('[data-cyid="confirmation-dialog-primary-action-button"]')
       .contains("Delete")
       .click();
     cy.contains("td", email).should("not.exist");
@@ -209,7 +209,7 @@ export class OrganizationComponent {
     cy.contains("td", roleName).trigger("mouseover");
     cy.get('[data-cyid="btn-delete-role"]').click();
     cy.log("Deleting the created Role");
-    cy.get('[data-cyid="btn-confirmation-dialog-blue-button"]').click();
+    cy.get('[data-cyid="confirmation-dialog-primary-action-button"]').click();
     cy.contains("td", roleName).should("not.exist");
     cy.log("Role deleted successfully"!);
   }
@@ -224,7 +224,7 @@ export class OrganizationComponent {
     cy.contains("td", groupName).trigger("mouseover");
     cy.get('[data-cyid="btn-delete-mapping-button"]').click();
     cy.log("Deleting the created Mapping");
-    cy.get('[data-cyid="btn-confirmation-dialog-red-button"]').click();
+    cy.get('[data-cyid="confirmation-dialog-destructive-action-button"]').click();
     cy.contains("td", groupName).should("not.exist");
     cy.log("Group role mapping deleted successfully"!);
   }
