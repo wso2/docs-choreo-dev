@@ -58,14 +58,14 @@ export class DomainsComponents {
     cy.contains("Create Custom Domain").should("be.visible");
     cy.log("Creating a dev portal custom domain");
     cy.get('[data-cyid="text-field-domain-name"]').type(domainName);
-    cy.get('[data-cyid="btn-verify-domain"]').click({ force: true });
-    cy.get('[data-cyid="btn-verify-domain"]').should("not.exist");
-    cy.get('[data-cyid="btn-next"]').should("exist");
+    cy.get('[data-cyid="verify-domain-button"]').click({ force: true });
+    cy.get('[data-cyid="verify-domain-button"]').should("not.exist");
+    cy.get('[data-cyid="next-button"]').should("exist");
     cy.log("Verified the CNAME mapping availability");
-    cy.get('[data-cyid="btn-next"]').click({ force: true });
+    cy.get('[data-cyid="next-button"]').click({ force: true });
     cy.contains("Select TLS Certificate Provider").should("be.visible");
     cy.get('[data-cyid="lets-encrypt-certificate-tile"]').click();
-    cy.get('[data-cyid="btn-add"]').should("be.visible").click({ force: true });
+    cy.get('[data-cyid="add-button"]').should("be.visible").click({ force: true });
     cy.contains("td", domainName).should("be.visible");
     cy.log("Created the custom domain successfully");
   }
