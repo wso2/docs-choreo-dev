@@ -93,7 +93,7 @@ public class TestCreateMiMultiRestEndpointServiceFromSubPath extends TestNGCitru
     public void createComponent_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
 
         // Creating component
-        String componentName = "atc".concat(String.valueOf(new Date().getTime()));
+        String componentName = "MiMultiRestEndpoint".concat(String.valueOf(new Date().getTime()));
         final String repoName = "ipaas-multi-mi-project";
         final String repoBranch = "main";
         final String subPath = "mi-hello-multiple-api";

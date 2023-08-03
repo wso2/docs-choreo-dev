@@ -133,7 +133,7 @@ public class Component extends ControlPlaneAPI {
                                         .concat(projectId)
                                         .concat("/components/")
                                         .concat(componentId)
-                                        .concat("/run/")
+                                        .concat("/runs/")
                                         .concat(runId)
                                         .concat("/logs"))
                                 .message()

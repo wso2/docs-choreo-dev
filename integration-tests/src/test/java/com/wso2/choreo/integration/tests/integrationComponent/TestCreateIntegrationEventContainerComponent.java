@@ -86,7 +86,7 @@ public class TestCreateIntegrationEventContainerComponent extends TestNGCitrusSp
     @CitrusTest
     public void createComponent_TestCreateIntegrationEventContainerComponent() throws Exception {
 
-        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String componentName = "event-listener".concat(String.valueOf(new Date().getTime()));
         final String repoName = "ipaas-containerized-event-listener";
         final String repoBranch = "main";
         String srcGitHubURL = Constant.GITHUB_URL.concat(githubOrg).concat("/").concat(repoName);
