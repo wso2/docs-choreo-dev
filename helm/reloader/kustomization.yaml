@@ -1,6 +1,7 @@
 helmCharts:
   - name: reloader
     valuesInline:
+      fullnameOverride: reloader
       reloader:
         deployment:
           replicas: 1
