@@ -16,16 +16,27 @@ package com.wso2.choreo.integration.apis.insights;
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.models.Insights.InsightDTO;
+import com.wso2.choreo.integration.tests.insights.Environment;
+
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.Collection;
+import java.util.List;
+
 import org.apache.http.HttpHeaders;
 import org.hamcrest.Matcher;
+import static org.hamcrest.Matchers.greaterThan;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -148,5 +159,113 @@ public class InsightRequest extends ControlPlaneAPI {
                         .ignore("$.alertConfiguration.apiName")
                 )
         );
+    }
+
+    public static void getEnvironments(TestActionRunner runner, HttpClient client, String accessToken,
+                    InsightDTO dto, String path) throws IOException {
+        String queryString = ObjectMapperUtil
+                .mapObjectToString("templates/insights/graphql/getEnvironmentsVariables.mustache", dto);
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(path)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(queryString)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate(jsonPath().expression("$.data.listEnvironments", greaterThan(0)))
+                .validate((message, context) -> {
+                        JsonArray environments = new JsonParser().parse((String) message.getPayload())
+                                        .getAsJsonObject()
+                                        .getAsJsonObject("data")
+                                        .getAsJsonArray("listEnvironments");
+                        Gson gson = new Gson();
+                        Type collectionType = new TypeToken<Collection<Environment>>() {
+                        }.getType();
+                        List<Environment> environmentList = gson.fromJson(environments.toString(),
+                                        collectionType);
+                        for (Environment env : environmentList) {
+                                if (env.getType().equals("CHOREO") && env.getName().equals("Development")) {
+                                        dto.setEnvironmentId(env.getExternalEnvId());
+                                        dto.setInternalEnvId(env.getInternalEnvId());
+                                        dto.setSandboxEnvId(env.getSandboxEnvId());
+                                        break;
+                                }
+                        }
+                }));
+    }
+
+    public static void getUtilityOperations(TestActionRunner runner, HttpClient client, String accessToken,
+                    InsightDTO dto, String path) throws IOException {
+        String queryString = ObjectMapperUtil
+                .mapObjectToString("templates/insights/graphql/utilQueryVariables.mustache", dto);
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(path)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(queryString)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .body(new ClassPathResource("templates/insights/utilQuerySuccess.json"))
+                .validate(json()
+                        .ignore("$.data.listOrganizations")
+                        .ignore("$.data.listAllAPI")
+                        .ignore("$.data.listApplications")
+                        .ignore("$.data.listProviders")
+                        .ignore("$.data.listSubscribers")
+                        .ignore("$.data.listTenants"))
+                .validate(jsonPath()
+                        .expression("$.data.listOrganizations.size()", greaterThan(0))
+                        .expression("$.data.listAllAPI.size()", greaterThan(0))
+                        .expression("$.data.listApplications.size()", greaterThan(0))
+                        .expression("$.data.listProviders.size()", greaterThan(0))
+                        .expression("$.data.listSubscribers.size()", greaterThan(0))
+                        .expression("$.data.listTenants.size()", greaterThan(0))));
+    }
+
+    public static void getOverviewOperations(TestActionRunner runner, HttpClient client, String accessToken,
+                    InsightDTO dto, String path) throws IOException {
+        String queryString = ObjectMapperUtil
+                .mapObjectToString("templates/insights/graphql/overviewQueryVariables.mustache", dto);
+        runner.$(http()
+            .client(client)
+            .send()
+            .post(path)
+            .message()
+            .header(HttpHeaders.AUTHORIZATION, accessToken)
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .body(queryString)
+            .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        runner.$(http()
+            .client(client)
+            .receive()
+            .response(HttpStatus.OK)
+            .message()
+            .type(MessageType.JSON)
+            .body(new ClassPathResource("templates/insights/overviewQuerySuccess.json"))
+            .validate(json()
+                    .ignore("$.data.getTotalTraffic")
+                    .ignore("$.data.getTotalErrors")
+                    .ignore("$.data.getOverallLatency"))
+            .validate(jsonPath()
+                    .expression("$.data.getTotalTraffic", greaterThan(0L))
+                    .expression("$.data.getTotalErrors", greaterThan(-1L))
+                    .expression("$.data.getOverallLatency", greaterThan(0.0))));
     }
 }

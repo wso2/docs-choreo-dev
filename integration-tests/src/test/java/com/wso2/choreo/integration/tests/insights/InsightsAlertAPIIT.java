@@ -13,15 +13,13 @@ package com.wso2.choreo.integration.tests.insights;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.github.mustachejava.DefaultMustacheFactory;
-import com.github.mustachejava.Mustache;
-import com.github.mustachejava.MustacheFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.wso2.choreo.integration.apis.insights.InsightRequest;
 import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -33,16 +31,12 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import static com.wso2.choreo.integration.config.Constant.INSIGHTS_API_RESOURCE;
@@ -84,28 +78,12 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
     public static void getEnvironmentIds(String orgUUID, String accessToken) throws IOException, InterruptedException {
         String requestURI =
                 Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT) + "/" + INSIGHTS_API_RESOURCE;
-        String graphQlQuery =
-                "query($orgFilter: OrgFilter!) {" +
-                        "   listEnvironments(org: $orgFilter) {" +
-                        "       id" +
-                        "       externalEnvId" +
-                        "       internalEnvId" +
-                        "       sandboxEnvId" +
-                        "       name" +
-                        "       type" +
-                        "   }" +
-                        "}";
-        MustacheFactory mf = new DefaultMustacheFactory();
-        Mustache mustache = mf.compile("templates/insights/graphql/getEnvironmentsVariables.mustache");
-        Writer writer = new StringWriter();
-        Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("orgId", orgUUID);
-        mustache.execute(writer, queryParams).flush();
-        String graphQlVariables = writer.toString();
-        String requestBody = "{\"query\":\"" + graphQlQuery + "\",\"variables\":" + graphQlVariables + "}";
+        InsightDTO dto = InsightDTO.builder().orgId(orgUUID).build();
+        String queryString = ObjectMapperUtil
+                .mapObjectToString("templates/insights/graphql/getEnvironmentsVariables.mustache", dto);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(requestURI))
-                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .POST(HttpRequest.BodyPublishers.ofString(queryString))
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON)
                 .build();

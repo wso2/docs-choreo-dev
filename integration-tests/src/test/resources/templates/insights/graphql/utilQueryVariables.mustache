@@ -1,11 +1,14 @@
 {
-  "dataFilter": {
-    "orgId": "{{orgId}}",
-    "environmentIds": ["{{externalEnvId}}", "{{internalEnvId}}", "{{sandboxEnvId}}"],
-    "tenant": "{{tenant}}"
-  },
+  "query": "query ($dataFilter: DataFilter!, $tenantDataFilter: TenantDataFilter!) {  listOrganizations {    id    uuid    handle    name  }  listAllAPI(dataFilter: $dataFilter) {    id    name    version    provider  }  listApplications(dataFilter: $dataFilter) {    id    name    owner  }  listProviders(dataFilter: $dataFilter) {    name  }  listSubscribers(dataFilter: $dataFilter) {    name  }  listTenants(tenantDataFilter: $tenantDataFilter)}",
+  "variables": {
+    "dataFilter": {
+      "orgId": "{{orgId}}",
+      "environmentIds": ["{{externalEnvId}}", "{{internalEnvId}}", "{{sandboxEnvId}}"],
+      "tenant": "{{tenant}}"
+    },
     "tenantDataFilter": {
-    "orgId": "{{orgId}}",
-    "environmentIds": ["{{externalEnvId}}", "{{internalEnvId}}", "{{sandboxEnvId}}"]
+      "orgId": "{{orgId}}",
+      "environmentIds": ["{{externalEnvId}}", "{{internalEnvId}}", "{{sandboxEnvId}}"]
+    }
   }
 }

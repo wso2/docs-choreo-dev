@@ -76,7 +76,7 @@ public class TestIntegrationRestComponentWithVulnerable extends TestNGCitrusSpri
     public void createComponent_TestMIIntegrationsWithVulnerableJars() throws Exception {
 
         // Creating component
-        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String componentName = "MIVulnerable".concat(String.valueOf(new Date().getTime()));
         final String repoName = "ipaas-mi-vulnerable-integration";
         final String repoBranch = "main";
         final String projectPath = "";

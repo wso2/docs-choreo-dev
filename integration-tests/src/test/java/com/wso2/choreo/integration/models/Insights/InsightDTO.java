@@ -23,13 +23,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InsightDTO { 
-    private String organization;
-    private String environmentId;
-    private String tenant;
     private String apiName;
     private String apiVersion;
     private String email;
-    private String metric;
-    private int threshold;
+    private String environmentId;
+    private String fromTime;
+    private String internalEnvId;
     private boolean isLatency;
+    private String metric;
+    private String orgId;
+    private String organization;
+    private String sandboxEnvId;
+    private String tenant;
+    private int threshold;
+    private String toTime;
 }
+
