@@ -1,5 +1,5 @@
 import { is } from "cypress/types/bluebird";
-import { cyGet } from "../../../commons/cy";
+import { cyGet, cyLog } from "../../../commons/cy";
 import { MEDIUM_TIME, MENU_RENDERING_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
 
@@ -200,5 +200,36 @@ export class ComponentOverviewPage {
           .click();
       }
     });
+  }
+
+  static getServiceInvokeUrl(visibility: string) {
+    cyGet("td>div>div>div")
+      .eq(1)
+      .invoke("text")
+      .then((url) => {
+        cy.log(url);
+        Cypress.env(`${visibility}_URL`, url);
+      });
+  }
+
+  static navigateToDevops() {
+    cyGet('[data-cyid="advanced-devops"]').click();
+  }
+
+  static navigateToRuntime() {
+    cy.contains("Runtime").click();
+  }
+
+  static generateProxyUrl(visibility: string) {
+    cyGet('[data-cyid="release-information"]>input')
+      .eq(2)
+      .invoke("attr", "value")
+      .then((namespace) => {
+        const url: string = Cypress.env(`${visibility}_URL`);
+        const _prts: string[] = url.split(":");
+        const _proxyUrl: string = `${_prts[0]}:${_prts[1]}.${namespace}:${_prts[2]}`;
+        Cypress.env("PROXY_URL", _proxyUrl);
+        cyLog(_proxyUrl);
+      });
   }
 }

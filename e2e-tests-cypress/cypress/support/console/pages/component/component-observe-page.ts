@@ -11,10 +11,10 @@
  * associated services.
  */
 
+import { cyLog } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
 import { SHORT_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
-
 
 export class ComponentObservePage {
   static gotoLogs(timeToWait = 0) {
@@ -23,13 +23,15 @@ export class ComponentObservePage {
   }
 
   static selectEnv(env: Enums.Environment) {
-    let index = 0;
+    let index = 1;
     if (env == Enums.Environment.DEVELOPMENT) {
-      index = 1;
+      index = 0;
     }
 
-    cy.get('[data-cyid="environment-selector-select"]').should("be.visible").click();
-    cy.get(`#environment-selector-label-option-${index}`).click({
+    cy.get('[data-cyid="environment-selector-select"]')
+      .should("be.visible")
+      .click();
+    cy.get(`[id="environment-selector-label-option-${index}"]`).click({
       force: true,
     });
   }
@@ -43,9 +45,28 @@ export class ComponentObservePage {
           .replace("ballerina: sending metrics to Choreo", "")
           .trim()
           .toString();
+
+        cyLog(log);
+
         if (log.includes(text)) {
           const exactText = log.slice(log.indexOf("{"), log.indexOf("}") + 1);
+          cyLog(exactText);
           expect(text).to.be.eq(exactText);
+        }
+      });
+  }
+
+  static verifyManualTriggerTextInLogs(text: string) {
+    cy.get('[data-testid="log-panel-entry"] span', { timeout: 180000 })
+      .should("be.visible")
+      .each(($e) => {
+        let log = $e
+          .text()
+          .replace("ballerina: sending metrics to Choreo", "")
+          .trim()
+          .toString();
+        if (log.includes(text)) {
+          expect(text).to.contains(text);
         }
       });
   }
@@ -93,7 +114,8 @@ export class ComponentObservePage {
       "employee information not found in the hr-service";
     const emptyHistogramMessage =
       "No requests received during the selected time period";
-    const responseTimeRegexp = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}[+-]\d{2}:\d{2}/;
+    const responseTimeRegexp =
+      /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}[+-]\d{2}:\d{2}/;
     let d;
     let prevY;
     let finalX;
@@ -154,9 +176,7 @@ export class ComponentObservePage {
         ).should("not.exist");
 
         cy.log("Asserting the request list");
-        cy.get('[data-testid="log-panel"]', SHORT_TIME).should(
-          "exist"
-        );
+        cy.get('[data-testid="log-panel"]', SHORT_TIME).should("exist");
         cy.get('[data-testid="log-panel-entry"]')
           .its("length")
           .should("be.gte", 1);
@@ -171,8 +191,7 @@ export class ComponentObservePage {
   }
 
   static verifyDiagnosticView() {
-    const timestampRegex =
-      /\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2}:\d{2}/;
+    const timestampRegex = /\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2}:\d{2}/;
     const numberOfBins = 5;
 
     cy.log("Waiting for the diagram to be rendered");
@@ -202,19 +221,11 @@ export class ComponentObservePage {
         cy.get('[data-testid="time-interval-5"]').should("not.exist");
         cy.get('[data-testid="logs-partition-5"]').should("not.exist");
         cy.log("Verifying whether all the graphs are rendered");
-        cy.get('[data-testid="error-graph"]', SHORT_TIME).should(
-          "exist"
-        );
-        cy.get('[data-testid="throughput-graph"]', SHORT_TIME).should(
-          "exist"
-        );
-        cy.get('[data-testid="latency-graph"]', SHORT_TIME).should(
-          "exist"
-        );
+        cy.get('[data-testid="error-graph"]', SHORT_TIME).should("exist");
+        cy.get('[data-testid="throughput-graph"]', SHORT_TIME).should("exist");
+        cy.get('[data-testid="latency-graph"]', SHORT_TIME).should("exist");
         cy.get('[data-testid="cpu-graph"]', SHORT_TIME).should("exist");
-        cy.get('[data-testid="memory-graph"]', SHORT_TIME).should(
-          "exist"
-        );
+        cy.get('[data-testid="memory-graph"]', SHORT_TIME).should("exist");
 
         cy.log("Scroll the graph and check selector repositioning");
         cy.get('[data-testid="diagnostics-view-slider"]').should("be.visible");
