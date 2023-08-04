@@ -91,6 +91,7 @@ export class ComponentDeployPage {
 
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
     // to ensure rendering completes before checking the deployment status
+    cy.get('[data-cyid="btn-status-action"]', LONG_TIME).eq(0).scrollIntoView();
     cy.get('[data-testid="btn-stop"]', LONG_TIME)
       .should("be.visible")
       .wait(600)
@@ -564,6 +565,7 @@ export class ComponentDeployPage {
     }
     cyGet('[data-cyid="btn-next-button"]').click();
     APIDeployment.RetryDevDeployment();
+    cy.get('[data-cyid="btn-status-action"]', LONG_TIME).eq(0).scrollIntoView();
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
     // to ensure rendering completes before checking the deployment status
     cy.get('[data-testid="btn-stop"]', LONG_TIME)
