@@ -1,0 +1,94 @@
+# Consume a Service
+
+Choreo is a platform that allows you to create, deploy, and consume services seamlessly. The Choreo developer portal simplifies the process of discovering and using APIs for API consumers. 
+
+Typically, an application developer who may be internal or external to your organization would want to consume the APIs published in the developer portal to develop their applications. In this guide, you will learn how to discover, generate credentials, and test the consumption of a service published in the Choreo Developer Portal. You will also learn how to invoke the service via a web application. 
+
+This guide walks you through the following steps:
+
+- Create an application in the Developer Portal and generate credentials for the application. 
+- Subscribe the API to the application.
+- Consume a published REST API via your web application.
+
+## Prerequisites
+
+Before you try out this guide, if you do not have a published API/ service that you would want to consume via the developer portal, follow [Develop a REST API ](../develop-components/develop-services/develop-a-rest-api.md) documentation to publish and deploy a sample REST API. 
+
+## Discover APIs
+
+In the Choreo Developer Portal, developers can use the search option to find APIs by it's name. The APIs and services that are created and published through the Choreo console, become visible in the Developer Portal depending on the APIs visibility as follows:
+
+ - **Public** : The API is **visible to all** in the developer portal.
+
+ - **Private** : The API is visible to the **users who only sign in to the Developer Portal**.
+
+ - **Restricted**: The API is **visible to only the user that has the roles that you specify**. This option helps developers to enforce fine-grained access control to the API.
+
+To learn more about API visibility, see [Control API Visibility](../api-management/control-api-visibility.md). 
+
+## Create an application
+
+{% include "create-an-application.md" %}
+
+## Subscribe to an API
+
+{% include "create-a-subscription.md" %}
+
+## Consume the API via your web application
+
+You can invoke the API/Service using the credentials you created above. Since Choreo services are secured, you need to invoke the services securely with the help of your IdP. To invoke the API/service you created securely, you need to follows the steps below:
+
+1. Create a web application in Choreo.
+2. Create an OAuth application in the IdP. 
+3. Configure the web application to authenticate the API/service invocations from the IdP, and securely invoke the service/API in Choreo.
+4. Deploy the web application. 
+
+In this guide, for explaining the above steps, we use :
+
+-  WSO2 Asgardeo as the IdP
+- [choreo-examples/cloud-native-app-developer/reading-list-front-end](https://github.com/wso2/choreo-examples/tree/main/cloud-native-app-developer/reading-list-front-end) as the web application. This is a React SPA that invokes the service using Axios. This web application is configured to read the
+[choreo-examples/cloud-native-app-developer/reading-list-service/](https://github.com/wso2/choreo-examples/tree/main/cloud-native-app-developer/reading-list-service) as the service. You can modify this web application to read your service, or [deploy the choreo-examples/cloud-native-app-developer/reading-list-service/](https://wso2.com/choreo/docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo/#step-1-create-a-service-component-and-publish-it-as-a-rest-api) in Choreo and use it. 
+
+### Step 1: Create a web application component
+
+!!! info
+    You can use your own web application implementation in place of the sample web application. In this guide, we use [choreo-examples/cloud-native-app-developer/reading-list-front-end](https://github.com/wso2/choreo-examples/tree/main/cloud-native-app-developer/reading-list-front-end) as the web application.
+
+{% include "../quick-start-guides/create-web-application-qsg.md" %}
+
+### Step 2: Create an OAuth application in the IdP
+
+We require a token to invoke the service/API in Choreo. In order to obtain a token we need to create an OAuth application in the IdP. If you use any other IdP other than Asgardeo, create an OAuth application and set the following:
+
+-  **Allowed grant types**:  Code
+-  **Public client** : Mark as a a public client is an application.
+-  **Authorized redirect URLs** : Enter the web app URL you copied earlier.
+-  **Allowed origins** field: Add the same URLs that you added as authorized redirect URLs.
+-  **Access Token**: set  JWT as the Token type.
+
+Choreo uses Asgardeo as the default identity provider for Choreo applications. When you create an application in the Choreo Developer Portal, it automatically creates a corresponding application in Asgardeo. You can go to the Asgardeo application to specify the configurations required for end users to sign in to the front-end application. Follow the steps below to configure the Asgardeo OAuth application:
+
+1. Access Asgardeo at [https://console.asgardeo.io/](https://console.asgardeo.io/) and sign in with the same credentials with which you signed in to Choreo.
+2. Make sure you are in the same organization that you were when you created the application in the Choreo Developer Portal. You can click the **Organization** list in the Asgardeo Console top menu and ensure you are in the correct organization.
+3. In the Asgardeo Console's left navigation, click **Applications**. You will see the **readingListApp** that is automatically created.
+4. Click on the edit icon to edit the application.
+5. Click the **Protocol** tab and apply the following changes:
+
+    1. Under **Allowed grant types**, select **Code**.
+    2. Select the **Public client** checkbox.
+    3. In the **Authorized redirect URLs** field, enter the web app URL you copied earlier and click the **+** icon to add the entry.
+    4. In the **Allowed origins** field, add the same URLs that you added as authorized redirect URLs.
+    5. Under **Access Token**, select **JWT** as the **Token type**.
+    6. Click **Update**.
+
+### Step 3: Configure the web application to connect to the IdP and invoke the service
+
+{% include "../quick-start-guides/configure-front-end-application-qsg.md" %}
+
+
+### Step 4: Deploy the web application
+
+{% include "../quick-start-guides/deploy-the-web-application-qsg.md" %}
+
+
+That's it! You can use a user created in your IdP\ and invoke the service through your web application.

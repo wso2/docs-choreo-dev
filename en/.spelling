@@ -419,6 +419,7 @@ Moesif
 www.moesif.com
 frontend
 Vite
+Axios
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -589,6 +590,7 @@ Moesif.md
 integrate-choreo-with-moesif
 configure-cio-dashboard.md
 control-api-visibility
+consuming-a-sevice
  - theme/material/templates/home-page.html
 doctype
 html
@@ -669,3 +671,5 @@ html
 choreoApiUrl
  - docs/api-management/api-policies.md
 Ballerina.toml
+ - docs/consuming-services/consuming-a-sevice.md
+choreo-examples
