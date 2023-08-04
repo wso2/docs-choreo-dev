@@ -88,7 +88,6 @@ public class TestBallerinaServiceDp extends TestBase {
     public void deployComponent_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
         ComponentUtils.deployComponent(this, citrusClients, accessToken, choreoComponent, environments,
                 ComponentFlavour.STANDARD);
-        SleepUtil.sleep(30);
     }
 
    @Test(dependsOnMethods = {"deployComponent_TestBallerinaServiceDp"}, dataProvider = "dps")
@@ -108,7 +107,6 @@ public class TestBallerinaServiceDp extends TestBase {
     public void promoteComponent_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
         ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent, environments,
                 ComponentFlavour.STANDARD);
-        SleepUtil.sleep(30);
     }
 
     @Test(dependsOnMethods = {"promoteComponent_TestBallerinaServiceDp"}, dataProvider = "dps")

@@ -955,17 +955,19 @@ public class ComponentUtils {
     }
 
     public static String verifyObservabilityTraceList(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-                                              String accessToken, List<ObservabilityIdInformation> observabilityIds,
-                                              ChoreoComponent component, SyntaxTree syntaxTree, int requestCount) throws Exception {
+                                                      String accessToken, List<ObservabilityIdInformation> observabilityIds,
+                                                      ChoreoComponent component, SyntaxTree syntaxTree, int requestCount,
+                                                      String entryPointSvcName, String entryPointFuncName) throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
 
         return ObservabilityService.verifyObservabilityTraceList(runner, choreoCPTestClient, accessToken,
-                observabilityIds, component, syntaxTree, requestCount);
+                observabilityIds, component, syntaxTree, requestCount, entryPointSvcName, entryPointFuncName);
     }
 
     public static void verifyObservabilityTraceInformation(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
                                                            String accessToken, List<ObservabilityIdInformation> observabilityIds,
-                                                           ChoreoComponent component, SyntaxTree syntaxTree, String traceId) throws Exception {
+                                                           ChoreoComponent component, SyntaxTree syntaxTree,
+                                                           String traceId) throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
 
         ObservabilityService.verifyObservabilityTraceInformation(runner, choreoCPTestClient, accessToken,
