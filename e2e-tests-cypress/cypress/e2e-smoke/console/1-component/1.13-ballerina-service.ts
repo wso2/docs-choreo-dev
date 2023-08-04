@@ -111,9 +111,9 @@ describe("Verify Ballerina service functionality", () => {
       "get",
       "operations-default-getBooks"
     ).then((res) => {
-      cy.fixture('books').then(books => {
-        expect(books[1].title).to.eq('Dead Men')
-      })
+      cy.fixture("books").then((books) => {
+        expect(books[1].title).to.eq("Dead Men");
+      });
       expect(res.statusCode).to.be.eq("200");
     });
   });
@@ -132,13 +132,9 @@ describe("Verify Ballerina service functionality", () => {
       "get",
       "operations-default-getBooks"
     ).then((res) => {
-<<<<<<< HEAD
-      expect(res.response).not.to.be.eq("[]");
-=======
-      cy.fixture('books').then(books => {
-        expect(books[2].title).to.eq('The Bucther')
-      })
->>>>>>> 9174d07cb722b955fa01541bcb673b8227368e3d
+      cy.fixture("books").then((books) => {
+        expect(books[2].title).to.eq("The Bucther");
+      });
       expect(res.statusCode).to.be.eq("200");
     });
   });
@@ -147,12 +143,9 @@ describe("Verify Ballerina service functionality", () => {
   it("Verify new version creation and deploy to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.addNewVersion();
-<<<<<<< HEAD
-=======
   });
 
   it("Verify new version deployment", () => {
->>>>>>> 9174d07cb722b955fa01541bcb673b8227368e3d
     ComponentDeployPage.deployService(
       PROJECT_NAME,
       COMPONENT_NAME,
@@ -170,13 +163,9 @@ describe("Verify Ballerina service functionality", () => {
       "get",
       "operations-default-getBooks"
     ).then((res) => {
-<<<<<<< HEAD
-      expect(res.response).not.to.be.eq("[]");
-=======
-      cy.fixture('books').then(books => {
-        expect(books[1].title).to.eq('Dead Men')
-      })
->>>>>>> 9174d07cb722b955fa01541bcb673b8227368e3d
+      cy.fixture("books").then((books) => {
+        expect(books[1].title).to.eq("Dead Men");
+      });
       expect(res.statusCode).to.be.eq("200");
     });
   });
@@ -195,13 +184,9 @@ describe("Verify Ballerina service functionality", () => {
       "get",
       "operations-default-getBooks"
     ).then((res) => {
-<<<<<<< HEAD
-      expect(res.response).not.to.be.eq("[]");
-=======
-      cy.fixture('books').then(books => {
-        expect(books[2].title).to.eq('The Bucther')
-      })
->>>>>>> 9174d07cb722b955fa01541bcb673b8227368e3d
+      cy.fixture("books").then((books) => {
+        expect(books[2].title).to.eq("The Bucther");
+      });
       expect(res.statusCode).to.be.eq("200");
     });
   });
