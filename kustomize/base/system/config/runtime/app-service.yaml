@@ -35,6 +35,7 @@ upstream:
     clientSecret: ${API_MANAGER_CLIENT_SECRET}
     serviceUrl: ${API_MANAGER_SERVICE_URL}
     exchangeTokenClientKey: ${API_MANAGER_EXCHANGE_TOKEN_CLIENT_KEY}
+  devops-api: ${DEVOPS_API_URL}
   centralOrgRegistry:
     url: ${CENTRAL_ORG_REGISTRY_URL}
     enabled: ${CENTRAL_ORG_REGISTRY_ENABLE}
