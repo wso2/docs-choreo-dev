@@ -12,17 +12,16 @@
  */
 
 import { Enums } from "../../../support/commons/enums";
+import { MEDIUM_TIME } from "../../../support/commons/timeouts";
 import { Utils } from "../../../support/commons/utils";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
-import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
-import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
+import { ComponentObservePage } from "../../../support/console/pages/component/component-observe-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { ComponentData } from "../../../support/interfaces/component-data";
@@ -40,31 +39,47 @@ describe("Verify Ballerina service functionality", () => {
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "sample ballerina service scenario";
   const REPO_NAME = Utils.generateComponentName("repo");
-  const ENDPOINT_NAME = "Readinglist";
+  const LOG_MESSAGE = "MATCHING RESPONSE";
+  const MANUAL_NAME = Utils.generateComponentName("manual-trigger");
+
+  const MANUAL_TRIGGER: ComponentData = {
+    componentName: MANUAL_NAME,
+    displayType: Enums.DisplayType.manualTrigger,
+    accessibility: Enums.Accessibility.EXTERNAL,
+    projectName: PROJECT_NAME,
+    triggerChannels: "",
+    triggerId: null,
+    srcGitRepoUrl:
+      "https://github.com/choreo-test-apps/book-service-manual-trigger",
+    repositoryType: Enums.RepoType.UserManagedNonEmpty,
+    initializeAsBallerinaProject: false,
+    repositorySubPath: "",
+    sampleTemplate: "",
+  };
+
+  const BALLERINA_SERVICE: ComponentData = {
+    componentName: COMPONENT_NAME,
+    displayType: Enums.DisplayType.ballerinaService,
+    accessibility: Enums.Accessibility.EXTERNAL,
+    projectName: PROJECT_NAME,
+    triggerChannels: "",
+    triggerId: null,
+    srcGitRepoUrl: "https://github.com/choreo-test-apps/byor-service-app1",
+    initializeAsBallerinaProject: false,
+    repositoryType: Enums.RepoType.UserManagedNonEmpty,
+    repositorySubPath: "",
+    sampleTemplate: "",
+  };
 
   it("Creating a project", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
   });
 
   it("Verify Ballerina service component creation", () => {
-    let componentData: ComponentData = {
-      componentName: COMPONENT_NAME,
-      displayType: Enums.DisplayType.ballerinaService,
-      accessibility: Enums.Accessibility.EXTERNAL,
-      projectName: PROJECT_NAME,
-      triggerChannels: "",
-      triggerId: null,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/byor-service-app1",
-      initializeAsBallerinaProject: false,
-      repositoryType: Enums.RepoType.UserManagedNonEmpty,
-      repositorySubPath: "",
-      sampleTemplate: "",
-    };
-
     GraphQL.createComponent(
       PROJECT_NAME,
       REPO_NAME,
-      componentData,
+      BALLERINA_SERVICE,
       GraphQLQueryBuilder.getRestComponentCreationQuery
     );
   });
@@ -76,14 +91,85 @@ describe("Verify Ballerina service functionality", () => {
 
   it("Initiate service deployment.", () => {
     ComponentDeployPage.initiateServiceDeployment("project");
-    ComponentDeployPage.getVisibilityLevel("project").should(
-      "equal",
-      "Project"
-    );
+    ComponentDeployPage.getVisibilityLevel().should("equal", "Project");
   });
 
   it("Deploy the service", () => {
-      ComponentDeployPage.deployServiceWithVisibilityLevel();
-      ComponentDeployPage.verifyDeploymentStatusOfService(PROJECT_NAME,COMPONENT_NAME).should('equal','Active');
+    ComponentDeployPage.deployServiceWithVisibilityLevel();
+    ComponentDeployPage.verifyDeploymentStatusOfService(
+      PROJECT_NAME,
+      COMPONENT_NAME
+    ).should("equal", "Active");
+  });
+
+  it("Promote the service", () => {
+    ComponentDeployPage.promoteServiceWithVisibilityLevel().should(
+      "equal",
+      "Active"
+    );
+  });
+
+  it("Verify test page for project level endpoint", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testProjectLevelEndpoint();
+  });
+
+  it("Get project endpoints", () => {
+    ComponentOverviewPage.navigateToOverview();
+    ComponentOverviewPage.getServiceInvokeUrl("Project");
+  });
+
+  it("Get projects namespace", () => {
+    ComponentOverviewPage.navigateToDevops();
+    ComponentOverviewPage.navigateToRuntime();
+    ComponentOverviewPage.generateProxyUrl("Project");
+  });
+
+  it("Verify Manual Trigger component creation", () => {
+    GraphQL.createComponent(
+      PROJECT_NAME,
+      REPO_NAME,
+      MANUAL_TRIGGER,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
+    );
+  });
+
+  it("Navigate to deployment", () => {
+    ChoreoHomePage.closeComponentViews(COMPONENT_NAME);
+    ChoreoHomePage.navigateToComponents();
+    ComponentListingPage.visitToAComponent(MANUAL_NAME);
+    ComponentOverviewPage.navigateToDeploy();
+  });
+
+  it("Verify component deployment", () => {
+    const proxyUrl = Cypress.env("PROXY_URL");
+    ComponentDeployPage.deployManualTriggerWithConfig(proxyUrl);
+  });
+
+  it("Run manual trigger in DEV", () => {
+    ComponentDeployPage.runManualTrigger(Enums.Environment.DEVELOPMENT, 3);
+  });
+
+  it("Verify component promotion to prod", () => {
+    const proxyUrl = Cypress.env("PROXY_URL");
+    ComponentDeployPage.promoteManualTriggerWithConfig(proxyUrl);
+  });
+
+  it("Run manual trigger in PROD", () => {
+    ComponentDeployPage.runManualTrigger(Enums.Environment.PRODUCTION, 3);
+  });
+
+  it("Verify task execution in observability ", () => {
+    ComponentOverviewPage.navigateToObserve();
+    ComponentObservePage.gotoLogs(MEDIUM_TIME.timeout);
+  });
+  it("Verify dev env logs", () => {
+    ComponentObservePage.selectEnv(Enums.Environment.DEVELOPMENT);
+    ComponentObservePage.verifyManualTriggerTextInLogs(LOG_MESSAGE);
+  });
+
+  it("Verify prod env logs", () => {
+    ComponentObservePage.selectEnv(Enums.Environment.PRODUCTION);
+    ComponentObservePage.verifyManualTriggerTextInLogs(LOG_MESSAGE);
   });
 });

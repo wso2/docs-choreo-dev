@@ -29,6 +29,7 @@ import {
 } from "../../../commons/timeouts";
 import { cyGet } from "../../../commons/cy";
 import { APIDeployment } from "../apis/api-deployment";
+import { Enums } from "../../../commons/enums";
 
 interface PromoteConfigs {
   settingButtonCount: number;
@@ -590,7 +591,9 @@ export class ComponentDeployPage {
   }
 
   static initiateServiceDeployment(visibilityLevel: string) {
-    cyGet('[data-testid="btn-deploy-api"]', LONG_TIME).should("be.enabled");
+    cyGet('[data-testid="btn-deploy-api"]', VERY_LONG_TIME).should(
+      "be.enabled"
+    );
     cyGet('[data-testid="btn-deploy-api"]', LONG_TIME).click();
     cyGet('[data-testid="Readinglist-edit-btn"]', LONG_TIME).should(
       "be.visible"
@@ -600,20 +603,70 @@ export class ComponentDeployPage {
     );
   }
 
-  static getVisibilityLevel(visibilityLevel: string) {
+  static changeVisibilityLevel(visibilityLevel: string) {
+    cyGet('[data-testid="Readinglist-edit-btn"]', LONG_TIME).click();
+    cyGet(`[data-testid="${visibilityLevel}-visibility-option"]`).click();
+    cyGet('[data-cyid="endpoint-submit-btn-button"]').click();
+  }
+
+  static getVisibilityLevel() {
     return cy
-      .get(`[data-cyid="${visibilityLevel}-chip"]`, LONG_TIME)
+      .get(
+        `[data-cyid="Readinglist-endpoint-accordion"] [data-cyid*="-chip"]`,
+        LONG_TIME
+      )
+      .eq(1)
       .invoke("text");
   }
 
   static deployServiceWithVisibilityLevel() {
     cyGet('[data-testid="btn-next"]', LONG_TIME).should("be.enabled");
     cyGet('[data-testid="btn-next"]', LONG_TIME).click();
+    cy.wait(60000);
   }
 
   static verifyDeploymentStatusOfService(projectName, componentName) {
     cyGet('[data-testid="btn-stop"]', LONG_TIME).should("be.visible");
     GraphQL._getComponentDeploymentStatus(projectName, componentName);
-    return cyGet('[data-cyid="deployment-status"]>h6').invoke("text");
+    return cyGet('[data-cyid="deployment-status"]>h6').eq(0).invoke("text");
+  }
+
+  static promoteServiceWithVisibilityLevel() {
+    cyGet('[data-cyid="btn-promote-button"]').should("be.enabled");
+    cyGet('[data-cyid="btn-promote-button"]').click();
+    cyGet('[data-testid="btn-next"]', LONG_TIME).click();
+    cy.wait(60000);
+    return cyGet('[data-cyid="deployment-status"]>h6').eq(1).invoke("text");
+  }
+
+  static deployManualTriggerWithConfig(url: string) {
+    cyGet('[data-testid="btn-deploy-api"]', LONG_TIME).should("be.enabled");
+    cyGet('[data-testid="btn-deploy-api"]').click();
+    cyGet('[data-cyid="invke_url"]>input').type(url);
+    cyGet('[data-cyid="btn-submit-configform"]').click();
+    cyGet('[data-cyid="run-once-button"]', VERY_LONG_TIME).should("be.enabled");
+    cyGet('[data-cyid="btn-promote-button"]').should("be.enabled");
+  }
+
+  static promoteManualTriggerWithConfig(url: string) {
+    cyGet('[data-cyid="btn-promote-button"]').should("be.enabled");
+    cyGet('[data-cyid="btn-promote-button"]').click();
+    cyGet('[data-cyid="invke_url"]>input').type(url);
+    cyGet('[data-cyid="btn-submit-configform"]').click();
+    cyGet('[data-cyid="run-once-button"]', VERY_LONG_TIME)
+      .eq(1)
+      .should("be.enabled");
+  }
+
+  static runManualTrigger(env: Enums.Environment, count: number) {
+    for (let i = 0; i < count; i++) {
+      if (env === Enums.Environment.DEVELOPMENT) {
+        cyGet('[data-cyid="run-once-button"]').eq(0).click();
+      } else {
+        cyGet('[data-cyid="run-once-button"]').eq(1).click();
+      }
+
+      cy.wait(5000);
+    }
   }
 }

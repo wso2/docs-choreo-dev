@@ -11,7 +11,11 @@
  * associated services.
  */
 
-import { MENU_RENDERING_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
+import { cyGet } from "../../../commons/cy";
+import {
+  MENU_RENDERING_TIME,
+  VERY_SHORT_TIME,
+} from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
 import { LoginPage } from "../login-page";
 
@@ -48,7 +52,9 @@ export class ChoreoHomePage {
   }
 
   static navigateToProjectUsageInsights() {
-    cy.get('[data-cyid="project-usage-insights-button"]').should("be.visible").click();
+    cy.get('[data-cyid="project-usage-insights-button"]')
+      .should("be.visible")
+      .click();
     cy.get('[id="backdrop-loader"]').should("not.exist");
   }
 
@@ -106,6 +112,18 @@ export class ChoreoHomePage {
   }
 
   static goToMarketplacePage() {
-    cy.get('[data-cyid="marketplace-link"]', VERY_SHORT_TIME).invoke('removeAttr', 'target').click();
+    cy.get('[data-cyid="marketplace-link"]', VERY_SHORT_TIME)
+      .invoke("removeAttr", "target")
+      .click();
+  }
+
+  static closeComponentViews(componentName: string) {
+    cyGet(`[data-cyid="${componentName}-close-button"]`).click();
+  }
+
+  static addNewComponent() {
+    cyGet('[data-testid="component-selector"]').click();
+    cyGet('[data-cyid="create-new-button-button"]').click();
+    cyGet("body").type("{esc}");
   }
 }
