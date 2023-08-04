@@ -16,7 +16,6 @@ package com.wso2.choreo.integration.tests.observability;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
@@ -24,17 +23,18 @@ import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
-import com.wso2.choreo.integration.models.apimanager.KeyData;
 import com.wso2.choreo.integration.models.code.Repository;
+import com.wso2.choreo.integration.models.endpoints.Endpoint;
 import com.wso2.choreo.integration.models.environments.Environment;
-import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.models.observability.SyntaxTree;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -45,26 +45,18 @@ import java.util.List;
 import java.util.Map;
 
 public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
+
     private static String accessToken;
-
-    ChoreoProject project;
-    String devInvokeURL;
-    String prodInvokeURL;
-    String apiId;
-    SyntaxTree syntaxTree;
-
-    String traceId;
-
+    private SyntaxTree syntaxTree;
+    private ChoreoComponent choreoComponent;
+    private String orgHandle;
+    private String traceId;
+    private HttpClient appServiceClient;
+    private String API_INVOCATION_REQUEST_URI;
+    private String REST_API_EXPECTED_RESPONSE;
     private static final int REQUEST_COUNT = 5;
-
-    private List<ObservabilityIdInformation> observabilityIdInfoList = new ArrayList<>();
-
-    ChoreoComponent choreoComponent;
-
     private List<Environment> environments;
-    private List<ComponentDeploymentStatusDTO> statusDTOs;
-
-    private List<Environment> observabilityEnvs;
+    private List<ObservabilityIdInformation> observabilityIdInfoList = new ArrayList<>();
 
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
@@ -72,111 +64,148 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @BeforeClass
     public void setup_ObservabilityAPITestCase() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        project = GraphQL.createProject(accessToken);
+        orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        API_INVOCATION_REQUEST_URI = "/books";
+        REST_API_EXPECTED_RESPONSE = new String(new ClassPathResource(
+                "templates/ballerinaService/ballerinaServiceResponse.json").getInputStream().readAllBytes());
     }
-
 
     @Test
     @CitrusTest
-    public void createUserManagedComponent_ObservabilityAPITestCase() throws Exception {
+    public void createComponent_ObservabilityAPITestCase() throws Exception {
+        ChoreoProject project = GraphQL.createProject(accessToken);
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-
-        Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/rest-api").branch("main").subPath("").build();
-        GraphqlDTO dto = ComponentUtils.createRestApiComponentRequest(componentName, project, repo);
+        Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/byor-service-app1").
+                branch("main").subPath("").build();
+        GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);
 
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
+        environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
+                choreoComponent);
+
         Assert.assertNotNull(choreoComponent.getId());
-
-        environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
     }
 
-
-    @Test(dependsOnMethods = {"createUserManagedComponent_ObservabilityAPITestCase"})
+    @Test(dependsOnMethods = {"createComponent_ObservabilityAPITestCase"})
     @CitrusTest
-    public void deploy_ObservabilityAPITestCase() throws Exception {
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, choreoComponent, environments, ComponentFlavour.STANDARD);
-        apiId = statusDTO.getApiId();
-        devInvokeURL = statusDTO.getInvokeUrl();
+    public void deployComponent_ObservabilityAPITestCase() throws Exception {
+        ComponentUtils.deployComponent(this, citrusClients, accessToken, choreoComponent,
+                environments, ComponentFlavour.STANDARD);
     }
 
-    @Test(dependsOnMethods = {"deploy_ObservabilityAPITestCase"})
+    @Test(dependsOnMethods = {"deployComponent_ObservabilityAPITestCase"})
     @CitrusTest
-    public void promote_ObservabilityAPITestCase() throws Exception {
-        statusDTOs = ComponentUtils.promoteComponent(this, citrusClients,
-                accessToken, choreoComponent, environments, ComponentFlavour.STANDARD);
+    public void promoteComponent_ObservabilityAPITestCase() throws Exception {
+        ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent,
+                environments, ComponentFlavour.STANDARD);
     }
 
-    @Test(dependsOnMethods = {"promote_ObservabilityAPITestCase"})
+    @Test(dependsOnMethods = {"promoteComponent_ObservabilityAPITestCase"})
     @CitrusTest
     public void getEnvironments_ObservabilityAPITestCase() throws Exception {
-        observabilityEnvs = ComponentUtils.getEnvironments(this, citrusClients, accessToken, choreoComponent);
+        List<Environment> observabilityEnvs = ComponentUtils.getEnvironments(this, citrusClients, accessToken, choreoComponent);
     }
 
     @Test(dependsOnMethods = {"getEnvironments_ObservabilityAPITestCase"})
     @CitrusTest
     public void getObservabilityIds_ObservabilityAPITestCase() throws Exception {
-        observabilityIdInfoList = ComponentUtils.getObservabilityIds(this, citrusClients, accessToken, choreoComponent);
+        observabilityIdInfoList = ComponentUtils.getObservabilityIds(this, citrusClients, accessToken,
+                choreoComponent);
     }
 
     @Test(dependsOnMethods = {"getObservabilityIds_ObservabilityAPITestCase"})
     @CitrusTest
-    public void invokeEP_ObservabilityAPITestCase() throws Exception {
-        KeyData devKeyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                apiId, ComponentUtils.getKeyType(environments.get(0)));
-        KeyData prodKeyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                apiId, ComponentUtils.getKeyType(environments.get(1)));
-        String expectedResponse = TestHelper.getExpectedResponse();
-        for (int i = 0; i < REQUEST_COUNT; ++i) {
-            ComponentUtils.invokeApiGET(this, devKeyData.getApikey(), devInvokeURL, "/isOdd?number=12121", expectedResponse);
-
-            for (ComponentDeploymentStatusDTO statusDTO : statusDTOs) {
-                ComponentUtils.invokeApiGET(this, prodKeyData.getApikey(), statusDTO.getInvokeUrl(), "/isOdd?number=12121", expectedResponse);
-            }
+    public void invokeAPIDev_ObservabilityAPITestCase() throws Exception {
+        Endpoint endpoint = ComponentUtils.getEndpoints(this, citrusClients, accessToken,
+                choreoComponent, Constant.DEV_ENVIRONMENT).get(0);
+        String devApiKey = choreoComponent.getAPIKeyForInvoke(accessToken, endpoint.getApimId(),
+                environments.get(0).getName()).replace("\"", "");
+        String invokeUrlDev = endpoint.getPublicUrl();
+        for (int i = 0; i < 5; ++i) {
+            ComponentUtils.invokeApiGET(this, devApiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI,
+                    REST_API_EXPECTED_RESPONSE);
         }
     }
 
-
-    @Test(dependsOnMethods = {"invokeEP_ObservabilityAPITestCase"})
+    @Test(dependsOnMethods = {"invokeAPIDev_ObservabilityAPITestCase"})
     @CitrusTest
-    public void testObservabilityAST_ObservabilityAPITestCase() throws Exception {
-        syntaxTree = ComponentUtils.verifyObservabilityAST(this, citrusClients, accessToken, observabilityIdInfoList, choreoComponent);
+    public void invokeAPIProd_ObservabilityAPITestCase() throws Exception {
+        Endpoint endpoint = ComponentUtils.getEndpoints(this, citrusClients, accessToken,
+                choreoComponent, Constant.PROD_ENVIRONMENT).get(0);
+        String prodApiKey = choreoComponent.getAPIKeyForInvoke(accessToken, endpoint.getApimId(),
+                environments.get(1).getName()).replace("\"", "");
+        String invokeUrlProd = endpoint.getPublicUrl();
+        for (int i = 0; i < 5; ++i) {
+            ComponentUtils.invokeApiGET(this, prodApiKey, invokeUrlProd, API_INVOCATION_REQUEST_URI,
+                    REST_API_EXPECTED_RESPONSE);
+        }
     }
 
-    @Test(dependsOnMethods = {"testObservabilityAST_ObservabilityAPITestCase"})
+    @Test(dependsOnMethods = {"invokeAPIProd_ObservabilityAPITestCase"})
     @CitrusTest
-    public void testObservabilityMetricDensity_ObservabilityAPITestCase() throws Exception {
+    public void verifyObservabilityAST_ObservabilityAPITestCase() throws Exception {
+        syntaxTree = ComponentUtils.verifyObservabilityAST(this, citrusClients, accessToken,
+                observabilityIdInfoList, choreoComponent);
+    }
+
+    @Test(dependsOnMethods = {"verifyObservabilityAST_ObservabilityAPITestCase"})
+    @CitrusTest
+    public void verifyObservabilityMetricDensity_ObservabilityAPITestCase() throws Exception {
         for (ObservabilityIdInformation obsIdInfo : observabilityIdInfoList) {
             ComponentUtils.verifyObservabilityMetricDensity(this, citrusClients, accessToken, obsIdInfo);
         }
     }
 
-    @Test(dependsOnMethods = {"testObservabilityMetricDensity_ObservabilityAPITestCase"})
+    @Test(dependsOnMethods = {"verifyObservabilityMetricDensity_ObservabilityAPITestCase"})
     @CitrusTest
-    public void testObservabilityMetricDensityHistogram_ObservabilityAPITestCase() throws Exception {
+    public void verifyObservabilityMetricDensityHistogram_ObservabilityAPITestCase() throws Exception {
         ComponentUtils.verifyObservabilityMetricDensityHistrogram(this, citrusClients, accessToken,
                 observabilityIdInfoList, choreoComponent);
     }
 
-    @Test(dependsOnMethods = {"testObservabilityAST_ObservabilityAPITestCase"})
+    @Test(dependsOnMethods = {"verifyObservabilityAST_ObservabilityAPITestCase"})
     @CitrusTest
-    public void testObservabilityStats_ObservabilityAPITestCase() throws Exception {
+    public void verifyObservabilityStats_ObservabilityAPITestCase() throws Exception {
         ComponentUtils.verifyObservabilityAPI(this, citrusClients, accessToken, observabilityIdInfoList,
                 choreoComponent, syntaxTree);
     }
 
-    @Test(dependsOnMethods = {"testObservabilityAST_ObservabilityAPITestCase"})
+    @Test(dependsOnMethods = {"verifyObservabilityAST_ObservabilityAPITestCase"})
     @CitrusTest
-    public void testObservabilityTraceList_ObservabilityAPITestCase() throws Exception {
+    public void verifyObservabilityTraceList_ObservabilityAPITestCase() throws Exception {
+        String entryPointSvcName = "/readinglist";
+        String entryPointFuncName = "/books";
         traceId = ComponentUtils.verifyObservabilityTraceList(this, citrusClients, accessToken,
-                observabilityIdInfoList, choreoComponent, syntaxTree, REQUEST_COUNT);
+                observabilityIdInfoList, choreoComponent, syntaxTree, REQUEST_COUNT, entryPointSvcName,
+                entryPointFuncName);
     }
 
-    @Test(dependsOnMethods = {"testObservabilityTraceList_ObservabilityAPITestCase"})
+    @Test(dependsOnMethods = {"verifyObservabilityTraceList_ObservabilityAPITestCase"})
     @CitrusTest
-    public void testObservabilityTraceInformation_ObservabilityAPITestCase() throws Exception {
+    public void verifyObservabilityTraceInformation_ObservabilityAPITestCase() throws Exception {
         ComponentUtils.verifyObservabilityTraceInformation(this, citrusClients, accessToken,
-                    observabilityIdInfoList, choreoComponent, syntaxTree, traceId);
+                observabilityIdInfoList, choreoComponent, syntaxTree, traceId);
+    }
+
+    @Test(dependsOnMethods = {"verifyObservabilityTraceInformation_ObservabilityAPITestCase"})
+    @CitrusTest
+    public void undeployComponentDev_ObservabilityAPITestCase() throws Exception {
+        String devReleaseId = GraphQL.componentDeployment(choreoComponent, Constant.DEV_ENVIRONMENT,
+                accessToken).getReleaseId();
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(choreoComponent.getId()).orgHandler(orgHandle)
+                .componentType("ballerinaService").releaseId(devReleaseId).build();
+        GraphQL.stopDeployment(this, appServiceClient, accessToken, graphqlDTO);
+    }
+
+    @Test(dependsOnMethods = {"undeployComponentDev_ObservabilityAPITestCase"})
+    @CitrusTest
+    public void undeployComponentProd_ObservabilityAPITestCase() throws Exception {
+        String prodReleaseId = GraphQL.componentDeployment(choreoComponent, Constant.PROD_ENVIRONMENT,
+                accessToken).getReleaseId();
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(choreoComponent.getId()).orgHandler(orgHandle)
+                .componentType("ballerinaService").releaseId(prodReleaseId).build();
+        GraphQL.stopDeployment(this, appServiceClient, accessToken, graphqlDTO);
     }
 }

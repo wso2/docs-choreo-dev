@@ -569,8 +569,10 @@ public class ObservabilityService extends ControlPlaneAPI {
     }
 
     public static String verifyObservabilityTraceList(TestActionRunner runner, HttpClient client, String accessToken,
-                                              List<ObservabilityIdInformation> observabilityIds,
-                                                      ChoreoComponent component, SyntaxTree syntaxTree, int requestCount) throws Exception {
+                                                      List<ObservabilityIdInformation> observabilityIds,
+                                                      ChoreoComponent component, SyntaxTree syntaxTree,
+                                                      int requestCount, String entryPointSvcName,
+                                                      String entryPointFuncName) throws Exception {
         ObservabilityIdInformation obsInfo = selectObsId(observabilityIds, component);
 
         String moduleId = syntaxTree.getPackageOrg() + "/" + syntaxTree.getPackageName() + ":" +
@@ -581,6 +583,8 @@ public class ObservabilityService extends ControlPlaneAPI {
         params.put("version",  obsInfo.getVerzion());
         params.put("moduleId", moduleId);
         params.put("entryPointFuncModule", moduleId);
+        params.put("entryPointSvcName", entryPointSvcName);
+        params.put("entryPointFuncName", entryPointFuncName);
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         params.put("from", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)));
         params.put("to", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)));
