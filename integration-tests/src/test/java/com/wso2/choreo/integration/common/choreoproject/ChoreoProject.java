@@ -3,25 +3,18 @@ package com.wso2.choreo.integration.common.choreoproject;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.wso2.choreo.integration.common.ChoreoOrganization;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationException;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationStatusCheckException;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationTimeoutException;
-import com.wso2.choreo.integration.common.exceptions.ComponentRetrieveException;
+import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.exceptions.GraphQLException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
-import com.wso2.choreo.integration.config.Constant;
 import lombok.Data;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Class to represent Choreo project
@@ -80,7 +73,7 @@ public class ChoreoProject {
         String gqlQuery = getComponentsQuery();
 
         try {
-            JsonObject body = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
+            JsonObject body = GraphQL.callGraphQL(accessToken, gqlQuery);
 
             JsonArray componentsJson = body.getAsJsonObject().getAsJsonObject("data")
                     .getAsJsonArray("components");
@@ -101,7 +94,7 @@ public class ChoreoProject {
         String gqlQuery = getDeleteComponentMutation(componentId);
 
         try {
-            ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
+            GraphQL.callGraphQL(accessToken, gqlQuery);
 
         } catch (GraphQLException e) {
             log.error("Error while deleting component", e);

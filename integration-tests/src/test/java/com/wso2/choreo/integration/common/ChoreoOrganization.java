@@ -16,8 +16,8 @@ package com.wso2.choreo.integration.common;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.choreoproject.ControlPlaneAPIs;
 import com.wso2.choreo.integration.common.exceptions.GraphQLException;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.ProjectRetrievalException;
@@ -90,7 +90,7 @@ public class ChoreoOrganization {
             try {
                 String gqlQuery = getProjectsQuery();
 
-                JsonObject body = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
+                JsonObject body = GraphQL.callGraphQL(accessToken, gqlQuery);
 
                 JsonArray projectsJson = body.getAsJsonObject("data").getAsJsonArray("projects");
 
@@ -110,7 +110,7 @@ public class ChoreoOrganization {
         String gqlQuery = getCreateProjectMutation(name, description);
 
         try {
-            JsonObject body = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
+            JsonObject body = GraphQL.callGraphQL(accessToken, gqlQuery);
             JsonObject projectJson = body.getAsJsonObject("data").getAsJsonObject("createProject");
             return gson.fromJson(projectJson.toString(), ChoreoProject.class);
         } catch (GraphQLException e) {
@@ -123,7 +123,7 @@ public class ChoreoOrganization {
         String gqlQuery = getDeleteProjectMutation(projectId);
 
         try {
-            ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
+            GraphQL.callGraphQL(accessToken, gqlQuery);
             projectMap.remove(projectId);
             return true;
         } catch (GraphQLException e) {

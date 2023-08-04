@@ -28,9 +28,10 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.endpoints.Endpoint;
 import com.wso2.choreo.integration.models.environments.Environment;
-import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -41,7 +42,7 @@ import java.util.Map;
 
 public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSupport {
 
-    public static final String MI_REST_API = "miRestApi";
+    public static final String MI_API_SERVICE = Constant.AppType.MI_API_SERVICE.value;
     public static final String API_INVOCATION_REQUEST_URI = "/serverinfo";
     private static String accessToken;
     private String orgHandle;
@@ -52,7 +53,7 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
     private static String componentHandler;
     private String githubOrg;
     private List<Environment> environments;
-
+    private List<Endpoint> endpoints;
     private static ChoreoComponent testComponent;
 
     @Autowired
@@ -82,7 +83,7 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
     public void createComponent() throws Exception {
 
         // Creating component
-        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String componentName = "MIConfig".concat(String.valueOf(new Date().getTime()));
         final String repoName = "ipaas-mi-config-test";
         final String repoBranch = "main";
         String srcGitHubURL = Constant.GITHUB_URL.concat(githubOrg).concat("/").concat(repoName);
@@ -91,7 +92,7 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
                 .orgId(Integer.parseInt(orgId))
                 .orgHandler(orgHandle)
                 .displayName(componentName)
-                .componentType(MI_REST_API)
+                .componentType(MI_API_SERVICE)
                 .projectId(projectId)
                 .srcGitRepoUrl(srcGitHubURL)
                 .repositorySubPath("")
@@ -104,14 +105,51 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
     @CitrusTest
     public void componentRetrieval() throws Exception {
 
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder()
-                .projectId(projectId)
-                .componentHandler(componentHandler)
-                .build();
-        testComponent = GraphQL.retrieveComponent(this, choreoTestClient, accessToken, graphqlDTO);
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
+        testComponent = GraphQL.retrieveComponent(this, choreoProjectsTestClient, accessToken,
+                graphqlDTO);
     }
 
-    @Test(dependsOnMethods = { "componentRetrieval" })
+    @Test(dependsOnMethods = {"componentRetrieval"})
+    @CitrusTest
+    public void generateEndpointsDev() throws Exception {
+        Map<String,String> argMap = new HashMap<>();
+        argMap.put("componentId", testComponent.getId());
+        argMap.put("versionId", testComponent.getLatestApiVersion().getId());
+        argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+        argMap.put("commitHash", testComponent.getLatestCommitHash(testComponent.getCommitHistory(accessToken)));
+        GraphQL.generateEndpoints(this, choreoProjectsTestClient, accessToken, argMap);
+    }
+
+    @Test(dependsOnMethods = {"generateEndpointsDev"})
+    @CitrusTest
+    public void getEndpointsDev() throws Exception {
+        Map<String,String> argMap = new HashMap<>();
+        argMap.put("componentId", testComponent.getId());
+        argMap.put("versionId", testComponent.getLatestApiVersion().getId());
+        argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+        endpoints = GraphQL.getEndpoints(this, choreoProjectsTestClient, accessToken, argMap);
+        Assert.assertEquals(endpoints.size(), 1);
+    }
+
+    @Test(dependsOnMethods = {"getEndpointsDev"})
+    @CitrusTest
+    public void updateEndpointsDev() throws Exception {
+        Map<String,String> argMap = new HashMap<>();
+        argMap.put("componentId", testComponent.getId());
+        argMap.put("versionId", testComponent.getLatestApiVersion().getId());
+        argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+        final Endpoint endpoint = endpoints.get(0);
+        argMap.put("endpointId", endpoint.getId());
+        argMap.put("displayName", endpoint.getDisplayName());
+        argMap.put("apiContext", endpoint.getApiContext());
+        argMap.put("apiDefinitionPath", endpoint.getApiDefinitionPath());
+        argMap.put("visibility", Constant.EndpointVisibility.PUBLIC.value);
+        Endpoint updatedEndpoint = GraphQL.updateEndpoint(this, choreoProjectsTestClient, accessToken, argMap);
+        endpoints.set(0, updatedEndpoint);
+    }
+
+    @Test(dependsOnMethods = { "updateEndpointsDev" })
     @CitrusTest
     public void componentDeployment() throws Exception {
 
@@ -134,7 +172,7 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
                 .build();
 
         // Deploy component
-        GraphQL.deployComponent(this, choreoTestClient, accessToken, graphqlDTO);
+        GraphQL.deployComponent(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 
     @Test(dependsOnMethods = { "componentDeployment" })
@@ -148,6 +186,7 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
                 .build();
         GraphQL.getDeploymentStatusByVersion(this, choreoProjectsTestClient, accessToken, dto);
     }
+
 
     @Test(dependsOnMethods = { "deploymentStatusByVersion" })
     @CitrusTest
@@ -172,19 +211,29 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
         responseParams.put("sha", latestCommitSha);
         responseParams.put("versionId", versionId);
 
-        GraphQL.getComponentDeploymentStatus(this, choreoTestClient, accessToken, dto, responseParams);
+        GraphQL.getComponentDeploymentStatus(this, choreoProjectsTestClient, accessToken, dto, responseParams);
+    }
+
+    @Test(dependsOnMethods = {"componentDeploymentStatus"})
+    @CitrusTest
+    public void getEndpointsDevAfterDeploy() throws Exception {
+        Map<String,String> argMap = new HashMap<>();
+        argMap.put("componentId", testComponent.getId());
+        argMap.put("versionId", testComponent.getLatestApiVersion().getId());
+        argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+        endpoints = GraphQL.getEndpoints(this, choreoProjectsTestClient, accessToken, argMap);
+        Assert.assertEquals(endpoints.size(), 1);
     }
 
     @Test(dependsOnMethods = { "componentDeploymentStatus" })
     @CitrusTest
     public void invokeAPIDev() throws Exception {
 
-        final InvokeInformation invokeInformation = testComponent.getInvokeInformation(accessToken, MI_REST_API,
-                Constant.Environment.Development.name());
+        Endpoint endpoint = endpoints.get(0);
         environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, testComponent);
-        final String devApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId(),
+        final String devApiKey = testComponent.getAPIKeyForInvoke(accessToken, endpoint.getApimId(),
                 environments.get(0).getName()).replace("\"", "");
-        String invokeUrlDev = invokeInformation.getInvokeUrl();
+        String invokeUrlDev = endpoint.getPublicUrl();
         String res = "{\"ServerName\":\"Choreo Micro Integrator 1.0.0\",\"GreetingMsg\":\"Greeting from WSO2 Micro " +
                 "Integrator\"}";
         ComponentUtils.invokeApiGET(this, devApiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI, res);
@@ -199,10 +248,10 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
         GraphqlDTO graphqlDTO = GraphqlDTO.builder()
                 .componentId(componentId)
                 .orgHandler(orgHandle)
-                .componentType(MI_REST_API)
+                .componentType(MI_API_SERVICE)
                 .releaseId(devReleaseId)
                 .build();
-        GraphQL.stopDeployment(this, choreoTestClient, accessToken, graphqlDTO);
+        GraphQL.stopDeployment(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 
 }

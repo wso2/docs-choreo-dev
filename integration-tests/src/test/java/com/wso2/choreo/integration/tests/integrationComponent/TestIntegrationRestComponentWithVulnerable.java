@@ -19,8 +19,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.wso2.choreo.integration.apis.Orgs;
+import com.wso2.choreo.integration.apis.component.Component;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
@@ -37,9 +36,11 @@ import org.testng.annotations.Test;
 
 import java.util.Date;
 
+import static com.wso2.choreo.integration.config.Constant.AppType.MI_API_SERVICE;
+
 public class TestIntegrationRestComponentWithVulnerable extends TestNGCitrusSpringSupport {
 
-    public static final String MI_REST_API = "miRestApi";
+    public static final String MI_REST_API = "miApiService";
     private static String accessToken;
     private String orgHandle;
     private String orgId;
@@ -75,7 +76,7 @@ public class TestIntegrationRestComponentWithVulnerable extends TestNGCitrusSpri
     public void createComponent_TestMIIntegrationsWithVulnerableJars() throws Exception {
 
         // Creating component
-        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String componentName = "MIVulnerable".concat(String.valueOf(new Date().getTime()));
         final String repoName = "ipaas-mi-vulnerable-integration";
         final String repoBranch = "main";
         final String projectPath = "";
@@ -101,7 +102,8 @@ public class TestIntegrationRestComponentWithVulnerable extends TestNGCitrusSpri
     public void componentRetrieval_TestMIIntegrationsWithVulnerableJars() throws Exception {
 
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
-        testComponent = GraphQL.retrieveComponent(this, choreoTestClient, accessToken, graphqlDTO);
+        testComponent = GraphQL.retrieveComponent(this, choreoProjectsTestClient, accessToken,
+                graphqlDTO);
     }
 
     @Test(dependsOnMethods = { "componentRetrieval_TestMIIntegrationsWithVulnerableJars" })
@@ -121,7 +123,7 @@ public class TestIntegrationRestComponentWithVulnerable extends TestNGCitrusSpri
                 .devEnvIdToDeploy(devEnvIdToDeploy).branch(branch).sha(latestCommitSha).shaDate("").build();
 
         // Deploy component
-        GraphQL.deployComponent(this, choreoTestClient, accessToken, graphqlDTO);
+        GraphQL.deployComponent(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 
     @Test(dependsOnMethods = { "componentDeployment_TestMIIntegrationsWithVulnerableJars" })
@@ -137,11 +139,8 @@ public class TestIntegrationRestComponentWithVulnerable extends TestNGCitrusSpri
 
     @Test(dependsOnMethods = { "deploymentStatusByVersion_TestMIIntegrationsWithVulnerableJars" })
     @CitrusTest
-    public void checkVulnarabilityScan_TestMIIntegrationsWithVulnerableJars() throws Exception {
-
-        String response = Orgs.getDeploymentLogs(accessToken, orgHandle, projectId, componentId, runId);
-        JsonObject dataJsonObject = new JsonParser().parse(response).getAsJsonObject().getAsJsonObject("data");
-        JsonArray stepJsonArray = dataJsonObject.getAsJsonObject("build").getAsJsonArray("steps");
+    public void checkVulnarabilityScan_TestMIIntegrationsWithVulnerableJars() {
+        JsonArray stepJsonArray = Component.getDeploymentBuildSteps(this, choreoProjectsTestClient, accessToken, projectId, componentId, runId);
         for (JsonElement element : stepJsonArray) {
             JsonObject jsonObject = element.getAsJsonObject();
             String stepName = jsonObject.get("name").getAsString();

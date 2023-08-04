@@ -222,11 +222,7 @@ export class ComponentAPILifecycle {
   }
 
   static selectSetting() {
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.get('[data-cyid="manage-settings"]').click();
-    } else {
-      cy.get('[data-testid="Settings"]').click();
-    }
+    cy.get('[data-cyid="manage-settings"]').click();
   }
 
   static selectResources() {
@@ -234,7 +230,7 @@ export class ComponentAPILifecycle {
   }
 
   static editResource() {
-    cy.get('[data-cyid="btn-edit-settings"]').click();
+    cy.get('[data-cyid="btn-edit-settings-button"]').click();
   }
 
   static selectEnvironment(env: Enums.Environment) {
@@ -264,20 +260,16 @@ export class ComponentAPILifecycle {
   }
 
   static applyConfiguration() {
-    cy.get('[data-cyid="btn-save-settings"]').click();
+    cy.get('[data-cyid="btn-save-settings-button"]').click();
     cy.get("button").contains("Apply").click().wait(2000);
-    cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
+    cy.get('[data-cyid="btn-delete-settings-button"]').should("be.visible");
     cy.wait(4000);
   }
 
   static selectConsumers() {
     let selector = '[data-cyid="manage-consumers"]';
-    if (Utils.isUnifiedMenuEnabled()) {
-      this.expandSecondaryMenu(selector);
-    } else {
-      selector = '[data-cyid="Consumers"]';
-    }
 
+    this.expandSecondaryMenu(selector);
     cy.get(selector).click();
   }
 
@@ -299,7 +291,7 @@ export class ComponentAPILifecycle {
     cy.get('div[role="combobox"]').eq(1).click();
     cy.get(`ul[id="Select List-popup"]>li`).contains(visibility).click();
     cy.get('[data-testid="info-banner"]').should("be.visible");
-    cy.get('[data-cyid="btn-confirmation-dialog-blue"]').wait(100).realClick();
+    cy.get('[data-cyid="confirmation-dialog-primary-action-button"]').wait(100).realClick();
     this.verifyAPIVisibility(visibility);
     cy.log("Successfully updated the API visibility");
   }
@@ -310,7 +302,7 @@ export class ComponentAPILifecycle {
       .click();
     cy.contains(accessMode).should("exist").realClick();
     cyGet('[data-testid="warning-banner"]').should("be.visible");
-    cyGet('[data-cyid="btn-confirmation-dialog-blue"]').should("exist").click();
+    cyGet('[data-cyid="confirmation-dialog-primary-action-button"]').should("exist").click();
     cy.contains(
       `Successfully converted to an ${accessMode.toLowerCase()} API.`
     ).should("be.visible");
@@ -330,12 +322,8 @@ export class ComponentAPILifecycle {
 
   static selectPermissions() {
     let selector = '[data-cyid="manage-permissions"]';
-    if (Utils.isUnifiedMenuEnabled()) {
-      this.expandSecondaryMenu(selector);
-    } else {
-      selector = '[data-testid="Permissions"]';
-    }
 
+    this.expandSecondaryMenu(selector);
     cy.get(selector).click();
   }
 
@@ -399,7 +387,7 @@ export class ComponentAPILifecycle {
   static deletePermission(permissionName: string) {
     cy.get(`[data-testid="scope-delete-btn-${permissionName}"]`).click();
     // Verify scope being used by how many resources
-    cy.get('[data-cyid="btn-confirmation-dialog-red"]')
+    cy.get('[data-cyid="confirmation-dialog-destructive-action-button"]')
       .should("be.visible")
       .click();
     cy.contains("Permission(Scope) deleted successfully");
@@ -443,39 +431,22 @@ export class ComponentAPILifecycle {
 
   private static selectLifeCycle() {
     let selector = '[data-cyid="manage-lifecycle"]';
-    if (Utils.isUnifiedMenuEnabled()) {
-      this.expandSecondaryMenu(selector);
-    } else {
-      selector = '[data-testid="Lifecycle"]';
-    }
 
+    this.expandSecondaryMenu(selector);
     cy.get(selector).click();
   }
 
   private static selectUsage() {
     let selector = '[data-cyid="manage-usage"]';
-    if (Utils.isUnifiedMenuEnabled()) {
-      this.expandSecondaryMenu(selector);
-    } else {
-      cy.get('[data-cyid="link-manage"]')
-        .should("be.visible")
-        .click({ force: true });
-      selector = '[data-testid="Usage plans"]';
-    }
 
+    this.expandSecondaryMenu(selector);
     cy.get(selector).click();
   }
 
   private static selectSettings() {
     let selector = '[data-cyid="manage-settings"]';
-    if (Utils.isUnifiedMenuEnabled()) {
-      this.expandSecondaryMenu(selector);
-    } else {
-      cy.get('[data-cyid="link-manage"]')
-        .should("be.visible")
-        .click({ force: true });
-      selector = '[data-testid="Settings"]';
-    }
+
+    this.expandSecondaryMenu(selector);
 
     cy.get(selector).click();
   }

@@ -6,6 +6,7 @@ import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.wso2.choreo.integration.apis.connectors.ConnectorPublisher;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentFlavour;
@@ -20,24 +21,17 @@ import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.code.Repository;
+import com.wso2.choreo.integration.models.connectors.Connector;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
-import static com.consol.citrus.http.actions.HttpActionBuilder.http;
-import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 
 /**
  * Connector publishing related tests
@@ -45,27 +39,23 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
 public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
 
     private static String accessToken;
-    private static String componentHandler;
     private ChoreoComponent choreoComponent;
     private String projectId;
     private ChoreoProject project;
     private String orgHandle;
     private String orgUUID;
     private static String revisionId;
-    private String orgId;
     private String githubOrg;
     private String githubPAT;
     private String devInvokeURL;
+    private List<Environment> environments;
 
     @Autowired
     private HttpClient choreoTestClient;
     @Autowired
-    private HttpClient choreoProjectsTestClient;
-    @Autowired
     Map<Endpoints, HttpClient> citrusClients;
     ChoreoOrganization org;
-
-    private List<Environment> environments;
+    Connector connector;
 
     @BeforeClass
     public void setup_ConnectorBuilderIT() throws Exception {
@@ -111,121 +101,30 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = "createComponent_ConnectorBuilderIT")
     @CitrusTest
-    public void publishConnector_ConnectorBuilderIT() {
-        $(http()
-                .client(choreoTestClient)
-                .send()
-                .post(Constant.USER_CONNECTORS_ENDPOINT_SUFFIX.concat("/").concat(orgHandle)
-                        .concat("/").concat(choreoComponent.getId()))
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header("x-correlation-id", Constant.X_CORRELATION_UUID)
-                .body("{" +
-                        "    \"apiId\": \"" + revisionId + "\"," +
-                        "    \"organizationId\": \"" + orgUUID + "\"," +
-                        "    \"connectorVersion\": \"" + Constant.TEST_CONNECTOR_VERSION + "\"," +
-                        "    \"visibility\": \"" + Constant.TEST_CONNECTOR_VISIBILITY + "\"" +
-                        "}")
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-
-        $(http()
-                .client(choreoTestClient)
-                .receive()
-                .response(HttpStatus.CREATED)
-                .message()
-                .type(MessageType.JSON)
-                .body(new ClassPathResource("templates/connectorbuilder/publish_success_ok.json")));
+    public void publishConnector_ConnectorBuilderIT() throws Exception {
+        connector = Connector.builder().version(Constant.TEST_CONNECTOR_VERSION)
+        .visibility(Constant.TEST_CONNECTOR_VISIBILITY).apiId(revisionId).orgUuid(orgUUID)
+        .orgHandler(orgHandle)
+        .componentId(choreoComponent.getId())
+        .build();
+        ConnectorPublisher.publishConnector(this, choreoTestClient, accessToken, connector, false);
     }
 
-    @Test(dependsOnMethods = {"publishConnector_ConnectorBuilderIT"})
+    @Test(dependsOnMethods = {"publishConnector_ConnectorBuilderIT"}, enabled = true)
     @CitrusTest
-    public void getConnectorStatus_ConnectorBuilderIT() throws InterruptedException {
-        $(repeatOnError()
-                .until("i = 15")
-                .index("i")
-                .autoSleep(5000)
-                .actions(
-                        http()
-                                .client(choreoTestClient)
-                                .send()
-                                .get(Constant.USER_CONNECTORS_ENDPOINT_SUFFIX.concat("/")
-                                        .concat(orgHandle).concat("/")
-                                        .concat(choreoComponent.getId()).concat("/status"))
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .header("x-correlation-id", Constant.X_CORRELATION_UUID)
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)
-                                ),
-                        http().client(choreoTestClient)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .body(new ClassPathResource(
-                                        "templates/connectorbuilder/publish_status_completed.json"))
-                                .validate(json()
-                                        .ignore("$.id")
-                                        .ignore("$.created_at")
-                                        .ignore("$.updated_at")
-                                )
-                )
-        );
+    public void getConnectorStatus_ConnectorBuilderIT() throws InterruptedException, IOException {
+        ConnectorPublisher.getConnectorStatus(this, choreoTestClient, accessToken, connector);
     }
 
-    @Test(dependsOnMethods = {"getConnectorStatus_ConnectorBuilderIT"})
+    @Test(dependsOnMethods = {"getConnectorStatus_ConnectorBuilderIT"}, enabled = true)
     @CitrusTest
-    public void getConnector_ConnectorBuilderIT() {
-        $(http()
-                .client(choreoTestClient)
-                .send()
-                .get(Constant.USER_CONNECTORS_ENDPOINT_SUFFIX.concat("/").concat(orgHandle)
-                        .concat("/").concat(choreoComponent.getId()))
-                .queryParam("version=".concat(Constant.TEST_CONNECTOR_VERSION))
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header("x-correlation-id", Constant.X_CORRELATION_UUID)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-        $(http()
-                .client(choreoTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .body(new ClassPathResource("templates/connectorbuilder/get_connector_success.json"))
-                .validate(json()
-                        .ignore("$.name")
-                        .ignore("$.org")
-                        .ignore("$.modules")
-                        .ignore("$.createdDate")
-                )
-        );
+    public void getConnector_ConnectorBuilderIT() throws IOException {
+        ConnectorPublisher.getConnector(this, choreoTestClient, accessToken, connector);
     }
 
-    @Test(dependsOnMethods = {"getConnector_ConnectorBuilderIT"})
+    @Test(dependsOnMethods = {"getConnector_ConnectorBuilderIT"}, enabled = true)
     @CitrusTest
-    public void republishConnector_ConnectorBuilderIT() {
-        $(http()
-                .client(choreoTestClient)
-                .send()
-                .post(Constant.USER_CONNECTORS_ENDPOINT_SUFFIX.concat("/").concat(orgHandle)
-                        .concat("/").concat(choreoComponent.getId()).concat("/republish"))
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header("x-correlation-id", Constant.X_CORRELATION_UUID)
-                .body("{" +
-                        "    \"apiId\": \"" + revisionId + "\"," +
-                        "    \"organizationId\": \"" + orgUUID + "\"," +
-                        "    \"connectorVersion\": \"" + Constant.TEST_CONNECTOR_VERSION + "\"," +
-                        "    \"visibility\": \"" + Constant.TEST_CONNECTOR_VISIBILITY + "\"" +
-                        "}")
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-
-        $(http()
-                .client(choreoTestClient)
-                .receive()
-                .response(HttpStatus.CREATED)
-                .message()
-                .type(MessageType.JSON)
-                .body(new ClassPathResource("templates/connectorbuilder/republish_success_ok.json")));
+    public void republishConnector_ConnectorBuilderIT() throws Exception {
+        ConnectorPublisher.publishConnector(this, choreoTestClient, accessToken, connector, true);
     }
 }

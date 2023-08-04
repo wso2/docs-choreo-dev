@@ -86,7 +86,7 @@ public class TestCreateIntegrationEventComponent extends TestNGCitrusSpringSuppo
     @CitrusTest
     public void createComponent_TestCreateIntegrationEventComponent() throws Exception {
 
-        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String componentName = "IntegrationEventComponent".concat(String.valueOf(new Date().getTime()));
         final String repoName = "ipaas-mi-event-triggered";
         final String repoBranch = "main";
         String srcGitHubURL = Constant.GITHUB_URL.concat(githubOrg).concat("/").concat(repoName);
@@ -201,7 +201,7 @@ public class TestCreateIntegrationEventComponent extends TestNGCitrusSpringSuppo
         responseParams.put("sha", latestCommitSha);
         responseParams.put("versionId", versionId);
 
-        GraphQL.getComponentDeploymentStatus(this, choreoTestClient, accessToken, dto, responseParams);
+        GraphQL.getComponentDeploymentStatus(this, choreoProjectsTestClient, accessToken, dto, responseParams);
     }
 
     @Test(dependsOnMethods = {"componentDeploymentStatus_TestCreateIntegrationEventComponent"})
@@ -211,6 +211,6 @@ public class TestCreateIntegrationEventComponent extends TestNGCitrusSpringSuppo
         String devReleaseId = GraphQL.componentDeployment(testComponent, Constant.DEV_ENVIRONMENT, accessToken).getReleaseId();
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(orgHandle)
                 .componentType(MI_EVENT_HANDLER).releaseId(devReleaseId).build();
-        GraphQL.stopDeployment(this, choreoTestClient, accessToken, graphqlDTO);
+        GraphQL.stopDeployment(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 }

@@ -17,7 +17,7 @@ authInfo:
   #CP_APP_CLIENT_SECRET:
 common:
   CHOREO_ENDPOINT: https://app.preview-dv.choreo.dev
-  CHOREO_CP_PROJECTS_ENDPOINT: https://apis.preview-dv.choreo.dev/projects/1.0.0
+  CHOREO_NEW_APP_SERVICE_ENDPOINT: https://apis.preview-dv.choreo.dev
   CHOREO_CP_GW_ENDPOINT: https://choreocontrolplane.preview-dv.choreo.dev
   BAL_REGISTRY_URL: https://api.dev-central.ballerina.io/2.0/registry
   GITHUB_ENDPOINT: https://api.github.com
@@ -27,6 +27,7 @@ common:
   #GMAIL_API_CS:
   #GMAIL_API_REFRESH_TOKEN:
   COMMIT_LIST_EXAMPLE_RESPONSE: templates/getCommitList/query_get_commit_list_success_dev.json
+  TOKEN_SCOPES: scopes/dev-scopes.yaml
 insights:
   INSIGHTS_ENDPOINT: https://analytics-event-auth.dv.choreo.dev
   INSIGHTS_ONPREM_KEY: cae0f0d0-11f3-4603-86ab-2a38eac3f155

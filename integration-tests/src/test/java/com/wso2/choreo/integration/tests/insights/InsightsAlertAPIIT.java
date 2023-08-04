@@ -12,26 +12,23 @@ package com.wso2.choreo.integration.tests.insights;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
-import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import com.wso2.choreo.integration.apis.insights.InsightRequest;
 import com.wso2.choreo.integration.common.TestContext;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.Insights.InsightDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -48,9 +45,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import static com.consol.citrus.http.actions.HttpActionBuilder.http;
-import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
-import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
 import static com.wso2.choreo.integration.config.Constant.INSIGHTS_API_RESOURCE;
 import static com.wso2.choreo.integration.config.Constant.INSIGHTS_LATENCY_ALERT_API_RESOURCE;
 import static com.wso2.choreo.integration.config.Constant.INSIGHTS_TRAFFIC_ALERT_API_RESOURCE;
@@ -73,7 +67,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
     private HttpClient choreoCPTestClient;
 
     @BeforeClass
-    public void beforeClass() throws IOException, InterruptedException, TokenRetrievalException {
+    public void beforeClass() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
 
@@ -132,254 +126,97 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void testTrafficGet() {
-        $(http()
-                .client(choreoCPTestClient)
-                .send()
-                .get(INSIGHTS_TRAFFIC_ALERT_API_RESOURCE)
-                .queryParam("organization", orgUuid)
-                .queryParam("environment", externalEnvId)
-                .queryParam("tenant", tenant)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .validate(jsonPath().expression("$.alertConfiguration.size()", greaterThanOrEqualTo(0)))
-        );
+    public void testTrafficGet() throws IOException {
+            InsightDTO dto = InsightDTO.builder().environmentId(externalEnvId).organization(orgUuid).tenant(tenant)
+                            .build();
+            InsightRequest.getInsightTrafficOrLatency(this, choreoCPTestClient, accessToken, dto,
+                            "$.alertConfiguration.size()", greaterThanOrEqualTo(0),
+                            INSIGHTS_TRAFFIC_ALERT_API_RESOURCE);
     }
 
     @Test
     @CitrusTest
-    public void testTrafficPost() {
-        $(http()
-                .client(choreoCPTestClient)
-                .send()
-                .post(INSIGHTS_TRAFFIC_ALERT_API_RESOURCE)
-                .queryParam("organization", orgUuid)
-                .queryParam("environment", externalEnvId)
-                .queryParam("tenant", tenant)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body("{\n" +
-                        "    \"alertConfiguration\": {\n" +
-                        "        \"apiName\": \"" + apiName + "\",\n" +
-                        "        \"apiVersion\": \"1.0.0\",\n" +
-                        "        \"threshold\": 5,\n" +
-                        "        \"emails\": [\"choreo-integration-test-user-dev@wso2.com\"],\n" +
-                        "        \"metric\": \"HIT_COUNT\"\n" +
-                        "    }\n" +
-                        "}")
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .validate(((message, testContext) -> {
-                    JsonObject component = new JsonParser().parse((String) message.getPayload()).getAsJsonObject()
-                            .getAsJsonObject("alertConfiguration");
-                    trafficAlertConfigurationId = component.get("id").getAsString();
-                }))
-        );
+    public void testTrafficPost() throws IOException {
+            InsightDTO dto = InsightDTO.builder().environmentId(externalEnvId).organization(orgUuid).tenant(tenant)
+                            .apiName(apiName)
+                            .email("choreo-integration-test-user-dev@wso2.com")
+                            .apiVersion("1.0.0")
+                            .threshold(5)
+                            .metric("HIT_COUNT")
+                            .build();
+            trafficAlertConfigurationId = InsightRequest.postInsightTrafficOrLatency(this, choreoCPTestClient,
+                            accessToken, dto, INSIGHTS_TRAFFIC_ALERT_API_RESOURCE);
     }
 
     @Test(dependsOnMethods = { "testTrafficPost" })
     @CitrusTest
-    public void testTrafficPut() {
-        $(http()
-                .client(choreoCPTestClient)
-                .send()
-                .put(INSIGHTS_TRAFFIC_ALERT_API_RESOURCE + "/" + trafficAlertConfigurationId)
-                .queryParam("organization", orgUuid)
-                .queryParam("environment", externalEnvId)
-                .queryParam("tenant", tenant)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body("{\n" +
-                        "    \"alertConfiguration\": {\n" +
-                        "        \"apiName\": \"" + apiName + "\",\n" +
-                        "        \"apiVersion\": \"1.0.0\",\n" +
-                        "        \"threshold\": 30,\n" +
-                        "        \"emails\": [\"choreo-integration-test-user-dev@wso2.com\"],\n" +
-                        "        \"metric\": \"HIT_COUNT\"\n" +
-                        "    }\n" +
-                        "}")
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .body(new ClassPathResource("templates/insights/alert/put_traffic_alert_success.json"))
-                .validate(json()
-                        .ignore("$.environment")
-                        .ignore("$.organization")
-                        .ignore("$.alertConfiguration.id")
-                        .ignore("$.alertConfiguration.apiName")
-                )
-        );
+    public void testTrafficPut() throws IOException {
+            InsightDTO dto = InsightDTO.builder().environmentId(externalEnvId).organization(orgUuid).tenant(tenant)
+                            .apiName(apiName)
+                            .email("choreo-integration-test-user-dev@wso2.com")
+                            .apiVersion("1.0.0")
+                            .threshold(30)
+                            .metric("HIT_COUNT")
+                            .build();
+            InsightRequest.putInsightTrafficOrLatency(this, choreoCPTestClient, accessToken, dto,
+                            INSIGHTS_TRAFFIC_ALERT_API_RESOURCE + "/" + trafficAlertConfigurationId);
     }
 
     @Test(dependsOnMethods = { "testTrafficPut" })
     @CitrusTest
-    public void testTrafficDelete() {
-        $(http()
-                .client(choreoCPTestClient)
-                .send()
-                .delete(INSIGHTS_TRAFFIC_ALERT_API_RESOURCE + "/" + trafficAlertConfigurationId)
-                .queryParam("organization", orgUuid)
-                .queryParam("environment", externalEnvId)
-                .queryParam("tenant", tenant)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.PLAINTEXT)
-                .body("Traffic alert configuration '" + trafficAlertConfigurationId + "' successfully deleted")
-        );
+    public void testTrafficDelete() throws IOException {
+            InsightDTO dto = InsightDTO.builder().environmentId(externalEnvId).organization(orgUuid).tenant(tenant)
+                            .build();
+            String path = INSIGHTS_TRAFFIC_ALERT_API_RESOURCE + "/" + trafficAlertConfigurationId;
+            InsightRequest.deleteInsightTrafficOrLatency(this, choreoCPTestClient, accessToken, dto, path);
     }
 
     @Test
     @CitrusTest
-    public void testLatencyGet() {
-        $(http()
-                .client(choreoCPTestClient)
-                .send()
-                .get(INSIGHTS_LATENCY_ALERT_API_RESOURCE)
-                .queryParam("organization", orgUuid)
-                .queryParam("environment", externalEnvId)
-                .queryParam("tenant", tenant)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .validate(jsonPath().expression("$.alertConfiguration.size()", greaterThanOrEqualTo(0)))
-        );
+    public void testLatencyGet() throws IOException {
+            InsightDTO dto = InsightDTO.builder().environmentId(externalEnvId).organization(orgUuid).tenant(tenant)
+                            .build();
+            InsightRequest.getInsightTrafficOrLatency(this, choreoCPTestClient, accessToken, dto,
+                            "$.alertConfiguration.size()", greaterThanOrEqualTo(0),
+                            INSIGHTS_LATENCY_ALERT_API_RESOURCE);
     }
 
     @Test
     @CitrusTest
-    public void testLatencyPost() {
-        $(http()
-                .client(choreoCPTestClient)
-                .send()
-                .post(INSIGHTS_LATENCY_ALERT_API_RESOURCE)
-                .queryParam("organization", orgUuid)
-                .queryParam("environment", externalEnvId)
-                .queryParam("tenant", tenant)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body("{\n" +
-                        "    \"alertConfiguration\": {\n" +
-                        "        \"apiName\": \"" + apiName + "\",\n" +
-                        "        \"apiVersion\": \"1.0.0\",\n" +
-                        "        \"threshold\": 5,\n" +
-                        "        \"emails\": [\"choreo-integration-test-user-dev@wso2.com\"],\n" +
-                        "        \"metric\": \"RESPONSE_LATENCY\"\n" +
-                        "    }\n" +
-                        "}")
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .validate(((message, testContext) -> {
-                    JsonObject component = new JsonParser().parse((String) message.getPayload()).getAsJsonObject()
-                            .getAsJsonObject("alertConfiguration");
-                    latencyAlertConfigurationId = component.get("id").getAsString();
-                }))
-        );
+    public void testLatencyPost() throws IOException {
+            InsightDTO dto = InsightDTO.builder().environmentId(externalEnvId).organization(orgUuid).tenant(tenant)
+                            .metric("RESPONSE_LATENCY")
+                            .apiName(apiName)
+                            .email("choreo-integration-test-user-dev@wso2.com")
+                            .apiVersion("1.0.0")
+                            .threshold(5)
+                            .build();
+            latencyAlertConfigurationId = InsightRequest.postInsightTrafficOrLatency(this, choreoCPTestClient,
+                            accessToken,
+                            dto, INSIGHTS_LATENCY_ALERT_API_RESOURCE);
     }
 
     @Test(dependsOnMethods = { "testLatencyPost" })
     @CitrusTest
-    public void testLatencyPut() {
-        $(http()
-                .client(choreoCPTestClient)
-                .send()
-                .put(INSIGHTS_LATENCY_ALERT_API_RESOURCE + "/" + latencyAlertConfigurationId)
-                .queryParam("organization", orgUuid)
-                .queryParam("environment", externalEnvId)
-                .queryParam("tenant", tenant)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body("{\n" +
-                        "    \"alertConfiguration\": {\n" +
-                        "        \"apiName\": \"" + apiName + "\",\n" +
-                        "        \"apiVersion\": \"1.0.0\",\n" +
-                        "        \"threshold\": 255,\n" +
-                        "        \"emails\": [\"choreo-integration-test-user-dev@wso2.com\"],\n" +
-                        "        \"category\": \"LATENCY\",\n" +
-                        "        \"metric\": \"RESPONSE_LATENCY\"\n" +
-                        "    }\n" +
-                        "}")
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .body(new ClassPathResource("templates/insights/alert/put_latency_alert_success.json"))
-                .validate(json()
-                        .ignore("$.environment")
-                        .ignore("$.organization")
-                        .ignore("$.alertConfiguration.id")
-                        .ignore("$.alertConfiguration.apiName")
-                )
-        );
+    public void testLatencyPut() throws IOException {
+            InsightDTO dto = InsightDTO.builder().environmentId(externalEnvId).organization(orgUuid).tenant(tenant)
+                            .apiName(apiName)
+                            .email("choreo-integration-test-user-dev@wso2.com")
+                            .apiVersion("1.0.0")
+                            .threshold(255)
+                            .metric("RESPONSE_LATENCY")
+                            .isLatency(true)
+                            .build();
+            InsightRequest.putInsightTrafficOrLatency(this, choreoCPTestClient, accessToken, dto,
+                            INSIGHTS_LATENCY_ALERT_API_RESOURCE + "/" + latencyAlertConfigurationId);
     }
 
     @Test(dependsOnMethods = { "testLatencyPut" })
     @CitrusTest
-    public void testLatencyDelete() {
-        $(http()
-                .client(choreoCPTestClient)
-                .send()
-                .delete(INSIGHTS_LATENCY_ALERT_API_RESOURCE + "/" + latencyAlertConfigurationId)
-                .queryParam("organization", orgUuid)
-                .queryParam("environment", externalEnvId)
-                .queryParam("tenant", tenant)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.PLAINTEXT)
-                .body("Latency alert configuration '" + latencyAlertConfigurationId + "' successfully deleted")
-        );
+    public void testLatencyDelete() throws IOException {
+            InsightDTO dto = InsightDTO.builder().environmentId(externalEnvId).organization(orgUuid).tenant(tenant)
+                            .build();
+            String path = INSIGHTS_LATENCY_ALERT_API_RESOURCE + "/" + latencyAlertConfigurationId;
+            InsightRequest.deleteInsightTrafficOrLatency(this, choreoCPTestClient, accessToken, dto, path);
     }
 }

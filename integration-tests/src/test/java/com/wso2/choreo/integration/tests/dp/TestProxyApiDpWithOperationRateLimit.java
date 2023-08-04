@@ -23,7 +23,6 @@ import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
@@ -57,7 +56,7 @@ public class TestProxyApiDpWithOperationRateLimit extends TestBase {
     }
 
     @BeforeClass
-    public void setup_ProxyApiDpWithOperationRateLimit() throws IOException, TokenRetrievalException {
+    public void setup_ProxyApiDpWithOperationRateLimit() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     }
 
@@ -165,8 +164,8 @@ public class TestProxyApiDpWithOperationRateLimit extends TestBase {
     public void setKeyData_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) {
         for (ProxyDeployment proxyDeployment : dp.getProxyDeployments()) {
             KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                    dp.getProxyAPI().getId(), proxyDeployment.getEnvironment());
-            if (proxyDeployment.getEnvironment().equals(dp.getEnvironments().get(0).getName())) {
+                    dp.getProxyAPI().getId(), ComponentUtils.getKeyType(proxyDeployment.getEnvironment(), dp.getEnvironments()));
+            if (proxyDeployment.getEnvironment().getId().equals(dp.getEnvironments().get(0).getId())) {
                 dp.setDevKeyData(keyData);
             } else {
                 dp.setProdKeyData(keyData);

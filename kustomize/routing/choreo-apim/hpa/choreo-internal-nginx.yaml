@@ -1,5 +1,5 @@
 # --------------------------------------------------------------------
-# Copyright (c) 2023, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+# Copyright (c) 2023, WSO2 LLC. (http://wso2.com) All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,17 +14,29 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   labels:
-    choreo.component: internal-nginx
-  name: choreo-internal-nginx-hpa
+    choreo.component: internal-nginx-v2
+  name: choreo-internal-nginx-v2-hpa
 spec:
   maxReplicas: 3
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: choreo-internal-nginx-deployment
-  targetCPUUtilizationPercentage: 75
+    name: choreo-internal-nginx-deployment-v2
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 75
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 75

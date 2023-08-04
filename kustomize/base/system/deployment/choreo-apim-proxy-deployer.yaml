@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    reloader.stakater.com/auto: "true"
     checkov.io/skip2: CKV_K8S_38=Required by linkerD
   labels:
     choreo.component: choreo-apim-proxy-deployer

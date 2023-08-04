@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    reloader.stakater.com/auto: "true"
     checkov.io/skip4: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
     checkov.io/skip6: CKV_K8S_38=Service account token is required when using Linkerd
   labels:

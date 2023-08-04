@@ -147,7 +147,7 @@ public class ChoreoComponent {
 
     public ChoreoComponent() {
         choreoEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_ENDPOINT);
-        choreoCpProjectsEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_CP_PROJECTS_ENDPOINT);
+        choreoCpProjectsEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         configCPGatewayEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT);
     }
 
@@ -344,7 +344,7 @@ public class ChoreoComponent {
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(requestBodyMap);
 
-        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat("/graphql"));
+        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX));
 
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
 
@@ -396,7 +396,7 @@ public class ChoreoComponent {
                 requestParams);
         String requestBody = MessageUtils.generateGQLPayload(graphQuery);
 
-        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat("/graphql"));
+        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX));
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         StringEntity requestEntity = new StringEntity(
                 requestBody,
@@ -441,7 +441,7 @@ public class ChoreoComponent {
                 requestParams);
         String requestBody = MessageUtils.generateGQLPayload(graphQuery);
 
-        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat("/graphql"));
+        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX));
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         StringEntity requestEntity = new StringEntity(
                 requestBody,
@@ -524,7 +524,7 @@ public class ChoreoComponent {
             ++numberOfTries;
 
             try {
-                JsonObject response = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
+                JsonObject response = GraphQL.callGraphQL(accessToken, gqlQuery);
 
                 String status = response.getAsJsonObject()
                         .getAsJsonObject("data").getAsJsonObject("componentDeployment")
@@ -578,7 +578,7 @@ public class ChoreoComponent {
             ++numberOfTries;
 
             try {
-                JsonObject response = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
+                JsonObject response = GraphQL.callGraphQL(accessToken, gqlQuery);
 
                 JsonArray deploymentJsonArray = response.getAsJsonObject()
                         .getAsJsonObject("data").getAsJsonArray("deploymentStatusByVersion");
@@ -667,7 +667,7 @@ public class ChoreoComponent {
                 "}";
 
         try {
-            JsonObject response = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
+            JsonObject response = GraphQL.callGraphQL(accessToken, gqlQuery);
 
             JsonArray deploymentJsonArray = response.getAsJsonObject()
                     .getAsJsonObject("data").getAsJsonArray("deployments");
@@ -1278,7 +1278,7 @@ public class ChoreoComponent {
 
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
-        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat("/graphql"));
+        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX));
 
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
 
@@ -1309,7 +1309,7 @@ public class ChoreoComponent {
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
 
-        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat("/graphql"));
+        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX));
 
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
 

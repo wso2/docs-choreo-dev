@@ -29,8 +29,8 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.endpoints.Endpoint;
 import com.wso2.choreo.integration.models.environments.Environment;
-import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -43,8 +43,8 @@ import java.util.Map;
 
 public class TestIntegrationMISecretAndCert extends TestNGCitrusSpringSupport {
 
-    public static final String MI_REST_API = "miRestApi";
-    public static final String API_INVOCATION_REQUEST_URI = "/restapiwithsecret/getsecret";
+    public static final String MI_API_SERVICE = Constant.AppType.MI_API_SERVICE.value;
+    public static final String API_INVOCATION_REQUEST_URI = "/getsecret";
     private static String accessToken;
     private String orgHandle;
     private String orgId;
@@ -54,7 +54,7 @@ public class TestIntegrationMISecretAndCert extends TestNGCitrusSpringSupport {
     private static String componentHandler;
     private String githubOrg;
     private List<Environment> environments;
-
+    private List<Endpoint> endpoints;
     private static ChoreoComponent testComponent;
 
     @Autowired
@@ -84,7 +84,7 @@ public class TestIntegrationMISecretAndCert extends TestNGCitrusSpringSupport {
     public void createComponent() throws Exception {
 
         // Creating component
-        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String componentName = "MISecret".concat(String.valueOf(new Date().getTime()));
         final String repoName = "ipaas-mi-secret-and-cert-test";
         final String repoBranch = "main";
         String srcGitHubURL = Constant.GITHUB_URL.concat(githubOrg).concat("/").concat(repoName);
@@ -93,7 +93,7 @@ public class TestIntegrationMISecretAndCert extends TestNGCitrusSpringSupport {
                 .orgId(Integer.parseInt(orgId))
                 .orgHandler(orgHandle)
                 .displayName(componentName)
-                .componentType(MI_REST_API)
+                .componentType(MI_API_SERVICE)
                 .projectId(projectId)
                 .srcGitRepoUrl(srcGitHubURL)
                 .repositorySubPath("")
@@ -106,14 +106,51 @@ public class TestIntegrationMISecretAndCert extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void componentRetrieval() throws Exception {
 
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder()
-                .projectId(projectId)
-                .componentHandler(componentHandler)
-                .build();
-        testComponent = GraphQL.retrieveComponent(this, choreoTestClient, accessToken, graphqlDTO);
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
+        testComponent = GraphQL.retrieveComponent(this, choreoProjectsTestClient, accessToken,
+                graphqlDTO);
     }
 
-    @Test(dependsOnMethods = { "componentRetrieval" })
+    @Test(dependsOnMethods = {"componentRetrieval"})
+    @CitrusTest
+    public void generateEndpointsDev() throws Exception {
+        Map<String,String> argMap = new HashMap<>();
+        argMap.put("componentId", testComponent.getId());
+        argMap.put("versionId", testComponent.getLatestApiVersion().getId());
+        argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+        argMap.put("commitHash", testComponent.getLatestCommitHash(testComponent.getCommitHistory(accessToken)));
+        GraphQL.generateEndpoints(this, choreoProjectsTestClient, accessToken, argMap);
+    }
+
+    @Test(dependsOnMethods = {"generateEndpointsDev"})
+    @CitrusTest
+    public void getEndpointsDev() throws Exception {
+        Map<String,String> argMap = new HashMap<>();
+        argMap.put("componentId", testComponent.getId());
+        argMap.put("versionId", testComponent.getLatestApiVersion().getId());
+        argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+        endpoints = GraphQL.getEndpoints(this, choreoProjectsTestClient, accessToken, argMap);
+        Assert.assertEquals(endpoints.size(), 1);
+    }
+
+    @Test(dependsOnMethods = {"getEndpointsDev"})
+    @CitrusTest
+    public void updateEndpointsDev() throws Exception {
+        Map<String,String> argMap = new HashMap<>();
+        argMap.put("componentId", testComponent.getId());
+        argMap.put("versionId", testComponent.getLatestApiVersion().getId());
+        argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+        final Endpoint endpoint = endpoints.get(0);
+        argMap.put("endpointId", endpoint.getId());
+        argMap.put("displayName", endpoint.getDisplayName());
+        argMap.put("apiContext", endpoint.getApiContext());
+        argMap.put("apiDefinitionPath", endpoint.getApiDefinitionPath());
+        argMap.put("visibility", Constant.EndpointVisibility.PUBLIC.value);
+        Endpoint updatedEndpoint = GraphQL.updateEndpoint(this, choreoProjectsTestClient, accessToken, argMap);
+        endpoints.set(0, updatedEndpoint);
+    }
+
+    @Test(dependsOnMethods = { "updateEndpointsDev" })
     @CitrusTest
     public void createSecret() throws Exception {
 
@@ -144,17 +181,11 @@ public class TestIntegrationMISecretAndCert extends TestNGCitrusSpringSupport {
         String devEnvIdToDeploy = testComponent.getLatestAppEnvId(Constant.DEV_ENVIRONMENT);
         String branch = testComponent.getRepository().getBranch();
 
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder()
-                .componentId(componentId)
-                .latestVersionId(latestVersionId)
-                .devEnvIdToDeploy(devEnvIdToDeploy)
-                .branch(branch)
-                .sha(latestCommitSha)
-                .shaDate("")
-                .build();
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).latestVersionId(latestVersionId)
+                .devEnvIdToDeploy(devEnvIdToDeploy).branch(branch).sha(latestCommitSha).shaDate("").build();
 
         // Deploy component
-        GraphQL.deployComponent(this, choreoTestClient, accessToken, graphqlDTO);
+        GraphQL.deployComponent(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 
     @Test(dependsOnMethods = { "componentDeployment" })
@@ -192,19 +223,29 @@ public class TestIntegrationMISecretAndCert extends TestNGCitrusSpringSupport {
         responseParams.put("sha", latestCommitSha);
         responseParams.put("versionId", versionId);
 
-        GraphQL.getComponentDeploymentStatus(this, choreoTestClient, accessToken, dto, responseParams);
+        GraphQL.getComponentDeploymentStatus(this, choreoProjectsTestClient, accessToken, dto, responseParams);
+    }
+
+    @Test(dependsOnMethods = {"componentDeploymentStatus"})
+    @CitrusTest
+    public void getEndpointsDevAfterDeploy() throws Exception {
+        Map<String,String> argMap = new HashMap<>();
+        argMap.put("componentId", testComponent.getId());
+        argMap.put("versionId", testComponent.getLatestApiVersion().getId());
+        argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+        endpoints = GraphQL.getEndpoints(this, choreoProjectsTestClient, accessToken, argMap);
+        Assert.assertEquals(endpoints.size(), 1);
     }
 
     @Test(dependsOnMethods = { "componentDeploymentStatus" })
     @CitrusTest
     public void invokeAPIDev() throws Exception {
 
-        final InvokeInformation invokeInformation = testComponent.getInvokeInformation(accessToken, MI_REST_API,
-                Constant.Environment.Development.name());
+        Endpoint endpoint = endpoints.get(0);
         environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, testComponent);
-        final String devApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId(),
+        final String devApiKey = testComponent.getAPIKeyForInvoke(accessToken, endpoint.getApimId(),
                         environments.get(0).getName()).replace("\"", "");
-        String invokeUrlDev = invokeInformation.getInvokeUrl();
+        String invokeUrlDev = endpoint.getPublicUrl();
         String res = "{\n" + "\"Info\": \"Integration with secrets\",\n" + "\"data\": [{\n" + "\"secret_key\": " +
                 "\"user_pass\",\n" + "\"secret_value\": \"user_pass_!@#$%\"\n" + "},\n" + "{\n" + "\"secret_key\": " +
                 "\"db_pass\",\n" + "\"secret_value\": \"db_pass_!@#$%\"\n" + "}\n" + "]\n" + "}";
@@ -220,10 +261,10 @@ public class TestIntegrationMISecretAndCert extends TestNGCitrusSpringSupport {
         GraphqlDTO graphqlDTO = GraphqlDTO.builder()
                 .componentId(componentId)
                 .orgHandler(orgHandle)
-                .componentType(MI_REST_API)
+                .componentType(MI_API_SERVICE)
                 .releaseId(devReleaseId)
                 .build();
-        GraphQL.stopDeployment(this, choreoTestClient, accessToken, graphqlDTO);
+        GraphQL.stopDeployment(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 
 }

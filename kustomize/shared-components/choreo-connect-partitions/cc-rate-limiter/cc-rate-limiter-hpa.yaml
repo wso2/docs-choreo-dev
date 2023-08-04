@@ -14,19 +14,29 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  annotations:
-    autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
   labels:
     choreo.component: choreo-connect-rate-limiter
   name: choreo-connect-rate-limiter
 spec:
-  maxReplicas: 10
+  maxReplicas: 5
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
     name: choreo-connect-rate-limiter
-  targetCPUUtilizationPercentage: 75
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 75
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 75

@@ -47,25 +47,25 @@ export class OrganizationComponent {
 
   static inviteMembers(email: string, ...roles: string[]) {
     cy.wait(300);
-    cy.get('[data-cyid="invite-members"]').click();
+    cy.get('[data-cyid="invite-members-button"]').click();
     cy.wait(300);
-    cy.get('[data-cyid="chip-email-addresses"] div div input')
-      .should("be.visible")
-      .type(email);
-    cy.get('[data-cyid="chip-email-addresses"] div div input')
-      .should("be.visible")
-      .type("{enter}");
+    cy.get('[data-cyid="tag-email-addresses"]').within(() => {
+      cy.get('input[type="text"]')
+        .should("be.visible")
+        .type(email)
+        .type("{enter}");
+    });
     cy.get('[data-cyid="select-roles"]').click();
     this.addRoles(roles);
     cy.get("body").type("{esc}");
-    cy.get('[data-cyid="btn-invite"]').click({ force: true });
-    cy.get('[data-cyid="btn-invite"]').should("not.exist");
+    cy.get('[data-cyid="btn-invite-button"]').click({ force: true });
+    cy.get('[data-cyid="btn-invite-button"]').should("not.exist");
     cy.log("Invitation sent successfully");
   }
 
   static addMappings(groupName: string, roles: string[]) {
     cy.wait(300);
-    cy.get('[data-cyid="add-mappings"]').click();
+    cy.get('[data-cyid="add-mappings-button"]').click();
     cy.get('[data-cyid="text-field-add-group-name"]')
       .should("be.visible")
       .type(groupName);
@@ -74,15 +74,15 @@ export class OrganizationComponent {
     cy.wait(3000);
     this.addRoles(roles);
     cy.get("body").type("{esc}");
-    cy.get('[data-cyid="btn-add-mapping"]').click({ force: true });
-    cy.get('[data-cyid="btn-add-mapping"]').should("not.exist");
+    cy.get('[data-cyid="add-mapping-button"]').click({ force: true });
+    cy.get('[data-cyid="add-mapping-button"]').should("not.exist");
     cy.log("Group role mapping added successfully");
   }
 
   static deleteMember(email: string) {
     cy.contains("td", email).trigger("mouseover");
     cy.get("tr>td>div>button").click({ force: true });
-    cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
+    cy.get('[data-cyid="confirmation-dialog-primary-action-button"]')
       .contains("Delete")
       .click();
     cy.contains("td", email).should("not.exist");
@@ -97,9 +97,11 @@ export class OrganizationComponent {
       authorization: `Bearer ${token}`,
     };
     const deletePendingInvitation = `${Cypress.env(
-      "appSvcURL"
-    )}/v2/orgs/${handle}/invitations?email=${email}`;
-    const getUsers = `${Cypress.env("appSvcURL")}/v2/orgs/${handle}/users`;
+      "newAppSvcURL"
+    )}/users-mgt/1.0.0/orgs/${handle}/invitations?email=${email}`;
+    const getUsers = `${Cypress.env(
+      "newAppSvcURL"
+    )}/users-mgt/1.0.0/orgs/${handle}/users`;
 
     Utils.sendGetRequest(getUsers, headers).then((res) => {
       const list = res.body.list as [];
@@ -109,8 +111,8 @@ export class OrganizationComponent {
       if (user) {
         const { idpId } = user;
         const deleteUserRequest = `${Cypress.env(
-          "appSvcURL"
-        )}/v2/orgs/${handle}/users/${idpId}`;
+          "newAppSvcURL"
+        )}/users-mgt/1.0.0/orgs/${handle}/users/${idpId}`;
 
         Utils.sendDeleteRequest(deleteUserRequest, headers).then((res) => {
           if (res.status === OK) {
@@ -155,18 +157,18 @@ export class OrganizationComponent {
     cy.get('[data-cyid="text-field-role-name"]').type(roleName);
     cy.get('[data-cyid="text-field-role-description"]').type(roleDescription);
     cy.get('[data-cyid="chip-role-tag"]').type(roleTag + "{enter}");
-    cy.get('[data-cyid="btn-role-create"]').click({ force: true });
+    cy.get('[data-cyid="btn-role-create-button"]').click({ force: true });
 
     cy.get(
-      '[data-cyid="checkbox-role-permission-APIM-PUBLISHER"]>span>input'
+      '[data-cyid="role-permission-apim-publisher-check-box"]>span>input'
     ).check();
-    cy.get('[data-cyid="checkbox-role-permission-APIM-SUBSCRIBER"]>span>input')
+    cy.get('[data-cyid="role-permission-apim-subscriber-check-box"]>span>input')
       .focus()
       .check();
 
     cy.log("Created Roles APIM-PUBLISHER and APIM-SUBSCRIBER");
-    cy.get('[data-cyid="btn-create"]').click();
-    cy.get('[data-cyid="btn-create"]').should("not.exist");
+    cy.get('[data-cyid="btn-create-button"]').click();
+    cy.get('[data-cyid="btn-create-button"]').should("not.exist");
   }
 
   static addMembertoRole(roleName: string) {
@@ -177,17 +179,11 @@ export class OrganizationComponent {
     cy.get('[data-cyid="select_members_to_role"]').click();
 
     const userData = Cypress.env("userData");
-    let displayName = userData["displayName"];
-
-    if (displayName.includes("@")) {
-      displayName = displayName.split("@")[0];
-    }
-
-    cy.get(`[data-cyid^="${displayName}"]`).click({ force: true });
-
+    let email = userData["userEmail"];
+    cy.get(`[data-cyid$="(${email})"]`).click({ force: true });
     cy.get("body").type("{esc}");
-    cy.get('[data-cyid="btn-add-member"]').click();
-    cy.get('[data-cyid="btn-add-member"]').should("not.exist");
+    cy.get('[data-cyid="btn-add-member-button"]').click();
+    cy.get('[data-cyid="btn-add-member-button"]').should("not.exist");
     cy.contains("td", userData["userEmail"]).should("be.visible");
     cy.log("Member added to the role successfully");
   }
@@ -213,7 +209,7 @@ export class OrganizationComponent {
     cy.contains("td", roleName).trigger("mouseover");
     cy.get('[data-cyid="btn-delete-role"]').click();
     cy.log("Deleting the created Role");
-    cy.get('[data-cyid="btn-confirmation-dialog-blue"]').click();
+    cy.get('[data-cyid="confirmation-dialog-primary-action-button"]').click();
     cy.contains("td", roleName).should("not.exist");
     cy.log("Role deleted successfully"!);
   }
@@ -226,9 +222,9 @@ export class OrganizationComponent {
 
   private static deleteSelectedMapping(groupName: string) {
     cy.contains("td", groupName).trigger("mouseover");
-    cy.get('[data-cyid="btn-delete-mapping"]').click();
+    cy.get('[data-cyid="btn-delete-mapping-button"]').click();
     cy.log("Deleting the created Mapping");
-    cy.get('[data-cyid="btn-confirmation-dialog-red"]').click();
+    cy.get('[data-cyid="confirmation-dialog-destructive-action-button"]').click();
     cy.contains("td", groupName).should("not.exist");
     cy.log("Group role mapping deleted successfully"!);
   }
@@ -246,14 +242,14 @@ export class OrganizationComponent {
 
   private static updateSelectedMapping(groupName: string, roles: string[]) {
     cy.contains("td", groupName).trigger("mouseover");
-    cy.get('[data-cyid="btn-edit-mapping"]').click();
+    cy.get('[data-cyid="btn-edit-mapping-button"]').click();
     cy.get('[data-cyid="text-field-update-group-name"]').should("be.visible");
     cy.get('[data-cyid="select-roles"]').should("be.visible").click();
     cy.wait(3000);
     this.addRoles(roles);
     cy.get("body").type("{esc}");
-    cy.get('[data-cyid="btn-update-mapping"]').click({ force: true });
-    cy.get('[data-cyid="btn-update-mapping"]').should("not.exist");
+    cy.get('[data-cyid="update-mapping-button"]').click({ force: true });
+    cy.get('[data-cyid="update-mapping-button"]').should("not.exist");
     cy.log("Group role mapping updated successfully");
   }
 }

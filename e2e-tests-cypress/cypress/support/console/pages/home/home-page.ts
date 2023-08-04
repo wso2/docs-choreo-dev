@@ -29,16 +29,12 @@ export class ChoreoHomePage {
   }
 
   static navigateToComponents() {
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.get('[data-cyid="listing"]')
-        .realHover({ position: "left" })
-        .wait(MENU_RENDERING_TIME)
-        .click()
-        .wait(MENU_RENDERING_TIME);
-      Utils.moveMouseAwayFromLeftMenu();
-    } else {
-      cy.get('[data-testid="main-left-nav-item-Components"]').click();
-    }
+    cy.get('[data-cyid="listing"]')
+      .realHover({ position: "left" })
+      .wait(MENU_RENDERING_TIME)
+      .click()
+      .wait(MENU_RENDERING_TIME);
+    Utils.moveMouseAwayFromLeftMenu();
   }
 
   static navigateToComponentUsageInsights() {
@@ -72,19 +68,10 @@ export class ChoreoHomePage {
   }
 
   static navigateToSettings() {
-    if (Utils.isUnifiedMenuEnabled()) {
-      cy.get("#backdrop-loader").should("not.exist");
-      this.navigateToHome();
-      cy.get("#backdrop-loader").should("not.exist");
-      cy.get('[data-cyid="settings"]').should("be.visible").click();
-    } else {
-      cy.get("#backdrop-loader").should("not.exist");
-      cy.get('[data-testid="header-user-profile-menu"]').click();
-      cy.get('[data-testid="header-user-profile-item-settings"]')
-        .should("be.visible")
-        .contains("Settings")
-        .click();
-    }
+    cy.get("#backdrop-loader").should("not.exist");
+    this.navigateToHome();
+    cy.get("#backdrop-loader").should("not.exist");
+    cy.get('[data-cyid="settings"]').should("be.visible").click();
   }
 
   static switchOrganization() {
