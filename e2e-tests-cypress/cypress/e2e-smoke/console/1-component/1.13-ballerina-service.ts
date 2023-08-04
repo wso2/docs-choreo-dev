@@ -111,9 +111,9 @@ describe("Verify Ballerina service functionality", () => {
       "get",
       "operations-default-getBooks"
     ).then((res) => {
-      cy.fixture('books').then(books => {
-        expect(books[1].title).to.eq('Dead Men')
-      })
+      cy.fixture("books").then((books) => {
+        expect(books[1].title).to.eq("Dead Men");
+      });
       expect(res.statusCode).to.be.eq("200");
     });
   });
@@ -132,9 +132,9 @@ describe("Verify Ballerina service functionality", () => {
       "get",
       "operations-default-getBooks"
     ).then((res) => {
-      cy.fixture('books').then(books => {
-        expect(books[2].title).to.eq('The Bucther')
-      })
+      cy.fixture("books").then((books) => {
+        expect(books[2].title).to.eq("The Bucther");
+      });
       expect(res.statusCode).to.be.eq("200");
     });
   });
@@ -163,9 +163,9 @@ describe("Verify Ballerina service functionality", () => {
       "get",
       "operations-default-getBooks"
     ).then((res) => {
-      cy.fixture('books').then(books => {
-        expect(books[1].title).to.eq('Dead Men')
-      })
+      cy.fixture("books").then((books) => {
+        expect(books[1].title).to.eq("Dead Men");
+      });
       expect(res.statusCode).to.be.eq("200");
     });
   });
@@ -184,9 +184,9 @@ describe("Verify Ballerina service functionality", () => {
       "get",
       "operations-default-getBooks"
     ).then((res) => {
-      cy.fixture('books').then(books => {
-        expect(books[2].title).to.eq('The Bucther')
-      })
+      cy.fixture("books").then((books) => {
+        expect(books[2].title).to.eq("The Bucther");
+      });
       expect(res.statusCode).to.be.eq("200");
     });
   });
