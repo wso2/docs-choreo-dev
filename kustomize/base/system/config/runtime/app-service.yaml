@@ -33,7 +33,8 @@ upstream:
   api-manager:
     clientKey: ${API_MANAGER_CLIENT_KEY}
     clientSecret: ${API_MANAGER_CLIENT_SECRET}
-    serviceUrl: ${API_MANAGER_SERVICE_URL}  
+    serviceUrl: ${API_MANAGER_SERVICE_URL}
+    exchangeTokenClientKey: ${API_MANAGER_EXCHANGE_TOKEN_CLIENT_KEY}
   centralOrgRegistry:
     url: ${CENTRAL_ORG_REGISTRY_URL}
     enabled: ${CENTRAL_ORG_REGISTRY_ENABLE}
