@@ -151,7 +151,7 @@ export class OrganizationComponent {
     roleDescription: string,
     roleTag: string
   ) {
-    cy.get('[data-cyid="btn-create-role-button"]').click();
+    cy.get('[data-cyid="create-role-button"]').click();
     cy.contains("Create Role").should("be.visible");
     cy.log("Creating a Role");
     cy.get('[data-cyid="text-field-role-name"]').type(roleName);
@@ -189,7 +189,7 @@ export class OrganizationComponent {
   }
 
   static deleteCreatedRole(roleName: string) {
-    cy.get('[data-cyid="btn-create-role-button"]').should("be.visible");
+    cy.get('[data-cyid="create-role-button"]').should("be.visible");
     cy.get('[data-cyid="search-app"]').clear().type(roleName);
     cy.contains("td", roleName).should("be.visible");
     this.deleteSelectedRole(roleName);
