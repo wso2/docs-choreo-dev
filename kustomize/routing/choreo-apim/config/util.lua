@@ -272,4 +272,71 @@ function util.getValueObject(key, valueArray)
     return cjson.decode(valueArray[1])
 end
 
+-- Return weather the request should be forwarded to cilium or not
+function util.ciliumEnabled(organizationId)
+    local forwardToCilium = false
+
+    local ciliumStatusKey = "cilium_migrate:" .. organizationId
+    local cacheModule = require "util.cache"
+    local cache = cacheModule.getCache()
+    local cacheValue = cache:get(ciliumStatusKey)
+
+    -- check local cache
+    if cacheValue ~= nil then
+        if cacheValue == "true" then
+            return true
+        else
+            return false
+        end
+    end
+
+    -- check redis cache
+    ngx.log(ngx.DEBUG, "cache miss hit for key: ", ciliumStatusKey)
+
+    local redis = require "resty.redis"
+    local red = redis:new()
+    if red == nil then
+        ngx.log(ngx.ERR, "failed to create redis client")
+        return forwardToCilium
+    end
+
+    red:set_timeout(1000) -- 1 second
+    ngx.log(ngx.DEBUG, "connecting to Redis database..")
+    local ok, err = red:connect(ngx.var.redis_host, ngx.var.redis_port,
+        { ssl = ngx.var.redis_ssl, ssl_verify = ngx.var.redis_ssl_verify })
+    if not ok then
+        ngx.log(ngx.ERR, "failed to connect to redis: ", err)
+        return forwardToCilium
+    end
+    local res, err = red:auth(ngx.var.redis_password)
+    if not res then
+        ngx.log(ngx.ERR, "failed to authenticate redis server: ", err)
+        return forwardToCilium
+    end
+
+    red:select(ngx.var.redis_database)
+
+    local redisResponse, readErr = red:mget(unpack(ciliumStatusKey))
+    if readErr then
+        ngx.log(ngx.ERR, "failed to retrieve cilium status for organization: ", organizationId, " from redis ", readErr)
+        return forwardToCilium
+    end
+
+    if redisResponse and redisResponse[#redisResponse] == "true" then
+        forwardToCilium = true
+    end
+    cache:set(ciliumStatusKey, forwardToCilium, 300)
+
+    local ok, err = red:set_keepalive(100000, 100)
+    if not ok then
+        ngx.log(ngx.ERR, "failed to set keepalive: ", err)
+    end
+
+    if forwardToCilium then
+        ngx.log(ngx.DEBUG, "forwarding organization: ", organizationId, " to cilium")
+    end
+
+    return forwardToCilium
+end
+
 return util
