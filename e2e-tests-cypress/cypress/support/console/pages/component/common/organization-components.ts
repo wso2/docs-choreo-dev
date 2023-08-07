@@ -26,7 +26,8 @@ export class OrganizationComponent {
   }
 
   static navigateToRoleMapping() {
-    cy.get('[data-cyid="nav-link-role-mappings"]').click({ force: true });
+    cy.get('[role="progressbar"]').should("not.exist");
+    cy.get('[data-cyid="nav-link-role-mappings"]').click();
   }
 
   static verifyEmailIsNotDisplayed(email: string) {
@@ -215,16 +216,29 @@ export class OrganizationComponent {
   }
 
   static deleteCreatedMapping(groupName: string) {
-    cy.wait(2000);
+    cy.get('[role="progressbar"]').should("not.exist");
     cy.contains("td", groupName).should("be.visible");
     this.deleteSelectedMapping(groupName);
+  }
+
+  static deleteCreatedMappingIfExists(groupName: string) {
+    cy.get('[role="progressbar"]').should("not.exist");
+    cy.get('[data-cyid="search-app"]').clear().type(groupName);
+    cy.get("td").then(($group) => {
+      if (!$group.text().includes("No records to display")) {
+        cy.contains("td", groupName).should("be.visible");
+        this.deleteSelectedMapping(groupName);
+      }
+    });
   }
 
   private static deleteSelectedMapping(groupName: string) {
     cy.contains("td", groupName).trigger("mouseover");
     cy.get('[data-cyid="btn-delete-mapping-button"]').click();
     cy.log("Deleting the created Mapping");
-    cy.get('[data-cyid="confirmation-dialog-destructive-action-button"]').click();
+    cy.get(
+      '[data-cyid="confirmation-dialog-destructive-action-button"]'
+    ).click();
     cy.contains("td", groupName).should("not.exist");
     cy.log("Group role mapping deleted successfully"!);
   }
