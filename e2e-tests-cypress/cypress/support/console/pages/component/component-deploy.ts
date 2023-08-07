@@ -741,6 +741,7 @@ export class ComponentDeployPage {
   static promoteManualTriggerWithConfig(url: string) {
     cyGet('[data-cyid="btn-promote-button"]').should("be.enabled");
     cyGet('[data-cyid="btn-promote-button"]').click();
+    cyGet('[data-cyid="btn-next-button"]').should("be.visible").click();
     cyGet('[data-cyid="invke_url"]>input').type(url);
     cyGet('[data-cyid="btn-submit-configform"]').click();
     cyGet('[data-cyid="run-once-button"]', VERY_LONG_TIME)
