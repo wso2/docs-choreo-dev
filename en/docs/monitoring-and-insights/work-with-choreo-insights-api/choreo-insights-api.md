@@ -58,7 +58,7 @@ The data filter.
 <td valign="top">[<a href="#application">Application</a>]</td>
 <td>
 
-Fetches all the Applications with the given combination of tenant ID, environment ID, and organization ID. Optionally, you
+Fetches all the applications with the given combination of tenant ID, environment ID, and organization ID. Optionally, you
 can configure the <code>applicationFilter</code> parameter to further filter the Applications by a specific application filter.
 
 </td>
