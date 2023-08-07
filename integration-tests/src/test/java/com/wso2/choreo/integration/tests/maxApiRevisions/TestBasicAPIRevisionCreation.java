@@ -16,15 +16,20 @@ import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.graphql.ApiRevisionDTO;
+import com.wso2.choreo.integration.models.invokeinfor.ApiRevision;
 import com.wso2.choreo.integration.models.proxyapi.DeploySettings;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
 import com.wso2.choreo.integration.models.response.ProxyResponse;
+import com.wso2.choreo.integration.models.revision.RevisionDeploymentRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -43,10 +48,8 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private ProxyAPI proxyAPI;
     private String apiId;
-    private String versionId;
-    private String newRevisionId;
-    private String oldRevisionId;
-    private String orgUuid;
+    ApiRevisionDTO apiRevisionDTO;
+
     Environment[] environments;
     Environment devEnv;
     ChoreoComponent choreoComponent;
@@ -62,14 +65,14 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void setup_TestBasicAPIRevisionCreation() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+        String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
 
         ChoreoProject testProject = GraphQL.createProject(accessToken);
         String projectId = testProject.getId();
 
         String firstAPIName = Constant.DEFAULT_API_NAME.concat(String.valueOf(new Date().getTime()));
         String firstContext = APICreator.generateContext(firstAPIName);
-        proxyAPI = APICreator.createAPI(firstAPIName, firstContext, accessToken).getEntity();
+        proxyAPI = APICreator.createAPI(firstAPIName, firstContext, accessToken).getEntity();        
         Assert.assertNotNull(proxyAPI.getId());
         this.apiId = proxyAPI.getId();
 
@@ -96,28 +99,23 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
         ProxyResponse<Status> res = APICreator.deployProxyAPI(choreoComponent.getId(), this.apiId, buildId,
                 devEnv.getId(), accessToken);
         Assert.assertEquals(res.getResponse().getStatusCode(), HttpStatus.OK.value());
+        apiRevisionDTO = ApiRevisionDTO.builder().proxyId(proxyAPI.getId()).apiId(proxyAPI.getId()).buildId(buildId).orgUuid(orgUuid).build();
     }
 
     @Test(dependsOnMethods = {"setup_TestBasicAPIRevisionCreation"})
     @CitrusTest
     public void createNewRevision_TestBasicAPIRevisionCreation() throws Exception {
-
-        Map<String, Object> responseParams = new HashMap<>();
-        responseParams.put("API_ID", proxyAPI.getId());
-
-        String expectedResponse = ComponentUtils.generateStringPayloadFromTemplate(
+        apiRevisionDTO.setDescription("new revision");
+        String expectedResponse = ObjectMapperUtil.mapObjectToString(
                 "templates/maxApiRevisions/create_new_revision_success.mustache",
-                responseParams);
-
+                apiRevisionDTO);
         String path = Constant.APIS_ENDPOINT.concat("/").concat(proxyAPI.getId())
                 .concat("/").concat("revisions")
                 .concat("?").concat(Constant.ORGANIZATION_ID).concat("=")
-                .concat(this.orgUuid);
-        HashMap<String, String> requestBodyMap = new HashMap<>() {{
-            put("description", "new revision");
-        }};
-        ObjectMapper objectMapper = new ObjectMapper();
-        String requestBody = objectMapper.writeValueAsString(requestBodyMap);
+                .concat(apiRevisionDTO.getOrgUuid());
+        String requestBody = ObjectMapperUtil.mapObjectToString(
+                "templates/maxApiRevisions/create_new_revision_payload.mustache",
+                apiRevisionDTO);
 
         $(http()
                 .client(choreoTestClientForSTS)
@@ -142,25 +140,22 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
                 .extract((message, context) -> {
                     JsonObject component = new JsonParser().parse((String) message.getPayload())
                             .getAsJsonObject();
-                    this.newRevisionId = component.get("id").getAsString();
+                    String newRevisionId = component.get("id").getAsString();
+                    apiRevisionDTO.setNewRevisionId(newRevisionId);
                 }));
     }
 
     @Test(dependsOnMethods = {"createNewRevision_TestBasicAPIRevisionCreation"})
     @CitrusTest
     public void verifyCreateNewRevision_TestBasicAPIRevisionCreation() throws Exception {
-        Map<String, Object> responseParams = new HashMap<>();
-        responseParams.put("REVISION_COUNT", 2);
-
-        String expectedResponse = ComponentUtils.generateStringPayloadFromTemplate(
+        apiRevisionDTO.setRevisionCount(2);
+        String expectedResponse = ObjectMapperUtil.mapObjectToString(
                 "templates/maxApiRevisions/get_revisions_success.mustache",
-                responseParams);
-
+                apiRevisionDTO);
         String path = Constant.APIS_ENDPOINT.concat("/").concat(proxyAPI.getId())
                 .concat("/").concat("revisions")
                 .concat("?").concat(Constant.ORGANIZATION_ID).concat("=")
-                .concat(this.orgUuid);
-
+                .concat(apiRevisionDTO.getOrgUuid());
         $(http()
                 .client(choreoTestClientForSTS)
                 .send()
@@ -168,7 +163,6 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-
         $(http()
                 .client(choreoTestClientForSTS)
                 .receive()
@@ -182,23 +176,28 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
                     JsonObject component = new JsonParser().parse((String) message.getPayload())
                             .getAsJsonObject();
                     JsonArray list = component.get("list").getAsJsonArray();
-
                     JsonObject deployedRevisionObject  = list.get(0).getAsJsonObject();
                     JsonArray deploymentInfoArray = deployedRevisionObject.get("deploymentInfo").getAsJsonArray();
                     JsonObject apiInfo = deployedRevisionObject.get("apiInfo").getAsJsonObject();
-                    versionId = apiInfo.get("id").getAsString();
+                    String versionId = apiInfo.get("id").getAsString();
+                    apiRevisionDTO.setVersionId(versionId);
                     if (deploymentInfoArray.size() != 0) {
                         JsonObject deploymentInfo = deploymentInfoArray.get(0).getAsJsonObject();
-                        oldRevisionId = deploymentInfo.get("revisionUuid").getAsString();
+                        String oldRevisionId = deploymentInfo.get("revisionUuid").getAsString();
+                        apiRevisionDTO.setOldRevisionId(oldRevisionId);
                     }}));
     }
 
     @Test(dependsOnMethods = {"verifyCreateNewRevision_TestBasicAPIRevisionCreation"})
     @CitrusTest
     public void deployNewRevision_TestBasicAPIRevisionCreation() throws Exception {
-        String buildId = proxyAPIBuild.getBuilds()[0].getBuildId();
-        DeploySettings res = APICreator.deployRevision(choreoComponent.getId(), versionId, devEnv.getId(), orgUuid,
-                newRevisionId, buildId, apiId, accessToken);
+        DeploySettings res = APICreator.deployRevision(choreoComponent.getId(), apiRevisionDTO.getVersionId(),
+                devEnv.getId(), 
+                apiRevisionDTO.getOrgUuid(),
+                apiRevisionDTO.getNewRevisionId(), 
+                apiRevisionDTO.getBuildId(), 
+                apiRevisionDTO.getApiId(), 
+                accessToken);
         Assert.assertEquals(res.getMessage(), "Settings deployment started");
         HttpClient choreoEPClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
         ProxyDeployer.getProxyAPIDeploymentStatus(this, choreoEPClient, accessToken, choreoComponent.getId(),
@@ -208,17 +207,15 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"deployNewRevision_TestBasicAPIRevisionCreation"})
     @CitrusTest
     public void verifyDeployNewRevision_TestBasicAPIRevisionCreation() throws Exception {
-        Map<String, Object> responseParams = new HashMap<>();
-        responseParams.put("REVISION_COUNT", 3);
-
-        String expectedResponse = ComponentUtils.generateStringPayloadFromTemplate(
+        apiRevisionDTO.setRevisionCount(3);
+        String expectedResponse = ObjectMapperUtil.mapObjectToString(
                 "templates/maxApiRevisions/get_revisions_success.mustache",
-                responseParams);
+                apiRevisionDTO);
 
         String path = Constant.APIS_ENDPOINT.concat("/").concat(proxyAPI.getId())
                 .concat("/").concat("revisions")
                 .concat("?").concat(Constant.ORGANIZATION_ID).concat("=")
-                .concat(this.orgUuid);
+                .concat(apiRevisionDTO.getOrgUuid());
 
         $(http()
                 .client(choreoTestClientForSTS)
@@ -250,10 +247,8 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"verifyDeployNewRevision_TestBasicAPIRevisionCreation"})
     @CitrusTest
-    public void deployOldRevision_TestBasicAPIRevisionCreation() throws Exception {
-        String buildId = proxyAPIBuild.getBuilds()[0].getBuildId();
-        DeploySettings res = APICreator.deployRevision(choreoComponent.getId(), versionId, devEnv.getId(), orgUuid,
-                oldRevisionId, buildId, apiId, accessToken);
+    public void deployOldRevision_TestBasicAPIRevisionCreation() throws Exception { 
+        DeploySettings res  = RevisionDeploymentRequest.deployRevision(choreoComponent, apiRevisionDTO, devEnv.getId(), accessToken);
         Assert.assertEquals(res.getMessage(), "Settings deployment started");
         HttpClient choreoEPClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
         ProxyDeployer.getProxyAPIDeploymentStatus(this, choreoEPClient, accessToken, choreoComponent.getId(),
@@ -263,17 +258,15 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"deployOldRevision_TestBasicAPIRevisionCreation"})
     @CitrusTest
     public void verifyRedeployOldRevision_TestBasicAPIRevisionCreation() throws Exception {
-        Map<String, Object> responseParams = new HashMap<>();
-        responseParams.put("REVISION_COUNT", 4);
-
-        String expectedResponse = ComponentUtils.generateStringPayloadFromTemplate(
+        apiRevisionDTO.setRevisionCount(4);
+        String expectedResponse = ObjectMapperUtil.mapObjectToString(
                 "templates/maxApiRevisions/get_revisions_success.mustache",
-                responseParams);
+                apiRevisionDTO);
 
         String path = Constant.APIS_ENDPOINT.concat("/").concat(proxyAPI.getId())
                 .concat("/").concat("revisions")
                 .concat("?").concat(Constant.ORGANIZATION_ID).concat("=")
-                .concat(this.orgUuid);
+                .concat(apiRevisionDTO.getOrgUuid());
 
         $(http()
                 .client(choreoTestClientForSTS)
