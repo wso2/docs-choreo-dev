@@ -80,12 +80,9 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
 
         Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/rest-api").branch("main").subPath("").build();
         GraphqlDTO dto = ComponentUtils.createRestApiComponentRequest(componentName, project, repo);
-
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
-
         environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
-
 
         //Deploying component
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
@@ -103,10 +100,8 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void publishConnector_ConnectorBuilderIT() throws Exception {
         connector = Connector.builder().version(Constant.TEST_CONNECTOR_VERSION)
-        .visibility(Constant.TEST_CONNECTOR_VISIBILITY).apiId(revisionId).orgUuid(orgUUID)
-        .orgHandler(orgHandle)
-        .componentId(choreoComponent.getId())
-        .build();
+            .visibility(Constant.TEST_CONNECTOR_VISIBILITY).apiId(revisionId).orgUuid(orgUUID)
+            .orgHandler(orgHandle).organizationId(orgUUID).componentId(choreoComponent.getId()).build();
         ConnectorPublisher.publishConnector(this, choreoTestClient, accessToken, connector, false);
     }
 
