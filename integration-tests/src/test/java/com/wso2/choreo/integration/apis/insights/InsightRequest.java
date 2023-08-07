@@ -194,7 +194,7 @@ public class InsightRequest extends ControlPlaneAPI {
                                         collectionType);
                         for (Environment env : environmentList) {
                                 if (env.getType().equals("CHOREO") && env.getName().equals("Development")) {
-                                        dto.setEnvironmentId(env.getExternalEnvId());
+                                        dto.setExternalEnvId(env.getExternalEnvId());
                                         dto.setInternalEnvId(env.getInternalEnvId());
                                         dto.setSandboxEnvId(env.getSandboxEnvId());
                                         break;

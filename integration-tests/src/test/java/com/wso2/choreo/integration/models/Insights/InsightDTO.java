@@ -27,6 +27,7 @@ public class InsightDTO {
     private String apiVersion;
     private String email;
     private String environmentId;
+    private String externalEnvId;
     private String fromTime;
     private String internalEnvId;
     private boolean isLatency;
