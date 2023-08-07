@@ -25,7 +25,7 @@ describe("Test group role mappings", () => {
     LoginPage.login();
     ChoreoHomePage.navigateToSettings();
     OrganizationComponent.navigateToRoleMapping();
-
+    OrganizationComponent.deleteCreatedMappingIfExists(groupName);
   });
   after(() => {
     ChoreoHomePage.logout();
