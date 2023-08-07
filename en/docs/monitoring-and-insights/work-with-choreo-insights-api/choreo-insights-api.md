@@ -59,7 +59,7 @@ The data filter.
 <td>
 
 Fetches all the applications with the given combination of tenant ID, environment ID, and organization ID. Optionally, you
-can configure the <code>applicationFilter</code> parameter to further filter the Applications by a specific application filter.
+can configure the <code>applicationFilter</code> parameter to further filter the applications by a specific application filter.
 
 </td>
 </tr>
