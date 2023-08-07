@@ -58,8 +58,8 @@ The data filter.
 <td valign="top">[<a href="#application">Application</a>]</td>
 <td>
 
-Fetches all the APIs with the given combination of tenant ID, environment ID, and organization ID. Optionally, you
-can configure the <code>applicationFilter</code> parameter to further filter the Applications by a specific application filter.
+Fetches all the applications with the given combination of tenant ID, environment ID, and organization ID. Optionally, you
+can configure the <code>applicationFilter</code> parameter to further filter the applications by a specific application filter.
 
 </td>
 </tr>
@@ -86,7 +86,7 @@ The data filter.
 <td valign="top">[<a href="#provider">Provider</a>]</td>
 <td>
 
-Fetches all the APIs with the given combination of tenant ID, environment ID, and organization ID.
+Fetches all the API providers with the given combination of tenant ID, environment ID, and organization ID.
 
 </td>
 </tr>
@@ -104,7 +104,7 @@ The data filter.
 <td valign="top">[<a href="#subscriber">Subscriber</a>]</td>
 <td>
 
-Fetches all the APIs with the given combination of tenant ID, environment ID, and organization ID. Optionally, you
+Fetches all the API subscribers with the given combination of tenant ID, environment ID, and organization ID. Optionally, you
 can configure the <code>subscriberFilter</code> parameter to further filter the subscribers.
 
 </td>
