@@ -602,7 +602,11 @@ export class ComponentDeployPage {
       .should("be.enabled")
       .click();
     if (configSetupStepAvailable) {
-      cy.get('[data-cyid="btn-next-button"]').click();
+      cy.get('[data-cyid="btn-next-button"]')
+        .should("be.visible")
+        .click()
+        .wait(2000);
+      Utils.clickOnOptionalElement('[data-cyid="btn-next-button"]', 2000);
     }
 
     if (configEnvVars) {
