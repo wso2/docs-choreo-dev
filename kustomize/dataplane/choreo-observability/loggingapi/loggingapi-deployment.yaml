@@ -33,6 +33,12 @@ spec:
                 name: loggingapi-env
             - secretRef:
                 name: loggingapi-secret
+          env:
+          - name: OPENSEARCH_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: opensearch-http-passwd
+                key: opensearch-http-passwd
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-logging-dp:latest
           securityContext:
             runAsUser: 10500
@@ -48,6 +54,9 @@ spec:
               subPath: Config.toml
             - name: loggingapi-secret
               mountPath: "/mnt/csi/loggingapi-secret"
+              readOnly: true
+            - name: opensearch-password
+              mountPath: "/mnt/csi/opensearch-password"
               readOnly: true
           ports:
             - containerPort: 9097
@@ -91,6 +100,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: loggingapi-secret
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: opensearch-password
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: opensearch-http-passwd
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always
