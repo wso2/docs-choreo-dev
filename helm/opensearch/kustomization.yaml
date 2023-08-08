@@ -1,2 +1,89 @@
-resources:
-- chart.yaml
+helmCharts:
+- name: opensearch
+  releaseName: opensearch
+  namespace: choreo-observability
+  version: 2.13.2
+  repo: oci://choreocontrolplane.azurecr.io/helm
+  valuesInline:
+    ## Please refer https://github.com/opensearch-project/helm-charts/blob/main/charts/opensearch/values.yaml for details
+    ## about these values
+    
+    extraInitContainers:
+    - name: set-vm-max-map-count
+      image: choreocontrolplane.azurecr.io/busybox@sha256:98de1ad411c6d08e50f26f392f3bc6cd65f686469b7c22a85c7b5fb1b820c154
+      securityContext:
+        capabilities:
+          drop:
+          - ALL
+        privileged: true
+        readOnlyRootFilesystem: true
+        runAsUser: 0
+      command: ['sh', '-c', 'sysctl -w vm.max_map_count=262144']
+      resources:
+        limits:
+          cpu: "25m"
+          memory: "128Mi"
+        requests:
+          cpu: "25m"
+          memory: "128Mi"
+    
+    extraVolumes:
+    - name: opensearch-internal-users
+      csi:
+        driver: secrets-store.csi.k8s.io
+        readOnly: true
+        volumeAttributes:
+          secretProviderClass: opensearch-internal-users
+        nodePublishSecretRef:
+          name: csi-secret-store-azure
+    
+    extraVolumeMounts:
+    - name: opensearch-internal-users
+      mountPath: "/mnt/csi/opensearch-internal-users"
+      readOnly: true
+    
+    initResources:
+      limits:
+        cpu: "25m"
+        memory: "128Mi"
+      requests:
+        cpu: "25m"
+        memory: "128Mi"
+    
+    image:
+      pullPolicy: "Always"
+      repository: "choreocontrolplane.azurecr.io/opensearchproject/opensearch"
+      tag: "2.8.0"
+    
+    imagePullSecrets:
+    - name: choreo-image-pull-secret
+    
+    livenessProbe:
+      periodSeconds: 30
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+      initialDelaySeconds: 30
+      tcpSocket:
+        port: 9200
+    
+    opensearchJavaOpts: "-Xmx1024M -Xms1024M"
+    
+    podSecurityContext:
+      seccompProfile:
+        type: RuntimeDefault
+          
+    resources:
+      limits:
+        cpu: "1500m"
+        memory: "1700Mi"
+      requests:
+        cpu: "1000m"
+        memory: "1500Mi"
+    
+    securityConfig:
+      internalUsersSecret: opensearch-internal-users
+    
+    securityContext:
+      allowPrivilegeEscalation: false
+      privileged: false
