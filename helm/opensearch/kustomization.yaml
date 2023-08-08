@@ -87,3 +87,11 @@ helmCharts:
     securityContext:
       allowPrivilegeEscalation: false
       privileged: false
+
+commonAnnotations:
+  checkov.io/skip1: CKV_K8S_37=Helm chart doesn't provide a way to fix this
+  checkov.io/skip2: CKV_K8S_20=Helm chart doesn't provide a way to fix this
+  checkov.io/skip3: CKV_K8S_28=Helm chart doesn't provide a way to fix this
+  checkov.io/skip4: CKV_K8S_22=Helm chart doesn't provide a way to fix this
+  checkov.io/skip5: CKV_K8S_40=Container enters a crashLoopBackoff when this is set. But already runs with UID 1000
+  checkov.io/skip6: CKV_K8S_16=An init-container needs to run as a privileged container
