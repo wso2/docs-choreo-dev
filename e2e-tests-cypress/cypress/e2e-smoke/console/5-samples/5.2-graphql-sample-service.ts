@@ -49,7 +49,7 @@ describe("Graphql GQL service test", () => {
       displayType: Enums.DisplayType.ballerinaService,
       accessibility: Enums.Accessibility.EXTERNAL,
       projectName: PROJECT_NAME,
-      sampleTemplate: "choreo/graphql_service:3.1.1",
+      sampleTemplate: "choreo/graphql_service:3.1.2",
       triggerChannels: "",
       triggerId: null,
       srcGitRepoUrl: `https://github.com/choreo-test-apps/graphql-service-sample/tree/main/${subPath}`,
