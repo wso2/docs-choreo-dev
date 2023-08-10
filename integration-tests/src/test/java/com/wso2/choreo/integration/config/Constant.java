@@ -153,4 +153,22 @@ public final class Constant {
 
     // Theme management constants
     public static final String THEME_ENDPOINT_SUFFIX = "/org-mgt/1.0.0/orgs/";
+
+    public static final String OBSERVABILITY_ORG_LOGS = "/orgLogs";
+
+    public static final String OBSERVABILITY_PROJECT_LOGS = "/projectLogs";
+
+    public static final String OBSERVABILITY_AUDIT_LOGS = "/audit-logging/1.0.0";
+
+    public static final String OBSERVABILITY_GATEWAY_ACCESS_LOGS = "/gatewayAccessLogs";
+
+    // DevOps related constants
+    public static final String DEVOPS_CI = "/devops/1.0.0/api/v1/ci";
+    public static final String DEVOPS_CLUSTERS = "/devops/1.0.0/api/v1/clusters";
+    public static final String DEVOPS_INTEGRATION = "/devops/1.0.0/api/v1/components/integration";
+    public static final String DEVOPS_ENVIRONMENTS = "/devops/1.0.0/api/v1/environments/";
+    public static final String DEVOPS_METRICS = "/devops/1.0.0/api/v1/metrics/";
+    public static final String DEVOPS_ORGANIZATIONS = "/devops/1.0.0/api/v1/organizations/";
+    public static final String DEVOPS_VOLUME = "/devops/1.0.0/api/v1/volume/";
+    public static final String DEVOPS_COMPONENTS_API = "/devops/1.0.0/api/v1/components/";
 }

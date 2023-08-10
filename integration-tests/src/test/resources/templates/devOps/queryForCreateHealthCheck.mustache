@@ -1,0 +1,30 @@
+{
+    "container_id": "{{container_id}}",
+    "app_environment_id": "{{app_env_id}}",
+    "organization_id": "{{organization_id}}",
+    "project_id": "{{project_id}}",
+    "probes": {
+        "liveness_probe": {
+            "probe": {
+                "exec": {
+                    "command": []
+                },
+                "tcpSocket": {
+                    "port": 0
+                },
+                "httpGet": {
+                    "httpHeaders": [],
+                    "path": "/",
+                    "port": 8080
+                },
+                "failureThreshold": 3,
+                "initialDelaySeconds": 10,
+                "periodSeconds": 30,
+                "successThreshold": 1,
+                "timeoutSeconds": 10
+            },
+            "type": "httpGet"
+        },
+        "readiness_probe": {}
+    }
+}

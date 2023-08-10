@@ -35,4 +35,8 @@ public class ConfigYaml {
     Map<String, String> themeManagement;
     @JsonProperty("dps")
     Map<String, String> dps;
+    @JsonProperty("observability")
+    Map<String, String> observability;
+    @JsonProperty("devOps")
+    Map<String, String> devOps;
 }

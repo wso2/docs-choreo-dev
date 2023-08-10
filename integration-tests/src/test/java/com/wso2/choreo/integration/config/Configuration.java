@@ -47,7 +47,7 @@ public class Configuration {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         mapper.findAndRegisterModules();
         ConfigYaml configYaml = mapper.readValue(new File(Objects.requireNonNull(Configuration.class.getClassLoader().
-                        getResource(testConfig)).toURI()), ConfigYaml.class);
+                getResource(testConfig)).toURI()), ConfigYaml.class);
 
         List<Map<String, String>> yamlConfigCollection = new ArrayList<>() {{
             add(configYaml.dps);
@@ -57,6 +57,8 @@ public class Configuration {
             add(configYaml.alerts);
             add(configYaml.insights);
             add(configYaml.themeManagement);
+            add(configYaml.observability);
+            add(configYaml.devOps);
         }};
 
         validateYamlConfigs(yamlConfigCollection);

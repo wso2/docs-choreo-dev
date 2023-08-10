@@ -1,0 +1,15 @@
+{
+    "operationName": "trace",
+    "variables": {
+        "observeId": "{{ballerinaComponentObsId}}",
+        "version": "{{versionId}}",
+        "moduleId": "{{ballerinaComponentModuleId}}",
+        "from": "{{from}}",
+        "to": "{{to}}",
+        "entryPointFuncModule": "{{ballerinaComponentEntryPointFuncModule}}",
+        "entryPointSvcName": "{{ballerinaComponentEntryPointSvcName}}",
+        "entryPointFuncName": "{{ballerinaComponentEntryPointFuncName}}",
+        "entryPointResourceAccessor": "{{ballerinaComponentEntryPointResourceAccessor}}"
+    },
+    "query": "query trace($observeId: String!, $version: String!, $from: String!, $to: String!, $moduleId: String!, $entryPointFuncModule: String!, $entryPointSvcName: String!, $entryPointFuncName: String!, $entryPointResourceAccessor: String) {\n  serviceFlameGraph(\n    obsId: $observeId\n    version: $version\n    from: $from\n    to: $to\n    module: $moduleId\n    entryPointFuncModule: $entryPointFuncModule\n    entryPointSvcName: $entryPointSvcName\n    entryPointFuncName: $entryPointFuncName\n    entryPointResourceAccessor: $entryPointResourceAccessor\n  ) {\n    stack\n    __typename\n  }\n}\n"
+}
