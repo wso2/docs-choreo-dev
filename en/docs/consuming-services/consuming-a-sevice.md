@@ -1,6 +1,6 @@
 # Consume a Service
 
-Choreo is a platform that allows you to create, deploy, and consume services seamlessly. The Choreo developer portal simplifies the process of discovering and using APIs for API consumers. 
+Choreo is a platform that allows you to create, deploy, and consume services seamlessly. The Choreo Developer Portal simplifies discovering and using APIs for API consumers. 
 
 Typically, an application developer who may be internal or external to your organization would want to consume the APIs published in the developer portal to develop their applications. In this guide, you will learn how to discover, generate credentials, and test the consumption of a service published in the Choreo Developer Portal. You will also learn how to invoke the service via a web application. 
 
