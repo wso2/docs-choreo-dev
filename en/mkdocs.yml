@@ -126,7 +126,7 @@ nav:
       - Test APIs with cURL: testing/test-apis-with-curl.md
       - Test APIs using Postman: testing/test-apis-using-postman.md
   - Consuming Services:
-      - Consume a service: consuming-services/consuming-a-sevice.md
+      - Consume a Service: consuming-services/consuming-a-sevice.md
       - Manage Application: consuming-services/manage-application.md
       - Manage Subscription: consuming-services/manage-subscription.md
   - API Management:
