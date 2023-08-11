@@ -21,7 +21,7 @@ import java.util.Map;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
-public class ChoreoElevatedAccessCheck_Observability extends TestNGCitrusSpringSupport  {
+public class ObservabilityElevatedAccessCheck extends TestNGCitrusSpringSupport  {
     private static String accessToken;
     private static String ballerinaComponentObsId;
     private static String ballerinaComponentVersionId;
@@ -52,7 +52,7 @@ public class ChoreoElevatedAccessCheck_Observability extends TestNGCitrusSpringS
     Map<Endpoints, HttpClient> citrusClients;
 
     @BeforeClass
-    public void setup_ChoreoElevatedAccessCheck_Observability() throws Exception {
+    public void setup_ObservabilityElevatedAccessCheck() throws Exception {
         accessToken = TestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
         ballerinaComponentObsId = Configuration.getConfig(ConfigDefinition.OBS_OBSERVEID);
         ballerinaComponentVersionId = Configuration.getConfig(ConfigDefinition.OBS_VERSION_ID);
@@ -88,7 +88,7 @@ public class ChoreoElevatedAccessCheck_Observability extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void viewBallerinaComponentDiagram_ChoreoElevatedAccessCheck_Observability() throws Exception {
+    public void viewBallerinaComponentDiagram_ObservabilityElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
         Map<String, String> params = new HashMap<>();
         params.put("obsId", ballerinaComponentObsId);
@@ -113,7 +113,7 @@ public class ChoreoElevatedAccessCheck_Observability extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void viewBYOCComponentRequestMetrics_ChoreoElevatedAccessCheck_Observability() throws Exception {
+    public void viewBYOCComponentRequestMetrics_ObservabilityElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
         Map<String, String> params = new HashMap<>();
         params.put("byocComponentReleaseId", byocComponentReleaseId);
@@ -139,7 +139,7 @@ public class ChoreoElevatedAccessCheck_Observability extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void viewBallerinaComponentStats_ChoreoElevatedAccessCheck_Observability() throws Exception {
+    public void viewBallerinaComponentStats_ObservabilityElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
         Map<String, String> params = new HashMap<>();
         params.put("ballerinaComponentObsId", ballerinaComponentObsId);
@@ -172,7 +172,7 @@ public class ChoreoElevatedAccessCheck_Observability extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void viewProjectServiceGraph_ChoreoElevatedAccessCheck_Observability() throws Exception {
+    public void viewProjectServiceGraph_ObservabilityElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
         Map<String, String> params = new HashMap<>();
         params.put("environment", environment);
@@ -200,7 +200,7 @@ public class ChoreoElevatedAccessCheck_Observability extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void viewBallerinaComponentFramegraph_ChoreoElevatedAccessCheck_Observability() throws Exception {
+    public void viewBallerinaComponentFramegraph_ObservabilityElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
         Map<String, String> params = new HashMap<>();
         params.put("ballerinaComponentObsId", ballerinaComponentObsId);
@@ -233,7 +233,7 @@ public class ChoreoElevatedAccessCheck_Observability extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void viewComponentGroupedLogs_ChoreoElevatedAccessCheck_Observability() throws Exception {
+    public void viewComponentGroupedLogs_ObservabilityElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
         String requestUrlForViewComponentGroupedLogs = Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX +
                 Constant.OBSERVABILITY_GROUP_LOGS + "?startTime=" + from + "&endTime=" + to +
@@ -256,7 +256,7 @@ public class ChoreoElevatedAccessCheck_Observability extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void viewComponentLogs_ChoreoElevatedAccessCheck_Observability() throws Exception {
+    public void viewComponentLogs_ObservabilityElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
         String requestUrlForViewComponentLogs = Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX +
                 Constant.OBSERVABILITY_LOGS + "?startTime=" + from + "&region=" + region +
@@ -279,7 +279,7 @@ public class ChoreoElevatedAccessCheck_Observability extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void viewBallerinaComponentMetrics_ChoreoElevatedAccessCheck_Observability() throws Exception {
+    public void viewBallerinaComponentMetrics_ObservabilityElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
         String requestUrlForViewBallerinaComponentMetrics = Constant.OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX +
                 Constant.OBSERVABILITY_METRICS + "?startTime=" + from +
@@ -302,7 +302,7 @@ public class ChoreoElevatedAccessCheck_Observability extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void viewOrganizationLogs_ChoreoElevatedAccessCheck_Observability() throws Exception {
+    public void viewOrganizationLogs_ObservabilityElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
         String requestUrlForViewOrganizationLogs = Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX +
                 Constant.OBSERVABILITY_ORG_LOGS + "?startTime=" + from +
@@ -325,7 +325,7 @@ public class ChoreoElevatedAccessCheck_Observability extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void viewProjectLogs_ChoreoElevatedAccessCheck_Observability() throws Exception {
+    public void viewProjectLogs_ObservabilityElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
         String requestUrlForViewProjectLogs = Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX +
                 Constant.OBSERVABILITY_PROJECT_LOGS + "?startTime=" + from +
@@ -349,7 +349,7 @@ public class ChoreoElevatedAccessCheck_Observability extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void viewAuditLogs_ChoreoElevatedAccessCheck_Observability() throws Exception {
+    public void viewAuditLogs_ObservabilityElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForViewAuditLogs = Constant.OBSERVABILITY_AUDIT_LOGS + "/orgs/" + orgId +
                 "/audit-logs?startTime=" + from + "&endTime=" + to;
@@ -370,7 +370,7 @@ public class ChoreoElevatedAccessCheck_Observability extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void viewProxyAPIComponentGatewayAccessLogs_ChoreoElevatedAccessCheck_Observability() throws Exception {
+    public void viewProxyAPIComponentGatewayAccessLogs_ObservabilityElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
         String requestUrlForViewProxyAPIComponentGatewayAccessLogs = Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX +
                 Constant.OBSERVABILITY_GATEWAY_ACCESS_LOGS + "?startTime=" + from +

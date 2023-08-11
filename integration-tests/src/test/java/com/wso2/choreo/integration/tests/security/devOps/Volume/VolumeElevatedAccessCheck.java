@@ -1,10 +1,11 @@
-package com.wso2.choreo.integration.tests.security.devOps.ApiV1Ci;
+package com.wso2.choreo.integration.tests.security.devOps.Volume;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.Endpoints;
+import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
@@ -15,40 +16,48 @@ import org.springframework.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
-public class ChoreoElevatedAccessCheck_ApiV1Ci extends TestNGCitrusSpringSupport {
+public class VolumeElevatedAccessCheck extends TestNGCitrusSpringSupport {
     private static String accessToken;
+    private static String orgId;
+    private static String volumeId;
+    private static String projectId;
+    private static String envId;
+    private static String appEnvId;
+    private static String vhost;
+    private static String envName;
+    private static String orgIntId;
 
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
-    private static String componentId;
-    private static String orgId;
-    private static String projectId;
-    private static String tokenId;
 
     @BeforeClass
-    public void setup_ChoreoElevatedAccessCheck_ApiV1Ci() throws Exception {
+    public void setup_VolumeElevatedAccessCheck() throws Exception {
         accessToken = TestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
-        componentId = Configuration.getConfig(ConfigDefinition.DEVOPS_COMPONENT_ID);
         orgId = Configuration.getConfig(ConfigDefinition.DEVOPS_ORG_ID);
         projectId = Configuration.getConfig(ConfigDefinition.DEVOPS_PROJECT_ID);
-        tokenId = Configuration.getConfig(ConfigDefinition.DEVOPS_TOKEN_ID);
+        envId = Configuration.getConfig(ConfigDefinition.DEVOPS_ENV_ID);
+        vhost = Configuration.getConfig(ConfigDefinition.DEVOPS_VHOST);
+        envName = Configuration.getConfig(ConfigDefinition.DEVOPS_ENV_NAME);
+        orgIntId = Configuration.getConfig(ConfigDefinition.DEVOPS_ORG_INT_ID);
+        volumeId = Configuration.getConfig(ConfigDefinition.DEVOPS_VOLUME_ID);
+        appEnvId = Configuration.getConfig(ConfigDefinition.DEVOPS_APP_ENV_ID);
     }
 
     @Test
     @CitrusTest
-    public void getToken_ChoreoElevatedAccessCheck_ApiV1Ci() throws Exception {
+    public void getVolume_VolumeElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForGetToken = Constant.DEVOPS_CI +
-                "/component/" + componentId + "/tokens?organization_id=" + orgId +
-                "&project_id=" + projectId;
+        String requestUrlForGetVolume = Constant.DEVOPS_VOLUME + volumeId + "?organization_id="
+                + orgId + "&project_id=" + projectId;
         $(http().
                 client(choreoCPTestClient).
                 send().
-                get(requestUrlForGetToken).
+                get(requestUrlForGetVolume).
                 message().
                 header(HttpHeaders.ACCEPT, "*/*").
                 header(HttpHeaders.AUTHORIZATION, accessToken));
@@ -62,15 +71,14 @@ public class ChoreoElevatedAccessCheck_ApiV1Ci extends TestNGCitrusSpringSupport
 
     @Test
     @CitrusTest
-    public void revokeToken_ChoreoElevatedAccessCheck_ApiV1Ci() throws Exception {
+    public void deleteVolume_VolumeElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForRevokeToken = Constant.DEVOPS_CI +
-                "/component/" + componentId + "/tokens/" + tokenId
-                + "/revoke?organization_id=" + orgId + "&project_id=" + projectId;
+        String requestUrlForDeleteVolume = Constant.DEVOPS_VOLUME + volumeId + "?organization_id="
+                + orgId + "&project_id=" + projectId;
         $(http().
                 client(choreoCPTestClient).
                 send().
-                delete(requestUrlForRevokeToken).
+                delete(requestUrlForDeleteVolume).
                 message().
                 header(HttpHeaders.ACCEPT, "*/*").
                 header(HttpHeaders.AUTHORIZATION, accessToken));
@@ -84,18 +92,25 @@ public class ChoreoElevatedAccessCheck_ApiV1Ci extends TestNGCitrusSpringSupport
 
     @Test
     @CitrusTest
-    public void tokenRegenerate_ChoreoElevatedAccessCheck_ApiV1Ci() throws Exception {
+    public void createVolume_VolumeElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForTokenRegenerate = Constant.DEVOPS_CI +
-                "/component/" + componentId + "/tokens/" + tokenId + "/regenerate?" +
-                "organization_id=" + orgId + "&project_id=" + projectId;
+        String requestUrlForCreateVolume = Constant.DEVOPS_VOLUME + "/?organization_id="
+                + orgId + "&project_id=" + projectId;
+        Map<String, String> params = new HashMap<>();
+        params.put("organization_id", orgId);
+        params.put("project_id", projectId);
+        params.put("app_env_id", appEnvId);
+        params.put("env_id", envId);
+        String body = MessageUtils.
+                generateStringFromTemplate("templates/devOps/queryForCreateVolume.mustache", params);
         $(http().
                 client(choreoCPTestClient).
                 send().
-                post(requestUrlForTokenRegenerate).
+                post(requestUrlForCreateVolume).
                 message().
                 header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
+                header(HttpHeaders.AUTHORIZATION, accessToken).
+                body(body));
         $(http()
                 .client(choreoCPTestClient)
                 .receive()
@@ -106,37 +121,14 @@ public class ChoreoElevatedAccessCheck_ApiV1Ci extends TestNGCitrusSpringSupport
 
     @Test
     @CitrusTest
-    public void postToken_ChoreoElevatedAccessCheck_ApiV1Ci() throws Exception {
+    public void listVolumes_VolumeElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForPostToken = Constant.DEVOPS_CI +
-                "/component/" + componentId + "/tokens?organization_id=" + orgId +
-                "&project_id=" + projectId;
+        String requestUrlForListVolumes = Constant.DEVOPS_VOLUME + "/?organization_id="
+                + orgId + "&project_id=" + projectId + "&environment_id=" + envId;
         $(http().
                 client(choreoCPTestClient).
                 send().
-                post(requestUrlForPostToken).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
-    }
-
-    @Test
-    @CitrusTest
-    public void deleteToken_ChoreoElevatedAccessCheck_ApiV1Ci() throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForDeleteToken = Constant.DEVOPS_CI +
-                "/component/" + componentId + "/tokens?organization_id=" + orgId +
-                "&project_id=" + projectId;;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                delete(requestUrlForDeleteToken).
+                get(requestUrlForListVolumes).
                 message().
                 header(HttpHeaders.ACCEPT, "*/*").
                 header(HttpHeaders.AUTHORIZATION, accessToken));

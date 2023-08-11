@@ -164,12 +164,16 @@ public final class Constant {
     public static final String OBSERVABILITY_GATEWAY_ACCESS_LOGS = "/gatewayAccessLogs";
 
     // DevOps related constants
-    public static final String DEVOPS_CI = "/devops/1.0.0/api/v1/ci";
-    public static final String DEVOPS_CLUSTERS = "/devops/1.0.0/api/v1/clusters";
-    public static final String DEVOPS_INTEGRATION = "/devops/1.0.0/api/v1/components/integration";
-    public static final String DEVOPS_ENVIRONMENTS = "/devops/1.0.0/api/v1/environments/";
-    public static final String DEVOPS_METRICS = "/devops/1.0.0/api/v1/metrics/";
-    public static final String DEVOPS_ORGANIZATIONS = "/devops/1.0.0/api/v1/organizations/";
-    public static final String DEVOPS_VOLUME = "/devops/1.0.0/api/v1/volume/";
-    public static final String DEVOPS_COMPONENTS_API = "/devops/1.0.0/api/v1/components/";
+    private static final String DEVOPS_API_CONTEXT = "/devops/1.0.0/api/v1";
+    public static final String DEVOPS_CI = DEVOPS_API_CONTEXT + "/ci";
+    public static final String DEVOPS_CLUSTERS = DEVOPS_API_CONTEXT + "/clusters";
+    public static final String DEVOPS_INTEGRATION = DEVOPS_API_CONTEXT + "/components/integration";
+    public static final String DEVOPS_ENVIRONMENTS = DEVOPS_API_CONTEXT + "/environments/";
+    public static final String DEVOPS_METRICS = DEVOPS_API_CONTEXT + "/metrics/";
+    public static final String DEVOPS_ORGANIZATIONS = DEVOPS_API_CONTEXT + "/organizations/";
+    public static final String DEVOPS_VOLUME = DEVOPS_API_CONTEXT + "/volume/";
+    public static final String DEVOPS_COMPONENTS_API = DEVOPS_API_CONTEXT + "/components/";
+
+    // Devportal related constants
+    public static final String DEVPORTAL_ENDPOINT_SUFFIX = "/api/am/devportal/v2";
 }

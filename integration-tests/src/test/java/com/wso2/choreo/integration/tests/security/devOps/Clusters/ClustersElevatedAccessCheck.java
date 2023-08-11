@@ -1,4 +1,4 @@
-package com.wso2.choreo.integration.tests.security.devOps.ApiV1Metrics;
+package com.wso2.choreo.integration.tests.security.devOps.Clusters;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
@@ -19,31 +19,42 @@ import java.util.Map;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
-public class ChoreoElevatedAccessCheck_ApiV1Metrics extends TestNGCitrusSpringSupport {
+public class ClustersElevatedAccessCheck extends TestNGCitrusSpringSupport {
     private static String accessToken;
-    private static String orgId;
-    private static String projectId;
 
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
+    private static String componentId;
+    private static String orgId;
+    private static String projectId;
+    private static String tokenId;
+    private static String namespace;
+    private static String clusterId;
+    private static String orgIntId;
 
     @BeforeClass
-    public void setup_ChoreoElevatedAccessCheck_ApiV1Metrics() throws Exception {
+    public void setup_ClustersElevatedAccessCheck() throws Exception {
         accessToken = TestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
+        componentId = Configuration.getConfig(ConfigDefinition.DEVOPS_COMPONENT_ID);
         orgId = Configuration.getConfig(ConfigDefinition.DEVOPS_ORG_ID);
         projectId = Configuration.getConfig(ConfigDefinition.DEVOPS_PROJECT_ID);
+        tokenId = Configuration.getConfig(ConfigDefinition.DEVOPS_TOKEN_ID);
+        namespace = Configuration.getConfig(ConfigDefinition.DEVOPS_NAMESPACE);
+        clusterId = Configuration.getConfig(ConfigDefinition.DEVOPS_CLUSTER_ID);
+        orgIntId = Configuration.getConfig(ConfigDefinition.DEVOPS_ORG_INT_ID);
     }
 
     @Test
     @CitrusTest
-    public void getPodMetrics_ChoreoElevatedAccessCheck_ApiV1Metrics() throws Exception {
+    public void getKind_ClustersElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForGetPodMetrics = Constant.DEVOPS_METRICS +
-                "podMetrics?org_id=" + orgId + "&project_id=" + projectId;
+        String requestUrlForGetToken = Constant.DEVOPS_CLUSTERS +
+                "/" + clusterId + "/query/v1/Pod?organization_id=" + orgId +
+                "&project_id=" + projectId + "&namespace=" + namespace + "&name=&labelSelector=&fieldSelector=&limit=0";
         $(http().
                 client(choreoCPTestClient).
                 send().
-                get(requestUrlForGetPodMetrics).
+                get(requestUrlForGetToken).
                 message().
                 header(HttpHeaders.ACCEPT, "*/*").
                 header(HttpHeaders.AUTHORIZATION, accessToken));
@@ -57,14 +68,15 @@ public class ChoreoElevatedAccessCheck_ApiV1Metrics extends TestNGCitrusSpringSu
 
     @Test
     @CitrusTest
-    public void getDeployments_ChoreoElevatedAccessCheck_ApiV1Metrics() throws Exception {
+    public void postPodLogs_ClustersElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForGetDeployments = Constant.DEVOPS_METRICS +
-                "deployments?organization_id=" + orgId + "&project_id=" + projectId;
+        String requestUrlForGetToken = Constant.DEVOPS_CLUSTERS +
+                "/" + clusterId + "/pod/logs?organization_id=" + orgId +
+                "&project_id=" + projectId;
         $(http().
                 client(choreoCPTestClient).
                 send().
-                get(requestUrlForGetDeployments).
+                post(requestUrlForGetToken).
                 message().
                 header(HttpHeaders.ACCEPT, "*/*").
                 header(HttpHeaders.AUTHORIZATION, accessToken));
@@ -78,14 +90,14 @@ public class ChoreoElevatedAccessCheck_ApiV1Metrics extends TestNGCitrusSpringSu
 
     @Test
     @CitrusTest
-    public void getActiveComponentCount_ChoreoElevatedAccessCheck_ApiV1Metrics() throws Exception {
+    public void getDataplanes_ClustersElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForGetDeployments = Constant.DEVOPS_METRICS +
-                "activeComponentCount?org_id=" + orgId + "&project_id=" + projectId;
+        String requestUrlForGetDataplanes = Constant.DEVOPS_CLUSTERS +
+                "/dataplanes?org_id=" + orgIntId + "&project_id=" + projectId;
         $(http().
                 client(choreoCPTestClient).
                 send().
-                get(requestUrlForGetDeployments).
+                get(requestUrlForGetDataplanes).
                 message().
                 header(HttpHeaders.ACCEPT, "*/*").
                 header(HttpHeaders.AUTHORIZATION, accessToken));

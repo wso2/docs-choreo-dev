@@ -2,7 +2,7 @@ dps:
   REGIONS: EU,US
 accountInfo:
   TEST_USER_EMAIL: choreo-integration-test-user-dev@wso2.com@carbon.super
-  #TEST_USER_PASSWORD:
+  TEST_USER_PASSWORD: 5StN#246k
   TEST_CHOREO_ORG_ID: 3752
   TEST_CHOREO_ORG_HANDLE: choreointegrationtestsuserdevdlwqo
   TEST_CHOREO_ORG_UUID: 31b9e3fe-4a92-4921-8be1-70f065b5b406
@@ -10,16 +10,16 @@ accountInfo:
   SECURITY_TEST_CHOREO_ORG_HANDLE: choreorbactestuser
   SECURITY_TEST_CHOREO_ORG_UUID: 75d75c0d-334f-4938-a36f-edfbc12041ed
   LOW_PRIVILEGED_USER_EMAIL: choreorbactestuser@gmail.com@carbon.super
-  #LOW_PRIVILEGED_USER_PASSWORD:
+  LOW_PRIVILEGED_USER_PASSWORD: 557abe1135f0L
 authInfo:
   STS_ENDPOINT: https://sts.preview-dv.choreo.dev
   STS_CLIENT_ID: szuIZKNy9KIaJxv5PDdM06RXfeca
-  #STS_CLIENT_SECRET:
+  STS_CLIENT_SECRET: VzAEfr0CWm3FEcz3cecxicUkMDoa
   ASGARDEO_ENDPOINT: https://dev.api.asgardeo.io
   ASGARDEO_CLIENT_ID: d0ydULDEa0BkT6t7ZyZJFkDU4FEa
-  #ASGARDEO_CLIENT_SECRET:
+  ASGARDEO_CLIENT_SECRET: dtIfwkhZ8GeOdd6C3PI28rRPh9Ma
   CP_APP_CLIENT_ID: W5HKbT7_3hHFU6rY9iRbFDzH41ga
-  #CP_APP_CLIENT_SECRET:
+  CP_APP_CLIENT_SECRET: w4xQE6mwfXwpAYrRKNj0O8izqf8a
 common:
   CHOREO_ENDPOINT: https://app.preview-dv.choreo.dev
   CHOREO_NEW_APP_SERVICE_ENDPOINT: https://apis.preview-dv.choreo.dev
@@ -27,17 +27,17 @@ common:
   BAL_REGISTRY_URL: https://api.dev-central.ballerina.io/2.0/registry
   GITHUB_ENDPOINT: https://api.github.com
   GITHUB_ORG: choreo-test-apps
-  #GITHUB_PAT:
+  GITHUB_PAT: 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
   GMAIL_API_CK: 412441153337-r3a3sj5ecba3a04aqlb3l05ro25tf08l.apps.googleusercontent.com
-  #GMAIL_API_CS:
-  #GMAIL_API_REFRESH_TOKEN:
+  GMAIL_API_CS: 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
+  GMAIL_API_REFRESH_TOKEN: 1//0gr5UM0NQ4wnyCgYIARAAGBASNwF-L9IrF8sQhrCXxwLJa_331P0eFqu661kbZlP4Ur4ovLMMbndBqrPh_ceP5bH-DaOr56ed2oA
   COMMIT_LIST_EXAMPLE_RESPONSE: templates/getCommitList/query_get_commit_list_success_dev.json
   TOKEN_SCOPES: scopes/dev-scopes.yaml
 insights:
   INSIGHTS_ENDPOINT: https://analytics-event-auth.dv.choreo.dev
   INSIGHTS_ONPREM_KEY: cae0f0d0-11f3-4603-86ab-2a38eac3f155
 alerts:
-  #ALERT_MAIL_IMAP_PASS:
+  ALERT_MAIL_IMAP_PASS: choreoalert@123
   ALERT_ORG_UUID: b545f89e-b328-4ff3-8a47-0ae964674957
   ALERT_RELEASE_ID: de821f3e-9418-449f-99d9-687831b5b3f7
 themeManagement:
@@ -96,3 +96,4 @@ devOps:
   DEVOPS_MOUNT_ID: 56b50c1e-8ea3-46c4-b115-b50d677cf026
   DEVOPS_IMAGE_ID: bd300085-a2ca-4ed7-beec-0cc1a8b4c50b
   DEVOPS_IMAGE_REGISTRY_ID: e6c4ab2d-3936-4c4d-8dfb-369c17568ca8
+

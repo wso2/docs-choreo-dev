@@ -1,4 +1,4 @@
-package com.wso2.choreo.integration.tests.security.devOps.ApiV1Clusters;
+package com.wso2.choreo.integration.tests.security.devOps.Ci;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
@@ -19,7 +19,7 @@ import java.util.Map;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
-public class ChoreoElevatedAccessCheck_ApiV1Clusters extends TestNGCitrusSpringSupport {
+public class CiElevatedAccessCheck extends TestNGCitrusSpringSupport {
     private static String accessToken;
 
     @Autowired
@@ -28,29 +28,23 @@ public class ChoreoElevatedAccessCheck_ApiV1Clusters extends TestNGCitrusSpringS
     private static String orgId;
     private static String projectId;
     private static String tokenId;
-    private static String namespace;
-    private static String clusterId;
-    private static String orgIntId;
 
     @BeforeClass
-    public void setup_ChoreoElevatedAccessCheck_ApiV1Clusters() throws Exception {
+    public void setup_CiElevatedAccessCheck() throws Exception {
         accessToken = TestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
         componentId = Configuration.getConfig(ConfigDefinition.DEVOPS_COMPONENT_ID);
         orgId = Configuration.getConfig(ConfigDefinition.DEVOPS_ORG_ID);
         projectId = Configuration.getConfig(ConfigDefinition.DEVOPS_PROJECT_ID);
         tokenId = Configuration.getConfig(ConfigDefinition.DEVOPS_TOKEN_ID);
-        namespace = Configuration.getConfig(ConfigDefinition.DEVOPS_NAMESPACE);
-        clusterId = Configuration.getConfig(ConfigDefinition.DEVOPS_CLUSTER_ID);
-        orgIntId = Configuration.getConfig(ConfigDefinition.DEVOPS_ORG_INT_ID);
     }
 
     @Test
     @CitrusTest
-    public void getKind_ChoreoElevatedAccessCheck_ApiV1Clusters() throws Exception {
+    public void getToken_CiElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForGetToken = Constant.DEVOPS_CLUSTERS +
-                "/" + clusterId + "/query/v1/Pod?organization_id=" + orgId +
-                "&project_id=" + projectId + "&namespace=" + namespace + "&name=&labelSelector=&fieldSelector=&limit=0";
+        String requestUrlForGetToken = Constant.DEVOPS_CI +
+                "/component/" + componentId + "/tokens?organization_id=" + orgId +
+                "&project_id=" + projectId;
         $(http().
                 client(choreoCPTestClient).
                 send().
@@ -68,15 +62,15 @@ public class ChoreoElevatedAccessCheck_ApiV1Clusters extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void postPodLogs_ChoreoElevatedAccessCheck_ApiV1Clusters() throws Exception {
+    public void revokeToken_CiElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForGetToken = Constant.DEVOPS_CLUSTERS +
-                "/" + clusterId + "/pod/logs?organization_id=" + orgId +
-                "&project_id=" + projectId;
+        String requestUrlForRevokeToken = Constant.DEVOPS_CI +
+                "/component/" + componentId + "/tokens/" + tokenId
+                + "/revoke?organization_id=" + orgId + "&project_id=" + projectId;
         $(http().
                 client(choreoCPTestClient).
                 send().
-                post(requestUrlForGetToken).
+                delete(requestUrlForRevokeToken).
                 message().
                 header(HttpHeaders.ACCEPT, "*/*").
                 header(HttpHeaders.AUTHORIZATION, accessToken));
@@ -90,14 +84,59 @@ public class ChoreoElevatedAccessCheck_ApiV1Clusters extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void getDataplanes_ChoreoElevatedAccessCheck_ApiV1Clusters() throws Exception {
+    public void tokenRegenerate_CiElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForGetDataplanes = Constant.DEVOPS_CLUSTERS +
-                "/dataplanes?org_id=" + orgIntId + "&project_id=" + projectId;
+        String requestUrlForTokenRegenerate = Constant.DEVOPS_CI +
+                "/component/" + componentId + "/tokens/" + tokenId + "/regenerate?" +
+                "organization_id=" + orgId + "&project_id=" + projectId;
         $(http().
                 client(choreoCPTestClient).
                 send().
-                get(requestUrlForGetDataplanes).
+                post(requestUrlForTokenRegenerate).
+                message().
+                header(HttpHeaders.ACCEPT, "*/*").
+                header(HttpHeaders.AUTHORIZATION, accessToken));
+        $(http()
+                .client(choreoCPTestClient)
+                .receive()
+                .response(HttpStatus.UNAUTHORIZED)
+                .message()
+                .type(MessageType.JSON));
+    }
+
+    @Test
+    @CitrusTest
+    public void postToken_CiElevatedAccessCheck() throws Exception {
+        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        String requestUrlForPostToken = Constant.DEVOPS_CI +
+                "/component/" + componentId + "/tokens?organization_id=" + orgId +
+                "&project_id=" + projectId;
+        $(http().
+                client(choreoCPTestClient).
+                send().
+                post(requestUrlForPostToken).
+                message().
+                header(HttpHeaders.ACCEPT, "*/*").
+                header(HttpHeaders.AUTHORIZATION, accessToken));
+        $(http()
+                .client(choreoCPTestClient)
+                .receive()
+                .response(HttpStatus.UNAUTHORIZED)
+                .message()
+                .type(MessageType.JSON));
+    }
+
+    @Test
+    @CitrusTest
+    public void deleteToken_CiElevatedAccessCheck() throws Exception {
+        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        String requestUrlForDeleteToken = Constant.DEVOPS_CI +
+                "/component/" + componentId + "/tokens?organization_id=" + orgId +
+                "&project_id=" + projectId;
+        $(http().
+                client(choreoCPTestClient).
+                send().
+                delete(requestUrlForDeleteToken).
                 message().
                 header(HttpHeaders.ACCEPT, "*/*").
                 header(HttpHeaders.AUTHORIZATION, accessToken));

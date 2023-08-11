@@ -21,7 +21,7 @@ import java.util.Map;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
-public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringSupport {
+public class ComponentsAPIElevatedAccessCheck extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private static String orgId;
     private static String volumeId;
@@ -47,7 +47,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
     Map<Endpoints, HttpClient> citrusClients;
 
     @BeforeClass
-    public void setup_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void setup_ComponentsAPIElevatedAccessCheck() throws Exception {
         accessToken = TestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
         orgId = Configuration.getConfig(ConfigDefinition.DEVOPS_ORG_ID);
         projectId = Configuration.getConfig(ConfigDefinition.DEVOPS_PROJECT_ID);
@@ -72,7 +72,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void getVolumeMount_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void getVolumeMount_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetVolume = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/"
                 + releaseId + "/volume-mount?organization_id=" + orgId + "&project_id=" + projectId;
@@ -93,7 +93,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void getSvcConfig_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void getSvcConfig_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetSvcConfig = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/"
                 + releaseId + "/svc-config?organization_id=" + orgId + "&project_id=" + projectId;
@@ -114,7 +114,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void updateHpaMetric_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void updateHpaMetric_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForUpdateHpaMetric = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/"
                 + releaseId + "/hpa/" + hpaId + "/metric/" + metricId + "?organization_id=" + orgId +
@@ -144,7 +144,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void deleteHpaMetric_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void deleteHpaMetric_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForDeleteHpaMetric = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/"
                 + releaseId + "/hpa/" + hpaId + "/metric/" + metricId + "?organization_id=" + orgId +
@@ -166,7 +166,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void getHpaMetric_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void getHpaMetric_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetHpaMetric = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/"
                 + releaseId + "/hpa/" + hpaId + "/metric?organization_id=" + orgId +
@@ -188,7 +188,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void createHpaMetric_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void createHpaMetric_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForCreateHpaMetric = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/"
                 + releaseId + "/hpa/" + hpaId + "/metric?organization_id=" + orgId + "&project_id=" + projectId;
@@ -216,7 +216,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void updateHpa_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void updateHpa_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForUpdateHpa = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/"
                 + releaseId + "/hpa/" + hpaId + "?organization_id=" + orgId +
@@ -246,7 +246,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void getHpa_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void getHpa_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetHpa = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/"
                 + releaseId + "/hpa?organization_id=" + orgId + "&project_id=" + projectId;
@@ -267,7 +267,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void createHpa_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void createHpa_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForCreateHpa = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/"
                 + releaseId + "/hpa?organization_id=" + orgId + "&project_id=" + projectId;
@@ -295,7 +295,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void getHealthCheck_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void getHealthCheck_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetHealthCheck = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/"
                 + releaseId + "/health-check?organization_id=" + orgId + "&project_id=" + projectId;
@@ -316,7 +316,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void getDeployHistory_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void getDeployHistory_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetDeployHistory = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/"
                 + releaseId + "/deploy-history?organization_id=" + orgId + "&project_id=" + projectId;
@@ -337,7 +337,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void redeployRelease_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void redeployRelease_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForRedeployRelease = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/"
                 + releaseId + "/deploy-deployment?organization_id=" + orgId + "&project_id=" + projectId;
@@ -362,7 +362,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void getDeployConfig_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void getDeployConfig_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetDeployConfig = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/"
                 + releaseId + "/deploy-config?organization_id=" + orgId + "&project_id=" + projectId;
@@ -383,7 +383,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void createVolumeMount_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void createVolumeMount_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForCreateVolumeMount = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/" +
                 releaseId + "/container/" + containerId + "/volume-mount?organization_id=" + orgId +
@@ -410,7 +410,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void updateVolumeMount_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void updateVolumeMount_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForUpdateVolumeMount = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/" +
                 releaseId + "/container/" + containerId + "/volume-mount/" + volumeMountId + "?organization_id=" +
@@ -436,7 +436,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void deleteVolumeMount_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void deleteVolumeMount_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForDeleteVolumeMount = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/" +
                 releaseId + "/container/" + containerId + "/volume-mount/" + volumeMountId + "?organization_id=" +
@@ -458,7 +458,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void createHealthCheck_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void createHealthCheck_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForCreateHealthCheck = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/" +
                 releaseId + "/container/" + containerId + "/health-check?organization_id=" + orgId +
@@ -488,7 +488,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void updateHealthCheck_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void updateHealthCheck_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForUpdateHealthCheck = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/" +
                 releaseId + "/container/" + containerId + "/health-check/" + healthCheckId + "?organization_id=" +
@@ -518,7 +518,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void deleteHealthCheck_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void deleteHealthCheck_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForDeleteHealthCheck = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/" +
                 releaseId + "/container/" + containerId + "/health-check/" + healthCheckId + "?organization_id=" +
@@ -540,7 +540,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void createConfigMount_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void createConfigMount_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForCreateConfigMount = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/" +
                 releaseId + "/container/" + containerId + "/config-mount?organization_id=" + orgId +
@@ -569,7 +569,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void getConfigMount_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void getConfigMount_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetConfigMount = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/" +
                 releaseId + "/container/" + containerId + "/config-mount?organization_id=" + orgId +
@@ -591,7 +591,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void updateConfigMount_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void updateConfigMount_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForUpdateConfigMount = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/" +
                 releaseId + "/container/" + containerId + "/config-mount/" + mountId + "?organization_id=" + orgId +
@@ -620,7 +620,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void deleteConfigMount_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void deleteConfigMount_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForUpdateConfigMount = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/" +
                 releaseId + "/container/" + containerId + "/config-mount/" + mountId + "?organization_id=" + orgId +
@@ -642,7 +642,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void updateContainer_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void updateContainer_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForUpdateContainer = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/" +
                 releaseId + "/container/" + containerId + "?organization_id=" + orgId +
@@ -671,7 +671,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void updateCdpWebappShortUrl_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void updateCdpWebappShortUrl_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForUpdateCdpWebappShortUrl = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/" +
                 releaseId + "/cdp-webapp-short-url?organization_id=" + orgId + "&project_id=" + projectId;
@@ -696,7 +696,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void getReleaseById_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void getReleaseById_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetReleaseById = Constant.DEVOPS_COMPONENTS_API + componentId + "/release/" +
                 releaseId + "?organization_id=" + orgId + "&project_id=" + projectId;
@@ -717,7 +717,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void getComponentId_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void getComponentId_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetComponentId = Constant.DEVOPS_COMPONENTS_API + componentId +
                 "?organization_id=" + orgId + "&project_id=" + projectId;
@@ -738,7 +738,7 @@ public class ChoreoElevatedAccessCheck_ComponentsAPI extends TestNGCitrusSpringS
 
     @Test
     @CitrusTest
-    public void getByociWebhookRegistries_ChoreoElevatedAccessCheck_ComponentsAPI() throws Exception {
+    public void getByociWebhookRegistries_ComponentsAPIElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetByociWebhookRegistries = Constant.DEVOPS_COMPONENTS_API +
                 "/byoci/webhook/registries?organization_id=" + orgId + "&project_id=" + projectId;

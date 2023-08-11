@@ -1,4 +1,4 @@
-package com.wso2.choreo.integration.tests.security.devOps.ApiV1Environments;
+package com.wso2.choreo.integration.tests.security.devOps.Environments;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
@@ -21,7 +21,7 @@ import java.util.Map;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
-public class ChoreoElevatedAccessCheck_ApiV1Environments extends TestNGCitrusSpringSupport {
+public class EnvironmentsElevatedAccessCheck extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private static String envId;
     private static String orgId;
@@ -34,7 +34,7 @@ public class ChoreoElevatedAccessCheck_ApiV1Environments extends TestNGCitrusSpr
     Map<Endpoints, HttpClient> citrusClients;
 
     @BeforeClass
-    public void setup_ChoreoElevatedAccessCheck_ApiV1Environments() throws Exception {
+    public void setup_EnvironmentsElevatedAccessCheck() throws Exception {
         accessToken = TestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
         envId = Configuration.getConfig(ConfigDefinition.DEVOPS_ENV_ID);
         orgId = Configuration.getConfig(ConfigDefinition.DEVOPS_ORG_ID);
@@ -46,7 +46,7 @@ public class ChoreoElevatedAccessCheck_ApiV1Environments extends TestNGCitrusSpr
 
     @Test
     @CitrusTest
-    public void getStorageClasses_ChoreoElevatedAccessCheck_ApiV1Environments() throws Exception {
+    public void getStorageClasses_EnvironmentsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetStorageClasses = Constant.DEVOPS_ENVIRONMENTS +
                 envId + "/storage-classes?organization_id=" + orgId + "&project_id=" + projectId;
@@ -67,7 +67,7 @@ public class ChoreoElevatedAccessCheck_ApiV1Environments extends TestNGCitrusSpr
 
     @Test
     @CitrusTest
-    public void getSecretById_ChoreoElevatedAccessCheck_ApiV1Environments() throws Exception {
+    public void getSecretById_EnvironmentsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetSecretById = Constant.DEVOPS_ENVIRONMENTS +
                 envId + "/secret/" + secretId + "?organization_id=" + orgId + "&project_id=" + projectId;
@@ -88,7 +88,7 @@ public class ChoreoElevatedAccessCheck_ApiV1Environments extends TestNGCitrusSpr
 
     @Test
     @CitrusTest
-    public void updateSecretById_ChoreoElevatedAccessCheck_ApiV1Environments() throws Exception {
+    public void updateSecretById_EnvironmentsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForUpdateSecretById = Constant.DEVOPS_ENVIRONMENTS +
                 envId + "/secret/" + secretId + "?organization_id=" + orgId + "&project_id=" + projectId;
@@ -118,7 +118,7 @@ public class ChoreoElevatedAccessCheck_ApiV1Environments extends TestNGCitrusSpr
 
     @Test
     @CitrusTest
-    public void deleteSecretById_ChoreoElevatedAccessCheck_ApiV1Environments() throws Exception {
+    public void deleteSecretById_EnvironmentsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForDeleteSecretById = Constant.DEVOPS_ENVIRONMENTS +
                 envId + "/secret/" + secretId + "?organization_id=" + orgId + "&project_id=" + projectId;
@@ -139,7 +139,7 @@ public class ChoreoElevatedAccessCheck_ApiV1Environments extends TestNGCitrusSpr
 
     @Test
     @CitrusTest
-    public void getSecretInEnvironment_ChoreoElevatedAccessCheck_ApiV1Environments() throws Exception {
+    public void getSecretInEnvironment_EnvironmentsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForSecretInEnvironment = Constant.DEVOPS_ENVIRONMENTS +
                 envId + "/secret?organization_id=" + orgId + "&project_id=" + projectId;
@@ -160,7 +160,7 @@ public class ChoreoElevatedAccessCheck_ApiV1Environments extends TestNGCitrusSpr
 
     @Test
     @CitrusTest
-    public void createSecretInEnvironment_ChoreoElevatedAccessCheck_ApiV1Environments() throws Exception {
+    public void createSecretInEnvironment_EnvironmentsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForCreateSecretInEnvironment = Constant.DEVOPS_ENVIRONMENTS +
                 envId + "/secret?organization_id=" + orgId + "&project_id=" + projectId;
@@ -190,7 +190,7 @@ public class ChoreoElevatedAccessCheck_ApiV1Environments extends TestNGCitrusSpr
 
     @Test
     @CitrusTest
-    public void getConfigMapById_ChoreoElevatedAccessCheck_ApiV1Environments() throws Exception {
+    public void getConfigMapById_EnvironmentsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetConfigMapById = Constant.DEVOPS_ENVIRONMENTS +
                 envId + "/configmap/" + configMapId + "?organization_id=" + orgId + "&project_id=" + projectId;
@@ -211,7 +211,7 @@ public class ChoreoElevatedAccessCheck_ApiV1Environments extends TestNGCitrusSpr
 
     @Test
     @CitrusTest
-    public void updateConfigMapById_ChoreoElevatedAccessCheck_ApiV1Environments() throws Exception {
+    public void updateConfigMapById_EnvironmentsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForUpdateConfigMapById = Constant.DEVOPS_ENVIRONMENTS +
                 envId + "/configmap/" + configMapId + "?organization_id=" + orgId + "&project_id=" + projectId;
@@ -241,7 +241,7 @@ public class ChoreoElevatedAccessCheck_ApiV1Environments extends TestNGCitrusSpr
 
     @Test
     @CitrusTest
-    public void deleteConfigMapById_ChoreoElevatedAccessCheck_ApiV1Environments() throws Exception {
+    public void deleteConfigMapById_EnvironmentsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForDeleteConfigMapById = Constant.DEVOPS_ENVIRONMENTS +
                 envId + "/configmap/" + configMapId + "?organization_id=" + orgId + "&project_id=" + projectId;
@@ -262,7 +262,7 @@ public class ChoreoElevatedAccessCheck_ApiV1Environments extends TestNGCitrusSpr
 
     @Test
     @CitrusTest
-    public void createConfigMapInEnvironment_ChoreoElevatedAccessCheck_ApiV1Environments() throws Exception {
+    public void createConfigMapInEnvironment_EnvironmentsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForCreateConfigMapInEnvironment = Constant.DEVOPS_ENVIRONMENTS +
                 envId + "/configmap/" + configMapId + "?organization_id=" + orgId + "&project_id=" + projectId;
@@ -292,7 +292,7 @@ public class ChoreoElevatedAccessCheck_ApiV1Environments extends TestNGCitrusSpr
 
     @Test
     @CitrusTest
-    public void getConfigMapInEnvironment_ChoreoElevatedAccessCheck_ApiV1Environments() throws Exception {
+    public void getConfigMapInEnvironment_EnvironmentsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetConfigMapInEnvironment = Constant.DEVOPS_ENVIRONMENTS +
                 envId + "/configmap/" + configMapId + "?organization_id=" + orgId + "&project_id=" + projectId;
