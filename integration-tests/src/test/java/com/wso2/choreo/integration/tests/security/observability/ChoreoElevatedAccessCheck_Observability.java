@@ -54,24 +54,24 @@ public class ChoreoElevatedAccessCheck_Observability extends TestNGCitrusSpringS
     @BeforeClass
     public void setup_ChoreoElevatedAccessCheck_Observability() throws Exception {
         accessToken = TestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
-        ballerinaComponentObsId = Configuration.getConfig(ConfigDefinition.BALLERINA_COMPONENT_OBS_ID);
-        ballerinaComponentVersionId = Configuration.getConfig(ConfigDefinition.BALLERINA_COMPONENT_VERSION_ID);
-        byocComponentReleaseId = Configuration.getConfig(ConfigDefinition.BYOC_COMPONENT_RELEASE_ID);
-        from = Configuration.getConfig(ConfigDefinition.FROM);
-        to = Configuration.getConfig(ConfigDefinition.TO);
-        ballerinaComponentModuleId = Configuration.getConfig(ConfigDefinition.BALLERINA_COMPONENT_MODULE_ID);
+        ballerinaComponentObsId = Configuration.getConfig(ConfigDefinition.OBS_OBSERVEID);
+        ballerinaComponentVersionId = Configuration.getConfig(ConfigDefinition.OBS_VERSION_ID);
+        byocComponentReleaseId = Configuration.getConfig(ConfigDefinition.OBS_BYOC_COMPONENT_RELEASE_ID);
+        from = Configuration.getConfig(ConfigDefinition.OBS_FROM);
+        to = Configuration.getConfig(ConfigDefinition.OBS_TO);
+        ballerinaComponentModuleId = Configuration.getConfig(ConfigDefinition.OBS_MODULE_ID);
         ballerinaComponentEntryPointFuncModule = Configuration.getConfig(ConfigDefinition.
-                BALLERINA_COMPONENT_ENTRYPOINT_FUNC_MODULE);
+                OBS_ENTRYPOINT_FUNC_MODULE);
         ballerinaComponentEntryPointSvcName = Configuration.getConfig(ConfigDefinition.
-                BALLERINA_COMPONENT_ENTRYPOINT_SVC_NAME);
+                OBS_ENTRYPOINT_SVC_NAME);
         ballerinaComponentEntryPointFuncName = Configuration.getConfig(ConfigDefinition.
-                BALLERINA_COMPONENT_ENTRYPOINT_FUNC_NAME);
+                OBS_ENTRYPOINT_FUNC_NAME);
         ballerinaComponentEntryPointFuncName = Configuration.getConfig(ConfigDefinition.
-                BALLERINA_COMPONENT_ENTRYPOINT_FUNC_NAME);
+                OBS_ENTRYPOINT_FUNC_NAME);
         ballerinaComponentEntryPointResourceAccessor = Configuration.getConfig(ConfigDefinition.
-                BALLERINA_COMPONENT_ENTRYPOINT_RESOURCE_ACCESSOR);
-        environment = Configuration.getConfig(ConfigDefinition.ENVIRONMENT);
-        ballerinaComponentProjectId = Configuration.getConfig(ConfigDefinition.BALLERINA_COMPONENT_PROJECT_ID);
+                OBS_ENTRYPOINT_RESOURCE_ACCESSOR);
+        environment = Configuration.getConfig(ConfigDefinition.OBS_ENVIRONMENT);
+        ballerinaComponentProjectId = Configuration.getConfig(ConfigDefinition.OBS_PROJECT_ID);
         region = Configuration.getConfig(ConfigDefinition.OBS_REGION);
         releaseId = Configuration.getConfig(ConfigDefinition.OBS_RELEASE_ID);
         namespace = Configuration.getConfig(ConfigDefinition.OBS_NAMESPACE);
