@@ -10,7 +10,7 @@ accountInfo:
   SECURITY_TEST_CHOREO_ORG_HANDLE: choreorbactestuser
   SECURITY_TEST_CHOREO_ORG_UUID: 75d75c0d-334f-4938-a36f-edfbc12041ed
   LOW_PRIVILEGED_USER_EMAIL: choreorbactestuser@gmail.com@carbon.super
-  LOW_PRIVILEGED_USER_PASSWORD: 557abe1135f0L
+  #LOW_PRIVILEGED_USER_PASSWORD:
 authInfo:
   STS_ENDPOINT: https://sts.preview-dv.choreo.dev
   STS_CLIENT_ID: szuIZKNy9KIaJxv5PDdM06RXfeca
