@@ -19,7 +19,14 @@ public class ApiRevisionDTO {
     private String newRevisionId;
     private String oldRevisionId;
     private String orgUuid;
+    private String orgHandler;
     private String description;
     private String buildId;
     private int revisionCount;
+    private String releaseId;
+    private String name;
+    private String vhost;
+    private boolean displayOnDevportal;
+    private String componentId;
+    private String environmentId;
 }

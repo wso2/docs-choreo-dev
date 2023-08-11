@@ -107,18 +107,18 @@ public class ComponentUtils {
         String componentName = testName + "component";
         Optional<ChoreoComponent> component = ComponentUtils.getComponentByName(runner, accessToken, citrusClients,
                 project, componentName);
-        ChoreoComponent restAPI;
+        ChoreoComponent serviceComponent;
 
         if (component.isEmpty()) {
-            GraphqlDTO dto = ComponentUtils.createRestApiComponentRequest(componentName, project, repo);
-            restAPI = createComponent(runner, citrusClients, accessToken, dto, componentFlavour);
+            GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);
+            serviceComponent = createComponent(runner, citrusClients, accessToken, dto, componentFlavour);
         } else {
-            restAPI = component.get();
+            serviceComponent = component.get();
         }
 
-        restAPI.setOrganization(org);
+        serviceComponent.setOrganization(org);
 
-        return restAPI;
+        return serviceComponent;
     }
 
     public static Optional<ChoreoComponent> getComponentByName(TestActionRunner runner, String accessToken,
