@@ -9,8 +9,24 @@
 #
 # --------------------------------------------------------------------------------------
 
-resources:
-  - loggingapi-deployment.yaml
-  - loggingapi-service.yaml
-  - loggingapi-hpa.yaml
-  - network-policy.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-rules-loggingapi
+spec:
+  podSelector:
+    matchLabels:
+      choreo.component: loggingapi
+  policyTypes:
+  - Egress
+  - Ingress
+  egress:
+  - {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: choreo-apim
+      podSelector:
+        matchLabels:
+          cc.component: choreo-connect-deployment
