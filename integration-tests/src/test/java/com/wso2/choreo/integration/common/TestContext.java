@@ -33,6 +33,7 @@ public class TestContext {
     @BeforeSuite
     public void setup() throws Exception {
         Configuration.loadConfigs();
+        Configuration.loadSecurityConfigs();
         setTestOrg();
         setTestUserTokenHandlerForSecurityTests();
         setTestUserTokenHandler();

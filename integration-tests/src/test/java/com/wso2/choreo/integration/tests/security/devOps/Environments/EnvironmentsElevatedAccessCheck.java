@@ -10,6 +10,7 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.config.SecurityConfigDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -36,12 +37,12 @@ public class EnvironmentsElevatedAccessCheck extends TestNGCitrusSpringSupport {
     @BeforeClass
     public void setup_EnvironmentsElevatedAccessCheck() throws Exception {
         accessToken = TestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
-        envId = Configuration.getConfig(ConfigDefinition.DEVOPS_ENV_ID);
-        orgId = Configuration.getConfig(ConfigDefinition.DEVOPS_ORG_ID);
-        projectId = Configuration.getConfig(ConfigDefinition.DEVOPS_PROJECT_ID);
-        secretId = Configuration.getConfig(ConfigDefinition.DEVOPS_SECRET_ID);
-        appEnvId = Configuration.getConfig(ConfigDefinition.DEVOPS_APP_ENV_ID);
-        configMapId = Configuration.getConfig(ConfigDefinition.DEVOPS_CONFIG_MAP_ID);
+        envId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_ENV_ID);
+        orgId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_ORG_ID);
+        projectId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_PROJECT_ID);
+        secretId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_SECRET_ID);
+        appEnvId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_APP_ENV_ID);
+        configMapId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_CONFIG_MAP_ID);
     }
 
     @Test

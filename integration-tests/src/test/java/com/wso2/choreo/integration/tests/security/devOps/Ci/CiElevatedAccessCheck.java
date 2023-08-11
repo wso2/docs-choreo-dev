@@ -9,6 +9,7 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.config.SecurityConfigDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,10 +33,10 @@ public class CiElevatedAccessCheck extends TestNGCitrusSpringSupport {
     @BeforeClass
     public void setup_CiElevatedAccessCheck() throws Exception {
         accessToken = TestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
-        componentId = Configuration.getConfig(ConfigDefinition.DEVOPS_COMPONENT_ID);
-        orgId = Configuration.getConfig(ConfigDefinition.DEVOPS_ORG_ID);
-        projectId = Configuration.getConfig(ConfigDefinition.DEVOPS_PROJECT_ID);
-        tokenId = Configuration.getConfig(ConfigDefinition.DEVOPS_TOKEN_ID);
+        componentId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_COMPONENT_ID);
+        orgId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_ORG_ID);
+        projectId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_PROJECT_ID);
+        tokenId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_TOKEN_ID);
     }
 
     @Test

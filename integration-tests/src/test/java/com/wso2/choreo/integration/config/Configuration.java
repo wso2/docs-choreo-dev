@@ -32,6 +32,7 @@ import java.util.Optional;
 
 public class Configuration {
     private static final Map<String, String> testConfigs = new HashMap<>();
+    private static final Map<String, String> securityTestConfigs = new HashMap<>();
 
     public static void loadConfigs() throws IOException, URISyntaxException {
         if (!testConfigs.isEmpty()) {
@@ -57,12 +58,35 @@ public class Configuration {
             add(configYaml.alerts);
             add(configYaml.insights);
             add(configYaml.themeManagement);
-            add(configYaml.observability);
-            add(configYaml.devOps);
         }};
 
         validateYamlConfigs(yamlConfigCollection);
         readTestConfigs(yamlConfigCollection);
+    }
+
+    public static void loadSecurityConfigs() throws IOException, URISyntaxException {
+        if (!securityTestConfigs.isEmpty()) {
+            return;
+        }
+
+        String securityTestConfig = System.getProperty("SecurityTestConfig");
+
+        if (StringUtils.isEmpty(securityTestConfig)) {
+            securityTestConfig = "security-env-config.yaml";
+        }
+
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+        mapper.findAndRegisterModules();
+        SecurityConfigYaml securityConfigYaml = mapper.readValue(new File(Objects.requireNonNull(Configuration.class.getClassLoader().
+                getResource(securityTestConfig)).toURI()), SecurityConfigYaml.class);
+
+        List<Map<String, String>> yamlConfigCollection = new ArrayList<>() {{
+            add(securityConfigYaml.observability);
+            add(securityConfigYaml.devOps);
+        }};
+
+        validateSecurityYamlConfigs(yamlConfigCollection);
+        readSecurityTestConfigs(yamlConfigCollection);
     }
 
     public static String getConfig(ConfigDefinition config) {
@@ -73,6 +97,16 @@ public class Configuration {
         }
 
         throw new IllegalStateException("Config '" + config.name() + "' has not been set");
+    }
+
+    public static String getSecurityConfig(SecurityConfigDefinition config) {
+        String value = securityTestConfigs.get(config.name());
+
+        if (value != null) {
+            return value;
+        }
+
+        throw new IllegalStateException("Security config '" + config.name() + "' has not been set");
     }
 
     private static void validateYamlConfigs(List<Map<String, String>> yamlConfigCollection) {
@@ -115,6 +149,46 @@ public class Configuration {
         }
     }
 
+    private static void validateSecurityYamlConfigs(List<Map<String, String>> yamlConfigCollection) {
+        for (Map<String, String> configMap : yamlConfigCollection) {
+            for (String key : configMap.keySet()) {
+                boolean isConfigInEnum = false;
+                for (SecurityConfigDefinition configEnum : SecurityConfigDefinition.values()) {
+                    if (configEnum.name().equals(key)) {
+                        isConfigInEnum = true;
+                        break;
+                    }
+                }
+
+                if (!isConfigInEnum) {
+                    throw new IllegalStateException("yaml contains config '" + key +
+                            "' which is not defined in Config enum");
+                }
+            }
+        }
+
+
+    }
+
+    private static void readSecurityTestConfigs(List<Map<String, String>> yamlConfigCollection) {
+        for (SecurityConfigDefinition config : getSecurityConfigDefinitions()) {
+            final String configName = config.name();
+
+            String envValue = System.getenv(configName);
+
+            if (envValue != null) {
+                securityTestConfigs.put(configName, envValue);
+            } else {
+                Optional<String> yamlValue = readYamlConfigValue(yamlConfigCollection, configName);
+                if (yamlValue.isPresent()) {
+                    securityTestConfigs.put(configName, yamlValue.get());
+                } else {
+                    throw new IllegalStateException("Security config '" + configName + "' has not been set");
+                }
+            }
+        }
+    }
+
     private static Optional<String> readYamlConfigValue(List<Map<String, String>> yamlConfigCollection, String config) {
         for (Map<String, String> configMap : yamlConfigCollection) {
             String yamlValue = configMap.get(config);
@@ -146,5 +220,9 @@ public class Configuration {
         }
 
         return List.of(ConfigDefinition.values());
+    }
+
+    private static List<SecurityConfigDefinition> getSecurityConfigDefinitions() {
+        return List.of(SecurityConfigDefinition.values());
     }
 }

@@ -10,6 +10,7 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.config.SecurityConfigDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -40,15 +41,15 @@ public class ComponentsIntegrationElevatedAccessCheck extends TestNGCitrusSpring
     @BeforeClass
     public void setup_ComponentsIntegrationElevatedAccessCheck() throws Exception {
         accessToken = TestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
-        componentId = Configuration.getConfig(ConfigDefinition.DEVOPS_COMPONENT_ID);
-        orgId = Configuration.getConfig(ConfigDefinition.DEVOPS_ORG_ID);
-        projectId = Configuration.getConfig(ConfigDefinition.DEVOPS_PROJECT_ID);
-        releaseId = Configuration.getConfig(ConfigDefinition.DEVOPS_RELEASE_ID);
-        envId = Configuration.getConfig(ConfigDefinition.DEVOPS_ENV_ID);
-        appEnvId = Configuration.getConfig(ConfigDefinition.DEVOPS_APP_ENV_ID);
-        integrationComponentId = Configuration.getConfig(ConfigDefinition.DEVOPS_INTEGRATION_COMPONENT_ID);
-        integrationCpReleaseId = Configuration.getConfig(ConfigDefinition.DEVOPS_INTEGRATION_CP_RELEASE_ID);
-        integrationCpSecretId = Configuration.getConfig(ConfigDefinition.DEVOPS_INTEGRATION_CP_SECRET_ID);
+        componentId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_COMPONENT_ID);
+        orgId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_ORG_ID);
+        projectId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_PROJECT_ID);
+        releaseId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_RELEASE_ID);
+        envId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_ENV_ID);
+        appEnvId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_APP_ENV_ID);
+        integrationComponentId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_INTEGRATION_COMPONENT_ID);
+        integrationCpReleaseId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_INTEGRATION_CP_RELEASE_ID);
+        integrationCpSecretId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_INTEGRATION_CP_SECRET_ID);
     }
 
     @Test

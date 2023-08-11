@@ -10,6 +10,7 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.config.SecurityConfigDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -38,14 +39,14 @@ public class VolumeElevatedAccessCheck extends TestNGCitrusSpringSupport {
     @BeforeClass
     public void setup_VolumeElevatedAccessCheck() throws Exception {
         accessToken = TestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
-        orgId = Configuration.getConfig(ConfigDefinition.DEVOPS_ORG_ID);
-        projectId = Configuration.getConfig(ConfigDefinition.DEVOPS_PROJECT_ID);
-        envId = Configuration.getConfig(ConfigDefinition.DEVOPS_ENV_ID);
-        vhost = Configuration.getConfig(ConfigDefinition.DEVOPS_VHOST);
-        envName = Configuration.getConfig(ConfigDefinition.DEVOPS_ENV_NAME);
-        orgIntId = Configuration.getConfig(ConfigDefinition.DEVOPS_ORG_INT_ID);
-        volumeId = Configuration.getConfig(ConfigDefinition.DEVOPS_VOLUME_ID);
-        appEnvId = Configuration.getConfig(ConfigDefinition.DEVOPS_APP_ENV_ID);
+        orgId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_ORG_ID);
+        projectId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_PROJECT_ID);
+        envId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_ENV_ID);
+        vhost = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_VHOST);
+        envName = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_ENV_NAME);
+        orgIntId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_ORG_INT_ID);
+        volumeId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_VOLUME_ID);
+        appEnvId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_APP_ENV_ID);
     }
 
     @Test

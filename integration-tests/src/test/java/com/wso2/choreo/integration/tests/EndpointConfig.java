@@ -32,6 +32,7 @@ public class EndpointConfig {
     @PostConstruct
     public void loadEndpointConfig() throws Exception {
         com.wso2.choreo.integration.config.Configuration.loadConfigs();
+        com.wso2.choreo.integration.config.Configuration.loadSecurityConfigs();
         TestContext.setTestOrg();
         TestContext.setTestUserTokenHandler();
         TestContext.setTestUserTokenHandlerForSecurityTests();

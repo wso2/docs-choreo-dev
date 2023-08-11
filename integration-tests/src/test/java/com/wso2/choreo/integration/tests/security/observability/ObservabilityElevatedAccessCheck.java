@@ -10,6 +10,7 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.config.SecurityConfigDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -54,36 +55,36 @@ public class ObservabilityElevatedAccessCheck extends TestNGCitrusSpringSupport 
     @BeforeClass
     public void setup_ObservabilityElevatedAccessCheck() throws Exception {
         accessToken = TestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
-        ballerinaComponentObsId = Configuration.getConfig(ConfigDefinition.OBS_OBSERVEID);
-        ballerinaComponentVersionId = Configuration.getConfig(ConfigDefinition.OBS_VERSION_ID);
-        byocComponentReleaseId = Configuration.getConfig(ConfigDefinition.OBS_BYOC_COMPONENT_RELEASE_ID);
-        from = Configuration.getConfig(ConfigDefinition.OBS_FROM);
-        to = Configuration.getConfig(ConfigDefinition.OBS_TO);
-        ballerinaComponentModuleId = Configuration.getConfig(ConfigDefinition.OBS_MODULE_ID);
-        ballerinaComponentEntryPointFuncModule = Configuration.getConfig(ConfigDefinition.
+        ballerinaComponentObsId = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_OBSERVEID);
+        ballerinaComponentVersionId = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_VERSION_ID);
+        byocComponentReleaseId = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_BYOC_COMPONENT_RELEASE_ID);
+        from = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_FROM);
+        to = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_TO);
+        ballerinaComponentModuleId = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_MODULE_ID);
+        ballerinaComponentEntryPointFuncModule = Configuration.getSecurityConfig(SecurityConfigDefinition.
                 OBS_ENTRYPOINT_FUNC_MODULE);
-        ballerinaComponentEntryPointSvcName = Configuration.getConfig(ConfigDefinition.
+        ballerinaComponentEntryPointSvcName = Configuration.getSecurityConfig(SecurityConfigDefinition.
                 OBS_ENTRYPOINT_SVC_NAME);
-        ballerinaComponentEntryPointFuncName = Configuration.getConfig(ConfigDefinition.
+        ballerinaComponentEntryPointFuncName = Configuration.getSecurityConfig(SecurityConfigDefinition.
                 OBS_ENTRYPOINT_FUNC_NAME);
-        ballerinaComponentEntryPointFuncName = Configuration.getConfig(ConfigDefinition.
+        ballerinaComponentEntryPointFuncName = Configuration.getSecurityConfig(SecurityConfigDefinition.
                 OBS_ENTRYPOINT_FUNC_NAME);
-        ballerinaComponentEntryPointResourceAccessor = Configuration.getConfig(ConfigDefinition.
+        ballerinaComponentEntryPointResourceAccessor = Configuration.getSecurityConfig(SecurityConfigDefinition.
                 OBS_ENTRYPOINT_RESOURCE_ACCESSOR);
-        environment = Configuration.getConfig(ConfigDefinition.OBS_ENVIRONMENT);
-        ballerinaComponentProjectId = Configuration.getConfig(ConfigDefinition.OBS_PROJECT_ID);
-        region = Configuration.getConfig(ConfigDefinition.OBS_REGION);
-        releaseId = Configuration.getConfig(ConfigDefinition.OBS_RELEASE_ID);
-        namespace = Configuration.getConfig(ConfigDefinition.OBS_NAMESPACE);
-        limit = Configuration.getConfig(ConfigDefinition.OBS_LIMIT);
-        bin = Configuration.getConfig(ConfigDefinition.OBS_BIN);
-        sort = Configuration.getConfig(ConfigDefinition.OBS_SORT);
-        interval = Configuration.getConfig(ConfigDefinition.OBS_INTERVAL);
-        logLevel = Configuration.getConfig(ConfigDefinition.OBS_LOG_LEVEL);
-        orgId = Configuration.getConfig(ConfigDefinition.OBS_ORG_ID);
-        envId = Configuration.getConfig(ConfigDefinition.OBS_ENVIRONMENT_ID);
-        componentId  = Configuration.getConfig(ConfigDefinition.OBS_COMPONENT_ID);
-        apiId = Configuration.getConfig(ConfigDefinition.OBS_API_ID);
+        environment = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_ENVIRONMENT);
+        ballerinaComponentProjectId = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_PROJECT_ID);
+        region = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_REGION);
+        releaseId = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_RELEASE_ID);
+        namespace = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_NAMESPACE);
+        limit = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_LIMIT);
+        bin = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_BIN);
+        sort = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_SORT);
+        interval = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_INTERVAL);
+        logLevel = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_LOG_LEVEL);
+        orgId = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_ORG_ID);
+        envId = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_ENVIRONMENT_ID);
+        componentId  = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_COMPONENT_ID);
+        apiId = Configuration.getSecurityConfig(SecurityConfigDefinition.OBS_API_ID);
     }
 
     @Test
