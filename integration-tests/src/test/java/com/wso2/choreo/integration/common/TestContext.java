@@ -52,7 +52,6 @@ public class TestContext {
     }
 
     public static TokenHandler getTestUserTokenHandler() {
-        System.out.println("testUserTokenHandler: " + testUserTokenHandler);
         return testUserTokenHandler;
     }
 

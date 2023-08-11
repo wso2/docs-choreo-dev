@@ -154,6 +154,7 @@ public final class Constant {
     // Theme management constants
     public static final String THEME_ENDPOINT_SUFFIX = "/org-mgt/1.0.0/orgs/";
 
+    // Observability related constants
     public static final String OBSERVABILITY_ORG_LOGS = "/orgLogs";
 
     public static final String OBSERVABILITY_PROJECT_LOGS = "/projectLogs";
