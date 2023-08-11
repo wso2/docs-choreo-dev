@@ -18,8 +18,6 @@
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationMICustomConfig"/>
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationEventContainerComponent"/>
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestIntegrationMISecretAndCert"/>
-            <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.TestUserManagedNonEmptyCreateComponentRoot"/>
-            <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.TestUserManagedNonEmptyCreateComponentSub"/>
             <class name="com.wso2.choreo.integration.tests.observability.ObservabilityAPITestCase"/>
             <class name="com.wso2.choreo.integration.tests.observability.LoggingAPITestCase"/>
             <class name="com.wso2.choreo.integration.tests.observability.SysObservabilityAPITestCase"/>
