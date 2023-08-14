@@ -1,0 +1,1916 @@
+{
+	"info": {
+		"_postman_id": "0cdeb5c3-7b7c-4f54-bd4c-1947f7297aac",
+		"name": "Api V1 Environments",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26391121",
+		"_collection_link": "https://winter-robot-282301.postman.co/workspace/Team-Workspace~be988dda-7505-4bca-8709-415b9b5bf44c/collection/26391121-0cdeb5c3-7b7c-4f54-bd4c-1947f7297aac?action=share&creator=26391121&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "{environmentId}",
+			"item": [
+				{
+					"name": "storage-classes",
+					"item": [
+						{
+							"name": "get Environmentid Storage Classes",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "payload",
+											"value": "{}",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl_environments}}/:environmentId/storage-classes?organization_id={{organization_id}}&project_id={{project_id}}",
+									"host": [
+										"{{baseUrl_environments}}"
+									],
+									"path": [
+										":environmentId",
+										"storage-classes"
+									],
+									"query": [
+										{
+											"key": "organization_id",
+											"value": "{{organization_id}}"
+										},
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										}
+									],
+									"variable": [
+										{
+											"key": "environmentId",
+											"value": "{{env_id}}"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Ok",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/:environmentId/storage-classes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												":environmentId",
+												"storage-classes"
+											],
+											"variable": [
+												{
+													"key": "environmentId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								},
+								{
+									"name": "Internal server error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/:environmentId/storage-classes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												":environmentId",
+												"storage-classes"
+											],
+											"variable": [
+												{
+													"key": "environmentId"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "secret",
+					"item": [
+						{
+							"name": "{secretId}",
+							"item": [
+								{
+									"name": "get secret by id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl_environments}}/:environmentId/secret/:secretId?organization_id={{organization_id}}&project_id={{project_id}}",
+											"host": [
+												"{{baseUrl_environments}}"
+											],
+											"path": [
+												":environmentId",
+												"secret",
+												":secretId"
+											],
+											"query": [
+												{
+													"key": "organization_id",
+													"value": "{{organization_id}}"
+												},
+												{
+													"key": "project_id",
+													"value": "{{project_id}}"
+												}
+											],
+											"variable": [
+												{
+													"key": "environmentId",
+													"value": "{{env_id}}"
+												},
+												{
+													"key": "secretId",
+													"value": "{{secret_id}}"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Ok",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/:environmentId/secret/:secretId",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														":environmentId",
+														"secret",
+														":secretId"
+													],
+													"variable": [
+														{
+															"key": "environmentId"
+														},
+														{
+															"key": "secretId"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										},
+										{
+											"name": "Internal server error",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/:environmentId/secret/:secretId",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														":environmentId",
+														"secret",
+														":secretId"
+													],
+													"variable": [
+														{
+															"key": "environmentId"
+														},
+														{
+															"key": "secretId"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": "<string>"
+										}
+									]
+								},
+								{
+									"name": "update secret by id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "*/*"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"ID\": \"{{secret_id}}\",\n    \"CreatedAt\": \"2023-07-17T02:09:32.3900797Z\",\n    \"UpdatedAt\": \"2023-07-17T02:09:32.3900797Z\",\n    \"metadata\": {},\n    \"name\": \"secret-1\",\n    \"organization_id\": \"{{organization_id}}\",\n    \"project_id\": \"{{project_id}}\",\n    \"environment_id\": \"{{env_id}}\",\n    \"environment\": null,\n    \"data\": {\n        \"id\": \"\"\n    },\n    \"kubernetes_name\": \"secret-1-263731026\",\n    \"app_environment_id\": \"{{app_env_id}}\",\n    \"keys\": [\n        \"id\"\n    ],\n    \"config_type\": \"VariableList\",\n    \"versions\": [\n        {\n            \"ID\": \"9ff9c664-57f0-40d9-8df5-350e39053247\",\n            \"CreatedAt\": \"2023-07-17T02:09:32.3572429Z\",\n            \"UpdatedAt\": \"2023-07-17T02:09:32.3572429Z\",\n            \"metadata\": {\n                \"keys\": [\n                    \"id\"\n                ]\n            },\n            \"Version\": 1,\n            \"ParentID\": \"f3d2cddb-3007-45e4-85d1-4c61e3cc02eb\"\n        }\n    ],\n    \"version\": 1,\n    \"placeholder\": false,\n    \"isBase64\": false,\n    \"namespace\": \"\",\n    \"copied_from\": null,\n    \"save_type\": \"Save\",\n    \"secret_type\": \"Opaque\",\n    \"is_configurable\": false,\n    \"delayed\": false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl_environments}}/:environmentId/secret/:secretId?organization_id={{organization_id}}&project_id={{project_id}}",
+											"host": [
+												"{{baseUrl_environments}}"
+											],
+											"path": [
+												":environmentId",
+												"secret",
+												":secretId"
+											],
+											"query": [
+												{
+													"key": "organization_id",
+													"value": "{{organization_id}}"
+												},
+												{
+													"key": "project_id",
+													"value": "{{project_id}}"
+												}
+											],
+											"variable": [
+												{
+													"key": "environmentId",
+													"value": "{{env_id}}"
+												},
+												{
+													"key": "secretId",
+													"value": "{{secret_id}}"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Ok",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "*/*"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/:environmentId/secret/:secretId",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														":environmentId",
+														"secret",
+														":secretId"
+													],
+													"variable": [
+														{
+															"key": "environmentId"
+														},
+														{
+															"key": "secretId"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										},
+										{
+											"name": "Internal server error",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "*/*"
+													},
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/:environmentId/secret/:secretId",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														":environmentId",
+														"secret",
+														":secretId"
+													],
+													"variable": [
+														{
+															"key": "environmentId"
+														},
+														{
+															"key": "secretId"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": "<string>"
+										}
+									]
+								},
+								{
+									"name": "delete secret by id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "*/*"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl_environments}}/:environmentId/secret/:secretId?organization_id={{organization_id}}&project_id={{project_id}}",
+											"host": [
+												"{{baseUrl_environments}}"
+											],
+											"path": [
+												":environmentId",
+												"secret",
+												":secretId"
+											],
+											"query": [
+												{
+													"key": "organization_id",
+													"value": "{{organization_id}}"
+												},
+												{
+													"key": "project_id",
+													"value": "{{project_id}}"
+												}
+											],
+											"variable": [
+												{
+													"key": "environmentId",
+													"value": "{{env_id}}"
+												},
+												{
+													"key": "secretId",
+													"value": "{{secret_id}}"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Ok",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "*/*"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/:environmentId/secret/:secretId",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														":environmentId",
+														"secret",
+														":secretId"
+													],
+													"variable": [
+														{
+															"key": "environmentId"
+														},
+														{
+															"key": "secretId"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										},
+										{
+											"name": "Internal server error",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "*/*"
+													},
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/:environmentId/secret/:secretId",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														":environmentId",
+														"secret",
+														":secretId"
+													],
+													"variable": [
+														{
+															"key": "environmentId"
+														},
+														{
+															"key": "secretId"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": "<string>"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "get secret in environment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl_environments}}/:environmentId/secret?organization_id={{organization_id}}&project_id={{project_id}}",
+									"host": [
+										"{{baseUrl_environments}}"
+									],
+									"path": [
+										":environmentId",
+										"secret"
+									],
+									"query": [
+										{
+											"key": "organization_id",
+											"value": "{{organization_id}}"
+										},
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										}
+									],
+									"variable": [
+										{
+											"key": "environmentId",
+											"value": "{{env_id}}"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Ok",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/:environmentId/secret",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												":environmentId",
+												"secret"
+											],
+											"variable": [
+												{
+													"key": "environmentId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								},
+								{
+									"name": "Internal server error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/:environmentId/secret",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												":environmentId",
+												"secret"
+											],
+											"variable": [
+												{
+													"key": "environmentId"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						},
+						{
+							"name": "create secret in environment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "payload",
+											"value": "{}",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "*/*"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"config_type\": \"VariableList\",\n    \"data\": {\n        \"id\": \"1234\"\n    },\n    \"environment_id\": \"{{env_id}}\",\n    \"metadata\": {},\n    \"name\": \"secret-2\",\n    \"organization_id\": \"{{organization_id}}\",\n    \"project_id\": \"{{project_id}}\",\n    \"app_environment_id\": \"{{app_env_id}}\",\n    \"isBase64\": false,\n    \"save_type\": \"Save\",\n    \"secret_type\": \"Opaque\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl_environments}}/:environmentId/secret?organization_id={{organization_id}}&project_id={{project_id}}",
+									"host": [
+										"{{baseUrl_environments}}"
+									],
+									"path": [
+										":environmentId",
+										"secret"
+									],
+									"query": [
+										{
+											"key": "organization_id",
+											"value": "{{organization_id}}"
+										},
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										}
+									],
+									"variable": [
+										{
+											"key": "environmentId",
+											"value": "{{env_id}}"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "*/*"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/:environmentId/secret",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												":environmentId",
+												"secret"
+											],
+											"variable": [
+												{
+													"key": "environmentId"
+												}
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								},
+								{
+									"name": "Internal server error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "*/*"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/:environmentId/secret",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												":environmentId",
+												"secret"
+											],
+											"variable": [
+												{
+													"key": "environmentId"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "configmap",
+					"item": [
+						{
+							"name": "{configMapId}",
+							"item": [
+								{
+									"name": "get configmap by id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl_environments}}/:environmentId/configmap/:configMapId?organization_id={{organization_id}}&project_id={{project_id}}",
+											"host": [
+												"{{baseUrl_environments}}"
+											],
+											"path": [
+												":environmentId",
+												"configmap",
+												":configMapId"
+											],
+											"query": [
+												{
+													"key": "organization_id",
+													"value": "{{organization_id}}"
+												},
+												{
+													"key": "project_id",
+													"value": "{{project_id}}"
+												}
+											],
+											"variable": [
+												{
+													"key": "environmentId",
+													"value": "{{env_id}}"
+												},
+												{
+													"key": "configMapId",
+													"value": "{{configmap_id}}"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Ok",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/:environmentId/configmap/:configMapId",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														":environmentId",
+														"configmap",
+														":configMapId"
+													],
+													"variable": [
+														{
+															"key": "environmentId"
+														},
+														{
+															"key": "configMapId"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										},
+										{
+											"name": "Internal server error",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/:environmentId/configmap/:configMapId",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														":environmentId",
+														"configmap",
+														":configMapId"
+													],
+													"variable": [
+														{
+															"key": "environmentId"
+														},
+														{
+															"key": "configMapId"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": "<string>"
+										}
+									]
+								},
+								{
+									"name": "update configmap by id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "*/*"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"ID\": \"{{configmap_id}}\",\n    \"CreatedAt\": \"2023-07-17T02:28:07.19159391Z\",\n    \"UpdatedAt\": \"2023-07-17T02:28:07.19159391Z\",\n    \"metadata\": {},\n    \"name\": \"config-1\",\n    \"organization_id\": \"{{organization_id}}\",\n    \"project_id\": \"{{project_id}}\",\n    \"environment_id\": \"{{env_id}}\",\n    \"environment\": null,\n    \"data\": {\n        \"id\": \"1232\",\n        \"name\": \"3\"\n    },\n    \"kubernetes_name\": \"config-1-2145861697\",\n    \"app_environment_id\": \"{{app_env_id}}\",\n    \"keys\": [\n        \"id\"\n    ],\n    \"config_type\": \"VariableList\",\n    \"versions\": [\n            {\n                \"ID\": \"ba8ad7aa-401a-4f9a-b0a3-d764a99c5cbe\",\n                \"CreatedAt\": \"2023-07-17T02:28:07.158446042Z\",\n                \"UpdatedAt\": \"2023-07-17T02:28:07.158446042Z\",\n                \"metadata\": {\n                    \"keys\": [\n                        \"id\"\n                    ]\n                },\n                \"Version\": 1,\n                \"ParentID\": \"d856e120-3466-46d4-b210-03326ceea24c\"\n            }\n        ],\n    \"version\": 1,\n    \"placeholder\": false,\n    \"isBase64\": false,\n    \"namespace\": \"\",\n    \"copied_from\": null\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl_environments}}/:environmentId/configmap/:configMapId?organization_id={{organization_id}}&project_id={{project_id}}",
+											"host": [
+												"{{baseUrl_environments}}"
+											],
+											"path": [
+												":environmentId",
+												"configmap",
+												":configMapId"
+											],
+											"query": [
+												{
+													"key": "organization_id",
+													"value": "{{organization_id}}"
+												},
+												{
+													"key": "project_id",
+													"value": "{{project_id}}"
+												},
+												{
+													"key": "",
+													"value": null,
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "environmentId",
+													"value": "{{env_id}}"
+												},
+												{
+													"key": "configMapId",
+													"value": "{{configmap_id}}"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Ok",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "*/*"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/:environmentId/configmap/:configMapId",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														":environmentId",
+														"configmap",
+														":configMapId"
+													],
+													"variable": [
+														{
+															"key": "environmentId"
+														},
+														{
+															"key": "configMapId"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										},
+										{
+											"name": "Internal server error",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "*/*"
+													},
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/:environmentId/configmap/:configMapId",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														":environmentId",
+														"configmap",
+														":configMapId"
+													],
+													"variable": [
+														{
+															"key": "environmentId"
+														},
+														{
+															"key": "configMapId"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": "<string>"
+										}
+									]
+								},
+								{
+									"name": "delete configmap by id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "*/*"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl_environments}}/:environmentId/configmap/:configMapId?organization_id={{organization_id}}&project_id={{project_id}}",
+											"host": [
+												"{{baseUrl_environments}}"
+											],
+											"path": [
+												":environmentId",
+												"configmap",
+												":configMapId"
+											],
+											"query": [
+												{
+													"key": "organization_id",
+													"value": "{{organization_id}}"
+												},
+												{
+													"key": "project_id",
+													"value": "{{project_id}}"
+												}
+											],
+											"variable": [
+												{
+													"key": "environmentId",
+													"value": "{{env_id}}"
+												},
+												{
+													"key": "configMapId",
+													"value": "{{configmap_id}}"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Ok",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "*/*"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/:environmentId/configmap/:configMapId",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														":environmentId",
+														"configmap",
+														":configMapId"
+													],
+													"variable": [
+														{
+															"key": "environmentId"
+														},
+														{
+															"key": "configMapId"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										},
+										{
+											"name": "Internal server error",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "*/*"
+													},
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/:environmentId/configmap/:configMapId",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														":environmentId",
+														"configmap",
+														":configMapId"
+													],
+													"variable": [
+														{
+															"key": "environmentId"
+														},
+														{
+															"key": "configMapId"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": "<string>"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "get configmap in environment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl_environments}}/:environmentId/configmap?organization_id={{organization_id}}&project_id={{project_id}}",
+									"host": [
+										"{{baseUrl_environments}}"
+									],
+									"path": [
+										":environmentId",
+										"configmap"
+									],
+									"query": [
+										{
+											"key": "organization_id",
+											"value": "{{organization_id}}"
+										},
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										}
+									],
+									"variable": [
+										{
+											"key": "environmentId",
+											"value": "{{env_id}}"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Ok",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/:environmentId/configmap",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												":environmentId",
+												"configmap"
+											],
+											"variable": [
+												{
+													"key": "environmentId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								},
+								{
+									"name": "Internal server error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/:environmentId/configmap",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												":environmentId",
+												"configmap"
+											],
+											"variable": [
+												{
+													"key": "environmentId"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						},
+						{
+							"name": "create configmap in environment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "payload",
+											"value": "{}",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "*/*"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"config_type\": \"VariableList\",\n    \"data\": {\n        \"id\": \"1232\"\n    },\n    \"environment_id\": \"{{env_id}}\",\n    \"metadata\": {},\n    \"name\": \"config-2\",\n    \"organization_id\": \"{{organization_id}}\",\n    \"project_id\": \"{{project_id}}\",\n    \"app_environment_id\": \"{{app_env_id}}\",\n    \"isBase64\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl_environments}}/:environmentId/configmap?organization_id={{organization_id}}&project_id={{project_id}}",
+									"host": [
+										"{{baseUrl_environments}}"
+									],
+									"path": [
+										":environmentId",
+										"configmap"
+									],
+									"query": [
+										{
+											"key": "organization_id",
+											"value": "{{organization_id}}"
+										},
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										}
+									],
+									"variable": [
+										{
+											"key": "environmentId",
+											"value": "{{env_id}}"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "*/*"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/:environmentId/configmap",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												":environmentId",
+												"configmap"
+											],
+											"variable": [
+												{
+													"key": "environmentId"
+												}
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								},
+								{
+									"name": "Internal server error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "*/*"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"description\": \"Any type of entity body\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/:environmentId/configmap",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												":environmentId",
+												"configmap"
+											],
+											"variable": [
+												{
+													"key": "environmentId"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server",
+			"value": ""
+		},
+		{
+			"key": "port",
+			"value": "config:port"
+		},
+		{
+			"key": "baseUrl",
+			"value": "{{server}}:{{port}}/api/v1/environments"
+		}
+	]
+}
