@@ -53,3 +53,9 @@ helmCharts:
 commonAnnotations:
   kapp.k14s.io/disable-original: ""
   kapp.k14s.io/disable-default-label-scoping-rules: ""
+  checkov.io/skip1: CKV_K8S_20=Managed by nginx ingress controller
+  checkov.io/skip2: CKV_K8S_22=Managed by nginx ingress controller
+  checkov.io/skip3: CKV_K8S_25=Managed by nginx ingress controller
+  checkov.io/skip4: CKV_K8S_38=Managed by nginx ingress controller
+  checkov.io/skip5: CKV_K8S_40=Managed by nginx ingress controller
+  checkov.io/skip6: CKV_K8S_AZURE_WSO2_2=Managed by nginx ingress controller
