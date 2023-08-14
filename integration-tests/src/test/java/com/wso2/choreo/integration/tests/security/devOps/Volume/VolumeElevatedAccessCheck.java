@@ -7,6 +7,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.utils.SecurityUtils;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -55,19 +56,8 @@ public class VolumeElevatedAccessCheck extends TestNGCitrusSpringSupport {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetVolume = Constant.DEVOPS_VOLUME + volumeId + "?organization_id="
                 + orgId + "&project_id=" + projectId;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                get(requestUrlForGetVolume).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient, requestUrlForGetVolume,
+                accessToken);
     }
 
     @Test
@@ -76,19 +66,8 @@ public class VolumeElevatedAccessCheck extends TestNGCitrusSpringSupport {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForDeleteVolume = Constant.DEVOPS_VOLUME + volumeId + "?organization_id="
                 + orgId + "&project_id=" + projectId;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                delete(requestUrlForDeleteVolume).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForDeleteRequests(this, choreoCPTestClient, requestUrlForDeleteVolume,
+                accessToken);
     }
 
     @Test
@@ -104,20 +83,8 @@ public class VolumeElevatedAccessCheck extends TestNGCitrusSpringSupport {
         params.put("env_id", envId);
         String body = MessageUtils.
                 generateStringFromTemplate("templates/devOps/queryForCreateVolume.mustache", params);
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                post(requestUrlForCreateVolume).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken).
-                body(body));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrlForCreateVolume,
+                body, accessToken);
     }
 
     @Test
@@ -126,18 +93,7 @@ public class VolumeElevatedAccessCheck extends TestNGCitrusSpringSupport {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForListVolumes = Constant.DEVOPS_VOLUME + "/?organization_id="
                 + orgId + "&project_id=" + projectId + "&environment_id=" + envId;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                get(requestUrlForListVolumes).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient, requestUrlForListVolumes,
+                accessToken);
     }
 }

@@ -5,7 +5,9 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.Endpoints;
+import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.utils.SecurityUtils;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -16,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
@@ -32,6 +35,8 @@ public class ClustersElevatedAccessCheck extends TestNGCitrusSpringSupport {
     private static String namespace;
     private static String clusterId;
     private static String orgIntId;
+    private static String podName;
+    private static String containerName;
 
     @BeforeClass
     public void setup_ClustersElevatedAccessCheck() throws Exception {
@@ -43,6 +48,8 @@ public class ClustersElevatedAccessCheck extends TestNGCitrusSpringSupport {
         namespace = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_NAMESPACE);
         clusterId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_CLUSTER_ID);
         orgIntId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_ORG_INT_ID);
+        podName = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_POD_NAME);
+        containerName = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_CONTAINER_NAME);
     }
 
     @Test
@@ -52,19 +59,8 @@ public class ClustersElevatedAccessCheck extends TestNGCitrusSpringSupport {
         String requestUrlForGetToken = Constant.DEVOPS_CLUSTERS +
                 "/" + clusterId + "/query/v1/Pod?organization_id=" + orgId +
                 "&project_id=" + projectId + "&namespace=" + namespace + "&name=&labelSelector=&fieldSelector=&limit=0";
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                get(requestUrlForGetToken).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient, requestUrlForGetToken,
+                accessToken);
     }
 
     @Test
@@ -74,19 +70,12 @@ public class ClustersElevatedAccessCheck extends TestNGCitrusSpringSupport {
         String requestUrlForGetToken = Constant.DEVOPS_CLUSTERS +
                 "/" + clusterId + "/pod/logs?organization_id=" + orgId +
                 "&project_id=" + projectId;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                post(requestUrlForGetToken).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        Map<String, String> params = new HashMap<>();
+        params.put("namespace", namespace);
+        params.put("pod_name", podName);
+        params.put("container_name", containerName);
+        String body = MessageUtils.
+                generateStringFromTemplate("templates/devOps/queryForCreatePodLogs.mustache", params);
     }
 
     @Test
@@ -95,18 +84,7 @@ public class ClustersElevatedAccessCheck extends TestNGCitrusSpringSupport {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetDataplanes = Constant.DEVOPS_CLUSTERS +
                 "/dataplanes?org_id=" + orgIntId + "&project_id=" + projectId;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                get(requestUrlForGetDataplanes).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient, requestUrlForGetDataplanes,
+                accessToken);
     }
 }

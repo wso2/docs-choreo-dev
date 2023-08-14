@@ -7,6 +7,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.utils.SecurityUtils;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -96,20 +97,8 @@ public class ObservabilityElevatedAccessCheck extends TestNGCitrusSpringSupport 
         params.put("version", ballerinaComponentVersionId);
         String body = MessageUtils.
                 generateStringFromTemplate("templates/observability/graphql/queryForAst.mustache", params);
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken).
-                body(body));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
+                Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX, body, accessToken);
     }
 
     @Test
@@ -122,20 +111,8 @@ public class ObservabilityElevatedAccessCheck extends TestNGCitrusSpringSupport 
         params.put("to", to);
         String body = MessageUtils.
                 generateStringFromTemplate("templates/observability/graphql/queryForBYOCComponentRequestMetrics.mustache", params);
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken).
-                body(body));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
+                Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX, body, accessToken);
     }
 
     @Test
@@ -155,20 +132,8 @@ public class ObservabilityElevatedAccessCheck extends TestNGCitrusSpringSupport 
         String body = MessageUtils.
                 generateStringFromTemplate("templates/observability/graphql/" +
                         "queryForBallerinaComponentStats.mustache", params);
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken).
-                body(body));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
+                Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX, body, accessToken);
     }
 
     @Test
@@ -183,20 +148,8 @@ public class ObservabilityElevatedAccessCheck extends TestNGCitrusSpringSupport 
         String body = MessageUtils.
                 generateStringFromTemplate("templates/observability/graphql/" +
                         "queryForViewProjectServiceGraph.mustache", params);
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken).
-                body(body));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
+                Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX, body, accessToken);
     }
 
     @Test
@@ -216,20 +169,8 @@ public class ObservabilityElevatedAccessCheck extends TestNGCitrusSpringSupport 
         String body = MessageUtils.
                 generateStringFromTemplate("templates/observability/graphql/" +
                         "queryForViewBallerinaComponentFramegraph.mustache", params);
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken).
-                body(body));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
+                Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX, body, accessToken);
     }
 
     @Test
@@ -240,19 +181,8 @@ public class ObservabilityElevatedAccessCheck extends TestNGCitrusSpringSupport 
                 Constant.OBSERVABILITY_GROUP_LOGS + "?startTime=" + from + "&endTime=" + to +
                 "&region=" + region + "&releaseId=" + releaseId + "&namespace=" + namespace +
                 "&limit=" + limit + "&bin=" + bin;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                get(requestUrlForViewComponentGroupedLogs).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http().
-                client(choreoCPTestClient).
-                receive().
-                response(HttpStatus.UNAUTHORIZED).
-                message().
-                type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient,
+                requestUrlForViewComponentGroupedLogs, accessToken);
     }
 
     @Test
@@ -263,19 +193,8 @@ public class ObservabilityElevatedAccessCheck extends TestNGCitrusSpringSupport 
                 Constant.OBSERVABILITY_LOGS + "?startTime=" + from + "&region=" + region +
                 "&endTime=" + to + "&releaseId=" + releaseId +
                 "&namespace=" + namespace + "&limit=" + limit + "&sort=" + sort;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                get(requestUrlForViewComponentLogs).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http().
-                client(choreoCPTestClient).
-                receive().
-                response(HttpStatus.UNAUTHORIZED).
-                message().
-                type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient,
+                requestUrlForViewComponentLogs, accessToken);
     }
 
     @Test
@@ -286,19 +205,8 @@ public class ObservabilityElevatedAccessCheck extends TestNGCitrusSpringSupport 
                 Constant.OBSERVABILITY_METRICS + "?startTime=" + from +
                 "&endTime=" + to + "&interval=" + interval + "&region=" + region +
                 "&releaseId=" + releaseId + "&namespace=" + namespace;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                get(requestUrlForViewBallerinaComponentMetrics).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http().
-                client(choreoCPTestClient).
-                receive().
-                response(HttpStatus.UNAUTHORIZED).
-                message().
-                type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient,
+                requestUrlForViewBallerinaComponentMetrics, accessToken);
     }
 
     @Test
@@ -309,19 +217,8 @@ public class ObservabilityElevatedAccessCheck extends TestNGCitrusSpringSupport 
                 Constant.OBSERVABILITY_ORG_LOGS + "?startTime=" + from +
                 "&region=" + region + "&endTime=" + to + "&namespace=" + namespace +
                 "&logLevel=" + logLevel + "&limit=" + limit + "&sort=" + sort;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                get(requestUrlForViewOrganizationLogs).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http().
-                client(choreoCPTestClient).
-                receive().
-                response(HttpStatus.UNAUTHORIZED).
-                message().
-                type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient,
+                requestUrlForViewOrganizationLogs, accessToken);
     }
 
     @Test
@@ -333,19 +230,8 @@ public class ObservabilityElevatedAccessCheck extends TestNGCitrusSpringSupport 
                 "&endTime=" + to + "&projectId=" + ballerinaComponentProjectId +
                 "&namespace=" + namespace + "&region=" + region + "&environment=" + environment +
                 "&limit=" + limit + "&sort=" + sort;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                get(requestUrlForViewProjectLogs).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http().
-                client(choreoCPTestClient).
-                receive().
-                response(HttpStatus.UNAUTHORIZED).
-                message().
-                type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient,
+                requestUrlForViewProjectLogs, accessToken);
     }
 
     @Test
@@ -354,19 +240,8 @@ public class ObservabilityElevatedAccessCheck extends TestNGCitrusSpringSupport 
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForViewAuditLogs = Constant.OBSERVABILITY_AUDIT_LOGS + "/orgs/" + orgId +
                 "/audit-logs?startTime=" + from + "&endTime=" + to;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                get(requestUrlForViewAuditLogs).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http().
-                client(choreoCPTestClient).
-                receive().
-                response(HttpStatus.UNAUTHORIZED).
-                message().
-                type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient,
+                requestUrlForViewAuditLogs, accessToken);
     }
 
     @Test
@@ -378,18 +253,7 @@ public class ObservabilityElevatedAccessCheck extends TestNGCitrusSpringSupport 
                 "&endTime=" + to + "&environmentId=" + envId +
                 "&componentId=" + componentId + "&apiId=" + apiId +
                 "&region=" + region + "&logType=singleLine&limit=" + limit + "&sort=" + sort;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                get(requestUrlForViewProxyAPIComponentGatewayAccessLogs).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http().
-                client(choreoCPTestClient).
-                receive().
-                response(HttpStatus.UNAUTHORIZED).
-                message().
-                type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient,
+                requestUrlForViewProxyAPIComponentGatewayAccessLogs, accessToken);
     }
 }

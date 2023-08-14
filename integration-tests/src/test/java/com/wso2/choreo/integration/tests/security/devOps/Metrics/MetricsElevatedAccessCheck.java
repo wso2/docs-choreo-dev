@@ -6,6 +6,7 @@ import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.utils.SecurityUtils;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -41,19 +42,8 @@ public class MetricsElevatedAccessCheck extends TestNGCitrusSpringSupport {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetPodMetrics = Constant.DEVOPS_METRICS +
                 "podMetrics?org_id=" + orgId + "&project_id=" + projectId;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                get(requestUrlForGetPodMetrics).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient, requestUrlForGetPodMetrics,
+                accessToken);
     }
 
     @Test
@@ -62,39 +52,17 @@ public class MetricsElevatedAccessCheck extends TestNGCitrusSpringSupport {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetDeployments = Constant.DEVOPS_METRICS +
                 "deployments?organization_id=" + orgId + "&project_id=" + projectId;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                get(requestUrlForGetDeployments).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient, requestUrlForGetDeployments,
+                accessToken);
     }
 
     @Test
     @CitrusTest
     public void getActiveComponentCount_MetricsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForGetDeployments = Constant.DEVOPS_METRICS +
+        String requestUrlForGetActiveDeployments = Constant.DEVOPS_METRICS +
                 "activeComponentCount?org_id=" + orgId + "&project_id=" + projectId;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                get(requestUrlForGetDeployments).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient,
+                requestUrlForGetActiveDeployments, accessToken);
     }
 }

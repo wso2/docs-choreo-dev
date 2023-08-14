@@ -82,6 +82,7 @@ public class Configuration {
         List<Map<String, String>> yamlConfigCollection = new ArrayList<>() {{
             add(securityConfigYaml.observability);
             add(securityConfigYaml.devOps);
+            add(securityConfigYaml.devportal);
         }};
 
         validateSecurityYamlConfigs(yamlConfigCollection);

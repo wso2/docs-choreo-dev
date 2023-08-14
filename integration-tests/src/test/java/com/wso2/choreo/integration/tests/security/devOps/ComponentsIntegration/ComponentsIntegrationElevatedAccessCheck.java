@@ -7,6 +7,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.utils.SecurityUtils;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -58,19 +59,8 @@ public class ComponentsIntegrationElevatedAccessCheck extends TestNGCitrusSpring
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetPaths = Constant.DEVOPS_INTEGRATION +
                 "paths?organization_id=" + orgId + "&project_id=" + projectId;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                get(requestUrlForGetPaths).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient, requestUrlForGetPaths,
+                accessToken);
     }
 
     @Test
@@ -80,19 +70,8 @@ public class ComponentsIntegrationElevatedAccessCheck extends TestNGCitrusSpring
         String requestUrlForGetReleaseSecrets = Constant.DEVOPS_INTEGRATION +
                 "/" + componentId + "/release/" + releaseId + "/secrets?organization_id=" + orgId +
                 "&project_id=" + projectId + "&env_id=" + envId;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                get(requestUrlForGetReleaseSecrets).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient, requestUrlForGetReleaseSecrets,
+                accessToken);
     }
 
     @Test
@@ -109,20 +88,8 @@ public class ComponentsIntegrationElevatedAccessCheck extends TestNGCitrusSpring
         params.put("app_env_id", appEnvId);
         String body = MessageUtils.
                 generateStringFromTemplate("templates/devOps/queryForPutSecrets.mustache", params);
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                post(requestUrlForPutReleaseSecrets).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken).
-                body(body));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+       SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrlForPutReleaseSecrets,
+               body, accessToken);
     }
 
     @Test
@@ -132,45 +99,22 @@ public class ComponentsIntegrationElevatedAccessCheck extends TestNGCitrusSpring
         String requestUrlForGetEnvironmentVariables = Constant.DEVOPS_INTEGRATION +
                 "/" + integrationComponentId + "/release/" + integrationCpReleaseId + "/environment-variables?" +
                 "organization_id=" + orgId + "&project_id=" + projectId + "&env_id=" + envId;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                get(requestUrlForGetEnvironmentVariables).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient,
+                requestUrlForGetEnvironmentVariables, accessToken);
     }
 
     @Test
     @CitrusTest
     public void putEnvironmentVariables_ComponentsIntegrationElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForGetEnvironmentVariables = Constant.DEVOPS_INTEGRATION +
+        String requestUrlForPutEnvironmentVariables = Constant.DEVOPS_INTEGRATION +
                 "/" + integrationComponentId + "/release/" + integrationCpReleaseId + "/environment-variables?" +
                 "organization_id=" + orgId + "&project_id=" + projectId + "&env_id=" + envId;
         Map<String, String> params = new HashMap<>();
         String body = MessageUtils.
                 generateStringFromTemplate("templates/devOps/queryForPutEnvironmentVariables.mustache", params);
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                post(requestUrlForGetEnvironmentVariables).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken).
-                body(body));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
+                requestUrlForPutEnvironmentVariables, body, accessToken);
     }
 
     @Test
@@ -180,18 +124,7 @@ public class ComponentsIntegrationElevatedAccessCheck extends TestNGCitrusSpring
         String requestUrlForDeleteSecrets = Constant.DEVOPS_INTEGRATION +
                 "/secrets?organization_id=" + orgId + "&project_id=" + projectId + "&env_id=" + envId +
                 "&secret_id=" + integrationCpSecretId;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                delete(requestUrlForDeleteSecrets).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForDeleteRequests(this, choreoCPTestClient, requestUrlForDeleteSecrets,
+                accessToken);
     }
 }

@@ -5,7 +5,9 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.Endpoints;
+import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.utils.SecurityUtils;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -16,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
@@ -46,19 +49,8 @@ public class CiElevatedAccessCheck extends TestNGCitrusSpringSupport {
         String requestUrlForGetToken = Constant.DEVOPS_CI +
                 "/component/" + componentId + "/tokens?organization_id=" + orgId +
                 "&project_id=" + projectId;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                get(requestUrlForGetToken).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient, requestUrlForGetToken,
+                accessToken);
     }
 
     @Test
@@ -68,19 +60,8 @@ public class CiElevatedAccessCheck extends TestNGCitrusSpringSupport {
         String requestUrlForRevokeToken = Constant.DEVOPS_CI +
                 "/component/" + componentId + "/tokens/" + tokenId
                 + "/revoke?organization_id=" + orgId + "&project_id=" + projectId;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                delete(requestUrlForRevokeToken).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForDeleteRequests(this, choreoCPTestClient, requestUrlForRevokeToken,
+                accessToken);
     }
 
     @Test
@@ -90,19 +71,11 @@ public class CiElevatedAccessCheck extends TestNGCitrusSpringSupport {
         String requestUrlForTokenRegenerate = Constant.DEVOPS_CI +
                 "/component/" + componentId + "/tokens/" + tokenId + "/regenerate?" +
                 "organization_id=" + orgId + "&project_id=" + projectId;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                post(requestUrlForTokenRegenerate).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        Map<String, String> params = new HashMap<>();
+        String body = MessageUtils.
+                generateStringFromTemplate("templates/devOps/queryForPostValidateVhost.mustache", params);
+        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrlForTokenRegenerate,
+                body, accessToken);
     }
 
     @Test
@@ -112,19 +85,11 @@ public class CiElevatedAccessCheck extends TestNGCitrusSpringSupport {
         String requestUrlForPostToken = Constant.DEVOPS_CI +
                 "/component/" + componentId + "/tokens?organization_id=" + orgId +
                 "&project_id=" + projectId;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                post(requestUrlForPostToken).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        Map<String, String> params = new HashMap<>();
+        String body = MessageUtils.
+                generateStringFromTemplate("templates/devOps/queryForCreateToken.mustache", params);
+        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrlForPostToken,
+                body, accessToken);
     }
 
     @Test
@@ -134,18 +99,7 @@ public class CiElevatedAccessCheck extends TestNGCitrusSpringSupport {
         String requestUrlForDeleteToken = Constant.DEVOPS_CI +
                 "/component/" + componentId + "/tokens?organization_id=" + orgId +
                 "&project_id=" + projectId;
-        $(http().
-                client(choreoCPTestClient).
-                send().
-                delete(requestUrlForDeleteToken).
-                message().
-                header(HttpHeaders.ACCEPT, "*/*").
-                header(HttpHeaders.AUTHORIZATION, accessToken));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.UNAUTHORIZED)
-                .message()
-                .type(MessageType.JSON));
+        SecurityUtils.elevatedAccessCheckForDeleteRequests(this, choreoCPTestClient, requestUrlForDeleteToken,
+                accessToken);
     }
 }

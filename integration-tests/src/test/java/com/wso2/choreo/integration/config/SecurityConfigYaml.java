@@ -9,4 +9,7 @@ public class SecurityConfigYaml {
     Map<String, String> observability;
     @JsonProperty("devOps")
     Map<String, String> devOps;
+
+    @JsonProperty("devportal")
+    Map<String, String> devportal;
 }

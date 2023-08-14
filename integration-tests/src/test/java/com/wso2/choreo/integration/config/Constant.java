@@ -176,4 +176,5 @@ public final class Constant {
 
     // Devportal related constants
     public static final String DEVPORTAL_ENDPOINT_SUFFIX = "/api/am/devportal/v2";
+    public static final String DEVPORTAL_APPLICATIONS = "/applications";
 }
