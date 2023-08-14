@@ -1,0 +1,315 @@
+{
+	"info": {
+		"_postman_id": "4169ebf7-3ee9-4825-851c-722f6c7ed2db",
+		"name": "Org Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "4676893"
+	},
+	"item": [
+		{
+			"name": "SaveOrganizationThemeToDB Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"palette\":{\"type\":\"light\",\"background\":{\"primary\":{\"light\":\"#f7f8fb\",\"dark\":\"#9A97EB\"},\"secondary\":{\"light\":\"#ffffff\",\"dark\":\"#542C3A\"}},\"text\":{\"primary\":{\"light\":\"#000000\",\"dark\":\"#493AA5\"},\"secondary\":{\"light\":\"#000000\",\"dark\":\"#f50057\"}},\"button\":{\"primary\":{\"light\":\"#303f9f\",\"dark\":\"#303f9f\"},\"secondary\":{\"light\":\"#303f9f\",\"dark\":\"#303f9f\"}}},\"typography\":{\"headings\":{\"fontFamily\":\"Gilmer\"},\"body\":{\"fontFamily\":\"Gilmer\"},\"p\":{\"fontFamily\":\"Gilmer\"}},\"assets\":{\"logoUrl\":{\"header\":\"https://devportal.choreo.dev/themes/default/images/logo-black.svg\",\"footer\":\"https://devportal.choreo.dev/themes/default/images/wso2-logo.svg\",\"favicon\":\"https://devportal.choreo.dev/themes/default/images/favicon.ico\"}},\"footerLinks\":{\"terms\":\"https://wso2.com/choreo/terms-of-use/\",\"privacyPolicy\":\"https://wso2.com/choreo/privacy-policy/\",\"support\":\"https://discord.com/invite/wso2\"},\"homePage\":{\"banner\":\"https://devportal.choreo.dev/themes/default/images/banner.svg\",\"title\":\"Continue working with APIs Test\",\"subtitle\":\"Use our APIs to automate, innovate, and connect to millions of customers.\"}}"
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/org-mgt/1.0.0/orgs/{{ORG_UUID}}/themes/default"
+			},
+			"response": []
+		},
+		{
+			"name": "GetOrganizationThemeByThemeName Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": "https://{{CP_GATEWAY_HOST}}/org-mgt/1.0.0/orgs/{{ORG_UUID}}/themes/default"
+			},
+			"response": []
+		},
+		{
+			"name": "ChangeLiveThemeConfiguration Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"url": {
+					"raw": "https://{{CP_GATEWAY_HOST}}/org-mgt/1.0.0/orgs/{{ORG_UUID}}/themes/default/change-live?action=upload",
+					"protocol": "https",
+					"host": [
+						"{{CP_GATEWAY_HOST}}"
+					],
+					"path": [
+						"org-mgt",
+						"1.0.0",
+						"orgs",
+						"{{ORG_UUID}}",
+						"themes",
+						"default",
+						"change-live"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "upload"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ResetThemeConfigurationToDefault Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"url": "https://{{CP_GATEWAY_HOST}}/org-mgt/1.0.0/orgs/{{ORG_UUID}}/themes/default"
+			},
+			"response": []
+		},
+		{
+			"name": "GetEnterpriseConfigsByOrgUUID Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"url": "https://{{CP_GATEWAY_HOST}}/org-mgt/1.0.0/orgs/{{ORG_UUID}}/enterprise-login/config"
+			},
+			"response": []
+		},
+		{
+			"name": "GetSelfSignupConfigsByOrganizationUUID Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"url": "https://{{CP_GATEWAY_HOST}}/org-mgt/1.0.0/orgs/{{ORG_UUID}}/self-signup/config"
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateSelfSignupConfigsByOrganizationUUID Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"orgUuid\":\"{{ORG_UUID}}\",\"isEnabled\":true,\"isAutoApprovalEnabled\":true,\"isCustom\":false}"
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/org-mgt/1.0.0/orgs/{{ORG_UUID}}/self-signup/config"
+			},
+			"response": []
+		},
+		{
+			"name": "GetSelfSignupRequestsByOrganizationUUID Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"url": "https://{{CP_GATEWAY_HOST}}/org-mgt/1.0.0/orgs/{{ORG_UUID}}/self-signup/approval-requests"
+			},
+			"response": []
+		},
+		{
+			"name": "GetSelfSignupRequestByOrganizationUUIDandRequestId Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": "https://{{CP_GATEWAY_HOST}}/org-mgt/1.0.0/orgs/{{ORG_UUID}}/self-signup/approval-requests/{{APPROVAL_REQUEST_ID}}"
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateTheStatusOfApprovalRequest Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"orgUuid\":\"{{ORG_UUID}}\",\"userIdpId\":\"{{SELF_SIGNUP_USER_IDP_ID}}\",\"status\":\"approved\"}"
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/org-mgt/1.0.0/orgs/{{ORG_UUID}}/self-signup/approval-requests/change-status"
+			},
+			"response": []
+		}
+	]
+}
