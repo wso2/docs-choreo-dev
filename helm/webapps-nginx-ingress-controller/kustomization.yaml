@@ -16,7 +16,7 @@ helmCharts:
         image:
           repository: choreocontrolplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller
           tag: v1.8.0
-          digest: null
+          digest: ""
         ingressClass: dev-choreo-webapps-nginx
         ingressClassResource:
             enabled: true
