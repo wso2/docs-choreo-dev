@@ -188,6 +188,13 @@ export class OrganizationComponent {
     cy.contains("td", userData["userEmail"]).should("be.visible");
     cy.log("Member added to the role successfully");
   }
+  
+  static checkMemberRole(roleName: string) {
+    const userData = Cypress.env("userData");
+    cy.contains("td", userData["userEmail"]).should("be.visible").click();
+    cy.contains("td", roleName).should("be.visible");
+    cy.log("Role listed for member successfully!");
+  }
 
   static deleteCreatedRole(roleName: string) {
     cy.get('[data-cyid="create-role-button"]').should("be.visible");
