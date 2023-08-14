@@ -40,6 +40,9 @@ helmCharts:
             service.beta.kubernetes.io/azure-load-balancer-resource-group: mc-choreo-dev-dataplane-aks-cluster-002-rg
           externalTrafficPolicy: Local
           loadBalancerIP: 172.26.129.201
+        podSecurityContext:
+          seccompProfile:
+            type: RuntimeDefault
       rbac:
         create: true
     releaseName: dev-choreo-webapps
