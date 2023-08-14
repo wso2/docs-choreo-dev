@@ -17,10 +17,10 @@ helmCharts:
           repository: choreocontrolplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller
           tag: v1.8.0
           digest: null
-        ingressClass: choreo-webapps-nginx
+        ingressClass: dev-choreo-webapps-nginx
         ingressClassResource:
             enabled: true
-            name: choreo-webapps-nginx
+            name: dev-choreo-webapps-nginx
             controllerValue: k8s.io/dev-choreo-webapps-nginx
         minAvailable: 1
         opentelemetry:
@@ -42,8 +42,8 @@ helmCharts:
           loadBalancerIP: 172.26.129.201
       rbac:
         create: true
-    releaseName: choreo-webapps
-    namespace: choreo-webapps-nginx-ingress
+    releaseName: dev-choreo-webapps
+    namespace: dev-choreo-webapps-nginx-ingress
     version: 4.7.0
     repo: oci://choreocontrolplane.azurecr.io/helm
 
