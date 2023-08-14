@@ -50,11 +50,11 @@ spec:
               path: /healthz
           resources:
             limits:
-              cpu: "1"
-              memory: 1Gi
+              cpu: 250m
+              memory: 500Mi
             requests:
-              cpu: 300m
-              memory: 768Mi
+              cpu: 100m
+              memory: 200Mi
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 10000
