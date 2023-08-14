@@ -16,13 +16,13 @@ kubectl annotate namespace "${CRYPTO_SERVICE_INTERNAL_CHOREO_CONTROLPLANE_INGRES
 kubectl apply -f ../../../netpol/"${CRYPTO_SERVICE_INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx-ingress-ns.yaml"
 
 helm registry login choreocontrolplane.azurecr.io --username "${HELM_ACR_USERNAME}" --password "${HELM_ACR_PASSWORD}"
-helm pull oci://choreocontrolplane.azurecr.io/helm/ingress-nginx --version 4.2.1
+helm pull oci://choreocontrolplane.azurecr.io/helm/ingress-nginx --version 4.7.0
 
 echo "--- Installing Control Plane Internal Nginx Ingress using Helm 3..."
 # shellcheck disable=SC2140
-helm upgrade --install "${CRYPTO_SERVICE_INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}" ingress-nginx-4.2.1.tgz \
+helm upgrade --install "${CRYPTO_SERVICE_INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}" ingress-nginx-4.7.0.tgz \
   --namespace "${CRYPTO_SERVICE_INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx-ingress" \
-  --version 4.2.1 \
+  --version 4.7.0 \
   --set controller.replicaCount=2 \
   --set controller.minAvailable=1 \
   --set controller.autoscaling.enabled=true \
@@ -42,7 +42,7 @@ helm upgrade --install "${CRYPTO_SERVICE_INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NA
   --set controller.ingressClassResource.enabled="true" \
   --set controller.ingressClassResource.name="${CRYPTO_SERVICE_INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx" \
   --set controller.image.repository="choreocontrolplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
-  --set controller.image.tag="v1.3.0" \
+  --set controller.image.tag="v1.8.0" \
   --set controller.image.digest=null \
   --set-string controller.config.server-tokens=false \
   --set controller.admissionWebhooks.enabled=false \
