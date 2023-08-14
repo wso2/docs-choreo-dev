@@ -32,8 +32,10 @@ public class EndpointConfig {
     @PostConstruct
     public void loadEndpointConfig() throws Exception {
         com.wso2.choreo.integration.config.Configuration.loadConfigs();
+        com.wso2.choreo.integration.config.Configuration.loadSecurityConfigs();
         TestContext.setTestOrg();
         TestContext.setTestUserTokenHandler();
+        TestContext.setTestUserTokenHandlerForSecurityTests();
     }
 
     @Bean
@@ -52,7 +54,7 @@ public class EndpointConfig {
                 .http()
                 .client()
                 .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
-                                ConfigDefinition.CHOREO_NEW_APP_SERVICE_ENDPOINT))
+                        ConfigDefinition.CHOREO_NEW_APP_SERVICE_ENDPOINT))
                 .build();
     }
 
@@ -81,7 +83,7 @@ public class EndpointConfig {
                 .http()
                 .client()
                 .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
-                                ConfigDefinition.INSIGHTS_ENDPOINT))
+                        ConfigDefinition.INSIGHTS_ENDPOINT))
                 .build();
     }
 
@@ -91,7 +93,7 @@ public class EndpointConfig {
                 .http()
                 .client()
                 .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
-                                ConfigDefinition.GITHUB_ENDPOINT))
+                        ConfigDefinition.GITHUB_ENDPOINT))
                 .build();
     }
 
@@ -101,7 +103,7 @@ public class EndpointConfig {
                 .http()
                 .client()
                 .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
-                    ConfigDefinition.THEME_ENDPOINT))
+                        ConfigDefinition.THEME_ENDPOINT))
                 .build();
     }
 

@@ -1,0 +1,11 @@
+{
+    "operationName": "getRequestMetrics",
+    "variables":
+    {
+        "destinationReleaseId": "{{byocComponentReleaseId}}",
+        "from": "{{from}}",
+        "to": "{{to}}",
+        "breakSize":"840s"
+    }
+    "query":"query getRequestMetrics($destinationReleaseId: String!, $from: String!, $to: String!, $breakSize: String!) {\n  requestMetrics(\n    destinationReleaseId: $destinationReleaseId\n    from: $from\n    to: $to\n    breakSize: $breakSize\n  ) {\n    latencyPercentiles\n    latencyMeanHistogram {\n      time\n      value\n      __typename\n    }\n    totalRequestCountHistogram {\n      time\n      value\n      __typename\n    }\n    successfulRequestCountHistogram {\n      time\n      value\n      __typename\n    }\n    failedRequestCountHistogram {\n      time\n      value\n      __typename\n    }\n    __typename\n  }\n}\n"
+}

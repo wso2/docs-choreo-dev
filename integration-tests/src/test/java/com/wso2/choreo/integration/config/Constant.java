@@ -153,4 +153,28 @@ public final class Constant {
 
     // Theme management constants
     public static final String THEME_ENDPOINT_SUFFIX = "/org-mgt/1.0.0/orgs/";
+
+    // Observability related constants
+    public static final String OBSERVABILITY_ORG_LOGS = "/orgLogs";
+
+    public static final String OBSERVABILITY_PROJECT_LOGS = "/projectLogs";
+
+    public static final String OBSERVABILITY_AUDIT_LOGS = "/audit-logging/1.0.0";
+
+    public static final String OBSERVABILITY_GATEWAY_ACCESS_LOGS = "/gatewayAccessLogs";
+
+    // DevOps related constants
+    private static final String DEVOPS_API_CONTEXT = "/devops/1.0.0/api/v1";
+    public static final String DEVOPS_CI = DEVOPS_API_CONTEXT + "/ci";
+    public static final String DEVOPS_CLUSTERS = DEVOPS_API_CONTEXT + "/clusters";
+    public static final String DEVOPS_INTEGRATION = DEVOPS_API_CONTEXT + "/components/integration";
+    public static final String DEVOPS_ENVIRONMENTS = DEVOPS_API_CONTEXT + "/environments/";
+    public static final String DEVOPS_METRICS = DEVOPS_API_CONTEXT + "/metrics/";
+    public static final String DEVOPS_ORGANIZATIONS = DEVOPS_API_CONTEXT + "/organizations/";
+    public static final String DEVOPS_VOLUME = DEVOPS_API_CONTEXT + "/volume/";
+    public static final String DEVOPS_COMPONENTS_API = DEVOPS_API_CONTEXT + "/components/";
+
+    // Devportal related constants
+    public static final String DEVPORTAL_ENDPOINT_SUFFIX = "/api/am/devportal/v2";
+    public static final String DEVPORTAL_APPLICATIONS = "/applications";
 }
