@@ -40,6 +40,11 @@ describe("Add roles and permissions", () => {
     OrganizationComponent.addMembertoRole(roleName);
   });
 
+  it("Check member has the new role", () => {
+    OrganizationComponent.navigateToMembers();
+    OrganizationComponent.checkMemberRole(roleName);
+  });
+
   it("Delete created role", () => {
     OrganizationComponent.navigateToMembers();
     OrganizationComponent.navigateToRoles();
