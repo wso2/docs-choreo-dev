@@ -1,0 +1,52 @@
+helmCharts:
+  - name: ingress-nginx
+    includeCRDs: true
+    valuesInline:
+      controller:
+        admissionWebhooks:
+          enabled: false
+        autoscaling:
+          enabled: true
+          minReplicas: 3
+          maxReplicas: 4
+          targetCPUUtilizationPercentage: 75
+          targetMemoryUtilizationPercentage: 75
+        config:
+          server-tokens: false
+        image:
+          repository: choreocontrolplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller
+          tag: v1.8.0
+          digest: null
+        ingressClass: dev-choreo-webapps-nginx
+        ingressClassResource:
+            enabled: true
+            name: dev-choreo-webapps-nginx
+            controllerValue: k8s.io/dev-choreo-webapps-nginx
+        minAvailable: 1
+        opentelemetry:
+          enabled: false
+        replicaCount: 2
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1Gi
+          requests:
+            cpu: 500m
+            memory: 500Mi
+        service:
+          annotations:
+            service.beta.kubernetes.io/azure-load-balancer-internal: true
+            service.beta.kubernetes.io/azure-load-balancer-internal-subnet: choreo-dev-dp-002-loadbalancer-subnet
+            service.beta.kubernetes.io/azure-load-balancer-resource-group: mc-choreo-dev-dataplane-aks-cluster-002-rg
+          externalTrafficPolicy: Local
+          loadBalancerIP: 172.26.129.201
+      rbac:
+        create: true
+    releaseName: dev-choreo-webapps
+    namespace: dev-choreo-webapps-nginx-ingress
+    version: 4.7.0
+    repo: oci://choreocontrolplane.azurecr.io/helm
+
+commonAnnotations:
+  kapp.k14s.io/disable-original: ""
+  kapp.k14s.io/disable-default-label-scoping-rules: ""
