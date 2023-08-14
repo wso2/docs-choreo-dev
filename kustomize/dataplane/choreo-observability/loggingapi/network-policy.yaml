@@ -21,7 +21,11 @@ spec:
   - Egress
   - Ingress
   egress:
-  - {}
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0  # Allow all egress traffic
+        except:
+        - cidr: 169.254.169.254/32  # Except egress to Azure VM metadata endpoint
   ingress:
   - from:
     - namespaceSelector:
