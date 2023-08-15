@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
 
 public class SecurityConfigYaml {
+    @JsonProperty("accountInfo")
+    Map<String, String> accountInfo;
     @JsonProperty("observability")
     Map<String, String> observability;
     @JsonProperty("devOps")

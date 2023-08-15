@@ -1,6 +1,11 @@
 package com.wso2.choreo.integration.config;
 
 public enum SecurityConfigDefinition {
+    SECURITY_TEST_CHOREO_ORG_ID,
+    SECURITY_TEST_CHOREO_ORG_HANDLE,
+    SECURITY_TEST_CHOREO_ORG_UUID,
+    LOW_PRIVILEGED_USER_EMAIL,
+    LOW_PRIVILEGED_USER_PASSWORD,
     DEVOPS_COMPONENT_ID,
     DEVOPS_ORG_ID,
     DEVOPS_PROJECT_ID,
