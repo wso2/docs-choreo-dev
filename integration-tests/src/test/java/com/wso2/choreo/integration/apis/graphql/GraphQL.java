@@ -15,10 +15,18 @@ package com.wso2.choreo.integration.apis.graphql;
 
 
 import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
+import com.consol.citrus.http.message.HttpMessage;
+import com.consol.citrus.http.message.HttpMessageHeaders;
+import com.consol.citrus.message.DefaultMessage;
 import com.consol.citrus.message.MessageType;
+import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.consol.citrus.validation.json.JsonMessageValidationContext;
+import com.consol.citrus.validation.json.JsonTextMessageValidator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
@@ -63,6 +71,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.testng.Assert;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,9 +81,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static com.consol.citrus.actions.EchoAction.Builder.echo;
+import static com.consol.citrus.actions.FailAction.Builder.fail;
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
+import static com.consol.citrus.container.RepeatUntilTrue.Builder.repeat;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
@@ -680,36 +695,71 @@ public class GraphQL extends ControlPlaneAPI {
      * @param graphqlDTO  DTO
      * @throws IOException If error occurred in object mapping
      */
-    public static void getDeploymentStatusByVersion(TestActionRunner runner, HttpClient client, String accessToken,
-            GraphqlDTO graphqlDTO) throws Exception {
+    public static void getDeploymentStatusByVersion(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+                                                     GraphqlDTO graphqlDTO) throws Exception {
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/deploymentStatusByVersion.mustache", graphqlDTO);
         String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
-        // Poll deployment status
-        runner.$(repeatOnError()
-                .until("i = 50")
+        runner.variable("deploymentSuccess", false);
+
+        AtomicBoolean isPassed = new AtomicBoolean(false);
+        AtomicInteger successiveFailureCount = new AtomicInteger(0);
+
+        runner.$(repeat()
+                .until("(i = 20) or ( ${deploymentSuccess} = true )")
                 .index("i")
-                .autoSleep(10000)
                 .actions(
-                        http()
-                                .client(client)
-                                .send()
-                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .body(requestBody)
-                                .accept(MediaType.APPLICATION_JSON_VALUE),
-                        http().client(client)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .type(MessageType.JSON)
-                                .validate(jsonPath()
-                                        .expression("$.data.deploymentStatusByVersion[0].conclusion", "success")
-                                                )
-                                        )
-                                );
+                    http()
+                        .client(client)
+                        .send()
+                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .body(requestBody)
+                        .accept(MediaType.APPLICATION_JSON_VALUE),
+                    http()
+                        .client(client)
+                        .receive()
+                        .response()
+                        .message()
+                        .validate((message, context) -> {
+
+                            int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+
+                            if (code != HttpStatus.OK.value()) {
+                                if (4 < successiveFailureCount.incrementAndGet()) {
+                                    throw new ValidationException("Too many successive calls with response code != 200");
+                                }
+                            } else {
+                                successiveFailureCount.set(0);
+                                JsonArray deploymentStatusByVersion = new JsonParser().parse(message.getPayload(String.class))
+                                        .getAsJsonObject()
+                                        .getAsJsonObject("data")
+                                        .getAsJsonArray("deploymentStatusByVersion");
+                                if (deploymentStatusByVersion.size() > 0) {
+                                    String status = deploymentStatusByVersion.get(0).getAsJsonObject().get("status").getAsString();
+                                    if ("completed".equals(status)) {
+                                        String conclusion = deploymentStatusByVersion.get(0).getAsJsonObject().get("conclusion").getAsString();
+                                        if ("failure".equals(conclusion)) {
+                                            throw new ValidationException("deploymentStatusByVersion[0].conclusion is failure");
+                                        }
+
+                                        isPassed.set("success".equals(conclusion));
+                                        context.setVariable("deploymentSuccess", isPassed.get());
+                                    }
+                                }
+                            }
+
+                            if (!isPassed.get()) {
+                               SleepUtil.sleep(30);
+                            }
+                        }))
+                );
+
+        if (!isPassed.get()) {
+            throw new ValidationException("Deployment conclusion is not success");
+        }
     }
 
     /**
@@ -794,24 +844,27 @@ public class GraphQL extends ControlPlaneAPI {
      * @return Release ID of the deployment
      * @throws IOException If error occurred in object mapping
      */
-    public static ComponentDeploymentStatusDTO getComponentDeploymentStatus(TestActionRunner runner, HttpClient client, String accessToken,
+    public static ComponentDeploymentStatusDTO getComponentDeploymentStatus(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
                                                                             GraphqlDTO graphqlDTO, Map<String, String> responseParams)
             throws IOException {
-
         String queryString = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/componentDeployment.mustache",
                 graphqlDTO);
         String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
         String expectedResponse = ComponentUtils.generateStringFromTemplate(
                 "templates/createIntegrationComponent/deployment_details_success.mustache",
                 responseParams);
 
-        AtomicReference<ComponentDeploymentStatusDTO> deploymentStatus = new AtomicReference<>();
+        AtomicReference<ComponentDeploymentStatusDTO> returnStatus = new AtomicReference<>();
+        AtomicBoolean isPassed = new AtomicBoolean(false);
+        AtomicInteger successiveFailureCount = new AtomicInteger(0);
+
+        runner.variable("deploymentSuccess", false);
 
         // Poll deployment status
-        runner.$(repeatOnError()
-                .until("i = 30")
+        runner.$(repeat()
+                .until("(i = 30) or ( ${deploymentSuccess} = true )")
                 .index("i")
-                .autoSleep(5000)
                 .actions(
                         http()
                                 .client(client)
@@ -823,34 +876,52 @@ public class GraphQL extends ControlPlaneAPI {
                                 .accept(MediaType.APPLICATION_JSON_VALUE),
                         http().client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .message()
-                                .body(expectedResponse)
                                 .validate((message, context) -> {
-                                    String payload = message.getPayload(String.class);
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
 
-                                    JsonObject responseJson = new JsonParser().parse(message.getPayload(String.class))
-                                            .getAsJsonObject();
+                                    if (code != HttpStatus.OK.value()) {
+                                        if (4 < successiveFailureCount.incrementAndGet()) {
+                                            throw new ValidationException("Too many successive calls with response code != 200");
+                                        }
+                                    } else {
+                                        successiveFailureCount.set(0);
 
-                                    JsonObject data = responseJson.getAsJsonObject("data");
-
-                                    if (data != null && !data.isJsonNull()) {
-                                        deploymentStatus.set(ObjectMapperUtil.
+                                        ComponentDeploymentStatusDTO deploymentStatus = ObjectMapperUtil.
                                                 mapStringToObject(ComponentDeploymentStatusDTO.class,
-                                                        payload, "componentDeployment"));
+                                                        message.getPayload(String.class), "componentDeployment");
 
-                                        if (deploymentStatus.get().getDeploymentStatusV2().equals("ERROR") ||
-                                                deploymentStatus.get().getDeploymentStatus().equals("ERROR")) {
-                                            throw new RuntimeException("deploymentStatusV2 is " +
-                                                    deploymentStatus.get().getDeploymentStatusV2() +
-                                                    " and deploymentStatus is " +
-                                                    deploymentStatus.get().getDeploymentStatus());
+                                        if (deploymentStatus.getDeploymentStatusV2().equals("ERROR") ||
+                                                deploymentStatus.getDeploymentStatus().equals("ERROR")) {
+                                            throw new ValidationException("deploymentStatusV2 is " +
+                                                    deploymentStatus.getDeploymentStatusV2() +
+                                                    " and returnStatus is " +
+                                                    deploymentStatus.getDeploymentStatus());
                                         }
 
+
+                                        try {
+                                            JsonTextMessageValidator validator = new JsonTextMessageValidator();
+                                            validator.validateMessage(message, new DefaultMessage(expectedResponse), context, new JsonMessageValidationContext());
+                                            isPassed.set(true);
+                                            context.setVariable("deploymentSuccess", isPassed.get());
+                                            returnStatus.set(deploymentStatus);
+                                        } catch (ValidationException e) {
+                                            log.error("Validation failed", e);
+                                        }
+
+                                        if (!isPassed.get()) {
+                                            SleepUtil.sleep(5);
+                                        }
                                     }
                                 })));
 
-        return deploymentStatus.get();
+        if (!isPassed.get()) {
+            throw new ValidationException("Deployment conclusion is not success");
+        }
+
+        return returnStatus.get();
     }
 
     public static ProxyDeployment getProxyComponentDeployment(TestActionRunner runner, HttpClient client, String accessToken,
