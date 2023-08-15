@@ -80,6 +80,7 @@ public class Configuration {
                 getResource(securityTestConfig)).toURI()), SecurityConfigYaml.class);
 
         List<Map<String, String>> yamlConfigCollection = new ArrayList<>() {{
+            add(securityConfigYaml.accountInfo);
             add(securityConfigYaml.observability);
             add(securityConfigYaml.devOps);
             add(securityConfigYaml.devportal);
