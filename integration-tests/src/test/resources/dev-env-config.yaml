@@ -6,11 +6,6 @@ accountInfo:
   TEST_CHOREO_ORG_ID: 3752
   TEST_CHOREO_ORG_HANDLE: choreointegrationtestsuserdevdlwqo
   TEST_CHOREO_ORG_UUID: 31b9e3fe-4a92-4921-8be1-70f065b5b406
-  SECURITY_TEST_CHOREO_ORG_ID: 5466
-  SECURITY_TEST_CHOREO_ORG_HANDLE: choreorbactestuser
-  SECURITY_TEST_CHOREO_ORG_UUID: 75d75c0d-334f-4938-a36f-edfbc12041ed
-  LOW_PRIVILEGED_USER_EMAIL: choreorbactestuser@gmail.com@carbon.super
-  LOW_PRIVILEGED_USER_PASSWORD: 557abe1135f0L
 authInfo:
   STS_ENDPOINT: https://sts.preview-dv.choreo.dev
   STS_CLIENT_ID: szuIZKNy9KIaJxv5PDdM06RXfeca
