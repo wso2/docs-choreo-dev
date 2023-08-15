@@ -58,6 +58,7 @@ public class SecurityUtils {
                 .message()
                 .header(HttpHeaders.ACCEPT, "*/*")
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, "application/json")
                 .body(body));
         runner.$(http()
                 .client(client)
@@ -76,6 +77,26 @@ public class SecurityUtils {
                 .message()
                 .header(HttpHeaders.ACCEPT, "*/*")
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, "application/json")
+                .body(body));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.UNAUTHORIZED)
+                .message()
+                .type(MessageType.JSON));
+    }
+
+    public static void elevatedAccessCheckForPatchRequests(TestActionRunner runner, HttpClient client,
+                                                         String requestUrl, String body, String accessToken) throws IOException {
+        runner.$(http()
+                .client(client)
+                .send()
+                .patch(requestUrl)
+                .message()
+                .header(HttpHeaders.ACCEPT, "*/*")
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, "application/json")
                 .body(body));
         runner.$(http()
                 .client(client)
