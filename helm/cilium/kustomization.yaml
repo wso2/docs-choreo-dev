@@ -1,0 +1,27 @@
+helmCharts:
+  - name: cilium
+    includeCRDs: true
+    valuesInline:
+      aksbyocni:
+        enabled: true
+      encryption:
+        enabled: true
+        ipsec:
+          interface: cilium_vxlan
+        type: ipsec
+      hubble:
+        enabled: true
+        relay:
+          enabled: true
+        ui:
+          enabled: true
+      nodeinit:
+        enabled: true
+    releaseName: cilium
+    namespace: kube-system
+    version: 1.13.0
+    repo: oci://choreocontrolplane.azurecr.io/helm
+
+commonAnnotations:
+  kapp.k14s.io/disable-original: ""
+  kapp.k14s.io/disable-default-label-scoping-rules: ""
