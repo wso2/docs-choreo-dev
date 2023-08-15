@@ -32,7 +32,7 @@ describe("Graphql GQL service test", () => {
   const TEST_QUERY_RESPONSE = 'greeting": "Hello, John';
   const COMPONENT_NAME = Utils.generateComponentName();
   const REPO_NAME = "graphql-service-sample";
-  const ENDPOINT_NAME = "Endpoint 8090";
+  const ENDPOINT_NAME = "Greeting GraphQL";
   const subPath = Cypress.env("branch").replace("-ci", "");
 
   before(() => {
@@ -80,7 +80,7 @@ describe("Graphql GQL service test", () => {
       PROJECT_NAME,
       COMPONENT_NAME,
       ENDPOINT_NAME,
-      true
+      false
     );
   });
 
