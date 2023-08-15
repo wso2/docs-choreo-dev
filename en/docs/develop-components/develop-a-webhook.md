@@ -5,7 +5,7 @@ Choreo allows developers to design high-quality webhooks. To explore this capabi
 In this tutorial, you will address this requirement by doing the following:
 
 - Create a webhook component by connecting to your GitHub repository containing the webhook implementation that addresses the described requirement.
-- Deploy the webhook you created to the development environment.
+- Deploy the webhook you have created to the development environment.
 - Modify the webhook implementation to connect the webhook implementation to GitHub, enabling it to act in response to selected GitHub-related events.
 - Test the webhook.
 - Promote the webhook to the production environment.
@@ -43,7 +43,7 @@ First, let's create a Webhook component as follows:
 
 8. Click **Create**.
 9. In the **Create a Webhook** pane, click on the trigger type you want to create, for example, **GitHub**. Click **Next**.
-10. Review the trigger type you selected and Click **Create**. 
+10. Review the trigger type you selected and click **Create**. 
 
 The webhook opens on a separate page.
 
