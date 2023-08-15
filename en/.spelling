@@ -670,3 +670,7 @@ html
 choreoApiUrl
  - docs/api-management/api-policies.md
 Ballerina.toml
+ - docs/develop-components/develop-a-webhook.md
+send-email-on-github-event-webhook
+toEmail
+webhookSecret

@@ -104,7 +104,8 @@ nav:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
           - Develop an Event-Triggered Integration: develop-components/develop-integrations/develop-an-event-triggered-integration.md
           - Develop a Scheduled Integration: develop-components/develop-integrations/develop-a-scheduled-integration.md
-      - Develop a Web Application: develop-components/develop-a-web-application.md       
+      - Develop a Web Application: develop-components/develop-a-web-application.md  
+      - Develop a Webhook: develop-components/develop-a-webhook.md   
       - Develop Components With Git: develop-components/develop-components-with-git.md  
       - Configure Mutual TLS Between Components: develop-components/configure-mutual-tls-between-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
@@ -231,7 +232,7 @@ plugins:
           'get-started/quick-start-guide.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo/'
           'get-started/tutorials/create-your-first-rest-api.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo/'
           'get-started/tutorials/create-your-first-rest-api-proxy.md': 'https://wso2.com/choreo/docs/quick-start-guides/expose-a-service-as-a-managed-api-with-choreo-api-manager/'
-          'get-started/tutorials/create-your-first-webhook.md': 'https://wso2.com/choreo/docs'
+          'get-started/tutorials/create-your-first-webhook.md': 'https://wso2.com/choreo/docs/develop-components/develop-a-webhook.md'
           'get-started/tutorials/create-your-first-integration-as-an-api.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-integration-with-choreo-ipaas/'
           'get-started/tutorials/create-your-first-event-triggered-integration.md': 'https://wso2.com/choreo/docs/develop-components/develop-integrations/develop-an-event-triggered-integration/'
           'get-started/tutorials/secure-an-api-with-role-based-access-control.md': 'https://wso2.com/choreo/docs/tutorials/secure-an-api-with-role-based-access-control/'
@@ -239,7 +240,7 @@ plugins:
           'get-started/tutorials/deploy-a-containerized-application-as-an-event-triggered-integration.md': 'https://wso2.com/choreo/docs'
           'develop/components/rest-api.md': 'https://wso2.com/choreo/docs'
           'develop/components/api-proxy.md': 'https://wso2.com/choreo/docs/develop-components/develop-a-rest-api-proxy/'
-          'develop/components/webhook.md': 'https://wso2.com/choreo/docs'
+          'develop/components/webhook.md': 'https://wso2.com/choreo/docs/develop-components/develop-a-webhook.md'
           'develop/components/scheduled-trigger.md': 'https://wso2.com/choreo/docs'
           'develop/components/manual-trigger.md': 'https://wso2.com/choreo/docs'
           'develop/components/graphql-api.md': 'https://wso2.com/choreo/docs'
