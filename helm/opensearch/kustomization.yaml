@@ -95,3 +95,6 @@ commonAnnotations:
   checkov.io/skip4: CKV_K8S_22=Helm chart doesn't provide a way to fix this
   checkov.io/skip5: CKV_K8S_40=Container enters a crashLoopBackoff when this is set. But already runs with UID 1000
   checkov.io/skip6: CKV_K8S_16=An init-container needs to run as a privileged container
+
+resources:
+- network-policy.yaml

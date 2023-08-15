@@ -101,3 +101,6 @@ helmCharts:
 commonAnnotations:
   checkov.io/skip1: CKV_K8S_19=Use case requires to share the host network namespace (To communicate with Kubelet)
   checkov.io/skip2: CKV_K8S_38=Helm chart doesn't provide a way to fix this
+
+resources:
+- network-policy.yaml
