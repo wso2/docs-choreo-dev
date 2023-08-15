@@ -69,6 +69,11 @@ spec:
                 secretKeyRef:
                   key: CHOREO_PRIVATE_ACR_SECRET
                   name: secret-dp-cicd
+            - name: BUILDPACKS_BUILDER_IMAGE
+              valueFrom:
+                secretKeyRef:
+                  key: BUILDPACKS_BUILDER_IMAGE
+                  name: common-env-variables
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
