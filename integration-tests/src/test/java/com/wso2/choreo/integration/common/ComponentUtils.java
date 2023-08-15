@@ -196,6 +196,12 @@ public class ComponentUtils {
                 build();
     }
 
+    public static GraphqlDTO createManualTriggerComponentRequest(String name, ChoreoProject project, Repository repo) {
+        GraphqlDTO graphqlDTO = createBallerinaServiceComponentRequest(name, project, repo);
+        graphqlDTO.setDisplayType(Constant.displayType.manualTrigger.name());
+        return graphqlDTO;
+    }
+
     public static GraphqlDTO createBallerinaServiceComponentRequest(String name, ChoreoProject project, Repository repo) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
