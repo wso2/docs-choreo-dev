@@ -71,7 +71,7 @@ spec:
                   name: secret-dp-cicd
             - name: BUILDPACKS_BUILDER_IMAGE
               valueFrom:
-                secretKeyRef:
+                configMapKeyRef:
                   key: BUILDPACKS_BUILDER_IMAGE
                   name: common-env-variables
           securityContext:
