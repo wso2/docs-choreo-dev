@@ -105,4 +105,23 @@ public class SecurityUtils {
                 .message()
                 .type(MessageType.JSON));
     }
+
+    public static void forbiddenCheckForPostRequests(TestActionRunner runner, HttpClient client,
+                                                          String requestUrl, String body, String accessToken) throws IOException {
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(requestUrl)
+                .message()
+                .header(HttpHeaders.ACCEPT, "*/*")
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, "application/json")
+                .body(body));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.FORBIDDEN)
+                .message()
+                .type(MessageType.JSON));
+    }
 }
