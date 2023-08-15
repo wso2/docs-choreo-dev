@@ -114,7 +114,7 @@ export class Utils {
             "content-type": "application/json",
           };
           this.sendPostRequest(
-            `${Utils.NEW_APP_SVC_URL}/users-mgt/1.0.0/orgs/${Utils.ORG_NAME}/invitations/${invitationId}`,
+            `${Utils.NEW_APP_SVC_URL}/user-mgt/1.0.0/orgs/${Utils.ORG_NAME}/invitations/${invitationId}`,
             header,
             {}
           ).then((resp) => {

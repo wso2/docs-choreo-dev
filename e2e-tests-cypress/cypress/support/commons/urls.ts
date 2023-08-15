@@ -12,7 +12,7 @@
  */
 
 export const VALIDATE_USER_URL =
-  Cypress.env("newAppSvcURL") + "/users-mgt/1.0.0/validate/user";
+  Cypress.env("newAppSvcURL") + "/user-mgt/1.0.0/validate/user";
 export const ORGS_URL = Cypress.env("appSvcURL") + "/orgs/*";
 export const PUBLISHER_URL = Cypress.env("apimSvcURL") + "/api/am/publisher/v2";
 export const PUBLISHER_API_KEYS_URL = PUBLISHER_URL + "/apis/*/environments/*/keys?organizationId=*";

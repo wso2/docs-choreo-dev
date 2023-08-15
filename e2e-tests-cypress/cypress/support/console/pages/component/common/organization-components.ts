@@ -99,10 +99,10 @@ export class OrganizationComponent {
     };
     const deletePendingInvitation = `${Cypress.env(
       "newAppSvcURL"
-    )}/users-mgt/1.0.0/orgs/${handle}/invitations?email=${email}`;
+    )}/user-mgt/1.0.0/orgs/${handle}/invitations?email=${email}`;
     const getUsers = `${Cypress.env(
       "newAppSvcURL"
-    )}/users-mgt/1.0.0/orgs/${handle}/users`;
+    )}/user-mgt/1.0.0/orgs/${handle}/users`;
 
     Utils.sendGetRequest(getUsers, headers).then((res) => {
       const list = res.body.list as [];
@@ -113,7 +113,7 @@ export class OrganizationComponent {
         const { idpId } = user;
         const deleteUserRequest = `${Cypress.env(
           "newAppSvcURL"
-        )}/users-mgt/1.0.0/orgs/${handle}/users/${idpId}`;
+        )}/user-mgt/1.0.0/orgs/${handle}/users/${idpId}`;
 
         Utils.sendDeleteRequest(deleteUserRequest, headers).then((res) => {
           if (res.status === OK) {
