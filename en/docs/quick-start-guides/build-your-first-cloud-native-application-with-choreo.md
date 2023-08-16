@@ -153,7 +153,7 @@ To retest the API, follow the steps given below:
 
 6. Click **Execute**.
 
-    Check the **Server Response** section. On successful invocation, you will receive the `200` HTTP code.
+    Check the **Server Response** section. On successful invocation, you will receive the `201` HTTP code.
 
 Similarly, you can expand and try out the **GET** and **DELETE** methods.
 

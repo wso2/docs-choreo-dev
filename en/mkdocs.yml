@@ -104,7 +104,8 @@ nav:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
           - Develop an Event-Triggered Integration: develop-components/develop-integrations/develop-an-event-triggered-integration.md
           - Develop a Scheduled Integration: develop-components/develop-integrations/develop-a-scheduled-integration.md
-      - Develop a Web Application: develop-components/develop-a-web-application.md       
+      - Develop a Web Application: develop-components/develop-a-web-application.md  
+      - Develop a Webhook: develop-components/develop-a-webhook.md   
       - Develop Components With Git: develop-components/develop-components-with-git.md  
       - Configure Mutual TLS Between Components: develop-components/configure-mutual-tls-between-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
@@ -136,15 +137,15 @@ nav:
       - Control API Visibility: api-management/control-api-visibility.md
   - Monitoring and Insights:
       - Observability Overview: monitoring-and-insights/observability-overview.md
-      - View API Insights: monitoring-and-insights/view-api-insights.md
+      - Delivery Insights:
+          - Configure DORA Metrics: monitoring-and-insights/delivery-insights/configure-dora-metrics.md
+          - View DORA Metrics: monitoring-and-insights/delivery-insights/view-dora-metrics.md
+      - Usage Insights: monitoring-and-insights/view-usage-insights.md
       - Generate Custom Reports: monitoring-and-insights/generate-custom-reports.md
       - Configure Alerts: monitoring-and-insights/alerts/configure-alerts.md
       - Work with the Choreo Insights API:
           - Access the Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
           - Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md 
-      - Engineering Insights:
-          - Configure CIO Dashboard: monitoring-and-insights/engineering-insights/configure-cio-dashboard.md
-          - View DORA Metrics: monitoring-and-insights/engineering-insights/view-dora-metrics.md    
       - Integrate Choreo with Moesif: monitoring-and-insights/integrate-choreo-with-moesif.md     
   - Administer:
       - Configure a Custom Domain for APIs: administer/configure-a-custom-domain-for-apis.md
@@ -231,26 +232,26 @@ plugins:
           'get-started/quick-start-guide.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo/'
           'get-started/tutorials/create-your-first-rest-api.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo/'
           'get-started/tutorials/create-your-first-rest-api-proxy.md': 'https://wso2.com/choreo/docs/quick-start-guides/expose-a-service-as-a-managed-api-with-choreo-api-manager/'
-          'get-started/tutorials/create-your-first-webhook.md': 'https://wso2.com/choreo/docs'
+          'get-started/tutorials/create-your-first-webhook.md': 'https://wso2.com/choreo/docs/develop-components/develop-a-webhook/'
           'get-started/tutorials/create-your-first-integration-as-an-api.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-integration-with-choreo-ipaas/'
           'get-started/tutorials/create-your-first-event-triggered-integration.md': 'https://wso2.com/choreo/docs/develop-components/develop-integrations/develop-an-event-triggered-integration/'
           'get-started/tutorials/secure-an-api-with-role-based-access-control.md': 'https://wso2.com/choreo/docs/tutorials/secure-an-api-with-role-based-access-control/'
           'get-started/tutorials/create-your-first-containerized-service-component.md': 'https://wso2.com/choreo/docs'
-          'get-started/tutorials/deploy-a-containerized-application-as-an-event-triggered-integration.md': 'https://wso2.com/choreo/docs'
-          'develop/components/rest-api.md': 'https://wso2.com/choreo/docs'
+          'get-started/tutorials/deploy-a-containerized-application-as-an-event-triggered-integration.md': 'https://wso2.com/choreo/docs/develop-components/deploy-a-containerized-application/'
+          'develop/components/rest-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-rest-api/'
           'develop/components/api-proxy.md': 'https://wso2.com/choreo/docs/develop-components/develop-a-rest-api-proxy/'
-          'develop/components/webhook.md': 'https://wso2.com/choreo/docs'
-          'develop/components/scheduled-trigger.md': 'https://wso2.com/choreo/docs'
+          'develop/components/webhook.md': 'https://wso2.com/choreo/docs/develop-components/develop-a-webhook/'
+          'develop/components/scheduled-trigger.md': 'https://wso2.com/choreo/docs/develop-components/develop-integrations/develop-a-scheduled-integration/'
           'develop/components/manual-trigger.md': 'https://wso2.com/choreo/docs'
-          'develop/components/graphql-api.md': 'https://wso2.com/choreo/docs'
+          'develop/components/graphql-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-ballerina-graphql-api/'
           'develop/components/service.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/'
-          'develop/manage-repository/connect-your-own-github-repository-to-choreo.md': 'https://wso2.com/choreo/docs'
+          'develop/manage-repository/connect-your-own-github-repository-to-choreo.md': 'https://wso2.com/choreo/docs/develop-components/develop-components-with-git/'
           'develop/run-and-test/forecast-performance-metrics.md': 'https://wso2.com/choreo/docs'
           'develop/api-policies/policies.md': 'https://wso2.com/choreo/docs/api-management/api-policies/'
           'develop/api-policies/create-a-policy.md': 'https://wso2.com/choreo/docs/api-management/api-policies/'
           'develop/api-policies/attach-policies.md': 'https://wso2.com/choreo/docs/api-management/api-policies/'
           'deploy/deploy-a-ballerina-application.md': 'https://wso2.com/choreo/docs'
-          'deploy/deploy-a-containerized-application.md': 'https://wso2.com/choreo/docs'
+          'deploy/deploy-a-containerized-application.md': 'https://wso2.com/choreo/docs/develop-components/deploy-a-containerized-application/'
           'deploy/devops/runtime.md': 'https://wso2.com/choreo/docs/devops-and-ci-cd/view-runtime-details/'
           'deploy/devops/containers.md': 'https://wso2.com/choreo/docs/devops-and-ci-cd/configure-container-resources-commands-and-arguments/'
           'deploy/devops/configs-and-secrets.md': 'https://wso2.com/choreo/docs/devops-and-ci-cd/manage-configurations-and-secrets/'
@@ -277,8 +278,8 @@ plugins:
           'observe-and-analyze/analyze/configure-alerts.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/alerts/configure-alerts/'
           'observe-and-analyze/analyze/choreo-insights-api.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api/'
           'observe-and-analyze/analyze/programmatic-access-choreo-insights-api.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api/'
-          'observe-and-analyze/analyze/dora-metrics/configure-cio-dashboard.md': 'https://wso2.com/choreo/docs'
-          'observe-and-analyze/analyze/dora-metrics/view-dora-metrics.md': 'https://wso2.com/choreo/docs'
+          'observe-and-analyze/analyze/dora-metrics/configure-cio-dashboard.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/engineering-insights/configure-cio-dashboard/'
+          'observe-and-analyze/analyze/dora-metrics/view-dora-metrics.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/engineering-insights/view-dora-metrics/'
           'alerts.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/alerts/configure-alerts/'
           'ipaas/get-started-with-choreo-ipaas.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-integration-with-choreo-ipaas/'
           'ipaas/ballerina/develop-integrations-with-ballerina.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-integration-with-choreo-ipaas/'
@@ -292,6 +293,9 @@ plugins:
           'reference/connect-with-protected-third-party-applications.md': 'https://wso2.com/choreo/docs/troubleshoot/faq/#q-how-can-i-connect-a-choreo-component-with-a-protected-third-party-application'
           'quick-start-guides/build-your-first-integration-with-choreo-ipaas.md': 'https://wso2.com/choreo/docs/tutorials/build-your-first-integration/'
           'quick-start-guides/expose-a-service-as-a-managed-api-with-choreo-api-manager.md': 'https://wso2.com/choreo/docs/tutorials/expose-a-service-as-a-managed-api/'
+          'monitoring-and-insights/engineering-insights/configure-cio-dashboard.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/delivery-insights/configure-dora-metrics/'
+          'monitoring-and-insights/engineering-insights/view-dora-metrics.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/delivery-insights/view-dora-metrics/'
+          'monitoring-and-insights/view-api-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/usage-insights/'
 extra_css:
   # - assets/lib/highlightjs/default.min.css
   # - assets/css/theme.css

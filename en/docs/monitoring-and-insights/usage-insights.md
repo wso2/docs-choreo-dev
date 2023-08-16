@@ -1,14 +1,14 @@
-# API Insights
+# View Usage Insights
 
 This section explains how you can view insights about the APIs deployed in your organization.
 
 ## Access the Insights page
 
-To open the **Insights** page, access the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/), and click **Insights** in the left navigation menu.
+To open the **Usage Insights** page, access the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/), and click **Usage Insights** in the left navigation menu.
 
 ## Analyzing statistics
 
-Once you access the **Insights** page, you can access the following subpages.
+Once you access the **Usage Insights** page, you can access the following subpages.
 
 ### Overview
 

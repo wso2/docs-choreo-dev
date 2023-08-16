@@ -420,6 +420,8 @@ www.moesif.com
 frontend
 Vite
 configs
+OpenJDK
+HotSpot
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -670,3 +672,9 @@ html
 choreoApiUrl
  - docs/api-management/api-policies.md
 Ballerina.toml
+ - docs/develop-components/develop-a-webhook.md
+send-email-on-github-event-webhook
+toEmail
+webhookSecret
+ - docs/resources/kubernetes-upgrade-notice.md
+jdk8u372
