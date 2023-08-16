@@ -1,0 +1,24 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2023, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+resources:
+  - hubble-exporter-deployment.yaml
+
+configMapGenerator:
+  - name: cm-hubble-exporter
+    behavior: create
+    literals:
+      - HUBBLE_ENDPOINT="hubble-relay.kube-system.svc.cluster.local"
+      - REQUEST_CLEANUP_INTERVAL="10m"
+      - REQUEST_STALE_TOLERATION_PERIOD="10m"
+      - REQUEST_LOG_INTERVAL="1m"
+      - DEBUG="true"
+      - HEALTH_SERVER_HOST=":8080"
