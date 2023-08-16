@@ -3,7 +3,7 @@
 <suite name="choreoIntegrationTests_security" parallel="classes" thread-count="7">
     <test name="choreo">
         <classes>
-            <class name="com.wso2.choreo.integration.common.TestContext"/>
+            <class name="com.wso2.choreo.integration.common.SecurityTestContext"/>
             <class name="com.wso2.choreo.integration.tests.security.devOps.Ci.CiElevatedAccessCheck"/>
             <class name="com.wso2.choreo.integration.tests.security.devOps.Clusters.ClustersElevatedAccessCheck"/>
             <class name="com.wso2.choreo.integration.tests.security.devOps.ComponentsAPI.ComponentsAPIElevatedAccessCheck"/>

@@ -2,26 +2,20 @@ package com.wso2.choreo.integration.tests.security.devOps.ComponentsAPI;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
-import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.MessageUtils;
-import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.SecurityTestContext;
 import com.wso2.choreo.integration.common.utils.SecurityUtils;
-import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.config.SecurityConfigDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 public class ComponentsAPIElevatedAccessCheck extends TestNGCitrusSpringSupport {
     private static String accessToken;
@@ -50,7 +44,7 @@ public class ComponentsAPIElevatedAccessCheck extends TestNGCitrusSpringSupport 
 
     @BeforeClass
     public void setup_ComponentsAPIElevatedAccessCheck() throws Exception {
-        accessToken = TestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
+        accessToken = SecurityTestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
         orgId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_ORG_ID);
         projectId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_PROJECT_ID);
         envId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_ENV_ID);

@@ -15,6 +15,7 @@ package com.wso2.choreo.integration.tests;
 
 import com.consol.citrus.dsl.endpoint.CitrusEndpoints;
 import com.consol.citrus.http.client.HttpClient;
+import com.wso2.choreo.integration.common.SecurityTestContext;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 
@@ -35,7 +36,7 @@ public class EndpointConfig {
         com.wso2.choreo.integration.config.Configuration.loadSecurityConfigs();
         TestContext.setTestOrg();
         TestContext.setTestUserTokenHandler();
-        TestContext.setTestUserTokenHandlerForSecurityTests();
+        SecurityTestContext.setTestUserTokenHandlerForSecurityTests();
     }
 
     @Bean
