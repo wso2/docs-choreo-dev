@@ -420,6 +420,8 @@ www.moesif.com
 frontend
 Vite
 Axios
+OpenJDK
+HotSpot
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -673,3 +675,7 @@ choreoApiUrl
 Ballerina.toml
  - docs/consuming-services/consuming-a-sevice.md
 choreo-examples
+ - docs/resources/kubernetes-upgrade-notice.md
+jdk8u372
+ - docs/devops-and-ci-cd/kubernetes-upgrade-notice.md
+jdk8u372
