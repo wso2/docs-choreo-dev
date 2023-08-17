@@ -11,13 +11,17 @@
  * associated services.
  */
 
-export const VALIDATE_USER_URL =
-  Cypress.env("newAppSvcURL") + "/users-mgt/1.0.0/validate/user";
-export const ORGS_URL = Cypress.env("appSvcURL") + "/orgs/*";
+export const USER_MGT_URL = Cypress.env("newAppSvcURL") + "/user-mgt/1.0.0";
+export const VALIDATE_USER_URL = USER_MGT_URL + "/validate/user";
+export const USER_ORGS_URL = USER_MGT_URL + "/orgs";
 export const PUBLISHER_URL = Cypress.env("apimSvcURL") + "/api/am/publisher/v2";
-export const PUBLISHER_API_KEYS_URL = PUBLISHER_URL + "/apis/*/environments/*/keys?organizationId=*";
-export const DEV_PORTAL_URL = Cypress.env("apimSvcURL") + "/api/am/devportal/v2";
-export const DEV_PORTAL_APP_TOKEN_GEN_URL = DEV_PORTAL_URL + "/applications/*/oauth-keys/*/generate-token?organizationId=*";
+export const PUBLISHER_API_KEYS_URL =
+  PUBLISHER_URL + "/apis/*/environments/*/keys?organizationId=*";
+export const DEV_PORTAL_URL =
+  Cypress.env("apimSvcURL") + "/api/am/devportal/v2";
+export const DEV_PORTAL_APP_TOKEN_GEN_URL =
+  DEV_PORTAL_URL +
+  "/applications/*/oauth-keys/*/generate-token?organizationId=*";
 export const DEV_PORTAL_APP_KEY_GEN_URL =
   DEV_PORTAL_URL + "/applications/*/generate-keys?organizationId=*";
 export const DEV_PORTAL_SUBSCRIPTIONS_URL =

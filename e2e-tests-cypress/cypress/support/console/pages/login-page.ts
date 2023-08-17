@@ -15,7 +15,6 @@ import { cyGet } from "../../commons/cy";
 import { AUTH_HEADER, OK } from "../../commons/http";
 import { MEDIUM_TIME, SHORT_TIME } from "../../commons/timeouts";
 import {
-  ORGS_URL,
   EP_USER_HOME_URL,
   VALIDATE_USER_URL,
   GRAPHQL_URL,
@@ -67,10 +66,12 @@ export class LoginPage {
     for (let i = 0; i < 5; i++) {
       cy.get("body", { log: false }).then((body) => {
         if (body.find('[data-testid="Welcome to Choreo!"]').length > 0) {
-          cy.get('[data-cyid="confirmation-dialog-primary-action-button"]').click();
-          cy.get('[data-cyid="confirmation-dialog-primary-action-button"]').should(
-            "not.exist"
-          );
+          cy.get(
+            '[data-cyid="confirmation-dialog-primary-action-button"]'
+          ).click();
+          cy.get(
+            '[data-cyid="confirmation-dialog-primary-action-button"]'
+          ).should("not.exist");
           return;
         } else {
           cy.wait(1000, { log: false });

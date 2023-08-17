@@ -14,6 +14,7 @@
 /// <reference types="cypress" />
 
 import { OK } from "../../../../commons/http";
+import { USER_ORGS_URL } from "../../../../commons/urls";
 import { Utils } from "../../../../commons/utils";
 
 export class OrganizationComponent {
@@ -97,12 +98,8 @@ export class OrganizationComponent {
     const headers = {
       authorization: `Bearer ${token}`,
     };
-    const deletePendingInvitation = `${Cypress.env(
-      "newAppSvcURL"
-    )}/users-mgt/1.0.0/orgs/${handle}/invitations?email=${email}`;
-    const getUsers = `${Cypress.env(
-      "newAppSvcURL"
-    )}/users-mgt/1.0.0/orgs/${handle}/users`;
+    const deletePendingInvitation = `${USER_ORGS_URL}/${handle}/invitations?email=${email}`;
+    const getUsers = `${USER_ORGS_URL}/${handle}/users`;
 
     Utils.sendGetRequest(getUsers, headers).then((res) => {
       const list = res.body.list as [];
@@ -111,9 +108,7 @@ export class OrganizationComponent {
 
       if (user) {
         const { idpId } = user;
-        const deleteUserRequest = `${Cypress.env(
-          "newAppSvcURL"
-        )}/users-mgt/1.0.0/orgs/${handle}/users/${idpId}`;
+        const deleteUserRequest = `${USER_ORGS_URL}/${handle}/users/${idpId}`;
 
         Utils.sendDeleteRequest(deleteUserRequest, headers).then((res) => {
           if (res.status === OK) {
@@ -188,7 +183,7 @@ export class OrganizationComponent {
     cy.contains("td", userData["userEmail"]).should("be.visible");
     cy.log("Member added to the role successfully");
   }
-  
+
   static checkMemberRole(roleName: string) {
     const userData = Cypress.env("userData");
     cy.contains("td", userData["userEmail"]).should("be.visible").click();
