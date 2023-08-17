@@ -1,0 +1,170 @@
+{
+	"info": {
+		"_postman_id": "1132b5bc-2670-4b76-b17b-0a3cf387d851",
+		"name": "org-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "4676893"
+	},
+	"item": [
+		{
+			"name": "ListOrganizations Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/orgs/1.0.0/orgs/"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateOrganization Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{ASGARDEO_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"{{CREATE_ORG_NAME}}\"}"
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/orgs/1.0.0/orgs"
+			},
+			"response": []
+		},
+		{
+			"name": "GetOrganizationByOrgHandle Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/orgs/1.0.0/orgs/{{ORG_HANDLE}}"
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateOrganizationByHandle Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"name\": \"{{UPDATE_ORG_NAME}}\"\n    }"
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/orgs/1.0.0/orgs/{{CREATE_ORG_NAME}}"
+			},
+			"response": []
+		},
+		{
+			"name": "GetOrgsMetaData Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{CP_GATEWAY_HOST}}/orgs/1.0.0/orgs-metadata?orghandle={{ORG_HANDLE}}",
+					"protocol": "https",
+					"host": [
+						"{{CP_GATEWAY_HOST}}"
+					],
+					"path": [
+						"orgs",
+						"1.0.0",
+						"orgs-metadata"
+					],
+					"query": [
+						{
+							"key": "orghandle",
+							"value": "{{ORG_HANDLE}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

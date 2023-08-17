@@ -1,0 +1,513 @@
+{
+	"info": {
+		"_postman_id": "1bb4a77e-c268-49ee-8edf-4c561c6b8f0c",
+		"name": "Api V1 Metrics",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26391121",
+		"_collection_link": "https://winter-robot-282301.postman.co/workspace/Team-Workspace~be988dda-7505-4bca-8709-415b9b5bf44c/collection/26391121-1bb4a77e-c268-49ee-8edf-4c561c6b8f0c?action=share&creator=26391121&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "podMetrics",
+			"item": [
+				{
+					"name": "get Podmetrics",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-jwt-assertion",
+								"value": "<string>"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl_metrics}}/podMetrics?org_id={{organization_id}}&project_id={{project_id}}",
+							"host": [
+								"{{baseUrl_metrics}}"
+							],
+							"path": [
+								"podMetrics"
+							],
+							"query": [
+								{
+									"key": "org_id",
+									"value": "{{organization_id}}",
+									"description": "(Required) "
+								},
+								{
+									"key": "project_id",
+									"value": "{{project_id}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-jwt-assertion",
+										"value": "<string>"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/podMetrics?org_id=<string>&project_id=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"podMetrics"
+									],
+									"query": [
+										{
+											"key": "org_id",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "project_id",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						},
+						{
+							"name": "Internal server error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-jwt-assertion",
+										"value": "<string>"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/podMetrics?org_id=<string>&project_id=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"podMetrics"
+									],
+									"query": [
+										{
+											"key": "org_id",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "project_id",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": "<string>"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "deployments",
+			"item": [
+				{
+					"name": "get Deployments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-jwt-assertion",
+								"value": "<string>"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl_metrics}}/deployments?organization_id={{organization_id}}&project_id={{project_id}}",
+							"host": [
+								"{{baseUrl_metrics}}"
+							],
+							"path": [
+								"deployments"
+							],
+							"query": [
+								{
+									"key": "organization_id",
+									"value": "{{organization_id}}",
+									"description": "(Required) "
+								},
+								{
+									"key": "project_id",
+									"value": "{{project_id}}",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-jwt-assertion",
+										"value": "<string>"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/deployments?organization_id=<string>&project_id=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"deployments"
+									],
+									"query": [
+										{
+											"key": "organization_id",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "project_id",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						},
+						{
+							"name": "Internal server error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-jwt-assertion",
+										"value": "<string>"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/deployments?organization_id=<string>&project_id=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"deployments"
+									],
+									"query": [
+										{
+											"key": "organization_id",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "project_id",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": "<string>"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "activeComponentCount",
+			"item": [
+				{
+					"name": "get Activecomponentcount",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-jwt-assertion",
+								"value": "<string>"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl_metrics}}/activeComponentCount?org_id={{organization_id}}&project_id={{project_id}}",
+							"host": [
+								"{{baseUrl_metrics}}"
+							],
+							"path": [
+								"activeComponentCount"
+							],
+							"query": [
+								{
+									"key": "org_id",
+									"value": "{{organization_id}}",
+									"description": "(Required) "
+								},
+								{
+									"key": "project_id",
+									"value": "{{project_id}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-jwt-assertion",
+										"value": "<string>"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/activeComponentCount?org_id=<string>&project_id=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"activeComponentCount"
+									],
+									"query": [
+										{
+											"key": "org_id",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "project_id",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						},
+						{
+							"name": "Internal server error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-jwt-assertion",
+										"value": "<string>"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/activeComponentCount?org_id=<string>&project_id=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"activeComponentCount"
+									],
+									"query": [
+										{
+											"key": "org_id",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "project_id",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": "<string>"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server",
+			"value": ""
+		},
+		{
+			"key": "port",
+			"value": "config:port"
+		},
+		{
+			"key": "baseUrl",
+			"value": "{{server}}:{{port}}/api/v1/metrics"
+		}
+	]
+}

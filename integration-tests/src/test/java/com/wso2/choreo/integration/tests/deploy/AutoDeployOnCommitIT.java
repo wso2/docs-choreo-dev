@@ -11,6 +11,7 @@
  * associated services.
  */
 package com.wso2.choreo.integration.tests.deploy;
+
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
@@ -18,26 +19,27 @@ import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
+import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.utils.FileUtil;
-import com.wso2.choreo.integration.config.ConfigDefinition;
-import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
-import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.code.Repository;
+import com.wso2.choreo.integration.models.commithistory.Commit;
+import com.wso2.choreo.integration.models.environments.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -66,7 +68,7 @@ import java.util.Map;
             String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
 
             Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/empty-repo").branch("main").subPath("").build();
-            GraphqlDTO dto = ComponentUtils.createRestApiComponentRequest(componentName, project, repo);
+            GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);
 
             choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                     ComponentFlavour.STANDARD);
@@ -95,12 +97,9 @@ import java.util.Map;
         @Test(dependsOnMethods = {"mergeNewCode_AutoDeployOnCommitIT"})
         @CitrusTest
         public void deploymentStatusByVersion_AutoDeployOnCommitIT() throws Exception {
-            GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
-        }
-
-        @Test(dependsOnMethods = {"deploymentStatusByVersion_AutoDeployOnCommitIT"})
-        @CitrusTest
-        public void componentDevDeployment_AutoDeployOnCommitIT() throws Exception {
-            GraphQL.componentDeployment(choreoComponent, "dev", accessToken);
+            List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
+            Commit latestCommit = ComponentUtils.getLatestCommit(this, citrusClients, accessToken, choreoComponent);
+            ComponentUtils.validateComponentDeployment(this, citrusClients, accessToken, choreoComponent,
+                    latestCommit, environments);
         }
     }

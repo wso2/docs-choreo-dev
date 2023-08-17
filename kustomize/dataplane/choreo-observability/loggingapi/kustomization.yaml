@@ -13,3 +13,4 @@ resources:
   - loggingapi-deployment.yaml
   - loggingapi-service.yaml
   - loggingapi-hpa.yaml
+  - network-policy.yaml

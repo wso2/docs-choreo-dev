@@ -61,7 +61,7 @@ public class TestManualTriggerDp extends TestBase{
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
 
         Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/manual-trigger").branch("main").subPath("").build();
-        GraphqlDTO dto = ComponentUtils.createRestApiComponentRequest(componentName, project, repo);
+        GraphqlDTO dto = ComponentUtils.createManualTriggerComponentRequest(componentName, project, repo);
         ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
         dp.setChoreoProject(project);
         dp.setChoreoComponent(choreoComponent);

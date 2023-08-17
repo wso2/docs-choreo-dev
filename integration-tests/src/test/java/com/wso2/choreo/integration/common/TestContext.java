@@ -15,6 +15,7 @@ package com.wso2.choreo.integration.common;
 
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
+import lombok.Getter;
 import org.apache.commons.lang.StringUtils;
 import org.testng.annotations.BeforeSuite;
 
@@ -25,23 +26,18 @@ import org.testng.annotations.BeforeSuite;
  */
 public class TestContext {
 
+    @Getter
     private static ChoreoOrganization testOrg;
 
+    @Getter
     private static TokenHandler testUserTokenHandler;
-    private static TokenHandler testUserTokenHandlerForSecurityTests;
 
     @BeforeSuite
     public void setup() throws Exception {
         Configuration.loadConfigs();
-        Configuration.loadSecurityConfigs();
         setTestOrg();
-        setTestUserTokenHandlerForSecurityTests();
         setTestUserTokenHandler();
         DataCleaner.removeOldTestData(testOrg);
-    }
-
-    public static ChoreoOrganization getTestOrg() {
-        return testOrg;
     }
 
     public static synchronized void setTestOrg() {
@@ -50,14 +46,6 @@ public class TestContext {
                     Integer.parseInt( Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID)),
                     Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
         }
-    }
-
-    public static TokenHandler getTestUserTokenHandler() {
-        return testUserTokenHandler;
-    }
-
-    public static TokenHandler getTestUserTokenHandlerForSecurityTests() {
-        return testUserTokenHandlerForSecurityTests;
     }
 
     public static synchronized void setTestUserTokenHandler() {
@@ -79,22 +67,4 @@ public class TestContext {
         }
     }
 
-    public static synchronized void setTestUserTokenHandlerForSecurityTests() {
-        if (testUserTokenHandlerForSecurityTests == null) {
-            String token = System.getProperty("Token");
-
-            if (!StringUtils.isEmpty(token)) {
-                testUserTokenHandlerForSecurityTests = new TokenHandler(token);
-            } else {
-                testUserTokenHandlerForSecurityTests = new TokenHandler.Builder(
-                        Configuration.getConfig(ConfigDefinition.SECURITY_TEST_CHOREO_ORG_HANDLE),
-                        Configuration.getConfig(ConfigDefinition.LOW_PRIVILEGED_USER_EMAIL),
-                        Configuration.getConfig(ConfigDefinition.LOW_PRIVILEGED_USER_PASSWORD))
-                        .asgardeoClientId(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_ID))
-                        .asgardeoClientSecret(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_SECRET))
-                        .cpAppClientId(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_ID))
-                        .cpAppClientSecret(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_SECRET)).build();
-            }
-        }
-    }
 }
