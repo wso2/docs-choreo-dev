@@ -101,18 +101,9 @@ sed -i "s/AKS_READONLY_AD_GROUP_ID/${AKS_READONLY_AD_GROUP_ID}/g" conf/view-clus
 kubectl apply -f conf/view-cluster-role-binding.yaml
 mv conf/view-cluster-role-binding.yaml.backup conf/view-cluster-role-binding.yaml
 
-############## Install Reloader
-echo "--- Installing Reloader..."
-bash dataplane/reloader/configure-reloader.sh
 
 echo "--- Add OMS Agent Config"
 bash dataplane/oms-agent/configure-oms-agent.sh
-
-echo "--- Configure CSI Secret Store"
-bash dataplane/secret-store-csi-driver/configure-csi-secret-store.sh
-
-#echo "--- Setup Nginx Ingress"
-#bash routing/nginx-ingress-controllers/configure-ingress-controllers.sh
 
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"

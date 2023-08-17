@@ -97,15 +97,6 @@ sed -i "s/AKS_READONLY_AD_GROUP_ID/${AKS_READONLY_AD_GROUP_ID}/g" conf/view-clus
 kubectl apply -f conf/view-cluster-role-binding.yaml
 mv conf/view-cluster-role-binding.yaml.backup conf/view-cluster-role-binding.yaml
 
-############## Install Reloader
-echo "--- Installing Reloader..."
-bash controlplane/reloader/configure-reloader.sh
-
-echo "--- Installing Cert Manager..."
-bash controlplane/cert-manager/configure-cert-manager.sh
-
-echo "--- Installing Emberstack reflector..."
-bash controlplane/reflector/configure-reflector.sh
 
 echo "--- Creating secrets for DNS-01 challenge..."
 bash controlplane/lets-encrypt-certs/configure-lets-encrypt-certs.sh
@@ -123,12 +114,6 @@ bash controlplane/buoyant-cloud/configure-buoyant-cloud.sh
 
 echo "--- Add OMS Agent Config"
 bash controlplane/oms-agent/configure-oms-agent.sh
-
-echo "--- Configure CSI Secret Store"
-bash controlplane/secret-store-csi-driver/configure-csi-secret-store.sh
-
-echo "--- Setup Nginx Ingress"
-bash controlplane/nginx-ingress-controllers/configure-ingress-controllers.sh
 
 echo "--- Create Internal Ingress TLS secrets"
 bash controlplane/internal-ingress-tls-secrets/create-ingress-tls-secrets.sh
