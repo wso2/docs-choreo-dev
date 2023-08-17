@@ -24,9 +24,9 @@ The following Choreo component types could be affected:
 
 To ensure a smooth transition and compatibility with the updated Java Runtime version, follow the steps below:
 
-- **Ballerina or Micro Integrator-based components**: If you have created components using the Ballerina preset or the MI preset, we strongly advise you to [redeploy your components](#redeploy-a-component-in-choreo) before we initiate the upgrade. In the deployment pipeline we will build your component using the latest Java version.
+- **Ballerina or Micro Integrator-based components**: If you have created components using the Ballerina preset or the MI preset, we strongly advise you to [redeploy your components](#redeploy-a-component-in-choreo) before we initiate the upgrade. In the deployment pipeline, we will build your component using the latest Java version.
 
-- **REST API Proxy components that include mediation policies**: If you have created REST API Proxy components and attached a mediation policy to the REST API Proxy, we strongly advise you to [redeploy your components](#redeploy-a-component-in-choreo) before we initiate the upgrade. In the deployment pipeline we will build your component using the latest Java version.
+- **REST API Proxy components that include mediation policies**: If you have created REST API Proxy components and attached a mediation policy to the REST API Proxy, we strongly advise you to [redeploy your components](#redeploy-a-component-in-choreo) before we initiate the upgrade. In the deployment pipeline, we will build your component using the latest Java version.
 
 - **Other Java-based containerized components**: If you have components created using the Dockerfile preset that includes containerized applications utilizing the Java Runtime, follow the steps below:
 
