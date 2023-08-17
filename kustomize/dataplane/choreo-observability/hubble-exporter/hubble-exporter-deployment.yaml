@@ -37,7 +37,7 @@ spec:
             capabilities:
               drop:
               - ALL
-          image: choreoprivateacr.azurecr.io/choreoipaas/choreo-hubble-exporter:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-hubble-exporter:latest
           imagePullPolicy: Always
           ports:
             - name: health
