@@ -20,7 +20,7 @@ The following Choreo component types could be affected:
 
 ## Action Required
 
-**Recommended action date: August 28, 2023, from 3:00 a.m. to 6:00 a.m. UTC** 
+**Recommended action date: Before August 28, 2023, 3:00 a.m. UTC** 
 
 To ensure a smooth transition and compatibility with the updated Java Runtime version, follow the steps below:
 
