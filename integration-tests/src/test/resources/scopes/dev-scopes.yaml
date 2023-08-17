@@ -65,22 +65,22 @@ scopes:
   - urn:choreocontrolplane:organizationmanagement:theme_deploy
   - urn:choreocontrolplane:organizationmanagement:theme_manage
   - urn:choreocontrolplane:organizationmanagement:theme_view
-  - urn:choreocontrolplane:usersmanagement:invitation_delete
-  - urn:choreocontrolplane:usersmanagement:invitation_manage
-  - urn:choreocontrolplane:usersmanagement:invitation_send
-  - urn:choreocontrolplane:usersmanagement:invitation_view
-  - urn:choreocontrolplane:usersmanagement:permission_view
-  - urn:choreocontrolplane:usersmanagement:role_create
-  - urn:choreocontrolplane:usersmanagement:role_delete
-  - urn:choreocontrolplane:usersmanagement:role_manage
-  - urn:choreocontrolplane:usersmanagement:role_mapping_create
-  - urn:choreocontrolplane:usersmanagement:role_mapping_delete
-  - urn:choreocontrolplane:usersmanagement:role_mapping_manage
-  - urn:choreocontrolplane:usersmanagement:role_mapping_update
-  - urn:choreocontrolplane:usersmanagement:role_mapping_view
-  - urn:choreocontrolplane:usersmanagement:role_update
-  - urn:choreocontrolplane:usersmanagement:role_view
-  - urn:choreocontrolplane:usersmanagement:user_delete
-  - urn:choreocontrolplane:usersmanagement:user_manage
-  - urn:choreocontrolplane:usersmanagement:user_update
-  - urn:choreocontrolplane:usersmanagement:user_view
+  - urn:choreocontrolplane:usermanagement:invitation_delete
+  - urn:choreocontrolplane:usermanagement:invitation_manage
+  - urn:choreocontrolplane:usermanagement:invitation_send
+  - urn:choreocontrolplane:usermanagement:invitation_view
+  - urn:choreocontrolplane:usermanagement:permission_view
+  - urn:choreocontrolplane:usermanagement:role_create
+  - urn:choreocontrolplane:usermanagement:role_delete
+  - urn:choreocontrolplane:usermanagement:role_manage
+  - urn:choreocontrolplane:usermanagement:role_mapping_create
+  - urn:choreocontrolplane:usermanagement:role_mapping_delete
+  - urn:choreocontrolplane:usermanagement:role_mapping_manage
+  - urn:choreocontrolplane:usermanagement:role_mapping_update
+  - urn:choreocontrolplane:usermanagement:role_mapping_view
+  - urn:choreocontrolplane:usermanagement:role_update
+  - urn:choreocontrolplane:usermanagement:role_view
+  - urn:choreocontrolplane:usermanagement:user_delete
+  - urn:choreocontrolplane:usermanagement:user_manage
+  - urn:choreocontrolplane:usermanagement:user_update
+  - urn:choreocontrolplane:usermanagement:user_view

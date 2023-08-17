@@ -65,22 +65,22 @@ scopes:
   - urn:choreosystem:organizationmanagement:theme_deploy
   - urn:choreosystem:organizationmanagement:theme_manage
   - urn:choreosystem:organizationmanagement:theme_view
-  - urn:choreosystem:usersmanagement:invitation_delete
-  - urn:choreosystem:usersmanagement:invitation_manage
-  - urn:choreosystem:usersmanagement:invitation_send
-  - urn:choreosystem:usersmanagement:invitation_view
-  - urn:choreosystem:usersmanagement:permission_view
-  - urn:choreosystem:usersmanagement:role_create
-  - urn:choreosystem:usersmanagement:role_delete
-  - urn:choreosystem:usersmanagement:role_manage
-  - urn:choreosystem:usersmanagement:role_mapping_create
-  - urn:choreosystem:usersmanagement:role_mapping_delete
-  - urn:choreosystem:usersmanagement:role_mapping_manage
-  - urn:choreosystem:usersmanagement:role_mapping_update
-  - urn:choreosystem:usersmanagement:role_mapping_view
-  - urn:choreosystem:usersmanagement:role_update
-  - urn:choreosystem:usersmanagement:role_view
-  - urn:choreosystem:usersmanagement:user_delete
-  - urn:choreosystem:usersmanagement:user_manage
-  - urn:choreosystem:usersmanagement:user_update
-  - urn:choreosystem:usersmanagement:user_view
+  - urn:choreosystem:usermanagement:invitation_delete
+  - urn:choreosystem:usermanagement:invitation_manage
+  - urn:choreosystem:usermanagement:invitation_send
+  - urn:choreosystem:usermanagement:invitation_view
+  - urn:choreosystem:usermanagement:permission_view
+  - urn:choreosystem:usermanagement:role_create
+  - urn:choreosystem:usermanagement:role_delete
+  - urn:choreosystem:usermanagement:role_manage
+  - urn:choreosystem:usermanagement:role_mapping_create
+  - urn:choreosystem:usermanagement:role_mapping_delete
+  - urn:choreosystem:usermanagement:role_mapping_manage
+  - urn:choreosystem:usermanagement:role_mapping_update
+  - urn:choreosystem:usermanagement:role_mapping_view
+  - urn:choreosystem:usermanagement:role_update
+  - urn:choreosystem:usermanagement:role_view
+  - urn:choreosystem:usermanagement:user_delete
+  - urn:choreosystem:usermanagement:user_manage
+  - urn:choreosystem:usermanagement:user_update
+  - urn:choreosystem:usermanagement:user_view
