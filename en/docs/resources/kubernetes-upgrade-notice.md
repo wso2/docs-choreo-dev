@@ -1,28 +1,39 @@
 # Choreo Kubernetes Infrastructure Upgrade Notice
 
-**Upgrade Date: August 28, 2023** 
+**Upgrade Date: August 28, 2023, from 3:00 a.m. to 6:00 a.m. UTC** 
 
 An upcoming upgrade to the Choreo Kubernetes infrastructure is scheduled to take place on August 28, 2023.
 
 ## Impact on Java-based Components
 
-This upgrade is geared towards enhancing the performance and capabilities of our platform. However, it's important to note that there might be an impact on Java-based components in terms of memory usage. Specifically, **applications relying on Java runtime versions older than jdk8u372 or 11.0.16 could experience out-of-memory errors due to potential memory consumption increases resulting from the upgrade**.
+This upgrade is geared towards enhancing the performance and capabilities of our platform. However, it's important to note that there might be an impact on Java-based components in terms of memory usage. Specifically, **applications relying on Java Runtime versions older than jdk8u372 or 11.0.16 could experience out-of-memory errors due to potential memory consumption increases resulting from the upgrade**.
 
-## Affected Component Types:
+## Affected Component Types
 
 The following Choreo component types could be affected:
 
-- Ballerina services
-- WSO2 Micro Gateway integrations
-- Triggers
-- Webhooks
-- REST API Proxies created with mediation policies
+- Components created using the Ballerina preset (For example, Service, Webhook, Scheduled trigger, Manual Trigger components).
+- Integration components created using the WSO2 Micro Integrator preset (For example, Integration as an API, Event-triggered integration, Manually-triggered integration, Scheduled integration components).
+- REST API Proxies that include mediation policies.
+- Components created using the Dockerfile preset (Components created with containerized applications utilizing the Java Runtime).
+
 
 ## Action Required
 
-- If you have created any of the above components, we strongly recommend you **rebuild and redeploy** them before the upgrade to ensure compatibility with the updated Java runtime version.
+**Recommended action date: August 28, 2023, from 3:00 a.m. to 6:00 a.m. UTC** 
 
-- If you have deployed any containerized applications that use the Java runtime, **ensure that you are using the Java version: OpenJDK / HotSpot - jdk8u372, 11.0.16, 15, and later**.
+To ensure a smooth transition and compatibility with the updated Java Runtime version, follow the steps below:
+
+- **Re-deploy (Excluding components created with containerized applications)**:  If you have created any of the component types mentioned above, excluding any components created using the Dockerfile preset, we strongly advise you to re-deploy them before we initiate the upgrade. 
+
+    To deploy your component, follow the steps given below:
+
+    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
+    2. Select your component from **Components Listing**. This will open the overview page of your component.
+    3. In the left navigation menu, click **Deploy**.
+    4. Deploy the component via the  **Build Area** card.
 
 
-For more information, please refer to [this](https://kubernetes.io/blog/2022/08/31/cgroupv2-ga-1-25/#migrate-to-cgroup-v2) document. 
+- **Ensure Java version compatibility (For components created with containerized applications)**: If you have deployed components with containerized applications that rely on the Java runtime, **ensure that you are using the Java version: OpenJDK / HotSpot - jdk8u372, 11.0.16, 15, and later**. 
+
+For more information, refer to [this](https://kubernetes.io/blog/2022/08/31/cgroupv2-ga-1-25/#migrate-to-cgroup-v2) document. 
