@@ -2,15 +2,12 @@ package com.wso2.choreo.integration.tests.dp;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
-import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.config.ConfigDefinition;
-import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.code.Repository;
@@ -57,7 +54,7 @@ public class TestManualTriggerDp extends TestBase{
     @Test(dataProvider = "dps")
     @CitrusTest
     public void createUserManagedRestAPI_TestManualTriggerDp(DataProviderWrapper dp) throws Exception {
-        ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
+        ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, dp.getRegion());
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
 
         Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/manual-trigger").branch("main").subPath("").build();

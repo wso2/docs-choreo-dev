@@ -16,14 +16,12 @@ package com.wso2.choreo.integration.tests.dp;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
-import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.Constant;
@@ -65,10 +63,10 @@ public class TestProxyApiDpWithAPIRateLimit extends TestBase {
 
     @Test(dataProvider = "dps")
     @CitrusTest
-    public void creteProject_ProxyApiDpWithAPIRateLimit(DataProviderWrapper dp) throws IOException {
+    public void creteProject_ProxyApiDpWithAPIRateLimit(DataProviderWrapper dp) throws Exception {
         String firstAPIName = Constant.DEFAULT_API_NAME.concat(String.valueOf(new Date().getTime()));
         String firstContext = APICreator.generateContext(firstAPIName);
-        ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
+        ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, dp.getRegion());
         dp.setChoreoProject(project);
         dp.setFirstName(firstAPIName);
         dp.setContext(firstContext);

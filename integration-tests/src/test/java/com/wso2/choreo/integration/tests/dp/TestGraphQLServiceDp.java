@@ -2,48 +2,29 @@ package com.wso2.choreo.integration.tests.dp;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
-import com.consol.citrus.message.MessageType;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
-import com.wso2.choreo.integration.apis.graphql.GraphQL;
-import com.wso2.choreo.integration.apis.observability.ObservabilityService;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.config.ConfigDefinition;
-import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
 import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
-import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
-import com.wso2.choreo.integration.models.observability.ObservabilityLogs;
 import com.wso2.choreo.integration.tests.graphqlservice.GqlServiceTestHelper;
-import org.hamcrest.core.StringRegularExpression;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
-
-import static com.consol.citrus.http.actions.HttpActionBuilder.http;
-import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
-import static org.hamcrest.Matchers.everyItem;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.hasItems;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 public class TestGraphQLServiceDp extends TestBase {
 
@@ -65,7 +46,7 @@ public class TestGraphQLServiceDp extends TestBase {
     @Test(dataProvider = "dps")
     @CitrusTest
     public void createUserManagedComponentFor_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
-        ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
+        ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, dp.getRegion());
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
 
         Repository repo = Repository.builder().
