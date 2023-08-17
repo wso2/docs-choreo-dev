@@ -213,7 +213,6 @@ defaultRoles:
         - environments:view_prod
         - apim:prod_key_manage
         - apim:sand_key_manage
-        - {{.PERMISSION_CUSTOM_DOMAIN_VIEW}}
     - name: API Publisher
       handle: api-publisher
       description: Users who understand the technical aspects of the API (interfaces, documentation, versions, etc.) and create and publish APIs into the Developer Portal.
