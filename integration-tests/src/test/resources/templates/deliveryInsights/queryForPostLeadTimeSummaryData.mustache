@@ -1,0 +1,10 @@
+query {
+      changeLeadTimeSummary (
+            startTime: "{{startTime}}",
+            endTime: "{{endTime}}",
+            projectId: "{{projectId}}"
+        ) {
+          avgLeadTime,
+          perfLevel
+        }
+      }

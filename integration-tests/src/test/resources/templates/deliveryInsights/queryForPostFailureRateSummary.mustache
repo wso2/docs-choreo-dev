@@ -1,0 +1,10 @@
+query {
+      changeFailureRateSummary (
+            startTime: "{{startTime}}",
+            endTime: "{{endTime}}",
+            projectId: "{{projectId}}"
+        ) {
+          failureRate,
+          perfLevel
+        }
+      }
