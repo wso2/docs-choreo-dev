@@ -28,7 +28,7 @@
 						"value": "{{AUTH_TOKEN}}"
 					}
 				],
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/users/{{USER_IDP_ID}}"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/users/{{USER_IDP_ID}}"
 			},
 			"response": []
 		},
@@ -54,7 +54,7 @@
 						"value": "{{AUTH_TOKEN}}"
 					}
 				],
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/users/{{DELETE_USER_IDP_ID}}"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/users/{{DELETE_USER_IDP_ID}}"
 			},
 			"response": []
 		},
@@ -76,7 +76,7 @@
 						"value": "{{AUTH_TOKEN}}"
 					}
 				],
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/users"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/users"
 			},
 			"response": []
 		},
@@ -102,7 +102,7 @@
 					"mode": "raw",
 					"raw": "{\"additionRoleHandles\":[\"api-subscriber\"]}"
 				},
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/users/{{USER_IDP_ID}}/roles"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/users/{{USER_IDP_ID}}/roles"
 			},
 			"response": []
 		},
@@ -129,7 +129,7 @@
 						"value": "{{AUTH_TOKEN}}"
 					}
 				],
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/roles/permissions"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/roles/permissions"
 			},
 			"response": []
 		},
@@ -156,13 +156,13 @@
 					}
 				],
 				"url": {
-					"raw": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles?include=members",
+					"raw": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles?include=members",
 					"protocol": "https",
 					"host": [
 						"{{CP_GATEWAY_HOST}}"
 					],
 					"path": [
-						"users-mgt",
+						"user-mgt",
 						"1.0.0",
 						"orgs",
 						"{{ORG_HANDLE}}",
@@ -204,7 +204,7 @@
 					"mode": "raw",
 					"raw": "{\n    \"displayName\": \"{{CREATE_ROLE_NAME}}\",\n    \"description\": \"{{CREATE_ROLE_DESCRIPTION}}\",\n    \"tags\": [],\n    \"permissions\": [\n        {\n            \"id\": \"{{CREATE_ROLE_PERMISSION_ID}}\",\n            \"domainArea\": \"{{CREATE_ROLE_DOMAIN_AREA}}\",\n            \"handle\": \"{{CREATE_ROLE_HANDLE}}\"\n        }\n    ]\n}"
 				},
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles"
 			},
 			"response": []
 		},
@@ -231,13 +231,13 @@
 					}
 				],
 				"url": {
-					"raw": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles/{{ROLE_HANDLE}}?include=permissions",
+					"raw": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles/{{ROLE_HANDLE}}?include=permissions",
 					"protocol": "https",
 					"host": [
 						"{{CP_GATEWAY_HOST}}"
 					],
 					"path": [
-						"users-mgt",
+						"user-mgt",
 						"1.0.0",
 						"orgs",
 						"{{ORG_HANDLE}}",
@@ -281,7 +281,7 @@
 					"mode": "raw",
 					"raw": "{\"deletionPermissionList\":[],\"additionPermissionList\":[{\"handle\":\"apim:admin\"},{\"handle\":\"apim:tier_manage\"}]}"
 				},
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles/{{ROLE_HANDLE}}"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles/{{ROLE_HANDLE}}"
 			},
 			"response": []
 		},
@@ -312,7 +312,7 @@
 					"mode": "raw",
 					"raw": "{\"deletionPermissionList\":[],\"additionPermissionList\":[{\"handle\":\"apim:prod_key_manage\"},{\"handle\":\"apim:sand_key_manage\"},{\"handle\":\"apim:subscribe\"},{\"handle\":\"apim:app_manage\"},{\"handle\":\"apim:sub_manage\"},{\"handle\":\"apim:app_import_export\"},{\"handle\":\"apim:api_key\"}]}"
 				},
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles/{{ROLE_HANDLE}}"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles/{{ROLE_HANDLE}}"
 			},
 			"response": []
 		},
@@ -338,7 +338,7 @@
 						"value": "{{AUTH_TOKEN}}"
 					}
 				],
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles/{{DELETE_ROLE_HANDLE}}"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles/{{DELETE_ROLE_HANDLE}}"
 			},
 			"response": []
 		},
@@ -369,7 +369,7 @@
 					"mode": "raw",
 					"raw": "{\"additionUserIds\":[\"{{USER_TO_ADD_TO_THE_ROLE}}\"]}"
 				},
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles/{{ROLE_HANDLE}}/users"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles/{{ROLE_HANDLE}}/users"
 			},
 			"response": []
 		},
@@ -395,7 +395,7 @@
 						"value": "{{AUTH_TOKEN}}"
 					}
 				],
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/group-role-mappings"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/group-role-mappings"
 			},
 			"response": []
 		},
@@ -426,7 +426,7 @@
 					"mode": "raw",
 					"raw": "{\"groupName\":\"{{GROUP_NAME}}\",\"roleList\":[\"developer\",\"api-subscriber\"]}"
 				},
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/group-role-mappings"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/group-role-mappings"
 			},
 			"response": []
 		},
@@ -457,7 +457,7 @@
 					"mode": "raw",
 					"raw": "{\"groupName\":\"{{GROUP_NAME}}\",\"roleList\":[\"developer\",\"api-subscriber\",\"admin\"]}"
 				},
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/group-role-mappings/{{GROUP_NAME}}"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/group-role-mappings/{{GROUP_NAME}}"
 			},
 			"response": []
 		},
@@ -484,7 +484,7 @@
 						"type": "text"
 					}
 				],
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/group-role-mappings/{{GROUP_NAME}}"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/group-role-mappings/{{GROUP_NAME}}"
 			},
 			"response": []
 		},
@@ -510,7 +510,7 @@
 						"value": "{{AUTH_TOKEN}}"
 					}
 				],
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/invitations"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/invitations"
 			},
 			"response": []
 		},
@@ -541,7 +541,7 @@
 					"mode": "raw",
 					"raw": "{\"application\":\"choreo\",\"emails\":[\"{{INVITED_USER_EMAIL}}\"],\"roles\":[\"developer\"]}"
 				},
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/invitations"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/invitations"
 			},
 			"response": []
 		},
@@ -564,13 +564,13 @@
 					}
 				],
 				"url": {
-					"raw": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/invitations?email={{INVITED_USER_EMAIL}}",
+					"raw": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/invitations?email={{INVITED_USER_EMAIL}}",
 					"protocol": "https",
 					"host": [
 						"{{CP_GATEWAY_HOST}}"
 					],
 					"path": [
-						"users-mgt",
+						"user-mgt",
 						"1.0.0",
 						"orgs",
 						"{{ORG_HANDLE}}",
@@ -615,7 +615,7 @@
 						"type": "text"
 					}
 				],
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/invitations/{{INVITATION_UUID}}"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/invitations/{{INVITATION_UUID}}"
 			},
 			"response": []
 		},
@@ -652,7 +652,7 @@
 						"disabled": true
 					}
 				],
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{ORG_HANDLE}}/invitations/{{INVITATION_UUID}}"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/invitations/{{INVITATION_UUID}}"
 			},
 			"response": []
 		},
@@ -680,13 +680,13 @@
 					}
 				],
 				"url": {
-					"raw": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/validate/orgname?orgName={{ORG_HANDLE}}&email={{ORG_OWNER_EMAIL}}",
+					"raw": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/validate/orgname?orgName={{ORG_HANDLE}}&email={{ORG_OWNER_EMAIL}}",
 					"protocol": "https",
 					"host": [
 						"{{CP_GATEWAY_HOST}}"
 					],
 					"path": [
-						"users-mgt",
+						"user-mgt",
 						"1.0.0",
 						"validate",
 						"orgname"
@@ -727,7 +727,7 @@
 						"value": "{{ASGARDEO_TOKEN}}"
 					}
 				],
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/validate/user"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/validate/user"
 			},
 			"response": []
 		},
@@ -758,7 +758,7 @@
 					"mode": "raw",
 					"raw": "{\"isDevportalUser\":true}"
 				},
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/add-enterprise-user"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/add-enterprise-user"
 			},
 			"response": []
 		},
@@ -790,7 +790,7 @@
 					"mode": "raw",
 					"raw": "{\"organization\":{\"name\":\"{{NEW_ORG_NAME}}\"},\"termsAccepted\":true,\"serviceName\":\"choreo\"}"
 				},
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/register-user"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/register-user"
 			},
 			"response": []
 		},
@@ -817,13 +817,13 @@
 					}
 				],
 				"url": {
-					"raw": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/consent/tos?idpId={{USER_IDP_ID}}&serviceName=choreo",
+					"raw": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/consent/tos?idpId={{USER_IDP_ID}}&serviceName=choreo",
 					"protocol": "https",
 					"host": [
 						"{{CP_GATEWAY_HOST}}"
 					],
 					"path": [
-						"users-mgt",
+						"user-mgt",
 						"1.0.0",
 						"consent",
 						"tos"
@@ -864,7 +864,7 @@
 						"value": "{{AUTH_TOKEN}}"
 					}
 				],
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/consent/user"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/consent/user"
 			},
 			"response": []
 		},
@@ -895,13 +895,13 @@
 					}
 				],
 				"url": {
-					"raw": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/consent/user?isGiven=false",
+					"raw": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/consent/user?isGiven=false",
 					"protocol": "https",
 					"host": [
 						"{{CP_GATEWAY_HOST}}"
 					],
 					"path": [
-						"users-mgt",
+						"user-mgt",
 						"1.0.0",
 						"consent",
 						"user"
@@ -943,7 +943,7 @@
 					"mode": "raw",
 					"raw": "{\"idp_id\":\"{{USER_IDP_ID}}\",\"service_name\":\"choreo\",\"is_accepted\":true}"
 				},
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/consent/tos"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/consent/tos"
 			},
 			"response": []
 		},
@@ -996,7 +996,7 @@
 					"mode": "raw",
 					"raw": ""
 				},
-				"url": "https://{{CP_GATEWAY_HOST}}/users-mgt/1.0.0/orgs/{{SELF_SUBSCRIBE_ORG_NAME}}/self-subscribe"
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{SELF_SUBSCRIBE_ORG_NAME}}/self-subscribe"
 			},
 			"response": []
 		}
