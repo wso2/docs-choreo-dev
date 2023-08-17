@@ -13,7 +13,7 @@ This upgrade is geared towards enhancing the performance and capabilities of our
 The following Choreo component types could be affected:
 
 - Components created using the Ballerina preset (For example, Service, Webhook, Scheduled trigger, Manual Trigger components).
-- Integration components created using the WSO2 Micro Integrator preset (For example, Integration as an API, Event-triggered integration, Manually-triggered integration, Scheduled integration components).
+- Integration components created using the WSO2 Micro Integrator preset (For example, Integration as an API, Event-triggered integration, Manually-triggered integration, and Scheduled integration components).
 - REST API Proxies that include mediation policies.
 - Components created using the Dockerfile preset (Components created with containerized applications utilizing the Java Runtime).
 
@@ -24,16 +24,21 @@ The following Choreo component types could be affected:
 
 To ensure a smooth transition and compatibility with the updated Java Runtime version, follow the steps below:
 
-- **Re-deploy (Excluding components created with containerized applications)**:  If you have created any of the component types mentioned above, excluding any components created using the Dockerfile preset, we strongly advise you to re-deploy them before we initiate the upgrade. 
+- **Ballerina or Micro Integrator-based components**: If you have created components using the Ballerina preset or the MI preset, we strongly advise you to [redeploy your components](#redeploy-a-component-in-choreo) before we initiate the upgrade. In the deployment pipeline we will build your component using the latest Java version.
 
-    To deploy your component, follow the steps given below:
+- **Other Java-based containerized components**: If you have components created using the Dockerfile preset that includes containerized applications utilizing the Java Runtime, follow the steps below:
 
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
-    2. Select your component from **Components Listing**. This will open the overview page of your component.
-    3. In the left navigation menu, click **Deploy**.
-    4. Deploy the component via the  **Build Area** card.
+    1. Upgrade your Java version to OpenJDK / HotSpot - jdk8u372, 11.0.16, 15, or later.
+    2. Rebuild your containerized application.
+    3. [Redeploy your containerized component](#redeploy-a-component-in-choreo).
 
+### Redeploy a component in Choreo 
 
-- **Ensure Java version compatibility (For components created with containerized applications)**: If you have deployed components with containerized applications that rely on the Java runtime, **ensure that you are using the Java version: OpenJDK / HotSpot - jdk8u372, 11.0.16, 15, and later**. 
+To redeploy your component, follow the steps given below:
+
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
+2. Select your component from **Components Listing**. This will open the overview page of your component.
+3. In the left navigation menu, click **Deploy**.
+4. Click **Re-deploy** on the relevant environment card.
 
 For more information, refer to [this](https://kubernetes.io/blog/2022/08/31/cgroupv2-ga-1-25/#migrate-to-cgroup-v2) document. 
