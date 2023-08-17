@@ -7,6 +7,13 @@ helmCharts:
   valuesInline:
     ## Please refer https://github.com/opensearch-project/helm-charts/blob/main/charts/opensearch/values.yaml for details
     ## about these values
+
+    extraEnvs:
+    - name: OPENSEARCH_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: opensearch-password
+          key: password
     
     extraInitContainers:
     - name: set-vm-max-map-count
@@ -28,18 +35,18 @@ helmCharts:
           memory: "128Mi"
     
     extraVolumes:
-    - name: opensearch-internal-users
+    - name: opensearch-csi-secret-store
       csi:
         driver: secrets-store.csi.k8s.io
         readOnly: true
         volumeAttributes:
-          secretProviderClass: opensearch-internal-users
+          secretProviderClass: opensearch
         nodePublishSecretRef:
           name: csi-secret-store-azure
     
     extraVolumeMounts:
-    - name: opensearch-internal-users
-      mountPath: "/mnt/csi/opensearch-internal-users"
+    - name: opensearch-csi-secret-store
+      mountPath: "/mnt/csi/opensearch-csi-secret-store"
       readOnly: true
     
     initResources:
@@ -52,8 +59,8 @@ helmCharts:
     
     image:
       pullPolicy: "Always"
-      repository: "choreocontrolplane.azurecr.io/opensearchproject/opensearch"
-      tag: "2.8.0"
+      repository: "choreocontrolplane.azurecr.io/choreoipaas/choreo-opensearch"
+      tag: "dataplane-9c1f38679049a4ea56547514642351e71ee49827"
     
     imagePullSecrets:
     - name: choreo-image-pull-secret
@@ -67,7 +74,17 @@ helmCharts:
       tcpSocket:
         port: 9200
     
+    majorVersion: "2.8.0"
+    
     opensearchJavaOpts: "-Xmx1024M -Xms1024M"
+
+    opensearchLifecycle:
+      postStart:
+        exec:
+          command:
+          - "/bin/bash"
+          - "-c"
+          - "sleep 120 && bash post-start.sh 2>&1 > /tmp/post-start.log"
     
     podSecurityContext:
       seccompProfile:
