@@ -26,7 +26,7 @@ To ensure a smooth transition and compatibility with the updated Java Runtime ve
 
 - **Re-deploy (Excluding components created with containerized applications)**:  If you have created any of the component types mentioned above, excluding any components created using the Dockerfile preset, we strongly advise you to re-deploy them before we initiate the upgrade. 
 
-    To build and deploy your component, follow the steps given below:
+    To deploy your component, follow the steps given below:
 
     1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
     2. Select your component from **Components Listing**. This will open the overview page of your component.
