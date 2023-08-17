@@ -9,7 +9,6 @@ import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -33,9 +32,6 @@ public class TestBallerinaServiceDp extends TestBase {
 
     private String accessToken;
     private String orgHandle;
-    private ChoreoComponent choreoComponent;
-    private String componentId;
-    private List<Environment> environments;
     private String API_INVOCATION_REQUEST_URI;
     private String REST_API_EXPECTED_RESPONSE;
 
@@ -67,17 +63,21 @@ public class TestBallerinaServiceDp extends TestBase {
     @Test(dataProvider = "dps")
     @CitrusTest
     public void createComponent_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
-        ChoreoProject project = GraphQL.createProject(dp.getRegion(), accessToken);
+        ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, dp.getRegion());
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/byor-service-app1").
                 branch("main").subPath("").build();
 
         GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);
-        choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
+        ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
-        environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 choreoComponent);
-        componentId = choreoComponent.getId();
+
+        dp.setChoreoComponent(choreoComponent);
+        dp.setEnvironments(environments);
+
+        String componentId = choreoComponent.getId();
 
         Assert.assertEquals(project.getRegion(), dp.getRegion());
         Assert.assertNotNull(componentId);
@@ -86,7 +86,7 @@ public class TestBallerinaServiceDp extends TestBase {
     @Test(dependsOnMethods = {"createComponent_TestBallerinaServiceDp"}, dataProvider = "dps")
     @CitrusTest
     public void deployComponent_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
-        ComponentUtils.deployComponent(this, citrusClients, accessToken, choreoComponent, environments,
+        ComponentUtils.deployComponent(this, citrusClients, accessToken, dp.getChoreoComponent(), dp.getEnvironments(),
                 ComponentFlavour.STANDARD);
     }
 
@@ -94,9 +94,9 @@ public class TestBallerinaServiceDp extends TestBase {
     @CitrusTest
     public void invokeAPIDev_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
         Endpoint endpoint = ComponentUtils.getEndpoints(this, citrusClients, accessToken,
-                choreoComponent, Constant.DEV_ENVIRONMENT).get(0);
-        String devApiKey = choreoComponent.getAPIKeyForInvoke(accessToken, endpoint.getApimId(),
-                environments.get(0).getName()).replace("\"", "");
+                dp.getChoreoComponent(), Constant.DEV_ENVIRONMENT).get(0);
+        String devApiKey = dp.getChoreoComponent().getAPIKeyForInvoke(accessToken, endpoint.getApimId(),
+                dp.getEnvironments().get(0).getName()).replace("\"", "");
         String invokeUrlDev = endpoint.getPublicUrl();
         ComponentUtils.invokeApiGET(this, devApiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI,
                 REST_API_EXPECTED_RESPONSE);
@@ -105,7 +105,7 @@ public class TestBallerinaServiceDp extends TestBase {
     @Test(dependsOnMethods = {"invokeAPIDev_TestBallerinaServiceDp"}, dataProvider = "dps")
     @CitrusTest
     public void promoteComponent_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
-        ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent, environments,
+        ComponentUtils.promoteComponent(this, citrusClients, accessToken, dp.getChoreoComponent(), dp.getEnvironments(),
                 ComponentFlavour.STANDARD);
     }
 
@@ -113,9 +113,9 @@ public class TestBallerinaServiceDp extends TestBase {
     @CitrusTest
     public void invokeAPIProd_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
         Endpoint endpoint = ComponentUtils.getEndpoints(this, citrusClients, accessToken,
-                choreoComponent, Constant.PROD_ENVIRONMENT).get(0);
-        String prodApiKey = choreoComponent.getAPIKeyForInvoke(accessToken, endpoint.getApimId(),
-                environments.get(1).getName()).replace("\"", "");
+                dp.getChoreoComponent(), Constant.PROD_ENVIRONMENT).get(0);
+        String prodApiKey = dp.getChoreoComponent().getAPIKeyForInvoke(accessToken, endpoint.getApimId(),
+                dp.getEnvironments().get(1).getName()).replace("\"", "");
         String invokeUrlProd = endpoint.getPublicUrl();
         ComponentUtils.invokeApiGET(this, prodApiKey, invokeUrlProd, API_INVOCATION_REQUEST_URI,
                 REST_API_EXPECTED_RESPONSE);
@@ -124,9 +124,9 @@ public class TestBallerinaServiceDp extends TestBase {
     @Test(dependsOnMethods = {"invokeAPIProd_TestBallerinaServiceDp"}, dataProvider = "dps")
     @CitrusTest
     public void undeployComponentDev_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
-        String devReleaseId = GraphQL.componentDeployment(choreoComponent, Constant.DEV_ENVIRONMENT,
-                accessToken).getReleaseId();
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(orgHandle)
+        String devReleaseId = ComponentUtils.getComponentDeploymentStatus(this, citrusClients, accessToken,
+                dp.getChoreoComponent(), Constant.DEV_ENVIRONMENT).getReleaseId();
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(dp.getChoreoComponent().getId()).orgHandler(orgHandle)
                 .componentType("ballerinaService").releaseId(devReleaseId).build();
         GraphQL.stopDeployment(this, appServiceClient, accessToken, graphqlDTO);
     }
@@ -134,9 +134,9 @@ public class TestBallerinaServiceDp extends TestBase {
     @Test(dependsOnMethods = {"undeployComponentDev_TestBallerinaServiceDp"}, dataProvider = "dps")
     @CitrusTest
     public void undeployComponentProd_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
-        String prodReleaseId = GraphQL.componentDeployment(choreoComponent, Constant.PROD_ENVIRONMENT,
-                accessToken).getReleaseId();
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(orgHandle)
+        String prodReleaseId = ComponentUtils.getComponentDeploymentStatus(this, citrusClients, accessToken,
+                dp.getChoreoComponent(), Constant.PROD_ENVIRONMENT).getReleaseId();
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(dp.getChoreoComponent().getId()).orgHandler(orgHandle)
                 .componentType("ballerinaService").releaseId(prodReleaseId).build();
         GraphQL.stopDeployment(this, appServiceClient, accessToken, graphqlDTO);
     }

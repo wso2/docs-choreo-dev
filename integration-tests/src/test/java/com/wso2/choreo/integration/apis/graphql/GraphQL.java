@@ -17,7 +17,6 @@ package com.wso2.choreo.integration.apis.graphql;
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
-import com.consol.citrus.http.message.HttpMessage;
 import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.consol.citrus.message.DefaultMessage;
 import com.consol.citrus.message.MessageType;
@@ -33,6 +32,7 @@ import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.exceptions.DeploymentStatusByVersionFailureException;
 import com.wso2.choreo.integration.common.exceptions.GraphQLException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
@@ -71,7 +71,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.testng.Assert;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,13 +80,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.consol.citrus.actions.EchoAction.Builder.echo;
-import static com.consol.citrus.actions.FailAction.Builder.fail;
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.container.RepeatUntilTrue.Builder.repeat;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
@@ -328,12 +325,44 @@ public class GraphQL extends ControlPlaneAPI {
         return ObjectMapperUtil.mapStringToObject(ChoreoProject.class, response.getRes(), "createProject");
     }
 
-    public static ChoreoProject createProject(String region, String accessToken) throws IOException {
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(Constant.TEST_PROJECT_NAME_PREFIX.concat(String.valueOf(new Date().getTime())))
-                .description(Constant.TEST_PROJECT_DESCRIPTION).region(region).orgId(ORG_ID).orgHandler(ORG_HANDLE).build();
-        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/createProject.mustache", graphqlDTO);
-        Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
-        return ObjectMapperUtil.mapStringToObject(ChoreoProject.class, response.getRes(), "createProject");
+    public static ChoreoProject createProject(TestNGCitrusSpringSupport runner, HttpClient client, String region,
+                                              String accessToken) throws Exception {
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(
+                Constant.TEST_PROJECT_NAME_PREFIX.concat(String.valueOf(new Date().getTime())))
+                .description(Constant.TEST_PROJECT_DESCRIPTION).region(region).orgId(ORG_ID).
+                orgHandler(ORG_HANDLE).build();
+
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/createProject.mustache", graphqlDTO);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        AtomicReference<ChoreoProject> project = new AtomicReference<>();
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                    http()
+                        .client(client)
+                        .send()
+                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(requestBody)
+                        .accept(MediaType.APPLICATION_JSON_VALUE),
+                    http().client(client)
+                        .receive()
+                        .response(HttpStatus.OK)
+                        .message()
+                        .type(MessageType.JSON)
+                        .validate((message, context) -> {
+                            project.set(ObjectMapperUtil.mapStringToObject(ChoreoProject.class,
+                                    message.getPayload(String.class), "createProject"));
+                        })));
+
+        return project.get();
     }
 
     public static ChoreoComponent createBYOCComponent(GraphqlDTO graphqlDTO, String accessToken) throws IOException {
@@ -742,7 +771,7 @@ public class GraphQL extends ControlPlaneAPI {
                                     if ("completed".equals(status)) {
                                         String conclusion = deploymentStatusByVersion.get(0).getAsJsonObject().get("conclusion").getAsString();
                                         if ("failure".equals(conclusion)) {
-                                            throw new ValidationException("deploymentStatusByVersion[0].conclusion is failure");
+                                            throw new ValidationException("deploymentStatusByVersion[0].conclusion is failure", new DeploymentStatusByVersionFailureException());
                                         }
 
                                         isPassed.set("success".equals(conclusion));
