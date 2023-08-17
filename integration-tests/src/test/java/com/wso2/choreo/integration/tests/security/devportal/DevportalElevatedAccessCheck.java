@@ -7,6 +7,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.sun.xml.bind.v2.runtime.reflect.opt.Const;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.MessageUtils;
+import com.wso2.choreo.integration.common.SecurityTestContext;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.utils.SecurityUtils;
 import com.wso2.choreo.integration.config.ConfigDefinition;
@@ -45,7 +46,7 @@ public class DevportalElevatedAccessCheck extends TestNGCitrusSpringSupport {
 
     @BeforeClass
     public void setup_DevportalElevatedAccessCheck() throws Exception {
-        accessToken = TestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
+        accessToken = SecurityTestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
         orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
         appId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVPORTAL_APP_ID);
         keyManager = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVPORTAL_KEY_MANAGER);

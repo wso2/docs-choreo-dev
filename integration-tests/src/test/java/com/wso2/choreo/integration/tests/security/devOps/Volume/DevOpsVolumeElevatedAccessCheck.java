@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VolumeElevatedAccessCheck extends TestNGCitrusSpringSupport {
+public class DevOpsVolumeElevatedAccessCheck extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private static String orgId;
     private static String volumeId;
@@ -32,7 +32,7 @@ public class VolumeElevatedAccessCheck extends TestNGCitrusSpringSupport {
     Map<Endpoints, HttpClient> citrusClients;
 
     @BeforeClass
-    public void setup_VolumeElevatedAccessCheck() throws Exception {
+    public void setup_DevOpsVolumeElevatedAccessCheck() throws Exception {
         accessToken = SecurityTestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
         orgId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_ORG_ID);
         projectId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_PROJECT_ID);
@@ -46,7 +46,7 @@ public class VolumeElevatedAccessCheck extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void getVolume_VolumeElevatedAccessCheck() throws Exception {
+    public void getVolume_DevOpsVolumeElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetVolume = Constant.DEVOPS_VOLUME + volumeId + "?organization_id="
                 + orgId + "&project_id=" + projectId;
@@ -56,7 +56,7 @@ public class VolumeElevatedAccessCheck extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void deleteVolume_VolumeElevatedAccessCheck() throws Exception {
+    public void deleteVolume_DevOpsVolumeElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForDeleteVolume = Constant.DEVOPS_VOLUME + volumeId + "?organization_id="
                 + orgId + "&project_id=" + projectId;
@@ -66,7 +66,7 @@ public class VolumeElevatedAccessCheck extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void createVolume_VolumeElevatedAccessCheck() throws Exception {
+    public void createVolume_DevOpsVolumeElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForCreateVolume = Constant.DEVOPS_VOLUME + "/?organization_id="
                 + orgId + "&project_id=" + projectId;
@@ -83,7 +83,7 @@ public class VolumeElevatedAccessCheck extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void listVolumes_VolumeElevatedAccessCheck() throws Exception {
+    public void listVolumes_DevOpsVolumeElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForListVolumes = Constant.DEVOPS_VOLUME + "/?organization_id="
                 + orgId + "&project_id=" + projectId + "&environment_id=" + envId;

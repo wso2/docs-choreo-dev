@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ClustersElevatedAccessCheck extends TestNGCitrusSpringSupport {
+public class DevOpsClustersElevatedAccessCheck extends TestNGCitrusSpringSupport {
     private static String accessToken;
 
     @Autowired
@@ -33,7 +33,7 @@ public class ClustersElevatedAccessCheck extends TestNGCitrusSpringSupport {
     private static String containerName;
 
     @BeforeClass
-    public void setup_ClustersElevatedAccessCheck() throws Exception {
+    public void setup_DevOpsClustersElevatedAccessCheck() throws Exception {
         accessToken = SecurityTestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
         componentId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_COMPONENT_ID);
         orgId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_ORG_ID);
@@ -48,7 +48,7 @@ public class ClustersElevatedAccessCheck extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void getKind_ClustersElevatedAccessCheck() throws Exception {
+    public void getKind_DevOpsClustersElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetToken = Constant.DEVOPS_CLUSTERS +
                 "/" + clusterId + "/query/v1/Pod?organization_id=" + orgId +
@@ -59,7 +59,7 @@ public class ClustersElevatedAccessCheck extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void postPodLogs_ClustersElevatedAccessCheck() throws Exception {
+    public void postPodLogs_DevOpsClustersElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetToken = Constant.DEVOPS_CLUSTERS +
                 "/" + clusterId + "/pod/logs?organization_id=" + orgId +
@@ -74,7 +74,7 @@ public class ClustersElevatedAccessCheck extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void getDataplanes_ClustersElevatedAccessCheck() throws Exception {
+    public void getDataplanes_DevOpsClustersElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetDataplanes = Constant.DEVOPS_CLUSTERS +
                 "/dataplanes?org_id=" + orgIntId + "&project_id=" + projectId;

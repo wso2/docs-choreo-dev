@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ComponentsIntegrationElevatedAccessCheck extends TestNGCitrusSpringSupport {
+public class DevOpsComponentsIntegrationElevatedAccessCheck extends TestNGCitrusSpringSupport {
     private static String accessToken;
 
     @Autowired
@@ -34,7 +34,7 @@ public class ComponentsIntegrationElevatedAccessCheck extends TestNGCitrusSpring
     private static String integrationCpSecretId;
 
     @BeforeClass
-    public void setup_ComponentsIntegrationElevatedAccessCheck() throws Exception {
+    public void setup_DevOpsComponentsIntegrationElevatedAccessCheck() throws Exception {
         accessToken = SecurityTestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
         componentId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_COMPONENT_ID);
         orgId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_ORG_ID);
@@ -49,7 +49,7 @@ public class ComponentsIntegrationElevatedAccessCheck extends TestNGCitrusSpring
 
     @Test
     @CitrusTest
-    public void getPaths_ComponentsIntegrationElevatedAccessCheck() throws Exception {
+    public void getPaths_DevOpsComponentsIntegrationElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetPaths = Constant.DEVOPS_INTEGRATION +
                 "paths?organization_id=" + orgId + "&project_id=" + projectId;
@@ -59,7 +59,7 @@ public class ComponentsIntegrationElevatedAccessCheck extends TestNGCitrusSpring
 
     @Test
     @CitrusTest
-    public void getReleaseSecrets_ComponentsIntegrationElevatedAccessCheck() throws Exception {
+    public void getReleaseSecrets_DevOpsComponentsIntegrationElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetReleaseSecrets = Constant.DEVOPS_INTEGRATION +
                 "/" + componentId + "/release/" + releaseId + "/secrets?organization_id=" + orgId +
@@ -70,7 +70,7 @@ public class ComponentsIntegrationElevatedAccessCheck extends TestNGCitrusSpring
 
     @Test
     @CitrusTest
-    public void putReleaseSecrets_ComponentsIntegrationElevatedAccessCheck() throws Exception {
+    public void putReleaseSecrets_DevOpsComponentsIntegrationElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForPutReleaseSecrets = Constant.DEVOPS_INTEGRATION +
                 "/" + componentId + "/release/" + releaseId + "/secrets?organization_id=" + orgId +
@@ -88,7 +88,7 @@ public class ComponentsIntegrationElevatedAccessCheck extends TestNGCitrusSpring
 
     @Test
     @CitrusTest
-    public void getEnvironmentVariables_ComponentsIntegrationElevatedAccessCheck() throws Exception {
+    public void getEnvironmentVariables_DevOpsComponentsIntegrationElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetEnvironmentVariables = Constant.DEVOPS_INTEGRATION +
                 "/" + integrationComponentId + "/release/" + integrationCpReleaseId + "/environment-variables?" +
@@ -99,7 +99,7 @@ public class ComponentsIntegrationElevatedAccessCheck extends TestNGCitrusSpring
 
     @Test
     @CitrusTest
-    public void putEnvironmentVariables_ComponentsIntegrationElevatedAccessCheck() throws Exception {
+    public void putEnvironmentVariables_DevOpsComponentsIntegrationElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForPutEnvironmentVariables = Constant.DEVOPS_INTEGRATION +
                 "/" + integrationComponentId + "/release/" + integrationCpReleaseId + "/environment-variables?" +
@@ -113,7 +113,7 @@ public class ComponentsIntegrationElevatedAccessCheck extends TestNGCitrusSpring
 
     @Test
     @CitrusTest
-    public void deleteSecrets_ComponentsIntegrationElevatedAccessCheck() throws Exception {
+    public void deleteSecrets_DevOpsComponentsIntegrationElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForDeleteSecrets = Constant.DEVOPS_INTEGRATION +
                 "/secrets?organization_id=" + orgId + "&project_id=" + projectId + "&env_id=" + envId +
