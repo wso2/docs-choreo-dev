@@ -15,7 +15,7 @@ Before you try out the steps in this guide, complete the following:
 2. Install [Visual Studio Code](https://code.visualstudio.com/) on your local machine and add the [Ballerina extension](https://marketplace.visualstudio.com/items?itemName=WSO2.ballerina) to it.
 3. Familiarize yourself with the [Ballerina programming language](https://ballerina.io/) and basic GitHub commands.
 4. If you are signing in to the Choreo Console for the first time, create an organization as follows:
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
+    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
