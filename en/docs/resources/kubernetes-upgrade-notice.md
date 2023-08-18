@@ -1,6 +1,6 @@
 # Choreo Kubernetes Infrastructure Upgrade Notice
 
-**Upgrade Date: August 28, 2023, from 3:00 a.m. to 6:00 a.m. UTC** 
+**Upgrade Date: September 4, 2023, from 3:00 a.m. to 6:00 a.m. UTC** 
 
 An upcoming upgrade to the Choreo Kubernetes infrastructure is scheduled to take place on August 28, 2023.
 
@@ -20,7 +20,7 @@ The following Choreo component types could be affected:
 
 ## Action Required
 
-**Recommended action date: Before August 28, 2023, 3:00 a.m. UTC** 
+**Recommended action date: Before September 4, 2023, 3:00 a.m. UTC** 
 
 To ensure a smooth transition and compatibility with the updated Java Runtime version, follow the steps below:
 
