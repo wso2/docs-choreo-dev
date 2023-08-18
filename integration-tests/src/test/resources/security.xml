@@ -4,14 +4,15 @@
     <test name="choreo">
         <classes>
             <class name="com.wso2.choreo.integration.common.SecurityTestContext"/>
-            <class name="com.wso2.choreo.integration.tests.security.devOps.Ci.CiElevatedAccessCheck"/>
-            <class name="com.wso2.choreo.integration.tests.security.devOps.Clusters.ClustersElevatedAccessCheck"/>
-            <class name="com.wso2.choreo.integration.tests.security.devOps.ComponentsAPI.ComponentsAPIElevatedAccessCheck"/>
-            <class name="com.wso2.choreo.integration.tests.security.devOps.ComponentsIntegration.ComponentsIntegrationElevatedAccessCheck"/>
-            <class name="com.wso2.choreo.integration.tests.security.devOps.Environments.EnvironmentsElevatedAccessCheck"/>
-            <class name="com.wso2.choreo.integration.tests.security.devOps.Metrics.MetricsElevatedAccessCheck"/>
-            <class name="com.wso2.choreo.integration.tests.security.devOps.Organizations.OrganizationsElevatedAccessCheck"/>
-            <class name="com.wso2.choreo.integration.tests.security.devOps.Volume.VolumeElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.devOps.Ci.DevOpsCiElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.devOps.Clusters.DevOpsClustersElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.devOps.ComponentsAPI.DevOpsComponentsAPIElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.devOps.ComponentsIntegration.DevOpsComponentsIntegrationElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.devOps.Environments.DevOpsEnvironmentsElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.devOps.Metrics.DevOpsMetricsElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.devOps.Organizations.DevOpsOrganizationsElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.devOps.Volume.DevOpsVolumeElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.devportal.DevportalElevatedAccessCheck"/>
         </classes>
     </test>
 </suite>

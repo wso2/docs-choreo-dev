@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 
 import java.util.Map;
 
-public class MetricsElevatedAccessCheck extends TestNGCitrusSpringSupport {
+public class DevOpsMetricsElevatedAccessCheck extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private static String orgId;
     private static String projectId;
@@ -24,7 +24,7 @@ public class MetricsElevatedAccessCheck extends TestNGCitrusSpringSupport {
     Map<Endpoints, HttpClient> citrusClients;
 
     @BeforeClass
-    public void setup_MetricsElevatedAccessCheck() throws Exception {
+    public void setup_DevOpsMetricsElevatedAccessCheck() throws Exception {
         accessToken = SecurityTestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
         orgId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_ORG_ID);
         projectId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_PROJECT_ID);
@@ -32,7 +32,7 @@ public class MetricsElevatedAccessCheck extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void getPodMetrics_MetricsElevatedAccessCheck() throws Exception {
+    public void getPodMetrics_DevOpsMetricsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetPodMetrics = Constant.DEVOPS_METRICS +
                 "podMetrics?org_id=" + orgId + "&project_id=" + projectId;
@@ -42,7 +42,7 @@ public class MetricsElevatedAccessCheck extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void getDeployments_MetricsElevatedAccessCheck() throws Exception {
+    public void getDeployments_DevOpsMetricsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetDeployments = Constant.DEVOPS_METRICS +
                 "deployments?organization_id=" + orgId + "&project_id=" + projectId;
@@ -52,7 +52,7 @@ public class MetricsElevatedAccessCheck extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void getActiveComponentCount_MetricsElevatedAccessCheck() throws Exception {
+    public void getActiveComponentCount_DevOpsMetricsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetActiveDeployments = Constant.DEVOPS_METRICS +
                 "activeComponentCount?org_id=" + orgId + "&project_id=" + projectId;

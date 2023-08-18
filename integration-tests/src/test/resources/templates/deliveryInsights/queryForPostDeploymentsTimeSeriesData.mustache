@@ -1,0 +1,12 @@
+query {
+        deployments (
+            startTime: "{{startTime}}",
+            endTime: "{{endTime}}",
+            granularity: WEEKLY,
+            isProd: false
+            projectId: "{{projectId}}"
+        ) {
+            timestamp
+            count
+        }
+      }

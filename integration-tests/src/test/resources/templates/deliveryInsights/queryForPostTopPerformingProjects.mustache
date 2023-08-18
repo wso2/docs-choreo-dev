@@ -1,0 +1,12 @@
+query {
+      topPerformingProjects (
+            startTime: "{{startTime}}",
+            endTime: "{{endTime}}",
+        ) {
+          projectId,
+          recoveryTime,
+          failureRate,
+          score,
+          leadTime
+        }
+      }

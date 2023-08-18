@@ -178,4 +178,8 @@ public final class Constant {
     // Devportal related constants
     public static final String DEVPORTAL_ENDPOINT_SUFFIX = "/api/am/devportal/v2";
     public static final String DEVPORTAL_APPLICATIONS = "/applications";
+
+    // Delivery Insights related constants
+    public static final String CIO_INCIDENT_CONFIGURATOR = "/cio-incident-configurator/1.0.0";
+    public static final String CIO_QUERY_API = "/cio-query-api/1.0.0/query";
 }

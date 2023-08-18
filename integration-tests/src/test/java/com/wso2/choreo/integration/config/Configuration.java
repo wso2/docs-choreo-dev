@@ -84,6 +84,7 @@ public class Configuration {
             add(securityConfigYaml.observability);
             add(securityConfigYaml.devOps);
             add(securityConfigYaml.devportal);
+            add(securityConfigYaml.deliveryInsights);
         }};
 
         validateSecurityYamlConfigs(yamlConfigCollection);

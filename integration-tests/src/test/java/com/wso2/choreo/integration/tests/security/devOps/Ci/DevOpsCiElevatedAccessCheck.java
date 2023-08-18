@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CiElevatedAccessCheck extends TestNGCitrusSpringSupport {
+public class DevOpsCiElevatedAccessCheck extends TestNGCitrusSpringSupport {
     private static String accessToken;
 
     @Autowired
@@ -28,7 +28,7 @@ public class CiElevatedAccessCheck extends TestNGCitrusSpringSupport {
     private static String tokenId;
 
     @BeforeClass
-    public void setup_CiElevatedAccessCheck() throws Exception {
+    public void setup_DevOpsCiElevatedAccessCheck() throws Exception {
         accessToken = SecurityTestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
         componentId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_COMPONENT_ID);
         orgId = Configuration.getSecurityConfig(SecurityConfigDefinition.DEVOPS_ORG_ID);
@@ -38,7 +38,7 @@ public class CiElevatedAccessCheck extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void getToken_CiElevatedAccessCheck() throws Exception {
+    public void getToken_DevOpsCiElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetToken = Constant.DEVOPS_CI +
                 "/component/" + componentId + "/tokens?organization_id=" + orgId +
@@ -49,7 +49,7 @@ public class CiElevatedAccessCheck extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void revokeToken_CiElevatedAccessCheck() throws Exception {
+    public void revokeToken_DevOpsCiElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForRevokeToken = Constant.DEVOPS_CI +
                 "/component/" + componentId + "/tokens/" + tokenId
@@ -60,7 +60,7 @@ public class CiElevatedAccessCheck extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void tokenRegenerate_CiElevatedAccessCheck() throws Exception {
+    public void tokenRegenerate_DevOpsCiElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForTokenRegenerate = Constant.DEVOPS_CI +
                 "/component/" + componentId + "/tokens/" + tokenId + "/regenerate?" +
@@ -74,7 +74,7 @@ public class CiElevatedAccessCheck extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void postToken_CiElevatedAccessCheck() throws Exception {
+    public void postToken_DevOpsCiElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForPostToken = Constant.DEVOPS_CI +
                 "/component/" + componentId + "/tokens?organization_id=" + orgId +
@@ -88,7 +88,7 @@ public class CiElevatedAccessCheck extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void deleteToken_CiElevatedAccessCheck() throws Exception {
+    public void deleteToken_DevOpsCiElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForDeleteToken = Constant.DEVOPS_CI +
                 "/component/" + componentId + "/tokens?organization_id=" + orgId +
