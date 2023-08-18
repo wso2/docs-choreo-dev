@@ -16,7 +16,7 @@ To create a project, add a Webhook component to it, design the webhook, test it,
 
 First, let's create a Webhook component as follows:
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your preferred method.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Go to the **Webhook** card and click **Create**.
 4. This opens the **Create a Webhook** pane, where you can give your component a name and a description. Enter the relevant information. Select the **Access Mode** and click **Next**.

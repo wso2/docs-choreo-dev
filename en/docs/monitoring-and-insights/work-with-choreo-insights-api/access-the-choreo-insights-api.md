@@ -6,7 +6,7 @@ Choreo provides a secure and user-friendly approach to accomplish this requireme
 
 ## Become a member of the Choreo System organization
 
-1. Access the Developer Portal of the `Choreo System` organization via [https://devportal.choreo.dev/choreosystem](https://devportal.choreo.dev/choreosystem) and sign in using your Google, GitHub, or Microsoft account.
+1. Access the Developer Portal of the `Choreo System` organization via [https://devportal.choreo.dev/choreosystem](https://devportal.choreo.dev/choreosystem) and sign in using your preferred method.
 
 2. In the top menu of the Developer Portal, click **Applications**.
    
@@ -55,7 +55,7 @@ To create an application and generate keys, follow the steps below:
     !!! info
         To obtain your organization handle, follow the steps given below:
 
-         1. Go to [https://console.choreo.dev](https://console.choreo.dev) and sign in using your Google, GitHub, or Microsoft account.
+         1. Go to [https://console.choreo.dev](https://console.choreo.dev) and sign in using your preferred method.
          2. In the Choreo Console, click your username in the top right corner.
          3. In the drop-down menu, click **Settings**.
          4. In the **Organization** pane, click **Copy Handle**. 
