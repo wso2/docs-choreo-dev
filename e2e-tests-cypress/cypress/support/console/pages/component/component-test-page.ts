@@ -22,7 +22,7 @@ export class ComponentTestPage {
   }
 
   static getTestKey() {
-    cy.contains("Get Test Key", SHORT_TIME).should("be.visible").click();
+    cy.get('[data-cyid="get-test-key-button-button"]').scrollIntoView().click();
   }
 
   static selectEnvironment(env: Enums.Environment) {
