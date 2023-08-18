@@ -38,7 +38,7 @@ To ensure a smooth transition and compatibility with the updated Java Runtime ve
 
 To redeploy your component, follow the steps given below:
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your preferred login method.
 2. Select your component from **Components Listing**. This will open the overview page of your component.
 3. In the left navigation menu, click **Deploy**.
 4. Click **Re-deploy** on the relevant environment card.
