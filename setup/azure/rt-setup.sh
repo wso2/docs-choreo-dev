@@ -77,27 +77,11 @@ sed -i "s/AKS_READONLY_AD_GROUP_ID/${AKS_READONLY_AD_GROUP_ID}/g" conf/view-clus
 kubectl apply -f conf/view-cluster-role-binding.yaml
 mv conf/view-cluster-role-binding.yaml.backup conf/view-cluster-role-binding.yaml
 
-############## Install Reloader
-echo "--- Installing Reloader..."
-bash routing/reloader/configure-reloader.sh
-
-echo "--- Installing Cert Manager..."
-bash routing/cert-manager/configure-cert-manager.sh
-
-echo "--- Installing Emberstack reflector..."
-bash routing/reflector/configure-reflector.sh
-
 echo "--- Creating secrets for DNS-01 challenge..."
 bash routing/lets-encrypt-certs/configure-lets-encrypt-certs.sh
 
 echo "--- Add OMS Agent Config"
 bash routing/oms-agent/configure-oms-agent.sh
-
-echo "--- Configure CSI Secret Store"
-bash routing/secret-store-csi-driver/configure-csi-secret-store.sh
-
-echo "--- Setup Routing Nginx Ingress Controller"
-bash routing/nginx-ingress-controllers/configure-ingress-controllers.sh
 
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"
