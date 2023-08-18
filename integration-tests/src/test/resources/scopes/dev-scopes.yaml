@@ -24,6 +24,8 @@ scopes:
   - choreo:project_manage
   - environments:view_dev
   - environments:view_prod
+  - urn:choreocontrolplane:choreoauditloggingapi:audit_logs_manage
+  - urn:choreocontrolplane:choreoauditloggingapi:audit_logs_view
   - urn:choreocontrolplane:choreodevopsportalapi:component_manage
   - urn:choreocontrolplane:choreodevopsportalapi:deployment_manage
   - urn:choreocontrolplane:choreodevopsportalapi:deployment_view
@@ -34,6 +36,10 @@ scopes:
   - urn:choreocontrolplane:componentsmanagement:component_logs_view
   - urn:choreocontrolplane:componentsmanagement:component_manage
   - urn:choreocontrolplane:componentsmanagement:component_trigger
+  - urn:choreocontrolplane:componentutils:component_file_view
+  - urn:choreocontrolplane:componentutils:component_logs_view
+  - urn:choreocontrolplane:componentutils:component_manage
+  - urn:choreocontrolplane:componentutils:component_trigger
   - urn:choreocontrolplane:configmanagement:config_create
   - urn:choreocontrolplane:configmanagement:config_delete
   - urn:choreocontrolplane:configmanagement:config_manage
