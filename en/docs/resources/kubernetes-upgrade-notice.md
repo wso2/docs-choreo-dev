@@ -41,6 +41,6 @@ To redeploy your component, follow the steps given below:
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your preferred login method.
 2. Select your component from **Components Listing**. This will open the overview page of your component.
 3. In the left navigation menu, click **Deploy**.
-4. Click **Re-deploy** on the relevant environment card.
+4. Deploy your component via the **Build Area** card. Alternatively, if your container is running, click **Stop** on the relevant environment card, and click **Re-deploy**.
 
 For more information, refer to [this](https://kubernetes.io/blog/2022/08/31/cgroupv2-ga-1-25/#migrate-to-cgroup-v2) document. 
