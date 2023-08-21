@@ -316,7 +316,7 @@ function util.ciliumEnabled(organizationId)
 
     red:select(ngx.var.redis_database)
 
-    local redisResponse, readErr = red:mget(unpack(ciliumStatusKey))
+    local redisResponse, readErr = red:get(ciliumStatusKey)
     if readErr then
         ngx.log(ngx.ERR, "failed to retrieve cilium status for organization: ", organizationId, " from redis ", readErr)
         return forwardToCilium
