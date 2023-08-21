@@ -322,7 +322,10 @@ function util.ciliumEnabled(organizationId)
         return forwardToCilium
     end
 
-    if redisResponse and redisResponse[#redisResponse] == "true" then
+    if redisResponse == ngx.null then
+        ngx.log(ngx.DEBUG, "cilium status not found for organization: ", organizationId)
+        forwardToCilium = false
+    elseif redisResponse == "true" then
         forwardToCilium = true
     end
     cache:set(ciliumStatusKey, forwardToCilium, 300)
