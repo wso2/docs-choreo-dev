@@ -403,7 +403,7 @@ public class ComponentUtils {
                 deploymentStatusDTO = validateComponentDeployment(runner, citrusClients, accessToken, component, latestCommit, environments);
                 break;
             } catch (Exception e) {
-                if (e.getCause().getCause() instanceof DeploymentStatusByVersionFailureException) {
+                if (e instanceof DeploymentStatusByVersionFailureException) {
                     log.error("DeployStatusByVersion failure detected, attempt number " + (i + 1), e);
                 } else {
                     throw e;

@@ -771,7 +771,7 @@ public class GraphQL extends ControlPlaneAPI {
                                     if ("completed".equals(status)) {
                                         String conclusion = deploymentStatusByVersion.get(0).getAsJsonObject().get("conclusion").getAsString();
                                         if ("failure".equals(conclusion)) {
-                                            throw new ValidationException("deploymentStatusByVersion[0].conclusion is failure", new DeploymentStatusByVersionFailureException());
+                                            throw new DeploymentStatusByVersionFailureException("deploymentStatusByVersion[0].conclusion is failure");
                                         }
 
                                         isPassed.set("success".equals(conclusion));
