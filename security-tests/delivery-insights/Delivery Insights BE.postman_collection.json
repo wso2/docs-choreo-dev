@@ -1,0 +1,732 @@
+{
+	"info": {
+		"_postman_id": "e5af77fd-e66c-4475-b66d-e0210c47181c",
+		"name": "Delivery Insights BE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11455112"
+	},
+	"item": [
+		{
+			"name": "Add Incident Scrapper Configurations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"organizationId\": \"{{orgId}}\",\n      \"repositories\": [],\n      \"environmentId\": \"{{dataPlaneId}}\",\n      \"selectorCriteria\": \"incident/P1\",\n      \"rejectorCriteria\": \"incident/P2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-incident-configurator/1.0.0/configurations/github",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-incident-configurator",
+						"1.0.0",
+						"configurations",
+						"github"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Organization Member Count",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n    orgMemberDetails {\n        totalMembers\n    }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-query-api/1.0.0/query",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-query-api",
+						"1.0.0",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deployments Time Series Data",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n        deployments (\n            startTime: \"{{startTime}}\",\n            endTime: \"{{endTime}}\",\n            granularity: WEEKLY,\n            isProd: false\n            projectId: \"{{projectId}}\"\n        ) {\n            timestamp\n            count\n        }\n      }",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-query-api/1.0.0/query",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-query-api",
+						"1.0.0",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deployment Frequency Summary",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n      deploymentFrequency (\n            startTime: \"{{startTime}}\",\n            endTime: \"{{endTime}}\",\n            granularity: WEEKLY,\n            isProd: false,\n            projectId: \"{{projectId}}\"\n        ) {\n          totalDeployments,\n          dataPoints,\n          relativeChangeInDeployment,\n          perfLevel\n        }\n      }",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-query-api/1.0.0/query",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-query-api",
+						"1.0.0",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lead Time Summary Data",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n      changeLeadTimeSummary (\n            startTime: \"{{startTime}}\",\n            endTime: \"{{endTime}}\",\n            projectId: \"{{projectId}}\"\n        ) {\n          avgLeadTime,\n          perfLevel\n        }\n      }",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-query-api/1.0.0/query",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-query-api",
+						"1.0.0",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lead Time Summary Data Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n        changeLeadTimes (\n            startTime: \"{{startTime}}\",\n            endTime: \"{{endTime}}\",\n            granularity: WEEKLY,\n            projectId: \"{{projectId}}\"\n        ) {\n          timestamp\n          leadTime\n        }\n      }",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-query-api/1.0.0/query",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-query-api",
+						"1.0.0",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Incident Config Repository",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"orgName\": \"testOrg\",\n    \"repoName\": \"test123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-incident-configurator/1.0.0/configurations/github/{{orgId}}/repository",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-incident-configurator",
+						"1.0.0",
+						"configurations",
+						"github",
+						"{{orgId}}",
+						"repository"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Incident Config Selector Criteria",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"selectorCriteria\": \"incident/P1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-incident-configurator/1.0.0/configurations/{{orgId}}/selectorCriteria",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-incident-configurator",
+						"1.0.0",
+						"configurations",
+						"{{orgId}}",
+						"selectorCriteria"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Incident Config Rejector Criteria",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"rejectorCriteria\": \"incident/P1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-incident-configurator/1.0.0/configurations/{{orgId}}/rejectorCriteria",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-incident-configurator",
+						"1.0.0",
+						"configurations",
+						"{{orgId}}",
+						"rejectorCriteria"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Scraper Configurations",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-incident-configurator/1.0.0/configurations/github/console?orgId={{orgId}}",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-incident-configurator",
+						"1.0.0",
+						"configurations",
+						"github",
+						"console"
+					],
+					"query": [
+						{
+							"key": "orgId",
+							"value": "{{orgId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Failure Rate Summary",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n      changeFailureRateSummary (\n            startTime: \"{{startTime}}\",\n            endTime: \"{{endTime}}\",\n            projectId: \"{{projectId}}\"\n        ) {\n          failureRate,\n          perfLevel\n        }\n      }",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-query-api/1.0.0/query",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-query-api",
+						"1.0.0",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Failure Rate Details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n      changeLeadTimes (\n            startTime: \"{{startTime}}\",\n            endTime: \"{{endTime}}\",\n            granularity: WEEKLY,\n            projectId: \"{{projectId}}\"\n        ) {\n          timestamp\n          leadTime\n        }\n      }",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-query-api/1.0.0/query",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-query-api",
+						"1.0.0",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recovery Time Details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n      meanTimesToRecovery (\n            startTime: \"{{startTime}}\",\n            endTime: \"{{endTime}}\",\n            granularity: WEEKLY,\n            projectId: \"{{projectId}}\"\n        ) {\n          timestamp\n          recoveryTime\n        }\n      }",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-query-api/1.0.0/query",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-query-api",
+						"1.0.0",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recovery Time Summary",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n      meanTimeToRecoverySummary (\n            startTime: \"{{startTime}}\",\n            endTime: \"{{endTime}}\",\n            projectId: \"{{projectId}}\"\n        ) {\n          avgRecoveryTime,\n          perfLevel\n        }\n      }",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-query-api/1.0.0/query",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-query-api",
+						"1.0.0",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Top Performing Projects",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n      topPerformingProjects (\n            startTime: \"{{startTime}}\",\n            endTime: \"{{endTime}}\",\n        ) {\n          projectId,\n          recoveryTime,\n          failureRate,\n          score,\n          leadTime\n        }\n      }",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-query-api/1.0.0/query",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-query-api",
+						"1.0.0",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Repo accessibility",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-incident-configurator/1.0.0/configurations/github/repo-accessibility?orgId={{orgId}}",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-incident-configurator",
+						"1.0.0",
+						"configurations",
+						"github",
+						"repo-accessibility"
+					],
+					"query": [
+						{
+							"key": "orgId",
+							"value": "{{orgId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Dataplanes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-incident-configurator/1.0.0/dataplanes/{{orgId}}",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-incident-configurator",
+						"1.0.0",
+						"dataplanes",
+						"{{orgId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Active Developer Count",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n      activeDevelopersCount (\n            startTime: \"{{startTime}}\",\n            endTime: \"{{endTime}}\"\n        ) {\n          activeDevelopers\n          totalDevelopers\n        }\n      }",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-query-api/1.0.0/query",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-query-api",
+						"1.0.0",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Scraper Configs",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ4NXQiOiJOMkprTmpZMllUZGtabVl4TldNNVltSTJabUkwWlRFNE56ZzRNREkxTVRneVpUaGpaVEppWWciLCJraWQiOiJNbUV5WlRSaFpHTTROamc1WW1SbU9XVXlOalkxT1dReVpURXlNREJoTXpVd01ESTFOak5pWlRkalptWXhZMlkzWWpCaU4ySTRaRFppTW1Jek5qYzJPUV9SUzI1NiIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI4NjNkZjJkNi0zNTMwLTQxNjEtODRjYy0xMzE2M2IzOWEzNGYiLCJhdXQiOiJBUFBMSUNBVElPTl9VU0VSIiwiaXNzIjoiaHR0cHM6XC9cL3N0cy5wcmV2aWV3LWR2LmNob3Jlby5kZXY6NDQzXC9vYXV0aDJcL3Rva2VuIiwiYXVkIjpbIld4cXkwbGlDZkxCc2RwWE9oa2N4Wno2dUxQa2EiLCJodHRwczpcL1wvc3RzLnByZXZpZXctZHYuY2hvcmVvLmRldjo0NDNcL29hdXRoMlwvdG9rZW4iXSwibmJmIjoxNjg5MzIwNjQ2LCJhenAiOiJXeHF5MGxpQ2ZMQnNkcFhPaGtjeFp6NnVMUGthIiwic2NvcGUiOiJhcGltOmFkbWluIGFwaW06YXBpX2dlbmVyYXRlX2tleSBhcGltOmFwaV9tYW5hZ2UgYXBpbTphcGlfcHVibGlzaCBhcGltOmFwaV9zZXR0aW5ncyBhcGltOmFwaV92aWV3IGFwaW06ZGNyOmFwcF9tYW5hZ2UgYXBpbTpkb2N1bWVudF9tYW5hZ2UgYXBpbTplbnZpcm9ubWVudF9tYW5hZ2UgYXBpbTpwdWJsaXNoZXJfc2V0dGluZ3MgYXBpbTpzdWJzY3JpYmUgYXBpbTpzdWJzY3JpcHRpb25fbWFuYWdlIGFwaW06c3Vic2NyaXB0aW9uX3ZpZXcgYXBpbTp0aWVyX21hbmFnZSBhcGltOnRpZXJfdmlldyBjaG9yZW86Y29tcG9uZW50X21hbmFnZSBjaG9yZW86ZGVwbG95bWVudF9tYW5hZ2UgY2hvcmVvOmRldl9lbnZfbWFuYWdlIGNob3Jlbzpsb2dfdmlld19ub25fcHJvZCBjaG9yZW86bG9nX3ZpZXdfcHJvZCBjaG9yZW86bm9uX3Byb2RfZW52X21hbmFnZSBjaG9yZW86cHJvZF9lbnZfbWFuYWdlIGNob3Jlbzpwcm9qZWN0X21hbmFnZSBlbnZpcm9ubWVudHM6dmlld19kZXYgZW52aXJvbm1lbnRzOnZpZXdfcHJvZCB1cm46Y2hvcmVvY29udHJvbHBsYW5lOmNob3Jlb2Rldm9wc3BvcnRhbGFwaTpjb21wb25lbnRfbWFuYWdlIHVybjpjaG9yZW9jb250cm9scGxhbmU6Y2hvcmVvZGV2b3BzcG9ydGFsYXBpOmRlcGxveW1lbnRfbWFuYWdlIHVybjpjaG9yZW9jb250cm9scGxhbmU6Y2hvcmVvZGV2b3BzcG9ydGFsYXBpOmRlcGxveW1lbnRfdmlldyB1cm46Y2hvcmVvY29udHJvbHBsYW5lOmNvbXBvbmVudHNtYW5hZ2VtZW50OmNvbXBvbmVudF9jb25maWdfdmlldyB1cm46Y2hvcmVvY29udHJvbHBsYW5lOmNvbXBvbmVudHNtYW5hZ2VtZW50OmNvbXBvbmVudF9jcmVhdGUgdXJuOmNob3Jlb2NvbnRyb2xwbGFuZTpjb21wb25lbnRzbWFuYWdlbWVudDpjb21wb25lbnRfZmlsZV92aWV3IHVybjpjaG9yZW9jb250cm9scGxhbmU6Y29tcG9uZW50c21hbmFnZW1lbnQ6Y29tcG9uZW50X2luaXRfdmlldyB1cm46Y2hvcmVvY29udHJvbHBsYW5lOmNvbXBvbmVudHNtYW5hZ2VtZW50OmNvbXBvbmVudF9sb2dzX3ZpZXcgdXJuOmNob3Jlb2NvbnRyb2xwbGFuZTpjb21wb25lbnRzbWFuYWdlbWVudDpjb21wb25lbnRfbWFuYWdlIHVybjpjaG9yZW9jb250cm9scGxhbmU6Y29tcG9uZW50c21hbmFnZW1lbnQ6Y29tcG9uZW50X3RyaWdnZXIgdXJuOmNob3Jlb2NvbnRyb2xwbGFuZTpjb25maWdtYW5hZ2VtZW50OmNvbmZpZ19jcmVhdGUgdXJuOmNob3Jlb2NvbnRyb2xwbGFuZTpjb25maWdtYW5hZ2VtZW50OmNvbmZpZ19kZWxldGUgdXJuOmNob3Jlb2NvbnRyb2xwbGFuZTpjb25maWdtYW5hZ2VtZW50OmNvbmZpZ19tYW5hZ2UgdXJuOmNob3Jlb2NvbnRyb2xwbGFuZTpjb25maWdtYW5hZ2VtZW50OmNvbmZpZ192aWV3IHVybjpjaG9yZW9jb250cm9scGxhbmU6Y29uZmlnbWFuYWdlbWVudDpnbG9iYWxfY29uZmlnX2NyZWF0ZSB1cm46Y2hvcmVvY29udHJvbHBsYW5lOmNvbmZpZ21hbmFnZW1lbnQ6Z2xvYmFsX2NvbmZpZ19kZWxldGUgdXJuOmNob3Jlb2NvbnRyb2xwbGFuZTpjb25maWdtYW5hZ2VtZW50Omdsb2JhbF9jb25maWdfbWFuYWdlIHVybjpjaG9yZW9jb250cm9scGxhbmU6Y29uZmlnbWFuYWdlbWVudDpnbG9iYWxfY29uZmlnX3VwZGF0ZSB1cm46Y2hvcmVvY29udHJvbHBsYW5lOmNvbmZpZ21hbmFnZW1lbnQ6Z2xvYmFsX2NvbmZpZ192aWV3IHVybjpjaG9yZW9jb250cm9scGxhbmU6Y3VzdG9tZG9tYWluYXBpOmN1c3RvbV9kb21haW5fY3JlYXRlIHVybjpjaG9yZW9jb250cm9scGxhbmU6Y3VzdG9tZG9tYWluYXBpOmN1c3RvbV9kb21haW5fZGVsZXRlIHVybjpjaG9yZW9jb250cm9scGxhbmU6Y3VzdG9tZG9tYWluYXBpOmN1c3RvbV9kb21haW5fbWFuYWdlIHVybjpjaG9yZW9jb250cm9scGxhbmU6Y3VzdG9tZG9tYWluYXBpOmN1c3RvbV9kb21haW5fdXBkYXRlIHVybjpjaG9yZW9jb250cm9scGxhbmU6Y3VzdG9tZG9tYWluYXBpOmN1c3RvbV9kb21haW5fdmlldyB1cm46Y2hvcmVvY29udHJvbHBsYW5lOm9ucHJlbWtleW1hbmFnZW1lbnQ6b25fcHJlbV9rZXlfY3JlYXRlIHVybjpjaG9yZW9jb250cm9scGxhbmU6b25wcmVta2V5bWFuYWdlbWVudDpvbl9wcmVtX2tleV9kZWxldGUgdXJuOmNob3Jlb2NvbnRyb2xwbGFuZTpvbnByZW1rZXltYW5hZ2VtZW50Om9uX3ByZW1fa2V5X21hbmFnZSB1cm46Y2hvcmVvY29udHJvbHBsYW5lOm9ucHJlbWtleW1hbmFnZW1lbnQ6b25fcHJlbV9rZXlfdXBkYXRlIHVybjpjaG9yZW9jb250cm9scGxhbmU6b25wcmVta2V5bWFuYWdlbWVudDpvbl9wcmVtX2tleV92aWV3IHVybjpjaG9yZW9jb250cm9scGxhbmU6b3JnYW5pemF0aW9ubWFuYWdlbWVudDplbnRlcnByaXNlX2xvZ2luX2NvbmZpZ19tYW5hZ2UgdXJuOmNob3Jlb2NvbnRyb2xwbGFuZTpvcmdhbml6YXRpb25tYW5hZ2VtZW50OmVudGVycHJpc2VfbG9naW5fY29uZmlnX3ZpZXcgdXJuOmNob3Jlb2NvbnRyb2xwbGFuZTpvcmdhbml6YXRpb25tYW5hZ2VtZW50OnNlbGZfc2lnbnVwX2FwcHJvdmFsX3VwZGF0ZSB1cm46Y2hvcmVvY29udHJvbHBsYW5lOm9yZ2FuaXphdGlvbm1hbmFnZW1lbnQ6c2VsZl9zaWdudXBfYXBwcm92YWxfdmlldyB1cm46Y2hvcmVvY29udHJvbHBsYW5lOm9yZ2FuaXphdGlvbm1hbmFnZW1lbnQ6c2VsZl9zaWdudXBfY29uZmlnX3VwZGF0ZSB1cm46Y2hvcmVvY29udHJvbHBsYW5lOm9yZ2FuaXphdGlvbm1hbmFnZW1lbnQ6c2VsZl9zaWdudXBfY29uZmlnX3ZpZXcgdXJuOmNob3Jlb2NvbnRyb2xwbGFuZTpvcmdhbml6YXRpb25tYW5hZ2VtZW50OnNlbGZfc2lnbnVwX21hbmFnZSB1cm46Y2hvcmVvY29udHJvbHBsYW5lOm9yZ2FuaXphdGlvbm1hbmFnZW1lbnQ6dGhlbWVfY3JlYXRlIHVybjpjaG9yZW9jb250cm9scGxhbmU6b3JnYW5pemF0aW9ubWFuYWdlbWVudDp0aGVtZV9kZWxldGUgdXJuOmNob3Jlb2NvbnRyb2xwbGFuZTpvcmdhbml6YXRpb25tYW5hZ2VtZW50OnRoZW1lX2RlcGxveSB1cm46Y2hvcmVvY29udHJvbHBsYW5lOm9yZ2FuaXphdGlvbm1hbmFnZW1lbnQ6dGhlbWVfbWFuYWdlIHVybjpjaG9yZW9jb250cm9scGxhbmU6b3JnYW5pemF0aW9ubWFuYWdlbWVudDp0aGVtZV92aWV3IHVybjpjaG9yZW9jb250cm9scGxhbmU6dXNlcnNtYW5hZ2VtZW50Omludml0YXRpb25fZGVsZXRlIHVybjpjaG9yZW9jb250cm9scGxhbmU6dXNlcnNtYW5hZ2VtZW50Omludml0YXRpb25fbWFuYWdlIHVybjpjaG9yZW9jb250cm9scGxhbmU6dXNlcnNtYW5hZ2VtZW50Omludml0YXRpb25fc2VuZCB1cm46Y2hvcmVvY29udHJvbHBsYW5lOnVzZXJzbWFuYWdlbWVudDppbnZpdGF0aW9uX3ZpZXcgdXJuOmNob3Jlb2NvbnRyb2xwbGFuZTp1c2Vyc21hbmFnZW1lbnQ6cGVybWlzc2lvbl92aWV3IHVybjpjaG9yZW9jb250cm9scGxhbmU6dXNlcnNtYW5hZ2VtZW50OnJvbGVfY3JlYXRlIHVybjpjaG9yZW9jb250cm9scGxhbmU6dXNlcnNtYW5hZ2VtZW50OnJvbGVfZGVsZXRlIHVybjpjaG9yZW9jb250cm9scGxhbmU6dXNlcnNtYW5hZ2VtZW50OnJvbGVfbWFuYWdlIHVybjpjaG9yZW9jb250cm9scGxhbmU6dXNlcnNtYW5hZ2VtZW50OnJvbGVfbWFwcGluZ19jcmVhdGUgdXJuOmNob3Jlb2NvbnRyb2xwbGFuZTp1c2Vyc21hbmFnZW1lbnQ6cm9sZV9tYXBwaW5nX2RlbGV0ZSB1cm46Y2hvcmVvY29udHJvbHBsYW5lOnVzZXJzbWFuYWdlbWVudDpyb2xlX21hcHBpbmdfbWFuYWdlIHVybjpjaG9yZW9jb250cm9scGxhbmU6dXNlcnNtYW5hZ2VtZW50OnJvbGVfbWFwcGluZ191cGRhdGUgdXJuOmNob3Jlb2NvbnRyb2xwbGFuZTp1c2Vyc21hbmFnZW1lbnQ6cm9sZV9tYXBwaW5nX3ZpZXcgdXJuOmNob3Jlb2NvbnRyb2xwbGFuZTp1c2Vyc21hbmFnZW1lbnQ6cm9sZV91cGRhdGUgdXJuOmNob3Jlb2NvbnRyb2xwbGFuZTp1c2Vyc21hbmFnZW1lbnQ6cm9sZV92aWV3IHVybjpjaG9yZW9jb250cm9scGxhbmU6dXNlcnNtYW5hZ2VtZW50OnVzZXJfZGVsZXRlIHVybjpjaG9yZW9jb250cm9scGxhbmU6dXNlcnNtYW5hZ2VtZW50OnVzZXJfbWFuYWdlIHVybjpjaG9yZW9jb250cm9scGxhbmU6dXNlcnNtYW5hZ2VtZW50OnVzZXJfdXBkYXRlIHVybjpjaG9yZW9jb250cm9scGxhbmU6dXNlcnNtYW5hZ2VtZW50OnVzZXJfdmlldyIsIm9yZ2FuaXphdGlvbiI6eyJoYW5kbGUiOiJzdGVmaW5pZWZlcm5hbmRvIiwidXVpZCI6ImU2NmQzYWE1LWUzODktNGQ0Zi1hMWIwLWZhYWIzNjU2ZTgzNyJ9LCJvcmdhbml6YXRpb25zIjpbImU2NmQzYWE1LWUzODktNGQ0Zi1hMWIwLWZhYWIzNjU2ZTgzNyIsIjMzOTEzYzYyLTYzM2EtNGQ2OC1iZDQzLTRjZGJmYjQ5Njc3MSIsIjBkMzc4MGJiLTZmMDktNDAyMC04Y2ZhLWExN2QzZTQ2Y2YyMiIsImQwYzVkYzZkLTkwZmItNDUwNS1iNTc3LWQxNjY5YzY0NWUxMyIsIjk0MGI0MzI0LTkxMWEtNGI2Ny1iNDc3LTA5ZTY5ZjUzMGFkNyIsIjNiZDViOTc0LWYxN2MtNGExMi04MGJjLThlYzBiODJjODEwNyIsIjdhZjBiNDI5LWZkZjYtNGYwMy1hNmE0LTg0OGUyMDBkMmM0MiIsIjc4M2M2YzRkLThiOWItNDE5MC1iNzBhLWU3MTdhYjFlZTczOSIsImM3MjU2OTRmLTZmYmUtNGVlZi04NDlkLTAzODgzMDlkMzRjYiIsIjc1Nzk1MWVlLWNjYTYtNGIxYS05YzdlLTg3NGQ5Y2ExMDdhOCIsImIwNzNkZjAxLWZkMTUtNDQ4OC1hZWUyLTdlYzFlMTllMDJlYSIsIjcwZDc2ZTAzLTJhMzQtNDMzZi05OTA4LTI1N2RiYTUxZmI5YiIsIjYzYTZhMWMwLTc5ZTgtNDhhNi04ZDc5LTkyZmExYTMxZTdhYyIsImQ2YTVhNDEzLTE0YjEtNGMxNS1hZjA3LWVmZDk3YjlhYTBkNyJdLCJleHAiOjE2ODkzMjQyNDYsImlkcF9jbGFpbXMiOnsiYXV0IjoiQVBQTElDQVRJT05fVVNFUiIsImF1dGhlbnRpY2F0ZWRfaWRwIjoiR29vZ2xlIiwibmFtZSI6IlN0ZWZpbmllIEZlcm5hbmRvIiwiZ2l2ZW5fbmFtZSI6IlN0ZWZpbmllIiwiZmFtaWx5X25hbWUiOiJGZXJuYW5kbyIsImVtYWlsIjoic3RlZmluaWVAd3NvMi5jb20ifSwiaWF0IjoxNjg5MzIwNjQ2LCJqdGkiOiJjY2IxOWI5ZC0zYzUyLTQxOTYtODFjMy1iODExMTRiOTFlZmMifQ.kR7a-63a23oZ8drGTwM6XV7smaQhAz-MtYrA_IicHb8KiYzDhX6yiqIFG11h9WX9LdXVMZkIkbq7_0WR8GzTSetUxubIWGombZsyDYE_60_RqhwQ7bcGnNLbfdfT9eBO2u8E9X15ZJIdnhfYCBrc46T8xsAsVqnoARM9F58GyM2_tGXCxNDpDkMKW2Ijdv_8W0u4gTfcy8j4zIbAtLUrKppLX5O9pCjzdXp_pIn1b7LEIub1lrvqgLUteWkiSnfv6_Tmy4d7y71f9XV_3PVvwO5geThr-KC1LtsJz9EqYxpakhYLAifPvNOB7jiZmILo5PXMJH5kMJFQiDTAoYR8ud71-vCx6yLSVxWsLNx98kl0K8Ne6gAiqaEkwHTEqDBv6-nPaGcaE7HjxZU3MKq8wG-Hzg26d_RFnjKvqgSeA-yrRmYGH47T6jNvfdHvHPOsvUBax5CpFNhrFpY0deBjR14LbwSqMeBwTu8LYTxLvu4G8vgk17IcJRlvFU44iyGSXqEBhWu27ilQqwLi7xzXub2ZsnyPVvDQQpkZfu_hpAba0oLEFP0TncJPye1sA6-7UbgTFlDynXr8v-f3AE_xFLmWTtQFzjDIrEmKOPp_tau4KNw3Z2Y1SyNV249f9dq2yoA6yJBtlvVrWptITU4U-4EXK5cIk7OVrtDjfSiKgLY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{apiEndpoint}}/cio-incident-configurator/1.0.0/configurations?dashboardKind=innov-perf-github",
+					"host": [
+						"{{apiEndpoint}}"
+					],
+					"path": [
+						"cio-incident-configurator",
+						"1.0.0",
+						"configurations"
+					],
+					"query": [
+						{
+							"key": "dashboardKind",
+							"value": "innov-perf-github"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
