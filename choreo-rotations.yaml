@@ -1,7 +1,7 @@
 rotations:
   - subject: Choreo release rotation
     teams:
-      - name: Platform Engineering
+      - name: Site Reliability Engineering
         members:
           - sachithka@wso2.com
           - shana@wso2.com
@@ -10,9 +10,6 @@ rotations:
         members:
           - isurupi@wso2.com
           - dasun@wso2.com
-      - name: Site Reliability Engineering
-        members:
-          - chiranga@wso2.com
     endMessage: "Please contact above team regarding Choreo releases within above dates"
     notifications:
       - choreo_release_chat
