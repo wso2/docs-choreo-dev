@@ -1,0 +1,1756 @@
+{
+	"info": {
+		"_postman_id": "0b0b4715-e8dc-4f7a-bc37-ef71341d30f7",
+		"name": "Devportal elevated permission check",
+		"description": "**Description**\n\nThis collection is created to check elevated permission for the devportal APIs.\n\nThe collection includes the operations used in the Choreo APIM devportal UI.\n\n**How to use**\n\n1. Import the given environment file: `Devportal access test`\n2. Set `apim-host` to the testing environment or host\n3. Variables starting with `manjula-` are the parameters taken from the low priviledged organization\n4. Other variables should be taken from the tester's high priviledged organization\n5. Set the postman environment to `Devportal access test`\n6. Test the operations by changing the `org-uuid` and `token` with the variables starting with `manjula-` and vise versa",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22129722"
+	},
+	"item": [
+		{
+			"name": "Get app list",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/applications/?organizationId={{manjula-org-uuid}}&limit=2147483647",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"applications",
+						""
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						},
+						{
+							"key": "limit",
+							"value": "2147483647"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "App detail get",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/applications/dab574c3-bc31-4eda-910d-5dba090559cc?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"applications",
+						"dab574c3-bc31-4eda-910d-5dba090559cc"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete app",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/applications/0ff94b8f-7024-46d9-914b-083e2f8dac78?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"applications",
+						"0ff94b8f-7024-46d9-914b-083e2f8dac78"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create app",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"access-check-app\",\"throttlingPolicy\":\"Unlimited\",\"tokenType\":\"JWT\",\"description\":\"\"}"
+				},
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/applications/?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"applications",
+						""
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Key managers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/key-managers?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"key-managers"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Oauth Keys",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/applications/99dcefe2-c513-4e84-b729-7eafab116a55/oauth-keys?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"applications",
+						"99dcefe2-c513-4e84-b729-7eafab116a55",
+						"oauth-keys"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate keys",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"keyType\": \"SANDBOX\",\n    \"keyManager\": \"_internal_key_manager_manjularathnayake\",\n    \"grantTypesToBeSupported\": [\n        \"client_credentials\"\n    ],\n    \"callbackUrl\": \"\",\n    \"additionalProperties\": {\n        \"application_access_token_expiry_time\": 900,\n        \"refresh_token_expiry_time\": \"86400\",\n        \"id_token_expiry_time\": 900,\n        \"user_access_token_expiry_time\": 900,\n        \"bypassClientCredentials\": \"false\",\n        \"pkceMandatory\": \"false\"\n    }\n}"
+				},
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/applications/99dcefe2-c513-4e84-b729-7eafab116a55/generate-keys?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"applications",
+						"99dcefe2-c513-4e84-b729-7eafab116a55",
+						"generate-keys"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Keys",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"keyManager\": \"_internal_key_manager_chathurangasiriwardhana\",\n    \"keyMappingId\": \"df41fbf7-47a5-484b-ae4d-6f642ac308e1\",\n    \"consumerKey\": \"DNRBUrZzcm74coGwvKlY64QEhFAa\",\n    \"consumerSecret\": \"4_yQJt3TTNIW8jKAVBw4Upz_zGv0sRwAqCnhlHQFjVMa\",\n    \"supportedGrantTypes\": [\n        \"client_credentials\",\n        \"refresh_token\"\n    ],\n    \"callbackUrl\": \"\",\n    \"keyType\": \"SANDBOX\",\n    \"additionalProperties\": {\n        \"application_access_token_expiry_time\": 900,\n        \"refresh_token_expiry_time\": 86400,\n        \"id_token_expiry_time\": \"899\",\n        \"user_access_token_expiry_time\": \"901\",\n        \"bypassClientCredentials\": \"false\",\n        \"pkceMandatory\": \"false\"\n    }\n}"
+				},
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/applications/99dcefe2-c513-4e84-b729-7eafab116a55/oauth-keys/df41fbf7-47a5-484b-ae4d-6f642ac308e1?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"applications",
+						"99dcefe2-c513-4e84-b729-7eafab116a55",
+						"oauth-keys",
+						"df41fbf7-47a5-484b-ae4d-6f642ac308e1"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Subscription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"applicationId\": \"5268e372-9f47-4562-ba86-4b11272c6df8\",\n    \"apiId\": \"63f7bdfac55c411b5d074d70\",\n    \"throttlingPolicy\": \"Unlimited\"\n}"
+				},
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/subscriptions/?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"subscriptions",
+						""
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update app",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"applicationId\":\"99dcefe2-c513-4e84-b729-7eafab116a55\",\"name\":\"access-check-test\",\"throttlingPolicy\":\"Unlimited\",\"description\":\"\",\"status\":\"APPROVED\",\"groups\":[],\"subscriptionCount\":1,\"attributes\":{\"scopes\":\"\"},\"owner\":\"a3484a57-7134-4a67-9e42-9cb1dbda9718\",\"createdTime\":\"1687866839517\",\"updatedTime\":\"1687867356247\",\"tokenType\":\"JWT\"}"
+				},
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/applications/99dcefe2-c513-4e84-b729-7eafab116a55?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"applications",
+						"99dcefe2-c513-4e84-b729-7eafab116a55"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get APIs",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/apis?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"apis"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Thumbnail",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/apis/63f5d0a1e352984f80053ac3/thumbnail?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"apis",
+						"63f5d0a1e352984f80053ac3",
+						"thumbnail"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get API details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/apis/63f7bdfac55c411b5d074d70?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"apis",
+						"63f7bdfac55c411b5d074d70"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get API comments",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/apis/63f7bdfac55c411b5d074d70/comments?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"apis",
+						"63f7bdfac55c411b5d074d70",
+						"comments"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get API ratings",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/apis/63f7bdfac55c411b5d074d70/ratings?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"apis",
+						"63f7bdfac55c411b5d074d70",
+						"ratings"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get API documents",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/apis/63f7bdfac55c411b5d074d70/documents?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"apis",
+						"63f7bdfac55c411b5d074d70",
+						"documents"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get API swagger",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/apis/63f7bdfac55c411b5d074d70/swagger?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"apis",
+						"63f7bdfac55c411b5d074d70",
+						"swagger"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get SDK details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/sdk-gen/languages?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"sdk-gen",
+						"languages"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user rating for an API",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"rating\":5,\"ratingId\":\"\",\"apiId\":\"\",\"ratedBy\":\"\"}"
+				},
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/apis/63f7bdfac55c411b5d074d70/user-rating?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"apis",
+						"63f7bdfac55c411b5d074d70",
+						"user-rating"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"consumerSecret\":\"IRvqtrGhdycl6lKV6lpAmkfPN6ka\",\"validityPeriod\":3600,\"scopes\":[],\"revokeToken\":\"\",\"additionalProperties\":{\"id_token_expiry_time\":3600,\"application_access_token_expiry_time\":3600,\"user_access_token_expiry_time\":3600,\"bypassClientCredentials\":false,\"pkceMandatory\":false,\"pkceSupportPlain\":false,\"refresh_token_expiry_time\":86400}}"
+				},
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/applications/99dcefe2-c513-4e84-b729-7eafab116a55/oauth-keys/df1f885d-5cdf-4e89-ab53-181afb40fffe/generate-token?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"applications",
+						"99dcefe2-c513-4e84-b729-7eafab116a55",
+						"oauth-keys",
+						"df1f885d-5cdf-4e89-ab53-181afb40fffe",
+						"generate-token"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update subscription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"applicationId\": \"5268e372-9f47-4562-ba86-4b11272c6df8\",\n    \"apiId\": \"63f7bdfac55c411b5d074d70\",\n    \"throttlingPolicy\": \"Unlimited\",\n    \"requestedThrottlingPolicy\": \"Unlimited\",\n    \"status\": \"UNBLOCKED\",\n    \"subscriptionId\": \"3e0a12c9-4478-4af5-b3fc-1393fe69373b\"\n}"
+				},
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/subscriptions/18fce1bc-2f2c-4d37-b33a-016cf726590d?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"subscriptions",
+						"18fce1bc-2f2c-4d37-b33a-016cf726590d"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get API tags",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/tags?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"tags"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get API caterogies",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/api-categories?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"api-categories"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Exchange token",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "choreodevportal",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "urn:ietf:params:oauth:grant-type:token-exchange",
+							"type": "text"
+						},
+						{
+							"key": "subject_token_type",
+							"value": "urn:ietf:params:oauth:token-type:jwt",
+							"type": "text"
+						},
+						{
+							"key": "requested_token_type",
+							"value": "urn:ietf:params:oauth:token-type:jwt",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "apim:subscribe  environments:view_prod environments:view_dev apim:prod_key_manage apim:sand_key_manage urn:choreosystem:customdomainapi:custom_domain_view urn:choreosystem:usersmanagement:user_view",
+							"type": "text"
+						},
+						{
+							"key": "subject_token",
+							"value": "{{asg-token}}",
+							"type": "text"
+						},
+						{
+							"key": "orgHandle",
+							"value": "{{org-handle}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{apim-host}}/oauth2/token",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"oauth2",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get subscriptions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/subscriptions/?apiId=63f7bdfac55c411b5d074d70&organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"subscriptions",
+						""
+					],
+					"query": [
+						{
+							"key": "apiId",
+							"value": "63f7bdfac55c411b5d074d70"
+						},
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post comment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"content\":\"Test comment by a shared user with lower privilegesCREATED_BY_USERChathuranga Siriwardhana\"}"
+				},
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/apis/63f7bdfac55c411b5d074d70/comments?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"apis",
+						"63f7bdfac55c411b5d074d70",
+						"comments"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit comment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"content\":\"Test comment EDIT by a shared user with lower privilegesCREATED_BY_USERChathuranga Siriwardhana\"}"
+				},
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/apis/63f7bdfac55c411b5d074d70/comments/ca6d951c-9e66-4c5d-a5e3-529314e45416?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"apis",
+						"63f7bdfac55c411b5d074d70",
+						"comments",
+						"ca6d951c-9e66-4c5d-a5e3-529314e45416"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete comment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/apis/63f7bdfac55c411b5d074d70/comments/ca6d951c-9e66-4c5d-a5e3-529314e45416?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"apis",
+						"63f7bdfac55c411b5d074d70",
+						"comments",
+						"ca6d951c-9e66-4c5d-a5e3-529314e45416"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update API rating",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{manjula-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer "
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"rating\":3,\"ratingId\":\"\",\"apiId\":\"\",\"ratedBy\":\"\"}"
+				},
+				"url": {
+					"raw": "{{apim-host}}/api/am/devportal/v2/apis/63f7bdfac55c411b5d074d70/user-rating?organizationId={{manjula-org-uuid}}",
+					"host": [
+						"{{apim-host}}"
+					],
+					"path": [
+						"api",
+						"am",
+						"devportal",
+						"v2",
+						"apis",
+						"63f7bdfac55c411b5d074d70",
+						"user-rating"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{manjula-org-uuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
