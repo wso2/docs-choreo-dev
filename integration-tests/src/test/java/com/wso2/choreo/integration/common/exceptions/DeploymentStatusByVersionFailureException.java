@@ -13,21 +13,15 @@
 
 package com.wso2.choreo.integration.common.exceptions;
 
+import com.consol.citrus.exceptions.ValidationException;
+
 /**
  * An exception to be thrown if a components deployment status by version returns a failure
  */
-public class DeploymentStatusByVersionFailureException extends Exception {
-
-        public DeploymentStatusByVersionFailureException() {
-            super();
-        }
+public class DeploymentStatusByVersionFailureException extends ValidationException {
 
         public DeploymentStatusByVersionFailureException(String message) {
             super(message);
-        }
-
-        public DeploymentStatusByVersionFailureException(Throwable e) {
-            super(e);
         }
 
         public DeploymentStatusByVersionFailureException(String msg, Throwable e) {
