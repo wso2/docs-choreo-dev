@@ -403,12 +403,16 @@ public class ComponentUtils {
                 deploymentStatusDTO = validateComponentDeployment(runner, citrusClients, accessToken, component, latestCommit, environments);
                 break;
             } catch (Exception e) {
-                if (e instanceof DeploymentStatusByVersionFailureException) {
+                if (e.getCause() instanceof DeploymentStatusByVersionFailureException) {
                     log.error("DeployStatusByVersion failure detected, attempt number " + (i + 1), e);
                 } else {
                     throw e;
                 }
             }
+        }
+
+        if (deploymentStatusDTO == null) {
+            throw new Exception("Component deployment failed");
         }
 
         return deploymentStatusDTO;
