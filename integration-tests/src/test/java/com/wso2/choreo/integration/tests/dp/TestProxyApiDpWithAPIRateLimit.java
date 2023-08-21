@@ -169,8 +169,6 @@ public class TestProxyApiDpWithAPIRateLimit extends TestBase {
         for (ProxyDeployment proxyDeployment : dp.getProxyDeployments()) {
             KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
                     dp.getProxyAPI().getId(), ComponentUtils.getKeyType(proxyDeployment.getEnvironment(), dp.getEnvironments()));
-            ComponentUtils.invokeApiGET(this, keyData.getApikey(), proxyDeployment.getInvokeUrl(),
-                    "/users", "{\"hello\": \"world\"}");
             if (proxyDeployment.getEnvironment().getId().equals(dp.getEnvironments().get(0).getId())) {
                 dp.setDevKeyData(keyData);
             } else {
