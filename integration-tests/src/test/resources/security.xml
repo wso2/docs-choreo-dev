@@ -13,6 +13,8 @@
             <class name="com.wso2.choreo.integration.tests.security.devOps.Organizations.DevOpsOrganizationsElevatedAccessCheck"/>
             <class name="com.wso2.choreo.integration.tests.security.devOps.Volume.DevOpsVolumeElevatedAccessCheck"/>
             <class name="com.wso2.choreo.integration.tests.security.devportal.DevportalElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.deliveryInsights.DeliveryInsightsElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.devportal.DevportalElevatedAccessCheck"/>
         </classes>
     </test>
 </suite>
