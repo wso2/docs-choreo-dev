@@ -93,6 +93,8 @@ spec:
             - name: secret-app-db
               mountPath: "/mnt/csi/secret-app-db"
               readOnly: true
+            - name: tmp
+              mountPath: /tmp
       restartPolicy: Always
       volumes:
         - name: config
@@ -114,6 +116,8 @@ spec:
               secretProviderClass: secret-app-db
             nodePublishSecretRef:
               name: csi-secret-store-azure
+        - name: tmp
+          emptyDir: {}
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
