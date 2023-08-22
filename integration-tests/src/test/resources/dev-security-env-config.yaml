@@ -116,3 +116,6 @@ componentManagement:
   CM_API_CONTEXT: "hello"
   CM_VISIBILITY: "Project"
   CM_BUILD_ID: 86d942b31-dbd8-4a85-bb34-9ecafe3eb9bf
+orgManagemnt:
+  ORG_MGT_APPROVAL_REQ_ID: 1
+  ORG_MGT_IDP_ID: 8616ebca-3376-4cfa-bf76-91abc00982a8

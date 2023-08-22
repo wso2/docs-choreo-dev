@@ -17,4 +17,6 @@ public class SecurityConfigYaml {
     Map<String, String> deliveryInsights;
     @JsonProperty("componentManagement")
     Map<String, String> componentManagement;
+    @JsonProperty("orgManagemnt")
+    Map<String, String> orgManagemnt;
 }

@@ -112,5 +112,7 @@ public enum SecurityConfigDefinition {
     CM_DISPLAY_NAME,
     CM_API_CONTEXT,
     CM_VISIBILITY,
-    CM_BUILD_ID
+    CM_BUILD_ID,
+    ORG_MGT_APPROVAL_REQ_ID,
+    ORG_MGT_IDP_ID
 }

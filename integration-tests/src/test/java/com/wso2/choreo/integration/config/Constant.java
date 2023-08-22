@@ -185,4 +185,8 @@ public final class Constant {
 
     // Component Managemnt related constants
     public static final String COMPONET_MGT_SUFFIX = "/projects/1.0.0/graphql";
+
+    // Org Managemnt related constants
+    public static final String ORG_MGT_SUFFIX = "/org-mgt/1.0.0/orgs/";
+    public static final String DEFAULT_THEME = "/themes/default";
 }
