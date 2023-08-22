@@ -182,4 +182,7 @@ public final class Constant {
     // Delivery Insights related constants
     public static final String CIO_INCIDENT_CONFIGURATOR = "/cio-incident-configurator/1.0.0";
     public static final String CIO_QUERY_API = "/cio-query-api/1.0.0/query";
+
+    // Component Managemnt related constants
+    public static final String COMPONET_MGT_SUFFIX = "/projects/1.0.0/graphql";
 }

@@ -1,0 +1,12 @@
+{
+  "query": "mutation {
+    handleDisableAutoBuild(
+      componentId: \"{{componentId}}\",
+      versionId: \"{{versionId}}\",
+      envId: \"{{envId}}\"
+    ) {
+      success
+      message
+    }
+  }"
+}

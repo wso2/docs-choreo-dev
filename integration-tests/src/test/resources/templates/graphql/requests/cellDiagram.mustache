@@ -1,0 +1,13 @@
+{
+  "query": "query {
+    cellDiagram(
+      componentId: \"{{componentId}}\",
+      commitHash: \"{{commitHash}}\",
+    ) {
+      message
+      data
+      errorName
+      success
+    }
+  }"
+}

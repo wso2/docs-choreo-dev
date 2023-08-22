@@ -1,0 +1,21 @@
+{
+  "query": "mutation {
+    updateProject(
+      project: {
+        id: "{{projectId}}",
+        name: "NewProjectName",
+        description: "",
+        orgId: {{orgId}},
+        version: ""
+      }
+    ) {
+      id
+      name
+      description
+      orgId
+      version
+      handler
+      createdDate
+    }
+  }"
+}

@@ -1,0 +1,11 @@
+{
+  "query": "query {
+    scanResult(
+      componentId: \"{{componentId}}\",
+      branch: \"main\",
+    ) {
+      checkovScan
+      trivyScan
+    }
+  }"
+}

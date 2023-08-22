@@ -1,0 +1,10 @@
+{
+  "query": "query {
+    componentWebhook(componentId: \"{{componentId}}\") {
+      webhookCount
+      hasCodePushWebhook
+      isLimitReached
+      hasWebhookCreateAccess
+    }
+  }"
+}

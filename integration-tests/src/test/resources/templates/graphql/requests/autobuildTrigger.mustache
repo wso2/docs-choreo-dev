@@ -1,0 +1,18 @@
+{
+  "query": "query {
+    autoBuildTrigger(
+      componentId: \"{{componentId}}\",
+      versionId: \"{{versionId}}\"
+    ) {
+      success
+      data {
+        autoBuildId
+        autoBuildEnabled
+        componentId
+        versionId
+        envId
+      }
+      message
+    }
+  }"
+}

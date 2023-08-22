@@ -1,0 +1,29 @@
+{
+  "query": "query {
+    repoMetadata(
+      organizationName: \"{{orgHandler}}\",
+      repoName: \"{{repoName}}\",
+      branch: \"{{branch}}\",
+      subPath: \"{{repositorySubPath}}\",
+      dockerFilePath: \"\",
+      dockerContextPath: \"\",
+      openAPIPath: \"\",
+      componentId: \"{{componentId}}\",
+      secretRef: \"\"
+    ) {
+      isBareRepo
+      isSubPathEmpty
+      isSubPathValid
+      isValidRepo
+      hasBallerinaTomlInPath
+      hasBallerinaTomlInRoot
+      isDockerfilePathValid
+      hasDockerfileInPath
+      isDockerContextPathValid
+      isOpenApiFilePathValid
+      hasOpenApiFileInPath
+      hasPomXmlInPath
+      hasPomXmlInRoot
+    }
+  }"
+}
