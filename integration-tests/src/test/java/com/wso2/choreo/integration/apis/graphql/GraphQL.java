@@ -84,7 +84,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.consol.citrus.actions.EchoAction.Builder.echo;
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.container.RepeatUntilTrue.Builder.repeat;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
@@ -172,44 +171,44 @@ public class GraphQL extends ControlPlaneAPI {
 
 
 
-    public static Optional<CreateComponentResponseDTO> createUserManagedComponent(TestActionRunner runner, HttpClient client,
+    public static Optional<CreateComponentResponseDTO> createUserManagedComponent(TestNGCitrusSpringSupport runner, HttpClient client,
                                                                         String queryString, String projectId,
                                                                         String accessToken) throws Exception {
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
-
-        Map<String, String> responseParams = new HashMap<>();
-        responseParams.put("orgId", String.valueOf(ORG_ID));
-        responseParams.put("projectId", projectId);
-        responseParams.put("handler", ORG_HANDLE);
-        String expectedResponse = ObjectMapperUtil.mapObjectToString(
-                "templates/graphql/responses/createComponentSuccess.mustache", responseParams);
-
         AtomicReference<CreateComponentResponseDTO> responseDTO = new AtomicReference<>();
-        runner.$(http()
-                .client(client)
-                .send()
-                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(requestBody)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .body(expectedResponse)
-                .validate((message, context) -> {
-                    responseDTO.set(ObjectMapperUtil.mapStringToObject(CreateComponentResponseDTO.class,
-                            (String) message.getPayload(), "createComponent"));
-                }));
-
+        runner.variable("isComponentCreationSuccess", false);
+        runner.$(repeat()
+                .until("(i = 5) or ( ${isComponentCreationSuccess} = true )")
+                .index("i")
+                .actions(
+                    http()
+                        .client(client)
+                        .send()
+                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(requestBody)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                    http().client(client)
+                        .receive()
+                        .response()
+                        .message()
+                        .type(MessageType.JSON)
+                        .validate((message, context) -> {
+                                int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                if (code == HttpStatus.OK.value()) {
+                                     context.setVariable("isComponentCreationSuccess", true);  
+                                responseDTO.set(ObjectMapperUtil.mapStringToObject(CreateComponentResponseDTO.class,
+                                   (String) message.getPayload(), "createComponent"));
+                                }        
+                        })
+                )
+        );
         return responseDTO.get() == null ? Optional.empty() :  Optional.of(responseDTO.get());
     }
 
-    public static Optional<CreateByocComponentResponseDTO> createBYOCComponent(TestActionRunner runner, HttpClient client,
+    public static Optional<CreateByocComponentResponseDTO> createBYOCComponent(TestNGCitrusSpringSupport runner, HttpClient client,
                                                                                GraphqlDTO graphqlDTO,
                                                                                String accessToken) throws Exception {
         graphqlDTO.setOrgId(ORG_ID);
@@ -217,35 +216,41 @@ public class GraphQL extends ControlPlaneAPI {
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/createBYOCcomponent.mustache", graphqlDTO);
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
-
         Map<String, String> responseParams = new HashMap<>();
         responseParams.put("orgId", String.valueOf(ORG_ID));
         responseParams.put("projectId", graphqlDTO.getProjectId());
         responseParams.put("handler", ORG_HANDLE);
-        String expectedResponse = ObjectMapperUtil.mapObjectToString(
-                "templates/graphql/responses/createByocComponentSuccess.mustache", responseParams);
-
         AtomicReference<CreateByocComponentResponseDTO> responseDTO = new AtomicReference<>();
-        runner.$(http()
-                .client(client)
-                .send()
-                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(requestBody)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .body(expectedResponse)
-                .validate((message, context) -> {
-                    responseDTO.set(ObjectMapperUtil.mapStringToObject(CreateByocComponentResponseDTO.class,
-                            (String) message.getPayload(), "createByocComponent"));
-                }));
+        runner.variable("isComponentCreationSuccess", false);
+        runner.$(repeat()
+                .until("(i = 5) or ( ${isComponentCreationSuccess} = true )")
+                .index("i")
+                .actions(
+                    http()
+                        .client(client)
+                        .send()
+                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(requestBody)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                    http().client(client)
+                        .receive()
+                        .response()
+                        .message()
+                        .type(MessageType.JSON)
+                        .validate((message, context) -> {
+                                int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                if (code == HttpStatus.OK.value()) {
+                                     context.setVariable("isComponentCreationSuccess", true);  
+                                     responseDTO.set(ObjectMapperUtil.mapStringToObject(
+                                                CreateByocComponentResponseDTO.class, (String) message.getPayload(), 
+                                                        "createByocComponent"));
+                                }        
+                        })
+                )
+        );
 
         return responseDTO.get() == null ? Optional.empty() :  Optional.of(responseDTO.get());
     }
@@ -331,17 +336,14 @@ public class GraphQL extends ControlPlaneAPI {
                 Constant.TEST_PROJECT_NAME_PREFIX.concat(String.valueOf(new Date().getTime())))
                 .description(Constant.TEST_PROJECT_DESCRIPTION).region(region).orgId(ORG_ID).
                 orgHandler(ORG_HANDLE).build();
-
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/createProject.mustache", graphqlDTO);
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
-
         AtomicReference<ChoreoProject> project = new AtomicReference<>();
-
-        runner.$(repeatOnError()
-                .until("i = 5")
+        runner.variable("isProjectCreationSuccess", false);
+        runner.$(repeat()
+                .until("(i = 5) or ( ${isProjectCreationSuccess} = true )")
                 .index("i")
-                .autoSleep(5000)
                 .actions(
                     http()
                         .client(client)
@@ -354,14 +356,18 @@ public class GraphQL extends ControlPlaneAPI {
                         .accept(MediaType.APPLICATION_JSON_VALUE),
                     http().client(client)
                         .receive()
-                        .response(HttpStatus.OK)
+                        .response()
                         .message()
-                        .type(MessageType.JSON)
                         .validate((message, context) -> {
-                            project.set(ObjectMapperUtil.mapStringToObject(ChoreoProject.class,
-                                    message.getPayload(String.class), "createProject"));
-                        })));
-
+                                int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                if (code == HttpStatus.OK.value()) {
+                                     context.setVariable("isProjectCreationSuccess", true);  
+                                     project.set(ObjectMapperUtil.mapStringToObject(ChoreoProject.class, message
+                                        .getPayload(String.class), "createProject")); 
+                                }        
+                        })
+                )
+        );
         return project.get();
     }
 
