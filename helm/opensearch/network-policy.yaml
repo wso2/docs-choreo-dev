@@ -79,6 +79,14 @@ spec:
       podSelector:
         matchLabels:
           app.kubernetes.io/name: fluent-bit
+
+    # Allow ingress from fluent-bit nodes to receive logs. Having only the above namespaceSelector and podSelector
+    # rule doesn't work because requests originate from the node. Hence this ipBlock rule is required.
+    # 
+    # Specify the nodepool subnet as the cidr.
+    # Nodepool subnet value is set by a Kustomize patch
+    - ipBlock:
+      - cidr: "X.X.X.X/X"
     ports:
     - port: 9200
       protocol: TCP
