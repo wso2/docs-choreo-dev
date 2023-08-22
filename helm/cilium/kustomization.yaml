@@ -33,6 +33,8 @@ helmCharts:
               requests:
                 cpu: 100m
                 memory: 100Mi
+            livenessProbe:
+              enabled: true
           frontend:
             resources:
               limits:
