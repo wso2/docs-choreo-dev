@@ -72,7 +72,7 @@ public class ThemePreference extends TestNGCitrusSpringSupport {
                 $(http()
                                 .client(choreoTestClientForTheme)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response(HttpStatus.CREATED)
                                 .message()
                                 .type(MessageType.JSON)
                                 .body(new ClassPathResource(
