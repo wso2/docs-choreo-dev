@@ -13,10 +13,64 @@ helmCharts:
         enabled: true
         relay:
           enabled: true
+          podSecurityContext:
+            seccompProfile:
+              type: RuntimeDefault
+          resources:
+            limits:
+              cpu: 150m
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
         ui:
           enabled: true
+          backend:
+            resources:
+              limits:
+                cpu: 150m
+                memory: 200Mi
+              requests:
+                cpu: 100m
+                memory: 100Mi
+          frontend:
+            resources:
+              limits:
+                cpu: 150m
+                memory: 200Mi
+              requests:
+                cpu: 100m
+                memory: 100Mi
       nodeinit:
         enabled: true
+        resources:
+          limits:
+            cpu: 150m
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+      operator:
+        podSecurityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1Gi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+      resources:
+        limits:
+          cpu: 4000m
+          memory: 4Gi
+        requests:
+          cpu: 100m
+          memory: 512Mi
+      livenessProbe:
+        failureThreshold: 10
+        periodSeconds: 30
     releaseName: cilium
     namespace: kube-system
     version: 1.13.0
