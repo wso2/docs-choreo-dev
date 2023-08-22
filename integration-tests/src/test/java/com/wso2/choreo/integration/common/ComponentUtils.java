@@ -570,8 +570,10 @@ public class ComponentUtils {
             BalConfig... balconfigs) throws Exception {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         List<ComponentDeploymentStatusDTO> promotionStatus = null;
+        String displayType = component.getDisplayType();
         for (int i = 0; i < 5; i++) {
-            if (component.getDisplayType().equals(Constant.displayType.ballerinaService.name())) {
+            if (displayType.equals(Constant.displayType.ballerinaService.name())
+                    || displayType.equals(Constant.AppType.MI_API_SERVICE.value)) {
                 Map<String, String> argMap = new HashMap<>();
                 argMap.put("componentId", component.getId());
                 argMap.put("versionId", component.getLatestApiVersion().getId());
@@ -583,7 +585,8 @@ public class ComponentUtils {
             promotionStatus = promote(runner, appServiceClient, accessToken, component, environments, componentFlavour,
                     balconfigs);
 
-            if (component.getDisplayType().equals(Constant.displayType.ballerinaService.name())) {
+            if (displayType.equals(Constant.displayType.ballerinaService.name())
+                    || displayType.equals(Constant.AppType.MI_API_SERVICE.value)) {
                 Endpoint latestEndpoint = preparePromotionEndpointStatusActive(runner, citrusClients, accessToken,
                         component, environments, componentFlavour);
                 if (latestEndpoint.getState().equals("Active")) {
