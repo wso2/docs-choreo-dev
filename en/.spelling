@@ -423,6 +423,7 @@ configs
 OpenJDK
 HotSpot
 a.m.
+onwards
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -593,6 +594,7 @@ Moesif.md
 integrate-choreo-with-moesif
 configure-cio-dashboard.md
 control-api-visibility
+rename-api-display-name
  - theme/material/templates/home-page.html
 doctype
 html
