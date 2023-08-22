@@ -86,7 +86,7 @@ spec:
     # Specify the nodepool subnet as the cidr.
     # Nodepool subnet value is set by a Kustomize patch
     - ipBlock:
-      - cidr: "X.X.X.X/X"
+        cidr: "X.X.X.X/X"
     ports:
     - port: 9200
       protocol: TCP
