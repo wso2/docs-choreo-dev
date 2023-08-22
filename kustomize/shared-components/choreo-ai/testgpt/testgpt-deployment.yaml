@@ -96,8 +96,8 @@ spec:
               readOnly: true
       volumes:
         - name: config
-            configMap:
-              name: testgpt-cm-file
+          configMap:
+            name: testgpt-cm-file
         - name: testgpt-secret
           csi:
             driver: secrets-store.csi.k8s.io
