@@ -18,7 +18,6 @@ kind: Deployment
 metadata:
   annotations:
     seccomp.security.alpha.kubernetes.io/pod: "docker/default"
-    checkov.io/skip1: "CKV_K8S_38=Need this to talk to kube api"
   labels:
     choreo.component: testgpt
   name: testgpt
@@ -32,12 +31,10 @@ spec:
         choreo.component: testgpt
         antiaffinity: testgpt
       annotations:
-        linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
         seccomp.security.alpha.kubernetes.io/pod: "docker/default"
     spec:
-      automountServiceAccountToken: true
-      serviceAccountName: testgpt-sa #TODO
+      automountServiceAccountToken: false
       securityContext:
         seccompProfile:
           type: RuntimeDefault
