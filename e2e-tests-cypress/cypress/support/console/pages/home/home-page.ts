@@ -113,4 +113,9 @@ export class ChoreoHomePage {
     cyGet('[data-cyid="create-new-button-button"]').click();
     cyGet("body").type("{esc}");
   }
+
+  static switchtOrg(orgName: string) {
+    cy.get("#org-picker").click();
+    cyGet(`[data-value="${orgName}"]`).click();
+  }
 }
