@@ -515,6 +515,10 @@ configMapGenerator:
     behavior: create
     files:
       - marketplace/Config.toml
+  - name: cm-file-cp-ris
+    behavior: create
+    files:
+      - cp-ris/Config.toml  
   - name: cm-file-audit-logging
     behavior: create
     files:
