@@ -85,6 +85,10 @@ helmCharts:
           - "/bin/bash"
           - "-c"
           - "sleep 120 && bash post-start.sh 2>&1 > /tmp/post-start.log"
+          
+    persistence:
+      image: choreocontrolplane.azurecr.io/busybox
+      imageTag: 1.36
     
     podSecurityContext:
       seccompProfile:

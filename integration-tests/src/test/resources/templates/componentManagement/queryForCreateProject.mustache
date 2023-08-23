@@ -1,0 +1,3 @@
+{
+    "query": "mutation{ createProject(project: {\n      name: \"{{projectName}}\", description: \"ElevatedAccess\",\n      orgId: {{orgId}}, orgHandler: \"{{orgHandler}}\",\n      version: \"1.0.0\", region: \"US\",\n    }){ \n      id, orgId, name, version, createdDate, handler, region, description,\n    } }"
+}

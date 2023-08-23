@@ -1,0 +1,26 @@
+{
+    "query":
+    "query{
+      projects(
+          orgHandler:\"{{orgHandler}}\",
+          orgId:{{orgId}}
+      )
+      {
+          name,
+          handler,
+          region,
+          extendedHandler,
+          version,
+          labels,
+          orgId,
+          id,
+          owner,
+          description,
+          createdDate,
+          repository,
+          branch,
+          secretRef,
+          gitProvider,
+      }
+    }"
+}

@@ -44,7 +44,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: testgpt-cm
-          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-testgpt-dp:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-ai-api-test-agent:latest
           resources:
             limits:
               cpu: 500m
