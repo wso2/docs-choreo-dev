@@ -112,9 +112,23 @@ BEGIN
         status VARCHAR(128) NOT NULL,
         is_paid BIT NOT NULL DEFAULT 0,
         created_at BIGINT DEFAULT DATEDIFF_BIG(MILLISECOND,'1970-01-01 00:00:00.000', SYSUTCDATETIME()),
+        threshold_id VARCHAR(128) DEFAULT '01ee409e-cdfd-13d6-86c6-1a523acc861b',
         PRIMARY KEY (org_id, tier_id),
         UNIQUE (id),
         CONSTRAINT FK_TierSubscriptionV2 FOREIGN KEY (tier_id) REFERENCES tierV2(id)
+    );
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='threshold' and xtype='U')
+BEGIN
+    CREATE TABLE threshold (
+        id VARCHAR(128) NOT NULL,
+        tier_id VARCHAR(128) NOT NULL,
+        threshold NVARCHAR(MAX),
+        billing_provider VARCHAR(128),
+        PRIMARY KEY (id),
+
     );
 END
 GO
@@ -154,4 +168,16 @@ INSERT INTO tierV2 (id,name,description,is_paid,created_at,is_internal) VALUES
 	 (N'c971b211-bc44-4f35-90ad-4d62b313b466',N'Pay As You Go',N'New PAYG tier for paid users with component based pricing',1,1689683632,0),
      (N'ac5b54f5-d665-4515-ae17-95eac201ecaa',N'Developer Infrastructure',N'Tier for infrastructure costs associated with Developer Paid users',1,1689683632,0),
      (N'd3bd7035-162d-49dd-8b20-2f8bf095a889',N'Pay As You Go Infrastructure',N'Tier for infrastructure costs associated with new PAYG users',1,1689683632,0);
+GO
+
+INSERT INTO threshold(id,tier_id,thresholds) values 
+	(N'01ee409e-cdfd-13d6-86c6-1a523acc861b',N'8de71e7a-adc2-4de4-a1b4-5b79d450f3ff', N'{"components": 5}'),
+	(N'01ee40ac-d78d-1a18-aefa-7525b354b84a',N'4abe3757-86f6-47de-994f-f02fb0522e99', N'{"components": 0}'),
+	(N'01ee40ac-d78d-1a18-ba66-569b6fbd58f5',N'352dd60e-8e14-4bb3-9dab-395a16fbfe88', N'{"components": 5}',N'stripe'),
+	(N'01ee40ac-d78d-1a18-ba37-e45d158efa93',N'352dd60e-8e14-4bb3-9dab-395a16fbfe88', N'{"components": 0}',N'stripe'),
+	(N'01ee40ac-d78d-1a18-af90-996025312323',N'c971b211-bc44-4f35-90ad-4d62b313b466', N'{"components": 0}',N'stripe'),
+	(N'01ee40ac-d78d-1a18-8651-eb07c06ff29b',N'01eca429-cdf8-1ece-9c04-755f5d6a2c77', N'{"components": 5}',N'stripe'),
+	(N'01ee40ac-d78d-1a18-9dde-008734339a61',N'01eca429-cdf8-1ece-9c04-755f5d6a2c77', N'{"components": 0}',N'azure'),
+	(N'01ee40ac-d78d-1a18-b26a-3bbb0a3feedc',N'9819cdd6-d2df-47cb-8954-8c1a80cb06cc', N'{"components": 0}',N'stripe'),
+	(N'01ee40ac-d78d-1a18-a135-9f837397bb80',N'd3bd7035-162d-49dd-8b20-2f8bf095a889', N'{"components": 0}',N'stripe');
 GO
