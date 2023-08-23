@@ -1,0 +1,38 @@
+{
+  "query": "query {
+    invokeInformation(
+      orgUuid: \"{{orgUuid}}\",
+      orgHandler: \"{{orgHandler}}\",
+      componentId: \"{{componentId}}\",
+      projectId: \"{{projectId}}\",
+      versionId: \"{{versionId}}\",
+      componentType: \"webhook\"
+    ) {
+      apiId
+      releaseId
+      versionId
+      environmentId
+      environmentChoreoName
+      apimEnvName
+      lifecycleStatus
+      invokeUrl
+      version
+      apiRevision {
+        displayName
+        id
+        description
+        createdTime
+        apiInfo {
+          id
+        }
+        deploymentInfo {
+          revisionUuid
+          name
+          vhost
+          displayOnDevportal
+          successDeployedTime
+        }
+      }
+    }
+  }"
+}

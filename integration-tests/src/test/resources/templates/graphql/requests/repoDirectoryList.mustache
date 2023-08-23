@@ -1,0 +1,11 @@
+{
+  "query": "query {
+    repoDirectoryList(
+      repositoryName: \"{{repoName}}\",
+      repositoryBranch: \"main\",
+      repositoryOrganization: \"{{gitOrgHandle}}\"
+    ) {
+      name
+    }
+  }"
+}
