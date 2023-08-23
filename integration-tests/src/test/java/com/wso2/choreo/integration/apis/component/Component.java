@@ -15,20 +15,27 @@ package com.wso2.choreo.integration.apis.component;
 
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.http.client.HttpClient;
+import com.consol.citrus.http.message.HttpMessageHeaders;
+import com.consol.citrus.message.DefaultMessage;
+import com.consol.citrus.message.Message;
+import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.consol.citrus.validation.json.JsonMessageValidationContext;
+import com.consol.citrus.validation.json.JsonTextMessageValidator;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
+import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.models.commithistory.Commit;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +43,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
-import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 
 @Log4j2
 public class Component extends ControlPlaneAPI {
@@ -85,11 +91,14 @@ public class Component extends ControlPlaneAPI {
     }
 
 
-    public static void waitForComponentCreationSuccess(TestActionRunner runner, HttpClient client, String accessToken,
+    public static void waitForComponentCreationSuccess(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
                                                        String projectId,
-                                                       String componentId) {
+                                                       String componentId) throws IOException {
+        String expectedResponse = ComponentUtils.generateStringFromTemplate(
+                "templates/createComponent/get_create_status_success.json", null);
+        runner.variable("isComponentCreationSuccess", false);
         runner.$(repeatOnError()
-                .until("i = 50")
+                .until("(i = 50) or ( ${isComponentCreationSuccess} = true )")
                 .index("i")
                 .autoSleep(5000)
                 .actions(
@@ -108,12 +117,20 @@ public class Component extends ControlPlaneAPI {
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON)),
                         http().client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .message()
-                                .body(new ClassPathResource(
-                                        "templates/createComponent/get_create_status_success.json"))
-                                .validate(json()
-                                        .ignore("$.message"))));
+                                .validate((message, context) -> {
+                                        int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                        if (code == HttpStatus.OK.value()) {
+                                            JsonTextMessageValidator validator = new JsonTextMessageValidator();
+                                            Message expected = new DefaultMessage( expectedResponse);
+                                            validator.validateMessage(message, expected, context, 
+                                                new JsonMessageValidationContext());
+                                            context.setVariable("isComponentCreationSuccess", true); 
+                                        }
+                                })       
+                        )
+                );
     }
 
     public static JsonArray getDeploymentBuildSteps(TestActionRunner runner, HttpClient client, String accessToken, String projectId,
