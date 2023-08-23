@@ -50,11 +50,11 @@ public class TestGraphQLServiceDp extends TestBase {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
 
         Repository repo = Repository.builder().
-                repoUrl("https://github.com/choreo-test-apps/graphql").
+                repoUrl("https://github.com/choreo-test-apps/gql-service").
                 branch("main").
                 subPath("").build();
 
-        GraphqlDTO dto = ComponentUtils.createGrpahQLComponentRequest(componentName, project, repo);
+        GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);
 
         ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
         dp.setChoreoProject(project);
