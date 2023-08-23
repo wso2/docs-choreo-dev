@@ -1058,7 +1058,7 @@ public class ComponentUtils {
 
     }
 
-    public static void createNewVersion(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+    public static void createNewVersion(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients,
             String accessToken, GraphqlDTO graphqlDTO) throws Exception {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         GraphQL.createNewVersion(runner, appServiceClient, accessToken, graphqlDTO);
