@@ -108,7 +108,7 @@ spec:
               name: csi-secret-store-azure
       affinity:
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
+          requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
                 - key: antiaffinity
