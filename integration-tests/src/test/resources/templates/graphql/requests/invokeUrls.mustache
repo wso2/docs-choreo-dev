@@ -1,0 +1,14 @@
+{
+  "query": "query {
+    invokeUrls(
+      orgUuid: \"{{orgUuid}}\",
+      orgHandler: \"{{orgHandler}}\",
+      componentId: \"{{componentId}}\",
+      versionId: \"{{versionId}}\"
+    ) {
+      environmentId
+      environmentName
+      invokeUrl
+    }
+  }"
+}

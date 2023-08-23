@@ -1,0 +1,10 @@
+{
+  "query": "query {
+    userRepos(secretRef: \"{{secretRef}}\") {
+      orgName
+      repositories {
+        name
+      }
+    }
+  }"
+}

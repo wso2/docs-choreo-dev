@@ -1,0 +1,13 @@
+{
+  "query": "# Try to write your query here\nquery {
+    isValidNonEmptyRepo(
+      organizationName: \"{{gitOrgHandle}}\",
+      repoName: \"{{repoName}}\",
+      branch: \"main\",
+      subPath: \"\",
+    ) {
+      isValid
+      message
+    }
+  }"
+}

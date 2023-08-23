@@ -1,0 +1,419 @@
+{
+	"info": {
+		"_postman_id": "22fc94ed-9e89-4f41-b403-5fcad0745b62",
+		"name": "RBACTestConfigMgt",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GlobalConfigs",
+			"item": [
+				{
+					"name": "List Global Configs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{DEVELOPER_JWT}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "https://{{HOST}}/orgs/{{ORG_UUID}}/projects/{{PROJECT_UUID}}/globalconfigurations",
+							"protocol": "https",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"orgs",
+								"{{ORG_UUID}}",
+								"projects",
+								"{{PROJECT_UUID}}",
+								"globalconfigurations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Global Config",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{DEVELOPER_JWT}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"org_uuid\": \"{{ORG_UUID}}\",\n    \"project_uuid\": \"{{PROJECT_UUID}}\",\n    \"name\": \"DevConfig\",\n    \"description\": \"\",\n    \"environments\": [\n        {\n            \"name\": \"Development\",\n            \"uuid\": \"{{DEV_ENV_UUID}}\"\n        }\n    ],\n    \"config_type\": \"Pre-defined\",\n    \"config_type_metadata\": \"5129/ballerinax/googleapis.gmail/3.2.0\",\n    \"config_data\": [\n        {\n            \"config_key\": \"config.auth.token\",\n            \"value\": \"DevConfig\",\n            \"value_type\": \"string\",\n            \"value_ref\": \"\",\n            \"configuration_data_id\": \"\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{HOST}}/orgs/{{ORG_UUID}}/projects/{{PROJECT_UUID}}/globalconfigurations",
+							"protocol": "https",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"orgs",
+								"{{ORG_UUID}}",
+								"projects",
+								"{{PROJECT_UUID}}",
+								"globalconfigurations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Global Config",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "",
+								"value": "Bearer {{DEVELOPER_JWT}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"org_uuid\": \"{{ORG_UUID}}\",\n    \"project_uuid\": \"{{PROJECT_UUID}}\",\n    \"config_uuid\": \"{{DevConfigUUID}}\",\n    \"environment_uuid\": \"{{DEV_ENV_UUID}}\",\n    \"name\": \"DevConfig\",\n    \"updated_config_data\": [\n        {\n            \"config_key\": \"config.auth.token\",\n            \"value\": \"DevConfigUpdated\",\n            \"value_type\": \"string\",\n            \"value_ref\": \"{{DevConfigValueRef}}\",\n            \"configuration_data_id\": \"{{DevConfigID}}\",\n            \"change_type\": 1\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{HOST}}/orgs/{{ORG_UUID}}/projects/{{PROJECT_UUID}}/globalconfigurations/{{DevConfigUUID}}",
+							"protocol": "https",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"orgs",
+								"{{ORG_UUID}}",
+								"projects",
+								"{{PROJECT_UUID}}",
+								"globalconfigurations",
+								"{{DevConfigUUID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Particular Global Config Data",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{DEVELOPER_JWT}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "https://{{HOST}}/orgs/{{ORG_UUID}}/projects/{{PROJECT_UUID}}/globalconfigurations/environments/{{DEV_ENV_UUID}}/configdata?configUuid={{DevConfigUUID}}",
+							"protocol": "https",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"orgs",
+								"{{ORG_UUID}}",
+								"projects",
+								"{{PROJECT_UUID}}",
+								"globalconfigurations",
+								"environments",
+								"{{DEV_ENV_UUID}}",
+								"configdata"
+							],
+							"query": [
+								{
+									"key": "configUuid",
+									"value": "{{DevConfigUUID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Global Config",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{DEVELOPER_JWT}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "https://{{HOST}}/orgs/{{ORG_UUID}}/projects/{{PROJECT_UUID}}/globalconfigurations/{{DevConfigUUID}}/environment/{{DEV_ENV_UUID}}",
+							"protocol": "https",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"orgs",
+								"{{ORG_UUID}}",
+								"projects",
+								"{{PROJECT_UUID}}",
+								"globalconfigurations",
+								"{{DevConfigUUID}}",
+								"environment",
+								"{{DEV_ENV_UUID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Global Config Data",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{DEVELOPER_JWT}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "https://{{HOST}}/orgs/{{ORG_UUID}}/projects/{{PROJECT_UUID}}/globalconfigurations/environments/{{DEV_ENV_UUID}}",
+							"protocol": "https",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"orgs",
+								"{{ORG_UUID}}",
+								"projects",
+								"{{PROJECT_UUID}}",
+								"globalconfigurations",
+								"environments",
+								"{{DEV_ENV_UUID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ConfigurationMount",
+			"item": [
+				{
+					"name": "Get Configuration",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{DEVELOPER_JWT}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://{{HOST}}/orgs/{{ORG_HANDLE}}/projects/{{PROJECT_UUID}}/components/{{COMPONENT_ID}}/envs/{{DEV_ENV_UUID}}/{{COMP_VERSION}}/configurations?component_name={{COMP_NAME}}&commit_hash={{COMMIT_HASH}}",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"orgs",
+								"{{ORG_HANDLE}}",
+								"projects",
+								"{{PROJECT_UUID}}",
+								"components",
+								"{{COMPONENT_ID}}",
+								"envs",
+								"{{DEV_ENV_UUID}}",
+								"{{COMP_VERSION}}",
+								"configurations"
+							],
+							"query": [
+								{
+									"key": "component_name",
+									"value": "{{COMP_NAME}}"
+								},
+								{
+									"key": "commit_hash",
+									"value": "{{COMMIT_HASH}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Configuration",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{DEVELOPER_JWT}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moduleName\": \"{{COMP_NAME}}\",\n    \"commitHash\": \"{{COMMIT_HASH}}\",\n    \"applyNow\": true,\n    \"operation\": 0,\n    \"sourceUuid\": \"\",\n    \"configs\": [\n        {\n            \"configKeyName\": \"nameFromConfig\",\n            \"valueType\": \"string\",\n            \"valueOrSource\": \"DevConfig\",\n            \"valueReference\": \"\",\n            \"isRequired\": true\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{HOST}}/orgs/{{ORG_HANDLE}}/projects/{{PROJECT_UUID}}/components/{{COMPONENT_ID}}/envs/{{DEV_ENV_UUID}}/{{COMP_VERSION}}/configurations",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"orgs",
+								"{{ORG_HANDLE}}",
+								"projects",
+								"{{PROJECT_UUID}}",
+								"components",
+								"{{COMPONENT_ID}}",
+								"envs",
+								"{{DEV_ENV_UUID}}",
+								"{{COMP_VERSION}}",
+								"configurations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Configuration",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{DEVELOPER_JWT}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"commitHash\": \"{{COMMIT_HASH}}\",\n    \"applyNow\": true,\n    \"configs\": [\n        {\n            \"configKeyName\": \"nameFromConfig\",\n            \"valueType\": \"string\",\n            \"valueOrSource\": \"DevConfig\",\n            \"valueReference\": \"\",\n            \"isRequired\": true\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{HOST}}/orgs/{{ORG_HANDLE}}/projects/{{PROJECT_UUID}}/components/{{COMPONENT_ID}}/envs/{{DEV_ENV_UUID}}/{{COMP_VERSION}}/configurations",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"orgs",
+								"{{ORG_HANDLE}}",
+								"projects",
+								"{{PROJECT_UUID}}",
+								"components",
+								"{{COMPONENT_ID}}",
+								"envs",
+								"{{DEV_ENV_UUID}}",
+								"{{COMP_VERSION}}",
+								"configurations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Configuration",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{DEVELOPER_JWT}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moduleName\": \"{{COMP_NAME}}\",\n    \"commitHash\": \"{{COMMIT_HASH}}\",\n    \"applyNow\": true,\n    \"configs\": [\n        {\n            \"id\": \"{{LocalDevConfigID}}\",\n            \"configKeyName\": \"nameFromConfig\",\n            \"valueType\": \"string\",\n            \"isRequired\": true,\n            \"configurationValue\": {\n                \"id\": \"{{LocalDevConfigValueID}}\",\n                \"valueRef\": \"{{LocalDevConfigValueRef}}\",\n                \"value\": \"DevConfig\"\n            }\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{HOST}}/orgs/{{ORG_HANDLE}}/projects/{{PROJECT_UUID}}/components/{{COMPONENT_ID}}/envs/{{DEV_ENV_UUID}}/{{COMP_VERSION}}/configurations",
+							"protocol": "https",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"orgs",
+								"{{ORG_HANDLE}}",
+								"projects",
+								"{{PROJECT_UUID}}",
+								"components",
+								"{{COMPONENT_ID}}",
+								"envs",
+								"{{DEV_ENV_UUID}}",
+								"{{COMP_VERSION}}",
+								"configurations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete All Configurations in a component",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{DEVELOPER_JWT}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "https://{{HOST}}/orgs/{{ORG_HANDLE}}/projects/{{PROJECT_UUID}}/components/{{COMPONENT_ID}}/configurations",
+							"protocol": "https",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"orgs",
+								"{{ORG_HANDLE}}",
+								"projects",
+								"{{PROJECT_UUID}}",
+								"components",
+								"{{COMPONENT_ID}}",
+								"configurations"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

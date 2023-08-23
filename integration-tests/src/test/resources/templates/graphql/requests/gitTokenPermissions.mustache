@@ -1,0 +1,14 @@
+{
+  "query": "query {
+    gitTokenPermissions(input: {
+      secretRef: \"{{secretRef}}\"
+    }) {
+      hasOrgs
+      hasRepos
+      prWrite
+      accountRead
+      webhookWrite
+      validCredential
+    }
+  }"
+}
