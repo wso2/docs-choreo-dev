@@ -15,4 +15,8 @@
 # -----------------------------------------------------------------------
 
 resources:
-  - ../../../shared-components/choreo-ai/testgpt
+  - testgpt-deployment.yaml
+  - testgpt-service.yaml
+  - testgpt-hpa.yaml
+  - testgpt-pdb.yaml
+  - testgpt-sa.yaml
