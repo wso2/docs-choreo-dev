@@ -189,4 +189,6 @@ public final class Constant {
     // Org Managemnt related constants
     public static final String ORG_MGT_SUFFIX = "/org-mgt/1.0.0/orgs/";
     public static final String DEFAULT_THEME = "/themes/default";
+    public static final String ORG_API_SUFFIX = "/orgs/1.0.0/orgs/";
+    public static final String USER_MGT_SUFFIX = "/users-mgt/1.0.0/orgs/";
 }

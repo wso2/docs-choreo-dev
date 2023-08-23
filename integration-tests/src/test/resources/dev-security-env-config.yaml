@@ -119,3 +119,14 @@ componentManagement:
 orgManagemnt:
   ORG_MGT_APPROVAL_REQ_ID: 1
   ORG_MGT_IDP_ID: 8616ebca-3376-4cfa-bf76-91abc00982a8
+  ORG_MGT_ORG_NAME: randorgcitruesdevte
+  ORG_MGT_ROLE_NAME: testCrossRoles
+  ORG_MGT_ROLE_DESCRIPTION: sample role for testing
+  ORG_MGT_ROLE_PERMISSION_ID: 26
+  ORG_MGT_ROLE_DOMAIN_AREA: APIM-PUBLISHER
+  ORG_MGT_ROLE_HANDLE: api-subscriber
+  ORG_MGT_USER_ID: 8616ebca-3376-4cfa-bf76-91abc00982a8
+  ORG_MGT_GROUP_NAME: TestGroupName
+  ORG_MGT_INVITED_USER_EMAIL: citrustestdev@outlook.com
+  ORG_MGT_INVITATION_UUID: f480618f-0fdc-4595-a9e0-6f6404740e72
+  ORG_MGT_ADMIN_EMAIL: choreo-integration-test-user-dev@wso2.com
