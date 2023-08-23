@@ -96,7 +96,7 @@ public class ComponentUtils {
 
     private static final int MAX_DEPLOY_RETRY_COUNT = 5;
 
-    public static ChoreoComponent getReusableComponent(TestActionRunner runner, String accessToken, Repository repo,
+    public static ChoreoComponent getReusableComponent(TestNGCitrusSpringSupport runner, String accessToken, Repository repo,
                                                        String testName, Map<Endpoints, HttpClient> citrusClients,
                                                        ComponentFlavour componentFlavour) throws Exception {
 
@@ -278,7 +278,8 @@ public class ComponentUtils {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         return GraphQL.createProject(runner, appServiceClient, region, accessToken);
     }
-    public static ChoreoComponent createComponent(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+
+    public static ChoreoComponent createComponent(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients,
             String accessToken, GraphqlDTO dto,
             ComponentFlavour componentFlavour) throws Exception {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
@@ -312,7 +313,7 @@ public class ComponentUtils {
                 graphqlDTO);
     }
 
-    public static ChoreoComponent createProxyComponent(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+    public static ChoreoComponent createProxyComponent(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients,
                                                   String accessToken, GraphqlDTO dto) throws Exception {
         HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
@@ -570,8 +571,10 @@ public class ComponentUtils {
             BalConfig... balconfigs) throws Exception {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         List<ComponentDeploymentStatusDTO> promotionStatus = null;
+        String displayType = component.getDisplayType();
         for (int i = 0; i < 5; i++) {
-            if (component.getDisplayType().equals(Constant.displayType.ballerinaService.name())) {
+            if (displayType.equals(Constant.displayType.ballerinaService.name())
+                    || displayType.equals(Constant.AppType.MI_API_SERVICE.value)) {
                 Map<String, String> argMap = new HashMap<>();
                 argMap.put("componentId", component.getId());
                 argMap.put("versionId", component.getLatestApiVersion().getId());
@@ -583,7 +586,8 @@ public class ComponentUtils {
             promotionStatus = promote(runner, appServiceClient, accessToken, component, environments, componentFlavour,
                     balconfigs);
 
-            if (component.getDisplayType().equals(Constant.displayType.ballerinaService.name())) {
+            if (displayType.equals(Constant.displayType.ballerinaService.name())
+                    || displayType.equals(Constant.AppType.MI_API_SERVICE.value)) {
                 Endpoint latestEndpoint = preparePromotionEndpointStatusActive(runner, citrusClients, accessToken,
                         component, environments, componentFlavour);
                 if (latestEndpoint.getState().equals("Active")) {

@@ -18,6 +18,7 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.google.gson.JsonArray;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
@@ -243,19 +244,10 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
     @Test(dependsOnMethods = {"promoteEndpointsProd_TestCreateIntegrationRestComponentFromRoot"})
     @CitrusTest
     public void componentPromotionToProd_TestCreateIntegrationRestComponentFromRoot() throws Exception {
-        // Retrieve the latest component.
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         testComponent = GraphQL.getComponentDetails(this, appServiceClient, projectId, componentHandler, accessToken);
-        String latestApiVersionId = testComponent.getLatestApiVersion().getId();
-        String releaseIdForEnvironment = testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT);
-        String latestAppEnvId = testComponent.getLatestAppEnvId(Constant.PROD_ENVIRONMENT);
-
-        GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).apiVersionId(latestApiVersionId).
-                sourceReleaseId(releaseIdForEnvironment).targetEnvironmentId(latestAppEnvId).build();
-        GraphQL.promoteComponent(this, choreoProjectsTestClient, accessToken, dto);
-
-        testComponent.waitForComponentDeploymentSuccess(accessToken, orgHandle, orgUUID, latestApiVersionId,
-                latestAppEnvId);
+        ComponentUtils.promoteComponent(this, citrusClients, accessToken, testComponent, environments, 
+            ComponentFlavour.MI);
     }
 
     @Test(dependsOnMethods = {"componentPromotionToProd_TestCreateIntegrationRestComponentFromRoot"})
