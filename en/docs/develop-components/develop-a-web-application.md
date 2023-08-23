@@ -26,6 +26,57 @@ You can create a Web Application in Choreo as follows:
 
     Once you create the Web Application component, Choreo will automatically generate a build pipeline for your Single Page Application and deploy it.
 
+    Follow the steps below to manage runtime configurations for your React application at manual deployment.
+    
+    - Go to your repository that includes the Web Application source code.
+
+    - Place `<script src="./public/{configuration-file-name}"></script>` tag in your index.html file. The tag should be placed before your application script so that the defined configurations will be available for your users in the browser at runtime.
+
+    ```
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="./public/config.js"></script>
+        <title>Reading List</title>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="module" src="/src/main.tsx"></script>
+    </body>
+    </html>
+    ```
+
+    - Commit changes to your repository and click **Deploy Manually** or **Configure & Deploy**. Deploying the component initiates the window to define a file with environment specific, non-confidential data for your web application which can be read and updated later.
+    - Input configuration file name as defined in the script tag and in the editor, define the variables you need to access from the web application as follows.
+    
+    ```
+    window.configs = {
+        apiUrl: 'https://api.example.com'
+    };
+    ```
+    
+    - Click **Deploy** which will initiate the build pipeline, and upon completion, your application will become accessible in your Development environment through a generated URL. Choreo takes care of automatic TLS/SSL management for your apps.
+
+    - The configurations can be accessed through your application from the window.config object as follows.
+
+    ```
+    import React from 'react';
+
+    function MyComponent() {
+        const apiUrl = window.config.apiUrl;
+        // ...
+    }
+    ```
+
+    !!! note
+        - The ‘index.html’ serves as the main entry point for your SPA in web development. It should contain the necessary metadata such as page titles and meta tags, code and other references to start your SPA.  
+
+        - The window object represents the global window of the browser environment. Variables or properties can be attached to the window object to make them globally accessible within the browser.
+
+        - The web application is reading the environment-specific configurations from the `window` object at runtime. Here, at deployment the specified file is mounted for the development environment. You will need to do the same for other environments as well when you deploy your web application to multiple environments.
+
  2. Bring your Dockerfile.
     - Create a Web Application component by linking your repository that includes the Dockerfile to your containerized web application.
     - Commit a Dockerfile to the connected git repository to have full control over your build process.
@@ -78,6 +129,9 @@ You have successfully created a Web Application component from the source code. 
 
 1. On the Deploy page, click **Deploy Manually**. 
 Deploying the component initiates the build pipeline, and upon completion, your application will become accessible in your Development environment through a generated URL. Choreo takes care of automatic TLS/SSL management for your apps.
+
+2. If Auto deploy on commit option is not enabled, click **Configure & Deploy**. 
+This will open the window to add configurations for your web app. Upon competion of adding configurations, click **Deploy** to initiate the build pipeline.  
 
     !!! note
         The deployment of the Web Application component may require some time. You can monitor the progress by observing the logs. Once the deployment is finished, the deployment status in the corresponding environment card will change to **Active**.

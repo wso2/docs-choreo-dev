@@ -241,9 +241,10 @@ Let's consume the service through the web app. Choreo services are by default se
 Once you create the web application component, you can deploy it to the Choreo runtime. To deploy the web application component, follow the steps below:
 
 1. In the left menu, click **Deploy**.
-2. In the **Build Area** card, click **Build and Deploy**. The deployment may take a few minutes to complete.
-3. Once you deploy the web application, copy the **Web App URL** from the development environment card.
-4. Navigate to the web app URL. You can verify that you have successfully hosted the web application.
+2. In the **Build Area** card, click **Configure & Deploy**. 
+3. Add configurations and deploy. The deployment may take a few minutes to complete. See how to define and read configurations at [Develop a Web Application page](https://wso2.com/choreo/docs/develop-components/develop-a-web-application/#creating-a-web-application).
+4. Once you deploy the web application, copy the **Web App URL** from the development environment card.
+5. Navigate to the web app URL. You can verify that you have successfully hosted the web application.
 
 Although you hosted the web application, you have not configured the web application to securely invoke the service. Let's create an OAuth app in the IdP (Asgardeo) and configure the web app.
 
