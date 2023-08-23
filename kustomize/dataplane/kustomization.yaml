@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - choreodp-system
   - choreo-obs
+  - choreo-ai
 
 commonLabels:
   app: choreo-dataplane
