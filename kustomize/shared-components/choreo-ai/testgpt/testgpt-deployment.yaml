@@ -109,8 +109,7 @@ spec:
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-            podAffinityTerm:
-              labelSelector:
+            - labelSelector:
                 matchExpressions:
                 - key: antiaffinity
                   operator: In
