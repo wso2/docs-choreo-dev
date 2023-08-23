@@ -1,10 +1,9 @@
-package com.wso2.choreo.integration.tests.security.OrganizationManagement.OrgApi;
+package com.wso2.choreo.integration.tests.security.organizationManagement.OrgApi;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.Endpoints;
-import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.SecurityTestContext;
 import com.wso2.choreo.integration.common.utils.SecurityUtils;
 import com.wso2.choreo.integration.config.ConfigDefinition;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class OrgMgtOrgApiElevatedAccessCheck extends TestNGCitrusSpringSupport {
@@ -44,13 +42,13 @@ public class OrgMgtOrgApiElevatedAccessCheck extends TestNGCitrusSpringSupport {
         SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient, requestUrlForGetOrg,
                 accessToken);
     }
-//    Cross org validation is not happening in the below API call. Need to check with the respective team.
-//    @Test
-//    @CitrusTest
-//    public void getOrgsMetaData_OrgMgtOrgApiElevatedAccessCheck() throws Exception {
-//        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-//        String requestUrlForGetOrgsMetaData = "/orgs/1.0.0/orgs-metadata?orghandle=" + orgHandle;
-//        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient, requestUrlForGetOrgsMetaData,
-//                accessToken);
-//    }
+
+    @Test
+    @CitrusTest
+    public void getOrgsMetaData_OrgMgtOrgApiElevatedAccessCheck() throws Exception {
+        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        String requestUrlForGetOrgsMetaData = "/orgs/1.0.0/orgs-metadata?orghandle=" + orgHandle;
+        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient, requestUrlForGetOrgsMetaData,
+                accessToken);
+    }
 }

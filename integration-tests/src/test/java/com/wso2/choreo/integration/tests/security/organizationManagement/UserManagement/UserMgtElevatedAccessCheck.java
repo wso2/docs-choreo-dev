@@ -1,4 +1,4 @@
-package com.wso2.choreo.integration.tests.security.OrganizationManagement.UserManagement;
+package com.wso2.choreo.integration.tests.security.organizationManagement.UserManagement;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
