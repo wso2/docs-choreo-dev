@@ -26,15 +26,13 @@ after(() => {
 });
 
 describe("Verify org switch functionality", () => {
-  const PROJECT_NAME = Utils.generateProjectName();
-  const PROJECT_DESCRIPTION = "Switch org Project";
 
   it("switch org", () => {
     ChoreoHomePage.switchtOrg("choreorbactestuser");
   });
 
-  it("Creating a project in switched org", () => {
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+  it("Search a project in switched org", () => {
+    ProjectListingPage.selectProject("SearchProject");
   });
 
   
