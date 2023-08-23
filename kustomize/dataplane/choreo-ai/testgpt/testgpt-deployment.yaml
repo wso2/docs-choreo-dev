@@ -44,8 +44,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: testgpt-cm
-            - secretRef:
-                name: testgpt-secret
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-testgpt-dp:latest
           resources:
             limits:
@@ -87,7 +85,7 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /home/ballerina/Config.toml
-              subPath: Config.yaml
+              subPath: Config.toml
               readOnly: true
             - mountPath: /mnt/csi/secret-testgpt
               name: testgpt-secret
