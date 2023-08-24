@@ -26,6 +26,13 @@ password_file_path = "/mnt/csi/secret-choreo-org-stat-data-collector/COMPONENTS_
 database = "{{.COMPONENTS_DATABASE}}"
 port = 0
 
+[sheetConfigs]
+refreshToken = "GOOGLE_SHEET_TOKEN_FILE_PATH=/mnt/csi/secret-choreo-org-stat-data-publisher/GOOGLE_SHEETS_TOKEN"
+clientId = "{{.GOOGLE_SHEET_CLIENT_ID}}"
+clientSecret = "/mnt/csi/secret-choreo-org-stat-data-publisher/GOOGLE_SHEETS_CLIENT_SECRET"
+spreadsheetId = "{{.GOOGLE_SHEET_KEY}}"
+sheetName = "ACTIVE_COMPONENTS"
+
 [subscriptionQuery]
 payAGTierId = "01ebea43-be76-1d7a-b410-2d1b873c57af"
 enterpriseTierId = "01ec1f84-ce3d-122e-ac9b-f10c95fd72da"
@@ -55,4 +62,5 @@ componentDataReset = {{.COMPONENT_DATA_RESET}}
 subscriptionDataReset = {{.SUBSCRIPTION_DATA_RESET}}
 activeOrgsDataDownload = {{.ACTIVE_ORGS_DATA_DOWNLOAD}}
 activeOrgsDataDownloadManualRun = {{.ACTIVE_ORGS_DATA_DOWNLOAD_MANUAL_RUN}}
+activeComponentsDataDownload = {{.ACTIVE_COMPONENTS_DATA_DOWNLOAD}}
 
