@@ -25,4 +25,4 @@ spec:
       port: 9090
       targetPort: testgpt-port
   selector:
-    choreo.component: testgpt-api
+    choreo.component: testgpt
