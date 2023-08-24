@@ -27,9 +27,9 @@ database = "{{.COMPONENTS_DATABASE}}"
 port = 0
 
 [sheetConfigs]
-refreshToken = "GOOGLE_SHEET_TOKEN_FILE_PATH=/mnt/csi/secret-choreo-org-stat-data-publisher/GOOGLE_SHEETS_TOKEN"
+refreshToken_file_path = "/mnt/csi/secret-choreo-org-stat-data-collector/GOOGLE_SHEETS_TOKEN"
 clientId = "{{.GOOGLE_SHEET_CLIENT_ID}}"
-clientSecret = "/mnt/csi/secret-choreo-org-stat-data-publisher/GOOGLE_SHEETS_CLIENT_SECRET"
+clientSecret_file_path = "/mnt/csi/secret-choreo-org-stat-data-collector/GOOGLE_SHEETS_CLIENT_SECRET"
 spreadsheetId = "{{.GOOGLE_SHEET_KEY}}"
 sheetName = "ACTIVE_COMPONENTS"
 
