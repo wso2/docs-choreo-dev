@@ -25,7 +25,6 @@ resources:
   - dp-mizzen.yaml
   - cp-graphql.yaml
   - console-next.yaml
-  - marketplace.yaml
   - alert-notification-service.yaml
   - alert-configuration-service.yaml
   - delete-manager.yaml

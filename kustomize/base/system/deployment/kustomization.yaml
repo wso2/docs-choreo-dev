@@ -22,7 +22,6 @@ resources:
   - dp-utility-api.yaml
   - email-service.yaml
   - loggingapi.yaml
-  - marketplace.yaml
   - moesif-service.yaml
   - negotiator.yaml
   - obsapi.yaml
