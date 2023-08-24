@@ -18,6 +18,7 @@ kind: Deployment
 metadata:
   annotations:
     seccomp.security.alpha.kubernetes.io/pod: "docker/default"
+    checkov.io/skip1: "CKV_K8S_AZURE_WSO2_2=Linkerd is disable for dataplane"
   labels:
     choreo.component: testgpt
   name: testgpt
@@ -43,9 +44,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: testgpt-cm
-            - secretRef:
-                name: testgpt-secret
-          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-testgpt-dp:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-ai-api-test-agent:latest
           resources:
             limits:
               cpu: 500m
@@ -86,7 +85,7 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /home/ballerina/Config.toml
-              subPath: Config.yaml
+              subPath: Config.toml
               readOnly: true
             - mountPath: /mnt/csi/secret-testgpt
               name: testgpt-secret
