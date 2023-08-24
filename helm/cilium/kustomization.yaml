@@ -25,6 +25,8 @@ helmCharts:
               memory: 100Mi
           image:
             repository: choreocontrolplane.azurecr.io/cilium/hubble-relay
+            useDigest: false
+            pullPolicy: "Always"
         ui:
           enabled: true
           backend:
@@ -37,6 +39,8 @@ helmCharts:
                 memory: 100Mi
             image:
               repository: choreocontrolplane.azurecr.io/cilium/hubble-ui-backend
+              tag: "v0.10.0"
+              pullPolicy: "Always"
           frontend:
             resources:
               limits:
@@ -47,6 +51,8 @@ helmCharts:
                 memory: 100Mi
             image:
               repository: choreocontrolplane.azurecr.io/cilium/hubble-ui
+              tag: "v0.10.0"
+              pullPolicy: "Always"
           securityContext:
             seccompProfile:
               type: RuntimeDefault
@@ -64,6 +70,7 @@ helmCharts:
             memory: 100Mi
         image:
           repository: choreocontrolplane.azurecr.io/cilium/startup-script
+          pullPolicy: "Always"
       operator:
         securityContext:
           seccompProfile:
@@ -77,6 +84,8 @@ helmCharts:
             memory: 128Mi
         image:
           repository: choreocontrolplane.azurecr.io/cilium/operator
+          useDigest: false
+          pullPolicy: "Always"
       resources:
         limits:
           cpu: 4000m
@@ -89,6 +98,8 @@ helmCharts:
         periodSeconds: 30
       image:
         repository: choreocontrolplane.azurecr.io/cilium/cilium
+        useDigest: false
+        pullPolicy: "Always"
     releaseName: cilium
     namespace: kube-system
     version: 1.13.0
