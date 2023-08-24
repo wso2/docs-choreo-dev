@@ -32,6 +32,7 @@ import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.exceptions.ComponentCreationException;
 import com.wso2.choreo.integration.common.exceptions.DeploymentStatusByVersionFailureException;
 import com.wso2.choreo.integration.common.exceptions.GraphQLException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
@@ -201,11 +202,18 @@ public class GraphQL extends ControlPlaneAPI {
                                      context.setVariable("isComponentCreationSuccess", true);  
                                 responseDTO.set(ObjectMapperUtil.mapStringToObject(CreateComponentResponseDTO.class,
                                    (String) message.getPayload(), "createComponent"));
+                                } else {
+                                        SleepUtil.sleep(5);
                                 }        
                         })
                 )
         );
-        return responseDTO.get() == null ? Optional.empty() :  Optional.of(responseDTO.get());
+        
+        if (responseDTO.get() == null) {
+                throw new ComponentCreationException("Component creation response retrieval failure.");
+        } else {
+                return Optional.of(responseDTO.get());
+        }
     }
 
     public static Optional<CreateByocComponentResponseDTO> createBYOCComponent(TestNGCitrusSpringSupport runner, HttpClient client,
@@ -247,15 +255,21 @@ public class GraphQL extends ControlPlaneAPI {
                                      responseDTO.set(ObjectMapperUtil.mapStringToObject(
                                                 CreateByocComponentResponseDTO.class, (String) message.getPayload(), 
                                                         "createByocComponent"));
+                                } else {
+                                        SleepUtil.sleep(5);
                                 }        
                         })
                 )
         );
 
-        return responseDTO.get() == null ? Optional.empty() :  Optional.of(responseDTO.get());
+        if (responseDTO.get() == null) {
+                throw new ComponentCreationException("BYOC component creation response retrieval failure.");
+        } else {
+                return Optional.of(responseDTO.get());
+        }
     }
 
-    public static List<Commit> getCommitHistory(TestActionRunner runner, HttpClient client, String componentId,
+    public static List<Commit> getCommitHistory(TestNGCitrusSpringSupport runner, HttpClient client, String componentId,
                                             String accessToken) throws Exception {
         GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).build();
         String queryString = ObjectMapperUtil.
@@ -263,27 +277,44 @@ public class GraphQL extends ControlPlaneAPI {
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
         List<Commit> commitList = new ArrayList<>();
-
-        runner.$(http()
-                .client(client)
-                .send()
-                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(requestBody)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .validate((message, context) -> {
-                    Commit[] commits = ObjectMapperUtil.mapToCollection(Commit[].class, message.getPayload(String.class), "commitHistory");
-                    commitList.addAll(List.of(commits));
-                }));
-
+        runner.variable("isCommitHistoryRetrieved", false);
+        runner.$(repeatOnError()
+                .until("(i = 5) or ( ${isCommitHistoryRetrieved} = true )")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .body(requestBody)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .validate((message, context) -> {
+                                        int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                        if (code == HttpStatus.OK.value()) {
+                                                Commit[] commits = ObjectMapperUtil.mapToCollection(
+                                                        Commit[].class, message.getPayload(String.class), 
+                                                        "commitHistory");
+                                                commitList.addAll(List.of(commits));
+                                                if (commits.length > 0) {
+                                                        context.setVariable("isCommitHistoryRetrieved",
+                                                        true); 
+                                                }     
+                                        }
+                                })       
+                        )
+                );
+        
+        if (commitList.size() == 0) {
+               throw new NoLatestCommitHashFoundException(); 
+        }
+        
         return commitList;
     }
 
