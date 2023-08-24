@@ -71,6 +71,9 @@ helmCharts:
     imagePullSecrets:
     - name: choreo-image-pull-secret
     
+    podAnnotations:
+      container.apparmor.security.beta.kubernetes.io/fluent-bit: runtime/default
+
     podSecurityContext:
       seccompProfile:
         type: RuntimeDefault

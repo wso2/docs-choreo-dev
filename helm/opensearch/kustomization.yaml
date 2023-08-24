@@ -89,6 +89,11 @@ helmCharts:
     persistence:
       image: choreocontrolplane.azurecr.io/busybox
       imageTag: 1.36
+
+    podAnnotations:
+      container.apparmor.security.beta.kubernetes.io/opensearch: runtime/default
+      container.apparmor.security.beta.kubernetes.io/fsgroup-volume: runtime/default
+      container.apparmor.security.beta.kubernetes.io/set-vm-max-map-count: runtime/default
     
     podSecurityContext:
       seccompProfile:
