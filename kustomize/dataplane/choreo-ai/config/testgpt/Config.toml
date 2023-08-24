@@ -6,6 +6,7 @@ level = "{{.LOG_LEVEL}}"
 name = "choreo/testgpt"
 level = "{{.LOG_LEVEL_TESTGPT}}"
 
+[choreo.testgpt]
 azureOpenAIServiceUrl =  "{{.OPENAI_SERVICE_URL_TESTGPT}}"
 azureOpenAITextDeploymentId = "{{.OPENAI_TEXT_DEPLOYMENT_ID_TESTGPT}}"
 azureOpenAIChatDeploymentId = "{{.OPENAI_CHAT_DEPLOYMENT_ID_TESTGPT}}"
