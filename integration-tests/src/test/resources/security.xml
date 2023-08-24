@@ -14,7 +14,10 @@
             <class name="com.wso2.choreo.integration.tests.security.devOps.Volume.DevOpsVolumeElevatedAccessCheck"/>
             <class name="com.wso2.choreo.integration.tests.security.devportal.DevportalElevatedAccessCheck"/>
             <class name="com.wso2.choreo.integration.tests.security.deliveryInsights.DeliveryInsightsElevatedAccessCheck"/>
-            <class name="com.wso2.choreo.integration.tests.security.devportal.DevportalElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.componentManagement.ComponentManagementElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.organizationManagement.CustomDomains.OrgMgtCustomDomainsElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.organizationManagement.OrgApi.OrgMgtOrgApiElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.organizationManagement.UserManagement.UserMgtElevatedAccessCheck"/>
         </classes>
     </test>
 </suite>
