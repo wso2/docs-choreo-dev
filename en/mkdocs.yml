@@ -89,6 +89,7 @@ nav:
       - Endpoint: choreo-concepts/endpoint.md
       - Data Planes: choreo-concepts/data-planes.md
       - Environments: choreo-concepts/environments.md
+      - Deployment Tracks: choreo-concepts/deployment-tracks.md
       - Choreo Marketplace: choreo-concepts/choreo-marketplace.md
   - Develop Components:
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
