@@ -6,7 +6,7 @@ In this step, you are adding the configurations needed for the web app to succes
 
 To configure the front-end application, follow the steps given below.
 
-1. While on the web application component page. Click and expand **Dev Ops** in the left menu.
+1. While on the web application component page, click **DevOps** in the left navigation menu.
 2. Select **Configs and Secrets** sub menu.
 3. Select **+Create**.
 4. Select the below mount configuration options and click **Next**.
