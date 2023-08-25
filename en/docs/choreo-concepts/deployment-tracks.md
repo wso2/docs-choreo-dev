@@ -8,7 +8,7 @@ The primary aim of Deployment Tracks is simplification. They establish an organi
 
 Deployment Tracks offer practical solutions to enhance the API consumer experience by addressing two critical challenges:
 
-- **Streamlined Deployment**: Deployment Tracks serve as well-designed routes for your software components, enhancing the organization and reliability of the deployment process, similar to a well-structured express route.
+- **Streamlined deployment**: Deployment Tracks serve as well-designed routes for your software components, enhancing the organization and reliability of the deployment process, similar to a well-structured express route.
 
 - **Efficient API Versioning**: Especially beneficial for managed APIs, Deployment Tracks provide a straightforward method for creating API versions that seamlessly interact with previous iterations. This simplified version management benefits both API creators and consumers alike.
 
