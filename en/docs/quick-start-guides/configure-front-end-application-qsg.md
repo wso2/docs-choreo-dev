@@ -6,24 +6,23 @@ In this step, you are adding the configurations needed for the web app to succes
 
 To configure the front-end application, follow the steps given below:
 
-1. While on the web application component page, click **DevOps** in the left navigation menu.
-2. Select **Configs and Secrets** sub menu.
-3. Click **+ Create**.
-4. Select the mount configuration options as follows and click **Next**:
+1. While on the web application component page, click **DevOps** in the left navigation menu and then click **Configs and Secrets**.
+2. Click **+ Create**.
+3. Select the mount configuration options as follows and click **Next**:
 
     | **Field**             | **Description**                               |
     |-----------------------|-----------------------------------------------|
     | **Config Type**       | **Config Map**                                |
     | **Mount Type**        | **File Mount**                                |
 
-5. Provide the below values for mount configuration
+4. Specify values as follows for the mount configuration:
 
     | **Field**             | **Description**                               |
     |-----------------------|-----------------------------------------------|
     | **Config Name**       | **Web App Config**                            |
     | **Mount Path**        | **/usr/share/nginx/html/config.js**. Every config that needs to be exposed through the web server should be placed inside `/usr/share/nginx/html/`                          |
 
-6. Copy the config details as a JSON file as shown below into the text area. Fill the placeholders with the values you copied from the previous steps as mentioned in the table below.
+5. Copy the config details as a JSON file as shown below into the text area. Fill the placeholders with the values you copied from the previous steps as mentioned in the table below.
 
     ```javascript
     window.config = {
@@ -41,4 +40,4 @@ To configure the front-end application, follow the steps given below:
     | **asgardeoBaseUrl**   | Specify the IdP API URL (For example, Asgardeo API URL) with your organization name. i.e., `https://api.asgardeo.io/t/<ORG_NAME>`.      |
     | **choreoApiUrl**      | The reading list service URL. Copy the Public URL of the **Reading List Service** component from the endpoint table in the overview page for the relevant environment |
 
-7. Click **Create**.
+6. Click **Create**.
