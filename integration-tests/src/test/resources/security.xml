@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="choreoIntegrationTests_security" parallel="classes" thread-count="7">
+<suite name="choreoIntegrationTests_security" parallel="classes" thread-count="2">
     <test name="choreo">
         <classes>
             <class name="com.wso2.choreo.integration.common.SecurityTestContext"/>
@@ -18,6 +18,9 @@
             <class name="com.wso2.choreo.integration.tests.security.organizationManagement.CustomDomains.OrgMgtCustomDomainsElevatedAccessCheck"/>
             <class name="com.wso2.choreo.integration.tests.security.organizationManagement.OrgApi.OrgMgtOrgApiElevatedAccessCheck"/>
             <class name="com.wso2.choreo.integration.tests.security.organizationManagement.UserManagement.UserMgtElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.billing.BillingElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.integrationComponents.IntegrationComponentsElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.configManagement.ConfigManagementElevatedAccessCheck"/>
         </classes>
     </test>
 </suite>
