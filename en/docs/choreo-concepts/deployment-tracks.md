@@ -29,7 +29,7 @@ If you're inclined to use your own Continuous Integration (CI) systems and want 
 ![Deployment Tacks - Source Repo](../assets/img/choreo-concepts/deployment-tracks-container-registry.png){.cInlineImage-half}
 
 
-## Efficient API Versioning
+## Efficient API versioning
 
 **This section applies to only service components**. When working with service components in Choreo, it's important to think about API versions. In Choreo, we follow semantic versioning (SemVer), which is widely used in the software industry.
 
