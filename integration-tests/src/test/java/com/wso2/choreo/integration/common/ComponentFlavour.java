@@ -20,5 +20,6 @@ public enum ComponentFlavour {
     STANDARD,
     MI,
     BYOC,
-    PROXY
+    PROXY,
+    CONTAINERIZED_EVENT_HANDLER
 }

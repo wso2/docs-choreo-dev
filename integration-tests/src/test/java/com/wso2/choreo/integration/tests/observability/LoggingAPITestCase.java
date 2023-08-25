@@ -23,7 +23,6 @@ import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -31,6 +30,8 @@ import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.endpoints.Endpoint;
 import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.testng.Assert;
@@ -46,13 +47,17 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private ChoreoComponent choreoComponent;
     private String orgHandle;
-    private HttpClient appServiceClient;
     private String API_INVOCATION_REQUEST_URI;
     private String REST_API_EXPECTED_RESPONSE;
     private List<Environment> environments;
 
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
+
+    @Autowired
+    private HttpClient choreoProjectsTestClient;
+
+    private ComponentDeploymentStatusDTO deploymentStatusDTO, promotionStatusDTO;
 
     @DataProvider(name = "env-provider")
     public Object[][] environment() {
@@ -63,7 +68,6 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     public void setup_LoggingAPITestCase() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
-        appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         API_INVOCATION_REQUEST_URI = "/books";
         REST_API_EXPECTED_RESPONSE = new String(new ClassPathResource(
                 "templates/ballerinaService/ballerinaServiceResponse.json").getInputStream().readAllBytes());
@@ -89,15 +93,16 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createComponent_LoggingAPITestCase"})
     @CitrusTest
     public void deployComponent_LoggingAPITestCase() throws Exception {
-        ComponentUtils.deployComponent(this, citrusClients, accessToken, choreoComponent,
+        deploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, choreoComponent,
                 environments, ComponentFlavour.STANDARD);
     }
 
     @Test(dependsOnMethods = {"deployComponent_LoggingAPITestCase"})
     @CitrusTest
     public void promoteComponent_LoggingAPITestCase() throws Exception {
-        ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent,
+        List<ComponentDeploymentStatusDTO> promotionStatuses = ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent,
                 environments, ComponentFlavour.STANDARD);
+        promotionStatusDTO = promotionStatuses.get(0);
     }
 
     @Test(dependsOnMethods = {"promoteComponent_LoggingAPITestCase"})
@@ -160,20 +165,16 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"verifyZipLogs_LoggingAPITestCase"})
     @CitrusTest
     public void undeployComponentDev_LoggingAPITestCase() throws Exception {
-        String devReleaseId = GraphQL.componentDeployment(choreoComponent, Constant.DEV_ENVIRONMENT,
-                accessToken).getReleaseId();
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(choreoComponent.getId()).orgHandler(orgHandle)
-                .componentType("ballerinaService").releaseId(devReleaseId).build();
-        GraphQL.stopDeployment(this, appServiceClient, accessToken, graphqlDTO);
+            .componentType("ballerinaService").releaseId(deploymentStatusDTO.getReleaseId()).build();
+        GraphQL.stopDeployment(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 
     @Test(dependsOnMethods = {"undeployComponentDev_LoggingAPITestCase"})
     @CitrusTest
     public void undeployComponentProd_LoggingAPITestCase() throws Exception {
-        String prodReleaseId = GraphQL.componentDeployment(choreoComponent, Constant.PROD_ENVIRONMENT,
-                accessToken).getReleaseId();
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(choreoComponent.getId()).orgHandler(orgHandle)
-                .componentType("ballerinaService").releaseId(prodReleaseId).build();
-        GraphQL.stopDeployment(this, appServiceClient, accessToken, graphqlDTO);
+            .componentType("ballerinaService").releaseId(promotionStatusDTO.getReleaseId()).build();
+        GraphQL.stopDeployment(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 }
