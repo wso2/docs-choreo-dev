@@ -16,36 +16,87 @@ When the request goes through Choreo, the backend JWT is appended as a transport
 
 ## Claims
 
-Claims are pieces of information included in the JWT. The following is a sample claims set:
+Claims are pieces of information included in the JWT. 
+
+The following is a sample claim set added to the end-user token for an access token generated via the authorization code:
+
+!!! tip
+    This access token is generated via Asgardeo using the authorization code grant type. Here, the Asgardeo application is configured to include the email claim in the token. 
 
 ``` java
 {
-  "http://wso2.org/claims/apiname": "DefaultAPId",
+  "sub": "11f53c32-f8ac-4810-bb79-615b2184baf5",
+  "http://wso2.org/claims/apiname": "JWT Test - Endpoint 9090 803",
+  "http://wso2.org/claims/applicationtier": "Unlimited",
   "http://wso2.org/claims/version": "1.0.0",
   "http://wso2.org/claims/keytype": "PRODUCTION",
   "iss": "wso2.org/products/am",
+  "http://wso2.org/claims/applicationname": "jwtTest2",
   "http://wso2.org/claims/enduserTenantId": "0",
-  "exp": 1673245727,
+  "http://wso2.org/claims/applicationUUId": "45101ccb-865f-4f48-b7ac-18e43b07edd3",
+  "client_id": "IMJB5ZiR1dHQYBdiMIRAGis1WToa",
+  "http://wso2.org/claims/subscriber": "5f4a7105-a889-4f92-9612-eef5bafe4eec",
+  "azp": "IMJB5ZiR1dHQYBdiMIRAGis1WToa",
+  "org_id": "b554e001-761c-4d3a-a7a6-a61d73d34221",
+  "http://wso2.org/claims/tier": "Unlimited",
+  "scope": "email openid profile",
+  "exp": 1690537362,
+  "http://wso2.org/claims/applicationid": "45101ccb-865f-4f48-b7ac-18e43b07edd3",
   "http://wso2.org/claims/usertype": "Application_User",
-  "iat": 1673242127,
-  "jti": "6e3f4392-8bd9-4900-9d08-eaab7429c510",
-  "http://wso2.org/claims/apicontext": "/9e71ab5e-6df5-4727-92d2-80ecf1a6218d/qbky/default/1.0.0"
+  "org_name": "test",
+  "iat": 1690533762,
+  "email": "testmail@gmail.com",
+  "jti": "69558555-d386-4a81-9ca0-0a23f809cd3c",
+  "http://wso2.org/claims/apicontext": "/b554e001-761c-4d3a-a7a6-a61d73d34221/swog/jwt-test/endpoint-9090-803/1.0.0"
 }
 ```
 
-The following table describes the information contained in the JWT claims set:
+The following table describes the information contained in the sample JWT claims set given above:
 
 |             **Claim Name**              |          **Description**           |  **Mandatory/Optional**  |
 |-----------------------------------------|------------------------------------|--------------------------|
 | `iat`                                   |  The time the token was issued.    |   Mandatory              |
-| `jti`                                   |  Unique token identifier.          |   Mandatory              |
+| `jti`                                   |  The unique token identifier.      |   Mandatory              |
 | `exp`                                   |  The token expiry time.            |   Mandatory              |
 | `iss`                                   |  The issuer of the token.          |   Mandatory              |
 | `http://wso2.org/claims/apiname`        |  The name of the API in Choreo.    |   Optional               |
 | `http://wso2.org/claims/version`        |  The API version.                  |   Optional               |
 | `http://wso2.org/claims/keytype`        |  The environment in Choreo that the API is in (`Development` or `production`).|   Optional     |
-| `http://wso2.org/claims/apicontext`     |  API context in Choreo.            |   Optional               |
+| `http://wso2.org/claims/apicontext`     |  The API context in Choreo.        |   Optional               |
+| `http://wso2.org/claims/subscriber`     |  The subscriber to the API, usually the app developer. |   Optional |
+| `http://wso2.org/claims/applicationname`|  The application through which the API invocation is done. |   Optional |
+| `http://wso2.org/claims/applicationid`  |  The ID of the application through which the API invocation is done. |   Optional | 
+| `http://wso2.org/claims/enduserTenantId`|  The tenant ID of the end-user.    |   Optional               |
+| `http://wso2.org/claims/applicationUUId`|  The UUID of the application.      |   Optional               | 
+| `client_id`                             |  The client identifier.            |   Optional               |
+| `azp`                                   |  The authorized party (the party to which the ID token was issued). |   Optional |
+| `org_id`                                |  The organization ID.              |   Optional               |
+| `org_name`                              |  The organization name.            |   Optional               |
+| `http://wso2.org/claims/tier`           |  The tier/price band for the subscription. |   Optional       |
+| `scope`                                 |  The scope of the token.           |   Optional               |              
+| `http://wso2.org/claims/usertype`       |  The type of application user whose action invoked the API. |   Optional         |
+| `email`                                 |  The email address of the user.    |   Optional               |
 
+
+!!! note
+
+    The claims that get added to the end-user token can vary depending on the grant type used when generating the access token. For example, if you use the client-credentials grant type to generate the access token, the generated backend JWT would contain the following information:
+
+    ``` java
+    { 
+      "http://wso2.org/claims/apiname": "DefaultAPId", 
+      "http://wso2.org/claims/version": "1.0.0", 
+      "http://wso2.org/claims/keytype": "PRODUCTION", 
+      "iss": "wso2.org/products/am", 
+      "http://wso2.org/claims/enduserTenantId": "0", 
+      "exp": 1673245727, 
+      "http://wso2.org/claims/usertype": "Application_User", 
+      "iat": 1673242127, 
+      "jti": "6e3f4392-8bd9-4900-9d08-eaab7429c510", 
+      "http://wso2.org/claims/apicontext": "/9e71ab5e-6df5-4727-92d2-80ecf1a6218d/qbky/default/1.0.0" 
+    }
+
+    ```
 
 To verify the authenticity of claims in a JWT, the claims must be validated using the public key corresponding to the private key used to sign the JWT.
 
