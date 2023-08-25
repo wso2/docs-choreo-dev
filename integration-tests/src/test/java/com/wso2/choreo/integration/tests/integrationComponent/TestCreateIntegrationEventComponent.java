@@ -17,8 +17,12 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.google.gson.JsonArray;
+import com.wso2.choreo.integration.apis.component.Component;
 import com.wso2.choreo.integration.apis.devops.DevopsPortalApi;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.common.ComponentFlavour;
+import com.wso2.choreo.integration.common.ComponentUtils;
+import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -27,6 +31,9 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -34,6 +41,7 @@ import org.testng.annotations.Test;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,7 +56,6 @@ public class TestCreateIntegrationEventComponent extends TestNGCitrusSpringSuppo
     private String orgId;
     private String orgUUID;
     private String projectId;
-    private String componentId;
     private static String componentHandler;
     private String githubOrg;
 
@@ -57,16 +64,12 @@ public class TestCreateIntegrationEventComponent extends TestNGCitrusSpringSuppo
     private static ChoreoComponent testComponent;
 
     @Autowired
-    private HttpClient choreoTestClient;
+    private Map<Endpoints, HttpClient> citrusClients;
 
     @Autowired
     private HttpClient choreoProjectsTestClient;
 
-    @Autowired
-    private HttpClient choreoTestClientForGithub;
-
-    @Autowired
-    private HttpClient choreoTestClientForSTS;
+    private ComponentDeploymentStatusDTO componentDeploymentStatusDTO;
 
     @BeforeClass
     public void setup_TestCreateIntegrationEventComponent()
@@ -91,11 +94,10 @@ public class TestCreateIntegrationEventComponent extends TestNGCitrusSpringSuppo
         final String repoBranch = "main";
         String srcGitHubURL = Constant.GITHUB_URL.concat(githubOrg).concat("/").concat(repoName);
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().apiName(componentName.toLowerCase()).orgId(Integer.parseInt(orgId)).
-                orgHandler(orgHandle).displayName(componentName).componentType(MI_EVENT_HANDLER).
-                projectId(projectId).srcGitRepoUrl(srcGitHubURL).repositorySubPath("").
-                repositoryBranch(repoBranch).build();
-        componentHandler = GraphQL.createIntegrationComponent(this, choreoProjectsTestClient, accessToken,
-                graphqlDTO);
+            orgHandler(orgHandle).displayName(componentName).componentType(MI_EVENT_HANDLER).
+            projectId(projectId).srcGitRepoUrl(srcGitHubURL).repositorySubPath("").
+            repositoryBranch(repoBranch).build();
+        componentHandler = GraphQL.createIntegrationComponent(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 
     @Test(dependsOnMethods = {"createComponent_TestCreateIntegrationEventComponent"})
@@ -156,61 +158,17 @@ public class TestCreateIntegrationEventComponent extends TestNGCitrusSpringSuppo
     @Test(dependsOnMethods = {"updateEnvVariables_TestCreateIntegrationEventComponent"})
     @CitrusTest
     public void componentDeployment_TestCreateIntegrationEventComponent() throws Exception {
-
-        JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
-        String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
-        componentId = testComponent.getId();
-        ApiVersion apiVersion = testComponent.getLatestApiVersion();
-        String latestVersionId = apiVersion.getId();
-
-        String devEnvIdToDeploy = testComponent.getLatestAppEnvId(Constant.DEV_ENVIRONMENT);
-        String branch = testComponent.getRepository().getBranch();
-
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).latestVersionId(latestVersionId)
-                .devEnvIdToDeploy(devEnvIdToDeploy).branch(branch).sha(latestCommitSha).shaDate("").build();
-
-        // Deploy component
-        GraphQL.deployComponent(this, choreoProjectsTestClient, accessToken, graphqlDTO);
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
+                testComponent);
+        componentDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, testComponent, 
+            environments, ComponentFlavour.MI);
     }
 
     @Test(dependsOnMethods = {"componentDeployment_TestCreateIntegrationEventComponent"})
     @CitrusTest
-    public void deploymentStatusByVersion_TestCreateIntegrationEventComponent() throws Exception {
-
-        String versionId = testComponent.getLatestApiVersion().getId();
-
-        GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).latestVersionId(versionId).build();
-        GraphQL.getDeploymentStatusByVersion(this, choreoProjectsTestClient, accessToken, dto);
-    }
-
-    @Test(dependsOnMethods = {"deploymentStatusByVersion_TestCreateIntegrationEventComponent"})
-    @CitrusTest
-    public void componentDeploymentStatus_TestCreateIntegrationEventComponent() throws Exception {
-
-        String versionId = testComponent.getLatestApiVersion().getId();
-        String devEnvIdToDeploy = testComponent.getLatestAppEnvId(Constant.DEV_ENVIRONMENT);
-
-        GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).orgHandler(orgHandle).orgUuid(orgUUID)
-                .versionId(versionId).environmentId(devEnvIdToDeploy).build();
-
-        JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
-        String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
-
-        Map<String, String> responseParams = new HashMap<>();
-        responseParams.put("environmentId", devEnvIdToDeploy);
-        responseParams.put("sha", latestCommitSha);
-        responseParams.put("versionId", versionId);
-
-        GraphQL.getComponentDeploymentStatus(this, choreoProjectsTestClient, accessToken, dto, responseParams);
-    }
-
-    @Test(dependsOnMethods = {"componentDeploymentStatus_TestCreateIntegrationEventComponent"})
-    @CitrusTest
     public void undeployComponentDev_TestCreateIntegrationEventComponent() throws Exception {
-
-        String devReleaseId = GraphQL.componentDeployment(testComponent, Constant.DEV_ENVIRONMENT, accessToken).getReleaseId();
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(orgHandle)
-                .componentType(MI_EVENT_HANDLER).releaseId(devReleaseId).build();
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(testComponent.getId()).orgHandler(orgHandle)
+                .componentType(MI_EVENT_HANDLER).releaseId(componentDeploymentStatusDTO.getReleaseId()).build();
         GraphQL.stopDeployment(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 }
