@@ -20,7 +20,7 @@ For Streamlined Deployments, Choreo dissect two integral approaches that leverag
 
 A deployment track is linked to a particular branch within a GitHub repository. This connection is useful for handling deployments to various environments. On Choreo's Deploy page, you can easily visualize the deployments to specific environments associated with your selected deployment track. Moreover, the deployment track has a functionality that initiates automatic deployments for the linked branch. When activated, merging a pull request (PR) triggers a deployment to the development environment.
 
-![Deployment Tacks - Source Repo](../assets/img/choreo-concepts/deployment-tracks-source-repo.png){.cInlineImage-half}
+![Deployment tracks - source repo](../assets/img/choreo-concepts/deployment-tracks-source-repo.png){.cInlineImage-half}
 
 ### CD-Only strategy with Deployment Tracks
 
