@@ -12,7 +12,7 @@ Deployment Tracks offer practical solutions to enhance the API consumer experien
 
 - **Efficient API Versioning**: Especially beneficial for managed APIs, Deployment Tracks provide a straightforward method for creating API versions that seamlessly interact with previous iterations. This simplified version management benefits both API creators and consumers alike.
 
-## Streamlined Deployments
+## Streamlined deployments
 
 For Streamlined Deployments, we dissect two integral approaches that leverage Deployment Tracks: the comprehensive CI/CD integration and the focused CD-Only strategy.
 
