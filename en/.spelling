@@ -424,6 +424,7 @@ OpenJDK
 HotSpot
 a.m.
 onwards
+SemVer
 
 
  - docs/references/upgrading-from-the-previous-version.md
