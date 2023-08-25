@@ -14,7 +14,7 @@ Deployment Tracks offer practical solutions to enhance the API consumer experien
 
 ## Streamlined deployments
 
-For Streamlined deployments, Choreo dissect two integral approaches that leverage Deployment tracks: the comprehensive CI/CD integration and the focused CD-Only strategy.
+For streamlined deployments, Choreo dissect two integral approaches that leverage Deployment Tracks: the comprehensive CI/CD integration and the focused CD-Only strategy.
 
 ### CI/CD with Deployment Tracks
 
