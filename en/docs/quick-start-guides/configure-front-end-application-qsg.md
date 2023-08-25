@@ -4,7 +4,7 @@ In this step, you are adding the configurations needed for the web app to succes
 !!! note
         The web application is reading the environment-specific configurations from the `window` object at runtime. This is done via the `config.js` file in the root of the web application. In this section, we are mounting the `config.js` file for the development environment. You will need to do the same for other environments as well when you deploy your web application to multiple environments.
 
-To configure the front-end application, follow the steps given below.
+To configure the front-end application, follow the steps given below:
 
 1. While on the web application component page, click **DevOps** in the left navigation menu.
 2. Select **Configs and Secrets** sub menu.
