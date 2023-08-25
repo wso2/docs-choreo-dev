@@ -1,6 +1,6 @@
 # View Private Data Plane (PDP) Logs 
 
-Choreo offers the capability to access runtime logs through its console. However, in cases where viewing logs for your PDP is not supported by Choreo, you can still view the runtime logs of your components via the log analyzing engines associated with your PDP.
+Choreo offers the capability to access runtime logs through its console. However, in cases where viewing logs for your PDP is not supported by Choreo yet, you can still view the runtime logs of your components via the log analyzing solution provided by your cloud vendor as a workaround.
 
 ## Prerequisites
 
