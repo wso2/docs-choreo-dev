@@ -19,4 +19,10 @@ public class SecurityConfigYaml {
     Map<String, String> componentManagement;
     @JsonProperty("orgManagemnt")
     Map<String, String> orgManagemnt;
+    @JsonProperty("configManagement")
+    Map<String, String> configManagement;
+    @JsonProperty("billing")
+    Map<String, String> billing;
+    @JsonProperty("integrationComponent")
+    Map<String, String> integrationComponent;
 }

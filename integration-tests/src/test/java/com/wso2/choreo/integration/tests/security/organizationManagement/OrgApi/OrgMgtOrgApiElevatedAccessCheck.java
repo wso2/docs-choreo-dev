@@ -48,7 +48,7 @@ public class OrgMgtOrgApiElevatedAccessCheck extends TestNGCitrusSpringSupport {
     public void getOrgsMetaData_OrgMgtOrgApiElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetOrgsMetaData = "/orgs/1.0.0/orgs-metadata?orghandle=" + orgHandle;
-        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient, requestUrlForGetOrgsMetaData,
+        SecurityUtils.successfulCheckForGetRequests(this, choreoCPTestClient, requestUrlForGetOrgsMetaData,
                 accessToken);
     }
 }

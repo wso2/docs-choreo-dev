@@ -1,0 +1,24 @@
+{
+    "variables": {
+        "filter": {
+            "from": "2023-06-23T13:11:06.000+05:30",
+            "to": "2023-06-30T13:11:06.000+05:30"
+        },
+        "latencySummaryFilter": {
+            "granularity": "1d"
+        },
+        "granularity": "1d",
+        "dataFilter": {
+            "orgId": "{{orgUuid}}",
+            "environmentIds": [
+                "{{devEnvironmentId}}",
+                "dev-us-east-azure",
+                "sandbox-dev",
+                "Dev-Internal"
+            ],
+            "tenant": "carbon.super",
+            "projectId": "{{projectId}}"
+        }
+    },
+    "query": "query ($dataFilter: DataFilter!, $filter: TimeFilter!, $latencySummaryFilter: LatencySummaryFilter!, $granularity: String!) {\n  getTotalTraffic(filter: $filter, dataFilter: $dataFilter)\n  getOverallLatency(filter: $filter, dataFilter: $dataFilter)\n  getTotalErrors(filter: $filter, dataFilter: $dataFilter)\n  getLatencySummary(\n    filter: $filter\n    latencySummaryFilter: $latencySummaryFilter\n    dataFilter: $dataFilter\n  ) {\n    summary {\n      timeSpan\n      latencyTime\n      __typename\n    }\n    granularity\n    __typename\n  }\n  getSuccessSummary(\n    filter: $filter\n    dataFilter: $dataFilter\n    granularity: $granularity\n  ) {\n    summary {\n      timeSpan\n      requestCount\n      __typename\n    }\n    granularity\n    __typename\n  }\n  getErrorSummary(\n    filter: $filter\n    dataFilter: $dataFilter\n    granularity: $granularity\n  ) {\n    summary {\n      timeSpan\n      errorCount\n      __typename\n    }\n    granularity\n    __typename\n  }\n}\n"
+}
