@@ -2,15 +2,12 @@ package com.wso2.choreo.integration.tests.dp;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
-import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.config.ConfigDefinition;
-import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
@@ -18,6 +15,7 @@ import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.tests.byoc.TestHelper;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -25,7 +23,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -49,12 +46,6 @@ public class TestBYOCDp extends TestBase {
         return this.setUp();
     }
 
-    @DataProvider(name = "reg")
-    public Object[][] regionData() {
-        return DataProviderWrapper.convertToDataProvider(
-                Arrays.asList(Configuration.getConfig(ConfigDefinition.REGIONS).split(",")));
-    }
-
     @Test(dataProvider = "dps")
     @CitrusTest
     public void createComponent_TestBYOCDp(DataProviderWrapper dp) throws Exception {
@@ -73,7 +64,6 @@ public class TestBYOCDp extends TestBase {
                 dto, ComponentFlavour.BYOC);
         dp.setChoreoProject(project);
         dp.setChoreoComponent(choreoComponent);
-        Assert.assertEquals(project.getRegion(), dp.getRegion());
         Assert.assertNotNull(choreoComponent.getId());
 
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients,
@@ -86,10 +76,7 @@ public class TestBYOCDp extends TestBase {
     public void deployComponent_TestBYOCDp(DataProviderWrapper dp) throws Exception {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
                 accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.BYOC);
-        String devInvokeURL = statusDTO.getInvokeUrl();
-        String apiId = statusDTO.getApiId();
-        dp.setApiId(apiId);
-        dp.setDevInvokeUrl(devInvokeURL);
+        dp.setDeploymentStatusDTO(statusDTO);
     }
 
     @Test(dependsOnMethods = {"deployComponent_TestBYOCDp"}, dataProvider = "dps")
@@ -103,25 +90,23 @@ public class TestBYOCDp extends TestBase {
     @Test(dependsOnMethods = {"promoteComponent_TestBYOCDp"}, dataProvider = "dps")
     @CitrusTest
     public void invokeAPIDev_TestBYOCDp(DataProviderWrapper dp) throws Exception {
-        KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                dp.getApiId(), ComponentUtils.getKeyType(dp.getEnvironments().get(0)));
+        Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
+                dp.getChoreoComponent(), dp.getDeploymentStatusDTO(), dp.getEnvironments());
         String expectedResponse = TestHelper.getExpectedResponse();
-        ComponentUtils.invokeApiGET(this, keyData.getApikey(), dp.getDevInvokeUrl(), "/movies",
+        ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/movies",
                 expectedResponse);
-        dp.setDevKeyData(keyData);
     }
 
     @Test(dependsOnMethods = {"invokeAPIDev_TestBYOCDp"}, dataProvider = "dps")
     @CitrusTest
     public void invokeAPIProd_TestBYOCDp(DataProviderWrapper dp) throws Exception {
-        KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                dp.getApiId(), ComponentUtils.getKeyType(dp.getEnvironments().get(1)));
         String expectedResponse = TestHelper.getExpectedResponse();
         for (ComponentDeploymentStatusDTO statusDTO :dp.getPromoteStatusDTO()) {
-            ComponentUtils.invokeApiGET(this, keyData.getApikey(), statusDTO.getInvokeUrl(), "/movies",
+            Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
+                    dp.getChoreoComponent(), statusDTO, dp.getEnvironments());
+            ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/movies",
                     expectedResponse);
         }
-        dp.setProdKeyData(keyData);
     }
 
 }

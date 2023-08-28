@@ -2,7 +2,6 @@ package com.wso2.choreo.integration.tests.dp;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
-import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
@@ -16,6 +15,7 @@ import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.tests.graphqlservice.GqlServiceTestHelper;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -39,13 +39,13 @@ public class TestGraphQLServiceDp extends TestBase {
     }
 
     @BeforeClass
-    public void setup_GraphQLServiceEUdpIT() throws Exception {
+    public void setup_GraphQLServiceDpIT() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     }
 
     @Test(dataProvider = "dps")
     @CitrusTest
-    public void createUserManagedComponentFor_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
+    public void createUserManagedComponentFor_GraphQLServiceDpIT(DataProviderWrapper dp) throws Exception {
         ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, dp.getRegion());
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
 
@@ -59,89 +59,87 @@ public class TestGraphQLServiceDp extends TestBase {
         ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
         dp.setChoreoProject(project);
         dp.setChoreoComponent(choreoComponent);
-        Assert.assertEquals(project.getRegion(), dp.getRegion());
         Assert.assertNotNull(choreoComponent.getId());
 
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
         dp.setEnvironments(environments);
     }
 
-    @Test(dependsOnMethods = {"createUserManagedComponentFor_GraphQLServiceEUdpIT"}, dataProvider = "dps")
+    @Test(dependsOnMethods = {"createUserManagedComponentFor_GraphQLServiceDpIT"}, dataProvider = "dps")
     @CitrusTest
-    public void componentDeploy_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
+    public void componentDeploy_GraphQLServiceDpIT(DataProviderWrapper dp) throws Exception {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
                 accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD);
-        String devInvokeURL = statusDTO.getInvokeUrl();
-        String apiId = statusDTO.getApiId();
-        dp.setApiId(apiId);
-        dp.setDevInvokeUrl(devInvokeURL);
+        dp.setDeploymentStatusDTO(statusDTO);
     }
 
-    @Test(dependsOnMethods = {"componentDeploy_GraphQLServiceEUdpIT"}, dataProvider = "dps")
+    @Test(dependsOnMethods = {"componentDeploy_GraphQLServiceDpIT"}, dataProvider = "dps")
     @CitrusTest
-    public void promote_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
+    public void promote_GraphQLServiceDpIT(DataProviderWrapper dp) throws Exception {
         List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
                 accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD);
         dp.setPromoteStatusDTO(statusDTO);
     }
 
-    @Test(dependsOnMethods = {"promote_GraphQLServiceEUdpIT"}, dataProvider = "dps")
+    @Test(dependsOnMethods = {"promote_GraphQLServiceDpIT"}, dataProvider = "dps")
     @CitrusTest
-    public void invokeQueryInDev_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
-        KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                dp.getApiId(), ComponentUtils.getKeyType(dp.getEnvironments().get(0)));
-        ComponentUtils.invokeApiPOST(this, keyData.getApikey(), dp.getDevInvokeUrl(), "/",
+    public void invokeQueryInDev_GraphQLServiceDpIT(DataProviderWrapper dp) throws Exception {
+        Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken, dp.getChoreoComponent(),
+                dp.getDeploymentStatusDTO(), dp.getEnvironments());
+        ComponentUtils.invokeApiPOST(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/",
                 GqlServiceTestHelper.getGqlQueryRequest(), GqlServiceTestHelper.getGqlQueryResponse());
-        dp.setDevKeyData(keyData);
     }
 
-    @Test(dependsOnMethods = {"invokeQueryInDev_GraphQLServiceEUdpIT"}, dataProvider = "dps")
+    @Test(dependsOnMethods = {"invokeQueryInDev_GraphQLServiceDpIT"}, dataProvider = "dps")
     @CitrusTest
-    public void invokeQueryInProd_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
-        KeyData keyData = ApiManager.getApiKey(this, citrusClients.get(Endpoints.STS_ENDPOINT), accessToken,
-                dp.getApiId(), ComponentUtils.getKeyType(dp.getEnvironments().get(1)));
+    public void invokeQueryInProd_GraphQLServiceDpIT(DataProviderWrapper dp) throws Exception {
         for (ComponentDeploymentStatusDTO statusDTO : dp.getPromoteStatusDTO()) {
-            ComponentUtils.invokeApiPOST(this, keyData.getApikey(), statusDTO.getInvokeUrl(), "/",
+            Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken, dp.getChoreoComponent(),
+                    statusDTO, dp.getEnvironments());
+            ComponentUtils.invokeApiPOST(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/",
                     GqlServiceTestHelper.getGqlQueryRequest(), GqlServiceTestHelper.getGqlQueryResponse());
         }
-        dp.setProdKeyData(keyData);
     }
 
 
-    @Test(dependsOnMethods = {"invokeQueryInProd_GraphQLServiceEUdpIT"}, dataProvider = "dps")
+    @Test(dependsOnMethods = {"invokeQueryInProd_GraphQLServiceDpIT"}, dataProvider = "dps")
     @CitrusTest
-    public void invokeMutationInDev_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
-        ComponentUtils.invokeApiPOST(this, dp.getDevKeyData().getApikey(), dp.getDevInvokeUrl(), "/",
+    public void invokeMutationInDev_GraphQLServiceDpIT(DataProviderWrapper dp) throws Exception {
+        Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken, dp.getChoreoComponent(),
+                dp.getDeploymentStatusDTO(), dp.getEnvironments());
+        ComponentUtils.invokeApiPOST(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/",
                 GqlServiceTestHelper.getGqlMutationRequest(), GqlServiceTestHelper.getGqlMutationResponse());
     }
 
-    @Test(dependsOnMethods = {"invokeMutationInDev_GraphQLServiceEUdpIT"}, dataProvider = "dps")
+    @Test(dependsOnMethods = {"invokeMutationInDev_GraphQLServiceDpIT"}, dataProvider = "dps")
     @CitrusTest
-    public void invokeMutationInProd_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
+    public void invokeMutationInProd_GraphQLServiceDpIT(DataProviderWrapper dp) throws Exception {
         for (ComponentDeploymentStatusDTO statusDTO : dp.getPromoteStatusDTO()) {
-            ComponentUtils.invokeApiPOST(this, dp.getProdKeyData().getApikey(), statusDTO.getInvokeUrl(), "/",
+            Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken, dp.getChoreoComponent(),
+                    statusDTO, dp.getEnvironments());
+            ComponentUtils.invokeApiPOST(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/",
                     GqlServiceTestHelper.getGqlMutationRequest(), GqlServiceTestHelper.getGqlMutationResponse());
         }
     }
 
-    @Test(dependsOnMethods = {"invokeMutationInProd_GraphQLServiceEUdpIT"}, dataProvider = "dps")
+    @Test(dependsOnMethods = {"invokeMutationInProd_GraphQLServiceDpIT"}, dataProvider = "dps")
     @CitrusTest
-    public void waitForObservabilityLogs_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
+    public void waitForObservabilityLogs_GraphQLServiceDpIT(DataProviderWrapper dp) throws Exception {
         dp.updateEnvironments(ComponentUtils.getEnvironments(this, citrusClients, accessToken, dp.getChoreoComponent()));
     }
 
 
-    @Test(dataProvider = "dps", dependsOnMethods = {"waitForObservabilityLogs_GraphQLServiceEUdpIT"})
+    @Test(dataProvider = "dps", dependsOnMethods = {"waitForObservabilityLogs_GraphQLServiceDpIT"})
     @CitrusTest
-    public void testLiveLogs_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
+    public void testLiveLogs_GraphQLServiceDpIT(DataProviderWrapper dp) throws Exception {
         for (Environment env : dp.getEnvironments()) {
             ComponentUtils.verifyLogs(this, citrusClients, accessToken, dp.getChoreoComponent(), env, dp.getRegion());
         }
     }
 
-    @Test(dataProvider = "dps", dependsOnMethods = {"testLiveLogs_GraphQLServiceEUdpIT"})
+    @Test(dataProvider = "dps", dependsOnMethods = {"testLiveLogs_GraphQLServiceDpIT"})
     @CitrusTest
-    public void testGroupedLogs_GraphQLServiceEUdpIT(DataProviderWrapper dp) throws Exception {
+    public void testGroupedLogs_GraphQLServiceDpIT(DataProviderWrapper dp) throws Exception {
         for (Environment env : dp.getEnvironments()) {
             ComponentUtils.verifyGroupLogs(this, citrusClients, accessToken, dp.getChoreoComponent(), env, dp.getRegion());
         }

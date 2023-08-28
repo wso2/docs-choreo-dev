@@ -1,5 +1,3 @@
-dps:
-  REGIONS: EU,US
 accountInfo:
   TEST_USER_EMAIL: choreo-integration-test-user-stage@wso2.com@carbon.super
   #TEST_USER_PASSWORD:
@@ -16,6 +14,7 @@ authInfo:
   #CP_APP_CLIENT_ID:
   #CP_APP_CLIENT_SECRET:
 common:
+  REGIONS: EU,US
   CHOREO_ENDPOINT: https://app.st.choreo.dev
   CHOREO_NEW_APP_SERVICE_ENDPOINT: https://apis.st.choreo.dev
   CHOREO_CP_GW_ENDPOINT: https://choreocontrolplane.st.choreo.dev/v90f
