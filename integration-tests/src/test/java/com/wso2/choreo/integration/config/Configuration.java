@@ -106,6 +106,16 @@ public class Configuration {
         throw new IllegalStateException("Config '" + config.name() + "' has not been set");
     }
 
+    public static Optional<String> getOptionalConfig(ConfigDefinition config) {
+        String value = testConfigs.get(config.name());
+
+        if (value != null) {
+            return Optional.of(value);
+        }
+
+        return Optional.empty();
+    }
+
     public static String getSecurityConfig(SecurityConfigDefinition config) {
         String value = securityTestConfigs.get(config.name());
 
