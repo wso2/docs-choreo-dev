@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class TestBase extends TestNGCitrusSpringSupport implements ITest {
     private final ThreadLocal<String> testName = new ThreadLocal<>();
@@ -19,10 +20,10 @@ public class TestBase extends TestNGCitrusSpringSupport implements ITest {
     @BeforeClass
     public Object[][] setUp() {
         if (dps.isEmpty()) {
-            String regionValue = Configuration.getConfig(ConfigDefinition.REGIONS);
+            Optional<String> regionValue = Configuration.getOptionalConfig(ConfigDefinition.REGIONS);
 
-            if (!regionValue.isEmpty()) {
-                String[] regions = regionValue.split(",");
+            if (regionValue.isPresent()) {
+                String[] regions = regionValue.get().split(",");
                 for (String region : regions) {
                     DataProviderWrapper dp = DataProviderWrapper.builder().region(region).build();
                     dps.add(dp);
