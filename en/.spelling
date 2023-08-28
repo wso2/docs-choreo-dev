@@ -423,6 +423,10 @@ configs
 OpenJDK
 HotSpot
 a.m.
+Ballerina.toml
+endpoints.yaml
+KPIs
+CloudWatch
 onwards
 SemVer
 
@@ -682,3 +686,42 @@ toEmail
 webhookSecret
  - docs/resources/kubernetes-upgrade-notice.md
 jdk8u372
+ - docs/develop-components/develop-integrations/develop-a-scheduled-integration.md
+OpenWeatherMap
+apiKey
+ - docs/develop-components/develop-integrations/develop-an-event-triggered-integration.md
+IssuesService
+webhookSecret
+recipientAddress
+json
+ - docs/develop-components/develop-services/develop-a-ballerina-graphql-api.md
+service.bal
+choreo
+ - docs/develop-components/develop-services/develop-a-ballerina-rest-api.md
+service_test.bal
+ - docs/develop-components/develop-services/develop-a-grpc-service.md
+proto
+main.go
+greeter_client
+Dockerfile.server
+Dockerfile.client
+greeter.proto
+grpc
+ - docs/develop-components/develop-services/develop-a-rest-api.md
+openapi.yaml
+endpoints.yaml.
+ - docs/monitoring-and-insights/delivery-insights/configure-dora-metrics.md
+cInlineImage-threeQuarter
+cInlineImage-small
+ - docs/monitoring-and-insights/logs/view-pdp-logs.md
+RELEASE_ID
+ - docs/monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md
+listOrganizations
+projectId
+externalEnvId
+internalEnvId
+sandboxEnvId
+EnvironmentType
+CHOREO_PRIVATE
+uuid
+environmentIds
