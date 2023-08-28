@@ -314,7 +314,7 @@ function util.ciliumEnabled(organizationId)
         return forwardToCilium
     end
 
-    red:select(ngx.var.redis_database)
+    red:select(1) -- rudder always uses db 1
 
     local redisResponse, readErr = red:get(ciliumStatusKey)
     if readErr then
