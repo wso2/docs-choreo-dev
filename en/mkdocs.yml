@@ -107,7 +107,7 @@ nav:
       - Develop a Web Application: develop-components/develop-a-web-application.md  
       - Develop a Webhook: develop-components/develop-a-webhook.md   
       - Develop Components With Git: develop-components/develop-components-with-git.md  
-      - Sharing and Reusing Services: develop-components/ballerina-private-package-usage.md
+      - Sharing and Reusing Services: develop-components/sharing-and-reusing-services.md
       - Configure Mutual TLS Between Components: develop-components/configure-mutual-tls-between-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
       - Deploy a Containerized Application: develop-components/deploy-a-containerized-application.md
