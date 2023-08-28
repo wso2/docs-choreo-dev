@@ -18,9 +18,9 @@ To configure the CIO dashboard by enabling the other two metrics, follow the ste
 
 1. Sign in to Choreo using your Google, GitHub, or Microsoft account.
 2. On the left navigation menu, click **Delivery Insights**.
-3. Cick on the **DORA Metrics** tab.
+3. Click on the **DORA Metrics** tab.
 4. Scroll to the bottom of the dashboard and click **Configure**.
-5. Select your incident management system. Currently Choreo only supports Github. 
+5. Select your incident management system. Currently Choreo only supports GitHub. 
 
 ## Configuring GitHub as the incident management system
 
@@ -34,7 +34,7 @@ To configure GitHub as the incident management system, follow the steps below:
 
 First, let's authorize Choreo to access the repositories used to record incidents. 
 
-On the **Add Integration** page,  select **GitHub** and click **Aurthorize with GitHub**.
+On the **Add Integration** page,  select **GitHub** and click **Authorize with GitHub**.
 
 Once the authorization process is complete. You can start configuring the GitHub repository.
 
@@ -46,9 +46,9 @@ By default Choreo will collect incident details(issues) from all repositories co
 
 | **Field**       | **Description**                   |   **Value**   |
 |-----------------|-----------------------------|-----------------------------|
-| **Data Plane**  | Choreo collects incident details by running a scheduled job which invokes the Github API periodically.This job runs on the user's data plane.   This configuration allows users to specify a preferred data plane to run the job, especially when they have multiple dataplanes. | Select preferred data plane from **Data Plane** list.        |
+| **Data Plane**  | Choreo collects incident details by running a scheduled job which invokes the GitHub API periodically. This job runs on the user's data plane.   This configuration allows users to specify a preferred data plane to run the job, especially when they have multiple data planes. | Select preferred data plane from **Data Plane** list.        |
 | **GitHub Account** | The GitHub account you have your repositories in.  | Select your GitHub account that includes the repository used for incident collection.|
-| **GitHub repository**| By default, Choreo will collect incident details(issues) from all repos which already have Choreo components. |
+| **GitHub repository**| By default, Choreo will collect incident details(issues) from all repositories which already have Choreo components. |
     
 
 ### Step 3: Filter label
@@ -79,7 +79,7 @@ Choreo extracts deployment information from the relevant incident and generate D
     ![Copy to clipboard](../../assets/img/monitoring-and-insights/engineering-insights/deployment-copy-to-clipboard.png){.cInlineImage-small}
 
 #### Add deployment information to the GitHub issue
-1. Edit the GitHub issue to add the depoyment information. 
+1. Edit the GitHub issue to add the deployment information. 
 2. Paste the deployment information you copied (in the step 4 under section `Get deployment details`) at the end of the issue body.
 3. Click **Save**.
 

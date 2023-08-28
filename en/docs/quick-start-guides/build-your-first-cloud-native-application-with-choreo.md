@@ -1,6 +1,6 @@
 # Build Your First Cloud Native Application with Choreo
 
-Choreo is a SaaS application development suite that allows you to effortlessly build, deploy, monitor, and manage your cloud-native applications.
+Choreo is an Internal Developer Platform (IDevP) that allows you to build, deploy, monitor, and manage your cloud-native applications effortlessly.
 
 In this quick start guide, you will explore how to expose a service endpoint as a REST API via Choreo and securely consume the API from a web application.
 You will build a simple reading list web application with a sign-in page and functionality to interact with a secure backend REST API. You will use Asgardeo, WSO2's Identity as a Service (IDaaS) solution, to secure user authentication to the web application. The application will allow users to sign in and view the reading list. On signing in, a user can add books to a reading list and delete books from the reading list. The application will also allow users to sign out of the application.
@@ -59,7 +59,7 @@ Follow the steps below to create the service:
 7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-examples](https://github.com/wso2/choreo-examples) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
-         The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
+         The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only needed to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
 
 8. In the **Connect Repository** pane, enter the following information:
@@ -80,14 +80,14 @@ For the REST endpoint of the service to be invokable, you need to deploy it. To 
 
 1. In the left navigation menu, click **Deploy**.
 2. In the **Build Area** card, click **Deploy Manually**.
-3. In the **Configure & Deploy** pane that opens, you can see the **Readinglist** endpoint ready to be deployed. Click the edit icon next to the **Readinglist** endpoint.
-4. Change the **Network Visibility** to **Public**. This allows you to securely expose the endpoint to your web application.
+3. In the **Endpoint** pane that opens, you can see the **Readinglist** endpoint ready to be deployed. Click the edit icon next to the **Readinglist** endpoint.
+4. Change the **Network Visibility** to **Public**. This setting securely exposes the endpoint for consumption.
 5. Click **Update**.
 
     !!! info
-         In this example, you deploy a Ballerina service as a REST endpoint. Therefore, the REST endpoint is generated automatically. If you deploy a non-Ballerina service, you must manually add the REST endpoint and set the network visibility to **Public**.
+         In this example, you deploy a Ballerina service as a REST endpoint. Therefore, Choreo generated the REST endpoint automatically. If you deploy a non-Ballerina service, you must manually add the REST endpoint and set the network visibility to **Public**.
 
-6. Click **Deploy**. This deploys the REST endpoint of the service to the development environment.
+6. Click **Deploy**. This deploys the service to the development environment.
 
 ### Step 1.3: Test the service
 
@@ -95,7 +95,7 @@ To test the **Readinglist** REST endpoint via the integrated OpenAPI Console in 
 
 1. In the left navigation menu, click **Test** and then click **Console**.
 2. In the **OpenAPI Console** pane that opens, select **Development** from the environment drop-down list.
-3. In the **Public Endpoint** list, select **Readinglist**.
+3. In the **Endpoint** list, select **Readinglist**.
 4. Expand the **GET** method and click **Try it out**.
 5. Click **Execute**.
 6. Check the **Server Response** section. You will see a response similar to the following:
@@ -153,7 +153,7 @@ To retest the API, follow the steps given below:
 
 6. Click **Execute**.
 
-    Check the **Server Response** section. On successful invocation, you will receive the `200` HTTP code.
+    Check the **Server Response** section. On successful invocation, you will receive the `201` HTTP code.
 
 Similarly, you can expand and try out the **GET** and **DELETE** methods.
 
@@ -163,7 +163,7 @@ To publish the REST endpoint and make it available for web applications to consu
 
 1. In the left navigation menu, click **Manage** and then click **Lifecycle**.
 2. In the **Lifecycle Management** pane, click **Publish**. This publishes the REST API to the Developer Portal so that external applications can subscribe to the API.
-3. To open the REST API in the Developer Portal via the **Lifecycle Management** pane, click **Go to DevPortal**.
+3. To open the REST API in the Developer Portal via the **Lifecycle Management** pane, click **Go to Devportal**.
 
     The **Reading List Service** REST API opens in the Developer Portal.
 
@@ -182,7 +182,7 @@ An application in the Developer Portal is a logical representation of a physical
 To create an application to consume the **Reading List Service** REST API, follow the steps given below:
 
 1. In the top menu of the Developer Portal, click **Applications**.
-2. Click **+ Create**.
+2. Click **+ Create Application**.
 3. Enter a name for the application (for example, `readingListApp`) and click **Create**. This creates the application and takes you to the application overview page.
 4. On the left navigation menu, click **Production** under **Credentials**.
 5. Click **Generate Credentials**. This generates credentials for the application.
@@ -207,35 +207,48 @@ Let's deploy a front-end application to consume the API. This application is des
 
 {% include "create-web-application-qsg.md" %}
 
-#### Step 2.3.2: Configure Asgardeo (IdP) to integrate with your application
+#### Step 2.3.2: Deploy the web application component
+
+Once you create the web application component, you can deploy it to the Choreo runtime. To deploy the web application component, follow the steps below:
+
+1. In the left menu, click **Deploy**.
+2. In the **Build Area** card, click **Build and Deploy**. The deployment may take a few minutes to complete.
+3. Once you deploy the web application, copy the **Web App URL** from the development environment card.
+4. Navigate to the web app URL. You can verify that you have successfully hosted the web application.
+
+Although you hosted the web application, you have not configured the web application to securely invoke the service. Let's create an OAuth app in the IdP (Asgardeo) and configure the web app.
+
+#### Step 2.3.3: Configure Asgardeo (IdP) to integrate with your application
 
 Choreo uses Asgardeo as the default identity provider for Choreo applications. When you create an application in the Choreo Developer Portal, it automatically creates a corresponding application in Asgardeo. You can go to the Asgardeo application to specify the configurations required for end users to sign in to the front-end application.
 
 1. Access Asgardeo at [https://console.asgardeo.io/](https://console.asgardeo.io/) and sign in with the same credentials with which you signed in to Choreo.
 2. Make sure you are in the same organization that you were when you created the application in the Choreo Developer Portal. You can click the **Organization** list in the Asgardeo Console top menu and ensure you are in the correct organization.
-3. In the Asgardeo Console's left navigation, click **Applications**. You will see the **readingListApp** that is automatically created.
+3. In the Asgardeo Console's left navigation, click **Applications**. You will see the **readingListApp** that Choreo automatically created for you.
 4. Click on the edit icon to edit the application.
 5. Click the **Protocol** tab and apply the following changes:
 
     1. Under **Allowed grant types**, select **Code**.
     2. Select the **Public client** checkbox.
-    3. In the **Authorized redirect URLs** field, enter the web app URL you copied earlier and click the **+** icon to add the entry.
-    4. In the **Allowed origins** field, add the same URLs that you added as authorized redirect URLs.
-    5. Under **Access Token**, select **JWT** as the **Token type**.
-    6. Click **Update**.
+    3. In the **Authorized redirect URLs** field, enter the web app URL you copied before and click the **+** icon to add the entry.
+    4. Add another `http://localhost:5173` following the above steps for authorized redirect URLs. The `http://localhost:5173` entry is to try out the web application locally. You can remove this entry when you deploy the web application to a production environment.
+    5. In the **Allowed origins** field, add the same URLs that you added as authorized redirect URLs.
+    6. Under **Access Token**, select **JWT** as the **Token type**.
+    7. Click **Update**.
 
-#### Step 2.3.3: Configure the front-end application
+#### Step 2.3.4: Configure the front-end application
 
 {% include "configure-front-end-application-qsg.md" %}
 
-#### Step 2.3.4: Deploy the web application component
+#### Step 2.3.5: Deploy the web application component
 
 Once the web application component is created, you can deploy it to the Choreo runtime. To deploy the web application component, follow the steps below:
 
 1. In the left menu, click **Deploy**.
-2. In the **Build Area** card, click **Deploy Manually**. The deployment may take a few minutes to complete.
+2. In the **Development**  environment card, click **Stop**. The deployment may take a few minutes to stop.
+3. Click **Re-deploy**. The deployment may take a few minutes to complete.
 3. Once the web application is deployed, copy the **Web App URL** from the development environment card.
-4. Navigate to the web app URL. You can verify that the web app is successfully hosted.
+4. Navigate to the web app URL. You can now view the login button. This verifies that the web app is successfully configured.
 
 Next, let's create a user to access the web application.
 
