@@ -61,21 +61,20 @@ The following table describes the information contained in the sample JWT claims
 | `iss`                                   |  The issuer of the token.          |   Mandatory              |
 | `http://wso2.org/claims/apiname`        |  The name of the API in Choreo.    |   Optional               |
 | `http://wso2.org/claims/version`        |  The API version.                  |   Optional               |
-| `http://wso2.org/claims/keytype`        |  The environment in Choreo that the API is in (`Development` or `production`).|   Optional     |
+| `http://wso2.org/claims/keytype`        |  The environment in Choreo that the API is in (`Development` or `production`).|   Optional |
 | `http://wso2.org/claims/apicontext`     |  The API context in Choreo.        |   Optional               |
 | `http://wso2.org/claims/subscriber`     |  The subscriber to the API, usually the app developer. |   Optional |
 | `http://wso2.org/claims/applicationname`|  The application through which the API invocation is done. |   Optional |
-| `http://wso2.org/claims/applicationid`  |  The ID of the application through which the API invocation is done. |   Optional | 
-| `http://wso2.org/claims/enduserTenantId`|  The tenant ID of the end-user.    |   Optional               |
+| `http://wso2.org/claims/applicationid`  |  The ID of the application through which the API invocation is done. |   Optional |
 | `http://wso2.org/claims/applicationUUId`|  The UUID of the application.      |   Optional               | 
-| `client_id`                             |  The client identifier.            |   Optional               |
-| `azp`                                   |  The authorized party (the party to which the ID token was issued). |   Optional |
-| `org_id`                                |  The organization ID.              |   Optional               |
-| `org_name`                              |  The organization name.            |   Optional               |
+| `client_id`                             |  The client identifier. This claim is copied from the original token.             |   Optional |
+| `azp`                                   |  The authorized party (the party to which the ID token was issued). This claim is copied from the original token. |   Optional |
+| `org_id`                                |  The organization ID. This claim is copied from the original token. |   Optional |
+| `org_name`                              |  The organization name. This claim is copied from the original token. |   Optional |
 | `http://wso2.org/claims/tier`           |  The tier/price band for the subscription. |   Optional       |
-| `scope`                                 |  The scope of the token.           |   Optional               |              
-| `http://wso2.org/claims/usertype`       |  The type of application user whose action invoked the API. |   Optional         |
-| `email`                                 |  The email address of the user.    |   Optional               |
+| `scope`                                 |  The scope of the token. This claim is copied from the original token. |   Optional |              
+| `http://wso2.org/claims/usertype`       |  The type of application user whose action invoked the API. |   Optional |
+| `email`                                 |  The email address of the user. This claim is copied from the original token. |   Optional |
 
 
 !!! note
@@ -84,7 +83,7 @@ The following table describes the information contained in the sample JWT claims
 
     ``` java
     { 
-      "http://wso2.org/claims/apiname": "DefaultAPId", 
+      "http://wso2.org/claims/apiname": "DefaultAPI", 
       "http://wso2.org/claims/version": "1.0.0", 
       "http://wso2.org/claims/keytype": "PRODUCTION", 
       "iss": "wso2.org/products/am", 
