@@ -12,7 +12,7 @@ This guide walks you through the following steps:
 
 ## Prerequisites
 
-Before you try out this guide, if you do not have a published API/ service that you would want to consume via the developer portal, follow [Develop a REST API ](../develop-components/develop-services/develop-a-rest-api.md) documentation to publish and deploy a sample REST API. 
+Before you try out this guide, if you do not have a published API/ service that you would want to consume via the Developer Portal, follow [Develop a REST API ](../develop-components/develop-services/develop-a-rest-api.md) documentation to publish and deploy a sample REST API. 
 
 ## Discover APIs
 
