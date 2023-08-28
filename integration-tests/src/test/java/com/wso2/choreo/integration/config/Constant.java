@@ -201,4 +201,8 @@ public final class Constant {
     // Insights related constants
     public static final String INSIGHTS_SUFFIX = "/insights/1.0.0/query-api";
     public static final String PROJECTS_GRAPHQL = "/projects/1.0.0/graphql";
+
+    // APIM related constants
+    public static final String PUBLISHER_URL = "/api/am/publisher/v2";
+    public static final String PROXY_DEPLOYER_URL = "/proxy/deployer/v1";
 }

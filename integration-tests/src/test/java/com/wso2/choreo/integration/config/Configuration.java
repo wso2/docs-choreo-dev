@@ -90,6 +90,7 @@ public class Configuration {
             add(securityConfigYaml.configManagement);
             add(securityConfigYaml.billing);
             add(securityConfigYaml.integrationComponent);
+            add(securityConfigYaml.apim);
         }};
 
         validateSecurityYamlConfigs(yamlConfigCollection);
