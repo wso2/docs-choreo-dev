@@ -419,10 +419,15 @@ Moesif
 www.moesif.com
 frontend
 Vite
+Axios
 configs
 OpenJDK
 HotSpot
 a.m.
+Ballerina.toml
+endpoints.yaml
+KPIs
+CloudWatch
 onwards
 SemVer
 
@@ -595,6 +600,7 @@ Moesif.md
 integrate-choreo-with-moesif
 configure-cio-dashboard.md
 control-api-visibility
+consuming-a-sevice
 rename-api-display-name
  - theme/material/templates/home-page.html
 doctype
@@ -676,9 +682,50 @@ html
 choreoApiUrl
  - docs/api-management/api-policies.md
 Ballerina.toml
+ - docs/consuming-services/consuming-a-sevice.md
+choreo-examples
  - docs/develop-components/develop-a-webhook.md
 send-email-on-github-event-webhook
 toEmail
 webhookSecret
  - docs/resources/kubernetes-upgrade-notice.md
 jdk8u372
+ - docs/develop-components/develop-integrations/develop-a-scheduled-integration.md
+OpenWeatherMap
+apiKey
+ - docs/develop-components/develop-integrations/develop-an-event-triggered-integration.md
+IssuesService
+webhookSecret
+recipientAddress
+json
+ - docs/develop-components/develop-services/develop-a-ballerina-graphql-api.md
+service.bal
+choreo
+ - docs/develop-components/develop-services/develop-a-ballerina-rest-api.md
+service_test.bal
+ - docs/develop-components/develop-services/develop-a-grpc-service.md
+proto
+main.go
+greeter_client
+Dockerfile.server
+Dockerfile.client
+greeter.proto
+grpc
+ - docs/develop-components/develop-services/develop-a-rest-api.md
+openapi.yaml
+endpoints.yaml.
+ - docs/monitoring-and-insights/delivery-insights/configure-dora-metrics.md
+cInlineImage-threeQuarter
+cInlineImage-small
+ - docs/monitoring-and-insights/logs/view-pdp-logs.md
+RELEASE_ID
+ - docs/monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md
+listOrganizations
+projectId
+externalEnvId
+internalEnvId
+sandboxEnvId
+EnvironmentType
+CHOREO_PRIVATE
+uuid
+environmentIds
