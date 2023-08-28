@@ -25,4 +25,6 @@ public class SecurityConfigYaml {
     Map<String, String> billing;
     @JsonProperty("integrationComponent")
     Map<String, String> integrationComponent;
+    @JsonProperty("apim")
+    Map<String, String> apim;
 }
