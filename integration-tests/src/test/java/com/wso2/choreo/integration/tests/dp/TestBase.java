@@ -13,15 +13,22 @@ import java.util.List;
 
 public class TestBase extends TestNGCitrusSpringSupport implements ITest {
     private final ThreadLocal<String> testName = new ThreadLocal<>();
-    private  List<DataProviderWrapper> dps = new ArrayList<>();
+    private final List<DataProviderWrapper> dps = new ArrayList<>();
 
 
     @BeforeClass
     public Object[][] setUp() {
-        if (dps.size() == 0) {
-            String[] regions = Configuration.getConfig(ConfigDefinition.REGIONS).split(",");
-            for (String region : regions) {
-                DataProviderWrapper dp = DataProviderWrapper.builder().region(region).build();
+        if (dps.isEmpty()) {
+            String regionValue = Configuration.getConfig(ConfigDefinition.REGIONS);
+
+            if (!regionValue.isEmpty()) {
+                String[] regions = regionValue.split(",");
+                for (String region : regions) {
+                    DataProviderWrapper dp = DataProviderWrapper.builder().region(region).build();
+                    dps.add(dp);
+                }
+            } else {
+                DataProviderWrapper dp = DataProviderWrapper.builder().region("").build();
                 dps.add(dp);
             }
         }
@@ -31,8 +38,8 @@ public class TestBase extends TestNGCitrusSpringSupport implements ITest {
 
     @AfterClass
     public void clean(){
-        if(dps.size()>0){
-           dps=new ArrayList<>();
+        if(!dps.isEmpty()){
+           dps.clear();
         }
     }
 

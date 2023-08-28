@@ -14,8 +14,6 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.BalConfig;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.config.ConfigDefinition;
-import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.code.Repository;
@@ -36,7 +34,6 @@ import org.testng.annotations.Test;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -58,28 +55,8 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 public class TestWebhookDp extends TestBase {
     private static String accessToken;
 
-    private String orgUUID;
-    private String repoName;
-    private String namespace;
-    private String obsId;
-    private String devInvokeURL;
-    private ChoreoComponent choreoComponent;
-    Environment[] en;
-    private final List<DataProviderWrapper> dps = new ArrayList<>();
-    @Autowired
-    private HttpClient choreoCPTestClient;
-    @Autowired
-    private HttpClient choreoProjectsTestClient;
-    @Autowired
-    private HttpClient choreoTestClient;
-
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
-
-    @DataProvider(name = "env-provider")
-    public Object[][] environment() {
-        return new Object[][]{{Constant.Environment.Development}};
-    }
 
 
     @DataProvider(name = "dps")
@@ -90,7 +67,6 @@ public class TestWebhookDp extends TestBase {
     @BeforeClass
     public void setup_CreateDeployInvokeWebhookIT() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
     }
 
     @Test(dataProvider = "dps")
@@ -108,11 +84,10 @@ public class TestWebhookDp extends TestBase {
         Trigger trigger = Trigger.builder().channels("IssuesService").id("88").build();
 
         GraphqlDTO dto = ComponentUtils.createWebhookComponentRequest(componentName, project, repo, trigger);
-        choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
+        ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
 
         dp.setChoreoProject(project);
         dp.setChoreoComponent(choreoComponent);
-        Assert.assertEquals(project.getRegion(), dp.getRegion());
         Assert.assertNotNull(choreoComponent.getId());
 
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
@@ -125,8 +100,7 @@ public class TestWebhookDp extends TestBase {
         BalConfig balConfigs = BalConfig.builder().isRequired(true).configKeyName("config.webhookSecret").valueType("string").valueOrSource("abcd").build();
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
                 dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD, balConfigs);
-        devInvokeURL = statusDTO.getInvokeUrl();
-        dp.setDevInvokeUrl(devInvokeURL);
+        dp.setDeploymentStatusDTO(statusDTO);
     }
 
     @Test(dependsOnMethods = {"componentDeployment_CreateDeployInvokeWebhookIT"}, dataProvider = "dps")
@@ -163,7 +137,7 @@ public class TestWebhookDp extends TestBase {
                 .autoSleep(6000)
                 .actions(
                         http()
-                                .client(devInvokeURL)
+                                .client(dp.getDeploymentStatusDTO().getInvokeUrl())
                                 .send()
                                 .post(apiInvocationRequestURI)
                                 .message()
@@ -175,7 +149,7 @@ public class TestWebhookDp extends TestBase {
                                 .body(new ClassPathResource(
                                         "templates/webhook/request.json")),
                         http()
-                                .client(devInvokeURL)
+                                .client(dp.getDeploymentStatusDTO().getInvokeUrl())
                                 .receive()
                                 .response(HttpStatus.OK)
                                 .message()

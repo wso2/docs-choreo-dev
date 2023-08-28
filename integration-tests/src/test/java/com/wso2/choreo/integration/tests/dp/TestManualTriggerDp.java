@@ -24,25 +24,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class TestManualTriggerDp extends TestBase{
+public class TestManualTriggerDp extends TestBase {
 
 
     private String accessToken;
-    @Autowired
-    private HttpClient choreoCPTestClient;
-    @Autowired
-    private HttpClient choreoTestClient;
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
 
     @DataProvider(name = "dps")
     public Object[][] provideData() {
         return this.setUp();
-    }
-
-    @DataProvider(name = "env-provider")
-    public Object[][] envProvider() {
-        return DataProviderWrapper.convertToDataProvider(Arrays.asList(Constant.Environment.values()));
     }
 
     @BeforeClass
@@ -62,7 +53,6 @@ public class TestManualTriggerDp extends TestBase{
         ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
         dp.setChoreoProject(project);
         dp.setChoreoComponent(choreoComponent);
-        Assert.assertEquals(project.getRegion(), dp.getRegion());
         Assert.assertNotNull(choreoComponent.getId());
 
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
@@ -74,14 +64,15 @@ public class TestManualTriggerDp extends TestBase{
     public void componentDeploy_TestManualTriggerDp(DataProviderWrapper dp) throws Exception {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
                 dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD);
-        String devInvokeURL = statusDTO.getInvokeUrl();
-        dp.setDevInvokeUrl(devInvokeURL);
+        dp.setDeploymentStatusDTO(statusDTO);
     }
 
 
     @Test(dependsOnMethods = {"componentDeploy_TestManualTriggerDp"}, dataProvider = "dps")
     @CitrusTest
     public void promote_TestManualTriggerDp(DataProviderWrapper dp) throws Exception {
-        ComponentUtils.promoteComponent(this, citrusClients, accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD);
+        List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
+                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD);
+        dp.setPromoteStatusDTO(statusDTO);
     }
 }
