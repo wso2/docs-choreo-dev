@@ -1,12 +1,12 @@
 # Access the Choreo Insights API
 
-The **Insights** page in the Choreo Console displays data retrieved from the Insights API exposed over the Internet. However, in some scenarios, you may need to retrieve data from external systems and implement custom dashboards to display the data.
+The **Usage Insights** page in the Choreo Console displays data retrieved from the Insights API exposed over the Internet. However, in some scenarios, you may need to retrieve data from external systems and implement custom dashboards to display the data.
 
 Choreo provides a secure and user-friendly approach to accomplish this requirement. Follow the steps given below:
 
 ## Become a member of the Choreo System organization
 
-1. Access the Developer Portal of the `Choreo System` organization via [https://devportal.choreo.dev/choreosystem](https://devportal.choreo.dev/choreosystem) and sign in using your Google, GitHub, or Microsoft account.
+1. Access the Developer Portal of the `Choreo System` organization via [https://devportal.choreo.dev/choreosystem](https://devportal.choreo.dev/choreosystem) and sign in using your preferred method.
 
 2. In the top menu of the Developer Portal, click **Applications**.
    
@@ -24,26 +24,16 @@ To create an application and generate keys, follow the steps below:
 
 1. To create a new application in the `Choreo System` organization, click **+ Create Application**. 
 
-    ![Create application](../../assets/img/monitoring-and-insights/work-with-choreo-insights-api/create-application.png){.cInlineImage-full}
-
-2. Enter a name for the application and click **Create**. 
-   
-    ![Create an application](../../assets/img/monitoring-and-insights/work-with-choreo-insights-api/create-an-application.png){.cInlineImage-half}
-
-    This creates the application and takes you to the **Overview** page.
+2. Enter a name for the application and click **Create**. This creates the application and takes you to the **Overview** page.
 
 3. To subscribe to the **Insights** API via the newly created application, follow the steps below:
     1.  In the left navigation menu, click **Subscriptions**.
     2.  In the **Subscription Management** pane, click **+ Add APIs**.
-    3.  Search for `insights` and click **Add**.
-
-         ![Subscribe to the insights API](../../assets/img/monitoring-and-insights/work-with-choreo-insights-api/subscribe-to-insights-api.png){.cInlineImage-threeQuarter}
+    3.  Search for `Insights` and click **Add**.
 
 4. To generate credentials for the application, follow the steps given below:
     1. In the left navigation menu, click **Production** under **Credentials**.
     2. Click **Generate Credentials**. Choreo generates tokens and populates the **Consumer Key** and **Consumer Secret** fields in the **Application Keys** pane.
-
-        ![Generate credentials](../../assets/img/monitoring-and-insights/work-with-choreo-insights-api/generate-credentials.png){.cInlineImage-threeQuarter}
 
 5. To specify an appropriate token expiry time for the application, follow the steps given below:
     1. In the **Application Keys** pane, click to expand **Advanced Configurations**.
@@ -65,7 +55,7 @@ To create an application and generate keys, follow the steps below:
     !!! info
         To obtain your organization handle, follow the steps given below:
 
-         1. Go to [https://console.choreo.dev](https://console.choreo.dev) and sign in using your Google, GitHub, or Microsoft account.
+         1. Go to [https://console.choreo.dev](https://console.choreo.dev) and sign in using your preferred method.
          2. In the Choreo Console, click your username in the top right corner.
          3. In the drop-down menu, click **Settings**.
          4. In the **Organization** pane, click **Copy Handle**. 

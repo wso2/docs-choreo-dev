@@ -36,46 +36,38 @@ To attach a policy to the `Request`, `Response`, or `Error` flow of a REST API p
 4. From the list of resources, expand the resource to which you want to attach the policy. 
 5. Click **Attach Policy** in the respective flow for which you want to attach a policy.
 6. In the **Policy List** pane that opens, click on a required policy to view its details.
-7. To attach the policy, click **Add**.
+7. If the attached policy requires parameter configuration, on the policy pane enter the appropriate values and configure the parameters. To make a parameter a configurable variable, input the value in the `${<variableName>}` format. For example, you can use `${name}` as an example.
 
-    ![Add policy](../assets/img/api-management/api-policies/add-policy.png)
+    ![Configure parameters](../assets/img/api-management/api-policies/configure-parameters.png)
+ 
+8. To attach the policy, click **Add**.
 
-8. Click **Save**.
+After attaching an API Policy, it is necessary to deploy the API in order for the policy to become active within its corresponding flow. 
+To deploy the API follow the steps below: 
 
-### Configure a policy to accept environment-specific parameters
+9. In the left navigation menu, click **Deploy** and then click **Configure & Deploy**. Choreo performs the interceptor application generation step and opens the **Configure & Deploy** pane.
 
-Some of the default policies in Choreo require you to specify custom parameters and values. These parameters can be static values or environment-specific values. For example, the `Add Header` policy requires you to specify a header name and value if you want to attach it to a flow of a REST API proxy.  
+10. In the **Configure & Deploy** pane, if you have any configurable variables that require values, specify appropriate values for them.
 
-To see how to add environment-specific values and policy parameters when you attach a policy that requires such input, follow the steps given below:
+     ![Save and deploy values](../assets/img/api-management/api-policies/save-and-deploy.png){.cInlineImage-full}
 
-1. Follow [steps 1 to 5 in the Attach a policy section](#attach-a-policy). 
-2. In the **Policy List** pane that opens, click on a policy that requires you to specify environment-specific parameters.
-3. Enter appropriate values for the parameters. If you want to make a parameter a configurable variable, enter the value in the `${<variableName>}` format. For example, `${name}`.
+11. Click **Save & Deploy**.
 
-       ![Configure parameters](../assets/img/api-management/api-policies/configure-parameters.png)
-
-4. Click **Add** and then click **Save**.
-5. To deploy the component and specify an appropriate value for the configurable, follow the steps given below:
-    1. In the left navigation menu, click **Deploy** and then click **Configure & Deploy**. Choreo performs the interceptor application generation step and opens the **Configure & Deploy** pane.
-    2. In the **Configure & Deploy** pane, specify an appropriate value for the configurable variable.
-
-         ![Save and deploy values](../assets/img/api-management/api-policies/save-and-deploy.png){.cInlineImage-full}
-
-    3. Click **Save & Deploy**.
-
-
-## Implement an API a policy
+## Implement an API policy
 
 Choreo allows you to implement an API policy as a Ballerina project and attach it to an API proxy component. 
+
+!!! info
+    Supported Ballerina version: 2201.5.1 
 
 To implement a policy, follow the steps given below: 
 
 ### Prerequisites
 
-1. Set up [Ballerina 2201.3.1](https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.3.1).
+1. Set up [ Ballerina 2201.5.1](https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.5.1).
 2. Open the `~/.ballerina/settings.toml` file and ensure you have configured an access token to Ballerina Central. If you have not configured an access token, follow the steps given below to configure one: 
     1. Generate a token via [https://central.ballerina.io/dashboard?tab=token](https://central.ballerina.io/dashboard?tab=token).
-    2. Download the generated `settings.toml` file and copy it to your local `~/.ballerina` directory.
+    2. Download the generated `Settings.toml` file and copy it to your local `~/.ballerina` directory.
     
 Alternatively, you can set the access token via the `BALLERINA_CENTRAL_ACCESS_TOKEN` environment variable.
 
@@ -105,6 +97,9 @@ To create a Ballerina project for the mediation policy using `mediation.template
 ![Ballerina project](../assets/img/api-management/api-policies/ballerina-project.png){.cInlineImage-xsmall}
 
 Depending on your requirement, you can modify the `Ballerina.toml` and the `Package.md` files of the generated project. For example, you can update the org, package, package version, API documentation content, keywords, etc.
+
+!!! note
+    Make sure you update the org value to your organization name to successfully publish to Ballerina central.
 
 ![Ballerina toml](../assets/img/api-management/api-policies/ballerina-toml.png){.cInlineImage-half}
 
@@ -180,6 +175,25 @@ In this guide, you are not going to make any changes to the `Fault` flow. Theref
 
 !!! note 
     The  **@mediation:RequestFlow**, **@mediation:ResponseFlow**, and **@mediation:FaultFlow** annotations are bound with the keywords in the `Ballerina.toml`. Therefore, the changes you make to the policy stubs should reflect in the `Ballerina.toml` file. For example, if the policy is applicable only on the request and response paths, you can remove the  **@mediation:FaultFlow** annotation from the policy. Then, you **MUST** also remove the **choreo-apim-mediation-fault-flow** keyword from the generated `Ballerina.toml` file. If you do not do so, the Ballerina compiler will show an error at compile time.
+
+#### Publish as a private custom policy
+ 
+ Choreo supports publishing a policy as a private custom policy. Publishing a policy as a private custom policy makes the policy inaccessible outside of the organization. To publish a policy as a private custom policy, change the visibility to `private` prior to pushing the package to Ballerina central as follows:
+
+ 1. Open the `Ballerina.toml` file of your policy. 
+ 2. Set the visibility to **private** by adding the configuration `visibility="private"`. For example:
+
+     ```
+     [package]
+        org = "orgName"
+        name = "packageName"
+        version = "1.0.2"
+        export = ["packageName"]
+        distribution = "2201.5.1"
+        keywords = ["choreo-apim-mediation-policy","choreo-apim-mediation-request-flow","choreo-apim-mediation-response-flow","choreo-apim-mediation-fault-flow"]
+        visibility = "private"
+     ```
+ 3. Package and publish your policy to Ballerina central.     
 
 #### Best practices 
 

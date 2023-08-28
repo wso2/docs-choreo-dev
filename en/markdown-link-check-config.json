@@ -1,10 +1,11 @@
 {
-    "ignorePatterns": [
-      {
-        "pattern": "^http:\/\/localhost*" 
-      },
-      { 
-        "pattern": "^https:\/\/choreocontrolplane.choreo.dev\/93tu\/insights\/1.0.0\/query-api" 
-      }
-    ]
+     "ignorePatterns":[
+       {
+         "pattern":"^http:\/\/localhost*"
+       },
+       {
+         "pattern":"^https:\/\/choreocontrolplane.choreo.dev\/93tu\/insights\/1.0.0\/query-api"
+       }
+     ],
+     "aliveStatusCodes": [200, 429]
 }

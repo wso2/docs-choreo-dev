@@ -1,6 +1,6 @@
 # Develop a REST API
 
-Choreo is a platform that allows you to create and deploy applications in any language.  In this guide, you will use Choreo to create a service component that exposes a REST API in Go. You are not required to have any prior knowledge of the Go language to follow the guide. 
+Choreo is a platform that allows you to create and deploy applications in any language.  In this guide, you will use Choreo to create a service component that exposes a REST API in Go. You are not required to have any prior knowledge of the Go language to follow the guide. To develop a service component that exposes a REST API in Ballerina, you can follow the [Develop a Ballerina REST API ](develop-a-ballerina-rest-api.md) guide.
 
 A REST API is a web service that follows the REpresentational State Transfer (REST) principles of using HTTP methods to access and manipulate resources. In this guide, you create a containerized service component in Go, deploy it on Choreo, and later use it in a client application.
 
@@ -37,7 +37,7 @@ Let's get started!
 
 Let's create a containerized service component by following these steps:
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the project home page.
 2. Create a project to add the service component. You can follow the instructions under Prerequisites in the Connect Your Own GitHub Repository to Choreo guide.
 3. On the Components page, click Create on the Service card.
 4. Enter a unique name and a description of the service. For this guide, let's enter the following values:

@@ -1,8 +1,8 @@
 # Develop an Event-Triggered Integration
 
-An event-triggered integration executes predefined actions in response to specific events. Choreo iPaaS simplifies the process of creating and deploying such integrations.
+An event-triggered integration executes predefined actions in response to specific events. Choreo simplifies the process of creating and deploying such integrations.
 
-This guide walks you through the steps to create and deploy an event-triggered integration using Ballerina and Choreo iPaaS. 
+This guide walks you through the steps to create and deploy an event-triggered integration using Ballerina and Choreo. 
 
 In this guide, you will build a simple integration that sends an email notification whenever a new issue is created in a GitHub repository.
 
@@ -15,7 +15,7 @@ Before you try out the steps in this guide, complete the following:
 2. Install [Visual Studio Code](https://code.visualstudio.com/) on your local machine and add the [Ballerina extension](https://marketplace.visualstudio.com/items?itemName=WSO2.ballerina) to it.
 3. Familiarize yourself with the [Ballerina programming language](https://ballerina.io/) and basic GitHub commands.
 4. If you are signing in to the Choreo Console for the first time, create an organization as follows:
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
+    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -23,7 +23,7 @@ Before you try out the steps in this guide, complete the following:
 
 ## Step 1: Create an event-triggered integration component
 
-1. Sign in to [Choreo iPaaS](https://console.choreo.dev/ipaas). This opens the **Project Home** page. 
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page. 
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Go to the **Event-Triggered Integration** card and click **Create**.
 4. Enter a unique name and a description for the component. You can use the name and description given below:
@@ -33,7 +33,7 @@ Before you try out the steps in this guide, complete the following:
     | **Name**        | `GitHubToEmail`                       |
     | **Description** | `My first event-triggered integration`|
 
-5. Select **External** as the **Access Mode**, and click **Next**.
+5. Click **Next**.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
 7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
@@ -49,7 +49,8 @@ Before you try out the steps in this guide, complete the following:
     | **GitHub Repository** | The repository you created by following the steps in the prerequisites section |
     | **Branch**            | **`main`**                               |
     | **Build Preset**      | **Ballerina** |
-    | **Project Path**      | Since the path is empty, select **Start with a sample**.  | 
+    | **Access Mode**       | **External**  |
+    | **Project Path**      | Since the project repository is empty, select **Start with a sample**.  | 
 
 	!!! tip
     	    - **Build Preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset. 

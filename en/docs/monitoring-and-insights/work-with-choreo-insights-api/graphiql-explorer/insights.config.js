@@ -20,5 +20,5 @@ window.__RUNTIME_CONFIG__ = {
         }
     },
     INSIGHTS_API_URL: 'https://choreocontrolplane.choreo.dev/93tu/insights/1.0.0/query-api',
-    VALIDATE_USER_ENDPOINT: 'https://app.choreo.dev/validate-user'
+    VALIDATE_USER_ENDPOINT: 'https://apis.choreo.dev/users-mgt/1.0.0/validate/user'
 }

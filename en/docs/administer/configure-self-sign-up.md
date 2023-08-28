@@ -1,34 +1,23 @@
 # Configure Self-Sign-Up
 
-Choreo allows you to configure self-sign-up to enable users to access your Developer Portal via a self-sign-up page. 
+With Choreo, you can set up a self-sign-up page for your Developer Portal. The self-sign-up page allows users to easily access your Developer Portal and subscribe to APIs. When you configure self-sign-up, users can create their accounts and access your Developer Portal without any manual intervention from you.
 
-This page walks you through the steps to configure self-sign-up to the Developer Portal.
+This page walks you through the steps to configure self-sign-up for your Developer Portal.
 
 ## Prerequisites
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/) using your Google, GitHub, or Microsoft account.
 2. If you are a new user, create an organization with a unique organization name. For example, "Stark Industries".
 
-    ![Create an organization](../assets/img/administer/create-choreo-organization.png){.cInlineImage-small}
 
-## Configure self-sign-up
+## Configure Developer Portal self-sign-up
 
-1. Click **Settings** in the left navigation menu of the Choreo Console.
-2. Click **Copy Handle** to copy the organization handle to the clipboard.
-3. Go to the [Asgardeo sign-up page](https://asgardeo.io/signup?utm_source=console) and register using the same email address/user account you used to sign up with Choreo.
+To configure self-sign-up, follow the steps given below:
 
-    !!! tip
-        You must sign up to Asgardeo with the same email address/user account you used to sign in to Choreo because the organization name is reserved for that user account.
-    
-4. In the **Organization Name** field, paste the organization handle that you copied from the **Settings** page in Choreo.
-
-    ![Create new organization](../assets/img/administer/self-sign-up/create-new-organization.png){.cInlineImage-half}
-
-5. Click **Create**. This creates a new organization so that you can proceed to access your workspace. 
-6. Send an email similar to the following to choreo-help@wso2.com requesting to configure enterprise IdP for the Developer Portal of your organization. 
+1. Send an email to <choreo-help@wso2.com> requesting to configure enterprise IdP for the Developer Portal of your organization. 
 
     !!! tip
-        Be sure you mention the organization name or handle in the request.
+        Ensure you include the organization name or handle in the request.
 
 
     !!! note "Sample email"
@@ -37,101 +26,112 @@ This page walks you through the steps to configure self-sign-up to the Developer
         Hi CS team,
 
         I need to configure enterprise IdP for my organization’s Developer Portal to enable self-sign-up. Can you please do the necessary configurations to proceed?
+
         My organization details are as follows: 
-        - Organization name: Stark Industries
-        - Organization handle:  starkindustries
+
+          - Organization name: Stark Industries
+          - Organization handle:  starkindustries
 
         Thank you
 
-    The Choreo support team will perform the necessary configurations and respond to you.
+    The Choreo support team will perform the necessary configurations and respond to your request.
 
-7. On receiving the response, sign in to your Asgardeo account and click **View all applications**.
+2. When you receive a response, sign in to [Asgardeo](https://console.asgardeo.io/) using the same credentials that you used to sign in to Choreo.
+3. In the Asgardeo Console, click **View all applications**.
 
-    ![View all applications](../assets/img/administer/self-sign-up/view-all-applications.png){.cInlineImage-full}
+    ![View all applications](../assets/img/administer/self-sign-up/view-all-applications.png)
 
     You will see an application named **WSO2_LOGIN_FOR_CHOREO_DEV_PORTAL**. 
 
-    ![Applications](../assets/img/administer/self-sign-up/application.png){.cInlineImage-full}
+    ![Applications](../assets/img/administer/self-sign-up/application.png)
 
-8. Click on the application to edit it and enter your organization’s Developer Portal URL as the **Access URL** of the application. For example, `https://devportal.choreo.dev/starkindustries`.
-9. Click **Update**.
-10. To add user attributes, follow these steps:
+4. Click on the application to edit it and enter your organization’s Developer Portal URL as the **Access URL** of the application. For example, `https://devportal.choreo.dev/starkindustries`.
+5. Click **Update**.
+6. To add user attributes, follow these steps:
+
+    !!! info "Note"
+          If you have enabled enterprise login and you want to add the **Groups** attribute during self-sign-up configuration, avoid making it mandatory. This ensures proper access control and prevents unauthorized privileges. If you make the **Groups** attribute mandatory, it allows self-signed-up users to specify a group and assume roles associated with it.
 
     1. Click the **User Attributes** tab.
-    2. Select user attributes as follows:
+    2. To add the email as a mandatory user attribute, select **Email** and click the arrow to expand the section. Then, select the **Requested** and **Mandatory** checkboxes.
 
-        ![User attributes](../assets/img/administer/self-sign-up/user-attributes.png){.cInlineImage-half}
+        ![Email attribute](../assets/img/administer/self-sign-up/email-attribute.png)
 
-        1. To add the email as a mandatory user attribute, expand **Email** and select the **Mandatory** checkbox for it.
-        2. To add the first name and the last name as optional, expand **Profile** and select the **Requested** checkbox for the **First Name** and the **Last Name** fields.
+    3. To add the first name and last name as optional attributes, select **Profile** and click the arrow to expand the section. Then, select the **Requested** checkbox for the **First Name** and the **Last Name** attributes.
 
-    3. Click **Update**.
+        ![Profile attribute](../assets/img/administer/self-sign-up/profile-attribute.png)
 
-11. To add the user attributes as OpenID Connect scopes, follow these steps:
+    4. Click **Update**.
 
-    1. In the top navigation menu, click **Manage** and then click **Scopes** in the left navigation menu.
-    2. Click **OpenID** and then click **+ New Attribute**.
-    3. Select **Email**, **First Name**, and **Last Name** as the attributes to associate with the OpenID scope.
-    4. Click **Save** and then click **Save Changes**.
+7. To add the user attributes as OpenID Connect scopes, follow these steps:
 
-        ![Save attributes as scopes](../assets/img/administer/self-sign-up/save-attributes-as-scopes.png){.cInlineImage-full}
+    1. In the Asgardeo Console left navigation menu, click **Scopes**.
+    2. In the **OpenID Connect Scopes** pane, click **OpenID** to edit it.
+    3. Click **+ New Attribute**.
+    4. Select **Email**, **First Name**, and **Last Name** as the attributes to associate with the OpenID scope.
+    5. Click **Save** and then click **Save Changes**.
 
-12. To configure basic authentication as the sign-in method, follow these steps:
+        ![Save attributes as scopes](../assets/img/administer/self-sign-up/save-attributes-as-scopes.png)
 
-    1. In the top navigation menu, click **Develop** and then click **WSO2_LOGIN_FOR_CHOREO_DEV_PORTAL** to edit the application details.
-    2. Click the **Sign-in Method** tab and then click **Start with default configuration**.
+8. To configure basic authentication as the sign-in method, follow these steps:
 
-        ![Add sign-in method](../assets/img/administer/self-sign-up/add-sign-in-method.png){.cInlineImage-full}
+    1. In the Asgardeo Console left navigation menu, click **Applications**.
+    2. In the **Applications** pane, click the **WSO2_LOGIN_FOR_CHOREO_DEV_PORTAL** application to edit it.
+    3. Click the **Sign-in Method** tab and then click **Start with default configuration**.
 
-    3. Click **Update**.
+        ![Add sign-in method](../assets/img/administer/self-sign-up/add-sign-in-method.png)
 
-13. To configure self-registration, follow these steps:
+    4. Click **Update**.
 
-    1. In the top navigation menu, click **Manage** and then click **Self Registration** in the left navigation menu.
-    2. To enable self-registration, turn on the toggle.
-    3. Select **Account verification**.
-    4. Update the value of the **Account verification link expiry time** depending on your requirement.
-    5. Click **Update**. 
+9.  To configure self-registration, follow these steps:
+
+    1. In the Asgardeo Console left navigation menu, click **Self Registration**.
+    2. In the **Self Registration** pane, click **Configure**.
+    3. To enable self-registration, turn on the toggle.
+    4. Select **Account verification**. This displays a confirmation message to enable account verification. 
+    5. Click **Continue**.
+    6. Specify an appropriate value in the **Account verification link expiry time** field.
+    7. Click **Update**. 
      
-        ![Configure self-registration](../assets/img/administer/self-sign-up/configure-self-registration.png){.cInlineImage-full}
+        ![Configure self-registration](../assets/img/administer/self-sign-up/configure-self-registration.png)
 
-Once you complete these steps, the Choreo support team will perform the final self-sign-up configuration, and you will see a sign-up link similar to the following in your Developer Portal:
+Once you complete these steps, you will see a sign up link similar to the following in your Developer Portal:
 
 ![Sign-up](../assets/img/administer/self-sign-up/sign-up.png){.cInlineImage-half}
  
-Users can click **LOGIN/SIGN UP** and then click **Create an account** to sign up to your Developer Portal without having to send you a request to register them.
+Users can click **LOGIN/SIGN UP** and then click **Create an account** to sign up to access your Developer Portal.
 
-![Create an account](../assets/img/administer/self-sign-up/create-an-account.png){.cInlineImage-small} 
+![Create an account](../assets/img/administer/self-sign-up/create-an-account.png)
 
-## Approve or reject new users
+## Manage new users
 
-To manage the users who try to access your Developer Portal via self-sign-up, you can follow either of the following approaches:
+To manage users who want to access your Developer Portal via self-sign-up, you have two possible approaches:
 
-- **Enable auto-approval**: This involves automating the user approval process.  When you enable auto-approval, you allow each user who signs up to access your Developer Portal by default.
-- **Manually approve/reject**: This allows you to view all the user registrations in a list and approve/reject each registration as required.
+- Enable auto-approval for new user registrations: This approach automates the user approval process.  When you enable auto-approval, each user who creates an account and signs up to your Developer Portal can access it by default.
+- Manually approve or reject user accounts: This allows you to review the list of user registrations and manually approve or reject each registration as needed.
 
 ### Enable auto-approval for new user registrations
 
-To enable auto-approval and automatically approve each new user account registered to your Developer Portal, follow the steps given below:
+To automatically approve each new user account registered on your Developer Portal, follow the steps given below:
 
-1. Click **Settings** in the left navigation menu of the Choreo Console.
+1. In the [Choreo Console](https://console.choreo.dev/), click your username in the top right corner.
+2. In the drop-down menu, click **Settings**. This opens the **Organization** pane, where you can make necessary changes to organization settings.
+3. In the **Organization** pane, click **Self Signups**.
+4. To enable auto-approval, turn on the toggle.
 
-2. Click **Self Signups**. 
-
-3. Toggle the **Auto-approval** switch.
-
-Once you enable auto-approval, the users can sign in to your Developer Portal and view your APIs and applications soon after they create an account.
+Once you enable auto-approval, users can sign in to your Developer Portal and view your APIs and applications immediately after creating an account.
 
 ### Manually approve or reject user accounts
 
-If you have not enabled auto-approval, you can manually approve/reject the new user registrations. Once a user creates an account, Choreo sends an email to ask the user to confirm the account. To manually approve/reject user accounts that were confirmed by users, follow the steps given below:
+If you have not enabled auto-approval, you can manually approve or reject new user registrations. Once a user creates an account, Choreo sends an email to ask the user to confirm the account. To manually approve or reject user accounts, follow the steps given below:
 
-1. Click **Settings** in the left navigation menu of the Choreo Console.
+1. In the [Choreo Console](https://console.choreo.dev/), click your username in the top right corner.
+2. In the drop-down menu, click **Settings**. This opens the **Organization** pane, where you can make necessary changes to organization settings.
+3. In the **Organization** pane, click **Self Signups**. You will see the user accounts listed for approval.
+4. To approve a user account, click **Approve**. To reject an account, click **Reject**.
 
-2. Click **Self Signups**. You will see the user accounts listed for approval.
+    - If you approve an account, the user will receive an email confirming the approval.
+    - If you reject an account, the user will receive an email mentioning that their account is rejected. 
 
-3. If you want to approve a user account, click **Approve** for it. If not, click **Reject**.
-
-    If you approve, the user will receive an email confirming that the user account is approved. 
-
-    If you reject the user account, Choreo sends an email to inform the user that the user account is rejected. Once you reject a user account, that user cannot sign up to your Developer Portal via that account again.
+        !!! info "Note"
+               A rejected user cannot sign up to your Developer Portal using the same account again.

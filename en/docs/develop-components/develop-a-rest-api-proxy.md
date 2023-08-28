@@ -17,7 +17,7 @@ Before you try out this guide, complete the following:
 
 - If you are signing in to the Choreo Console for the first time, create an organization as follows:
 
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
+    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -30,7 +30,7 @@ To create a REST API proxy, you can either upload an OpenAPI specification or pr
  
 Follow the steps given below:
 
-1. Go to [https://console.choreo.dev/apim](https://console.choreo.dev/apim) and sign in. This opens the **Project Home** page.
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Go to the **REST API Proxy** card and click **Create**.
    This opens the **Create API Proxy** pane, where you can upload an OpenAPI definition or provide the URL of an OpenAPI. In this guide, you will define resources manually. Therefore, click **Skip Source** to proceed.
@@ -46,25 +46,23 @@ Follow the steps given below:
 
 5.  Click **Create**.
    
-   This takes you to the **Develop** view, where you can define resources for the API proxy.
+   This takes you to the **Resources** pane, where you can define resources for the API proxy.
 
 ## Step 2: Define resources for the REST API proxy
 
-To define resources for the REST API proxy, follow the steps given below:
+To add a new resource that can retrieve the department ID, follow the steps given below:
 
-1. In the left navigation menu, click **Develop** and then click **Resources**.
-2. To add a new resource that can retrieve the department ID, follow the steps given below:
-    1. Select **GET** as the **HTTP Verb**.
-    2. Enter `/department/{departmentId}` as the **URI Pattern** and click **+** to add the resource.
-    3. Click to expand the added resource and specify appropriate values for the **Operation ID** and **Description** fields. You can specify the values given in the following table:
+1. In the **Resources** pane, select **GET** as the **HTTP Verb**.
+2. Enter `/department/{departmentId}` as the **URI Pattern** and click **+** to add the resource.
+3. Click to expand the added resource and specify appropriate values for the **Operation ID** and **Description** fields. You can specify the values given in the following table:
 
-        | **Field**        | **Value**                            |
-        |------------------|--------------------------------------|
-        | **Operation ID** | `findDepartment`                     |
-        | **Description**  | `Find a department by Department ID` |
+    | **Field**        | **Value**                            |
+    |------------------|--------------------------------------|
+    | **Operation ID** | `findDepartment`                     |
+    | **Description**  | `Find a department by Department ID` |
 
-    4. To remove the five default resources that start with `/*`, click the delete icon corresponding to each resource. This marks the resources for deletion.
-    5. Click **Save**.
+ 4. To remove the five default resources that start with `/*`, click the delete icon corresponding to each resource. This marks the resources for deletion.
+ 5. Click **Save**.
 
 ## Step 3: Deploy the REST API proxy
 
@@ -86,7 +84,7 @@ In this guide, you will use the OpenAPI Console to test the API proxy.
 
 Follow the steps given below:
 
-1. In the left navigation menu, click **Test**.
+1. In the left navigation menu, click **Test** and then click **OpenAPI Console**.
 
     !!! tip
           By default, Choreo ensures the security of API operations. When you go to the **Test** view, Choreo automatically generates a key to test the API. To view the key, click the show key icon in the **Security Header** field.
@@ -121,7 +119,7 @@ To apply a rate limiting level to the API, follow the steps given below:
    
 To publish the REST API proxy to the Choreo Developer Portal, follow the steps given below:
 
-1. In the left navigation menu, click **Manage** and then click **Lifecycle**. 
+1. In the left navigation menu, click **Lifecycle** under **Manage**. 
    This opens the **Lifecycle Management** pane, where you can see the different lifecycle stages that an API can be in. You can see that the current lifecycle stage is **Created**.
 2. In the **Lifecycle Management** pane, click **Publish**. 
    A message appears where you can specify whether you want to publish a connector for this REST API proxy. Creating a connector for this REST API proxy makes it available in the Marketplace. In this guide, you will not publish a connector for the API.

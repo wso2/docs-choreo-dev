@@ -1,12 +1,12 @@
 # Work with the Micro Integrator Runtime in Choreo
 
-WSO2 Micro Integrator (WSO2 MI) is a lightweight, high-performance integration runtime. It allows you to run integrations developed using WSO2 Integration Studio within the Choreo iPaaS platform. 
+WSO2 Micro Integrator (WSO2 MI) is a lightweight, high-performance integration runtime. It allows you to run integrations developed using WSO2 Integration Studio within Choreo. 
 
 The topics on this page walk you through the key aspects you need to understand to use the WSO2 MI runtime effectively in Choreo.
 
 ## Integration types
 
-Choreo iPaaS supports the following WSO2 MI integrations that cater to different use cases and requirements. Each integration type serves a specific purpose. Therefore, it is essential to understand their differences to easily choose the most appropriate integration for your use case.
+Choreo supports the following WSO2 MI integrations that cater to different use cases and requirements. Each integration type serves a specific purpose. Therefore, it is essential to understand their differences to easily choose the most appropriate integration for your use case.
 
 - **Integration as an API**: Exposes an integration as an API via HTTP, making it possible to create a RESTful interface for your integration services. This type is ideal for scenarios where you need to provide an API for external systems or clients to interact with your integration.
 - **Event-triggered integration**: Triggers an integration based on external events such as messages arriving on a queue or updates in a database. This type is well-suited for implementing event-driven architectures or responding to changes in your system's environment.
@@ -34,7 +34,7 @@ An integration project directory structure includes the following key components
 
 Optionally, you can include the following components in your integration project:
 
- - OpenAPI definition file: You can add the OpenAPI definition file to any location within the project. When creating a component, you'll need to define the path to this file.
+ - OpenAPI definition file: You can add the OpenAPI definition file to any location within the project. When creating a component, you'll need to define the path to this file. Choreo will automatically generate an OpenAPI definition for you based on your integration project, if you don't provide one.
  - Java libraries: If your integration project requires additional Java libraries, you can add them to the libs directory located in the project root.
  - deployment.toml file: This optional configuration file allows you to customize the preconfigured settings of WSO2 MI instances running on Choreo. By including this file, you can tailor the behavior of your WSO2 MI instances to better suit your project's specific requirements.
 
@@ -42,7 +42,7 @@ Understanding the Integration Project directory structure is crucial for organiz
 
 ## OpenAPI support
 
-OpenAPI Support plays a crucial role in enhancing the functionality of integrations exposed as APIs. By providing an OpenAPI definition for your exposed integration, you can streamline testing and management processes, ensuring a more efficient and user-friendly experience.
+OpenAPI Support plays a crucial role in enhancing the functionality of integrations exposed as APIs. By providing an OpenAPI definition for your exposed integration, you can streamline testing and management processes, ensuring a more efficient and user-friendly experience. Choreo will automatically generate an OpenAPI definition for you based on your integration project, if you don't provide one, saving you time and effort.
 
 To incorporate OpenAPI support, store the OpenAPI definition file within the repository hosting your Integration Studio project. When creating the project, simply point to the file's location in the repository. If needed, you can change the location of the OpenAPI definition file later via the deploy page.
 
