@@ -572,11 +572,8 @@ public class ComponentUtils {
             BalConfig... balconfigs) throws Exception {
         List<ComponentDeploymentStatusDTO> promotionStatus = null;
         String displayType = component.getDisplayType();
-        for (int i = 0; i < 5; i++) {
-            promotionStatus = promote(runner, citrusClients, accessToken, component, environments, componentFlavour,
-                    balconfigs);
-        }
-
+        promotionStatus = promote(runner, citrusClients, accessToken, component, environments, componentFlavour,
+            balconfigs);
         return promotionStatus;
     }
 
