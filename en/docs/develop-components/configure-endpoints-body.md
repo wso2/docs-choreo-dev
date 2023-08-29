@@ -7,9 +7,9 @@ Choreo defines endpoints by combining port binding, protocol, endpoint name, net
 | ----- | ----------- |
 | Name | A unique identifier for the endpoint within the service component. |
 | Port | The network port on which the endpoint is accessible. |
-| Type | The communication protocol used by the endpoint (e.g., HTTP, HTTPS, gRPC, etc.). |
+| Type | The communication method used by the service component. Possible types: REST, GraphQL, gRPC, UDP, and TCP. |
 | Network Visibility | Determines the level of visibility of an endpoint. Possible values are: <ul><li>Project: Allows components within the same project to access the endpoint.</li><li>Organization: Allows any component within the same organization to access the endpoint but restricts access to components outside the organization.</li><li>Public: Allows any client to access the endpoint, regardless of location or organization.</li></ul> |
-| Schema | specifies the structure and format of the data exchanged through the endpoint. |
+| Schema | Specifies the structure and format of the data exchanged through the endpoint. |
 | Context (HTTP and GraphQL only) | A context path that you add to the endpoint's URL for routing purposes. |
 
 ## Configure endpoints
@@ -59,7 +59,7 @@ The `endpoints.yaml` file has a specific structure and contains the following de
 | **version**          | Required     | The version of the `endpoints.yaml` file.                                           |
 | **name**             | Required     | A unique name for the endpoint, which Choreo will use to generate the managed API.|
 | **port**             | Required     | The numeric port value that gets exposed via this endpoint.                      |
-| **type**             | Required     | The type of traffic this endpoint is accepting, such as `REST`, `GraphQL`, or `gRPC`. Currently, the MI preset supports only the `REST` type.                                         |
+| **type**             | Required     | The type of traffic this endpoint is accepting, such as `REST`, `GraphQL`, `gRPC`, `UDP`or `TCP`. Currently, the MI preset supports only the `REST` type.                                         |
 | **networkVisibility**| Required     | The network level visibility of this endpoint, which defaults to `Project` if not specified. Accepted values are `Project`, `Organization`, or `Public`.|
 | **context**          | Required     | The context (base path) of the API that Choreo exposes via this endpoint.        |
 | **schemaFilePath**   | Required     | The swagger definition file path. Defaults to the wildcard route if not provided. This field should be a relative path to the project path when using the MI build preset. For REST endpoint types when using the Ballerina or Dockerfile preset, this field should be a relative path to the component root or Docker context .|
@@ -92,7 +92,7 @@ endpoints:
   # +required Numeric port value that gets exposed via this endpoint
   port: 9090
   # +required Type of the traffic this endpoint is accepting. Example: REST, GraphQL, etc.
-  # Allowed values: REST, GraphQL, GRPC
+  # Allowed values: REST, GraphQL, GRPC, UDP, TCP
   type: REST
   # +optional Network level visibility of this endpoint. Defaults to Project
   # Accepted values: Project|Organization|Public.
