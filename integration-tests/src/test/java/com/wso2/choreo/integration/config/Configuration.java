@@ -106,7 +106,7 @@ public class Configuration {
         throw new IllegalStateException("Config '" + config.name() + "' has not been set");
     }
 
-    public static Optional<String> getOptionalConfig(ConfigDefinition config) {
+    public static Optional<String> getOptionalConfig(OptionalConfigDefinition config) {
         String value = testConfigs.get(config.name());
 
         if (value != null) {
@@ -134,6 +134,15 @@ public class Configuration {
                     if (configEnum.name().equals(key)) {
                         isConfigInEnum = true;
                         break;
+                    }
+                }
+
+                if (!isConfigInEnum) {
+                    for (OptionalConfigDefinition configEnum : OptionalConfigDefinition.values()) {
+                        if (configEnum.name().equals(key)) {
+                            isConfigInEnum = true;
+                            break;
+                        }
                     }
                 }
 

@@ -3,6 +3,7 @@ package com.wso2.choreo.integration.tests.dp;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
+import com.wso2.choreo.integration.config.OptionalConfigDefinition;
 import org.testng.ITest;
 import org.testng.annotations.*;
 
@@ -20,7 +21,7 @@ public class TestBase extends TestNGCitrusSpringSupport implements ITest {
     @BeforeClass
     public Object[][] setUp() {
         if (dps.isEmpty()) {
-            Optional<String> regionValue = Configuration.getOptionalConfig(ConfigDefinition.REGIONS);
+            Optional<String> regionValue = Configuration.getOptionalConfig(OptionalConfigDefinition.REGIONS);
 
             if (regionValue.isPresent()) {
                 String[] regions = regionValue.get().split(",");
