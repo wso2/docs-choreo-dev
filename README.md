@@ -145,7 +145,7 @@ To clone the Choreo documentation GitHub repository and run the site on your loc
 This script will check spellings and incorrect links. 
 
 Incorrect spellings will be highlighted in red. You can take one of the following resolution paths:
-- You can choose the correct suggested spelling. 
+- Choose the suggested correct spelling. 
 - "Ignore" will ignore that word and not ask about it again in the current run. If you re-run the command again though, it will appear.
 - "Add to file ignores" will ignore the word in this file only.
 - "Add to dictionary - case insensitive" will add to the dictionary for all files and match any case. E.g. with the word Microsoft both Microsoft and microsoft would match.
