@@ -144,7 +144,7 @@ To clone the Choreo documentation GitHub repository and run the site on your loc
     ```
 This script will check spellings and incorrect links. 
 
-Incorrect Spellings will be highlighted in red. You can take one of the resolution paths:
+Incorrect spellings will be highlighted in red. You can take one of the following resolution paths:
 - You can choose the correct suggested spelling. 
 - "Ignore" will ignore that word and not ask about it again in the current run. If you re-run the command again though, it will appear.
 - "Add to file ignores" will ignore the word in this file only.
