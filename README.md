@@ -148,7 +148,7 @@ Incorrect spellings will be highlighted in red. You can take one of the followin
 - Choose the suggested correct spelling. 
 - Proceed with "Ignore" to skip the word and not be prompted about it again during the current run. However, it will reappear if you rerun the command.
 - Proceed with "Add to file ignores" to ignore the word in the current file.
-- "Add to dictionary - case insensitive" will add to the dictionary for all files and match any case. E.g. with the word Microsoft both Microsoft and microsoft would match.
+- Proceed with "Add to dictionary - case insensitive" to add the word to the dictionary for all files, allowing it to match regardless of case. For example, with the word "Microsoft," both "Microsoft" and "Microsoft" would be considered correct.
 - Proceed with "Add to dictionary - case sensitive" to add the word to the dictionary for all files, but only match the exact case used. For instance, with the word "Microsoft," the word "microsoft" would not be considered correct.
 
 All exclusions will be stored in a .spelling file in the directory from which you run the command.
