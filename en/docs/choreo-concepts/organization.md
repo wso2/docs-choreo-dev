@@ -22,4 +22,20 @@ Choreo roles are defined as follows:
 - Environment manager: Manages deployment environments.
 - External API subscriber: External API subscribers are API consumers who have access only to the API Developer Portal. They can join an organization with the sole purpose of consuming APIs.
 
+## Organization ID
 
+The Organization ID serves as a unique identifier for each organization. To get the organization ID, follow the steps below:
+
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
+2. Click on the **Organization** list on the header and select your organization.
+3. In the left navigation, click **Settings**.
+4. Under **Organization** click **Copy ID**.
+
+## Organization Handle
+
+The organization handle is a unique string that directly corresponds to your organization's name. To get the organization handle, follow the steps below:
+
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
+2. Click on the **Organization** list on the header and select your organization.
+3. In the left navigation, click **Settings**.
+4. Under **Organization** click **Copy Handle**.
