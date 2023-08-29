@@ -8,7 +8,7 @@ Choreo provides a method to send user information to a backend service through a
 
 The backend JWT contains claims transferred between the parties, such as the user and the backend. A claim can be metadata of the request or data about the user. A set of claims is called a dialect, for example, `http://wso2.org/claims`.
 
-For each API request, a digitally signed JWT is carried to the backend service in the following format to ensure that the authenticity of the claims is verified:
+For each API request, a digitally signed JWT is carried to the backend service in the following format to ensure that the authenticity of the claims list is verified:
 
 `{token header}.{claims list}.{signature}`
 
@@ -16,7 +16,7 @@ When the request goes through Choreo, the backend JWT is appended as a transport
 
 ## Claims
 
-Claims are pieces of information included in the JWT. 
+Claims are fragments of information included in the JWT. 
 
 The following is a sample claim set added to the end-user token for an access token generated via the authorization code:
 
@@ -67,14 +67,14 @@ The following table describes the information contained in the sample JWT claims
 | `http://wso2.org/claims/applicationname`|  The application through which the API invocation is done. |   Optional |
 | `http://wso2.org/claims/applicationid`  |  The ID of the application through which the API invocation is done. |   Optional |
 | `http://wso2.org/claims/applicationUUId`|  The UUID of the application.      |   Optional               | 
-| `client_id`                             |  The client identifier. This claim is copied from the original token.             |   Optional |
-| `azp`                                   |  The authorized party (the party to which the ID token was issued). This claim is copied from the original token. |   Optional |
-| `org_id`                                |  The organization ID. This claim is copied from the original token. |   Optional |
-| `org_name`                              |  The organization name. This claim is copied from the original token. |   Optional |
+| `client_id`                             |  The client identifier. This is copied from the original token.             |   Optional |
+| `azp`                                   |  The authorized party (the party to which the ID token was issued). This is copied from the original token. |   Optional |
+| `org_id`                                |  The organization ID. This is copied from the original token. |   Optional |
+| `org_name`                              |  The organization name. This is copied from the original token. |   Optional |
 | `http://wso2.org/claims/tier`           |  The tier/price band for the subscription. |   Optional       |
-| `scope`                                 |  The scope of the token. This claim is copied from the original token. |   Optional |              
+| `scope`                                 |  The scope of the token. This is copied from the original token. |   Optional |              
 | `http://wso2.org/claims/usertype`       |  The type of application user whose action invoked the API. |   Optional |
-| `email`                                 |  The email address of the user. This claim is copied from the original token. |   Optional |
+| `email`                                 |  The email address of the user. This is copied from the original token. |   Optional |
 
 
 !!! note
