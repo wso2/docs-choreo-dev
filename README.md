@@ -146,7 +146,7 @@ This script will check spellings and incorrect links.
 
 Incorrect spellings will be highlighted in red. You can take one of the following resolution paths:
 - Choose the suggested correct spelling. 
-- "Ignore" will ignore that word and not ask about it again in the current run. If you re-run the command again though, it will appear.
+- Proceed with "Ignore" to skip the word and not be prompted about it again during the current run. However, it will reappear if you rerun the command.
 - Proceed with "Add to file ignores" to ignore the word in the current file.
 - "Add to dictionary - case insensitive" will add to the dictionary for all files and match any case. E.g. with the word Microsoft both Microsoft and microsoft would match.
 - "Add to dictionary - case sensitive" will add to the dictionary for all files and match the case that has been used. E.g. with the word Microsoft, the word microsoft will not match.
