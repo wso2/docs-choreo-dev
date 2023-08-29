@@ -430,6 +430,7 @@ KPIs
 CloudWatch
 onwards
 SemVer
+README.md
 
 
  - docs/references/upgrading-from-the-previous-version.md
