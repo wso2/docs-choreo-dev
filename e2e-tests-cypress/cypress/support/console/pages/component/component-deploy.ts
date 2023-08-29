@@ -449,7 +449,6 @@ export class ComponentDeployPage {
       .should("be.enabled")
       .click();
     if (configSetupStepAvailable) {
-      cy.wait(20000);
       cy.get('[data-cyid="btn-next-button"]').contains("Next").click();
     }
     if (configEnvVars) {
