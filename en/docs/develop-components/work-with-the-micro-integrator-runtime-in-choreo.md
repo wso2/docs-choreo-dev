@@ -240,15 +240,15 @@ For more information, see the following topics in the WSO2 API Manager documenta
 - [Connectors Overview](https://apim.docs.wso2.com/en/latest/reference/connectors/connectors-overview/)
 - [Adding Connectors](https://apim.docs.wso2.com/en/latest/integrate/develop/creating-artifacts/adding-connectors/)
 
-## Explore Choreo Examples on GitHub
+## Explore Choreo examples on GitHub
 
 For a hands-on experience with MI-based integrations in Choreo, we recommend exploring our GitHub repository filled with practical code examples.
 
-### [Choreo Examples GitHub Repository](https://github.com/wso2/choreo-examples)
+### [Choreo examples - GitHub Repository](https://github.com/wso2/choreo-examples)
 
-- **Fork & Clone**: Start by forking the repository to your account. Once forked, clone your fork to your local machine.
+- **Fork & clone**: Start by forking the repository to your account. Once forked, clone your fork to your local machine.
    ```
    git clone https://github.com/wso2/choreo-examples.git
    ```
-- **Explore & Run**: Navigate through different integration scenarios in `integrations/micro-integrator` subdirectory. Each example has a README.md with setup and execution instructions.
+- **Explore & run**: Navigate through the different integration scenarios under the `integrations/micro-integrator` subdirectory. Each example has a README.md with setup and execution instructions.
 
