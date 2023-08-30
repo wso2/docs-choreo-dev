@@ -432,6 +432,14 @@ export class ComponentDeployPage {
     cy.get('[data-testid="btn-next"]').click();
   }
 
+  private static configByocComponentPromote() {
+    cy.get(
+      '[data-cyid="promote-selector-default-configs"]'
+    ).click();
+    cy.get('[data-cyid="btn-next-button"]').click();
+    this.configByocComponent();
+  }
+
   static deployService(
     projectName: string,
     componentName: string,
@@ -609,7 +617,7 @@ export class ComponentDeployPage {
     }
 
     if (configEnvVars) {
-      this.configByocComponent();
+      this.configByocComponentPromote();
     }
 
     cy.get(
