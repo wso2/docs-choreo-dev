@@ -1,5 +1,3 @@
-## Reflector configuration
-
 ### Description
 Create TLS secrets used by internal Ingresses in control plane cluster
 
