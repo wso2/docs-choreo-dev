@@ -65,26 +65,26 @@ A **bin** is a horizontal section of the graph for a particular period. A bin co
 
 ## Logs
 
-The Choreo log panel offers a centralized view to access comprehensive runtime logs of the components you have deployed on Choreo, enhancing troubleshooting and analysis.
+The Choreo log pane offers a centralized view to access comprehensive runtime logs of the components you have deployed on Choreo, enhancing troubleshooting and analysis.
 
 ## Application logs
 
-![Logs panel](../assets/img/monitoring-and-insights/observability/view-application-logs.png){.cInlineImage-full}
+![Logs pane](../assets/img/monitoring-and-insights/observability/view-application-logs.png){.cInlineImage-full}
 
-The Service components generates application logs. On the **Observability Overview** page you can click the **View Logs** icon on the header bar to view the application logs for the component as shown in the image above.
+The Service components generate application logs. On the **Observability Overview** page you can click the **View Logs** icon on the header bar to view the application logs for the component as shown in the image above.
 
 !!! note
     For REST API Proxy components, application logs will only be available if the `Log Message` policy is attached to the respective flows. 
 
 ## Gateway logs
 
-![Logs panel](../assets/img/monitoring-and-insights/observability/logs-panel.png){.cInlineImage-full}
+![Logs pane](../assets/img/monitoring-and-insights/observability/logs-panel.png){.cInlineImage-full}
 
-The **Logs** panel includes all gateway access logs that the proxy service generates. Logs are currently **only available for REST API Proxy components**.  To view the access logs, icon on the header bar. This will be available for other components soon. 
+The **Logs** pane includes all gateway access logs that the proxy service generates. Logs are currently **only available for REST API Proxy components**.  To view the access logs, click the **Access Logs** icon on the header bar. This will be available for other components soon. 
 
-You can filter the logs based on time or based on text.
+You can filter the logs based on time or text.
 
-To download the log entries, click the **Access Logs** icon on the header bar. As a result, the log entries are saved as a .zip file in the location you specify.
+To download the log entries, click the **Download** icon on the header bar. As a result, the log entries are saved as a .zip file in the location you specify.
 
 ### Trace requests
 
