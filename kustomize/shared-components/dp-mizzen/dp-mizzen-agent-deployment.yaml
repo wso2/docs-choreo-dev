@@ -37,6 +37,7 @@ spec:
       labels:
         choreo.component: dp-mizzen-agent
         antiaffinity: dp-mizzen-agent
+        userapp-ingress-allowed: "true"
     spec:
       automountServiceAccountToken: true
       securityContext:

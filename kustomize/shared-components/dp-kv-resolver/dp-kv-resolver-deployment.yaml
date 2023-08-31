@@ -34,6 +34,7 @@ spec:
       labels:
         choreo.component: dp-kv-resolver
         antiaffinity: dp-kv-resolver
+        userapp-ingress-allowed: "true"
     spec:
       automountServiceAccountToken: true
       securityContext:
