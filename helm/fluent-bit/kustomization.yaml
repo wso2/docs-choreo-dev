@@ -9,6 +9,22 @@ helmCharts:
     ## values
     
     config:
+      inputs: |
+        [INPUT]
+            Name tail
+            Path /var/log/containers/*.log
+            multiline.parser docker, cri
+            Tag kube.*
+            Mem_Buf_Limit 256MB
+            Skip_Long_Lines On
+
+        [INPUT]
+            Name systemd
+            Mem_Buf_Limit 50MB
+            Tag host.*
+            Systemd_Filter _SYSTEMD_UNIT=kubelet.service
+            Read_From_Tail On
+      
       filters: |
         [FILTER]
             Name kubernetes
@@ -84,10 +100,10 @@ helmCharts:
     resources:
       limits:
         cpu: 200m
-        memory: 256Mi
+        memory: 512Mi
       requests:
         cpu: 200m
-        memory: 256Mi
+        memory: 512Mi
     
     securityContext:
       allowPrivilegeEscalation: false
