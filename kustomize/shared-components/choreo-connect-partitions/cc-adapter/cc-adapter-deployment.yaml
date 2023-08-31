@@ -31,6 +31,9 @@ spec:
       maxUnavailable: 0
     type: RollingUpdate
   template:
+    metadata:
+      labels:
+        userapp-ingress-allowed: "true"
     spec:
       affinity:
         podAntiAffinity:
