@@ -89,11 +89,6 @@ command -v helm >/dev/null 2>&1 || {
 # shellcheck disable=SC2154
 #kubectl create secret generic "choreo-secret-azuredns-config" --from-literal=client-secret="${DNS01_CHALLENGE_CLIENT_SECRET}" -n cert-manager --dry-run=client -o yaml | kubectl apply -f -
 
-#echo "--- Installing Emberstack reflector..."
-#
-#helm repo add emberstack https://emberstack.github.io/helm-charts
-#helm repo update
-#helm upgrade --install reflector emberstack/reflector --namespace cert-manager --version 5.4.17
 
 echo "--- Creating AKS view cluster role binding to AAD"
 cp conf/view-cluster-role-binding.yaml conf/view-cluster-role-binding.yaml.backup
