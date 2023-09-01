@@ -20,7 +20,7 @@ Once you have connected your Git repository to Choreo, you can build, deploy, an
 4. In the left navigation, click **Settings**.
 5. Click on the **Credentials** tab. 
 6. Click **+Add Credentials** to configure the Git repository connection.
-7. Enter a* **Credential name**, select the Git provider, and provide the **Personal Access Token** obtained from the Git provider.
+7. Enter a **Credential name**, select the Git provider, and provide the **Personal Access Token** obtained from the Git provider.
 8. Click **Save**.  
 
 ## Authorize GitHub with Choreo 
