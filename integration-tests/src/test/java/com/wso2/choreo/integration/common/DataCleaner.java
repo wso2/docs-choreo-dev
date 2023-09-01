@@ -73,7 +73,14 @@ public class DataCleaner  {
             return false;
         }
 
-        long createdDateTime = Long.parseLong(projectName.split(Constant.TEST_PROJECT_NAME_PREFIX)[1]);
+        String[] parts = projectName.split("_");
+        long createdDateTime = 0;
+        if (parts.length >= 3) {
+            String timestampPart = parts[1];
+            createdDateTime = Long.parseLong(timestampPart);
+        } else {
+            createdDateTime = Long.parseLong(projectName.split(Constant.TEST_PROJECT_NAME_PREFIX)[1]);
+        }
 
         String dateFormatStr = "Jan 01 2023 00:00:01.000 UTC";
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd yyyy HH:mm:ss.SSS zzz");
