@@ -15,6 +15,3 @@ azureOpenAIToken = "/mnt/csi/secret-testgpt/OPENAI-ACCESS-KEY"
 
 redisHost = "{{.REDIS_HOST_TESTGPT}}"
 redisPassword = "/mnt/csi/secret-testgpt/REDIS-AUTH-KEY"
-
-[ballerina.http.traceLogAdvancedConfig]
-console = true
