@@ -1,3 +1,11 @@
+-- Create User
+IF EXISTS (SELECT name FROM sys.databases WHERE name = N'choreo_cio_metric_management_db') AND NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_cio_metric_management_db_user')
+BEGIN
+    CREATE USER [choreo_cio_metric_management_db_user] with password = N'xxxxxxxxxxxxx'
+    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_cio_metric_management_db TO choreo_cio_metric_management_db_user
+END;
+GO
+
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='last_update_times' and xtype='U')
 BEGIN
     CREATE TABLE last_update_times (

@@ -9,7 +9,7 @@
 -- Create User
 IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_subscriptions_db_user')
 BEGIN
-    CREATE USER [choreo_subscriptions_db_user] FOR LOGIN [choreo_subscriptions_db_user]
+    CREATE USER [choreo_subscriptions_db_user] with password = N'xxxxxxxxxxxxx'
     GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_subscriptions_db TO choreo_subscriptions_db_user
 END;
 GO

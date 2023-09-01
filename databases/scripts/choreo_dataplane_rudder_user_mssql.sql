@@ -1,8 +1,6 @@
 IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_rudder_admin_db_user')
 BEGIN
-    CREATE USER [choreo_rudder_admin_db_user] FOR LOGIN [choreo_rudder_admin_db_user]
-    EXEC sp_addrolemember N'db_ddladmin', N'choreo_rudder_admin_db_user'
-    EXEC sp_addrolemember N'db_datawriter', N'choreo_rudder_admin_db_user'
-    EXEC sp_addrolemember N'db_datareader', N'choreo_rudder_admin_db_user'
+    CREATE USER [choreo_rudder_admin_db_user] with password = N'xxxxxxxxxxxxx'
+    GRANT ALTER, SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_rudder_db TO choreo_rudder_admin_db_user
 END;
 GO
