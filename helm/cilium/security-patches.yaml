@@ -4,6 +4,7 @@ metadata:
   annotations:
     container.apparmor.security.beta.kubernetes.io/cilium-operator: runtime/default
   name: cilium-operator
+  namespace: kube-system
 spec:
   template:
     spec:
