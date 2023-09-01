@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    container.apparmor.security.beta.kubernetes.io/hello: runtime/default
+  name: cilium-operator
+spec:
+  template:
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
