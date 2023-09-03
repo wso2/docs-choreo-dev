@@ -13,4 +13,4 @@ spec:
       port: 9092
       targetPort: healthz
   selector:
-    choreo.component: telemetry
+    choreo.telemetry: enabled
