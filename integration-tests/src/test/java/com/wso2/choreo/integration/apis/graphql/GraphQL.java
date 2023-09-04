@@ -40,6 +40,7 @@ import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundExcept
 import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
 import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
+import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
@@ -354,7 +355,7 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
     public static ChoreoProject createProject(String accessToken) throws IOException {
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(Constant.TEST_PROJECT_NAME_PREFIX.concat(String.valueOf(new Date().getTime())))
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(NameGenerator.generateUniqueName(Constant.TEST_PROJECT_NAME_PREFIX))
                 .description(Constant.TEST_PROJECT_DESCRIPTION).orgId(ORG_ID).orgHandler(ORG_HANDLE).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/createProject.mustache", graphqlDTO);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
@@ -364,7 +365,7 @@ public class GraphQL extends ControlPlaneAPI {
     public static ChoreoProject createProject(TestNGCitrusSpringSupport runner, HttpClient client, String region,
                                               String accessToken) throws Exception {
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(
-                Constant.TEST_PROJECT_NAME_PREFIX.concat(String.valueOf(new Date().getTime())))
+                NameGenerator.generateUniqueName(Constant.TEST_PROJECT_NAME_PREFIX))
                 .description(Constant.TEST_PROJECT_DESCRIPTION).region(region).orgId(ORG_ID).
                 orgHandler(ORG_HANDLE).build();
         String queryString = ObjectMapperUtil.mapObjectToString(
