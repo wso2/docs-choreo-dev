@@ -16,7 +16,8 @@ spec:
     metadata:
       labels:
         choreo.component: telemetry
-        choreo.telemetry: enabled
+        choreo.telemetry.all: enabled
+        choreo.telemetry.bal: enabled
         antiaffinity: telemetry
       annotations:
         linkerd.io/inject: enabled
