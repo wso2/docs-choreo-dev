@@ -17,7 +17,7 @@ spec:
       labels:
         choreo.component: telemetry-go
         choreo.telemetry: disabled
-        antiaffinity: telemetry
+        antiaffinity: telemetry-go
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -124,5 +124,5 @@ spec:
                   - key: antiaffinity
                     operator: In
                     values:
-                      - telemetry
+                      - telemetry-go
               topologyKey: kubernetes.io/hostname
