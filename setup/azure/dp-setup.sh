@@ -71,19 +71,6 @@ command -v helm >/dev/null 2>&1 || {
 #    fi
 #}
 
-############### Install Certmanager
-#echo "--- Installing Cert Manager..."
-#kubectl create ns cert-manager
-#kubectl label namespace cert-manager cert-manager.io/disable-validation=true
-#
-#helm repo add jetstack https://charts.jetstack.io
-#helm repo update
-#helm install \
-#  cert-manager jetstack/cert-manager \
-#  --namespace cert-manager \
-#  --version v1.8.0 \
-#  -n cert-manager \
-#  --set installCRDs=true
 
 #echo "--- Creating secrets for DNS-01 challenge..."
 # shellcheck disable=SC2154
