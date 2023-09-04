@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
 
-############## Install Reloader
-echo "--- Installing Reloader..."
-if [[ -f "../reloader.yaml" ]]; then
-    kubectl apply -n kube-system -f ../reloader.yaml
-else
-    kubectl apply -n kube-system -f reloader.yaml
-fi
-
 ############## Install Linkerd
 echo "--- Installing Linkerd..."
 LINKERD_VERSION=stable-2.9.0
