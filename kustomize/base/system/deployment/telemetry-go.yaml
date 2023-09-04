@@ -4,21 +4,21 @@ metadata:
   annotations:
     checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
-    choreo.component: telemetry
-  name: telemetry
+    choreo.component: telemetry-go
+  name: telemetry-go
 spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: telemetry
+      choreo.component: telemetry-go
   strategy: { }
   template:
     metadata:
       labels:
-        choreo.component: telemetry
+        choreo.component: telemetry-go
         choreo.telemetry.all: enabled
-        choreo.telemetry.bal: enabled
-        antiaffinity: telemetry
+        choreo.telemetry.go: enabled
+        antiaffinity: telemetry-go
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -40,7 +40,7 @@ spec:
                 name: env-telemetry
             - secretRef:
                 name: secret-telemetry
-          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-telemetry:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-telemetry-go:latest
           securityContext:
             runAsUser: 10500
             runAsGroup: 10500
@@ -91,10 +91,10 @@ spec:
           resources:
             limits:
               cpu: 1000m
-              memory: 6Gi
+              memory: 1Gi
             requests:
               cpu: 1000m
-              memory: 6Gi
+              memory: 1Gi
       volumes:
         - name: config
           configMap:
@@ -125,5 +125,5 @@ spec:
                   - key: antiaffinity
                     operator: In
                     values:
-                      - telemetry
+                      - telemetry-go
               topologyKey: kubernetes.io/hostname
