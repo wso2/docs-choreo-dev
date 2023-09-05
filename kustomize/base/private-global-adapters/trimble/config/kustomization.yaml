@@ -1,9 +1,0 @@
-configMapGenerator:
-  - name: trimble-feature-flags
-    behavior: create
-    literals:
-      - FEATURE_FLAG_DEFAULT=true
-      - FEATURE_STEP_QUOTA_LIMITING=false
-      - FEATURE_FLAG_MONGODB_DIRECT_SEARCH=true
-      - LOG4J_FORMAT_MSG_NO_LOOKUPS=true
-      - FEATURE_FLAG_MONGODB_SINGLE_COLLECTION=true

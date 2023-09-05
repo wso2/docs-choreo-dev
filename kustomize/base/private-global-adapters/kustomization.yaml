@@ -3,6 +3,5 @@ kind: Kustomization
 
 resources:
   - choreo
-  - trimble
 
 namespace: choreo-apim
