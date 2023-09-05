@@ -31,10 +31,10 @@ spec:
           resources:
             limits:
               cpu: 800m
-              memory: 1024Mi
+              memory: 600Mi
             requests:
               cpu: 300m
-              memory: 512Mi
+              memory: 400Mi
           envFrom:
             - configMapRef:
                 name: cm-cio-incident-configurator
