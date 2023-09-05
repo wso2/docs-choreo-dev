@@ -6,16 +6,15 @@ In this guide, you will learn to use Choreo to create a service component that e
 
 By following this guide, you will:
 
-- Setup TCP Server
+- Setup a TCP Server
     - Create a simple TCP server using a Service component.
     - Link the containerized TCP service to the Choreo component using the Dockerfile. 
     - Deploy the TCP server component in Choreo. 
-- Setup TCP Client
+- Setup a TCP Client
     - Create a TCP client using a Manual Trigger component. 
     - Link the containerized TCP client to the Choreo component using the Dockerfile. 
     - Deploy the TCP client component in Choreo.
 - Invoke the TCP server using a TCP client and check the response through the Choreo log view.
-
 
 ## Prerequisites
 
@@ -93,11 +92,11 @@ You have successfully created a Service component from a Dockerfile. Now let's b
 
 ## Step 2: Configure the service port with endpoints
 
-Let's run the TCP server Service component on port 5050. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. In Choreo, you can expose your services with endpoints. You can read more about endpoints in our [endpoint documentation](https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/#configure-endpoints).
+Let's run the TCP server Service component on port 5050. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. In Choreo, you can expose your services with endpoints. You can read more about endpoints in [Configure Endpoints](https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/#configure-endpoints).
 
 Choreo looks for an `endpoints.yaml` file inside the `.choreo` directory to configure the endpoint details of a containerized component. Place the `.choreo` directory at the root of the Docker build context path.
 
-In our gRPC server sample, the `endpoints.yaml` file is at `go/tcp-service/.choreo/endpoints.yaml`. Our build context path is `go/tcp-service`.
+In our TCP server sample, the `endpoints.yaml` file is at `go/tcp-service/.choreo/endpoints.yaml`. Our build context path is `go/tcp-service`.
 
 ## Step 3: Build and deploy
 
@@ -135,7 +134,7 @@ Let's invoke the TCP service that you created above, using a TCP client.
 
 Let's create a containerized manual trigger component by following these steps:
 
-1. Click on the **Project** list to go to the **Components** page. Alternatively, you can expand the **Components** list and click **+ Create New**.
+1. Click on the **Project** list and go to the **Components** page. Alternatively, you can expand the **Components** list and click **+ Create New**.
 2. On the **Components** page, click **Create**.
 3. On the **Manual Trigger** card, click **Create**.
 4. Enter a unique name and a description for the client component. For this guide, let's enter the following values:
