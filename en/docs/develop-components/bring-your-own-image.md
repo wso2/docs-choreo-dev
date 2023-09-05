@@ -1,6 +1,6 @@
 # Bring Your Own Image (BYOI)
 
-Effortlessly integrate your personalized images from your container registry into the Choreo platform. This enables you to deploy and effectively manage your container images directly within the Choreo environment.
+Deploy and manage (prebuilt) container images from external container registries as Choreo Components. This enables you to deploy and effectively manage your container images directly within the Choreo environment.
 
 !!! info
     - This feature is currently only available on [Private Data Planes (PDP)](https://wso2.com/choreo/docs/choreo-concepts/data-planes/#private-data-plane).
