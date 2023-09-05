@@ -77,11 +77,11 @@ spec:
               protocol: TCP
           resources:
             limits:
-              cpu: 500m
-              memory: 1.5Gi
-            requests:
               cpu: 300m
-              memory: 512Mi
+              memory: 300Mi
+            requests:
+              cpu: 200m
+              memory: 200Mi
           volumeMounts:
             - mountPath: /home/ballerina/Config.toml
               name: bal-config-volume
