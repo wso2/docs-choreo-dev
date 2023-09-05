@@ -111,7 +111,7 @@ endpoints:
 Exposing endpoints as managed APIs is crucial to ensure secure and controlled access to the services being exposed. When a user wants to expose their written service to the outside world or to the organization at large, there is an inherent security risk involved. To mitigate this risk, the Choreo platform is built with an internal (access within the organization only) or external (publicly accessible) gateway that is protected with Choreo API management making the services secure by design.
 
 !!! note
-    This feature is not available for gRPC, UDP & TCP endpoints.
+    This feature is not available for gRPC, UDP, and TCP endpoints.
 
 If you want to expose an endpoint as a managed API in Choreo, you need to set the network visibility to either Organization or Public. This allows the endpoint to be exposed through the Choreo API Gateway, which provides a number of benefits, including:
 
