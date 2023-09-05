@@ -152,7 +152,7 @@ Follow the guidelines below based on your container registry:
 !!! tip
     When a public image from Docker Hub lacks a specified "repository name," it typically defaults to "/library/." For instance, you can access the public Nginx image (https://hub.docker.com/_/nginx) as registry.hub.docker.com/library/nginx:1.25.
 
-### Step 3: Deploy the component in Choreo
+## Step 3: Deploy the component in Choreo
 
 You can deploy the component and thereby bring your image to Choreo by following the steps below: 
 
@@ -177,7 +177,7 @@ You can deploy the component and thereby bring your image to Choreo by following
 
 7. Click **Deploy**. This deploys the service to the development environment.
 
-## Step 3: Expose service endpoints 
+## Step 4: Expose service endpoints 
 
 !!! info
     This section only applies to Service components.
