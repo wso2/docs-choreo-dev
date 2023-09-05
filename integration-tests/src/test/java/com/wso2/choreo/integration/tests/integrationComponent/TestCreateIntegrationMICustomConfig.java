@@ -75,13 +75,19 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
         githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        ChoreoProject project = GraphQL.createProject(accessToken);
-        projectId = project.getId();
     }
 
     @Test
     @CitrusTest
-    public void createComponent() throws Exception {
+    public void createProject_TestCreateIntegrationMICustomConfig() throws Exception {
+        ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, 
+            Constant.region.US.toString());
+        projectId = project.getId();
+    }
+
+    @Test(dependsOnMethods = { "createProject_TestCreateIntegrationMICustomConfig" })
+    @CitrusTest
+    public void createComponent_TestCreateIntegrationMICustomConfig() throws Exception {
 
         // Creating component
         String componentName = "MIConfig".concat(String.valueOf(new Date().getTime()));
@@ -102,17 +108,17 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
         componentHandler = GraphQL.createIntegrationComponent(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 
-    @Test(dependsOnMethods = { "createComponent" })
+    @Test(dependsOnMethods = { "createComponent_TestCreateIntegrationMICustomConfig" })
     @CitrusTest
-    public void componentRetrieval() throws Exception {
+    public void componentRetrieval_TestCreateIntegrationMICustomConfig() throws Exception {
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
         testComponent = GraphQL.retrieveComponent(this, choreoProjectsTestClient, accessToken,
                 graphqlDTO);
     }
 
-    @Test(dependsOnMethods = {"componentRetrieval"})
+    @Test(dependsOnMethods = {"componentRetrieval_TestCreateIntegrationMICustomConfig"})
     @CitrusTest
-    public void generateEndpointsDev() throws Exception {
+    public void generateEndpointsDev_TestCreateIntegrationMICustomConfig() throws Exception {
         Map<String,String> argMap = new HashMap<>();
         argMap.put("componentId", testComponent.getId());
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
@@ -121,9 +127,9 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
         GraphQL.generateEndpoints(this, choreoProjectsTestClient, accessToken, argMap);
     }
 
-    @Test(dependsOnMethods = {"generateEndpointsDev"})
+    @Test(dependsOnMethods = {"generateEndpointsDev_TestCreateIntegrationMICustomConfig"})
     @CitrusTest
-    public void getEndpointsDev() throws Exception {
+    public void getEndpointsDev_TestCreateIntegrationMICustomConfig() throws Exception {
         Map<String,String> argMap = new HashMap<>();
         argMap.put("componentId", testComponent.getId());
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
@@ -132,9 +138,9 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
         Assert.assertEquals(endpoints.size(), 1);
     }
 
-    @Test(dependsOnMethods = {"getEndpointsDev"})
+    @Test(dependsOnMethods = {"getEndpointsDev_TestCreateIntegrationMICustomConfig"})
     @CitrusTest
-    public void updateEndpointsDev() throws Exception {
+    public void updateEndpointsDev_TestCreateIntegrationMICustomConfig() throws Exception {
         Map<String,String> argMap = new HashMap<>();
         argMap.put("componentId", testComponent.getId());
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
@@ -149,18 +155,18 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
         endpoints.set(0, updatedEndpoint);
     }
 
-    @Test(dependsOnMethods = { "updateEndpointsDev" })
+    @Test(dependsOnMethods = { "updateEndpointsDev_TestCreateIntegrationMICustomConfig" })
     @CitrusTest
-    public void componentDeployment() throws Exception {
+    public void componentDeployment_TestCreateIntegrationMICustomConfig() throws Exception {
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 testComponent);
         componentDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, testComponent, 
             environments, ComponentFlavour.MI);
     }
 
-    @Test(dependsOnMethods = {"componentDeployment"})
+    @Test(dependsOnMethods = {"componentDeployment_TestCreateIntegrationMICustomConfig"})
     @CitrusTest
-    public void getEndpointsDevAfterDeploy() throws Exception {
+    public void getEndpointsDevAfterDeploy_TestCreateIntegrationMICustomConfig() throws Exception {
         Map<String,String> argMap = new HashMap<>();
         argMap.put("componentId", testComponent.getId());
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
@@ -169,9 +175,9 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
         Assert.assertEquals(endpoints.size(), 1);
     }
 
-    @Test(dependsOnMethods = { "getEndpointsDevAfterDeploy" })
+    @Test(dependsOnMethods = { "getEndpointsDevAfterDeploy_TestCreateIntegrationMICustomConfig" })
     @CitrusTest
-    public void invokeAPIDev() throws Exception {
+    public void invokeAPIDev_TestCreateIntegrationMICustomConfig() throws Exception {
 
         Endpoint endpoint = endpoints.get(0);
         environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, testComponent);
@@ -183,9 +189,9 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
         ComponentUtils.invokeApiGET(this, devApiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI, res);
     }
 
-    @Test(dependsOnMethods = { "invokeAPIDev" })
+    @Test(dependsOnMethods = { "invokeAPIDev_TestCreateIntegrationMICustomConfig" })
     @CitrusTest
-    public void undeployComponentDev() throws Exception {
+    public void undeployComponentDev_TestCreateIntegrationMICustomConfig() throws Exception {
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(testComponent.getId()).orgHandler(orgHandle)
             .componentType(MI_API_SERVICE).releaseId(componentDeploymentStatusDTO.getReleaseId()).build();
         GraphQL.stopDeployment(this, choreoProjectsTestClient, accessToken, graphqlDTO);

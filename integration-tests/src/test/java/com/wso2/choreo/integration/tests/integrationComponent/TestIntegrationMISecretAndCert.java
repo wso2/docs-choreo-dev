@@ -76,11 +76,17 @@ public class TestIntegrationMISecretAndCert extends TestNGCitrusSpringSupport {
         githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
 
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        ChoreoProject project = GraphQL.createProject(accessToken);
-        projectId = project.getId();
     }
 
     @Test
+    @CitrusTest
+    public void createProject() throws Exception {
+        ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, 
+            Constant.region.US.toString());
+        projectId = project.getId();
+    }
+
+    @Test(dependsOnMethods = { "createProject" })
     @CitrusTest
     public void createComponent() throws Exception {
 

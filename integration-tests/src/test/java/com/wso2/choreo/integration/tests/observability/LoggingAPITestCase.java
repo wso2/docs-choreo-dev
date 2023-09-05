@@ -46,6 +46,7 @@ import java.util.Map;
 public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private ChoreoComponent choreoComponent;
+    private ChoreoProject project;
     private String orgHandle;
     private String API_INVOCATION_REQUEST_URI;
     private String REST_API_EXPECTED_RESPONSE;
@@ -75,8 +76,13 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
+    public void createProject_LoggingAPITestCase() throws Exception {
+        project = ComponentUtils.createProject(this, citrusClients, accessToken, Constant.region.US.toString());
+    }
+
+    @Test(dependsOnMethods = {"createProject_LoggingAPITestCase"})
+    @CitrusTest
     public void createComponent_LoggingAPITestCase() throws Exception {
-        ChoreoProject project = GraphQL.createProject(accessToken);
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/byor-service-app1").
                 branch("main").subPath("").build();
