@@ -158,7 +158,7 @@ You can deploy the component and thereby bring your image to Choreo by following
 
 1. In the left navigation menu, click **Deploy**.
 2. In the **Build Area** card, click **Update Image & Deploy**. 
-3. In the **Endpoint** pane that opens, you can see the **Readinglist** endpoint ready to be deployed. Click the edit icon next to the **Readinglist** endpoint. Optionally, you can define the endpoints for your service when you manually deploy the service. Refer to section [Expose service endpoints](#step-3-expose-service-endpoints).
+3. In the **Endpoint** pane that opens, you can see the **Readinglist** endpoint ready to be deployed. Click the edit icon next to the **Readinglist** endpoint. Optionally, you can define the endpoints for your service when you manually deploy the service. Refer to section [Expose service endpoints](#step-4-expose-service-endpoints).
 4. Change the **Network Visibility** to **Public**. This setting securely exposes the endpoint for consumption.
 5. Click **Update**.
 
