@@ -21,6 +21,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.wso2.choreo.integration.apis.component.Component;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.common.ComponentUtils;
+import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -35,6 +37,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Date;
+import java.util.Map;
 
 import static com.wso2.choreo.integration.config.Constant.AppType.MI_API_SERVICE;
 
@@ -56,22 +59,26 @@ public class TestIntegrationRestComponentWithVulnerable extends TestNGCitrusSpri
     private HttpClient choreoProjectsTestClient;
 
     @Autowired
-    private HttpClient choreoTestClient;
+    Map<Endpoints, HttpClient> citrusClients;
 
     @BeforeClass
     public void setup_TestMIIntegrationsWithVulnerableJars()
             throws Exception {
-
         orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
         githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
-
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        ChoreoProject project = GraphQL.createProject(accessToken);
-        projectId = project.getId();
     }
 
     @Test
+    @CitrusTest
+    public void createProject_TestMIIntegrationsWithVulnerableJars() throws Exception {
+        ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, 
+            Constant.region.US.toString());
+        projectId = project.getId();
+    }
+
+    @Test(dependsOnMethods = { "createProject_TestMIIntegrationsWithVulnerableJars" })
     @CitrusTest
     public void createComponent_TestMIIntegrationsWithVulnerableJars() throws Exception {
 

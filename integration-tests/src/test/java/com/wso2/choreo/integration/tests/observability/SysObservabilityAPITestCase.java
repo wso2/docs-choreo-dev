@@ -91,7 +91,8 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @Test
     @CitrusTest
     public void createComponent_SysObservabilityAPITestCase() throws Exception {
-        ChoreoProject project = GraphQL.createProject(accessToken);
+        ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, 
+                Constant.region.US.toString());
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
 
         Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/byor-service-app1").

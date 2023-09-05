@@ -81,14 +81,19 @@ public class TestCreateIntegrationEventComponent extends TestNGCitrusSpringSuppo
         githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
 
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        ChoreoProject project = GraphQL.createProject(accessToken);
-        projectId = project.getId();
     }
 
     @Test
     @CitrusTest
-    public void createComponent_TestCreateIntegrationEventComponent() throws Exception {
+    public void createProject_TestCreateIntegrationEventComponent() throws Exception {
+        ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, 
+            Constant.region.US.toString());
+        projectId = project.getId();
+    }
 
+    @Test(dependsOnMethods = {"createProject_TestCreateIntegrationEventComponent"})
+    @CitrusTest
+    public void createComponent_TestCreateIntegrationEventComponent() throws Exception {
         String componentName = "IntegrationEventComponent".concat(String.valueOf(new Date().getTime()));
         final String repoName = "ipaas-mi-event-triggered";
         final String repoBranch = "main";
