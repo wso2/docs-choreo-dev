@@ -118,10 +118,10 @@ spec:
               protocol: TCP
           resources:
             limits:
-              cpu: 400m
+              cpu: 300m
               memory: 400Mi
             requests:
-              cpu: 300m
+              cpu: 200m
               memory: 200Mi
           volumeMounts:
             - mountPath: /mnt/csi/secret-app-db
