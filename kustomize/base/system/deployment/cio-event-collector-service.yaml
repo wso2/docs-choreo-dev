@@ -30,11 +30,11 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/cio-event-collector-service:latest
           resources:
             limits:
-              cpu: 800m
-              memory: 1024Mi
+              cpu: 700m
+              memory: 500Mi
             requests:
-              cpu: 300m
-              memory: 512Mi
+              cpu: 200m
+              memory: 400Mi
           envFrom:
             - configMapRef:
                 name: env-cio-event-collector-service
