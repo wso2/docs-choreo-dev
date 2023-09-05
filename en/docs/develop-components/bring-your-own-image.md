@@ -158,7 +158,7 @@ You can deploy the component and thereby bring your image to Choreo by following
 
 1. In the left navigation menu, click **Deploy**.
 2. In the **Build Area** card, click **Update Image & Deploy**. 
-3. In the **Endpoint** pane that opens, you can see the **Readinglist** endpoint ready to be deployed. Click the edit icon next to the **Readinglist** endpoint. Optionally, you can define the endpoints for your service when you manually deploy the service. Refer to section [Expose service endpoints](#expose-service-endpoints).
+3. In the **Endpoint** pane that opens, you can see the **Readinglist** endpoint ready to be deployed. Click the edit icon next to the **Readinglist** endpoint. Optionally, you can define the endpoints for your service when you manually deploy the service. Refer to section [Expose service endpoints](#step-3-expose-service-endpoints).
 4. Change the **Network Visibility** to **Public**. This setting securely exposes the endpoint for consumption.
 5. Click **Update**.
 
@@ -204,6 +204,6 @@ Follow the steps below to configure your CI/Build pipeline:
     !!! note
         - The tokens are bound to a specific component.
         - It is recommended to reference the token from a secure location available to your CI pipeline. For example,  use a GitHub Secret if you are using GitHub Actions.
-        
+
 4. To trigger an automatic deployment to your development environment, you can initiate an HTTP POST request to the Choreo webhook endpoint with the updated image details. Alternatively, you can use the provided Webhook Snippets. This action will seamlessly deploy the image to the development environment.
 
