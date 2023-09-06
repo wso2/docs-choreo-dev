@@ -134,7 +134,7 @@ Let's invoke the TCP service that you created above, using a TCP client. To do t
 
 ### Step 4.1: Create a manual trigger for the TCP client
 
-Let's create a containerized manual trigger component by following these steps:
+Let's create a containerized Manual Trigger component by following these steps:
 
 1. Click on the **Project** list and go to the **Components** page. Alternatively, you can expand the **Components** list and click **+ Create New**.
 2. On the **Components** page, click **Create**.
