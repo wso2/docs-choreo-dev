@@ -433,6 +433,8 @@ SemVer
 README.md
 datagram
 connectionless
+Nginx
+schemas
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -605,6 +607,8 @@ configure-cio-dashboard.md
 control-api-visibility
 consuming-a-sevice
 rename-api-display-name
+pymdownx.tabbed
+alternate_style
  - theme/material/templates/home-page.html
 doctype
 html
@@ -736,3 +740,9 @@ environmentIds
 tcp-service
  - docs/develop-components/develop-services/develop-a-udp-service.md
 udp-service
+ - docs/develop-components/bring-your-own-image.md
+registry.hub.docker.com
+registry.docker.com
+auths
+nginx
+Url
