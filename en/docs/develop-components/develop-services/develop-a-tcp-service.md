@@ -188,7 +188,7 @@ To build and run the client, follow these steps:
 1. Go to the **Deploy** page and click **Configure & Deploy**.
 2. On the **Environment Variables** side pane, leave the fields emopty, and click **Next**.
 3. On the **Config File**, leave the fields empty, and click **Deploy** .
-2. Once the Choreo deploys the component successfully, to trigger the TCP client and generate logs, go to the **Development** card and click **Run Once**. Perform multiple runs to generate logs.
-3. Navigate to the **Observability** page from the left navigation menu and view **Logs**.
+4. Once the Choreo deploys the component successfully, to trigger the TCP client and generate logs, go to the **Development** card and click **Run Once**. Perform multiple runs to generate logs.
+5. Navigate to the **Observability** page from the left navigation menu and view **Logs**.
 If the logs are not present, try again after a few minutes to fetch the logs. You will see several log lines corresponding to each run of the client trigger in the log view.
-4. Navigate to TCP Server **Observability** page and view the TCP server service **Logs**.
+6. Navigate to TCP Server **Observability** page and view the TCP server service **Logs**.
