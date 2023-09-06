@@ -32,11 +32,11 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/dp-helmhub:latest
           resources:
             limits:
-              cpu: 1
-              memory: 768Mi
+              cpu: 150m
+              memory: 150Mi
             requests:
-              cpu: 500m
-              memory: 300Mi
+              cpu: 100m
+              memory: 100Mi
           envFrom:
             - configMapRef:
                 name: env-dp-helmhub
