@@ -70,11 +70,11 @@ spec:
               protocol: TCP
           resources:
             limits:
-              cpu: 1100m
-              memory: 1024Mi
+              cpu: 400m
+              memory: 1000Mi
             requests:
-              cpu: 1000m
-              memory: 768Mi
+              cpu: 200m
+              memory: 750Mi
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           volumeMounts:
