@@ -31,11 +31,11 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/dp-cloud-manager:latest
           resources:
             limits:
-              cpu: 550m
-              memory: 550Mi
-            requests:
               cpu: 500m
-              memory: 500Mi
+              memory: 200Mi
+            requests:
+              cpu: 250m
+              memory: 100Mi
           envFrom:
             - configMapRef:
                 name: env-dp-cloud-manager
