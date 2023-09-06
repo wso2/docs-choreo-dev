@@ -59,11 +59,11 @@ spec:
               path: /liveness
           resources:
             limits:
-              cpu: "1"
-              memory: 2Gi
+              cpu: 400m
+              memory: 750Mi
             requests:
-              cpu: 300m
-              memory: 768Mi
+              cpu: 200m
+              memory: 500Mi
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 10500
