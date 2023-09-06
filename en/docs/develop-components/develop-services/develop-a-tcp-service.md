@@ -34,8 +34,8 @@ Let's familiarize ourselves with the key files in the sample greeter application
 
 |File Path                |Description                                                                                   |
 |------------------------|----------------------------------------------------------------------------------------------|
-| server/main.go                | The greeter service code written in the Go language.                                       |
-| client/main.go | The greeter client application written in the Go language.                                    |
+| server/main.go                | The greeter service code is written in the Go language.                                       |
+| client/main.go | The greeter client application is written in the Go language.                                    |
 | Dockerfile.server      | Dockerfile to build the container image of the server application.|
 | Dockerfile.client      | Dockerfile to build the container image of the client application.|
 | .choreo/endpoints.yaml |  The Choreo-specific configuration provides information about how Choreo exposes the service.|
@@ -106,7 +106,7 @@ To build and deploy the service, follow these steps:
 
 1. In the left navigation menu, click **Deploy**.
 
-2. On the Deploy page, click **Deploy Manually**.
+2. On the Deploy page, click **Configure & Deploy**.
 
     !!! note
         Deploying the service component may take a while. You can track the progress by observing the logs. Once the deployment is complete, the deployment status changes to **Active** in the corresponding environment card.
@@ -122,13 +122,15 @@ To build and deploy the service, follow these steps:
     If you have Choreo environments on a private data plane, you can ignore these vulnerabilities and proceed with the deployment.
 
 4. On the **Configure & Deploy** pane, click **Deploy**.
-5. Once you have successfully deployed your service, navigate to the component overview page and copy the TCP service address. You need to provide that address when setting up the client application later in this guide.
+5. Click **Next**, on the **Environmental Variables** pane and the **Config File** pane. We do not need to provide any configurations for the TCP server component. 
+6. On the **Endpoints** pane, click **Deploy**. 
+7. Once you have successfully deployed your service, navigate to the component overview page and copy the TCP service address. You need to provide that address when setting up the client application later in this guide.
 
 You have successfully deployed the TCP server. Currently, the TCP service is only accessible for the components deployed within the same project.
 
 ## Step 4: Invoke the TCP service
 
-Let's invoke the TCP service that you created above, using a TCP client. 
+Let's invoke the TCP service that you created above, using a TCP client. To do this, you can make use of a Manual Trigger component. We recommend this approach because, in this example, it's more efficient to have a client that connects to the server, sends a request, and then stops. A continuously executing task isn't required. Furthermore, if you use a Manual Trigger component, you won't need to expose an endpoint in the client for invocation, unlike with an API.
 
 ### Step 4.1: Create a manual trigger for the TCP client
 
@@ -161,7 +163,7 @@ Let's create a containerized manual trigger component by following these steps:
 
 ### Step 4.2: Setup environment variables
 
-The client application, in this case, the TCP client, needs the server address of the TCP server service. This is read from the client application as an environment variable. Follow the steps below to configure the environment variable for the client application:
+The client application, in this case, the TCP client, needs the server address of the TCP server service. Choreo reads this from the client application as an environment variable. Follow the steps below to configure the environment variable for the client application:
 
 1. Navigate to the **TCP Client** component's **DevOps** page from the left navigation and click on **Configs and Secrets**.
 3. Click **+ Create**.
@@ -183,11 +185,10 @@ Now that you have connected the source repository, and configured the environmen
 
 To build and run the client, follow these steps:
 
-1. Go to the **Deploy** page and click **Deploy Manually**.
-2. To trigger the TCP client and generate logs, go to the **Development** card and click **Run Once**. Perform multiple runs to generate multiple logs.
+1. Go to the **Deploy** page and click **Configure & Deploy**.
+2. On the **Environment Variables** side pane, leave the fields emopty, and click **Next**.
+3. On the **Config File**, leave the fields empty, and click **Deploy** .
+2. Once the Choreo deploys the component successfully, to trigger the TCP client and generate logs, go to the **Development** card and click **Run Once**. Perform multiple runs to generate logs.
 3. Navigate to the **Observability** page from the left navigation menu and view **Logs**.
-If the logs are not present give it a bit more time to fetch the logs. You will see several log lines corresponding to each run of the client trigger in the log view.
+If the logs are not present, try again after a few minutes to fetch the logs. You will see several log lines corresponding to each run of the client trigger in the log view.
 4. Navigate to TCP Server **Observability** page and view the TCP server service **Logs**.
-
-
-
