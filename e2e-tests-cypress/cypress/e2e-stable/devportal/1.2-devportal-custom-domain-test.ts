@@ -63,7 +63,7 @@ describe("Create and deploy a component to test developer portal with custom dom
     );
     cy.task("setAPIName", API_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.deployToDev();
     APIDeployment.promoteToProd();
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();

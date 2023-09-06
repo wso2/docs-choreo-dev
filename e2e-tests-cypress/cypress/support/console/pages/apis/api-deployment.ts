@@ -31,16 +31,21 @@ import {
 import { Utils } from "../../../commons/utils";
 
 export class APIDeployment {
-  static DeployToDev() {
+  static deployToDev() {
     cy.intercept({ method: "GET", url: PUBLISHER_API_KEYS_URL, times: 1 }).as(
       "keys"
     );
-    cyGet('[data-cyid="btn-deploy-proxy-button"]', MEDIUM_TIME)
-      .contains("Generating Configurations", MEDIUM_TIME)
-      .should("not.exist");
+    cy.wait(5000);
     this.RetryDevDeployment();
+    cy.wait(5000);
+    cyGet('[data-cyid="direct-deploy-option-proxy-split-toggle-button-button"]', LONG_TIME)
+      .should("not.be.disabled")
+      .click();
 
-    cyGet('[data-cyid="btn-deploy-proxy-button"]')
+      cyGet('[data-cyid="configure-&-deploy-option"]')
+      .click();
+
+      cyGet('[data-cyid="direct-deploy-option-proxy-split-group-button-button"]', LONG_TIME)
       .should("not.be.disabled")
       .click();
 
@@ -274,7 +279,8 @@ export class APIDeployment {
     cy.get('[data-cyid="env-baseProduction-env-card"]')
       .contains("Production")
       .should("be.visible");
-    cyGet('[data-cyid="deployment-status"]').should("have.length", 2);
+    cy.wait(10000);
+    cyGet('[data-cyid="deployment-status"]', SHORT_TIME).should("have.length", 2);
     cyGet('[data-cyid="deployment-status"]>h6', VERY_LONG_TIME)
       .eq(1)
       .should("contain", "Active");

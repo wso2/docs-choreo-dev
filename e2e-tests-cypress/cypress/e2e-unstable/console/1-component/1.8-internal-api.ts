@@ -109,7 +109,7 @@ describe(`Verify internal api functionality`, () => {
 
   it("Deploy api to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.deployToDev();
   });
 
   it("Verify REST API component promote to PROD", () => {
@@ -177,7 +177,7 @@ describe(`Verify internal api functionality`, () => {
 
   it("Verify 1st PROXY API component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.deployToDev();
   });
 
   it("Verify 1st PROXY API component promote to PROD", () => {
@@ -220,7 +220,7 @@ describe(`Verify internal api functionality`, () => {
 
   it("Verify 2nd PROXY API component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.deployToDev();
   });
 
   it("Verify 2nd PROXY API component promote to PROD", () => {

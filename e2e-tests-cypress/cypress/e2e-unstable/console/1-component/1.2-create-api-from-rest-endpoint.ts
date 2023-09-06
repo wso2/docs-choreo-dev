@@ -78,7 +78,7 @@ describe(`Verify proxy api functionality`, () => {
 
   it("Verify component deployment to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.deployProxyAPIToDev();
+    APIDeployment.deployToDev();
     buildCount = APIDeployment.verifyProxyDeployment(buildCount);
   });
 
@@ -148,7 +148,7 @@ describe(`Verify proxy api functionality`, () => {
 
   it("Verify component deployment to dev with new policy", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.deployProxyAPIToDev();
+    APIDeployment.deployToDev();
     buildCount = APIDeployment.verifyProxyDeployment(buildCount);
   });
 
@@ -216,7 +216,7 @@ describe(`Verify proxy api functionality`, () => {
 
   it("Verify component deployment to dev with updated header value", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.deployProxyAPIToDev();
+    APIDeployment.deployToDev();
     buildCount = APIDeployment.verifyProxyDeployment(buildCount);
   });
 
