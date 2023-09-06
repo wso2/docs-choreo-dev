@@ -35,8 +35,8 @@ Let's familiarize ourselves with the key files in the sample greeter application
 
 |File Path                |Description                                                                                   |
 |------------------------|----------------------------------------------------------------------------------------------|
-| server/main.go                | The greeter service code written in the Go language.                                       |
-| client/main.go | The greeter client application written in the Go language.                                    |
+| server/main.go                | The greeter service code is written in the Go language.                                       |
+| client/main.go | The greeter client application is written in the Go language.                                    |
 | Dockerfile.server      | Dockerfile to build the container image of the server application.|
 | Dockerfile.client      | Dockerfile to build the container image of the client application.|
 | .choreo/endpoints.yaml |  The Choreo-specific configuration provides information about how Choreo exposes the service.|
@@ -163,7 +163,7 @@ Let's create a containerized Manual Trigger component by following these steps:
 
 ### Step 4.2: Setup environment variables
 
-The client application, in this case, the UDP client, needs the server address of the UDP server service. This is read from the client application as an environment variable. Follow the steps below to configure the environment variable for the client application:
+The client application, in this case, the UDP client, needs the server address of the UDP server service. Choreo reads this from the client application as an environment variable. Follow the steps below to configure the environment variable for the client application:
 
 1. Navigate to the **UDP Client** component's **DevOps** page from the left navigation and click on **Configs and Secrets**.
 3. Click **+ Create**.
@@ -192,6 +192,3 @@ To build and run the client, follow these steps:
 5. Navigate to the **Observability** page from the left navigation menu and view **Logs**.
 If the logs are not present give it a bit more time to fetch the logs. You will see several log lines corresponding to each run of the client trigger in the log view.
 6. Navigate to UDP Server **Observability** page and view the UDP server service **Logs**.
-
-
-
