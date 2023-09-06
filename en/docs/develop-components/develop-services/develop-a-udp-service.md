@@ -2,15 +2,15 @@
 
 Choreo offers the flexibility to design and deploy applications in the programming language of your choice. One compelling choice for certain network communication needs is UDP (User Datagram Protocol). UDP is a high-speed, connectionless protocol ideal for scenarios where lightweight, real-time data transmission is essential.
 
-In this guide, you will learn to use Choreo to create a service component that exposes a UDP server implemented in [Go](https://go.dev/), enabling efficient and scalable communication with any UDP client application. No prior knowledge of the Go language is necessary to follow this guide.
+In this guide, you will learn to use Choreo to create a Service component that exposes a UDP server implemented in [Go](https://go.dev/), enabling efficient and scalable communication with any UDP client application. No prior knowledge of the Go language is necessary to follow this guide.
 
 By following this guide, you will:
 
-- Setup UDP Server
+- Setup a UDP Server
     - Create a simple UDP server using a Service component.
     - Link the containerized UDP service to the Choreo component using the Dockerfile. 
     - Deploy the UDP server component in Choreo. 
-- Setup UDP Client
+- Setup a UDP Client
     - Create a UDP client using a Manual Trigger component. 
     - Link the containerized UDP client to the Choreo component using the Dockerfile. 
     - Deploy the UDP client component in Choreo.
@@ -107,12 +107,14 @@ To build and deploy the service, follow these steps:
 
 1. In the left navigation menu, click **Deploy**.
 
-2. On the Deploy page, click **Deploy Manually**.
+2. On the Deploy page, click **Configure & Deploy**.
+3. Click **Next**, on the **Environmental Variables** pane and the **Config File** pane. We do not need to provide any configurations for the UDP server component. 
+4. On the **Endpoints** pane, click **Deploy**. 
 
     !!! note
         Deploying the service component may take a while. You can track the progress by observing the logs. Once the deployment is complete, the deployment status changes to **Active** in the corresponding environment card.
 
-3. Check the deployment progress by observing the console logs on the right of the page.
+5. Check the deployment progress by observing the console logs on the right of the page.
     You can access the following scans under **Build**. 
 
     - **The Dockerfile scan**: Choreo performs a scan to check if a non-root user ID is assigned to the Docker container to ensure security. If no non-root user is specified, the build will fail.
@@ -122,18 +124,17 @@ To build and deploy the service, follow these steps:
 !!! info
     If you have Choreo environments on a private data plane, you can ignore these vulnerabilities and proceed with the deployment.
 
-4. On the **Configure & Deploy** pane, click **Deploy**.
-5. Once you have successfully deployed your service, navigate to the component overview page and copy the UDP service address. You need to provide that address when setting up the client application later in this guide.
+6. Once you have successfully deployed your service, navigate to the component overview page and copy the UDP service address. You need to provide that address when setting up the client application later in this guide.
 
 You have successfully deployed the UDP server. Currently, the UDP service is only accessible for the components deployed within the same project.
 
 ## Step 4: Invoke the UDP service
 
-Let's invoke the UDP service that you created above, using a UDP client. 
+Let's invoke the UDP service that you created above, using a UDP client. To do this, you can make use of a Manual Trigger component. We recommend this approach because, in this example, it's more efficient to have a client that connects to the server, sends a request, and then stops. A continuously executing task isn't required. Furthermore, if you use a Manual Trigger component, you won't need to expose an endpoint in the client for invocation, unlike with an API.
 
 ### Step 4.1: Create a manual trigger for the UDP client
 
-Let's create a containerized manual trigger component by following these steps:
+Let's create a containerized Manual Trigger component by following these steps:
 
 1. Click on the **Project** list to go to the **Components** page. Alternatively, you can expand the **Components** list and click **+ Create New**.
 2. On the **Components** page, click **Create**.
@@ -184,11 +185,13 @@ Now that you have connected the source repository, and configured the environmen
 
 To build and run the client, follow these steps:
 
-1. Go to the **Deploy** page and click **Deploy Manually**.
-2. To trigger the UDP client and generate logs, go to the **Development** card and click **Run Once**. Perform multiple runs to generate multiple logs.
-3. Navigate to the **Observability** page from the left navigation menu and view **Logs**.
+1. Go to the **Deploy** page and click **Configure & Deploy**.
+2. On the **Environment Variables** side pane, leave the fields empty, and click **Next**.
+3. On the **Config File**, leave the fields empty, and click **Deploy** .
+4. To trigger the UDP client and generate logs, go to the **Development** card and click **Run Once**. Perform multiple runs to generate multiple logs.
+5. Navigate to the **Observability** page from the left navigation menu and view **Logs**.
 If the logs are not present give it a bit more time to fetch the logs. You will see several log lines corresponding to each run of the client trigger in the log view.
-4. Navigate to UDP Server **Observability** page and view the UDP server service **Logs**.
+6. Navigate to UDP Server **Observability** page and view the UDP server service **Logs**.
 
 
 
