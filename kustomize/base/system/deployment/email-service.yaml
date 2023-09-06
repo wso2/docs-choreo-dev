@@ -29,10 +29,10 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/email-service:latest
           resources:
             limits:
-              cpu: 800m
-              memory: 1000Mi
+              cpu: 500m
+              memory: 400Mi
             requests:
-              cpu: 300m
+              cpu: 250m
               memory: 300Mi
           envFrom:
             - configMapRef:
