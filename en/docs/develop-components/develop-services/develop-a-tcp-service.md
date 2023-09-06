@@ -186,7 +186,7 @@ Now that you have connected the source repository, and configured the environmen
 To build and run the client, follow these steps:
 
 1. Go to the **Deploy** page and click **Configure & Deploy**.
-2. On the **Environment Variables** side pane, leave the fields emopty, and click **Next**.
+2. On the **Environment Variables** side pane, leave the fields empty, and click **Next**.
 3. On the **Config File**, leave the fields empty, and click **Deploy** .
 4. Once the Choreo deploys the component successfully, to trigger the TCP client and generate logs, go to the **Development** card and click **Run Once**. Perform multiple runs to generate logs.
 5. Navigate to the **Observability** page from the left navigation menu and view **Logs**.
