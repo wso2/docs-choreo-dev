@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+        checkov.io/skip1: CKV_K8S_AZURE_WSO2_2=Linkerd is not used in dataplanes
+  labels:
+    choreo.component: sys-obsapi
+  name: sys-obsapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: sys-obsapi
+  template:
+    metadata:
+      labels:
+        choreo.component: sys-obsapi
+        antiaffinity: sys-obsapi
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: sys-obsapi
+          envFrom:
+            - configMapRef:
+                name: sys-obsapi-cm
+            - configMapRef:
+                name: sys-obsapi-env
+            - secretRef:
+                name: sys-obsapi-secret
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-sys-obsapi-dp:latest
+          securityContext:
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
+            - name: sys-obsapi-secret
+              mountPath: "/mnt/csi/sys-obsapi-secret"
+              readOnly: true
+          ports:
+            - containerPort: 9098
+              name: sys-obsapi-port
+              protocol: TCP
+            - containerPort: 9096      # To be used for readiness/liveness probes (internal)
+              name: health
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 60
+            periodSeconds: 60
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /liveness
+          resources:
+            limits:
+              cpu: 500m
+              memory: 768Mi
+            requests:
+              cpu: 300m
+              memory: 512Mi
+      volumes:
+        - name: config
+          configMap:
+            name: sys-obsapi-cm-file
+        - name: sys-obsapi-secret
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: sys-obsapi-secret
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      restartPolicy: Always
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - sys-obsapi
+              topologyKey: kubernetes.io/hostname
