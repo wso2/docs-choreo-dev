@@ -97,6 +97,8 @@ nav:
           - Develop a Service: develop-components/develop-services/develop-a-service.md
           - Develop a REST API: develop-components/develop-services/develop-a-rest-api.md
           - Develop a gRPC Service: develop-components/develop-services/develop-a-grpc-service.md
+          - Develop a TCP Service: develop-components/develop-services/develop-a-tcp-service.md
+          - Develop a UDP Service: develop-components/develop-services/develop-a-udp-service.md
           - Develop a Ballerina REST API:  develop-components/develop-services/develop-a-ballerina-rest-api.md
           - Develop a Ballerina GraphQL API: develop-components/develop-services/develop-a-ballerina-graphql-api.md
       - Develop a REST API Proxy: develop-components/develop-a-rest-api-proxy.md

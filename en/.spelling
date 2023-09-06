@@ -609,6 +609,8 @@ consuming-a-sevice
 rename-api-display-name
 pymdownx.tabbed
 alternate_style
+develop-a-tcp-service
+develop-a-udp-service
  - theme/material/templates/home-page.html
 doctype
 html
