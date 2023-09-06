@@ -84,11 +84,11 @@ spec:
             - containerPort: 8080
           resources:
             requests:
-              memory: "250Mi"
-              cpu: "2"
+              memory: "50Mi"
+              cpu: "100m"
             limits:
-              memory: "500Mi"
-              cpu: "2"
+              memory: "100Mi"
+              cpu: "200m"
           livenessProbe:
             httpGet:
               scheme: HTTP
@@ -149,11 +149,11 @@ spec:
                 - NET_RAW
           resources:
             requests:
-              memory: "64Mi"
-              cpu: "256m"
+              memory: "50Mi"
+              cpu: "10m"
             limits:
-              memory: "128Mi"
-              cpu: "512m"
+              memory: "75Mi"
+              cpu: "20m"
           volumeMounts:
             - name: redis-subscribe-folder
               mountPath: /redis
