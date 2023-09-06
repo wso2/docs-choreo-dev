@@ -431,6 +431,8 @@ CloudWatch
 onwards
 SemVer
 README.md
+datagram
+connectionless
 Nginx
 schemas
 
@@ -734,6 +736,10 @@ EnvironmentType
 CHOREO_PRIVATE
 uuid
 environmentIds
+ - docs/develop-components/develop-services/develop-a-tcp-service.md
+tcp-service
+ - docs/develop-components/develop-services/develop-a-udp-service.md
+udp-service
  - docs/develop-components/bring-your-own-image.md
 registry.hub.docker.com
 registry.docker.com
