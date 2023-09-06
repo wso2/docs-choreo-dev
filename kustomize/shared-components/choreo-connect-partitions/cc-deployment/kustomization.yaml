@@ -33,7 +33,7 @@ configMapGenerator:
       - ENFORCER_REGION="UNKNOWN"
       - XDS_MAX_MSG_SIZE="4194304"
       - XDS_MAX_RETRIES="3"
-      - JAVA_OPTS="-Dhttpclient.hostnameVerifier=AllowAll -XX:InitialRAMPercentage=60.0 -XX:MaxRAMPercentage=60.0"
+      - JAVA_OPTS="-Dhttpclient.hostnameVerifier=AllowAll -XX:InitialRAMPercentage=70.0 -XX:MaxRAMPercentage=70.0"
       - ADAPTER_HOST=adapter
       - ENFORCER_LABEL=""
   - name: env-cc-router
