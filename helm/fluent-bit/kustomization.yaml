@@ -12,6 +12,7 @@ helmCharts:
       inputs: |
         [INPUT]
             Name tail
+            Inotify_Watcher false
             Path /var/log/containers/*_dp-*_*.log, /var/log/containers/*_*-choreo-apim_*.log
             multiline.parser docker, cri
             Tag kube.*
