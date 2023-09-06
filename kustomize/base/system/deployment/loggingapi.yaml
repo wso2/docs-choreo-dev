@@ -92,11 +92,11 @@ spec:
               path: /liveness
           resources:
             limits:
-              cpu: 500m
-              memory: 768Mi
-            requests:
               cpu: 300m
-              memory: 512Mi
+              memory: 450Mi
+            requests:
+              cpu: 200m
+              memory: 350Mi
       volumes:
         - name: config
           configMap:
