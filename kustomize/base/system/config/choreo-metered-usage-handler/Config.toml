@@ -26,3 +26,6 @@ dbConnPoolMinIdle = 5
 subscriptionMappingsBatchSize = 1000
 startTime = "23:30:00"
 endTime = "23:30:00"
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"

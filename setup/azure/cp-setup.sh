@@ -108,10 +108,6 @@ bash controlplane/linkerd/configure-linkerd.sh
 echo "---  Installing Linkerd Viz... "
 bash controlplane/linkerd-viz/configure-linkerd-viz.sh
 
-# Execute for Stage and Prod Environments only
-echo "---  Installing Buoyant Cloud... "
-bash controlplane/buoyant-cloud/configure-buoyant-cloud.sh
-
 echo "--- Add OMS Agent Config"
 bash controlplane/oms-agent/configure-oms-agent.sh
 

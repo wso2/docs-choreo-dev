@@ -35,11 +35,11 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/dp-mizzen:latest
           resources:
             limits:
-              cpu: 1
-              memory: 1Gi
+              cpu: 500m
+              memory: 300Mi
             requests:
-              cpu: 1
-              memory: 512Mi
+              cpu: 250m
+              memory: 200Mi
           envFrom:
             - configMapRef:
                 name: env-dp-mizzen

@@ -34,11 +34,11 @@ spec:
                 name: secret-crypto-key-service
           resources:
             limits:
-              cpu: 600m
-              memory: 600Mi
+              cpu: 500m
+              memory: 500Mi
             requests:
-              cpu: 600m
-              memory: 600Mi
+              cpu: 250m
+              memory: 400Mi
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 10001

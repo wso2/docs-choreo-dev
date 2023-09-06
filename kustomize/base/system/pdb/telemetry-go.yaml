@@ -1,9 +1,9 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: trimble-private-global-adapter
+  name: telemetry-go
 spec:
   minAvailable: "50%"
   selector:
     matchLabels:
-      choreo.component: trimble-private-global-adapter
+      choreo.component: telemetry-go

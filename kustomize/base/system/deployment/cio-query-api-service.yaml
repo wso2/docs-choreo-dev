@@ -30,11 +30,11 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/cio-query-api:latest
           resources:
             limits:
-              cpu: 800m
-              memory: 1024Mi
+              cpu: 750m
+              memory: 500Mi
             requests:
               cpu: 300m
-              memory: 512Mi
+              memory: 300Mi
           envFrom:
             - configMapRef:
                 name: env-cio-query-api

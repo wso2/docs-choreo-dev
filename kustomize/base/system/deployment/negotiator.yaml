@@ -127,11 +127,11 @@ spec:
               protocol: TCP
           resources:
             limits:
-              cpu: 1000m
-              memory: 3Gi
+              cpu: 750m
+              memory: 1.25Gi
             requests:
-              cpu: 1000m
-              memory: 3Gi
+              cpu: 500m
+              memory: 1Gi
           volumeMounts:
             - mountPath: /mnt/csi/secret-program-db
               name: secret-program-db

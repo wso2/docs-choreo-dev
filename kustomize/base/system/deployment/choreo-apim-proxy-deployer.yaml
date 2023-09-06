@@ -59,7 +59,7 @@ spec:
               path: /liveness
           resources:
             limits:
-              cpu: "2"
+              cpu: 500m
               memory: 1Gi
             requests:
               cpu: 300m

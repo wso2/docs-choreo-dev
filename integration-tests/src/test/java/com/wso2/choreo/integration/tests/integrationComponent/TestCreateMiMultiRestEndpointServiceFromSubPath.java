@@ -69,18 +69,22 @@ public class TestCreateMiMultiRestEndpointServiceFromSubPath extends TestNGCitru
     @BeforeClass
     public void setup_TestCreateMiMultiRestEndpointServiceFromSubPath()
             throws Exception {
-
         orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
         githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
-
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        ChoreoProject project = GraphQL.createProject(accessToken);
-        projectId = project.getId();
     }
 
     @Test
+    @CitrusTest
+    public void createProject_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
+        ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, 
+            Constant.region.US.toString());
+        projectId = project.getId();
+    }
+
+    @Test(dependsOnMethods = {"createProject_TestCreateMiMultiRestEndpointServiceFromSubPath"})
     @CitrusTest
     public void createComponent_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
 
@@ -101,7 +105,6 @@ public class TestCreateMiMultiRestEndpointServiceFromSubPath extends TestNGCitru
     @Test(dependsOnMethods = {"createComponent_TestCreateMiMultiRestEndpointServiceFromSubPath"})
     @CitrusTest
     public void componentRetrieval_TestCreateMiMultiRestEndpointServiceFromSubPath() throws Exception {
-
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
         testComponent = GraphQL.retrieveComponent(this, choreoProjectsTestClient, accessToken,
                 graphqlDTO);

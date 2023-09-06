@@ -59,23 +59,26 @@ import java.util.Map;
         public void setup_AutoDeployOnCommitIT()
                 throws Exception {
             accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-            project = GraphQL.createProject(accessToken);
         }
 
         @Test
         @CitrusTest
-        public void createUserManagedComponentFor_AutoDeployOnCommitIT() throws Exception {
-            String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        public void createProject_AutoDeployOnCommitIT() throws Exception {
+            project =  ComponentUtils.createProject(this, citrusClients, accessToken, Constant.region.US.toString());
+        }
 
+        @Test(dependsOnMethods = {"createProject_AutoDeployOnCommitIT"})
+        @CitrusTest
+        public void createUserManagedComponent_AutoDeployOnCommitIT() throws Exception {
+            String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
             Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/empty-repo").branch("main").subPath("").build();
             GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);
-
             choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                     ComponentFlavour.STANDARD);
             Assert.assertNotNull(choreoComponent.getId());
         }
 
-        @Test(dependsOnMethods = {"createUserManagedComponentFor_AutoDeployOnCommitIT"})
+        @Test(dependsOnMethods = {"createUserManagedComponent_AutoDeployOnCommitIT"})
         @CitrusTest
         public void handleConfigInit_AutoDeployOnCommitIT() throws Exception {
             HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);

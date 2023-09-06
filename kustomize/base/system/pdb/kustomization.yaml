@@ -30,6 +30,7 @@ resources:
   - subscriptions.yaml
   - sys-obsapi.yaml
   - telemetry.yaml
+  - telemetry-go.yaml
   - test-assistant.yaml
   - testbase.yaml
   - devops-portal-api.yaml

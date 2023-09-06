@@ -74,11 +74,17 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
         githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        ChoreoProject project = GraphQL.createProject(accessToken);
-        projectId = project.getId();
     }
 
     @Test
+    @CitrusTest
+    public void createProject_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+        ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, 
+            Constant.region.US.toString());
+        projectId = project.getId();
+    }
+
+    @Test(dependsOnMethods = {"createProject_TestCreateIntegrationRestComponentFromRoot"})
     @CitrusTest
     public void createComponent_TestCreateIntegrationRestComponentFromRoot() throws Exception {
 

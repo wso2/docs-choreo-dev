@@ -107,11 +107,11 @@ spec:
             - containerPort: 7777
           resources:
             limits:
-              cpu: 300m
-              memory: 256Mi
+              cpu: 250m
+              memory: 200Mi
             requests:
-              cpu: 100m
-              memory: 256Mi
+              cpu: 150m
+              memory: 150Mi
       volumes:
         - name: secret-asb
           csi:

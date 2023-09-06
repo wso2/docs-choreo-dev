@@ -2,15 +2,15 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   labels:
-    choreo.component: trimble-private-global-adapter
-  name: trimble-private-global-adapter
+    choreo.component: telemetry-go
+  name: telemetry-go
 spec:
-  maxReplicas: 3
+  maxReplicas: 6
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: trimble-private-global-adapter
+    name: telemetry-go
   metrics:
     - type: Resource
       resource:
