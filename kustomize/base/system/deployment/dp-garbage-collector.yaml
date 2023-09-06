@@ -34,11 +34,11 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/dp-garbage-collector:latest
           resources:
             limits:
-              cpu: 350m
-              memory: 400Mi
+              cpu: 150m
+              memory: 150Mi
             requests:
-              cpu: 300m
-              memory: 300Mi
+              cpu: 100m
+              memory: 100Mi
           envFrom:
             - configMapRef:
                 name: env-dp-garbage-collector
