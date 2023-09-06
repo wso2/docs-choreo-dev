@@ -129,11 +129,11 @@ spec:
                   name: secret-mgw-analytics
           resources:
             requests:
-              memory: "1.5Gi"
-              cpu: "1"
+              memory: "3Gi"
+              cpu: "2"
             limits:
-              memory: "1.5Gi"
-              cpu: "1"
+              memory: "3Gi"
+              cpu: "2"
           ports:
             - containerPort: 8081
             - containerPort: 9001
@@ -188,11 +188,11 @@ spec:
                 name: env-cc-router
           resources:
             requests:
-              memory: "1Gi"
-              cpu: "1"
+              memory: "3Gi"
+              cpu: "2"
             limits:
-              memory: "1Gi"
-              cpu: "1"
+              memory: "3Gi"
+              cpu: "2"
           ports:
             - containerPort: 9000
             - containerPort: 9095
