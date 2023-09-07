@@ -61,10 +61,10 @@ spec:
               resources:
                 limits:
                   cpu: 500m
-                  memory: 1024Mi
+                  memory: 400Mi
                 requests:
                   cpu: 300m
-                  memory: 512Mi
+                  memory: 300Mi
               volumeMounts:
                 - name: config
                   mountPath: /home/ballerina/Config.toml
