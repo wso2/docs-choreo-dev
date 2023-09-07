@@ -78,8 +78,6 @@ spec:
             - name: config
               mountPath: /home/ballerina/Config.toml
               subPath: Config.toml
-            - name: crypto-service-ingress-secret
-              mountPath: /mnt/csi/crypto-service-ingress-secret
             - name: secret-endpoint-resolver
               mountPath: /mnt/csi/secret-endpoint-resolver
       restartPolicy: Always
@@ -87,14 +85,6 @@ spec:
         - name: config
           configMap:
             name: cm-file-endpoint-resolver
-        - name: crypto-service-ingress-secret
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: ingress-tls-endpoint-resolver
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
         - name: secret-endpoint-resolver
           csi:
             driver: secrets-store.csi.k8s.io
