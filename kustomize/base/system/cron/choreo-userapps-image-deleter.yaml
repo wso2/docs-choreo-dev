@@ -48,11 +48,11 @@ spec:
                     name: env-userapps-image-deleter
               resources:
                 limits:
-                  cpu: 300m
-                  memory: 256Mi
+                  cpu: 200m
+                  memory: 100Mi
                 requests:
                   cpu: 150m
-                  memory: 128Mi
+                  memory: 75Mi
               volumeMounts:
                 - mountPath: /mnt/csi/secret-userapps-image-deleter
                   name: secret-userapps-image-deleter
