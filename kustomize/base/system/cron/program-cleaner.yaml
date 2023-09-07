@@ -78,11 +78,11 @@ spec:
                     name: cm-datalake-ast
               resources:
                 limits:
-                  cpu: 300m
-                  memory: 512Mi
+                  cpu: 150m
+                  memory: 100Mi
                 requests:
                   cpu: 100m
-                  memory: 128Mi
+                  memory: 50Mi
               volumeMounts:
                 - mountPath: /mnt/csi/secret-program-db
                   name: secret-program-db

@@ -39,10 +39,10 @@ spec:
               resources:
                 limits:
                   cpu: 500m #CPU limit
-                  memory: 1024Mi #Memory limit
+                  memory: 500Mi #Memory limit
                 requests:
                   cpu: 300m #CPU request
-                  memory: 512Mi #Memory request
+                  memory: 400Mi #Memory request
               volumeMounts:
                 - name: config #Name of the volume mount
                   mountPath: /home/ballerina/Config.toml #Path to mount the volume
