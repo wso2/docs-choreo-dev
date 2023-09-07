@@ -35,10 +35,8 @@ export class APIDeployment {
     cy.intercept({ method: "GET", url: PUBLISHER_API_KEYS_URL, times: 1 }).as(
       "keys"
     );
-    cy.wait(5000);
     this.RetryDevDeployment();
-    cy.wait(5000);
-    cyGet('[data-cyid="direct-deploy-option-proxy-split-toggle-button-button"]', LONG_TIME)
+    cyGet('[data-cyid="direct-deploy-option-proxy-split-toggle-button-button"]', VERY_LONG_TIME)
       .should("not.be.disabled")
       .click();
 
@@ -279,7 +277,6 @@ export class APIDeployment {
     cy.get('[data-cyid="env-baseProduction-env-card"]')
       .contains("Production")
       .should("be.visible");
-    cy.wait(10000);
     cyGet('[data-cyid="deployment-status"]', SHORT_TIME).should("have.length", 2);
     cyGet('[data-cyid="deployment-status"]>h6', VERY_LONG_TIME)
       .eq(1)

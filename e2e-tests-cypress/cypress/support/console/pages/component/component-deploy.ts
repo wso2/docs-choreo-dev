@@ -66,11 +66,9 @@ export class ComponentDeployPage {
     isManualTrigger: boolean = false
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.wait(5000);
     APIDeployment.RetryDevDeployment();
-    cy.wait(5000);
 
-    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', LONG_TIME)
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', VERY_LONG_TIME)
       .should("be.enabled")
       .click();
 
@@ -122,10 +120,8 @@ export class ComponentDeployPage {
     isManualTrigger: boolean = false
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.wait(5000);
     APIDeployment.RetryDevDeployment();
-    cy.wait(5000);
-    cyGet('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
+    cyGet('[data-cyid="btn-deploy-api-button"]', VERY_LONG_TIME)
       .should("be.enabled")
       .click();
 
@@ -173,11 +169,9 @@ export class ComponentDeployPage {
     isWebApp: boolean = false
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.wait(5000);
     APIDeployment.RetryDevDeployment();
-    cy.wait(5000);
 
-    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', LONG_TIME)
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', VERY_LONG_TIME)
       .should("be.enabled")
       .click();
 
@@ -312,9 +306,7 @@ export class ComponentDeployPage {
   static deployScheduleTask() {
     window.localStorage.setItem("hideSocialShareModel", "true");
     APIDeployment.RetryDevDeployment();
-    cy.wait(5000);
-
-    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', LONG_TIME)
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', VERY_LONG_TIME)
       .should("be.enabled")
       .click();
     cyGet('[data-cyid="configure-&-deploy-option"]')
@@ -342,16 +334,12 @@ export class ComponentDeployPage {
 
   static configureAndDeploy(configValue: string) {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.wait(5000);
     APIDeployment.RetryDevDeployment();
-    cy.wait(5000);
-    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', LONG_TIME)
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', VERY_LONG_TIME)
       .should("be.enabled")
       .click();
-
     cyGet('[data-cyid="configure-&-deploy-option"]')
       .click();
-
     cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', LONG_TIME)
       .should("be.enabled")
       .click();
@@ -565,16 +553,12 @@ export class ComponentDeployPage {
     configSetupStepAvailable = false,
     configEnvVars = false
   ) {
-    cy.wait(5000);
     APIDeployment.RetryDevDeployment();
-    cy.wait(5000);
-    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', LONG_TIME)
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', VERY_LONG_TIME)
       .should("be.enabled")
       .click();
-
     cyGet('[data-cyid="configure-&-deploy-option"]')
       .click();
-
     cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', LONG_TIME)
       .should("be.enabled")
       .click();
@@ -669,16 +653,12 @@ export class ComponentDeployPage {
     changeVisibility?: boolean,
     configSetupStepAvailable = false
   ) {
-    cy.wait(5000);
     APIDeployment.RetryDevDeployment();
-    cy.wait(5000);
-    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]')
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', VERY_LONG_TIME)
       .should("be.enabled")
       .click();
-
     cyGet('[data-cyid="configure-&-deploy-option"]')
       .click();
-
     cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', LONG_TIME)
       .should("be.enabled")
       .click();
@@ -819,14 +799,11 @@ export class ComponentDeployPage {
   }
 
   static initiateServiceDeployment(visibilityLevel: string) {
-    cy.wait(5000);
-    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', LONG_TIME)
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', VERY_LONG_TIME)
       .should("be.enabled")
       .click();
-
     cyGet('[data-cyid="configure-&-deploy-option"]')
       .click();
-
     cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', LONG_TIME)
       .should("be.enabled")
       .click();
@@ -875,14 +852,11 @@ export class ComponentDeployPage {
   }
 
   static deployManualTriggerWithConfig(url: string) {
-    cy.wait(5000);
-    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', LONG_TIME)
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', VERY_LONG_TIME)
       .should("be.enabled")
       .click();
-
     cyGet('[data-cyid="configure-&-deploy-option"]')
       .click();
-
     cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', LONG_TIME)
       .should("be.enabled")
       .click();
