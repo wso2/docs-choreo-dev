@@ -17,6 +17,7 @@ package com.wso2.choreo.integration.config;
  * Test configs enum.
  */
 public enum ConfigDefinition {
+    REGIONS,
     CHOREO_ENDPOINT,
     CHOREO_NEW_APP_SERVICE_ENDPOINT,
     STS_ENDPOINT,
