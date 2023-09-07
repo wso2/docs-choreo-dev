@@ -2,11 +2,8 @@
 servicePort=9090
 healthPort=9092
 
-rudderEndpoint = "{{.RUDDER_ENDPOINT}}"
-projectManagerEndpoint = "{{.PROJECT_MANAGER_ENDPOINT}}"
-apimUrl = "{{.APIM_ENDPOINT}}"
-apimClientId = "{{.APIM_CLIENT_ID}}"
-apimClientSecret = "{{.APIM_CLIENT_SECRET}}"
+rudderEndpoint = "http://dp-rudder:80/api/v1"
+projectManagerEndpoint = "http://dp-project-manager:80/api/v1"
 
 [ballerina.log]
 format="json"

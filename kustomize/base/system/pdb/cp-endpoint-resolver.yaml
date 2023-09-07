@@ -7,4 +7,3 @@ spec:
   selector:
     matchLabels:
       choreo.component: endpoint-resolver
-      
