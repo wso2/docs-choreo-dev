@@ -63,10 +63,10 @@ spec:
               resources:
                 limits:
                   cpu: 1500m
-                  memory: 1024Mi
+                  memory: 700Mi
                 requests:
                   cpu: 1000m
-                  memory: 512Mi
+                  memory: 500Mi
               volumeMounts:
                 - name: perfanalyzer-config
                   mountPath: /home/python-ai/perf-analyzer/config/
