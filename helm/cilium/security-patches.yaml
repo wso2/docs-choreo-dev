@@ -11,4 +11,3 @@ spec:
       securityContext:
         seccompProfile:
           type: RuntimeDefault
-      hostNetwork: false
