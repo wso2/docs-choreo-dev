@@ -16,7 +16,7 @@ If you do not already have a component, you can choose to create one from the fo
     | Component type |Sample source                                       | Reference documentation      |
     |----------------|----------------------------------------------------|------------------------------|
     | REST API Proxy| [https://github.com/wso2/choreo-sample-apps/tree/main/rest-api-proxy/pet-store ](https://github.com/wso2/choreo-sample-apps/tree/main/rest-api-proxy/pet-store ) | [Develop a REST API Proxy ](../develop-components/develop-a-rest-api-proxy.md) |
-    | Service (Exposing a REST API endpoint)| [https://raw.githubusercontent.com/wso2/choreo-sample-apps/main/rest-api-proxy/pet-store/openapi.yaml](https://raw.githubusercontent.com/wso2/choreo-sample-apps/main/rest-api-proxy/pet-store/openapi.yaml ) |[Develop a REST API](/Users/shaniranasinghe/shani/git/new/docs-choreo-dev/en/docs/develop-components/develop-services/develop-a-rest-api.md) |
+    | Service (Exposing a REST API endpoint)| [https://raw.githubusercontent.com/wso2/choreo-sample-apps/main/rest-api-proxy/pet-store/openapi.yaml](https://raw.githubusercontent.com/wso2/choreo-sample-apps/main/rest-api-proxy/pet-store/openapi.yaml ) |[Develop a REST API](../develop-components/develop-services/develop-a-rest-api.md) |
 
 - An available OpenAPI specification in your component.
 
