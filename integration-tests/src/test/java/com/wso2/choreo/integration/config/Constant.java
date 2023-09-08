@@ -190,7 +190,7 @@ public final class Constant {
     public static final String ORG_MGT_SUFFIX = "/org-mgt/1.0.0/orgs/";
     public static final String DEFAULT_THEME = "/themes/default";
     public static final String ORG_API_SUFFIX = "/orgs/1.0.0/orgs/";
-    public static final String USER_MGT_SUFFIX = "/users-mgt/1.0.0/orgs/";
+    public static final String USER_MGT_SUFFIX = "/user-mgt/1.0.0/orgs/";
 
     // Config management related constants
     public static final String CONF_MGT_SUFFIX = "/config-mgt/1.0.0/orgs/";
