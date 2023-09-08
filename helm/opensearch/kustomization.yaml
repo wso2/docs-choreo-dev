@@ -60,7 +60,7 @@ helmCharts:
     image:
       pullPolicy: "Always"
       repository: "choreocontrolplane.azurecr.io/choreoipaas/choreo-opensearch"
-      tag: "dataplane-c39e983e88eeb18f04f7ec84394a9aec566323ad"
+      tag: "dataplane-db78848ce2a7e75814d7c27530b4f329ada85c4c"
     
     imagePullSecrets:
     - name: choreo-image-pull-secret
