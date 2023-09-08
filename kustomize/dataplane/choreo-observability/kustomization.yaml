@@ -16,5 +16,6 @@ resources:
   - network-policy.yaml
   - loggingapi
   - config
+  - obsapi
 
 namespace: choreo-observability

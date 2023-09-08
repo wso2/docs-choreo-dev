@@ -80,11 +80,11 @@ spec:
               subPath: organization-remover.yaml
           resources:
             limits:
-              cpu: 500m
-              memory: 512Mi
+              cpu: 150m
+              memory: 150Mi
             requests:
               cpu: 100m
-              memory: 256Mi
+              memory: 100Mi
       volumes:
         - name: secret-organization-remover
           csi:

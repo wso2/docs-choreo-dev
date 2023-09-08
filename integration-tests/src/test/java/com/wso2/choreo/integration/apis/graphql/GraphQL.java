@@ -32,6 +32,7 @@ import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.exceptions.ComponentCreationException;
 import com.wso2.choreo.integration.common.exceptions.DeploymentStatusByVersionFailureException;
 import com.wso2.choreo.integration.common.exceptions.GraphQLException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
@@ -39,6 +40,7 @@ import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundExcept
 import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
 import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
+import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
@@ -84,7 +86,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.consol.citrus.actions.EchoAction.Builder.echo;
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.container.RepeatUntilTrue.Builder.repeat;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
@@ -172,44 +173,51 @@ public class GraphQL extends ControlPlaneAPI {
 
 
 
-    public static Optional<CreateComponentResponseDTO> createUserManagedComponent(TestActionRunner runner, HttpClient client,
+    public static Optional<CreateComponentResponseDTO> createUserManagedComponent(TestNGCitrusSpringSupport runner, HttpClient client,
                                                                         String queryString, String projectId,
                                                                         String accessToken) throws Exception {
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
-
-        Map<String, String> responseParams = new HashMap<>();
-        responseParams.put("orgId", String.valueOf(ORG_ID));
-        responseParams.put("projectId", projectId);
-        responseParams.put("handler", ORG_HANDLE);
-        String expectedResponse = ObjectMapperUtil.mapObjectToString(
-                "templates/graphql/responses/createComponentSuccess.mustache", responseParams);
-
         AtomicReference<CreateComponentResponseDTO> responseDTO = new AtomicReference<>();
-        runner.$(http()
-                .client(client)
-                .send()
-                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(requestBody)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .body(expectedResponse)
-                .validate((message, context) -> {
-                    responseDTO.set(ObjectMapperUtil.mapStringToObject(CreateComponentResponseDTO.class,
-                            (String) message.getPayload(), "createComponent"));
-                }));
-
-        return responseDTO.get() == null ? Optional.empty() :  Optional.of(responseDTO.get());
+        runner.variable("isComponentCreationSuccess", false);
+        runner.$(repeat()
+                .until("(i = 5) or ( ${isComponentCreationSuccess} = true )")
+                .index("i")
+                .actions(
+                    http()
+                        .client(client)
+                        .send()
+                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(requestBody)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                    http().client(client)
+                        .receive()
+                        .response()
+                        .message()
+                        .type(MessageType.JSON)
+                        .validate((message, context) -> {
+                                int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                if (code == HttpStatus.OK.value()) {
+                                     context.setVariable("isComponentCreationSuccess", true);  
+                                responseDTO.set(ObjectMapperUtil.mapStringToObject(CreateComponentResponseDTO.class,
+                                   (String) message.getPayload(), "createComponent"));
+                                } else {
+                                        SleepUtil.sleep(5);
+                                }        
+                        })
+                )
+        );
+        
+        if (responseDTO.get() == null) {
+                throw new ComponentCreationException("Component creation response retrieval failure.");
+        } else {
+                return Optional.of(responseDTO.get());
+        }
     }
 
-    public static Optional<CreateByocComponentResponseDTO> createBYOCComponent(TestActionRunner runner, HttpClient client,
+    public static Optional<CreateByocComponentResponseDTO> createBYOCComponent(TestNGCitrusSpringSupport runner, HttpClient client,
                                                                                GraphqlDTO graphqlDTO,
                                                                                String accessToken) throws Exception {
         graphqlDTO.setOrgId(ORG_ID);
@@ -217,40 +225,52 @@ public class GraphQL extends ControlPlaneAPI {
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/createBYOCcomponent.mustache", graphqlDTO);
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
-
         Map<String, String> responseParams = new HashMap<>();
         responseParams.put("orgId", String.valueOf(ORG_ID));
         responseParams.put("projectId", graphqlDTO.getProjectId());
         responseParams.put("handler", ORG_HANDLE);
-        String expectedResponse = ObjectMapperUtil.mapObjectToString(
-                "templates/graphql/responses/createByocComponentSuccess.mustache", responseParams);
-
         AtomicReference<CreateByocComponentResponseDTO> responseDTO = new AtomicReference<>();
-        runner.$(http()
-                .client(client)
-                .send()
-                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(requestBody)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .body(expectedResponse)
-                .validate((message, context) -> {
-                    responseDTO.set(ObjectMapperUtil.mapStringToObject(CreateByocComponentResponseDTO.class,
-                            (String) message.getPayload(), "createByocComponent"));
-                }));
+        runner.variable("isComponentCreationSuccess", false);
+        runner.$(repeat()
+                .until("(i = 5) or ( ${isComponentCreationSuccess} = true )")
+                .index("i")
+                .actions(
+                    http()
+                        .client(client)
+                        .send()
+                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(requestBody)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                    http().client(client)
+                        .receive()
+                        .response()
+                        .message()
+                        .type(MessageType.JSON)
+                        .validate((message, context) -> {
+                                int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                if (code == HttpStatus.OK.value()) {
+                                     context.setVariable("isComponentCreationSuccess", true);  
+                                     responseDTO.set(ObjectMapperUtil.mapStringToObject(
+                                                CreateByocComponentResponseDTO.class, (String) message.getPayload(), 
+                                                        "createByocComponent"));
+                                } else {
+                                        SleepUtil.sleep(5);
+                                }        
+                        })
+                )
+        );
 
-        return responseDTO.get() == null ? Optional.empty() :  Optional.of(responseDTO.get());
+        if (responseDTO.get() == null) {
+                throw new ComponentCreationException("BYOC component creation response retrieval failure.");
+        } else {
+                return Optional.of(responseDTO.get());
+        }
     }
 
-    public static List<Commit> getCommitHistory(TestActionRunner runner, HttpClient client, String componentId,
+    public static List<Commit> getCommitHistory(TestNGCitrusSpringSupport runner, HttpClient client, String componentId,
                                             String accessToken) throws Exception {
         GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).build();
         String queryString = ObjectMapperUtil.
@@ -258,27 +278,44 @@ public class GraphQL extends ControlPlaneAPI {
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
         List<Commit> commitList = new ArrayList<>();
-
-        runner.$(http()
-                .client(client)
-                .send()
-                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(requestBody)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .validate((message, context) -> {
-                    Commit[] commits = ObjectMapperUtil.mapToCollection(Commit[].class, message.getPayload(String.class), "commitHistory");
-                    commitList.addAll(List.of(commits));
-                }));
-
+        runner.variable("isCommitHistoryRetrieved", false);
+        runner.$(repeatOnError()
+                .until("(i = 5) or ( ${isCommitHistoryRetrieved} = true )")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .body(requestBody)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .validate((message, context) -> {
+                                        int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                        if (code == HttpStatus.OK.value()) {
+                                                Commit[] commits = ObjectMapperUtil.mapToCollection(
+                                                        Commit[].class, message.getPayload(String.class), 
+                                                        "commitHistory");
+                                                commitList.addAll(List.of(commits));
+                                                if (commits.length > 0) {
+                                                        context.setVariable("isCommitHistoryRetrieved",
+                                                        true); 
+                                                }     
+                                        }
+                                })       
+                        )
+                );
+        
+        if (commitList.size() == 0) {
+               throw new NoLatestCommitHashFoundException(); 
+        }
+        
         return commitList;
     }
 
@@ -318,7 +355,7 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
     public static ChoreoProject createProject(String accessToken) throws IOException {
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(Constant.TEST_PROJECT_NAME_PREFIX.concat(String.valueOf(new Date().getTime())))
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(NameGenerator.generateUniqueName(Constant.TEST_PROJECT_NAME_PREFIX))
                 .description(Constant.TEST_PROJECT_DESCRIPTION).orgId(ORG_ID).orgHandler(ORG_HANDLE).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/createProject.mustache", graphqlDTO);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
@@ -328,20 +365,17 @@ public class GraphQL extends ControlPlaneAPI {
     public static ChoreoProject createProject(TestNGCitrusSpringSupport runner, HttpClient client, String region,
                                               String accessToken) throws Exception {
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(
-                Constant.TEST_PROJECT_NAME_PREFIX.concat(String.valueOf(new Date().getTime())))
+                NameGenerator.generateUniqueName(Constant.TEST_PROJECT_NAME_PREFIX))
                 .description(Constant.TEST_PROJECT_DESCRIPTION).region(region).orgId(ORG_ID).
                 orgHandler(ORG_HANDLE).build();
-
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/createProject.mustache", graphqlDTO);
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
-
         AtomicReference<ChoreoProject> project = new AtomicReference<>();
-
-        runner.$(repeatOnError()
-                .until("i = 5")
+        runner.variable("isProjectCreationSuccess", false);
+        runner.$(repeat()
+                .until("(i = 5) or ( ${isProjectCreationSuccess} = true )")
                 .index("i")
-                .autoSleep(5000)
                 .actions(
                     http()
                         .client(client)
@@ -354,14 +388,18 @@ public class GraphQL extends ControlPlaneAPI {
                         .accept(MediaType.APPLICATION_JSON_VALUE),
                     http().client(client)
                         .receive()
-                        .response(HttpStatus.OK)
+                        .response()
                         .message()
-                        .type(MessageType.JSON)
                         .validate((message, context) -> {
-                            project.set(ObjectMapperUtil.mapStringToObject(ChoreoProject.class,
-                                    message.getPayload(String.class), "createProject"));
-                        })));
-
+                                int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                if (code == HttpStatus.OK.value()) {
+                                     context.setVariable("isProjectCreationSuccess", true);  
+                                     project.set(ObjectMapperUtil.mapStringToObject(ChoreoProject.class, message
+                                        .getPayload(String.class), "createProject")); 
+                                }        
+                        })
+                )
+        );
         return project.get();
     }
 

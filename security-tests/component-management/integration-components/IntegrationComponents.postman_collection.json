@@ -1,0 +1,603 @@
+{
+	"info": {
+		"_postman_id": "66e0bde4-5504-4a12-99c2-267322e2053e",
+		"name": "Integration Components Test - Elevated access across orgs in Choreo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create MI component",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var componentId = jsonData.data.createIntegrationComponent.id;",
+							"var componentHandle = jsonData.data.createIntegrationComponent.handle;",
+							"",
+							"pm.environment.set(\"componentHandler\", componentHandle.toString());",
+							"pm.environment.set(\"componentId\", componentId.toString());",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation ($orgId: Int!, $orgHandler: String!, $projectId: String!) {\n  createIntegrationComponent(\n    component: {\n      name: \"mi-service\"\n      displayName: \"mi-service\"\n      description: \"\"\n      orgId: $orgId\n      orgHandler: $orgHandler\n      projectId: $projectId\n      labels: \"\"\n      componentType: \"miApiService\"\n      accessibility: \"external\"\n      srcGitRepoUrl: \"https://github.com/chameerar/hello-world-project\"\n      srcGitRepoBranch: \"main\"\n      repositorySubPath: \"\"\n      oasFilePath: \"\"\n      version: \"1.0.0\"\n      secretRef: \"\"\n    }\n  ) {\n    id\n    organizationId\n    projectId\n    handle\n  }\n}\n",
+						"variables": "{\n    \"orgId\": {{orgId}},\n    \"orgHandler\": \"{{orgHandler}}\",\n    \"projectId\": \"{{projectId}}\"\n}"
+					},
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/projects/1.0.0/graphql",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"projects",
+						"1.0.0",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retreive Component",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var apiVersion = jsonData.data.component.apiVersions[0];",
+							"pm.environment.set(\"versionId\", apiVersion.id);",
+							"",
+							"var appEnvVersions = apiVersion.appEnvVersions",
+							"var devAppEnvVersion;",
+							"for(const appEnvVersion of appEnvVersions){",
+							"    if(appEnvVersion.release.metadata.choreoEnv == \"dev\"){",
+							"        devAppEnvVersion = appEnvVersion;",
+							"        break",
+							"    }",
+							"}",
+							"",
+							"pm.environment.set(\"releaseId\", devAppEnvVersion.releaseId);",
+							"pm.environment.set(\"commitHash\", devAppEnvVersion.release.gitHash);",
+							"pm.environment.set(\"devEnvironmentId\", devAppEnvVersion.environmentId);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query ($projectId: String!, $componentHandler: String!) {\n  component(projectId: $projectId, componentHandler: $componentHandler) {\n    id\n    name\n    handler\n    description\n    displayType\n    displayName\n    ownerName\n    orgId\n    orgHandler\n    version\n    labels\n    createdAt\n    updatedAt\n    projectId\n    apiId\n    httpBased\n    isMigrationCompleted\n    repository {\n      gitProvider\n      nameApp\n      nameConfig\n      branch\n      branchApp\n      organizationApp\n      organizationConfig\n      isUserManage\n      appSubPath\n      byocBuildConfig {\n        id\n        isMainContainer\n        containerId\n        componentId\n        repositoryId\n        dockerContext\n        dockerfilePath\n        oasFilePath\n      }\n      byocWebAppBuildConfig {\n        id\n        containerId\n        componentId\n        repositoryId\n        dockerContext\n        webAppType\n        buildCommand\n        packageManagerVersion\n        outputDirectory\n      }\n    }\n    apiVersions {\n      apiVersion\n      proxyName\n      proxyUrl\n      proxyId\n      id\n      state\n      latest\n      branch\n      accessibility\n      appEnvVersions {\n        environmentId\n        releaseId\n        release {\n          id\n          metadata {\n            choreoEnv\n          }\n          environmentId\n          environment\n          gitHash\n          gitOpsHash\n        }\n      }\n    }\n  }\n}\n",
+						"variables": "{\n    \"projectId\": \"{{projectId}}\",\n    \"componentHandler\": \"{{componentHandler}}\"\n}"
+					},
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/projects/1.0.0/graphql",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"projects",
+						"1.0.0",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create MI Event component",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation ($orgId: Int!, $orgHandler: String!, $projectId: String!) {\n  createIntegrationComponent(\n    component: {\n      name: \"mi-event\"\n      displayName: \"mi-event\"\n      description: \"\"\n      orgId: $orgId\n      orgHandler: $orgHandler\n      projectId: $projectId\n      labels: \"\"\n      componentType: \"miEventHandler\"\n      accessibility: \"external\"\n      srcGitRepoUrl: \"https://github.com/chameerar/hello-world-project\"\n      srcGitRepoBranch: \"main\"\n      repositorySubPath: \"\"\n      oasFilePath: \"\"\n      version: \"1.0.0\"\n      secretRef: \"\"\n    }\n  ) {\n    id\n    organizationId\n    projectId\n    handle\n  }\n}\n",
+						"variables": "{\n    \"orgId\": {{orgId}},\n    \"orgHandler\": \"{{orgHandler}}\",\n    \"projectId\": \"{{projectId}}\"\n}"
+					},
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/projects/1.0.0/graphql",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"projects",
+						"1.0.0",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create BYOC component",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": ""
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation ($orgId: Int!, $orgHandler: String!, $projectId: String!) {\n  createByocComponent(\n    component: {\n      name: \"container-event\"\n      displayName: \"container-event\"\n      description: \"\"\n      orgId: $orgId\n      orgHandler: $orgHandler\n      projectId: $projectId\n      labels: \"\"\n      componentType: \"byocWebhook\"\n      port: 80\n      oasFilePath: \"\"\n      accessibility: \"external\"\n      byocConfig: {\n        dockerfilePath: \"ipaas/containerized/containerized-rabbitmq-listener/Dockerfile\"\n        dockerContext: \"ipaas/containerized/containerized-rabbitmq-listener\"\n        srcGitRepoUrl: \"https://github.com/chameerar/choreo-examples\"\n        srcGitRepoBranch: \"main\"\n      }\n      secretRef: \"\"\n    }\n  ) {\n    id\n    organizationId\n    projectId\n    handle\n  }\n}",
+						"variables": "{\n    \"orgId\": {{orgId}},\n    \"orgHandler\": \"{{orgHandler}}\",\n    \"projectId\": \"{{projectId}}\"\n}"
+					},
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/projects/1.0.0/graphql",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"projects",
+						"1.0.0",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Env variable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"new\": \"value\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/devops/1.0.0/api/v1/components/integration/{{componentId}}/release/{{releaseId}}/environment-variables?project_id={{projectId}}&env_id={{devEnvironmentId}}&organization_id={{orgUuid}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"devops",
+						"1.0.0",
+						"api",
+						"v1",
+						"components",
+						"integration",
+						"{{componentId}}",
+						"release",
+						"{{releaseId}}",
+						"environment-variables"
+					],
+					"query": [
+						{
+							"key": "project_id",
+							"value": "{{projectId}}"
+						},
+						{
+							"key": "env_id",
+							"value": "{{devEnvironmentId}}"
+						},
+						{
+							"key": "organization_id",
+							"value": "{{orgUuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Secret",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"new\": \"value2\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/devops/1.0.0/api/v1/components/integration/{{componentId}}/release/{{releaseId}}/secrets?project_id={{projectId}}&env_id={{devEnvironmentId}}&organization_id={{orgUuid}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"devops",
+						"1.0.0",
+						"api",
+						"v1",
+						"components",
+						"integration",
+						"{{componentId}}",
+						"release",
+						"{{releaseId}}",
+						"secrets"
+					],
+					"query": [
+						{
+							"key": "project_id",
+							"value": "{{projectId}}"
+						},
+						{
+							"key": "env_id",
+							"value": "{{devEnvironmentId}}"
+						},
+						{
+							"key": "organization_id",
+							"value": "{{orgUuid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Usage Insights - List environments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"var envList = jsonData.data.listEnvironments;",
+							"for(const env of envList){",
+							"    if(env.name == \"Development\"){",
+							"        pm.environment.set(\"devEnvironmentId\", env.id);",
+							"        break",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"variables\": {\n        \"org\": {\n            \"orgId\": \"{{orgUuid}}\"\n        },\n        \"projectId\": \"{{projectId}}\"\n    },\n    \"query\": \"query ($org: OrgFilter!, $projectId: String) {\\n  listEnvironments(org: $org, projectId: $projectId) {\\n    id\\n    externalEnvId\\n    internalEnvId\\n    sandboxEnvId\\n    name\\n    type\\n    __typename\\n  }\\n}\\n\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrlInsights}}/insights/1.0.0/query-api",
+					"host": [
+						"{{baseUrlInsights}}"
+					],
+					"path": [
+						"insights",
+						"1.0.0",
+						"query-api"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Usage Insights - Insights",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"variables\": {\n        \"filter\": {\n            \"from\": \"2023-06-23T13:11:06.000+05:30\",\n            \"to\": \"2023-06-30T13:11:06.000+05:30\"\n        },\n        \"latencySummaryFilter\": {\n            \"granularity\": \"1d\"\n        },\n        \"granularity\": \"1d\",\n        \"dataFilter\": {\n            \"orgId\": \"{{orgUuid}}\",\n            \"environmentIds\": [\n                \"{{devEnvironmentId}}\",\n                \"dev-us-east-azure\",\n                \"sandbox-dev\",\n                \"Dev-Internal\"\n            ],\n            \"tenant\": \"carbon.super\",\n            \"projectId\": \"{{projectId}}\"\n        }\n    },\n    \"query\": \"query ($dataFilter: DataFilter!, $filter: TimeFilter!, $latencySummaryFilter: LatencySummaryFilter!, $granularity: String!) {\\n  getTotalTraffic(filter: $filter, dataFilter: $dataFilter)\\n  getOverallLatency(filter: $filter, dataFilter: $dataFilter)\\n  getTotalErrors(filter: $filter, dataFilter: $dataFilter)\\n  getLatencySummary(\\n    filter: $filter\\n    latencySummaryFilter: $latencySummaryFilter\\n    dataFilter: $dataFilter\\n  ) {\\n    summary {\\n      timeSpan\\n      latencyTime\\n      __typename\\n    }\\n    granularity\\n    __typename\\n  }\\n  getSuccessSummary(\\n    filter: $filter\\n    dataFilter: $dataFilter\\n    granularity: $granularity\\n  ) {\\n    summary {\\n      timeSpan\\n      requestCount\\n      __typename\\n    }\\n    granularity\\n    __typename\\n  }\\n  getErrorSummary(\\n    filter: $filter\\n    dataFilter: $dataFilter\\n    granularity: $granularity\\n  ) {\\n    summary {\\n      timeSpan\\n      errorCount\\n      __typename\\n    }\\n    granularity\\n    __typename\\n  }\\n}\\n\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrlInsights}}/insights/1.0.0/query-api",
+					"host": [
+						"{{baseUrlInsights}}"
+					],
+					"path": [
+						"insights",
+						"1.0.0",
+						"query-api"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

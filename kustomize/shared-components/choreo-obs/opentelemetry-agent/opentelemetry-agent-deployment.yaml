@@ -31,6 +31,7 @@ spec:
       labels:
         choreo.component: opentelemetry-agent
         antiaffinity: opentelemetry-agent
+        userapp-ingress-allowed: "true"
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"

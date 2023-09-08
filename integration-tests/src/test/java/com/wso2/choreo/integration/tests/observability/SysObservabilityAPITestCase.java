@@ -24,13 +24,13 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.Endpoints;
-import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.endpoints.Endpoint;
 import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.config.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +71,8 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
 
+    ComponentDeploymentStatusDTO deploymentStatusDTO, promotionStatusDTO;
+
     @DataProvider(name = "env-provider")
     public Object[][] environment() {
         return new Object[][]{{Constant.Environment.Development}, {Constant.Environment.Production}};
@@ -89,7 +91,8 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @Test
     @CitrusTest
     public void createComponent_SysObservabilityAPITestCase() throws Exception {
-        ChoreoProject project = GraphQL.createProject(accessToken);
+        ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, 
+                Constant.region.US.toString());
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
 
         Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/byor-service-app1").
@@ -107,15 +110,16 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createComponent_SysObservabilityAPITestCase"})
     @CitrusTest
     public void deployComponent_SysObservabilityAPITestCase() throws Exception {
-        ComponentUtils.deployComponent(this, citrusClients, accessToken, choreoComponent,
-                environments, ComponentFlavour.STANDARD);
+        deploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, 
+                accessToken, choreoComponent, environments, ComponentFlavour.STANDARD);
     }
 
     @Test(dependsOnMethods = {"deployComponent_SysObservabilityAPITestCase"})
     @CitrusTest
     public void promoteComponent_SysObservabilityAPITestCase() throws Exception {
-        ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent,
+        List<ComponentDeploymentStatusDTO> promotionStatuses = ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent,
                 environments, ComponentFlavour.STANDARD);
+        promotionStatusDTO = promotionStatuses.get(0);
     }
 
     @Test(dependsOnMethods = {"promoteComponent_SysObservabilityAPITestCase"})
@@ -219,20 +223,16 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testSystemMetrics_SysObservabilityAPITestCase"})
     @CitrusTest
     public void undeployComponentDev_SysObservabilityAPITestCase() throws Exception {
-        String devReleaseId = GraphQL.componentDeployment(choreoComponent, Constant.DEV_ENVIRONMENT,
-                accessToken).getReleaseId();
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(choreoComponent.getId()).orgHandler(orgHandle)
-                .componentType("ballerinaService").releaseId(devReleaseId).build();
+                .componentType("ballerinaService").releaseId(deploymentStatusDTO.getReleaseId()).build();
         GraphQL.stopDeployment(this, appServiceClient, accessToken, graphqlDTO);
     }
 
     @Test(dependsOnMethods = {"undeployComponentDev_SysObservabilityAPITestCase"})
     @CitrusTest
     public void undeployComponentProd_SysObservabilityAPITestCase() throws Exception {
-        String prodReleaseId = GraphQL.componentDeployment(choreoComponent, Constant.PROD_ENVIRONMENT,
-                accessToken).getReleaseId();
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(choreoComponent.getId()).orgHandler(orgHandle)
-                .componentType("ballerinaService").releaseId(prodReleaseId).build();
+                .componentType("ballerinaService").releaseId(promotionStatusDTO.getReleaseId()).build();
         GraphQL.stopDeployment(this, appServiceClient, accessToken, graphqlDTO);
     }
 }

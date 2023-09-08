@@ -16,6 +16,8 @@ spec:
     metadata:
       labels:
         choreo.component: telemetry
+        choreo.telemetry.all: enabled
+        choreo.telemetry.bal: enabled
         antiaffinity: telemetry
       annotations:
         linkerd.io/inject: enabled
@@ -88,11 +90,11 @@ spec:
               path: /liveness
           resources:
             limits:
-              cpu: 1000m
-              memory: 6Gi
+              cpu: 750m
+              memory: 5.5Gi
             requests:
-              cpu: 1000m
-              memory: 6Gi
+              cpu: 500m
+              memory: 5Gi
       volumes:
         - name: config
           configMap:

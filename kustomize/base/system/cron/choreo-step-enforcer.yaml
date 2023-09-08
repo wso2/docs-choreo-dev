@@ -61,11 +61,11 @@ spec:
                     name: env-step-enforcer
               resources:
                 limits:
-                  cpu: 500m
-                  memory: 1024Mi
+                  cpu: 750m
+                  memory: 400Mi
                 requests:
-                  cpu: 300m
-                  memory: 512Mi
+                  cpu: 500m
+                  memory: 300Mi
               volumeMounts:
                 - name: config
                   mountPath: /home/ballerina/Config.toml

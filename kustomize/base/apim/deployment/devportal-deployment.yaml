@@ -81,11 +81,11 @@ spec:
               protocol: TCP
           resources:
             limits:
-              cpu: 500m
-              memory: 768Mi
+              cpu: 100m
+              memory: 100Mi
             requests:
-              cpu: 300m
-              memory: 512Mi
+              cpu: 50m
+              memory: 50Mi
           volumeMounts:
             - name: devportal-var-cache-dir
               mountPath: /var/cache/nginx

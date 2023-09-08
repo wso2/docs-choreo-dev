@@ -3,6 +3,7 @@ package com.wso2.choreo.integration.tests.dp;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
+import com.wso2.choreo.integration.config.OptionalConfigDefinition;
 import org.testng.ITest;
 import org.testng.annotations.*;
 
@@ -10,18 +11,26 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class TestBase extends TestNGCitrusSpringSupport implements ITest {
     private final ThreadLocal<String> testName = new ThreadLocal<>();
-    private  List<DataProviderWrapper> dps = new ArrayList<>();
+    private final List<DataProviderWrapper> dps = new ArrayList<>();
 
 
     @BeforeClass
     public Object[][] setUp() {
-        if (dps.size() == 0) {
-            String[] regions = Configuration.getConfig(ConfigDefinition.REGIONS).split(",");
-            for (String region : regions) {
-                DataProviderWrapper dp = DataProviderWrapper.builder().region(region).build();
+        if (dps.isEmpty()) {
+            Optional<String> regionValue = Configuration.getOptionalConfig(OptionalConfigDefinition.REGIONS);
+
+            if (regionValue.isPresent()) {
+                String[] regions = regionValue.get().split(",");
+                for (String region : regions) {
+                    DataProviderWrapper dp = DataProviderWrapper.builder().region(region).build();
+                    dps.add(dp);
+                }
+            } else {
+                DataProviderWrapper dp = DataProviderWrapper.builder().region("").build();
                 dps.add(dp);
             }
         }
@@ -31,8 +40,8 @@ public class TestBase extends TestNGCitrusSpringSupport implements ITest {
 
     @AfterClass
     public void clean(){
-        if(dps.size()>0){
-           dps=new ArrayList<>();
+        if(!dps.isEmpty()){
+           dps.clear();
         }
     }
 

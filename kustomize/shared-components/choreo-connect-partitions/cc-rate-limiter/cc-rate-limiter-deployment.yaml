@@ -31,6 +31,9 @@ spec:
       maxUnavailable: 0
     type: RollingUpdate
   template:
+    metadata:
+      labels:
+        userapp-ingress-allowed: "true"
     spec:
       affinity:
         podAntiAffinity:
@@ -62,11 +65,11 @@ spec:
           imagePullPolicy: Always
           resources:
             requests:
-              memory: "256Mi"
-              cpu: "0.1"
+              memory: 50Mi
+              cpu: 50m
             limits:
-              memory: "512Mi"
-              cpu: "0.3"
+              memory: 100Mi
+              cpu: 100m
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -117,11 +120,11 @@ spec:
                 name: env-cc-rate-limiter
           resources:
             requests:
-              memory: "2Gi"
-              cpu: "1500m"
+              memory: 100Mi
+              cpu: 100m
             limits:
-              memory: "2Gi"
-              cpu: "1500m"
+              memory: 150Mi
+              cpu: 150m
           ports:
             - containerPort: 8090
             - containerPort: 8091

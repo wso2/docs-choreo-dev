@@ -70,7 +70,6 @@ public class TestProxyApiDpWithAPIRateLimit extends TestBase {
         dp.setChoreoProject(project);
         dp.setFirstName(firstAPIName);
         dp.setContext(firstContext);
-        Assert.assertEquals(project.getRegion(), dp.getRegion());
     }
 
     @Test(dependsOnMethods = {"creteProject_ProxyApiDpWithAPIRateLimit"}, dataProvider = "dps")

@@ -31,6 +31,9 @@ spec:
       maxUnavailable: 0
     type: RollingUpdate
   template:
+    metadata:
+      labels:
+        userapp-ingress-allowed: "true"
     spec:
       affinity:
         podAntiAffinity:
@@ -127,7 +130,7 @@ spec:
           resources:
             requests:
               memory: "3Gi"
-              cpu: "2"
+              cpu: "1"
             limits:
               memory: "3Gi"
               cpu: "2"
@@ -186,10 +189,10 @@ spec:
           resources:
             requests:
               memory: "3Gi"
-              cpu: "2"
+              cpu: 200m
             limits:
               memory: "3Gi"
-              cpu: "2"
+              cpu: 300m
           ports:
             - containerPort: 9000
             - containerPort: 9095

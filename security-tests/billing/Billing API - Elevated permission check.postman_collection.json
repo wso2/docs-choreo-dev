@@ -1,0 +1,1106 @@
+{
+	"info": {
+		"_postman_id": "80c4c529-5af8-454c-8553-31a4c9304999",
+		"name": "Billing API - Elevated permission check",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8079270"
+	},
+	"item": [
+		{
+			"name": "1. Get tier list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/tiers?cloudType=choreo",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"tiers"
+					],
+					"query": [
+						{
+							"key": "cloudType",
+							"value": "choreo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Retrieve coupon by coupon ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/coupons/{{COUPON_ID}}",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"coupons",
+						"{{COUPON_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Get subscriptions",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/organizations/{{ORG_UUID}}/subscriptions?cloudType=choreo",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"organizations",
+						"{{ORG_UUID}}",
+						"subscriptions"
+					],
+					"query": [
+						{
+							"key": "cloudType",
+							"value": "choreo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Submit enterprise upgrade request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cloudType\": \"choreo\",\n    \"organizationId\": \"{{ORG_UUID}}\",\n    \"name\": \"Test Org\",\n    \"email\": \"choreorbactestuser@gmail.com\",\n    \"phoneNumber\": \"0777123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/notifications/enterprise",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"notifications",
+						"enterprise"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Send emails for subscription upgrade requests fro Asgardeo",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"contactDetails\": {\n        \"name\": \"Test Asgardeo Org\",\n        \"email\": \"choreorbactestuser@gmail.com\",\n        \"phoneNumber\": \"0777123456\",\n        \"country\": \"Sri Lanka\"\n    },\n    \"cloudType\": \"choreo\",\n    \"organizationId\": \"{{ORG_UUID}}\",\n    \"currentTierName\": \"Individual\",\n    \"upgradingTierName\": \"Team\",\n    \"upgradingBillingCycle\": \"monthly\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/notifications",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"notifications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Create billing organization",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Cloud-Type",
+						"value": "choreo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"address\": {\n        \"city\": \"Colombo\",\n        \"country\": \"LK\",\n        \"line1\": \"20\",\n        \"postalCode\": \"00400\",\n        \"state\": \"Western\"\n    },\n    \"billingProvider\": \"stripe\",\n    \"email\": \"choreorbactestuser@gmail.com\",\n    \"name\": \"Choreo RBAC\",\n    \"organizationId\": \"{{ORG_UUID}}\",\n    \"phone\": \"+94777800909\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/organizations",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"organizations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. Add Stripe Payment Method",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "type",
+							"value": "card",
+							"type": "text"
+						},
+						{
+							"key": "metadata[name_on_card]",
+							"value": "Ayesh",
+							"type": "text"
+						},
+						{
+							"key": "billing_details[name]",
+							"value": "Ayesh Dev",
+							"type": "text"
+						},
+						{
+							"key": "billing_details[email]",
+							"value": "ayesh@wso2.com",
+							"type": "text"
+						},
+						{
+							"key": "billing_details[address][city]",
+							"value": "Colombo",
+							"type": "text"
+						},
+						{
+							"key": "billing_details[address][country]",
+							"value": "LK",
+							"type": "text"
+						},
+						{
+							"key": "billing_details[address][line1]",
+							"value": "20",
+							"type": "text"
+						},
+						{
+							"key": "billing_details[address][line2]",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "billing_details[address][state]",
+							"value": "Western",
+							"type": "text"
+						},
+						{
+							"key": "billing_details[address][postal_code]",
+							"value": "00300",
+							"type": "text"
+						},
+						{
+							"key": "billing_details[phone]",
+							"value": "+94712348907",
+							"type": "text"
+						},
+						{
+							"key": "card[number]",
+							"value": "4111111111111111",
+							"type": "text"
+						},
+						{
+							"key": "card[cvc]",
+							"value": "234",
+							"type": "text"
+						},
+						{
+							"key": "card[exp_month]",
+							"value": "12",
+							"type": "text"
+						},
+						{
+							"key": "card[exp_year]",
+							"value": "32",
+							"type": "text"
+						},
+						{
+							"key": "guid",
+							"value": "8bc73239-a5ce-469b-9e2e-eee5891712151cd54c",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "muid",
+							"value": "f6f8ef94-092c-45c9-9f24-e50bc5c49d11a07875",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "sid",
+							"value": "d418b047-1b10-4071-b0a6-415810fdf55bb89fea",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "payment_user_agent",
+							"value": "stripe.js/814c622cf5; stripe-js-v3/814c622cf5; split-card-element",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "time_on_page",
+							"value": "19533530",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "key",
+							"value": "{{STRIPE_PUBLISHABLE_KEY}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://api.stripe.com/v1/payment_methods",
+					"protocol": "https",
+					"host": [
+						"api",
+						"stripe",
+						"com"
+					],
+					"path": [
+						"v1",
+						"payment_methods"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8. Attach payment method",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Cloud-Type",
+						"value": "choreo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"isDefault\": true,\n    \"paymentMethodId\": \"{{PAYMENT_METHOD_ID_1}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/organizations/{{ORG_UUID}}/payment-methods",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"organizations",
+						"{{ORG_UUID}}",
+						"payment-methods"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9. Create subscription",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cloudType\": \"choreo\",\n    \"paymentMethodId\": \"{{PAYMENT_METHOD_ID_1}}\",\n    \"subscriptionType\": \"choreo-subscription\",\n    \"tierId\": \"c971b211-bc44-4f35-90ad-4d62b313b466\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/organizations/{{ORG_UUID}}/subscriptions",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"organizations",
+						"{{ORG_UUID}}",
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10. Add Stripe Payment Method",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "type",
+							"value": "card",
+							"type": "text"
+						},
+						{
+							"key": "metadata[name_on_card]",
+							"value": "Ayesh",
+							"type": "text"
+						},
+						{
+							"key": "billing_details[name]",
+							"value": "Ayesh Dev",
+							"type": "text"
+						},
+						{
+							"key": "billing_details[email]",
+							"value": "ayesh@wso2.com",
+							"type": "text"
+						},
+						{
+							"key": "billing_details[address][city]",
+							"value": "Colombo",
+							"type": "text"
+						},
+						{
+							"key": "billing_details[address][country]",
+							"value": "LK",
+							"type": "text"
+						},
+						{
+							"key": "billing_details[address][line1]",
+							"value": "20",
+							"type": "text"
+						},
+						{
+							"key": "billing_details[address][line2]",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "billing_details[address][state]",
+							"value": "Western",
+							"type": "text"
+						},
+						{
+							"key": "billing_details[address][postal_code]",
+							"value": "00300",
+							"type": "text"
+						},
+						{
+							"key": "billing_details[phone]",
+							"value": "+94712348907",
+							"type": "text"
+						},
+						{
+							"key": "card[number]",
+							"value": "4242424242424242",
+							"type": "text"
+						},
+						{
+							"key": "card[cvc]",
+							"value": "123",
+							"type": "text"
+						},
+						{
+							"key": "card[exp_month]",
+							"value": "11",
+							"type": "text"
+						},
+						{
+							"key": "card[exp_year]",
+							"value": "36",
+							"type": "text"
+						},
+						{
+							"key": "guid",
+							"value": "8bc73239-a5ce-469b-9e2e-eee5891712151cd54c",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "muid",
+							"value": "f6f8ef94-092c-45c9-9f24-e50bc5c49d11a07875",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "sid",
+							"value": "d418b047-1b10-4071-b0a6-415810fdf55bb89fea",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "payment_user_agent",
+							"value": "stripe.js/814c622cf5; stripe-js-v3/814c622cf5; split-card-element",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "time_on_page",
+							"value": "19533530",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "key",
+							"value": "{{STRIPE_PUBLISHABLE_KEY}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://api.stripe.com/v1/payment_methods",
+					"protocol": "https",
+					"host": [
+						"api",
+						"stripe",
+						"com"
+					],
+					"path": [
+						"v1",
+						"payment_methods"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11. Attach payment method",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Cloud-Type",
+						"value": "choreo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"isDefault\": true,\n    \"paymentMethodId\": \"{{PAYMENT_METHOD_ID_2}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/organizations/{{ORG_UUID}}/payment-methods",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"organizations",
+						"{{ORG_UUID}}",
+						"payment-methods"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12. Get payment methods",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Cloud-Type",
+						"value": "choreo",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/organizations/{{ORG_UUID}}/payment-methods",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"organizations",
+						"{{ORG_UUID}}",
+						"payment-methods"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "13. Detach payment method",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Cloud-Type",
+						"value": "choreo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/organizations/{{ORG_UUID}}/payment-methods/{{PAYMENT_METHOD_ID_2}}",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"organizations",
+						"{{ORG_UUID}}",
+						"payment-methods",
+						"{{PAYMENT_METHOD_ID_2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "14. Get billing organization",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Cloud-Type",
+						"value": "choreo",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/organizations/{{ORG_UUID}}",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"organizations",
+						"{{ORG_UUID}}"
+					],
+					"query": [
+						{
+							"key": "cloudType",
+							"value": "choreo",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "15. Get Overview",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/organizations/{{ORG_UUID}}/billing-overview?cloudType=choreo",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"organizations",
+						"{{ORG_UUID}}",
+						"billing-overview"
+					],
+					"query": [
+						{
+							"key": "cloudType",
+							"value": "choreo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "16. Update billing organization",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"address\": {\n        \"city\": \"Colombo\",\n        \"country\": \"LK\",\n        \"line1\": \"200\",\n        \"postalCode\": \"00400\",\n        \"state\": \"Western\"\n    },\n    \"email\": \"manjular@wso2.com\",\n    \"name\": \"Manjula Dev\",\n    \"phone\": \"+94777800909\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/organizations/{{ORG_UUID}}",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"organizations",
+						"{{ORG_UUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "17. Update subscription v2",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cloudType\": \"choreo\",\n    \"operation\": \"cancel\",\n    \"paymentMethodId\": \"{{PAYMENT_METHOD_ID_1}}\",\n    \"subscriptionType\": \"choreo-subscription\",\n    \"tierId\": \"352dd60e-8e14-4bb3-9dab-395a16fbfeff\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/organizations/{{ORG_UUID}}/subscriptions/{{SUBSCRIPTION_ID}}/v2",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"organizations",
+						"{{ORG_UUID}}",
+						"subscriptions",
+						"{{SUBSCRIPTION_ID}}",
+						"v2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "18. Retrieve invoices",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/organizations/{{ORG_UUID}}/invoices?cloudType=choreo",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"organizations",
+						"{{ORG_UUID}}",
+						"invoices"
+					],
+					"query": [
+						{
+							"key": "cloudType",
+							"value": "choreo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "19. Retrieve invoice by ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Cloud-Type",
+						"value": "choreo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/organizations/{{ORG_UUID}}/invoices/{{INVOICE_ID}}",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"organizations",
+						"{{ORG_UUID}}",
+						"invoices",
+						"{{INVOICE_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "20. Cleanup billing organization",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Cloud-Type",
+						"value": "choreo",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/organizations/{{ORG_UUID}}/clean-up",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"organizations",
+						"{{ORG_UUID}}",
+						"clean-up"
+					],
+					"query": [
+						{
+							"key": "cloudType",
+							"value": "choreo",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get component's step usage",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "pm_1NezHREeYOVsvOhWjaZ2hjCp",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/organizations/{{ORG_UUID}}/components/{{COMPONENT_ID}}/step-count?cloudType=choreo&componentType=service&startTime={{START_TIMESTAMP}}&endTime={{END_TIMESTAMP}}",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"organizations",
+						"{{ORG_UUID}}",
+						"components",
+						"{{COMPONENT_ID}}",
+						"step-count"
+					],
+					"query": [
+						{
+							"key": "cloudType",
+							"value": "choreo"
+						},
+						{
+							"key": "componentType",
+							"value": "service"
+						},
+						{
+							"key": "startTime",
+							"value": "{{START_TIMESTAMP}}"
+						},
+						{
+							"key": "endTime",
+							"value": "{{END_TIMESTAMP}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update subscription (Deprecated)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cloudType\": \"choreo\",\n    \"operation\": \"cancel\",\n    \"paymentMethodId\": \"pm_sampleEeYOVsvOhxxxxxxxxx\",\n    \"subscriptionType\": \"choreo-subscription\",\n    \"tierId\": \"352dd60e-8e14-4bb3-9dab-395a16fbfeff\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/organizations/{{ORG_UUID}}/subscriptions/sub_samplexxxxxxxxxx",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"organizations",
+						"{{ORG_UUID}}",
+						"subscriptions",
+						"sub_samplexxxxxxxxxx"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register Azure subscription",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{DEVELOPER_TOKEN}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Cloud-Type",
+						"value": "choreo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cloudType\": \"choreo\",\n    \"organizationId\": \"{{ORG_UUID}}\",\n    \"azureMarketplaceToken\": \"{{AZURE_TOKEN}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{HOST_NAME}}/api/register-azure-subscription",
+					"protocol": "https",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"api",
+						"register-azure-subscription"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

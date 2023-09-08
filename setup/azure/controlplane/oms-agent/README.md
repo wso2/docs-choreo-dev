@@ -1,5 +1,3 @@
-## Reflector configuration
-
 ### Description
 Configure the oms agent in control plane cluster
 

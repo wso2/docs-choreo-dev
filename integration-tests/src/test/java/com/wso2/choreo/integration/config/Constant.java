@@ -182,4 +182,27 @@ public final class Constant {
     // Delivery Insights related constants
     public static final String CIO_INCIDENT_CONFIGURATOR = "/cio-incident-configurator/1.0.0";
     public static final String CIO_QUERY_API = "/cio-query-api/1.0.0/query";
+
+    // Component Managemnt related constants
+    public static final String COMPONET_MGT_SUFFIX = "/projects/1.0.0/graphql";
+
+    // Org Managemnt related constants
+    public static final String ORG_MGT_SUFFIX = "/org-mgt/1.0.0/orgs/";
+    public static final String DEFAULT_THEME = "/themes/default";
+    public static final String ORG_API_SUFFIX = "/orgs/1.0.0/orgs/";
+    public static final String USER_MGT_SUFFIX = "/users-mgt/1.0.0/orgs/";
+
+    // Config management related constants
+    public static final String CONF_MGT_SUFFIX = "/config-mgt/1.0.0/orgs/";
+
+    // Billing related constants
+    public static final String X_CLOUD_TYPE = "X-Cloud-Type";
+
+    // Insights related constants
+    public static final String INSIGHTS_SUFFIX = "/insights/1.0.0/query-api";
+    public static final String PROJECTS_GRAPHQL = "/projects/1.0.0/graphql";
+
+    // APIM related constants
+    public static final String PUBLISHER_URL = "/api/am/publisher/v2";
+    public static final String PROXY_DEPLOYER_URL = "/proxy/deployer/v1";
 }

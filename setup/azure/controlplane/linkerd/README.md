@@ -1,5 +1,3 @@
-## Reflector configuration
-
 ### Description
 Configure the Linkerd in control plane cluster
 

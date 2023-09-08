@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - ../../shared-components/dp-mizzen
+  - netpol
 
 patches:
   - path: linkerd-patch.yaml

@@ -1,0 +1,78 @@
+query (projectId: String!, componentHandler: String!) {
+  component(projectId: {{projectId}}, componentHandler: {{componentHandler}}) {
+    id
+    name
+    handler
+    description
+    displayType
+    displayName
+    ownerName
+    orgId
+    orgHandler
+    version
+    labels
+    createdAt
+    updatedAt
+    projectId
+    apiId
+    httpBased
+    isMigrationCompleted
+    repository {
+      gitProvider
+      nameApp
+      nameConfig
+      branch
+      branchApp
+      organizationApp
+      organizationConfig
+      isUserManage
+      appSubPath
+      byocBuildConfig {
+        id
+        isMainContainer
+        containerId
+        componentId
+        repositoryId
+        dockerContext
+        dockerfilePath
+        oasFilePath
+      }
+      byocWebAppBuildConfig {
+        id
+        containerId
+        componentId
+        repositoryId
+        dockerContext
+        webAppType
+        buildCommand
+        packageManagerVersion
+        outputDirectory
+      }
+    }
+    apiVersions {
+      apiVersion
+      proxyName
+      proxyUrl
+      proxyId
+      id
+      state
+      latest
+      branch
+      accessibility
+      appEnvVersions {
+        environmentId
+        releaseId
+        release {
+          id
+          metadata {
+            choreoEnv
+          }
+          environmentId
+          environment
+          gitHash
+          gitOpsHash
+        }
+      }
+    }
+  }
+}

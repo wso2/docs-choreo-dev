@@ -40,7 +40,6 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
 
     private static String accessToken;
     private ChoreoComponent choreoComponent;
-    private String projectId;
     private ChoreoProject project;
     private String orgHandle;
     private String orgUUID;
@@ -61,11 +60,8 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
     public void setup_ConnectorBuilderIT() throws Exception {
 
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
-
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-        project = GraphQL.createProject(accessToken);
-        projectId = project.getId();
         org = new ChoreoOrganization(orgHandle, orgId, orgUUID);
         githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
         githubPAT = Configuration.getConfig(ConfigDefinition.GITHUB_PAT);
@@ -75,9 +71,14 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
+    public void createProject_ConnectorBuilderIT() throws Exception, ApiLifecycleChangeException {
+        project = ComponentUtils.createProject(this, citrusClients, accessToken, Constant.region.US.toString());
+    }
+
+    @Test(dependsOnMethods = "createProject_ConnectorBuilderIT")
+    @CitrusTest
     public void createComponent_ConnectorBuilderIT() throws Exception, ApiLifecycleChangeException {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-
         Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/rest-api").branch("main").subPath("").build();
         GraphqlDTO dto = ComponentUtils.createRestApiComponentRequest(componentName, project, repo);
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,

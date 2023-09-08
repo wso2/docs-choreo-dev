@@ -33,6 +33,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     private String accessToken;
+    private ChoreoProject project;
     private ChoreoComponent choreoComponent;
     private List<Environment> environments;
 
@@ -46,8 +47,13 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
+    public void createProject_TestClientJwTValidation() throws Exception {
+        project = ComponentUtils.createProject(this, citrusClients, accessToken, Constant.region.US.toString());
+    }
+
+    @Test(dependsOnMethods = {"createProject_TestClientJwTValidation"})
+    @CitrusTest
     public void createComponent_TestClientJwTValidation() throws Exception {
-        ChoreoProject project = GraphQL.createProject(accessToken);
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/jwt-encoder").
                 branch("main").subPath("").build();

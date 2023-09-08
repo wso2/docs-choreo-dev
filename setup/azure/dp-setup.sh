@@ -71,29 +71,11 @@ command -v helm >/dev/null 2>&1 || {
 #    fi
 #}
 
-############### Install Certmanager
-#echo "--- Installing Cert Manager..."
-#kubectl create ns cert-manager
-#kubectl label namespace cert-manager cert-manager.io/disable-validation=true
-#
-#helm repo add jetstack https://charts.jetstack.io
-#helm repo update
-#helm install \
-#  cert-manager jetstack/cert-manager \
-#  --namespace cert-manager \
-#  --version v1.8.0 \
-#  -n cert-manager \
-#  --set installCRDs=true
 
 #echo "--- Creating secrets for DNS-01 challenge..."
 # shellcheck disable=SC2154
 #kubectl create secret generic "choreo-secret-azuredns-config" --from-literal=client-secret="${DNS01_CHALLENGE_CLIENT_SECRET}" -n cert-manager --dry-run=client -o yaml | kubectl apply -f -
 
-#echo "--- Installing Emberstack reflector..."
-#
-#helm repo add emberstack https://emberstack.github.io/helm-charts
-#helm repo update
-#helm upgrade --install reflector emberstack/reflector --namespace cert-manager --version 5.4.17
 
 echo "--- Creating AKS view cluster role binding to AAD"
 cp conf/view-cluster-role-binding.yaml conf/view-cluster-role-binding.yaml.backup

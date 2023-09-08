@@ -27,4 +27,4 @@ spec:
           protocol: TCP
   podSelector:
     matchLabels:
-      choreo.component: internal-nginx
+      choreo.component: internal-nginx-v2

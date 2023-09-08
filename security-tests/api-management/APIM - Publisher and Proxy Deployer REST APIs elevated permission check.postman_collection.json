@@ -1,0 +1,1822 @@
+{
+	"info": {
+		"_postman_id": "cdde542d-0562-4a9f-b672-9fa45fd679c0",
+		"name": "APIM - Publisher and Proxy Deployer REST APIs elevated permission check",
+		"description": "# Reason\n\nThis is to check the (elevated permission), a member of the organization with less priviledge to the orgnization could invoke APIs that are not authorized.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1834781"
+	},
+	"item": [
+		{
+			"name": "Choreo Console",
+			"item": [
+				{
+					"name": "Create APIM API (endpoint)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var resp = JSON.parse(responseBody)",
+									"pm.environment.set(\"apimApiUuid\", resp.id)",
+									"",
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Elevated Access Test - Service 1\",\n    \"description\": \"\",\n    \"context\": \"/elevated-access-test/context/service-1\",\n    \"version\": \"1.0.0\",\n    \"provider\": \"choreo_dev_apim_admin\",\n    \"lifeCycleStatus\": \"PUBLISHED\",\n    \"wsdlInfo\": null,\n    \"wsdlUrl\": null,\n    \"responseCachingEnabled\": false,\n    \"cacheTimeout\": 300,\n    \"hasThumbnail\": false,\n    \"isDefaultVersion\": false,\n    \"isRevision\": false,\n    \"enableBackendJWT\": false,\n    \"revisionedApiId\": null,\n    \"revisionId\": 0,\n    \"enableSchemaValidation\": false,\n    \"type\": \"HTTP\",\n    \"audience\": null,\n    \"transport\": [\n        \"http\",\n        \"https\"\n    ],\n    \"tags\": [],\n    \"policies\": [\n        \"Unlimited\"\n    ],\n    \"apiThrottlingPolicy\": null,\n    \"throttlingLimit\": null,\n    \"authorizationHeader\": \"Authorization\",\n    \"securityScheme\": [\n        \"oauth2\",\n        \"oauth_basic_auth_api_key_mandatory\"\n    ],\n    \"maxTps\": null,\n    \"visibility\": \"PRIVATE\",\n    \"visibleRoles\": [\n        \"\"\n    ],\n    \"visibleTenants\": [],\n    \"mediationPolicies\": [],\n    \"subscriptionAvailability\": \"CURRENT_TENANT\",\n    \"subscriptionAvailableTenants\": [\n        \"\"\n    ],\n    \"additionalProperties\": [\n        {\n            \"name\": \"projectId\",\n            \"value\": \"c0fb925e-a2ef-4e8a-9b92-2f0e433b054d\",\n            \"display\": true\n        },\n        {\n            \"name\": \"accessibility\",\n            \"value\": \"external\",\n            \"display\": true\n        },\n        {\n            \"name\": \"org\",\n            \"value\": \"renukafernando\",\n            \"display\": true\n        },\n        {\n            \"name\": \"application\",\n            \"value\": \"Golang Service\",\n            \"display\": true\n        },\n        {\n            \"name\": \"applicationId\",\n            \"value\": \"e5f034cb-c4b1-4ac4-aa66-df40e1e458a4\",\n            \"display\": true\n        },\n        {\n            \"name\": \"endpointType\",\n            \"value\": \"REST\",\n            \"display\": true\n        }\n    ],\n    \"additionalPropertiesMap\": {\n        \"projectId__display\": {\n            \"name\": \"projectId\",\n            \"value\": \"c0fb925e-a2ef-4e8a-9b92-2f0e433b054d\",\n            \"display\": false\n        },\n        \"accessibility__display\": {\n            \"name\": \"accessibility\",\n            \"value\": \"external\",\n            \"display\": false\n        },\n        \"org__display\": {\n            \"name\": \"org\",\n            \"value\": \"renukafernando\",\n            \"display\": false\n        },\n        \"application__display\": {\n            \"name\": \"application\",\n            \"value\": \"Golang Service\",\n            \"display\": false\n        },\n        \"applicationId__display\": {\n            \"name\": \"applicationId\",\n            \"value\": \"e5f034cb-c4b1-4ac4-aa66-df40e1e458a4\",\n            \"display\": false\n        },\n        \"endpointType__display\": {\n            \"name\": \"endpointType\",\n            \"value\": \"REST\",\n            \"display\": false\n        }\n    },\n    \"monetization\": null,\n    \"accessControl\": \"NONE\",\n    \"accessControlRoles\": [],\n    \"businessInformation\": {\n        \"businessOwner\": null,\n        \"businessOwnerEmail\": null,\n        \"technicalOwner\": null,\n        \"technicalOwnerEmail\": null\n    },\n    \"corsConfiguration\": {\n        \"corsConfigurationEnabled\": false,\n        \"accessControlAllowOrigins\": [\n            \"*\"\n        ],\n        \"accessControlAllowCredentials\": false,\n        \"accessControlAllowHeaders\": [\n            \"authorization\",\n            \"Access-Control-Allow-Origin\",\n            \"Content-Type\",\n            \"SOAPAction\",\n            \"apikey\",\n            \"API-Key\",\n            \"testKey\"\n        ],\n        \"accessControlAllowMethods\": [\n            \"GET\",\n            \"PUT\",\n            \"POST\",\n            \"DELETE\",\n            \"PATCH\",\n            \"OPTIONS\"\n        ]\n    },\n    \"websubSubscriptionConfiguration\": {\n        \"enable\": false,\n        \"secret\": \"\",\n        \"signingAlgorithm\": \"SHA1\",\n        \"signatureHeader\": \"x-hub-signature\"\n    },\n    \"workflowStatus\": null,\n    \"createdTime\": \"1686889901502\",\n    \"lastUpdatedTime\": \"2023-07-05 07:43:49.319\",\n    \"endpointConfig\": {\n        \"endpoint_type\": \"http\",\n        \"production_endpoints\": {\n            \"url\": \"http://golang-service-3192360657.dp-development-default-project-224-321563503.svc.cluster.local:8080/bar\"\n        }\n    },\n    \"endpointImplementationType\": \"ENDPOINT\",\n    \"scopes\": [],\n    \"scopePrefix\": null,\n    \"operations\": [\n        {\n            \"id\": \"\",\n            \"target\": \"/hello\",\n            \"verb\": \"GET\",\n            \"authType\": \"Application & Application User\",\n            \"throttlingPolicy\": \"Unlimited\",\n            \"throttlingLimit\": {\n                \"requestCount\": -1,\n                \"unit\": \"MINUTE\"\n            },\n            \"scopes\": [],\n            \"usedProductIds\": [],\n            \"amznResourceName\": null,\n            \"amznResourceTimeout\": null,\n            \"payloadSchema\": null,\n            \"uriMapping\": null,\n            \"operationPolicies\": {\n                \"request\": [],\n                \"response\": [],\n                \"fault\": []\n            }\n        },\n        {\n            \"id\": \"\",\n            \"target\": \"/hello\",\n            \"verb\": \"POST\",\n            \"authType\": \"Application & Application User\",\n            \"throttlingPolicy\": \"Unlimited\",\n            \"throttlingLimit\": {\n                \"requestCount\": -1,\n                \"unit\": \"MINUTE\"\n            },\n            \"scopes\": [],\n            \"usedProductIds\": [],\n            \"amznResourceName\": null,\n            \"amznResourceTimeout\": null,\n            \"payloadSchema\": null,\n            \"uriMapping\": null,\n            \"operationPolicies\": {\n                \"request\": [],\n                \"response\": [],\n                \"fault\": []\n            }\n        }\n    ],\n    \"threatProtectionPolicies\": null,\n    \"categories\": [],\n    \"keyManagers\": [\n        \"all\"\n    ],\n    \"serviceInfo\": null,\n    \"advertiseInfo\": {\n        \"advertised\": false,\n        \"apiExternalProductionEndpoint\": null,\n        \"apiExternalSandboxEndpoint\": null,\n        \"originalDevPortalUrl\": null,\n        \"apiOwner\": \"choreo_dev_apim_admin\",\n        \"vendor\": \"WSO2\"\n    },\n    \"gatewayVendor\": \"wso2\",\n    \"gatewayType\": \"wso2/synapse\",\n    \"asyncTransportProtocols\": [\n        \"\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/apis?organizationId={{orgUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"apis"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get APIM API (endpoint)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/apis/{{apimApiUuid}}?organizationId={{orgUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"apis",
+								"{{apimApiUuid}}"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update API",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Elevated Access Test - Service 1\",\n    \"description\": \"Updated Description with the PUT Rest API Call\",\n    \"context\": \"/elevated-access-test/context/service-1\",\n    \"version\": \"1.0.0\",\n    \"provider\": \"e32f86e9-5a3b-415e-8d53-1aaf03c1214d\",\n    \"lifeCycleStatus\": \"CREATED\",\n    \"wsdlInfo\": null,\n    \"wsdlUrl\": null,\n    \"responseCachingEnabled\": false,\n    \"cacheTimeout\": 300,\n    \"hasThumbnail\": false,\n    \"isDefaultVersion\": false,\n    \"isRevision\": false,\n    \"enableBackendJWT\": false,\n    \"backendJWTConfiguration\": {\n        \"audiences\": []\n    },\n    \"revisionedApiId\": null,\n    \"revisionId\": 0,\n    \"enableSchemaValidation\": false,\n    \"type\": \"HTTP\",\n    \"audience\": null,\n    \"transport\": [\n        \"http\",\n        \"https\"\n    ],\n    \"tags\": [],\n    \"policies\": [\n        \"Unlimited\"\n    ],\n    \"apiThrottlingPolicy\": null,\n    \"throttlingLimit\": null,\n    \"authorizationHeader\": \"Authorization\",\n    \"securityScheme\": [\n        \"oauth2\",\n        \"oauth_basic_auth_api_key_mandatory\"\n    ],\n    \"maxTps\": null,\n    \"visibility\": \"PRIVATE\",\n    \"visibleRoles\": [\n        \"\"\n    ],\n    \"visibleTenants\": [],\n    \"mediationPolicies\": [],\n    \"subscriptionAvailability\": \"CURRENT_TENANT\",\n    \"subscriptionAvailableTenants\": [\n        \"\"\n    ],\n    \"additionalProperties\": [\n        {\n            \"name\": \"projectId\",\n            \"value\": \"c0fb925e-a2ef-4e8a-9b92-2f0e433b054d\",\n            \"display\": true\n        },\n        {\n            \"name\": \"accessibility\",\n            \"value\": \"external\",\n            \"display\": true\n        },\n        {\n            \"name\": \"org\",\n            \"value\": \"renukafernando\",\n            \"display\": true\n        },\n        {\n            \"name\": \"application\",\n            \"value\": \"Golang Service\",\n            \"display\": true\n        },\n        {\n            \"name\": \"applicationId\",\n            \"value\": \"e5f034cb-c4b1-4ac4-aa66-df40e1e458a4\",\n            \"display\": true\n        },\n        {\n            \"name\": \"endpointType\",\n            \"value\": \"REST\",\n            \"display\": true\n        }\n    ],\n    \"additionalPropertiesMap\": {\n        \"projectId__display\": {\n            \"name\": \"projectId\",\n            \"value\": \"c0fb925e-a2ef-4e8a-9b92-2f0e433b054d\",\n            \"display\": false\n        },\n        \"accessibility__display\": {\n            \"name\": \"accessibility\",\n            \"value\": \"external\",\n            \"display\": false\n        },\n        \"org__display\": {\n            \"name\": \"org\",\n            \"value\": \"renukafernando\",\n            \"display\": false\n        },\n        \"application__display\": {\n            \"name\": \"application\",\n            \"value\": \"Golang Service\",\n            \"display\": false\n        },\n        \"applicationId__display\": {\n            \"name\": \"applicationId\",\n            \"value\": \"e5f034cb-c4b1-4ac4-aa66-df40e1e458a4\",\n            \"display\": false\n        },\n        \"endpointType__display\": {\n            \"name\": \"endpointType\",\n            \"value\": \"REST\",\n            \"display\": false\n        }\n    },\n    \"monetization\": null,\n    \"accessControl\": \"NONE\",\n    \"accessControlRoles\": [],\n    \"businessInformation\": {\n        \"businessOwner\": null,\n        \"businessOwnerEmail\": null,\n        \"technicalOwner\": null,\n        \"technicalOwnerEmail\": null\n    },\n    \"corsConfiguration\": {\n        \"corsConfigurationEnabled\": false,\n        \"accessControlAllowOrigins\": [\n            \"*\"\n        ],\n        \"accessControlAllowCredentials\": false,\n        \"accessControlAllowHeaders\": [\n            \"authorization\",\n            \"Access-Control-Allow-Origin\",\n            \"Content-Type\",\n            \"SOAPAction\",\n            \"apikey\",\n            \"API-Key\",\n            \"testKey\"\n        ],\n        \"accessControlAllowMethods\": [\n            \"GET\",\n            \"PUT\",\n            \"POST\",\n            \"DELETE\",\n            \"PATCH\",\n            \"OPTIONS\"\n        ]\n    },\n    \"websubSubscriptionConfiguration\": {\n        \"enable\": false,\n        \"secret\": \"\",\n        \"signingAlgorithm\": \"SHA1\",\n        \"signatureHeader\": \"x-hub-signature\"\n    },\n    \"workflowStatus\": null,\n    \"createdTime\": \"1691733576433\",\n    \"lastUpdatedTime\": \"2023-08-11 05:59:36.433\",\n    \"endpointConfig\": {\n        \"endpoint_type\": \"http\",\n        \"production_endpoints\": {\n            \"url\": \"http://golang-service-3192360657.dp-development-default-project-224-321563503.svc.cluster.local:8080/bar\"\n        }\n    },\n    \"endpointImplementationType\": \"ENDPOINT\",\n    \"scopes\": [],\n    \"scopePrefix\": null,\n    \"operations\": [\n        {\n            \"id\": \"\",\n            \"target\": \"/hello\",\n            \"verb\": \"GET\",\n            \"authType\": \"Application & Application User\",\n            \"throttlingPolicy\": \"Unlimited\",\n            \"throttlingLimit\": {\n                \"requestCount\": -1,\n                \"unit\": \"MINUTE\"\n            },\n            \"scopes\": [],\n            \"usedProductIds\": [],\n            \"amznResourceName\": null,\n            \"amznResourceTimeout\": null,\n            \"payloadSchema\": null,\n            \"uriMapping\": null,\n            \"operationPolicies\": {\n                \"request\": [],\n                \"response\": [],\n                \"fault\": []\n            }\n        },\n        {\n            \"id\": \"\",\n            \"target\": \"/hello\",\n            \"verb\": \"POST\",\n            \"authType\": \"Application & Application User\",\n            \"throttlingPolicy\": \"Unlimited\",\n            \"throttlingLimit\": {\n                \"requestCount\": -1,\n                \"unit\": \"MINUTE\"\n            },\n            \"scopes\": [],\n            \"usedProductIds\": [],\n            \"amznResourceName\": null,\n            \"amznResourceTimeout\": null,\n            \"payloadSchema\": null,\n            \"uriMapping\": null,\n            \"operationPolicies\": {\n                \"request\": [],\n                \"response\": [],\n                \"fault\": []\n            }\n        }\n    ],\n    \"threatProtectionPolicies\": null,\n    \"categories\": [],\n    \"keyManagers\": [\n        \"all\"\n    ],\n    \"serviceInfo\": null,\n    \"advertiseInfo\": {\n        \"advertised\": false,\n        \"apiExternalProductionEndpoint\": null,\n        \"apiExternalSandboxEndpoint\": null,\n        \"originalDevPortalUrl\": null,\n        \"apiOwner\": \"e32f86e9-5a3b-415e-8d53-1aaf03c1214d\",\n        \"vendor\": \"WSO2\"\n    },\n    \"gatewayVendor\": \"wso2\",\n    \"gatewayType\": \"wso2/synapse\",\n    \"asyncTransportProtocols\": [\n        \"\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/apis/{{apimApiUuid}}?organizationId={{orgUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"apis",
+								"{{apimApiUuid}}"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get APIM Deployments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/apis/{{apimApiUuid}}/deployments?organizationId={{orgUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"apis",
+								"{{apimApiUuid}}",
+								"deployments"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Swagger",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/apis/{{apimApiUuid}}/swagger?organizationId={{orgUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"apis",
+								"{{apimApiUuid}}",
+								"swagger"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Swagger",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "apiDefinition",
+									"value": "{\"openapi\":\"3.0.1\",\"info\":{\"title\":\"Elevated Access Test - Service 1\",\"description\":\"Updated the Swagger Using PUT Rest API Call\",\"version\":\"1.0.0\"},\"servers\":[{\"url\":\"/\"}],\"security\":[{\"default\":[]}],\"paths\":{\"/hello\":{\"get\":{\"responses\":{\"200\":{\"description\":\"OK\"}},\"security\":[{\"default\":[]}],\"x-auth-type\":\"Application & Application User\",\"x-throttling-tier\":\"Unlimited\",\"x-throttling-limit\":{\"requestCount\":-1,\"unit\":\"MINUTE\"}},\"post\":{\"responses\":{\"200\":{\"description\":\"OK\"}},\"security\":[{\"default\":[]}],\"x-auth-type\":\"Application & Application User\",\"x-throttling-tier\":\"Unlimited\",\"x-throttling-limit\":{\"requestCount\":-1,\"unit\":\"MINUTE\"}}}},\"components\":{\"securitySchemes\":{\"default\":{\"type\":\"oauth2\",\"flows\":{\"implicit\":{\"authorizationUrl\":\"https://test.com\",\"scopes\":{}}}}}},\"x-wso2-disable-security\":false,\"x-wso2-auth-header\":\"Authorization\",\"x-wso2-cors\":{\"corsConfigurationEnabled\":false,\"accessControlAllowOrigins\":[\"*\"],\"accessControlAllowCredentials\":false,\"accessControlAllowHeaders\":[\"authorization\",\"Access-Control-Allow-Origin\",\"Content-Type\",\"SOAPAction\",\"apikey\",\"API-Key\",\"testKey\"],\"accessControlAllowMethods\":[\"GET\",\"PUT\",\"POST\",\"DELETE\",\"PATCH\",\"OPTIONS\"]},\"x-wso2-production-endpoints\":{\"urls\":[\"http://golang-service-3192360657.dp-development-default-project-224-321563503.svc.cluster.local:8080/bar\"],\"type\":\"http\"},\"x-wso2-basePath\":\"/elevated-access-test/context/service-1/1.0.0\",\"x-wso2-transports\":[\"http\",\"https\"],\"x-wso2-response-cache\":{\"enabled\":false,\"cacheTimeoutInSeconds\":300}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/apis/{{apimApiUuid}}/swagger?organizationId={{orgUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"apis",
+								"{{apimApiUuid}}",
+								"swagger"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Subscriptions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/subscriptions?organizationId={{orgUuid}}&apiId={{apimApiUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"subscriptions"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								},
+								{
+									"key": "apiId",
+									"value": "{{apimApiUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Revision",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"description\": \"hello world\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/apis/{{apimApiUuid}}/revisions?organizationId={{orgUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"apis",
+								"{{apimApiUuid}}",
+								"revisions"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Revisions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/apis/{{apimApiUuid}}/revisions?organizationId={{orgUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"apis",
+								"{{apimApiUuid}}",
+								"revisions"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Opration Policies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/operation-policies?limit=100&organizationId={{orgUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"operation-policies"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "100"
+								},
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Lifecycle",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/apis/change-lifecycle?organizationId={{orgUuid}}&apiId={{apimApiUuid}}&action=Publish",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"apis",
+								"change-lifecycle"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								},
+								{
+									"key": "apiId",
+									"value": "{{apimApiUuid}}"
+								},
+								{
+									"key": "action",
+									"value": "Publish"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Lifecycle History",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/apis/{{apimApiUuid}}/lifecycle-history?organizationId={{orgUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"apis",
+								"{{apimApiUuid}}",
+								"lifecycle-history"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Documents",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"New Doc\",\"type\":\"HOWTO\",\"sourceType\":\"MARKDOWN\",\"visibility\":\"API_LEVEL\",\"summary\":\" \"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/apis/{{apimApiUuid}}/documents?organizationId={{orgUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"apis",
+								"{{apimApiUuid}}",
+								"documents"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Documents",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/apis/{{apimApiUuid}}/documents?organizationId={{orgUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"apis",
+								"{{apimApiUuid}}",
+								"documents"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Throttling Policies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/throttling-policies/subscription?organizationId={{orgUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"throttling-policies",
+								"subscription"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query List {\n  componentEndpoints(\n    input: {\n      componentId: \"b649cca8-4916-4966-a117-bc82019febc3\"\n      versionId: \"79068801-3fb8-48e7-b6f8-a9b9c13d97b5\"\n    }\n  ) {\n    id\n    createdAt\n    updatedAt\n    releaseId\n    environmentId\n    displayName\n    port\n    type\n    apiContext\n    apiDefinitionPath\n    invokeUrl\n    visibility\n    hostName\n    apimId\n    apimRevisionId\n    apimName\n    projectUrl\n    organizationUrl\n    publicUrl\n    state\n    stateReason {\n      code\n      message\n      details\n      workerId\n    }\n    isDeleted\n    deletedAt\n  }\n}\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/apis/{{apimApiUuid}}/generate-key?organizationId={{orgUuid}}&keyType=Development",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"apis",
+								"{{apimApiUuid}}",
+								"generate-key"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								},
+								{
+									"key": "keyType",
+									"value": "Development"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get APIM API (endpoint) - x-jwt-assertion - Should 401",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-jwt-assertion",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/apis/{{apimApiUuid}}?organizationId={{orgUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"apis",
+								"{{apimApiUuid}}"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Environment Keys",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/apis/{{apimApiUuid}}/environments/dev-us-east-azure/keys?organizationId={{orgUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"apis",
+								"{{apimApiUuid}}",
+								"environments",
+								"dev-us-east-azure",
+								"keys"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete APIM API (endpoint)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{sts_choreo_host}}/api/am/publisher/v2/apis/{{apimApiUuid}}?organizationId={{orgUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{sts_choreo_host}}"
+							],
+							"path": [
+								"api",
+								"am",
+								"publisher",
+								"v2",
+								"apis",
+								"{{apimApiUuid}}"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Proxy Deployer",
+			"item": [
+				{
+					"name": "Get Proxy Deployments",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{app_choreo_host}}/proxy/deployer/v1/components/{{componentId}}/versions/{{versionId}}/deployments?environmentId={{environmentId}}&accessMode=external",
+							"protocol": "https",
+							"host": [
+								"{{app_choreo_host}}"
+							],
+							"path": [
+								"proxy",
+								"deployer",
+								"v1",
+								"components",
+								"{{componentId}}",
+								"versions",
+								"{{versionId}}",
+								"deployments"
+							],
+							"query": [
+								{
+									"key": "environmentId",
+									"value": "{{environmentId}}"
+								},
+								{
+									"key": "accessMode",
+									"value": "external"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Initiage Proxy Deployment",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{app_choreo_host}}/proxy/deployer/v1/components/{{componentId}}/versions/{{versionId}}/initiate-deployment?environmentId={{environmentId}}&accessMode=external",
+							"protocol": "https",
+							"host": [
+								"{{app_choreo_host}}"
+							],
+							"path": [
+								"proxy",
+								"deployer",
+								"v1",
+								"components",
+								"{{componentId}}",
+								"versions",
+								"{{versionId}}",
+								"initiate-deployment"
+							],
+							"query": [
+								{
+									"key": "environmentId",
+									"value": "{{environmentId}}"
+								},
+								{
+									"key": "accessMode",
+									"value": "external"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Builds",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var resp = JSON.parse(responseBody)",
+									"pm.environment.set(\"proxyBuildId\", resp.builds[0].buildId)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{app_choreo_host}}/proxy/deployer/v1/components/{{componentId}}/versions/{{versionId}}/builds?limit=20",
+							"protocol": "https",
+							"host": [
+								"{{app_choreo_host}}"
+							],
+							"path": [
+								"proxy",
+								"deployer",
+								"v1",
+								"components",
+								"{{componentId}}",
+								"versions",
+								"{{versionId}}",
+								"builds"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Builds",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{app_choreo_host}}/proxy/deployer/v1/components/{{componentId}}/versions/{{versionId}}/builds/{{proxyBuildId}}",
+							"protocol": "https",
+							"host": [
+								"{{app_choreo_host}}"
+							],
+							"path": [
+								"proxy",
+								"deployer",
+								"v1",
+								"components",
+								"{{componentId}}",
+								"versions",
+								"{{versionId}}",
+								"builds",
+								"{{proxyBuildId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Build Status",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{app_choreo_host}}/proxy/deployer/v1/components/{{componentId}}/versions/{{versionId}}/builds/{{proxyBuildId}}/status",
+							"protocol": "https",
+							"host": [
+								"{{app_choreo_host}}"
+							],
+							"path": [
+								"proxy",
+								"deployer",
+								"v1",
+								"components",
+								"{{componentId}}",
+								"versions",
+								"{{versionId}}",
+								"builds",
+								"{{proxyBuildId}}",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy Service",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://{{app_choreo_host}}/proxy/deployer/v1/components/{{componentId}}/versions/{{versionId}}/deploy-service?buildId={{proxyBuildId}}&environmentId={{environmentId}}&accessMode=external",
+							"protocol": "https",
+							"host": [
+								"{{app_choreo_host}}"
+							],
+							"path": [
+								"proxy",
+								"deployer",
+								"v1",
+								"components",
+								"{{componentId}}",
+								"versions",
+								"{{versionId}}",
+								"deploy-service"
+							],
+							"query": [
+								{
+									"key": "buildId",
+									"value": "{{proxyBuildId}}"
+								},
+								{
+									"key": "environmentId",
+									"value": "{{environmentId}}"
+								},
+								{
+									"key": "accessMode",
+									"value": "external"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Undeploy",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://{{app_choreo_host}}/proxy/deployer/v1/components/{{componentId}}/versions/{{versionId}}/un-deploy?environmentId={{environmentId}}&buildId={{proxyBuildId}}&accessMode=external",
+							"protocol": "https",
+							"host": [
+								"{{app_choreo_host}}"
+							],
+							"path": [
+								"proxy",
+								"deployer",
+								"v1",
+								"components",
+								"{{componentId}}",
+								"versions",
+								"{{versionId}}",
+								"un-deploy"
+							],
+							"query": [
+								{
+									"key": "environmentId",
+									"value": "{{environmentId}}"
+								},
+								{
+									"key": "buildId",
+									"value": "{{proxyBuildId}}"
+								},
+								{
+									"key": "accessMode",
+									"value": "external"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Redeploy",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://{{app_choreo_host}}/proxy/deployer/v1/components/{{componentId}}/versions/{{versionId}}/re-deploy?environmentId={{environmentId}}&buildId={{proxyBuildId}}&accessMode=external",
+							"protocol": "https",
+							"host": [
+								"{{app_choreo_host}}"
+							],
+							"path": [
+								"proxy",
+								"deployer",
+								"v1",
+								"components",
+								"{{componentId}}",
+								"versions",
+								"{{versionId}}",
+								"re-deploy"
+							],
+							"query": [
+								{
+									"key": "environmentId",
+									"value": "{{environmentId}}"
+								},
+								{
+									"key": "buildId",
+									"value": "{{proxyBuildId}}"
+								},
+								{
+									"key": "accessMode",
+									"value": "external"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Deployments",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{app_choreo_host}}/proxy/deployer/v1/components/{{componentId}}/versions/{{versionId}}/deployments?environmentId={{environmentId}}",
+							"protocol": "https",
+							"host": [
+								"{{app_choreo_host}}"
+							],
+							"path": [
+								"proxy",
+								"deployer",
+								"v1",
+								"components",
+								"{{componentId}}",
+								"versions",
+								"{{versionId}}",
+								"deployments"
+							],
+							"query": [
+								{
+									"key": "environmentId",
+									"value": "{{environmentId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://{{app_choreo_host}}/proxy/deployer/v1/components/{{componentId}}/versions/{{versionId}}/deploy?environmentId={{environmentId}}&buildId={{proxyBuildId}}&orgId={{orgUuid}}&accessMode=external",
+							"protocol": "https",
+							"host": [
+								"{{app_choreo_host}}"
+							],
+							"path": [
+								"proxy",
+								"deployer",
+								"v1",
+								"components",
+								"{{componentId}}",
+								"versions",
+								"{{versionId}}",
+								"deploy"
+							],
+							"query": [
+								{
+									"key": "environmentId",
+									"value": "{{environmentId}}"
+								},
+								{
+									"key": "buildId",
+									"value": "{{proxyBuildId}}"
+								},
+								{
+									"key": "orgId",
+									"value": "{{orgUuid}}"
+								},
+								{
+									"key": "accessMode",
+									"value": "external"
+								},
+								{
+									"key": "projectId",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy Settings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var resp = JSON.parse(responseBody)",
+									"pm.environment.set(\"proxyDeployerDeployRequestId\", resp.requestId)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "openApi",
+									"value": "{\"openapi\":\"3.0.1\",\"info\":{\"title\":\"PoliciesProxy\",\"description\":\"This api is used to connect to the PoliciesProxy service\",\"version\":\"1.0.0\"},\"servers\":[{\"url\":\"/\"}],\"security\":[{\"default\":[]}],\"paths\":{\"/foo/{id}\":{\"get\":{\"parameters\":[{\"name\":\"id\",\"in\":\"path\",\"required\":true,\"style\":\"simple\",\"explode\":false,\"schema\":{\"type\":\"string\",\"format\":\"string\"}}],\"responses\":{\"200\":{\"description\":\"ok\"}},\"security\":[{\"default\":[]}],\"x-auth-type\":\"Application & Application User\",\"x-throttling-tier\":\"Unlimited\",\"x-throttling-limit\":{\"requestCount\":-1,\"unit\":\"MINUTE\"},\"x-wso2-application-security\":{\"security-types\":[\"oauth2\"],\"optional\":false}},\"put\":{\"parameters\":[{\"name\":\"id\",\"in\":\"path\",\"required\":true,\"style\":\"simple\",\"explode\":false,\"schema\":{\"type\":\"string\",\"format\":\"string\"}}],\"responses\":{\"200\":{\"description\":\"ok\"}},\"security\":[{\"default\":[]}],\"x-auth-type\":\"Application & Application User\",\"x-throttling-tier\":\"Unlimited\",\"x-throttling-limit\":{\"requestCount\":-1,\"unit\":\"MINUTE\"},\"x-wso2-application-security\":{\"security-types\":[\"oauth2\"],\"optional\":false}},\"delete\":{\"parameters\":[{\"name\":\"id\",\"in\":\"path\",\"required\":true,\"style\":\"simple\",\"explode\":false,\"schema\":{\"type\":\"string\",\"format\":\"string\"}}],\"responses\":{\"200\":{\"description\":\"ok\"}},\"security\":[{\"default\":[]}],\"x-auth-type\":\"Application & Application User\",\"x-throttling-tier\":\"Unlimited\",\"x-throttling-limit\":{\"requestCount\":-1,\"unit\":\"MINUTE\"},\"x-wso2-application-security\":{\"security-types\":[\"oauth2\"],\"optional\":false}}},\"/foo\":{\"get\":{\"parameters\":[],\"responses\":{\"200\":{\"description\":\"ok\"}},\"security\":[{\"default\":[]}],\"x-auth-type\":\"Application & Application User\",\"x-throttling-tier\":\"Unlimited\",\"x-throttling-limit\":{\"requestCount\":-1,\"unit\":\"MINUTE\"},\"x-wso2-application-security\":{\"security-types\":[\"oauth2\"],\"optional\":false}},\"post\":{\"parameters\":[],\"responses\":{\"200\":{\"description\":\"ok\"}},\"security\":[{\"default\":[]}],\"x-auth-type\":\"Application & Application User\",\"x-throttling-tier\":\"Unlimited\",\"x-throttling-limit\":{\"requestCount\":-1,\"unit\":\"MINUTE\"},\"x-wso2-application-security\":{\"security-types\":[\"oauth2\"],\"optional\":false}}}},\"components\":{\"securitySchemes\":{\"default\":{\"type\":\"oauth2\",\"flows\":{\"implicit\":{\"authorizationUrl\":\"https://test.com\",\"scopes\":{}}}}}},\"x-wso2-auth-header\":\"Authorization\",\"x-wso2-cors\":{\"corsConfigurationEnabled\":false,\"accessControlAllowOrigins\":[\"*\"],\"accessControlAllowCredentials\":false,\"accessControlAllowHeaders\":[\"authorization\",\"Access-Control-Allow-Origin\",\"Content-Type\",\"SOAPAction\",\"apikey\",\"API-Key\",\"testKey\"],\"accessControlAllowMethods\":[\"GET\",\"PUT\",\"POST\",\"DELETE\",\"PATCH\",\"OPTIONS\"]},\"x-wso2-production-endpoints\":{\"urls\":[\"https://run.mocky.io/v3/9ec5a57e-733c-4338-9854-7ea31866dcba\"],\"type\":\"http\"},\"x-wso2-sandbox-endpoints\":{\"urls\":[\"https://run.mocky.io/v3/9ec5a57e-733c-4338-9854-7ea31866dcba\"],\"type\":\"http\"},\"x-wso2-basePath\":\"/90bce838-056d-46df-8a0d-0fbaac6d3499/g46r/policies/1.0.0\",\"x-wso2-transports\":[\"http\",\"https\"],\"x-wso2-response-cache\":{\"enabled\":false,\"cacheTimeoutInSeconds\":300}}",
+									"type": "text"
+								},
+								{
+									"key": "api",
+									"value": "{\"id\":\"64a5411ad823ad168209c634\",\"name\":\"PoliciesProxy\",\"description\":\"This api is used to connect to the PoliciesProxy service\",\"context\":\"/90bce838-056d-46df-8a0d-0fbaac6d3499/g46r/policies\",\"version\":\"1.0.0\",\"provider\":\"e32f86e9-5a3b-415e-8d53-1aaf03c1214d\",\"lifeCycleStatus\":\"CREATED\",\"wsdlInfo\":null,\"wsdlUrl\":null,\"responseCachingEnabled\":false,\"cacheTimeout\":300,\"hasThumbnail\":false,\"isDefaultVersion\":false,\"isRevision\":true,\"enableBackendJWT\":false,\"revisionedApiId\":\"64a53f89d823ad168209c629\",\"revisionId\":2,\"enableSchemaValidation\":false,\"type\":\"HTTP\",\"audience\":null,\"transport\":[\"http\",\"https\"],\"tags\":[],\"policies\":[\"Bronze\"],\"apiThrottlingPolicy\":null,\"throttlingLimit\":{\"requestCount\":\"10\",\"unit\":\"MINUTE\"},\"authorizationHeader\":\"Authorization\",\"securityScheme\":[\"oauth2\",\"oauth_basic_auth_api_key_mandatory\"],\"maxTps\":null,\"visibility\":\"PRIVATE\",\"visibleRoles\":[\"\"],\"visibleTenants\":[],\"mediationPolicies\":[],\"subscriptionAvailability\":\"CURRENT_TENANT\",\"subscriptionAvailableTenants\":[\"\"],\"additionalProperties\":[{\"name\":\"projectId\",\"value\":\"c0fb925e-a2ef-4e8a-9b92-2f0e433b054d\",\"display\":true},{\"name\":\"accessibility\",\"value\":\"external\",\"display\":true}],\"additionalPropertiesMap\":{\"projectId__display\":{\"name\":\"projectId\",\"value\":\"c0fb925e-a2ef-4e8a-9b92-2f0e433b054d\",\"display\":false},\"accessibility__display\":{\"name\":\"accessibility\",\"value\":\"external\",\"display\":false}},\"monetization\":null,\"accessControl\":\"NONE\",\"accessControlRoles\":[],\"businessInformation\":{\"businessOwner\":null,\"businessOwnerEmail\":null,\"technicalOwner\":null,\"technicalOwnerEmail\":null},\"corsConfiguration\":{\"corsConfigurationEnabled\":false,\"accessControlAllowOrigins\":[\"*\"],\"accessControlAllowCredentials\":false,\"accessControlAllowHeaders\":[\"authorization\",\"Access-Control-Allow-Origin\",\"Content-Type\",\"SOAPAction\",\"apikey\",\"API-Key\",\"testKey\"],\"accessControlAllowMethods\":[\"GET\",\"PUT\",\"POST\",\"DELETE\",\"PATCH\",\"OPTIONS\"]},\"websubSubscriptionConfiguration\":{\"enable\":false,\"secret\":\"\",\"signingAlgorithm\":\"SHA1\",\"signatureHeader\":\"x-hub-signature\"},\"workflowStatus\":null,\"createdTime\":\"1688551305273\",\"lastUpdatedTime\":\"2023-07-05 10:02:14.615\",\"endpointConfig\":{\"endpoint_type\":\"http\",\"sandbox_endpoints\":{\"url\":\"https://run.mocky.io/v3/9ec5a57e-733c-4338-9854-7ea31866dcba\"},\"production_endpoints\":{\"url\":\"https://run.mocky.io/v3/9ec5a57e-733c-4338-9854-7ea31866dcba\"}},\"endpointImplementationType\":\"ENDPOINT\",\"scopes\":[],\"scopePrefix\":\"urn:renukafernando:policiesproxy:\",\"operations\":[{\"id\":\"\",\"target\":\"/foo/{id}\",\"verb\":\"GET\",\"authType\":\"Application & Application User\",\"throttlingPolicy\":\"Unlimited\",\"throttlingLimit\":{\"requestCount\":-1,\"unit\":\"MINUTE\"},\"scopes\":[],\"usedProductIds\":[],\"amznResourceName\":null,\"amznResourceTimeout\":null,\"payloadSchema\":null,\"uriMapping\":null,\"operationPolicies\":{\"request\":[],\"response\":[],\"fault\":[]}},{\"id\":\"\",\"target\":\"/foo/{id}\",\"verb\":\"PUT\",\"authType\":\"Application & Application User\",\"throttlingPolicy\":\"Unlimited\",\"throttlingLimit\":{\"requestCount\":-1,\"unit\":\"MINUTE\"},\"scopes\":[],\"usedProductIds\":[],\"amznResourceName\":null,\"amznResourceTimeout\":null,\"payloadSchema\":null,\"uriMapping\":null,\"operationPolicies\":{\"request\":[],\"response\":[],\"fault\":[]}},{\"id\":\"\",\"target\":\"/foo/{id}\",\"verb\":\"DELETE\",\"authType\":\"Application & Application User\",\"throttlingPolicy\":\"Unlimited\",\"throttlingLimit\":{\"requestCount\":-1,\"unit\":\"MINUTE\"},\"scopes\":[],\"usedProductIds\":[],\"amznResourceName\":null,\"amznResourceTimeout\":null,\"payloadSchema\":null,\"uriMapping\":null,\"operationPolicies\":{\"request\":[],\"response\":[],\"fault\":[]}},{\"id\":\"\",\"target\":\"/foo\",\"verb\":\"GET\",\"authType\":\"Application & Application User\",\"throttlingPolicy\":\"Unlimited\",\"throttlingLimit\":{\"requestCount\":-1,\"unit\":\"MINUTE\"},\"scopes\":[],\"usedProductIds\":[],\"amznResourceName\":null,\"amznResourceTimeout\":null,\"payloadSchema\":null,\"uriMapping\":null,\"operationPolicies\":{\"request\":[],\"response\":[],\"fault\":[]}},{\"id\":\"\",\"target\":\"/foo\",\"verb\":\"POST\",\"authType\":\"Application & Application User\",\"throttlingPolicy\":\"Unlimited\",\"throttlingLimit\":{\"requestCount\":-1,\"unit\":\"MINUTE\"},\"scopes\":[],\"usedProductIds\":[],\"amznResourceName\":null,\"amznResourceTimeout\":null,\"payloadSchema\":null,\"uriMapping\":null,\"operationPolicies\":{\"request\":[],\"response\":[],\"fault\":[]}}],\"threatProtectionPolicies\":null,\"categories\":[],\"keyManagers\":[\"all\"],\"serviceInfo\":null,\"advertiseInfo\":{\"advertised\":false,\"apiExternalProductionEndpoint\":null,\"apiExternalSandboxEndpoint\":null,\"originalDevPortalUrl\":null,\"apiOwner\":\"e32f86e9-5a3b-415e-8d53-1aaf03c1214d\",\"vendor\":\"WSO2\"},\"gatewayVendor\":\"wso2\",\"gatewayType\":\"wso2/synapse\",\"asyncTransportProtocols\":[\"\"]}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{app_choreo_host}}/proxy/deployer/v1/components/{{componentId}}/versions/{{versionId}}/deploy-settings?environmentId={{environmentId}}&buildId={{proxyBuildId}}&description=&revisionId={{revisionId}}&apiId={{apimApiUuid}}&accessMode=external&isDevEnv=true",
+							"protocol": "https",
+							"host": [
+								"{{app_choreo_host}}"
+							],
+							"path": [
+								"proxy",
+								"deployer",
+								"v1",
+								"components",
+								"{{componentId}}",
+								"versions",
+								"{{versionId}}",
+								"deploy-settings"
+							],
+							"query": [
+								{
+									"key": "environmentId",
+									"value": "{{environmentId}}"
+								},
+								{
+									"key": "buildId",
+									"value": "{{proxyBuildId}}"
+								},
+								{
+									"key": "description",
+									"value": ""
+								},
+								{
+									"key": "revisionId",
+									"value": "{{revisionId}}"
+								},
+								{
+									"key": "apiId",
+									"value": "{{apimApiUuid}}"
+								},
+								{
+									"key": "accessMode",
+									"value": "external"
+								},
+								{
+									"key": "isDevEnv",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Deployment Status",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{app_choreo_host}}/proxy/deployer/v1/components/{{componentId}}/versions/{{versionId}}/deployment-status?requestId={{proxyDeployerDeployRequestId}}",
+							"protocol": "https",
+							"host": [
+								"{{app_choreo_host}}"
+							],
+							"path": [
+								"proxy",
+								"deployer",
+								"v1",
+								"components",
+								"{{componentId}}",
+								"versions",
+								"{{versionId}}",
+								"deployment-status"
+							],
+							"query": [
+								{
+									"key": "requestId",
+									"value": "{{proxyDeployerDeployRequestId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Environments (Util)",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{apis_choreo_host}}/devops/1.0.0/api/v1/organizations/{{orgUuid}}/environments?organization_id={{orgUuid}}&project_id={{projectId}}&include=environment_clusters",
+							"protocol": "https",
+							"host": [
+								"{{apis_choreo_host}}"
+							],
+							"path": [
+								"devops",
+								"1.0.0",
+								"api",
+								"v1",
+								"organizations",
+								"{{orgUuid}}",
+								"environments"
+							],
+							"query": [
+								{
+									"key": "organization_id",
+									"value": "{{orgUuid}}"
+								},
+								{
+									"key": "project_id",
+									"value": "{{projectId}}"
+								},
+								{
+									"key": "include",
+									"value": "environment_clusters"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Promote",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://{{app_choreo_host}}/proxy/deployer/v1/components/{{componentId}}/versions/{{versionId}}/promote?fromEnv={{environmentId}}&targetEnv=1322c90f-e9c8-4211-9880-e221088485f8&buildId=9cc570fae-196c-460e-9922-ff3a20ea7826&accessMode=external",
+							"protocol": "https",
+							"host": [
+								"{{app_choreo_host}}"
+							],
+							"path": [
+								"proxy",
+								"deployer",
+								"v1",
+								"components",
+								"{{componentId}}",
+								"versions",
+								"{{versionId}}",
+								"promote"
+							],
+							"query": [
+								{
+									"key": "fromEnv",
+									"value": "{{environmentId}}"
+								},
+								{
+									"key": "targetEnv",
+									"value": "1322c90f-e9c8-4211-9880-e221088485f8"
+								},
+								{
+									"key": "buildId",
+									"value": "9cc570fae-196c-460e-9922-ff3a20ea7826"
+								},
+								{
+									"key": "accessMode",
+									"value": "external"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Release IDs",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{app_choreo_host}}/proxy/deployer/v1/components/{{componentId}}/releaseIds?organizationId={{orgUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{app_choreo_host}}"
+							],
+							"path": [
+								"proxy",
+								"deployer",
+								"v1",
+								"components",
+								"{{componentId}}",
+								"releaseIds"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{orgUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OAS Merge",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "openAPI",
+									"value": "{\"openapi\":\"3.0.1\",\"info\":{\"title\":\"HttpBin\",\"description\":\"This api is used to connect to the RenukaEcho service\",\"version\":\"1.2.3\"},\"servers\":[{\"url\":\"/\"}],\"security\":[{\"default\":[]}],\"paths\":{\"/echo\":{\"get\":{\"parameters\":[],\"responses\":{\"200\":{\"description\":\"ok\"}},\"security\":[{\"default\":[]}],\"x-auth-type\":\"Application & Application User\",\"x-throttling-tier\":\"Unlimited\",\"x-throttling-limit\":{\"requestCount\":-1,\"unit\":\"MINUTE\"},\"x-wso2-application-security\":{\"security-types\":[\"oauth2\"],\"optional\":false}},\"post\":{\"parameters\":[],\"responses\":{\"200\":{\"description\":\"ok\"}},\"security\":[{\"default\":[]}],\"x-auth-type\":\"Application & Application User\",\"x-throttling-tier\":\"Unlimited\",\"x-throttling-limit\":{\"requestCount\":-1,\"unit\":\"MINUTE\"},\"x-wso2-application-security\":{\"security-types\":[\"oauth2\"],\"optional\":false}}},\"/echo/{id}\":{\"get\":{\"parameters\":[{\"name\":\"id\",\"in\":\"path\",\"required\":true,\"style\":\"simple\",\"explode\":false,\"schema\":{\"type\":\"string\",\"format\":\"string\"}}],\"responses\":{\"200\":{\"description\":\"ok\"}},\"security\":[{\"default\":[]}],\"x-auth-type\":\"Application & Application User\",\"x-throttling-tier\":\"Unlimited\",\"x-throttling-limit\":{\"requestCount\":-1,\"unit\":\"MINUTE\"},\"x-wso2-application-security\":{\"security-types\":[\"oauth2\"],\"optional\":false}},\"put\":{\"parameters\":[{\"name\":\"id\",\"in\":\"path\",\"required\":true,\"style\":\"simple\",\"explode\":false,\"schema\":{\"type\":\"string\",\"format\":\"string\"}}],\"responses\":{\"200\":{\"description\":\"ok\"}},\"security\":[{\"default\":[]}],\"x-auth-type\":\"Application & Application User\",\"x-throttling-tier\":\"Unlimited\",\"x-throttling-limit\":{\"requestCount\":-1,\"unit\":\"MINUTE\"},\"x-wso2-application-security\":{\"security-types\":[\"oauth2\"],\"optional\":false}},\"delete\":{\"parameters\":[{\"name\":\"id\",\"in\":\"path\",\"required\":true,\"style\":\"simple\",\"explode\":false,\"schema\":{\"type\":\"string\",\"format\":\"string\"}}],\"responses\":{\"200\":{\"description\":\"ok\"}},\"security\":[{\"default\":[]}],\"x-auth-type\":\"Application & Application User\",\"x-throttling-tier\":\"Unlimited\",\"x-throttling-limit\":{\"requestCount\":-1,\"unit\":\"MINUTE\"},\"x-wso2-application-security\":{\"security-types\":[\"oauth2\"],\"optional\":false}}}},\"components\":{\"securitySchemes\":{\"default\":{\"type\":\"oauth2\",\"flows\":{\"implicit\":{\"authorizationUrl\":\"https://test.com\",\"scopes\":{}}}}}},\"x-wso2-auth-header\":\"Authorization\",\"x-throttling-tier\":\"10PerMin\",\"x-throttling-limit\":{\"requestCount\":10,\"unit\":\"MINUTE\"},\"x-wso2-cors\":{\"corsConfigurationEnabled\":false,\"accessControlAllowOrigins\":[\"*\"],\"accessControlAllowCredentials\":false,\"accessControlAllowHeaders\":[\"authorization\",\"Access-Control-Allow-Origin\",\"Content-Type\",\"SOAPAction\",\"apikey\",\"API-Key\",\"testKey\"],\"accessControlAllowMethods\":[\"GET\",\"PUT\",\"POST\",\"DELETE\",\"PATCH\",\"OPTIONS\"]},\"x-wso2-production-endpoints\":{\"urls\":[\"https://httpbin.org/anything\"],\"type\":\"http\"},\"x-wso2-sandbox-endpoints\":{\"urls\":[\"https://httpbin.org/anything\"],\"type\":\"http\"},\"x-wso2-basePath\":\"/64621544-c7e6-4b75-b09b-0a2ce6d7594d/njxl/default/1.2.4\",\"x-wso2-transports\":[\"http\",\"https\"],\"x-wso2-response-cache\":{\"enabled\":false,\"cacheTimeoutInSeconds\":300}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{app_choreo_host}}/proxy/deployer/v1/components/{{componentId}}/versions/{{versionId}}/oas-merge?orgId={{orgUuid}}&environmentId={{environmentId}}&buildId={{proxyBuildId}}&apiId={{apimApiUuid}}",
+							"protocol": "https",
+							"host": [
+								"{{app_choreo_host}}"
+							],
+							"path": [
+								"proxy",
+								"deployer",
+								"v1",
+								"components",
+								"{{componentId}}",
+								"versions",
+								"{{versionId}}",
+								"oas-merge"
+							],
+							"query": [
+								{
+									"key": "orgId",
+									"value": "{{orgUuid}}"
+								},
+								{
+									"key": "environmentId",
+									"value": "{{environmentId}}"
+								},
+								{
+									"key": "buildId",
+									"value": "{{proxyBuildId}}"
+								},
+								{
+									"key": "apiId",
+									"value": "{{apimApiUuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Accessibility",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"buildByEnvironment\": [\n    {\n      \"envId\": \"87a936c4-fd7d-44d7-9740-d2c2ff60120e\",\n      \"buildId\": \"9cc570fae-196c-460e-9922-ff3a20ea7826\"\n    },\n    {\n      \"envId\": \"1322c90f-e9c8-4211-9880-e221088485f8\",\n      \"buildId\": \"9cc570fae-196c-460e-9922-ff3a20ea7826\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{app_choreo_host}}/proxy/deployer/v1/components/{{componentId}}/versions/{{versionId}}/change-accessibility?accessMode=internal",
+							"protocol": "https",
+							"host": [
+								"{{app_choreo_host}}"
+							],
+							"path": [
+								"proxy",
+								"deployer",
+								"v1",
+								"components",
+								"{{componentId}}",
+								"versions",
+								"{{versionId}}",
+								"change-accessibility"
+							],
+							"query": [
+								{
+									"key": "accessMode",
+									"value": "internal"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

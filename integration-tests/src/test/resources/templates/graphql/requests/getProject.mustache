@@ -1,0 +1,15 @@
+{
+  "query": "query {
+    project(orgHandler: "{{orgHandler}}", projectId: "{{projectId}}", orgId: {{orgId}}) {
+      id
+      orgId
+      components(orgHandler: "yashodperera") {
+        id
+        version
+        project {
+          id
+        }
+      }
+    }
+  }"
+}

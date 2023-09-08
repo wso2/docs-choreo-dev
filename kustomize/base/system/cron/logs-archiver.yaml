@@ -78,11 +78,11 @@ spec:
                     name: env-logs-archiver
               resources:
                 limits:
-                  cpu: 300m
-                  memory: 512Mi
+                  cpu: 250m
+                  memory: 150Mi
                 requests:
-                  cpu: 100m
-                  memory: 256Mi
+                  cpu: 150m
+                  memory: 100Mi
               volumeMounts:
                 - mountPath: /mnt/csi/secret-logs-archiver
                   name: secret-logs-archiver

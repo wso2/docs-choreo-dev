@@ -9,6 +9,23 @@ helmCharts:
     ## values
     
     config:
+      inputs: |
+        [INPUT]
+            Name tail
+            Inotify_Watcher false
+            Path /var/log/containers/*_dp-*_*.log, /var/log/containers/*_*-choreo-apim_*.log
+            multiline.parser docker, cri
+            Tag kube.*
+            Mem_Buf_Limit 256MB
+            Skip_Long_Lines On
+
+        [INPUT]
+            Name systemd
+            Mem_Buf_Limit 50MB
+            Tag host.*
+            Systemd_Filter _SYSTEMD_UNIT=kubelet.service
+            Read_From_Tail On
+      
       filters: |
         [FILTER]
             Name kubernetes
@@ -71,6 +88,9 @@ helmCharts:
     imagePullSecrets:
     - name: choreo-image-pull-secret
     
+    podAnnotations:
+      container.apparmor.security.beta.kubernetes.io/fluent-bit: runtime/default
+
     podSecurityContext:
       seccompProfile:
         type: RuntimeDefault
@@ -80,11 +100,11 @@ helmCharts:
     
     resources:
       limits:
-        cpu: 100m
-        memory: 128Mi
+        cpu: 200m
+        memory: 512Mi
       requests:
-        cpu: 100m
-        memory: 128Mi
+        cpu: 200m
+        memory: 512Mi
     
     securityContext:
       allowPrivilegeEscalation: false

@@ -31,6 +31,9 @@ spec:
       maxUnavailable: 0
     type: RollingUpdate
   template:
+    metadata:
+      labels:
+        userapp-ingress-allowed: "true"
     spec:
       affinity:
         podAntiAffinity:
@@ -125,11 +128,11 @@ spec:
                   key: ASB_CONNECTION_STRING
           resources:
             requests:
-              memory: "500Mi"
-              cpu: "500m"
+              memory: 400Mi
+              cpu: 400m
             limits:
-              memory: "750Mi"
-              cpu: "750m"
+              memory: 600Mi
+              cpu: 500m
           ports:
             - containerPort: 18000
             - containerPort: 9843

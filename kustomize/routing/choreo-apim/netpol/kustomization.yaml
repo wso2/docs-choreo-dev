@@ -1,2 +1,3 @@
 resources:
   - allow-internal-nginx-netpol.yaml
+  - deny-metadata-egress.yaml

@@ -50,7 +50,6 @@ public class Configuration {
                 getResource(testConfig)).toURI()), ConfigYaml.class);
 
         List<Map<String, String>> yamlConfigCollection = new ArrayList<>() {{
-            add(configYaml.dps);
             add(configYaml.accountInfo);
             add(configYaml.authInfo);
             add(configYaml.common);
@@ -85,6 +84,12 @@ public class Configuration {
             add(securityConfigYaml.devOps);
             add(securityConfigYaml.devportal);
             add(securityConfigYaml.deliveryInsights);
+            add(securityConfigYaml.componentManagement);
+            add(securityConfigYaml.orgManagemnt);
+            add(securityConfigYaml.configManagement);
+            add(securityConfigYaml.billing);
+            add(securityConfigYaml.integrationComponent);
+            add(securityConfigYaml.apim);
         }};
 
         validateSecurityYamlConfigs(yamlConfigCollection);
@@ -99,6 +104,16 @@ public class Configuration {
         }
 
         throw new IllegalStateException("Config '" + config.name() + "' has not been set");
+    }
+
+    public static Optional<String> getOptionalConfig(OptionalConfigDefinition config) {
+        String value = testConfigs.get(config.name());
+
+        if (value != null) {
+            return Optional.of(value);
+        }
+
+        return Optional.empty();
     }
 
     public static String getSecurityConfig(SecurityConfigDefinition config) {
@@ -119,6 +134,15 @@ public class Configuration {
                     if (configEnum.name().equals(key)) {
                         isConfigInEnum = true;
                         break;
+                    }
+                }
+
+                if (!isConfigInEnum) {
+                    for (OptionalConfigDefinition configEnum : OptionalConfigDefinition.values()) {
+                        if (configEnum.name().equals(key)) {
+                            isConfigInEnum = true;
+                            break;
+                        }
                     }
                 }
 

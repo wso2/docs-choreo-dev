@@ -42,6 +42,11 @@ middleware:
     dumpResponseBody: true
     dumpResponseHeaders: true
     publicKey: ${MIDDLEWARE_LOGGING_PUBLIC_KEY}
+  eventPublish:
+    websubHubPublisherConfig:
+      websubHubBaseUrl: ${MIDDLEWARE_EVENT_PUBLISH_WEBSUBHUB_URL}
+      hubTopic: ${MIDDLEWARE_EVENT_PUBLISH_WEBSUBHUB_TOPIC}
+    enable: ${MIDDLEWARE_EVENT_PUBLISH_ENABLE}
 upstream:
   app-service: app-service:8080
   workspace-manager: workspace-manager:8080
@@ -51,7 +56,6 @@ upstream:
   dp-cicd: dp-cicd:80
   dp-rudder: dp-rudder:80
   organization-management: organization-management:8080
-  marketing-content-storage-url: ${MARKETING_CONTENT_STORAGE_URL}
 redis:
   host: ${REDIS_HOST}
   port: 6380

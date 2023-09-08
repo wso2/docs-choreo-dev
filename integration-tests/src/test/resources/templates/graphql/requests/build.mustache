@@ -1,0 +1,42 @@
+{
+  "query": "query {
+    build(
+      orgHandler: \"{{orgHandler}}\",
+      build: {
+        buildId: \"{{buildId}}\",
+        componentId: \"{{componentId}}\",
+        versionId: \"{{versionId}}\",
+        commitHash: \"{{commitHash}}\",
+        environmentId: \"{{devEnvId}}\",
+        revisionId: \"{{revisionId}}\",
+      }
+    ) {
+      id
+      versionId
+      buildId
+      commitHash
+      componentId
+      createdDate
+      environments {
+        id
+        revisions {
+          id
+          revisionId
+          createdDate
+          updatedDate
+          description
+          environments
+          isBase
+        }
+      }
+      revisions {
+        id
+        environments
+        revisionId
+        createdDate
+        updatedDate
+        isBase
+      }
+    }
+  }"
+}

@@ -1,0 +1,15 @@
+{
+  "operationName": null,
+  "variables": {},
+  "query": "{
+    repoBranchList(
+      secretRef: \"\",
+      repositoryOrganization: \"{{orgHandler}}\",
+      repositoryName: \"{{repoName}}\"
+    ) {
+      name
+      isDefault
+      __typename
+    }
+  }"
+}

@@ -85,6 +85,15 @@ helmCharts:
           - "/bin/bash"
           - "-c"
           - "sleep 120 && bash post-start.sh 2>&1 > /tmp/post-start.log"
+          
+    persistence:
+      image: choreocontrolplane.azurecr.io/busybox
+      imageTag: 1.36
+
+    podAnnotations:
+      container.apparmor.security.beta.kubernetes.io/opensearch: runtime/default
+      container.apparmor.security.beta.kubernetes.io/fsgroup-volume: runtime/default
+      container.apparmor.security.beta.kubernetes.io/set-vm-max-map-count: runtime/default
     
     podSecurityContext:
       seccompProfile:
@@ -92,11 +101,11 @@ helmCharts:
           
     resources:
       limits:
-        cpu: "1500m"
-        memory: "1700Mi"
+        cpu: "1000m"
+        memory: "2000Mi"
       requests:
         cpu: "1000m"
-        memory: "1500Mi"
+        memory: "2000Mi"
     
     securityConfig:
       internalUsersSecret: opensearch-internal-users

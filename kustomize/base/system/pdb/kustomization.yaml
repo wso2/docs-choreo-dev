@@ -22,7 +22,6 @@ resources:
   - dp-utility-api.yaml
   - email-service.yaml
   - loggingapi.yaml
-  - marketplace.yaml
   - negotiator.yaml
   - obsapi.yaml
   - orgremover.yaml
@@ -31,6 +30,7 @@ resources:
   - subscriptions.yaml
   - sys-obsapi.yaml
   - telemetry.yaml
+  - telemetry-go.yaml
   - test-assistant.yaml
   - testbase.yaml
   - devops-portal-api.yaml

@@ -1,0 +1,9 @@
+{
+    "variables": {
+        "org": {
+            "orgId": "{{orgUuid}}"
+        },
+        "projectId": "{{projectId}}"
+    },
+    "query": "query ($org: OrgFilter!, $projectId: String) {\n  listEnvironments(org: $org, projectId: $projectId) {\n    id\n    externalEnvId\n    internalEnvId\n    sandboxEnvId\n    name\n    type\n    __typename\n  }\n}\n"
+}

@@ -67,7 +67,8 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
 
-        ChoreoProject testProject = GraphQL.createProject(accessToken);
+        ChoreoProject testProject = ComponentUtils.createProject(this, citrusClients, accessToken, 
+                Constant.region.US.toString());
         String projectId = testProject.getId();
 
         String firstAPIName = Constant.DEFAULT_API_NAME.concat(String.valueOf(new Date().getTime()));

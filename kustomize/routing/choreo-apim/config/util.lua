@@ -283,7 +283,8 @@ function util.ciliumEnabled(organizationId)
 
     -- check local cache
     if cacheValue ~= nil then
-        if cacheValue == "true" then
+        if cacheValue == true then
+            ngx.log(ngx.DEBUG, "cache hit, forwarding organization: ", organizationId, " to cilium")
             return true
         else
             return false
@@ -314,11 +315,12 @@ function util.ciliumEnabled(organizationId)
         return forwardToCilium
     end
 
-    red:select(ngx.var.redis_database)
+    red:select(1) -- rudder always uses db 1
 
     local redisResponse, readErr = red:get(ciliumStatusKey)
     if readErr then
         ngx.log(ngx.ERR, "failed to retrieve cilium status for organization: ", organizationId, " from redis ", readErr)
+        cache:set(ciliumStatusKey, forwardToCilium, 5000)
         return forwardToCilium
     end
 
@@ -328,7 +330,7 @@ function util.ciliumEnabled(organizationId)
     elseif redisResponse == "true" then
         forwardToCilium = true
     end
-    cache:set(ciliumStatusKey, forwardToCilium, 300)
+    cache:set(ciliumStatusKey, forwardToCilium, 5000)
 
     local ok, err = red:set_keepalive(100000, 100)
     if not ok then

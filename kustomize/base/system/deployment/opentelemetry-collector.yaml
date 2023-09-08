@@ -32,8 +32,8 @@ spec:
         name: otel-collector
         resources:
           limits:
-            cpu: 500m
-            memory: 500Mi
+            cpu: 150m
+            memory: 150Mi
           requests:
             cpu: 100m
             memory: 100Mi

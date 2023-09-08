@@ -8,6 +8,7 @@ resources:
   - app-service.yaml
   - audit-logging.yaml
   - telemetry.yaml
+  - telemetry-go.yaml
   - sys-obsapi.yaml
   - negotiator.yaml
   - loggingapi.yaml
@@ -25,7 +26,6 @@ resources:
   - dp-mizzen.yaml
   - cp-graphql.yaml
   - console-next.yaml
-  - marketplace.yaml
   - alert-notification-service.yaml
   - alert-configuration-service.yaml
   - delete-manager.yaml
