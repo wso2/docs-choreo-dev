@@ -202,20 +202,20 @@ To build and deploy the service, follow these steps:
 
 2. On the **Deploy** page, click **Deploy Manually**.  The endpoint added to the `.choreo/endpoints.yaml` is listed in the **Configure & Deploy** pane on the right. 
 
-!!! tip
-     - Optionally, you can click the arrow icon on the endpoint in the **Configure & Deploy** pane to view the endpoint details. The endpoint details added to the `.choreo/endpoints.yaml` is visible here.
-     - Optionally, to change the network visibility, you can click the edit icon on the endpoint on the **Configure & Deploy** pane to change the network visibility. Click **Update** to persist your changes.
+    !!! tip
+        - Optionally, you can click the arrow icon on the endpoint in the **Configure & Deploy** pane to view the endpoint details. The endpoint details added to the `.choreo/endpoints.yaml` is visible here.
+        - Optionally, to change the network visibility, you can click the edit icon on the endpoint on the **Configure & Deploy** pane to change the network visibility. Click **Update** to persist your changes.
 
-!!! note
-    To test the service over the web you need to expose the service to the public. This is done securely by setting the network visibility to `public` in `.choreo/endpoints.yaml`. 
+    !!! note
+        To test the service over the web you need to expose the service to the public. This is done securely by setting the network visibility to `public` in `.choreo/endpoints.yaml`. 
 
 3. In the **Configure & Deploy** pane, click **Deploy** to deploy the service.
 
-   !!! note
-       Deploying the service component may take a while. You can track the progress by observing the logs. Once the deployment is complete, the deployment status changes to `Active` in the corresponding environment card.
+    !!! note
+        Deploying the service component may take a while. You can track the progress by observing the logs. Once the deployment is complete, the deployment status changes to `Active` in the corresponding environment card.
 
 
-2. Check the deployment progress by observing the console logs on the right of the page.
+4. Check the deployment progress by observing the console logs on the right of the page.
     You can access the following scans under **Build**. 
 
     - **The Dockerfile scan**: Choreo performs a scan to check if a non-root user ID is assigned to the Docker container to ensure security. If no non-root user is specified, the build will fail.
@@ -229,7 +229,7 @@ The DevOps configurations related to scaling, health checks, configuration, and 
 
 For detailed instructions, see the following sections:
 
-- [Step 3: Test](https://wso2.com/choreo/docs/test/invoke-apis-via-console/)
+- [Step 3: Test](https://wso2.com/choreo/docs/testing/test-graphql-endpoints-via-the-graphql-console/)
 - [Step 4: Manage](https://wso2.com/choreo/docs/manage/api-management/)
 
 ## Manage the deployment¶

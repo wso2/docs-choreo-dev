@@ -435,6 +435,7 @@ datagram
 connectionless
 Nginx
 schemas
+TestGPT
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -748,3 +749,6 @@ registry.docker.com
 auths
 nginx
 Url
+ - docs/testing/test-apis-with-testgpt.md
+findByStatus
+getBooksByYear
