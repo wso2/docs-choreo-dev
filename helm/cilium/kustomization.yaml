@@ -137,3 +137,4 @@ commonAnnotations:
 
 patchesStrategicMerge:
   - cilium-operator-security-patches.yaml
+  - hubble-relay-security-patches.yaml
