@@ -26,7 +26,7 @@ You can create a Web Application in Choreo as follows:
 
     Once you create the Web Application component, Choreo will automatically generate a build pipeline for your Single Page Application and deploy it.
 
-    Follow the steps below to manage runtime configurations for your React application at manual deployment.
+    Follow the steps below to manage runtime configurations for your SPA application at manual deployment.
     
     - Go to your repository that includes the Web Application source code.
 
@@ -48,8 +48,8 @@ You can create a Web Application in Choreo as follows:
     </html>
     ```
 
-    - Commit changes to your repository and click **Deploy Manually** or **Configure & Deploy**. Deploying the component initiates the window to define a file with environment specific, non-confidential data for your web application which can be read and updated later.
-    - Input configuration file name as defined in the script tag and in the editor, define the variables you need to access from the web application as follows.
+    - Commit changes to your repository and click **Deploy Manually** if auto deploy on commit is enabled, else click **Configure & Deploy**. This opens the window to define a file with environment specific, non-confidential data for your web application which can be read and updated later in the **Dev Ops** view.
+    - Input the configuration filename as defined in the script tag and define the variables you need to access from the web application as follows.
     
     ```
     window.configs = {
@@ -57,9 +57,9 @@ You can create a Web Application in Choreo as follows:
     };
     ```
     
-    - Click **Deploy** which will initiate the build pipeline, and upon completion, your application will become accessible in your Development environment through a generated URL. Choreo takes care of automatic TLS/SSL management for your apps.
+    - Click **Deploy** to initiate the build pipeline. Upon the completion of build, your application will become accessible in your Development environment through a generated URL. Choreo takes care of automatic TLS/SSL management for your apps.
 
-    - The configurations can be accessed through your application from the window.config object as follows.
+    - The defined configurations can be accessed through your application from the window.config object as follows.
 
     ```
     import React from 'react';
@@ -71,11 +71,13 @@ You can create a Web Application in Choreo as follows:
     ```
 
     !!! note
-        - The ‘index.html’ serves as the main entry point for your SPA in web development. It should contain the necessary metadata such as page titles and meta tags, code and other references to start your SPA.  
+        - The **index.html** serves as the main entry point for your SPA in web development. It should contain the necessary metadata such as page titles and meta tags, code and other references to start your SPA.  
 
-        - The window object represents the global window of the browser environment. Variables or properties can be attached to the window object to make them globally accessible within the browser.
+        - The `window` object represents the global window of the browser environment. Variables or properties can be attached to the window object to make them globally accessible within the browser.
 
-        - The web application is reading the environment-specific configurations from the `window` object at runtime. Here, at deployment the specified file is mounted for the development environment. You will need to do the same for other environments as well when you deploy your web application to multiple environments.
+        - The web application is reading the environment-specific configurations from the `window` object at runtime. 
+        
+        - Here, at deployment, the specified file is mounted for the development environment. You will need to do the same for other environments as well when you deploy your web application to multiple environments.
 
  2. Bring your Dockerfile.
     - Create a Web Application component by linking your repository that includes the Dockerfile to your containerized web application.
@@ -127,11 +129,13 @@ You have successfully created a Web Application component from the source code. 
 
 ## Deploy and access your web application
 
-1. On the Deploy page, click **Deploy Manually**. 
-Deploying the component initiates the build pipeline, and upon completion, your application will become accessible in your Development environment through a generated URL. Choreo takes care of automatic TLS/SSL management for your apps.
+1. Navigate to the Deploy page within your development environment.
 
-2. If Auto deploy on commit option is not enabled, click **Configure & Deploy**. 
-This will open the window to add configurations for your web app. Upon competion of adding configurations, click **Deploy** to initiate the build pipeline.  
+2. If the **Auto deploy on commit** option is not enabled, click **Configure & Deploy**, else click **Deploy Manually**. This will open the window to add configurations for your web app.
+
+3. In the configuration window, specify the configuration filename and parameters for your application.
+
+4. Once you have completed the configuration, click the **Deploy** button to initiate the build pipeline. Upon completion, your application will become accessible in your Development environment through a generated URL. Choreo takes care of automatic TLS/SSL management for your apps.
 
     !!! note
         The deployment of the Web Application component may require some time. You can monitor the progress by observing the logs. Once the deployment is finished, the deployment status in the corresponding environment card will change to **Active**.
@@ -149,7 +153,17 @@ This will open the window to add configurations for your web app. Upon competion
 
     The DevOps configurations related to scaling, health checks and configuration & secret management are available to all Web Application components regardless of how they were created, similar to other Choreo components. 
 
-3. To access your Web application, copy the **Web App URL** on the environment card and paste it in a browser. You will see your React App that you created. 
+3. To access your Web application, copy the **Web App URL** on the environment card and paste it in a browser. You will see your React App that you created.
+
+## Promote your Web Application to Production
+
+When you promote your component, if there is no deployment in the production environment you will get the following options.
+
+- Define new configuration values
+
+- Use Development configurations
+
+You can select **Define new configuration values** option to create new config files for Production environment or **Use Development configurations** option to copy the configs and secrets defined in the development environment.
 
 ## Create a short URL for your Web Application in Production
 
@@ -206,14 +220,14 @@ Follow the steps below to manage runtime configurations for the React applicatio
     </head>
     <body>
         <div id="root"></div>
-        <script src="%PUBLIC_URL%/config.js"></script>
+        <script src=".public/config.js"></script>
     </body>
     </html>
 
     ```
 This will make the `window.config` object available to your app at runtime.
 
-3. In your React component, you can access the configuration variables by referencing the window.config object as follows:
+4. In your React component, you can access the configuration variables by referencing the window.config object as follows:
 
     ```
     import React from 'react';
@@ -228,7 +242,7 @@ This will make the `window.config` object available to your app at runtime.
     ```
 Now you can deploy your component. 
 
-4. When you deploy your component to Choreo, create a config file mount at the specified path in each environment (where your index.html expects the config.js file as in this example).
+5. When you deploy your component to Choreo, create a config file mount with the specified filename (config.js as index.html expects the config.js file in this example).
 [https://wso2.com/choreo/docs/devops-and-ci-cd/manage-configurations-and-secrets/#apply-a-file-mount-to-your-container](https://wso2.com/choreo/docs/devops-and-ci-cd/manage-configurations-and-secrets/#apply-a-file-mount-to-your-container).
 
 ## Limitations
