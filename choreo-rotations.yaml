@@ -9,7 +9,7 @@ rotations:
       - name: QA Engineering
         members:
           - isurupi@wso2.com
-          - dasun@wso2.com
+          - uvindra@wso2.com
     endMessage: "Please contact above team regarding Choreo releases within above dates"
     notifications:
       - choreo_release_chat
