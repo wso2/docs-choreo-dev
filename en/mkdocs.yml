@@ -192,6 +192,7 @@ markdown_extensions:
       base_path: docs
   - attr_list
 plugins:
+  - search
   - include-markdown
   - glightbox
   - markdownextradata: {}
