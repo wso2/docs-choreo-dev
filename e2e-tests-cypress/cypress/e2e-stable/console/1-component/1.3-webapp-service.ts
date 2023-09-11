@@ -80,7 +80,7 @@ describe("Verify containerized service functionality", () => {
   });
 
   it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd(false);
+    ComponentDeployPage.promoteToProd(false, true, 1, true);
   });
 
   it("Verify test page is disabled", () => {

@@ -132,6 +132,10 @@ export class ComponentDeployPage {
       }
       if (!isWebApp) {
         this.pollElement('[data-cyid="btn-next-button"]').click();
+      } else {
+        cy.get('[data-cyid="btn-next-button"]', VERY_LONG_TIME)
+        .should("be.visible")
+        .click();
       }
     }
 
@@ -158,7 +162,8 @@ export class ComponentDeployPage {
   static promoteToProd(
     isAdditionalConfigs: boolean = true,
     isManagedByAPIM: boolean = true,
-    numberOfNextPrompts: number = 2
+    numberOfNextPrompts: number = 2,
+    isWebApp: boolean = false
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
     APIDeployment.RetryPromotionToProd();
@@ -177,6 +182,14 @@ export class ComponentDeployPage {
 
     if (isManagedByAPIM) {
       Utils.interceptConfig();
+    }
+
+    if (isWebApp) {
+      cyGet('[data-cyid="btn-next-button"]').realClick();
+      cy.get('[data-cyid="btn-next-button"]', VERY_LONG_TIME)
+      .should("be.visible")
+      .contains("Promote")
+      .click();
     }
 
     APIDeployment.RetryPromotionToProd();
