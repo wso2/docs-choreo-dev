@@ -127,6 +127,8 @@ spec:
               value: "-Xms2048m -Xmx2048m"
             - name: PROFILE_NAME
               value: control-plane
+            - name: DEPLOYMENT_TYPE_PROD_PREFIXES
+              value: "prod, systemapis" 
           volumeMounts:
             - name: apim-vol
               mountPath: /home/wso2carbon/wso2am-4.0.0-SNAPSHOT
