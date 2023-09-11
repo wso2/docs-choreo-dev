@@ -25,6 +25,7 @@ spec:
 
   policyTypes:
   - Egress
+  - Ingress
   egress:
   # Allow egress to the K8s Kubelet on port 10250 to get Kubernetes metadata
   # ref - https://docs.fluentbit.io/manual/pipeline/filters/kubernetes#optional-feature-using-kubelet-to-get-metadata
@@ -48,4 +49,16 @@ spec:
           app.kubernetes.io/name: opensearch
     ports:
     - port: 9200
+      protocol: TCP
+  ingress:
+  # Allow ingress from loggingapi to receive requests to the health check endpoint
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: choreo-observability
+      podSelector:
+        matchLabels:
+          choreo.component: choreo-loggingapi
+    ports:
+    - port: 2020
       protocol: TCP
