@@ -19,6 +19,7 @@ If you do not already have a component, you can choose to create one from the fo
     | Service (Exposing a REST API endpoint)| [https://github.com/wso2/choreo-sample-apps/tree/main/rest-api-proxy/pet-store ](https://github.com/wso2/choreo-sample-apps/tree/main/rest-api-proxy/pet-store ) |[Develop a REST API](../develop-components/develop-services/develop-a-rest-api.md) |
 
 - [Expose an OpenAPI specification from your component](https://wso2.com/choreo/docs/develop-components/configure-endpoints/#learn-the-endpointsyaml-file).
+
 ## Test your APIs
 
 Follow the steps below to test an API with TestGPT: 
