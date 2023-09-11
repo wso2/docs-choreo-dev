@@ -15,10 +15,10 @@ If you do not already have a component, you can choose to create one from the fo
 
     | Component type |Sample source                                       | Reference documentation      |
     |----------------|----------------------------------------------------|------------------------------|
-    | REST API Proxy| [https://github.com/wso2/choreo-sample-apps/tree/main/rest-api-proxy/pet-store ](https://github.com/wso2/choreo-sample-apps/tree/main/rest-api-proxy/pet-store ) | [Develop a REST API Proxy ](../develop-components/develop-a-rest-api-proxy.md) |
-    | Service (Exposing a REST API endpoint)| [https://raw.githubusercontent.com/wso2/choreo-sample-apps/main/rest-api-proxy/pet-store/openapi.yaml](https://raw.githubusercontent.com/wso2/choreo-sample-apps/main/rest-api-proxy/pet-store/openapi.yaml ) |[Develop a REST API](../develop-components/develop-services/develop-a-rest-api.md) |
+    | REST API Proxy| [https://raw.githubusercontent.com/wso2/choreo-sample-apps/main/rest-api-proxy/pet-store/openapi.yaml](https://raw.githubusercontent.com/wso2/choreo-sample-apps/main/rest-api-proxy/pet-store/openapi.yaml ) | [Develop a REST API Proxy ](../develop-components/develop-a-rest-api-proxy.md) | 
+    | Service (Exposing a REST API endpoint)| [https://github.com/wso2/choreo-sample-apps/tree/main/rest-api-proxy/pet-store ](https://github.com/wso2/choreo-sample-apps/tree/main/rest-api-proxy/pet-store ) |[Develop a REST API](../develop-components/develop-services/develop-a-rest-api.md) |
 
-- An available OpenAPI specification in your component.
+- [Expose an OpenAPI specification from your component](https://wso2.com/choreo/docs/develop-components/configure-endpoints/#learn-the-endpointsyaml-file).
 
 ## Test your APIs
 
@@ -28,3 +28,6 @@ Follow the steps below to test an API with TestGPT:
 2. In the **Component Listing** pane, click on the component you want to test.
 3. On the left navigation, click **Test** and then click **TestGPT**. This opens the **TestGPT** pane.
 4. You can enter your query in natural language and execute it. For example, if you have a resource like "/pet/findByStatus," you can input the query, such as "Get the pets that are available," and execute it to obtain results. The resources are executed sequentially based on your query. Alternatively, you can use the sample queries available to try out TestGPT. 
+
+
+
