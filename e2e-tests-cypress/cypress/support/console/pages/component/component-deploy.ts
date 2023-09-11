@@ -14,6 +14,7 @@
 import { GraphQL } from "../../apis/graphql";
 import {
   BUILD_FAILED,
+  CONFIG_CONTENT,
   CONFIG_FILE,
   CONFIG_KEY,
   CONFIG_VALUE,
@@ -58,6 +59,19 @@ export class ComponentDeployPage {
         return cy.get(locator);
       }
     });
+  }
+
+  private static configWebappComponent() {
+    cy.get('[class="view-lines monaco-mouse-cursor-text"]').type('{backspace}').type(CONFIG_CONTENT);
+    cy.get('[data-testid="btn-next"]').click();
+  }
+
+  private static configWebAppComponentPromote() {
+    cy.get(
+      '[data-cyid="promote-selector-default-configs"]'
+    ).click();
+    cy.get('[data-cyid="btn-next-button"]').click();
+    this.configWebappComponent();
   }
 
   static reDeployToDev(
@@ -133,9 +147,7 @@ export class ComponentDeployPage {
       if (!isWebApp) {
         this.pollElement('[data-cyid="btn-next-button"]').click();
       } else {
-        cy.get('[data-cyid="btn-next-button"]', VERY_LONG_TIME)
-        .should("be.visible")
-        .click();
+        this.configWebappComponent()
       }
     }
 
@@ -185,11 +197,7 @@ export class ComponentDeployPage {
     }
 
     if (isWebApp) {
-      cyGet('[data-cyid="btn-next-button"]').realClick();
-      cy.get('[data-cyid="btn-next-button"]', VERY_LONG_TIME)
-      .should("be.visible")
-      .contains("Promote")
-      .click();
+      this.configWebAppComponentPromote();
     }
 
     APIDeployment.RetryPromotionToProd();
@@ -452,7 +460,6 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-next-button"]').click();
     this.configByocComponent();
   }
-
   static deployService(
     projectName: string,
     componentName: string,
