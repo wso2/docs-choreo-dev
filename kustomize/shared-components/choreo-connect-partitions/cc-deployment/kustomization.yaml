@@ -53,6 +53,7 @@ configMapGenerator:
       - ENFORCER_CA_CERT_PATH="/home/wso2/security/truststore/mg.pem"
       - ADAPTER_HOST=adapter
       - ROUTER_LABEL=""
+      - FILE_FLUSH_INTERVAL_MSEC="2000"
 
 commonLabels:
   cc.component: choreo-connect-deployment

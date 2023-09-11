@@ -9,14 +9,18 @@
 #
 # --------------------------------------------------------------------------------------
 
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
 resources:
+  - deployment.yaml
+  - service.yaml
+  - hpa.yaml
   - network-policy.yaml
-  - loggingapi
-  - config
-  - obsapi
-  - sys-obsapi
 
-namespace: choreo-observability
+configMapGenerator:
+  - name: sys-obsapi-cm-file
+    behavior: create
+    files:
+      - Config.toml
+  - name: sys-obsapi-cm
+    behavior: create
+    literals:
+      - AZURE_LA_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9

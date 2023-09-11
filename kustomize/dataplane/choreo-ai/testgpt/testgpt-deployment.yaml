@@ -50,8 +50,8 @@ spec:
               cpu: 500m
               memory: 500Mi
             requests:
-              cpu: 100m
-              memory: 100Mi
+              cpu: 250m
+              memory: 250Mi
           ports:
             - containerPort: 9090 
               name: testgpt-port

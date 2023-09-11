@@ -7,7 +7,7 @@ metadata:
 spec:
   schedule: 0 1 1 * *
   successfulJobsHistoryLimit: 3
-  concurrencyPolicy: Forbid
+  concurrencyPolicy: Allow
   jobTemplate:
     spec:
       backoffLimit: 10
@@ -48,10 +48,10 @@ spec:
               resources:
                 limits:
                   cpu: 500m
-                  memory: 1024Mi
+                  memory: 450Mi
                 requests:
-                  cpu: 300m
-                  memory: 512Mi
+                  cpu: 400m
+                  memory: 350Mi
               volumeMounts:
                 - name: config
                   mountPath: /home/ballerina/Config.toml

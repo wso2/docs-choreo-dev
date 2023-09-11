@@ -43,10 +43,10 @@ spec:
               resources:
                 limits:
                   cpu: 300m
-                  memory: 1024Mi
+                  memory: 600Mi
                 requests:
                   cpu: 200m
-                  memory: 512Mi
+                  memory: 500Mi
               volumeMounts:
                 - name: output-volume  # Used for storing the content written during execution
                   mountPath: /choreo-data-generator/output

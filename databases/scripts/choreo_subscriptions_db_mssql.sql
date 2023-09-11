@@ -115,7 +115,8 @@ BEGIN
         threshold_id VARCHAR(128) DEFAULT '01ee409e-cdfd-13d6-86c6-1a523acc861b',
         PRIMARY KEY (org_id, tier_id),
         UNIQUE (id),
-        CONSTRAINT FK_TierSubscriptionV2 FOREIGN KEY (tier_id) REFERENCES tierV2(id)
+        CONSTRAINT FK_TierSubscriptionV2 FOREIGN KEY (tier_id) REFERENCES tierV2(id),
+        CONSTRAINT FK_ThresholdSubscriptionV2 FOREIGN KEY (threshold_id) REFERENCES threshold(id)
     );
 END
 GO
@@ -170,7 +171,7 @@ INSERT INTO tierV2 (id,name,description,is_paid,created_at,is_internal) VALUES
      (N'd3bd7035-162d-49dd-8b20-2f8bf095a889',N'Pay As You Go Infrastructure',N'Tier for infrastructure costs associated with new PAYG users',1,1689683632,0);
 GO
 
-INSERT INTO threshold(id,tier_id,thresholds) values 
+INSERT INTO threshold(id,tier_id,threshold) values 
 	(N'01ee409e-cdfd-13d6-86c6-1a523acc861b',N'8de71e7a-adc2-4de4-a1b4-5b79d450f3ff', N'{"components": 5}'),
 	(N'01ee40ac-d78d-1a18-aefa-7525b354b84a',N'4abe3757-86f6-47de-994f-f02fb0522e99', N'{"components": 0}'),
 	(N'01ee40ac-d78d-1a18-ba66-569b6fbd58f5',N'352dd60e-8e14-4bb3-9dab-395a16fbfe88', N'{"components": 5}',N'stripe'),
