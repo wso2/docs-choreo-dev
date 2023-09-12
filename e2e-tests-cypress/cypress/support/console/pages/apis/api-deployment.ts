@@ -31,16 +31,31 @@ import {
 import { Utils } from "../../../commons/utils";
 
 export class APIDeployment {
-  static DeployToDev() {
+  static deployToDev() {
     cy.intercept({ method: "GET", url: PUBLISHER_API_KEYS_URL, times: 1 }).as(
       "keys"
     );
-    cyGet('[data-cyid="btn-deploy-proxy-button"]', MEDIUM_TIME)
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .should("be.visible")
+      .wait(1000);
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
       .contains("Generating Configurations", MEDIUM_TIME)
       .should("not.exist");
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading Configurations", MEDIUM_TIME)
+      .should("not.exist");
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading", MEDIUM_TIME)
+      .should("not.exist");
     this.RetryDevDeployment();
+    cyGet('[data-cyid="direct-deploy-option-proxy-split-toggle-button-button"]', SHORT_TIME)
+      .should("not.be.disabled")
+      .click();
 
-    cyGet('[data-cyid="btn-deploy-proxy-button"]')
+    cyGet('[data-cyid="configure-&-deploy-option"]')
+      .click();
+
+    cyGet('[data-cyid="direct-deploy-option-proxy-split-group-button-button"]', MEDIUM_TIME)
       .should("not.be.disabled")
       .click();
 
@@ -274,7 +289,7 @@ export class APIDeployment {
     cy.get('[data-cyid="env-baseProduction-env-card"]')
       .contains("Production")
       .should("be.visible");
-    cyGet('[data-cyid="deployment-status"]').should("have.length", 2);
+    cyGet('[data-cyid="deployment-status"]', SHORT_TIME).should("have.length", 2);
     cyGet('[data-cyid="deployment-status"]>h6', VERY_LONG_TIME)
       .eq(1)
       .should("contain", "Active");

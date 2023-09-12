@@ -77,7 +77,7 @@ describe("Verify containerized service functionality", () => {
   });
 
   it("Verify component deployment to dev", () => {
-    ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME, true, true, false, true);
+    ComponentDeployPage.deployToDevWithoutSplitButton(PROJECT_NAME,COMPONENT_NAME, true, true, false, true);
   });
 
   it("Verify config file availability for dev", () => {

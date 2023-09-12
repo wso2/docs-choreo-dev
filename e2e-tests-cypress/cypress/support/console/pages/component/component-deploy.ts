@@ -87,11 +87,86 @@ export class ComponentDeployPage {
     isManualTrigger: boolean = false
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
-      .contains("Generating Configurations", LONG_TIME)
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .should("be.visible")
+      .wait(1000);
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Generating Configurations", MEDIUM_TIME)
+      .should("not.exist");
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading Configurations", MEDIUM_TIME)
+      .should("not.exist");
+     cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading", MEDIUM_TIME)
       .should("not.exist");
     APIDeployment.RetryDevDeployment();
-    cyGet('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
+
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', SHORT_TIME)
+      .should("be.enabled")
+      .click();
+
+    cyGet('[data-cyid="configure-&-deploy-option"]')
+      .click();
+
+    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
+      .should("be.enabled")
+      .click();
+
+    if (isAdditionalConfigs) {
+      if (isManagedByAPIM) {
+        Utils.interceptConfig();
+      }
+      this.pollElement('[data-cyid="btn-next-button"]').click();
+    }
+
+    APIDeployment.RetryDevDeployment();
+    if (isManualTrigger) {
+      cy.get('[data-cyid="btn-promote-button"]', LONG_TIME).should(
+        "be.enabled"
+      );
+      return;
+    }
+
+    // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
+    // to ensure rendering completes before checking the deployment status
+    cy.get('[data-cyid="btn-status-action"]', LONG_TIME).eq(0).scrollIntoView();
+    cy.get('[data-testid="btn-stop"]', LONG_TIME)
+      .should("be.visible")
+      .wait(600)
+      .get('[data-testid="btn-stop"]', MEDIUM_TIME)
+      .should("be.visible");
+    cy.contains("div", "Development")
+      .parents("div")
+      .eq(3)
+      .within(() => {
+        cy.get('[data-cyid="deployment-status"]', VERY_LONG_TIME).contains(
+          DEPLOYMENT_SUCCESS,
+          VERY_LONG_TIME
+        );
+      });
+    cy.get('[data-cyid="link-test"]').should("be.visible");
+  }
+
+  static reDeployToDevWithoutSplitButton(
+    isAdditionalConfigs: boolean = true,
+    isManagedByAPIM: boolean = true,
+    isManualTrigger: boolean = false
+  ) {
+    window.localStorage.setItem("hideSocialShareModel", "true");
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .should("be.visible")
+      .wait(1000);
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Generating Configurations", MEDIUM_TIME)
+      .should("not.exist");
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading Configurations", MEDIUM_TIME)
+      .should("not.exist");
+     cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading", MEDIUM_TIME)
+      .should("not.exist");
+    APIDeployment.RetryDevDeployment();
+    cyGet('[data-cyid="btn-deploy-api-button"]', MEDIUM_TIME)
       .should("be.enabled")
       .click();
 
@@ -139,11 +214,83 @@ export class ComponentDeployPage {
     isWebApp: boolean = false
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
-      .contains("Generating Configurations", LONG_TIME)
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .should("be.visible")
+      .wait(1000);
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Generating Configurations", MEDIUM_TIME)
+      .should("not.exist");
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading Configurations", MEDIUM_TIME)
+      .should("not.exist");
+     cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading", MEDIUM_TIME)
       .should("not.exist");
     APIDeployment.RetryDevDeployment();
-    cyGet('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
+
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', SHORT_TIME)
+      .should("be.enabled")
+      .click();
+
+    cyGet('[data-cyid="configure-&-deploy-option"]')
+      .click();
+
+    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
+      .should("be.enabled")
+      .click();
+
+    if (isAdditionalConfigs) {
+      if (isManagedByAPIM) {
+        Utils.interceptConfig();
+      }
+      if (!isWebApp) {
+        this.pollElement('[data-cyid="btn-next-button"]').click();
+      }
+    }
+
+    APIDeployment.RetryDevDeployment();
+    if (isManualTrigger) {
+      cy.get('[data-cyid="btn-promote-button"]', LONG_TIME).should(
+        "be.enabled"
+      );
+      return;
+    }
+    cy.get('[data-testid="btn-stop"]', LONG_TIME).should("be.visible");
+    GraphQL._getComponentDeploymentStatus(projectName, componentName);
+    // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
+    // to ensure rendering completes before checking the deployment status
+    cy.wait(600);
+    cy.get('[data-testid="btn-stop"]', MEDIUM_TIME).should("be.visible");
+    cy.get('[data-cyid="deployment-status"]', LONG_TIME).contains(
+      DEPLOYMENT_SUCCESS,
+      LONG_TIME
+    );
+    cy.get('[data-cyid="link-test"]').should("be.visible");
+  }
+
+  static deployToDevWithoutSplitButton(
+    projectName: string,
+    componentName: string,
+    isAdditionalConfigs: boolean = true,
+    isManagedByAPIM: boolean = true,
+    isManualTrigger: boolean = false,
+    isWebApp: boolean = false
+  ) {
+    window.localStorage.setItem("hideSocialShareModel", "true");
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .should("be.visible")
+      .wait(1000);
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Generating Configurations", MEDIUM_TIME)
+      .should("not.exist");
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading Configurations", MEDIUM_TIME)
+      .should("not.exist");
+     cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading", MEDIUM_TIME)
+      .should("not.exist");
+    APIDeployment.RetryDevDeployment();
+    cyGet('[data-cyid="btn-deploy-api-button"]', MEDIUM_TIME)
       .should("be.enabled")
       .click();
 
@@ -231,8 +378,25 @@ export class ComponentDeployPage {
 
   static deployScheduleTask() {
     window.localStorage.setItem("hideSocialShareModel", "true");
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .should("be.visible")
+      .wait(1000);
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Generating Configurations", MEDIUM_TIME)
+      .should("not.exist");
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading Configurations", MEDIUM_TIME)
+      .should("not.exist");
+     cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading", MEDIUM_TIME)
+      .should("not.exist");
     APIDeployment.RetryDevDeployment();
-    cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', SHORT_TIME)
+      .should("be.enabled")
+      .click();
+    cyGet('[data-cyid="configure-&-deploy-option"]')
+      .click();
+    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
       .should("be.enabled")
       .click();
     cy.get('[data-cyid="btn-next-button"]').contains("Deploy").click();
@@ -255,17 +419,27 @@ export class ComponentDeployPage {
 
   static configureAndDeploy(configValue: string) {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
-      .contains("Generating Configurations", LONG_TIME)
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .should("be.visible")
+      .wait(1000);
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Generating Configurations", MEDIUM_TIME)
       .should("not.exist");
-    cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
-      .contains("Loading Configurations", LONG_TIME)
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading Configurations", MEDIUM_TIME)
+      .should("not.exist");
+     cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading", MEDIUM_TIME)
       .should("not.exist");
     APIDeployment.RetryDevDeployment();
-    cyGet('[data-cyid="btn-deploy-api-button"]', LONG_TIME).should(
-      "be.enabled"
-    );
-    cy.contains("Configure & Deploy", LONG_TIME).should("be.visible").click();
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', SHORT_TIME)
+      .should("be.enabled")
+      .click();
+    cyGet('[data-cyid="configure-&-deploy-option"]')
+      .click();
+    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
+      .should("be.enabled")
+      .click();
     this.addConfiguration(configValue);
     APIDeployment.RetryDevDeployment();
     cy.get('[data-testid="btn-stop"]', LONG_TIME).should("be.visible");
@@ -384,7 +558,18 @@ export class ComponentDeployPage {
 
   static configureAndDeployProxyApiToDev() {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.wait(4000);
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+    .should("be.visible")
+    .wait(1000);
+  cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+    .contains("Generating Configurations", MEDIUM_TIME)
+    .should("not.exist");
+  cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+    .contains("Loading Configurations", MEDIUM_TIME)
+    .should("not.exist");
+   cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+    .contains("Loading", MEDIUM_TIME)
+    .should("not.exist");
     APIDeployment.RetryDevDeployment();
     cy.get('[data-cyid="btn-deploy-proxy-button"]')
       .should("be.enabled")
@@ -475,12 +660,25 @@ export class ComponentDeployPage {
     configSetupStepAvailable = false,
     configEnvVars = false
   ) {
-    cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
-      .contains("Generating Configurations", LONG_TIME)
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .should("be.visible")
+      .wait(1000);
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Generating Configurations", MEDIUM_TIME)
+      .should("not.exist");
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading Configurations", MEDIUM_TIME)
+      .should("not.exist");
+     cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading", MEDIUM_TIME)
       .should("not.exist");
     APIDeployment.RetryDevDeployment();
-    cyGet('[data-cyid="btn-deploy-api-button"]').should("be.enabled").click();
-    cyGet('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', SHORT_TIME)
+      .should("be.enabled")
+      .click();
+    cyGet('[data-cyid="configure-&-deploy-option"]')
+      .click();
+    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
       .should("be.enabled")
       .click();
     if (configSetupStepAvailable) {
@@ -574,12 +772,25 @@ export class ComponentDeployPage {
     changeVisibility?: boolean,
     configSetupStepAvailable = false
   ) {
-    cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
-      .contains("Generating Configurations", LONG_TIME)
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .should("be.visible")
+      .wait(1000);
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Generating Configurations", MEDIUM_TIME)
+      .should("not.exist");
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading Configurations", MEDIUM_TIME)
+      .should("not.exist");
+     cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading", MEDIUM_TIME)
       .should("not.exist");
     APIDeployment.RetryDevDeployment();
-    cy.get('[data-cyid="btn-deploy-api-button"]').should("be.enabled").click();
-    cy.get('[data-cyid="btn-deploy-api-button"]', LONG_TIME)
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', SHORT_TIME)
+      .should("be.enabled")
+      .click();
+    cyGet('[data-cyid="configure-&-deploy-option"]')
+      .click();
+    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
       .should("be.enabled")
       .click();
     if (configSetupStepAvailable) {
@@ -719,10 +930,27 @@ export class ComponentDeployPage {
   }
 
   static initiateServiceDeployment(visibilityLevel: string) {
-    cyGet('[data-testid="btn-deploy-api"]', VERY_LONG_TIME).should(
-      "be.enabled"
-    );
-    cyGet('[data-testid="btn-deploy-api"]', LONG_TIME).click();
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .should("be.visible")
+      .wait(1000);
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Generating Configurations", MEDIUM_TIME)
+      .should("not.exist");
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading Configurations", MEDIUM_TIME)
+      .should("not.exist");
+     cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading", MEDIUM_TIME)
+      .should("not.exist");
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', SHORT_TIME)
+      .should("be.enabled")
+      .click();
+    cyGet('[data-cyid="configure-&-deploy-option"]')
+      .click();
+    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
+      .should("be.enabled")
+      .click();
+
     cyGet('[data-testid="Readinglist-edit-btn"]', LONG_TIME).should(
       "be.visible"
     );
@@ -768,8 +996,28 @@ export class ComponentDeployPage {
   }
 
   static deployManualTriggerWithConfig(url: string) {
-    cyGet('[data-testid="btn-deploy-api"]', LONG_TIME).should("be.enabled");
-    cyGet('[data-testid="btn-deploy-api"]').click();
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .should("be.visible")
+      .wait(1000);
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Generating Configurations", MEDIUM_TIME)
+      .should("not.exist");
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading Configurations", MEDIUM_TIME)
+      .should("not.exist");
+     cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading", MEDIUM_TIME)
+      .should("not.exist");
+
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', SHORT_TIME)
+      .should("be.enabled")
+      .click();
+    cyGet('[data-cyid="configure-&-deploy-option"]')
+      .click();
+    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
+      .should("be.enabled")
+      .click();
+
     cyGet('[data-cyid="invke_url"]>input').type(url);
     cyGet('[data-cyid="btn-submit-configform"]').click();
     cyGet('[data-cyid="run-once-button"]', VERY_LONG_TIME).should("be.enabled");

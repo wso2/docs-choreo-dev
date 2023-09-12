@@ -100,7 +100,7 @@ describe("Create proxy api using existing url", () => {
 
   it("Verify component deployment and endpoint configurations", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.deployToDev();
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -170,7 +170,7 @@ describe("Create proxy api using existing url", () => {
 
   it("Verify component deployment and endpoint configurations", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.deployToDev();
   });
 
   it("Verify test functionality of new version using Swagger UI in dev", () => {
