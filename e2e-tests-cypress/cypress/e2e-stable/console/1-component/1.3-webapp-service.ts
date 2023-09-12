@@ -16,7 +16,6 @@ import { Utils } from "../../../support/commons/utils";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ComponentDevOpsPage } from "../../../support/console/pages/component/component-devops-page";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
@@ -37,6 +36,13 @@ describe("Verify containerized service functionality", () => {
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Webapp SPA service";
   const REPO_NAME = Utils.generateComponentName("repo");
+
+  const validateConfigFile = () => {
+    cy.get('[data-cyid="edit-icon-button"]').click();
+    cy.get('[data-cyid="config-mount-path"]').within(() =>
+    cy.get("input").should("have.value", "/app/public/config.js")
+    );
+  }
 
 
   it("Creating a project", () => {
@@ -77,20 +83,16 @@ describe("Verify containerized service functionality", () => {
   });
 
   it("Verify component deployment to dev", () => {
-    ComponentDeployPage.deployToDevWithoutSplitButton(PROJECT_NAME,COMPONENT_NAME, true, true, false, true);
+    ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME, true, true, false, true);
   });
 
   it("Verify config file availability for dev", () => {
-    ComponentDeployPage.navigateToDevops();
-    ComponentDeployPage.navigateToConfigsAndSecrets();
-    cy.get('[data-cyid="edit-icon-button"]').click();
-    cy.get('[data-cyid="config-mount-path"]').within(() =>
-    cy.get("input").should("have.value", "/app/public/config.js")
-    );
+    cy.get('[data-cyid="path-link"]').click();
+    validateConfigFile();
   });
 
   it("Navigate to deployment", () => {
-    ComponentDevOpsPage.navigateToDeploy();
+    ComponentOverviewPage.navigateToDeploy();
   });
 
   it("Verify component promote to prod", () => {
@@ -98,13 +100,10 @@ describe("Verify containerized service functionality", () => {
   });
 
   it("Verify config file availability for prod", () => {
-    ComponentDeployPage.navigateToConfigsAndSecrets();
-    cy.get('[data-cyid="environment-picker"]').click();
-    cy.contains("Production").click();
-    cy.get('[data-cyid="edit-icon-button"]').click();
-    cy.get('[data-cyid="config-mount-path"]').within(() =>
-    cy.get("input").should("have.value", "/app/public/config.js")
-    );
+    cy.get('[data-cyid="env-baseProduction-env-card"]').within(() => {
+      cy.get('[data-cyid="path-link"]').click();
+    });
+    validateConfigFile();
   });
 
   it("Verify test page is disabled", () => {
