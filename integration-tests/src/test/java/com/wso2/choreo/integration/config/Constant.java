@@ -205,4 +205,7 @@ public final class Constant {
     // APIM related constants
     public static final String PUBLISHER_URL = "/api/am/publisher/v2";
     public static final String PROXY_DEPLOYER_URL = "/proxy/deployer/v1";
+
+    // Data plane Logs
+    public static final String DP_LOGS_SUFFIX = "/choreologgingapi/0.2.0/logs";
 }

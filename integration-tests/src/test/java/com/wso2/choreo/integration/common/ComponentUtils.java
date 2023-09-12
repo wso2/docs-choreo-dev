@@ -25,6 +25,8 @@ import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.component.Component;
 import com.wso2.choreo.integration.apis.configmgt.ConfigManagement;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.apis.observability.AuditLogsService;
+import com.wso2.choreo.integration.apis.observability.DPLogsService;
 import com.wso2.choreo.integration.apis.observability.ObservabilityService;
 import com.wso2.choreo.integration.apis.proxydeployer.ProxyDeployer;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
@@ -1012,6 +1014,62 @@ public class ComponentUtils {
 
         ObservabilityService.verifyLogsOverLongerDuration(runner, choreoCPTestClient, accessToken,
                 releaseId, namespace, region, validationMap);
+    }
+
+    public static void verifyAuditLogs(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+            String accessToken) throws Exception {
+        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        AuditLogsService.verifyAuditLogs(runner, choreoCPTestClient, accessToken);
+    }
+
+    public static void verifyDataPlanes(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+            String accessToken) throws Exception {
+        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        AuditLogsService.verifyDataPlanes(runner, choreoCPTestClient, accessToken);
+    }
+
+    public static void verifyCloudPlanes(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+            String accessToken) throws Exception {
+        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        AuditLogsService.verifyCloudPlanes(runner, choreoCPTestClient, accessToken);
+    }
+
+    public static void verifyProjectLevelDPLogs(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+            String accessToken, ChoreoProject project, ChoreoComponent choreoComponent, Environment env)
+            throws Exception {
+        DPLogsService.getProjectLogs(runner, accessToken,
+                project, choreoComponent, env, false);
+    }
+
+    public static void verifyComponentLevelDPLogs(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+            String accessToken, ChoreoProject project, ChoreoComponent component, Environment env) throws Exception {
+        DPLogsService.getComponentLogs(runner, accessToken, project,
+                component, env, false);
+    }
+
+    public static void verifyGatewayDPLogs(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+            String accessToken, ChoreoProject project, ChoreoComponent component, Environment env) throws Exception {
+        DPLogsService.getGatewayLogs(runner, accessToken, project,
+                component, env, false);
+    }
+
+    public static void verifyProjectLevelDPLogsLive(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+            String accessToken, ChoreoProject project, ChoreoComponent choreoComponent, Environment env)
+            throws Exception {
+        DPLogsService.getProjectLogs(runner, accessToken,
+                project, choreoComponent, env, true);
+    }
+
+    public static void verifyComponentLevelDPLogsLive(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+            String accessToken, ChoreoProject project, ChoreoComponent component, Environment env) throws Exception {
+        DPLogsService.getComponentLogs(runner, accessToken, project,
+                component, env, true);
+    }
+
+    public static void verifyGatewayDPLogsLive(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+            String accessToken, ChoreoProject project, ChoreoComponent component, Environment env) throws Exception {
+        DPLogsService.getGatewayLogs(runner, accessToken, project,
+                component, env, true);
     }
 
     public static void verifyZipLogs(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
