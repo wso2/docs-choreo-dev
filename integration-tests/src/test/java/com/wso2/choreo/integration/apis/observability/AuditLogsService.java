@@ -67,8 +67,7 @@ public class AuditLogsService extends ControlPlaneAPI {
 				.index("i")
 				.autoSleep(3000)
 				.actions(
-						http()
-								.client(client)
+						http().client(client)
 								.send()
 								.post(resourceUrl)
 								.message()
