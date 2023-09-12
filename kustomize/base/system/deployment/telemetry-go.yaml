@@ -49,7 +49,7 @@ spec:
             capabilities:
               drop:
                 - all
-          name: telemetry
+          name: telemetry-go
           volumeMounts:
             - name: config
               mountPath: /home/ballerina/Config.toml
