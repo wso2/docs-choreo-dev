@@ -439,6 +439,7 @@ marketingConsent:
   pardotEndpoint: ${PARDOT_EP}
   pardotSvcURL: ${PARDOT_SVC_URL}
   emailConsentSvcURL: ${EMAIL_CONSENT_SVC_URL}
+  enforceTLS12: ${MARKETING_CONSENT_CLIENT_ENFORCE_TLS_12}
 balCentral:
   ballerinaCentralUserIdpId: ${BAL_CENTRAL_USER_IDP_ID}
 subscriptions:
