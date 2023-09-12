@@ -60,6 +60,13 @@ export class ComponentDeployPage {
       }
     });
   }
+  static navigateToDevops() {
+    cyGet('[data-cyid="advanced-devops"]').click();
+  }
+
+  static navigateToConfigsAndSecrets() {
+    cy.contains("Configs & Secrets").click();
+  }
 
   private static configWebappComponent() {
     cy.get('[class="view-lines monaco-mouse-cursor-text"]').type('{backspace}').type(CONFIG_CONTENT);

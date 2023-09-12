@@ -16,6 +16,7 @@ import { Utils } from "../../../support/commons/utils";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
+import { ComponentDevOpsPage } from "../../../support/console/pages/component/component-devops-page";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
@@ -79,8 +80,31 @@ describe("Verify containerized service functionality", () => {
     ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME, true, true, false, true);
   });
 
+  it("Verify config file availability for dev", () => {
+    ComponentDeployPage.navigateToDevops();
+    ComponentDeployPage.navigateToConfigsAndSecrets();
+    cy.get('[data-cyid="edit-icon-button"]').click();
+    cy.get('[data-cyid="config-mount-path"]').within(() =>
+    cy.get("input").should("have.value", "/app/public/config.js")
+    );
+  });
+
+  it("Navigate to deployment", () => {
+    ComponentDevOpsPage.navigateToDeploy();
+  });
+
   it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd(false, true, 1, true);
+  });
+
+  it("Verify config file availability for prod", () => {
+    ComponentDeployPage.navigateToConfigsAndSecrets();
+    cy.get('[data-cyid="environment-picker"]').click();
+    cy.contains("Production").click();
+    cy.get('[data-cyid="edit-icon-button"]').click();
+    cy.get('[data-cyid="config-mount-path"]').within(() =>
+    cy.get("input").should("have.value", "/app/public/config.js")
+    );
   });
 
   it("Verify test page is disabled", () => {
