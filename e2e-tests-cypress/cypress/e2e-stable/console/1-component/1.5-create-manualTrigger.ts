@@ -70,7 +70,7 @@ describe("Verify manual trigger creation functionality", () => {
   });
 
   it("Verify component deployment", () => {
-    ComponentDeployPage.deployToDev(PROJECT_NAME,MANUAL_NAME,false, false, true);
+    ComponentDeployPage.deployToDevWithoutSplitButton(PROJECT_NAME,MANUAL_NAME,false, false, true);
   });
 
   it("Verify component promotion to prod", () => {
