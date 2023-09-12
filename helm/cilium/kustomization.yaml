@@ -136,4 +136,5 @@ commonAnnotations:
   checkov.io/skip22: CKV_K8S_AZURE_WSO2_2=Managed by cilium
 
 patchesStrategicMerge:
-  - security-patches.yaml
+  - cilium-operator-security-patches.yaml
+  - hubble-relay-security-patches.yaml
