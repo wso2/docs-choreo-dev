@@ -16,6 +16,7 @@ import { Utils } from "../../../support/commons/utils";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
+import { ComponentDevOpsPage } from "../../../support/console/pages/component/component-devops-page";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
@@ -36,14 +37,6 @@ describe("Verify containerized service functionality", () => {
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Webapp SPA service";
   const REPO_NAME = Utils.generateComponentName("repo");
-
-  const validateConfigFile = () => {
-    cy.get('[data-cyid="edit-icon-button"]').click();
-    cy.get('[data-cyid="config-mount-path"]').within(() =>
-    cy.get("input").should("have.value", "/app/public/config.js")
-    );
-  }
-
 
   it("Creating a project", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
@@ -88,7 +81,7 @@ describe("Verify containerized service functionality", () => {
 
   it("Verify config file availability for dev", () => {
     cy.get('[data-cyid="path-link"]').click();
-    validateConfigFile();
+    ComponentDevOpsPage.validateConfigFile();
   });
 
   it("Navigate to deployment", () => {
@@ -103,7 +96,7 @@ describe("Verify containerized service functionality", () => {
     cy.get('[data-cyid="env-baseProduction-env-card"]').within(() => {
       cy.get('[data-cyid="path-link"]').click();
     });
-    validateConfigFile();
+    ComponentDevOpsPage.validateConfigFile();
   });
 
   it("Verify test page is disabled", () => {
