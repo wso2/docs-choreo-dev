@@ -159,7 +159,7 @@ describe("Create proxy api using existing url", () => {
     ComponentOverviewPage.createNewVersion(API_NEW_VERSION, "");
     ComponentDevelopPage.getVersion().should(
       "eq",
-      `API Version ${API_NEW_VERSION}`
+      `v${API_NEW_VERSION}`
     );
   });
 
