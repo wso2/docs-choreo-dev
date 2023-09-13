@@ -80,8 +80,7 @@ describe("Verify containerized service functionality", () => {
   });
 
   it("Verify config file availability for dev", () => {
-    cy.get('[data-cyid="path-link"]').click();
-    ComponentDevOpsPage.validateConfigFile();
+    ComponentDevOpsPage.validateConfigFile(Enums.Environment.DEVELOPMENT);
   });
 
   it("Navigate to deployment", () => {
@@ -93,10 +92,7 @@ describe("Verify containerized service functionality", () => {
   });
 
   it("Verify config file availability for prod", () => {
-    cy.get('[data-cyid="env-baseProduction-env-card"]').within(() => {
-      cy.get('[data-cyid="path-link"]').click();
-    });
-    ComponentDevOpsPage.validateConfigFile();
+    ComponentDevOpsPage.validateConfigFile(Enums.Environment.PRODUCTION);
   });
 
   it("Verify test page is disabled", () => {
