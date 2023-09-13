@@ -91,12 +91,12 @@ nav:
       - Environments: choreo-concepts/environments.md
       - Choreo Marketplace: choreo-concepts/choreo-marketplace.md
   - Develop Components:
-      - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
-      - Work with the Micro Integrator Runtime in Choreo: develop-components/work-with-the-micro-integrator-runtime-in-choreo.md
       - Develop Services:
           - Develop a Service: develop-components/develop-services/develop-a-service.md
           - Develop a REST API: develop-components/develop-services/develop-a-rest-api.md
           - Develop a gRPC Service: develop-components/develop-services/develop-a-grpc-service.md
+          - Develop a TCP Service: develop-components/develop-services/develop-a-tcp-service.md
+          - Develop a UDP Service: develop-components/develop-services/develop-a-udp-service.md
           - Develop a Ballerina REST API:  develop-components/develop-services/develop-a-ballerina-rest-api.md
           - Develop a Ballerina GraphQL API: develop-components/develop-services/develop-a-ballerina-graphql-api.md
       - Develop a REST API Proxy: develop-components/develop-a-rest-api-proxy.md
@@ -106,11 +106,14 @@ nav:
           - Develop a Scheduled Integration: develop-components/develop-integrations/develop-a-scheduled-integration.md
       - Develop a Web Application: develop-components/develop-a-web-application.md  
       - Develop a Webhook: develop-components/develop-a-webhook.md   
-      - Develop Components With Git: develop-components/develop-components-with-git.md  
+      - Develop Components With Git: develop-components/develop-components-with-git.md
+      - Bring Your Own Image: develop-components/bring-your-own-image.md
+      - Deploy a Containerized Application: develop-components/deploy-a-containerized-application.md  
       - Sharing and Reusing Services: develop-components/sharing-and-reusing-services.md
       - Configure Mutual TLS Between Components: develop-components/configure-mutual-tls-between-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
-      - Deploy a Containerized Application: develop-components/deploy-a-containerized-application.md
+      - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
+      - Work with the Micro Integrator Runtime in Choreo: develop-components/work-with-the-micro-integrator-runtime-in-choreo.md
   - Authentication and Authorization:
       - Pass End-User Attributes to Upstream Services: authentication-and-authorization/pass-end-user-attributes-to-upstream-services.md
   - DevOps and CI/CD: 
@@ -181,6 +184,8 @@ markdown_extensions:
   - pymdownx.mark
   - pymdownx.smartsymbols
   - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true 
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.tilde
