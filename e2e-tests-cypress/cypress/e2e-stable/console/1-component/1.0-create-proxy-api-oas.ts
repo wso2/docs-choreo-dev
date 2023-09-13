@@ -38,7 +38,7 @@ describe("Create proxy api using existing url", () => {
   const URL = "https://petstore3.swagger.io/api/v3/openapi.json";
   const ENDPOINT_URL =
     "https://9f3f5ca2-c1f2-43e7-afbe-a15714138b57-dev.e1-us-east-azure.choreoapis.dev/ppcb/petstore/petstore-9f2/1.0.0";
-  const API_NEW_VERSION = "1.1.0";
+  const API_NEW_VERSION = "1.1";
   const RESOURCE = "store/inventory";
   const NEW_RESOURCE = "pet/{petId}";
   const idpUser = "choreoe2etest";
@@ -65,7 +65,7 @@ describe("Create proxy api using existing url", () => {
       API_NAME,
       API_BASE_PATH,
       ENDPOINT_URL,
-      "1.0.0",
+      "1.0",
       "pet/{petId}",
       ""
     );

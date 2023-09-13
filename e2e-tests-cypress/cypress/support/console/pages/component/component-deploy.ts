@@ -609,7 +609,7 @@ export class ComponentDeployPage {
     cy.get(`[data-value="${branch}"]`).click();
     cy.get('[role="dialog"]').within(() => {
       cy.get(`[name="Version name"]`).type(version);
-      cy.get('[data-testid="create-version-create"]').click();
+      cy.get('[data-testid="create-deployment-track-create"]').click();
       cy.get('[data-testid="dialog-close-icon"]').should("not.exist");
     });
   }
