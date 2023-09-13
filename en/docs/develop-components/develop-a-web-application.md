@@ -30,7 +30,7 @@ You can create a Web Application in Choreo as follows:
     
     - Go to your repository that includes the Web Application source code.
 
-    - Place `<script src="./public/{configuration-file-name}"></script>` tag in your index.html file. The tag should be placed before your application script so that the defined configurations will be available for your users in the browser at runtime.
+    - Place `<script src="./public/{configuration-file-name}"></script>` tag in your **index.html** file. The tag should be placed before your application script so that the defined configurations will be available for your users in the browser at runtime.
 
     ```
     <html lang="en">
@@ -48,7 +48,7 @@ You can create a Web Application in Choreo as follows:
     </html>
     ```
 
-    - Commit changes to your repository and click **Deploy Manually** if auto deploy on commit is enabled, else click **Configure & Deploy**. This opens the window to define a file with environment specific, non-confidential data for your web application which can be read and updated later in the **Dev Ops** view.
+    - Commit changes to your repository and choose **Configure & Deploy** from the split button and click. This opens the window to define a file with environment specific, non-confidential data for your web application which can be read and updated later in the **Dev Ops** view.
     - Input the configuration filename as defined in the script tag and define the variables you need to access from the web application as follows.
     
     ```
@@ -65,7 +65,7 @@ You can create a Web Application in Choreo as follows:
     import React from 'react';
 
     function MyComponent() {
-        const apiUrl = window.config.apiUrl;
+        const apiUrl = window.configs.apiUrl;
         // ...
     }
     ```
@@ -131,7 +131,7 @@ You have successfully created a Web Application component from the source code. 
 
 1. Navigate to the Deploy page within your development environment.
 
-2. If the **Auto deploy on commit** option is not enabled, click **Configure & Deploy**, else click **Deploy Manually**. This will open the window to add configurations for your web app.
+2. Click **Configure & Deploy**, from the split button. This will open the window to add configurations for your web app.
 
 3. In the configuration window, specify the configuration filename and parameters for your application.
 
@@ -139,6 +139,9 @@ You have successfully created a Web Application component from the source code. 
 
     !!! note
         The deployment of the Web Application component may require some time. You can monitor the progress by observing the logs. Once the deployment is finished, the deployment status in the corresponding environment card will change to **Active**.
+
+    !!! info
+        If you do not have runtime configurations for your web application, you can skip the configuration step and directly select **Deploy** and click to deploy.
 
 
 2. Check the deployment progress by observing the console logs on the right of the page.
@@ -209,7 +212,7 @@ Follow the steps below to manage runtime configurations for the React applicatio
         },
     };
     ```
-2. In your index.html file inside the public directory , add a script tag as follows to include the config.js file inside the <body> tag, so that this config.js file will be accessible via JavaScript at runtime.
+2. In your **index.html** file inside the public directory , add a script tag as follows to include the config.js file inside the <body> tag, so that this config.js file will be accessible via JavaScript at runtime.
 
     ```
     <!DOCTYPE html>
@@ -242,7 +245,7 @@ This will make the `window.config` object available to your app at runtime.
     ```
 Now you can deploy your component. 
 
-5. When you deploy your component to Choreo, create a config file mount with the specified filename (config.js as index.html expects the config.js file in this example).
+5. When you deploy your component to Choreo, create a config file mount with the specified filename (config.js as **index.html** expects the config.js file in this example).
 [https://wso2.com/choreo/docs/devops-and-ci-cd/manage-configurations-and-secrets/#apply-a-file-mount-to-your-container](https://wso2.com/choreo/docs/devops-and-ci-cd/manage-configurations-and-secrets/#apply-a-file-mount-to-your-container).
 
 ## Limitations

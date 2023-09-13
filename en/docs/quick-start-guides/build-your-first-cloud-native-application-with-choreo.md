@@ -212,7 +212,7 @@ Let's deploy a front-end application to consume the API. This application is des
 Once you create the web application component, you can deploy it to the Choreo runtime. To deploy the web application component, follow the steps below:
 
 1. In the left menu, click **Deploy**.
-2. In the **Build Area** card, click **Configure & Deploy**. 
+2. In the **Build Area** card, select **Configure & Deploy** from the split button and click to add runtime configurations for your application and deploy. 
 3. Add configurations and deploy. The deployment may take a few minutes to complete. See how to define and read configurations at [Develop a Web Application page](https://wso2.com/choreo/docs/develop-components/develop-a-web-application/#creating-a-web-application).
 4. Once you deploy the web application, copy the **Web App URL** from the development environment card.
 5. Navigate to the web app URL. You can verify that you have successfully hosted the web application.
@@ -243,15 +243,7 @@ Choreo uses Asgardeo as the default identity provider for Choreo applications. W
 
 #### Step 2.3.5: Deploy the web application component
 
-Once the web application component is created, you can deploy it to the Choreo runtime. To deploy the web application component, follow the steps below:
-
-1. In the left menu, click **Deploy**.
-2. In the **Development**  environment card, click **Stop**. The deployment may take a few minutes to stop.
-3. Click **Re-deploy**. The deployment may take a few minutes to complete.
-3. Once the web application is deployed, copy the **Web App URL** from the development environment card.
-4. Navigate to the web app URL. You can now view the login button. This verifies that the web app is successfully configured.
-
-Next, let's create a user to access the web application.
+{% include "deploy-the-web-application-qsg.md" %}
 
 #### Step 2.3.5: Create a user in Asgardeo
 

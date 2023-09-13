@@ -20,7 +20,7 @@ To configure the front-end application, follow the steps given below:
     | **Field**             | **Description**                               |
     |-----------------------|-----------------------------------------------|
     | **Config Name**       | **Web App Config**                            |
-    | **Mount Path**        | **/usr/share/nginx/html/config.js**. Every config that needs to be exposed through the web server should be placed inside `/usr/share/nginx/html/`                          |
+    | **Mount Path**        | **/app/public/config.js**. Every config that needs to be exposed through the web server should be placed inside `/app/public/`.                          |
 
 5. Copy the config details as a JSON file as shown below into the text area. Fill the placeholders with the values you copied from the previous steps as mentioned in the table below.
 
@@ -41,3 +41,5 @@ To configure the front-end application, follow the steps given below:
     | **choreoApiUrl**      | The reading list service URL. Copy the Public URL of the **Reading List Service** component from the endpoint table in the overview page for the relevant environment |
 
 6. Click **Create**.
+
+7. The above environment specific  configuration can be accessed by placing `<script src="./public/config.js"></script>` in the **index.html** file of the web application.
