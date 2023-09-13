@@ -14,6 +14,7 @@
 import { GraphQL } from "../../apis/graphql";
 import {
   BUILD_FAILED,
+  CONFIG_CONTENT,
   CONFIG_FILE,
   CONFIG_KEY,
   CONFIG_VALUE,
@@ -58,6 +59,19 @@ export class ComponentDeployPage {
         return cy.get(locator);
       }
     });
+  }
+
+  private static configWebappComponent() {
+    cy.get('[class="view-lines monaco-mouse-cursor-text"]').type('{backspace}').type(CONFIG_CONTENT);
+    cy.get('[data-testid="btn-next"]').click();
+  }
+
+  private static configWebAppComponentPromote() {
+    cy.get(
+      '[data-cyid="promote-selector-default-configs"]'
+    ).click();
+    cy.get('[data-cyid="btn-next-button"]').click();
+    this.configWebappComponent();
   }
 
   static reDeployToDev(
@@ -224,6 +238,8 @@ export class ComponentDeployPage {
       }
       if (!isWebApp) {
         this.pollElement('[data-cyid="btn-next-button"]').click();
+      } else {
+        this.configWebappComponent();
       }
     }
 
@@ -305,7 +321,8 @@ export class ComponentDeployPage {
   static promoteToProd(
     isAdditionalConfigs: boolean = true,
     isManagedByAPIM: boolean = true,
-    numberOfNextPrompts: number = 2
+    numberOfNextPrompts: number = 2,
+    isWebApp: boolean = false
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
     APIDeployment.RetryPromotionToProd();
@@ -324,6 +341,10 @@ export class ComponentDeployPage {
 
     if (isManagedByAPIM) {
       Utils.interceptConfig();
+    }
+
+    if (isWebApp) {
+      this.configWebAppComponentPromote();
     }
 
     APIDeployment.RetryPromotionToProd();
@@ -624,7 +645,6 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-next-button"]').click();
     this.configByocComponent();
   }
-
   static deployService(
     projectName: string,
     componentName: string,

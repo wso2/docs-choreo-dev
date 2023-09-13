@@ -29,5 +29,6 @@ export const SECRET_KEY = "secret";
 export const SECRET_VALUE = "secret-value";
 export const MOUNT_PATH = "/app/configs/config.json";
 export const CONFIG_FILE = '{\n\t"name": "testUser"';
+export const CONFIG_CONTENT = '\t"name": "testUser"\n}';
 
 export const MIN_RENDERING_WAIT_TIME = 1500;
