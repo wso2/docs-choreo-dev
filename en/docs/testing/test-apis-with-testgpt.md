@@ -1,6 +1,6 @@
-# Test APIs with TestGPT
+# Test APIs with Choreo TestGPT
 
-Testing APIs is an essential step in the API development process. Choreo simplifies the testing task by allowing you to test your APIs using natural language through Choreo's TestGPT. It eliminates manual test scenario creation and JSON payload accuracy concerns. It enables easy API communication using human language and requires no coding for handling sequences with multiple resource calls. This makes your API testing efficient and user-friendly.
+Testing APIs is an essential step in the API development process. Choreo simplifies the testing task by allowing you to test your APIs using natural language through Choreo TestGPT. It eliminates manual test scenario creation and JSON payload accuracy concerns. It enables easy API communication using human language and requires no coding for handling sequences with multiple resource calls. This makes your API testing efficient and user-friendly.
 
 
 !!! info
