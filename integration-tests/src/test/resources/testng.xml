@@ -19,8 +19,8 @@
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationEventContainerComponent"/>
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestIntegrationMISecretAndCert"/>
             <class name="com.wso2.choreo.integration.tests.observability.ObservabilityAPITestCase"/>
-            <class name="com.wso2.choreo.integration.tests.observability.LoggingAPITestCase"/>
             <class name="com.wso2.choreo.integration.tests.observability.SysObservabilityAPITestCase"/>
+            <class name="com.wso2.choreo.integration.tests.logs.DPLogsAPITestCase"/>
             <class name="com.wso2.choreo.integration.tests.themeManagement.ThemePreference"/>
             <class name="com.wso2.choreo.integration.tests.jwt.TestClientJwTValidation"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestGraphQLServiceDp"/>
