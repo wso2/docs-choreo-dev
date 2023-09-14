@@ -5,7 +5,6 @@ externalHealthCheckPort = 9092
 platformerUrl = "http://dp-project-manager:80/api/v1"
 appServiceUrl = "http://app-service:8080"
 rudderServiceUrl = "http://dp-rudder:80/api/v1"
-cicdServiceUrl = "http://dp-cicd:80/api/v1"
 cicdUrl = "http://dp-cicd:80"
 negotiatorUrl = "http://negotiator:9092"
 workspaceManagerUrl = "http://workspace-manager:8080"
