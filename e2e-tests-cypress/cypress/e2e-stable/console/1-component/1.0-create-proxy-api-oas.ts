@@ -32,9 +32,9 @@ import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 
 describe("Create proxy api using existing url", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
-  const PROJECT_NAME = Utils.generateProjectName();
-  const API_NAME = Utils.generateComponentName("oas");
-  const API_BASE_PATH = Utils.generateBasePath();
+  let PROJECT_NAME;
+  let API_NAME;
+  let API_BASE_PATH;
   const URL = "https://petstore3.swagger.io/api/v3/openapi.json";
   const ENDPOINT_URL =
     "https://9f3f5ca2-c1f2-43e7-afbe-a15714138b57-dev.e1-us-east-azure.choreoapis.dev/ppcb/petstore/petstore-9f2/1.0.0";
@@ -54,11 +54,15 @@ describe("Create proxy api using existing url", () => {
   });
 
   it("Creating a project", () => {
+    PROJECT_NAME = Utils.generateProjectName();
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
   });
 
   it("Creating and publishing an API from open API specification", () => {
     cy.log("Starting API Creation using open API specification");
+    API_NAME = Utils.generateComponentName("oas");
+    API_BASE_PATH = Utils.generateBasePath();
+
     ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.createOpenApi("", URL);
     RestAPIProxyTemplate.enterAPIdetails(
@@ -157,10 +161,7 @@ describe("Create proxy api using existing url", () => {
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentOverviewPage.createNewVersion(API_NEW_VERSION, "");
-    ComponentDevelopPage.getVersion().should(
-      "eq",
-      `v${API_NEW_VERSION}`
-    );
+    ComponentDevelopPage.getVersion().should("eq", `v${API_NEW_VERSION}`);
   });
 
   it("Add a resource to new version", () => {
@@ -230,7 +231,7 @@ describe("Create proxy api using existing url", () => {
       API_NAME,
       idpUser
     );
-    Apis.searchApiAndSelect(API_NAME, 2, API_NEW_VERSION);
+    Apis.searchApiAndSelect(API_NAME, 2);
     ApiCredentials.navigateToEnvironment(Enums.Environment.PRODUCTION);
     ApiCredentials.generateCredentials(Enums.Environment.PRODUCTION);
   });
