@@ -159,10 +159,10 @@ describe("Verify Ballerina service functionality", () => {
     ComponentDeployPage.runManualTrigger(Enums.Environment.PRODUCTION, 3);
   });
 
-  it("Verify task execution in observability ", () => {
+  it("Verify navigate to observability Page", () => {
     ComponentOverviewPage.navigateToObserve();
-    ComponentObservePage.gotoLogs(MEDIUM_TIME.timeout);
   });
+  
   it("Verify dev env logs", () => {
     ComponentObservePage.selectEnv(Enums.Environment.DEVELOPMENT);
     ComponentObservePage.verifyManualTriggerTextInLogs(LOG_MESSAGE);
