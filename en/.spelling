@@ -7,6 +7,8 @@ cInlineImage-full
 microservices
 OpenAPI
 api-rate-limiting
+project.runtime.version
+runtimes
 lifecycle
 microservice
 choreo-concepts
