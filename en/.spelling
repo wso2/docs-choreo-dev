@@ -752,3 +752,5 @@ Url
  - docs/testing/test-apis-with-testgpt.md
 findByStatus
 getBooksByYear
+ - docs/testing/test-apis-with-choreo-testgpt.md
+findByStatus
