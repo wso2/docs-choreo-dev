@@ -6,6 +6,8 @@ COVID-19
 cInlineImage-full 
 microservices
 OpenAPI
+webhookSecret
+toEmail
 api-rate-limiting
 lifecycle
 microservice
