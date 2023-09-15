@@ -682,6 +682,7 @@ schemaFilePath
 DB_PASS
 CVEs
 trivyignore
+Golang-based
  - docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo.md
 redirectUrl
 asgardeoClientId
