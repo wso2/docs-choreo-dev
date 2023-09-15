@@ -180,6 +180,7 @@ defaultRoles:
         - {{.PERMISSION_COMPONENT_INIT_VIEW}}
         - {{.PERMISSION_COMPONENT_FILE_VIEW}}
         - {{.PERMISSION_COMPONENT_COMPONENT_MANAGE}}
+        - {{.PERMISSION_DEVOPS_DEPLOYMENT_VIEW}}
     - name: API Subscriber
       handle: api-subscriber
       description: Users or Application Developers who search the Developer Portal to discover APIs and use them. They read the documentation and forums, rates/comments on the APIs, subscribes to APIs, obtain access tokens, and invokes the APIs
@@ -232,6 +233,7 @@ defaultRoles:
         - environments:view_dev
         - environments:view_prod
         - choreo:log_view_non_prod
+        - {{.PERMISSION_DEVOPS_DEPLOYMENT_VIEW}}
     - name: Choreo DevOps
       handle: choreo-devops
       description: Users who are involved in deployment management
@@ -266,6 +268,7 @@ defaultRoles:
         - {{.PERMISSION_CUSTOM_DOMAIN_MANAGE}}
         - {{.PERMISSION_COMPONENT_TRIGGER}}
         - {{.PERMISSION_COMPONENT_COMPONENT_MANAGE}}
+        - {{.PERMISSION_DEVOPS_DEPLOYMENT_VIEW}}
 roleBasedUserMgt:
   enabled: ${ROLE_BASED_USER_MGT_ENABLED}
 onPremKeySubscription:
