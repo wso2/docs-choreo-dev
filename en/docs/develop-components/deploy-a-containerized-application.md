@@ -69,6 +69,11 @@ The following table describes the individual fields in the **Connect Repository*
 Choreo will automatically apply deployment configurations and settings based on the component type you select during creation.
 For example, if you select the **Service** component type, Choreo will deploy it as a Kubernetes deployment with appropriate scaling configurations.
 
+You can run unit tests in the build pipeline by adding the relevant command to the Dockerfile.  For example: 
+
+- [Go-based sample](https://github.com/wso2/choreo-sample-apps/blob/8c18c82db604adb43b89f669888a07cd6e31d7b7/go/rest-api/Dockerfile#L37)
+- [Python-based sample](https://github.com/wso2/choreo-sample-apps/blob/8c18c82db604adb43b89f669888a07cd6e31d7b7/python/rest-api/Dockerfile#L15)
+
 ### Application configurations
 
 You must provide any required configurations for running the application in the **Configs & Secrets** section of the component's **DevOps** page. Alternatively, you can also review the configurations when you manually deploy via the **Deploy** page.
