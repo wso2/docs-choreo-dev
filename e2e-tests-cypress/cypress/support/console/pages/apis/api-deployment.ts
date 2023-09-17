@@ -80,7 +80,16 @@ export class APIDeployment {
   }
 
   static deployProxyAPIToDev() {
-    cyGet('[data-testid="btn-deploy-proxy"]').should("be.enabled").click();
+    cyGet('[data-cyid="direct-deploy-option-proxy-split-toggle-button-button"]', MEDIUM_TIME)
+      .should("not.be.disabled")
+      .click();
+
+    cyGet('[data-cyid="configure-&-deploy-option"]')
+      .click();
+
+    cyGet('[data-cyid="direct-deploy-option-proxy-split-group-button-button"]', SHORT_TIME)
+      .should("not.be.disabled")
+      .click();
   }
 
   static verifyProxyDeployment(buildCount: number) {
