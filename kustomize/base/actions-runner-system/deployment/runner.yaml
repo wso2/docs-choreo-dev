@@ -27,10 +27,5 @@ spec:
           value: "true"
         - name: LOG_DEBUG_DISABLED
           value: "true"
-        - name: SYNAPSE_RESOURCE_GENERATOR_VERSION
-          valueFrom:
-            configMapKeyRef:
-              name: common-env-variables
-              key: SYNAPSE_RESOURCE_GENERATOR_VERSION
       labels:
         - choreo-custom-runner
