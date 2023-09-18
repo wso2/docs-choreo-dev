@@ -24,7 +24,7 @@ You can establish multiple runtime environments by utilizing updated MI instance
 
 ### Configure a Micro Integrator runtime environment in Integration Studio
 
-If you are using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), follow these steps to set up a remote server instance and configure a Micro Integrator runtime environment to execute your integration project:
+If you are using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), follow these steps to set up a remote server instance with a Micro Integrator runtime environment to execute your integration project:
 
 !!! info "Note"
     If you have not downloaded and installed WSO2 Integration Studio, you can follow the [installation instructions](installing-WSO2-Integration-Studio/) in the WSO2 Integration Studio documentation.
