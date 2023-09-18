@@ -113,15 +113,16 @@ public class DPLogsAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = { "createComponent_DPLogsAPITestCase" })
     @CitrusTest
     public void deployComponent_DPLogsAPITestCase() throws Exception {
-        ComponentUtils.deployComponent(this, citrusClients, accessToken, choreoComponent,
+        deploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, choreoComponent,
                 environments, ComponentFlavour.STANDARD);
     }
 
     @Test(dependsOnMethods = { "deployComponent_DPLogsAPITestCase" })
     @CitrusTest
     public void promoteComponent_DPLogsAPITestCase() throws Exception {
-        ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent,
+        List<ComponentDeploymentStatusDTO> promoteComponentStatues = ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent,
                 environments, ComponentFlavour.STANDARD);
+        promotionStatusDTO = promoteComponentStatues.get(0);
     }
 
     @Test(dependsOnMethods = { "promoteComponent_DPLogsAPITestCase" })
