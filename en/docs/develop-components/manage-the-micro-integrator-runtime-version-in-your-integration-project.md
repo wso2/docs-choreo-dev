@@ -40,7 +40,7 @@ If you are using [WSO2 Integration Studio](https://wso2.com/integration/integrat
 6. Click **Add >**.
 7. Click **Finish**. 
 
-Your integration project is now running in a remote server instance, configured with the Micro Integrator runtime environment you require.
+Your integration project is now running in a remote server instance with the Micro Integrator runtime environment you require.
 If you need to make changes to the integration project, expand the remote server instance, right-click on the deployed exporter project, and select **Redeploy** to apply the changes.
 
 ![Redeploy project](../assets/img/develop-components/micro-integrator/redeploy-project.png)
