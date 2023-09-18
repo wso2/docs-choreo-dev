@@ -2,14 +2,12 @@ package com.wso2.choreo.integration.tests.connectorbuilder;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
-import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.wso2.choreo.integration.apis.connectors.ConnectorPublisher;
-import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
-import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
@@ -20,11 +18,18 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
-import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.connectors.Connector;
 import com.wso2.choreo.integration.models.environments.Environment;
-import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
+import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
+import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
+import com.wso2.choreo.integration.models.proxyapi.ProxyDeployment;
+import com.wso2.choreo.integration.models.response.Response;
+import com.wso2.choreo.integration.tests.dp.DataProviderWrapper;
+
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -33,76 +38,103 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Connector publishing related tests
- */
 public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
-
-    private static String accessToken;
+    private String accessToken;
     private ChoreoComponent choreoComponent;
-    private ChoreoProject project;
-    private String orgHandle;
+    private ChoreoProject choreoProject;
+    private String apiName;
+    private ProxyAPIBuild proxyAPIBuild;
+    private ProxyAPI proxyAPI;
+    List<Environment> environments;
+    private List<ProxyDeployment> proxyDeployments;
+    private String revisionId;
     private String orgUUID;
-    private static String revisionId;
-    private String githubOrg;
-    private String githubPAT;
-    private String devInvokeURL;
-    private List<Environment> environments;
+    private ChoreoOrganization org;
+    private String orgHandle;
+    private Connector connector;
+
+    @Autowired
+    Map<Endpoints, HttpClient> citrusClients;
 
     @Autowired
     private HttpClient choreoTestClient;
-    @Autowired
-    Map<Endpoints, HttpClient> citrusClients;
-    ChoreoOrganization org;
-    Connector connector;
 
     @BeforeClass
     public void setup_ConnectorBuilderIT() throws Exception {
-
+        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
         org = new ChoreoOrganization(orgHandle, orgId, orgUUID);
-        githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
-        githubPAT = Configuration.getConfig(ConfigDefinition.GITHUB_PAT);
-        orgHandle=Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
-
+        orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
     }
 
-    @Test
+    @Test()
     @CitrusTest
-    public void createProject_ConnectorBuilderIT() throws Exception, ApiLifecycleChangeException {
-        project = ComponentUtils.createProject(this, citrusClients, accessToken, Constant.region.US.toString());
+    public void createProject_ConnectorBuilderIT() throws Exception {
+        apiName = Constant.DEFAULT_API_NAME.concat(String.valueOf(new Date().getTime()));
+        choreoProject = ComponentUtils.createProject(this, citrusClients, accessToken, Constant.region.US.toString());
     }
 
-    @Test(dependsOnMethods = "createProject_ConnectorBuilderIT")
+    @Test(dependsOnMethods = {"createProject_ConnectorBuilderIT"})
     @CitrusTest
-    public void createComponent_ConnectorBuilderIT() throws Exception, ApiLifecycleChangeException {
+    public void testCreateComponentForProxyAPI_ConnectorBuilderIT() throws Exception {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/rest-api").branch("main").subPath("").build();
-        GraphqlDTO dto = ComponentUtils.createRestApiComponentRequest(componentName, project, repo);
-        choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
-                ComponentFlavour.STANDARD);
+        Pair<ChoreoComponent, ProxyAPI> componentCreationDetail = ComponentUtils.createProxyComponent(this, citrusClients,
+                accessToken, componentName, apiName, choreoProject);
+        choreoComponent = componentCreationDetail.getLeft();
+        proxyAPI = componentCreationDetail.getRight();
+    }
+
+    @Test(dependsOnMethods = { "testCreateComponentForProxyAPI_ConnectorBuilderIT" })
+    @CitrusTest
+    public void testUpdateSwagger_ConnectorBuilderIT() throws IOException {
+        String swaggerFileName = "templates/graphql/requests/proxyAPIUpdateRequestWithMethodRateLimit.mustache";
+        Response response = APICreator.updateAPIWithSwaggerFile(proxyAPI, swaggerFileName, accessToken);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
+    }
+
+    @Test(dependsOnMethods = { "testUpdateSwagger_ConnectorBuilderIT" })
+    @CitrusTest
+    public void getDeploymentEnvironment_ConnectorBuilderIT() throws Exception {
         environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
+    }
 
-        //Deploying component
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, choreoComponent, environments, ComponentFlavour.STANDARD);
-        devInvokeURL = statusDTO.getInvokeUrl();
+    @Test(dependsOnMethods = { "getDeploymentEnvironment_ConnectorBuilderIT" })
+    @CitrusTest
+    public void deployProxyAPI_ConnectorBuilderIT() throws Exception {
+        proxyAPIBuild = ComponentUtils.deployProxyComponent(this, citrusClients, accessToken, choreoComponent,
+                environments);
+    }
 
-        //change the API lifecycle
-        choreoComponent.getLatestApiVersion().changeApiLifeCycle(accessToken, org.getOrgUUID(), Constant.apiLIifCycleState.Publish);
-        JsonArray revisions = choreoComponent.getRevisions(accessToken, choreoComponent.getLatestApiVersion().getProxyId(), orgUUID);
+    @Test(dependsOnMethods = { "deployProxyAPI_ConnectorBuilderIT" })
+    @CitrusTest
+    public void componentDevDeploymentStatus_ConnectorBuilderIT()
+            throws Exception, ApiLifecycleChangeException {
+        proxyDeployments = ComponentUtils.getProxyDeployments(this, citrusClients, accessToken, choreoComponent,
+                environments);
+
+        choreoComponent.getLatestApiVersion().changeApiLifeCycle(accessToken, org.getOrgUUID(),
+                Constant.apiLIifCycleState.Publish);
+        JsonArray revisions = choreoComponent.getRevisions(accessToken, choreoComponent.getLatestApiVersion()
+                .getProxyId(), orgUUID);
         JsonObject revision = (JsonObject) revisions.get(0);
         revisionId = revision.get("id").getAsString();
     }
 
-    @Test(dependsOnMethods = "createComponent_ConnectorBuilderIT")
+    @Test(dependsOnMethods = { "componentDevDeploymentStatus_ConnectorBuilderIT" })
+    @CitrusTest
+    public void promoteProxyAPI_ConnectorBuilderIT() throws Exception {
+        ComponentUtils.promoteProxyComponent(this, citrusClients, accessToken, choreoComponent, environments,
+                proxyAPIBuild);
+    }
+
+    @Test(dependsOnMethods = "promoteProxyAPI_ConnectorBuilderIT")
     @CitrusTest
     public void publishConnector_ConnectorBuilderIT() throws Exception {
         connector = Connector.builder().version(Constant.TEST_CONNECTOR_VERSION)
-            .visibility(Constant.TEST_CONNECTOR_VISIBILITY).apiId(revisionId).orgUuid(orgUUID)
-            .orgHandler(orgHandle).organizationId(orgUUID).componentId(choreoComponent.getId()).build();
+                .visibility(Constant.TEST_CONNECTOR_VISIBILITY).apiId(revisionId).orgUuid(orgUUID)
+                .orgHandler(orgHandle).organizationId(orgUUID).componentId(choreoComponent.getId()).build();
         ConnectorPublisher.publishConnector(this, choreoTestClient, accessToken, connector, false);
     }
 

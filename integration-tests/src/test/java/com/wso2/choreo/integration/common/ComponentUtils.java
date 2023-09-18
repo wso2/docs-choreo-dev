@@ -169,25 +169,11 @@ public class ComponentUtils {
         }
     }
 
-    public static ProxyAPI createApiProxy(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+    private static ProxyAPI createApiProxy(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
                                           String accessToken, String apiName) throws Exception {
         HttpClient stsClient = citrusClients.get(Endpoints.STS_ENDPOINT);
-        return ApiManager.createApiProxy(runner, stsClient, accessToken, apiName);
-    }
-
-    public static GraphqlDTO createProxyComponentRequest(String name, ChoreoProject project, String apiId) {
-        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
-        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
-        return GraphqlDTO.builder().
-                name(name).
-                displayName(name).
-                triggerID("null").
-                projectId(project.getId()).
-                orgId(orgId).
-                orgHandler(orgHandle).
-                displayType(Constant.displayType.proxy.name()).
-                apiId(apiId.replaceAll("\"", "")).
-                build();
+        ProxyAPI proxyAPI = ApiManager.createApiProxy(runner, stsClient, accessToken, apiName);
+        return proxyAPI;
     }
 
     public static GraphqlDTO createRestApiComponentRequest(String name, ChoreoProject project, Repository repo) {
@@ -316,20 +302,33 @@ public class ComponentUtils {
                 graphqlDTO);
     }
 
-    public static ChoreoComponent createProxyComponent(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients,
-                                                  String accessToken, GraphqlDTO dto) throws Exception {
+    public static Pair<ChoreoComponent, ProxyAPI> createProxyComponent(TestNGCitrusSpringSupport runner,
+            Map<Endpoints, HttpClient> citrusClients, String accessToken, String componentName, String proxyAPIName, 
+            ChoreoProject project) throws Exception {
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+        ProxyAPI proxyAPI = ComponentUtils.createApiProxy(runner, citrusClients, accessToken, proxyAPIName);
+        Assert.assertNotNull(proxyAPI.getId(), "Proxy API id not found");
+        GraphqlDTO dto = GraphqlDTO.builder().
+                name(componentName).
+                displayName(componentName).
+                triggerID("null").
+                projectId(project.getId()).
+                orgId(orgId).
+                orgHandler(orgHandle).
+                displayType(Constant.displayType.proxy.name()).
+                apiId(proxyAPI.getId().replaceAll("\"", "")).
+                build();
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/api-proxy/graphqlQueryForComponentCreation.mustache", dto);
         HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-
-        String queryString = ObjectMapperUtil.mapObjectToString("templates/api-proxy/graphqlQueryForComponentCreation.mustache", dto);
-
         Optional<CreateComponentResponseDTO> responseDTO = GraphQL.createUserManagedComponent(runner,
-                cpProjectsClient, queryString, dto.getProjectId(), accessToken);
-
+                cpProjectsClient, queryString, project.getId(), accessToken);
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
                 .componentHandler(responseDTO.get().getHandler()).build();
-
-        return GraphQL.retrieveComponent(runner, cpProjectsClient, accessToken,
+        ChoreoComponent component =  GraphQL.retrieveComponent(runner, cpProjectsClient, accessToken,
                 graphqlDTO);
+        return Pair.of(component, proxyAPI);
     }
 
     public static List<Environment> getDeploymentEnvironments(TestActionRunner runner,
