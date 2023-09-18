@@ -10,15 +10,20 @@ Testing APIs is an essential step in the API development process. Choreo simplif
 
 Before you try out this guide, be sure that you have the following:
   
-- A REST API Proxy component or a Service component that exposes a REST API. 
-If you do not already have a component, you can choose to create one from the following sources:
+- A REST API Proxy component or a Service component that exposes a REST API with a valid OpenAPI specification. 
 
-    | Component type |Sample source                                       | Reference documentation      |
+    !!! info
+        - If you are creating a REST API Proxy component, you can create it either by using a valid OpenAPI specification or by defining the resources manually.
+        - If you are creating a service component with the Dockerfile preset,  make sure to [expose the OpenAPI specification from your component](https://wso2.com/choreo/docs/develop-components/configure-endpoints/#learn-the-endpointsyaml-file).
+
+         
+
+    - If you do not already have a component, you can choose to create one from the following sources:
+
+    | Component type |Sample source                                       | Reference documentation      | 
     |----------------|----------------------------------------------------|------------------------------|
     | REST API Proxy| [https://raw.githubusercontent.com/wso2/choreo-sample-apps/main/rest-api-proxy/pet-store/openapi.yaml](https://raw.githubusercontent.com/wso2/choreo-sample-apps/main/rest-api-proxy/pet-store/openapi.yaml ) | [Develop a REST API Proxy ](../develop-components/develop-a-rest-api-proxy.md) | 
     | Service (Exposing a REST API endpoint)| [https://github.com/wso2/choreo-sample-apps/tree/main/java/pet-store ](https://github.com/wso2/choreo-sample-apps/tree/main/java/pet-store ) |[Develop a REST API](../develop-components/develop-services/develop-a-rest-api.md) |
-
-- [Expose an OpenAPI specification from your component](https://wso2.com/choreo/docs/develop-components/configure-endpoints/#learn-the-endpointsyaml-file).
 
 ## Test your APIs
 
