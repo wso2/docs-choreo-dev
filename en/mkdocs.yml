@@ -100,12 +100,14 @@ nav:
           - Develop a Ballerina REST API:  develop-components/develop-services/develop-a-ballerina-rest-api.md
           - Develop a Ballerina GraphQL API: develop-components/develop-services/develop-a-ballerina-graphql-api.md
       - Develop a REST API Proxy: develop-components/develop-a-rest-api-proxy.md
+      - Develop a Web Application: develop-components/develop-a-web-application.md
+      - Develop a Webhook: develop-components/develop-a-webhook.md 
       - Develop Integrations:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
           - Develop an Event-Triggered Integration: develop-components/develop-integrations/develop-an-event-triggered-integration.md
-          - Develop a Scheduled Integration: develop-components/develop-integrations/develop-a-scheduled-integration.md
-      - Develop a Web Application: develop-components/develop-a-web-application.md  
-      - Develop a Webhook: develop-components/develop-a-webhook.md   
+          - Develop a Scheduled Integration: develop-components/develop-integrations/develop-a-scheduled-integration.md 
+      - Work with the Micro Integrator Runtime:
+          - Get Started with the Micro Integrator Runtime: develop-components/work-with-the-micro-integrator-runtime-in-choreo.md
       - Develop Components With Git: develop-components/develop-components-with-git.md
       - Bring Your Own Image: develop-components/bring-your-own-image.md
       - Deploy a Containerized Application: develop-components/deploy-a-containerized-application.md  
@@ -113,7 +115,6 @@ nav:
       - Configure Mutual TLS Between Components: develop-components/configure-mutual-tls-between-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
-      - Work with the Micro Integrator Runtime in Choreo: develop-components/work-with-the-micro-integrator-runtime-in-choreo.md
   - Authentication and Authorization:
       - Pass End-User Attributes to Upstream Services: authentication-and-authorization/pass-end-user-attributes-to-upstream-services.md
   - DevOps and CI/CD: 
