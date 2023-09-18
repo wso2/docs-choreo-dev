@@ -47,10 +47,10 @@ spec:
                     name: secret-choreo-metered-usage-handler
               resources:
                 limits:
-                  cpu: 700m
+                  cpu: 750m
                   memory: 500Mi
                 requests:
-                  cpu: 600m
+                  cpu: 700m
                   memory: 400Mi
               volumeMounts:
                 - name: config
