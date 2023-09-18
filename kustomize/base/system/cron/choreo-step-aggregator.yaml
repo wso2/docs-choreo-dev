@@ -56,10 +56,10 @@ spec:
                     name: env-step-aggregator
               resources:
                 limits:
-                  cpu: 500m
+                  cpu: 600m
                   memory: 600Mi
                 requests:
-                  cpu: 300m
+                  cpu: 500m
                   memory: 500Mi
               volumeMounts:
                 - name: config
