@@ -109,6 +109,7 @@ nav:
           - Develop a Scheduled Integration: develop-components/develop-integrations/develop-a-scheduled-integration.md 
       - Work with the Micro Integrator Runtime:
           - Get Started with the Micro Integrator Runtime: develop-components/work-with-the-micro-integrator-runtime-in-choreo.md
+          - Manage the Micro Integrator Runtime Version in Your Integration Project: develop-components/manage-the-micro-integrator-runtime-version-in-your-integration-project.md
       - Develop Components With Git: develop-components/develop-components-with-git.md
       - Bring Your Own Image: develop-components/bring-your-own-image.md
       - Deploy a Containerized Application: develop-components/deploy-a-containerized-application.md  
