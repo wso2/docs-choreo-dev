@@ -87,6 +87,7 @@ nav:
       - Project: choreo-concepts/project.md
       - Component: choreo-concepts/component.md
       - Endpoint: choreo-concepts/endpoint.md
+      - Deployment Tracks: choreo-concepts/deployment-tracks.md
       - Data Planes: choreo-concepts/data-planes.md
       - Environments: choreo-concepts/environments.md
       - Choreo Marketplace: choreo-concepts/choreo-marketplace.md
