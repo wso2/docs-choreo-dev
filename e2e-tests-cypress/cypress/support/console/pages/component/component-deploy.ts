@@ -615,24 +615,27 @@ export class ComponentDeployPage {
   }
 
   private static configByocComponent() {
-    cy.get('[data-testid="config-name-input"]').type(CONFIG_KEY);
-    cy.get('[data-testid="config-value-input"]').type(CONFIG_VALUE);
     cy.get(
-      '[data-cyid="editable-key-value-input-primary-button-button"]'
+      '[data-cyid="add-new-button"]'
     ).click();
-    cy.get('[data-cyid="configurations-config-accordion-summary"]').should(
-      "be.visible"
-    );
-    cy.get('[data-testid="config-name-input"]').type(SECRET_KEY);
-    cy.get('[data-testid="config-value-input"]').type(SECRET_VALUE);
-    cy.get('[data-testid="config-is-secret-checkbox"]').click();
+    cy.get('[data-cyid="key-value-card-add-new-new-input-name"]').type(CONFIG_KEY);
+    cy.get('[data-cyid="key-value-card-add-new-new-input-value"]').type(CONFIG_VALUE);
     cy.get(
-      '[data-cyid="editable-key-value-input-primary-button-button"]'
+      '[data-cyid="key-value-save-button"]'
     ).click();
-    cy.get('[data-cyid="secrets-config-accordion-summary"]').should(
-      "be.visible"
-    );
+    cy.get(
+      '[data-cyid="add-new-button"]'
+    ).click();
+    cy.get('[data-cyid="key-value-card-add-new-new-input-name"]').type(SECRET_KEY);
+    cy.get('[data-cyid="key-value-card-add-new-new-input-value"]').type(SECRET_VALUE);
+    cy.get('[data-cyid="key-value-card-add-new-secret-checkbox-check-box"]').click();
+    cy.get(
+      '[data-cyid="key-value-save-button"]'
+    ).click();
     cy.get('[data-testid="btn-next"]').click();
+    cy.get(
+      '[data-cyid="file-mount-upload-button"]'
+    ).click();
     cy.get('[data-cyid="mount-path"]').type(MOUNT_PATH);
     cy.get('[class="view-lines monaco-mouse-cursor-text"]').type(CONFIG_FILE);
     cy.get('[data-testid="btn-next"]').click();
