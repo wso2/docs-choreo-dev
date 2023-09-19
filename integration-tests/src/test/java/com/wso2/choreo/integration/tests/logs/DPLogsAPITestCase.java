@@ -23,7 +23,6 @@ import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -48,11 +47,11 @@ public class DPLogsAPITestCase extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private ChoreoComponent choreoComponent;
     private String orgHandle;
-    private HttpClient appServiceClient;
     private String API_INVOCATION_REQUEST_URI;
     private String REST_API_EXPECTED_RESPONSE;
     private List<Environment> environments;
     private ChoreoProject project;
+
     @Autowired
     private HttpClient choreoProjectsTestClient;
 
@@ -70,7 +69,6 @@ public class DPLogsAPITestCase extends TestNGCitrusSpringSupport {
     public void setup_DPLogsAPITestCase() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
-        appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         API_INVOCATION_REQUEST_URI = "/books";
         REST_API_EXPECTED_RESPONSE = new String(new ClassPathResource(
                 "templates/ballerinaService/ballerinaServiceResponse.json").getInputStream().readAllBytes());
@@ -157,12 +155,6 @@ public class DPLogsAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = { "invokeAPIProd_DPLogsAPITestCase" })
     @CitrusTest
-    public void sleepForTenSeconds_DPLogsLiveAPITestCase() throws Exception {
-        SleepUtil.sleep(10);
-    }
-
-    @Test(dependsOnMethods = { "sleepForTenSeconds_DPLogsLiveAPITestCase" })
-    @CitrusTest
     public void verifyProjectLevelDPLogs_DPLogsLiveAPITestCase() throws Exception {
         ComponentUtils.updateEnvironments(environments, ComponentUtils.getEnvironments(this, citrusClients,
                 accessToken, choreoComponent));
@@ -172,7 +164,7 @@ public class DPLogsAPITestCase extends TestNGCitrusSpringSupport {
         }
     }
 
-    @Test(dependsOnMethods = { "sleepForTenSeconds_DPLogsLiveAPITestCase" })
+    @Test(dependsOnMethods = { "verifyProjectLevelDPLogs_DPLogsLiveAPITestCase" })
     @CitrusTest
     public void verifyComponentLevelDPLogs_DPLogsLiveAPITestCase() throws Exception {
         ComponentUtils.updateEnvironments(environments, ComponentUtils.getEnvironments(this, citrusClients,
@@ -183,7 +175,7 @@ public class DPLogsAPITestCase extends TestNGCitrusSpringSupport {
         }
     }
 
-    @Test(dependsOnMethods = { "sleepForTenSeconds_DPLogsLiveAPITestCase" })
+    @Test(dependsOnMethods = { "verifyComponentLevelDPLogs_DPLogsLiveAPITestCase" })
     @CitrusTest
     public void verifyComponentLevelGatewayDPLogs_DPLogsLiveAPITestCase() throws Exception {
         ComponentUtils.updateEnvironments(environments, ComponentUtils.getEnvironments(this, citrusClients,
@@ -194,13 +186,6 @@ public class DPLogsAPITestCase extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = { "verifyComponentLevelGatewayDPLogs_DPLogsLiveAPITestCase" })
-    @CitrusTest
-    public void sleepForThreeMinutes_DPLogsAPITestCase() throws Exception {
-        SleepUtil.sleep(180);
-    }
-
-
-    @Test(dependsOnMethods = { "sleepForThreeMinutes_DPLogsAPITestCase" })
     @CitrusTest
     public void verifyProjectLevelDPLogs_DPLogsAPITestCase() throws Exception {
         ComponentUtils.updateEnvironments(environments, ComponentUtils.getEnvironments(this, citrusClients,
