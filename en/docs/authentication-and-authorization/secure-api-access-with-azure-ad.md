@@ -76,7 +76,7 @@ To expose the API to application developers, create an application in Azure AD. 
 Follow the steps below to create the application:
 
 1. Follow the steps in [Register an application](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application) on Azure to create an application.
-2. [Configure the plateform settings](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#configure-platform-settings). Enter your client application's redirect URI in the process. 
+2. [Configure the platform settings](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#configure-platform-settings). Enter your client application's redirect URI in the process. 
 
     !!! note
          OAuth2 Authorization Grant flow applies to Web Applications.
