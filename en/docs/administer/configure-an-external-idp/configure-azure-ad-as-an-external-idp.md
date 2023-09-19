@@ -26,4 +26,4 @@ Follow the steps below to add Azure AD as an IdP in Choreo:
         - If you intend to work with v2.0, then the IDP application's manifest should be changed as explained in the [access tokendocumentation](https://learn.microsoft.com/en-us/azure/active-directory/develop/access-tokens#token-formats). 
         
 7. Leave the **Apply to all environments** checkbox selected. However, if you want to restrict the use of the external IdP to a certain environment, you can select them from the **Environments** list.
-8. Click **Next**.
+8. Review the endpoints and click **Next**.

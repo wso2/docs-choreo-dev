@@ -16,10 +16,9 @@ This guide walks you through the following steps:
 
 Before you try out this guide, complete the following:
 
--  [Configured Asgardeo as an external IdP](../administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp/) 
--  Find the Asgardeo application's client ID :
-   Click on the **info** tab of your application to view the endpoints and copy the **Client ID**.
-
+-  [Configured Asgardeo as an external IdP](../administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md) 
+- If you don't already have an API in Choreo, [develop a REST API](../develop-components/develop-services/develop-a-rest-api.md) or a [REST API Proxy](../develop-components/develop-a-rest-api-proxy.md).
+- Deploy and publish your API. 
 
 ## Step 1: Assign scopes to an API in Choreo
 
@@ -28,18 +27,23 @@ To provide fine-grained access control to resources, we use scopes. Follow the s
 1. In the **Component Listing** pane, click on the component you want to attach scopes to.
 2. On the left navigation, click **Manage** and then **Permissions**.
 3. Click **+ Add Permission (Scope)**. 
-4. On the **Permission List** pane, enter the premission value and click **+ Add New**.
+4. On the **Permission List** pane, enter the permission value and click **+ Add New**.
 5. Click the copy icon in front of the added scope to copy the fully qualified name of the scope. Save this value for future reference. 
 5. To attach a scope to a resource, click the **Select Permissions** list under the respective resource, and select the scopes you wish to attach.
 6. Click **Save and Deploy**.
+7. On the left navigation, click **Manage** and then **Lifecycle**.
+8. Click **Publish** and continue to publish your API to the Choreo Developer Portal. 
 
 ## Step 2: Create an API and an application in Asgardeo
 
- Follow the [Asgardeo API Authorization guide](https://wso2.com/asgardeo/docs/guides/api-authorization/#assign-roles-to-groups) to create an application and an API in Asgardeo and to enable api authorization.
+ Follow the [Asgardeo API Authorization guide](https://wso2.com/asgardeo/docs/guides/api-authorization/) to create an application and an API in Asgardeo and to enable API authorization.
 
  !!! note
      - Use the fully qualified name of the scope when adding scopes. 
-     - Copy the Client ID and secret of the applicaition for future reference.
+     - Do the following under the protocol tab:
+        - Select `JWT` as the **Access Token**.
+        - Select the appropriate grant types.
+        - Copy the client ID and client secret of the application for future reference.
 
 ## Step 3: Create an application in Choreo and enable external IdP authentication
 
@@ -51,7 +55,7 @@ Follow the steps below to consume the Choreo API and use an external IdP for aut
 4. Click **Create**.
 5. On the left navigation, under **Credentials** and click **Production**.
 6. Select the **Identity Provider** as `Asgardeo`.
-7. Enter the **Client ID** you copied in the prerequisites.
+7. Enter the **Client ID** you copied in [step 2](#step-2-create-an-api-and-an-application-in-asgardeo).
 8. Click **+Add**.
 
     !!! note 
@@ -60,7 +64,7 @@ Follow the steps below to consume the Choreo API and use an external IdP for aut
 
 9. In the left navigation menu, click **Subscriptions**.
 10. In the **Subscription Management** pane that opens, click **+ Add APIs**.
-11. Select the API you assigned scopes to in step 1 and Click **Add to subscribe to an API**. 
+11. Select the API you assigned scopes to in [step 1](#step-1-assign-scopes-to-an-api-in-choreo) and click **Add**. 
 
 ## Step 4: Invoke the Choreo API with scopes
 
@@ -68,6 +72,10 @@ Follow the steps below to consume the Choreo API and use an external IdP for aut
 2. On the left navigation, under **Credentials** and click **Production**.
 3. Under **Endpoints**, copy the **Token Endpoint** URL. 
 4. Obtain an access token by invoking the token endpoint as follows:
+   
+   !!! note
+       - If you are using the production credentials, you need to deploy your component(endpoint) to the production environment by promoting it from the development environment.
+       - If you are using the sandbox credentials, you can use the endpoints deployed in the development environment.
 
     ===  "Format"
     ```bash
@@ -81,5 +89,5 @@ Follow the steps below to consume the Choreo API and use an external IdP for aut
 --header 'Content-Type: application/x-www-form-urlencoded' \
 --header 'Authorization: Basic <BASE64-ENCODED CLIENT_ID:CLIENT_SECRET>'
 
-5. Once you receive the access token, you can [test invoking the resource using the openapi consple](../testing/test-rest-endpoints-via-the-openapi-console.md) in Choreo by specifying the scope. 
+5. Once you receive the access token, you can [test invoking the resource using the OpenAPI console](../testing/test-rest-endpoints-via-the-openapi-console.md) in Choreo by specifying the scope. 
 

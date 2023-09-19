@@ -759,3 +759,11 @@ findByStatus
 getBooksByYear
  - docs/testing/test-apis-with-choreo-testgpt.md
 findByStatus
+ - docs/authentication-and-authorization/secure-api-access-with-asgardeo.md
+x-www-form-urlencoded
+ - docs/authentication-and-authorization/secure-api-access-with-azure-ad.md
+Quickstart
+Entra
+AzureAD
+ - docs/administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md
+identity-as-a-soluton
