@@ -36,7 +36,7 @@ If you are using [WSO2 Integration Studio](https://wso2.com/integration/integrat
 3. Enter the WSO2 Micro Integrator Management API URL in the **Server URL** field and click **Test Connection**.
 
     !!! info "Note"
-        The default HTTPS port of the Management API of WSO2 Micro Integrator is `9164`. If you have not manually changed the default port, you can set the Management API URL as `https://localhost:9164/management`.  If you have changed the default HTTPS port, you must set the port number appropriately when specifying the **Server URL**. For more information on the default ports of WSO2 Micro Integrator, see [WSO2 Micro IntegratorDafult ports](https://apim.docs.wso2.com/en/latest/install-and-setup/setup/reference/default-product-ports/#micro-integrator-ports) in the WSO2 API Manager documentation.
+        The Management API of WSO2 Micro Integrator is an internal REST API introduced to substitute MI admin services. The default HTTPS port of the Management API of WSO2 Micro Integrator is `9164`. If you have not manually changed the default port, you must set the Management API URL as `https://localhost:9164/management`.  If you have changed the default HTTPS port, you must set the port number appropriately when specifying the **Server URL**. For more information on the default ports of WSO2 Micro Integrator, see [WSO2 Micro Integrator default ports](https://apim.docs.wso2.com/en/latest/install-and-setup/setup/reference/default-product-ports/#micro-integrator-ports) in the WSO2 API Manager documentation.
 
     ![Set server URL](../assets/img/develop-components/micro-integrator/set-server-url.png)
     
