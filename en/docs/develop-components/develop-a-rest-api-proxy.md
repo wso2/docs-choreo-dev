@@ -40,7 +40,7 @@ Follow the steps given below:
     |---------------|---------------------------------------------|
     | **Name**      | `HR API`                                    |
     | **Base Path** | `abc-hr`                                    |
-    | **Version**   | `1.0.0`                                     |
+    | **Version**   | `1.0`                                     |
     | **Target**    | `https://samples.choreoapps.dev/company/hr` |
     |**Access Mode**| **External**                                |
 
