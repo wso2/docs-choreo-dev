@@ -89,7 +89,8 @@ export class ComponentOverviewPage {
     Utils.moveMouseAwayFromLeftMenu();
   }
 
-  static navigateToObserve() {
+  static navigateToObserve(timeToWait = 0) {
+    cy.wait(timeToWait);
     cy.get('[data-cyid="observability"]').should("be.visible").click();
   }
 
