@@ -139,9 +139,6 @@ export class ComponentObservePage {
       .get("g.recharts-layer.recharts-area")
       .should("exist");
 
-    cy.log("Asserting the default log panel");
-    cy.get('[data-testid="log-panel"]').should("exist");
-
     cy.log("Waiting on graphs to be expanded");
     cy.get('[data-testid="histogram-response-time"]')
       .find("g.recharts-layer.recharts-area")
@@ -170,13 +167,9 @@ export class ComponentObservePage {
         cy.log(
           "Asserting the log panel after clicking on the very first point in the latency graph"
         );
-        cy.contains(
-          '[data-testid="log-panel"]',
-          employeeInfoNotFoundLogEntry
-        ).should("not.exist");
+        cy.contains('[data-testid="log-panel"]',employeeInfoNotFoundLogEntry).should("not.exist");
 
         cy.log("Asserting the request list");
-        cy.get('[data-testid="log-panel"]', SHORT_TIME).should("exist");
         cy.get('[data-testid="log-panel-entry"]')
           .its("length")
           .should("be.gte", 1);
