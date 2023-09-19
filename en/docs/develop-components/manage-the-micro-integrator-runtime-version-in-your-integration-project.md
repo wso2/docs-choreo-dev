@@ -22,6 +22,34 @@ An integration project is structured as a Maven project with multiple sub-module
 
 You can establish multiple runtime environments by utilizing updated MI instances. With a valid WSO2 subscription, you can also access and download updates to set up an updated MI server locally. This update process allows you to select a preferred update level as the runtime version. Consequently, you can run your integration on a runtime with the latest updates, ensuring optimal performance and access to new features.
 
+### Configure a Micro Integrator runtime environment in Integration Studio
+
+If you are using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), follow these steps to set up a remote server instance with a Micro Integrator runtime environment to execute your integration project:
+
+!!! info "Note"
+    If you have not downloaded and installed WSO2 Integration Studio, you can follow the [installation instructions](installing-WSO2-Integration-Studio/) in the WSO2 Integration Studio documentation.
+
+1. Launch WSO2 Integration Studio and click **Add Server** in the **Getting Started** view.
+   ![Add server](../assets/img/develop-components/micro-integrator/add-server.png)
+2. In the **Define a New Server** dialog, click to expand the `WSO2` directory and select **WSO2 Remote Server**.
+   ![Define a remote server instance](../assets/img/develop-components/micro-integrator/define-a-remote-server-instance.png)
+3. Enter the WSO2 Micro Integrator Management API URL in the **Server URL** field and click **Test Connection**.
+
+    !!! info "Note"
+        The Management API of WSO2 Micro Integrator is an internal REST API introduced to substitute MI admin services. The default HTTPS port of the Management API of WSO2 Micro Integrator is `9164`. If you have not manually changed the default port, you must set the Management API URL as `https://localhost:9164/management`.  If you have changed the default HTTPS port, you must set the port number appropriately when specifying the **Server URL**. For more information on the default ports of WSO2 Micro Integrator, see [WSO2 Micro Integrator default ports](https://apim.docs.wso2.com/en/latest/install-and-setup/setup/reference/default-product-ports/#micro-integrator-ports) in the WSO2 API Manager documentation.
+
+    ![Set server URL](../assets/img/develop-components/micro-integrator/set-server-url.png)
+    
+4. Click **Finish**.
+5. In the **Add and Remove** dialog, select the integration components to move from the left side to the right side.
+6. Click **Add >**.
+7. Click **Finish**. 
+
+Your integration project is now running in a remote server instance with the Micro Integrator runtime environment you require.
+If you need to make changes to the integration project, expand the remote server instance, right-click on the deployed exporter project, and select **Redeploy** to apply the changes.
+
+![Redeploy project](../assets/img/develop-components/micro-integrator/redeploy-project.png)
+
 ## Convention for version interpretation in Choreo deployments
 
 You can use the following convention to indicate the required MI runtime version in your integration project:
