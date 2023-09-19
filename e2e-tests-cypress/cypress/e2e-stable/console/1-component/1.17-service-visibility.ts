@@ -12,7 +12,7 @@
  */
 
 import { Enums } from "../../../support/commons/enums";
-import { MEDIUM_TIME } from "../../../support/commons/timeouts";
+import { MEDIUM_TIME, SHORT_TIME } from "../../../support/commons/timeouts";
 import { Utils } from "../../../support/commons/utils";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
@@ -160,7 +160,7 @@ describe("Verify Ballerina service functionality", () => {
   });
 
   it("Verify navigate to observability Page", () => {
-    ComponentOverviewPage.navigateToObserve();
+    ComponentOverviewPage.navigateToObserve(MEDIUM_TIME.timeout);
   });
   
   it("Verify dev env logs", () => {
