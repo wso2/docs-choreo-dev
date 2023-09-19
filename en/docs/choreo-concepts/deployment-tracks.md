@@ -1,8 +1,6 @@
 # Deployment Tracks
 
-Deployment Tracks within Choreo are systematically structured pathways for deploying your software components. Each deployment track is Choreo's version of a CI/CD pipeline but enriched with additional capabilities aimed at simplifying developers' deployment management. These tracks ensure that your components, regardless of their origin as source code or prebuilt images, reach their intended destinations seamlessly without encountering obstacles.
-
-The primary aim of Deployment Tracks is simplification. They establish an organized and structured approach that minimizes the chances of errors and challenges that are typically associated with deployment workflows.
+Deployment Tracks in Choreo are structured pathways for simplified software component deployment. They act like advanced CI/CD pipelines, ensuring your components reach their destinations seamlessly, whether from source code or prebuilt images. They establish an organized and structured approach that minimizes the chances of errors and challenges that are typically associated with deployment workflows.
 
 ## The significance of Deployment Tracks
 
