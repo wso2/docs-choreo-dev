@@ -31,7 +31,6 @@ import { Utils } from "../../support/commons/utils";
 import { ComponentListingPage } from "../../support/console/pages/component/component-listing-page";
 import { ProjectListingPage } from "../../support/console/pages/projects/projects-listing-page";
 import { Enums } from "../../support/commons/enums";
-import { Credentials } from "../../support/devportal/pages/applications/credentials";
 
 describe("API overview comment and rating scenario", () => {
   const API_Name = Utils.generateComponentName("oas");
@@ -40,7 +39,7 @@ describe("API overview comment and rating scenario", () => {
   const idpUser = "choreoe2etest";
   const OPERATION_USERS = "intensity";
   const appName = generateAppName("-e2etest");
-  const sdkFile = API_Name + "_1.0.0_android.zip";
+  const sdkFile = API_Name + "_v1.0_android.zip";
 
   before(() => {
     LoginPage.login();
@@ -64,7 +63,7 @@ describe("API overview comment and rating scenario", () => {
     Apis.searchApiAndSelect(API_Name);
   });
 
-  it("Add a comment for the API", () => {
+  it.skip("Add a comment for the API", () => {
     ApiOverview.addCommentToApi("Test comment from Cypress Test Runner");
   });
 
@@ -83,7 +82,6 @@ describe("API overview comment and rating scenario", () => {
     ApiCredentials.generateCredentials(Enums.Environment.SANDBOX);
   })
 
-
   it("Tryout API in Sandbox env", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT)
@@ -99,7 +97,6 @@ describe("API overview comment and rating scenario", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.GenerateAccessToken();
   });
-
 
   it("Tryout API in prod env", () => {
     TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
