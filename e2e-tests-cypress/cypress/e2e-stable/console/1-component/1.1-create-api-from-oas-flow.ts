@@ -131,7 +131,12 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
     ComponentAPILifecycle.navigatePermissionManagementWindow();
     ComponentAPILifecycle.managePermissions(permissions, API_NAME);
+  });
+
+  it("Change API lifecycle to Published", () => {
     ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.publishWithoutConnector();
+    
   });
 
   it("Verify connector publishing ", () => {

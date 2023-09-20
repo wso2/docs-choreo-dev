@@ -45,7 +45,6 @@ export class ComponentAPILifecycle {
   }
 
   static publish(audience: Enums.ConnectorAudience) {
-    this.changeLifeCycleToPublished(audience);
     this.publishConnector(audience);
     return cy
       .get(ComponentAPILifecycle.devportl_btn)
