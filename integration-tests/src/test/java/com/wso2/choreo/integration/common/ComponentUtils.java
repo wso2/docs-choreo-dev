@@ -40,6 +40,7 @@ import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundEx
 import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
 import com.wso2.choreo.integration.common.exceptions.ProjectRetrievalException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
+import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
@@ -109,7 +110,9 @@ public class ComponentUtils {
         Optional<ChoreoProject> existingProject = org.getProjectByName(accessToken, projectName);
         ChoreoProject project;
         if (existingProject.isEmpty()) {
-            project = createProject(runner, citrusClients, accessToken, Constant.region.US.toString());
+            HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+            project = GraphQL.createProject(runner, appServiceClient, Constant.region.US.toString(), accessToken, 
+                projectName);
         } else {
             project = existingProject.get();
         }
@@ -265,7 +268,8 @@ public class ComponentUtils {
     public static ChoreoProject createProject(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients,
                                                String accessToken, String region) throws Exception {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        return GraphQL.createProject(runner, appServiceClient, region, accessToken);
+        String projectName = NameGenerator.generateUniqueName(Constant.TEST_PROJECT_NAME_PREFIX);
+        return GraphQL.createProject(runner, appServiceClient, region, accessToken, projectName);
     }
 
     public static ChoreoComponent createComponent(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients,
