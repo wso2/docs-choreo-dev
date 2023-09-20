@@ -94,15 +94,11 @@ export class ComponentDeployPage {
       .should("not.exist");
     APIDeployment.RetryDevDeployment();
 
-    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', SHORT_TIME)
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', MEDIUM_TIME)
       .should("be.enabled")
       .click();
 
     cyGet('[data-cyid="configure-&-deploy-option"]')
-      .click();
-
-    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
-      .should("be.enabled")
       .click();
 
     if (isAdditionalConfigs) {
@@ -221,15 +217,11 @@ export class ComponentDeployPage {
       .should("not.exist");
     APIDeployment.RetryDevDeployment();
 
-    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', SHORT_TIME)
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', MEDIUM_TIME)
       .should("be.enabled")
       .click();
 
     cyGet('[data-cyid="configure-&-deploy-option"]')
-      .click();
-
-    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
-      .should("be.enabled")
       .click();
 
     if (isAdditionalConfigs) {
@@ -384,13 +376,10 @@ export class ComponentDeployPage {
       .contains("Loading", MEDIUM_TIME)
       .should("not.exist");
     APIDeployment.RetryDevDeployment();
-    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', SHORT_TIME)
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', MEDIUM_TIME)
       .should("be.enabled")
       .click();
     cyGet('[data-cyid="configure-&-deploy-option"]')
-      .click();
-    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
-      .should("be.enabled")
       .click();
     cy.get('[data-cyid="btn-next-button"]').contains("Deploy").click();
     cy.get('[value="*/1 * * * *"]', LONG_TIME).eq(0).should("be.visible");
@@ -425,13 +414,10 @@ export class ComponentDeployPage {
       .contains("Loading", MEDIUM_TIME)
       .should("not.exist");
     APIDeployment.RetryDevDeployment();
-    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', SHORT_TIME)
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', MEDIUM_TIME)
       .should("be.enabled")
       .click();
     cyGet('[data-cyid="configure-&-deploy-option"]')
-      .click();
-    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
-      .should("be.enabled")
       .click();
     this.addConfiguration(configValue);
     APIDeployment.RetryDevDeployment();
@@ -666,13 +652,10 @@ export class ComponentDeployPage {
       .contains("Loading", MEDIUM_TIME)
       .should("not.exist");
     APIDeployment.RetryDevDeployment();
-    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', SHORT_TIME)
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', MEDIUM_TIME)
       .should("be.enabled")
       .click();
     cyGet('[data-cyid="configure-&-deploy-option"]')
-      .click();
-    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
-      .should("be.enabled")
       .click();
     if (configSetupStepAvailable) {
       cy.get('[data-cyid="btn-next-button"]').contains("Next").click();
@@ -778,13 +761,10 @@ export class ComponentDeployPage {
       .contains("Loading", MEDIUM_TIME)
       .should("not.exist");
     APIDeployment.RetryDevDeployment();
-    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', SHORT_TIME)
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', MEDIUM_TIME)
       .should("be.enabled")
       .click();
     cyGet('[data-cyid="configure-&-deploy-option"]')
-      .click();
-    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
-      .should("be.enabled")
       .click();
     if (configSetupStepAvailable) {
       cy.get('[data-cyid="btn-next-button"]').contains("Next").click();
@@ -935,15 +915,11 @@ export class ComponentDeployPage {
      cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
       .contains("Loading", MEDIUM_TIME)
       .should("not.exist");
-    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', SHORT_TIME)
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', MEDIUM_TIME)
       .should("be.enabled")
       .click();
     cyGet('[data-cyid="configure-&-deploy-option"]')
       .click();
-    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
-      .should("be.enabled")
-      .click();
-
     cyGet('[data-testid="Readinglist-edit-btn"]', LONG_TIME).should(
       "be.visible"
     );
@@ -1002,13 +978,10 @@ export class ComponentDeployPage {
       .contains("Loading", MEDIUM_TIME)
       .should("not.exist");
 
-    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', SHORT_TIME)
+    cyGet('[data-cyid="direct-deploy-option-split-toggle-button-button"]', MEDIUM_TIME)
       .should("be.enabled")
       .click();
     cyGet('[data-cyid="configure-&-deploy-option"]')
-      .click();
-    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
-      .should("be.enabled")
       .click();
 
     cyGet('[data-cyid="invke_url"]>input').type(url);
