@@ -33,7 +33,3 @@ Follow the steps below to test an API with TestGPT:
 2. In the **Component Listing** pane, click on the component you want to test.
 3. On the left navigation, click **Test** and then click **TestGPT**. This opens the **TestGPT** pane.
 4. You can enter your query in natural language and execute it. For example, if you have a resource like "/pet/findByStatus," you can input the query, such as "Get the pets that are available," and execute it to obtain results. The resources are executed sequentially based on your query. Alternatively, you can use the sample queries available to try out TestGPT. 
-
-
-
-/Users/shaniranasinghe/shani/git/new/docs-choreo-dev/en/docs/choreo-concepts/deployment-tracks.md
