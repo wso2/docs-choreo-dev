@@ -12,7 +12,7 @@ https://wso2.com/asgardeo/docs/guides/applications/register-standard-based-app/#
 - Find the well-known URL
   Click on the **info** tab of your application to view the endpoints and copy the **Discovery** endpoint.
 
-- Find the Client ID :
+- Find the Client ID:
   Click on the **info** tab of your application to view the endpoints and copy the **Client ID**.
 
 ## Add Azure Active Directory as an external IdP in Choreo
