@@ -14,7 +14,7 @@ This guide walks you through the following steps:
 
 ## Prerequisites
 
-Before you try out this guide, complete the following:
+To follow this guide, you need to satisfy the following prerequisites:
 
 -  [Configured Asgardeo as an external IdP](../administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md) 
 - If you don't already have an API in Choreo, [develop a REST API](../develop-components/develop-services/develop-a-rest-api.md) or a [REST API Proxy](../develop-components/develop-a-rest-api-proxy.md).

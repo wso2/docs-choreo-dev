@@ -14,9 +14,9 @@ This guide walks you through the following steps:
 
 ## Prerequisites
 
-Before you try out this guide, complete the following:
+To follow this guide, you need to satisfy the following prerequisites:
 
--  [Configured Azure AD as an external IdP](../administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp.md). 
+-  [Configure Azure AD as an external IdP](../administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp.md). 
 -  An API: If you don't already have an API in Choreo, [develop a REST API](../develop-components/develop-services/develop-a-rest-api.md) or a [REST API Proxy](../develop-components/develop-a-rest-api-proxy.md).
 - Deploy and publish your API.
 - An Azure Active Directory account:  If you don’t already have one, set up an Azure Active Directory account at [https://azure.microsoft.com/en-gb/](https://azure.microsoft.com/en-gb/).
@@ -26,7 +26,7 @@ Before you try out this guide, complete the following:
 
 ## Step 1: Assign scopes to an API in Choreo
 
-To provide fine-grained access control to resources, Choreo uses scopes. Follow the steps below to assign a scope to the resources in the API:
+You can provide fine-grained access control to your API resources with scopes. Follow the steps below to assign a scope to the resources in the API:
 
 1. In the **Component Listing** pane, click on the component you want to attach scopes to.
 2. On the left navigation, click **Manage** and then **Permissions**.
