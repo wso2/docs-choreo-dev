@@ -154,7 +154,7 @@ You can now invoke the Choreo API using the authorization code grant. Choreo wil
         ```
 7. Review the consent in the login screens that prompt and continue. 
 8. After you log in, you will receive an authorization code in the URL. Copy the authorization code and use it to get an access token from Azure AD by following the next steps. 
-9. On the Choreo Developer Portal, go to your application.
+9. In the Choreo Developer Portal, go to your application.
 10. On the left navigation, under **Credentials** and click **Production**.
 11. Under **Endpoints**, copy the **Token Endpoint** URL. 
 12. Invoke the token endpoint as follows: 
