@@ -6,8 +6,8 @@ In organizations leveraging Microsoft Azure Active Directory (Azure AD) for iden
 
 Before you try out this guide, be sure you have the following:
 
-- **An Azure Active Directory account**:  If you don’t already have one,  setup an Azure Active Directory account at [https://azure.microsoft.com/en-gb/](https://azure.microsoft.com/en-gb/).
-- **Administrator rights to your Choreo organization**: You need this to configure the Azure AD account in your organization.
+- An Azure Active Directory account:  If you don’t already have one,  setup an Azure Active Directory account at [https://azure.microsoft.com/en-gb/](https://azure.microsoft.com/en-gb/).
+- Administrator rights to your Choreo organization: You need this to configure the Azure AD account in your organization.
 
 ## Add Azure Active Directory as an external IdP in Choreo
 
