@@ -25,7 +25,7 @@ Before you try out this guide, complete the following:
 You can provide fine-grained access control to your API resources with scopes. Follow the steps below to assign a scope to the resources in the API:
 
 1. In the **Component Listing** pane, click on the component you want to attach scopes to.
-2. On the left navigation, click **Manage** and then **Permissions**.
+2. In the left navigation menu, click **Manage** and then **Permissions**.
 3. Click **+ Add Permission (Scope)**. 
 4. On the **Permission List** pane, enter the permission value and click **+ Add New**.
 5. Click the copy icon in front of the added scope to copy the fully qualified name of the scope. Save this value for future reference. 
