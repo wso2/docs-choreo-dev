@@ -46,7 +46,7 @@ describe("Choreo APIM publisher scenarios", () => {
   const OPERATION = "intensity";
 
   before(() => {
-    LoginPage.login();
+    LoginPage.login(true);
   });
   after(() => {
     ChoreoHomePage.logout();
