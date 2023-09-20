@@ -109,7 +109,7 @@ public class ComponentUtils {
         Optional<ChoreoProject> existingProject = org.getProjectByName(accessToken, projectName);
         ChoreoProject project;
         if (existingProject.isEmpty()) {
-            project = org.createProject(accessToken, projectName, projectName);
+            project = createProject(runner, citrusClients, accessToken, Constant.region.US.toString());
         } else {
             project = existingProject.get();
         }
