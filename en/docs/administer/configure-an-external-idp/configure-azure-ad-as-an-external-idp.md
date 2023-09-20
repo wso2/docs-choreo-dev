@@ -15,7 +15,7 @@ Follow the steps below to add Azure AD as an IdP in Choreo:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev).
 2. In the left navigation menu, click **Settings**.
-3. In the **API Management** tab, under **Identity Providers**, click **+ Identity Provider**.
+3. On the **API Management** tab, under **Identity Providers**, click **+ Identity Provider**.
 4. Select  **Microsoft Security** as the Identity Provider. 
 5. Provide a name and a description for the IdP. 
 6. To obtain the `Well-Known URL` of your Azure AD instance, on your Azure account, under **Azure Active Directory** go to **App registrations**, and then **Endpoints**. Copy the URI under`OpenID Connect metadata document`.
