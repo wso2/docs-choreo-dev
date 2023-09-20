@@ -37,11 +37,12 @@ You can register your container registry by following the steps outlined below:
 2. Select the organization from the **Organization** list in the header. 
 3. Remove any project selection from the **Project** list in the header. 
 4. In the left navigation, click **Settings**.
-5. Click on the **Credentials** tab and then click on the **Container Registries** tab. 
-6. Click **+Add Registry** to configure the Git repository connection.
-7. Enter a **Registry Display Name**.
-8. Select the **Authentication Type**. Fill in the required information depending on your authentication type. Refer to the section [Authentication types](#authentication-types) for more information.
-8. Click **Save**.
+5. In the header, click the **Organization** list. This will open the organization level settings page. 
+6. Click on the **Credentials** tab and then click on the **Container Registries** tab. 
+7. Click **+Add Registry** to configure the Git repository connection.
+8. Enter a **Registry Display Name**.
+9. Select the **Authentication Type**. Fill in the required information depending on your authentication type. Refer to the section [Authentication types](#authentication-types) for more information.
+10. Click **Save**.
 
 ### Authentication types
 

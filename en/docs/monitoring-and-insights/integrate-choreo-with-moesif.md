@@ -52,14 +52,11 @@ Let's configure Choreo to publish events to Moesif.
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/cloud-native-app-developer) and sign in.
 2. On the left navigation, click **Settings**. 
-
-    !!! info
-        Be sure to **not have a project selected**. If you have a project selected, close the project list on the header of the Choreo Console.
-
-3. Click the **API Management** tab, and click **Moesif Dashboard**.
-4. Select the environment you want to publish data for.
-5. Paste the **Application Id** you copied. 
-6. Click **Add**.
+3. In the header, click the **Organization** list. This will open the organization level settings page. 
+4. Click the **API Management** tab, and click **Moesif Dashboard**.
+5. Select the environment you want to publish data for.
+6. Paste the **Application Id** you copied. 
+7. Click **Add**.
 
 Once you successfully add the key, you will see a delete option next to it. Currently, you can only configure one API key. If you need to add a new API key, you need to delete the existing key and add the new one. 
 
