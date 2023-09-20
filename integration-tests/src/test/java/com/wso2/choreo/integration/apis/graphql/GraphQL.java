@@ -363,11 +363,9 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
     public static ChoreoProject createProject(TestNGCitrusSpringSupport runner, HttpClient client, String region,
-                                              String accessToken) throws Exception {
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(
-                NameGenerator.generateUniqueName(Constant.TEST_PROJECT_NAME_PREFIX))
-                .description(Constant.TEST_PROJECT_DESCRIPTION).region(region).orgId(ORG_ID).
-                orgHandler(ORG_HANDLE).build();
+                                              String accessToken, String projectName) throws Exception {
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(projectName).description(Constant.TEST_PROJECT_DESCRIPTION)
+                .region(region).orgId(ORG_ID).orgHandler(ORG_HANDLE).build();
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/createProject.mustache", graphqlDTO);
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
