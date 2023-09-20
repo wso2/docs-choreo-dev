@@ -17,16 +17,16 @@ This guide walks you through the following steps:
 Before you try out this guide, complete the following:
 
 -  [Configured Azure AD as an external IdP](../administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp.md). 
--  If you don't already have an API in Choreo, [develop a REST API](../develop-components/develop-services/develop-a-rest-api.md) or a [REST API Proxy](../develop-components/develop-a-rest-api-proxy.md).
+-  An API: If you don't already have an API in Choreo, [develop a REST API](../develop-components/develop-services/develop-a-rest-api.md) or a [REST API Proxy](../develop-components/develop-a-rest-api-proxy.md).
 - Deploy and publish your API.
-- **An Azure Active Directory account**:  If you don’t already have one, set up an Azure Active Directory account at [https://azure.microsoft.com/en-gb/](https://azure.microsoft.com/en-gb/).
-- **Administrator rights to your Choreo organization**: You need this to configure the Azure AD account in your organization.
+- An Azure Active Directory account:  If you don’t already have one, set up an Azure Active Directory account at [https://azure.microsoft.com/en-gb/](https://azure.microsoft.com/en-gb/).
+- Administrator rights to your Choreo organization: You need this to configure the Azure AD account in your organization.
 - To create applications, the `Application Developer` role is required. [Learn more](https://learn.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#application-developer)
 
 
 ## Step 1: Assign scopes to an API in Choreo
 
-To provide fine-grained access control to resources, we use scopes. Follow the steps below to assign a scope to the resources in the API:
+To provide fine-grained access control to resources, Choreo uses scopes. Follow the steps below to assign a scope to the resources in the API:
 
 1. In the **Component Listing** pane, click on the component you want to attach scopes to.
 2. On the left navigation, click **Manage** and then **Permissions**.
@@ -52,6 +52,7 @@ To enable external IdP authentication for APIs,  create an API on Azure AD that 
 8. Enter appropriate values and click **Add Scope**.
 
 For more information, refer to the Azure documentation: 
+
 - [Quickstart: Register an application with the Microsoft identity platform](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app)
 - [Quickstart: Configure an application to expose a web API](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-expose-web-apis)
 
@@ -81,7 +82,7 @@ Follow the steps below to create the application:
     !!! note
          OAuth2 Authorization Grant flow applies to Web Applications.
      
-### Step 3.1: Consume the Azure AD web API from the Azure AD application
+### Step 3.2: Consume the Azure AD web API from the Azure AD application
 
 Once you create the application, select the API and the scopes you want the application to consume. Follow the steps below:
 
@@ -95,7 +96,7 @@ Once you create the application, select the API and the scopes you want the appl
 For more information, refer to the Azure documentation: [Add permissions to access your web API](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis)
 
 
-### Step 3.2: Create secrets for the Azure web application
+### Step 3.3: Create secrets for the Azure web application
 
 To invoke the application, provide client secrets to the consuming application. Follow the steps below to generate the credentials:
 
@@ -123,7 +124,7 @@ Follow the steps below to consume the Choreo API and use an external IdP for aut
 8. Click **+Add**.
 
     !!! note 
-        - You can only use the Client ID in one application.]
+        - You can only use the Client ID in one application.
         - The Identity Provider dropdown is visible only to organizations where you have configured external IdPs. 
 
 9. In the left navigation menu, click **Subscriptions**.
@@ -141,14 +142,16 @@ You can now invoke the Choreo API using the authorization code grant. Choreo wil
 4. Invoke the authorization endpoint as follows: 
 
     === "Format"
-    ```bash
-    {authorize_url}?client_id={client_id}&redirect_uri={redirect_url}&scope={scopes}&response_mode=query&response_type=code
-    ```
+
+        ``` curl
+        {authorize_url}?client_id={client_id}&redirect_uri={redirect_url}&scope={scopes}&response_mode=query&response_type=code
+        ```
 
     === "Example"
-    ```bash
-    https://login.microsoftonline.com/dd912d48-b0be-401f-b18c-8ca89e9c0b6c/oauth2/authorize?client_id=5eb1de74-e449-4973-a620-52c4dc9157a9&redirect_uri=https://localhost:9000&scope=api://580b40b7-5513-4714-a4e0-8d4e784f7dc6/urn:taylordean:books:books_addt&response_mode=query&response_type=code
-    ```
+
+        ``` 
+        https://login.microsoftonline.com/dd912d48-b0be-401f-b18c-8ca89e9c0b6c/oauth2/authorize?client_id=5eb1de74-e449-4973-a620-52c4dc9157a9&redirect_uri=https://localhost:9000&scope=api://580b40b7-5513-4714-a4e0-8d4e784f7dc6/urn:taylordean:books:books_addt&response_mode=query&response_type=code
+        ```
 7. Review the consent in the login screens that prompt and continue. 
 8. After you log in, you will receive an authorization code in the URL. Copy the authorization code and use it to get an access token from Azure AD by following the next steps. 
 9. On the Choreo Developer Portal, go to your application.
@@ -157,28 +160,30 @@ You can now invoke the Choreo API using the authorization code grant. Choreo wil
 12. Invoke the token endpoint as follows: 
 
     === "Format"
-    ```bash
-    curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' \
-    {token_endpoint} \
-    -d 'client_id={client_id}' \
-    -d 'scope={scopes}' \
-    -d 'code={authorization_code}' \
-    -d 'redirect_uri={redirect_url}' \
-    -d 'client_secret={The client_secret value you copied from the Azure Application}'
-    -d 'grant_type=authorization_code' \    
-    ```
+    
+        ``` curl
+        curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' \
+        {token_endpoint} \
+        -d 'client_id={client_id}' \
+        -d 'scope={scopes}' \
+        -d 'code={authorization_code}' \
+        -d 'redirect_uri={redirect_url}' \
+        -d 'client_secret={The client_secret value you copied from the Azure Application}'
+        -d 'grant_type=authorization_code' \    
+        ```
 
     === "Example"
-    ```bash
-    curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' \
-    https://login.microsoftonline.com/dd912d48-b0be-401f-b18c-8ca89e9c0b6c/oauth2/v2.0/token \
-    -d 'client_id=5eb1de74-e449-4973-a620-52c4dc9157a9' \
-    -d 'scope=api://580b40b7-5513-4714-a4e0-8d4e784f7dc6/urn:taylordean:books:books_add' \
-    -d 'code=0.AXAASC…zZUzKYm18yM_5-SXz1uvRbbGYF7F32hE9zIQFRQY35haD' \
-    -d 'redirect_uri=https://localhost:9000' \
-    -d 'grant_type=authorization_code' \
-    -d 'state=111' \
-    -d 'client_secret=l4Q8Q~4WKiRXYSQZly5E6Ess.fKf__U1yJR3IaMd'
-    ```
+
+        ``` curl
+        curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' \
+        https://login.microsoftonline.com/dd912d48-b0be-401f-b18c-8ca89e9c0b6c/oauth2/v2.0/token \
+        -d 'client_id=5eb1de74-e449-4973-a620-52c4dc9157a9' \
+        -d 'scope=api://580b40b7-5513-4714-a4e0-8d4e784f7dc6/urn:taylordean:books:books_add' \
+        -d 'code=0.AXAASC…zZUzKYm18yM_5-SXz1uvRbbGYF7F32hE9zIQFRQY35haD' \
+        -d 'redirect_uri=https://localhost:9000' \
+        -d 'grant_type=authorization_code' \
+        -d 'state=111' \
+        -d 'client_secret=l4Q8Q~4WKiRXYSQZly5E6Ess.fKf__U1yJR3IaMd'
+        ```
 
 14. Once you receive the access token, you can [test invoking the resource using the OpenAPI console](../testing/test-rest-endpoints-via-the-openapi-console.md) in Choreo by specifying the scope. 

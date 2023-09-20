@@ -22,7 +22,7 @@ Before you try out this guide, complete the following:
 
 ## Step 1: Assign scopes to an API in Choreo
 
-To provide fine-grained access control to resources, we use scopes. Follow the steps below to assign a scope to the resources in the API:
+You can provide fine-grained access control to your API resources with scopes. Follow the steps below to assign a scope to the resources in the API:
 
 1. In the **Component Listing** pane, click on the component you want to attach scopes to.
 2. On the left navigation, click **Manage** and then **Permissions**.
@@ -39,7 +39,7 @@ To provide fine-grained access control to resources, we use scopes. Follow the s
 
  Follow the [Asgardeo API Authorization guide](https://wso2.com/asgardeo/docs/guides/api-authorization/) to create an application and an API in Asgardeo and to enable API authorization.
 
- !!! note
+!!! note
      - Use the fully qualified name of the scope when adding scopes. 
      - Do the following under the protocol tab:
         - Select `JWT` as the **Access Token**.
@@ -60,7 +60,7 @@ Follow the steps below to consume the Choreo API and use an external IdP for aut
 8. Click **+Add**.
 
     !!! note 
-        - You can only use the Client ID in one application.]
+        - You can only use the Client ID in one application.
         - The Identity Provider dropdown is visible only to organizations where you have configured external IdPs. 
 
 9. In the left navigation menu, click **Subscriptions**.
@@ -74,33 +74,27 @@ Follow the steps below to consume the Choreo API and use an external IdP for aut
 3. Under **Endpoints**, copy the **Token Endpoint** URL. 
 4. Obtain an access token by invoking the token endpoint as follows:
    
-   !!! note
-       - If you are using the production credentials, you need to deploy your component(endpoint) to the production environment by promoting it from the development environment.
-       - If you are using the sandbox credentials, you can use the endpoints deployed in the development environment.
+    !!! note
+        - If you are using the production credentials, you need to deploy your component(endpoint) to the production environment by promoting it from the development environment.
+        - If you are using the sandbox credentials, you can use the endpoints deployed in the development environment.
 
-   !!! note
-       - If you are using the production credentials, you need to deploy your component(endpoint) to the production environment by promoting it from the development environment.
-       - If you are using the sandbox credentials, you can use the endpoints deployed in the development environment.
+    === "Format"
 
-   !!! note
-       - If you are using the production credentials, you need to deploy your component(endpoint) to the production environment by promoting it from the development environment.
-       - If you are using the sandbox credentials, you can use the endpoints deployed in the development environment.
-
-   !!! note
-       - If you are using the production credentials, you need to deploy your component(endpoint) to the production environment by promoting it from the development environment.
-       - If you are using the sandbox credentials, you can use the endpoints deployed in the development environment.
-
-    ===  "Format"
-    ```bash
-    curl -X POST '<TOKEN_ENDPOINT>?grant_type=password&scope=<REQUIRED_SCOPES>&username=<USER_NAME>&password=<USER_PASSWORD>' \
---header 'Content-Type: application/x-www-form-urlencoded' \
---header 'Authorization: Basic <BASE64-ENCODED ASGARDEO_APP_CLIENT_ID:ASGARDEO_APP_CLIENT_SECRET>'
-    ```
+        ``` sh
+        curl -X POST '<TOKEN_ENDPOINT>?grant_type=password&scope=<REQUIRED_SCOPES>&username=<USER_NAME>&password=<USER_PASSWORD>' \
+         --header 'Content-Type: application/x-www-form-urlencoded' \
+         --header 'Authorization: Basic <BASE64-ENCODED ASGARDEO_APP_CLIENT_ID:ASGARDEO_APP_CLIENT_SECRET>'
+        ```
 
     === "Example"
-    curl -X POST 'https://dev.api.asgardeo.io/t/orgHandle/oauth2/token?grant_type=password&scope=<REQUIRED_SCOPES>&username=<USER_NAME>&password=<USER_PASSWORD>' \
---header 'Content-Type: application/x-www-form-urlencoded' \
---header 'Authorization: Basic <BASE64-ENCODED CLIENT_ID:CLIENT_SECRET>'
+
+        ``` sh
+        curl -X POST 'https://dev.api.asgardeo.io/t/orgHandle/oauth2/token?grant_type=password&scope=<REQUIRED_SCOPES>&username=<USER_NAME>&password=<USER_PASSWORD>' \
+        --header 'Content-Type: application/x-www-form-urlencoded' \
+        --header 'Authorization: Basic <BASE64-ENCODED CLIENT_ID:CLIENT_SECRET>'
+        ```
+
+
 
 5. Once you receive the access token, you can [test invoking the resource using the OpenAPI console](../testing/test-rest-endpoints-via-the-openapi-console.md) in Choreo by specifying the scope. 
 
