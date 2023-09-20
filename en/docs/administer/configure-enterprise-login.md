@@ -119,11 +119,12 @@ Before you proceed with the configuration, make sure you complete the following:
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console, go to the top navigation menu and click **Organization**. This takes you to the organization's home page.
 3. In the left navigation menu, click **Settings**.
-4. In the **Organization** tab, click **Role Mapping**.
+4. In the header, click the **Organization** list. This will open the organization level settings page. 
+5. In the **Organization** tab, click **Role Mapping**.
     ![Role mapping](../assets/img/administer/enterprise-login/role-mapping.png)
  
-5. To add a new role mapping, click **+ Add Mapping**. 
-6. In the **Groups** field, enter the exact name you configured in the enterprise IdP. Next, select the applicable roles to map from the **Roles** list.
+6. To add a new role mapping, click **+ Add Mapping**. 
+7. In the **Groups** field, enter the exact name you configured in the enterprise IdP. Next, select the applicable roles to map from the **Roles** list.
    
     !!! tip
 
@@ -132,6 +133,6 @@ Before you proceed with the configuration, make sure you complete the following:
         - If there is a change to the group role mapping, it takes effect from the next login session onwards. 
         - If there is no role mapping, the default developer role is applied to all enterprise users.
 
-7. Click **Save**. 
+8. Click **Save**. 
 
 By following these steps, you have successfully configured role-based access control for enterprise login in Choreo, allowing users from the external IdP to have the appropriate permission.

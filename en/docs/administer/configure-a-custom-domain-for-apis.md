@@ -26,17 +26,19 @@ To configure a custom domain for your APIs, follow the steps given below:
 
 1. In the left navigation menu, click **Settings**.
 
-2. Click the **Domains** tab and in the **Gateway** sub-tab, click **+ Add Custom Domain**.
+2. In the header, click the **Organization** list. This will open the organization level settings page. 
 
-3. Enter your domain name and click **Verify**. 
+3. Click the **Domains** tab and in the **Gateway** sub-tab, click **+ Add Custom Domain**.
+
+4. Enter your domain name and click **Verify**. 
 
     ![Verify domain name](../assets/img/administer/create-custom-domain.png){.cInlineImage-half}
 
-4. Once Choreo verifies the custom domain successfully, click **Next**.
+5. Once Choreo verifies the custom domain successfully, click **Next**.
 
-5. You can add the TLS certificates you created for the custom domain. Alternatively, you can click the **Let's Encrypt** option to let Choreo generate and manage the certificates for you. For this scenario, let's click the **Let's Encrypt** option.
+6. You can add the TLS certificates you created for the custom domain. Alternatively, you can click the **Let's Encrypt** option to let Choreo generate and manage the certificates for you. For this scenario, let's click the **Let's Encrypt** option.
 
-6. Click **Add** to save the custom domain.
+7. Click **Add** to save the custom domain.
 
     The **Settings** page displays the custom domain in the **Domains**/**Gateway** sub-tab.
 
