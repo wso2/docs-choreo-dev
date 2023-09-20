@@ -21,9 +21,10 @@ Follow the steps below to add Asgardeo as an external IdP in Choreo:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev).
 2. In the left navigation menu, click **Settings**.
-3. On the **API Management** tab, under **Identity Providers**, click **+ Identity Provider**.
-4. Select  **Asgardeo** as the Identity Provider. 
-5. Provide a name and a description for the IdP. 
-6. Enter the `Well-Known URL` of your Asgardeo instance. You copied this in the prerequisites. 
-7. Leave the **Apply to all environments** checkbox selected. However, if you want to restrict the use of the external IdP to a certain environment, you can select them from the **Environments** list.
-8. Click **Next**.
+3. In the header, click the **Organization** list. This will open the organization level settings page. 
+4. On the **API Management** tab, under **Identity Providers**, click **+ Identity Provider**.
+5. Select  **Asgardeo** as the Identity Provider. 
+6. Provide a name and a description for the IdP. 
+7. Enter the `Well-Known URL` of your Asgardeo instance. You copied this in the prerequisites. 
+8. Leave the **Apply to all environments** checkbox selected. However, if you want to restrict the use of the external IdP to a certain environment, you can select them from the **Environments** list.
+9. Click **Next**.

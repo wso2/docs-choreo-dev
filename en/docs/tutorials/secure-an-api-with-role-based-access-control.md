@@ -46,8 +46,9 @@ This creates the organization and opens the home page of the default project cre
 
       1. In the Choreo Console, go to the top navigation menu and click **Organization**. This takes you to the organization's home page.
       2. In the left navigation menu, click **Settings**.
-      3. Click the **API Management** tab and then click **Enable Asgardeo Key Manager**.
-      4. In the confirmation dialog that opens, click **Yes**.
+      3. In the header, click the **Organization** list. This will open the organization level settings page. 
+      4. Click the **API Management** tab and then click **Enable Asgardeo Key Manager**.
+      5. In the confirmation dialog that opens, click **Yes**.
 
         !!!tip
 

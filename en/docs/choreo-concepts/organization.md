@@ -29,7 +29,8 @@ The Organization ID serves as a unique identifier for each organization. To get 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. Click on the **Organization** list on the header and select your organization.
 3. In the left navigation, click **Settings**.
-4. Under **Organization** click **Copy ID**.
+4. In the header, click the **Organization** list. This will open the organization level settings page. 
+5. Under **Organization** click **Copy ID**.
 
 ## Organization Handle
 

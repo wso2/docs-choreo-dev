@@ -31,7 +31,7 @@ You can provide fine-grained access control to your API resources with scopes. F
 5. Click the copy icon in front of the added scope to copy the fully qualified name of the scope. Save this value for future reference. 
 6. To attach a scope to a resource, click the **Select Permissions** list under the respective resource, and select the scopes you wish to attach.
 7. Click **Save and Deploy**.
-8. In the left navigation menu, click **Manage** and then **Lifecycle**.
+8. In the left navigation, click **Manage** and then **Lifecycle**.
 9. Click **Publish** and continue to publish your API to the Choreo Developer Portal. 
 
 
@@ -54,7 +54,7 @@ Follow the steps below to consume the Choreo API and use an external IdP for aut
 2. Click **Applications**. and then click **+Create**.
 3. Enter a name and description for the application. 
 4. Click **Create**.
-5. In the left navigation menu, under **Credentials** and click **Production**.
+5. In the left navigation, under **Credentials** and click **Production**.
 6. Select the **Identity Provider** as `Asgardeo`.
 7. Enter the **Client ID** you copied in [step 2](#step-2-create-an-api-and-an-application-in-asgardeo).
 8. Click **+Add**.
