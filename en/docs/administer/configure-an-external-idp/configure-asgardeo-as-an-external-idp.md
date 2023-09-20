@@ -6,8 +6,7 @@ Asgardeo is an identity-as-a-service (IDaaS) that is designed to create seamless
 
 Before you try out this guide, be sure you have the following:
 
-- Create an Asgardeo application as follows: 
-https://wso2.com/asgardeo/docs/guides/applications/register-standard-based-app/#register-an-application
+- Create an Asgardeo application by following the Asgardeo guide: [Register a Standard-based Application](https://wso2.com/asgardeo/docs/guides/applications/register-standard-based-app/#register-an-application)
 
 - Find the well-known URL
   Click on the **info** tab of your application to view the endpoints and copy the **Discovery** endpoint.
