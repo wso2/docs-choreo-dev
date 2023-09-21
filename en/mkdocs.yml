@@ -133,6 +133,7 @@ nav:
       - Test GraphQL Endpoints via the GraphQL Console: testing/test-graphql-endpoints-via-the-graphql-console.md
       - Test APIs with cURL: testing/test-apis-with-curl.md
       - Test APIs using Postman: testing/test-apis-using-postman.md
+      - Test APIs with Choreo TestGPT: testing/test-apis-with-choreo-testgpt.md
   - Consuming Services:
       - Consume a Service: consuming-services/consuming-a-sevice.md
       - Manage Application: consuming-services/manage-application.md
