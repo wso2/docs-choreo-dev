@@ -127,14 +127,13 @@ describe("Verify Reusable RestAPI functionality", () => {
     });
   });
 
-  it("Verify manage functionality", () => {
+  it("Verify publish API to Devportal", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publishToDevportal();
   });
 
   it("Verify suspending Prod deployed component", () => {
-    ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.demoteToCreated();
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
