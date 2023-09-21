@@ -30,6 +30,7 @@ export class DevPortalHelper {
   static API_BASE_PATH = Utils.generateBasePath();
   static Filepath = "apis/generation_oas.yaml";
   static REPO_NAME = Utils.generateComponentName("repo");
+  static ENDPOINT_NAME = "Readinglist";
 
   static createDeployHttpProxyComponent(API_Name, projectName) {
     ProjectOverviewPage.createHttpProxyAPI();
@@ -51,15 +52,15 @@ export class DevPortalHelper {
     ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
   }
 
-  static createDeployRestApiComponent(API_Name, projectName) {
+  static createDeployBalServiceComponent(API_Name, projectName) {
     let componentData: ComponentData = {
       componentName: API_Name,
-      displayType: Enums.DisplayType.restAPI,
+      displayType: Enums.DisplayType.ballerinaService,
       accessibility: Enums.Accessibility.EXTERNAL,
       projectName: projectName,
       triggerChannels: "",
       triggerId: null,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/rest-api",
+      srcGitRepoUrl: "https://github.com/choreo-test-apps/byor-service-app1",
       initializeAsBallerinaProject: false,
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: "",
@@ -74,10 +75,15 @@ export class DevPortalHelper {
     ).then(() => {
       ComponentListingPage.visitToAComponent(API_Name);
       ComponentOverviewPage.navigateToDeploy();
-      ComponentDeployPage.deployToDev(projectName, API_Name);
+      ComponentDeployPage.deployService(
+        projectName,
+        API_Name,
+        this.ENDPOINT_NAME,
+        true
+      );
       ComponentOverviewPage.navigateToManage();
       ComponentAPILifecycle.manageLifecycle();
-      ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
+      ComponentAPILifecycle.publishServiceToMarketplace();
     });
   }
 }

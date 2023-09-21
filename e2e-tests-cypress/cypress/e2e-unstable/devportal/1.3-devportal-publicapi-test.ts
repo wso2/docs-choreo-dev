@@ -15,7 +15,6 @@ describe("Public access on devportal", () => {
   const API_Name = Utils.generateComponentName("rest");
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
-  const description = "Sample API for testing devportal public APIs";
   const projectName = Utils.generateProjectName();
 
   before(() => {
@@ -31,7 +30,7 @@ describe("Public access on devportal", () => {
   });
 
   it("Create and deploy a component", () => {
-    DevPortalHelper.createDeployRestApiComponent(API_Name, projectName);
+    DevPortalHelper.createDeployBalServiceComponent(API_Name, projectName);
     ComponentAPILifecycle.selectSetting();
     ComponentAPILifecycle.verifyAPIVisibility("Private");
   });
@@ -44,7 +43,7 @@ describe("Public access on devportal", () => {
   });
 
   it("Update the API visibility to public", () => {
-    ConsoleLoginPage.visitToHomePage()
+    ConsoleLoginPage.visitToHomePage();
     ProjectListingPage.selectProject(projectName as string);
     ComponentListingPage.visitToAComponent(API_Name as string);
     ComponentOverviewPage.navigateToManage();
