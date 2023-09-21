@@ -586,9 +586,7 @@ export class ComponentDeployPage {
 
   static addNewVersion(branch: string = "feature", version: string = "1.1") {
     cy.get('[data-cyid="deployment-track-picker-chip"]').click();
-    cy.get('[data-cyid="btn-create-version-button"]')
-      .should("be.visible")
-      .click();
+    cy.get('[data-cyid="create-version-button"]').should("be.visible").click();
     cy.get('[role="dialog"]').within(() => {
       cy.get('[data-testid*="feature"]').click();
     });
