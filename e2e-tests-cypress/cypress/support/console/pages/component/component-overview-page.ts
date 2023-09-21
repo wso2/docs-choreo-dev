@@ -44,11 +44,10 @@ export class ComponentOverviewPage {
   }
 
   static navigateToDeploy() {
-    cy.get("[data-cyid=link-deploy]")
-      .should("be.visible")
-      .realHover({ position: "top" })
+    cy.get("[data-cyid=link-deploy]").should("be.visible")
+      .realHover({ position: "left" })
       .wait(MENU_RENDERING_TIME)
-      .click()
+      .click({ force: true })
       .wait(MENU_RENDERING_TIME);
     cy.get('[id="backdrop-loader"]').should("not.exist");
     Utils.moveMouseAwayFromLeftMenu();
