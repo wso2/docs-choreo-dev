@@ -46,7 +46,7 @@ export class ComponentOverviewPage {
   static navigateToDeploy() {
     cy.get("[data-cyid=link-deploy]")
       .should("be.visible")
-      .realHover({ position: "left" })
+      .realHover({ position: "top" })
       .wait(MENU_RENDERING_TIME)
       .click()
       .wait(MENU_RENDERING_TIME);
