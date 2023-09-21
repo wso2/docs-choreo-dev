@@ -29,7 +29,9 @@ export class Apis {
       apiName + "{enter}"
     );
 
-    Utils.getRenderedElement(`[data-testid="apiCard-${apiName}"]`).click();
+    // Add a partial match because Service components currently include the Endpoint name in the Devportal API cards
+    // TODO: Remove this partial match once the Service component API cards are updated to not include the Endpoint name
+    Utils.getRenderedElement(`[data-testid^="apiCard-${apiName}"]`).click();
     cy.log("Successfully navigated to Overview");
   }
 
