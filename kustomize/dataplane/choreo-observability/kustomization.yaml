@@ -17,5 +17,6 @@ resources:
   - loggingapi
   - config
   - obsapi
+  - sys-obsapi
 
 namespace: choreo-observability

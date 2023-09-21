@@ -27,35 +27,6 @@ helmCharts:
             repository: choreocontrolplane.azurecr.io/cilium/hubble-relay
             useDigest: false
             pullPolicy: "Always"
-        ui:
-          enabled: true
-          backend:
-            resources:
-              limits:
-                cpu: 150m
-                memory: 200Mi
-              requests:
-                cpu: 100m
-                memory: 100Mi
-            image:
-              repository: choreocontrolplane.azurecr.io/cilium/hubble-ui-backend
-              tag: "v0.10.0"
-              pullPolicy: "Always"
-          frontend:
-            resources:
-              limits:
-                cpu: 150m
-                memory: 200Mi
-              requests:
-                cpu: 100m
-                memory: 100Mi
-            image:
-              repository: choreocontrolplane.azurecr.io/cilium/hubble-ui
-              tag: "v0.10.0"
-              pullPolicy: "Always"
-          securityContext:
-            seccompProfile:
-              type: RuntimeDefault
       nodeinit:
         enabled: true
         securityContext:
@@ -136,4 +107,6 @@ commonAnnotations:
   checkov.io/skip22: CKV_K8S_AZURE_WSO2_2=Managed by cilium
 
 patchesStrategicMerge:
-  - security-patches.yaml
+  - cilium-operator-security-patches.yaml
+  - cilium-security-patches.yaml
+  - hubble-relay-security-patches.yaml

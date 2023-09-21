@@ -17,6 +17,7 @@ package com.wso2.choreo.integration.config;
  * Test configs enum.
  */
 public enum ConfigDefinition {
+    REGIONS,
     CHOREO_ENDPOINT,
     CHOREO_NEW_APP_SERVICE_ENDPOINT,
     STS_ENDPOINT,
@@ -48,5 +49,8 @@ public enum ConfigDefinition {
     GMAIL_API_CS,
     GMAIL_API_REFRESH_TOKEN,
     THEME_ENDPOINT,
-    CDN_THEME_ENDPOINT
+    CDN_THEME_ENDPOINT,
+    CHOREO_SYSTEM_API_PREFIX,
+    CHOREO_US_DP_URL,
+    CHOREO_EU_DP_URL
 }

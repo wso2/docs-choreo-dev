@@ -36,9 +36,9 @@ import { OK } from "../../../support/commons/http";
 
 describe("Choreo APIM publisher scenarios", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
-  const PROJECT_NAME = Utils.generateProjectName();
-  const API_NAME = Utils.generateComponentName("oas");
-  const API_BASE_PATH = Utils.generateBasePath();
+  let PROJECT_NAME;
+  let API_NAME;
+  let API_BASE_PATH;
   const Filepath = "apis/generation_oas.yaml";
   const idpUser = "choreoe2etest";
   const appName = generateAppName("-e2etest");
@@ -53,11 +53,15 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Creating a project", () => {
+    PROJECT_NAME = Utils.generateProjectName();
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
   });
 
   it("Creating and publishing an API from open API specification", () => {
     cy.log("Starting API Creation using open API specification");
+    API_NAME = Utils.generateComponentName("oas");
+    API_BASE_PATH = Utils.generateBasePath();
+
     ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.createOpenApi(Filepath);
     RestAPIProxyTemplate.enterAPIdetails(
@@ -72,7 +76,7 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify component deployment and endpoint configurations", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.deployToDev();
   });
 
   it("Verify prod invoke url", () => {
@@ -127,7 +131,12 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
     ComponentAPILifecycle.navigatePermissionManagementWindow();
     ComponentAPILifecycle.managePermissions(permissions, API_NAME);
+  });
+
+  it("Change API lifecycle to Published", () => {
     ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.publishWithoutConnector();
+    
   });
 
   it("Verify connector publishing ", () => {
@@ -221,7 +230,7 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify redeployment after removing permissions", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.deployToDev();
   });
 
   it("Navigate to component usage insights", () => {
@@ -251,7 +260,7 @@ describe("Choreo APIM publisher scenarios", () => {
     InsightsPage.getTotalErrorRequestCount().should("eq", "0");
     InsightsPage.getAverageErrorRate().should("eq", "0");
   });
-  
+
   it("Navigate to deployment", () => {
     ChoreoHomePage.navigateToComponents();
     ComponentListingPage.visitToAComponent(API_NAME);

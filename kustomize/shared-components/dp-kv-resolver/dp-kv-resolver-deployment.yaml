@@ -61,11 +61,11 @@ spec:
               port: proxy-port
           resources:
             requests:
-              cpu: 150m
-              memory: 256Mi
+              cpu: 100m
+              memory: 100Mi
             limits:
-              cpu: 300m
-              memory: 512Mi
+              cpu: 150m
+              memory: 150Mi
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
@@ -101,10 +101,10 @@ spec:
           resources:
             requests:
               memory: 2Gi
-              cpu: 2
+              cpu: 1
             limits:
               memory: 4Gi
-              cpu: 3
+              cpu: 1.5
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:

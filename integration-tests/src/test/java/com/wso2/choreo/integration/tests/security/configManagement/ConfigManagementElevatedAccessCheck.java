@@ -67,6 +67,7 @@ public class ConfigManagementElevatedAccessCheck extends TestNGCitrusSpringSuppo
         params.put("DEV_ENV_UUID", devEnvUuid);
         String body = MessageUtils.generateStringFromTemplate("templates/configManagement/" +
                 "createGlobalConfig.mustache", params);
+
         SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 

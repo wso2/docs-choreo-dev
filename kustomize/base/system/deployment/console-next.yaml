@@ -58,7 +58,7 @@ spec:
               cpu: 200m
               memory: 150Mi
             requests:
-              cpu: 100m
+              cpu: 150m
               memory: 100Mi
           env:
             - name: REACT_APP_BALLERINA_LOW_CODE_RESOURCES_VERSION

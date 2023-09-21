@@ -44,11 +44,10 @@ export class ComponentOverviewPage {
   }
 
   static navigateToDeploy() {
-    cy.get("[data-cyid=link-deploy]")
-      .should("be.visible")
+    cy.get("[data-cyid=link-deploy]").should("be.visible")
       .realHover({ position: "left" })
       .wait(MENU_RENDERING_TIME)
-      .click()
+      .click({ force: true })
       .wait(MENU_RENDERING_TIME);
     cy.get('[id="backdrop-loader"]').should("not.exist");
     Utils.moveMouseAwayFromLeftMenu();
@@ -89,7 +88,8 @@ export class ComponentOverviewPage {
     Utils.moveMouseAwayFromLeftMenu();
   }
 
-  static navigateToObserve() {
+  static navigateToObserve(timeToWait = 0) {
+    cy.wait(timeToWait);
     cy.get('[data-cyid="observability"]').should("be.visible").click();
   }
 
