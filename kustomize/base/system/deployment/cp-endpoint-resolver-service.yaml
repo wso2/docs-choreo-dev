@@ -29,9 +29,6 @@ spec:
         - name: endpoint-resolver
           imagePullPolicy: Always
           image: choreocontrolplane.azurecr.io/choreoipaas/endpoint-resolver:latest
-          envFrom:
-            - secretRef:
-                name: secret-endpoint-resolver
           resources:
             limits:
               cpu: 150m
@@ -78,21 +75,11 @@ spec:
             - name: config
               mountPath: /home/ballerina/Config.toml
               subPath: Config.toml
-            - name: secret-endpoint-resolver
-              mountPath: /mnt/csi/secret-endpoint-resolver
       restartPolicy: Always
       volumes:
         - name: config
           configMap:
             name: cm-file-endpoint-resolver
-        - name: secret-endpoint-resolver
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-endpoint-resolver
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
