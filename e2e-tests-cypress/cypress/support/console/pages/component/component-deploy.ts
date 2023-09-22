@@ -941,7 +941,7 @@ export class ComponentDeployPage {
         `[data-cyid="Readinglist-endpoint-accordion"] [data-cyid*="-chip"]`,
         LONG_TIME
       )
-      .eq(1)
+      .eq(0)
       .invoke("text");
   }
 
