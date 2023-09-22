@@ -45,3 +45,4 @@ resources:
   - crypto-key-service.yaml
   - obsmanager.yaml
   - dp-helmhub.yaml
+  - resource-registry-service.yaml
