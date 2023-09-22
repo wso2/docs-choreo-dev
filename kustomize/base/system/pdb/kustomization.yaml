@@ -46,4 +46,4 @@ resources:
   - obsmanager.yaml
   - dp-helmhub.yaml
   - resource-registry-service.yaml
-
+  - marketplace.yaml

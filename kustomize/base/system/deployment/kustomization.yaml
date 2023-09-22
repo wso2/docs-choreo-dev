@@ -48,6 +48,7 @@ resources:
   - obsmanager.yaml
   - dp-helmhub.yaml
   - resource-registry-service.yaml
+  - marketplace.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587,25,1433,6380
