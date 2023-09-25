@@ -44,7 +44,9 @@ export class ComponentOverviewPage {
   }
 
   static navigateToDeploy() {
-    cy.get("[data-cyid=link-deploy]").should("be.visible")
+    this.scrollToTopOfMenu();
+    cy.get("[data-cyid=link-deploy]")
+      .should("be.visible")
       .realHover({ position: "left" })
       .wait(MENU_RENDERING_TIME)
       .click({ force: true })
@@ -110,6 +112,16 @@ export class ComponentOverviewPage {
       new Array('[data-cyid="develop-resources"]')
     );
     Utils.moveMouseAwayFromLeftMenu();
+  }
+
+  private static scrollToTopOfMenu() {
+    cy.get('[data-cyid="left-navigation"]')
+      .should("be.visible")
+      .realHover({ position: "center" })
+      .wait(MENU_RENDERING_TIME)
+      .realMouseWheel({
+        deltaY: -100,
+      });
   }
 
   static navigateToDevPortal() {
