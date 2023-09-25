@@ -60,8 +60,8 @@ describe("Verify Reusable RestAPI functionality", () => {
   });
 
   it("Navigate to deployment", () => {
-    ComponentListingPage.visitToAComponent(REST_API_NAME)
-    ComponentOverviewPage.navigateToDeploy()
+    ComponentListingPage.visitToAComponent(REST_API_NAME);
+    ComponentOverviewPage.navigateToDeploy();
   });
 
   it("Deploy component", () => {
