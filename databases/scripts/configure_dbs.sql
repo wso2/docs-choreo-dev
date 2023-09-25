@@ -24,3 +24,4 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON `choreo_codeserver_db`.* TO 'choreo_code
 GRANT SELECT, INSERT, UPDATE, DELETE ON `choreo_proxy_deployer_db`.* TO 'choreo_proxy_deployer_db_user'@'%';
 GRANT SELECT, INSERT, UPDATE, DELETE ON `choreo_cp_ris_db`.* TO 'choreo_cp_ris_db_user'@'%';
 GRANT SELECT, INSERT, UPDATE, DELETE ON `choreo_cp_sis_db`.* TO 'choreo_cp_sis_db_user'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON `choreo_app_dev_user_mgt_db`.* TO 'choreo_app_dev_user_mgt_db_user'@'%';
