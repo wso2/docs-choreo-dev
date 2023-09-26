@@ -8,5 +8,8 @@ healthCheckPort = 9091
 
 jwtTokenScopes = ["apim:api_manage", "apim:publisher_settings"]
 
+[ballerina.http.accessLogConfig]
+console = true
+
 [ballerina.log]
 level = "{{.LOG_LEVEL | default "INFO"}}"
