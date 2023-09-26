@@ -31,7 +31,7 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/resource-registry-service:latest
           envFrom:
             - secretRef:
-                name: secret-resource-registry
+                name: secret-resource-registry-db
           resources:
             limits:
               cpu: 200m
