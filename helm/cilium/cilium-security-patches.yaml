@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: cilium
+  namespace: kube-system
+spec:
+  template:
+    metadata:
+      annotations:
+        container.apparmor.security.beta.kubernetes.io/config: runtime/default
+        container.apparmor.security.beta.kubernetes.io/mount-bpf-fs: runtime/default
+        container.apparmor.security.beta.kubernetes.io/wait-for-node-init: runtime/default
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: cilium-agent
+          securityContext:
+            allowPrivilegeEscalation: false
+      initContainers:
+        - name: config
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+        - name: mount-cgroup
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+        - name: apply-sysctl-overwrites
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+        - name: mount-bpf-fs
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+            privileged: true
+        - name: wait-for-node-init
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+        - name: clean-cilium-state
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false

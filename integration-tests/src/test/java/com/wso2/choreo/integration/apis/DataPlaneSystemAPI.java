@@ -20,8 +20,8 @@ public abstract class DataPlaneSystemAPI {
     protected static final String CHOREO_SYSTEM_API_PREFIX = Configuration
             .getConfig(ConfigDefinition.CHOREO_SYSTEM_API_PREFIX);
 
-    protected static final String CHOREO_EU_DP_URL = CHOREO_SYSTEM_API_PREFIX + Configuration
+    public static final String CHOREO_EU_DP_URL = CHOREO_SYSTEM_API_PREFIX + Configuration
             .getConfig(ConfigDefinition.CHOREO_EU_DP_URL) + "/systemapis";
-    protected static final String CHOREO_US_DP_URL = CHOREO_SYSTEM_API_PREFIX + Configuration
+    public static final String CHOREO_US_DP_URL = CHOREO_SYSTEM_API_PREFIX + Configuration
             .getConfig(ConfigDefinition.CHOREO_US_DP_URL) + "/systemapis";
 }

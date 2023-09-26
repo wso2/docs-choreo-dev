@@ -2,15 +2,15 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   labels:
-    choreo.component: marketplace
-  name: marketplace
+    choreo.component: endpoint-resolver
+  name: endpoint-resolver
 spec:
   maxReplicas: 5
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: marketplace
+    name: endpoint-resolver
   metrics:
     - type: Resource
       resource:

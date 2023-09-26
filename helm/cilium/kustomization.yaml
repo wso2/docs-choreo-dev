@@ -30,8 +30,13 @@ helmCharts:
       nodeinit:
         enabled: true
         securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
           seccompProfile:
             type: RuntimeDefault
+          capabilities:
+            drop:
+            - ALL
         resources:
           limits:
             cpu: 150m
@@ -107,5 +112,7 @@ commonAnnotations:
   checkov.io/skip22: CKV_K8S_AZURE_WSO2_2=Managed by cilium
 
 patchesStrategicMerge:
+  - cilium-node-init-security-patches.yaml
   - cilium-operator-security-patches.yaml
+  - cilium-security-patches.yaml
   - hubble-relay-security-patches.yaml

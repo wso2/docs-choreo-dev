@@ -40,6 +40,7 @@ import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundEx
 import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
 import com.wso2.choreo.integration.common.exceptions.ProjectRetrievalException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
+import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
@@ -109,7 +110,9 @@ public class ComponentUtils {
         Optional<ChoreoProject> existingProject = org.getProjectByName(accessToken, projectName);
         ChoreoProject project;
         if (existingProject.isEmpty()) {
-            project = org.createProject(accessToken, projectName, projectName);
+            HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+            project = GraphQL.createProject(runner, appServiceClient, Constant.region.US.toString(), accessToken, 
+                projectName);
         } else {
             project = existingProject.get();
         }
@@ -265,7 +268,8 @@ public class ComponentUtils {
     public static ChoreoProject createProject(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients,
                                                String accessToken, String region) throws Exception {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        return GraphQL.createProject(runner, appServiceClient, region, accessToken);
+        String projectName = NameGenerator.generateUniqueName(Constant.TEST_PROJECT_NAME_PREFIX);
+        return GraphQL.createProject(runner, appServiceClient, region, accessToken, projectName);
     }
 
     public static ChoreoComponent createComponent(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients,
@@ -1033,41 +1037,41 @@ public class ComponentUtils {
         AuditLogsService.verifyCloudPlanes(runner, choreoCPTestClient, accessToken);
     }
 
-    public static void verifyProjectLevelDPLogs(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+    public static void verifyProjectLevelDPLogs(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusDPClients,
             String accessToken, ChoreoProject project, ChoreoComponent choreoComponent, Environment env)
             throws Exception {
-        DPLogsService.getProjectLogs(runner, accessToken,
+        DPLogsService.getProjectLogs(runner, citrusDPClients, accessToken,
                 project, choreoComponent, env, false);
     }
 
-    public static void verifyComponentLevelDPLogs(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+    public static void verifyComponentLevelDPLogs(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusDPClients,
             String accessToken, ChoreoProject project, ChoreoComponent component, Environment env) throws Exception {
-        DPLogsService.getComponentLogs(runner, accessToken, project,
+        DPLogsService.getComponentLogs(runner, citrusDPClients, accessToken, project,
                 component, env, false);
     }
 
-    public static void verifyGatewayDPLogs(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+    public static void verifyGatewayDPLogs(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusDPClients,
             String accessToken, ChoreoProject project, ChoreoComponent component, Environment env) throws Exception {
-        DPLogsService.getGatewayLogs(runner, accessToken, project,
+        DPLogsService.getGatewayLogs(runner, citrusDPClients, accessToken, project,
                 component, env, false);
     }
 
-    public static void verifyProjectLevelDPLogsLive(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+    public static void verifyProjectLevelDPLogsLive(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusDPClients,
             String accessToken, ChoreoProject project, ChoreoComponent choreoComponent, Environment env)
             throws Exception {
-        DPLogsService.getProjectLogs(runner, accessToken,
+        DPLogsService.getProjectLogs(runner, citrusDPClients, accessToken,
                 project, choreoComponent, env, true);
     }
 
-    public static void verifyComponentLevelDPLogsLive(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+    public static void verifyComponentLevelDPLogsLive(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusDPClients,
             String accessToken, ChoreoProject project, ChoreoComponent component, Environment env) throws Exception {
-        DPLogsService.getComponentLogs(runner, accessToken, project,
+        DPLogsService.getComponentLogs(runner, citrusDPClients, accessToken, project,
                 component, env, true);
     }
 
-    public static void verifyGatewayDPLogsLive(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+    public static void verifyGatewayDPLogsLive(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients,
             String accessToken, ChoreoProject project, ChoreoComponent component, Environment env) throws Exception {
-        DPLogsService.getGatewayLogs(runner, accessToken, project,
+        DPLogsService.getGatewayLogs(runner, citrusClients, accessToken, project,
                 component, env, true);
     }
 

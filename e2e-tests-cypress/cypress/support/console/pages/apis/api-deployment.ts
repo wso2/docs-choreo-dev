@@ -48,15 +48,11 @@ export class APIDeployment {
       .contains("Loading", MEDIUM_TIME)
       .should("not.exist");
     this.RetryDevDeployment();
-    cyGet('[data-cyid="direct-deploy-option-proxy-split-toggle-button-button"]', SHORT_TIME)
+    cyGet('[data-cyid="direct-deploy-option-proxy-split-toggle-button-button"]', MEDIUM_TIME)
       .should("not.be.disabled")
       .click();
 
     cyGet('[data-cyid="configure-&-deploy-option"]')
-      .click();
-
-    cyGet('[data-cyid="direct-deploy-option-proxy-split-group-button-button"]', MEDIUM_TIME)
-      .should("not.be.disabled")
       .click();
 
     this.RetryDevDeployment();
@@ -85,10 +81,6 @@ export class APIDeployment {
       .click();
 
     cyGet('[data-cyid="configure-&-deploy-option"]')
-      .click();
-
-    cyGet('[data-cyid="direct-deploy-option-proxy-split-group-button-button"]', SHORT_TIME)
-      .should("not.be.disabled")
       .click();
   }
 

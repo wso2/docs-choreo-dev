@@ -5,18 +5,18 @@ metadata:
     checkov.io/skip1: CKV_K8S_25=Temporarily suppressing till fixing
     checkov.io/skip2: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
-    choreo.component: marketplace
-  name: marketplace
+    choreo.component: resource-registry
+  name: resource-registry
 spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: marketplace
+      choreo.component: resource-registry
   template:
     metadata:
       labels:
-        choreo.component: marketplace
-        antiaffinity: marketplace
+        choreo.component: resource-registry
+        antiaffinity: resource-registry
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -26,9 +26,12 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: marketplace
+        - name: resource-registry
           imagePullPolicy: Always
-          image: choreocontrolplane.azurecr.io/choreoipaas/marketplace:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/resource-registry:latest
+          envFrom:
+            - secretRef:
+                name: secret-resource-registry
           resources:
             limits:
               cpu: 200m
@@ -75,11 +78,21 @@ spec:
             - name: config
               mountPath: /home/ballerina/Config.toml
               subPath: Config.toml
+            - name: secret-resource-registry
+              mountPath: /mnt/csi/secret-resource-registry
       restartPolicy: Always
       volumes:
         - name: config
           configMap:
-            name: cm-file-marketplace
+            name: cm-file-resource-registry
+        - name: secret-resource-registry
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-resource-registry
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
@@ -89,5 +102,5 @@ spec:
                   - key: antiaffinity
                     operator: In
                     values:
-                      - marketplace
+                      - resource-registry
               topologyKey: kubernetes.io/hostname

@@ -45,3 +45,5 @@ resources:
   - metered-usage-handler.yaml
   - obsmanager.yaml
   - dp-helmhub.yaml
+  - resource-registry-service.yaml
+  - marketplace.yaml

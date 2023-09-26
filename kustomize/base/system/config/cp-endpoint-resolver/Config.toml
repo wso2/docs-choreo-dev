@@ -1,0 +1,9 @@
+[choreo_cp_endpoint_resolver.config]
+servicePort=9090
+healthPort=9092
+
+rudderEndpoint = "http://dp-rudder:80/api/v1"
+projectManagerEndpoint = "http://dp-project-manager:80/api/v1"
+
+[ballerina.log]
+format="json"

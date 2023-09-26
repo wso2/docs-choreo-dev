@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    choreo.component: marketplace
-  name: marketplace
+    choreo.component: endpoint-resolver
+  name: endpoint-resolver
 spec:
   ports:
     - name: http-port
@@ -14,4 +14,4 @@ spec:
       targetPort: healthz
 
   selector:
-    choreo.component: marketplace
+    choreo.component: endpoint-resolver

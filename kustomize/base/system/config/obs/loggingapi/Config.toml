@@ -10,7 +10,6 @@ level = "{{.LOG_LEVEL_LOGGINGAPI}}"
 [choreo.loggingapi.laWorkspaceIds]
 US = "{{.US_LA_WORKSPACE_ID}}"
 EU = "{{.EU_LA_WORKSPACE_ID}}"
-IND = "{{.IND_LA_WORKSPACE_ID}}"
 
 [choreo.loggingapi.enovyRespCodeLookupTableMap]
 via_upstream = "SERVICE_RESPONSE"

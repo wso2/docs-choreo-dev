@@ -19,6 +19,14 @@ configMapGenerator:
     behavior: create
     files:
       - default.conf
+  - name: nginx-redis-vhost
+    behavior: create
+    files:
+      - redis-endpoint.conf
+  - name: nginx-init-script
+    behavior: create
+    files:
+      - init.sh
   - name: internal-nginx-default-vhost
     behavior: create
     files:

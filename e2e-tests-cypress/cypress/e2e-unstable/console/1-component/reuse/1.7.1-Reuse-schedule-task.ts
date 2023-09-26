@@ -12,7 +12,7 @@
  */
 
 import { Enums } from "../../../../support/commons/enums";
-import { MEDIUM_TIME } from "../../../../support/commons/timeouts";
+import { MEDIUM_TIME, SHORT_TIME } from "../../../../support/commons/timeouts";
 import { ComponentDeployPage } from "../../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../../support/console/pages/component/component-listing-page";
 import { ComponentObservePage } from "../../../../support/console/pages/component/component-observe-page";
@@ -70,7 +70,7 @@ describe("Create Reusable Schedule Trigger", () => {
   });
 
   it("Verify navigate to observability Page", () => {
-    ComponentOverviewPage.navigateToObserve();
+    ComponentOverviewPage.navigateToObserve(MEDIUM_TIME.timeout);
   });
   
   it("Verify dev env logs", () => {
