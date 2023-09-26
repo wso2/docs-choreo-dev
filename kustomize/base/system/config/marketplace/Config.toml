@@ -1,4 +1,4 @@
-[arketplace.config]
+[marketplace.config]
 servicePort=9090
 healthPort=9092
 resourceRegistryEndpoint="http://resource-registry:9090/resource-registry"
