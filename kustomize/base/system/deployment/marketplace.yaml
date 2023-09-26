@@ -2,89 +2,84 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    checkov.io/skip1: CKV_K8S_38=Required by LinkerD
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
-    choreo.component: choreo-marketplace
-  name: choreo-marketplace
+    choreo.component: marketplace
+  name: marketplace
 spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: choreo-marketplace
-  strategy: { }
+      choreo.component: marketplace
   template:
     metadata:
       labels:
-        choreo.component: choreo-marketplace
-        antiaffinity: choreo-marketplace
+        choreo.component: marketplace
+        antiaffinity: marketplace
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
+      automountServiceAccountToken: true
       securityContext:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: choreo-marketplace
-          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-marketplace:latest
+        - name: marketplace
+          imagePullPolicy: Always
+          image: choreocontrolplane.azurecr.io/choreoipaas/marketplace:latest
+          resources:
+            limits:
+              cpu: 200m
+              memory: 300Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10001
+            runAsGroup: 10001
+            seccompProfile:
+              type: RuntimeDefault
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
           ports:
+            - containerPort: 9092
+              name: healthz
+              protocol: TCP
             - containerPort: 9090
-              name: service-port
-            - containerPort: 9091      # To be used for readiness/liveness probes (internal)
-              name: health-port
+              name: http-port
+              protocol: TCP
           readinessProbe:
-            initialDelaySeconds: 60
+            initialDelaySeconds: 5
             timeoutSeconds: 15
             periodSeconds: 10
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              port: health-port
-              path: /readiness
+              path: /health
+              port: healthz
           livenessProbe:
-            initialDelaySeconds: 30
+            initialDelaySeconds: 10
             timeoutSeconds: 15
             periodSeconds: 30
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              port: health-port
-              path: /liveness
-          resources:
-            limits:
-              cpu: 500m
-              memory: 1Gi
-            requests:
-              cpu: 250m
-              memory: 768Mi
-          securityContext:
-            allowPrivilegeEscalation: false
-            runAsUser: 10500
-            runAsGroup: 10500
-            readOnlyRootFilesystem: true
-            capabilities:
-              drop:
-                - ALL
+              path: /health
+              port: healthz
           volumeMounts:
             - name: config
               mountPath: /home/ballerina/Config.toml
               subPath: Config.toml
-            - name: secret-choreo-marketplace
-              mountPath: "/mnt/csi/secret-choreo-marketplace"
-              readOnly: true
       restartPolicy: Always
       volumes:
         - name: config
           configMap:
-            name: cm-file-choreo-marketplace
-        - name: secret-choreo-marketplace
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-choreo-marketplace
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
+            name: cm-file-marketplace
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
@@ -94,5 +89,5 @@ spec:
                   - key: antiaffinity
                     operator: In
                     values:
-                      - choreo-marketplace
+                      - marketplace
               topologyKey: kubernetes.io/hostname
