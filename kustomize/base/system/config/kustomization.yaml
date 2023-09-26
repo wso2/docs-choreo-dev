@@ -198,6 +198,7 @@ configMapGenerator:
       - RUDDER_API_URL=http://dp-rudder
       - RESILIENT_INVOKER_URL=http://cp-ris:9090
       - CICD_SERVICE_URL=http://dp-cicd
+      - STATUS_INFO_SERVICE_URL=http://cp-sis:9091
       - AZURE_LOGS_TABLE=GithubWorkflowLogs
       - PROJECT_MANAGER_API_URL=http://dp-project-manager
       - BUILDPACKS_BUILDER_IMAGE="choreocontrolplane.azurecr.io/choreoipaas/choreo-buildpacks/builder:alpine"
