@@ -28,7 +28,7 @@ spec:
       containers:
         - name: resource-registry
           imagePullPolicy: Always
-          image: choreocontrolplane.azurecr.io/choreoipaas/resource-registry:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/resource-registry-service:latest
           envFrom:
             - secretRef:
                 name: secret-resource-registry
