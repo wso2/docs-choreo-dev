@@ -10,7 +10,7 @@ configMapGenerator:
     files:
       - cache.lua
       - split.lua
-      - ic-util.lua
+      - util.lua=ic-util.lua
   - name: internal-nginx-lua-modules
     behavior: create
     files:
