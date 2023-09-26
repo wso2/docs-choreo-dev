@@ -523,7 +523,7 @@ configMapGenerator:
   - name: cm-file-cp-sis
     behavior: create
     files:
-      - cp-sis/Config.toml   
+      - cp-sis/Config.toml
   - name: cm-file-audit-logging
     behavior: create
     files:
@@ -538,3 +538,7 @@ configMapGenerator:
       - MSSQL_PORT=1433
       - MSSQL_USER=choreo_helmhub_db_user
       - MSSQL_DBNAME=choreo_helmhub_db
+  - name: cm-file-resource-registry
+    behavior: create
+    files:
+      - resource-registry/Config.toml
