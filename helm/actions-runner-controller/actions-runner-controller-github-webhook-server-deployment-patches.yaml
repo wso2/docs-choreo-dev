@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: actions-runner-controller-github-webhook-server
+  namespace: actions-runner-system
 spec:
   template:
     spec:
