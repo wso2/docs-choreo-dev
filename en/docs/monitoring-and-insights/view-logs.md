@@ -1,8 +1,8 @@
 # View Logs
 
-The unified log view in Choreo allows you to gain application and user insights while ensuring data privacy. 
+The unified log view in Choreo allows you to view runtime and audit logs to gain application and user insights while ensuring data privacy.
 
-Choreo provides real-time insights through live logs and allows you to view historical logs for insights into the past. You also have the flexibility to define a required time window to view relevant log entries, where an intuitive scrolling capability facilitates easy viewing of appropriate logs within the selected time frame.
+Choreo provides real-time insights through live logs and allows you to view historical logs for insights into the past. You also have the flexibility to define a required time range to view relevant log entries, where an intuitive scrolling capability facilitates easy viewing of appropriate logs within the selected time frame.
 
 The log view also provides advanced filtering capabilities that allow you to efficiently navigate through appropriate logs to expedite troubleshooting in distributed environments.
 
@@ -13,16 +13,16 @@ The log view also provides advanced filtering capabilities that allow you to eff
 
 Choreo runtime logs provide insights into project-level and component-level logs, covering application, gateway, system, and access logs. The runtime logs streamline the debugging process by centralizing diverse log sources.
 
-You can view runtime logs for the past 30 days by default when you access the runtime logs page. Choreo also allows precise filtering of runtime logs based on parameters such as log level (error, warn, info, debug), log type (application, gateway, system, access), and environment (development, staging, production). These granular filters effectively simplify the debugging process. 
+In Choreo, any organization member can view runtime logs via the runtime logs page. Choreo allows precise filtering of runtime logs based on parameters such as log level (error, warn, info, debug), log type (application, gateway, system, access), and environment (development, staging, production). These granular filters effectively simplify the debugging process. 
 
 To access runtime logs, follow the steps below:
 
-1. Sign in to [Choreo](https://console.choreo.dev/) using your Google, GitHub, or Microsoft account.
+1. Sign in to [Choreo](https://console.choreo.dev/).
 2. In the left navigation menu, click **Logs** and then click **Runtime Logs**. This displays runtime logs for the past 30 days by default.
 
-    ![Runtime logs](../assets/img/monitoring-and-insights/view-logs/runtime-logs.png)
+    To view logs based on a specific time range and other requirements, you can apply the necessary filter criteria.
 
-    You can apply the necessary filter criteria to view logs according to your requirements.
+    ![Runtime logs](../assets/img/monitoring-and-insights/view-logs/runtime-logs.png)
 
 ## Audit logs
 
@@ -49,7 +49,7 @@ In Choreo, organization administrators are allowed to view audit logs by default
 
 To view audit logs, follow these steps:
 
-1. Sign in to [Choreo](https://console.choreo.dev/) using your Google, GitHub, or Microsoft account.
+1. Sign in to [Choreo](https://console.choreo.dev/).
 2. In the Choreo Console, go to the top navigation menu and click **Organization**.
    
     !!! tip
@@ -57,9 +57,9 @@ To view audit logs, follow these steps:
 
 3. In the left navigation menu, click **Logs** and then click **Audit Logs**. This displays audit logs for the past 30 days by default.
 
-    ![Audit logs](../assets/img/monitoring-and-insights/view-logs/audit-logs.png)
+    To view audit logs based on a specific time range and other requirements, you can apply the necessary filter criteria.
 
-    You can apply the necessary filter criteria to view logs according to your requirements.
+    ![Audit logs](../assets/img/monitoring-and-insights/view-logs/audit-logs.png)
 
 ### Audit log retention
 
@@ -89,7 +89,7 @@ Follow the steps given below to create a role with audit log access permission a
 7. Click **Create**.  
 
 
-#### Step 2: Assign the created role to an organization member who needs to have access to audit logs
+#### Step 2: Assign the created role to an organization member
 
 1. On the **Organization** tab, click **Members**. This lists the members of the organization with their respective details.
 2. Click on a member who needs to have access to audit logs, and then click **+ Add Role**.
