@@ -31,11 +31,25 @@ helmCharts:
           - effect: NoSchedule
             key: ghrunner
             operator: Exists
+        resources:
+          limits:
+            cpu: 3000m
+            memory: 2G
+          requests:
+            cpu: 1000m
+            memory: 500M
       image:
         actionsRunnerRepositoryAndTag: choreocontrolplane.azurecr.io/summerwind/actions-runner:v2.305.0-ubuntu-20.04-462d044-20230713-1631
         dindSidecarRepositoryAndTag: choreocontrolplane.azurecr.io/docker:dind-20230713-1631
         repository: choreocontrolplane.azurecr.io/summerwind/actions-runner-controller
         tag: v0.27.4-20230713-1631
+      resources:
+        limits:
+          cpu: 3000m
+          memory: 2G
+        requests:
+          cpu: 1000m
+          memory: 500M
       metrics:
         proxy:
           image:
@@ -77,3 +91,7 @@ commonAnnotations:
   checkov.io/skip18: CKV2_K8S_6=Managed by ARC
   kapp.k14s.io/disable-original: ""
   kapp.k14s.io/disable-default-label-scoping-rules: ""
+
+patchesStrategicMerge:
+  - actions-runner-controller-deployment-patches.yaml
+  - actions-runner-controller-github-webhook-server-deployment-patches.yaml

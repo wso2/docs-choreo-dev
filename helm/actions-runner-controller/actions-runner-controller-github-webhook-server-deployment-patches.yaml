@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: actions-runner-controller-github-webhook-server
+spec:
+  template:
+    spec:
+      containers:
+        - name: kube-rbac-proxy
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 512M
+            requests:
+              cpu: 500m
+              memory: 100M
