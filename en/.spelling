@@ -620,6 +620,11 @@ alternate_style
 develop-a-tcp-service
 develop-a-udp-service
 test-apis-with-choreo-testgpt
+secure-api-access-with-asgardeo
+secure-api-access-with-azure-ad
+configure-an-external-idp
+configure-asgardeo-as-an-external-idp
+configure-azure-ad-as-an-external-idp
  - theme/material/templates/home-page.html
 doctype
 html
