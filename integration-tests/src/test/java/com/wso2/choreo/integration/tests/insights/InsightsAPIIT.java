@@ -67,6 +67,6 @@ public class InsightsAPIIT extends TestNGCitrusSpringSupport {
         dto.setFromTime(sixMonthsAgoDateTimeAtUTC.toString());
         dto.setToTime(currentDateTimeAtUTC.toString());
         dto.setTenant("carbon.super");
-        InsightRequest.getUtilityOperations(this, choreoCPTestClient, accessToken, dto, INSIGHTS_API_RESOURCE);
+        InsightRequest.getOverviewOperations(this, choreoCPTestClient, accessToken, dto, INSIGHTS_API_RESOURCE);
     }
 }
