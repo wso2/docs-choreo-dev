@@ -5,7 +5,7 @@ mongoDBUsername="{{.RESOURCE_REGISTRY_DB_USERNAME}}"
 mongoDBClusterUrl="{{.MONGO_DB_CLUSTER_URL}}"
 databaseName="{{.RESOURCE_REGISTRY_DB_NAME}}"
 collectionName="resources"
-mongoDBOptions="?retryWrites=true&amp;w=majority"
+mongoDBOptions=""
 defaultThumbnailUrl="https://picsum.photos/200"
 
 [ballerina.log]
