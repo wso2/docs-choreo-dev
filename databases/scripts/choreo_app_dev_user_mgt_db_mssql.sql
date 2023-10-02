@@ -20,6 +20,7 @@ CREATE TABLE USER_STORES (
     ID varchar(255) PRIMARY KEY,
     ORG_ID varchar(255) NOT NULL,
     NAME varchar(255) NOT NULL,
+    FILE_CONTENT varbinary(max) NOT NULL,
     UNIQUE (ORG_ID, NAME)
 );
 
