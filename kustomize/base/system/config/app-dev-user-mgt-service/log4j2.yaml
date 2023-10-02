@@ -16,11 +16,11 @@ Configuration:
         pattern: "%style{%d{ISO8601}}{white} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C}{bright,yellow}: %msg%n%throwable"
   Loggers:
     Root:
-      level: info
+      level: {{.ROOT_LOG_LEVEL}}
       AppenderRef:
         - ref: Console
     Logger:
       - name: com.wso2.choreo.user.mgt.service
-        level: info
+        level: {{.SERVICE_LOG_LEVEL}}
         AppenderRef:
           - ref: Console
