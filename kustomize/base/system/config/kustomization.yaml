@@ -545,3 +545,8 @@ configMapGenerator:
     behavior: create
     files:
       - resource-registry/Config.toml
+  - name: cm-files-appdev-user-mgt
+    behavior: create
+    files:
+      - app-dev-user-mgt-service/application.properties
+      - app-dev-user-mgt-service/log4j2.yaml
