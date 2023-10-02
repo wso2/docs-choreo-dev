@@ -160,7 +160,7 @@ nav:
           - Access the Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
           - Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md 
       - Integrate Choreo with Moesif: monitoring-and-insights/integrate-choreo-with-moesif.md     
- - Administer:
+  - Administer:
       - Configure a Custom Domain for APIs: administer/configure-a-custom-domain-for-apis.md
       - Configure Enterprise Login: administer/configure-enterprise-login.md
       - Configure an External IdP:
