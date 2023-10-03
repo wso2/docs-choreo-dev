@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    choreo.component: cp-configuration-service
-  name: cp-configuration-service
+    choreo.component: configuration-service
+  name: configuration-service
 spec:
   ports:
     - name: configsvc-port
@@ -13,4 +13,4 @@ spec:
       port: 8082
       targetPort: healthz
   selector:
-    choreo.component: cp-configuration-service
+    choreo.component: configuration-service

@@ -2,15 +2,15 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   labels:
-    choreo.component: cp-configuration-service
-  name: cp-configuration-service
+    choreo.component: configuration-service
+  name: configuration-service
 spec: 
   maxReplicas: 3
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: cp-configuration-service
+    name: configuration-service
   metrics:
     - type: Resource
       resource:

@@ -1,9 +1,9 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: cp-configuration-service
+  name: configuration-service
 spec:
   minAvailable: "50%"
   selector:
     matchLabels:
-      choreo.component: cp-configuration-service
+      choreo.component: configuration-service
