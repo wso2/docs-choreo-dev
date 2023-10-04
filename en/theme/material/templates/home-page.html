@@ -864,17 +864,6 @@
       <div class="md-dialog" data-md-component="dialog">
         <div class="md-dialog__inner md-typeset"></div>
       </div>
-      {% if config.extra.consent %}
-        <div class="md-consent" data-md-component="consent" id="__consent" hidden>
-          <div class="md-consent__overlay"></div>
-          <aside class="md-consent__inner">
-            <form class="md-consent__form md-grid md-typeset" name="consent">
-              {% include "partials/consent.html" %}
-            </form>
-          </aside>
-        </div>
-        {% include "partials/javascripts/consent.html" %}
-      {% endif %}
       {% block config %}
         {%- set app = {
           "base": base_url,
