@@ -38,7 +38,6 @@ theme:
     text: Montserrat
   favicon: assets/images/favicon.png
   features:    
-    - navigation.sections
     - navigation.expand
     - navigation.path
     - navigation.top
@@ -150,7 +149,7 @@ nav:
       - Delivery Insights:
           - Configure DORA Metrics: monitoring-and-insights/delivery-insights/configure-dora-metrics.md
           - View DORA Metrics: monitoring-and-insights/delivery-insights/view-dora-metrics.md
-      - Usage Insights: monitoring-and-insights/view-usage-insights.md
+      - Usage Insights: monitoring-and-insights/usage-insights.md
       - Generate Custom Reports: monitoring-and-insights/generate-custom-reports.md
       - Configure Alerts: monitoring-and-insights/alerts/configure-alerts.md
       - Work with the Choreo Insights API:
