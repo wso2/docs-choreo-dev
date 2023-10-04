@@ -30,7 +30,7 @@ The Choreo Developer Portal lists APIs based on their major version.
 
 ![Developer Portal APIs](../assets/img/consume/developer-portal-apis.png)
 
-The overview page of an API displays the subscribed versions of the API along with subscription details such as the subscribed application and the application creation date.
+The overview page of an API displays the subscribed versions of the API along with the respective subscription details such as the subscribed application and the application creation date.
 
 ![API overview](../assets/img/consume/api-overview.png)
 
