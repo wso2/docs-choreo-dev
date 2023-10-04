@@ -26,11 +26,11 @@ In the Choreo Developer Portal, developers can use the search option to find API
 
 To learn more about API visibility, see [Control API Visibility](../api-management/control-api-visibility.md).
 
-The Choreo Developer Portal lists APIs by the respective API's major version. 
+The Choreo Developer Portal lists APIs based on their major version. 
 
 ![Developer Portal APIs](../assets/img/consume/developer-portal-apis.png)
 
-You can view the subscribed versions of an API along with the subscription details (i.e., the subscribed application and the application creation date) via the API overview page.
+The overview page of an API displays the subscribed versions of the API along with subscription details such as the subscribed application and the application creation date.
 
 ![API overview](../assets/img/consume/api-overview.png)
 
