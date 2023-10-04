@@ -29,16 +29,17 @@ If you're inclined to use your own Continuous Integration (CI) systems and want 
 
 ## Efficient API versioning
 
-**This section applies to only service components**. When working with service components in Choreo, it's important to think about API versions. Choreo follows semantic versioning (SemVer), which is widely used in the software industry.
+**This section applies to only service components**. When working with service components in Choreo, it is important to have an effective API versioning mechanism. Choreo follows a versioning mechanism based on Semantic Versioning (SemVer) but only includes the major version and minor version with the prefix `v`. 
 
-!!! info "What is semantic versioning?"
-    In brief Semantic Versioning (SemVer) is a way to number versions that helps everyone understand changes in software. A version number has three parts: Major, Minor, and Patch.
-    For example: 1.2.3 (1 is the major, 2 is the minor, and 3 is the patch version)  
+For example, `v1.2`. 
 
-    Given a version number MAJOR.MINOR.PATCH, the following rules apply:
-    - **MAJOR** version is incremented when you make incompatible API changes.
-    - **MINOR** version is incremented when you add functionality in a backward-compatible manner.
-    - **PATCH** version is incremented when you make backward-compatible bug fixes
+You can follow the approach given below when you version APIs in Choreo:
+
+  - Increment the major version when you make incompatible API changes.
+  - Increment the minor version when you add functionality in a backward-compatible manner.
+
+!!! info "What is Semantic Versioning?"
+    Semantic Versioning (SemVer) is a specification that defines how to assign and increment version numbers for software products, including APIs. For more information, see [Semantic Versioning specification](https://semver.org/#semantic-versioning-specification-semver).
 
 One of the primary concerns when dealing with SaaS APIs is to minimize disruption for API consumers while continuously developing and deploying updates.
 
