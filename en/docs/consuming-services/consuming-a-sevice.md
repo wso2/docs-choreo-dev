@@ -18,13 +18,24 @@ Before you try out this guide, if you do not have a published API/ service that 
 
 In the Choreo Developer Portal, developers can use the search option to find APIs by name. The APIs and services that are created and published through the Choreo Console become visible in the Developer Portal depending on the API's visibility as follows:
 
- - **Public** : The API is **visible to all** in the developer portal.
+ - **Public**: The API is **visible to all** in the developer portal.
 
- - **Private** : The API is visible to the **users who only sign in to the Developer Portal**.
+ - **Private**: The API is visible to the **users who only sign in to the Developer Portal**.
 
  - **Restricted**: The API is **visible to only the user that has the roles that you specify**. This option helps developers to enforce fine-grained access control to the API.
 
-To learn more about API visibility, see [Control API Visibility](../api-management/control-api-visibility.md). 
+To learn more about API visibility, see [Control API Visibility](../api-management/control-api-visibility.md).
+
+The Choreo Developer Portal lists APIs by the respective API's major version. 
+
+![Developer Portal APIs](../assets/img/consume/developer-portal-apis.png)
+
+You can view the subscribed versions of an API along with the subscription details (i.e., the subscribed application and the application creation date) via the API overview page.
+
+![API overview](../assets/img/consume/api-overview.png)
+
+!!! tip
+      If you want to use an API, the recommended approach is to use the latest version of it. You can copy the major version range pattern provided as the value of **Endpoints(s)** on the API overview page and use it to ensure that your client application always invokes the latest version of a subscribed API version’s major version range.
 
 ## Create an application
 
