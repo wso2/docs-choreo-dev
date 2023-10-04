@@ -16,7 +16,7 @@ To subscribe to an API via an application, follow the steps given below:
 6. Click **Add** to subscribe to an API. Depending on your requirement, you can subscribe to one or more APIs.
 
     !!! tip
-          When a new minor API version is released, the invocation URL based on the major version will automatically route to the latest minor version within the original subscription's major range.
+          When a new minor version of an API is published, the major version-based invocation URL will automatically route to the latest minor version within the subscribed API's major version range.
 
     ![Add APIs](../assets/img/consume/add-apis.png)
 
