@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=Required by LinkerD
+  labels:
+    choreo.component: configuration-service
+  name: configuration-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: configuration-service
+  strategy: { }
+  template:
+    metadata:
+      labels:
+        choreo.component: configuration-service
+        antiaffinity: configuration-service
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: configuration-service
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-cp-configuration-service:latest
+          ports:
+            - containerPort: 8080
+              name: configsvc-port
+            - containerPort: 8081      # To be used for readiness/liveness probes (internal)
+              name: health
+            - containerPort: 8082      # To be used for public health check (external)
+              name: healthz
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /liveness
+          resources:
+            limits:
+              cpu: 200m
+              memory: 300Mi
+            requests:
+              cpu: 100m
+              memory: 150Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                     - configuration-service
+              topologyKey: kubernetes.io/hostname

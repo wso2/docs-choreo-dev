@@ -25,6 +25,7 @@ resources:
   - dp-garbage-collector.yaml
   - dp-mizzen.yaml
   - cp-graphql.yaml
+  - configuration-service.yaml
   - console-next.yaml
   - alert-notification-service.yaml
   - alert-configuration-service.yaml
