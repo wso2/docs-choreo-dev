@@ -11,7 +11,6 @@ spec:
   selector:
     matchLabels:
       choreo.component: declarative-api
-  strategy: { }
   template:
     metadata:
       labels:
@@ -29,7 +28,7 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-cp-declarative-api:latest
           ports:
             - containerPort: 8080
-              name: declarativeapi-port
+              name: decapi-port
             - containerPort: 8081      # To be used for readiness/liveness probes (internal)
               name: health
           readinessProbe:
