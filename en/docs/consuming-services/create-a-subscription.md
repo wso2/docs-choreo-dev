@@ -1,5 +1,5 @@
 
-You must subscribe to a published API to use it in your application. New API subscriptions cover all minor versions within the subscribed API’s major version range.
+You must subscribe to a published API to use it in your application. New API subscriptions cover all minor versions within the subscribed API’s major version.
 
 The subscription process is designed to ensure the secure authentication of API requests via application keys. Alternatively, you can generate credentials for an API without an explicit subscription to an application. However, this approach limits the capability to control advanced configurations such as access token expiry time, revoke token expiry time, ID token expiry time, and enabling access to the API without a secret. Generating keys in the API is recommended for testing or short-term usage but not for long-term production usage. 
 
