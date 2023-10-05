@@ -29,6 +29,9 @@ spec:
         - name: marketplace
           imagePullPolicy: Always
           image: choreocontrolplane.azurecr.io/choreoipaas/marketplace:latest
+          env:
+            - name: RESOURCE_DIR
+              value: /home/ballerina/resources/
           resources:
             limits:
               cpu: 200m
