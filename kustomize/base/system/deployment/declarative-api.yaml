@@ -32,8 +32,6 @@ spec:
               name: declarativeapi-port
             - containerPort: 8081      # To be used for readiness/liveness probes (internal)
               name: health
-            - containerPort: 8082      # To be used for public health check (external)
-              name: healthz
           readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 15

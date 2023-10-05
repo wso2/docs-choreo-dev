@@ -9,8 +9,5 @@ spec:
     - name: declarativeapi-port
       port: 8080
       targetPort: declarativeapi-port
-    - name: healthz
-      port: 8082
-      targetPort: healthz
   selector:
     choreo.component: declarative-api
