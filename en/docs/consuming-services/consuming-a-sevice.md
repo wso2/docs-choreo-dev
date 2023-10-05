@@ -35,7 +35,7 @@ The overview page of an API displays the subscribed versions of the API along wi
 ![API overview](../assets/img/consume/api-overview.png)
 
 !!! tip
-      If you want to use an API, the recommended approach is to use the latest version of it. You can copy the major version range pattern provided as the value of **Endpoints(s)** on the API overview page and use it to ensure that your client application always invokes the latest version of a subscribed API version’s major version range.
+      If you want to use an API, the recommended approach is to use the latest version of it. You can copy the major version pattern provided as the value of **Endpoints(s)** on the API overview page and use it in your client application. This ensures that your application always invokes the latest API version.
 
 ## Create an application
 
