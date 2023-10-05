@@ -24,6 +24,7 @@ metadata:
     checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
     checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
 spec:
+  progressDeadlineSeconds: 900
   replicas: 1
   selector:
     matchLabels:
