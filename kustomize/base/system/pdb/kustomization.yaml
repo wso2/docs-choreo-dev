@@ -18,7 +18,7 @@ resources:
   - dp-cloud-manager.yaml
   - dp-garbage-collector.yaml
   - dp-mizzen.yaml
-  - dp-project-manager.yamls
+  - dp-project-manager.yaml
   - dp-rudder.yaml
   - dp-secret-manager.yaml
   - dp-utility-api.yaml
