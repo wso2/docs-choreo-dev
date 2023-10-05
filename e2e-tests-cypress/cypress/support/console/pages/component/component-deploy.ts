@@ -443,7 +443,7 @@ export class ComponentDeployPage {
 
   static addConfiguration(value: string) {
     cy.get(".ConfigForm", MEDIUM_TIME).should("be.visible");
-    cy.get(".ConfigForm div input").type(value);
+    cy.get(".ConfigForm div input").clear().type(value);
     cy.get('.ConfigForm button[type="submit"]').click();
   }
 
