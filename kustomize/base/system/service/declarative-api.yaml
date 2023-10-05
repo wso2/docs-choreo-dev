@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: declarative-api
+  name: declarative-api
+spec:
+  ports:
+    - name: declarativeapi-port
+      port: 8080
+      targetPort: declarativeapi-port
+    - name: healthz
+      port: 8082
+      targetPort: healthz
+  selector:
+    choreo.component: declarative-api
