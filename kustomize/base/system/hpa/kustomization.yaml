@@ -18,6 +18,7 @@ resources:
   - analytics-subscription.yaml
   - organization-remover.yaml
   - datacollector.yaml
+  - declarative-api.yaml
   - quota-limiter.yaml
   - subscriptions.yaml
   - dp-secret-manager.yaml
