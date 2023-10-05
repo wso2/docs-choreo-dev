@@ -15,7 +15,7 @@ spec:
     metadata:
       labels:
         choreo.component: declarative-api
-        antiaffinity: declartive-api
+        antiaffinity: declarative-api
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -28,7 +28,7 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-cp-declarative-api:latest
           ports:
             - containerPort: 8080
-              name: decapi-port
+              name: service-port
             - containerPort: 8081      # To be used for readiness/liveness probes (internal)
               name: health
           readinessProbe:

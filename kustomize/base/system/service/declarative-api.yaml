@@ -6,8 +6,8 @@ metadata:
   name: declarative-api
 spec:
   ports:
-    - name: decapi-port
+    - name: service-port
       port: 8080
-      targetPort: decapi-port
+      targetPort: service-port
   selector:
     choreo.component: declarative-api
