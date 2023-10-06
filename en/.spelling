@@ -8,6 +8,7 @@ microservices
 undeployment
 frontend
 UUIDs
+v1
 OpenAPI
 webhookSecret
 toEmail
@@ -625,6 +626,7 @@ secure-api-access-with-azure-ad
 configure-an-external-idp
 configure-asgardeo-as-an-external-idp
 configure-azure-ad-as-an-external-idp
+test-apis-with-choreo-apichat
  - theme/material/templates/home-page.html
 doctype
 html
@@ -776,3 +778,5 @@ Entra
 AzureAD
  - docs/administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md
 identity-as-a-soluton
+ - docs/testing/test-apis-with-choreo-apichat.md
+findByStatus
