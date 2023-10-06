@@ -134,7 +134,7 @@ nav:
       - Test GraphQL Endpoints via the GraphQL Console: testing/test-graphql-endpoints-via-the-graphql-console.md
       - Test APIs with cURL: testing/test-apis-with-curl.md
       - Test APIs using Postman: testing/test-apis-using-postman.md
-      - Test APIs with Choreo TestGPT: testing/test-apis-with-choreo-testgpt.md
+      - Test APIs with Choreo API Chat: testing/test-apis-with-choreo-apichat.md
   - Consuming Services:
       - Consume a Service: consuming-services/consuming-a-sevice.md
       - Manage Application: consuming-services/manage-application.md
@@ -313,6 +313,7 @@ plugins:
           'monitoring-and-insights/engineering-insights/configure-cio-dashboard.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/delivery-insights/configure-dora-metrics/'
           'monitoring-and-insights/engineering-insights/view-dora-metrics.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/delivery-insights/view-dora-metrics/'
           'monitoring-and-insights/view-api-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/usage-insights/'
+          'testing/test-apis-with-choreo-testgpt.md': 'https://wso2.com/choreo/docs/testing/test-apis-with-choreo-apichat/'
 extra_css:
   # - assets/lib/highlightjs/default.min.css
   # - assets/css/theme.css

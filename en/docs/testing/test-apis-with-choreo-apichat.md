@@ -1,6 +1,6 @@
-# Test APIs with Choreo TestGPT
+# Test APIs with Choreo API Chat
 
-Testing APIs is an essential step in the API development process. Choreo simplifies the testing task by allowing you to test your APIs using natural language through Choreo TestGPT. It eliminates manual test scenario creation and JSON payload accuracy concerns. It enables easy API communication using human language and requires no coding for handling sequences with multiple resource calls. This makes your API testing efficient and user-friendly.
+Testing APIs is an essential step in the API development process. Choreo simplifies the testing task by allowing you to test your APIs using natural language through Choreo API Chat. It eliminates manual test scenario creation and JSON payload accuracy concerns. It enables easy API communication using human language and requires no coding for handling sequences with multiple resource calls. This makes your API testing efficient and user-friendly.
 
 
 !!! info
@@ -27,9 +27,9 @@ Before you try out this guide, be sure that you have the following:
 
 ## Test your APIs
 
-Follow the steps below to test an API with TestGPT: 
+Follow the steps below to test an API with API Chat: 
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component you want to test.
-3. On the left navigation, click **Test** and then click **TestGPT**. This opens the **TestGPT** pane.
-4. You can enter your query in natural language and execute it. For example, if you have a resource like "/pet/findByStatus," you can input the query, such as "Get the pets that are available," and execute it to obtain results. The resources are executed sequentially based on your query. Alternatively, you can use the sample queries available to try out TestGPT. 
+3. On the left navigation, click **Test** and then click **API Chat**. This opens the **API Chat** pane.
+4. You can enter your query in natural language and execute it. For example, if you have a resource like "/pet/findByStatus," you can input the query, such as "Get the pets that are available," and execute it to obtain results. The resources are executed sequentially based on your query. Alternatively, you can use the sample queries available to try out API Chat. 
