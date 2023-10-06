@@ -53,7 +53,8 @@ window.addEventListener("DOMContentLoaded", function() {
             var searchTerm = textInput.value;
          //   const arrayFromCollection = Array.from(document.links);
          //   localStorage.setItem('searchResults', arrayFromCollection);
-            var searchPage="/search-results.html" +"?search_term="+searchTerm;
+            const logo = document.getElementById("logo");
+            var searchPage=logo.href+"search-results.html" +"?search_term="+searchTerm;
             document.location.href=searchPage;
 
             // You can add more code here to handle the form submission
