@@ -15,6 +15,7 @@ helmCharts:
             Inotify_Watcher false
             Path /var/log/containers/*_dp-*_*.log, /var/log/containers/*_*-choreo-apim_*.log
             multiline.parser docker, cri
+            Refresh_Interval 5
             Tag kube.*
             Mem_Buf_Limit 256MB
             Skip_Long_Lines On
