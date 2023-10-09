@@ -282,6 +282,8 @@ memberInvitation:
   invitationLinkDurationDays: 7
 controlPlaneOrganization:
   uuid: ${CONTROL_PLANE_ORG_UUID}
+demoOrganization:
+  uuid: ${CHOREO_DEMO_ORG_UUID}
 azureKeyVault:
   clientId: ${AZURE_KEY_VAULT_CLIENT_ID}
   clientSecret: ${AZURE_KEY_VAULT_CLIENT_SECRET}
