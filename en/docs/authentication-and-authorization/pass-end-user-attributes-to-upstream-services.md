@@ -142,3 +142,16 @@ The following table describes the information contained in the JWKS response:
 | `alg`        |  The algorithm to use with the key.                                                |
 | `n`          |  The modulus value of the public key.                                              |
 
+## Enable passing end-user attributes to the backend
+
+To enable passing end-user attributes to the backend through API calls via Choreo, follow the steps given below:
+
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. In the left navigation menu, click **Components**.
+3. In the **Components Listing** pane, click on the component for which you want to pass end-user attributes to the backend.
+4. In the left navigation menu, click **Manage** and then click **Settings**.
+5. Under **API Settings**, click **Edit**.
+6. Enable the **Pass Security Context To Backend** toggle.
+7. Click **Save**.
+8. In the **Apply to Development** pane that opens, enter a meaningful message to reflect the changes made to API settings. 
+9. Click **Apply**.
