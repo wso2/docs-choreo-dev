@@ -101,7 +101,7 @@ describe("Verify MI API SERVICE component in root", () => {
     ComponentDeployPage.promoteService(ENDPOINT_NAME, true, 0, true);
   });
 
-  it("Verify test functionality of root resource in dev on swagger", () => {
+  it("Verify test functionality of root resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testManagedEndpoint(
       Enums.Environment.PRODUCTION,

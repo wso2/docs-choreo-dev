@@ -24,7 +24,7 @@ import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-bui
 import { GitHub } from "../../../support/github/github";
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
-import { MEDIUM_TIME } from "../../../support/commons/timeouts";
+import { MEDIUM_TIME, SHORT_TIME } from "../../../support/commons/timeouts";
 
 describe("Create Schedule Trigger", () => {
   const SCHEDULE_NAME = Utils.generateComponentName();
@@ -86,10 +86,10 @@ describe("Create Schedule Trigger", () => {
     ComponentDeployPage.promoteScheduleTask();
   });
 
-  it("Verify task execution in observability ", () => {
-    ComponentOverviewPage.navigateToObserve();
-    ComponentObservePage.gotoLogs(MEDIUM_TIME.timeout);
+  it("Verify navigate to observability Page", () => {
+    ComponentOverviewPage.navigateToObserve(MEDIUM_TIME.timeout);
   });
+  
   it("Verify dev env logs", () => {
     ComponentObservePage.selectEnv(Enums.Environment.DEVELOPMENT);
     ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT);

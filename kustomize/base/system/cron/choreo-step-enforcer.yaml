@@ -61,10 +61,10 @@ spec:
                     name: env-step-enforcer
               resources:
                 limits:
-                  cpu: 750m
+                  cpu: 850m
                   memory: 400Mi
                 requests:
-                  cpu: 500m
+                  cpu: 750m
                   memory: 300Mi
               volumeMounts:
                 - name: config

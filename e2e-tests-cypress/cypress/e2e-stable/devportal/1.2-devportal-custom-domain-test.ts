@@ -32,7 +32,6 @@ import { ProjectListingPage } from "../../support/console/pages/projects/project
 import { ComponentAPILifecycle } from "../../support/console/pages/component/component-manage-page";
 import { Utils } from "../../support/commons/utils";
 import { Enums } from "../../support/commons/enums";
-import { Credentials } from "../../support/devportal/pages/applications/credentials";
 
 const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
 const API_BASE_PATH = Utils.generateBasePath();
@@ -63,7 +62,7 @@ describe("Create and deploy a component to test developer portal with custom dom
     );
     cy.task("setAPIName", API_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.deployToDev();
     APIDeployment.promoteToProd();
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
@@ -132,7 +131,7 @@ describe("Login and test developer portal with custom domain", () => {
 
   it("Verify the downloaded SDK file", () => {
     cy.task("getAPIName").then((API_Name) => {
-      const sdkFile = API_Name + "_1.0.0_android.zip";
+      const sdkFile = API_Name + "_v1.0_android.zip";
       APISdk.downloadSDK(sdkFile);
     });
   });

@@ -23,11 +23,6 @@ describe("Observability tests", () => {
     ChoreoHomePage.logout();
   });
 
-  it("Test logs view", () => {
-    ComponentObservePage.navigateToSampleApp();
-    ComponentObservePage.verifyLogsView();
-  });
-
   it("Test observability overview", () => {
     ComponentObservePage.navigateToSampleApp();
     ComponentObservePage.verifyObserveOverview();

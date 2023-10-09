@@ -47,7 +47,7 @@ after(() => {
 describe(`Verify internal api functionality`, () => {
   const API_NAME = Utils.generateComponentName("CYE2E");
   const API_BASE_PATH = Utils.generateBasePath();
-  const API_VERSION = "1.0.0";
+  const API_VERSION = "1.0";
 
   const API_ENDPOINT =
     "https://9f3f5ca2-c1f2-43e7-afbe-a15714138b57-dev.e1-us-east-azure.choreoapis.dev/ppcb/users/endpoint-9090-803/1.0.0";
@@ -62,7 +62,7 @@ describe(`Verify internal api functionality`, () => {
   let PROD_INVOKE_URL = "";
 
   const PROXY_API_NAME_DEV = Utils.generateComponentName("dev");
-  const PROXY_API_VERSION_DEV = "1.0.0";
+  const PROXY_API_VERSION_DEV = "1.0";
   const PROXY_API_BASEPATH_DEV = `/${PROXY_API_NAME_DEV}`;
   const PROXY_API_NAME_PROD = Utils.generateComponentName("prod");
   const PROXY_API_BASEPATH_PROD = `/${PROXY_API_NAME_PROD}`;
@@ -109,7 +109,7 @@ describe(`Verify internal api functionality`, () => {
 
   it("Deploy api to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.deployToDev();
   });
 
   it("Verify REST API component promote to PROD", () => {
@@ -177,7 +177,7 @@ describe(`Verify internal api functionality`, () => {
 
   it("Verify 1st PROXY API component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.deployToDev();
   });
 
   it("Verify 1st PROXY API component promote to PROD", () => {
@@ -220,7 +220,7 @@ describe(`Verify internal api functionality`, () => {
 
   it("Verify 2nd PROXY API component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.deployToDev();
   });
 
   it("Verify 2nd PROXY API component promote to PROD", () => {

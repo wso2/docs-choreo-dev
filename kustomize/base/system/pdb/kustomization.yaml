@@ -10,7 +10,9 @@ resources:
   - connectords.yaml
   - console-next.yaml
   - cp-graphql.yaml
+  - configuration-service.yaml
   - datacollector.yaml
+  - declarative-api.yaml
   - delete-manager.yaml
   - dp-cicd.yaml
   - dp-cloud-manager.yaml
@@ -45,3 +47,5 @@ resources:
   - crypto-key-service.yaml
   - obsmanager.yaml
   - dp-helmhub.yaml
+  - resource-registry-service.yaml
+  - marketplace.yaml

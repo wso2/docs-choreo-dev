@@ -49,10 +49,10 @@ spec:
           name: dp-mizzen-agent
           resources:
             requests:
-              memory: 100Mi
+              memory: 256Mi
               cpu: 200m
             limits:
-              memory: 200Mi
+              memory: 512Mi
               cpu: 500m
           securityContext:
             allowPrivilegeEscalation: false

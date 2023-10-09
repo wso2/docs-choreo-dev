@@ -61,7 +61,7 @@ public class TestProxyApiDpWithOperationRateLimit extends TestBase {
 
     @Test(dataProvider = "dps")
     @CitrusTest
-    public void creteProject_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) throws Exception {
+    public void createProject_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) throws Exception {
         String firstAPIName = Constant.DEFAULT_API_NAME.concat(String.valueOf(new Date().getTime()));
         String firstContext = APICreator.generateContext(firstAPIName);
         ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, dp.getRegion());
@@ -70,32 +70,21 @@ public class TestProxyApiDpWithOperationRateLimit extends TestBase {
         dp.setContext(firstContext);
     }
 
-    @Test(dependsOnMethods = {"creteProject_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
+    @Test(dependsOnMethods = {"createProject_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
     @CitrusTest
     public void verifyAPIName_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) throws IOException {
         Response response = APICreator.validateAPIName(dp.getFirstName(), accessToken);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND.value());
     }
-
+    
     @Test(dependsOnMethods = {"verifyAPIName_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
     @CitrusTest
-    public void createAPI_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) throws Exception {
-        ProxyAPI proxyAPI = ComponentUtils.createApiProxy(this, citrusClients, accessToken, dp.getFirstName());
-        dp.setProxyAPI(proxyAPI);
-        Assert.assertNotNull(proxyAPI.getId());
-    }
-
-    @Test(dependsOnMethods = {"createAPI_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
-    @CitrusTest
-    public void testCreateComponentForProxyAPI_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp)
-            throws Exception {
-        GraphqlDTO dto = ComponentUtils.createProxyComponentRequest(dp.getFirstName(), dp.getChoreoProject(),
-                dp.getProxyAPI().getId());
-
-        ChoreoComponent choreoComponent = ComponentUtils.createProxyComponent(this, citrusClients,
-                accessToken, dto);
-
-        dp.setChoreoComponent(choreoComponent);
+    public void testCreateComponentForProxyAPI_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) throws Exception {
+        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        Pair<ChoreoComponent, ProxyAPI> componentDetail = ComponentUtils.createProxyComponent(this, citrusClients,
+                accessToken, componentName, dp.getFirstName(), dp.getChoreoProject());
+        dp.setChoreoComponent(componentDetail.getLeft());
+        dp.setProxyAPI(componentDetail.getRight());
     }
 
     @Test(dependsOnMethods = {"testCreateComponentForProxyAPI_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")

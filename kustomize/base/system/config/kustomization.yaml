@@ -196,6 +196,34 @@ configMapGenerator:
       - REGISTRY_PROJECT_ID=global
       - CLOUD_MANAGER_API_URL=http://dp-cloud-manager
       - RUDDER_API_URL=http://dp-rudder
+      - RESILIENT_INVOKER_URL=http://cp-ris:9090
+      - CICD_SERVICE_URL=http://dp-cicd
+      - STATUS_INFO_SERVICE_URL=http://cp-sis:9091
+      - AZURE_LOGS_TABLE=GithubWorkflowLogs
+      - PROJECT_MANAGER_API_URL=http://dp-project-manager
+      - BUILDPACKS_BUILDER_IMAGE="choreocontrolplane.azurecr.io/choreoipaas/choreo-buildpacks/builder:alpine"
+      - BUILDPACKS_DOCKER_ACR="choreocontrolplane.azurecr.io"
+  - name: cm-dp-cicd-temp
+    behavior: create
+    literals:
+      - SERVER_PORT=8080
+      - DB_NAME=choreo_cicd_db
+      - DB_PORT=1433
+      - DB_USERNAME=choreo_cicd_admin_db_user
+      - DB_TYPE=mssql
+      - CLOUD_CONNECTOR_URL=http://dp-cloud-manager
+      - SENTRY=https://b3d0a52a966b46edb34287daff8d411c@o350818.ingest.sentry.io/5599109
+      - GITOPS_ORG_ID=0
+      - GITOPS_ORG_PROJECT_ID=global
+      - APP_ORG_ID=0
+      - APP_ORG_PROJECT_ID=global
+      - REGISTRY_ORG_ID=0
+      - REGISTRY_PROJECT_ID=global
+      - CLOUD_MANAGER_API_URL=http://dp-cloud-manager
+      - RUDDER_API_URL=http://dp-rudder
+      - RESILIENT_INVOKER_URL=http://cp-ris:9090
+      - CICD_SERVICE_URL=http://dp-cicd-temp
+      - STATUS_INFO_SERVICE_URL=http://cp-sis:9091
       - AZURE_LOGS_TABLE=GithubWorkflowLogs
       - PROJECT_MANAGER_API_URL=http://dp-project-manager
       - BUILDPACKS_BUILDER_IMAGE="choreocontrolplane.azurecr.io/choreoipaas/choreo-buildpacks/builder:alpine"
@@ -320,6 +348,7 @@ configMapGenerator:
       - REACT_APP_AUTHENTICATOR_ANONYMOUS=OpenIDConnectAuthenticator
       - REACT_APP_AUTHENTICATOR_ENTERPRISE=EnterpriseIDPAuthenticator
       - REACT_CHOREO_HOME_PAGE='https://wso2.com/choreo/'
+      - REACT_APP_MAX_NO_OF_ORG_ENVS_ALLOWED=5
   - name: cm-userapps-image-deleter
     behavior: create
     literals:
@@ -511,14 +540,18 @@ configMapGenerator:
       - MIZZEN_URL="http://dp-mizzen"
       - KV_RESOLVER_INTERNAL_SVC_URL="http://dp-kv-resolver"
       - CLOUD_MANAGER_URL="http://dp-cloud-manager"
-  - name: cm-file-choreo-marketplace
+  - name: cm-file-marketplace
     behavior: create
     files:
       - marketplace/Config.toml
   - name: cm-file-cp-ris
     behavior: create
     files:
-      - cp-ris/Config.toml  
+      - cp-ris/Config.toml
+  - name: cm-file-cp-sis
+    behavior: create
+    files:
+      - cp-sis/Config.toml
   - name: cm-file-audit-logging
     behavior: create
     files:
@@ -533,3 +566,12 @@ configMapGenerator:
       - MSSQL_PORT=1433
       - MSSQL_USER=choreo_helmhub_db_user
       - MSSQL_DBNAME=choreo_helmhub_db
+  - name: cm-file-resource-registry
+    behavior: create
+    files:
+      - resource-registry/Config.toml
+  - name: cm-files-appdev-user-mgt
+    behavior: create
+    files:
+      - app-dev-user-mgt-service/application.properties
+      - app-dev-user-mgt-service/log4j2.yaml

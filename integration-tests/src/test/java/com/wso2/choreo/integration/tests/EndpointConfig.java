@@ -18,7 +18,7 @@ import com.consol.citrus.http.client.HttpClient;
 import com.wso2.choreo.integration.common.SecurityTestContext;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.config.ConfigDefinition;
-
+import com.wso2.choreo.integration.apis.DataPlaneSystemAPI;
 import com.wso2.choreo.integration.common.Endpoints;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -154,8 +154,11 @@ public class EndpointConfig {
                 CitrusEndpoints.http().client().requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
                         ConfigDefinition.CDN_THEME_ENDPOINT)).build());
 
+        endpoints.put(Endpoints.CHOREO_EU_DP_URL,
+                        CitrusEndpoints.http().client().requestUrl(DataPlaneSystemAPI.CHOREO_EU_DP_URL).build());
+
+        endpoints.put(Endpoints.CHOREO_US_DP_URL,
+                        CitrusEndpoints.http().client().requestUrl(DataPlaneSystemAPI.CHOREO_US_DP_URL).build());
         return endpoints;
     }
-
-
 }

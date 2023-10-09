@@ -287,6 +287,7 @@ function util.ciliumEnabled(organizationId)
             ngx.log(ngx.DEBUG, "cache hit, forwarding organization: ", organizationId, " to cilium")
             return true
         else
+            ngx.log(ngx.DEBUG, "cache hit, not forwarding organization: ", organizationId, " to cilium")
             return false
         end
     end
@@ -320,7 +321,7 @@ function util.ciliumEnabled(organizationId)
     local redisResponse, readErr = red:get(ciliumStatusKey)
     if readErr then
         ngx.log(ngx.ERR, "failed to retrieve cilium status for organization: ", organizationId, " from redis ", readErr)
-        cache:set(ciliumStatusKey, forwardToCilium, 5000)
+        cache:set(ciliumStatusKey, forwardToCilium, 120) -- cache for 120 seconds
         return forwardToCilium
     end
 
@@ -330,7 +331,7 @@ function util.ciliumEnabled(organizationId)
     elseif redisResponse == "true" then
         forwardToCilium = true
     end
-    cache:set(ciliumStatusKey, forwardToCilium, 5000)
+    cache:set(ciliumStatusKey, forwardToCilium, 120) -- cache for 120 seconds
 
     local ok, err = red:set_keepalive(100000, 100)
     if not ok then

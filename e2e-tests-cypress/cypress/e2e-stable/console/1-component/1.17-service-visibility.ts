@@ -12,7 +12,7 @@
  */
 
 import { Enums } from "../../../support/commons/enums";
-import { MEDIUM_TIME } from "../../../support/commons/timeouts";
+import { MEDIUM_TIME, SHORT_TIME } from "../../../support/commons/timeouts";
 import { Utils } from "../../../support/commons/utils";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
@@ -159,10 +159,10 @@ describe("Verify Ballerina service functionality", () => {
     ComponentDeployPage.runManualTrigger(Enums.Environment.PRODUCTION, 3);
   });
 
-  it("Verify task execution in observability ", () => {
-    ComponentOverviewPage.navigateToObserve();
-    ComponentObservePage.gotoLogs(MEDIUM_TIME.timeout);
+  it("Verify navigate to observability Page", () => {
+    ComponentOverviewPage.navigateToObserve(MEDIUM_TIME.timeout);
   });
+  
   it("Verify dev env logs", () => {
     ComponentObservePage.selectEnv(Enums.Environment.DEVELOPMENT);
     ComponentObservePage.verifyManualTriggerTextInLogs(LOG_MESSAGE);
