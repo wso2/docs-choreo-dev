@@ -50,7 +50,7 @@ describe(`Verify internal api functionality`, () => {
   const API_VERSION = "1.0";
 
   const API_ENDPOINT =
-    "https://9f3f5ca2-c1f2-43e7-afbe-a15714138b57-dev.e1-us-east-azure.choreoapis.dev/ppcb/users/endpoint-9090-803/1.0.0";
+    "https://9f3f5ca2-c1f2-43e7-afbe-a15714138b57-dev.e1-us-east-azure.choreoapis.dev/mgch/users/endpoint-9090-803/v1.0";
   const OPERATION_USERS = "users";
   const PROJECT_DESCRIPTION = "Internal API Proxy for REST Endpoint";
   const PROJECT_NAME = Utils.generateProjectName();
