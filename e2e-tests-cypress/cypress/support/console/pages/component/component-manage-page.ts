@@ -255,7 +255,7 @@ export class ComponentAPILifecycle {
 
   static disableResourceSecurity(resource: string) {
     cyGet(`[id="panel-/${resource}/get-header"]`).scrollIntoView().click();
-    cy.get(`[data-testid="security"]`).scrollIntoView().click();
+    cy.get(`[data-testid="operation ratelimit"]`).scrollIntoView().click();
   }
 
   static applyConfiguration() {
