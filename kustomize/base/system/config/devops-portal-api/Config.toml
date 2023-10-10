@@ -19,3 +19,4 @@ helmhub_url = "http://dp-helmhub"
 apim_url = "{{.APIM_URL}}"
 no_of_max_env_per_org = 5
 feature_flag_create_dynamic_env = {{.FEATURE_FLAG_CREATE_DYNAMIC_ENV}}
+ciliumClusterIds = {{.CILIUM_CLUSTER_IDS | default ""}}
