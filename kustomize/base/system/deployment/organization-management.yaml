@@ -34,19 +34,11 @@ spec:
                 secretKeyRef:
                   name: secret-app-db
                   key: CHOREO_DB_PASSWORD
-            - name: AZURE_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: secret-organization-management
-                  key: AZURE_ACCESS_KEY
-            - name: KEYSTORE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: secret-organization-management
-                  key: KEYSTORE_PASSWORD
           envFrom:
             - configMapRef:
                 name: env-organization-management
+            - secretRef:
+                name: secret-organization-management
           ports:
             - containerPort: 9090
               name: http
