@@ -1,0 +1,2 @@
+resources:
+  - app-gateway-oauth-agent.yaml
