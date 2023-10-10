@@ -27,20 +27,18 @@ spec:
       containers:
         - name: organization-management
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-organization-management:latest
+          command: ["/home/ballerina/docker-entrypoint.sh"]
           env:
             - name: CHOREO_APP_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: secret-app-db
                   key: CHOREO_DB_PASSWORD
-            - name: AZURE_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: secret-organization-management
-                  key: AZURE_ACCESS_KEY
           envFrom:
             - configMapRef:
                 name: env-organization-management
+            - secretRef:
+                name: secret-organization-management
           ports:
             - containerPort: 9090
               name: http
@@ -95,6 +93,12 @@ spec:
               readOnly: true
             - name: tmp
               mountPath: /tmp
+            - name: secret-organization-management
+              mountPath: /home/ballerina/security/choreo-organization-management-keystore.pfx
+              subPath: BAL_KEYSTORE
+              readOnly: true
+            - name: keystore
+              mountPath: /home/ballerina/keystore
       restartPolicy: Always
       volumes:
         - name: config
@@ -117,6 +121,8 @@ spec:
             nodePublishSecretRef:
               name: csi-secret-store-azure
         - name: tmp
+          emptyDir: {}
+        - name: keystore
           emptyDir: {}
       serviceAccountName: sa-choreo-default
       affinity:
