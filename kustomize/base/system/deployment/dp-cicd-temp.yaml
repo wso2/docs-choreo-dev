@@ -24,9 +24,7 @@ spec:
     spec:
       automountServiceAccountToken: true
       securityContext:
-        allowPrivilegeEscalation: false
-        seccompProfile:
-          type: RuntimeDefault
+        allowPrivilegeEscalation: true
       containers:
         - name: dp-cicd
           imagePullPolicy: Always
@@ -75,15 +73,10 @@ spec:
                   key: BUILDPACKS_BUILDER_IMAGE
                   name: common-env-variables
           securityContext:
-            allowPrivilegeEscalation: false
-            seccompProfile:
-              type: RuntimeDefault
-            runAsUser: 10001
-            runAsGroup: 10001
-            readOnlyRootFilesystem: true
-            capabilities:
-              drop:
-                - all
+            allowPrivilegeEscalation: true
+            runAsUser: 0
+            runAsGroup: 0
+            readOnlyRootFilesystem: false
           ports:
             - containerPort: 8080
               name: http-port
