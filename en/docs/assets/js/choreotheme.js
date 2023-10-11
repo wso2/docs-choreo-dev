@@ -52,7 +52,6 @@ window.addEventListener("DOMContentLoaded", function() {
             var pathname = this.window.location.pathname;
             var origin = this.window.location.origin;
             var searchPage= "search-results.html" + "?search_term=" + searchTerm;
-            this.alert("pathname= " + pathname + "origin = " + origin)
             if(pathname != null && pathname.startsWith("/choreo/docs/")){
                
                 searchPage = origin + "/choreo/docs/" + searchPage;
