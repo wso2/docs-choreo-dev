@@ -91,7 +91,7 @@ end
 --
 -- @param keyArray redis search keys
 -- @return Array Redis MGET keys
-function util.getRedisKeyString(keyArray)
+function util.getRedisKeyString(keyArray, correlation_id)
     local keyString = ""
     local cjson = require "cjson"
 
@@ -104,7 +104,7 @@ function util.getRedisKeyString(keyArray)
     end
     keyString = keyString .. "]"
 
-    ngx.log(ngx.DEBUG, "keyString: ", keyString)
+    ngx.log(ngx.DEBUG, "correlation-id: ", correlation_id, "keyString: ", keyString)
     return cjson.decode(keyString)
 end
 
@@ -112,11 +112,11 @@ end
 --
 -- @param valueArray redis response values
 -- @return Array
-function util.getRedisLocalAdapterLabel(valueArray)
+function util.getRedisLocalAdapterLabel(valueArray, correlation_id)
     local index = #valueArray
     local result = {}
     local cjson = require "cjson"
-    ngx.log(ngx.DEBUG, "valueArray: ", cjson.encode(valueArray))
+    ngx.log(ngx.DEBUG, "correlation-id: ", correlation_id, "valueArray: ", cjson.encode(valueArray))
 
     for k, value in pairs(valueArray) do
         -- Get last value of the array
@@ -129,7 +129,7 @@ function util.getRedisLocalAdapterLabel(valueArray)
         end
     end
     if (#result == 0) then
-        ngx.log(ngx.DEBUG, "No values found in Redis")
+        ngx.log(ngx.DEBUG, "correlation-id: ", correlation_id, "No values found in Redis")
         table.insert(result, "nil");
     end
     table.insert(result, index);
@@ -140,7 +140,7 @@ end
 --
 -- @param localAdapterLabel label returned from the cache or redis DB
 -- @return String LA k8s service name
-function util.getLocalAdapterK8sServiceName(localAdapterLabel)
+function util.getLocalAdapterK8sServiceName(localAdapterLabel, correlation_id)
     local serviceName
     local split = require "util.split"
 
@@ -148,7 +148,7 @@ function util.getLocalAdapterK8sServiceName(localAdapterLabel)
         local splitLabelArray = split.splitString(localAdapterLabel, '/')
         -- Get the first element of the array
         serviceName = table.remove(splitLabelArray,1)
-        ngx.log(ngx.DEBUG, "serviceName: ", serviceName)
+        ngx.log(ngx.DEBUG, "correlation-id: ", correlation_id, "serviceName: ", serviceName)
     end
     return serviceName
 end
@@ -220,22 +220,22 @@ function util.getLocalCacheValueForBlocking(key)
 end
 
 function util.getRedisCacheValue(key, redis_host, redis_port, redis_ssl, 
-    redis_ssl_verify, redis_password, redis_database)
+    redis_ssl_verify, redis_password, redis_database, correlation_id)
     local redis = require "resty.redis"
 
     local red = redis:new()
     red:set_timeout(1000) -- 1 second
 
-    ngx.log(ngx.INFO, "connecting to Redis database..")
+    ngx.log(ngx.INFO, "correlation-id: ", correlation_id, "connecting to Redis database..")
     local ok, err = red:connect(redis_host, redis_port, {ssl=redis_ssl, ssl_verify=redis_ssl_verify})
     if not ok then
-        ngx.log(ngx.ERR, "failed to connect to redis: ", err)
+        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to connect to redis: ", err)
         return nil, err
     end
 
     local res, err = red:auth(ngx.var.redis_password)
     if not res then
-        ngx.log(ngx.ERR, "failed to authenticate redis server: ", err)
+        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to authenticate redis server: ", err)
         return nil, err
     end
 
@@ -243,13 +243,13 @@ function util.getRedisCacheValue(key, redis_host, redis_port, redis_ssl,
 
     local redisResponse, err = red:mget(unpack(key))
     if not redisResponse then 
-        ngx.log(ngx.ERR, "failed to retrieve step limit cache value from redis ", err)
+        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to retrieve step limit cache value from redis ", err)
         return nil, err
     end
     
     local ok, err = red:set_keepalive(100000, 100)
     if not ok then
-        ngx.log(ngx.ERR, "failed to set keepalive: ", err)
+        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to set keepalive: ", err)
         return redisResponse, err
     end
 
@@ -273,7 +273,7 @@ function util.getValueObject(key, valueArray)
 end
 
 -- Return weather the request should be forwarded to cilium or not
-function util.ciliumEnabled(organizationId)
+function util.ciliumEnabled(organizationId, correlation_id)
     local forwardToCilium = false
 
     local ciliumStatusKey = "cilium_migrate:" .. organizationId
@@ -284,35 +284,35 @@ function util.ciliumEnabled(organizationId)
     -- check local cache
     if cacheValue ~= nil then
         if cacheValue == true then
-            ngx.log(ngx.DEBUG, "cache hit, forwarding organization: ", organizationId, " to cilium")
+            ngx.log(ngx.DEBUG, "correlation-id: ", correlation_id, "cache hit, forwarding organization: ", organizationId, " to cilium")
             return true
         else
-            ngx.log(ngx.DEBUG, "cache hit, not forwarding organization: ", organizationId, " to cilium")
+            ngx.log(ngx.DEBUG, "correlation-id: ", correlation_id, "cache hit, not forwarding organization: ", organizationId, " to cilium")
             return false
         end
     end
 
     -- check redis cache
-    ngx.log(ngx.DEBUG, "cache miss hit for key: ", ciliumStatusKey)
+    ngx.log(ngx.DEBUG, "correlation-id: ", correlation_id, "cache miss hit for key: ", ciliumStatusKey)
 
     local redis = require "resty.redis"
     local red = redis:new()
     if red == nil then
-        ngx.log(ngx.ERR, "failed to create redis client")
+        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to create redis client")
         return forwardToCilium
     end
 
     red:set_timeout(1000) -- 1 second
-    ngx.log(ngx.DEBUG, "connecting to Redis database..")
+    ngx.log(ngx.DEBUG, "correlation-id: ", correlation_id, "connecting to Redis database..")
     local ok, err = red:connect(ngx.var.redis_host, ngx.var.redis_port,
         { ssl = ngx.var.redis_ssl, ssl_verify = ngx.var.redis_ssl_verify })
     if not ok then
-        ngx.log(ngx.ERR, "failed to connect to redis: ", err)
+        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to connect to redis: ", err)
         return forwardToCilium
     end
     local res, err = red:auth(ngx.var.redis_password)
     if not res then
-        ngx.log(ngx.ERR, "failed to authenticate redis server: ", err)
+        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to authenticate redis server: ", err)
         return forwardToCilium
     end
 
@@ -320,13 +320,13 @@ function util.ciliumEnabled(organizationId)
 
     local redisResponse, readErr = red:get(ciliumStatusKey)
     if readErr then
-        ngx.log(ngx.ERR, "failed to retrieve cilium status for organization: ", organizationId, " from redis ", readErr)
+        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to retrieve cilium status for organization: ", organizationId, " from redis ", readErr)
         cache:set(ciliumStatusKey, forwardToCilium, 120) -- cache for 120 seconds
         return forwardToCilium
     end
 
     if redisResponse == ngx.null then
-        ngx.log(ngx.DEBUG, "cilium status not found for organization: ", organizationId)
+        ngx.log(ngx.DEBUG, "correlation-id: ", correlation_id, "cilium status not found for organization: ", organizationId)
         forwardToCilium = false
     elseif redisResponse == "true" then
         forwardToCilium = true
@@ -335,11 +335,11 @@ function util.ciliumEnabled(organizationId)
 
     local ok, err = red:set_keepalive(100000, 100)
     if not ok then
-        ngx.log(ngx.ERR, "failed to set keepalive: ", err)
+        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to set keepalive: ", err)
     end
 
     if forwardToCilium then
-        ngx.log(ngx.DEBUG, "forwarding organization: ", organizationId, " to cilium")
+        ngx.log(ngx.DEBUG, "correlation-id: ", correlation_id, "forwarding organization: ", organizationId, " to cilium")
     end
 
     return forwardToCilium
