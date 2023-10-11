@@ -1,0 +1,49 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kubectl-executor
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: c-builder-kubectl-executor
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "watch", "patch"]
+    resourceNames: ["connector-builder"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: deployment-restarter-binding
+subjects:
+  - kind: ServiceAccount
+    name: kubectl-executor
+roleRef:
+  kind: Role
+  name: c-builder-kubectl-executor
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: connector-builder-rollout-restarter
+spec:
+  schedule: '*/10 * * * *'
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: kubectl-executor
+          containers:
+            - name: connector-builder-restart-cron
+              image: choreocontrolplane.azurecr.io/bitnami/kubectl:1.27.5
+              command:
+                - kubectl
+                - rollout
+                - restart
+                - deployment/connector-builder
+          restartPolicy: Never
+  successfulJobsHistoryLimit: 3

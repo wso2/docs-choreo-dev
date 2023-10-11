@@ -16,3 +16,4 @@ resources:
   - choreo-org-stat-data-publisher.yaml
   - choreo-offline-runner-cleaner.yaml
   - choreo-offline-build-status-cleaner.yaml
+  - connector-builder-restarter.yaml
