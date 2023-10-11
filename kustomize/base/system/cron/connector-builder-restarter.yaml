@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: connector-builder-rollout-restarter
+spec:
+  schedule: '*/10 * * * *'
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: connector-builder-kubectl-executor-sa
+          containers:
+            - name: connector-builder-restart-cron
+              image: choreocontrolplane.azurecr.io/bitnami/kubectl:1.27.5
+              command:
+                - kubectl
+                - rollout
+                - restart
+                - deployment/connector-builder
+          restartPolicy: Never
+  successfulJobsHistoryLimit: 3
