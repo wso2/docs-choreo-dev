@@ -10,3 +10,5 @@ minIdle = 5
 testEnabled = false
 emailServiceUrl = "https://email-service"
 resourceDir = "resources/"
+keyStorePath = "/home/ballerina/keystore/clientKeyStore.p12"
+keyStorePasswordPath = "/mnt/csi/secret-organization-management/KEYSTORE_PASSWORD"
