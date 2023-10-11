@@ -38,7 +38,7 @@ spec:
               memory: 400Mi
           envFrom:
             - configMapRef:
-                name: env-dp-cicd
+                name: env-dp-cicd-temp
             - configMapRef:
                 name: cm-dp-cicd-temp
           env:
