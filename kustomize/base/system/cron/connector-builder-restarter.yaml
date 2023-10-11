@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: connector-builder-rollout-restarter
 spec:
-  schedule: '*/10 * * * *'
+  schedule: '0 0 * * *'
   jobTemplate:
     spec:
       template:
