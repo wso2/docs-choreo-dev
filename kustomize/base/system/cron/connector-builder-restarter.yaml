@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: kubectl-executor
+  name: connector-builder-kubectl-executor-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: c-builder-kubectl-executor
+  name: connector-builder-kubectl-executor-role
 rules:
   - apiGroups: ["apps"]
     resources: ["deployments"]
@@ -17,13 +17,13 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: deployment-restarter-binding
+  name: connector-builder-restarter-binding
 subjects:
   - kind: ServiceAccount
-    name: kubectl-executor
+    name: connector-builder-kubectl-executor-sa
 roleRef:
   kind: Role
-  name: c-builder-kubectl-executor
+  name: connector-builder-kubectl-executor-role
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: batch/v1
@@ -36,7 +36,7 @@ spec:
     spec:
       template:
         spec:
-          serviceAccountName: kubectl-executor
+          serviceAccountName: connector-builder-kubectl-executor-sa
           containers:
             - name: connector-builder-restart-cron
               image: choreocontrolplane.azurecr.io/bitnami/kubectl:1.27.5
