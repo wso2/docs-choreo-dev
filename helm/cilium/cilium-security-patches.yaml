@@ -28,14 +28,35 @@ spec:
             capabilities:
               drop:
               - ALL
+          resources:
+            limits:
+              cpu: 150m
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
         - name: mount-cgroup
           securityContext:
             readOnlyRootFilesystem: true
             allowPrivilegeEscalation: false
+          resources:
+            limits:
+              cpu: 150m
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
         - name: apply-sysctl-overwrites
           securityContext:
             readOnlyRootFilesystem: true
             allowPrivilegeEscalation: false
+          resources:
+            limits:
+              cpu: 150m
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
         - name: mount-bpf-fs
           securityContext:
             runAsNonRoot: true
@@ -45,6 +66,13 @@ spec:
               drop:
                 - ALL
             privileged: true
+          resources:
+            limits:
+              cpu: 150m
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
         - name: wait-for-node-init
           securityContext:
             runAsNonRoot: true
@@ -54,6 +82,13 @@ spec:
             capabilities:
               drop:
                 - ALL
+          resources:
+            limits:
+              cpu: 150m
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
         - name: clean-cilium-state
           securityContext:
             runAsNonRoot: true
