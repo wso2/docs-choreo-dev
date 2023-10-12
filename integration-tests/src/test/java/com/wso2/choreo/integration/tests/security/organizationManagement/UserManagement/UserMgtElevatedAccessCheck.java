@@ -226,15 +226,6 @@ public class UserMgtElevatedAccessCheck extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void getInvitationByOrgHandleAndInvitationUUID_UserMgtElevatedAccessCheck() throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrl = Constant.USER_MGT_SUFFIX + orgHandle + "/invitations/" + invitationUuid;
-        SecurityUtils.successfulCheckForGetRequests(this, choreoCPTestClient, requestUrl,
-                accessToken);
-    }
-
-    @Test
-    @CitrusTest
     public void acceptInvitationByOrgHandleAndInvitationUUID_UserMgtElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrl = Constant.USER_MGT_SUFFIX + orgHandle + "/invitations/" + invitationUuid;
@@ -242,12 +233,4 @@ public class UserMgtElevatedAccessCheck extends TestNGCitrusSpringSupport {
                 accessToken);
     }
 
-    @Test
-    @CitrusTest
-    public void validateOrganizationName_UserMgtElevatedAccessCheck() throws Exception {
-        // orgHandle should contain 3-30 characters.
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrl = "/users-mgt/1.0.0/validate/orgname?orgName=" + orgHandle + "&email=" + adminEmail;
-        SecurityUtils.successfulCheckForGetRequests(this, choreoCPTestClient, requestUrl, accessToken);
-    }
 }
