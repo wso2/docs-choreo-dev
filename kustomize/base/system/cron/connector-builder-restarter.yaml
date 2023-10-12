@@ -9,6 +9,9 @@ spec:
   jobTemplate:
     spec:
       template:
+        metadata:
+          annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
         spec:
           securityContext:
             seccompProfile:
