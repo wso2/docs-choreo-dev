@@ -195,9 +195,30 @@ export class APIDevelop {
     cy.get("button").contains("Save").click();
   }
 
+  static toggleSecurity(resourcePath: string, verb: string) {
+    this.selectSecurity();
+
+    const header = this.getHeader(resourcePath, verb.toUpperCase());
+
+    cyGet(header).eq(0).click();
+    cy.get('[data-testid="security"]').click();
+
+    cy.get('[data-cyid="security-save-button"]').click();
+  }
+
+  private static selectSecurity() {
+    let selector = '[data-cyid="develop-security"]';
+
+    this.expandSecondaryMenu(selector);
+  }
+
   private static selectDevelop() {
     let selector = '[data-cyid="develop-resources"]';
 
+    this.expandSecondaryMenu(selector);
+  }
+
+  private static expandSecondaryMenu(selector: string) {
     cy.get("body").then((bdy) => {
       // Secondary menu is collapsed
       if (bdy.find(selector).length == 0) {
