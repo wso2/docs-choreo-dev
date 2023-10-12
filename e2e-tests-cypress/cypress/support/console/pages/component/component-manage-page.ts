@@ -290,7 +290,9 @@ export class ComponentAPILifecycle {
     cy.get('div[role="combobox"]').eq(1).click();
     cy.get(`ul[id="Select List-popup"]>li`).contains(visibility).click();
     cy.get('[data-testid="info-banner"]').should("be.visible");
-    cy.get('[data-cyid="confirmation-dialog-primary-action-button"]').wait(100).realClick();
+    cy.get('[data-cyid="confirmation-dialog-primary-action-button"]')
+      .wait(100)
+      .realClick();
     this.verifyAPIVisibility(visibility);
     cy.log("Successfully updated the API visibility");
   }
@@ -301,7 +303,9 @@ export class ComponentAPILifecycle {
       .click();
     cy.contains(accessMode).should("exist").realClick();
     cyGet('[data-testid="warning-banner"]').should("be.visible");
-    cyGet('[data-cyid="confirmation-dialog-primary-action-button"]').should("exist").click();
+    cyGet('[data-cyid="confirmation-dialog-primary-action-button"]')
+      .should("exist")
+      .click();
     cy.contains(
       `Successfully converted to an ${accessMode.toLowerCase()} API.`
     ).should("be.visible");
@@ -393,7 +397,7 @@ export class ComponentAPILifecycle {
   }
 
   static saveAndDeployPermissions(componentName: string) {
-    cy.get('[data-testid="scope-save-and-deploy-btn"]').click();
+    cy.get('[data-cyid="scope-save-and-deploy-button"]').click();
     cy.contains("Permissions(Scopes) assigned successfully").wait(1000);
     cy.contains(`Deployed the component ${componentName}`).wait(10000);
   }
