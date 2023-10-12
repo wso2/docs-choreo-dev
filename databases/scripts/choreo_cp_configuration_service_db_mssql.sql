@@ -6,7 +6,7 @@
 -- You may not alter or remove any copyright or other notice from copies of this content.
 
 -- Create configuration groups table
-CREATE TABLE [dbo].[configuration_groups] (
+CREATE TABLE configuration_groups (
   [id] [int] IDENTITY(1,1) NOT NULL,
   [group_uuid] [nvarchar](50) NOT NULL,
   [group_name] [nvarchar](255) NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE [dbo].[configuration_groups] (
 );
 
 -- Create configuration scopes table
-CREATE TABLE [dbo].[configuration_scopes] (
+CREATE TABLE configuration_scopes (
   [id] [int] IDENTITY(1,1) NOT NULL,
   [deployment_track_uuid] [nvarchar](50) DEFAULT NULL,
   [component_uuid] [nvarchar](50) DEFAULT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE [dbo].[configuration_scopes] (
 );
 
 -- Create configuration keys table
-CREATE TABLE [dbo].[configuration_keys] (
+CREATE TABLE configuration_keys (
   [id] [int] IDENTITY(1,1) NOT NULL,
   [key_uuid] [nvarchar](50) NOT NULL,
   [key_name] [nvarchar](255) NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE [dbo].[configuration_keys] (
 );
 
 -- Create configuration values table
-CREATE TABLE [dbo].[configuration_values] (
+CREATE TABLE configuration_values (
   [id] [int] IDENTITY(1,1) NOT NULL,
   [value_ref] [nvarchar](255) NOT NULL,
   [key_id] [int] NOT NULL,
