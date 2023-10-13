@@ -2,8 +2,7 @@ query {
       changeLeadTimes (
             startTime: "{{startTime}}",
             endTime: "{{endTime}}",
-            granularity: WEEKLY,
-            projectId: "{{projectId}}"
+            granularity: WEEKLY
         ) {
           timestamp
           leadTime

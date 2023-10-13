@@ -80,7 +80,6 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
         Map<String, String> params = new HashMap<>();
         params.put("startTime", startTime);
         params.put("endTime", endTime);
-        params.put("projectId", projectId);
         String body = MessageUtils.generateStringFromTemplate("templates/deliveryInsights/" +
                 "queryForPostDeploymentsTimeSeriesData.mustache", params);
         SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
@@ -112,7 +111,6 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
         Map<String, String> params = new HashMap<>();
         params.put("startTime", startTime);
         params.put("endTime", endTime);
-        params.put("projectId", projectId);
         String body = MessageUtils.generateStringFromTemplate("templates/deliveryInsights/" +
                 "queryForPostLeadTimeSummaryData.mustache", params);
         SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
@@ -158,7 +156,7 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
                 requestUrlForUpdateIncidentConfigRejectorCriteria, body, accessToken);
     }
 
-    @Test
+    @Test(dependsOnMethods = {"addIncidentScrapperConfigurations_DeliveryInsightsElevatedAccessCheck"})
     @CitrusTest
     public void getScraperConfigurations_DeliveryInsightsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
@@ -176,7 +174,6 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
         Map<String, String> params = new HashMap<>();
         params.put("startTime", startTime);
         params.put("endTime", endTime);
-        params.put("projectId", projectId);
         String body = MessageUtils.generateStringFromTemplate("templates/deliveryInsights/" +
                 "queryForPostFailureRateSummary.mustache", params);
         SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
@@ -191,7 +188,6 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
         Map<String, String> params = new HashMap<>();
         params.put("startTime", startTime);
         params.put("endTime", endTime);
-        params.put("projectId", projectId);
         String body = MessageUtils.generateStringFromTemplate("templates/deliveryInsights/" +
                 "queryForPostFailureRateDetails.mustache", params);
         SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
@@ -206,7 +202,6 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
         Map<String, String> params = new HashMap<>();
         params.put("startTime", startTime);
         params.put("endTime", endTime);
-        params.put("projectId", projectId);
         String body = MessageUtils.generateStringFromTemplate("templates/deliveryInsights/" +
                 "queryForPostRecoveryTimeDetails.mustache", params);
         SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
@@ -276,7 +271,7 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
                 requestUrlForPostActiveDeveloperCount, body, accessToken);
     }
 
-    @Test
+    @Test(dependsOnMethods = {"getScraperConfigurations_DeliveryInsightsElevatedAccessCheck"})
     @CitrusTest
     public void deleteScraperConfigs_DeliveryInsightsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
