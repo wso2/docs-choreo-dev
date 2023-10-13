@@ -9,7 +9,7 @@
 IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_configuration_service_admin_db_user')
 BEGIN
     CREATE USER [choreo_configuration_service_admin_db_user] with password = N'xxxxxxxxxxxxx'
-    GRANT ALTER, SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_configuration_service_db TO choreo_configuration_service_admin_db_user
+    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_configuration_service_db TO choreo_configuration_service_admin_db_user
 END;
 GO
 
