@@ -2,8 +2,7 @@ query {
       meanTimesToRecovery (
             startTime: "{{startTime}}",
             endTime: "{{endTime}}",
-            granularity: WEEKLY,
-            projectId: "{{projectId}}"
+            granularity: WEEKLY
         ) {
           timestamp
           recoveryTime

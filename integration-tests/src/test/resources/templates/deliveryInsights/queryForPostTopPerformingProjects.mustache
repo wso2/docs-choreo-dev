@@ -4,9 +4,10 @@ query {
             endTime: "{{endTime}}",
         ) {
           projectId,
+          deployments,
+          leadTime,
           recoveryTime,
           failureRate,
-          score,
-          leadTime
+          score
         }
       }
