@@ -253,6 +253,11 @@ export class ComponentAPILifecycle {
       .click({ force: true });
   }
 
+  static disableResourceSecurity(resource: string) {
+    cyGet(`[id="panel-/${resource}/get-header"]`).scrollIntoView().click();
+    cy.get(`[data-testid="security"]`).scrollIntoView().click();
+  }
+
   static applyConfiguration() {
     cy.get('[data-cyid="btn-save-settings-button"]').click();
     cy.get("button").contains("Apply").click().wait(2000);

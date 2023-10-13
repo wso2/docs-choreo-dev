@@ -105,7 +105,8 @@ describe(`Verify internal api functionality`, () => {
 
   it("Add resources & disable security", () => {
     APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
-    APIDevelop.toggleSecurity(OPERATION_USERS, Enums.HTTPMethod.GET);
+    // Commenting this for now, need to enable this when API Configuration streamlining is no longer in feature preview
+    // APIDevelop.toggleSecurity(OPERATION_USERS, Enums.HTTPMethod.GET);
   });
 
   it("Deploy api to dev", () => {
@@ -116,6 +117,34 @@ describe(`Verify internal api functionality`, () => {
   it("Verify REST API component promote to PROD", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.promoteProxyApiToProd();
+  });
+
+  it("Apply disable security config in DEV", () => {
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.selectSetting();
+    ComponentAPILifecycle.selectResources();
+    ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
+    ComponentAPILifecycle.selectRevision(Enums.Environment.DEVELOPMENT);
+    ComponentAPILifecycle.editResource();
+    ComponentAPILifecycle.selectResources();
+    ComponentAPILifecycle.disableResourceSecurity(OPERATION_USERS);
+    ComponentAPILifecycle.applyConfiguration();
+    ComponentAPILifecycle.verifyDevRevision().should(
+      "eq",
+      Enums.Environment.DEVELOPMENT
+    );
+  });
+
+  it("Apply disable security config in PROD", () => {
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.selectSetting();
+    ComponentAPILifecycle.selectResources();
+    ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
+    ComponentAPILifecycle.selectRevision(Enums.Environment.PRODUCTION);
+    ComponentAPILifecycle.editResource();
+    ComponentAPILifecycle.selectResources();
+    ComponentAPILifecycle.disableResourceSecurity(OPERATION_USERS);
+    ComponentAPILifecycle.applyConfiguration();
   });
 
   it("Copy endpoint url", () => {
