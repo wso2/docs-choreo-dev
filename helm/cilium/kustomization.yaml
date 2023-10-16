@@ -66,6 +66,9 @@ helmCharts:
           repository: choreocontrolplane.azurecr.io/cilium/operator
           useDigest: false
           pullPolicy: "Always"
+        podDisruptionBudget:
+          enabled: true
+          minAvailable: "50%"
       resources:
         limits:
           cpu: 4000m
@@ -114,5 +117,6 @@ commonAnnotations:
 patchesStrategicMerge:
   - cilium-node-init-security-patches.yaml
   - cilium-operator-security-patches.yaml
+  - cilium-operator-hpa.yaml
   - cilium-security-patches.yaml
   - hubble-relay-security-patches.yaml
