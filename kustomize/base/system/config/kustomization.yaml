@@ -330,6 +330,7 @@ configMapGenerator:
       - DEV_PORTAL_SERVICE_PORT=80
       - DEV_PORTAL_SERVICE_PATH=/
       - RUDDER_URL="http://dp-rudder:80" # This is for the rudder-migration-service, remove this when removing that
+      - CONFIGURATION_MGT_URL="http://configuration-service:8080"
   - name: cm-console-next
     behavior: create
     literals:
