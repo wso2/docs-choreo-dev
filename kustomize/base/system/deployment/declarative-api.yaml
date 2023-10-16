@@ -64,6 +64,10 @@ spec:
             capabilities:
               drop:
                 - ALL
+          volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
       affinity:
