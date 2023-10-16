@@ -71,6 +71,28 @@ public class SecurityUtils {
                 .type(MessageType.JSON));
     }
 
+    public static void elevatedAccessCheckForForbiddenPostRequests(TestActionRunner runner, HttpClient client,
+                                                          String requestUrl, String body, String accessToken) throws IOException {
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(requestUrl)
+                .message()
+                .header(HttpHeaders.ACCEPT, "*/*")
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, "application/json")
+                .header(Constant.X_CLOUD_TYPE, "choreo")
+                .body(body));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.FORBIDDEN)
+                .message()
+                .type(MessageType.JSON));
+    }
+
+
+
     public static void elevatedAccessCheckForPutRequests(TestActionRunner runner, HttpClient client,
                                                           String requestUrl, String body, String accessToken) throws IOException {
         runner.$(http()
