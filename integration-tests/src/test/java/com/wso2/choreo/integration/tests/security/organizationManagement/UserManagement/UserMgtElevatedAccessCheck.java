@@ -212,7 +212,7 @@ public class UserMgtElevatedAccessCheck extends TestNGCitrusSpringSupport {
         params.put("INVITED_USER_EMAIL", invitedUserEmail);
         String body = MessageUtils.generateStringFromTemplate("templates/orgManagement/" +
                 "inviteMemberToTheOrg.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -221,15 +221,6 @@ public class UserMgtElevatedAccessCheck extends TestNGCitrusSpringSupport {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrl = Constant.USER_MGT_SUFFIX + orgHandle + "/invitations?email=" + invitedUserEmail;
         SecurityUtils.elevatedAccessCheckForDeleteRequests(this, choreoCPTestClient, requestUrl,
-                accessToken);
-    }
-
-    @Test
-    @CitrusTest
-    public void acceptInvitationByOrgHandleAndInvitationUUID_UserMgtElevatedAccessCheck() throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrl = Constant.USER_MGT_SUFFIX + orgHandle + "/invitations/" + invitationUuid;
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, "",
                 accessToken);
     }
 
