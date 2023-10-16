@@ -37,7 +37,7 @@ CREATE TABLE configuration_scopes (
   [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
   [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  CONSTRAINT [configuration_scopes$group_id_fk] FOREIGN KEY (group_id) REFERENCES [dbo].[configuration_groups](id)
+  CONSTRAINT [configuration_scopes$group_id_fk] FOREIGN KEY (group_id) REFERENCES configuration_groups(id)
 );
 
 -- Create configuration keys table
@@ -52,7 +52,7 @@ CREATE TABLE configuration_keys (
   [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   CONSTRAINT [configuration_keys$key_uuid_unique] UNIQUE (key_uuid),
-  CONSTRAINT [configuration_keys$group_id_fk] FOREIGN KEY (group_id) REFERENCES [dbo].[configuration_groups](id)
+  CONSTRAINT [configuration_keys$group_id_fk] FOREIGN KEY (group_id) REFERENCES configuration_groups(id)
 );
 
 -- Create configuration values table
