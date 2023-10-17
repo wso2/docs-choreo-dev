@@ -576,3 +576,7 @@ configMapGenerator:
     files:
       - app-dev-user-mgt-service/application.properties
       - app-dev-user-mgt-service/log4j2.yaml
+  - name: cm-file-endpoint-resolver
+    behavior: create
+    files:
+      - cp-endpoint-resolver/Config.toml

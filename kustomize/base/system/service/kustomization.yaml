@@ -50,3 +50,4 @@ resources:
   - resource-registry-service.yaml
   - marketplace.yaml
   - dp-cicd-temp.yaml
+  - cp-endpoint-resolver.yaml
