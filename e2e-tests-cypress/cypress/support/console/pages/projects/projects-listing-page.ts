@@ -27,12 +27,15 @@ export class ProjectListingPage {
   ) {
     ChoreoHomePage.navigateToHome();
     this.checkProjectCardCreation();
-    cy.get('[name="Name"]').clear().type(projectName);
-    cy.get('[name="Description"]').clear().type(description);
-    cy.get('[data-cyid="select-region-select"]').click();
-    cy.contains(`Cloud Data Plane - ${dataPlane}`).click();
-    Utils.getRenderedElement('[data-testid="create-version-create"]').click();
-    cy.get('[data-testid="create-version-create"]').should("not.exist");
+    cy.get('[data-cyid="project-name"]').clear().type(projectName);
+    cy.get('[data-cyid="project-description"]').clear().type(description);
+    cy.get('[data-testid="Multi Repository-radio-card"]').click();
+    Utils.getRenderedElement(
+      '[data-cyid="create-project-stepper-submit-button"]'
+    ).click();
+    cy.get('[data-cyid="create-project-stepper-submit-button"]').should(
+      "not.exist"
+    );
     ProjectOverviewPage.waitForTemplateCardsToLoad();
   }
 
@@ -65,8 +68,8 @@ export class ProjectListingPage {
 
     cy.log("Verify the PopUP is displayed");
     cy.get("body").then((bdy) => {
-      if (bdy.find('[data-testid="create-version-create"]').length > 0) {
-        cy.get('[data-testid="create-version-create"]').should("be.visible");
+      if (bdy.find('[data-cyid="project-name"]').length > 0) {
+        cy.get('[data-cyid="project-name"]').should("be.visible");
         return;
       } else {
         this.getCreateNewProjectPopUp(retryCount);
