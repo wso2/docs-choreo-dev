@@ -1,4 +1,4 @@
-[choreo.cp.graphql.config]
+[cp_declarative_api.config]
 servicePort = 8080
 internalHealthCheckPort = 8081
 maxHeaderSize = 65536
