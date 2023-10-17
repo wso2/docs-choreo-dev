@@ -88,6 +88,9 @@ helmCharts:
     version: 1.13.0
     repo: oci://choreocontrolplane.azurecr.io/helm
 
+resources:
+  - cilium-operator-hpa.yaml
+
 commonAnnotations:
   kapp.k14s.io/disable-original: ""
   kapp.k14s.io/disable-default-label-scoping-rules: ""
@@ -108,6 +111,5 @@ commonAnnotations:
 patchesStrategicMerge:
   - cilium-node-init-security-patches.yaml
   - cilium-operator-security-patches.yaml
-  - cilium-operator-hpa.yaml
   - cilium-security-patches.yaml
   - hubble-relay-security-patches.yaml
