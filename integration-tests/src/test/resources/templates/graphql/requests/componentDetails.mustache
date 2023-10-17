@@ -1,8 +1,8 @@
 {
   "query": "query {
     component(
-      projectId: "{{projectId}}"
-      componentHandler: "{{componentHandler}}"
+      projectId: \"{{projectId}}\",
+      componentHandler: \"{{componentHandler}}\"
     ) {
       id
       name
@@ -22,6 +22,7 @@
       httpBased
       isMigrationCompleted
       repository {
+        bitbucketServerUrl
         gitProvider
         nameApp
         nameConfig
@@ -52,6 +53,11 @@
           packageManagerVersion
           outputDirectory
         }
+        testRunnerConfig {
+          dockerContext
+          postmanDirectory
+          testRunnerType
+        }
       }
       apiVersions {
         apiVersion
@@ -77,6 +83,17 @@
             gitOpsHash
           }
         }
+      }
+      deploymentTracks {
+        id
+        createdAt
+        updatedAt
+        apiVersion
+        branch
+        description
+        componentId
+        latest
+        versionStrategy
       }
     }
   }"

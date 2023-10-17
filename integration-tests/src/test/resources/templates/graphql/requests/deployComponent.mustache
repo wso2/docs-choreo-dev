@@ -1,16 +1,18 @@
-mutation {
-  deployComponent(
-    deployment: {
-      componentId: "{{componentId}}"
-      versionId: "{{latestVersionId}}"
-      envId: "{{devEnvIdToDeploy}}"
-      branch: "{{branch}}"
-      sha: "{{sha}}"
-      cron:""
-      shaDate: "{{shaDate}}"
+{
+  "query": "mutation {
+    deployComponent(
+      deployment: {
+        componentId: \"{{componentId}}\"
+        versionId: \"{{latestVersionId}}\"
+        envId: \"{{devEnvIdToDeploy}}\"
+        branch: \"{{branch}}\"
+        sha: \"{{sha}}\"
+        cron: \"\"
+        shaDate: \"{{shaDate}}\"
+      }
+    ) {
+      message
+      success
     }
-  ) {
-    message
-    success
-  }
+  }"
 }

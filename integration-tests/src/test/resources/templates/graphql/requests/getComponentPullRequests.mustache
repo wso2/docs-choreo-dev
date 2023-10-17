@@ -1,4 +1,9 @@
-query{
-    componentPullRequests(componentId: "{{componentId}}")
-        {url, number}
+{
+    "query": "query {
+        componentPullRequests (componentId: \"{{componentId}}\")
+        {
+            url
+            number
+        }
+    }"
 }
