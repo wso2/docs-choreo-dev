@@ -1,0 +1,10 @@
+[cp_configuration_service.config]
+configServerPort = 8080
+internalHealthCheckPort = 8081
+externalHealthCheckPort = 8082
+maxHeaderSize = 65536
+rudderServiceUrl = "http://dp-rudder:80"
+secretManagerUrl = "http://dp-secret-manager:80"
+dbHost = "{{.DB_HOST}}"
+dbUsername = "{{.DB_USERNAME}}"
+dbPasswordPath = "/mnt/csi/secret-configuration-service/CONFIGURATION_SERVICE_DB_PASSWORD"
