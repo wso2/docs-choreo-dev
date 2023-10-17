@@ -108,6 +108,7 @@ commonAnnotations:
   checkov.io/skip11: CKV_K8S_38=Risk accepted for multiple Cilium workloads as it is not an issue
   checkov.io/skip12: CKV_K8S_39=Risk accepted for multiple Cilium workloads as it cannot be fixed
   checkov.io/skip13: CKV_K8S_40=Risk accepted for multiple Cilium workloads as it cannot be fixed
+  checkov.io/skip14: CKV_K8S_AZURE_WSO2_2=LinkerD is not needed for cilium
 
 patchesStrategicMerge:
   - cilium-node-init-security-patches.yaml
