@@ -1,0 +1,5 @@
+[authz_management_service.config]
+dbPasswordFilePath="/mnt/csi/secret-appdev-authorization/APPDEV_AUTHZ_DB_PASSWORD"
+
+[ballerina.log]
+level = "{{.LOG_LEVEL | default "INFO"}}"
