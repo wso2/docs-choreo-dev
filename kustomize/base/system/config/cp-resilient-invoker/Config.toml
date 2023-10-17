@@ -1,7 +1,9 @@
-[cp.resilient_invocation_service]
-servicePort = 9090
+[cp.resilient_invoker]
+healthCheckPort = 9090
+invocationScheduleInterval = 10.0
+invocationCleanupInterval = 3600.0
 
-[cp.resilient_invocation_service.repository]
+[cp.resilient_invoker.repository]
 host = "{{.MSSQL_HOST}}"
 port  = 1433
 user = "choreo_cp_ris_db_user"
