@@ -2,7 +2,7 @@
 
 Choreo insights allow you to generate custom reports to view the information that is important to you to make timely decisions for the betterment of your business. With custom reports, you can generate reports for a set of metrics of your choice and aggregate results by specific fields. Once generated, the metrics can be filtered out using any selected group-by filters. Custom reports support three visualizations: overtime charts, pie charts, and tables.
 
-## Metrics
+## Metrics 
 
 Choreo Insights allow you to retrieve data for the following metrics:
 
