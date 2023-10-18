@@ -94,6 +94,8 @@ spec:
             - name: secret-apim
               mountPath: /mnt/csi/secret-apim
               readOnly: true
+            - name: log-volume
+              mountPath: logs
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connect-global-adapter-v2:latest
           imagePullPolicy: Always
           securityContext:
@@ -163,6 +165,8 @@ spec:
             initialDelaySeconds: 120
             periodSeconds: 5
       volumes:
+        - name: log-volume
+          emptyDir: {}
         - name: global-adapter-keystore-vol
           configMap:
             name: global-adapter-keystore-vol
