@@ -9,12 +9,12 @@ spec:
     - name: health-port
       port: 9090
       targetPort: health-port
-    - name: internal-service-port
+    - name: internal-port
       port: 9091
-      targetPort: internal-service-port
-    - name: public-service-port
+      targetPort: internal-port
+    - name: public-port
       port: 9092
-      targetPort: public-service-port
+      targetPort: public-port
 
   selector:
     choreo.component: cp-sis
