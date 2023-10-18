@@ -389,6 +389,10 @@ configMapGenerator:
     behavior: create
     files:
       - cp-graphql/Config.toml
+  - name: cm-file-configuration-service
+    behavior: create
+    files:
+      - configuration-service/Config.toml
   - name: cm-file-declarative-api
     behavior: create
     files:

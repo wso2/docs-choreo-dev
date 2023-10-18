@@ -67,7 +67,26 @@ spec:
             capabilities:
               drop:
                 - ALL
+          volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
+            - name: secret-configuration-service
+              mountPath: "/mnt/csi/secret-configuration-service"
+              readOnly: true
       restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: cm-file-configuration-service
+        - name: secret-configuration-service
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-configuration-service
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
