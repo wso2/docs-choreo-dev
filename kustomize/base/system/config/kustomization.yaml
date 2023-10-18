@@ -389,6 +389,10 @@ configMapGenerator:
     behavior: create
     files:
       - cp-graphql/Config.toml
+  - name: cm-file-declarative-api
+    behavior: create
+    files:
+      - declarative-api/Config.toml
   - name: cm-file-moesif-service
     behavior: create
     files:
