@@ -4,7 +4,6 @@ metadata:
   labels:
     choreo.component: cp-sis
   name: cp-sis
-  namespace: choreo-system
 spec:
   ports:
     - name: health-port
