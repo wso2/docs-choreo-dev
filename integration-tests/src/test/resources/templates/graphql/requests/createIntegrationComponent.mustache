@@ -1,22 +1,21 @@
-{
-  "query": "mutation {
+mutation {
     createIntegrationComponent(
        component: {
-          name: \"{{componentName}}\",
-          displayName: \"{{componentName}}\",
-          description: \"\",
+          name: "{{componentName}}",
+          displayName: "{{componentName}}",
+          description: "",
           orgId: {{orgId}},
-          orgHandler: \"{{orgHandler}}\",
-          projectId: \"{{projectId}}\",
-          labels: \"\",
-          componentType: \"miApiService\",
-          accessibility: \"external\",
-          srcGitRepoUrl: \"{{srcGitRepoUrl}}\",
-          srcGitRepoBranch: \"main\",
-          repositorySubPath: \"{{repositorySubPath}}\",
-          oasFilePath: \"\",
-          version: \"1.0.0\",
-          secretRef: \"\"
+          orgHandler: "{{orgHandler}}",
+          projectId: "{{projectId}}",
+          labels: "",
+          componentType: "miApiService",
+          accessibility: "external",
+          srcGitRepoUrl: "{{srcGitRepoUrl}}",
+          srcGitRepoBranch: "main",
+          repositorySubPath: "{{repositorySubPath}}",
+          oasFilePath: "",
+          version: "1.0.0",
+          secretRef: ""
         }
       ) {
         id
@@ -24,5 +23,4 @@
         projectId
         handle
       }
-  }"
-}
+  }

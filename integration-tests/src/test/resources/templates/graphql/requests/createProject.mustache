@@ -1,23 +1,15 @@
-{
-    "query": "mutation {
-        createProject(
+mutation{
+    createProject(
             project: {
-                name: \"{{name}}\",
-                description: \"{{description}}\",
+                name: "{{name}}",
+                description: "{{description}}",
                 orgId: {{orgId}},
-                orgHandler: \"{{orgHandler}}\",
-                version: \"1.0.0\",
-                region: \"{{region}}\"
+                orgHandler: "{{orgHandler}}",
+                version: "1.0.0",
+                region:"{{region}}"
             }
-        )
+    )
         {
-            id
-            orgId
-            name
-            version
-            createdDate
-            handler
-            region
+        id, orgId, name, version, createdDate, handler,region
         }
-    }"
 }

@@ -1,17 +1,14 @@
-{
-    "query": "mutation {
-        createVersion(
-            orgHandler: \"{{orgHandler}}\",
-            orgUuid: \"{{orgUuid}}\",
-            version: \"2.0.0\",
-            componentId: \"{{componentId}}\",
-            componentType: \"{{componentType}}\",
-            apiId: \"{{apiId}}\",
-            branch: \"{{branch}}\"
-        )
-        {
-            id
-            apiVersion
-        }
-    }"
+mutation {
+  createVersion(
+    orgHandler: "{{orgHandler}}"
+    orgUuid: "{{orgUuid}}"
+    version: "2.0.0"
+    componentId: "{{componentId}}"
+    componentType: "{{componentType}}"
+    apiId: "{{apiId}}"
+    branch: "{{branch}}"
+  ) {
+    id
+    apiVersion
+  }
 }
