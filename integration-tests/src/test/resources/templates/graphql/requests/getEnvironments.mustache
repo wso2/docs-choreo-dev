@@ -1,16 +1,18 @@
-query {
-        environments(
-        orgUuid:"{{orgUuid}}",
-        projectId: "{{projectId}}"
-        ) {
-          organizationUuid,
-          orgShared,
-          name,
-          description,
-          id,
-          choreoEnv,
-          projectId,
-          promoteFrom,
-          namespace,
-        }
-      }
+{
+  "query": "query {
+    environments(
+    orgUuid: \"{{orgUuid}}\",
+    projectId: \"{{projectId}}\"
+    ) {
+      organizationUuid,
+      orgShared,
+      name,
+      description,
+      id,
+      choreoEnv,
+      projectId,
+      promoteFrom,
+      namespace,
+    }
+  }"
+}

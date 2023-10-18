@@ -26,6 +26,9 @@ resources:
   - dp-garbage-collector.yaml
   - dp-mizzen.yaml
   - cp-graphql.yaml
+  - cp-resilient-invoker.yaml
+  - cp-ris.yaml
+  - cp-sis.yaml
   - configuration-service.yaml
   - console-next.yaml
   - alert-notification-service.yaml
@@ -49,3 +52,4 @@ resources:
   - dp-helmhub.yaml
   - resource-registry-service.yaml
   - marketplace.yaml
+  - cp-endpoint-resolver.yaml

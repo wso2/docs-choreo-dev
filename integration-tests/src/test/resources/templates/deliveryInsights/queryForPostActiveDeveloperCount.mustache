@@ -1,9 +1,11 @@
-query {
-      activeDevelopersCount (
-            startTime: "{{startTime}}",
-            endTime: "{{endTime}}"
-        ) {
-          activeDevelopers
-          totalDevelopers
-        }
-      }
+{
+  "query": "query {
+    activeDevelopersCount(
+      startTime: \"{{startTime}}\",
+      endTime: \"{{endTime}}\"
+      ) {
+      activeDevelopers
+      totalDevelopers
+    }
+  }"
+}

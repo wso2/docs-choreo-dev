@@ -4,18 +4,19 @@ metadata:
   annotations:
     checkov.io/skip1: CKV_K8S_38=Required by LinkerD
   labels:
-    choreo.component: declarative-api
-  name: declarative-api
+    choreo.component: cp-sis
+  name: cp-sis
 spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: declarative-api
+      choreo.component: cp-sis
+  strategy: { }
   template:
     metadata:
       labels:
-        choreo.component: declarative-api
-        antiaffinity: declarative-api
+        choreo.component: cp-sis
+        antiaffinity: cp-sis
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -24,21 +25,29 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: declarative-api
-          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-cp-declarative-api:latest
+        - name: cp-sis
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-cp-sis:latest
+          env:
+            - name: CP_SIS_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-cp-sis
+                  key: CP_SIS_DB_PASSWORD
           ports:
-            - containerPort: 8080
-              name: service-port
-            - containerPort: 8081      # To be used for readiness/liveness probes (internal)
-              name: health
+            - containerPort: 9090
+              name: health-port
+            - containerPort: 9091
+              name: internal-port
+            - containerPort: 9092
+              name: public-port
           readinessProbe:
-            initialDelaySeconds: 5
+            initialDelaySeconds: 60
             timeoutSeconds: 15
             periodSeconds: 10
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              port: health
+              port: health-port
               path: /readiness
           livenessProbe:
             initialDelaySeconds: 30
@@ -47,15 +56,15 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              port: health
+              port: health-port
               path: /liveness
           resources:
             limits:
-              cpu: 200m
-              memory: 300Mi
+              cpu: 300m
+              memory: 768Mi
             requests:
               cpu: 100m
-              memory: 150Mi
+              memory: 500Mi
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 10500
@@ -68,11 +77,22 @@ spec:
             - name: config
               mountPath: /home/ballerina/Config.toml
               subPath: Config.toml
+            - name: secret-cp-sis
+              mountPath: "/mnt/csi/secret-cp-sis"
+              readOnly: true
       restartPolicy: Always
       volumes:
         - name: config
           configMap:
-            name: cm-file-declarative-api
+            name: cm-file-cp-sis
+        - name: secret-cp-sis
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cp-sis
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
@@ -82,5 +102,5 @@ spec:
                   - key: antiaffinity
                     operator: In
                     values:
-                     - declarative-api
+                      - cp-sis
               topologyKey: kubernetes.io/hostname

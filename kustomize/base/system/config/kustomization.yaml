@@ -330,6 +330,7 @@ configMapGenerator:
       - DEV_PORTAL_SERVICE_PORT=80
       - DEV_PORTAL_SERVICE_PATH=/
       - RUDDER_URL="http://dp-rudder:80" # This is for the rudder-migration-service, remove this when removing that
+      - CONFIGURATION_MGT_URL="http://configuration-service:8080"
   - name: cm-console-next
     behavior: create
     literals:
@@ -392,6 +393,10 @@ configMapGenerator:
     behavior: create
     files:
       - configuration-service/Config.toml
+  - name: cm-file-declarative-api
+    behavior: create
+    files:
+      - declarative-api/Config.toml
   - name: cm-file-moesif-service
     behavior: create
     files:
@@ -548,6 +553,10 @@ configMapGenerator:
     behavior: create
     files:
       - marketplace/Config.toml
+  - name: cm-file-cp-resilient-invoker
+    behavior: create
+    files:
+      - cp-resilient-invoker/Config.toml
   - name: cm-file-cp-ris
     behavior: create
     files:
@@ -579,3 +588,11 @@ configMapGenerator:
     files:
       - app-dev-user-mgt-service/application.properties
       - app-dev-user-mgt-service/log4j2.yaml
+  - name: cm-file-appdev-authorization
+    behavior: create
+    files:
+      - app-dev-authorization-service/Config.toml
+  - name: cm-file-endpoint-resolver
+    behavior: create
+    files:
+      - cp-endpoint-resolver/Config.toml

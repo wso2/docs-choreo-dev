@@ -1,9 +1,11 @@
-query {
-      changeFailureRateSummary (
-            startTime: "{{startTime}}",
-            endTime: "{{endTime}}"
-        ) {
-          failureRate,
-          perfLevel
-        }
-      }
+{
+  "query": "query {
+    changeFailureRateSummary(
+      startTime: \"{{startTime}}\",
+      endTime: \"{{endTime}}\"
+    ) {
+      failureRate
+      perfLevel
+    }
+  }"
+}

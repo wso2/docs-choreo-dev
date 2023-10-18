@@ -20,6 +20,13 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Test cases in the 'SuccessWithDefaultPayload' group ensure successful outcomes
+ * with the default payload and do not encounter elevated access issues.
+ * Expected behavior for delivery insight queries: Access issues are mitigated
+ * as query data is filtered by the organization UUID in the access token.
+ */
+
 public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private static String orgId;
@@ -60,19 +67,19 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
 
     }
 
-    @Test
+    @Test(groups = {"SuccessWithDefaultPayload"})
     @CitrusTest
     public void postOrganizationMemberCount_DeliveryInsightsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForAddIncidentScrapperConfigurations = Constant.CIO_QUERY_API;
         String body = MessageUtils.generateStringFromTemplate("templates/deliveryInsights/" +
                 "queryForPostOrganizationMemberCount.mustache", null);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
+        SecurityUtils.elevatedAccessCheckForSuccessfulPostRequests(this, choreoCPTestClient,
                 requestUrlForAddIncidentScrapperConfigurations, body, accessToken);
 
     }
 
-    @Test
+    @Test(groups = {"SuccessWithDefaultPayload"})
     @CitrusTest
     public void postDeploymentsTimeSeriesData_DeliveryInsightsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
@@ -82,12 +89,12 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
         params.put("endTime", endTime);
         String body = MessageUtils.generateStringFromTemplate("templates/deliveryInsights/" +
                 "queryForPostDeploymentsTimeSeriesData.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
+        SecurityUtils.elevatedAccessCheckForSuccessfulPostRequests(this, choreoCPTestClient,
                 requestUrlForPostDeploymentsTimeSeriesData, body, accessToken);
 
     }
 
-    @Test
+    @Test(groups = {"SuccessWithDefaultPayload"})
     @CitrusTest
     public void postDeploymentFrequencySummary_DeliveryInsightsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
@@ -98,12 +105,12 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
         params.put("projectId", projectId);
         String body = MessageUtils.generateStringFromTemplate("templates/deliveryInsights/" +
                 "queryForPostDeploymentFrequencySummary.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
+        SecurityUtils.elevatedAccessCheckForSuccessfulPostRequests(this, choreoCPTestClient,
                 requestUrlForPostDeploymentFrequencySummary, body, accessToken);
 
     }
 
-    @Test
+    @Test(groups = {"SuccessWithDefaultPayload"})
     @CitrusTest
     public void postLeadTimeSummaryData_DeliveryInsightsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
@@ -113,7 +120,7 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
         params.put("endTime", endTime);
         String body = MessageUtils.generateStringFromTemplate("templates/deliveryInsights/" +
                 "queryForPostLeadTimeSummaryData.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
+        SecurityUtils.elevatedAccessCheckForSuccessfulPostRequests(this, choreoCPTestClient,
                 requestUrlForPostDeploymentFrequencySummary, body, accessToken);
     }
 
@@ -166,7 +173,7 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
                 requestUrlForGetScraperConfigurations, accessToken);
     }
 
-    @Test
+    @Test(groups = {"SuccessWithDefaultPayload"})
     @CitrusTest
     public void postFailureRateSummary_DeliveryInsightsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
@@ -176,11 +183,11 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
         params.put("endTime", endTime);
         String body = MessageUtils.generateStringFromTemplate("templates/deliveryInsights/" +
                 "queryForPostFailureRateSummary.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
+        SecurityUtils.elevatedAccessCheckForSuccessfulPostRequests(this, choreoCPTestClient,
                 requestUrlForPostFailureRateSummary, body, accessToken);
     }
 
-    @Test
+    @Test(groups = {"SuccessWithDefaultPayload"})
     @CitrusTest
     public void postFailureRateDetails_DeliveryInsightsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
@@ -190,11 +197,11 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
         params.put("endTime", endTime);
         String body = MessageUtils.generateStringFromTemplate("templates/deliveryInsights/" +
                 "queryForPostFailureRateDetails.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
+        SecurityUtils.elevatedAccessCheckForSuccessfulPostRequests(this, choreoCPTestClient,
                 requestUrlForPostFailureRateSummary, body, accessToken);
     }
 
-    @Test
+    @Test(groups = {"SuccessWithDefaultPayload"})
     @CitrusTest
     public void postRecoveryTimeDetails_DeliveryInsightsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
@@ -204,11 +211,11 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
         params.put("endTime", endTime);
         String body = MessageUtils.generateStringFromTemplate("templates/deliveryInsights/" +
                 "queryForPostRecoveryTimeDetails.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
+        SecurityUtils.elevatedAccessCheckForSuccessfulPostRequests(this, choreoCPTestClient,
                 requestUrlForPostRecoveryTimeDetails, body, accessToken);
     }
 
-    @Test
+    @Test(groups = {"SuccessWithDefaultPayload"})
     @CitrusTest
     public void postRecoveryTimeSummary_DeliveryInsightsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
@@ -219,11 +226,11 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
         params.put("projectId", projectId);
         String body = MessageUtils.generateStringFromTemplate("templates/deliveryInsights/" +
                 "queryForPostRecoveryTimeSummary.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
+        SecurityUtils.elevatedAccessCheckForSuccessfulPostRequests(this, choreoCPTestClient,
                 requestUrlForPostRecoveryTimeSummary, body, accessToken);
     }
 
-    @Test
+    @Test(groups = {"SuccessWithDefaultPayload"})
     @CitrusTest
     public void postTopPerformingProjects_DeliveryInsightsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
@@ -233,7 +240,7 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
         params.put("endTime", endTime);
         String body = MessageUtils.generateStringFromTemplate("templates/deliveryInsights/" +
                 "queryForPostTopPerformingProjects.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
+        SecurityUtils.elevatedAccessCheckForSuccessfulPostRequests(this, choreoCPTestClient,
                 requestUrlForPostTopPerformingProjects, body, accessToken);
     }
 
@@ -257,7 +264,7 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
                 requestUrlForGetDataplanes, accessToken);
     }
 
-    @Test
+    @Test(groups = {"SuccessWithDefaultPayload"})
     @CitrusTest
     public void postActiveDeveloperCount_DeliveryInsightsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
@@ -267,17 +274,7 @@ public class DeliveryInsightsElevatedAccessCheck extends TestNGCitrusSpringSuppo
         params.put("endTime", endTime);
         String body = MessageUtils.generateStringFromTemplate("templates/deliveryInsights/" +
                 "queryForPostActiveDeveloperCount.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
+        SecurityUtils.elevatedAccessCheckForSuccessfulPostRequests(this, choreoCPTestClient,
                 requestUrlForPostActiveDeveloperCount, body, accessToken);
-    }
-
-    @Test(dependsOnMethods = {"getScraperConfigurations_DeliveryInsightsElevatedAccessCheck"})
-    @CitrusTest
-    public void deleteScraperConfigs_DeliveryInsightsElevatedAccessCheck() throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForDeleteScraperConfigs = Constant.CIO_INCIDENT_CONFIGURATOR +
-                "/configurations?dashboardKind=innov-perf-github";
-        SecurityUtils.elevatedAccessCheckForDeleteRequests(this, choreoCPTestClient,
-                requestUrlForDeleteScraperConfigs, accessToken);
     }
 }

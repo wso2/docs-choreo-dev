@@ -10,6 +10,9 @@ resources:
   - connectords.yaml
   - console-next.yaml
   - cp-graphql.yaml
+  - cp-resilient-invoker.yaml
+  - cp-ris.yaml
+  - cp-sis.yaml
   - configuration-service.yaml
   - datacollector.yaml
   - declarative-api.yaml
@@ -49,3 +52,4 @@ resources:
   - dp-helmhub.yaml
   - resource-registry-service.yaml
   - marketplace.yaml
+  - cp-endpoint-resolver.yaml
