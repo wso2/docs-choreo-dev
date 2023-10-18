@@ -11,6 +11,8 @@ resources:
   - console-next.yaml
   - cp-graphql.yaml
   - cp-resilient-invoker.yaml
+  - cp-ris.yaml
+  - cp-sis.yaml
   - configuration-service.yaml
   - datacollector.yaml
   - declarative-api.yaml

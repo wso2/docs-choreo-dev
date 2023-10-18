@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: cp-sis
+  name: cp-sis
+spec:
+  ports:
+    - name: health-port
+      port: 9090
+      targetPort: health-port
+    - name: internal-service-port
+      port: 9091
+      targetPort: internal-service-port
+    - name: public-service-port
+      port: 9092
+      targetPort: public-service-port
+
+  selector:
+    choreo.component: cp-sis
