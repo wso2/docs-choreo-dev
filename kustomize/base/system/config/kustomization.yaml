@@ -580,6 +580,10 @@ configMapGenerator:
     files:
       - app-dev-user-mgt-service/application.properties
       - app-dev-user-mgt-service/log4j2.yaml
+  - name: cm-file-appdev-authorization
+    behavior: create
+    files:
+      - app-dev-authorization-service/Config.toml
   - name: cm-file-endpoint-resolver
     behavior: create
     files:
