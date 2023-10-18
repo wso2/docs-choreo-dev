@@ -1,100 +1,98 @@
-{
-  "query": "query {
-    component(
-      projectId: \"{{projectId}}\",
-      componentHandler: \"{{componentHandler}}\"
-    ) {
-      id
-      name
-      handler
-      description
-      displayType
-      displayName
-      ownerName
-      orgId
-      orgHandler
-      version
-      labels
-      createdAt
-      updatedAt
-      projectId
-      apiId
-      httpBased
-      isMigrationCompleted
-      repository {
-        bitbucketServerUrl
-        gitProvider
-        nameApp
-        nameConfig
-        branch
-        branchApp
-        organizationApp
-        organizationConfig
-        isUserManage
-        appSubPath
-        byocBuildConfig {
-          id
-          isMainContainer
-          containerId
-          componentId
-          repositoryId
-          dockerContext
-          dockerfilePath
-          oasFilePath
-        }
-        byocWebAppBuildConfig {
-          id
-          containerId
-          componentId
-          repositoryId
-          dockerContext
-          webAppType
-          buildCommand
-          packageManagerVersion
-          outputDirectory
-        }
-        testRunnerConfig {
-          dockerContext
-          postmanDirectory
-          testRunnerType
-        }
-      }
-      apiVersions {
-        apiVersion
-        proxyName
-        proxyUrl
-        proxyId
+query {
+  component(
+    projectId: "{{projectId}}"
+    componentHandler: "{{componentHandler}}"
+  ) {
+    id
+    name
+    handler
+    description
+    displayType
+    displayName
+    ownerName
+    orgId
+    orgHandler
+    version
+    labels
+    createdAt
+    updatedAt
+    projectId
+    apiId
+    httpBased
+    isMigrationCompleted
+    repository {
+      bitbucketServerUrl
+      gitProvider
+      nameApp
+      nameConfig
+      branch
+      branchApp
+      organizationApp
+      organizationConfig
+      isUserManage
+      appSubPath
+      byocBuildConfig {
         id
-        state
-        latest
-        branch
-        accessibility
-        appEnvVersions {
-          environmentId
-          releaseId
-          release {
-            id
-            metadata {
-              choreoEnv
-            }
-            environmentId
-            environment
-            gitHash
-            gitOpsHash
-          }
-        }
-      }
-      deploymentTracks {
-        id
-        createdAt
-        updatedAt
-        apiVersion
-        branch
-        description
+        isMainContainer
+        containerId
         componentId
-        latest
-        versionStrategy
+        repositoryId
+        dockerContext
+        dockerfilePath
+        oasFilePath
+      }
+      byocWebAppBuildConfig {
+        id
+        containerId
+        componentId
+        repositoryId
+        dockerContext
+        webAppType
+        buildCommand
+        packageManagerVersion
+        outputDirectory
+      }
+      testRunnerConfig {
+        dockerContext
+        postmanDirectory
+        testRunnerType
       }
     }
-  }"
+    apiVersions {
+      apiVersion
+      proxyName
+      proxyUrl
+      proxyId
+      id
+      state
+      latest
+      branch
+      accessibility
+      appEnvVersions {
+        environmentId
+        releaseId
+        release {
+          id
+          metadata {
+            choreoEnv
+          }
+          environmentId
+          environment
+          gitHash
+          gitOpsHash
+        }
+      }
+    }
+    deploymentTracks {
+      id
+      createdAt
+      updatedAt
+      apiVersion
+      branch
+      description
+      componentId
+      latest
+      versionStrategy
+    }
+  }
 }
