@@ -37,9 +37,9 @@ spec:
             - containerPort: 9090
               name: health-port
             - containerPort: 9091
-              name: internal-service-port
+              name: internal-port
             - containerPort: 9092
-              name: public-service-port
+              name: public-port
           readinessProbe:
             initialDelaySeconds: 60
             timeoutSeconds: 15
