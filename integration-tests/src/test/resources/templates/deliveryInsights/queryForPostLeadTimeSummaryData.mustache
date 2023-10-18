@@ -1,9 +1,11 @@
-query {
-      changeLeadTimeSummary (
-            startTime: "{{startTime}}",
-            endTime: "{{endTime}}"
-        ) {
-          avgLeadTime,
-          perfLevel
-        }
-      }
+{
+  "query": "query {
+    changeLeadTimeSummary(
+      startTime: \"{{startTime}}\",
+      endTime: \"{{endTime}}\"
+    ) {
+      avgLeadTime
+      perfLevel
+    }
+  }"
+}

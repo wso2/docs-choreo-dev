@@ -1,10 +1,12 @@
-query {
-      meanTimeToRecoverySummary (
-            startTime: "{{startTime}}",
-            endTime: "{{endTime}}",
-            projectId: "{{projectId}}"
-        ) {
-          avgRecoveryTime,
-          perfLevel
-        }
-      }
+{
+  "query": "query {
+    meanTimeToRecoverySummary(
+      startTime: \"{{startTime}}\",
+      endTime: \"{{endTime}}\",
+      projectId: \"{{projectId}}\"
+    ) {
+      avgRecoveryTime
+      perfLevel
+    }
+  }"
+}

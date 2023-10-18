@@ -1,13 +1,15 @@
-query {
-      topPerformingProjects (
-            startTime: "{{startTime}}",
-            endTime: "{{endTime}}",
-        ) {
-          projectId,
-          deployments,
-          leadTime,
-          recoveryTime,
-          failureRate,
-          score
-        }
+{
+  "query": "query {
+    topPerformingProjects (
+          startTime: \"{{startTime}}\",
+          endTime: \"{{endTime}}\",
+      ) {
+        projectId,
+        deployments,
+        leadTime,
+        recoveryTime,
+        failureRate,
+        score
       }
+    }"
+}
