@@ -4,3 +4,4 @@ internalHealthCheckPort = 8081
 maxHeaderSize = 65536
 appServiceUrl = "http://app-service:8080"
 graphqlUrl = "http://cp-graphql:9095"
+rudderUrl = "http://dp-rudder:80"
