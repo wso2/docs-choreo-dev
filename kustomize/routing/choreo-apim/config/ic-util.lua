@@ -367,10 +367,10 @@ function util.getLocalAdapterLabel(organizationId, uri, host, correlation_id)
             return nil
         end
 
-        laLookup = util.getRedisLocalAdapterLabel(redisResponse, correlation_id)
+        local laLookup = util.getRedisLocalAdapterLabel(redisResponse, correlation_id)
 
         cacheValue = laLookup[1]
-        if not cacheValue then
+        if cacheValue == nil or cacheValue == "nil" then
             ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to get redis key: ", err)
             return nil
         end
