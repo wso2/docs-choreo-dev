@@ -331,6 +331,9 @@ configMapGenerator:
       - DEV_PORTAL_SERVICE_PATH=/
       - RUDDER_URL="http://dp-rudder:80" # This is for the rudder-migration-service, remove this when removing that
       - CONFIGURATION_MGT_URL="http://configuration-service:8080"
+      - ENDPOINT_RESOLVER_URL="http://endpoint-resolver:9090"
+      - SERVICE_REGISTRY_URL="http://resource-registry:9090"
+
   - name: cm-console-next
     behavior: create
     literals:
