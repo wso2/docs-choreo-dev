@@ -183,8 +183,8 @@ public final class Constant {
     public static final String CIO_INCIDENT_CONFIGURATOR = "/cio-incident-configurator/1.0.0";
     public static final String CIO_QUERY_API = "/cio-query-api/1.0.0/query";
 
-    // Component Managemnt related constants
-    public static final String COMPONET_MGT_SUFFIX = "/projects/1.0.0/graphql";
+    // Component Management related constants
+    public static final String COMPONENT_MGT_SUFFIX = "/projects/1.0.0/graphql";
 
     // Org Managemnt related constants
     public static final String ORG_MGT_SUFFIX = "/org-mgt/1.0.0/orgs/";

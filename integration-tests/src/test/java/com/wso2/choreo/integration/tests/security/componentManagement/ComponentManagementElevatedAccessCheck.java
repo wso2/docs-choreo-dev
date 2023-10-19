@@ -66,7 +66,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
 
     @BeforeClass
     public void setup_ComponentManagementElevatedAccessCheck() throws Exception {
-        requestUrl = Constant.COMPONET_MGT_SUFFIX;
+        requestUrl = Constant.COMPONENT_MGT_SUFFIX;
         accessToken = SecurityTestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
         orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
         orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
