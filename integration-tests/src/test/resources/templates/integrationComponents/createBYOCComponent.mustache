@@ -1,29 +1,44 @@
-mutation (orgId: Int!, orgHandler: String!, projectId: String!) {
-  createByocComponent(
-    component: {
-      name: "container-event"
-      displayName: "container-event"
-      description: ""
-      orgId: {{orgId}}
-      orgHandler: {{orgHandler}}
-      projectId: {{projectId}}
-      labels: ""
-      componentType: "byocWebhook"
-      port: 80
-      oasFilePath: ""
-      accessibility: "external"
-      byocConfig: {
-        dockerfilePath: "ipaas/containerized/containerized-rabbitmq-listener/Dockerfile"
-        dockerContext: "ipaas/containerized/containerized-rabbitmq-listener"
-        srcGitRepoUrl: "https://github.com/chameerar/choreo-examples"
-        srcGitRepoBranch: "main"
-      }
-      secretRef: ""
-    }
-  ) {
-    id
-    organizationId
-    projectId
-    handle
-  }
+mutation {
+createByocComponent(
+component: {
+name: "{{name}}"
+displayName: "{{name}}"
+description: ""
+orgId: {{orgId}}
+orgHandler: "{{orgHandler}}"
+projectId: "{{projectId}}"
+labels: ""
+componentType: "{{componentType}}"
+port: 8080
+oasFilePath: "{{oasFilePath}}"
+accessibility: "external"
+byocConfig: {
+dockerfilePath: "{{dockerfilePath}}"
+dockerContext: "{{dockerContext}}"
+srcGitRepoUrl: "{{srcGitRepoUrl}}"
+srcGitRepoBranch: "main"
+}
+}
+) {
+id
+createdAt
+updatedAt
+name
+handle
+organizationId
+projectId
+orgHandle
+type
+description
+imageRegistryId
+imageRegistry {
+id
+createdAt
+updatedAt
+cloudConnectorId
+imageRepositoryName
+}
+componentType
+httpBased
+}
 }
