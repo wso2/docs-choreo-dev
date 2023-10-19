@@ -34,3 +34,8 @@ spec:
       port: 9843
       targetPort: 9843
       protocol: TCP
+    - name: "http-global-adapter-api-server"
+      port: 9090
+      targetPort: 9090
+      protocol: TCP
+
