@@ -345,4 +345,41 @@ function util.ciliumEnabled(organizationId, correlation_id)
     return forwardToCilium
 end
 
+
+function util.getLocalAdapterLabel(organizationId, uri, host, correlation_id)
+    local cacheModule = require "util.cache"
+    local cache = cacheModule.getCache()
+
+    ngx.log(ngx.DEBUG, "correlation-id: ", correlation_id, "organizationId: ", organizationId, " uri: ", uri, " host: ", host)
+
+    local cacheLookups = util.getLocalCacheValue(organizationId, uri, host)
+    local cacheValue = table.remove(cacheLookups, #cacheLookups)
+
+    if cacheValue == nil or cacheValue == "nil" then
+
+        local mkey = util.getRedisKeyString(cacheLookups, correlation_id)
+
+        local redisResponse, err = util.getRedisCacheValue(mkey, ngx.var.REDIS_HOST, ngx.var.REDIS_PORT,
+            ngx.var.REDIS_SSL,ngx.var.REDIS_SSL_VERIFY, ngx.var.REDIS_PASSWORD, ngx.var.REDIS_DATABASE, correlation_id)
+
+        if not redisResponse then
+            ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to connect to redis: ", err)
+            return nil
+        end
+
+        local laLookup = util.getRedisLocalAdapterLabel(redisResponse, correlation_id)
+
+        cacheValue = laLookup[1]
+        if cacheValue == nil or cacheValue == "nil" then
+            ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to get redis key: ", err)
+            return nil
+        end
+        cache:set(cacheLookups[laLookup[2]], cacheValue, 300)
+    end
+
+    return cacheValue
+end
+
+
+
 return util
