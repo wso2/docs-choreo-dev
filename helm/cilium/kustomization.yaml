@@ -69,7 +69,7 @@ helmCharts:
         podDisruptionBudget:
           enabled: true
           minAvailable: "50%"
-          maxUnavailable: null
+          maxUnavailable: ""
       resources:
         limits:
           cpu: 4000m
