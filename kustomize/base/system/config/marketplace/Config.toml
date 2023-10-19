@@ -5,6 +5,7 @@ healthPort=9092
 resourceRegistryEndpoint="http://resource-registry:9090/resource-registry"
 endpointResolverEndpoint="http://endpoint-resolver:9090/endpoint/resolver/v1"
 configurationServiceEndpoint="http://configuration-service:8080"
+projectManagerEndpoint="http://dp-project-manager:80/api/v1"
 
 [ballerina.log]
 format="json"
