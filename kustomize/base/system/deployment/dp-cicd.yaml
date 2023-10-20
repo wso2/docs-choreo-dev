@@ -34,10 +34,10 @@ spec:
           resources:
             limits:
               cpu: 500m
-              memory: 500Mi
+              memory: 1.5G
             requests:
               cpu: 300m
-              memory: 400Mi
+              memory: 500M
           envFrom:
             - configMapRef:
                 name: env-dp-cicd
