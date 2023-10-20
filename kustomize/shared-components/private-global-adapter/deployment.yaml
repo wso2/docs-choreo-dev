@@ -98,6 +98,9 @@ spec:
             - name: secret-private-ga
               mountPath: /mnt/csi/secret-private-ga
               readOnly: true
+            - name: secret-mgw-analytics
+              mountPath: /mnt/csi/ssecret-mgw-analytics
+              readOnly: true
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connect-global-adapter-v2:latest
           imagePullPolicy: Always
           securityContext:
@@ -123,11 +126,11 @@ spec:
               value: "/home/wso2/security/keystore/mg.pem"
             - name: GLOBAL_ADAPTER_SERVER_NAME
               value: global-adapter
-#            - name: ga_admin_pwd
-#              valueFrom:
-#                secretKeyRef:
-#                  key: PRIVATE_GLOBAL_ADAPTER_PASSWORD
-#                  name: ftr-secret-private-ga-credentials
+            - name: ga_admin_pwd
+              valueFrom:
+                secretKeyRef:
+                  key: PRIVATE_GLOBAL_ADAPTER_PASSWORD
+                  name: secret-private-ga-credentials
             - name: ga_db_pwd
               valueFrom:
                 secretKeyRef:
@@ -138,6 +141,11 @@ spec:
 #                configMapKeyRef:
 #                  key: MOESIF_MS_URL
 #                  name: ftr-cc-ga-conf
+            - name: moesif_ms_auth_pwd
+              valueFrom:
+                secretKeyRef:
+                  key: MOESIF_MS_AUTH_PWD
+                  name: secret-mgw-analytics
             - name: redis_host_pwd
               valueFrom:
                 secretKeyRef:
@@ -174,12 +182,12 @@ spec:
             initialDelaySeconds: 8
             periodSeconds: 5
       volumes:
-#        - name: global-adapter-keystore-vol
-#          configMap:
-#            name: ftr-ga-keystore-vol
-#        - name: global-adapter-config
-#          configMap:
-#            name: ftr-cc-ga-conf
+        - name: global-adapter-keystore-vol
+          configMap:
+            name: ga-keystore-vol
+        - name: global-adapter-config
+          configMap:
+            name: cc-ga-conf
         - name: ga-log-config
           configMap:
             name: pvtga-log-config
@@ -189,6 +197,14 @@ spec:
         - name: mgw-adapter-truststore-vol
           configMap:
             name: mgw-adapter-truststore
+        - name: secret-mgw-analytics
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-mgw-analytics
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
         - name: secret-mgw-keystore
           csi:
             driver: secrets-store.csi.k8s.io
