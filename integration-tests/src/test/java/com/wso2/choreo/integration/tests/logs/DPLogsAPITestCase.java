@@ -76,8 +76,14 @@ public class DPLogsAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void verifyDataPlanes_DPLogsAPITestCase() throws Exception {
+    public void verifyAuditLogs_DPLogsAPITestCase() throws Exception {
         ComponentUtils.verifyAuditLogs(this, citrusClients, accessToken);
+    }
+
+    @Test
+    @CitrusTest
+    public void verifyDataPlanes_DPLogsAPITestCase() throws Exception {
+        ComponentUtils.verifyDataPlanes(this, citrusClients, accessToken);
     }
 
     @Test
