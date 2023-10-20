@@ -40,4 +40,4 @@ You can follow the steps below to generate an access token for **testing purpose
 1. In the [Choreo Developer Portal](https://devportal.choreo.dev) header, click **Applications**.
 2. On the **My Applications** page, click on the application for which you want to generate keys and tokens.
 3. In the left navigation menu, click the required environment under **Credentials**. This opens the **Application Keys** pane of the specific environment.
-5. Click **Generate Token**.
+4. Click **Generate Token**.
