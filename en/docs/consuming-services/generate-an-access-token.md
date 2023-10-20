@@ -33,7 +33,7 @@ You can follow the steps below to generate an access token for your application 
     ```
 6. Execute the  cURL command to generate an access token. 
 
-## Generate an Access Token in the Choreo Console (for testing purposes)
+## Generate an access token via the Choreo Console (for testing purposes)
 
 You follow the steps below to generate an access token for **testing purposes**: 
 
