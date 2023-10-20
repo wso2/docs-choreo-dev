@@ -1,0 +1,5 @@
+resources:
+  - deployment.yaml
+  - hpa.yaml
+  - pdb.yaml
+  - service.yaml
