@@ -35,7 +35,7 @@ You can follow the steps below to generate an access token for your application 
 
 ## Generate an access token via the Choreo Console (for testing purposes)
 
-You follow the steps below to generate an access token for **testing purposes**: 
+You can follow the steps below to generate an access token for **testing purposes**: 
 
 1. In the [Choreo Developer Portal](https://devportal.choreo.dev) header, click **Applications**.
 2. On the **My Applications** page, click on the application for which you want to generate keys and tokens.
