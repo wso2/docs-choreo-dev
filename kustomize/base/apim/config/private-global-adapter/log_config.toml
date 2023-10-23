@@ -20,7 +20,7 @@ logfile = "/dev/null"
 logLevel = "DEBG"
 
 [rotation]
-MaxSize = 10    #meabytes
+MaxSize = 10    #megabytes
 MaxBackups = 3
 MaxAge =  2   #days
 Compress = true
