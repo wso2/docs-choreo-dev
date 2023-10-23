@@ -16,6 +16,7 @@ spec:
       labels:
         choreo.component: sys-obsapi
         antiaffinity: sys-obsapi
+        userapp-ingress-allowed: "true"
     spec:
       automountServiceAccountToken: false
       securityContext:

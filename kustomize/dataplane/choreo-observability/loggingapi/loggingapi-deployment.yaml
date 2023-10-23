@@ -17,6 +17,7 @@ spec:
       labels:
         choreo.component: loggingapi
         antiaffinity: loggingapi
+        userapp-ingress-allowed: "true"
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"

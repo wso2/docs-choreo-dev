@@ -31,6 +31,7 @@ spec:
       labels:
         choreo.component: testgpt
         antiaffinity: testgpt
+        userapp-ingress-allowed: "true"
       annotations:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
         seccomp.security.alpha.kubernetes.io/pod: "docker/default"
