@@ -381,5 +381,36 @@ function util.getLocalAdapterLabel(organizationId, uri, host, correlation_id)
 end
 
 
+-- Retrieves web application metadata from Redis cache.
+--
+-- @param releaseDetailsSubdomain The unique ID for the release (release ID).
+-- @return The web application metadata, or nil if not found.
+function util.getWebappMetadata(releaseDetailsSubdomain)
+    local redis = require "resty.redis"
+
+    local red = redis:new()
+    red:set_timeout(1000) -- 1 second
+
+    ngx.log(ngx.INFO, "connecting to Redis database..")
+    local ok, err = red:connect(ngx.var.REDIS_HOST, ngx.var.REDIS_PORT, {ssl=ngx.var.REDIS_SSL, ssl_verify=ngx.var.REDIS_SSL_VERIFY})
+    if not ok then
+        ngx.log(ngx.ERR, "failed to connect to redis: ", err)
+        return ngx.exit(500)
+    end
+
+    local res, err = red:auth(ngx.var.REDIS_PASSWORD)
+    if not res then
+        ngx.log(ngx.ERR, "failed to authenticate redis server: ", err)
+        return ngx.exit(500)
+    end
+
+    red:set_prefix(ngx.var.WEB_APPS_DB_PREFIX)
+    red:select(ngx.var.WEB_APPS_REDIS_DATABASE)
+
+    local ingressEntryKey = ngx.var.WEB_APPS_DB_PREFIX .. ":" .. ngx.var.WEB_APPS_REDIS_DATABASE .. ":" .. releaseDetailsSubdomain
+    ngx.log(ngx.DEBUG, "ingress entry key: ", ingressEntryKey)
+
+    return red:mget(ingressEntryKey)
+end
 
 return util
