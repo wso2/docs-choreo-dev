@@ -1,5 +1,5 @@
 # --------------------------------------------------------------------
-# Copyright (c) 2023, WSO2 Inc. (http://wso2.com).
+# Copyright (c) 2023, WSO2 Inc. (http://wso2.com) All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-# The logging configuration file for global adapter
+# The logging configuration file for control plane
 ######### root Level ########
-logfile = "logs/adapter.log"
-logLevel = "INFO"
+logfile = "/dev/null"
+logLevel = "DEBG"
 
 [rotation]
 MaxSize = 10    #megabytes
@@ -29,5 +29,20 @@ Compress = true
 # LogLevels = "DEBG", "FATL", "ERRO", "WARN", "INFO", "PANC"
 
 [[pkg]]
-name = "github.com/wso2-enterprise/choreo-connect-global-adapter/internal/server"
+name = "github.com/wso2/micro-gw/pkg/mgw"
 logLevel = "INFO"
+
+[[pkg]]
+name = "github.com/wso2/micro-gw/pkg/oasparser"
+logLevel = "INFO"
+
+
+[accessLogs]
+enable = true
+logType = "json" # "text" or "json"
+logfile = "/dev/stdout"
+
+# "secondaryLogFormat" is the log format that is append after "reservedLogFormat". This can be used by dev for debug purpose.
+# For example: secondaryLogFormat = "'%REQUEST_TX_DURATION%' '%RESPONSE_TX_DURATION%'"
+# Find the default values of "reservedLogFormat" from https://github.com/wso2/product-microgateway/blob/choreo/resources/conf/log_config.toml
+secondaryLogFormat = ""
