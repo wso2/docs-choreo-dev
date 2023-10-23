@@ -22,7 +22,6 @@ spec:
         app.kubernetes.io/name: choreo-hubble-exporter
         app.kubernetes.io/part-of: choreo-observability
         choreo.component: choreo-hubble-exporter
-        userapp-ingress-allowed: "true"
     spec:
       automountServiceAccountToken: false
       securityContext:
