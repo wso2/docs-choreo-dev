@@ -42,6 +42,8 @@ spec:
       containers:
         - name: private-global-adapter
           volumeMounts:
+            - mountPath: logs
+              name: logs
             - mountPath: /home/wso2/security/keystore/mg.key
               name: secret-mgw-keystore
               readOnly: true
@@ -160,6 +162,8 @@ spec:
             initialDelaySeconds: 8
             periodSeconds: 5
       volumes:
+        - name: logs
+          emptyDir: {}
         - name: global-adapter-keystore-vol
           configMap:
             name: ga-keystore-vol
