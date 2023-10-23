@@ -98,11 +98,6 @@ spec:
               drop:
                 - all
               add: [ "NET_RAW" ]
-          envFrom:
-            - configMapRef:
-                name: pvtga-feature-flags
-            - configMapRef:
-                name: env-private-ga
           env:
             - name: GLOBAL_ADAPTER_PRIVATE_KEY_PATH
               value: /home/wso2/security/keystore/global-adapter.key
