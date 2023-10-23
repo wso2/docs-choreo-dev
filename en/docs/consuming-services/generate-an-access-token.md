@@ -16,10 +16,11 @@ Before you try out this guide, be sure you have the following:
 2. [Generate keys for the application](https://wso2.com/choreo/docs/consuming-services/create-an-application/#step-2-generate-keys). 
 3. [Subscribe APIs to the application](https://wso2.com/choreo/docs/consuming-services/create-a-subscription/#manage-subscriptions). 
 
+## Generate an access token
 
-## Generate an access token via cURL
+You can generate an access token using a cURL command or a test token in the Choreo console. Follow the steps below:
 
-You can follow the steps below to generate an access token for your application via cURL: 
+{% include "generate-an-access-token-body.md" %}
 
 1. In the [Choreo Developer Portal](https://devportal.choreo.dev) header, click **Applications**.
 2. On the **My Applications** page, click on the application for which you want to generate the token.

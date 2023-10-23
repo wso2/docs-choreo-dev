@@ -628,6 +628,7 @@ configure-an-external-idp
 configure-asgardeo-as-an-external-idp
 configure-azure-ad-as-an-external-idp
 test-apis-with-choreo-apichat
+invoke-an-api
  - theme/material/templates/home-page.html
 doctype
 html
@@ -781,3 +782,5 @@ AzureAD
 identity-as-a-soluton
  - docs/testing/test-apis-with-choreo-apichat.md
 findByStatus
+ - docs/consuming-services/consume-a-service.md
+choreo-examples
