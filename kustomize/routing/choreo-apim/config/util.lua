@@ -391,7 +391,6 @@ function util.getWebappMetadata(releaseDetailsSubdomain)
     local red = redis:new()
     red:set_timeout(1000) -- 1 second
 
-    ngx.log(ngx.INFO, "connecting to Redis database..")
     local ok, err = red:connect(ngx.var.REDIS_HOST, ngx.var.REDIS_PORT, {ssl=ngx.var.REDIS_SSL, ssl_verify=ngx.var.REDIS_SSL_VERIFY})
     if not ok then
         ngx.log(ngx.ERR, "failed to connect to redis: ", err)
