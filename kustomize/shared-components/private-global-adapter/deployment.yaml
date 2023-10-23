@@ -33,18 +33,6 @@ spec:
         antiaffinity: private-global-adapter
         choreo.component: private-global-adapter
     spec:
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: antiaffinity
-                      operator: In
-                      values:
-                        - private-global-adapter
-                topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       securityContext:
         runAsUser: 10500
@@ -136,11 +124,6 @@ spec:
                 secretKeyRef:
                   key: GLOBAL_ADAPTER_MSSQL_PASSWORD
                   name: secret-cc-ga-credentials
-#            - name: moesif_ms_url
-#              valueFrom:
-#                configMapKeyRef:
-#                  key: MOESIF_MS_URL
-#                  name: ftr-cc-ga-conf
             - name: moesif_ms_auth_pwd
               valueFrom:
                 secretKeyRef:
