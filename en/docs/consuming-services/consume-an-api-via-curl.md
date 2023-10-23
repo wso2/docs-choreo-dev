@@ -4,8 +4,6 @@ You can invoke the API using the access token you generated above. Use the follo
     ``` curl
          curl -H "Authorization: Bearer <access_token>" <API_invocation_URL>
     ```
-    
-
 
 === "Example"
     ``` curl
