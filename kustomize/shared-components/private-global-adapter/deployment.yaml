@@ -111,11 +111,6 @@ spec:
               value: "/home/wso2/security/keystore/mg.pem"
             - name: GLOBAL_ADAPTER_SERVER_NAME
               value: global-adapter
-            - name: ga_admin_pwd
-              valueFrom:
-                secretKeyRef:
-                  key: PRIVATE_GLOBAL_ADAPTER_PASSWORD
-                  name: secret-private-ga-credentials
             - name: ga_db_pwd
               valueFrom:
                 secretKeyRef:
