@@ -6,12 +6,15 @@ metadata:
   name: marketplace
 spec:
   ports:
-    - name: http-port
+    - name: marketplace-port
       port: 9090
-      targetPort: http-port
+      targetPort: marketplace-port
     - name: healthz
       port: 9092
       targetPort: healthz
+    - name: dependecy-config-port
+      port: 9091
+      targetPort: dependecy-config-port
 
   selector:
     choreo.component: marketplace
