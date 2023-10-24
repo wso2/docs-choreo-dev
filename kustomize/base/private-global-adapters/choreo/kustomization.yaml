@@ -1,6 +1,0 @@
-resources:
-  - config
-  - deployment
-  - hpa
-  - pdb
-  - service
