@@ -7,7 +7,6 @@ resources:
   - hpa
   - pdb
   - rbac
-  - component/linker
   - cron
   - config
   - netpol
