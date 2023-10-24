@@ -1,5 +1,6 @@
 [marketplace.config]
 servicePort=9090
+dependencyConfigServicePort=9091
 healthPort=9092
 resourceRegistryEndpoint="http://resource-registry:9090/resource-registry"
 endpointResolverEndpoint="http://endpoint-resolver:9090/endpoint/resolver/v1"

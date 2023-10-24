@@ -54,7 +54,10 @@ spec:
               name: healthz
               protocol: TCP
             - containerPort: 9090
-              name: http-port
+              name: marketplace-port
+              protocol: TCP
+            - containerPort: 9091
+              name: dependecy-config-port
               protocol: TCP
           readinessProbe:
             initialDelaySeconds: 5
