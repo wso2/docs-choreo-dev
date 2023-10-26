@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: platform-services-manager
+  name: platform-services-manager
+  namespace: choreo-system
+spec:
+  ports:
+    - name: platform-services-manager-port
+      port: 80
+      targetPort: http-port
+  selector:
+    choreo.component: platform-services-manager

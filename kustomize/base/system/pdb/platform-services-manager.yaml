@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: platform-services-manager
+  namespace: choreo-system
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: platform-services-manager

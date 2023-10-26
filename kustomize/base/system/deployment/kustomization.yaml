@@ -32,6 +32,7 @@ resources:
   - obsapi.yaml
   - orgremover.yaml
   - perfanalyzer-estimator.yaml
+  - platform-services-manager.yaml
   - quota-limiter.yaml
   - subscriptions.yaml
   - sys-obsapi.yaml
