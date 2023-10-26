@@ -135,7 +135,8 @@ To learn more about the observability details you can view via Choreo observabil
 
 ## Step 5: Monitoring Executions: Tracking Running and Completed Tasks
 
-The Execute view offers users the following key insights:
+The Execute view offers users the following key insights. To access the Execute view, click on the **Execute** tab in the left navigation menu.
+The Execute view is accessible for both scheduled and manual tasks.
 
 ### The total count of executions over the last 30 days
 ![Total Execution](../../assets/img/develop-components/develop-a-scheduled-integration/total_executions.png)
