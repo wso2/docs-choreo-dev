@@ -71,13 +71,14 @@ export class ComponentListingPage {
   static visitToAComponent(componentName: string) {
     cy.get('[data-cyid="listing"]').should("be.visible").click();
 
-    cy.get("#filterByType").click().should("have.length", 1);
-    cy.get(
-      '[data-cyid="project-components-multi-select-all-button-button"]'
-    ).click();
-    cy.contains("Components Listing").click();
+    cy.get('[data-cyid="project-components-multi-select"]').should(
+      "be.visible"
+    );
 
-    cy.get("tr p").contains(componentName).should("be.visible").click();
+    cy.get('[data-cyid="component-table"]')
+      .contains(componentName)
+      .should("be.visible")
+      .click();
 
     cy.get('[data-cyid="home"]').should("be.visible");
     Utils.saveComponentURL();
