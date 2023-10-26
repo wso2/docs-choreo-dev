@@ -34,11 +34,10 @@ IF NOT EXISTS (SELECT * FROM SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'[DBO].[RO
 CREATE TABLE ROLE_PERMISSION_MAPPING (
     role_id VARCHAR(36) NOT NULL,
     permission_name VARCHAR(255) NOT NULL,
-    api_id VARCHAR(36) NOT NULL,
     env_id VARCHAR(36) NOT NULL,
     org_id varchar(36) NOT NULL,
     CONSTRAINT rpm_role_fkey FOREIGN KEY (role_id) REFERENCES ROLE(id) ON DELETE CASCADE,
-    PRIMARY KEY (role_id, permission_name, api_id, env_id, org_id)
+    PRIMARY KEY (role_id, permission_name, env_id, org_id)
 );
 
 IF EXISTS (SELECT NAME FROM SYSINDEXES WHERE NAME = 'idx_rpm_role_id_env_id')
