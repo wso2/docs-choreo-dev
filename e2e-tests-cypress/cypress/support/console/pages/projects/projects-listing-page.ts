@@ -59,7 +59,7 @@ export class ProjectListingPage {
     cy.get("body").then((bdy) => {
       if (bdy.find('[data-cyid="create-project-card"]').length > 0) {
         cy.get('[data-cyid="create-project-card"]').click();
-        cy.wait(VERY_SHORT_TIME.timeout);
+        cy.get('[data-cyid="create-project-card"]').should("not.exist");
       } else {
         cy.log("Retry count: " + retryCount);
         this.getCreateNewProjectPopUp(retryCount);
