@@ -14,6 +14,7 @@ resources:
   - loggingapi.yaml
   - connectords.yaml
   - perfanalyzer-estimator.yaml
+  - platform-services-manager.yaml
   - test-assistant.yaml
   - analytics-subscription.yaml
   - organization-remover.yaml
