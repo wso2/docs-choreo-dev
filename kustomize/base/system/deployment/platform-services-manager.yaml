@@ -6,7 +6,6 @@ metadata:
   labels:
     choreo.component: platform-services-manager
   name: platform-services-manager
-  namespace: choreo-system
 spec:
   replicas: 1
   selector:
