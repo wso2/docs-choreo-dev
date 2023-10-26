@@ -133,18 +133,31 @@ To visualize and monitor the performance of the scheduled integration component 
   
 To learn more about the observability details you can view via Choreo observability, see [Observability Overview](../../monitoring-and-insights/observability-overview.md).
 
-## Step 5: Monitoring Executions: Tracking Running and Completed Tasks
+## Step 5: Monitor executions
 
-The Execute view offers users the following key insights. To access the Execute view, click on the **Execute** tab in the left navigation menu.
-The Execute view is accessible for both scheduled and manual tasks.
+To track and monitor executions associated with the deployed scheduled task, go to the left navigation menu and click **Execute**. 
 
-### The total count of executions over the last 30 days
-![Total Execution](../../assets/img/develop-components/develop-a-scheduled-integration/total_executions.png)
+!!! tip
+     The **Execute** view is applicable to both scheduled and manual tasks.
 
-### List of both presently active and previously completed executions
-In this view, users can access information regarding the Execution ID, Triggered Time, and Revision.
-![Execution History](../../assets/img/develop-components/develop-a-scheduled-integration/execution_history.png)
+You can view the following information:
 
-### Access the execution logs for a specific execution.
-Users can access the logs of a specific execution by clicking on that particular execution. Please note that it may take a few minutes for the logs to appear, and users may need to manually check for logs.
-![Execution History](../../assets/img/develop-components/develop-a-scheduled-integration/execution_logs.png)
+- The total number of executions within the past 30 days.
+
+    ![Total Execution](../../assets/img/develop-components/develop-a-scheduled-integration/total_executions.png)
+
+- The currently active executions and those that are already complete.
+  
+    Here, you can view information such as the execution ID, the revision of the execution, and the time it was triggered.
+
+    ![Execution History](../../assets/img/develop-components/develop-a-scheduled-integration/execution_history.png)
+
+- Detailed execution logs for a specific execution.
+
+    You can click on an execution to view detailed logs related to it.
+    
+    !!! info
+         
+         It may take a few minutes for the logs to appear. You may need to manually refresh to view the latest logs.
+
+     ![Execution History](../../assets/img/develop-components/develop-a-scheduled-integration/execution_logs.png)
