@@ -34,6 +34,8 @@ spec:
               name: health
             - containerPort: 8082      # To be used for public health check (external)
               name: healthz
+            - containerPort: 8084      # To be used for public health check (external)
+              name: configmapsvc-port
           readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 15
