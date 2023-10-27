@@ -135,10 +135,10 @@ To learn more about the observability details you can view via Choreo observabil
 
 ## Step 5: Monitor executions
 
-To track and monitor executions associated with the deployed scheduled task, go to the left navigation menu and click **Execute**. 
+To track and monitor executions associated with the deployed scheduled integration, go to the left navigation menu and click **Execute**. 
 
 !!! tip
-     The **Execute** view is applicable to both scheduled and manual tasks.
+     The **Execute** view is applicable to both scheduled and manually-triggered integrations.
 
 You can view the following information:
 
