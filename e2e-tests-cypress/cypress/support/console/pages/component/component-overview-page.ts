@@ -55,6 +55,17 @@ export class ComponentOverviewPage {
     Utils.moveMouseAwayFromLeftMenu();
   }
 
+  static navigateToExecute() {
+    this.scrollToTopOfMenu();
+    cy.get("[data-cyid=link-executions]").should("be.visible")
+      .realHover({ position: "left" })
+      .wait(MENU_RENDERING_TIME)
+      .click({ force: true })
+      .wait(MENU_RENDERING_TIME);
+    cy.get('[id="backdrop-loader"]').should("not.exist");
+    Utils.moveMouseAwayFromLeftMenu();
+  }
+
   static navigateToTest() {
     this.navigateToSubMenu(
       '[data-cyid="link-test"]',
