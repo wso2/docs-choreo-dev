@@ -412,4 +412,41 @@ function util.getWebappMetadata(releaseDetailsSubdomain)
     return red:mget(ingressEntryKey)
 end
 
+-- Return a redis value for a given redis key.
+function util.getRedisValue(key, redis_host, redis_port, redis_ssl, redis_ssl_verify, redis_password, redis_database, correlation_id)
+    local redis = require "resty.redis"
+
+    local red = redis:new()
+    red:set_timeout(1000) -- 1 second
+    ngx.log(ngx.INFO, "correlation-id: ", correlation_id, "connecting to Redis database..")
+
+    local ok, err = red:connect(redis_host, redis_port, {ssl=redis_ssl, ssl_verify=redis_ssl_verify})
+    if not ok then
+        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to connect to redis: ", err)
+        return nil, err
+    end
+
+    local res, err = red:auth(redis_password)
+    if not res then
+       ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to authenticate redis server: ", err)
+       return nil, err
+    end
+
+    red:select(redis_database)
+    local redisResponse, err = red:get(key)
+
+    if not redisResponse then 
+        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to retrieve value from redis ", err)
+        return nil, err
+    end
+    
+    local ok, err = red:set_keepalive(100000, 100)
+    if not ok then
+        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to set keepalive: ", err)
+        return redisResponse, err
+    end
+
+    return redisResponse, nil
+end
+
 return util
