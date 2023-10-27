@@ -68,7 +68,7 @@ Let's create a Ballerina service component by following these steps:
     | **GitHub Account**    | Your account       |
     | **GitHub Repository** | choreo-sample-apps |
     | **Branch**            | **`main`**         |
-    | **Build Preset**      | Ballerina          |
+    | **Buildpack**      | Ballerina          |
     | **Project Path**      | ballerina/greeter  |
   
 9. Click **Create**. Once the component creation is complete, you will see the component overview page.

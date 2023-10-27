@@ -91,7 +91,7 @@ Let's create a containerized Service component by following these steps:
     | **GitHub Account**      | Your account                    |
     | **GitHub Repository**   | **`choreo-sample-apps`**        |
     | **Branch**              | **`main`**                      |
-    | **Build Preset**        | **Dockerfile**                  |
+    | **Buildpack**        | **Dockerfile**                  |
     | **Dockerfile Path**     | **go/grpc/Dockerfile.server** |
     | **Docker Context Path** | **go/grpc**                     |
 
@@ -171,7 +171,7 @@ Let's create a containerized manual trigger component by following these steps:
     | **GitHub Account**    | Your account                    |
     | **GitHub Repository** | **`choreo-sample-apps`**        |
     | **Branch**            | **`main`**                      |
-    | **Build Preset**      | **Dockerfile**                  |
+    | **Buildpack**      | **Dockerfile**                  |
     | **Dockerfile Path**   | **go/grpc/Dockerfile.client** |
     | **Docker Context Path** | **go/grpc**                   |
 

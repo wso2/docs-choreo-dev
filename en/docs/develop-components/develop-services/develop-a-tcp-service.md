@@ -73,7 +73,7 @@ Let's create a containerized Service component by following these steps:
     | **GitHub Account**      | Your account                    |
     | **GitHub Repository**   | **`choreo-sample-apps`**        |
     | **Branch**              | **`main`**                      |
-    | **Build Preset**        | **Dockerfile**                  |
+    | **Buildpack**        | **Dockerfile**                  |
     | **Dockerfile Path**     | **go/tcp-service/Dockerfile.server** |
     | **Docker Context Path** | **go/tcp-service**                     |
 
@@ -155,7 +155,7 @@ Let's create a containerized Manual Trigger component by following these steps:
     | **GitHub Account**    | Your account                    |
     | **GitHub Repository** | **`choreo-sample-apps`**        |
     | **Branch**            | **`main`**                      |
-    | **Build Preset**      | **Dockerfile**                  |
+    | **Buildpack**      | **Dockerfile**                  |
     | **Dockerfile Path**   | **go/tcp-service/Dockerfile.client** |
     | **Docker Context Path** | **go/tcp-service**                   |
 

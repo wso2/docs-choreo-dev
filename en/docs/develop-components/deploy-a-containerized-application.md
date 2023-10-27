@@ -35,7 +35,7 @@ To connect your GitHub repository to Choreo, you should authorize the [Choreo Ap
     You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. Choreo needs write access only to send pull requests to a user repository. Choreo does not directly push any changes to a repository.
 
 After granting access to the required repositories, you can choose a repository and an associated branch to connect to the Choreo component.
-For the containerized application deployments, you should select the **Dockerfile** as the **Build Preset** and provide **Dockerfile Path** and [**Docker Context Path**](https://docs.docker.com/build/building/context/#path-context) for the Docker build.
+For the containerized application deployments, you should select the **Dockerfile** as the **Buildpack** and provide **Dockerfile Path** and [**Docker Context Path**](https://docs.docker.com/build/building/context/#path-context) for the Docker build.
 
 ![Connected Dockerfile Repository](../assets/img/develop-components/deploy/create-component-connected-repo.png){.cInlineImage-full}
 
@@ -46,7 +46,7 @@ The following table describes the individual fields in the **Connect Repository*
 | **GitHub Account**      | Your GitHub account or organization. If you want to add another GitHub account, you can expand the list and click **+ Add**.                                                            |
 | **GitHub Repository**   | Depending on the repository access you provided, the list will show available repositories to be connected.                                                                                  |
 | **Branch**              | The branch of the repository.                                                                                                                                                         |
-| **Build Preset**        | Determines the implementation of the component: Ballerina or any other language as a Docker container.                                                                                |
+| **Buildpack**        | Determines the implementation of the component: Ballerina or any other language as a Docker container.                                                                                |
 | **Dockerfile Path**     | The path to your Dockerfile. This path is defined relative to the repository root.<br/>For example, if the Dockerfile is at the repository root, the value for this field is `/Dockerfile`. |
 | **Docker Context Path** | The Docker build context path. To include the repository root, leave the default `/` value.                                                                                          |
 | **Port***               | The port at which your service is running.                                                                                                                                           |

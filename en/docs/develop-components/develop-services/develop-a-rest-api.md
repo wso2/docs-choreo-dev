@@ -62,7 +62,7 @@ Let's create a containerized service component by following these steps:
     | **GitHub Account**    | Your account                                  |
     | **GitHub Repository** | choreo-sample-apps |
     | **Branch**            | **`main`**                               |
-    | **Build Preset**      | Dockerfile|
+    | **Buildpack**      | Dockerfile|
     | **Dockerfile Path**       | go/greeter/Dockerfile |
     | **Docker Context path**              | go/greeter |
 

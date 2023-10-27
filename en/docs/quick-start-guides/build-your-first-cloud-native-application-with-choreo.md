@@ -70,7 +70,7 @@ Follow the steps below to create the service:
     | **GitHub Account**    | Your account                                  |
     | **GitHub Repository** | **`choreo-examples`** |
     | **Branch**            | **`main`**                               |
-    | **Build Preset**      | Click **Ballerina** because you are creating the REST API from a [Ballerina](https://ballerina.io/) project, and Choreo needs to run a Ballerina build to build it.|
+    | **Buildpack**      | Click **Ballerina** because you are creating the REST API from a [Ballerina](https://ballerina.io/) project, and Choreo needs to run a Ballerina build to build it.|
     | **Project Path**              | **`cloud-native-app-developer/reading-list-service`**                    |
 
 9. Click **Create**. This initializes the service with the implementation from your GitHub repository and takes you to the **Overview** page of the component.

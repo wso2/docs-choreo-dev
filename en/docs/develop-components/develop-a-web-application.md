@@ -19,7 +19,7 @@ You can create a Web Application in Choreo as follows:
 
 1. Build and deploy a SPA from source code.
     - Create a Web Application component by linking your repository that includes the Web Application source code.
-    - Select the relevant build preset. Default presets include React, Angular, and Vue.js. If you’re using a different SPA framework, you can try one of these presets as the configurations can be overridden to support most Javascript-based SPAs.
+    - Select the relevant buildpack. Default presets include React, Angular, and Vue.js. If you’re using a different SPA framework, you can try one of these presets as the configurations can be overridden to support most Javascript-based SPAs.
     - Enter the build command based on the your package manager. NPM, yarn, and pnpm are supported and the relevant package manager is run based on the dependency lock file in your repository (defaults to NPM if no lock file is present).
     - Specify the build output directory.
     - Specify the NodeJs version. Choreo does not pick the Nodejs version from the package.json engine property. The required Node version must be explicitly set in the build configuration.
@@ -64,7 +64,7 @@ Follow the steps below to create a sample Web Application component and deploy i
     | **GitHub Account**            | Your account       |
     | **GitHub Repository**         | choreo-sample-apps |
     | **Branch**                    | **`main`**         |
-    | **Build Preset**              | ReactSPA           |
+    | **Buildpack**              | ReactSPA           |
     | **Build Context Path**        | web-apps/react-spa |
     | **Build Command**             | npm run build      |
     | **Build output directory**    | build              |
