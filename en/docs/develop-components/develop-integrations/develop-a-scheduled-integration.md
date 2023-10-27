@@ -132,3 +132,32 @@ To visualize and monitor the performance of the scheduled integration component 
  - The low-code diagram.
   
 To learn more about the observability details you can view via Choreo observability, see [Observability Overview](../../monitoring-and-insights/observability-overview.md).
+
+## Step 5: Monitor executions
+
+To track and monitor executions associated with the deployed scheduled integration, go to the left navigation menu and click **Execute**. 
+
+!!! tip
+     The **Execute** view is applicable to both scheduled and manually-triggered integrations.
+
+You can view the following information:
+
+- The total number of executions within the past 30 days.
+
+    ![Total Execution](../../assets/img/develop-components/develop-a-scheduled-integration/total_executions.png)
+
+- The currently active executions and those that are already complete.
+  
+    Here, you can view information such as the execution ID, the revision of the execution, and the time it was triggered.
+
+    ![Execution History](../../assets/img/develop-components/develop-a-scheduled-integration/execution_history.png)
+
+- Detailed execution logs for a specific execution.
+
+    You can click on an execution to view detailed logs related to it.
+    
+    !!! info
+         
+         It may take a few minutes for the logs to appear. You may need to manually refresh to view the latest logs.
+
+     ![Execution History](../../assets/img/develop-components/develop-a-scheduled-integration/execution_logs.png)
