@@ -412,7 +412,32 @@ function util.getWebappMetadata(releaseDetailsSubdomain)
     return red:mget(ingressEntryKey)
 end
 
--- Return a redis value for a given redis key.
+---
+-- Retrieve a value from a Redis database.
+--
+-- This function connects to a Redis server, authenticates, selects a database (if specified),
+-- and retrieves a value associated with the provided key.
+--
+-- @param key The key to look up in the Redis database.
+-- @param redis_host The hostname or IP address of the Redis server.
+-- @param redis_port The port on which the Redis server is listening.
+-- @param redis_ssl (boolean) Whether to use SSL/TLS for the connection.
+-- @param redis_ssl_verify (boolean) Whether to verify SSL certificates (if SSL is enabled).
+-- @param redis_password The password for authenticating with the Redis server.
+-- @param redis_database The Redis database number to select (optional).
+-- @param correlation_id A unique identifier for tracking the operation.
+--
+-- @return The retrieved value from Redis if successful, or nil if there was an error.
+-- @return An error message if an error occurs during the operation, or nil if successful.
+--
+-- @usage
+-- local value, error = util.getRedisValue("myKey", "redis.example.com", 6379, true, true, "password123", 0, "123456789")
+-- if value then
+--     ngx.say("Retrieved value: " .. value)
+-- else
+--     ngx.log(ngx.ERR, "Error: " .. error)
+-- end
+--
 function util.getRedisValue(key, redis_host, redis_port, redis_ssl, redis_ssl_verify, redis_password, redis_database, correlation_id)
     local redis = require "resty.redis"
 
