@@ -171,7 +171,7 @@ Let's create a Ballerina service component by following these steps:
    | Name       | Ballerina Reading List     |
    | Description| Manage a reading list      |
 
-5. Click **Next**.
+5. Select **GitHub** tab.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
 7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 

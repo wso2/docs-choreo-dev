@@ -47,7 +47,7 @@ Let's create a containerized service component by following these steps:
     |Name           | Greetings              |
     |Description    | Sends greetings        |
 
-5. Click Next.
+5. Select **GitHub** Tab
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
 7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 

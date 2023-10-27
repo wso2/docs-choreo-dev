@@ -162,7 +162,7 @@ Let's create a containerized manual trigger component by following these steps:
     | **Name**        | `Go gRPC Client`        |
     | **Description** | `Receive greetings`     |
 
-5. Click **Next**.
+5. Select **GitHub** tab.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
 7. Select the following values to connect the repository:
 

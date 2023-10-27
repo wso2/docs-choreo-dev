@@ -55,7 +55,7 @@ Let's create a containerized Service component by following these steps:
     | **Name**        | `Go UDP Server`        |
     | **Description** | `Sends greetings`       |
 
-5. Click **Next**.
+5. Select **GitHub** tab.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
 7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-sample-apps](https://github.com/wso2/choreo-sample-apps) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
