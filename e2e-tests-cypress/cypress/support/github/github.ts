@@ -53,6 +53,22 @@ export class GitHub {
     });
   }
 
+  static syncForkWithUpstream(repoName: string, branch: string) {
+    const requestURI = `${Cypress.env("ghUrl")}/repos/${Cypress.env(
+      "ghOrg"
+    )}/${repoName}/merge-upstream`;
+
+    Utils.sendPostRequest(requestURI, this.headers, {
+      branch: `${branch}`,
+    }).then((resp) => {
+      if (resp.status == 200) {
+        cy.log("Sync successful");
+      } else {
+        cy.log("Sync failed with status code: " + resp.status);
+      }
+    });
+  }
+
   static deleteRepoContent(repoName: string) {
     const requestURI = `${this.url}/repos/${this.org}/${repoName}/contents/${this.env}`;
     Utils.sendGetRequest(requestURI, this.headers).then((res) => {
