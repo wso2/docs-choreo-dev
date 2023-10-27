@@ -301,6 +301,13 @@ configMapGenerator:
       - RUDDER_URL=http://dp-rudder:80
       - SUBSCRIPTION_SERVICE_URL=subscriptions:9090
       - DELETION_PERIOD_IN_MONTHS=3
+  - name: cm-platform-services-manager
+    behavior: create
+    literals:
+      - DB_NAME=choreo_platform_service_manager_db
+      - DB_USER=choreo_platform_service_manager_db_user
+      - DB_PORT=1433
+      - SUBSCRIPTION_SVC_ADDRESS=subscriptions:9090
   - name: cm-dp-rudder
     behavior: create
     literals:
