@@ -32,6 +32,8 @@ spec:
                 name: env-choreo-platform-services-manager
             - secretRef:
                 name: secret-choreo-platform-services-manager
+            - configMapRef:
+                name: cm-platform-services-manager
           ports:
             - containerPort: 8910
               name: http-port
@@ -77,9 +79,6 @@ spec:
               readOnly: true
       restartPolicy: Always
       volumes:
-        - name: env-choreo-platform-services-manager
-          configMap:
-            name: env-choreo-platform-services-manager
         - name: secret-choreo-platform-services-manager
           csi:
             driver: secrets-store.csi.k8s.io
