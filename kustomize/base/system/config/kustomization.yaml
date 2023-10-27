@@ -586,6 +586,12 @@ configMapGenerator:
     behavior: create
     files:
       - resource-registry/Config.toml
+  - name: cm-appdev-user-mgt
+    behavior: create
+    literals:
+      - UM_DATABASE_USERNAME="choreo_app_dev_user_mgt_db_user"
+      - UM_DATABASE_PASSWORD_FILE=UM_DB_PASSWORD
+      - UM_AUTHORIZATION_HEADER_NAME="x-jwt-assertion"
   - name: cm-files-appdev-user-mgt
     behavior: create
     files:

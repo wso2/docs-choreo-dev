@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=Required by LinkerD
+  labels:
+    choreo.component: app-dev-user-mgt-service
+  name: app-dev-user-mgt-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: app-dev-user-mgt-service
+  strategy: { }
+  template:
+    metadata:
+      labels:
+        choreo.component: app-dev-user-mgt-service
+        antiaffinity: app-dev-user-mgt-service
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: app-dev-user-mgt-service
+          image: choreocontrolplane.azurecr.io/choreoipaas/app-dev-user-mgt:latest
+          envFrom:
+            - configMapRef:
+                name: cm-appdev-user-mgt
+            - configMapRef:
+                name: env-appdev-user-mgt
+          ports:
+            - containerPort: 8080
+              name: service-port
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: service-port
+              path: /health
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: service-port
+              path: /health
+          resources:
+            limits:
+              cpu: 750m
+              memory: 2Gi
+            requests:
+              cpu: 250m
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: app-properties
+              mountPath: /home/wso2/application.properties
+              subPath: application.properties
+              readOnly: true
+            - name: app-properties
+              mountPath: /home/wso2/log4j2.yaml
+              subPath: log4j2.yaml
+              readOnly: true
+            - name: secret-appdev-user-mgt
+              mountPath: "/mnt/csi/secret-appdev-user-mgt"
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: app-properties
+          configMap:
+            name: cm-files-appdev-user-mgt
+        - name: secret-appdev-user-mgt
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-appdev-user-mgt
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - app-dev-user-mgt-service
+              topologyKey: kubernetes.io/hostname
