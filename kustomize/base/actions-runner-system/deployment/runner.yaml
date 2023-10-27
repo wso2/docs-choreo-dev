@@ -29,3 +29,10 @@ spec:
           value: "true"
       labels:
         - choreo-custom-runner
+      dockerdContainerResources:
+        limits:
+          cpu: "1.0"
+          memory: "3Gi"
+        requests:
+          cpu: "1.0"
+          memory: "2Gi"
