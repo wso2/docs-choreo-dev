@@ -79,12 +79,6 @@ spec:
               readOnly: true
       restartPolicy: Always
       volumes:
-        - name: env-choreo-platform-services-manager
-          configMap:
-            name: env-choreo-platform-services-manager
-        - name: cm-platform-services-manager
-          configMap:
-            name: cm-platform-services-manager
         - name: secret-choreo-platform-services-manager
           csi:
             driver: secrets-store.csi.k8s.io
