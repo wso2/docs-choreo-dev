@@ -25,7 +25,7 @@ Before you try out this guide, complete the following:
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
 
-    This creates the organization and opens the home page of the default project created for you.
+    This creates the organization and opens the organization home page.
 
     !!! info "Enable Asgardeo as the key manager"
 
@@ -33,28 +33,31 @@ Before you try out this guide, complete the following:
 
          1. In the Choreo Console, go to the top navigation menu and click **Organization**. This takes you to the organization's home page.
          2. In the left navigation menu, click **Settings**.
-         3. In the header, click the **Organization** list. This will open the organization level settings page. 
+         3. In the header, click the **Organization** list. This will open the organization-level settings page. 
          4. Click the **API Management** tab and then click **Enable Asgardeo Key Manager**.
          5. In the confirmation dialog that opens, click **Yes**.
 
-## Step 1: Create a service component and publish it as a REST API
+## Step 1: Create a project and configure the sample service 
 
-In this step, you are playing the role of an API developer. You will create a service and publish it as a REST API for your web application to consume.
+In this step, you are playing the role of an API developer. You will create a project, configure the sample service, and publish it as a REST API for your web application to consume.
 
-### Step 1.1: Create the service
+### Step 1.1: Create a mono repository project
 
-Follow the steps below to create the service:
+Follow the steps given below to create a mono repository project:.
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the project home page.
-2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
-3. Go to the **Service** card and click **Create**.
-4. Enter a unique name and a description of the service. You can enter the name and description given below:
+!!! info
+     A mono repository project allows you to link a specific Git-based repository and branch to the project during project creation. This streamlines deployment by establishing a dedicated deployment track tied to a selected branch within the project. Creating a mono repository project also eliminates the need for repetitive selection of Git accounts, repositories, and branches during component creation.
+
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the organization home page.
+2. On the organization home page, click **+ Create Project**.
+3. Enter a unique name and description for the project. You can enter the name and description given below:
 
     | **Field**       | **Value**               |
     |-----------------|-------------------------|
-    | **Name**        | `Reading List Service`  |
-    | **Description** | `Manages reading lists` |
+    | **Name**        | `Sample project`        |
+    | **Description** | `My sample project`     |
 
+4. Select **Mono Repository**.
 5. Click **Next**.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
 7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-examples](https://github.com/wso2/choreo-examples) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
@@ -62,26 +65,37 @@ Follow the steps below to create the service:
     !!! info
          The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only needed to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
-
 8. In the **Connect Repository** pane, enter the following information:
 
-    | **Field**             | **Description**                               |
+    | **Field**             | **Value**                                     |
     |-----------------------|-----------------------------------------------|
     | **GitHub Account**    | Your account                                  |
-    | **GitHub Repository** | **`choreo-examples`** |
-    | **Branch**            | **`main`**                               |
-    | **Buildpack**      | Click **Ballerina** because you are creating the REST API from a [Ballerina](https://ballerina.io/) project, and Choreo needs to run a Ballerina build to build it.|
-    | **Project Path**              | **`cloud-native-app-developer/reading-list-service`**                    |
+    | **GitHub Repository** | **`choreo-examples`**                         |
+    | **Branch**            | **`main`**                                    |
 
-9. Click **Create**. This initializes the service with the implementation from your GitHub repository and takes you to the **Overview** page of the component.
+9. Click **Next**. This scans the repository branch you connected and displays the components that are already available in it.
 
-###  Step 1.2: Deploy the service
+### Step 1.2: Configure the sample service and publish it as a REST API
+
+1. In the **Import Component Code** pane, click **Configure** corresponding to the `Reading List Service` component.
+2. In the **Component Configuration** dialog, specify values as follows for each of the fields:
+
+    | **Field**             | **Value**                                     |
+    |-----------------------|-----------------------------------------------|
+    | **Component Name**    | Reading List Service                          |
+    | **Buildpack***     | **Ballerina**                                 |
+    | **Component Type**    | **Service**                                   |
+
+3. Click **Save**. You will see that the status of the `Reading List Service` component has changed to **Configured** and the checkbox to select the component is enabled.
+4. Select the `Reading List Service` component and click **Create**. This initializes the service with the implementation from your GitHub repository and takes you to the **Overview** page of the component.   
+
+## Step 2: Deploy the service
 
 For the REST endpoint of the service to be invokable, you need to deploy it. To deploy the service, follow the steps given below:
 
 1. In the left navigation menu, click **Deploy**.
-2. In the **Build Area** card, click **Deploy Manually**.
-3. In the **Endpoint** pane that opens, you can see the **Readinglist** endpoint ready to be deployed. Click the edit icon next to the **Readinglist** endpoint.
+2. In the **Build Area** card, click **Configure & Deploy**.
+3. In the **Endpoint Details** pane that opens, you can see the **Readinglist** endpoint ready to be deployed. Click the edit icon next to the **Readinglist** endpoint.
 4. Change the **Network Visibility** to **Public**. This setting securely exposes the endpoint for consumption.
 5. Click **Update**.
 
@@ -90,12 +104,12 @@ For the REST endpoint of the service to be invokable, you need to deploy it. To 
 
 6. Click **Deploy**. This deploys the service to the development environment.
 
-### Step 1.3: Test the service
+## Step 3: Test the service
 
 To test the **Readinglist** REST endpoint via the integrated OpenAPI Console in Choreo, follow the steps given below:
 
-1. In the left navigation menu, click **Test** and then click **Console**.
-2. In the **OpenAPI Console** pane that opens, select **Development** from the environment drop-down list.
+1. In the Choreo Console left navigation menu, click **Test** and then click **Console**.
+2. In the OpenAPI Console that opens, select **Development** from the environment drop-down list.
 3. In the **Endpoint** list, select **Readinglist**.
 4. Expand the **GET** method and click **Try it out**.
 5. Click **Execute**.
@@ -110,29 +124,29 @@ To test the **Readinglist** REST endpoint via the integrated OpenAPI Console in 
 To fix the JWT error response, you must enable passing the security context to the backend service through API management.
 You can proceed to the next section to fix the JWT error and publish the service.
 
-### Step 1.4: Publish the service
+## Step 4: Publish the service
 
 To fix the JWT error and publish the service, follow the steps given below:
 
-#### Step 1.4.1: Fix the JWT error
+### Step 4.1: Fix the JWT error
 
 1. In the left navigation menu, click **Manage** and then click **Settings**.
 2. Under **API Settings**, click **Edit**.
 3. Click the **CORS Configuration** toggle to enable the setting.
 4. To allow cross-origin calls to send credentials, select the **Access Control Allow Credentials** checkbox.
 5. To allow passing the JWT to the backend service, enable the **Pass Security Context To Backend** toggle.
-6. Click **Save**.
+6. Under **API Settings**, click **Save**.
 7. In the **Apply to Development** pane that opens, enter a meaningful message and click **Apply**.
 
 Now you can retest the API to confirm that it works as expected.
 
-#### Step 1.4.2: Retest the API
+### Step 4.2: Retest the API
 
 To retest the API, follow the steps given below:
 
 1. In the left navigation menu, click **Test** and then click **Console**.
-2. In the **OpenAPI Console** pane that opens, select **Development** from the environment drop-down list.
-3. In the **Public Endpoint** list, select **Readinglist**.
+2. In the OpenAPI Console that opens, select **Development** from the environment drop-down list.
+3. In the **Endpoint** list, select **Readinglist**.
 4. Expand the **POST** method and click **Try it out**.
 5. Update the request body so that the parameters have the values given below:
 
@@ -158,7 +172,7 @@ To retest the API, follow the steps given below:
 
 Similarly, you can expand and try out the **GET** and **DELETE** methods.
 
-#### Step 1.4.3: Publish the service endpoint as a REST API
+### Step 4.3: Publish the service endpoint as a REST API
 
 To publish the REST endpoint and make it available for web applications to consume, follow the steps given below:
 
@@ -168,58 +182,58 @@ To publish the REST endpoint and make it available for web applications to consu
 
     The **Reading List Service** REST API opens in the Developer Portal.
 
-## Step 2: Consume the REST API
+## Step 5: Consume the REST API
 
 You have published the **Reading List Service** REST API to the Developer Portal where application developers can find it and subscribe their applications to it.
 
-In the previous steps, you played the role of backend developer and developed a service. In this step, you will play the role of the web application developer who consumes the service.
+In the previous steps, you played the role of backend developer and developed a service. In this step, you will play the role of a web application developer who consumes the service.
 
 To consume the **Reading List Service** REST API, you must create an application, subscribe the application to the REST API, generate keys, and invoke the API.
 
-### Step 2.1: Create an application
+### Step 5.1: Create an application
 
-An application in the Developer Portal is a logical representation of a physical application such as a mobile application, web application, device, etc.
+An application in the Choreo Developer Portal is a logical representation of a physical application such as a mobile application, web application, device, etc.
 
 To create an application to consume the **Reading List Service** REST API, follow the steps given below:
 
-1. In the top menu of the Developer Portal, click **Applications**.
+1. In the top menu of the Choreo Developer Portal, click **Applications**.
 2. Click **+ Create Application**.
 3. Enter a name for the application (for example, `readingListApp`) and click **Create**. This creates the application and takes you to the application overview page.
 4. On the left navigation menu, click **Production** under **Credentials**.
 5. Click **Generate Credentials**. This generates credentials for the application.
 
-### Step 2.2: Subscribe to the API
+### Step 5.2: Subscribe to the API
 
 To consume the **Reading List Service** REST API, your application must subscribe to it. To subscribe to the API from the application, follow the steps given below:
 
-1. In the left navigation menu, click **Subscriptions**.
+1. In the left navigation menu of the Choreo Developer Portal, click **Subscriptions**.
 2. Click **Add APIs**.
 3. Find your REST API and click **Add**.
 
 Now your application has subscribed to the **Reading List Service** REST API.
 
-### Step 2.3: Deploy a web application and invoke the REST API
+### Step 5.3: Deploy a web application and invoke the REST API
 
 At the moment, any user can invoke the **Reading List Service** REST API via the **readingListApp** application (i.e., using its token) and update the reading list. However, if a user sends a request to retrieve the reading list, the response will also show entries by other users. To allow multiple users to use the application and maintain personal reading lists, you need a front-end application that allows each user to sign in with a unique user ID.
 
 Let's deploy a front-end application to consume the API. This application is designed to personalize the reading lists based on the user ID that it obtains from its identity provider.
 
-#### Step 2.3.1: Create a web application component
+#### Step 5.3.1: Create a web application component
 
 {% include "create-web-application-qsg.md" %}
 
-#### Step 2.3.2: Deploy the web application component
+#### Step 5.3.2: Deploy the web application component
 
 Once you create the web application component, you can deploy it to the Choreo runtime. To deploy the web application component, follow the steps below:
 
-1. In the left menu, click **Deploy**.
+1. In the left navigation menu, click **Deploy**.
 2. In the **Build Area** card, click **Build and Deploy**. The deployment may take a few minutes to complete.
 3. Once you deploy the web application, copy the **Web App URL** from the development environment card.
 4. Navigate to the web app URL. You can verify that you have successfully hosted the web application.
 
 Although you hosted the web application, you have not configured the web application to securely invoke the service. Let's create an OAuth app in the IdP (Asgardeo) and configure the web app.
 
-#### Step 2.3.3: Configure Asgardeo (IdP) to integrate with your application
+#### Step 5.3.3: Configure Asgardeo (IdP) to integrate with your application
 
 Choreo uses Asgardeo as the default identity provider for Choreo applications. When you create an application in the Choreo Developer Portal, it automatically creates a corresponding application in Asgardeo. You can go to the Asgardeo application to specify the configurations required for end users to sign in to the front-end application.
 
@@ -237,11 +251,11 @@ Choreo uses Asgardeo as the default identity provider for Choreo applications. W
     6. Under **Access Token**, select **JWT** as the **Token type**.
     7. Click **Update**.
 
-#### Step 2.3.4: Configure the front-end application
+#### Step 5.3.4: Configure the front-end application
 
 {% include "configure-front-end-application-qsg.md" %}
 
-#### Step 2.3.5: Deploy the web application component
+#### Step 5.3.5: Deploy the web application component
 
 Once the web application component is created, you can deploy it to the Choreo runtime. To deploy the web application component, follow the steps below:
 
@@ -253,7 +267,7 @@ Once the web application component is created, you can deploy it to the Choreo r
 
 Next, let's create a user to access the web application.
 
-#### Step 2.3.5: Create a user in Asgardeo
+#### Step 5.3.6: Create a user in Asgardeo
 
 To sign in to the **readingListApp** application and create private reading lists, the end users require user IDs. End users can self-register these user IDs in Asgardeo or request an Asgardeo user with administrative privileges to register them. For more information, see [Asgardeo Documentation - Manage users](https://wso2.com/asgardeo/docs/guides/users/manage-customers/#onboard-a-user).
 
@@ -277,7 +291,7 @@ To define a user for the **readingListApp** application, follow the steps given 
 !!! tip
     You can create multiple users to test your front-end application.
 
-#### Step 2.3.6: Log in and test the front-end application
+#### Step 5.3.7: Sign in and test the front-end application
 
 To test the front-end application and send requests to the **Reading List Service** REST API via it, follow the steps given below:
 
