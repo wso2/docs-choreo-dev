@@ -41,6 +41,14 @@ Let's familiarize ourselves with the key files in the sample greeter application
 | Dockerfile.client      | Dockerfile to build the container image of the client application.|
 | .choreo/endpoints.yaml |  The Choreo-specific configuration provides information about how Choreo exposes the service.|
 
+### Configure the service port with endpoints
+
+Let's run the UDP server Service component on port 5050. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. In Choreo, you can expose your services with endpoints. You can read more about endpoints in our [endpoint documentation](https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/#configure-endpoints).
+
+Choreo looks for an `endpoints.yaml` file inside the `.choreo` directory to configure the endpoint details of a containerized component. Place the `.choreo` directory at the root of the Docker build context path.
+
+In our gRPC server sample, the `endpoints.yaml` file is at `go/udp-service/.choreo/endpoints.yaml`. Our build context path is `go/udp-service`.
+
 ## Step 1: Create a service component with a UDP endpoint
 
 Let's create a containerized Service component by following these steps:
@@ -67,7 +75,7 @@ Let's create a containerized Service component by following these steps:
              
           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
-8. In the **Connect Repository** pane, enter the following information:
+8. Enter the following information:
 
     | **Field**               | **Description**                 |
     |-------------------------|---------------------------------|
@@ -91,15 +99,7 @@ Let's create a containerized Service component by following these steps:
 
 You have successfully created a Service component from a Dockerfile. Now let's build and deploy the service.
 
-## Step 2: Configure the service port with endpoints
-
-Let's run the UDP server Service component on port 5050. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. In Choreo, you can expose your services with endpoints. You can read more about endpoints in our [endpoint documentation](https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/#configure-endpoints).
-
-Choreo looks for an `endpoints.yaml` file inside the `.choreo` directory to configure the endpoint details of a containerized component. Place the `.choreo` directory at the root of the Docker build context path.
-
-In our gRPC server sample, the `endpoints.yaml` file is at `go/udp-service/.choreo/endpoints.yaml`. Our build context path is `go/udp-service`.
-
-## Step 3: Build and deploy
+## Step 2: Build and deploy
 
 Having connected the source repository and configured the endpoint details, you can now proceed to build and deploy the UDP server Service component.
 
@@ -128,11 +128,11 @@ To build and deploy the service, follow these steps:
 
 You have successfully deployed the UDP server. Currently, the UDP service is only accessible for the components deployed within the same project.
 
-## Step 4: Invoke the UDP service
+## Step 3: Invoke the UDP service
 
 Let's invoke the UDP service that you created above, using a UDP client. To do this, you can make use of a Manual Trigger component. We recommend this approach because, in this example, it's more efficient to have a client that connects to the server, sends a request, and then stops. A continuously executing task isn't required. Furthermore, if you use a Manual Trigger component, you won't need to expose an endpoint in the client for invocation, unlike with an API.
 
-### Step 4.1: Create a manual trigger for the UDP client
+### Step 3.1: Create a manual trigger for the UDP client
 
 Let's create a containerized Manual Trigger component by following these steps:
 
@@ -161,7 +161,7 @@ Let's create a containerized Manual Trigger component by following these steps:
 
 8. Click **Create** . Once the component creation is complete, you will see the component overview page.
 
-### Step 4.2: Setup environment variables
+### Step 3.2: Setup environment variables
 
 The client application, in this case, the UDP client, needs the server address of the UDP server service. Choreo reads this from the client application as an environment variable. Follow the steps below to configure the environment variable for the client application:
 
@@ -179,7 +179,7 @@ The client application, in this case, the UDP client, needs the server address o
 
 7. Click **Create**.
 
-### Step 4.3: Build and deploy the UDP client component
+### Step 3.3: Build and deploy the UDP client component
 
 Now that you have connected the source repository, and configured the environment variable details, let's build and run the greeter client.
 

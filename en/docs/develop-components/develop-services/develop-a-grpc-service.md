@@ -58,6 +58,14 @@ Let's familiarize ourselves with the key files in the sample greeter application
 | .choreo/endpoints.yaml |  The Choreo-specific configuration provides information about how Choreo exposes the service.|
 | pkg/greeter.proto      |Interface definition of the gRPC service. This is used to generate the server and client stubs for the Go application.|
 
+### Configure the service port with endpoints
+
+Let's run the gRPC server Service component on port 8080. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. In Choreo, you can expose your services with endpoints. You can read more about endpoints in our [endpoint documentation](https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/#what-are-endpoints-in-service-components).
+
+Choreo looks for an `endpoints.yaml` file inside the `.choreo` directory to configure the endpoint details of a containerized component. Place the `.choreo` directory at the root of the Docker build context path.
+
+In our gRPC server sample, the `endpoints.yaml` file is at `go/grpc/.choreo/endpoints.yaml`. Our build context path is `go/grpc`.
+
 ## Step 1: Create a service component with a gRPC endpoint
 
 Let's create a containerized Service component by following these steps:
@@ -84,7 +92,7 @@ Let's create a containerized Service component by following these steps:
              
           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
-8. In the **Connect Repository** pane, enter the following information:
+8. Enter the following information:
 
     | **Field**               | **Description**                 |
     |-------------------------|---------------------------------|
@@ -108,15 +116,7 @@ Let's create a containerized Service component by following these steps:
 
 You have successfully created a Service component from a Dockerfile. Now let's build and deploy the service.
 
-## Step 2: Configure the service port with endpoints
-
-Let's run the gRPC server Service component on port 8080. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. In Choreo, you can expose your services with endpoints. You can read more about endpoints in our [endpoint documentation](https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/#what-are-endpoints-in-service-components).
-
-Choreo looks for an `endpoints.yaml` file inside the `.choreo` directory to configure the endpoint details of a containerized component. Place the `.choreo` directory at the root of the Docker build context path.
-
-In our gRPC server sample, the `endpoints.yaml` file is at `go/grpc/.choreo/endpoints.yaml`. Our build context path is `go/grpc`.
-
-## Step 3: Build and deploy
+## Step 2: Build and deploy
 
 Having connected the source repository and configured the endpoint details, you can now proceed to build and deploy the gRPC server Service component.
 
@@ -144,11 +144,11 @@ To build and deploy the service, follow these steps:
 
 You have successfully deployed the gRPC server. Currently, the gRPC service is only accessible for the components deployed within the same project.
 
-## Step 4: Invoke the gRPC service
+## Step 3: Invoke the gRPC service
 
 Let's invoke the gRPC service that you created above, using a gRPC client. 
 
-### Step 4.1: Create a manual trigger for the gRPC client
+### Step 3.1: Create a manual trigger for the gRPC client
 
 Let's create a containerized manual trigger component by following these steps:
 
@@ -177,7 +177,7 @@ Let's create a containerized manual trigger component by following these steps:
 
 8. Click **Create** . Once the component creation is complete, you will see the component overview page.
 
-### Step 4.2: Setup environment variables
+### Step 3.2: Setup environment variables
 
 The client application, in this case, the gRPC client,  needs the server URL of the gRPC server service. This is read from the client application as an environment variable. Follow the steps below to configure the environment variable for the client application:
 

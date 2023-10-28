@@ -14,11 +14,11 @@ Choreo defines endpoints by combining port binding, protocol, endpoint name, net
 
 ## Configure endpoints
 
-The method of defining endpoints depends on the buildpacks. 
+The method of defining endpoints depends on the buildpacks. For buildpacks other than `Ballerina` and `WSO2 MI`, it is required to have an endpoints.yaml file in project root directory to create the Service Component.
 
 ### Configure endpoints with the Ballerina buildpack
 
-When you create a service component with the `Ballerina preset`, Choreo automatically detects the endpoint details for REST APIs. You can override the auto-generated endpoint configuration by providing the `endpoints.yaml` file in the source directory
+When you create a service component with the `Ballerina buildpack`, Choreo automatically detects the endpoint details for REST APIs. You can override the auto-generated endpoint configuration by providing the `endpoints.yaml` file in the source directory
 
 See [Understanding the endpoints.yaml file](#learn-the-endpointsyaml-file) to learn about the `endpoints.yaml` file.
 

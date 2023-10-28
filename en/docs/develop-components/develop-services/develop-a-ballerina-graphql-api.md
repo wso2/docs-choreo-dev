@@ -178,7 +178,7 @@ Let's create a Ballerina service component by following these steps:
     !!! info
          The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, Choreo requires write access only to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
-8. In the **Connect Repository** pane, enter the following information:
+8. Enter the following information:
 
     | **Field**             | **Description**        |
     |-----------------------|------------------------|
