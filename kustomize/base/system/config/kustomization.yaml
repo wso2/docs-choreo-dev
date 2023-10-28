@@ -542,14 +542,6 @@ configMapGenerator:
     literals:
       - CHOREO_USAGE_HANDLER_CRONJOB_MODE="publisher"
       - CHOREO_USAGE_PUBLISHING_FREQUENCY="dynamic-monthly"
-  - name: cm-file-choreo-org-stat-data-collector
-    behavior: create
-    files:
-      - choreo-org-stat/data-collector/Config.toml
-  - name: cm-file-choreo-org-stat-data-publisher
-    behavior: create
-    files:
-      - choreo-org-stat/data-publisher/application.properties
   - name: cm-file-choreo-metered-usage-handler-service
     behavior: create
     files:
