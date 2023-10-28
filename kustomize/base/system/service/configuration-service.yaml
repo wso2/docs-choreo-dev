@@ -12,5 +12,8 @@ spec:
     - name: healthz
       port: 8082
       targetPort: healthz
+    - name: configmapsvc-port
+      port: 8084
+      targetPort: configmapsvc-port
   selector:
     choreo.component: configuration-service
