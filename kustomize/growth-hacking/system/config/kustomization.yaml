@@ -1,0 +1,9 @@
+configMapGenerator:
+  - name: cm-file-choreo-org-stat-data-collector
+    behavior: create
+    files:
+      - choreo-org-stat/data-collector/Config.toml
+  - name: cm-file-choreo-org-stat-data-publisher
+    behavior: create
+    files:
+      - choreo-org-stat/data-publisher/application.properties
