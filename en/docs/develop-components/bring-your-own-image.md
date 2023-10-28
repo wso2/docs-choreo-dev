@@ -4,7 +4,7 @@ Deploy and manage (prebuilt) container images from external container registries
 
 !!! info
     - This feature is currently only available on [Private Data Planes (PDP)](https://wso2.com/choreo/docs/choreo-concepts/data-planes/#private-data-plane).
-    - This feature currently only supports the following component types: service components, web applications, scheduled triggers, and manual triggers.
+    - This feature currently only supports the following component types: service components, web applications, scheduled tasks, and manual tasks.
 
 
 ## Prerequisites
