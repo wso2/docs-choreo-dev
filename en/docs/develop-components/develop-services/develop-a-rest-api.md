@@ -47,7 +47,7 @@ Let's create a containerized service component by following these steps:
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the project home page.
 2. Create a project to add the service component. You can follow the instructions under Prerequisites in the Connect Your Own GitHub Repository to Choreo guide.
-3. On the Components page, click Create on the Service card.
+3. On the Components page, click on the Service card.
 4. Enter a unique name and a description of the service. For this guide, let's enter the following values:
 
     |Field          |     Value              |
@@ -56,14 +56,13 @@ Let's create a containerized service component by following these steps:
     |Description    | Sends greetings        |
 
 5. Select **GitHub** Tab
-6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
-7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+6. If you have not already connected your GitHub repository to Choreo, to allow Choreo to connect to your GitHub account, click **Authorize with GitHub** and enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
 
-8. Enter the following information:
+7. Enter the following information:
 
     | **Field**             | **Description**                               |
     |-----------------------|-----------------------------------------------|
@@ -82,7 +81,7 @@ Let's create a containerized service component by following these steps:
 
         2. The Dockerfile utilized in this guide is a Multi-stage Dockerfile, which is designed to keep the final image size small and provides the ability to build the application with a specific version of tools and libraries.
 
-9. Click Create. Once the component creation is complete, you will see the component overview page.
+8. Click Create. Once the component creation is complete, you will see the component overview page.
 
 You have successfully created a Service component from a Dockerfile. Now let's build and deploy the service.
 

@@ -44,10 +44,9 @@ Follow the steps below to create a sample Web Application component and deploy i
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/login/](https://console.choreo.dev/login/). This opens the **Project Home** page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
-3. Go to the **Web Application** card and click **Create**.
-4. This opens the **Create a Web Application** pane, where you can give your component a name and a description. Enter the relevant information and click **Next**.
-5. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
-6. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+3. Click **Web Application** card.
+4. This opens the **Create a Web Application** pane, where you can give your component a name and a description.
+5. If you have not already connected your GitHub repository to Choreo, to allow Choreo to connect to your GitHub account, click **Authorize with GitHub** and enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:
@@ -57,7 +56,7 @@ Follow the steps below to create a sample Web Application component and deploy i
              
         You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
-7. In the **Connect Repository** pane, enter the following information:
+6. Enter the following information:
 
     | **Field**                     | **Description**    |
     |-------------------------------|--------------------|
@@ -70,7 +69,7 @@ Follow the steps below to create a sample Web Application component and deploy i
     | **Build output directory**    | build              |
     | **Node Version**              | 18                 |
          
-8. Click Create. Once the component creation is complete, you will see the **Build and Deploy** page.
+7. Click Create. Once the component creation is complete, you will see the **Build and Deploy** page.
 
 You have successfully created a Web Application component from the source code. Now let's build and deploy the Web Application.
 
