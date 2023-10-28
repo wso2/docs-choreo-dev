@@ -36,7 +36,12 @@ export class ProjectListingPage {
     cy.get('[data-cyid="create-project-stepper-submit-button"]').should(
       "not.exist"
     );
-    ProjectOverviewPage.waitForTemplateCardsToLoad();
+    cy.get('[data-cyid="sample-creation-dialog-closeBtn-button"]').should(
+      "exist"
+    );
+    cy.get('[data-cyid="sample-creation-dialog-closeBtn-button"]').should(
+      "not.exist"
+    );
   }
 
   static checkProjectCardCreation() {

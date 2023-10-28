@@ -342,10 +342,10 @@ export class Utils {
     }
   }
 
-  static isUnifiedMenuEnabled() {
-    const enableUnifiedMenu = Cypress.env("enableUnifiedMenu");
-    if (enableUnifiedMenu != null) {
-      return enableUnifiedMenu == true || enableUnifiedMenu == "true";
+  static isKubeConFeaturesEnabled() {
+    const enableKubeConFeatures = Cypress.env("enableKubeConFeatures");
+    if (enableKubeConFeatures != null) {
+      return enableKubeConFeatures == true || enableKubeConFeatures == "true";
     }
 
     return false;
