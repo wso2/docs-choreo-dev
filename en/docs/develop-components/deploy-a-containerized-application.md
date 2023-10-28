@@ -5,9 +5,11 @@ Using Choreo, you can easily deploy applications written in different language f
 Choreo supports deploying containerized applications for the following component types:
 
 - Service
-- Scheduled Trigger
-- Manual Trigger
+- Scheduled Task
+- Manual Task
 - Webhook
+- Event Handler
+- Test Runner
 
 ## Connect your repository to Choreo
 
@@ -39,7 +41,7 @@ For the containerized application deployments, you should select the **Dockerfil
 
 ![Connected Dockerfile Repository](../assets/img/develop-components/deploy/create-component-connected-repo.png){.cInlineImage-full}
 
-The following table describes the individual fields in the **Connect Repository** pane.
+The following table describes the individual fields in the **Create Component** pane.
 
 | **Field**               | **Description**                                                                                                                                                                      |
 |-------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
