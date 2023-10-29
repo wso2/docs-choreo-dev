@@ -94,6 +94,7 @@ nav:
       - Develop Services:
           - Develop a Service: develop-components/develop-services/develop-a-service.md
           - Develop a REST API: develop-components/develop-services/develop-a-rest-api.md
+          - Develop a Go REST API: develop-components/develop-services/develop-a-go-rest-api.md
           - Develop a gRPC Service: develop-components/develop-services/develop-a-grpc-service.md
           - Develop a TCP Service: develop-components/develop-services/develop-a-tcp-service.md
           - Develop a UDP Service: develop-components/develop-services/develop-a-udp-service.md
