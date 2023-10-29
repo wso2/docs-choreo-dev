@@ -5,9 +5,9 @@ Using Choreo, you can easily deploy applications written in different language f
 Choreo supports deploying containerized applications for the following component types:
 
 - Service
+- Web Application
 - Scheduled Task
 - Manual Task
-- Webhook
 - Event Handler
 - Test Runner
 

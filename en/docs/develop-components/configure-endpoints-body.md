@@ -84,7 +84,7 @@ version: 0.1
 # +required List of endpoints to create
 endpoints:
   # +required Unique name for the endpoint. (This name will be used when generating the managed API)
-- name: Greeting 9090
+- name: Greeting Service
   # +required Numeric port value that gets exposed via this endpoint
   port: 9090
   # +required Type of the traffic this endpoint is accepting. Example: REST, GraphQL, etc.

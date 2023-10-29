@@ -38,7 +38,7 @@ Choreo looks for an endpoints.yaml file inside the `.choreo` directory to config
 
 In our greeter sample, the endpoints.yaml file is at go/greeter/.choreo/endpoints.yaml. 
 
-## Step 1: Create a service component from a Dockerfile
+## Step 1: Create a service component
 
 Let's create a containerized service component by following these steps:
 
