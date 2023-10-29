@@ -33,6 +33,7 @@ import { Subscriptions } from "../../../support/devportal/pages/applications/sub
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { generateAppName } from "../../../support/devportal/utils";
 import { OK } from "../../../support/commons/http";
+import { APIDevelop } from "../../../support/console/pages/apis/api-develop";
 
 describe("Choreo APIM publisher scenarios", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
@@ -128,15 +129,20 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify manage functionality", () => {
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
-    ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
-    ComponentAPILifecycle.navigatePermissionManagementWindow();
-    ComponentAPILifecycle.managePermissions(permissions, API_NAME);
+    if (Utils.isKubeConFeaturesEnabled()) {
+      ComponentOverviewPage.navigateToDeploy();
+      APIDeployment.configureSecuritySettings(false);
+      APIDevelop.managePermissions(permissions, API_NAME);
+    } else {
+      ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
+      ComponentAPILifecycle.navigatePermissionManagementWindow();
+      ComponentAPILifecycle.managePermissions(permissions, API_NAME);
+    }
   });
 
   it("Change API lifecycle to Published", () => {
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publishWithoutConnector();
-    
   });
 
   it("Verify connector publishing ", () => {
@@ -222,10 +228,14 @@ describe("Choreo APIM publisher scenarios", () => {
   it("Verify delete permissions", () => {
     LoginPage.reLoginToChoreo();
     ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.selectPermissions();
-    permissions.forEach((permission) => {
-      ComponentAPILifecycle.deletePermission(permission);
-    });
+
+    // No need to check deletion in new flow as it is already checked in the initial step
+    if (!Utils.isKubeConFeaturesEnabled()) {
+      ComponentAPILifecycle.selectPermissions();
+      permissions.forEach((permission) => {
+        ComponentAPILifecycle.deletePermission(permission);
+      });
+    }
   });
 
   it("Verify redeployment after removing permissions", () => {

@@ -14,6 +14,7 @@
 import { cyGet } from "../../../commons/cy";
 import { Utils } from "../../../commons/utils";
 import { ProxyAPI } from "../../../interfaces/proxy-api";
+import { ComponentOverviewPage } from "../component/component-overview-page";
 
 export class RestAPIProxyTemplate {
   static skipSource() {
@@ -79,6 +80,12 @@ export class RestAPIProxyTemplate {
       );
     }
     cy.get('[data-cyid="btn-create-button"]').should("be.enabled").click();
+
+    if (Utils.isKubeConFeaturesEnabled()) {
+      cy.get('[id="backdrop-loader"]').should("not.exist");
+      cy.get("[data-cyid=create-time]").should("be.visible");
+      ComponentOverviewPage.navigateToDevelop();
+    }
 
     let resourceIdentifier = "panel-/intensity/get-header";
     if (validateResourceName) {
