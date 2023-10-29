@@ -79,6 +79,68 @@ export class APIDevelop {
     cy.get('[id="backdrop-loader"]').should("not.exist");
   }
 
+  static managePermissions(permissions: string[], componentName: string) {
+    this.selectSecurity();
+    cy.get('[data-cyid="add-permissions-button"]').should("be.visible").click();
+    cy.get('[data-cyid="scope-add-icon-button"]').should("be.visible").click();
+    cy.get('[data-cyid="scope-text"]').should("be.visible").click();
+
+    permissions.forEach((permission) => {
+      this.addPermission(permission);
+    });
+
+    this.applyAllPermissionsToResources(permissions);
+    this.saveAndDeployPermissions(componentName);
+    this.deletePermission(permissions[permissions.length - 1]);
+    this.saveAndDeployPermissions(componentName);
+  }
+
+  private static addPermission(permissionName: string) {
+    cy.get('[data-cyid="scope-add-new-button"]').should("be.disabled");
+    cy.get('[data-cyid="scope-text"]').type(permissionName);
+    cy.get('[data-cyid="scope-add-new-button"]')
+      .should("be.enabled")
+      .click()
+      .wait(1000);
+    cy.contains("Permission(Scope) created successfully");
+    cy.get('[data-cyid="scope-select-all-button"]').should("be.visible");
+    cy.get(`[data-testid="scope-item-${permissionName}"]`).should("be.visible");
+  }
+
+  private static applyAllPermissionsToResources(permissions: string[]) {
+    cy.get('[data-cyid="scope-apply-to-all-button"]').should("be.disabled");
+    cy.get('[data-cyid="scope-select-all-button"]')
+      .should("be.enabled")
+      .click();
+    cy.get('[data-cyid="scope-apply-to-all-button"]')
+      .should("be.enabled")
+      .click();
+    this.verifyApplyAllPermissionsToResources(permissions.length);
+  }
+
+  private static verifyApplyAllPermissionsToResources(
+    permissionsLength: number
+  ) {
+    cy.get('[data-testid="autocomplete-textfield"]>div')
+      .find(".MuiChip-root")
+      .should("have.length", permissionsLength * 3);
+  }
+
+  private static saveAndDeployPermissions(componentName: string) {
+    cy.get('[data-cyid="security-save-button"]').click();
+    cy.contains("Changes saved successfully").wait(1000);
+  }
+
+  private static deletePermission(permissionName: string) {
+    cy.get(`[data-testid="scope-delete-${permissionName}"]`).click();
+    cy.get('[data-cyid="confirmation-dialog-destructive-action-button"]')
+      .should("be.visible")
+      .click();
+    cy.get(
+      '[data-cyid="confirmation-dialog-destructive-action-button"]'
+    ).should("not.exist");
+  }
+
   static addPolicy(
     resourcePath: string,
     verb: string,

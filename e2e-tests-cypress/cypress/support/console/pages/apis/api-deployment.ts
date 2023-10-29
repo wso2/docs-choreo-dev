@@ -48,12 +48,14 @@ export class APIDeployment {
       .contains("Loading", MEDIUM_TIME)
       .should("not.exist");
     this.RetryDevDeployment();
-    cyGet('[data-cyid="direct-deploy-option-proxy-split-toggle-button-button"]', MEDIUM_TIME)
+    cyGet(
+      '[data-cyid="direct-deploy-option-proxy-split-toggle-button-button"]',
+      MEDIUM_TIME
+    )
       .should("not.be.disabled")
       .click();
 
-    cyGet('[data-cyid="configure-&-deploy-option"]')
-      .click();
+    cyGet('[data-cyid="configure-&-deploy-option"]').click();
 
     this.RetryDevDeployment();
 
@@ -76,12 +78,14 @@ export class APIDeployment {
   }
 
   static deployProxyAPIToDev() {
-    cyGet('[data-cyid="direct-deploy-option-proxy-split-toggle-button-button"]', MEDIUM_TIME)
+    cyGet(
+      '[data-cyid="direct-deploy-option-proxy-split-toggle-button-button"]',
+      MEDIUM_TIME
+    )
       .should("not.be.disabled")
       .click();
 
-    cyGet('[data-cyid="configure-&-deploy-option"]')
-      .click();
+    cyGet('[data-cyid="configure-&-deploy-option"]').click();
   }
 
   static verifyProxyDeployment(buildCount: number) {
@@ -290,10 +294,34 @@ export class APIDeployment {
     cy.get('[data-cyid="env-baseProduction-env-card"]')
       .contains("Production")
       .should("be.visible");
-    cyGet('[data-cyid="deployment-status"]', SHORT_TIME).should("have.length", 2);
+    cyGet('[data-cyid="deployment-status"]', SHORT_TIME).should(
+      "have.length",
+      2
+    );
     cyGet('[data-cyid="deployment-status"]>h6', VERY_LONG_TIME)
       .eq(1)
       .should("contain", "Active");
     cy.get('[data-cyid*="promote"]').should("not.be.disabled");
+  }
+
+  static configureSecuritySettings(isAllOriginsAllowed: boolean) {
+    cy.get('[data-cyid="env-baseDevelopment-env-card"]').within(() => {
+      cy.get('[data-testid="API Configuration-env-artifact"]').within(() => {
+        cy.get('[data-cyid="btn-view-artifact-icon-button"]').click();
+      });
+    });
+    Utils.getRenderedElement('[data-cyid="manage-security"]')
+      .should("be.visible")
+      .click();
+    cy.get('[data-cyid="chk-enable-cors-check-box"]')
+      .should("be.visible")
+      .click();
+    if (!isAllOriginsAllowed) {
+      cy.get('[data-cyid="chk-allow-all-origins-check-box"]').click();
+    }
+
+    cy.get('[data-cyid="manage-save-btn-button"]').click();
+    cy.contains("Configuration applied successfully").should("be.visible");
+    cy.get('button[aria-label="close"]').eq(1).click();
   }
 }
