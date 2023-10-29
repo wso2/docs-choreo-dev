@@ -599,3 +599,7 @@ configMapGenerator:
     behavior: create
     files:
       - cp-endpoint-resolver/Config.toml
+  - name: cm-file-connection-service
+    behavior: create
+    files:
+      - connection-service/Config.toml  
