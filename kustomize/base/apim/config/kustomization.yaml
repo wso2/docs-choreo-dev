@@ -30,3 +30,7 @@ configMapGenerator:
       - FEATURE_FLAG_MONGODB_DIRECT_SEARCH=true
       - LOG4J_FORMAT_MSG_NO_LOOKUPS=true
       - FEATURE_FLAG_MONGODB_SINGLE_COLLECTION=true
+  - name: scheduled-mssql-tasks-config
+    behavior: create
+    files:
+      - scheduled-mssql-tasks/config.yaml

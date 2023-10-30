@@ -1,0 +1,9 @@
+steps:
+  - readVariables:
+      - APIM_TOKEN_CLEANUP_PASSWORD
+    executeScript: |
+      sqlcmd -S {{.DB_HOST}} \
+             -U 'apim_token_cleanup_user' \
+             -P 'APIM_TOKEN_CLEANUP_PASSWORD' \
+             -d choreo_apim_db \
+             -Q 'EXEC WSO2_TOKEN_CLEANUP_SP_ALL'
