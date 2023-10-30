@@ -1,0 +1,9 @@
+helmCharts:
+  - name: keda
+    includeCRDs: true
+    releaseName: keda
+    namespace: keda
+    version: 2.11.2
+    repo: oci://choreocontrolplane.azurecr.io/helm
+
+commonAnnotations: {}
