@@ -157,13 +157,18 @@ spec:
           livenessProbe:
             exec:
               command: [ "sh", "check_health.sh", "liveness" ]
-            initialDelaySeconds: 120
+            initialDelaySeconds: 5
             periodSeconds: 30
           readinessProbe:
             exec:
               command: [ "sh", "check_health.sh", "readiness" ]
-            initialDelaySeconds: 120
+            initialDelaySeconds: 5
             periodSeconds: 5
+          startupProbe:
+            exec:
+              command: [ "sh", "check_health.sh", "readiness" ]
+            failureThreshold: 30
+            periodSeconds: 30
       volumes:
         - name: log-volume
           emptyDir: {}

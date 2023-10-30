@@ -66,4 +66,3 @@ activeOrgsDataDownloadManualRun = {{.ACTIVE_ORGS_DATA_DOWNLOAD_MANUAL_RUN}}
 activeComponentsDataDownload = {{.ACTIVE_COMPONENTS_DATA_DOWNLOAD}}
 userActivityDownload = {{.USER_ACTIVITY_DOWNLOAD}}
 userActivityDataReset = {{.USER_ACTIVITY_RESET}}
-

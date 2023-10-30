@@ -49,6 +49,10 @@ interface PromoteConfigs {
 export class ComponentDeployPage {
   static count: number = 6;
 
+  private static devEnvCardSelector =
+    '[data-cyid="env-baseDevelopment-env-card"]';
+  private static deploymentStatusSelector = '[data-cyid="deployment-status"]';
+
   private static pollElement(locator: string) {
     cy.wait(5000);
     return cy.get("body").then((bdy) => {
@@ -647,6 +651,7 @@ export class ComponentDeployPage {
     configSetupStepAvailable = false,
     configEnvVars = false
   ) {
+    Utils.getRenderedElement('[data-cyid="default-build-card"]');
     cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
       .should("be.visible")
       .wait(1000);
@@ -693,14 +698,13 @@ export class ComponentDeployPage {
     // to ensure rendering completes before checking the deployment status
     cy.wait(600);
     cyGet('[data-testid="btn-stop"]', MEDIUM_TIME).should("be.visible");
-    cy.contains("div", "Development")
-      .parents("div")
-      .eq(3)
-      .within(() => {
-        cyGet('[data-cyid="deployment-status"]', LONG_TIME)
-          .contains(DEPLOYMENT_SUCCESS, LONG_TIME)
-          .should("be.visible");
-      });
+
+    cy.get(this.devEnvCardSelector).within(() => {
+      cy.get(this.deploymentStatusSelector, LONG_TIME)
+        .contains(DEPLOYMENT_SUCCESS, LONG_TIME)
+        .should("be.visible");
+    });
+
     cyGet('[data-testid="Endpoints-env-artifact"]').should("be.visible");
     this.verifyEndpointIsDeployed();
     cyGet('[data-cyid="deployment-status"]', SHORT_TIME)

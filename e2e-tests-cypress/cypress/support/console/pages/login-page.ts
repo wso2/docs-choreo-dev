@@ -48,6 +48,25 @@ export class LoginPage {
 
   static login(doCleanup: boolean = false) {
     window.localStorage.setItem("seen", Date.now().toString());
+    if (Utils.isKubeConFeaturesEnabled()) {
+      window.localStorage.setItem(
+        "features",
+        JSON.stringify({
+          "API Configuration": true,
+          "Mono Repository": true,
+          "Buildpack - Component Creation": true,
+          "Project Architecture Diagram": true,
+          "Test Runner Component Type": true,
+          "Choreo built-in IdP": true,
+          "Demo Organization": true,
+          "Internal Marketplace": true,
+          "Internal Endpoint Testing": true,
+        })
+      );
+    } else {
+      window.localStorage.removeItem("features");
+    }
+
     Utils.setBrowserCookie();
     this.registerNetworkCallsForInterception();
     this.enterUserCredentials("choreoIDPUsername", "choreoIDPPassword");
@@ -117,7 +136,9 @@ export class LoginPage {
     cy.visit(Cypress.env("enterpriseLoginUrl"));
     cy.get(signInButton).should("be.visible", MEDIUM_TIME);
     cy.get(signInButton).click();
-    cy.get("[data-cyid=sign-in-with-enterprise]").type(Cypress.env("enterpriseIDPUsername"));
+    cy.get("[data-cyid=sign-in-with-enterprise]").type(
+      Cypress.env("enterpriseIDPUsername")
+    );
     cy.contains("Continue").click();
 
     cy.get('input[id="username"]').should("be.visible", MEDIUM_TIME);
