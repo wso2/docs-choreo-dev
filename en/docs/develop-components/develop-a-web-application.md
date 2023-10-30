@@ -19,7 +19,7 @@ You can create a Web Application in Choreo as follows:
 
 1. Build and deploy a SPA from source code.
     - Create a Web Application component by linking your repository that includes the Web Application source code.
-    - Select the relevant build preset. Default presets include React, Angular, and Vue.js. If you’re using a different SPA framework, you can try one of these presets as the configurations can be overridden to support most Javascript-based SPAs.
+    - Select the relevant buildpack. Default presets include React, Angular, and Vue.js. If you’re using a different SPA framework, you can try one of these presets as the configurations can be overridden to support most Javascript-based SPAs.
     - Enter the build command based on the your package manager. NPM, yarn, and pnpm are supported and the relevant package manager is run based on the dependency lock file in your repository (defaults to NPM if no lock file is present).
     - Specify the build output directory.
     - Specify the NodeJs version. Choreo does not pick the Nodejs version from the package.json engine property. The required Node version must be explicitly set in the build configuration.
@@ -44,10 +44,9 @@ Follow the steps below to create a sample Web Application component and deploy i
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/login/](https://console.choreo.dev/login/). This opens the **Project Home** page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
-3. Go to the **Web Application** card and click **Create**.
-4. This opens the **Create a Web Application** pane, where you can give your component a name and a description. Enter the relevant information and click **Next**.
-5. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
-6. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+3. Click **Web Application** card.
+4. This opens the **Create a Web Application** pane, where you can give your component a name and a description.
+5. If you have not already connected your GitHub repository to Choreo, to allow Choreo to connect to your GitHub account, click **Authorize with GitHub** and enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:
@@ -57,20 +56,20 @@ Follow the steps below to create a sample Web Application component and deploy i
              
         You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
-7. In the **Connect Repository** pane, enter the following information:
+6. Enter the following information:
 
     | **Field**                     | **Description**    |
     |-------------------------------|--------------------|
     | **GitHub Account**            | Your account       |
     | **GitHub Repository**         | choreo-sample-apps |
     | **Branch**                    | **`main`**         |
-    | **Build Preset**              | ReactSPA           |
+    | **Buildpack**              | ReactSPA           |
     | **Build Context Path**        | web-apps/react-spa |
     | **Build Command**             | npm run build      |
     | **Build output directory**    | build              |
     | **Node Version**              | 18                 |
          
-8. Click Create. Once the component creation is complete, you will see the **Build and Deploy** page.
+7. Click Create. Once the component creation is complete, you will see the **Build and Deploy** page.
 
 You have successfully created a Web Application component from the source code. Now let's build and deploy the Web Application.
 

@@ -83,7 +83,7 @@ Follow the steps given below to create a mono repository project:.
     | **Field**             | **Value**                                     |
     |-----------------------|-----------------------------------------------|
     | **Component Name**    | Reading List Service                          |
-    | **Build Preset***     | **Ballerina**                                 |
+    | **Buildpack***     | **Ballerina**                                 |
     | **Component Type**    | **Service**                                   |
 
 3. Click **Save**. You will see that the status of the `Reading List Service` component has changed to **Configured** and the checkbox to select the component is enabled.
