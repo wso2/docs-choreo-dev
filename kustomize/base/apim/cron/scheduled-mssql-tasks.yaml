@@ -54,7 +54,7 @@ spec:
           volumes:
             - name: config-volume
               configMap:
-                name: scheduled-mssql-tasks-config
+                name: cm-file-scheduled-mssql-tasks-config
             - name: script-volume
               emptyDir: { }
             - name: secret-volume
