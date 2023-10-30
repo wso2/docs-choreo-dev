@@ -14,7 +14,7 @@ Choreo defines endpoints by combining port binding, protocol, endpoint name, net
 
 ## Configure endpoints
 
-The method of defining endpoints depends on the buildpacks. For buildpacks other than `Ballerina` and `WSO2 MI`, it is required to have an endpoints.yaml file in project root directory to create the Service Component.
+The method of defining endpoints depends on the buildpack. For buildpacks other than `Ballerina` and `WSO2 MI`, it is required to have an `endpoints.yaml` file in project root directory to create the Service component.
 
 ### Configure endpoints with the Ballerina buildpack
 

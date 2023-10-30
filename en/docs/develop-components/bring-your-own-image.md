@@ -3,8 +3,12 @@
 Deploy and manage (prebuilt) container images from external container registries as Choreo Components. This enables you to deploy and effectively manage your container images directly within the Choreo environment.
 
 !!! info
-    - This feature is currently only available on [Private Data Planes (PDP)](https://wso2.com/choreo/docs/choreo-concepts/data-planes/#private-data-plane).
-    - This feature currently only supports the following component types: service components, web applications, scheduled tasks, and manual tasks.
+    This feature is currently only available on [Private Data Planes (PDP)](https://wso2.com/choreo/docs/choreo-concepts/data-planes/#private-data-plane) and supports the following component types:
+
+    - service
+    - web applications
+    - scheduled tasks
+    - manual tasks.
 
 
 ## Prerequisites
@@ -144,7 +148,7 @@ Follow the guidelines below based on your container registry:
 2. Under **Component Listing** click **+ Create**.
 3. Select your component type. (BYOI is only available for Service, Web App, Scheduled Task, or Manual Trigger components) 
 4. Enter a **name** and **Description**.
-5. Select **DockerHub** tab or **Container Registry** tab based on your vendor.
+5. Select either the **DockerHub** tab or the **Container Registry** tab depending on your vendor.
 6. Under the **Deploy an image from a Container Registry/DockerHub** section, select the container registry you have registered in [Step 1](#step-1-register-a-container-registry).
 7. Enter the full image URL. Image URL format in general is as follows:
    `[container-registry-host]/[repository-name]/[image-name]:[tag]`
