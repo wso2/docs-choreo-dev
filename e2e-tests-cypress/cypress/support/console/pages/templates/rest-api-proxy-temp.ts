@@ -51,6 +51,9 @@ export class RestAPIProxyTemplate {
     }
     cy.get('[data-cyid="btn-create-button"]').should("be.enabled").click();
 
+    if (Utils.isKubeConFeaturesEnabled()) {
+      ComponentOverviewPage.navigateToDevelop();
+    }
     cyGet('[data-testid="delete-all-operations-btn"]').should("be.visible");
   }
 
