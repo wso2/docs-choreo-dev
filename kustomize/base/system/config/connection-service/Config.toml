@@ -1,0 +1,9 @@
+[connection_service.config]
+servicePort=9000
+healthPort=9001
+
+configurationServiceEndpoint = "http://configuration-service:8080"
+resourceRegistryEndpoint = "http://resource-registry:9090/resource-registry"
+
+[ballerina.log]
+format="json"
