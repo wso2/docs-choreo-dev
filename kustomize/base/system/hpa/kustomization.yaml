@@ -7,7 +7,7 @@ resources:
   - app-deployer.yaml
   - app-service.yaml
   - audit-logging.yaml
-  - telemetry.yaml
+#  - telemetry.yaml
   - telemetry-go.yaml
   - sys-obsapi.yaml
   - negotiator.yaml
