@@ -23,4 +23,5 @@ helmCharts:
     version: 2.11.2
     repo: oci://choreocontrolplane.azurecr.io/helm
 
-commonAnnotations: {}
+commonAnnotations:
+  kapp.k14s.io/disable-default-label-scoping-rules: ""
