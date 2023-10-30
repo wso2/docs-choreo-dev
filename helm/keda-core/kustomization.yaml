@@ -1,0 +1,27 @@
+helmCharts:
+  - name: keda
+    valuesInline:
+      image:
+        keda:
+          # -- Image name of KEDA operator
+          repository: choreocontrolplane.azurecr.io/kedacore/keda
+          # -- Image tag of KEDA operator. Optional, given app version of Helm chart is used by default
+          tag: "2.11.2"
+        metricsApiServer:
+          # -- Image name of KEDA Metrics API Server
+          repository: choreocontrolplane.azurecr.io/kedacore/keda-metrics-apiserver
+          # -- Image tag of KEDA Metrics API Server. Optional, given app version of Helm chart is used by default
+          tag: "2.11.2"
+        webhooks:
+          # -- Image name of KEDA admission-webhooks
+          repository: choreocontrolplane.azurecr.io/kedacore//keda-admission-webhooks
+          # -- Image tag of KEDA admission-webhooks . Optional, given app version of Helm chart is used by default
+          tag: "2.11.2"
+    includeCRDs: true
+    releaseName: keda
+    namespace: keda
+    version: 2.11.2
+    repo: oci://choreocontrolplane.azurecr.io/helm
+
+commonAnnotations:
+  kapp.k14s.io/disable-default-label-scoping-rules: ""
