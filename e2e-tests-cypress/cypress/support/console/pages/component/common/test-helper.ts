@@ -158,10 +158,12 @@ export class TestHelper {
     ComponentOverviewPage.navigateToTest();
   }
 
-  static testProjectLevelEndpoint() {
-    cy.get('[data-testid="no-public-endpoints-notification"]').should(
-      "be.visible"
-    );
+  static verifyProjectLevelEndpoint() {
+    if (Utils.isKubeConFeaturesEnabled()) {
+      cy.get('[data-testid="notification-with-icon-and-button"]').should("be.visible");
+    } else {
+      cy.get('[data-testid="no-public-endpoints-notification"]').should("be.visible");
+    }
   }
 
   static testManagedEndpoint(

@@ -16,6 +16,7 @@ import { Enums } from "../../../commons/enums";
 import { LONG_TIME } from "../../../commons/timeouts";
 import { Utils } from "../../../commons/utils";
 import { GraphQL } from "../../apis/graphql";
+import { ComponentOverviewPage } from "./component-overview-page";
 
 export class ComponentAPILifecycle {
   static devportl_btn = '[data-testid="go-to-dev-portal-btn"]';
@@ -403,7 +404,12 @@ export class ComponentAPILifecycle {
   }
 
   static verifyOverviewForProjectLevelEndpoints() {
-    cy.get('[data-testid="no-endpoints-notification"]').should("be.visible");
+    if (Utils.isKubeConFeaturesEnabled()) {
+      ComponentOverviewPage.navigateToTest();
+      cy.get('[data-testid="notification-with-icon-and-button"]').should("be.visible");
+    } else {
+      cy.get('[data-testid="no-endpoints-notification"]').should("be.visible");
+    }
   }
 
   static selectEndpoint(endpoint: string) {
