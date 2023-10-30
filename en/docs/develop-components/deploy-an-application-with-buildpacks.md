@@ -40,7 +40,7 @@ In Choreo, for a project to be detected as a given language project, at least on
 
 ## Develop a component
 
-To develop a service component that exposes a REST API in Go. you can follow the [Develop a Go REST API ](develop-a-go-rest-api.md) guide.
+To develop a service component that exposes a REST API in Go. you can follow the [Develop a Go REST API ](develop-services/develop-a-go-rest-api.md) guide.
 
 Refer below examples for other component types and buildpacks. Follow the readme.md inside the example.
 
