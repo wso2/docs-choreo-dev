@@ -54,3 +54,4 @@ resources:
   - resource-registry-service.yaml
   - marketplace.yaml
   - cp-endpoint-resolver.yaml
+  - connection-service.yaml
