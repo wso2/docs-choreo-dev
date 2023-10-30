@@ -111,7 +111,7 @@ describe("Verify Ballerina service functionality", () => {
 
   it("Verify test page for project level endpoint", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testProjectLevelEndpoint();
+    TestHelper.verifyProjectLevelEndpoint();
   });
 
   it("Get project endpoints", () => {

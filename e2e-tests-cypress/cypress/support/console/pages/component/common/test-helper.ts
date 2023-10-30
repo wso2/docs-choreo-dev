@@ -158,7 +158,7 @@ export class TestHelper {
     ComponentOverviewPage.navigateToTest();
   }
 
-  static testProjectLevelEndpoint() {
+  static verifyProjectLevelEndpoint() {
     if (Utils.isKubeConFeaturesEnabled()) {
       cy.get('[data-testid="notification-with-icon-and-button"]').should("be.visible");
     } else {

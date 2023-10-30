@@ -403,7 +403,11 @@ export class ComponentAPILifecycle {
   }
 
   static verifyOverviewForProjectLevelEndpoints() {
-    cy.get('[data-testid="no-endpoints-notification"]').should("be.visible");
+    if (Utils.isKubeConFeaturesEnabled()) {
+      cy.get('[data-testid="notification-with-icon-and-button"]').should("be.visible");
+    } else {
+      cy.get('[data-testid="no-endpoints-notification"]').should("be.visible");
+    }
   }
 
   static selectEndpoint(endpoint: string) {
