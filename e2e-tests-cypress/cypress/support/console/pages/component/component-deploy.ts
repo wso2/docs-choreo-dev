@@ -83,20 +83,7 @@ export class ComponentDeployPage {
     isManagedByAPIM: boolean = true,
     isManualTrigger: boolean = false
   ) {
-    window.localStorage.setItem("hideSocialShareModel", "true");
-    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
-      .should("be.visible")
-      .wait(1000);
-    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
-      .contains("Generating Configurations", MEDIUM_TIME)
-      .should("not.exist");
-    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
-      .contains("Loading Configurations", MEDIUM_TIME)
-      .should("not.exist");
-    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
-      .contains("Loading", MEDIUM_TIME)
-      .should("not.exist");
-    APIDeployment.RetryDevDeployment();
+    this.ensureBuildCardIsReady();
 
     cyGet(
       '[data-cyid="direct-deploy-option-split-toggle-button-button"]',
@@ -147,20 +134,8 @@ export class ComponentDeployPage {
     isManagedByAPIM: boolean = true,
     isManualTrigger: boolean = false
   ) {
-    window.localStorage.setItem("hideSocialShareModel", "true");
-    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
-      .should("be.visible")
-      .wait(1000);
-    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
-      .contains("Generating Configurations", MEDIUM_TIME)
-      .should("not.exist");
-    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
-      .contains("Loading Configurations", MEDIUM_TIME)
-      .should("not.exist");
-    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
-      .contains("Loading", MEDIUM_TIME)
-      .should("not.exist");
-    APIDeployment.RetryDevDeployment();
+    this.ensureBuildCardIsReady();
+
     cyGet('[data-cyid="btn-deploy-api-button"]', MEDIUM_TIME)
       .should("be.enabled")
       .click();
@@ -208,20 +183,7 @@ export class ComponentDeployPage {
     isManualTrigger: boolean = false,
     isWebApp: boolean = false
   ) {
-    window.localStorage.setItem("hideSocialShareModel", "true");
-    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
-      .should("be.visible")
-      .wait(1000);
-    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
-      .contains("Generating Configurations", MEDIUM_TIME)
-      .should("not.exist");
-    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
-      .contains("Loading Configurations", MEDIUM_TIME)
-      .should("not.exist");
-    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
-      .contains("Loading", MEDIUM_TIME)
-      .should("not.exist");
-    APIDeployment.RetryDevDeployment();
+    this.ensureBuildCardIsReady();
 
     cyGet(
       '[data-cyid="direct-deploy-option-split-toggle-button-button"]',
@@ -271,20 +233,7 @@ export class ComponentDeployPage {
     isManualTrigger: boolean = false,
     isWebApp: boolean = false
   ) {
-    window.localStorage.setItem("hideSocialShareModel", "true");
-    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
-      .should("be.visible")
-      .wait(1000);
-    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
-      .contains("Generating Configurations", MEDIUM_TIME)
-      .should("not.exist");
-    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
-      .contains("Loading Configurations", MEDIUM_TIME)
-      .should("not.exist");
-    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
-      .contains("Loading", MEDIUM_TIME)
-      .should("not.exist");
-    APIDeployment.RetryDevDeployment();
+    this.ensureBuildCardIsReady();
     cyGet('[data-cyid="btn-deploy-api-button"]', MEDIUM_TIME)
       .should("be.enabled")
       .click();
@@ -316,6 +265,23 @@ export class ComponentDeployPage {
       LONG_TIME
     );
     cy.get('[data-cyid="link-test"]').should("be.visible");
+  }
+
+  private static ensureBuildCardIsReady() {
+    window.localStorage.setItem("hideSocialShareModel", "true");
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .should("be.visible")
+      .wait(1000);
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Generating Configurations", MEDIUM_TIME)
+      .should("not.exist");
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading Configurations", MEDIUM_TIME)
+      .should("not.exist");
+    cyGet('[data-cyid="default-build-card"]', MEDIUM_TIME)
+      .contains("Loading", MEDIUM_TIME)
+      .should("not.exist");
+    APIDeployment.RetryDevDeployment();
   }
 
   static promoteToProd(

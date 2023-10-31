@@ -55,3 +55,4 @@ resources:
   - dp-cicd-temp.yaml
   - cp-endpoint-resolver.yaml
   - connection-service.yaml
+  - app-dev-user-mgt-service.yaml
