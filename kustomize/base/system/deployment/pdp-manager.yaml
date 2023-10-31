@@ -7,7 +7,6 @@ metadata:
   labels:
     choreo.component: pdp-manager
   name: pdp-manager
-  namespace: choreo-system
 spec:
   replicas: 1
   selector:

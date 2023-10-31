@@ -4,7 +4,6 @@ metadata:
   labels:
     choreo.component: pdp-manager
   name: pdp-manager
-  namespace: choreo-system
 spec:
   ports:
     - name: pdp-manager-port
