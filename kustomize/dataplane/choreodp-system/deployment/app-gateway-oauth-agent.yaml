@@ -77,6 +77,8 @@ spec:
                 - all
           envFrom:
             - configMapRef:
+                name: env-common-app-gateway-oauth-agent
+            - configMapRef:
                 name: env-app-gateway-oauth-agent
       restartPolicy: Always
       volumes:
