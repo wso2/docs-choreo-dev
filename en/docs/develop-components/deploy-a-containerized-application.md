@@ -1,6 +1,6 @@
 # Deploy a Containerized Application 
 
-Using Choreo, you can easily deploy applications written in different language frameworks (such as Java, Go, NodeJs, Python, etc.) on shared or private data planes using containers.
+Using Choreo, you can easily deploy applications written in different language frameworks (such as Java, Go, NodeJS, Python, etc.) on shared or private data planes using containers.
 
 Choreo supports deploying containerized applications for the following component types:
 
