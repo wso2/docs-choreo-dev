@@ -39,7 +39,7 @@ spec:
               memory: 128Mi
           envFrom:
             - configMapRef:
-                name: env-pdp-manager
+                name: env-choreo-pdp-manager
             - configMapRef:
                 name: cm-pdp-manager
             - secretRef:
