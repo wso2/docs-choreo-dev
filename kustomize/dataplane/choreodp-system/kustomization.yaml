@@ -22,5 +22,9 @@ resources:
   - dp-mizzen
   - config
   - cron
+  - deployment
+  - hpa
+  - pdb
+  - service
 
 namespace: choreodp-system
