@@ -14,7 +14,6 @@ resources:
   - cp-ris.yaml
   - cp-sis.yaml
   - configuration-service.yaml
-  - datacollector.yaml
   - declarative-api.yaml
   - delete-manager.yaml
   - dp-cicd.yaml
