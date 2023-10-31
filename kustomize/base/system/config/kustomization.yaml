@@ -586,6 +586,10 @@ configMapGenerator:
     behavior: create
     literals:
       - PORT=8080
+      - RUDDER_URL=http://dp-rudder
+      - CLOUD_MANAGER_URL=http://dp-cloud-manager
+      - MIZZEN_URL=http://dp-mizzen
+      - CP_GATEWAY_ADAPTER_URL=http://cp-gw-adapter:8080
   - name: cm-file-resource-registry
     behavior: create
     files:
