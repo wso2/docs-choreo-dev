@@ -582,6 +582,10 @@ configMapGenerator:
       - MSSQL_PORT=1433
       - MSSQL_USER=choreo_helmhub_db_user
       - MSSQL_DBNAME=choreo_helmhub_db
+  - name: cm-pdp-manager
+    behavior: create
+    literals:
+      - PORT=8080
   - name: cm-file-resource-registry
     behavior: create
     files:
@@ -602,4 +606,4 @@ configMapGenerator:
   - name: cm-file-connection-service
     behavior: create
     files:
-      - connection-service/Config.toml  
+      - connection-service/Config.toml
