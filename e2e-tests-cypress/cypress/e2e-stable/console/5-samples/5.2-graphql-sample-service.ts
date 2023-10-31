@@ -28,12 +28,14 @@ import { ComponentData } from "../../../support/interfaces/component-data";
 describe("Graphql GQL service test", () => {
   const PROJECT_DESCRIPTION = "sample gql service";
   const PROJECT_NAME = Utils.generateProjectName();
-  const TEST_QUERY = '{greeting(name:"John")}';
+  const TEST_QUERY = `query MyQuery {
+                        greeting(name: "John")
+                      }`;
   const TEST_QUERY_RESPONSE = 'greeting": "Hello, John';
   const COMPONENT_NAME = Utils.generateComponentName();
-  const REPO_NAME = "graphql-service-sample";
+  const REPO_NAME = "choreo-samples";
   const ENDPOINT_NAME = "Greeting GraphQL";
-  const subPath = Cypress.env("branch").replace("-ci", "");
+  const subPath = "graphql-service";
 
   before(() => {
     LoginPage.login();
@@ -43,20 +45,22 @@ describe("Graphql GQL service test", () => {
   });
 
   it("Verify GraphQL sample creation", () => {
-    GitHub.deleteRepoContent(REPO_NAME);
+    GitHub.syncForkWithUpstream(REPO_NAME, "main");
+
     let componentData: ComponentData = {
       componentName: COMPONENT_NAME,
       displayType: Enums.DisplayType.ballerinaService,
       accessibility: Enums.Accessibility.EXTERNAL,
       projectName: PROJECT_NAME,
-      sampleTemplate: "choreo/graphql_service:3.1.2",
       triggerChannels: "",
       triggerId: null,
-      srcGitRepoUrl: `https://github.com/choreo-test-apps/graphql-service-sample/tree/main/${subPath}`,
-      initializeAsBallerinaProject: true,
-      repositoryType: Enums.RepoType.UserManagedEmpty,
+      srcGitRepoUrl: "https://github.com/choreo-test-apps/choreo-samples",
+      initializeAsBallerinaProject: false,
+      repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: subPath,
+      sampleTemplate: "",
     };
+
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
       PROJECT_DESCRIPTION,
@@ -64,7 +68,7 @@ describe("Graphql GQL service test", () => {
     );
     GraphQL.createComponent(
       PROJECT_NAME,
-      REPO_NAME,
+      "",
       componentData,
       GraphQLQueryBuilder.getRestComponentCreationQuery
     );

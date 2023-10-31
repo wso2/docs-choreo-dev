@@ -1,9 +1,0 @@
-apiVersion: policy/v1
-kind: PodDisruptionBudget
-metadata:
-  name: choreo-linker-0-pdb
-spec:
-  minAvailable: "50%"
-  selector:
-    matchLabels:
-      app: "choreo-linker-0.1.2"

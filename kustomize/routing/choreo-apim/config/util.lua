@@ -345,4 +345,133 @@ function util.ciliumEnabled(organizationId, correlation_id)
     return forwardToCilium
 end
 
+
+function util.getLocalAdapterLabel(organizationId, uri, host, correlation_id)
+    local cacheModule = require "util.cache"
+    local cache = cacheModule.getCache()
+
+    ngx.log(ngx.DEBUG, "correlation-id: ", correlation_id, "organizationId: ", organizationId, " uri: ", uri, " host: ", host)
+
+    local cacheLookups = util.getLocalCacheValue(organizationId, uri, host)
+    local cacheValue = table.remove(cacheLookups, #cacheLookups)
+
+    if cacheValue == nil or cacheValue == "nil" then
+
+        local mkey = util.getRedisKeyString(cacheLookups, correlation_id)
+
+        local redisResponse, err = util.getRedisCacheValue(mkey, ngx.var.REDIS_HOST, ngx.var.REDIS_PORT,
+            ngx.var.REDIS_SSL,ngx.var.REDIS_SSL_VERIFY, ngx.var.REDIS_PASSWORD, ngx.var.REDIS_DATABASE, correlation_id)
+
+        if not redisResponse then
+            ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to connect to redis: ", err)
+            return nil
+        end
+
+        local laLookup = util.getRedisLocalAdapterLabel(redisResponse, correlation_id)
+
+        cacheValue = laLookup[1]
+        if cacheValue == nil or cacheValue == "nil" then
+            ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to get redis key: ", err)
+            return nil
+        end
+        cache:set(cacheLookups[laLookup[2]], cacheValue, 300)
+    end
+
+    return cacheValue
+end
+
+
+-- Retrieves web application metadata from Redis cache.
+--
+-- @param releaseDetailsSubdomain The unique ID for the release (release ID).
+-- @return The web application metadata, or nil if not found.
+function util.getWebappMetadata(releaseDetailsSubdomain)
+    local redis = require "resty.redis"
+
+    local red = redis:new()
+    red:set_timeout(1000) -- 1 second
+
+    local ok, err = red:connect(ngx.var.REDIS_HOST, ngx.var.REDIS_PORT, {ssl=ngx.var.REDIS_SSL, ssl_verify=ngx.var.REDIS_SSL_VERIFY})
+    if not ok then
+        ngx.log(ngx.ERR, "failed to connect to redis: ", err)
+        return ngx.exit(500)
+    end
+
+    local res, err = red:auth(ngx.var.REDIS_PASSWORD)
+    if not res then
+        ngx.log(ngx.ERR, "failed to authenticate redis server: ", err)
+        return ngx.exit(500)
+    end
+
+    red:set_prefix(ngx.var.WEB_APPS_DB_PREFIX)
+    red:select(ngx.var.WEB_APPS_REDIS_DATABASE)
+
+    local ingressEntryKey = ngx.var.WEB_APPS_DB_PREFIX .. ":" .. ngx.var.WEB_APPS_REDIS_DATABASE .. ":" .. releaseDetailsSubdomain
+    ngx.log(ngx.DEBUG, "ingress entry key: ", ingressEntryKey)
+
+    return red:mget(ingressEntryKey)
+end
+
+---
+-- Retrieve a value from a Redis database.
+--
+-- This function connects to a Redis server, authenticates, selects a database (if specified),
+-- and retrieves a value associated with the provided key.
+--
+-- @param key The key to look up in the Redis database.
+-- @param redis_host The hostname or IP address of the Redis server.
+-- @param redis_port The port on which the Redis server is listening.
+-- @param redis_ssl (boolean) Whether to use SSL/TLS for the connection.
+-- @param redis_ssl_verify (boolean) Whether to verify SSL certificates (if SSL is enabled).
+-- @param redis_password The password for authenticating with the Redis server.
+-- @param redis_database The Redis database number to select (optional).
+-- @param correlation_id A unique identifier for tracking the operation.
+--
+-- @return The retrieved value from Redis if successful, or nil if there was an error.
+-- @return An error message if an error occurs during the operation, or nil if successful.
+--
+-- @usage
+-- local value, error = util.getRedisValue("myKey", "redis.example.com", 6379, true, true, "password123", 0, "123456789")
+-- if value then
+--     ngx.say("Retrieved value: " .. value)
+-- else
+--     ngx.log(ngx.ERR, "Error: " .. error)
+-- end
+--
+function util.getRedisValue(key, redis_host, redis_port, redis_ssl, redis_ssl_verify, redis_password, redis_database, correlation_id)
+    local redis = require "resty.redis"
+
+    local red = redis:new()
+    red:set_timeout(1000) -- 1 second
+    ngx.log(ngx.INFO, "correlation-id: ", correlation_id, "connecting to Redis database..")
+
+    local ok, err = red:connect(redis_host, redis_port, {ssl=redis_ssl, ssl_verify=redis_ssl_verify})
+    if not ok then
+        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to connect to redis: ", err)
+        return nil, err
+    end
+
+    local res, err = red:auth(redis_password)
+    if not res then
+       ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to authenticate redis server: ", err)
+       return nil, err
+    end
+
+    red:select(redis_database)
+    local redisResponse, err = red:get(key)
+
+    if not redisResponse then 
+        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to retrieve value from redis ", err)
+        return nil, err
+    end
+    
+    local ok, err = red:set_keepalive(100000, 100)
+    if not ok then
+        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to set keepalive: ", err)
+        return redisResponse, err
+    end
+
+    return redisResponse, nil
+end
+
 return util

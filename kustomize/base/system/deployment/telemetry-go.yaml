@@ -24,8 +24,8 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
         config.linkerd.io/proxy-cpu-limit: 100m
         config.linkerd.io/proxy-cpu-request: 50m
-        config.linkerd.io/proxy-memory-limit: 500Mi
-        config.linkerd.io/proxy-memory-request: 250Mi
+        config.linkerd.io/proxy-memory-limit: 2Gi
+        config.linkerd.io/proxy-memory-request: 1Gi
     spec:
       securityContext:
         seccompProfile:

@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=Required by LinkerD
+  labels:
+    choreo.component: platform-services-manager
+  name: platform-services-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: platform-services-manager
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: platform-services-manager
+        antiaffinity: platform-services-manager
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: platform-services-manager
+          image: choreocontrolplane.azurecr.io/choreoipaas/platform-services-manager:latest
+          envFrom:
+            - configMapRef:
+                name: env-choreo-platform-services-manager
+            - secretRef:
+                name: secret-choreo-platform-services-manager
+            - configMapRef:
+                name: cm-platform-services-manager
+          ports:
+            - containerPort: 8910
+              name: http-port
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /healthz
+              port: http-port
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /healthz
+              port: http-port
+          resources:
+            limits:
+              cpu: 300m
+              memory: 300Mi
+            requests:
+              cpu: 100m
+              memory: 150Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            runAsUser: 10001
+            runAsGroup: 10001
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          volumeMounts:
+            - name: secret-choreo-platform-services-manager
+              mountPath: "/mnt/csi/secret-choreo-platform-services-manager"
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: secret-choreo-platform-services-manager
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-choreo-platform-services-manager
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - platform-services-manager
+              topologyKey: kubernetes.io/hostname

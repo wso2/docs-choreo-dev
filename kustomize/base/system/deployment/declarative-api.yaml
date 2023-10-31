@@ -64,7 +64,15 @@ spec:
             capabilities:
               drop:
                 - ALL
+          volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
       restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: cm-file-declarative-api
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:

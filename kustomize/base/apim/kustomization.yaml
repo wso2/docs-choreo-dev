@@ -19,11 +19,12 @@ kind: Kustomization
 
 resources:
   - config
+  - cron
   - deployment
-  - service
   - hpa
+  - netpol
   - pdb
   - rbac
-  - netpol
+  - service
 
 namespace: choreo-apim

@@ -1,10 +1,12 @@
-query {
-      changeLeadTimes (
-            startTime: "{{startTime}}",
-            endTime: "{{endTime}}",
-            granularity: WEEKLY
-        ) {
-          timestamp
-          leadTime
-        }
-      }
+{
+  "query": "query {
+    changeLeadTimes(
+      startTime: \"{{startTime}}\"
+      endTime: \"{{endTime}}\"
+      granularity: WEEKLY
+    ) {
+      timestamp
+      leadTime
+    }
+  }"
+}

@@ -30,8 +30,10 @@ describe("Create Greeting sample in Choreo", () => {
   const PROJECT_DESCRIPTION = "sample greeting service";
   const PROJECT_NAME = Utils.generateProjectName();
   const COMPONENT_NAME = Utils.generateComponentName();
-  const REPO_NAME = "hello-world-sample";
+  const REPO_NAME = "choreo-samples";
   const ENDPOINT_NAME = "Endpoint 8090";
+  const subPath = "greeting-service";
+
   before(() => {
     LoginPage.login();
   });
@@ -40,21 +42,22 @@ describe("Create Greeting sample in Choreo", () => {
   });
 
   it("Verify Hello World sample creation", () => {
-    const subPath = Cypress.env("branch").replace("-ci", "");
-    GitHub.deleteRepoContent(REPO_NAME);
+    GitHub.syncForkWithUpstream(REPO_NAME, "main");
+
     let componentData: ComponentData = {
       componentName: COMPONENT_NAME,
       displayType: Enums.DisplayType.ballerinaService,
       accessibility: Enums.Accessibility.EXTERNAL,
       projectName: PROJECT_NAME,
-      sampleTemplate: "choreo/greeting_service:3.1.1",
       triggerChannels: "",
       triggerId: null,
-      srcGitRepoUrl: `https://github.com/choreo-test-apps/hello-world-sample/tree/main/${subPath}`,
-      initializeAsBallerinaProject: true,
-      repositoryType: Enums.RepoType.UserManagedEmpty,
+      srcGitRepoUrl: "https://github.com/choreo-test-apps/choreo-samples",
+      initializeAsBallerinaProject: false,
+      repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: subPath,
+      sampleTemplate: "",
     };
+
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
       PROJECT_DESCRIPTION,
@@ -62,7 +65,7 @@ describe("Create Greeting sample in Choreo", () => {
     );
     GraphQL.createComponent(
       PROJECT_NAME,
-      REPO_NAME,
+      "",
       componentData,
       GraphQLQueryBuilder.getRestComponentCreationQuery
     );

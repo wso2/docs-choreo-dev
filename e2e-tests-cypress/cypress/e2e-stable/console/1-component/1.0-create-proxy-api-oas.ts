@@ -165,7 +165,6 @@ describe("Create proxy api using existing url", () => {
   });
 
   it("Add a resource to new version", () => {
-    ComponentOverviewPage.navigateProxyResources();
     APIDevelop.addResources(NEW_RESOURCE, Enums.HTTPMethod.GET);
   });
 

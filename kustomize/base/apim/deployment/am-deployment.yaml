@@ -90,7 +90,7 @@ spec:
               memory: 3Gi
               cpu: "2"
             limits:
-              memory: 3.5Gi
+              memory: 4.25Gi
               cpu: "2.5"
           securityContext:
             allowPrivilegeEscalation: false

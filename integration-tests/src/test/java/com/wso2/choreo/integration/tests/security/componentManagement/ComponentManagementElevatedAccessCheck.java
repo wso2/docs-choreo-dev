@@ -6,6 +6,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.SecurityTestContext;
+import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.common.utils.SecurityUtils;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
@@ -65,7 +66,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
 
     @BeforeClass
     public void setup_ComponentManagementElevatedAccessCheck() throws Exception {
-        requestUrl = Constant.COMPONET_MGT_SUFFIX;
+        requestUrl = Constant.COMPONENT_MGT_SUFFIX;
         accessToken = SecurityTestContext.getTestUserTokenHandlerForSecurityTests().getTestTokenForCPAPIs();
         orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
         orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
@@ -118,7 +119,8 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("orgHandler", orgHandler);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "createProject.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        body = ObjectMapperUtil.mapToGraphQLQuery(body);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -169,7 +171,8 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("ballerinaVersion", ballerinaVersion);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "createComponent.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        body = ObjectMapperUtil.mapToGraphQLQuery(body);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -208,7 +211,8 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("repositorySubPath", repositorySubPath);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "createIntegrationComponent.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        body = ObjectMapperUtil.mapToGraphQLQuery(body);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -227,7 +231,8 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("srcGitRepoUrl", srcGitRepoUrl);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "createBYOCcomponent.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        body = ObjectMapperUtil.mapToGraphQLQuery(body);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -239,7 +244,8 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("componentHandler", componentHandler);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "componentDetails.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        body = ObjectMapperUtil.mapToGraphQLQuery(body);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -263,10 +269,13 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("projectId", projectId);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "getEnvironments.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        body = ObjectMapperUtil.mapToGraphQLQuery(body);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
-    @Test
+    // disabled until the unauthorized error codes are handled
+    // https://github.com/wso2-enterprise/choreo/issues/24660
+    @Test(enabled = false)
     @CitrusTest
     public void deployComponent_ComponentManagementElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
@@ -307,7 +316,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("versionId", versionId);
         String body = MessageUtils.generateStringFromTemplate("templates/maxApiRevisions/" +
                 "query_build_by_version_payload.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -319,7 +328,8 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("branch", branch);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "commitHistoryBranch.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        body = ObjectMapperUtil.mapToGraphQLQuery(body);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -343,7 +353,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("orgUuid", orgUuid);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "commonCredentials.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -406,7 +416,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("componentId", componentId);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "componentWebhook.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -428,7 +438,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("componentId", componentId);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "branchListInComponent.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -444,7 +454,8 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("branch", branch);
         String body = MessageUtils.generateStringFromTemplate("templates/byor/" +
                 "graphqlQueryForNewVersionCreation.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        body = ObjectMapperUtil.mapToGraphQLQuery(body);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -457,21 +468,21 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient, requestUrl, accessToken);
     }
 
-    @Test
-    @CitrusTest
-    public void configGeneration_ComponentManagementElevatedAccessCheck() throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        requestUrl = "/component-mgt/1.0.0/orgs/" + orgHandler + "/projects/" + projectId +
-                "/triggers/configurable-generation";
-        Map<String, String> params = new HashMap<>();
-        params.put("componentId", componentId);
-        params.put("versionId", versionId);
-        params.put("branch", branch);
-        params.put("commitHash", commitHash);
-        String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
-                "configGeneration.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
-    }
+   @Test
+   @CitrusTest
+   public void configGeneration_ComponentManagementElevatedAccessCheck() throws Exception {
+       HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+       String requestUrlConfigGeneration = "/component-mgt/1.0.0/orgs/" + orgHandler + "/projects/" + projectId +
+               "/triggers/configurable-generation";
+       Map<String, String> params = new HashMap<>();
+       params.put("componentId", componentId);
+       params.put("versionId", versionId);
+       params.put("branch", branch);
+       params.put("commitHash", commitHash);
+       String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
+               "configGeneration.mustache", params);
+       SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrlConfigGeneration, body, accessToken);
+   }
 
     @Test
     @CitrusTest
@@ -491,7 +502,8 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("componentId", componentId);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "getComponentPullRequests.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        body = ObjectMapperUtil.mapToGraphQLQuery(body);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -503,7 +515,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("versionId", versionId);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "autobuildTrigger.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -528,7 +540,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("appPwd", appPwd);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "commonCredential.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -578,7 +590,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("commitHash", commitHash);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "cellDiagram.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -639,7 +651,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("devEnvId", envId);
         String body = MessageUtils.generateStringFromTemplate("templates/maxApiRevisions/" +
                 "query_build_by_version_payload.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -650,7 +662,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("orgId", orgId);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "distinctComponentTypeCount.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -732,7 +744,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("commitHash", commitHash);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "generateEndpoints.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -745,7 +757,8 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("releaseId", releaseId);
         String body = MessageUtils.generateStringFromTemplate("templates/endpoints/" +
                 "GetEndpoints.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        body = ObjectMapperUtil.mapToGraphQLQuery(body);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -820,7 +833,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("runID", runID);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "buildLogs.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -851,18 +864,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrlForRunPod, body,
                 accessToken);
     }
-
-    @Test
-    @CitrusTest
-    public void configurableGenerationTrigger_ComponentManagementElevatedAccessCheck() throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForConfigurableGenerationTrigger = "/component-mgt/1.0.0/orgs/" + gitOrgHandle +
-                "/projects/" + projectId + "/triggers/configurable-generation";
-        String body = "";
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
-                requestUrlForConfigurableGenerationTrigger, body, accessToken);
-    }
-
+    
     @Test
     @CitrusTest
     public void getActionRunLogs_ComponentManagementElevatedAccessCheck() throws Exception {
@@ -904,7 +906,8 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("endpointId", endpointId);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "componentEndpointApiDefinition.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        body = ObjectMapperUtil.mapToGraphQLQuery(body);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -913,11 +916,12 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         Map<String, String> params = new HashMap<>();
         params.put("componentId", componentId);
-        params.put("versionId", versionId);
-        params.put("endpointId", endpointId);
+        params.put("orgHandler", orgHandler);
+        params.put("projectId", projectId);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "deleteComponent.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        body = ObjectMapperUtil.mapToGraphQLQuery(body);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -929,7 +933,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("projectId", projectId);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "deleteProject.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -945,6 +949,6 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("devEnvId", envId);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "build.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 }

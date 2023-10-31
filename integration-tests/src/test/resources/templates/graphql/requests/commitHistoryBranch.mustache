@@ -1,16 +1,13 @@
 query {
-	commitHistory(
-	    componentId: "{{componentId}}"
-		branch: "{{branch}}"
-      ) {
-        author {
-            name
-            date
-            email
-            avatarUrl
-        }
-        message
-        sha
-        isLatest
-        }
-     }
+  commitHistory(componentId: "{{componentId}}", branch: "{{branch}}") {
+    author {
+      name
+      date
+      email
+      avatarUrl
+    }
+    message
+    sha
+    isLatest
+  }
+}

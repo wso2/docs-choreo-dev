@@ -1,40 +1,38 @@
 query List {
-componentEndpoints(
-input: {
-componentId: "{{componentId}}",
-versionId: "{{versionId}}",
-options: {
-filter: { releaseIds: ["{{releaseId}}"] }
-}
-}
-) {
-id
-createdAt
-updatedAt
-releaseId
-environmentId
-displayName
-port
-type
-apiContext
-apiDefinitionPath
-invokeUrl
-visibility
-hostName
-apimId
-apimRevisionId
-apimName
-projectUrl
-organizationUrl
-publicUrl
-state
-stateReason {
-code
-message
-details
-workerId
-}
-isDeleted
-deletedAt
-}
+  componentEndpoints(
+    input: {
+      componentId: "{{componentId}}"
+      versionId: "{{versionId}}"
+      options: { filter: { releaseIds: ["{{releaseId}}"] } }
+    }
+  ) {
+    id
+    createdAt
+    updatedAt
+    releaseId
+    environmentId
+    displayName
+    port
+    type
+    apiContext
+    apiDefinitionPath
+    invokeUrl
+    visibility
+    hostName
+    apimId
+    apimRevisionId
+    apimName
+    projectUrl
+    organizationUrl
+    publicUrl
+    state
+    stateReason {
+      code
+      message
+      details
+      workerId
+    }
+    isDeleted
+    deletedAt
+  }
 }

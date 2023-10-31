@@ -43,10 +43,30 @@ export class ComponentOverviewPage {
     });
   }
 
+  static navigateToBuild() {
+    this.scrollToTopOfMenu();
+    cy.get("[data-cyid=link-build]").should("be.visible").realHover({ position: "left" })
+      .wait(MENU_RENDERING_TIME).click({ force: true })
+      .wait(MENU_RENDERING_TIME);
+    cy.get('[id="backdrop-loader"]').should("not.exist");
+    Utils.moveMouseAwayFromLeftMenu();
+  }
+
   static navigateToDeploy() {
     this.scrollToTopOfMenu();
     cy.get("[data-cyid=link-deploy]")
       .should("be.visible")
+      .realHover({ position: "left" })
+      .wait(MENU_RENDERING_TIME)
+      .click({ force: true })
+      .wait(MENU_RENDERING_TIME);
+    cy.get('[id="backdrop-loader"]').should("not.exist");
+    Utils.moveMouseAwayFromLeftMenu();
+  }
+
+  static navigateToExecute() {
+    this.scrollToTopOfMenu();
+    cy.get("[data-cyid=link-executions]").should("be.visible")
       .realHover({ position: "left" })
       .wait(MENU_RENDERING_TIME)
       .click({ force: true })

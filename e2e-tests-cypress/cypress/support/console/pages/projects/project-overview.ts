@@ -52,23 +52,19 @@ export class ProjectOverviewPage {
   }
 
   static createHttpProxyAPI() {
-    this.waitForTemplateCardsToLoad();
-    cy.get('[data-testid="project-template-list-httpProxyApi"]')
-      .should("be.visible")
-      .click();
+    if (Utils.isKubeConFeaturesEnabled()) {
+      cy.get('[data-cyid="component-template-httpProxyApi-card-action-area"]')
+        .should("be.visible")
+        .click();
+    } else {
+      cy.get('[data-testid="project-template-list-httpProxyApi"]')
+        .should("be.visible")
+        .click();
+    }
   }
 
   static navigateToComponents() {
     cy.contains("← Components").click();
-  }
-
-  static waitForTemplateCardsToLoad() {
-    cy.get('[data-testid="project-template-list-scheduleTask"]')
-      .should("be.enabled")
-      .get('[data-testid="project-template-list-manualTrigger"]')
-      .should("be.enabled")
-      .get('[data-testid="project-template-list-httpProxyApi"]')
-      .should("be.enabled");
   }
 
   static addComponent() {

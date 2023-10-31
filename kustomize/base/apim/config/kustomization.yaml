@@ -1,6 +1,3 @@
-resources:
-  - internal-global-adapter
-
 configMapGenerator:
   - name: cm-file-mgw-adapter-enforcer
     behavior: create
@@ -13,3 +10,27 @@ configMapGenerator:
     files:
       - internal-global-adapter/ga_config.toml
       - internal-global-adapter/log_config.toml
+  - name: pvtga-log-config
+    behavior: create
+    files:
+      - private-global-adapter/log_config.toml
+  - name: internal-ga-feature-flags
+    behavior: create
+    literals:
+      - FEATURE_FLAG_DEFAULT=true
+      - FEATURE_STEP_QUOTA_LIMITING=true
+      - FEATURE_FLAG_MONGODB_DIRECT_SEARCH=true
+      - LOG4J_FORMAT_MSG_NO_LOOKUPS=true
+      - FEATURE_FLAG_MONGODB_SINGLE_COLLECTION=true
+  - name: pvtga-feature-flags
+    behavior: create
+    literals:
+      - FEATURE_FLAG_DEFAULT=true
+      - FEATURE_STEP_QUOTA_LIMITING=false
+      - FEATURE_FLAG_MONGODB_DIRECT_SEARCH=true
+      - LOG4J_FORMAT_MSG_NO_LOOKUPS=true
+      - FEATURE_FLAG_MONGODB_SINGLE_COLLECTION=true
+  - name: cm-file-scheduled-mssql-tasks-config
+    behavior: create
+    files:
+      - scheduled-mssql-tasks/config.yaml

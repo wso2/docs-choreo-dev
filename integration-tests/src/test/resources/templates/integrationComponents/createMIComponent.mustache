@@ -1,26 +1,26 @@
-mutation (orgId: Int!, orgHandler: String!, projectId: String!) {
-  createIntegrationComponent(
-    component: {
-      name: "mi-service"
-      displayName: "mi-service"
-      description: ""
-      orgId: {{orgId}}
-      orgHandler: {{orgHandler}}
-      projectId: {{projectId}}
-      labels: ""
-      componentType: "miApiService"
-      accessibility: "external"
-      srcGitRepoUrl: "https://github.com/chameerar/hello-world-project"
-      srcGitRepoBranch: "main"
-      repositorySubPath: ""
-      oasFilePath: ""
-      version: "1.0.0"
-      secretRef: ""
-    }
-  ) {
-    id
-    organizationId
-    projectId
-    handle
+mutation {
+    createIntegrationComponent(
+       component: {
+          name: "{{componentName}}",
+          displayName: "{{componentName}}",
+          description: "",
+          orgId: {{orgId}},
+          orgHandler: "{{orgHandler}}",
+          projectId: "{{projectId}}",
+          labels: "",
+          componentType: "miApiService",
+          accessibility: "external",
+          srcGitRepoUrl: "{{srcGitRepoUrl}}",
+          srcGitRepoBranch: "main",
+          repositorySubPath: "{{repositorySubPath}}",
+          oasFilePath: "",
+          version: "1.0.0",
+          secretRef: ""
+        }
+      ) {
+        id
+        organizationId
+        projectId
+        handle
+      }
   }
-}

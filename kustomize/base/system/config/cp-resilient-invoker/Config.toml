@@ -1,0 +1,14 @@
+[cp.resilient_invoker]
+healthCheckPort = 9090
+invocationScheduleInterval = 10.0
+invocationCleanupInterval = 3600.0
+
+[cp.resilient_invoker.repository]
+host = "{{.MSSQL_HOST}}"
+port  = 1433
+user = "choreo_cp_ris_db_user"
+database = "choreo_cp_ris_db"
+mssqlPwdSecretPath = "/mnt/csi/secret-cp-ris/CP_RIS_DB_PASSWORD"
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"

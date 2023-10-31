@@ -27,13 +27,21 @@ export class ProjectListingPage {
   ) {
     ChoreoHomePage.navigateToHome();
     this.checkProjectCardCreation();
-    cy.get('[name="Name"]').clear().type(projectName);
-    cy.get('[name="Description"]').clear().type(description);
-    cy.get('[data-cyid="select-region-select"]').click();
-    cy.contains(`Cloud Data Plane - ${dataPlane}`).click();
-    Utils.getRenderedElement('[data-testid="create-version-create"]').click();
-    cy.get('[data-testid="create-version-create"]').should("not.exist");
-    ProjectOverviewPage.waitForTemplateCardsToLoad();
+    cy.get('[data-cyid="project-name"]').clear().type(projectName);
+    cy.get('[data-cyid="project-description"]').clear().type(description);
+    cy.get('[data-testid="Multi Repository-radio-card"]').click();
+    Utils.getRenderedElement(
+      '[data-cyid="create-project-stepper-submit-button"]'
+    ).click();
+    cy.get('[data-cyid="create-project-stepper-submit-button"]').should(
+      "not.exist"
+    );
+    cy.get('[data-cyid="sample-creation-dialog-closeBtn-button"]').should(
+      "exist"
+    );
+    cy.get('[data-cyid="sample-creation-dialog-closeBtn-button"]').should(
+      "not.exist"
+    );
   }
 
   static checkProjectCardCreation() {
@@ -56,7 +64,7 @@ export class ProjectListingPage {
     cy.get("body").then((bdy) => {
       if (bdy.find('[data-cyid="create-project-card"]').length > 0) {
         cy.get('[data-cyid="create-project-card"]').click();
-        cy.wait(VERY_SHORT_TIME.timeout);
+        cy.get('[data-cyid="create-project-card"]').should("not.exist");
       } else {
         cy.log("Retry count: " + retryCount);
         this.getCreateNewProjectPopUp(retryCount);
@@ -65,8 +73,8 @@ export class ProjectListingPage {
 
     cy.log("Verify the PopUP is displayed");
     cy.get("body").then((bdy) => {
-      if (bdy.find('[data-testid="create-version-create"]').length > 0) {
-        cy.get('[data-testid="create-version-create"]').should("be.visible");
+      if (bdy.find('[data-cyid="project-name"]').length > 0) {
+        cy.get('[data-cyid="project-name"]').should("be.visible");
         return;
       } else {
         this.getCreateNewProjectPopUp(retryCount);

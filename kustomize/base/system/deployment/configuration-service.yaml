@@ -34,6 +34,8 @@ spec:
               name: health
             - containerPort: 8082      # To be used for public health check (external)
               name: healthz
+            - containerPort: 8084
+              name: configmap-port
           readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 15
@@ -67,7 +69,26 @@ spec:
             capabilities:
               drop:
                 - ALL
+          volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
+            - name: secret-configuration-service
+              mountPath: "/mnt/csi/secret-configuration-service"
+              readOnly: true
       restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: cm-file-configuration-service
+        - name: secret-configuration-service
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-configuration-service
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:

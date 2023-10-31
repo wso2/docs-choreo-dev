@@ -290,6 +290,7 @@ configMapGenerator:
       - API_SERVER_URL=http://api-server
       - GCHAT_URL=https://chat.googleapis.com
       - APP_SERVICE_URL=app-service:8080
+      - CRYPTO_KEY_SERVICE_URL=http://crypto-key-service:9091
   - name: cm-logsarchiver
     behavior: create
     literals:
@@ -301,6 +302,13 @@ configMapGenerator:
       - RUDDER_URL=http://dp-rudder:80
       - SUBSCRIPTION_SERVICE_URL=subscriptions:9090
       - DELETION_PERIOD_IN_MONTHS=3
+  - name: cm-platform-services-manager
+    behavior: create
+    literals:
+      - DB_NAME=choreo_platform_service_manager_db
+      - DB_USER=choreo_platform_service_manager_db_user
+      - DB_PORT=1433
+      - SUBSCRIPTION_SVC_ADDRESS=subscriptions:9090
   - name: cm-dp-rudder
     behavior: create
     literals:
@@ -330,6 +338,10 @@ configMapGenerator:
       - DEV_PORTAL_SERVICE_PORT=80
       - DEV_PORTAL_SERVICE_PATH=/
       - RUDDER_URL="http://dp-rudder:80" # This is for the rudder-migration-service, remove this when removing that
+      - CONFIGURATION_MGT_URL="http://configuration-service:8080"
+      - ENDPOINT_RESOLVER_URL="http://endpoint-resolver:9090"
+      - SERVICE_REGISTRY_URL="http://resource-registry:9090"
+      - CONFIG_MAPPING_SERVICE_URL="http://configuration-service:8084"
   - name: cm-console-next
     behavior: create
     literals:
@@ -388,6 +400,14 @@ configMapGenerator:
     behavior: create
     files:
       - cp-graphql/Config.toml
+  - name: cm-file-configuration-service
+    behavior: create
+    files:
+      - configuration-service/Config.toml
+  - name: cm-file-declarative-api
+    behavior: create
+    files:
+      - declarative-api/Config.toml
   - name: cm-file-moesif-service
     behavior: create
     files:
@@ -522,14 +542,6 @@ configMapGenerator:
     literals:
       - CHOREO_USAGE_HANDLER_CRONJOB_MODE="publisher"
       - CHOREO_USAGE_PUBLISHING_FREQUENCY="dynamic-monthly"
-  - name: cm-file-choreo-org-stat-data-collector
-    behavior: create
-    files:
-      - choreo-org-stat/data-collector/Config.toml
-  - name: cm-file-choreo-org-stat-data-publisher
-    behavior: create
-    files:
-      - choreo-org-stat/data-publisher/application.properties
   - name: cm-file-choreo-metered-usage-handler-service
     behavior: create
     files:
@@ -544,6 +556,10 @@ configMapGenerator:
     behavior: create
     files:
       - marketplace/Config.toml
+  - name: cm-file-cp-resilient-invoker
+    behavior: create
+    files:
+      - cp-resilient-invoker/Config.toml
   - name: cm-file-cp-ris
     behavior: create
     files:
@@ -575,3 +591,15 @@ configMapGenerator:
     files:
       - app-dev-user-mgt-service/application.properties
       - app-dev-user-mgt-service/log4j2.yaml
+  - name: cm-file-appdev-authorization
+    behavior: create
+    files:
+      - app-dev-authorization-service/Config.toml
+  - name: cm-file-endpoint-resolver
+    behavior: create
+    files:
+      - cp-endpoint-resolver/Config.toml
+  - name: cm-file-connection-service
+    behavior: create
+    files:
+      - connection-service/Config.toml  

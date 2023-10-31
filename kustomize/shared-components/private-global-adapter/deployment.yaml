@@ -1,0 +1,237 @@
+# --------------------------------------------------------------------
+# Copyright (c) 2023, WSO2 Inc. (http://wso2.com).
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# -----------------------------------------------------------------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: private-global-adapter
+  annotations:
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+    checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: private-global-adapter
+  template:
+    metadata:
+      labels:
+        global.adapter: private
+        antiaffinity: private-global-adapter
+        choreo.component: private-global-adapter
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 10500
+        runAsGroup: 10500
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: private-global-adapter
+          volumeMounts:
+            - mountPath: logs
+              name: logs
+            - mountPath: /home/wso2/security/keystore/mg.key
+              name: secret-mgw-keystore
+              readOnly: true
+              subPath: ADAPTER_KEYSTORE_KEY
+            - mountPath: /home/wso2/security/keystore/mg.pem
+              name: mgw-common-cert-vol
+              readOnly: true
+              subPath: mg.pem
+            - mountPath: /home/wso2/security/keystore/global-adapter.key
+              name: secret-private-ga
+              readOnly: true
+              subPath: GLOBAL_ADAPTER_KEYSTORE_KEY
+            - mountPath: /home/wso2/security/keystore/global-adapter.pem
+              name: global-adapter-keystore-vol
+              subPath: global-adapter.pem
+            - mountPath: /home/wso2/security/truststore/controlplane.pem
+              name: mgw-adapter-truststore-vol
+              readOnly: true
+              subPath: controlplane.pem
+            - mountPath: /home/wso2/security/truststore/local-adapter.pem
+              name: mgw-common-cert-vol
+              readOnly: true
+              subPath: mg.pem
+            - mountPath: /home/wso2/conf/ga_config.toml
+              name: global-adapter-config
+              subPath: ga_config.toml
+            - mountPath: /home/wso2/conf/log_config.toml
+              name: ga-log-config
+              subPath: log_config.toml
+            - name: secret-redis
+              mountPath: /mnt/csi/secret-redis
+              readOnly: true
+            - name: secret-cc-ga-credentials
+              mountPath: /mnt/csi/secret-cc-ga-credentials
+              readOnly: true
+            - name: secret-asb
+              mountPath: /mnt/csi/secret-asb
+              readOnly: true
+            - name: secret-apim
+              mountPath: /mnt/csi/secret-apim
+              readOnly: true
+            - name: secret-private-ga
+              mountPath: /mnt/csi/secret-private-ga
+              readOnly: true
+            - name: secret-mgw-analytics
+              mountPath: /mnt/csi/ssecret-mgw-analytics
+              readOnly: true
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connect-global-adapter-v2:latest
+          imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+              add: [ "NET_RAW" ]
+          env:
+            - name: GLOBAL_ADAPTER_PRIVATE_KEY_PATH
+              value: /home/wso2/security/keystore/global-adapter.key
+            - name: GLOBAL_ADAPTER_PUBLIC_CERT_PATH
+              value: /home/wso2/security/keystore/global-adapter.pem
+            - name: ADAPTER_PRIVATE_KEY_PATH
+              value: "/home/wso2/security/keystore/mg.key"
+            - name: ADAPTER_PUBLIC_CERT_PATH
+              value: "/home/wso2/security/keystore/mg.pem"
+            - name: GLOBAL_ADAPTER_SERVER_NAME
+              value: global-adapter
+            - name: ga_db_pwd
+              valueFrom:
+                secretKeyRef:
+                  key: GLOBAL_ADAPTER_MSSQL_PASSWORD
+                  name: secret-cc-ga-credentials
+            - name: moesif_ms_auth_pwd
+              valueFrom:
+                secretKeyRef:
+                  key: MOESIF_MS_AUTH_PWD
+                  name: secret-mgw-analytics
+            - name: redis_host_pwd
+              valueFrom:
+                secretKeyRef:
+                  key: REDIS_PASSWORD
+                  name: secret-redis
+            - name: cp_admin_pwd
+              valueFrom:
+                secretKeyRef:
+                  key: SUPER_ADMIN_PSWD
+                  name: secret-apim
+            - name: ASB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: secret-asb
+                  key: ASB_CONNECTION_STRING
+          resources:
+            requests:
+              memory: "1000Mi"
+              cpu: "500m"
+            limits:
+              memory: "1000Mi"
+              cpu: "750m"
+          ports:
+            - containerPort: 18000
+            - containerPort: 9843
+          livenessProbe:
+            httpGet:
+              scheme: HTTPS
+              path: /healthz
+              port: 9745
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              scheme: HTTPS
+              path: /readyz
+              port: 9745
+            initialDelaySeconds: 8
+            periodSeconds: 5
+      volumes:
+        - name: logs
+          emptyDir: {}
+        - name: global-adapter-keystore-vol
+          configMap:
+            name: ga-keystore-vol
+        - name: global-adapter-config
+          configMap:
+            name: cc-ga-conf
+        - name: ga-log-config
+          configMap:
+            name: pvtga-log-config
+        - name: mgw-common-cert-vol
+          configMap:
+            name: mgw-common-cert
+        - name: mgw-adapter-truststore-vol
+          configMap:
+            name: mgw-adapter-truststore
+        - name: secret-mgw-analytics
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-mgw-analytics
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-mgw-keystore
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-mgw-keystore
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-cc-ga-credentials
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cc-ga-credentials
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-redis
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-redis
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-asb
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-asb
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-apim
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-private-ga
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-private-ga
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      restartPolicy: Always

@@ -7,17 +7,17 @@ resources:
   - app-deployer.yaml
   - app-service.yaml
   - audit-logging.yaml
-  - telemetry.yaml
+#  - telemetry.yaml
   - telemetry-go.yaml
   - sys-obsapi.yaml
   - negotiator.yaml
   - loggingapi.yaml
   - connectords.yaml
   - perfanalyzer-estimator.yaml
+  - platform-services-manager.yaml
   - test-assistant.yaml
   - analytics-subscription.yaml
   - organization-remover.yaml
-  - datacollector.yaml
   - declarative-api.yaml
   - quota-limiter.yaml
   - subscriptions.yaml
@@ -26,6 +26,9 @@ resources:
   - dp-garbage-collector.yaml
   - dp-mizzen.yaml
   - cp-graphql.yaml
+  - cp-resilient-invoker.yaml
+  - cp-ris.yaml
+  - cp-sis.yaml
   - configuration-service.yaml
   - console-next.yaml
   - alert-notification-service.yaml
@@ -49,3 +52,5 @@ resources:
   - dp-helmhub.yaml
   - resource-registry-service.yaml
   - marketplace.yaml
+  - cp-endpoint-resolver.yaml
+  - connection-service.yaml

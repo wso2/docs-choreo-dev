@@ -10,8 +10,10 @@ resources:
   - connectords.yaml
   - console-next.yaml
   - cp-graphql.yaml
+  - cp-resilient-invoker.yaml
+  - cp-ris.yaml
+  - cp-sis.yaml
   - configuration-service.yaml
-  - datacollector.yaml
   - declarative-api.yaml
   - delete-manager.yaml
   - dp-cicd.yaml
@@ -29,6 +31,7 @@ resources:
   - obsapi.yaml
   - orgremover.yaml
   - perfanalyzer-estimator.yaml
+  - platform-services-manager.yaml
   - quota-limiter.yaml
   - subscriptions.yaml
   - sys-obsapi.yaml
@@ -52,6 +55,8 @@ resources:
   - resource-registry-service.yaml
   - marketplace.yaml
   - dp-cicd-temp.yaml
+  - cp-endpoint-resolver-service.yaml
+  - connection-service.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587,25,1433,6380

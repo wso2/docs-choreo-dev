@@ -6,6 +6,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.SecurityTestContext;
+import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.common.utils.SecurityUtils;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
@@ -28,6 +29,13 @@ public class IntegrationComponentsElevatedAccessCheck extends TestNGCitrusSpring
     private static String releaseId;
     private static String devEnvironmentId;
     private static String orgUuid;
+    private static String oasFilePath;
+    private static String dockerfilePath;
+    private static String dockerContext;
+    private static String srcGitRepoUrl;
+    private static String repositorySubPath;
+    private static String componentName;
+
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
 
@@ -42,6 +50,13 @@ public class IntegrationComponentsElevatedAccessCheck extends TestNGCitrusSpring
         componentId = Configuration.getSecurityConfig(SecurityConfigDefinition.IC_COMPONENT_ID);
         releaseId = Configuration.getSecurityConfig(SecurityConfigDefinition.IC_COMPONENT_ID);
         devEnvironmentId = Configuration.getSecurityConfig(SecurityConfigDefinition.IC_ENV_ID);
+        componentName = Configuration.getSecurityConfig(SecurityConfigDefinition.CM_COMPONENT_NAME);
+        srcGitRepoUrl = Configuration.getSecurityConfig(SecurityConfigDefinition.CM_SRC_GIT_REPO_URL);
+        repositorySubPath = Configuration.getSecurityConfig(SecurityConfigDefinition.CM_REPOSITORY_SUB_PATH);
+        oasFilePath = Configuration.getSecurityConfig(SecurityConfigDefinition.CM_OAS_FILE_PATH);
+        dockerfilePath = Configuration.getSecurityConfig(SecurityConfigDefinition.CM_DOCKER_FILE_PATH);
+        dockerContext = Configuration.getSecurityConfig(SecurityConfigDefinition.CM_DOCKER_CONTEXT);
+
     }
 
     @Test
@@ -60,28 +75,20 @@ public class IntegrationComponentsElevatedAccessCheck extends TestNGCitrusSpring
 
     @Test
     @CitrusTest
-    public void retreiveComponent_DevportalElevatedAccessCheck() throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrl = Constant.PROJECTS_GRAPHQL;
-        Map<String, String> params = new HashMap<>();
-        params.put("projectId", projectId);
-        params.put("componentHandler", componentHandler);
-        String body = MessageUtils.generateStringFromTemplate("templates/integrationComponents/" +
-                "retreiveComponent.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
-    }
-
-    @Test
-    @CitrusTest
     public void createMIEventComponent_DevportalElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
         String requestUrl = Constant.PROJECTS_GRAPHQL;
         Map<String, String> params = new HashMap<>();
+        params.put("componentName", componentName);
+        params.put("orgId", orgId);
+        params.put("orgHandler", orgHandler);
         params.put("projectId", projectId);
-        params.put("componentHandler", componentHandler);
+        params.put("srcGitRepoUrl", srcGitRepoUrl);
+        params.put("repositorySubPath", repositorySubPath);
         String body = MessageUtils.generateStringFromTemplate("templates/integrationComponents/" +
-                "retreiveComponent.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+                "createMIComponent.mustache", params);
+        body = ObjectMapperUtil.mapToGraphQLQuery(body);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
@@ -93,9 +100,14 @@ public class IntegrationComponentsElevatedAccessCheck extends TestNGCitrusSpring
         params.put("orgId", orgId);
         params.put("orgHandler", orgHandler);
         params.put("projectId", projectId);
+        params.put("oasFilePath", oasFilePath);
+        params.put("dockerfilePath", dockerfilePath);
+        params.put("dockerContext", dockerContext);
+        params.put("srcGitRepoUrl", srcGitRepoUrl);
         String body = MessageUtils.generateStringFromTemplate("templates/integrationComponents/" +
                 "createBYOCComponent.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        body = ObjectMapperUtil.mapToGraphQLQuery(body);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test

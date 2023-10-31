@@ -1,13 +1,11 @@
-{
-  "query": "query {
+query {
     componentEndpointApiDefinition(
       input: {
-        componentId: \"{{componentId}}\",
-        versionId: \"{{versionId}}\",
-        endpointId: \"{{endpointId}}\"
+        componentId: "{{componentId}}",
+        versionId: "{{versionId}}",
+        endpointId: "{{endpointId}}"
       }
     ) {
       content
     }
-  }"
-}
+  }

@@ -266,10 +266,13 @@ public class ComponentUtils {
     }
 
     public static ChoreoProject createProject(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients,
-                                               String accessToken, String region) throws Exception {
+                                              String accessToken, String region) throws Exception {
+
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String projectName = NameGenerator.generateUniqueName(Constant.TEST_PROJECT_NAME_PREFIX);
-        return GraphQL.createProject(runner, appServiceClient, region, accessToken, projectName);
+        ChoreoProject project = GraphQL.createProject(runner, appServiceClient, region, accessToken, projectName);
+        Assert.assertNotNull(project.getId(), "Project ID is not null.");
+        return project;
     }
 
     public static ChoreoComponent createComponent(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients,
