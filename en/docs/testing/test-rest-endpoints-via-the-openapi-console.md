@@ -41,7 +41,7 @@ As Choreo uses OAuth2.0 authentication to secure REST APIs, the OpenAPI Console 
 5. Select the required endpoint from the **Endpoint** list.
 
     !!! note
-        You have set the **Network Visibility** to **Organization** in the **endpoints.yaml** to declare an endpoint as an organization endpoint.
+        You have to set the **Network Visibility** to **Organization** in the **endpoints.yaml** to declare an endpoint as an organization endpoint.
 
 6. Click on **Generate URL** to generate a temporay test URL that will be active for 15 minutes.
 
