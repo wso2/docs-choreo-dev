@@ -22,7 +22,7 @@ You can create a Web Application in Choreo as follows:
     - Select the relevant buildpack. Default presets include React, Angular, and Vue.js. If you’re using a different SPA framework, you can try one of these presets as the configurations can be overridden to support most Javascript-based SPAs.
     - Enter the build command based on the your package manager. NPM, yarn, and pnpm are supported and the relevant package manager is run based on the dependency lock file in your repository (defaults to NPM if no lock file is present).
     - Specify the build output directory.
-    - Specify the NodeJs version. Choreo does not pick the Nodejs version from the package.json engine property. The required Node version must be explicitly set in the build configuration.
+    - Specify the NodeJS version. Choreo does not pick the Nodejs version from the package.json engine property. The required Node version must be explicitly set in the build configuration.
 
     Once you create the Web Application component, Choreo will automatically generate a build pipeline for your Single Page Application and deploy it.
 

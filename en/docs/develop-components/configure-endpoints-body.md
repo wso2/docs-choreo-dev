@@ -42,7 +42,7 @@ If `endpoints.yaml` is not provided and if the source Micro Integrator project d
 
 ### Configure endpoints with the other buildpacks
 
-When you build a service component using the other buildpacks(Java, Python, NodeJs, Ruby, PHP, Go, Dockerfile, etc), you can configure the endpoint details with the `endpoints.yaml` configuration file. You must place this file inside the `.choreo` directory at the build context path and commit it to the source repository.
+When you build a service component using the other buildpacks(Java, Python, NodeJS, Ruby, PHP, Go, Dockerfile, etc), you can configure the endpoint details with the `endpoints.yaml` configuration file. You must place this file inside the `.choreo` directory at the build context path and commit it to the source repository.
 
 See [Understanding the endpoints.yaml file](#learn-the-endpointsyaml-file) to learn about the `endpoints.yaml` file.
 
@@ -58,7 +58,7 @@ The `endpoints.yaml` file has a specific structure and contains the following de
 | **type**             | Required     | The type of traffic this endpoint is accepting, such as `REST`, `GraphQL`, `gRPC`, `UDP`or `TCP`. Currently, the MI preset supports only the `REST` type.                                         |
 | **networkVisibility**| Required     | The network level visibility of this endpoint, which defaults to `Project` if not specified. Accepted values are `Project`, `Organization`, or `Public`.|
 | **context**          | Required     | The context (base path) of the API that Choreo exposes via this endpoint.        |
-| **schemaFilePath**   | Required     | The swagger definition file path. Defaults to the wildcard route if not provided. This field should be a relative path to the project path when using the buildpacks(Java, Python, NodeJs, Go, PHP, Ruby and WSO2 MI). For REST endpoint types when using the Ballerina or Dockerfile buildpack, this field should be a relative path to the component root or Docker context .|
+| **schemaFilePath**   | Required     |  The swagger definition file path. Defaults to the wildcard route if not provided. This field should be a relative path to the project path when using the **Java**, **Python**, **NodeJS**, **Go**, **PHP**, **Ruby**, and **WSO2 MI** buildpacks. For REST endpoint types, when using the **Ballerina** or **Dockerfile** buildpack, this field should be a relative path to the component root or Docker context.|
 
 #### Sample endpoints.yaml
 
