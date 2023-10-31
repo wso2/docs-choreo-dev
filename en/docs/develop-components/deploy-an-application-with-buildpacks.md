@@ -27,15 +27,14 @@ In Choreo, for a project to be detected as a given language project, at least on
 | Java     | 8, 11, 17, 18 (OpenJDK Runtime Environment Temurin) | `pom.xml`, `*.java`, `build.gradle`, `build.gradle.kts` |
 | Go       | 1.x | `go.mod`, `*.go` |
 | NodeJS   | 12.x.x, 14.x.x, 16.x.x, 18.x.x, 20.x.x | `package.json`, `*.js` |
-| Python   | 3.10.x, 3.11.x | `requirements.txt`, `*.py` |
+| Python   | 3.10.x, 3.11.x | `requirements.txt`, `*.py`   !!! info For Python, it is mandatory to have a [Procfile](#procfile) in the project root directory. |
 | Ruby     | 3.1.x, 3.2.x | `Gemfile`, `*.rb` |
 | PHP      | 8.1.x, 8.2.x | `composer.json`, `*.php` |
 | WSO2 MI | 4.1.0.x, 4.2.0.x |`pom.xml`|
 
 !!! info
-    1. For Python, it is mandatory to have a [Procfile](#procfile) in project root directory.
 
-    2. For Java, Main class should be defined in the Manifest.
+    1. For Java, Main class should be defined in the Manifest.
 
 
 ## Develop a component
@@ -46,18 +45,16 @@ Refer below examples for other component types and buildpacks. Follow the readme
 
 | Component Type | Buildpack   | Example            |
 |----------------|-------------|--------------------|
-| Service        |  Java | *[Product Management Service](https://github.com/wso2/choreo-samples)|
-| Service| Python | *[Reading List Service](https://github.com/wso2/choreo-samples)|
-| Service| NodeJS | *[Reading List Service](https://github.com/wso2/choreo-samples)|
+| Service        |  Java | [Product Management Service](https://github.com/wso2/choreo-samples/tree/main/product-management-service)|
+| Service| Python | [Reading List Service](https://github.com/wso2/choreo-samples/tree/main/reading-books-list-service-python)|
+| Service| NodeJS | [Reading List Service](https://github.com/wso2/choreo-samples/tree/main/reading-books-list-service-nodejs)|
 | Service| Ballerina | [Echo Service](https://github.com/wso2/choreo-samples/tree/main/echo-service)|
 | Service | WSO2 MI | [Hello World Service](https://github.com/wso2/choreo-samples/tree/main/hello-world-mi)|
-| Service | Ruby | *[Hello World Service](https://github.com/wso2/choreo-samples)|
-| Web Application | PHP | *[Hello World Web App](https://github.com/wso2/choreo-samples)|
-| Manual Task | Go | *[Hello World Task](https://github.com/wso2/choreo-samples)|
+| Service | Ruby | [Hello World Service](https://github.com/wso2/choreo-samples/tree/main/hello-world-ruby-service)|
+| Web Application | PHP | [Hello World Web App](https://github.com/wso2/choreo-samples/tree/main/hello-world-php-webapp)|
+| Manual Task | Go | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-go-task)|
 | Manual Task | Ballerina | [Covid19 Statistics To Email](https://github.com/wso2/choreo-samples/tree/main//covid19-statistics-to-email)|
-| Manual Task | Java | *[Hello World Task](https://github.com/wso2/choreo-samples)|
-
-`*` Samples are not added yet.
+| Manual Task | Java | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-java-task)|
 
 Refer [choreo samples](https://github.com/wso2/choreo-samples) for more examples.
 
