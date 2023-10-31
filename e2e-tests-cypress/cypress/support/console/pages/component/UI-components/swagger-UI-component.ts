@@ -11,6 +11,8 @@
  * associated services.
  */
 
+import { SHORT_TIME } from "../../../../commons/timeouts";
+
 export class SwaggerUI {
   static SelectResource(path: string, method: string = "") {
     const pathVariable = method
@@ -35,19 +37,17 @@ export class SwaggerUI {
     if (str.length === 0) {
       return str;
     }
-  
+
     const firstLetter = str.charAt(0).toUpperCase();
     const remainingLetters = str.slice(1);
     return firstLetter + remainingLetters;
   }
-  
 
   static closeResource(path: string, parentComponentId: string) {
     if (parentComponentId == "") {
       cy.get(`[data-path="/${path}"]`).scrollIntoView().click();
     } else {
-    cy.get(`[id="${parentComponentId}"]`)
-      .within(() => {
+      cy.get(`[id="${parentComponentId}"]`).within(() => {
         cy.get(`[data-path="/${path}"]`).scrollIntoView().click();
       });
     }
@@ -67,7 +67,7 @@ export class SwaggerUI {
 
   static ExecuteResourceFunction(resource = "-get") {
     cy.contains("Execute").focus().click();
-    cy.get(`[class="curl-command"]`).should("be.visible");
+    cy.get(`[class="curl-command"]`, SHORT_TIME).should("be.visible");
     cy.get('[class="loading-container"]').should("not.exist");
     cy.log("Execution is successful");
     cy.contains("Cancel").click();

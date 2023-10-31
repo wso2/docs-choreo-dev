@@ -1,250 +1,168 @@
-/*
- * Copyright (c) 2023, WSO2 LLC. (http://www.wso2.com). All Rights Reserved.
- *
- * This software is the property of WSO2 LLC. and its suppliers, if any.
- * Dissemination of any information or reproduction of any material contained
- * herein is strictly forbidden, unless permitted by WSO2 in accordance with
- * the WSO2 Commercial License available at http://wso2.com/licenses.
- * For specific language governing the permissions and limitations under
- * this license, please see the license as well as any agreement you’ve
- * entered into with WSO2 governing the purchase of this software and any
- * associated services.
- */
-
 import { Enums } from "../../../support/commons/enums";
-import { Utils } from "../../../support/commons/utils";
-import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
-import { GraphQL } from "../../../support/console/apis/graphql";
-import { ComponentBuild } from "../../../support/console/pages/component/Functionalities/Component-build";
-import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
-import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
-import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
-import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
-import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
-import { LoginPage } from "../../../support/console/pages/login-page";
-import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { ComponentData } from "../../../support/interfaces/component-data";
-
-before(() => {
-  LoginPage.login();
-});
+import { console } from "../../../support/console/console";
+import { Project } from "../../../support/console/concepts/project/project";
+import { Service } from "../../../support/console/concepts/component/service/service-component";
+import { UsagePlan } from "../../../support/console/concepts/component/service/service-management";
 
 after(() => {
-  ChoreoHomePage.logout();
+  console.logout();
 });
 
 describe("Verify Ballerina service functionality", () => {
-  const COMPONENT_NAME = Utils.generateComponentName("ballerina-service");
-  const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "sample ballerina service scenario";
-  const REPO_NAME = Utils.generateComponentName("repo");
   const ENDPOINT_NAME = "Readinglist";
+  let project: Project;
+  let component: Service;
+
+  it("Login to Console", () => {
+    console.login();
+  });
 
   it("Creating a project", () => {
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+    project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
   it("Verify Ballerina service component creation", () => {
-    let componentData: ComponentData = {
-      componentName: COMPONENT_NAME,
-      displayType: Enums.DisplayType.ballerinaService,
-      accessibility: Enums.Accessibility.EXTERNAL,
-      projectName: PROJECT_NAME,
-      triggerChannels: "",
-      triggerId: null,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/byor-service-app1",
-      initializeAsBallerinaProject: false,
-      repositoryType: Enums.RepoType.UserManagedNonEmpty,
-      repositorySubPath: "",
-      sampleTemplate: "",
-    };
-
-    GraphQL.createComponent(
-      PROJECT_NAME,
-      REPO_NAME,
-      componentData,
-      GraphQLQueryBuilder.getRestComponentCreationQuery
-    );
-
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-  });
-
-  it("Navigate to deployment", () => {
-    if (Utils.isBuildDeployEnabled()) {
-      ComponentOverviewPage.navigateToBuild();
-      ComponentBuild.buildComponent();
-    }
-    ComponentOverviewPage.navigateToDeploy();
-  });
-
-  it("Verify component deployment with project level endpoint", () => {
-    ComponentDeployPage.deployService(
-      PROJECT_NAME,
-      COMPONENT_NAME,
-      ENDPOINT_NAME,
-      false,
-      true
-    );
-  });
-
-  it("Verify test page for project level endpoint", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.verifyProjectLevelEndpoint();
-  });
-
-  it("Verify manage page for project level endpoint", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.verifyOverviewForProjectLevelEndpoints();
-  });
-
-  it("Verify component deployment with public level endpoint", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployService(
-      PROJECT_NAME,
-      COMPONENT_NAME,
-      ENDPOINT_NAME,
-      true,
-      true
-    );
-  });
-
-  it("Verify test functionality of root resource in dev on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testManagedEndpoint(
-      Enums.Environment.DEVELOPMENT,
-      "Readinglist",
-      "books",
-      "get",
-      "operations-default-getBooks"
-    ).then((res) => {
-      cy.fixture("books").then((books) => {
-        expect(books[1].title).to.eq("Dead Men");
+    project
+      .createServiceComponent(
+        Enums.Accessibility.EXTERNAL,
+        {
+          url: "https://github.com/choreo-test-apps/byor-service-app1",
+          branch: "main",
+        },
+        ENDPOINT_NAME
+      )
+      .then((serviceComponent: Service) => {
+        component = serviceComponent;
       });
-      expect(res.statusCode).to.be.eq("200");
-    });
   });
 
-  it("Verify component promote to prod", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteService(ENDPOINT_NAME, true);
+  it("Build the component", () => {
+    component.buildComponent();
   });
 
-  it("Verify test functionality of root resource in prod on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testManagedEndpoint(
-      Enums.Environment.PRODUCTION,
-      "Readinglist",
-      "books",
-      "get",
-      "operations-default-getBooks"
-    ).then((res) => {
-      cy.fixture("books").then((books) => {
-        expect(books[2].title).to.eq("The Bucther");
+  it("Deploying the component with Project level visibility", () => {
+    component.deployProjectLevelAccessibility();
+  });
+
+  it("Deploying the component with Public level visibility", () => {
+    component.deployPublicLevelAccessibility();
+  });
+
+  it("Testing the component in Dev", () => {
+    component
+      .testConsole({
+        env: Enums.Environment.DEVELOPMENT,
+        endpoint: ENDPOINT_NAME,
+        resourcePath: "books",
+        method: "get",
+        parentComponentId: "operations-default-getBooks",
+      })
+      .then((res) => {
+        cy.fixture("books").then((books) => {
+          expect(books[1].title).to.eq("Dead Men");
+        });
+        expect(res.statusCode).to.be.eq("200");
       });
-      expect(res.statusCode).to.be.eq("200");
-    });
   });
 
-  //new version creation
-  it("Verify new version creation and deploy to dev", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.addNewVersion();
+  it("Verifying component promotion to Prod", () => {
+    component.promotePublicLevelAccessibility();
   });
 
-  it("Verify new version deployment", () => {
-    if (Utils.isBuildDeployEnabled()) {
-      ComponentOverviewPage.navigateToBuild();
-      ComponentBuild.buildComponent();
-      ComponentOverviewPage.navigateToDeploy();
-    }
-    ComponentDeployPage.deployService(
-      PROJECT_NAME,
-      COMPONENT_NAME,
-      ENDPOINT_NAME,
-      true,
-      true
-    );
-  });
-
-  it("Verify test functionality of root resource in dev on swagger for new version", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testManagedEndpoint(
-      Enums.Environment.DEVELOPMENT,
-      "Readinglist",
-      "books",
-      "get",
-      "operations-default-getBooks"
-    ).then((res) => {
-      cy.fixture("books").then((books) => {
-        expect(books[1].title).to.eq("Dead Men");
+  it("Testing the component in Prod", () => {
+    component
+      .testConsole({
+        env: Enums.Environment.PRODUCTION,
+        endpoint: ENDPOINT_NAME,
+        resourcePath: "books",
+        method: "get",
+        parentComponentId: "operations-default-getBooks",
+      })
+      .then((res) => {
+        cy.fixture("books").then((books) => {
+          expect(books[1].title).to.eq("Dead Men");
+        });
+        expect(res.statusCode).to.be.eq("200");
       });
-      expect(res.statusCode).to.be.eq("200");
-    });
   });
 
-  it("Verify new version promotion to prod", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteService(ENDPOINT_NAME, true);
+  it("Adding a new version", () => {
+    component.addVersion();
   });
 
-  it("Verify test functionality of root resource in prod on swagger for new version", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testManagedEndpoint(
-      Enums.Environment.PRODUCTION,
-      "Readinglist",
-      "books",
-      "get",
-      "operations-default-getBooks"
-    ).then((res) => {
-      cy.fixture("books").then((books) => {
-        expect(books[2].title).to.eq("The Bucther");
+  it("Build the new version", () => {
+    component.buildComponent();
+  });
+
+  it("Deploying the new version", () => {
+    component.deployPublicLevelAccessibility();
+  });
+
+  it("Testing new version in Dev", () => {
+    component
+      .testConsole({
+        env: Enums.Environment.DEVELOPMENT,
+        endpoint: ENDPOINT_NAME,
+        resourcePath: "books",
+        method: "get",
+        parentComponentId: "operations-default-getBooks",
+      })
+      .then((res) => {
+        cy.fixture("books").then((books) => {
+          expect(books[1].title).to.eq("Dead Men");
+        });
+        expect(res.statusCode).to.be.eq("200");
       });
-      expect(res.statusCode).to.be.eq("200");
-    });
   });
 
-  it("Verify manage functionality", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publishServiceToMarketplace();
+  it("Promote new version to Prod", () => {
+    component.promotePublicLevelAccessibility();
   });
 
-  it("Verify usage plan change", () => {
-    ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
-    ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
+  it("Testing new version in Prod", () => {
+    component
+      .testConsole({
+        env: Enums.Environment.PRODUCTION,
+        endpoint: ENDPOINT_NAME,
+        resourcePath: "books",
+        method: "get",
+        parentComponentId: "operations-default-getBooks",
+      })
+      .then((res) => {
+        cy.fixture("books").then((books) => {
+          expect(books[1].title).to.eq("Dead Men");
+        });
+        expect(res.statusCode).to.be.eq("200");
+      });
   });
 
-  it("Navigate to component usage insights", () => {
-    ChoreoHomePage.navigateToComponentUsageInsights();
+  it("Updating the usage plans", () => {
+    component.updateUsagePlans([UsagePlan.Gold, UsagePlan.Bronze]);
   });
 
-  it("Navigate to project usage insights", () => {
-    ChoreoHomePage.navigateToProjectUsageInsights();
+  it("Enabling CORS", () => {
+    component.enableCors();
   });
 
-  it("Verify API insights for dev env", () => {
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
-    InsightsPage.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(2);
-    });
+  it("Publishing the component", () => {
+    component.publish();
   });
 
-  it("Verify API insights for prod env", () => {
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
-    InsightsPage.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(2);
-    });
+  it("Stop component", () => {
+    component.stopDeployment();
+    component.stopPromotion();
   });
 
-  it("Verify suspending all component deployments", () => {
-    ChoreoHomePage.navigateToComponents();
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
+  it("Verifying component insights", () => {
+    component.verifyUsageInsights();
+  });
+
+  it("Verifying project insights in Dev", () => {
+    project.verifyUsageInsights(Enums.Environment.DEVELOPMENT);
+  });
+
+  it("Verifying project insights in Prod", () => {
+    project.verifyUsageInsights(Enums.Environment.PRODUCTION);
   });
 });
