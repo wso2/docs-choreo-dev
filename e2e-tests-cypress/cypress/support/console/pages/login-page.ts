@@ -61,6 +61,12 @@ export class LoginPage {
           "Demo Organization": true,
           "Internal Marketplace": true,
           "Internal Endpoint Testing": true,
+          "Choreo built-in Identity Provider": true,
+          "Connection Management": true,
+          "Credentials Management": true,
+          "Decouple Build and Deploy": true,
+          "Innovation Performance": true,
+          "Unified Logs View": true,
         })
       );
     } else {
