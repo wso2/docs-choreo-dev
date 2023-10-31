@@ -48,7 +48,7 @@ Refer below examples for other component types and buildpacks. Follow the readme
 |----------------|-------------|--------------------|
 | Service        |  Java | *[Product Management Service](https://github.com/wso2/choreo-samples)|
 | Service| Python | *[Reading List Service](https://github.com/wso2/choreo-samples)|
-| Service| NodeJs | *[Reading List Service](https://github.com/wso2/choreo-samples)|
+| Service| NodeJS | *[Reading List Service](https://github.com/wso2/choreo-samples)|
 | Service| Ballerina | [Echo Service](https://github.com/wso2/choreo-samples/tree/main/echo-service)|
 | Service | WSO2 MI | [Hello World Service](https://github.com/wso2/choreo-samples/tree/main/hello-world-mi)|
 | Service | Ruby | *[Hello World Service](https://github.com/wso2/choreo-samples)|
