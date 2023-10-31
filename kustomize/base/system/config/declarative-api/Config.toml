@@ -5,5 +5,5 @@ maxHeaderSize = 65536
 appServiceUrl = "http://app-service:8080"
 graphqlUrl = "http://cp-graphql:9095"
 rudderUrl = "http://dp-rudder:80"
-configServiceUrl = "http://configuration-servicer:8080"
+configServiceUrl = "http://configuration-service:8080"
 configMappingServiceUrl = "http://configuration-service:8084"
