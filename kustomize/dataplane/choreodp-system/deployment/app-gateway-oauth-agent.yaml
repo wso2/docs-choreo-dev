@@ -17,7 +17,6 @@ metadata:
   name: app-gateway-oauth-agent
   labels:
     choreo.component: app-gateway-oauth-agent
-  namespace: choreodp-system
 spec:
   replicas: 1
   selector:
