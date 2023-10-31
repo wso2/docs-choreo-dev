@@ -44,19 +44,20 @@ To develop a service component that exposes a REST API in Go. you can follow the
 
 Refer below examples for other component types and buildpacks. Follow the readme.md inside the example.
 
-
 | Component Type | Buildpack   | Example            |
 |----------------|-------------|--------------------|
-| Service        |  Java | [Product Management Service](https://github.com/wso2/choreo-samples/tree/main/product-management-service)|
-| Service| Python | [Reading List Service](https://github.com/wso2/choreo-samples/tree/main/reading-books-list-service-python)|
-| Service| NodeJS | [Reading List Service](https://github.com/wso2/choreo-samples/tree/main/reading-books-list-service-nodejs)|
+| Service        |  Java | *[Product Management Service](https://github.com/wso2/choreo-samples)|
+| Service| Python | *[Reading List Service](https://github.com/wso2/choreo-samples)|
+| Service| NodeJs | *[Reading List Service](https://github.com/wso2/choreo-samples)|
 | Service| Ballerina | [Echo Service](https://github.com/wso2/choreo-samples/tree/main/echo-service)|
 | Service | WSO2 MI | [Hello World Service](https://github.com/wso2/choreo-samples/tree/main/hello-world-mi)|
-| Service | Ruby | [Hello World Service](https://github.com/wso2/choreo-samples/tree/main/hello-world-ruby-service)|
-| Web Application | PHP | [Hello World Web App](https://github.com/wso2/choreo-samples/tree/main/hello-world-php-webapp)|
-| Manual Task | Go | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-go-task)|
+| Service | Ruby | *[Hello World Service](https://github.com/wso2/choreo-samples)|
+| Web Application | PHP | *[Hello World Web App](https://github.com/wso2/choreo-samples)|
+| Manual Task | Go | *[Hello World Task](https://github.com/wso2/choreo-samples)|
 | Manual Task | Ballerina | [Covid19 Statistics To Email](https://github.com/wso2/choreo-samples/tree/main//covid19-statistics-to-email)|
-| Manual Task | Java | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-java-task)|
+| Manual Task | Java | *[Hello World Task](https://github.com/wso2/choreo-samples)|
+
+`*` Samples are not added yet.
 
 Refer [choreo samples](https://github.com/wso2/choreo-samples) for more examples.
 
