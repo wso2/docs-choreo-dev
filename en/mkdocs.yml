@@ -127,7 +127,9 @@ nav:
       - View Runtime Details: devops-and-ci-cd/view-runtime-details.md
       - Configure Container Resources, Commands, and Arguments: devops-and-ci-cd/configure-container-resources-commands-and-arguments.md
       - Set Up Health Checks: devops-and-ci-cd/set-up-health-checks.md
-      - Autoscale Component Replicas: devops-and-ci-cd/autoscale-component-replicas.md
+      - Autoscale:
+        - Autoscale Component Replicas: devops-and-ci-cd/autoscale/autoscale-component-replicas.md
+        - Autoscale Components with Scale to Zero: devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero.md
       - Configure Storage: devops-and-ci-cd/configure-storage.md
       - Manage Environments: devops-and-ci-cd/manage-environments.md
   - Testing: 
@@ -314,6 +316,7 @@ plugins:
           'monitoring-and-insights/engineering-insights/configure-cio-dashboard.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/delivery-insights/configure-dora-metrics/'
           'monitoring-and-insights/engineering-insights/view-dora-metrics.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/delivery-insights/view-dora-metrics/'
           'monitoring-and-insights/view-api-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/usage-insights/'
+          'devops-and-ci-cd/autoscale-component-replicas.md': 'https://wso2.com/choreo/docs/devops-and-ci-cd/autoscale/autoscale-component-replicas'
 extra_css:
   # - assets/lib/highlightjs/default.min.css
   # - assets/css/theme.css
