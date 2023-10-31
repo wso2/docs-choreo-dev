@@ -3,7 +3,7 @@
 Choreo allows you to share and reuse your services, promoting faster development and increased efficiency in building integrated applications, through the use of Ballerina Private Packages.
 
 Ballerina private packages allow developers to share the reusable code within the organization via Ballerina central without making it available to the public.
-Choreo allows you to use Ballerina private packages to create components when you use the the `Ballerina` build preset.
+Choreo allows you to use Ballerina private packages to create components when you use the the `Ballerina` buildpack.
 
 In order to use Ballerina private packages, you need to make sure that you are using the same organization in Choreo and Ballerina Central.
 For example, if you are using `choreo` as the organization name in Choreo, following conditions should be met. 

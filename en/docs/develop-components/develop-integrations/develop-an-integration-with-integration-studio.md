@@ -50,7 +50,7 @@ Before you try out the steps in this guide, complete the following:
     | **GitHub Account**    | Your account                                  |
     | **GitHub Repository** | The repository you created by following the steps in the prerequisites section |
     | **Branch**            | **`main`**                               |
-    | **Build Preset**      | Click **WSO2 MI** because you are creating the REST API from a [WSO2 Integration Studio](https://wso2.com/micro-integrator/) project|
+    | **Buildpack**      | Click **WSO2 MI** because you are creating the REST API from a [WSO2 Integration Studio](https://wso2.com/micro-integrator/) project|
     | **Project Path**      | `integrations/micro-integrator/hello-world-api` |
 
 8. Click **Create**. Choreo initializes the component with the sample integration.

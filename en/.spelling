@@ -1,5 +1,32 @@
 >
 Choreo
+DockerHub
+buildpack
+buildpacks
+Temurin
+1.x
+12.x.x
+14.x.x 
+16.x.x
+18.x.x
+20.x
+20.x.x
+package.json
+3.1.x
+3.2.x
+3.10.x
+3.11.x
+8.1.x
+8.2.x
+4.1.0.x
+4.2.0.x
+readme.md
+Procfile
+entrypoint
+api
+main.go
+openapi.yaml
+endpoints.yaml.
 API
 APIs
 COVID-19
@@ -8,6 +35,8 @@ microservices
 undeployment
 frontend
 UUIDs
+PDPs
+v1
 OpenAPI
 webhookSecret
 toEmail
@@ -374,7 +403,7 @@ Okta
 IdPs
 Devportal
 Base64
-NodeJs
+NodeJS
 Dockerfile
 monorepo
 filepath
@@ -625,6 +654,7 @@ secure-api-access-with-azure-ad
 configure-an-external-idp
 configure-asgardeo-as-an-external-idp
 configure-azure-ad-as-an-external-idp
+test-apis-with-choreo-apichat
  - theme/material/templates/home-page.html
 doctype
 html
@@ -776,3 +806,5 @@ Entra
 AzureAD
  - docs/administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md
 identity-as-a-soluton
+ - docs/testing/test-apis-with-choreo-apichat.md
+findByStatus

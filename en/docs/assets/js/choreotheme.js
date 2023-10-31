@@ -22,6 +22,11 @@
 /* 
  * Initialize highlightjs 
  */
+const form = document.getElementById("search");
+const textInput = document.getElementById("query");
+
+    // Get a reference to the input field
+const nameInput = document.getElementById("query");
 window.addEventListener("DOMContentLoaded", function() {
     hljs.initHighlightingOnLoad();
 });
@@ -38,3 +43,26 @@ window.addEventListener("DOMContentLoaded", function() {
         });
     }
 })();
+
+
+    // Add an event listener to capture the Enter key press
+    window.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && event.target.id === "query")  {
+            var searchTerm = textInput.value;
+            var pathname = this.window.location.pathname;
+            var origin = this.window.location.origin;
+            var searchPage= "search-results.html" + "?search_term=" + searchTerm;
+            if(pathname != null && pathname.startsWith("/choreo/docs/")){
+               
+                searchPage = origin + "/choreo/docs/" + searchPage;
+            } else{
+                searchPage = origin + "/"+ searchPage;
+            }
+
+         //   const arrayFromCollection = Array.from(document.links);
+         //   localStorage.setItem('searchResults', arrayFromCollection);
+            document.location.href=searchPage;
+
+            // You can add more code here to handle the form submission
+        }
+    });
