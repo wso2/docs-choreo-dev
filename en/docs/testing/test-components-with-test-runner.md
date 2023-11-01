@@ -48,9 +48,6 @@ We can develop tests in a language of our choice and execute them within the Cho
         | -------------------- | --------------- |
         | Go Project Directory | /test-runner-go |
         | Language Version     | 1.x             |
-
-        !!! note
-            By default, **main.go** file is considered as the entrypoint. Default entrypoint can be overriden by providing a Procfile.
     
     === "JavaScript"
 
