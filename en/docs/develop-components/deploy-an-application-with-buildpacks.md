@@ -22,8 +22,37 @@ Choreo uses [Google Buildpacks](https://cloud.google.com/docs/buildpacks/overvie
 
 To develop a service component that exposes a REST API in Go. you can follow the [Develop a Go REST API ](develop-services/develop-a-go-rest-api.md) guide.
 
-
 Follow the guidelines below based on your language:
+
+=== "Python"
+    Supported Versions - 3.10.x, 3.11.x
+
+    Refer below examples for different component types. Follow the `readme.md` inside the example.
+
+    | Component Type  | Example            |
+    |---------------- |--------------------|
+    | Service| [Reading Books List Service](https://github.com/wso2/choreo-samples/tree/main/reading-books-list-service-python)|
+    | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-python-task)|
+
+    ### Procfile
+    A `Procfile` is a configuration file used to declare what commands are run by your application's containers. 
+    
+    !!! info 
+        For Python, it is mandatory to have a Procfile in the project root directory.
+
+    Here's an example `Procfile` for an application:
+
+    ```
+    web: <command to start your application>
+    ```
+
+    Eg:-
+
+    `web: python main.py` <br>
+    `web: gunicorn --bind :8080 --workers 1 --threads 8 --timeout 0 main:app` <br>
+    `web: flask run --host=0.0.0.0`
+
+    Refer [choreo samples](https://github.com/wso2/choreo-samples) for more examples.
 
 === "Ballerina"
 
@@ -52,6 +81,21 @@ Follow the guidelines below based on your language:
     | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-go-task)|
     | Web Application | [Hello World Web Application](https://github.com/wso2/choreo-samples/tree/main/hello-world-go-webapp)|
 
+    ### Procfile 
+
+    A `Procfile` is a configuration file used to declare what commands are run by your application's containers. 
+    This is optional and you can add a Procfile if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
+
+    Here's an example `Procfile` for an application:
+
+    ```
+    web: <command to start your application>
+    ```
+
+    Eg:-
+
+    `web: go run main.go` <br>
+
     Refer [choreo samples](https://github.com/wso2/choreo-samples) for more examples.
 
 === "Java"
@@ -69,6 +113,21 @@ Follow the guidelines below based on your language:
 
         1. For Java, Main class should be defined in the Manifest.
     
+    ### Procfile 
+
+    A `Procfile` is a configuration file used to declare what commands are run by your application's containers. 
+    This is optional and you can add a Procfile if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
+
+    Here's an example `Procfile` for an application:
+
+    ```
+    web: <command to start your application>
+    ```
+
+    Eg:-
+
+    `web: java -jar target/sample.jar` <br>
+
     Refer [choreo samples](https://github.com/wso2/choreo-samples) for more examples.
 
 === "NodeJS"
@@ -80,6 +139,21 @@ Follow the guidelines below based on your language:
     |---------------- |--------------------|
     | Service| [Reading Books List Service](https://github.com/wso2/choreo-samples/tree/main/reading-books-list-service-nodejs)|
     | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-nodejs-task)|
+
+    ### Procfile 
+
+    A `Procfile` is a configuration file used to declare what commands are run by your application's containers. 
+    This is optional and you can add a Procfile if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
+
+    Here's an example `Procfile` for an application:
+
+    ```
+    web: <command to start your application>
+    ```
+
+    Eg:-
+
+    `web: node app.js` <br>
 
     Refer [choreo samples](https://github.com/wso2/choreo-samples) for more examples.
 
@@ -94,20 +168,20 @@ Follow the guidelines below based on your language:
     | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-php-task)|
     | Web Application | [Hello World Web Application](https://github.com/wso2/choreo-samples/tree/main/hello-world-php-webapp)|
 
-    Refer [choreo samples](https://github.com/wso2/choreo-samples) for more examples.
+    ### Procfile 
 
-=== "Python"
-    Supported Versions - 3.10.x, 3.11.x
+    A `Procfile` is a configuration file used to declare what commands are run by your application's containers. 
+    This is optional and you can add a Procfile if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
 
-    Refer below examples for different component types. Follow the `readme.md` inside the example.
+    Here's an example `Procfile` for an application:
 
-    | Component Type  | Example            |
-    |---------------- |--------------------|
-    | Service| [Reading Books List Service](https://github.com/wso2/choreo-samples/tree/main/reading-books-list-service-python)|
-    | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-python-task)|
+    ```
+    web: <command to start your application>
+    ```
 
-    !!! info 
-        For Python, it is mandatory to have a [Procfile](#procfile) in the      project root directory.
+    Eg:-
+
+    `web:php -S 0.0.0.0:8000 index.php` <br>
 
     Refer [choreo samples](https://github.com/wso2/choreo-samples) for more examples.
 
@@ -122,6 +196,22 @@ Follow the guidelines below based on your language:
     | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-ruby-task)|
     | Web Application | [Hello World Web Application](https://github.com/wso2/choreo-samples/tree/main/hello-world-ruby-webapp)|
 
+    ### Procfile 
+
+    A `Procfile` is a configuration file used to declare what commands are run by your application's containers. 
+    This is optional and you can add a Procfile if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
+
+    Here's an example `Procfile` for an application:
+
+    ```
+    web: <command to start your application>
+    ```
+
+    Eg:-
+
+    `web: ruby app.rb` <br>
+    `web:bundle exec ruby app.rb -p 8080` <br>
+
     Refer [choreo samples](https://github.com/wso2/choreo-samples) for more examples.
 
 === "WSO2 MI"
@@ -134,19 +224,3 @@ Follow the guidelines below based on your language:
     | Service |[Hello World Service](https://github.com/wso2/choreo-samples/tree/main/hello-world-mi)|
 
     Refer [choreo samples](https://github.com/wso2/choreo-samples) for more examples.
-
-## Procfile
-
-A `Procfile` is a configuration file used to declare what commands are run by your application's containers. It is mandatory to have a Procfile for `Python`. For other buildpacks(Java, PHP, NodeJS, Ruby and Go), you can add a Procfile if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
-
-Here's an example `Procfile` for an application:
-
-```
-web: <command to start your application>
-```
-
-Eg:-
-
-Python - `web: python main.py` <br>
-Go - `web: go run main.go` <br>
-Java - `web: java -jar target/sample.jar` <br>
