@@ -1,8 +1,8 @@
-# Develop an Event-Triggered Integration
+# Develop an Event Handler
 
-An event-triggered integration executes predefined actions in response to specific events. Choreo simplifies the process of creating and deploying such integrations.
+An event handler executes predefined actions in response to specific events. Choreo simplifies the process of creating and deploying such integrations.
 
-This guide walks you through the steps to create and deploy an event-triggered integration using Ballerina and Choreo. 
+This guide walks you through the steps to create and deploy an event handler using Ballerina and Choreo. 
 
 In this guide, you will build a simple integration that sends an email notification whenever a new issue is created in a GitHub repository.
 
@@ -21,27 +21,26 @@ Before you try out the steps in this guide, complete the following:
     4. Click **Create**.
        This creates the organization and opens the **Project Home** page of the default project created for you.
 
-## Step 1: Create an event-triggered integration component
+## Step 1: Create an event handler component
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page. 
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
-3. Go to the **Event-Triggered Integration** card and click **Create**.
+3. Click the **Event Handler** card.
 4. Enter a unique name and a description for the component. You can use the name and description given below:
 
     | **Field**       | **Value**                             |
     |-----------------|---------------------------------------|
     | **Name**        | `GitHubToEmail`                       |
-    | **Description** | `My first event-triggered integration`|
+    | **Description** | `My first event handler`|
 
-5. Click **Next**.
-6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
-7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+5. Select **GitHub** Tab
+6. If you have not already connected your GitHub repository to Choreo, to allow Choreo to connect to your GitHub account, click **Authorize with GitHub** and enter your GitHub credentials, and select the repository you created in the prerequisites section to install the  [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
 
-8. In the **Connect Repository** pane, enter the following information:
+7. Enter the following information:
 
     | **Field**             | **Description**                               |
     |-----------------------|-----------------------------------------------|
@@ -57,12 +56,8 @@ Before you try out the steps in this guide, complete the following:
 
           - **Project Path** specifies the location of the project to build the component.
 
-8. Click **Next**.
-9. Select **GitHub** as the trigger type and click **Next**.
-10. In the **Trigger Channel** list, select **IssuesService** and click **Create**. Choreo initializes the component with the sample implementation and sends a pull request to the GitHub repository you connected.
-11. Review and merge the pull request to add the sample files to your GitHub repository.
+8. Click **Create**.
     
-
 ## Step 2: Implement the integration logic
 
 To implement the integration logic for the component, follow the steps given below: 
@@ -186,5 +181,5 @@ To test the integration, follow the step given below:
 
   Verify that an email notification has been sent to the specified recipient with the details of the new issue.
 
-Now you have gained hands-on experience in creating, configuring, and deploying an event-triggered integration, while also exploring how to implement event-driven logic.
+Now you have gained hands-on experience in creating, configuring, and deploying an event handler, while also exploring how to implement event-driven logic.
  
