@@ -7,7 +7,7 @@ Managed Authentication internally handles the complexities of OIDC/OAuth2 flows 
 In addition, Managed Authentication introduces a [BFF](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps#section-6.2) for your web application which is a secure architecture pattern recommended for browser based applications using OIDC/OAuth2 for authentication and authorization. The pattern ensures that OAuth tokens are not accessible to browser side code  making the tokens unsusceptible for attacks such as Cross Site Scripting (XSS).
 
 !!! note
-    Managed Authentication is currently available only for Single Page Applications.
+    Managed Authentication is currently available only for React, Angular, and Vue.js buildpacks.
 
 ## Setup Managed Authentication
 
