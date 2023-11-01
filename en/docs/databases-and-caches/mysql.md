@@ -4,6 +4,8 @@ MySQL on Choreo offers fully-managed, flexible relational databases on AWS, Azur
 
 ## Create a MySQL database
 
+Follow the styeps below to create a MySQL databse in Choreo: 
+
 1. Navigate to your **Organization > Dependencies > Databases**.
 
 2. Click 'Create' and select 'MySQL' as the database type. Provide a display name for this server and follow the instructions.
