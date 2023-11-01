@@ -342,6 +342,7 @@ configMapGenerator:
       - ENDPOINT_RESOLVER_URL="http://endpoint-resolver:9090"
       - SERVICE_REGISTRY_URL="http://resource-registry:9090"
       - CONFIG_MAPPING_SERVICE_URL="http://configuration-service:8084"
+      - CONNECTION_SERVICE_URL="http://connection-service:9000"
   - name: cm-console-next
     behavior: create
     literals:
