@@ -4,10 +4,13 @@ Choreo is a platform that allows you to create, deploy, and consume services sea
 
 Typically, an application developer who may be internal or external to your organization would want to consume the APIs published in the Developer Portal to develop their applications. In this guide, you will learn how to discover, generate credentials, and test the consumption of a service published in the Choreo Developer Portal. You will also learn how to invoke the service via a web application. 
 
-This guide walks you through the following steps:
+This guide is an end-to-end guide that walks you through the following steps:
 
 - Create an application in the Developer Portal and generate credentials for the application. 
 - Subscribe the API to the application.
+- Generate keys for your application. 
+- Generate an access token. 
+- Consume your published API via a cURL.
 - Consume a published REST API via your web application.
 
 ## Prerequisites
@@ -45,7 +48,19 @@ The overview page of an API displays the subscribed versions of the API along wi
 
 {% include "create-a-subscription.md" %}
 
-## Consume the API via your web application
+## Generate an access token
+
+{% include "generate-an-access-token-body.md" %}
+
+## Consume the API 
+ 
+ You can consume an API using a cURL command in your web application.
+
+### Consume an via cURL
+
+{% include "consume-an-api-via-curl.md" %}
+
+### Consume an API via a web application
 
 You can invoke the API/service using the credentials you created above. Since Choreo services are secured, you need to invoke the services securely with the help of your IdP. To invoke the API/service you created securely, you need to follow the steps below:
 
@@ -60,14 +75,14 @@ In this guide, you will be using the following product and examples:
 - [choreo-examples/cloud-native-app-developer/reading-list-front-end](https://github.com/wso2/choreo-examples/tree/main/cloud-native-app-developer/reading-list-front-end) as the web application. This is a React SPA that invokes the service using Axios. This web application is configured to read the
 [choreo-examples/cloud-native-app-developer/reading-list-service/](https://github.com/wso2/choreo-examples/tree/main/cloud-native-app-developer/reading-list-service) as the service. You can modify this web application to read your service, or [deploy the choreo-examples/cloud-native-app-developer/reading-list-service/](https://wso2.com/choreo/docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo/#step-1-create-a-service-component-and-publish-it-as-a-rest-api) in Choreo and use it. 
 
-### Step 1: Create a web application component
+#### Step 1: Create a web application component
 
 !!! info
     You can use your own web application implementation in place of the sample web application. For this exercise, let's use the [choreo-examples/cloud-native-app-developer/reading-list-front-end](https://github.com/wso2/choreo-examples/tree/main/cloud-native-app-developer/reading-list-front-end) as the web application.
 
 {% include "../quick-start-guides/create-web-application-qsg.md" %}
 
-### Step 2: Create an OAuth application in the IdP
+#### Step 2: Create an OAuth application in the IdP
 
 To invoke the service/API in Choreo you require a token. To obtain a token you need to create an OAuth application in the IdP. If you use any other IdP other than Asgardeo, create an OAuth application and set the following:
 
@@ -92,14 +107,13 @@ Choreo uses Asgardeo as the default identity provider for Choreo applications. W
     5. Under **Access Token**, select **JWT** as the **Token type**.
     6. Click **Update**.
 
-### Step 3: Configure the web application to connect to the IdP and invoke the service
+#### Step 3: Configure the web application to connect to the IdP and invoke the service
 
 {% include "../quick-start-guides/configure-front-end-application-qsg.md" %}
 
 
-### Step 4: Deploy the web application
+#### Step 4: Deploy the web application
 
 {% include "../quick-start-guides/deploy-the-web-application-qsg.md" %}
-
 
 That's it! You can use a user created in your IdP and invoke the service through your web application.

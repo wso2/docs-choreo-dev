@@ -139,10 +139,11 @@ nav:
       - Test APIs using Postman: testing/test-apis-using-postman.md
       - Test APIs with Choreo API Chat: testing/test-apis-with-choreo-apichat.md
   - Consuming Services:
-      - Consume a Service: consuming-services/consuming-a-sevice.md
+      - Consume a Service: consuming-services/consume-a-service.md
       - Manage Application: consuming-services/manage-application.md
       - Manage Subscription: consuming-services/manage-subscription.md
       - Generate an Access Token: consuming-services/generate-an-access-token.md
+      - Invoke an API: consuming-services/invoke-an-api.md
   - API Management:
       - Lifecycle Management: api-management/lifecycle-management.md
       - Documents: api-management/documents.md
@@ -291,6 +292,7 @@ plugins:
           'consume/manage-application.md': 'https://wso2.com/choreo/docs/consuming-services/manage-application/'
           'consume/manage-subscription.md': 'https://wso2.com/choreo/docs/consuming-services/manage-subscription/'
           'consume/test-api.md': 'https://wso2.com/choreo/docs/testing/test-rest-endpoints-via-the-openapi-console/'
+          'consume/consuming-a-sevice.md': 'https://wso2.com/choreo/docs/consuming-services/consume-a-service/'
           'marketplace.md': 'https://wso2.com/choreo/docs/choreo-concepts/choreo-marketplace/'
           'observe-and-analyze/observe/observability-overview.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/observability-overview/'
           'observe-and-analyze/observe/root-cause-analysis.md': 'https://wso2.com/choreo/docs'
