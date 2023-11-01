@@ -342,13 +342,15 @@ export class Utils {
     }
   }
 
-  static isKubeConFeaturesEnabled() {
+  static isKubeConFeaturesEnabled(enableSpecificFeature: boolean = true) {
+    let isNewFeaturesActivated = false;
     const enableKubeConFeatures = Cypress.env("enableKubeConFeatures");
     if (enableKubeConFeatures != null) {
-      return enableKubeConFeatures == true || enableKubeConFeatures == "true";
+      isNewFeaturesActivated =
+        enableKubeConFeatures == true || enableKubeConFeatures == "true";
     }
 
-    return false;
+    return isNewFeaturesActivated && enableSpecificFeature;
   }
 
   static moveMouseAwayFromLeftMenu() {
