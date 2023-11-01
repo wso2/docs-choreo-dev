@@ -318,6 +318,9 @@ plugins:
           'monitoring-and-insights/engineering-insights/view-dora-metrics.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/delivery-insights/view-dora-metrics/'
           'monitoring-and-insights/view-api-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/usage-insights/'
           'testing/test-apis-with-choreo-testgpt.md': 'https://wso2.com/choreo/docs/testing/test-apis-with-choreo-apichat/'
+          'develop-integrations/develop-an-event-triggered-integration.md': 'https://wso2.com/choreo/docs/develop-components/develop-integrations/develop-an-event-handler/'
+          'develop-integrations/develop-a-scheduled-integration.md': 'https://wso2.com/choreo/docs/develop-components/develop-integrations/develop-a-scheduled-task/'
+          
 extra_css:
   # - assets/lib/highlightjs/default.min.css
   # - assets/css/theme.css
