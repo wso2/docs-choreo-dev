@@ -106,13 +106,14 @@ nav:
       - Develop Integrations:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
           - Develop an Event-Triggered Integration: develop-components/develop-integrations/develop-an-event-triggered-integration.md
-          - Develop a Scheduled Integration: develop-components/develop-integrations/develop-a-scheduled-integration.md 
+          - Develop a Scheduled Integration: develop-components/develop-integrations/develop-a-scheduled-integration.md
+          - Develop a Manually-Triggered Integration: develop-components/develop-integrations/develop-a-manually-triggered-integration.md
       - Work with the Micro Integrator Runtime:
           - Get Started with the Micro Integrator Runtime: develop-components/work-with-the-micro-integrator-runtime-in-choreo.md
           - Manage the Micro Integrator Runtime Version in Your Integration Project: develop-components/manage-the-micro-integrator-runtime-version-in-your-integration-project.md
       - Develop Components With Git: develop-components/develop-components-with-git.md
       - Bring Your Own Image: develop-components/bring-your-own-image.md
-      - Deploy an Appliction with Buildpacks: develop-components/deploy-an-application-with-buildpacks.md
+      - Deploy an Application with Buildpacks: develop-components/deploy-an-application-with-buildpacks.md
       - Deploy a Containerized Application: develop-components/deploy-a-containerized-application.md  
       - Sharing and Reusing Services: develop-components/sharing-and-reusing-services.md
       - Configure Mutual TLS Between Components: develop-components/configure-mutual-tls-between-components.md

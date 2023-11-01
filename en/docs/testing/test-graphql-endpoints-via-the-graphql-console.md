@@ -10,21 +10,27 @@ Follow the steps below to test a GraphQL endpoint via the GraphQL Console:
 
 3. Click **Test** in the left navigation menu and then click **Console**. This opens the **GraphQL Console** pane.
 
-3. In the **GraphQL Console** pane, select the environment from the drop-down list.
+4. In the **GraphQL Console** pane, select the environment from the drop-down list.
 
-4. Select the required endpoint from the **Public Endpoint** list.
+5. Select the required endpoint from the **Endpoint** list.
 
-    !!! note 
-        The **Public Endpoint** list only includes GraphQL endpoints for which you have set the **Network Visibility** to **Public**.
+    !!! note
+        - The **Network Visibility** of an endpoint is set in the **endpoints.yaml**. You can set it to **Public**, **Organization**, or **Project**.
+        - If you have set the **Network Visibility** of the endpoint in the **endpoints.yaml** to **Public**, continue with step 7. 
+        - If you have set the **Network Visibility** of the endpoint in the **endpoints.yaml** to **Organization**, the GraphQL endpoint will not be invokable from outside the organization. In this instance, for testing purposes, Choreo allows you to generate a temporay test URL that will be active for 15 minutes. Execute step 6 to generate the temporary URL. 
+        
+6. If the **Network Visibility** of the endpoint is set to **Organization**, click on **Generate URL** to generate a temporary test URL that will be active for 15 minutes. Else, skip this step. 
 
-5. Enter the API path and the query or mutation you want to test.
+    !!! note
+        The temporay test URL will be available **only for 15 minutes** and it will get expired after. You can deactivate the test URL by clicking on the **Deactivate URL** button.
 
-6. Click the play icon.
+    ![OpenAPI Console](../assets/img/testing/graphql-console-org.png){.cInlineImage-full}
+
+7. Enter the API path and the query or mutation you want to test.
+
+8. Click the play icon.
 
     !!! tip
         If you want to generate a required query or mutation for testing via the GraphQL Explorer, click **Explorer** to open the GraphQL Explorer.
 
     ![GraphQL Console](../assets/img/testing/graphql-console.png){.cInlineImage-full}
-
-
-
