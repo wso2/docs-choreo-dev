@@ -135,7 +135,7 @@ nav:
       - Test APIs with cURL: testing/test-apis-with-curl.md
       - Test APIs using Postman: testing/test-apis-using-postman.md
       - Test APIs with Choreo API Chat: testing/test-apis-with-choreo-apichat.md
-      - Test Runner Component: testing/test-components-using-test-runner.md
+      - Test Components with Test Runner: testing/test-components-with-test-runner.md
   - Consuming Services:
       - Consume a Service: consuming-services/consuming-a-sevice.md
       - Manage Application: consuming-services/manage-application.md
