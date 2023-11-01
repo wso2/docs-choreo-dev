@@ -2,7 +2,7 @@
 
 Test Runner is a component type in Choreo that simplifies the process of running automated tests against your components deployed in Choreo. This capability helps developers evaluate applications in different setups and environments, leading to more confidence and improved visibility into the application's status.
 
-You can create tests using popular programming languages like Go, Java, Javascript, Python, and more. Additionally, you have the option to build a test runner component by supplying a Dockerfile containing a series of test scripts or by offering a set of Postman Collections.
+You can create tests using popular programming languages like Go, Java, JavaScript, Python, and more. Additionally, you have the option to build a test runner component by supplying a Dockerfile containing a series of test scripts or by offering a set of Postman Collections.
 
 ## Prerequisites
 
@@ -31,7 +31,7 @@ We can develop tests in a language of our choice and execute them within the Cho
     | Name        | Go Test Runner                |
     | Description | Test Runner implemented in Go |
 
-5. Click **Github** tab and enter the following information:
+5. Click **GitHub** tab and enter the following information:
 
     | **Field**                     | **Description**    |
     |-------------------------------|--------------------|
@@ -39,7 +39,7 @@ We can develop tests in a language of our choice and execute them within the Cho
     | **GitHub Repository**         | choreo-samples |
     | **Branch**                    | **`main`**         |
 
-6. Under **Buildpack**, select a builpack based on the language of your choice.
+6. Under **Buildpack**, select a buildpack based on the language of your choice.
 7. Based on the buildpack you chose, select the relevant tab below and enter the respective values for the **Project directory** and **Go version** fields:
 
     === "Go"
@@ -52,7 +52,7 @@ We can develop tests in a language of our choice and execute them within the Cho
         !!! note
             By default, **main.go** file is considered as the entrypoint. Default entrypoint can be overriden by providing a Procfile.
     
-    === "Javascript"
+    === "JavaScript"
 
         | Field             | Value                   |
         | ----------------- | ----------------------- |
@@ -91,7 +91,7 @@ You have successfully created a Test Runner component using a buildpack of you c
 
 1. On the left navigation, click **Build**.
 2. Under **Builds**, click **Build**.
-3. Slect the latest commit and click **Build**. Once Choreo completes the build process, you can proceed to the next step. 
+3. Select the latest commit and click **Build**. Once Choreo completes the build process, you can proceed to the next step. 
 4. On the left navigation, click **Deploy**.
 4. In the **Set Up** card, click **Deploy** to deploy the test runner component. If you want to provide additional configuration or secrets, use the **Configure and Deploy** option from the list.
 3. Once the deployment is successful, on the left menu, click **Execute**.
