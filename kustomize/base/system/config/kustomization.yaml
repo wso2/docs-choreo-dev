@@ -617,3 +617,7 @@ configMapGenerator:
     behavior: create
     files:
       - connection-service/Config.toml
+  - name: cm-app-dev-authorization
+    behavior: create
+    literals:
+      - DB_USERNAME="choreo_app_dev_authz_svc_db_user"
