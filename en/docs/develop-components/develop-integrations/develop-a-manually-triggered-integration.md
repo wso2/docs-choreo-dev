@@ -4,7 +4,7 @@ This guide walks you through the steps to develop, deploy, test, and observe a M
 
 In this guide, you will:
 
-  - Develop a Manually-Triggered Integration to fetch the weather forecast for a specified location for the next 24 hours from the  [OpenWeatherMap](https://openweathermap.org) API.
+  - Develop a manually-triggered integration to fetch the weather forecast for a specified location for the next 24 hours from the  [OpenWeatherMap](https://openweathermap.org) API.
   - Process the weather data to a specific format.
   - Send the formatted data to a specified email address.
 
@@ -13,7 +13,7 @@ In this guide, you will:
 Before you try out the steps in this guide, complete the following:
 
  - If you are signing in to the Choreo Console for the first time, create an organization as follows:
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
+    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -36,7 +36,7 @@ Before you try out the steps in this guide, complete the following:
  - Go to [OpenWeatherMap](https://openweathermap.org/) and sign up to obtain an API key. For details on how to obtain an API key, see the [OpenWeatherMap documentation](https://openweathermap.org/appid#signup).
 
 
-## Step 1: Create a Manually-Triggered Integration component
+## Step 1: Create a manually-triggered integration component
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page. 
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
@@ -63,11 +63,11 @@ Before you try out the steps in this guide, complete the following:
     | **GitHub Account**    | Your account                                   |
     | **GitHub Repository** | `choreo-examples`                              |
     | **Branch**            | **`main`**                                     |
-    | **Build Preset**      | **Ballerina**                                  |
+    | **Buildpack**      | **Ballerina**                                  |
     | **Project Path**      | `integrations/ballerina/weather-to-email-integration` |
 
 	!!! tip
-    	    - **Build Preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset. 
+    	    - **Buildpack** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the buildpack. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the buildpack. 
 
           - **Project Path** specifies the location of the project to build the component.
 
@@ -94,9 +94,11 @@ To deploy the integration, follow the steps given below:
 4.  Click **Deploy**.
 
 ## Step 4: Execute integration
+
 To execute the integration, follow the steps given below:
+
 1. In the left navigation menu, click **Execute**.
-2. Click **Run Now**
+2. Click **Run Now**.
 
 ## Step 4: Test the integration
 
