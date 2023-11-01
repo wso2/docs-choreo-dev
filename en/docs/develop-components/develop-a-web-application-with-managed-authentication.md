@@ -127,7 +127,13 @@ If the user is not logged in, a 401 Unauthorized response will be sent.
 
 ### API calls
 
-Choreo APIs in the same organization as a web application can be invoked from the web application by using the relative path `/choreo-apis/<api-suffix>` irrespective of whether managed authentication is enabled for the web application or not. 
+Choreo APIs in the same organization as a web application can be invoked from the web application by using the relative path `/choreo-apis/<api-suffix>` irrespective of whether managed authentication is enabled for the web application or not.
+
+!!! info
+    For example, for the API URL `https://2d9ec1f6-2f04-4127-974f-0a3b20e97af5-dev.e1-us-east-azure.choreoapis.dev/rbln/item-service/api-e04/1.0.0`, the `<api-suffix>` would be `/rbln/item-service/api-e04/1.0.0`.
+    
+    From your Single Page Application, you can invoke the API using `/choreo-apis/rbln/item-service/api-e04/1.0.0` relative path.
+
 
 If managed authentication is enabled, the developer does not need to manually add any logic to attach an access token in the API call because Choreo APIs will accept the cookies set by Managed Authentication.
 
