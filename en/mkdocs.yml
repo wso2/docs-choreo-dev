@@ -172,6 +172,12 @@ nav:
           - Customize the Developer Portal: administer/customize-the-developer-portal.md
           - Configure Self-Sign-Up: administer/configure-self-sign-up.md
           - Customize the Developer Portal Domain: administer/customize-the-developer-portal-domain.md
+  - Databases and Caches: 
+          - Overview: databases-and-caches/overview.md
+          - PostgreSQL: databases-and-caches/postgresql.md
+          - MySQL: databases-and-caches/mysql.md
+          - Redis: databases-and-caches/redis.md
+          - Billing: databases-and-caches/billing.md
   - Troubleshoot:
       - FAQ: troubleshoot/faq.md
 # Extensions
