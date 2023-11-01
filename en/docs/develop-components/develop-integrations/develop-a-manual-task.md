@@ -1,6 +1,6 @@
 # Develop a Manual Task
 
-This guide walks you through the steps to develop, deploy, test, and observe a Manually-Triggered Integration using Choreo.  
+This guide walks you through the steps to develop, deploy, test, and observe a manual task using Choreo.  
 
 In this guide, you will:
 
