@@ -4,7 +4,7 @@ Redis on Choreo offers fully-managed in-memory data stores on AWS, Azure, GCP an
 
 ## Create a Redis data store
 
-1. Navigate to your Organization page and click on 'Cloud Storage'.
+1. Navigate to your **Organization > Dependencies > Databases**.
 
 2. Click 'Create' and select 'Redis' as the data store type. Provide a display name for this server and follow the instructions.
 

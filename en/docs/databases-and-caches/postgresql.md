@@ -4,7 +4,7 @@ PostgreSQL on Choreo offers fully-managed, performant object-relational database
 
 ## Create a PostgreSQL database
 
-1. Navigate to your Organization page and click on 'Cloud Storage'.
+1. Navigate to your **Organization > Dependencies > Databases**.
 
 2. Click 'Create' and select 'PostgreSQL' as the database type. Provide a display name for this server and follow the instructions.
 
