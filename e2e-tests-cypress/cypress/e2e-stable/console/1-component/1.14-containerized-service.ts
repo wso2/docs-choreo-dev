@@ -75,7 +75,7 @@ describe("Verify containerized service functionality", () => {
 
   it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-    if (Utils.isKubeConFeaturesEnabled()) {
+    if (Utils.isKubeConFeaturesEnabled(false)) {
       ComponentOverviewPage.navigateToBuild();
       ComponentBuild.buildComponent();
     }
@@ -83,7 +83,14 @@ describe("Verify containerized service functionality", () => {
   });
 
   it("Verify component deployment with public level endpoint", () => {
-    ComponentDeployPage.deployService(PROJECT_NAME,COMPONENT_NAME,ENDPOINT_NAME,false,false,true);
+    ComponentDeployPage.deployService(
+      PROJECT_NAME,
+      COMPONENT_NAME,
+      ENDPOINT_NAME,
+      false,
+      false,
+      true
+    );
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
