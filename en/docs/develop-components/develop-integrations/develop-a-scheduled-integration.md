@@ -1,14 +1,14 @@
-# Develop a Scheduled Integration
+# Develop a Scheduled Task
 
 Choreo is a versatile integration platform that allows you to create various types of integrations depending on your requirement. 
 
-If you have a requirement to automatically run a specific integration at regular intervals, you can use Choreo to develop a scheduled integration.  This type of integration can automate the synchronization of data between different systems at specified intervals, reducing errors and improving productivity by eliminating the need for manual intervention.
+If you have a requirement to automatically run a specific integration at regular intervals, you can use Choreo to develop a scheduled task.  This type of integration can automate the synchronization of data between different systems at specified intervals, reducing errors and improving productivity by eliminating the need for manual intervention.
 
-This guide walks you through the steps to develop, deploy, test, and observe a scheduled integration using Choreo.  
+This guide walks you through the steps to develop, deploy, test, and observe a scheduled task using Choreo.  
 
 In this guide, you will:
 
-  - Develop a scheduled integration to fetch the weather forecast for a specified location for the next 24 hours from the  [OpenWeatherMap](https://openweathermap.org) API.
+  - Develop a scheduled task to fetch the weather forecast for a specified location for the next 24 hours from the  [OpenWeatherMap](https://openweathermap.org) API.
   - Process the weather data to a specific format.
   - Send the formatted data to a specified email address at a specific time every day.
 
@@ -40,27 +40,26 @@ Before you try out the steps in this guide, complete the following:
  - Go to [OpenWeatherMap](https://openweathermap.org/) and sign up to obtain an API key. For details on how to obtain an API key, see the [OpenWeatherMap documentation](https://openweathermap.org/appid#signup).
 
 
-## Step 1: Create a scheduled integration component
+## Step 1: Create a scheduled task component
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page. 
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
-3. Go to the **Scheduled Integration** card and click **Create**.
+3. Go to the **Scheduled Task** card and click **Create**.
 4. Enter a unique name and a description for the component. You can use the name and description given below:
 
     | **Field**       | **Value**                        |
     | --------------- | -------------------------------- |
     | **Name**        | `WeatherToEmail`                 |
-    | **Description** | `My first scheduled integration` |
+    | **Description** | `My first scheduled task` |
 
-5. Click **Next**.
-6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
-6. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-examples](https://github.com/wso2/choreo-examples) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+5. Select **GitHub** Tab
+6. If you have not already connected your GitHub repository to Choreo, to allow Choreo to connect to your GitHub account, click **Authorize with GitHub** and enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
 
-8. In the **Connect Repository** pane, enter the following information:
+7. Enter the following information:
 
     | **Field**             | **Description**                                |
     | --------------------- | ---------------------------------------------- |
@@ -106,9 +105,9 @@ To deploy the integration, follow the steps given below:
     | **At**               | `08:00`                                               |
     
     !!! tip
-         - When you develop a scheduled integration, you can define a schedule depending on your requirement. If you want to test and verify the integration immediately, you can schedule the deployment to run in just a few minutes after you create it. However, to avoid unnecessary expenses, make sure you reschedule or stop the deployment once you test and verify.
+         - When you develop a scheduled task, you can define a schedule depending on your requirement. If you want to test and verify the integration immediately, you can schedule the deployment to run in just a few minutes after you create it. However, to avoid unnecessary expenses, make sure you reschedule or stop the deployment once you test and verify.
 
-6. Click **Deploy**. This deploys the scheduled integration to the development environment and indicates the **Scheduled Status** as **Active** in the **Development** card.
+6. Click **Deploy**. This deploys the scheduled task to the development environment and indicates the **Scheduled Status** as **Active** in the **Development** card.
 
    You can test the integration when it runs at the scheduled time. 
 
@@ -124,7 +123,7 @@ If the integration ran successfully, you should receive an email similar to the 
 
 The observability view in Choreo displays graphs that depict details such as throughput, latency, diagnostic data, and logs to identify and troubleshoot anomalies in components you deploy.
 
-To visualize and monitor the performance of the scheduled integration component you deployed, click **Observability** in the left navigation menu. You can observe the following:
+To visualize and monitor the performance of the scheduled task component you deployed, click **Observability** in the left navigation menu. You can observe the following:
 
  - The throughput and latencies of requests served over a given period.
  - The logs that are generated over a given period.
@@ -135,7 +134,7 @@ To learn more about the observability details you can view via Choreo observabil
 
 ## Step 5: Monitor executions
 
-To track and monitor executions associated with the deployed scheduled integration, go to the left navigation menu and click **Execute**. 
+To track and monitor executions associated with the deployed scheduled task, go to the left navigation menu and click **Execute**. 
 
 !!! tip
      The **Execute** view is applicable to both scheduled and manually-triggered integrations.

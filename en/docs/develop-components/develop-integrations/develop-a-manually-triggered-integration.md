@@ -1,10 +1,10 @@
-# Develop a Manually-Triggered Integration
+# Develop a Manual Task
 
 This guide walks you through the steps to develop, deploy, test, and observe a Manually-Triggered Integration using Choreo.  
 
 In this guide, you will:
 
-  - Develop a manually-triggered integration to fetch the weather forecast for a specified location for the next 24 hours from the  [OpenWeatherMap](https://openweathermap.org) API.
+  - Develop a manual task to fetch the weather forecast for a specified location for the next 24 hours from the  [OpenWeatherMap](https://openweathermap.org) API.
   - Process the weather data to a specific format.
   - Send the formatted data to a specified email address.
 
@@ -36,11 +36,11 @@ Before you try out the steps in this guide, complete the following:
  - Go to [OpenWeatherMap](https://openweathermap.org/) and sign up to obtain an API key. For details on how to obtain an API key, see the [OpenWeatherMap documentation](https://openweathermap.org/appid#signup).
 
 
-## Step 1: Create a manually-triggered integration component
+## Step 1: Create a manual task component
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page. 
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
-3. Go to the **Manually-Triggered Integration** card and click **Create**.
+3. Go to the **Manual Task** card.
 4. Enter a unique name and a description for the component. You can use the name and description given below:
 
     | **Field**       | **Value**                        |
@@ -48,15 +48,14 @@ Before you try out the steps in this guide, complete the following:
     | **Name**        | `WeatherToEmail`                 |
     | **Description** | `My first scheduled integration` |
 
-5. Click **Next**.
-6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
-6. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-examples](https://github.com/wso2/choreo-examples) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+5. Select **GitHub** Tab
+6. If you have not already connected your GitHub repository to Choreo, to allow Choreo to connect to your GitHub account, click **Authorize with GitHub** and enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
 
-8. In the **Connect Repository** pane, enter the following information:
+7. Enter the following information:
 
     | **Field**             | **Description**                                |
     | --------------------- | ---------------------------------------------- |
@@ -71,7 +70,7 @@ Before you try out the steps in this guide, complete the following:
 
           - **Project Path** specifies the location of the project to build the component.
 
-9. Click **Create**. Choreo initializes the component with the sample implementation and opens the **Overview** page of the component.
+8. Click **Create**. Choreo initializes the component with the sample implementation and opens the **Overview** page of the component.
 
 ## Step 2: Deploy the integration
 
