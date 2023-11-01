@@ -54,7 +54,7 @@ describe("Verify Test Runner Component functionality", () => {
       labels: "",
       projectId: "",
       buildpackConfig: {
-        buildContext: "react-spa",
+        buildContext: "test-runner-go",
         srcGitRepoUrl: "https://github.com/choreo-test-apps/buildPack-testrunner-Goapp",
         srcGitRepoBranch: "main",
         languageVersion: "3.10.x",
