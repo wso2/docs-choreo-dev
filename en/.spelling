@@ -1,6 +1,8 @@
 >
 Choreo
 OpenWeatherMap
+json
+recipientAddress
 apiKey
 DockerHub
 buildpack
@@ -750,8 +752,6 @@ jdk8u372
  - docs/develop-components/develop-integrations/develop-an-event-triggered-integration.md
 IssuesService
 webhookSecret
-recipientAddress
-json
  - docs/develop-components/develop-services/develop-a-ballerina-graphql-api.md
 service.bal
 choreo

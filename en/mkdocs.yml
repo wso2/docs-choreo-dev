@@ -100,14 +100,14 @@ nav:
           - Develop a UDP Service: develop-components/develop-services/develop-a-udp-service.md
           - Develop a Ballerina REST API:  develop-components/develop-services/develop-a-ballerina-rest-api.md
           - Develop a Ballerina GraphQL API: develop-components/develop-services/develop-a-ballerina-graphql-api.md
-      - Develop an API Proxy: develop-components/develop-a-rest-api-proxy.md
+      - Develop an API Proxy: develop-components/develop-an-api-proxy.md
       - Develop a Web Application: develop-components/develop-a-web-application.md
       - Develop a Webhook: develop-components/develop-a-webhook.md 
       - Develop Integrations:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
-          - Develop an Event Handler: develop-components/develop-integrations/develop-an-event-triggered-integration.md
-          - Develop a Scheduled Task: develop-components/develop-integrations/develop-a-scheduled-integration.md
-          - Develop a Manual Task: develop-components/develop-integrations/develop-a-manually-triggered-integration.md
+          - Develop an Event Handler: develop-components/develop-integrations/develop-an-event-handler.md
+          - Develop a Scheduled Task: develop-components/develop-integrations/develop-a-scheduled-task.md
+          - Develop a Manual Task: develop-components/develop-integrations/develop-a-manual-task.md
       - Work with the Micro Integrator Runtime:
           - Get Started with the Micro Integrator Runtime: develop-components/work-with-the-micro-integrator-runtime-in-choreo.md
           - Manage the Micro Integrator Runtime Version in Your Integration Project: develop-components/manage-the-micro-integrator-runtime-version-in-your-integration-project.md
@@ -318,6 +318,10 @@ plugins:
           'monitoring-and-insights/engineering-insights/view-dora-metrics.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/delivery-insights/view-dora-metrics/'
           'monitoring-and-insights/view-api-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/usage-insights/'
           'testing/test-apis-with-choreo-testgpt.md': 'https://wso2.com/choreo/docs/testing/test-apis-with-choreo-apichat/'
+          'develop-integrations/develop-an-event-triggered-integration.md': 'https://wso2.com/choreo/docs/develop-components/develop-integrations/develop-an-event-handler/'
+          'develop-integrations/develop-a-scheduled-integration.md': 'https://wso2.com/choreo/docs/develop-components/develop-integrations/develop-a-scheduled-task/'
+          'develop-components/develop-a-rest-api-proxy.md': 'https://wso2.com/choreo/docs/develop-components/develop-an-api-proxy/'
+          
 extra_css:
   # - assets/lib/highlightjs/default.min.css
   # - assets/css/theme.css

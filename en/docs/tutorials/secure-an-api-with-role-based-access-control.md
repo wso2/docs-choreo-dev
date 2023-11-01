@@ -65,7 +65,7 @@ This creates the organization and opens the home page of the default project cre
 Follow these steps to create a REST API proxy component, add resources, and deploy it:
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the project home page.
-2. To create a REST API proxy component, follow the instructions in [Develop an API Proxy: Step 1](../develop-components/develop-a-rest-api-proxy.md#step-1-create-a-rest-api-proxy). This opens the **Resources** pane, where you can define resources for the API proxy.
+2. To create a REST API proxy component, follow the instructions in [Develop an API Proxy: Step 1](../develop-components/develop-an-api-proxy.md#step-1-create-an-api-proxy). This opens the **Resources** pane, where you can define resources for the API proxy.
 3. In the **Resources** pane, follow the steps given below to add resources:
 
      - Select **GET** as the **HTTP Verb**, enter `/users` as the **URI Pattern**, and click **+** to add the resource.
