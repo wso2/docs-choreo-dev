@@ -76,7 +76,7 @@ describe(`Verify BYOC functionality`, () => {
 
   it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(REST_API_NAME);
-    if (Utils.isKubeConFeaturesEnabled()) {
+    if (Utils.isKubeConFeaturesEnabled(false)) {
       ComponentOverviewPage.navigateToBuild();
       ComponentBuild.buildComponent();
     }
@@ -84,7 +84,7 @@ describe(`Verify BYOC functionality`, () => {
   });
 
   it("Deploy component", () => {
-    ComponentDeployPage.deployToDev(PROJECT_NAME,REST_API_NAME);
+    ComponentDeployPage.deployToDev(PROJECT_NAME, REST_API_NAME);
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -134,7 +134,6 @@ describe(`Verify BYOC functionality`, () => {
     });
   });
 
- 
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
