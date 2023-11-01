@@ -9,6 +9,6 @@ keyManagerClientEndpoint = "{{.KEY_MANAGER_API_URL}}"
 projectManagerEndpoint = "http://dp-project-manager:80"
 endpointResolverEndpoint = "http://endpoint-resolver:9090"
 choreoIdpId = "{{.CHOREO_IDP_ID}}"
-
+rudderClientEndpoint = "http://dp-rudder:80/api/v1"
 [ballerina.log]
 format="json"
