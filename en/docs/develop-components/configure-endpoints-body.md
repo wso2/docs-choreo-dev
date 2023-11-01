@@ -14,28 +14,18 @@ Choreo defines endpoints by combining port binding, protocol, endpoint name, net
 
 ## Configure endpoints
 
-The method of defining endpoints depends on the build preset. There are three build presets that supports defining endpoints: 
+The method of defining endpoints depends on the buildpack. For buildpacks other than `Ballerina` and `WSO2 MI`, it is required to have an `endpoints.yaml` file in project root directory to create the Service component.
 
-- Ballerina
-- Dockerfile
-- WSO2 MI
+### Configure endpoints with the Ballerina buildpack
 
-### Configure endpoints with the Dockerfile build-preset
-
-When you build a service component using the Dockerfile build-preset, you can configure the endpoint details with the `endpoints.yaml` configuration file. You must place this file inside the `.choreo` directory at the build context path and commit it to the source repository.
-
-See [Understanding the endpoints.yaml file](#learn-the-endpointsyaml-file) to learn about the `endpoints.yaml` file.
-
-### Configure endpoints with the Ballerina build-preset
-
-When you create a service component with the `Ballerina preset`, Choreo automatically detects the endpoint details for REST APIs. You can override the auto-generated endpoint configuration by providing the `endpoints.yaml` file in the source directory
+When you create a service component with the `Ballerina buildpack`, Choreo automatically detects the endpoint details for REST APIs. You can override the auto-generated endpoint configuration by providing the `endpoints.yaml` file in the source directory
 
 See [Understanding the endpoints.yaml file](#learn-the-endpointsyaml-file) to learn about the `endpoints.yaml` file.
 
 
-### Configure endpoints with the WSO2 MI build-preset
+### Configure endpoints with the WSO2 MI buildpack
 
-WSO2 MI build preset is where you can deploy integrations developed with WSO2 Micro Integrator as an API. In this preset, you have three different ways to define endpoints. Choreo gives priory to the definition of endpoints in the below-mentioned order. 
+WSO2 MI buildpack is where you can deploy integrations developed with WSO2 Micro Integrator as an API. In this preset, you have three different ways to define endpoints. Choreo gives priory to the definition of endpoints in the below-mentioned order. 
 
 1. **Using endpoints.yaml file**
 This is the most flexible method to define endpoints. You can configure the endpoint details with the `endpoints.yaml` configuration file. Place this file in the .choreo directory in the project path of the component. 
@@ -50,6 +40,12 @@ If `endpoints.yaml` is not provided and if the source Micro Integrator project h
 3. **Provide default endpoints**
 If `endpoints.yaml` is not provided and if the source Micro Integrator project doesn't have APIs, Choreo generates a default endpoint which will expose the default micro integrator port (8290) with `Project` visibility and wildcard context.
 
+### Configure endpoints with the other buildpacks
+
+When you build a service component using the other buildpacks(Java, Python, NodeJS, Ruby, PHP, Go, Dockerfile, etc), you can configure the endpoint details with the `endpoints.yaml` configuration file. You must place this file inside the `.choreo` directory at the build context path and commit it to the source repository.
+
+See [Understanding the endpoints.yaml file](#learn-the-endpointsyaml-file) to learn about the `endpoints.yaml` file.
+
 ### Learn the endpoints.yaml file
 
 The `endpoints.yaml` file has a specific structure and contains the following details:
@@ -62,7 +58,7 @@ The `endpoints.yaml` file has a specific structure and contains the following de
 | **type**             | Required     | The type of traffic this endpoint is accepting, such as `REST`, `GraphQL`, `gRPC`, `UDP`or `TCP`. Currently, the MI preset supports only the `REST` type.                                         |
 | **networkVisibility**| Required     | The network level visibility of this endpoint, which defaults to `Project` if not specified. Accepted values are `Project`, `Organization`, or `Public`.|
 | **context**          | Required     | The context (base path) of the API that Choreo exposes via this endpoint.        |
-| **schemaFilePath**   | Required     | The swagger definition file path. Defaults to the wildcard route if not provided. This field should be a relative path to the project path when using the MI build preset. For REST endpoint types when using the Ballerina or Dockerfile preset, this field should be a relative path to the component root or Docker context .|
+| **schemaFilePath**   | Required     |  The swagger definition file path. Defaults to the wildcard route if not provided. This field should be a relative path to the project path when using the **Java**, **Python**, **NodeJS**, **Go**, **PHP**, **Ruby**, and **WSO2 MI** buildpacks. For REST endpoint types, when using the **Ballerina** or **Dockerfile** buildpack, this field should be a relative path to the component root or Docker context.|
 
 #### Sample endpoints.yaml
 
@@ -73,10 +69,10 @@ The `endpoints.yaml` file has a specific structure and contains the following de
 ```
 
 !!! note
-    - For components built with Ballerina build preset `docker-build-context-path` should be replaced with `component-root`. 
+    - For components built with Ballerina buildpack `docker-build-context-path` should be replaced with `component-root`. 
     For example: `<component-root>/.choreo/endpoints.yaml`
 
-    - For components built with WSO2 MI build preset `docker-build-context-path` should be replaced with `<Project Path>`. 
+    - For components built with WSO2 MI buildpack `docker-build-context-path` should be replaced with `<Project Path>`. 
     For example: `<Project Path>/.choreo/endpoints.yaml`
 
 **File content**:
@@ -88,7 +84,7 @@ version: 0.1
 # +required List of endpoints to create
 endpoints:
   # +required Unique name for the endpoint. (This name will be used when generating the managed API)
-- name: Greeting 9090
+- name: Greeting Service
   # +required Numeric port value that gets exposed via this endpoint
   port: 9090
   # +required Type of the traffic this endpoint is accepting. Example: REST, GraphQL, etc.

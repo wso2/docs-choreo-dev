@@ -40,6 +40,14 @@ Let's familiarize ourselves with the key files in the sample greeter application
 | Dockerfile.client      | Dockerfile to build the container image of the client application.|
 | .choreo/endpoints.yaml |  The Choreo-specific configuration provides information about how Choreo exposes the service.|
 
+### Configure the service port with endpoints
+
+Let's run the TCP server Service component on port 5050. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. In Choreo, you can expose your services with endpoints. You can read more about endpoints in [Configure Endpoints](https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/#configure-endpoints).
+
+Choreo looks for an `endpoints.yaml` file inside the `.choreo` directory to configure the endpoint details of a containerized component. Place the `.choreo` directory at the root of the Docker build context path.
+
+In our TCP server sample, the `endpoints.yaml` file is at `go/tcp-service/.choreo/endpoints.yaml`. Our build context path is `go/tcp-service`.
+
 ## Step 1: Create a service component with a TCP endpoint
 
 Let's create a containerized Service component by following these steps:
@@ -54,9 +62,8 @@ Let's create a containerized Service component by following these steps:
     | **Name**        | `Go TCP Server`        |
     | **Description** | `Sends greetings`       |
 
-5. Click **Next**.
-6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
-7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-sample-apps](https://github.com/wso2/choreo-sample-apps) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+5. Select **GitHub** tab.
+6. If you have not already connected your GitHub repository to Choreo, to allow Choreo to connect to your GitHub account, click **Authorize with GitHub** and enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:
@@ -66,14 +73,14 @@ Let's create a containerized Service component by following these steps:
              
           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
-8. In the **Connect Repository** pane, enter the following information:
+7. Enter the following information:
 
     | **Field**               | **Description**                 |
     |-------------------------|---------------------------------|
     | **GitHub Account**      | Your account                    |
     | **GitHub Repository**   | **`choreo-sample-apps`**        |
     | **Branch**              | **`main`**                      |
-    | **Build Preset**        | **Dockerfile**                  |
+    | **Buildpack**        | **Dockerfile**                  |
     | **Dockerfile Path**     | **go/tcp-service/Dockerfile.server** |
     | **Docker Context Path** | **go/tcp-service**                     |
 
@@ -86,19 +93,11 @@ Let's create a containerized Service component by following these steps:
 
         2. The Dockerfile utilized in this guide is a multi-stage Dockerfile, which is designed to keep the final image size small and provides the ability to build the application with a specific version of tools and libraries.
 
-9. Click **Create**. Once the component creation is complete, you will see the component's overview page.
+8. Click **Create**. Once the component creation is complete, you will see the component's overview page.
 
 You have successfully created a Service component from a Dockerfile. Now let's build and deploy the service.
 
-## Step 2: Configure the service port with endpoints
-
-Let's run the TCP server Service component on port 5050. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. In Choreo, you can expose your services with endpoints. You can read more about endpoints in [Configure Endpoints](https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/#configure-endpoints).
-
-Choreo looks for an `endpoints.yaml` file inside the `.choreo` directory to configure the endpoint details of a containerized component. Place the `.choreo` directory at the root of the Docker build context path.
-
-In our TCP server sample, the `endpoints.yaml` file is at `go/tcp-service/.choreo/endpoints.yaml`. Our build context path is `go/tcp-service`.
-
-## Step 3: Build and deploy
+## Step 2: Build and deploy
 
 Having connected the source repository and configured the endpoint details, you can now proceed to build and deploy the TCP server Service component.
 
@@ -128,7 +127,7 @@ To build and deploy the service, follow these steps:
 
 You have successfully deployed the TCP server. Currently, the TCP service is only accessible for the components deployed within the same project.
 
-## Step 4: Invoke the TCP service
+## Step 3: Invoke the TCP service
 
 Let's invoke the TCP service that you created above, using a TCP client. To do this, you can make use of a Manual Trigger component. We recommend this approach because, in this example, it's more efficient to have a client that connects to the server, sends a request, and then stops. A continuously executing task isn't required. Furthermore, if you use a Manual Trigger component, you won't need to expose an endpoint in the client for invocation, unlike with an API.
 
@@ -155,13 +154,13 @@ Let's create a containerized Manual Trigger component by following these steps:
     | **GitHub Account**    | Your account                    |
     | **GitHub Repository** | **`choreo-sample-apps`**        |
     | **Branch**            | **`main`**                      |
-    | **Build Preset**      | **Dockerfile**                  |
+    | **Buildpack**      | **Dockerfile**                  |
     | **Dockerfile Path**   | **go/tcp-service/Dockerfile.client** |
     | **Docker Context Path** | **go/tcp-service**                   |
 
 8. Click **Create** . Once the component creation is complete, you will see the component overview page.
 
-### Step 4.2: Setup environment variables
+### Step 3.2: Setup environment variables
 
 The client application, in this case, the TCP client, needs the server address of the TCP server service. Choreo reads this from the client application as an environment variable. Follow the steps below to configure the environment variable for the client application:
 
@@ -179,7 +178,7 @@ The client application, in this case, the TCP client, needs the server address o
 
 7. Click **Create**.
 
-### Step 4.3: Build and deploy the TCP client component
+### Step 3.3: Build and deploy the TCP client component
 
 Now that you have connected the source repository, and configured the environment variable details, let's build and run the greeter client.
 

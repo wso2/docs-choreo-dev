@@ -1,14 +1,14 @@
-# Develop a REST API Proxy
+# Develop an API Proxy
 
-A REST API proxy acts as an intermediary between an existing API and Choreo, intercepting all requests made to the API. It also functions as a managed API, which allows you to apply essential API management features such as security policies and rate limiting.
+An API proxy acts as an intermediary between an existing API and Choreo, intercepting all requests made to the API. It also functions as a managed API, which allows you to apply essential API management features such as security policies and rate limiting.
 
 In this guide, you will:
 
- - Create a REST API proxy component to expose an existing API.
- - Deploy the REST API proxy.
- - Test the REST API proxy to verify its functionality.
- - Manage the REST API.
- - Consume the REST API.
+ - Create an API proxy component to expose an existing API.
+ - Deploy the API proxy.
+ - Test the API proxy to verify its functionality.
+ - Manage the API.
+ - Consume the API.
  
 
 ## Prerequisites
@@ -24,15 +24,15 @@ Before you try out this guide, complete the following:
 
     This creates the organization and opens the **Project Home** page of the default project created for you.
 
-## Step 1: Create a REST API proxy
+## Step 1: Create an API proxy
 
-To create a REST API proxy, you can either upload an OpenAPI specification or provide an OpenAPI specification URL. In this guide, you will specify a URL to an OpenAPI definition of a sample API.
+To create an API proxy, you can either upload an OpenAPI specification or provide an OpenAPI specification URL. In this guide, you will specify a URL to an OpenAPI definition of a sample API.
  
 Follow the steps given below:
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
-3. Go to the **REST API Proxy** card and click **Create**.
+3. Go to the **API Proxy** card and click **Create**.
    This opens the **Create API Proxy** pane, where you can upload an OpenAPI definition or provide the URL of an OpenAPI. In this guide, you will define resources manually. Therefore, click **Skip Source** to proceed.
 4. Specify the values given in the following table as API proxy details: 
 
@@ -48,7 +48,7 @@ Follow the steps given below:
    
    This takes you to the **Resources** pane, where you can define resources for the API proxy.
 
-## Step 2: Define resources for the REST API proxy
+## Step 2: Define resources for the API proxy
 
 To add a new resource that can retrieve the department ID, follow the steps given below:
 
@@ -64,9 +64,9 @@ To add a new resource that can retrieve the department ID, follow the steps give
  4. To remove the five default resources that start with `/*`, click the delete icon corresponding to each resource. This marks the resources for deletion.
  5. Click **Save**.
 
-## Step 3: Deploy the REST API proxy
+## Step 3: Deploy the API proxy
 
-To deploy the REST API proxy to the development environment, follow the steps given below:
+To deploy the API proxy to the development environment, follow the steps given below:
 
 1. In the left navigation menu, click **Deploy**.
 
@@ -74,11 +74,11 @@ To deploy the REST API proxy to the development environment, follow the steps gi
 
 3. Click **Save and Deploy**. The **Development** card indicates the **Deployment Status** as **Active** when the API proxy is successfully deployed.
 
-Now you are ready to test the REST API proxy.
+Now you are ready to test the API proxy.
 
-## Step 3: Test the REST API proxy
+## Step 3: Test the API proxy
 
-Choreo allows you to test your REST API proxy using either the [integrated OpenAPI Console](../testing/test-rest-endpoints-via-the-openapi-console.md), [cURL](../testing/test-apis-with-curl.md), or [Postman](../testing/test-apis-using-postman.md).
+Choreo allows you to test your API proxy using either the [integrated OpenAPI Console](../testing/test-rest-endpoints-via-the-openapi-console.md), [cURL](../testing/test-apis-with-curl.md), or [Postman](../testing/test-apis-using-postman.md).
 
 In this guide, you will use the OpenAPI Console to test the API proxy. 
 
@@ -95,17 +95,17 @@ Follow the steps given below:
 
 4. Enter `1` as the **departmentId** and click **Execute**. You will see a response similar to the following:
 
-    ![REST API proxy response](../assets/img/develop-components/develop-a-rest-api-proxy/rest-api-proxy-response.png){.cInlineImage-full}
+    ![API proxy response](../assets/img/develop-components/develop-a-rest-api-proxy/rest-api-proxy-response.png){.cInlineImage-full}
 
-   This indicates that your REST API proxy is working as expected.
+   This indicates that your API proxy is working as expected.
 
-## Step 4: Manage the REST API proxy
+## Step 4: Manage the API proxy
 
-Now that you have a tested REST API proxy, you can publish it and make it available for application developers to consume. Depending on your requirement, you can apply security, throttling, and other settings to the REST API before you publish it.
+Now that you have a tested API proxy, you can publish it and make it available for application developers to consume. Depending on your requirement, you can apply security, throttling, and other settings to the API before you publish it.
 
-In this guide, you will apply rate limiting to the REST API and publish it.
+In this guide, you will apply rate limiting to the  API and publish it.
 
-### Step 4.1: Apply a rate limiting level to the REST API proxy
+### Step 4.1: Apply a rate limiting level to the API proxy
 
 To apply a rate limiting level to the API, follow the steps given below:
  
@@ -115,18 +115,18 @@ To apply a rate limiting level to the API, follow the steps given below:
 4. Click **Save**.
 5. In the **Apply to Development** pane that opens, enter a meaningful message and click **Apply**.
 
-### Step 4.2: Publish the REST API proxy
+### Step 4.2: Publish the API proxy
    
-To publish the REST API proxy to the Choreo Developer Portal, follow the steps given below:
+To publish the API proxy to the Choreo Developer Portal, follow the steps given below:
 
 1. In the left navigation menu, click **Lifecycle** under **Manage**. 
    This opens the **Lifecycle Management** pane, where you can see the different lifecycle stages that an API can be in. You can see that the current lifecycle stage is **Created**.
 2. In the **Lifecycle Management** pane, click **Publish**. 
-   A message appears where you can specify whether you want to publish a connector for this REST API proxy. Creating a connector for this REST API proxy makes it available in the Marketplace. In this guide, you will not publish a connector for the API.
+   A message appears where you can specify whether you want to publish a connector for this API proxy. Creating a connector for this API proxy makes it available in the Marketplace. In this guide, you will not publish a connector for the API.
 3. Click **No, Thanks**. 
    This changes the API lifecycle state to **Published**. 
 
-## Step 5: Invoke the REST API 
+## Step 5: Invoke the API 
 
 To generate credentials for the published API and to invoke it via the Choreo Developer Portal, follow the steps below:
 
@@ -138,7 +138,7 @@ To generate credentials for the published API and to invoke it via the Choreo De
     2. Click **Generate Credentials**. Choreo generates new tokens and populates the **Consumer Key** and **Consumer Secret** fields.
 
         !!! tip
-             If you want to test the REST API via an API test tool or through code, click **Generate Access Token** and copy the test token that is displayed. Alternatively, click **cURL** and copy the generated cURL command to use via a cURL client. You do not need to generate an access token if you are testing the API via the **Try Out** capability in the Choreo Developer Portal.
+             If you want to test the API via an API test tool or through code, click **Generate Access Token** and copy the test token that is displayed. Alternatively, click **cURL** and copy the generated cURL command to use via a cURL client. You do not need to generate an access token if you are testing the API via the **Try Out** capability in the Choreo Developer Portal.
  
 3. To invoke a resource via the **Try Out** capability in the Choreo Developer Portal, follow the steps given below:
 
@@ -150,6 +150,6 @@ To generate credentials for the published API and to invoke it via the Choreo De
 
         ![Try out response](../assets/img/develop-components/develop-a-rest-api-proxy/try-out-response.png){.cInlineImage-full}
 
-Now, you have gained hands-on experience creating, deploying, testing, and publishing a REST API proxy using Choreo API Manager.
+Now, you have gained hands-on experience creating, deploying, testing, and publishing an API proxy using Choreo API Manager.
 
 To learn more about the API management capabilities supported by Choreo API Manager, see [API Management](../api-management/lifecycle-management.md).

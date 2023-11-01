@@ -33,7 +33,7 @@ First, let's create a Webhook component as follows:
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Go to the **Webhook** card and click **Create**.
 4. This opens the **Create a Webhook** pane, where you can specify a name and description for the component. Enter a unique name and description. 
-5. Select the **Access Mode** depending on your requirement, and click **Next**.
+5. Select **GitHub** tab.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
 7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
@@ -45,20 +45,18 @@ First, let's create a Webhook component as follows:
              
         You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
-8. In the **Connect Repository** pane, enter the following information:
+8. Select the **Access Mode** depending on your requirement.
+9. Enter the following information:
 
     | **Field**                     | **Description**    |
     |-------------------------------|--------------------|
     | **GitHub Account**            | Your account       |
     | **GitHub Repository**         | choreo-examples |
     | **Branch**                    | **`main`**         |
-    | **Build Preset**              | Ballerina           |
+    | **Buildpack**              | Ballerina           |
     | **Project Path**              | `integrations/ballerina/send-email-on-github-event-webhook`|
 
-9. Click **Next**.
-10. In the **Create a Webhook** pane, select a trigger type depending on your requirement. For this tutorial, select **GitHub**.
-11. Click **Next**.
-12. Review the trigger type you selected and click **Create**. 
+9. Click **Create**.
 
 Choreo creates the Webhook component with the sample implementation and opens the component **Overview** page.
 
@@ -109,7 +107,7 @@ To allow the webhook to read the labels of issues in a specific GitHub repositor
     | **Secret**       | The last webhook secret you configured in [Step 2](#step-2-deploy).| 
 
 	!!! tip
-    	  - **Build Preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset. 
+    	  - **Buildpack** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the buildpack. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the buildpack. 
 
           - **Project Path** specifies the location of the project to build the component.
 

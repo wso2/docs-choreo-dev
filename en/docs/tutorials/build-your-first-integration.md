@@ -45,11 +45,11 @@ Before you try out this tutorial, complete the following:
     | **GitHub Account**    | Your account                                                                   |
     | **GitHub Repository** | The repository you created by following the steps in the prerequisites section |
     | **Branch**            | **`main`**                                                                     |
-    | **Build Preset**      | **Ballerina**.                                                           |
+    | **Buildpack**      | **Ballerina**.                                                           |
     | **Project Path**      | Since the path is empty, select **Start with a sample**.                       | 
 
 	!!! tip
-    	    - **Build Preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset. 
+    	    - **Buildpack** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the buildpack. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the buildpack. 
 
           - **Project Path** specifies the location of the project to build the component.
 

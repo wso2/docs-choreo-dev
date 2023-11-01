@@ -27,30 +27,29 @@ Before you try out the steps in this guide, complete the following:
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
-3. Go to the **Integration as an API** card and click **Create**.
-4. In the **General Details** pane, enter a unique name and a description for the component. You can enter the name and description given below:
+3. Click the **Service** card.
+4. Enter a unique name and a description for the component. You can enter the name and description given below:
 
     | **Field**       | **Value**              |
     |-----------------|------------------------|
     | **Name**        | `Hello World`          |
     | **Description** | `Hello World REST API` |
 
-5. Click **Next**.
-6. In the **Authorization** pane, click **Authorize with GitHub** to allow Choreo to connect to your GitHub account.
-7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+5. Select **GitHub** Tab
+6. If you have not already connected your GitHub repository to Choreo, to allow Choreo to connect to your GitHub account, click **Authorize with GitHub** and enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
 
-7. In the **Connect Repository** pane, enter the following information:
+7. Enter the following information:
 
     | **Field**             | **Description**                               |
     |-----------------------|-----------------------------------------------|
     | **GitHub Account**    | Your account                                  |
     | **GitHub Repository** | The repository you created by following the steps in the prerequisites section |
     | **Branch**            | **`main`**                               |
-    | **Build Preset**      | Click **WSO2 MI** because you are creating the REST API from a [WSO2 Integration Studio](https://wso2.com/micro-integrator/) project|
+    | **Buildpack**      | Click **WSO2 MI** because you are creating the REST API from a [WSO2 Integration Studio](https://wso2.com/micro-integrator/) project|
     | **Project Path**      | `integrations/micro-integrator/hello-world-api` |
 
 8. Click **Create**. Choreo initializes the component with the sample integration.
@@ -66,7 +65,7 @@ To deploy the integration component to the development environment, follow the s
 The **Development** card indicates the **Deployment Status** as **Active** when the integration is successfully deployed.
 
     !!! tip
-         Choreo uses [endpoints](../../choreo-concepts/endpoint.md) to expose **Integration as an API** component to the network. You can read more about configuring endpoints in [Configure Endoints](../configure-endpoints.md).
+         Choreo uses [endpoints](../../choreo-concepts/endpoint.md) to expose **Service** component to the network. You can read more about configuring endpoints in [Configure Endoints](../configure-endpoints.md).
 
     !!! tip
          Automatic deployment is enabled for the component by default. Therefore, you are required to perform only the first deployment manually.

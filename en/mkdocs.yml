@@ -78,7 +78,6 @@ nav:
       - Build Your First Cloud Native Application with Choreo: quick-start-guides/build-your-first-cloud-native-application-with-choreo.md
   - Tutorials:
       - Expose a Service as a Managed API: tutorials/expose-a-service-as-a-managed-api.md
-      - Build Your First Integration: tutorials/build-your-first-integration.md
       - Secure an API with Role-Based Access Control: tutorials/secure-an-api-with-role-based-access-control.md
   - Choreo Concepts:
       - Resource Hierarchy: choreo-concepts/resource-hierarchy.md
@@ -94,23 +93,26 @@ nav:
       - Develop Services:
           - Develop a Service: develop-components/develop-services/develop-a-service.md
           - Develop a REST API: develop-components/develop-services/develop-a-rest-api.md
+          - Develop a Go REST API: develop-components/develop-services/develop-a-go-rest-api.md
           - Develop a gRPC Service: develop-components/develop-services/develop-a-grpc-service.md
           - Develop a TCP Service: develop-components/develop-services/develop-a-tcp-service.md
           - Develop a UDP Service: develop-components/develop-services/develop-a-udp-service.md
           - Develop a Ballerina REST API:  develop-components/develop-services/develop-a-ballerina-rest-api.md
           - Develop a Ballerina GraphQL API: develop-components/develop-services/develop-a-ballerina-graphql-api.md
-      - Develop a REST API Proxy: develop-components/develop-a-rest-api-proxy.md
+      - Develop an API Proxy: develop-components/develop-an-api-proxy.md
       - Develop a Web Application: develop-components/develop-a-web-application.md
       - Develop a Webhook: develop-components/develop-a-webhook.md 
       - Develop Integrations:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
-          - Develop an Event-Triggered Integration: develop-components/develop-integrations/develop-an-event-triggered-integration.md
-          - Develop a Scheduled Integration: develop-components/develop-integrations/develop-a-scheduled-integration.md 
+          - Develop an Event Handler: develop-components/develop-integrations/develop-an-event-handler.md
+          - Develop a Scheduled Task: develop-components/develop-integrations/develop-a-scheduled-task.md
+          - Develop a Manual Task: develop-components/develop-integrations/develop-a-manual-task.md
       - Work with the Micro Integrator Runtime:
           - Get Started with the Micro Integrator Runtime: develop-components/work-with-the-micro-integrator-runtime-in-choreo.md
           - Manage the Micro Integrator Runtime Version in Your Integration Project: develop-components/manage-the-micro-integrator-runtime-version-in-your-integration-project.md
       - Develop Components With Git: develop-components/develop-components-with-git.md
       - Bring Your Own Image: develop-components/bring-your-own-image.md
+      - Deploy an Application with Buildpacks: develop-components/deploy-an-application-with-buildpacks.md
       - Deploy a Containerized Application: develop-components/deploy-a-containerized-application.md  
       - Sharing and Reusing Services: develop-components/sharing-and-reusing-services.md
       - Configure Mutual TLS Between Components: develop-components/configure-mutual-tls-between-components.md
@@ -135,6 +137,7 @@ nav:
       - Test APIs with cURL: testing/test-apis-with-curl.md
       - Test APIs using Postman: testing/test-apis-using-postman.md
       - Test APIs with Choreo API Chat: testing/test-apis-with-choreo-apichat.md
+      - Test Components with Test Runner: testing/test-components-with-test-runner.md
   - Consuming Services:
       - Consume a Service: consuming-services/consuming-a-sevice.md
       - Manage Application: consuming-services/manage-application.md
@@ -315,6 +318,12 @@ plugins:
           'monitoring-and-insights/engineering-insights/view-dora-metrics.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/delivery-insights/view-dora-metrics/'
           'monitoring-and-insights/view-api-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/usage-insights/'
           'testing/test-apis-with-choreo-testgpt.md': 'https://wso2.com/choreo/docs/testing/test-apis-with-choreo-apichat/'
+          'develop-integrations/develop-an-event-triggered-integration.md': 'https://wso2.com/choreo/docs/develop-components/develop-integrations/develop-an-event-handler/'
+          'develop-integrations/develop-a-scheduled-integration.md': 'https://wso2.com/choreo/docs/develop-components/develop-integrations/develop-a-scheduled-task/'
+          'develop-components/develop-a-rest-api-proxy.md': 'https://wso2.com/choreo/docs/develop-components/develop-an-api-proxy/'
+          'develop-components/deploy-an-application-with-buildpacks.md': 'https://wso2.com/choreo/docs/develop-components/deploy-an-application-with-buildpacks/'
+          'develop-components/configure-endpoints.md' : 'https://wso2.com/choreo/docs/develop-components/configure-endpoints/'
+          
 extra_css:
   # - assets/lib/highlightjs/default.min.css
   # - assets/css/theme.css
