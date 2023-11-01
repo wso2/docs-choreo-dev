@@ -96,4 +96,4 @@ You have successfully created a Test Runner component using a buildpack of you c
 4. In the **Set Up** card, click **Deploy** to deploy the test runner component. If you want to provide additional configuration or secrets, use the **Configure and Deploy** option from the list.
 3. Once the deployment is successful, on the left menu, click **Execute**.
 4. Select the environment from the environment list and click **Run Now** to trigger a test execution.
-5. A new execution will be shown in the execution list and click on the execution list item to view the test results.
+5. Once the execution is completed it is listed in the execution page. You can click on a particular execution to view the test result(s).
