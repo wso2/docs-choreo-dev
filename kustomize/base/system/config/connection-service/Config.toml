@@ -4,6 +4,11 @@ healthPort=9001
 
 configurationServiceEndpoint = "http://configuration-service:8080"
 resourceRegistryEndpoint = "http://resource-registry:9090/resource-registry"
+consoleApiClientEndpoint = "{{.CONSOLE_API_URL}}"
+keyManagerClientEndpoint = "{{.KEY_MANAGER_API_URL}}"
+projectManagerEndpoint = "http://dp-project-manager:80"
+endpointResolverEndpoint = "http://endpoint-resolver:9090"
+choreoIdpId = "{{.CHOREO_IDP_ID}}"
 
 [ballerina.log]
 format="json"
