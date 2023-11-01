@@ -31,6 +31,7 @@ export namespace Enums {
     ballerinaService = "ballerinaService",
     byocService = "byocService",
     byocWebAppsDockerfileLess = "byocWebAppsDockerfileLess",
+    buildpackTestRunner = "buildpackTestRunner",
   }
 
   export enum Accessibility {
