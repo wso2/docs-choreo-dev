@@ -93,7 +93,7 @@ To deploy the integration, follow the steps given below:
 
 4.  Click **Deploy**.
 
-## Step 4: Execute integration
+## Step 4: Execute the integration
 
 To execute the integration, follow the steps given below:
 
