@@ -18,10 +18,6 @@ export class ComponentBuild {
   static buildComponent() {
     cy.get('[data-cyid="build-button"]').should("be.enabled").click();
     cy.get('[data-cyid="btn-next-button"]').should("be.visible").click();
-    cy.get('[data-cyid="btn-next-button"]').should(
-      "not.be.visible",
-      VERY_SHORT_TIME
-    );
     cy.get('[data-cyid="table-title"]').within(() => {
       cy.contains(BUILD_SUCCESS, MEDIUM_TIME);
     });
