@@ -71,7 +71,7 @@ Follow the guidelines below based on your language:
     
     Refer [choreo samples](https://github.com/wso2/choreo-samples) for more examples.
 
-=== "NodeJs"
+=== "NodeJS"
     Supported Versions - 12.x.x, 14.x.x, 16.x.x, 18.x.x, 20.x.x
 
     Refer below examples for different component types. Follow the `readme.md` inside the example.
