@@ -78,7 +78,6 @@ nav:
       - Build Your First Cloud Native Application with Choreo: quick-start-guides/build-your-first-cloud-native-application-with-choreo.md
   - Tutorials:
       - Expose a Service as a Managed API: tutorials/expose-a-service-as-a-managed-api.md
-      - Build Your First Integration: tutorials/build-your-first-integration.md
       - Secure an API with Role-Based Access Control: tutorials/secure-an-api-with-role-based-access-control.md
   - Choreo Concepts:
       - Resource Hierarchy: choreo-concepts/resource-hierarchy.md
