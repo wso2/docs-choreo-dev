@@ -2,7 +2,7 @@
 
 Role-based access control is a flexible and scalable approach to manage access to API resources. In this approach, each user or group is assigned a specific role that determines the permission granted to perform operations on an API resource.
 
-This tutorial explains how to implement role-based access control using Choreo and Asgardeo. It includes a real-world scenario with instructions to create and publish a REST API proxy component in Choreo and apply role-based access control.
+This tutorial explains how to implement role-based access control using Choreo and Asgardeo. It includes a real-world scenario with instructions to create and publish an API proxy component in Choreo and apply role-based access control.
 
 ## Scenario
 
@@ -60,12 +60,12 @@ This creates the organization and opens the home page of the default project cre
              - The capability to add an external IdP will be disabled because Asgardeo does not support token exchange. However, you can use the [federation capabilities of Asgardeo](https://wso2.com/asgardeo/docs/get-started/asgardeo-use-cases/#identity-federation) to achieve similar functionality.
 
 
-### Step 1: Create a REST API proxy component and deploy it
+### Step 1: Create an API proxy component and deploy it
 
-Follow these steps to create a REST API proxy component, add resources, and deploy it:
+Follow these steps to create an API proxy component, add resources, and deploy it:
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the project home page.
-2. To create a REST API proxy component, follow the instructions in [Develop an API Proxy: Step 1](../develop-components/develop-an-api-proxy.md#step-1-create-an-api-proxy). This opens the **Resources** pane, where you can define resources for the API proxy.
+2. To create an API proxy component, follow the instructions in [Develop an API Proxy: Step 1](../develop-components/develop-an-api-proxy.md#step-1-create-an-api-proxy). This opens the **Resources** pane, where you can define resources for the API proxy.
 3. In the **Resources** pane, follow the steps given below to add resources:
 
      - Select **GET** as the **HTTP Verb**, enter `/users` as the **URI Pattern**, and click **+** to add the resource.
@@ -122,8 +122,8 @@ Now, an application developer can discover the API, subscribe to it and then inv
 
 ### Step 3: Subscribe to the Published API
 
-In this step, you take the role of an application developer who consumes the published REST API.
-To consume the REST API, you must create an application, generate keys, and subscribe to the API.
+In this step, you take the role of an application developer who consumes the published API.
+To consume the API, you must create an application, generate keys, and subscribe to the API.
 
 Follow these steps:
 
