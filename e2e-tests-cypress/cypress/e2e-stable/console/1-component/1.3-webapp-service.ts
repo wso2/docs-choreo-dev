@@ -73,8 +73,12 @@ describe("Verify containerized service functionality", () => {
 
   it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-    ComponentOverviewPage.navigateToBuild();
-    ComponentBuild.buildComponent();
+
+    if (Utils.isKubeConFeaturesEnabled()) {
+      ComponentOverviewPage.navigateToBuild();
+      ComponentBuild.buildComponent();
+    }
+
     ComponentOverviewPage.navigateToDeploy();
   });
 
