@@ -81,7 +81,7 @@ Follow the guidelines below based on your language:
     | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-go-task)|
     | Web Application | [Hello World Web Application](https://github.com/wso2/choreo-samples/tree/main/hello-world-go-webapp)|
 
-    ### Procfile 
+    #### Procfile 
 
     A `Procfile` is a configuration file used to declare what commands are run by your application's containers. 
     This is optional and you can add a Procfile if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
@@ -113,7 +113,7 @@ Follow the guidelines below based on your language:
 
         1. For Java, Main class should be defined in the Manifest.
     
-    ### Procfile 
+    #### Procfile 
 
     A `Procfile` is a configuration file used to declare what commands are run by your application's containers. 
     This is optional and you can add a Procfile if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
@@ -140,7 +140,7 @@ Follow the guidelines below based on your language:
     | Service| [Reading Books List Service](https://github.com/wso2/choreo-samples/tree/main/reading-books-list-service-nodejs)|
     | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-nodejs-task)|
 
-    ### Procfile 
+    #### Procfile 
 
     A `Procfile` is a configuration file used to declare what commands are run by your application's containers. 
     This is optional and you can add a Procfile if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
@@ -168,7 +168,7 @@ Follow the guidelines below based on your language:
     | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-php-task)|
     | Web Application | [Hello World Web Application](https://github.com/wso2/choreo-samples/tree/main/hello-world-php-webapp)|
 
-    ### Procfile 
+    #### Procfile 
 
     A `Procfile` is a configuration file used to declare what commands are run by your application's containers. 
     This is optional and you can add a Procfile if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
@@ -196,7 +196,7 @@ Follow the guidelines below based on your language:
     | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-ruby-task)|
     | Web Application | [Hello World Web Application](https://github.com/wso2/choreo-samples/tree/main/hello-world-ruby-webapp)|
 
-    ### Procfile 
+    #### Procfile 
 
     A `Procfile` is a configuration file used to declare what commands are run by your application's containers. 
     This is optional and you can add a Procfile if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
