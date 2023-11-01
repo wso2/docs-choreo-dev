@@ -5,4 +5,3 @@ level = "{{.LOG_LEVEL}}"
 [[ballerina.log.modules]]
 name = "choreo/sysobsapi"
 level = "{{.LOG_LEVEL_SYS_OBS_API}}"
-
