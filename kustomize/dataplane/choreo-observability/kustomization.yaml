@@ -16,6 +16,7 @@ resources:
   - network-policy.yaml
   - loggingapi
   - config
+  - hubble-exporter
   - obsapi
   - sys-obsapi
 
