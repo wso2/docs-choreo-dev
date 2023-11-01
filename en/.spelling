@@ -1,5 +1,7 @@
 >
 Choreo
+OpenWeatherMap
+apiKey
 DockerHub
 buildpack
 buildpacks
@@ -745,8 +747,6 @@ webhookSecret
  - docs/resources/kubernetes-upgrade-notice.md
 jdk8u372
  - docs/develop-components/develop-integrations/develop-a-scheduled-integration.md
-OpenWeatherMap
-apiKey
  - docs/develop-components/develop-integrations/develop-an-event-triggered-integration.md
 IssuesService
 webhookSecret
