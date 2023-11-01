@@ -1,8 +1,10 @@
 # Billing for Platform Services (Databases and Caches)
 
-Any platform services created under your Choreo Organization will be added to your existing Choreo subscription (the amount will depend on the service plan of the created resources).
+Any platform services you create within your Choreo Organization will be included in your current Choreo subscription. The quantity included will vary depending on the service plan of the resources you create.
 
-- Usage is billed hourly. If you create a database and then remove it later on, you will only be billed for the hours that it was active for that month.
+A few important considerations: 
+
+- Usage is billed hourly. If you create a database that you later remove within the same month, you will only be charged for the hours during which it was active.
 - Fixed pricing based on service plans. Choreo does not charge extra for network bandwith usage.
 
 
