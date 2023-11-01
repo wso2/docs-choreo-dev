@@ -1,2 +1,3 @@
 resources:
   - app-gateway-oauth-agent.yaml
+  - dp-kv-resolver.yaml

@@ -1,0 +1,9 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: sys-obsapi
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: sys-obsapi

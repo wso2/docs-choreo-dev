@@ -3,8 +3,9 @@ kind: Kustomization
 
 resources:
   - ../base/clusterissuers
-  - choreodp-system
   - choreo-obs
+  - choreodp-system
+  - crd
 
 commonLabels:
   app: choreo-dataplane

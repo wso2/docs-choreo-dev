@@ -18,7 +18,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - testgpt
   - config
+  - deployment
+  - hpa
+  - pdb
+  - service
 
 namespace: choreo-ai
