@@ -48,9 +48,6 @@ We can develop tests in a language of our choice and execute them within the Cho
         | -------------------- | --------------- |
         | Go Project Directory | /test-runner-go |
         | Language Version     | 1.x             |
-
-        !!! note
-            By default, **main.go** file is considered as the entrypoint. Default entrypoint can be overriden by providing a Procfile.
     
     === "JavaScript"
 
@@ -96,4 +93,4 @@ You have successfully created a Test Runner component using a buildpack of you c
 4. In the **Set Up** card, click **Deploy** to deploy the test runner component. If you want to provide additional configuration or secrets, use the **Configure and Deploy** option from the list.
 3. Once the deployment is successful, on the left menu, click **Execute**.
 4. Select the environment from the environment list and click **Run Now** to trigger a test execution.
-5. Once the execution is completed it is listed in the execution page. You can click on a particular execution to view the test result(s).
+5. Once the execution is completed it is listed in the execution page. This may take sometime. Once the execution is listed, you can click on a particular execution to view the test result(s).
