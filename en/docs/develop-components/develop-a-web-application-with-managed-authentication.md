@@ -34,7 +34,7 @@ In addition, Managed Authentication introduces a [BFF](https://datatracker.ietf.
 | ----------------- | ----------------- | ----------------- |
 | Post Login Path   | Relative path to be redirected to after a successful login. Logic to process the userinfo cookie set by the Managed Authentication has to be implemented in your code. See [Login with userinfo](#login-with-userinfo)       | /                      |
 | Post Logout Path  | Relative path to be redirected to after a successful logout.  | /                      |
-| Error Path        | Relative path to be redirected to if an error occurs during a Redirection based flow (i.e. Login, Logout)             | Builtin error page     |
+| Error Path        | Relative path to be redirected to if an error occurs during a Redirection based flow (i.e. Login, Logout). See [Custom Error Page](#custom-error-page)             | Builtin error page     |
 | Additional Scopes | All additional scopes required by the web app. Following scopes will be added by default. `openid`, `profile`, `email` and scopes required to invoke subscribed APIs.               | none                   |
 
 
@@ -189,3 +189,17 @@ You can wrap the requests to choreo APIs with the refresh logic to automatically
             }
         }
     };
+
+### Custom Error Page
+
+You can [configure Managed Authentication](#configure-managed-authentication) to redirect to a custom error page in your Web Application by specifying the Error Path. If an error occurs during a redirection based flow (i.e Login, Logout), users will be redirected to this custom error page. 
+
+!!! note
+    If you have not cofigured an Error Path, Managed Authnetication will serve its default error page in the event of an error.
+
+Managed Authentication will include the following query parameters in the URL when redirecting to the custom error page.
+
+| parameter name | parameter description                         |
+|----------------|-----------------------------------------------|
+| code           | short textual error code indicating the error |
+| message        | description of the error                      |
