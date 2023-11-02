@@ -15,14 +15,13 @@ To secure your web application, you need to implement authentication. You can ut
 
 To enable Choreo to manage the login functionality of your web application, you need to implement a login button that redirects users to /auth/login when clicked. You can use the following code snippet or any custom button component from your preferred UI component library:
 
- ```
-    <button onClick={() => {window.location.href="/auth/login"}}>Login</button>
+```
+<button onClick={() => {window.location.href="/auth/login"}}>Login</button>
 ```
 
-When a user clicks on the login button within your web application, Choreo will redirect them to the preconfigured Identity Provider and handle the authentication process, conforming to the OICD/OAuth2.0 protocols. After a successful login, Choreo will set the relevant session cookies and redirect the user to the post-login path (default is /). The user can then invoke any Choreo-deployed APIs permitted to them.
+When a user clicks on the login button within your web application, Choreo will redirect them to the preconfigured Identity Provider and handle the authentication process, conforming to the OICD/OAuth2.0 protocols. After a successful login, Choreo will set the relevant session cookies and redirect the user to the post-login path (default is `/`). The user can then invoke any Choreo-deployed APIs permitted to them.
 
-
-### Handling user info post-login
+### Obtaining user info claims
 
 Choreo's Managed Authentication allows you to access user info claims that the Identity Provider returns post login, either via a cookie or by invoking a GET resource.
 
@@ -73,9 +72,9 @@ To enable Choreo-managed logout capability to your web application, you can impl
     - The below example uses the `js-cookie` library for cookie parsing. You can use any cookie-parsing library of your choice.   
     
 ```
-    <button onClick={async () => {
-        window.location.href = `/auth/logout?session_hint=${Cookies.get('session_hint')}`;
-    }}>Login</button>`
+<button onClick={async () => {
+    window.location.href = `/auth/logout?session_hint=${Cookies.get('session_hint')}`;
+}}>Login</button>`
 ```
 
 When a user clicks on the logout button, Choreo will clear the session cookies and redirect the users to the OIDC logout endpoint of the configured Identity Provider (if available).  
@@ -167,7 +166,7 @@ Choreo's Managed Authentication will include the following query parameters in t
 
 You have successfully implemented Choreo's Managed Authentication for your web application. Your next step involves creating a web application component in Choreo, enabling Managed Authentication for the component, and subsequently deploying it.
 
-### Step 2: Enable Managed Authentication
+## Step 2: Enable Managed Authentication
 
 To ensure that your web application functions seamlessly with Managed Authentication, it is essential to enable Managed Authentication for your web application component within Choreo.
 
@@ -175,20 +174,20 @@ There are two ways that you can enable Managed Authentication for your Web Appli
 - At component creation
 - At component deployment
 
-#### Enable Managed Authentication at component creation
+### Enable Managed Authentication at component creation
 
 When creating a web application component, click the toggle **Managed authentication with Choreo** under **Authentication**  to enable Managed Authentication.
 
 !!! note
     Managed Authentication is currently available only for React, Angular, and Vue.js buildpacks.
 
-#### Enable Managed Authentication at component deployment
+### Enable Managed Authentication at component deployment
 
 1. Go to the **Deploy** view of your component.
 2. Click **Authentication Settings** on the **Set Up** card.
 3. Enable/Disable Managed Authentication using the toggle in the sidebar.
 
-### Configure Managed Authentication
+## Step 3: Configure Managed Authentication
 
 To configure the necessary paths and scopes for managed authentication, follow the steps below:
 
@@ -205,7 +204,7 @@ To configure the necessary paths and scopes for managed authentication, follow t
 | Additional Scopes | All additional scopes required by the web application. The following scopes will be added by default. `openid`, `profile`, `email`, and scopes required to invoke subscribed APIs.               | none                   |
 
 
-### Managing OAuth Keys
+## Step 4: Manage OAuth Keys
 
 1. In the left navigation of your component view, click **Settings**.
 2. Select an Identity Provider.
