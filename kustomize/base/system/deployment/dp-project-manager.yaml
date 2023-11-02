@@ -51,6 +51,11 @@ spec:
                 secretKeyRef:
                   name: secret-dp-project-manager
                   key: MONGODB_PASSWORD
+            - name: APIM_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-dp-project-manager
+                  key: APIM_CLIENT_SECRET
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 10001

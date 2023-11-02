@@ -4,6 +4,14 @@ healthPort=9001
 
 configurationServiceEndpoint = "http://configuration-service:8080"
 resourceRegistryEndpoint = "http://resource-registry:9090/resource-registry"
+consoleApiClientEndpoint = "{{.CONSOLE_API_URL}}"
+keyManagerClientEndpoint = "{{.KEY_MANAGER_API_URL}}"
+apimHost = "{{.APIM_HOST_URL}}"
+projectManagerEndpoint = "http://dp-project-manager:80"
+endpointResolverEndpoint = "http://endpoint-resolver:9090"
+choreoIdpId = "{{.CHOREO_IDP_ID}}"
+rudderClientEndpoint = "http://dp-rudder:80/api/v1"
+apimClientId = "{{.APIM_REST_API_CONSUMER_KEY}}"
 
 [ballerina.log]
 format="json"

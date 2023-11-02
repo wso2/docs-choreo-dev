@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: pdp-manager
+  name: pdp-manager
+spec:
+  ports:
+    - name: pdp-manager-port
+      port: 80
+      protocol: TCP
+      targetPort: http-port
+  selector:
+    choreo.component: pdp-manager

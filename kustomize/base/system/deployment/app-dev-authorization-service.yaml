@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=Required by LinkerD
+  labels:
+    choreo.component: app-dev-authorization-service
+  name: app-dev-authorization-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: app-dev-authorization-service
+  strategy: { }
+  template:
+    metadata:
+      labels:
+        choreo.component: app-dev-authorization-service
+        antiaffinity: app-dev-authorization-service
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: app-dev-authorization-service
+          image: choreocontrolplane.azurecr.io/choreoipaas/appdev-authorization:latest
+          envFrom:
+            - configMapRef:
+                name: cm-app-dev-authorization
+            - configMapRef:
+                name: env-appdev-authorization
+          ports:
+            - containerPort: 9090
+              name: service-port
+            - containerPort: 9091
+              name: health-port
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health-port
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health-port
+              path: /liveness
+          resources:
+            limits:
+              cpu: 750m
+              memory: 2Gi
+            requests:
+              cpu: 250m
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
+              readOnly: true
+            - name: secret-appdev-authorization
+              mountPath: "/mnt/csi/secret-appdev-authorization"
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: cm-file-appdev-authorization
+        - name: secret-appdev-authorization
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-appdev-authorization
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - app-dev-authorization-service
+              topologyKey: kubernetes.io/hostname

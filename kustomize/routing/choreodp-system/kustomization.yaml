@@ -5,9 +5,4 @@ resources:
   - ../../shared-components/dp-mizzen
   - netpol
 
-patches:
-  - path: linkerd-patch.yaml
-    target:
-      kind: Deployment
-
 namespace: choreodp-system
