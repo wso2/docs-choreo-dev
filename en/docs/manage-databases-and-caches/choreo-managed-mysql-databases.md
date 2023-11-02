@@ -22,5 +22,5 @@ Follow the steps below to create a Choreo-managed MySQL database:
 To connect to your Choreo-managed MySQL database, consider the following guidelines:
 
 - You can use any MySQL driver, ORM, or supported generic SQL library (may depend on the programming language) to connect to the database.
-- The connection parameters can be found in the **Overview** section in the Choreo Console under the relavent database.
+- The connection parameters can be found in the **Overview** section in the Choreo Console under the relevant database.
 - MySQL databases accepts traffic from the internet by default. You can restrict access to specific IP addresses and CIDR blocks under **Advanced Settings**.

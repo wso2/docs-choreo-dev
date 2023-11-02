@@ -808,3 +808,6 @@ AzureAD
 identity-as-a-soluton
  - docs/testing/test-apis-with-choreo-apichat.md
 findByStatus
+ - docs/manage-databases-and-caches/choreo-managed-databases-and-caches.md
+DigitalOcean
+Postgres
