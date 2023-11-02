@@ -181,7 +181,9 @@ export class ComponentDeployPage {
     isAdditionalConfigs: boolean = true,
     isManagedByAPIM: boolean = true,
     isManualTrigger: boolean = false,
-    isWebApp: boolean = false
+    isWebApp: boolean = false,
+    isRunnerApp: boolean = false
+    
   ) {
     this.ensureBuildCardIsReady();
 
@@ -200,6 +202,11 @@ export class ComponentDeployPage {
       }
       if (!isWebApp) {
         this.pollElement('[data-cyid="btn-next-button"]').click();
+
+    if (!isRunnerApp) {
+      this.pollElement('[data-cyid="btn-next-button"]').click();
+    }
+
       } else {
         this.configWebappComponent();
       }

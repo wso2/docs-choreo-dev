@@ -37,6 +37,7 @@ export namespace Enums {
   export enum Accessibility {
     EXTERNAL = "external",
     INTERNAL = "internal",
+    NONE = "none",
   }
 
   export enum Environment {

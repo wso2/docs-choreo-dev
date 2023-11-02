@@ -10,6 +10,8 @@ export interface TestRunnerComponent extends AbsComponent {
     projectId: string,
     labels: string,
     componentType: string,
+    port: null,
+    oasFilePath: "",
     accessibility: Enums.Accessibility,
     buildpackConfig?:  TestRunnerConfig
 }
