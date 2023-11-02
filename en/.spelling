@@ -811,6 +811,6 @@ findByStatus
  - docs/manage-databases-and-caches/choreo-managed-databases-and-caches.md
 DigitalOcean
 Postgres
- - docs/authentication-and-authorization/security.md
+ - docs/authentication-and-authorization/secure-web-applications-with-managed-authentication.md
 userinfo
 choreo-apis
