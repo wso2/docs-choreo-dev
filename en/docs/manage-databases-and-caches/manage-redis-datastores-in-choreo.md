@@ -1,4 +1,4 @@
-# Create a Redis data store in Choreo
+# Manage a Redis Data Stores in Choreo
 
 Redis on Choreo offers fully Choreo-managed in-memory data stores on AWS, Azure, GCP, and Digital Ocean and can be used as a cache, database, streaming engine, and a message broker.
 
