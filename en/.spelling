@@ -811,3 +811,4 @@ findByStatus
  - docs/manage-databases-and-caches/choreo-managed-databases-and-caches.md
 DigitalOcean
 Postgres
+Authorization
