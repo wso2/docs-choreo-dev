@@ -10,7 +10,7 @@ apimHost = "{{.APIM_HOST_URL}}"
 projectManagerEndpoint = "http://dp-project-manager:80"
 endpointResolverEndpoint = "http://endpoint-resolver:9090"
 choreoIdpId = "{{.CHOREO_IDP_ID}}"
-rudderClientEndpoint = "http://dp-rudder:80/api/v1"
+rudderClientEndpoint = "http://dp-rudder:80"
 apimClientId = "{{.APIM_REST_API_CONSUMER_KEY}}"
 
 [ballerina.log]
