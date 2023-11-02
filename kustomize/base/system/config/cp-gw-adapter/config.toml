@@ -2,11 +2,11 @@
 port="8080"
 
 [dataplane]
-namespace="apk"
+namespace="choreo-ppdp"
 
 [apim]
 apimHost="{{.APIM_HOST}}"
-apimUsername="choreo_dev_apim_admin"
+apimUsername="{{.APIM_USERNAME}}"
 configDeployerHost="{{.CONFIG_DEPLOYER_HOST}}"
 
 [mizzen]

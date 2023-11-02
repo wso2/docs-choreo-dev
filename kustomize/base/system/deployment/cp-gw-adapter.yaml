@@ -44,6 +44,8 @@ spec:
           envFrom:
             - secretRef:
                 name: secret-cp-gw-adapter
+            - secretRef:
+                name: secret-choreo-apim-proxy-deployer    
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
@@ -84,6 +86,9 @@ spec:
             - name: secret-cp-gw-adapter
               mountPath: /mnt/csi/secret-cp-gw-adapter
               readOnly: true
+            - name: secret-choreo-apim-proxy-deployer
+              mountPath: "/mnt/csi/secret-choreo-apim-proxy-deployer"
+              readOnly: true  
       volumes:
         - name: config
           configMap:
@@ -96,6 +101,14 @@ spec:
               secretProviderClass: secret-cp-gw-adapter
             nodePublishSecretRef:
               name: csi-secret-store-azure
+        - name: secret-choreo-apim-proxy-deployer
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-choreo-apim-proxy-deployer
+            nodePublishSecretRef:
+              name: csi-secret-store-azure      
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
       affinity:
