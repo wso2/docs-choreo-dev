@@ -71,7 +71,7 @@ Follow the steps below to create a sample Web Application component and deploy i
          
 7. If you wish to enable Managed Authentication, click the toggle **Managed authentication with Choreo** under **Authentication**. Learn how to [Secure Web Applications with Managed Authentication](../authentication-and-authorization/secure-web-applications-with-managed-authentication/) in Choreo.
 
-8. Click Create. Once the component creation is complete, you will see the **Build and Deploy** page.
+8. Click **Create**. Once the component creation is complete, you will see the **Build and Deploy** page.
 
 You have successfully created a Web Application component from the source code. Now let's build and deploy the Web Application.
 
