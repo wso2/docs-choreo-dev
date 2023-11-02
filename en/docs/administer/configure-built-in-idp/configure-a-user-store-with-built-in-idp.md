@@ -1,4 +1,4 @@
-# Configure a User Store in Choreo Built-In Identity Provider
+# Configure a User Store with Built-In Identity Provider
 
 Developers looking to experiment with a complete application development process that includes user authentication and authorization can utilize Choreo's Built-In Identity Provider (IDP). This feature allows you to easily test your application's authentication by setting up test users and groups within Choreo.
 
