@@ -1,4 +1,4 @@
-# PostgreSQL on Choreo
+# Manage PostgreSQL Databases in Choreo
 
 PostgreSQL on Choreo offers a fully Choreo-managed, performant object-relational databases on AWS, Azure, GCP and Digital Ocean.
 
