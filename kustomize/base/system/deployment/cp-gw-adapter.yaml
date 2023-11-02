@@ -41,11 +41,14 @@ spec:
           env:
             - name: CONFIG_FILE_PATH
               value: /go/bin/config/config.toml
+            - name: APIM_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: INTROSPECTION_ADMIN_PASSWORD
+                  name: secret-choreo-apim-proxy-deployer   
           envFrom:
             - secretRef:
                 name: secret-cp-gw-adapter
-            - secretRef:
-                name: secret-choreo-apim-proxy-deployer    
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
