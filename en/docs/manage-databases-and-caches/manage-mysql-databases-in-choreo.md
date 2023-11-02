@@ -1,4 +1,4 @@
-# Managed MySQL Databases
+# Manage MySQL Databases in Choreo
 
 MySQL on Choreo offers fully-managed, flexible relational databases on AWS, Azure, GCP, and Digital Ocean.
 
