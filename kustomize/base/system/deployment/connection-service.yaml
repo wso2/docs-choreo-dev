@@ -71,15 +71,32 @@ spec:
             httpGet:
               path: /health
               port: healthz
+          env:
+            - name: APIM_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-connection-service
+                  key: APIM_CLIENT_SECRET
           volumeMounts:
             - name: config
               mountPath: /home/ballerina/Config.toml
               subPath: Config.toml
+            - name: secret-connection-service
+              mountPath: "/mnt/csi/secret-connection-service"
+              readOnly: true
       restartPolicy: Always
       volumes:
         - name: config
           configMap:
             name: cm-file-connection-service
+        - name: secret-connection-service
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-connection-service
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
