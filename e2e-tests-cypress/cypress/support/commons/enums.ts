@@ -31,11 +31,13 @@ export namespace Enums {
     ballerinaService = "ballerinaService",
     byocService = "byocService",
     byocWebAppsDockerfileLess = "byocWebAppsDockerfileLess",
+    buildpackTestRunner = "buildpackTestRunner",
   }
 
   export enum Accessibility {
     EXTERNAL = "external",
     INTERNAL = "internal",
+    NONE = "none",
   }
 
   export enum Environment {
