@@ -102,7 +102,6 @@ nav:
           - Develop a Ballerina GraphQL API: develop-components/develop-services/develop-a-ballerina-graphql-api.md
       - Develop an API Proxy: develop-components/develop-a-rest-api-proxy.md
       - Develop a Web Application: develop-components/develop-a-web-application.md
-      - Develop a Web Application with Managed Authentication: develop-components/develop-a-web-application-with-managed-authentication.md
       - Develop a Webhook: develop-components/develop-a-webhook.md 
       - Develop Integrations:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
@@ -123,6 +122,7 @@ nav:
       - Pass End-User Attributes to Upstream Services: authentication-and-authorization/pass-end-user-attributes-to-upstream-services.md
       - Secure API Access with Asgardeo: authentication-and-authorization/secure-api-access-with-asgardeo.md
       - Secure API Access with Azure: authentication-and-authorization/secure-api-access-with-azure-ad.md
+      - Secure Web Applications with Managed Authentication: authentication-and-authorization/secure-web-applications-with-managed-authentication.md
   - DevOps and CI/CD: 
       - Builds and Deployments: devops-and-ci-cd/builds-and-deployments.md
       - Manage Configurations and Secrets: devops-and-ci-cd/manage-configurations-and-secrets.md
