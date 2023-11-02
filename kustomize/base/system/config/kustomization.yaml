@@ -622,7 +622,3 @@ configMapGenerator:
     behavior: create
     literals:
       - DB_USERNAME="choreo_app_dev_authz_svc_db_user"
-  - name: cm-file-cp-gw-adapter
-    behavior: create
-    files:
-      - cp-gw-adapter/config.toml

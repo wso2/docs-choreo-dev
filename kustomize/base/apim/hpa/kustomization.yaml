@@ -2,4 +2,3 @@ resources:
   - am.yaml
   - choreo-connect-global-adapter-v2.yaml
   - devportal.yaml
-  - config-deployer-service.yaml
