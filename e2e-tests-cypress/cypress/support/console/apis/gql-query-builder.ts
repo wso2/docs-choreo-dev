@@ -1,4 +1,5 @@
 import { ByocComponent } from "../../interfaces/byoc-component"
+import { TestRunnerComponent } from "../../interfaces/choreo-components/testrunner-component";
 import { WebappComponent } from "../../interfaces/choreo-components/webapp-component";
 import { ComponentData } from "../../interfaces/component-data";
 
@@ -235,6 +236,60 @@ export class GraphQLQueryBuilder {
             webAppPackageManagerVersion: "${byocComponent.byocWebAppsConfig.webAppPackageManagerVersion}",
             webAppOutputDirectory: "${byocComponent.byocWebAppsConfig.webAppOutputDirectory}",
           }
+        }
+      ) 
+      {
+        id,
+        createdAt,
+        updatedAt,
+        name,
+        handle,
+        organizationId,
+        projectId,
+        orgHandle,
+        type,
+        description,
+        imageRegistryId,
+        imageRegistry {
+            id,
+            createdAt,
+            updatedAt,
+            cloudConnectorId,
+            imageRepositoryName
+        },
+        componentType,
+        httpBased
+      }
+    }`
+    }
+
+  }
+
+
+  static getTestRunnerComponentCreationQuery(testRunnerComponent: TestRunnerComponent, projectId: string) {
+    return {
+      query: `mutation {
+        createBuildpackComponent(
+        component: {
+          name: "${testRunnerComponent.name}",
+          displayName: "${testRunnerComponent.displayName}",
+          description: "${testRunnerComponent.description}",
+          orgId: ${testRunnerComponent.orgId},
+          orgHandler: "${testRunnerComponent.handle}",
+          projectId: "${projectId}",
+          labels: "",
+          componentType: "${testRunnerComponent.componentType}",
+          port: null,
+          oasFilePath: "",
+          accessibility: "${testRunnerComponent.accessibility}",
+          buildpackConfig: {
+            buildContext:  "${testRunnerComponent.buildpackConfig.buildContext}",
+            srcGitRepoUrl: "${testRunnerComponent.buildpackConfig.srcGitRepoUrl}",
+            srcGitRepoBranch: "${testRunnerComponent.buildpackConfig.srcGitRepoBranch}",
+            languageVersion: "${testRunnerComponent.buildpackConfig.languageVersion}",
+            buildpackId: "${testRunnerComponent.buildpackConfig.buildpackId}",
+          }
+          secretRef: "",
         }
       ) 
       {
