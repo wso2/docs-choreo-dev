@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: config-deployer-service
+  namespace: choreo-apim
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: config-deployer-service
