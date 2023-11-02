@@ -21,7 +21,7 @@ CREATE TABLE configuration_groups (
   [description] [nvarchar](255) DEFAULT NULL,
   [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
   [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  [is_system] [smallint] NOT NULL DEFAULT 0,
+  [type] [varchar](25) NOT NULL DEFAULT 'user',
   PRIMARY KEY (id),
   CONSTRAINT [configuration_groups$group_uuid_unique] UNIQUE (group_uuid)
 );
@@ -60,7 +60,7 @@ CREATE TABLE configuration_values (
   [id] [int] IDENTITY(1,1) NOT NULL,
   [value_ref] [nvarchar](255) NOT NULL,
   [key_id] [int] NOT NULL,
-  [environment_uuid] [nvarchar](50) NOT NULL,
+  [env_template_uuid] [nvarchar](50) NOT NULL,
   [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
   [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
