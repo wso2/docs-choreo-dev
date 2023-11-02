@@ -5,7 +5,7 @@ These databases and caches can be seamlessly provisioned to offer persistence an
 
 ## PostgreSQL on Choreo
 
-PostgreSQL (also know as Postgres), is an open-source object-relational database management system. You can create a PostgreSQL database on Choreo as fully Choreo-managed, flexible SQL databases that are ideal for both structured and unstructed data.
+PostgreSQL (also know as Postgres), is an open-source object-relational database management system. You can create a PostgreSQL database on Choreo as fully Choreo-managed, flexible SQL databases that are ideal for both structured and unstructured data.
 
 - [Create a PostgreSQL database on Choreo](./choreo-managed-postgresql-databases.md)
 
