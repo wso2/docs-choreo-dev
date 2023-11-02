@@ -34,3 +34,7 @@ configMapGenerator:
     behavior: create
     files:
       - scheduled-mssql-tasks/config.yaml
+  - name: cm-file-config-deployer-service
+    behavior: create
+    files:
+      - config-deployer-service/config.toml

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: config-deployer-service
+  name: config-deployer-service
+  namespace: choreo-apim
+spec:
+  ports:
+    - name: config-ds-port
+      port: 9443
+      protocol: TCP
+      targetPort: http-port
+  selector:
+    choreo.component: config-deployer-service
