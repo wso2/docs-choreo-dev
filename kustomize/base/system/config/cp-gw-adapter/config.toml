@@ -2,7 +2,7 @@
 port="8080"
 
 [dataplane]
-namespace="choreo-ppdp"
+namespace="apk"
 
 [apim]
 apimHost="{{.APIM_HOST}}"
