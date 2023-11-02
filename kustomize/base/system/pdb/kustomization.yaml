@@ -34,7 +34,7 @@ resources:
   - quota-limiter.yaml
   - subscriptions.yaml
   - sys-obsapi.yaml
-#  - telemetry.yaml
+  #  - telemetry.yaml
   - telemetry-go.yaml
   - test-assistant.yaml
   - testbase.yaml
@@ -54,3 +54,6 @@ resources:
   - marketplace.yaml
   - cp-endpoint-resolver.yaml
   - connection-service.yaml
+  - pdp-manager.yaml
+  - app-dev-user-mgt-service.yaml
+  - app-dev-authorization-service.yaml

@@ -15,6 +15,7 @@ import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
+import { ComponentBuild } from "../../../support/console/pages/component/Functionalities/Component-build";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentDevOpsPage } from "../../../support/console/pages/component/component-devops-page";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
@@ -72,11 +73,24 @@ describe("Verify containerized service functionality", () => {
 
   it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
+
+    if (Utils.isKubeConFeaturesEnabled(false)) {
+      ComponentOverviewPage.navigateToBuild();
+      ComponentBuild.buildComponent();
+    }
+
     ComponentOverviewPage.navigateToDeploy();
   });
 
   it("Verify component deployment to dev", () => {
-    ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME, true, true, false, true);
+    ComponentDeployPage.deployToDev(
+      PROJECT_NAME,
+      COMPONENT_NAME,
+      true,
+      true,
+      false,
+      true
+    );
   });
 
   it("Verify config file availability for dev", () => {
@@ -96,11 +110,11 @@ describe("Verify containerized service functionality", () => {
   });
 
   it("Verify test page is disabled", () => {
-    cy.get('[data-cyid="link-test"]').should('have.attr', 'disabled')
+    cy.get('[data-cyid="link-test"]').should("have.attr", "disabled");
   });
 
   it("Verify manage page is disabled", () => {
-    cy.get('[data-cyid="link-manage"]').should('have.attr', 'disabled')
+    cy.get('[data-cyid="link-manage"]').should("have.attr", "disabled");
   });
 
   it("Verify suspending all component deployments", () => {

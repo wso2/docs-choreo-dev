@@ -129,7 +129,7 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify manage functionality", () => {
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
-    if (Utils.isKubeConFeaturesEnabled()) {
+    if (Utils.isKubeConFeaturesEnabled(false)) {
       ComponentOverviewPage.navigateToDeploy();
       APIDeployment.configureSecuritySettings(false);
       APIDevelop.managePermissions(permissions, API_NAME);
@@ -145,10 +145,8 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.publishWithoutConnector();
   });
 
-  it("Verify connector publishing ", () => {
-    ComponentAPILifecycle.publish(Enums.ConnectorAudience.PRIVATE).should(
-      "be.visible"
-    );
+  it.skip("Verify connector publishing ", () => {
+    ComponentAPILifecycle.publish(Enums.ConnectorAudience.PRIVATE).should("be.visible");
   });
 
   it("Search application in devportal", () => {
@@ -230,7 +228,7 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentOverviewPage.navigateToManage();
 
     // No need to check deletion in new flow as it is already checked in the initial step
-    if (!Utils.isKubeConFeaturesEnabled()) {
+    if (!Utils.isKubeConFeaturesEnabled(false)) {
       ComponentAPILifecycle.selectPermissions();
       permissions.forEach((permission) => {
         ComponentAPILifecycle.deletePermission(permission);

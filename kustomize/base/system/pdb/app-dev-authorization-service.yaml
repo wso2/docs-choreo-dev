@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: app-dev-authorization-service
+  namespace: choreo-system
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: app-dev-authorization-service
