@@ -145,7 +145,7 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.publishWithoutConnector();
   });
 
-  it.skip("Verify connector publishing ", () => {
+  it("Verify connector publishing ", () => {
     ComponentAPILifecycle.publish(Enums.ConnectorAudience.PRIVATE).should(
       "be.visible"
     );
