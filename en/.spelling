@@ -829,6 +829,6 @@ x-choreo-project-ns
  - docs/authentication-and-authorization/security.md
 userinfo
 choreo-apis
- - docs/administer/configure-in-built-idp.md
+ - docs/administer/configure-built-in-idp/configure-built-in-idp-userstore.md
 Uploader
 buil-in
