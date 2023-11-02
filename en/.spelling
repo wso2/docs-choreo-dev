@@ -826,3 +826,9 @@ reusability
 intra-project
 x-choreo-project-ns
 
+ - docs/authentication-and-authorization/security.md
+userinfo
+choreo-apis
+ - docs/administer/configure-in-built-idp.md
+Uploader
+buil-in
