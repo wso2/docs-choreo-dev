@@ -4,3 +4,4 @@ resources:
   - choreo-connect-global-adapter.yaml
   - choreo-connect-global-adapter-v2.yaml
   - choreo-connect-internal-global-adapter.yaml
+  - config-deployer-service.yaml
