@@ -12,6 +12,7 @@ endpointResolverEndpoint = "http://endpoint-resolver:9090"
 choreoIdpId = "{{.CHOREO_IDP_ID}}"
 rudderClientEndpoint = "http://dp-rudder:80/api/v1"
 apimClientId = "{{.APIM_REST_API_CONSUMER_KEY}}"
+choreoStsUrl = "{{.CHOREO_STS_URL}}"
 
 [ballerina.log]
 format="json"
