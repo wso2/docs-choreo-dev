@@ -323,6 +323,7 @@ export class ComponentDeployPage {
       cyGet('[data-testid="btn-stop"]', LONG_TIME)
         .should("have.length", 2)
         .eq(1)
+        .scrollIntoView()
         .should("be.visible");
     }
 
