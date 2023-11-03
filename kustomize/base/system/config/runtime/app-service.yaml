@@ -433,10 +433,15 @@ apim:
   createApiForService: ${CREATE_API_FOR_SERVICE}
 asgardeo:
   orgManagementApiUrl: ${ASGARDEO_ORG_MANAGEMENT_API_URL}
+  userManagementApiUrl: ${ASGARDEO_USER_MANAGEMENT_API_URL}
+  tokenUrl: ${ASGARDEO_TOKEN_URL}
+  clientKey: ${ASGARDEO_CLIENT_KEY}
+  clientSecret: ${ASGARDEO_CLIENT_SECRET}
 asgardeoOrgManagement:
   enable: ${IS_ASGARDEO_ORG_MANAGEMENT_ENABLED}
   perOrgKeyManagerEnabled: ${IS_ASGARDEO_PER_ORG_KEY_MANAGER_ENABLED}
   asgardeoKeyManagerBaseUrl: ${ASGARDEO_KEY_MANAGER_BASE_URL}
+  enableAsgardeoInvitation: ${IS_ASGARDEO_INVITATION_ENABLED}
 marketingConsent:
   clientKey: ${MARKETING_CONSENT_APP_CLIENT_KEY}
   clientSecret: ${MARKETING_CONSENT_APP_CLIENT_SECRET}
