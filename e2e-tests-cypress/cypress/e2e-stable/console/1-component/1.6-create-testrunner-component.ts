@@ -73,13 +73,9 @@ describe("Verify Test Runner Component functionality", () => {
 
   it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-
-    if (Utils.isKubeConFeaturesEnabled(false)) {
       ComponentOverviewPage.navigateToBuild();
       ComponentBuild.buildComponent();
-    }
-
-    ComponentOverviewPage.navigateToDeploy();
+      ComponentOverviewPage.navigateToDeploy();
   });
 
   it("Verify component deployment to dev", () => {

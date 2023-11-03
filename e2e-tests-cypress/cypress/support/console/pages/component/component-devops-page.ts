@@ -20,11 +20,11 @@ export class ComponentDevOpsPage {
   ) {
     if (environment === Enums.Environment.DEVELOPMENT) {
         cy.get('[data-cyid="env-baseDevelopment-env-card"]').within(() => {
-            cy.get('[data-cyid="path-link"]').click();
+            cy.get('[data-cyid="btn-link-button"]').click();
           });
     } else if (environment === Enums.Environment.PRODUCTION) {
         cy.get('[data-cyid="env-baseProduction-env-card"]').within(() => {
-            cy.get('[data-cyid="path-link"]').click();
+            cy.get('[data-cyid="btn-link-button"]').click();
           });
     }
 
