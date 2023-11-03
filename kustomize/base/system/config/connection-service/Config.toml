@@ -15,4 +15,5 @@ apimClientId = "{{.APIM_REST_API_CONSUMER_KEY}}"
 choreoStsUrl = "{{.CHOREO_STS_URL}}"
 
 [ballerina.log]
+level = "{{.LOG_LEVEL}}"
 format="json"
