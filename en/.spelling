@@ -1,5 +1,9 @@
 >
 Choreo
+OpenWeatherMap
+json
+recipientAddress
+apiKey
 DockerHub
 buildpack
 buildpacks
@@ -745,13 +749,9 @@ webhookSecret
  - docs/resources/kubernetes-upgrade-notice.md
 jdk8u372
  - docs/develop-components/develop-integrations/develop-a-scheduled-integration.md
-OpenWeatherMap
-apiKey
  - docs/develop-components/develop-integrations/develop-an-event-triggered-integration.md
 IssuesService
 webhookSecret
-recipientAddress
-json
  - docs/develop-components/develop-services/develop-a-ballerina-graphql-api.md
 service.bal
 choreo
@@ -808,3 +808,6 @@ AzureAD
 identity-as-a-soluton
  - docs/testing/test-apis-with-choreo-apichat.md
 findByStatus
+ - docs/manage-databases-and-caches/choreo-managed-databases-and-caches.md
+DigitalOcean
+Postgres
