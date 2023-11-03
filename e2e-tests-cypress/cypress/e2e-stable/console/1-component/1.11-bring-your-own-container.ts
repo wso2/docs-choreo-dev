@@ -51,7 +51,7 @@ describe(`Verify BYOC functionality`, () => {
       name: REST_API_NAME,
       displayName: REST_API_NAME,
       accessibility: Enums.Accessibility.EXTERNAL,
-      componentType: Enums.DisplayType.byocRestApi,
+      componentType: Enums.DisplayType.byocService,
       description: "BYOC Component",
       labels: "",
       oasFilePath: "byoc-test/oas.yaml",
@@ -76,10 +76,8 @@ describe(`Verify BYOC functionality`, () => {
 
   it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(REST_API_NAME);
-    if (Utils.isKubeConFeaturesEnabled(false)) {
-      ComponentOverviewPage.navigateToBuild();
-      ComponentBuild.buildComponent();
-    }
+    ComponentOverviewPage.navigateToBuild();
+    ComponentBuild.buildComponent();
     ComponentOverviewPage.navigateToDeploy();
   });
 
