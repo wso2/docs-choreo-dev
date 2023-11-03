@@ -68,3 +68,9 @@ level = "{{.LOG_LEVEL_UTILS}}"
 [[ballerina.log.modules]]
 name = "choreo/cp.graphql.apis"
 level = "{{.LOG_LEVEL_APIS}}"
+
+[[choreo.cp.graphql.config.serviceStatus]]
+visible = {{.INCIDENT_MESSAGE_VISIBILITY}}
+name = "{{.INCIDENT_MESSAGE_NAME}}"
+status = "{{.INCIDENT_MESSAGE_STATUS}}"
+message = "{{.INCIDENT_MESSAGE}}"
