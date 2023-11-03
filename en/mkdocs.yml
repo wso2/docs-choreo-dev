@@ -105,7 +105,7 @@ nav:
       - Develop a Webhook: develop-components/develop-a-webhook.md 
       - Develop Integrations:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
-          - Develop an Event-Triggered Integration: develop-components/develop-integrations/develop-an-event-triggered-integration.md
+          - Develop an Event Handler Integration: develop-components/develop-integrations/develop-an-event-handler-integration.md
           - Develop a Scheduled Integration: develop-components/develop-integrations/develop-a-scheduled-integration.md
           - Develop a Manually-Triggered Integration: develop-components/develop-integrations/develop-a-manually-triggered-integration.md
       - Work with the Micro Integrator Runtime:
