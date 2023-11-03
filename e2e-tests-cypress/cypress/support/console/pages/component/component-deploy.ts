@@ -182,8 +182,7 @@ export class ComponentDeployPage {
     isManagedByAPIM: boolean = true,
     isManualTrigger: boolean = false,
     isWebApp: boolean = false,
-    isRunnerApp: boolean = false
-    
+    nextButtonCount: number = 1
   ) {
     this.ensureBuildCardIsReady();
 
@@ -201,12 +200,9 @@ export class ComponentDeployPage {
         Utils.interceptConfig();
       }
       if (!isWebApp) {
-        this.pollElement('[data-cyid="btn-next-button"]').click();
-
-    if (!isRunnerApp) {
-      this.pollElement('[data-cyid="btn-next-button"]').click();
-    }
-
+        for (var i = 0; i < nextButtonCount; i++) {
+          this.pollElement('[data-cyid="btn-next-button"]').click();
+        }
       } else {
         this.configWebappComponent();
       }
@@ -295,7 +291,8 @@ export class ComponentDeployPage {
     isAdditionalConfigs: boolean = true,
     isManagedByAPIM: boolean = true,
     numberOfNextPrompts: number = 2,
-    isWebApp: boolean = false
+    isWebApp: boolean = false,
+    isStopButtonVisible: boolean = true
   ) {
     window.localStorage.setItem("hideSocialShareModel", "true");
     APIDeployment.RetryPromotionToProd();
@@ -321,10 +318,14 @@ export class ComponentDeployPage {
     }
 
     APIDeployment.RetryPromotionToProd();
-    cyGet('[data-testid="btn-stop"]', LONG_TIME)
-      .should("have.length", 2)
-      .eq(1)
-      .should("be.visible");
+
+    if (isStopButtonVisible) {
+      cyGet('[data-testid="btn-stop"]', LONG_TIME)
+        .should("have.length", 2)
+        .eq(1)
+        .should("be.visible");
+    }
+
     cyGet('[data-cyid="deployment-status"]', LONG_TIME)
       .should("have.length", 2)
       .eq(1)

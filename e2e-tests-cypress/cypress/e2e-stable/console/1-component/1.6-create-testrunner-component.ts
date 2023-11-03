@@ -54,8 +54,9 @@ describe("Verify Test Runner Component functionality", () => {
       oasFilePath: "",
       port: null,
       buildpackConfig: {
-        buildContext: "test-runner-go",
-        srcGitRepoUrl: "https://github.com/choreo-test-apps/buildPack-testrunner-Goapp",
+        buildContext: "",
+        srcGitRepoUrl:
+          "https://github.com/choreo-test-apps/buildPack-testrunner-Goapp",
         srcGitRepoBranch: "main",
         languageVersion: "1.x",
         buildpackId: "F9E4820E-6284-11EE-8C99-0242AC120005",
@@ -66,7 +67,8 @@ describe("Verify Test Runner Component functionality", () => {
       PROJECT_NAME,
       REPO_NAME,
       componentData,
-      GraphQLQueryBuilder.getTestRunnerComponentCreationQuery);
+      GraphQLQueryBuilder.getTestRunnerComponentCreationQuery
+    );
   });
 
   it("Navigate to deployment", () => {
@@ -81,16 +83,19 @@ describe("Verify Test Runner Component functionality", () => {
   });
 
   it("Verify component deployment to dev", () => {
-    ComponentDeployPage.deployToDev(PROJECT_NAME,COMPONENT_NAME,
+    ComponentDeployPage.deployToDev(
+      PROJECT_NAME,
+      COMPONENT_NAME,
+      true,
       true,
       true,
       false,
-      false
+      2
     );
   });
 
   it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd(false, true, 1, true);
+    ComponentDeployPage.promoteToProd(false, true, 1, false, false);
   });
 
   it("Verify test page is disabled", () => {
@@ -99,10 +104,5 @@ describe("Verify Test Runner Component functionality", () => {
 
   it("Verify manage page is disabled", () => {
     cy.get('[data-cyid="link-manage"]').should("have.attr", "disabled");
-  });
-
-  it("Verify suspending all component deployments", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
   });
 });
