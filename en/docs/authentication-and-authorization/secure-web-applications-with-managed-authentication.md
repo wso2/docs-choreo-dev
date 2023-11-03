@@ -7,6 +7,9 @@ Moreover, Choreo's Managed Authentication introduces the concept of a Backend Fo
 !!! note
     Managed Authentication is currently available only for React, Angular, and Vue.js buildpacks.
 
+!!! warn
+    Managed Authentication relies on "SAMESITE" cookie attribute for security. It is not recommended to be used with older browsers which do not have "SAMESITE" cookie support.
+
 ## Step 1: Utilizing Managed Authentication in your web application
 
 To secure your web application, you need to implement authentication. You can utilize Choreo's Managed Authentication to secure your web application as follows: 
