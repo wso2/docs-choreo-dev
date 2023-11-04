@@ -73,7 +73,7 @@ describe("Verify containerized service functionality", () => {
     );
   });
 
-  it("Navigate to deployment", () => {
+  it("Build component", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToBuild();
     ComponentBuild.buildComponent();
