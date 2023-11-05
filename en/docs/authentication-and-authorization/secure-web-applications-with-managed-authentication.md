@@ -88,6 +88,9 @@ You can invoke Choreo APIs within the same organization as your web application 
 
 For example, if the API URL is `https://2d9ec1f6-2f04-4127-974f-0a3b20e97af5-dev.e1-us-east-azure.choreoapis.dev/rbln/item-service/api-e04/1.0.0`, the `<api-suffix>` would be `/rbln/item-service/api-e04/1.0.0`. From your Single Page Application, you can invoke the API using `/choreo-apis/rbln/item-service/api-e04/1.0.0` relative path.
 
+!!! info
+    The relative path will be shown in the relavent **Connections** page under **Dependencies** section in the left navigation of the web application component view.
+
 If you enable Choreo's Managed Authentication, you don't have to manually add any logic to attach an access token in the API call, as Choreo APIs will accept the cookies set by Choreo's Managed Authentication.
 You can directly invoke the API. For example:
 
@@ -137,7 +140,7 @@ To automate the token refresh process when receiving a 401 unauthorized response
                     window.location.href = "/auth/login";
                 }
                 if (status !== 204) {
-                    // The STS cannot refresh the token due to a server error.
+                    // Tokens cannot be refreshed due to a server error.
                     console.log("Failed to refresh token. Status: " + status);
 
                     //  Throw the 401 error from API Gateway.
@@ -209,6 +212,10 @@ To configure the necessary paths and scopes for managed authentication, follow t
 
 ## Step 4: Manage OAuth Keys
 
+!!! note
+    This step is optional is you are using the `Choreo Built-in Identity Provider`. We auto generate keys during the component deployment, if keys are not available. 
+
 1. In the left navigation of your component view, click **Settings**.
-2. Select an Identity Provider.
-3. If you are using the `Choreo Built-in Identity Provider`, click on the generate credentials button. Otherwise, if you are using an external Identity Provider, configure the Identity Provider as instructed on the console and add the client keys.
+2. Click **Authentication** tab.
+3. Select an Identity Provider.
+4. If you are using the `Choreo Built-in Identity Provider`, click on the generate credentials button. Otherwise, if you are using an external Identity Provider, configure the Identity Provider as instructed on the console and add the client keys.
