@@ -27,10 +27,8 @@ export class ComponentDevOpsPage {
             cy.get('[data-cyid="btn-link-button"]').click();
           });
     }
-
-    cy.get('[data-cyid="edit-icon-button"]').click();
-    cy.get('[data-cyid="config-mount-path"]').within(() =>
-    cy.get("input").should("have.value", "/app/public/config.js")
+    cy.get('[data-cyid="mount-path"]').within(() =>
+    cy.get("input").should("have.value", "config.js")
     );
   }
 
