@@ -52,7 +52,6 @@ resources:
   - dp-helmhub.yaml
   - resource-registry-service.yaml
   - marketplace.yaml
-  - dp-cicd-temp.yaml
   - cp-endpoint-resolver.yaml
   - connection-service.yaml
   - pdp-manager.yaml
