@@ -67,6 +67,11 @@ spec:
                 secretKeyRef:
                   name: secret-app-service
                   key: MARKETING_CONSENT_APP_CLIENT_SECRET
+            - name: ASGARDEO_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: ASGARDEO_CLIENT_SECRET
             - name: IDP_BACKEND_API_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
