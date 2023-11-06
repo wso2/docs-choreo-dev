@@ -20,17 +20,15 @@ export class ComponentDevOpsPage {
   ) {
     if (environment === Enums.Environment.DEVELOPMENT) {
         cy.get('[data-cyid="env-baseDevelopment-env-card"]').within(() => {
-            cy.get('[data-cyid="path-link"]').click();
+            cy.get('[data-cyid="btn-link-button"]').click();
           });
     } else if (environment === Enums.Environment.PRODUCTION) {
         cy.get('[data-cyid="env-baseProduction-env-card"]').within(() => {
-            cy.get('[data-cyid="path-link"]').click();
+            cy.get('[data-cyid="btn-link-button"]').click();
           });
     }
-
-    cy.get('[data-cyid="edit-icon-button"]').click();
-    cy.get('[data-cyid="config-mount-path"]').within(() =>
-    cy.get("input").should("have.value", "/app/public/config.js")
+    cy.get('[data-cyid="mount-path"]').within(() =>
+    cy.get("input").should("have.value", "config.js")
     );
   }
 

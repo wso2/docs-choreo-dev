@@ -203,31 +203,6 @@ configMapGenerator:
       - PROJECT_MANAGER_API_URL=http://dp-project-manager
       - BUILDPACKS_BUILDER_IMAGE="choreocontrolplane.azurecr.io/choreoipaas/choreo-buildpacks/builder:alpine"
       - BUILDPACKS_DOCKER_ACR="choreocontrolplane.azurecr.io"
-  - name: cm-dp-cicd-temp
-    behavior: create
-    literals:
-      - SERVER_PORT=8080
-      - DB_NAME=choreo_cicd_db
-      - DB_PORT=1433
-      - DB_USERNAME=choreo_cicd_admin_db_user
-      - DB_TYPE=mssql
-      - CLOUD_CONNECTOR_URL=http://dp-cloud-manager
-      - SENTRY=https://b3d0a52a966b46edb34287daff8d411c@o350818.ingest.sentry.io/5599109
-      - GITOPS_ORG_ID=0
-      - GITOPS_ORG_PROJECT_ID=global
-      - APP_ORG_ID=0
-      - APP_ORG_PROJECT_ID=global
-      - REGISTRY_ORG_ID=0
-      - REGISTRY_PROJECT_ID=global
-      - CLOUD_MANAGER_API_URL=http://dp-cloud-manager
-      - RUDDER_API_URL=http://dp-rudder
-      - RESILIENT_INVOKER_URL=http://cp-ris:9090
-      - CICD_SERVICE_URL=http://dp-cicd-temp
-      - STATUS_INFO_SERVICE_URL=http://cp-sis:9091
-      - AZURE_LOGS_TABLE=GithubWorkflowLogs
-      - PROJECT_MANAGER_API_URL=http://dp-project-manager
-      - BUILDPACKS_BUILDER_IMAGE="choreocontrolplane.azurecr.io/choreoipaas/choreo-buildpacks/builder:alpine"
-      - BUILDPACKS_DOCKER_ACR="choreocontrolplane.azurecr.io"
   - name: cm-runner-cleaner
     behavior: create
     literals:
@@ -361,7 +336,6 @@ configMapGenerator:
       - REACT_APP_AUTHENTICATOR_ANONYMOUS=OpenIDConnectAuthenticator
       - REACT_APP_AUTHENTICATOR_ENTERPRISE=EnterpriseIDPAuthenticator
       - REACT_CHOREO_HOME_PAGE='https://wso2.com/choreo/'
-      - REACT_APP_MAX_NO_OF_ORG_ENVS_ALLOWED=5
   - name: cm-userapps-image-deleter
     behavior: create
     literals:

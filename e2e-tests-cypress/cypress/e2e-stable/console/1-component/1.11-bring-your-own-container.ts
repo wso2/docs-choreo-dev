@@ -19,12 +19,10 @@ import { ComponentBuild } from "../../../support/console/pages/component/Functio
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
-import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { GitHub } from "../../../support/github/github";
 import { ByocComponent } from "../../../support/interfaces/byoc-component";
 
 before(() => {
@@ -46,7 +44,7 @@ describe(`Verify BYOC functionality`, () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
   });
 
-  it("Verify REST API component creation", () => {
+  it("Verify BYOC REST API component creation", () => {
     let componentData: ByocComponent = {
       name: REST_API_NAME,
       displayName: REST_API_NAME,
@@ -76,10 +74,6 @@ describe(`Verify BYOC functionality`, () => {
 
   it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(REST_API_NAME);
-    if (Utils.isKubeConFeaturesEnabled(false)) {
-      ComponentOverviewPage.navigateToBuild();
-      ComponentBuild.buildComponent();
-    }
     ComponentOverviewPage.navigateToDeploy();
   });
 
