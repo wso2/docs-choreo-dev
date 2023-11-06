@@ -353,6 +353,16 @@ export class Utils {
     return isNewFeaturesActivated && enableSpecificFeature;
   }
 
+  static isBuildDeployEnabled() {
+    const enableBuildDeploy = Cypress.env("enableBuildDeploy");
+
+    if (enableBuildDeploy != null) {
+      return enableBuildDeploy == true || enableBuildDeploy == "true";
+    }
+
+    return false;
+  }
+
   static moveMouseAwayFromLeftMenu() {
     cy.get("body").realMouseMove(250, 250);
   }
