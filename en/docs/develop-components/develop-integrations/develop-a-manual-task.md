@@ -40,35 +40,34 @@ Before you try out the steps in this guide, complete the following:
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page. 
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
-3. Go to the **Manual Task** card.
+3. Click the **Manual Task** card.
 4. Enter a unique name and a description for the component. You can use the name and description given below:
 
     | **Field**       | **Value**                        |
     | --------------- | -------------------------------- |
     | **Name**        | `WeatherToEmail`                 |
-    | **Description** | `My first scheduled integration` |
+    | **Description** | `My first manual task` |
 
-5. Select **GitHub** Tab
-6. If you have not already connected your GitHub repository to Choreo, to allow Choreo to connect to your GitHub account, click **Authorize with GitHub** and enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+5. Click the **GitHub** tab
+6. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-examples](https://github.com/wso2/choreo-examples) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
-
 7. Enter the following information:
 
-    | **Field**             | **Description**                                |
-    | --------------------- | ---------------------------------------------- |
-    | **GitHub Account**    | Your account                                   |
-    | **GitHub Repository** | `choreo-examples`                              |
-    | **Branch**            | **`main`**                                     |
-    | **Buildpack**      | **Ballerina**                                  |
-    | **Project Path**      | `integrations/ballerina/weather-to-email-integration` |
+    | **Field**             | **Description**                                      |
+    | ----------------------| -----------------------------------------------------|
+    | **Organization**      | Your GitHub account                                  |
+    | **Repository**        | `choreo-examples`                                    |
+    | **Branch**            | **`main`**                                           |
+    | **Buildpack**         | **Ballerina**                                        |
+    | **Project Directory** | `integrations/ballerina/weather-to-email-integration`|
 
 	!!! tip
-    	    - **Buildpack** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the buildpack. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the buildpack. 
+    	  - **Buildpack** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the buildpack. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the buildpack. 
 
-          - **Project Path** specifies the location of the project to build the component.
+          - **Project Directory** specifies the location of the project to build the component.
 
 8. Click **Create**. Choreo initializes the component with the sample implementation and opens the **Overview** page of the component.
 
@@ -78,7 +77,7 @@ To deploy the integration, follow the steps given below:
 
 1. In the left navigation menu, click **Deploy**.
 2. In the **Build Area** card, click **Configure & Deploy**.
-3. In the **Configure & Deploy** pane, specify values as follows for the configurable variables:
+3. In the **Configurations** pane, specify values as follows for the configurable variables:
 
     !!! tip
         The configurable variables populated here are defined in the sample Ballerina project used in this guide. To learn how to declare configurable variables in Ballerina, see the [Ballerina documentation on declaring configurable variables](https://ballerina.io/learn/by-example/configurable-variables/). If configurable variables are detected in a connected Ballerina project, Choreo prompts for the respective values during component deployment.
@@ -92,22 +91,22 @@ To deploy the integration, follow the steps given below:
 
 4.  Click **Deploy**.
 
-## Step 4: Execute the integration
+## Step 4: Execute the manual task
 
-To execute the integration, follow the steps given below:
+To execute the manual task, follow the steps given below:
 
 1. In the left navigation menu, click **Execute**.
 2. Click **Run Now**.
 
-## Step 4: Test the integration
+## Step 4: Test the manual task
 
-Once an integration is completed, an email with the subject `[WSO2 Choreo Demo] Next 24H Weather Forecast` is sent from `choreo.demo@gmail.com` to the email address specified as the **email** configurable variable value in [Step 2](#step-2-deploy-the-integration). 
+Once the task is triggered, an email with the subject `[WSO2 Choreo Demo] Next 24H Weather Forecast` is sent from `choreo.demo@gmail.com` to the email address specified as the **email** configurable variable value in [Step 2](#step-2-deploy-the-integration). 
 
-If the integration ran successfully, you should receive an email similar to the following to the email address you specified:
+If the manual task ran successfully, you should receive an email similar to the following to the email address you specified:
 
 ![Received email](../../assets/img/develop-components/develop-a-scheduled-integration/Received-email.png)
 
-## Step 5: Observe the integration
+## Step 5: Observe the manual task 
 
 The observability view in Choreo displays graphs that depict details such as throughput, latency, diagnostic data, and logs to identify and troubleshoot anomalies in components you deploy.
 
