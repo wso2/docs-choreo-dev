@@ -71,9 +71,9 @@ Before you try out the steps in this guide, complete the following:
 
 8. Click **Create**. Choreo initializes the component with the sample implementation and opens the **Overview** page of the component.
 
-## Step 2: Deploy the integration
+## Step 2: Deploy the manual task
 
-To deploy the integration, follow the steps given below:
+To deploy the manual task, follow the steps given below:
 
 1. In the left navigation menu, click **Deploy**.
 2. In the **Build Area** card, click **Configure & Deploy**.
@@ -91,7 +91,7 @@ To deploy the integration, follow the steps given below:
 
 4.  Click **Deploy**.
 
-## Step 4: Execute the manual task
+## Step 3: Execute the manual task
 
 To execute the manual task, follow the steps given below:
 
@@ -100,7 +100,7 @@ To execute the manual task, follow the steps given below:
 
 ## Step 4: Test the manual task
 
-Once the task is triggered, an email with the subject `[WSO2 Choreo Demo] Next 24H Weather Forecast` is sent from `choreo.demo@gmail.com` to the email address specified as the **email** configurable variable value in [Step 2](#step-2-deploy-the-integration). 
+Once the task is triggered, an email with the subject `[WSO2 Choreo Demo] Next 24H Weather Forecast` is sent from `choreo.demo@gmail.com` to the email address specified as the **email** configurable variable value in [Step 2](#step-2-deploy-the-manual-task). 
 
 If the manual task ran successfully, you should receive an email similar to the following to the email address you specified:
 
@@ -110,7 +110,7 @@ If the manual task ran successfully, you should receive an email similar to the 
 
 The observability view in Choreo displays graphs that depict details such as throughput, latency, diagnostic data, and logs to identify and troubleshoot anomalies in components you deploy.
 
-To visualize and monitor the performance of the scheduled integration component you deployed, click **Observability** in the left navigation menu. You can observe the following:
+To visualize and monitor the performance of the manual task you deployed, click **Observability** in the left navigation menu. You can observe the following:
 
  - The throughput and latencies of requests served over a given period.
  - The logs that are generated over a given period.
