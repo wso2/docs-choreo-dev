@@ -266,6 +266,7 @@ configMapGenerator:
       - GCHAT_URL=https://chat.googleapis.com
       - APP_SERVICE_URL=app-service:8080
       - CRYPTO_KEY_SERVICE_URL=http://crypto-key-service:9091
+      - CONFIG_MAPPING_SERVICE_URL=http://configuration-service:8084
   - name: cm-logsarchiver
     behavior: create
     literals:
