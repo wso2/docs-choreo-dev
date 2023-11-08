@@ -38,7 +38,7 @@ Follow the guidelines below based on your language:
     A `Procfile` is a configuration file used to declare what commands are run by your application's containers. 
     
     !!! info 
-        For Python, it is mandatory to have a Procfile in the project root directory.
+        For Python, it is mandatory to have a Procfile, with the `web` process type, in the project root directory.
 
     Here's an example `Procfile` for an application:
 
@@ -84,7 +84,7 @@ Follow the guidelines below based on your language:
     #### Procfile 
 
     A `Procfile` is a configuration file used to declare what commands are run by your application's containers. 
-    This is optional and you can add a Procfile if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
+    This is optional and you can add a Procfile, with the `web` process type, if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
 
     Here's an example `Procfile` for an application:
 
@@ -116,7 +116,7 @@ Follow the guidelines below based on your language:
     #### Procfile 
 
     A `Procfile` is a configuration file used to declare what commands are run by your application's containers. 
-    This is optional and you can add a Procfile if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
+    This is optional and you can add a Procfile, with the `web` process type, if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
 
     Here's an example `Procfile` for an application:
 
@@ -143,7 +143,7 @@ Follow the guidelines below based on your language:
     #### Procfile 
 
     A `Procfile` is a configuration file used to declare what commands are run by your application's containers. 
-    This is optional and you can add a Procfile if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
+    This is optional and you can add a Procfile, with the `web` process type, if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
 
     Here's an example `Procfile` for an application:
 
@@ -171,7 +171,7 @@ Follow the guidelines below based on your language:
     #### Procfile 
 
     A `Procfile` is a configuration file used to declare what commands are run by your application's containers. 
-    This is optional and you can add a Procfile if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
+    This is optional and you can add a Procfile, with the `web` process type, if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
 
     Here's an example `Procfile` for an application:
 
@@ -199,7 +199,7 @@ Follow the guidelines below based on your language:
     #### Procfile 
 
     A `Procfile` is a configuration file used to declare what commands are run by your application's containers. 
-    This is optional and you can add a Procfile if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
+    This is optional and you can add a Procfile, with the `web` process type, if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
 
     Here's an example `Procfile` for an application:
 
