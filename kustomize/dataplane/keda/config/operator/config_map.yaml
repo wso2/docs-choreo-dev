@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: routing-table
-  labels:
-    app.kubernetes.io/instance: operator
-data:
-  routing-table: "{}"
