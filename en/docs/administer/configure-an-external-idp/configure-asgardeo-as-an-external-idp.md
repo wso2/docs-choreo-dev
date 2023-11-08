@@ -1,6 +1,6 @@
 # Configure Asgardeo as an External Identity Provider (IdP)
 
-Asgardeo is an identity-as-a-service (IDaaS) that is designed to create seamless login experiences for your apps. Asgardeo is Choreo's default Identity provider offering powerful API access control. This control hinges on the use of API scopes. That is, it enables the restriction of access to a designated group of users. Choreo allows you to bring your user stores in Asgardeo as an external IdP and provide API access control seamlessly. This document guides you step-by-step to configure Asgardeo AD as your external IdP.
+Asgardeo is an identity-as-a-service (IDaaS) that is designed to create seamless login experiences for your apps. Asgardeo seamlessly integrates with Choreo, offering powerful API access control. This control hinges on the use of API scopes. That is, it enables the restriction of access to a designated group of users. Choreo allows you to bring your user stores in Asgardeo as an external IdP and provide API access control. This document guides you step-by-step to configure Asgardeo AD as your external IdP.
 
 ## Prerequisites
 

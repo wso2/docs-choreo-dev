@@ -112,7 +112,10 @@ Follow the guidelines below based on your language:
 
     !!! info
 
-       - In **Java** projects, the `Main` class should be defined in the Manifest.
+         When working on Java projects:
+
+           - The `Main` class should be defined in the manifest file.
+           - If Maven files such as `mvn.cmd` exist in the project without the `.mvn` directory, the build will fail. To ensure a successful build, you must either commit the `.mvn` directory along with any Maven files or not include any Maven files in the project if you choose not to commit the `.mvn` directory.
     
     #### Procfile 
 
