@@ -55,7 +55,7 @@ export class LoginPage {
           "Buildpack - Component Creation": false,
           "Choreo built-in Identity Provider": true,
           "Internal Marketplace": true,
-          "API Configuration": true,
+          "API Configuration": false,
           "App Gateway Settings": true,
           "Role Group Mapping": true,
           "App Gateway Authentication": true,
