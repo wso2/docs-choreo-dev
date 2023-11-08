@@ -94,7 +94,7 @@ To deploy the scheduled task, follow the steps given below:
     | **email**     | The email address to receive the formatted weather forecast information |
 
 4.  Click **Next**. 
-5.  In this step, you must define a schedule to run the task. In this guide, you set the schdule to receive the weather information daily at 8.00 AM UTC. Enter values as follows to configure the schedule:
+5.  In this step, you must define a schedule to run the task. In this guide, you set the schedule to receive the weather information daily at 8.00 AM UTC. Enter values as follows to configure the schedule:
 
     | **Field**            | **Value**                                             |
     | -------------------- | ----------------------------------------------------- |
