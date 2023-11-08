@@ -71,7 +71,7 @@ Before you try out the steps in this guide, complete the following:
 	!!! tip
     	    - **Buildpack** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the buildpack. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the buildpack. 
 
-          - **Project Path** specifies the location of the project to build the component.
+          - **Project Directory** specifies the location of the project to build the component.
 
 8. Click **Create**. Choreo initializes the component with the sample implementation and opens the **Overview** page of the component.
 
