@@ -73,10 +73,6 @@ describe("Verify Test Runner Component functionality", () => {
 
   it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-    if (Utils.isBuildDeployEnabled()) {
-      ComponentOverviewPage.navigateToBuild();
-      ComponentBuild.buildComponent();
-    }
     ComponentOverviewPage.navigateToDeploy();
   });
 
