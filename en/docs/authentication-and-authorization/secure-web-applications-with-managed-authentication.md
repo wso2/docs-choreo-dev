@@ -210,12 +210,73 @@ To configure the necessary paths and scopes for managed authentication, follow t
 | Additional Scopes | All additional scopes required by the web application. The following scopes will be added by default. `openid`, `profile`, `email`, and scopes required to invoke subscribed APIs.               | none                   |
 
 
-## Step 4: Manage OAuth Keys
+## Step 4.a: Manage OAuth Keys with Choreo Built-in Identity Provider
 
 !!! note
-    This step is optional is you are using the `Choreo Built-in Identity Provider`. We auto generate keys during the component deployment, if keys are not available. 
+    This step is optional. When you are using `Choreo Built-in Identity Provider`, we auto generate keys during the component deployment if keys are not available.
 
 1. In the left navigation of your component view, click **Settings**.
-2. Click **Authentication** tab.
-3. Select an Identity Provider.
-4. If you are using the `Choreo Built-in Identity Provider`, click on the generate credentials button. Otherwise, if you are using an external Identity Provider, configure the Identity Provider as instructed on the console and add the client keys.
+2. Click **Authentication Keys** tab.
+3. Select the environment that you need to manage keys for.
+4. Select **Choreo Built-In Identity Provider**.
+5. Click on the **Generate Keys** button. 
+
+!!! note
+    If the **Generate Keys** button is not visible, it means that OAuth keys have already been generated for the component for the selected environment.
+
+## Step 4.b: Manage OAuth Keys with Asgardeo
+
+### Create OIDC/OAuth2.0 Application in Asgardeo
+
+1. Login to [Asgardeo](https://console.asgardeo.io/).
+2. Select your organization.
+3. Click **Applications** in the left navigation.
+4. Click **+ New Application**.
+5. Select **Standard Based Application**.
+6. Provide a name for the application.
+7. Select **OAuth2.0 OpenID Connect** as the protocol.
+8. Click Register.
+9. Go to **Protocol** tab of the top navigation of the created application.
+10. Select `Code` and `Refresh Token` as the **Allowed grant types**.
+11. Add the following as **Authorized redirect URLs**.
+    - [your-web-application-url]/auth/login/callback
+    - [your-web-application-url]/auth/logout/callback
+12. Add [your-web-application-url] under **Allowed origins**
+13. Under **Access Token** section, select JWT as **Token Type**.
+14. Click **Update**.
+15. If you need to invoke APIs secured with Role Based Access Control, you need to create roles in the application and map those roles to relevant permissions (scope). Then those roles should be assigned to user groups. Refer the [Asgardeo API Authorization guide](https://wso2.com/asgardeo/docs/guides/api-authorization/) for additional details.  
+16. Copy the **Client ID** and **Client Secret** of the application. 
+
+### Link OIDC/OAuth2.0 Application to the Choreo Component
+
+1. In the left navigation of your component view, click **Settings**.
+2. Click **Authentication Keys** tab.
+3. Select the environment that you need to manage keys for.
+4. Select **Asgardeo - [your-org-name]**.
+5. Paste the **Client ID** and **Client Secret** of the OIDC/OAuth2.0 Application created in Asgardeo. 
+6. Click **Add Keys**.
+
+## Step 4.c: Manage OAuth Keys with Asgardeo
+
+### Create OIDC/OAuth2.0 Application in Identity Provider
+
+1. Create a OIDC/OAuth2.0 Application.
+2. Configure `Code` and `Refresh Token` as **Allowed grant types**.
+3. Add the following as **Authorized redirect URLs**.
+    - [your-web-application-url]/auth/login/callback
+    - [your-web-application-url]/auth/logout/callback
+4. Set Access token type to **JWT**.
+5. Set Refresh token expiry time to 1 Day.
+6. If you need to invoke APIs secured with Role Based Access Control, you need to make sure that the users have a role mapping which sets relevant permissions to invoke the APIs. 
+
+!!! note
+    The specific implementation of how application roles are mapped to users will depend on the Identity Provider.
+
+### Link OIDC/OAuth2.0 Application to the Choreo Component
+
+1. In the left navigation of your component view, click **Settings**.
+2. Click **Authentication Keys** tab.
+3. Select the environment that you need to manage keys for.
+4. Select **Asgardeo - [your-org-name]**.
+5. Paste the **Client ID** and **Client Secret** of the OIDC/OAuth2.0 Application created in Asgardeo. 
+6. Click **Add Keys**.
