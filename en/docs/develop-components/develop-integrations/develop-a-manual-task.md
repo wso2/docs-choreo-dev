@@ -43,10 +43,10 @@ Before you try out the steps in this guide, complete the following:
 3. Click the **Manual Task** card.
 4. Enter a unique name and a description for the component. You can use the name and description given below:
 
-    | **Field**       | **Value**                        |
-    | --------------- | -------------------------------- |
-    | **Name**        | `WeatherToEmail`                 |
-    | **Description** | `My first manual task` |
+    | **Field**          | **Value**                        |
+    | ------------------ | -------------------------------- |
+    | **Component Name** | `WeatherToEmail`                 |
+    | **Description**    | `My first manual task`           |
 
 5. Click the **GitHub** tab
 6. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-examples](https://github.com/wso2/choreo-examples) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
