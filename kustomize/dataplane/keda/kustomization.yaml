@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- config
+- crd
+- deployment
+- rbac
+- service
+namespace: keda
+namePrefix: keda-http-add-on-
+labels:
+- includeSelectors: true
+  includeTemplates: true
+  pairs:
+    app.kubernetes.io/name: http
+    app.kubernetes.io/component: add-on
+    app.kubernetes.io/part-of: keda
+- includeSelectors: false
+  includeTemplates: false
+  pairs:
+    app.kubernetes.io/version: HEAD
+    app.kubernetes.io/managed-by: kustomize
