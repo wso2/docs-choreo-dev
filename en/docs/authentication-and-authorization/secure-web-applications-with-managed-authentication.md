@@ -256,9 +256,9 @@ To configure the necessary paths and scopes for managed authentication, follow t
 5. Paste the **Client ID** and **Client Secret** of the OIDC/OAuth2.0 Application created in Asgardeo. 
 6. Click **Add Keys**.
 
-## Step 4.c: Manage OAuth Keys with Asgardeo
+## Step 4.c: Manage OAuth Keys with an External Identity Provider
 
-### Create OIDC/OAuth2.0 Application in Identity Provider
+### Create OIDC/OAuth2.0 Application in the External Identity Provider
 
 1. Create a OIDC/OAuth2.0 Application.
 2. Configure `Code` and `Refresh Token` as **Allowed grant types**.
@@ -277,6 +277,6 @@ To configure the necessary paths and scopes for managed authentication, follow t
 1. In the left navigation of your component view, click **Settings**.
 2. Click **Authentication Keys** tab.
 3. Select the environment that you need to manage keys for.
-4. Select **Asgardeo - [your-org-name]**.
-5. Paste the **Client ID** and **Client Secret** of the OIDC/OAuth2.0 Application created in Asgardeo. 
+4. Select the External Identity Provider.
+5. Paste the **Client ID** and **Client Secret** of the OIDC/OAuth2.0 Application created in the External Identity Provider. 
 6. Click **Add Keys**.
