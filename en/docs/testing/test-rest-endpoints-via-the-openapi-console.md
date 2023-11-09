@@ -23,7 +23,7 @@ Follow the steps below to test a REST endpoint via the integrated OpenAPI Consol
 6. If the **Network Visibility** of the endpoint is set to **Organization**, click on **Generate URL** to generate a temporary test URL that will be active for 15 minutes. Else, skip this step. 
 
     !!! note
-        The temporay test URL will be available **only for 15 minutes** and it will get expired after. You can deactivate the test URL by clicking on the **Deactivate URL** button.
+        The temporary test URL will be available **only for 15 minutes** and it will get expired after. You can deactivate the test URL by clicking on the **Deactivate URL** button.
 
 
     ![OpenAPI Console](../assets/img/testing/openapi-console-org.png){.cInlineImage-full}
