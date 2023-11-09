@@ -6,7 +6,6 @@ resources:
   - choreo-step-enforcer.yaml
   - choreo-step-usage-publisher.yaml
   - program-cleaner.yaml
-  - logs-archiver.yaml
   - choreo-userapps-image-deleter.yaml
   - cio-internal-metric-collector.yaml
   - choreo-daily-usage-publisher.yaml
