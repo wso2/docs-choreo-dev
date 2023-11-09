@@ -81,7 +81,7 @@ Now that we have connected the source repository, and configured the endpoint de
 To build and deploy the service, follow the steps below:
 
 1. In the left navigation click **Deploy** and navigate to the **Deploy** page.
-2. In the **Deploy** page, click **Deploy Manually**.
+2. In the **Deploy** page, click **Configure &  Deploy**.
 3. In the **Configure & Deploy** pane that opens on the right, click the edit icon to edit the **Endpoint**.
 
 4. Under **Network Visibility**, select **Public** and click **Update**.

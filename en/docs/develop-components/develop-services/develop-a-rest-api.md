@@ -47,7 +47,7 @@ Let's create a containerized service component by following these steps:
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the project home page.
 2. Create a project to add the service component. You can follow the instructions under Prerequisites in the Connect Your Own GitHub Repository to Choreo guide.
-3. On the Components page, click on the Service card.
+3. On the **Components** page, click on the **Service** card.
 4. Enter a unique name and a description of the service. For this guide, let's enter the following values:
 
     |Field          |     Value              |
@@ -69,9 +69,9 @@ Let's create a containerized service component by following these steps:
     | **GitHub Account**    | Your account                                  |
     | **GitHub Repository** | choreo-sample-apps |
     | **Branch**            | **`main`**                               |
-    | **Buildpack**      | Dockerfile|
-    | **Dockerfile Path**       | go/greeter/Dockerfile |
+    | **Buildpack**      | Docker|
     | **Docker Context path**              | go/greeter |
+    | **Dockerfile Path**       | go/greeter/Dockerfile |
 
     !!! info
         1.  To successfully build your container with Choreo, it is essential to explicitly define a User ID (UID) under the USER instruction in your Dockerfile. For reference, see [sample Dockerfile](https://github.com/wso2/choreo-sample-apps/blob/main/go/greeter/Dockerfile).
@@ -86,24 +86,41 @@ Let's create a containerized service component by following these steps:
 You have successfully created a Service component from a Dockerfile. Now let's build and deploy the service.
 
 ## Step 2: Build and deploy
-Now that we have connected the source repository, and configured the endpoint details, it's time to build and deploy the greeter service.
+Now that we have connected the source repository, and configured the endpoint details, it's time to build the service and create an image. Then we can deploy that image test the greeter service.
 
-To build and deploy the service, follow these steps:
+### Step 2.1: Build
 
-1. On the Deploy page, click **Deploy Manually**.
+To build the service, follow these steps:
+
+1. In the left navigation menu, click **Build**.
+2. Select the latest commit and click **Build**.
+3. Check the deployment progress by observing the console logs on the right of the page.
+
 
     !!! note
-        Deploying the service component may take a while. You can track the progress by observing the logs. Once the deployment is complete, the deployment status changes to Active in the corresponding environment card.
+        Building the service component may take a while. You can track the progress by observing the logs. Once the build process is complete, the build status changes to **Success**.
 
-2. Check the deployment progress by observing the console logs on the right of the page.
-    You can access the following scans under **Build**. 
+You can access the following scans under **Build**. 
 
-    - **The Dockerfile scan**: Choreo performs a scan to check if a non-root user ID is assigned to the Docker container to ensure security. If no non-root user is specified, the build will fail.
-    - **Container (Trivy) vulnerability scan**: This detects vulnerabilities in the final docker image. 
-    -  **Container (Trivy) vulnerability scan**: The details of the vulnerabilities open in a separate pane. If this scan detects critical vulnerabilities, the build will fail.
+- **The Dockerfile scan**: Choreo performs a scan to check if a non-root user ID is assigned to the Docker container to ensure security. If no non-root user is specified, the build will fail.
+- **Container (Trivy) vulnerability scan**: This detects vulnerabilities in the final docker image. 
+-  **Container (Trivy) vulnerability scan**: The details of the vulnerabilities open in a separate pane. If this scan detects critical vulnerabilities, the build will fail.
 
 !!! info
     If you have Choreo environments on a private data plane, you can ignore these vulnerabilities and proceed with the deployment.
+
+### Step 2.2: Deploy
+
+Next, to deploy this service, follow these steps: 
+
+1. In the left navigation menu, click **Deploy**.
+2. On the **Set Up** card, click **Configure &  Deploy**.
+3. Skip configuring the **Environment Configurations** and click **Next**.
+4. Skip adding a **File Mount**. Click **Deploy**.
+5. Review the **Endpoint Details** and click **Deploy**.
+
+    !!! note
+        Deploying the service component may take a while. You can track the progress by observing the logs. Once the deploying is complete, the build status changes to **Active** on the **Development** environment card.
 
 Once you have successfully deployed your service, you can [test](../../testing/test-rest-endpoints-via-the-openapi-console.md), [manage](../../api-management/lifecycle-management.md), and [observe](../../monitoring-and-insights/observability-overview.md) it like any other component type in Choreo.
 

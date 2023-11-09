@@ -197,9 +197,8 @@ Now that we have connected the source repository, it's time to build and deploy 
 
 To build and deploy the service, follow these steps:
 
-1. In the left navigation menu, click **Deploy**.
-
-2. On the **Deploy** page, click **Deploy Manually**.  The endpoint added to the `.choreo/endpoints.yaml` is listed in the **Configure & Deploy** pane on the right. 
+1. In the left navigation click **Deploy** and navigate to the **Deploy** page.
+2. In the **Deploy** page, click **Configure &  Deploy**. The endpoint added to the `.choreo/endpoints.yaml` is listed in the **Configure & Deploy** pane on the right. 
 
     !!! tip
         - Optionally, you can click the arrow icon on the endpoint in the **Configure & Deploy** pane to view the endpoint details. The endpoint details added to the `.choreo/endpoints.yaml` is visible here.
@@ -208,7 +207,7 @@ To build and deploy the service, follow these steps:
     !!! note
         To test the service over the web you need to expose the service to the public. This is done securely by setting the network visibility to `public` in `.choreo/endpoints.yaml`. 
 
-3. In the **Configure & Deploy** pane, click **Deploy** to deploy the service.
+3. In the **Endpoint Details** pane, click **Deploy** to deploy the service.
 
     !!! note
         Deploying the service component may take a while. You can track the progress by observing the logs. Once the deployment is complete, the deployment status changes to `Active` in the corresponding environment card.

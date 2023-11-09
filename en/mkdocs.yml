@@ -85,7 +85,9 @@ nav:
       - Project: choreo-concepts/project.md
       - Component: choreo-concepts/component.md
       - Endpoint: choreo-concepts/endpoint.md
+      - CI/CD: choreo-concepts/ci-cd.md
       - Deployment Tracks: choreo-concepts/deployment-tracks.md
+      - Configuration Management: choreo-concepts/configuration-management.md
       - Data Planes: choreo-concepts/data-planes.md
       - Environments: choreo-concepts/environments.md
       - Choreo Marketplace: choreo-concepts/choreo-marketplace.md
@@ -328,6 +330,7 @@ plugins:
           'develop-integrations/develop-an-event-triggered-integration.md': 'https://wso2.com/choreo/docs/develop-components/develop-integrations/develop-an-event-handler/'
           'develop-integrations/develop-a-scheduled-integration.md': 'https://wso2.com/choreo/docs/develop-components/develop-integrations/develop-a-scheduled-task/'
           'develop-components/develop-a-rest-api-proxy.md': 'https://wso2.com/choreo/docs/develop-components/develop-an-api-proxy/'
+          'devops-and-ci-cd/builds-and-deployments.md' : 'https://wso2.com/choreo/docs/choreo-concepts/ci-cd/'
           
 extra_css:
   # - assets/lib/highlightjs/default.min.css
