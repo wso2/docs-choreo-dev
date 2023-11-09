@@ -8,6 +8,8 @@ DockerHub
 buildpack
 buildpacks
 Temurin
+RabbitMQ
+SalesOrderQueue
 1.x
 12.x.x
 14.x.x 
@@ -659,6 +661,7 @@ configure-an-external-idp
 configure-asgardeo-as-an-external-idp
 configure-azure-ad-as-an-external-idp
 test-apis-with-choreo-apichat
+ci-cd
  - theme/material/templates/home-page.html
 doctype
 html
@@ -811,3 +814,7 @@ findByStatus
  - docs/manage-databases-and-caches/choreo-managed-databases-and-caches.md
 DigitalOcean
 Postgres
+ - docs/administer/configure-in-built-idp.md
+Uploader
+ - docs/choreo-concepts/configuration-management.md
+reusability
