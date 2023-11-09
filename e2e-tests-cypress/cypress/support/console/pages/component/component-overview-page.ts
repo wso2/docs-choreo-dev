@@ -66,7 +66,7 @@ export class ComponentOverviewPage {
 
   static navigateToExecute() {
     this.scrollToTopOfMenu();
-    cy.get("[data-cyid=link-executions]").should("be.visible")
+    cy.get("[data-cyid=link-execute]").should("be.visible")
       .realHover({ position: "left" })
       .wait(MENU_RENDERING_TIME)
       .click({ force: true })
