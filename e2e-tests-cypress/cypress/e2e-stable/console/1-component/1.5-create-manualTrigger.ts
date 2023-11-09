@@ -15,6 +15,7 @@ import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
+import { ComponentExecutePage } from "../../../support/console/pages/component/UI-components/Component-execute-page";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
@@ -76,4 +77,17 @@ describe("Verify manual trigger creation functionality", () => {
   it("Verify component promotion to prod", () => {
     ComponentDeployPage.promoteManualTriggerToProd();
   });
+
+  it("Verify execution in dev", () => {
+    ComponentOverviewPage.navigateToExecute();
+    ComponentExecutePage.selectEnvironment(Enums.Environment.DEVELOPMENT);
+    ComponentExecutePage.verifyExecution();
+  });
+
+  it("Verify execution in prod", () => {
+    ComponentOverviewPage.navigateToExecute();
+    ComponentExecutePage.selectEnvironment(Enums.Environment.PRODUCTION);
+    ComponentExecutePage.verifyExecution();
+  });
+
 });
