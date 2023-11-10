@@ -269,6 +269,22 @@ defaultRoles:
         - {{.PERMISSION_COMPONENT_TRIGGER}}
         - {{.PERMISSION_COMPONENT_COMPONENT_MANAGE}}
         - {{.PERMISSION_DEVOPS_DEPLOYMENT_VIEW}}
+    - name: Viewer
+      handle: viewer
+      description: Users who have read only permissions
+      tags:
+        - viewer
+      permissions:
+        - apim:api_view
+        - apim:tier_view
+        - choreo:log_view_non_prod
+        - environments:view_dev
+        - environments:view_prod
+        - {{.PERMISSION_DEVOPS_DEPLOYMENT_VIEW}}
+        - {{.PERMISSION_COMPONENT_FILE_VIEW}}
+        - {{.PERMISSION_COMPONENT_LOGS_VIEW}}
+        - {{.PERMISSION_CUSTOM_DOMAIN_VIEW}}
+        - {{.PERMISSION_CUSTOM_THEME_VIEW}}
 roleBasedUserMgt:
   enabled: ${ROLE_BASED_USER_MGT_ENABLED}
 onPremKeySubscription:
