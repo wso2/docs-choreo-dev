@@ -87,7 +87,9 @@ Follow the steps given below to create a mono repository project:.
     | **Component Type**    | **Service**                                   |
 
 3. Click **Save**. You will see that the status of the `Reading List Service` component has changed to **Configured** and the checkbox to select the component is enabled.
-4. Select the `Reading List Service` component and click **Create**. This initializes the service with the implementation from your GitHub repository and takes you to the **Overview** page of the component.   
+4. Select the `Reading List Service` component and click **Create**. This creates a mono repository project, initializes the service with the implementation from your GitHub repository, and takes you to the project home page.
+
+    You can see the `Reading List Service` component listed under **Component Listing** on the project home page.
 
 ## Step 2: Deploy the service
 
