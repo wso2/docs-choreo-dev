@@ -64,11 +64,26 @@ spec:
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
-          runAsNonRoot: true
+          # choreo changes
+          # runAsNonRoot: true
+          runAsUser: 10001
+          # choreo changes
           capabilities:
             drop:
             - ALL
           seccompProfile:
             type: RuntimeDefault
+        # added by choreo
+        readinessProbe:
+          tcpSocket:
+            port: 9091
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 9091
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        # added by choreo
       serviceAccountName: scaler
       terminationGracePeriodSeconds: 10
