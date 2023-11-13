@@ -1,0 +1,5 @@
+resources:
+  - config
+  - rbac
+
+namespace: keda

@@ -5,7 +5,6 @@ resources:
   - ../base/clusterissuers
   - choreodp-system
   - crd
-  - keda
 
 commonLabels:
   app: choreo-dataplane
