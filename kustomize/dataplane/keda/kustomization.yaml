@@ -3,9 +3,7 @@ kind: Kustomization
 resources:
 - config
 - crd
-- deployment
 - rbac
-- service
 namespace: keda
 namePrefix: keda-http-add-on-
 labels:
