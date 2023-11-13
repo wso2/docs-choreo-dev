@@ -111,6 +111,7 @@ spec:
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always
+      serviceAccountName: loggingapi
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
