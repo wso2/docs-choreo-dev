@@ -2,6 +2,8 @@
 
 The seamless integration of APIs, microservices, applications, and data across different languages and formats requires the ability to expose integrations as APIs. Choreo simplifies building, deploying, and managing integration components, making it easy for you to quickly expose integrations as APIs.
 
+You can develop integrations in WSO2 Micro Integration in non-server mode. See [Creating Artifacts in Non-Server Mode](en/docs/integrate/develop/creating-artifacts/creating-artifacts-in-non-server-mode.md)
+
 This guide walks you through the steps to expose an integration you created in WSO2 Integration Studio as an API in Choreo. 
 
 In this guide, you will:
