@@ -18,6 +18,7 @@ resources:
   - hpa
   - netpol
   - pdb
+  - rbac
   - service
 
 namespace: choreo-observability
