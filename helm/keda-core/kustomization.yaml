@@ -22,3 +22,4 @@ commonAnnotations:
   kapp.k14s.io/disable-default-label-scoping-rules: ""
 patchesStrategicMerge:
   - keda-core-operator-patch.yaml
+  - keda-core-metrics-server-patch.yaml
