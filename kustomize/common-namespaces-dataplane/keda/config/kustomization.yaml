@@ -3,3 +3,6 @@ configMapGenerator:
     behavior: create
     literals:
       - routing-table={}
+
+generatorOptions:
+  disableNameSuffixHash: true
