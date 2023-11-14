@@ -10,10 +10,6 @@ spec:
       - name: keda-operator
         securityContext:
           runAsUser: 10001
-          seccompProfile:
-            type: RuntimeDefault
       securityContext:
-          readOnlyRootFilesystem: true
-          runAsUser: 10001
-          seccompProfile:
-            type: RuntimeDefault
+        seccompProfile:
+          type: RuntimeDefault
