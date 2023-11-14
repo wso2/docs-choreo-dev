@@ -44,6 +44,7 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
+                .timeout(300000)
                 .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
                         ConfigDefinition.CHOREO_ENDPOINT))
                 .build();
@@ -54,6 +55,7 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
+                .timeout(300000)
                 .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
                         ConfigDefinition.CHOREO_NEW_APP_SERVICE_ENDPOINT))
                 .build();
@@ -64,6 +66,7 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
+                .timeout(300000)
                 .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(ConfigDefinition.STS_ENDPOINT))
                 .build();
     }
@@ -73,6 +76,7 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
+                .timeout(300000)
                 .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
                         ConfigDefinition.CHOREO_CP_GW_ENDPOINT))
                 .build();
@@ -83,6 +87,7 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
+                .timeout(300000)
                 .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
                         ConfigDefinition.INSIGHTS_ENDPOINT))
                 .build();
@@ -93,6 +98,7 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
+                .timeout(300000)
                 .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
                         ConfigDefinition.GITHUB_ENDPOINT))
                 .build();
@@ -103,6 +109,7 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
+                .timeout(300000)
                 .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
                         ConfigDefinition.THEME_ENDPOINT))
                 .build();
@@ -113,6 +120,7 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
+                .timeout(300000)
                 .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
                         ConfigDefinition.CDN_THEME_ENDPOINT))
                 .build();
@@ -123,42 +131,42 @@ public class EndpointConfig {
         Map<Endpoints, HttpClient> endpoints = new HashMap<>();
 
         endpoints.put(Endpoints.CHOREO_ENDPOINT,
-                CitrusEndpoints.http().client().requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                CitrusEndpoints.http().client().timeout(300000).requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
                         ConfigDefinition.CHOREO_ENDPOINT)).build());
 
         endpoints.put(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT,
-                CitrusEndpoints.http().client().requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                CitrusEndpoints.http().client().timeout(300000).requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
                         ConfigDefinition.CHOREO_NEW_APP_SERVICE_ENDPOINT)).build());
 
         endpoints.put(Endpoints.STS_ENDPOINT,
-                CitrusEndpoints.http().client().requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                CitrusEndpoints.http().client().timeout(300000).requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
                         ConfigDefinition.STS_ENDPOINT)).build());
 
         endpoints.put(Endpoints.CHOREO_CP_GW_ENDPOINT,
-                CitrusEndpoints.http().client().requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                CitrusEndpoints.http().client().timeout(300000).requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
                         ConfigDefinition.CHOREO_CP_GW_ENDPOINT)).build());
 
         endpoints.put(Endpoints.INSIGHTS_ENDPOINT,
-                CitrusEndpoints.http().client().requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                CitrusEndpoints.http().client().timeout(300000).requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
                         ConfigDefinition.INSIGHTS_ENDPOINT)).build());
 
         endpoints.put(Endpoints.GITHUB_ENDPOINT,
-                CitrusEndpoints.http().client().requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                CitrusEndpoints.http().client().timeout(300000).requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
                         ConfigDefinition.GITHUB_ENDPOINT)).build());
 
         endpoints.put(Endpoints.THEME_ENDPOINT,
-                CitrusEndpoints.http().client().requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                CitrusEndpoints.http().client().timeout(300000).requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
                         ConfigDefinition.THEME_ENDPOINT)).build());
 
         endpoints.put(Endpoints.CDN_THEME_ENDPOINT,
-                CitrusEndpoints.http().client().requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                CitrusEndpoints.http().client().timeout(300000).requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
                         ConfigDefinition.CDN_THEME_ENDPOINT)).build());
 
         endpoints.put(Endpoints.CHOREO_EU_DP_URL,
-                        CitrusEndpoints.http().client().requestUrl(DataPlaneSystemAPI.CHOREO_EU_DP_URL).build());
+                        CitrusEndpoints.http().client().timeout(300000).requestUrl(DataPlaneSystemAPI.CHOREO_EU_DP_URL).build());
 
         endpoints.put(Endpoints.CHOREO_US_DP_URL,
-                        CitrusEndpoints.http().client().requestUrl(DataPlaneSystemAPI.CHOREO_US_DP_URL).build());
+                        CitrusEndpoints.http().client().timeout(300000).requestUrl(DataPlaneSystemAPI.CHOREO_US_DP_URL).build());
         return endpoints;
     }
 }
