@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: keda-operator
+  name: keda-operator-metrics-apiserver
   namespace: keda
   annotations:
     checkov.io/skip1: CKV_K8S_49=Default is set by NIC
@@ -11,7 +11,7 @@ spec:
   template:
     spec:
       containers:
-      - name: keda-operator
+      - name: keda-operator-metrics-apiserver
         securityContext:
           runAsUser: 10001
       securityContext:
