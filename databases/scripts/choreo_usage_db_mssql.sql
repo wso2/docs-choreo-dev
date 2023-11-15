@@ -23,7 +23,7 @@ BEGIN
         project_id VARCHAR(128) NOT NULL,
         start_date DATETIME2(0) NOT NULL,
         end_date DATETIME2(0) NOT NULL,
-        namespace VARCHAR(128) NOT NULL,
+        namespace VARCHAR(255) NOT NULL,
         monthly_total_cost FLOAT,
         cpu_cost FLOAT,
         gpu_cost FLOAT,
