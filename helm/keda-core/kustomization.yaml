@@ -23,3 +23,4 @@ commonAnnotations:
 patchesStrategicMerge:
   - keda-core-operator-patch.yaml
   - keda-core-metrics-server-patch.yaml
+  - keda-core-operator-cluster-role-patch.yaml
