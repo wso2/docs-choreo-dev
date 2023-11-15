@@ -9,5 +9,5 @@ A few important considerations:
 
 
 !!!Tip "Try out the free trial"
-    Choreo provides a 14 day free trial for all database types on the 'Hobbyist' service plan (for free tier users).
+    Choreo provides a 7 day free trial for all database types on the 'Hobbyist' service plan (for free tier users).
 
