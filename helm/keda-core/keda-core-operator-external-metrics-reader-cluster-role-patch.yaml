@@ -1,0 +1,6 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: keda-operator-external-metrics-reader
+  annotations:
+    checkov.io/skip1: CKV_K8S_49=Default is set by NIC
