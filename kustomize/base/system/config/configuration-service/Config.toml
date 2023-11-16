@@ -3,7 +3,6 @@ configServerPort = 8080
 internalHealthCheckPort = 8081
 externalHealthCheckPort = 8082
 maxHeaderSize = 65536
-rudderServiceUrl = "http://dp-rudder:80"
 secretManagerUrl = "http://dp-secret-manager:80"
 cloudManagerUrl = "http://dp-cloud-manager:80"
 dbHost = "{{.DB_HOST}}"

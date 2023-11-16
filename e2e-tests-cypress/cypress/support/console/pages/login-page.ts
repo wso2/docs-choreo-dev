@@ -52,19 +52,14 @@ export class LoginPage {
       window.localStorage.setItem(
         "features",
         JSON.stringify({
+          "Buildpack - Component Creation": false,
+          "Choreo built-in Identity Provider": true,
+          "Internal Marketplace": true,
           "API Configuration": false,
-          "Mono Repository": true,
-          "Buildpack - Component Creation": true,
-          "Project Architecture Diagram": false,
-          "Test Runner Component Type": true,
-          "Choreo built-in IdP": true,
-          "Demo Organization": true,
-          "Internal Marketplace": false,
-          "Internal Endpoint Testing": true,
-          "Decouple Build and Deploy": false,
-          "Innovation Performance": false,
-          "Choreo built-in Identity Provider": false,
-          "Connection Management": false,
+          "App Gateway Settings": true,
+          "Role Group Mapping": true,
+          "App Gateway Authentication": true,
+          "Connection Management": true,
         })
       );
     } else {

@@ -14,6 +14,8 @@ configMapGenerator:
     behavior: create
     files:
       - loggingapi/Config.toml
+    literals:
+      - K8S_API_SERVER_TOKEN_FILE_PATH="/var/run/secrets/kubernetes.io/serviceaccount/token"
   - name: sys-obsapi-cm-file
     behavior: create
     files:

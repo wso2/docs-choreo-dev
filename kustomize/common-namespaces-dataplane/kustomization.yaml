@@ -1,0 +1,4 @@
+resources:
+  - choreo-ai
+  - keda
+  - choreo-observability

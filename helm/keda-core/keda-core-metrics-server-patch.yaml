@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keda-operator-metrics-apiserver
+  namespace: keda
+  annotations:
+    checkov.io/skip1: CKV_K8S_49=Default is set by NIC
+    checkov.io/skip2: CKV_K8S_38=Default is set by NIC
+    checkov.io/skip3: CKV_K8S_AZURE_WSO2_2=Default is set by NIC
+    checkov.io/skip4: CKV_K8S_22=keda-operator-metrics-apiserver needs file write access
+spec:
+  template:
+    spec:
+      containers:
+      - name: keda-operator-metrics-apiserver
+        securityContext:
+          runAsUser: 10001
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault

@@ -1,0 +1,8 @@
+configMapGenerator:
+  - name: keda-http-add-on-routing-table
+    behavior: create
+    literals:
+      - routing-table={}
+
+generatorOptions:
+  disableNameSuffixHash: true

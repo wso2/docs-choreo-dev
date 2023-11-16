@@ -17,9 +17,15 @@ import { Enums } from "../../../../commons/enums";
 export class ComponentExecutePage {
 
     static verifyExecution() {
-        cy.get('[data-cyid="run-once-button"]').should("be.enabled").click();
+        cy.get('[data-cyid="run-now-button"]').should("be.enabled").click();
         cy.get('[data-testid="snackbar-notification"]',).should('be.visible').contains('Task triggered successfully');
         cy.log("Task executed Successfully");
       }
+
+      static selectEnvironment(env: Enums.Environment) {
+        cy.get('[data-cyid="environment-picker"]').should("be.visible").scrollIntoView().click();
+        cy.get(`[data-cyid="environment-picker-${env}"]`).click();
+      }
+
 
 }
