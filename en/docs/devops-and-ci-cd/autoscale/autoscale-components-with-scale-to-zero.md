@@ -2,14 +2,14 @@
 	
 Choreo supports automatic scaling based on its usage. 
 
-Choreo allows you enable scale-to-zero for your HTTP applications you deploy in the dataplane. This lets you run your components in a serverless mode. When you enable this feature, your applications will automatically scale down to zero when not receiving HTTP traffic. In the event of an HTTP request, your workload rapidly scales up from zero to handle the request.
+Choreo allows you enable scale-to-zero for your HTTP applications you deploy in the data plane. This lets you run your components in a serverless mode. When you enable this feature, your applications will automatically scale down to zero when not receiving HTTP traffic. In the event of an HTTP request, your workload rapidly scales up from zero to handle the request.
 
 ## Enable scale to zero
 
 You can independently scale applications in both the `Development` and `Production` environments. Follow the steps below to enable scale-to-zero:
 
 1. Go to the **Deploy** view of the component for which you want to enable scale to zero. Ensure the component is deployed to an environment and is ready to receive traffic. 
-2. On the header, select the environment you want to apply scale to zero autoscaling from the **Environment** list.
+2. On the header, select the environment you want to apply scale to zero auto scaling from the **Environment** list.
 2. In the left navigation, click **DevOps** and then click **Scaling**.
 3. Click on the **Scale to Zero** toggle to enable it. 
 

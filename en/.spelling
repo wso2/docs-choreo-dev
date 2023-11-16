@@ -662,6 +662,7 @@ configure-asgardeo-as-an-external-idp
 configure-azure-ad-as-an-external-idp
 test-apis-with-choreo-apichat
 ci-cd
+autoscale
  - theme/material/templates/home-page.html
 doctype
 html
@@ -818,3 +819,6 @@ Postgres
 Uploader
  - docs/choreo-concepts/configuration-management.md
 reusability
+ - docs/devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero.md
+intra-project
+x-choreo-project-ns
