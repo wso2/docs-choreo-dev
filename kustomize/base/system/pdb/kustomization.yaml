@@ -10,8 +10,6 @@ resources:
   - connectords.yaml
   - console-next.yaml
   - cp-graphql.yaml
-  - cp-resilient-invoker.yaml
-  - cp-ris.yaml
   - cp-sis.yaml
   - configuration-service.yaml
   - declarative-api.yaml

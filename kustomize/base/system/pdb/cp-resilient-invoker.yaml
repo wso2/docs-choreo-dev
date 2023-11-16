@@ -1,9 +1,0 @@
-apiVersion: policy/v1
-kind: PodDisruptionBudget
-metadata:
-  name: cp-resilient-invoker
-spec:
-  minAvailable: "50%"
-  selector:
-    matchLabels:
-      choreo.component: cp-resilient-invoker
