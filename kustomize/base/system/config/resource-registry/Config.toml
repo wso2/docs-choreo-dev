@@ -6,7 +6,7 @@ mongoDBClusterUrl="{{.MONGO_DB_CLUSTER_URL}}"
 databaseName="{{.RESOURCE_REGISTRY_DB_NAME}}"
 collectionName="resources"
 mongoDBOptions=""
-defaultThumbnailUrl="https://picsum.photos/200"
+defaultThumbnailUrl=""
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
