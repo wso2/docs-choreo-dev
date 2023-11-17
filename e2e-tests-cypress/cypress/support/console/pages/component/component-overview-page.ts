@@ -160,6 +160,7 @@ export class ComponentOverviewPage {
     } else {
       this.createNewVersionApiProxy(version);
     }
+    cy.wait(3000);
   }
 
   private static createNewVersionApiProxy(version: string) {

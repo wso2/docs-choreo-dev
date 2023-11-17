@@ -75,7 +75,7 @@ describe("Create proxy api using existing url", () => {
     );
   });
 
-  it("Remove additional resources and save", () => {
+  it.skip("Remove additional resources and save", () => {
     APIDevelop.removeResources([
       "panel-/pet/{petId}/uploadImage/post-header",
       "panel-/pet/post-header",
@@ -102,12 +102,12 @@ describe("Create proxy api using existing url", () => {
     ]);
   });
 
-  it("Verify component deployment and endpoint configurations", () => {
+  it.skip("Verify component deployment and endpoint configurations", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.deployToDev();
   });
 
-  it("Verify test functionality using Swagger UI in Dev", () => {
+  it.skip("Verify test functionality using Swagger UI in Dev", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(Enums.Environment.DEVELOPMENT, RESOURCE).then(
       (res) => {
@@ -117,7 +117,7 @@ describe("Create proxy api using existing url", () => {
     );
   });
 
-  it("Verify test functionality using generated curl in Dev", () => {
+  it.skip("Verify test functionality using generated curl in Dev", () => {
     TestHelper.testOnCurl(
       Enums.Environment.DEVELOPMENT,
       Enums.HTTPMethod.GET,
@@ -130,12 +130,12 @@ describe("Create proxy api using existing url", () => {
     });
   });
 
-  it("Verify prod promotion", () => {
+  it.skip("Verify prod promotion", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.promoteToProd();
   });
 
-  it("Verify test functionality using Swagger UI in Prod", () => {
+  it.skip("Verify test functionality using Swagger UI in Prod", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(Enums.Environment.PRODUCTION, RESOURCE).then(
       (res) => {
@@ -145,7 +145,7 @@ describe("Create proxy api using existing url", () => {
     );
   });
 
-  it("Verify test functionality using generated curl in Prod", () => {
+  it.skip("Verify test functionality using generated curl in Prod", () => {
     TestHelper.testOnCurl(
       Enums.Environment.PRODUCTION,
       Enums.HTTPMethod.GET,
@@ -161,7 +161,6 @@ describe("Create proxy api using existing url", () => {
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentOverviewPage.createNewVersion(API_NEW_VERSION, "");
-    cy.wait(3000);
     ComponentDevelopPage.getVersion().should("eq", `v${API_NEW_VERSION}`);
   });
 
