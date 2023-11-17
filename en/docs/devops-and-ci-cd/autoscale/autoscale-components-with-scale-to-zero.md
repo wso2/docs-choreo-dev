@@ -22,7 +22,7 @@ The deployment card indicates the scaling status of each environment.
 ## Limitations
 
 - The scale-to-zero feature currently exclusively supports web applications and HTTP services.
-- Your HTTP service must run on one of the specified ports: 5000, 6000, 7000, 8000, 9000, 7070 to 7079, and 8080 to 8089.
+- Your HTTP service must run on one of the specified ports: 5000, 6000, 7000, 8000, 9000, 7070 to 7079, 8080 to 8089, and 9091 to 9099.
 - It is mandatory to set up readiness probes for your application through the “Devops” -> “Health Checks” page.
 - When conducting intra-project service-to-service communication, remember to include the 'x-choreo-project-ns' header during a service call. Make sure the header's value aligns with your project's namespace name.
 
