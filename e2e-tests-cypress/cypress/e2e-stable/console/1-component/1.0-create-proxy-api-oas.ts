@@ -161,6 +161,7 @@ describe("Create proxy api using existing url", () => {
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentOverviewPage.createNewVersion(API_NEW_VERSION, "");
+    cy.wait(3000);
     ComponentDevelopPage.getVersion().should("eq", `v${API_NEW_VERSION}`);
   });
 
