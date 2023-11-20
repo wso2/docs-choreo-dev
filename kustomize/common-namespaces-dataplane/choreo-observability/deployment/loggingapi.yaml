@@ -93,6 +93,8 @@ spec:
         - name: loggingapi-sidecar
           envFrom:
             - configMapRef:
+                name: loggingapi-cm
+            - configMapRef:
                 name: loggingapi-env
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-logging-sidecar:latest
           securityContext:
@@ -103,12 +105,8 @@ spec:
             capabilities:
               drop:
                 - all
-          ## This port is not exposed from the K8s service. This is because only the loggingapi container makes
-          ## request to this loggingapi-sidecar container
-          ports:
-            - containerPort: 9197
-              name: loggingapi-sidecar-port
-              protocol: TCP
+          ## No port is exposed from this container. This is because only the loggingapi container makes
+          ## requests to this loggingapi-sidecar container
           readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 60
