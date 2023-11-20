@@ -22,9 +22,14 @@ The deployment card indicates the scaling status of each environment.
 ## Limitations
 
 - The scale-to-zero feature currently exclusively supports web applications and HTTP services.
-- Your HTTP service must run on one of the specified ports: 5000, 6000, 7000, 8000, 9000, 7070 to 7079, 8080 to 8089, and 9091 to 9099.
+- Your HTTP service must run on one of the specified ports: 5000, 6000, 7000, 8000, 9000, 7070 to 7079, 8080 to 8089, and 9090 to 9099. Enabling scale-to-zero for a service not operating on any of the specified ports allows the service deployment to scale down to zero. However, it will not scale up upon receiving a request.
 - It is mandatory to set up readiness probes for your application through the “Devops” -> “Health Checks” page.
-- When conducting intra-project service-to-service communication, remember to include the 'x-choreo-project-ns' header during a service call. Make sure the header's value aligns with your project's namespace name.
+- When conducting intra-project service-to-service communication, remember to include the 'x-choreo-project-ns' header during a service call. Make sure the header's value aligns with your project's namespace name. You can retrieve the value of project namespace from the environment variable called `X_CHOREO_PROJECT_NS`. For example in a Ballerina service, you can extract it as follows:
+  
+```
+string projectNamespace = os:getEnv("X_CHOREO_PROJECT_NS");
+http:Response response = check barEp->get("/", {"X-CHOREO-PROJECT-NS": projectNamespace});
+```
 
 ## Architecture 
 
