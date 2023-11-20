@@ -536,10 +536,10 @@ configMapGenerator:
     behavior: create
     files:
       - cp-resilient-invoker/Config.toml
-  - name: cm-file-cp-ris
+  - name: cm-file-cp-rrs
     behavior: create
     files:
-      - cp-ris/Config.toml
+      - cp-rrs/Config.toml
   - name: cm-file-cp-sis
     behavior: create
     files:
