@@ -17,6 +17,8 @@ Alternatively, you can enable the scale-to-zero feature for a specific environme
 
 When you turn on the scale-to-zero option for your application using the UI toggle, the minimum replicas for your app will be set to zero. However, you can still pick an appropriate maximum number of replicas. 
 
+When your application is scaled up from zero and receiving heavy traffic, Choreo will add more pods to your application's deployment. You can configure the number of requests that need to be in the pending state before Choreo add another pod to your application deployment.
+
 The deployment card indicates the scaling status of each environment. 
 
 ## Limitations
@@ -24,12 +26,51 @@ The deployment card indicates the scaling status of each environment.
 - The scale-to-zero feature currently exclusively supports web applications and HTTP services. TCP and HTTPS services are not supported to be scaled to zero.
 - Your HTTP service must run on one of the specified ports: 5000, 6000, 7000, 8000, 9000, 7070 to 7079, 8080 to 8089, and 9090 to 9099. Enabling scale-to-zero for a service not operating on any of the specified ports allows the service deployment to scale down to zero. However, it will not scale up upon receiving a request.
 - It is mandatory to set up readiness probes for your application through the “Devops” -> “Health Checks” page.
-- When conducting intra-project service-to-service communication, remember to include the `X-CHOREO-PROJECT-NS` header during a service call. Make sure the header's value aligns with your project's namespace name. You can retrieve the value of project namespace from the environment variable called `X_CHOREO_PROJECT_NS`. For example in a Ballerina service, you can extract it as follows:
+- When conducting intra-project service-to-service communication, remember to include the `X-CHOREO-PROJECT-NS` header during a service call. Make sure the header's value aligns with your project's namespace name. You can retrieve the value of project namespace from the environment variable called `X_CHOREO_PROJECT_NS`. Please refer the following examples,
+
+NodeJs
+```
+const axios = require('axios');
+
+const url = 'https://example.com/path';
+
+const projectNamespace = process.env.X_CHOREO_PROJECT_NS;
+
+const headers = {
+  'X-CHOREO-PROJECT-NS': projectNamespace
+};
+
+axios.get(url, { headers })
+  .then(response => {
+    ...
+  })
+  .catch(error => {
+    ...
+  });
+```
+
+Java (Using `HttpURLConnection`)
+```
+String projectNamespace = System.getenv("X_CHOREO_PROJECT_NS");
+
+String url = "https://example.com/path";
+
+URL urlObject = new URL(url);
+
+HttpURLConnection connection = (HttpURLConnection) urlObject.openConnection();
+
+connection.setRequestMethod("GET");
+
+connection.setRequestProperty("X-CHOREO-PROJECT-NS", projectNamespace);
+```
   
+Ballerina
 ```
 string projectNamespace = os:getEnv("X_CHOREO_PROJECT_NS");
-http:Response response = check barEp->get("/", {"X-CHOREO-PROJECT-NS": projectNamespace});
+http:Response response = check barEp->get("https://example.com/path", {"X-CHOREO-PROJECT-NS": projectNamespace});
 ```
+
+
 
 ## Architecture 
 
