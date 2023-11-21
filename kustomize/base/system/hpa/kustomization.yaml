@@ -26,6 +26,7 @@ resources:
   - dp-garbage-collector.yaml
   - dp-mizzen.yaml
   - cp-graphql.yaml
+  - cp-resilient-invoker.yaml
   - cp-sis.yaml
   - cp-rrs.yaml
   - configuration-service.yaml
