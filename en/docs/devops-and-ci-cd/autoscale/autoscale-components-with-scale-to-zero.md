@@ -28,7 +28,7 @@ The deployment card indicates the scaling status of each environment.
 - It is mandatory to set up readiness probes for your application through the “Devops” -> “Health Checks” page.
 - When conducting intra-project service-to-service communication, remember to include the `X-CHOREO-PROJECT-NS` header during a service call. Make sure the header's value aligns with your project's namespace name. You can retrieve the value of project namespace from the environment variable called `X_CHOREO_PROJECT_NS`. Please refer the following examples,
 
-NodeJs
+NodeJs (Using `axios`)
 ```
 const axios = require('axios');
 
