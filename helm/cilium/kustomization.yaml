@@ -9,6 +9,7 @@ helmCharts:
         ipsec:
           interface: cilium_vxlan
         type: ipsec
+      priorityClassName: system-node-critical
       hubble:
         enabled: true
         relay:
@@ -47,6 +48,7 @@ helmCharts:
         image:
           repository: choreocontrolplane.azurecr.io/cilium/startup-script
           pullPolicy: "Always"
+        priorityClassName: system-node-critical
       operator:
         securityContext:
           seccompProfile:
@@ -70,6 +72,7 @@ helmCharts:
           enabled: true
           minAvailable: "50%"
           maxUnavailable: ""
+        priorityClassName: system-cluster-critical
       resources:
         limits:
           cpu: 4000m
