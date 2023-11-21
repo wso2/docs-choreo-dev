@@ -55,7 +55,7 @@ export class ChoreoHomePage {
   }
 
   static isOrgHandleVisible(orgHandle: string) {
-    cy.get('[data-cyid="org-picker-button"]').should("be.visible").click();
+    cy.get('[id="org-picker"]').click();
     cy.get('[data-value="' + orgHandle + '"]');
   }
 
