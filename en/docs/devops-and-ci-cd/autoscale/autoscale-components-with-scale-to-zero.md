@@ -68,10 +68,10 @@ The deployment card indicates the scaling status of each environment.
   
 === "Ballerina"
 
-```
-string projectNamespace = os:getEnv("X_CHOREO_PROJECT_NS");
-http:Response response = check barEp->get("https://example.com/path", {"X-CHOREO-PROJECT-NS": projectNamespace});
-```
+	```
+	string projectNamespace = os:getEnv("X_CHOREO_PROJECT_NS");
+	http:Response response = check barEp->get("https://example.com/path", {"X-CHOREO-PROJECT-NS": projectNamespace});
+	```
 
 
 
