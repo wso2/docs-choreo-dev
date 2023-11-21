@@ -11,6 +11,7 @@ resources:
   - console-next.yaml
   - cp-graphql.yaml
   - cp-sis.yaml
+  - cp-rrs.yaml
   - configuration-service.yaml
   - declarative-api.yaml
   - delete-manager.yaml

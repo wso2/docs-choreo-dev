@@ -27,6 +27,7 @@ resources:
   - dp-mizzen.yaml
   - cp-graphql.yaml
   - cp-sis.yaml
+  - cp-rrs.yaml
   - configuration-service.yaml
   - console-next.yaml
   - alert-notification-service.yaml
