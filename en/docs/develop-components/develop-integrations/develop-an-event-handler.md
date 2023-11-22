@@ -34,7 +34,7 @@ Before you try out the steps in this guide, complete the following:
     | **Description**    | `RabbitMQ integration` |
 
 5. Click the **GitHub** tab
-6. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-examples](https://github.com/wso2/choreo-examples) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+6. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-samples](https://github.com/wso2/choreo-samples) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
@@ -44,10 +44,10 @@ Before you try out the steps in this guide, complete the following:
     | **Field**             | **Description**              |
     |-----------------------|----------------------------- |
     | **Organization**      | Your GitHub account          |
-    | **Repository**        | `choreo-examples`            |
+    | **Repository**        | `choreo-samples`            |
     | **Branch**            | **`main`**                   |
     | **Buildpack**         | **WSO2 MI** because you are creating the REST API from a [WSO2 Integration Studio](https://wso2.com/micro-integrator/) project|
-    | **Project Directory** | `/integrations/micro-integrator/simple-rabbitmq-listener` |                                                     |
+    | **Project Directory** | `mi-rabbitmq-listener` |                                                     |
 
     !!! tip
     	    - **Buildpack** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the buildpack. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the buildpack. 

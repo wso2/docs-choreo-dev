@@ -21,7 +21,7 @@ Before you try out the steps in this guide, complete the following:
     4. Click **Create**.
        This creates the organization and opens the **Project Home** page of the default project created for you.
 
- - Fork the [Choreo examples repository](https://github.com/wso2/choreo-examples), which contains the sample integration for this guide.
+ - Fork the [Choreo aamples repository](https://github.com/wso2/choreo-samples), which contains the sample integration for this guide.
 
 ## Step 1: Create a Webhook component
 
@@ -51,10 +51,10 @@ First, let's create a Webhook component as follows:
     | **Field**                     | **Description**    |
     |-------------------------------|--------------------|
     | **GitHub Account**            | Your account       |
-    | **GitHub Repository**         | choreo-examples |
+    | **GitHub Repository**         | choreo-samples |
     | **Branch**                    | **`main`**         |
     | **Buildpack**              | Ballerina           |
-    | **Project Path**              | `integrations/ballerina/send-email-on-github-event-webhook`|
+    | **Project Path**              | `/github-event-to-email-webhook`|
 
 9. Click **Create**.
 
