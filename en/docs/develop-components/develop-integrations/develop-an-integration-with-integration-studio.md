@@ -10,7 +10,7 @@ This guide walks you through the steps to expose an integration you created in W
 
 In this guide, you will:
 
-  - Create a component to expose the sample integration in the [Choreo examples repository](https://github.com/wso2/choreo-examples) as an API. 
+  - Create a component to expose the sample integration in the [Choreo samples repository](https://github.com/wso2/choreo-samples) as an API. 
   - Deploy, test, and observe the integration component.
   - Publish the integration component as an API to the Choreo Developer Portal.
 
@@ -25,7 +25,7 @@ Before you try out the steps in this guide, complete the following:
     4. Click **Create**.
        This creates the organization and opens the **Project Home** page of the default project created for you.
 
- - Fork the [Choreo examples repository](https://github.com/wso2/choreo-examples), which contains the sample integration for this guide.
+ - Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples), which contains the sample integration for this guide.
 
 ## Step 1: Create the integration component
 
@@ -40,7 +40,7 @@ Before you try out the steps in this guide, complete the following:
     | **Description**    | `Hello World REST API` |
 
 5. Click the **GitHub** tab
-6. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-examples](https://github.com/wso2/choreo-examples) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+6. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-samples](https://github.com/wso2/choreo-samples) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
@@ -51,10 +51,10 @@ Before you try out the steps in this guide, complete the following:
     | **Field**             | **Description**              |
     |-----------------------|----------------------------- |
     | **Organization**      | Your GitHub account          |
-    | **Repository**        | `choreo-examples`            |
+    | **Repository**        | `choreo-samples`            |
     | **Branch**            | **`main`**                   |
     | **Buildpack**         | **WSO2 MI** because you are creating the REST API from a [WSO2 Integration Studio](https://wso2.com/micro-integrator/) project|
-    | **Project Directory** | `integrations/micro-integrator/hello-world-api` |
+    | **Project Directory** | `hello-world-mi` |
 
 8. Click **Create**. Choreo initializes the component with the sample integration.
 

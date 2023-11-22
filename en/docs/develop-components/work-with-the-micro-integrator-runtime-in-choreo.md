@@ -242,13 +242,11 @@ For more information, see the following topics in the WSO2 API Manager documenta
 
 ## Explore Choreo examples on GitHub
 
-For a hands-on experience with MI-based integrations in Choreo, we recommend exploring our GitHub repository filled with practical code examples.
+For a hands-on experience with MI-based integrations in Choreo, we recommend exploring our samples in Choreo Console. You can filter out the samples based on the buidpack `WSO2 MI`. This will point you to the samples in the [Choreo samples GitHub repository](https://github.com/wso2/choreo-samples)
 
-### [Choreo examples - GitHub Repository](https://github.com/wso2/choreo-examples)
+### [Choreo samples - GitHub Repository](https://github.com/wso2/choreo-samples)
 
-- **Fork & clone**: Start by forking the repository to your account. Once forked, clone your fork to your local machine.
-   ```
-   git clone https://github.com/wso2/choreo-examples.git
-   ```
-- **Explore & run**: Navigate through the different integration scenarios under the `integrations/micro-integrator` subdirectory. Each example has a README.md with setup and execution instructions.
+- **Fork the Repository**: Start by forking the repository to your account.
+
+- **Explore & run**: Navigate through the different integration scenarios. Each example has a README.md with setup and execution instructions.
 
