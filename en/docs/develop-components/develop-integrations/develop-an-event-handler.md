@@ -1,10 +1,10 @@
-# Develop an Event Handler Integration
+# Develop an Event Handler
 
-An Event Handler integration executes predefined actions in response to specific events. Choreo simplifies the process of creating and deploying such integrations.
+An Event Handler executes predefined actions in response to specific events. Choreo simplifies the process of creating and deploying such integrations.
 
-This guide walks you through the steps to create and deploy an Event Handler integration using WSO2 MI and Choreo. 
+This guide walks you through the steps to create and deploy an Event Handler using WSO2 MI and Choreo. 
 
-In this guide, you will build a simple event handler integration that monitors RabbitMQ for new messages and displays them once they become available.
+In this guide, you will build a simple event handler that monitors RabbitMQ for new messages and displays them once they become available.
 
 ## Prerequisites
 
@@ -21,7 +21,7 @@ Before you try out the steps in this guide, complete the following:
 
   - Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples), which contains the sample integration for this guide.
 
-## Step 1: Create an event handler integration component
+## Step 1: Create an event handler component
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page. 
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
@@ -74,7 +74,7 @@ To deploy the integration, follow the steps given below:
     | **USERNAME**  | Username for connecting to RabbitMQ              |
     | **PASSWORD**  | Password associated with the RabbitMQ username   |
 
-4. Click **Deploy**. This deploys the event handler integration to the development environment and indicates the **Deployment Status** as **Active** in the **Development** card.
+4. Click **Deploy**. This deploys the event handler to the development environment and indicates the **Deployment Status** as **Active** in the **Development** card.
 
 
 ## Step 3: Test the integration
@@ -95,5 +95,5 @@ To test the integration, follow the steps given below:
 2. Observe the logs:
     - In the left navigation menu, click **Logs** and then click **Runtime Logs**. You will see the order message in the logs.
   
-Now you have gained hands-on experience in creating, configuring, and deploying an event handler integration.
+Now you have gained hands-on experience in creating, configuring, and deploying an event handler.
  
