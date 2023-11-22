@@ -490,7 +490,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetRepoContents = "/component-utils/1.0.0/repositories/" + gitOrgHandle + "/" + repoName + "/branches/main/contents?"
                 + "userId=" + testUserId;
-        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient, requestUrlForGetRepoContents,
+        SecurityUtils.elevatedAccessCheckForForbiddenGetRequests(this, choreoCPTestClient, requestUrlForGetRepoContents,
                 accessToken);
     }
 
