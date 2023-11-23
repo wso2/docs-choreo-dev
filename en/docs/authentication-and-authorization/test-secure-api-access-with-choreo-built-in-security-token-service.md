@@ -44,7 +44,7 @@ The permissions assigned to your APIs need to be associated with roles. Follow t
 1. Select the project that contains your component. In the left navigation menu, click **Settings**.
 2. Click  **Role Management**.
 3. Click  **+ Role**.
-4. You can assign permissions from the list on this page. These permissions are based on the scopes of the subscribed APIs of the project components as well as the scopes of the APIs exposed from the project component
+4. You can assign permissions from the list on this page. These permissions are based on the scopes required by the connections created by the project components as well as the scopes of the APIs exposed from the project component
 5. Fill in the role details, select the required permission to consume the API, and click **Create Role**.
 
 ## Step 3: Assign user groups to Role
@@ -59,17 +59,22 @@ Created roles need to be assigned to the user groups defined in your Choreo buil
 
 ## Step 4: Test API invocation
 
-To enable API invocation, you must first create a subscription. To do this, develop a web application component. If your web application is a SPA, you have the option to let Choreo handle authentication on behalf of the application. This approach will reduce the need to incorporate OAuth protocol-specific logic into your application. You can then proceed to subscribe to the API from within the web application you've created.
+To enable API invocation, you must first create a connection to your API. To do this, create a web application component. Once the component is created, click on **Dependencies > Connections** from the left menu and proceed to create a connection to the API deployed in Step 1. Then proceed to **Build** and **Deploy** the web application.
+
+When deploying, if your web application is a SPA, you have the option to let Choreo handle authentication on behalf of the application. This approach will reduce the need to incorporate OAuth protocol-specific logic into your application.
 
 ### When Choreo-managed authentication is enabled.
 
 If Managed Authentication is enabled for your web application, Choreo will automatically handle the acquisition of necessary permissions for API invocation. This process occurs when access tokens are requested, allowing you to seamlessly invoke the subscribed APIs through your web application without any additional intervention.
 
+!!! note
+    If permissions of an existing connection changes or if you create a new connection with permissions, you have to Deploy your web application to get the API invocation working with Managed Authentication.
+
 ### When the application is managing the authentication
 
 If your application handles authentication independently, you can generate the necessary OAuth credentials to acquire access tokens.
 1. Click on the **Settings** section in your **web application component**.
-2. Navigate to the **Authentication** section.
+2. Navigate to the **Authentication Keys** section.
 3. Select a desired environment and select **Choreo Built-In Identity Provider** from the drop-down.
 4. Expand the Advanced Configuration section and make sure the `code` and `refresh` grants are enabled. This is required to obtain access tokens with an authorization code grant.
 5. Configure the callback URL of the web application to receive the authorization code.
