@@ -14,6 +14,7 @@
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
 import { GraphQL } from "../../../support/console/apis/graphql";
+import { ComponentBuild } from "../../../support/console/pages/component/Functionalities/Component-build";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
@@ -63,12 +64,14 @@ describe("Verify MI API SERVICE with endpoints yaml", () => {
     GraphQL.createIntegrationComponent(componentData);
   });
 
-  it("Navigate to deployment", () => {
+  it("Verify component build", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-    ComponentOverviewPage.navigateToDeploy();
+    ComponentOverviewPage.navigateToBuild();
+    ComponentBuild.buildComponent();
   });
 
   it("Verify component deployment with endpoints yaml", () => {
+    ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployService(PROJECT_NAME,COMPONENT_NAME,ENDPOINT_NAME, false, true);
   });
 
@@ -91,7 +94,7 @@ describe("Verify MI API SERVICE with endpoints yaml", () => {
     ComponentDeployPage.promoteService(ENDPOINT_NAME, false, 0, true);
   });
 
-  it("Verify test functionality of root resource in dev on swagger", () => {
+  it("Verify test functionality of root resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testManagedEndpoint(
       Enums.Environment.PRODUCTION,

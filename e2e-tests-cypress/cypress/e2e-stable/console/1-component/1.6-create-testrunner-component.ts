@@ -71,12 +71,14 @@ describe("Verify Test Runner Component functionality", () => {
     );
   });
 
-  it("Navigate to deployment", () => {
+  it("Verify component build", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-    ComponentOverviewPage.navigateToDeploy();
+    ComponentOverviewPage.navigateToBuild();
+    ComponentBuild.buildComponent();
   });
 
   it("Verify component deployment to dev", () => {
+    ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployToDev(
       PROJECT_NAME,
       COMPONENT_NAME,
