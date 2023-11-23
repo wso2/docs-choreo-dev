@@ -32,8 +32,6 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      annotations:
-        restart-reason: "Fetching updated STS metadata"
       labels:
         userapp-ingress-allowed: "true"
     spec:
