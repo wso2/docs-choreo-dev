@@ -1,0 +1,2 @@
+resources:
+  - fluent-bit.yaml
