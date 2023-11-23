@@ -5,6 +5,7 @@ resources:
   - ../base/clusterissuers
   - choreodp-system
   - crd
+  - priorityclass
 
 commonLabels:
   app: choreo-dataplane
