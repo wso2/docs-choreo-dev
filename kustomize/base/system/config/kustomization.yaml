@@ -540,10 +540,6 @@ configMapGenerator:
     behavior: create
     files:
       - cp-rrs/Config.toml
-  - name: cm-file-cp-sis
-    behavior: create
-    files:
-      - cp-sis/Config.toml
   - name: cm-file-audit-logging
     behavior: create
     files:
