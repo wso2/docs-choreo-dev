@@ -7,7 +7,7 @@ name = "choreo/loggingapi"
 level = "{{.LOG_LEVEL_LOGGINGAPI}}"
 
 [ballerina.http.traceLogAdvancedConfig]
-console = "{{.ENABLE_HTTP_TRACE_LOGS}}"
+console = {{.ENABLE_HTTP_TRACE_LOGS}}
 
 [choreo.loggingapi.enovyRespCodeLookupTableMap]
 via_upstream = "SERVICE_RESPONSE"
