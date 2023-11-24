@@ -1,5 +1,6 @@
 [cp.proxyDeployer.config]
 maxRevisions = 20
+resourceRegistryBasePath="http://resource-registry:9090/resource-registry"
 
 dbUser = "choreo_proxy_deployer_db_user"
 
