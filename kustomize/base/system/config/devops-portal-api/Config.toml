@@ -15,7 +15,6 @@ port = 8089
 project_manager_url = "http://dp-project-manager"
 rudder_url = "http://dp-rudder"
 subscription_svc_url = "http://subscriptions:9090"
-helmhub_url = "http://dp-helmhub"
 pdp_manager_url = "http://pdp-manager"
 apim_url = "{{.APIM_URL}}"
 no_of_max_env_per_org = {{.NO_OF_MAX_ENV_PER_ORG}}
