@@ -60,6 +60,7 @@ To connect your Choreo component with a protected third-party application, add t
 
  - 20.22.170.144/28
  - 20.22.170.176/28
+ - 20.166.183.112/28
 
 By including these IP ranges, you ensure that Choreo can establish a secure connection and overcome any firewall restrictions. This enables seamless communication between your Choreo component and the protected third-party application, especially when using connectors for external databases like MySQL, MSSQL, PGSQL, Oracle DB, etc.
 
