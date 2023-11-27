@@ -72,10 +72,34 @@ export class ComponentDeployPage {
     cy.get('[data-testid="btn-next"]').click();
   }
 
+  private static configWebAppComponentWithAuthenticationSettings(environment:string = "dev") {
+    cy.get('[class="view-lines monaco-mouse-cursor-text"]')
+      .type("{backspace}")
+      .type(CONFIG_CONTENT);
+    cy.get('[data-testid="btn-next"]').click();
+    cy.get('[data-cyid="quick-add-users-button"]').should('be.visible').click();
+    cy.get('[data-cyid="username-default"]').within(() => {
+      cy.get('input').invoke('val').then((val) => {
+        Cypress.env(`demoUserUsername-${environment}`, val.toString());
+      })
+    });
+    cy.get('[data-cyid="password-default"]').within(() => {
+      cy.get('input').invoke('val').then((val) => {
+        Cypress.env(`demoUserPassword-${environment}`, val.toString());
+      })
+    });
+    cy.get('[data-cyid="create-users-button"]').should('be.visible').click();
+    cy.get('[data-cyid="btn-next-button"]').should('be.visible').click();
+  }
+
   private static configWebAppComponentPromote() {
     cy.get('[data-cyid="promote-selector-default-configs"]').click();
     cy.get('[data-cyid="btn-next-button"]').click();
-    this.configWebappComponent();
+    if (Utils.isWebAppAuthenticationEnabled) {
+      this.configWebAppComponentWithAuthenticationSettings("prod");
+    } else {
+      this.configWebappComponent();
+    }
   }
 
   static reDeployToDev(
@@ -204,7 +228,11 @@ export class ComponentDeployPage {
           this.pollElement('[data-cyid="btn-next-button"]').click();
         }
       } else {
-        this.configWebappComponent();
+        if (Utils.isWebAppAuthenticationEnabled) {
+          this.configWebAppComponentWithAuthenticationSettings();
+        } else {
+          this.configWebappComponent();
+        }
       }
     }
 

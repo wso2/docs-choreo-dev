@@ -6,4 +6,5 @@ export interface WebappConfig {
     webAppBuildCommand: string,
     webAppPackageManagerVersion: string,
     webAppOutputDirectory: string
+    isAppGatewayEnabled: boolean
 }
