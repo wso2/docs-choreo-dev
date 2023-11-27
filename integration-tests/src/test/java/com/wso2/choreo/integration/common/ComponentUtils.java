@@ -227,6 +227,7 @@ public class ComponentUtils {
                 srcGitRepoUrl(repo.getRepoUrl()).
                 projectId(project.getId()).
                 orgId(orgId).
+                displayType(Constant.displayType.restAPI.name()).
                 orgHandler(orgHandle).
                 oasFilePath(repo.getOasFilePath()).
                 dockerContext(repo.getDockerContext()).
@@ -285,7 +286,7 @@ public class ComponentUtils {
         GraphqlDTO graphqlDTO;
 
         if (componentFlavour.equals(ComponentFlavour.BYOC)) {
-            dto.setComponentType("byocRestApi");
+            dto.setComponentType("byocService");
             Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createBYOCComponent(runner, appServiceClient,
                     dto, accessToken);
 
