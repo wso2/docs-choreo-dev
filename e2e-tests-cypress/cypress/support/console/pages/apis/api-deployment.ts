@@ -57,6 +57,10 @@ export class APIDeployment {
 
     cyGet('[data-cyid="configure-&-deploy-option"]').click();
 
+    cyGet('[data-cyid="direct-deploy-option-proxy-split-group-button-button"]', MEDIUM_TIME)
+      .should("not.be.disabled")
+      .click();
+
     this.RetryDevDeployment();
 
     cy.wait("@keys", VERY_SHORT_TIME).then(() => {
@@ -86,6 +90,10 @@ export class APIDeployment {
       .click();
 
     cyGet('[data-cyid="configure-&-deploy-option"]').click();
+
+    cyGet('[data-cyid="direct-deploy-option-proxy-split-group-button-button"]', SHORT_TIME)
+    .should("not.be.disabled")
+    .click();
   }
 
   static verifyProxyDeployment(buildCount: number) {

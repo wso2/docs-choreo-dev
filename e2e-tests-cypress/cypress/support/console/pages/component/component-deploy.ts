@@ -94,6 +94,10 @@ export class ComponentDeployPage {
 
     cyGet('[data-cyid="configure-&-deploy-option"]').click();
 
+    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
+    .should("be.enabled")
+    .click();
+
     if (isAdditionalConfigs) {
       if (isManagedByAPIM) {
         Utils.interceptConfig();
@@ -194,6 +198,10 @@ export class ComponentDeployPage {
       .click();
 
     cyGet('[data-cyid="configure-&-deploy-option"]').click();
+
+    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
+    .should("be.enabled")
+    .click();
 
     if (isAdditionalConfigs) {
       if (isManagedByAPIM) {
@@ -366,6 +374,9 @@ export class ComponentDeployPage {
       .should("be.enabled")
       .click();
     cyGet('[data-cyid="configure-&-deploy-option"]').click();
+    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
+    .should("be.enabled")
+    .click();
     cy.get('[data-cyid="btn-next-button"]').contains("Deploy").click();
     cy.get('[value="*/1 * * * *"]', LONG_TIME).eq(0).should("be.visible");
     APIDeployment.RetryDevDeployment();
@@ -406,6 +417,9 @@ export class ComponentDeployPage {
       .should("be.enabled")
       .click();
     cyGet('[data-cyid="configure-&-deploy-option"]').click();
+    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
+    .should("be.enabled")
+    .click();
     this.addConfiguration(configValue);
     APIDeployment.RetryDevDeployment();
     cy.get('[data-testid="btn-stop"]', LONG_TIME).should("be.visible");
@@ -647,6 +661,9 @@ export class ComponentDeployPage {
       .should("be.enabled")
       .click();
     cyGet('[data-cyid="configure-&-deploy-option"]').click();
+    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
+    .should("be.enabled")
+    .click();
     if (configSetupStepAvailable) {
       cy.get('[data-cyid="btn-next-button"]').contains("Next").click();
     }
@@ -757,6 +774,9 @@ export class ComponentDeployPage {
       .should("be.enabled")
       .click();
     cyGet('[data-cyid="configure-&-deploy-option"]').click();
+    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
+    .should("be.enabled")
+    .click();
     if (configSetupStepAvailable) {
       cy.get('[data-cyid="btn-next-button"]').contains("Next").click();
     }
@@ -978,6 +998,9 @@ export class ComponentDeployPage {
       .should("be.enabled")
       .click();
     cyGet('[data-cyid="configure-&-deploy-option"]').click();
+    cyGet('[data-cyid="direct-deploy-option-split-group-button-button"]', MEDIUM_TIME)
+    .should("be.enabled")
+    .click();
 
     cyGet('[data-cyid="invke_url"]>input').type(url);
     cyGet('[data-cyid="btn-submit-configform"]').click();
