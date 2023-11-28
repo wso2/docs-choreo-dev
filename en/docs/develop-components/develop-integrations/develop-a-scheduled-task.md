@@ -23,11 +23,11 @@ Before you try out the steps in this guide, complete the following:
     4. Click **Create**.
        This creates the organization and opens the **Project Home** page of the default project created for you.
 
- - Fork the [Choreo examples repository](https://github.com/wso2/choreo-examples), which contains the sample integration for this guide.
+ - Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples), which contains the sample integration for this guide.
     
     !!! info "Repository file structure"
          
-         To work with the sample repository, it is important to familiarize yourself with the repository file structure. The sample code for this guide is in the `<sample-repository-dir>/integrations/ballerina/weather-to-email-integration` directory. To understand how the functionality is implemented, you must read the code comments. The following table describes what you will find in each file in the repository:
+         To work with the sample repository, it is important to familiarize yourself with the repository file structure. The sample code for this guide is in the `<sample-repository-dir>/weather-to-email-scheduled-task` directory. To understand how the functionality is implemented, you must read the code comments. The following table describes what you will find in each file in the repository:
 
           | **File path**         | **File content**                                                     |
           | --------------------- | -------------------------------------------------------------------- |
@@ -53,7 +53,7 @@ Before you try out the steps in this guide, complete the following:
     | **Description**    | `My first scheduled task`        |
 
 5. Click the **GitHub** tab
-6. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-examples](https://github.com/wso2/choreo-examples) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+6. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-samples](https://github.com/wso2/choreo-samples) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
@@ -63,10 +63,10 @@ Before you try out the steps in this guide, complete the following:
     | **Field**             | **Description**                                |
     | --------------------- | ---------------------------------------------- |
     | **Organization**      | Your GitHub account                            |
-    | **Repository**        | `choreo-examples`                              |
+    | **Repository**        | `choreo-samples`                              |
     | **Branch**            | **`main`**                                     |
     | **Buildpack**         | **Ballerina**                                  |
-    | **Project Directory** | `integrations/ballerina/weather-to-email-integration` |
+    | **Project Directory** | `weather-to-email-scheduled-task` |
 
 	!!! tip
     	    - **Buildpack** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the buildpack. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the buildpack. 
