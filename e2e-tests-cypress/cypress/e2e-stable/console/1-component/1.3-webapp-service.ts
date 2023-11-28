@@ -24,6 +24,7 @@ import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { WebappComponent } from "../../../support/interfaces/choreo-components/webapp-component";
+import { UserstoreManagerService } from "../../../support/console/apis/userstore-mgt-service";
 
 before(() => {
   LoginPage.login();
@@ -39,6 +40,24 @@ describe("Verify containerized service functionality", () => {
   const PROJECT_DESCRIPTION = "Webapp SPA service";
   const REPO_NAME = Utils.generateComponentName("repo");
 
+  // Removing existing userstores
+  it("Removing existing userstores", () => {
+    const { uuid } = Cypress.env("userData");
+    cy.log("orgId: ", uuid);
+    UserstoreManagerService.getUserstores(uuid).then((response) => {
+      cy.log(`Found ${response.body.length} userstores`);
+      if (response.body.length > 0) {
+        response.body.forEach((element) => {
+          cy.log(`Deleting userstore ${element.userStoreId}`)
+          UserstoreManagerService.deleteUserstore(element.userStoreId);
+        });
+      }
+      response.body.forEach(element => {
+        cy.log("element: ", element.userStoreId);
+      });
+    });
+  });
+
   it("Creating a project", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
   });
@@ -53,14 +72,14 @@ describe("Verify containerized service functionality", () => {
       labels: "",
       projectId: "",
       byocWebAppsConfig: {
-        dockerContext: "react-spa",
-        srcGitRepoUrl: "https://github.com/choreo-test-apps/web-apps",
-        srcGitRepoBranch: "main",
+        dockerContext: "cloud-native-app-developer/reading-list-front-end",
+        srcGitRepoUrl: "https://github.com/rajithacharith/choreo-examples",
+        srcGitRepoBranch: "app-gw",
         webAppType: "React",
-        webAppBuildCommand: "npm run build",
+        webAppBuildCommand: "npm install && npm run build",
         webAppPackageManagerVersion: "18",
-        webAppOutputDirectory: "build",
-        isAppGatewayEnabled: false,
+        webAppOutputDirectory: "dist",
+        isAppGatewayEnabled: true,
       },
     };
 
@@ -116,8 +135,35 @@ describe("Verify containerized service functionality", () => {
     cy.get('[data-cyid="link-manage"]').should("have.attr", "disabled");
   });
 
-  it("Verify suspending all component deployments", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
+  it("Retrieve webapp url", () => {
+    ComponentOverviewPage.navigateToOverview();
+    ComponentOverviewPage.getDeployedURLofInitialEnv("webAppUrl");
+    cy.get("@webAppUrl").then((url) => {
+      Cypress.env("webAppUrl", url.toString());
+    });
   });
+
+  it("Access webapp and login", () => {
+    cy.origin(Cypress.env("webAppUrl"), () => {
+      cy.visit('/');
+      cy.contains('button', 'Login').click();
+    });
+
+    cy.url().then((url) => {
+      let uri = new URL(url.toString());
+      let hostname = uri.hostname;
+      cy.origin(hostname, () => {
+        cy.get('input[id="username"]').should("be.visible");
+        cy.get('input[id="username"]').type(Cypress.env("demoUserUsername-dev"));
+        cy.get('input[id="password"]').type(Cypress.env("demoUserPassword-dev"));
+        cy.contains('button', 'Sign In').click();
+      });
+    });
+
+    cy.origin(Cypress.env("webAppUrl"), () => {
+      cy.contains('p', 'Reading List');
+      cy.contains('button', 'Logout').click();
+    });
+  });
+
 });
