@@ -24,7 +24,7 @@ retryBackOffFactor = 2.0
 [choreo.choreo_url_management.db]
 port = 1433
 host = "{{.DATABASE_HOST}}"
-user = "{{.DATABASE_USER}}"
+user = "choreo_url_mgt_db_user"
 database = "choreo_url_mgt_db"
 
 [ballerina.log]
