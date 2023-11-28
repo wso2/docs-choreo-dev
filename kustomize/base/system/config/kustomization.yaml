@@ -598,3 +598,7 @@ configMapGenerator:
     behavior: create
     files:
       - cp-gw-adapter/config.toml
+  - name: cm-file-choreo-url-management
+    behavior: create
+    files:
+      - choreo-url-management/Config.toml
