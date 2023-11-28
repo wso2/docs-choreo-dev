@@ -242,7 +242,7 @@ For more information, see the following topics in the WSO2 API Manager documenta
 
 ## Explore Choreo examples on GitHub
 
-For a hands-on experience with MI-based integrations in Choreo, we recommend exploring our samples in Choreo Console. You can filter out the samples based on the buidpack `WSO2 MI`. This will point you to the samples in the [Choreo samples GitHub repository](https://github.com/wso2/choreo-samples)
+For a hands-on experience with MI-based integrations in Choreo, we recommend exploring our samples in Choreo Console. You can filter out the samples based on the buildpack `WSO2 MI`. This will point you to the samples in the [Choreo samples GitHub repository](https://github.com/wso2/choreo-samples)
 
 ### [Choreo samples - GitHub Repository](https://github.com/wso2/choreo-samples)
 
