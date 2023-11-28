@@ -52,9 +52,6 @@ describe("Verify containerized service functionality", () => {
           UserstoreManagerService.deleteUserstore(element.userStoreId);
         });
       }
-      response.body.forEach(element => {
-        cy.log("element: ", element.userStoreId);
-      });
     });
   });
 
