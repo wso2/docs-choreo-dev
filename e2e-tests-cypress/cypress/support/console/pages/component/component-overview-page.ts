@@ -118,7 +118,7 @@ export class ComponentOverviewPage {
       .realHover({ position: "left" })
       .wait(MENU_RENDERING_TIME)
       .click({ force: true })
-      .wait(9000);
+      .wait(MENU_RENDERING_TIME);
     cy.get('[id="backdrop-loader"]').should("not.exist");
     Utils.moveMouseAwayFromLeftMenu();
 
