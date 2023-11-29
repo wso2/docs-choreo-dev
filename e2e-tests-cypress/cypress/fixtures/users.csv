@@ -1,0 +1,2 @@
+username,password,groups,first_name,last_name,email
+"e2e-webapp-user","acme2@123","[manager, engineering]","John","Doe","john1@acme.org"

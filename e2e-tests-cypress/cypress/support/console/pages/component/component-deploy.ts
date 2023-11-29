@@ -77,18 +77,7 @@ export class ComponentDeployPage {
       .type("{backspace}")
       .type(CONFIG_CONTENT);
     cy.get('[data-testid="btn-next"]').click();
-    cy.get('[data-cyid="quick-add-users-button"]').should('be.visible').click();
-    cy.get('[data-cyid="username-default"]').within(() => {
-      cy.get('input').invoke('val').then((val) => {
-        Cypress.env(`demoUserUsername-${environment}`, val.toString());
-      })
-    });
-    cy.get('[data-cyid="password-default"]').within(() => {
-      cy.get('input').invoke('val').then((val) => {
-        Cypress.env(`demoUserPassword-${environment}`, val.toString());
-      })
-    });
-    cy.get('[data-cyid="create-users-button"]').should('be.visible').click();
+    cy.contains('h5','Authentication Settings').click();
     cy.get('[data-cyid="btn-next-button"]').should('be.visible').click();
   }
 

@@ -60,6 +60,8 @@ export class LoginPage {
           "Role Group Mapping": true,
           "App Gateway Authentication": true,
           "Connection Management": true,
+          "App Gateway Settings in Configure & Deploy": true,
+          "Application Security": true,
         })
       );
     } else {
