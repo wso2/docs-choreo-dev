@@ -518,6 +518,11 @@ configMapGenerator:
     literals:
       - CHOREO_USAGE_HANDLER_CRONJOB_MODE="publisher"
       - CHOREO_USAGE_PUBLISHING_FREQUENCY="dynamic-monthly"
+  - name: cm-choreo-metered-usage-handler-platform-svc-cost-collector
+    behavior: create
+    literals:
+      - CHOREO_USAGE_HANDLER_CRONJOB_MODE="platform-cost-collector"
+      - CHOREO_USAGE_PUBLISHING_FREQUENCY="daily"
   - name: cm-file-choreo-metered-usage-handler-service
     behavior: create
     files:

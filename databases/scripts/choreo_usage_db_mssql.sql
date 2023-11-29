@@ -104,3 +104,34 @@ BEGIN
     );
 END
 GO
+
+IF NOT EXISTS (SELECT * FROM SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'[DBO].[platform_svc_cost]') AND TYPE IN (N'U'))
+BEGIN
+    CREATE TABLE platform_svc_cost (
+        id INTEGER IDENTITY(1,1),
+        org_id VARCHAR(128) NOT NULL,
+        job_id VARCHAR(128) NOT NULL,
+        start_date DATETIME2(0) NOT NULL,
+        end_date DATETIME2(0) NOT NULL,
+        execution_timestamp DATETIME2(3) NOT NULL,
+        total_cost FLOAT,
+        total_cost_diff FLOAT
+        PRIMARY KEY (id)
+    );
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'[DBO].[platform_svc_cost_collection_job_status]') AND TYPE IN (N'U'))
+BEGIN
+    CREATE TABLE platform_svc_cost_collection_job_status (
+        id VARCHAR(128) NOT NULL,
+        date DATETIME2(0) NOT NULL,
+        execution_timestamp DATETIME2(3) NOT NULL,
+        started BIT NOT NULL DEFAULT 0,
+        completed BIT NOT NULL DEFAULT 0,
+        collection_successful BIT NOT NULL DEFAULT 0,
+        insertion_successful BIT NOT NULL DEFAULT 0,
+        PRIMARY KEY (date)
+    );
+END
+GO
