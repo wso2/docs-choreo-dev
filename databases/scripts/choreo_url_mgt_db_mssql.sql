@@ -70,7 +70,7 @@ CREATE TABLE [ApprovalStatus] (
 	[status] VARCHAR(191) CHECK ([status] IN ('approved', 'pending', 'rejected')) NOT NULL,
 	[requested_time] DATETIME2 NOT NULL,
 	[updated_time] DATETIME2 NOT NULL,
-    FOREIGN KEY([url_mapping_id]) REFERENCES [URLMapping]([id]) ON DELETE CASCADE,
+	FOREIGN KEY([url_mapping_id]) REFERENCES [URLMapping]([id]) ON DELETE CASCADE,
 	PRIMARY KEY([url_mapping_id])
 );
 
