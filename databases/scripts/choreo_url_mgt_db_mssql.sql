@@ -16,12 +16,6 @@ GO
 USE choreo_url_mgt_db;
 GO
 
-DROP TABLE IF EXISTS [Cluster];
-DROP TABLE IF EXISTS [ApprovalStatus];
-DROP TABLE IF EXISTS [URLMapping];
-DROP TABLE IF EXISTS [Domain];
-DROP TABLE IF EXISTS [KeyVaultSecret];
-
 CREATE TABLE [Domain] (
 	[id] VARCHAR(191) NOT NULL,
 	[organization_uuid] VARCHAR(191) NOT NULL,
@@ -155,11 +149,4 @@ BEGIN
         WHERE id = (SELECT id FROM INSERTED)
     END
 END;
-GO
-
--- Sample Data for Clusters
-
-INSERT INTO [Cluster] ([id], [routing_cluster_id], [api_cname], [webapp_cname], [namespace], [ingress_class_name], [nginx_service_name], [nginx_service_port], [letsencrypt_issuer_name]) VALUES ('7eca5163-6a37-ee11-b8f0-000d3adac5f0', '4F682651-D14C-EC11-981F-2818781ADACC', 'customdns.e1-us-east-azure.preview-dv.choreoapis.dev', 'customdns.e1-us-east-azure.choreoapps.dev', 'dev-choreo-apim', 'dev-choreo-apim-nginx', 'choreo-nginx-service', 9443, 'letsencrypt-prod')
-GO
-INSERT INTO [Cluster] ([id], [routing_cluster_id], [api_cname], [webapp_cname], [namespace], [ingress_class_name], [nginx_service_name], [nginx_service_port], [letsencrypt_issuer_name]) VALUES ('dee0f1c5-c968-ee11-9937-00224853e41c', '2955FC0F-EB6B-ED11-ADE6-CC60C8B57983', 'customdns.e1-eu-north-azure.preview-dv.choreoapis.dev','customdns.e1-eu-north-azure.choreoapps.dev', 'dev-choreo-apim', 'dev-choreo-apim-nginx', 'choreo-nginx-service', 9443, 'letsencrypt-prod')
 GO
