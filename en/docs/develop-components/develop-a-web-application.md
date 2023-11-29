@@ -69,7 +69,7 @@ Follow the steps below to create a sample Web Application component and deploy i
     | **Build output directory**    | build              |
     | **Node Version**              | 18                 |
          
-7. If you wish to enable Managed Authentication, click the toggle **Managed authentication with Choreo** under **Authentication**. Learn how to [Secure Web Applications with Managed Authentication](../authentication-and-authorization/secure-web-applications-with-managed-authentication/) in Choreo.
+7. If your webapp is a React or Angular or Vue.js SPA, Managed Authentication will be enabled by default. Learn how to [Secure Web Applications with Managed Authentication](../authentication-and-authorization/secure-web-applications-with-managed-authentication/) in Choreo.
 
 8. Click **Create**. Once the component creation is complete, you will see the **Build and Deploy** page.
 
