@@ -176,24 +176,25 @@ You have successfully implemented Choreo's Managed Authentication for your web a
 
 To ensure that your web application functions seamlessly with Managed Authentication, it is essential to enable Managed Authentication for your web application component within Choreo.
 
-You can enable Managed Authentication for your Web Application component at component deployment in the Choreo Console. By default, Managed Authentication is enabled for all webapp components.
-
-### Enable Managed Authentication at component deployment
-
 !!! note
     Managed Authentication is currently available only for React, Angular, and Vue.js buildpacks.
 
+You can enable Managed Authentication for your Web Application component at component deployment in the Choreo Console. By default, Managed Authentication is enabled for React, Angular and Vue.js buildpacks.
+
 1. Go to the **Deploy** view of your component.
-2. Click **Authentication Settings** on the **Set Up** card.
-3. Enable/Disable Managed Authentication using the toggle in the sidebar.
+2. Click **Configure and Deploy** on the **Set Up** card.
+3. Add the necessary configurations for your component if applicable and click **Next**.
+4. Enable/Disable Managed Authentication using the toggle in the sidebar.
 
 ## Step 3: Configure Managed Authentication
 
 To configure the necessary paths and scopes for managed authentication, follow the steps below:
 
 1. Go to the **Deploy** view of your component.
-2. Click **Authentication Settings** on the **Set Up** card.
-2. Configure the following fields:
+2. Click **Configure and Deploy** on the **Set Up** card.
+3. Add the necessary configurations for your component if applicable and click **Next**.
+4. Enable Managed Authentication using the toggle in the sidebar.
+5. Configure the following fields:
 
 
 | Option            |  Description      | Default           |
@@ -204,6 +205,8 @@ To configure the necessary paths and scopes for managed authentication, follow t
 | Session Expiry Time | The time in minutes after which the user session expires. For a seamless experience, the session expiry value should match the refresh token expiry time of the OIDC application in your Identity Provider.               | 10080 Minutes (7 Days)                   |
 | Additional Scopes | All additional scopes required by the web application. The following scopes will be added by default. `openid`, `profile`, `email`, and scopes required to invoke subscribed APIs.               | none                   |
 
+!!! note
+    If you need to change these configurations after deployment, you can do so by clicking on the **Authentication Settings** button on the **Set Up** card.
 
 ## Step 4.a: Manage OAuth Keys with Choreo Built-in Identity Provider
 
