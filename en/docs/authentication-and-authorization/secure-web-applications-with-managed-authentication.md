@@ -182,7 +182,7 @@ To ensure that your web application functions seamlessly with Managed Authentica
 You can enable Managed Authentication for your Web Application component at component deployment in the Choreo Console. By default, Managed Authentication is enabled for React, Angular and Vue.js buildpacks.
 
 1. Go to the **Deploy** view of your component.
-2. Click **Configure and Deploy** on the **Set Up** card.
+2. Click **Configure & Deploy** on the **Set Up** card.
 3. Add the necessary configurations for your component if applicable and click **Next**.
 4. Enable/Disable Managed Authentication using the toggle in the sidebar.
 
@@ -191,7 +191,7 @@ You can enable Managed Authentication for your Web Application component at comp
 To configure the necessary paths and scopes for managed authentication, follow the steps below:
 
 1. Go to the **Deploy** view of your component.
-2. Click **Configure and Deploy** on the **Set Up** card.
+2. Click **Configure & Deploy** on the **Set Up** card.
 3. Add the necessary configurations for your component if applicable and click **Next**.
 4. Enable Managed Authentication using the toggle in the sidebar.
 5. Configure the following fields:
