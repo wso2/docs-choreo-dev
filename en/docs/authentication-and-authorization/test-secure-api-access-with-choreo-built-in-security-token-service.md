@@ -42,7 +42,7 @@ You can provide fine-grained access control to your API resources with scopes. F
 The permissions assigned to your APIs need to be associated with roles. Follow the steps below to create roles and assign permissions to the roles.
 
 1. Select the project that contains your component. In the left navigation menu, click **Settings**.
-2. Click  **Role Management**.
+2. Click  **Application Security**.
 3. Click  **+ Role**.
 4. You can assign permissions from the list on this page. These permissions are based on the scopes required by the connections created by the project components as well as the scopes of the APIs exposed from the project component
 5. Fill in the role details, select the required permission to consume the API, and click **Create Role**.
@@ -52,7 +52,7 @@ The permissions assigned to your APIs need to be associated with roles. Follow t
 Created roles need to be assigned to the user groups defined in your Choreo built-in IdP to ensure the authenticated users can obtain access tokens with the required permissions.
 
 1. Navigate to **Settings** section of your **organization**.
-2. Click on **Role Management**.
+2. Click on **Application Security** and then on **Role Management**.
 3. Roles defined within different projects can be seen in the list.
 4. Click on **Map Groups** for the created role.
 5. Type the group name(s) and press Enter and Click **Save**.
