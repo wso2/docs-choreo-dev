@@ -14,6 +14,7 @@ kubecostApiRetryCount = 3
 kubecostApiInterval = 10.0
 kubecostApiBackoffFactor = 3.0
 meteredUsageServiceUrl = "http://usagehandler-service:9090"
+platformSvcApiUrl = "http://platform-services-manager:80"
 
 [choreo.metered_usage_handler.db]
 dbUsername = "choreo_usage_db_user"
