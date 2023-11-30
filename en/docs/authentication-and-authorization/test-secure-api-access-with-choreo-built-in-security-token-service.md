@@ -8,8 +8,8 @@ This guide walks you through the following steps to test the invocation of secur
 
 - Assign scopes to an API in Choreo.
 - Create roles and assign permissions in Choreo.
-- Assign user groups to roles.
-- Test API invocation.
+- Assign roles to user groups.
+- Test the API invocation.
     - When Choreo manages the authentication (i.e., managed authentication enabled).
     - When the application independently handles the authentication (i.e., managed authentication disabled).
 
