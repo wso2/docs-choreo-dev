@@ -1,25 +1,24 @@
-# Configure a User Store with Built-In Identity Provider
+# Configure a User Store with the Built-In Identity Provider
 
-Developers looking to experiment with a complete application development process that includes user authentication and authorization can utilize Choreo's Built-In Identity Provider (IDP). This feature allows you to easily test your application's authentication by setting up test users and groups within Choreo.
+Developers looking to experiment with a complete application development process that includes user authentication and authorization can utilize Choreo's built-in identity provider (IdP). Choreo's built-in identity provider allows you to seamlessly test your application's authentication by setting up test users and groups within Choreo. 
 
-User management support in built-in IdP will be limited to adding users with attributes and groups. It is important to note that these user management capabilities are not recommended for use in production.
+!!! note
+     Although the built-in IdP facilitates user management support, it is limited to adding users with attributes and groups. Therefore, the built-in IdP user management capabilities are not recommended for use in production.
 
 ## Prerequisites
 
-Before you try out this guide, be sure you have the following:
-- Administrator rights to your Choreo organization: You need this to configure a user store in Built-in IdP.
+Before you try out the steps in this guide, be sure you have administrator rights to your Choreo organization. This permission is essential to configure a user store with the built-in IdP.
 
-## Configure Choreo Built-in IdP user store
+## Configure a Choreo built-in IdP user store
 
-Follow the below steps to configure Choreo built-in IdP user store for an environment.
+Follow the steps given below to configure a Choreo built-in IdP user store for an environment:
 
-1. Sign in to the Choreo Console at https://console.choreo.dev.
-2. In the top menu, click on your **Organization**.
-3. In the left navigation menu, click **Settings**.
-4. From the tab set, select **Application Security**, and from the subsequent tab navigation menu, select **Identity Providers**
-5. On the Identity Providers page, you can see a banner on the top to manage Choreo Built-In IdP. Click on the **Manage** button.
-6. Choose the environment you want to configure the built-in IdP user store from the tabs.
-7. Click on the **User Store Template file** and download the template file for a user store.
-8. Fill the template file with the user details and save it.
-9. Select the file from the **File Uploader** and click on **Upload**.
-10. Upon successful upload, the user store will be created and your users will be displayed below.
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in.
+2. In the Choreo Console top navigation menu, click the **Organization** list and then click on your organization.
+3. In the left navigation menu, click **Settings**. This takes you to your organization settings.
+4. Click the **Application Security** tab and then click the **Identity Providers** tab.
+5. On the **Identity Providers** tab, click **Manage** in the **Choreo Built-in Identity Provider** pane.
+6. In the Manage IdP pane, click on a specific environment tab depending on where you want to configure the built-in IdP user store.
+7. To download the template file for a user store, click **User store template file**. 
+8. Specify appropriate user details in the template file and save it.
+9. Select the template file that you saved and click **Upload**. A successful upload creates the user store and displays the configured users in the **Users** section.
