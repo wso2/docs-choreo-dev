@@ -94,7 +94,6 @@ build-your-first-integration
 configure-a-user-store-with-built-in-idp
 devops-and-ci-cd
 autoscale-component-replicas
-configure-a-user-store-with-built-in-idp
 test-rest-endpoints-via-the-openapi-console
 test-graphql-endpoints-via-the-graphql-console
 test-apis-with-curl
