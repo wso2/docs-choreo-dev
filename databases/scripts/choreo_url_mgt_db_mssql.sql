@@ -6,9 +6,6 @@ BEGIN
 END;
 GO
 
-USE choreo_url_mgt_db;
-GO
-
 CREATE TABLE [Domain] (
 	[id] VARCHAR(191) NOT NULL,
 	[organization_uuid] VARCHAR(191) NOT NULL,
