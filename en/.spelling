@@ -103,6 +103,7 @@ subpath
 codebase
 libs
 work-with-the-micro-integrator-runtime-in-choreo
+test-secure-api-access-with-choreo-built-in-security-token-service
 project.md
 component.md
 endpoint.md
