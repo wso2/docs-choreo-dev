@@ -18,8 +18,8 @@ This guide walks you through the following steps to test the invocation of secur
 Before you try out this guide, ensure you have set up the following:
 
 - Configure the Choreo built-in identity provider with users.
-- Deploy and publish an API via Choreo: If you don't have an existing API in Choreo, you can either [develop a REST API](../develop-components/develop-services/develop-a-rest-api.md) or an [API Proxy](../develop-components/develop-an-api-proxy/).
-- A web application for API subscription. If you don't have an application in Choreo, you must [create a web application](../develop-components/develop-a-web-application/).
+- Deploy and publish an API via Choreo. If you don't have an existing API in Choreo, you can either [develop a REST API](../develop-components/develop-services/develop-a-rest-api.md) or an [API Proxy](../develop-components/develop-an-api-proxy.md).
+- A web application for API subscription. If you don't have an application in Choreo, you must [create a web application](../develop-components/develop-a-web-application.md).
 - Administrator rights in your Choreo organization. You need this access to configure role-group and role-permission mappings.
 
 ## Step 1: Assign permissions to an API in Choreo
