@@ -25,6 +25,7 @@ import { GitHub } from "../../../support/github/github";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
+import { ComponentBuild } from "../../../support/console/pages/component/Functionalities/Component-build";
 
 describe("Create Greeting sample in Choreo", () => {
   const PROJECT_DESCRIPTION = "sample greeting service";
@@ -73,6 +74,10 @@ describe("Create Greeting sample in Choreo", () => {
 
   it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
+    if (Utils.isBuildDeployEnabled()) {
+      ComponentOverviewPage.navigateToBuild();
+      ComponentBuild.buildComponent();
+    }
     ComponentOverviewPage.navigateToDeploy();
   });
 
@@ -81,6 +86,7 @@ describe("Create Greeting sample in Choreo", () => {
       PROJECT_NAME,
       COMPONENT_NAME,
       ENDPOINT_NAME,
+      true,
       true
     );
   });

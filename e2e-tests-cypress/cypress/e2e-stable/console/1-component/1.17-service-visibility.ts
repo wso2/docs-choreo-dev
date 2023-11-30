@@ -16,6 +16,7 @@ import { MEDIUM_TIME, SHORT_TIME } from "../../../support/commons/timeouts";
 import { Utils } from "../../../support/commons/utils";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
+import { ComponentBuild } from "../../../support/console/pages/component/Functionalities/Component-build";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
@@ -82,10 +83,15 @@ describe("Verify Ballerina service functionality", () => {
       BALLERINA_SERVICE,
       GraphQLQueryBuilder.getRestComponentCreationQuery
     );
+
+    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
   });
 
   it("Navigate to deployment", () => {
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
+    if (Utils.isBuildDeployEnabled()) {
+      ComponentOverviewPage.navigateToBuild();
+      ComponentBuild.buildComponent();
+    }
     ComponentOverviewPage.navigateToDeploy();
   });
 
@@ -138,6 +144,10 @@ describe("Verify Ballerina service functionality", () => {
     ChoreoHomePage.closeComponentViews(COMPONENT_NAME);
     ChoreoHomePage.navigateToComponents();
     ComponentListingPage.visitToAComponent(MANUAL_NAME);
+    if (Utils.isBuildDeployEnabled()) {
+      ComponentOverviewPage.navigateToBuild();
+      ComponentBuild.buildComponent();
+    }
     ComponentOverviewPage.navigateToDeploy();
   });
 
@@ -162,7 +172,7 @@ describe("Verify Ballerina service functionality", () => {
   it("Verify navigate to observability Page", () => {
     ComponentOverviewPage.navigateToObserve(MEDIUM_TIME.timeout);
   });
-  
+
   it("Verify dev env logs", () => {
     ComponentObservePage.selectEnv(Enums.Environment.DEVELOPMENT);
     ComponentObservePage.verifyManualTriggerTextInLogs(LOG_MESSAGE);

@@ -15,6 +15,7 @@ import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
+import { ComponentBuild } from "../../../support/console/pages/component/Functionalities/Component-build";
 import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
@@ -67,10 +68,15 @@ describe("Verify Ballerina service functionality", () => {
       componentData,
       GraphQLQueryBuilder.getRestComponentCreationQuery
     );
+
+    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
   });
 
   it("Navigate to deployment", () => {
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
+    if (Utils.isBuildDeployEnabled()) {
+      ComponentOverviewPage.navigateToBuild();
+      ComponentBuild.buildComponent();
+    }
     ComponentOverviewPage.navigateToDeploy();
   });
 
@@ -78,7 +84,9 @@ describe("Verify Ballerina service functionality", () => {
     ComponentDeployPage.deployService(
       PROJECT_NAME,
       COMPONENT_NAME,
-      ENDPOINT_NAME
+      ENDPOINT_NAME,
+      false,
+      true
     );
   });
 
@@ -98,6 +106,7 @@ describe("Verify Ballerina service functionality", () => {
       PROJECT_NAME,
       COMPONENT_NAME,
       ENDPOINT_NAME,
+      true,
       true
     );
   });
@@ -143,6 +152,11 @@ describe("Verify Ballerina service functionality", () => {
   it("Verify new version creation and deploy to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.addNewVersion();
+    if (Utils.isBuildDeployEnabled()) {
+      ComponentOverviewPage.navigateToBuild();
+      ComponentBuild.buildComponent();
+    }
+    ComponentOverviewPage.navigateToDeploy();
   });
 
   it("Verify new version deployment", () => {
@@ -150,6 +164,7 @@ describe("Verify Ballerina service functionality", () => {
       PROJECT_NAME,
       COMPONENT_NAME,
       ENDPOINT_NAME,
+      true,
       true
     );
   });
