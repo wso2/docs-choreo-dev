@@ -73,7 +73,7 @@ command -v helm >/dev/null 2>&1 || {
 
 
 #echo "--- Creating a Kubernetes secret for the Cilium IPsec configuration to be stored..."
-PSK=($(dd if=/dev/urandom count=20 bs=1 2> /dev/null | xxd -p -c 64))
+PSK="$(dd if=/dev/urandom count=20 bs=1 2> /dev/null | xxd -p -c 64))"
 kubectl create -n kube-system secret generic cilium-ipsec-keys --from-literal=keys="3 rfc4106(gcm(aes)) $PSK 128"
 
 #echo "--- Creating secrets for DNS-01 challenge..."
