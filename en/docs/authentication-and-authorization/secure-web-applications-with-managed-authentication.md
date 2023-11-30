@@ -7,7 +7,7 @@ Moreover, Choreo's Managed Authentication introduces the concept of a Backend Fo
 !!! note
     Managed Authentication is currently available only for React, Angular, and Vue.js buildpacks.
 
-!!! warn
+!!! warning
     Managed Authentication employs the 'SAMESITE' cookie attribute to safeguard against CSRF attacks. It is recommended for use with modern browsers that support this attribute.
 
 ## Step 1: Utilizing Managed Authentication in your web application
@@ -18,7 +18,7 @@ To secure your web application, you need to implement authentication. You can ut
 
 To enable Choreo to manage the login functionality of your web application, you need to implement a login button that redirects users to /auth/login when clicked. You can use the following code snippet or any custom button component from your preferred UI component library:
 
-```
+``` javascript
 <button onClick={() => {window.location.href="/auth/login"}}>Login</button>
 ```
 
@@ -40,7 +40,7 @@ Upon successful login, Choreo's Managed Authentication establishes a userinfo co
 
 We recommend you retrieve the user info from the cookie and subsequently clear the cookie. Below is a sample code snippet that you can include in your post-login path for this purpose:
 
-```
+``` javascript
     import Cookies from 'js-cookie';
 
     // Read userinfo cookie value.
@@ -60,7 +60,7 @@ Choreo's Managed Authentication provides a GET endpoint, `/auth/userinfo`, in ad
 
 Below is an example of a request to this endpoint:
 
-```
+``` javascript
 const response = await fetch('/auth/userinfo')
 ```
 
@@ -74,7 +74,7 @@ To enable Choreo-managed logout capability to your web application, you can impl
     - It is recommended to clear the user info (if stored) at logout.
     - The below example uses the `js-cookie` library for cookie parsing. You can use any cookie-parsing library of your choice.   
     
-```
+``` javascript
 <button onClick={async () => {
     window.location.href = `/auth/logout?session_hint=${Cookies.get('session_hint')}`;
 }}>Login</button>`
@@ -109,7 +109,7 @@ To refresh the tokens, you can make a POST request to the `/auth/refresh` endpoi
 
 For example:
 
-```
+``` javascript
 const response = await fetch("/auth/refresh", { method: "POST" })
 ```
 
@@ -119,7 +119,7 @@ However, if the refresh token has expired, the system will respond with a 401 Un
 
 To automate the token refresh process when receiving a 401 unauthorized response from the Choreo API, you can encapsulate the requests with the refresh logic. Below is an example code snippet that wraps GET requests.
 
-```
+``` javascript
     export const performGetWithRetry = async (url) => {
         try {
             // API call
@@ -176,30 +176,25 @@ You have successfully implemented Choreo's Managed Authentication for your web a
 
 To ensure that your web application functions seamlessly with Managed Authentication, it is essential to enable Managed Authentication for your web application component within Choreo.
 
-There are two ways that you can enable Managed Authentication for your Web Application component Choreo: 
-- At component creation
-- At component deployment
-
-### Enable Managed Authentication at component creation
-
-When creating a web application component, click the toggle **Managed authentication with Choreo** under **Authentication**  to enable Managed Authentication.
-
 !!! note
     Managed Authentication is currently available only for React, Angular, and Vue.js buildpacks.
 
-### Enable Managed Authentication at component deployment
+You can enable Managed Authentication for your Web Application component at component deployment in the Choreo Console. By default, Managed Authentication is enabled for React, Angular and Vue.js buildpacks.
 
 1. Go to the **Deploy** view of your component.
-2. Click **Authentication Settings** on the **Set Up** card.
-3. Enable/Disable Managed Authentication using the toggle in the sidebar.
+2. Click **Configure & Deploy** on the **Set Up** card.
+3. Add the necessary configurations for your component if applicable and click **Next**.
+4. Enable/Disable Managed Authentication using the toggle in the sidebar.
 
 ## Step 3: Configure Managed Authentication
 
 To configure the necessary paths and scopes for managed authentication, follow the steps below:
 
 1. Go to the **Deploy** view of your component.
-2. Click **Authentication Settings** on the **Set Up** card.
-2. Configure the following fields:
+2. Click **Configure & Deploy** on the **Set Up** card.
+3. Add the necessary configurations for your component if applicable and click **Next**.
+4. Enable Managed Authentication using the toggle in the sidebar.
+5. Configure the following fields:
 
 
 | Option            |  Description      | Default           |
@@ -207,8 +202,11 @@ To configure the necessary paths and scopes for managed authentication, follow t
 | Post Login Path   | This represents the relative path that the application will be redirected to following a successful login. In your code, you will need to implement the necessary logic to handle the userinfo cookie set by Managed Authentication. See [ Handling user info post-login](#handling-user-info-post-login)       | /                      |
 | Post Logout Path  | The relative path to which Choreo redirects after a successful logout.  | /                      |
 | Error Path        | The relative path to which Choreo redirects to if an error occurs during a redirection-based flow (i.e. Login, Logout). See [Custom Error Page](#custom-error-page)             | Builtin error page     |
+| Session Expiry Time | The time in minutes after which the user session expires. For a seamless experience, the session expiry value should match the refresh token expiry time of the OIDC application in your Identity Provider.               | 10080 Minutes (7 Days)                   |
 | Additional Scopes | All additional scopes required by the web application. The following scopes will be added by default. `openid`, `profile`, `email`, and scopes required to invoke subscribed APIs.               | none                   |
 
+!!! note
+    If you need to change these configurations after deployment, you can do so by clicking on the **Authentication Settings** button on the **Set Up** card.
 
 ## Step 4.a: Manage OAuth Keys with Choreo Built-in Identity Provider
 
