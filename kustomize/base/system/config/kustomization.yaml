@@ -196,7 +196,7 @@ configMapGenerator:
       - REGISTRY_PROJECT_ID=global
       - CLOUD_MANAGER_API_URL=http://dp-cloud-manager
       - RUDDER_API_URL=http://dp-rudder
-      - RESILIENT_INVOKER_URL=http://cp-rrs:9090
+      - RESILIENT_INVOKER_URL=http://cp-rrs:9095
       - CICD_SERVICE_URL=http://dp-cicd
       - STATUS_INFO_SERVICE_URL=http://cp-sis:9091
       - AZURE_LOGS_TABLE=GithubWorkflowLogs
