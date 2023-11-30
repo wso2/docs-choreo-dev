@@ -1,10 +1,3 @@
--- Create database
-IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'choreo_url_mgt_db')
-    BEGIN
-        CREATE DATABASE choreo_url_mgt_db;
-    END
-GO
-
 -- Create User
 IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_url_mgt_db_user')
 BEGIN
