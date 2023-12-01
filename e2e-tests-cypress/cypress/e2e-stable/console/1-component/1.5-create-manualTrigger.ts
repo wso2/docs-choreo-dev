@@ -15,6 +15,7 @@ import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
 import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { GraphQL } from "../../../support/console/apis/graphql";
+import { ComponentBuild } from "../../../support/console/pages/component/Functionalities/Component-build";
 import { ComponentExecutePage } from "../../../support/console/pages/component/UI-components/Component-execute-page";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
@@ -67,11 +68,21 @@ describe("Verify manual trigger creation functionality", () => {
 
   it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(MANUAL_NAME);
+    if (Utils.isBuildDeployEnabled()) {
+      ComponentOverviewPage.navigateToBuild();
+      ComponentBuild.buildComponent();
+    }
     ComponentOverviewPage.navigateToDeploy();
   });
 
   it("Verify component deployment", () => {
-    ComponentDeployPage.deployToDevWithoutSplitButton(PROJECT_NAME,MANUAL_NAME,false, false, true);
+    ComponentDeployPage.deployToDevWithoutSplitButton(
+      PROJECT_NAME,
+      MANUAL_NAME,
+      false,
+      false,
+      true
+    );
   });
 
   it("Verify component promotion to prod", () => {
@@ -89,5 +100,4 @@ describe("Verify manual trigger creation functionality", () => {
     ComponentExecutePage.selectEnvironment(Enums.Environment.PRODUCTION);
     ComponentExecutePage.verifyExecution();
   });
-
 });

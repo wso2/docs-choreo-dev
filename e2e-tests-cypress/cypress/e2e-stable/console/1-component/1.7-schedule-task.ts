@@ -25,6 +25,7 @@ import { GitHub } from "../../../support/github/github";
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
 import { MEDIUM_TIME, SHORT_TIME } from "../../../support/commons/timeouts";
+import { ComponentBuild } from "../../../support/console/pages/component/Functionalities/Component-build";
 
 describe("Create Schedule Trigger", () => {
   const SCHEDULE_NAME = Utils.generateComponentName();
@@ -75,6 +76,10 @@ describe("Create Schedule Trigger", () => {
 
   it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(SCHEDULE_NAME);
+    if (Utils.isBuildDeployEnabled()) {
+      ComponentOverviewPage.navigateToBuild();
+      ComponentBuild.buildComponent();
+    }
     ComponentOverviewPage.navigateToDeploy();
   });
 
@@ -89,7 +94,7 @@ describe("Create Schedule Trigger", () => {
   it("Verify navigate to observability Page", () => {
     ComponentOverviewPage.navigateToObserve(MEDIUM_TIME.timeout);
   });
-  
+
   it("Verify dev env logs", () => {
     ComponentObservePage.selectEnv(Enums.Environment.DEVELOPMENT);
     ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT);

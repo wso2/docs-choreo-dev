@@ -1,4 +1,5 @@
 resources:
+  - cert-manager
   - choreo-ai
   - keda
   - choreo-observability

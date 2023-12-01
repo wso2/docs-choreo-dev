@@ -1,0 +1,31 @@
+[choreo.choreo_url_management.configs]
+portOffset = 0
+cpGatewayJwtIssuer = "{{.CHOREO_CP_GATEWAY_ISSUER}}"
+choreoJwtAudience = "{{.CHOREO_JWT_AUDIENCE}}"
+cpGatewayJWKSUrl = "{{.CHOREO_CP_GATEWAY_JWKS_URL}}"
+cloudManagerUrl = "http://dp-cloud-manager:80"
+apimUrl = "{{.CHOREO_APIM_URL}}"
+mizzenUrl = "http://dp-mizzen:80/api/v1"
+secretManagerUrl = "http://dp-secret-manager:80/api/v1/secrets"
+hcCachedTimeDuration = 30000
+devportalCname = "{{.DEVPORTAL_CNAME}}"
+devportalUpstreamHost = "{{.DEVPORTAL_UPSTREAM_SERVICE_NAME}}"
+devportalIngressClusterId = "{{.DEVPORTAL_INGRESS_CLUSTER_ID}}"
+cacheDefaultMaxAge = 3600.0
+cacheCapacity = 100
+cacheEvictionFactor = 0.1
+cacheCleanUpInterval = 1800.0
+enableLocalMode = false
+httpClientTimeout = 10.0
+retryInterval = 1.0
+retryCount = 3
+retryBackOffFactor = 2.0
+
+[choreo.choreo_url_management.db]
+port = 1433
+host = "{{.DATABASE_HOST}}"
+user = "choreo_url_mgt_db_user"
+database = "choreo_url_mgt_db"
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"

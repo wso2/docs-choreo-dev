@@ -38,6 +38,9 @@ helmCharts:
     namespace: cert-manager
     repo: oci://choreocontrolplane.azurecr.io/helm
 
+resources:
+  - namespace.yaml
+
 commonAnnotations:
   checkov.io/skip1: CKV_K8S_AZURE_WSO2_2=Managed by cert-manager
   checkov.io/skip2: CKV_K8S_6=Managed by cert-manager
