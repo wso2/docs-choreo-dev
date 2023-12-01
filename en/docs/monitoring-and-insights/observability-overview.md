@@ -2,6 +2,9 @@
 
 Observability in Choreo provides the capability to visualize and monitor the performance of services deployed on Choreo. Choreo has built-in support for viewing the overall status, latencies, throughput data,  diagnostic data, and logs. Hence, you can use Choreo Observability to detect and troubleshoot anomalies in your services efficiently. 
 
+!!! tip
+    If you are a Choreo private data plane customer and you want to observe your private data plane using New Relic, see [Observing Choreo Private Data Planes With New Relic](https://wso2.com/blogs/thesource/observing-choreo-private-data-planes-with-new-relic/).
+
 ## Dashboard
 The Choreo Observability dashboard gives you more than one way to monitor your services. This section introduces the dashboards.
 

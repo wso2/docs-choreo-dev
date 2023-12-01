@@ -17,7 +17,7 @@ This guide walks you through the following steps:
 
 Before you try out this guide, complete the following:
 
-1. Create a GitHub repository to save the service implementation. For this guide, you can fork [https://github.com/wso2/choreo-examples](https://github.com/wso2/choreo-examples).
+1. Create a GitHub repository to save the service implementation. For this guide, you can fork [https://github.com/wso2/choreo-samples](https://github.com/wso2/choreo-samples).
 2. If you are signing in to the Choreo Console for the first time, create an organization as follows:
 
     1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
@@ -60,7 +60,7 @@ Follow the steps given below to create a mono repository project:.
 4. Select **Mono Repository**.
 5. Click **Next**.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
-7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-examples](https://github.com/wso2/choreo-examples) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-samples](https://github.com/wso2/choreo-samples) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only needed to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
@@ -70,7 +70,7 @@ Follow the steps given below to create a mono repository project:.
     | **Field**             | **Value**                                     |
     |-----------------------|-----------------------------------------------|
     | **GitHub Account**    | Your account                                  |
-    | **GitHub Repository** | **`choreo-examples`**                         |
+    | **GitHub Repository** | **`choreo-samples`**                         |
     | **Branch**            | **`main`**                                    |
 
 9. Click **Next**. This scans the repository branch you connected and displays the components that are already available in it.
@@ -87,7 +87,9 @@ Follow the steps given below to create a mono repository project:.
     | **Component Type**    | **Service**                                   |
 
 3. Click **Save**. You will see that the status of the `Reading List Service` component has changed to **Configured** and the checkbox to select the component is enabled.
-4. Select the `Reading List Service` component and click **Create**. This initializes the service with the implementation from your GitHub repository and takes you to the **Overview** page of the component.   
+4. Select the `Reading List Service` component and click **Create**. This creates a mono repository project, initializes the service with the implementation from your GitHub repository, and takes you to the project home page.
+
+    You can see the `Reading List Service` component listed under **Component Listing** on the project home page.
 
 ## Step 2: Deploy the service
 

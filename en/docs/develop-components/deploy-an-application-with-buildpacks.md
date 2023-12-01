@@ -1,6 +1,6 @@
 # Deploy an Application with Buildpacks
 
-Using Choreo, you can easily deploy applications written in different language frameworks (such as Java, Go, NodeJS, Python, Ruby, PHP etc.) on shared or private data planes.
+Using Choreo, you can easily deploy applications written in different language frameworks (such as Java, Go, NodeJS, Python, Ruby, PHP, etc.) on shared or private data planes.
 
 Choreo supports deploying applications with buildpacks for the following component types:
 
@@ -15,64 +15,220 @@ Choreo supports deploying applications with buildpacks for the following compone
 ## Buildpacks
 Buildpacks are a fundamental building block in modern application development. They convert your source code into a secure, efficient, production-ready container image without a Dockerfile. With Choreo, developers can take advantage of this powerful tool to effortlessly deploy their applications without the hassle of manual configuration.
 
-Choreo uses [Google Buildpacks](https://cloud.google.com/docs/buildpacks/overview) as default buildpacks for Java, Go, NodeJS, Python, PHP and Ruby. Choreo uses its own buildpacks for Ballerina and WSO2 MI.
-
-## Language Specific Details
-
-In Choreo, for a project to be detected as a given language project, at least one of the required files should be in the project directory.
-
-| Language | Supported Versions    | Required Files             |
-|----------|-----------------------|----------------------------|
-| Ballerina | 2201.3.5, 2201.4.1, 2201.5.0, 2201.5.1, 2201.6.0, 2201.7.0 | `Ballerina.toml`|
-| Java     | 8, 11, 17, 18 (OpenJDK Runtime Environment Temurin) | `pom.xml`, `*.java`, `build.gradle`, `build.gradle.kts` |
-| Go       | 1.x | `go.mod`, `*.go` |
-| NodeJS   | 12.x.x, 14.x.x, 16.x.x, 18.x.x, 20.x.x | `package.json`, `*.js` |
-| Python   | 3.10.x, 3.11.x | `requirements.txt`, `*.py` |
-| Ruby     | 3.1.x, 3.2.x | `Gemfile`, `*.rb` |
-| PHP      | 8.1.x, 8.2.x | `composer.json`, `*.php` |
-| WSO2 MI | 4.1.0.x, 4.2.0.x |`pom.xml`|
-
-!!! info
-    1. For Python, it is mandatory to have a [Procfile](#procfile) in project root directory.
-
-    2. For Java, Main class should be defined in the Manifest.
+Choreo uses [Google Buildpacks](https://cloud.google.com/docs/buildpacks/overview) as default buildpacks for Java, Go, NodeJS, Python, PHP, and Ruby. Choreo uses its own buildpacks for Ballerina and WSO2 MI.
 
 
 ## Develop a component
 
 To develop a service component that exposes a REST API in Go. you can follow the [Develop a Go REST API ](develop-services/develop-a-go-rest-api.md) guide.
 
-Refer below examples for other component types and buildpacks. Follow the readme.md inside the example.
+Follow the guidelines below based on your language:
 
-| Component Type | Buildpack   | Example            |
-|----------------|-------------|--------------------|
-| Service        |  Java | *[Product Management Service](https://github.com/wso2/choreo-samples)|
-| Service| Python | *[Reading List Service](https://github.com/wso2/choreo-samples)|
-| Service| NodeJS | *[Reading List Service](https://github.com/wso2/choreo-samples)|
-| Service| Ballerina | [Echo Service](https://github.com/wso2/choreo-samples/tree/main/echo-service)|
-| Service | WSO2 MI | [Hello World Service](https://github.com/wso2/choreo-samples/tree/main/hello-world-mi)|
-| Service | Ruby | *[Hello World Service](https://github.com/wso2/choreo-samples)|
-| Web Application | PHP | *[Hello World Web App](https://github.com/wso2/choreo-samples)|
-| Manual Task | Go | *[Hello World Task](https://github.com/wso2/choreo-samples)|
-| Manual Task | Ballerina | [Covid19 Statistics To Email](https://github.com/wso2/choreo-samples/tree/main//covid19-statistics-to-email)|
-| Manual Task | Java | *[Hello World Task](https://github.com/wso2/choreo-samples)|
+=== "Python"
+    Supported Versions - 3.10.x, 3.11.x
 
-`*` Samples are not added yet.
+    Refer below examples for different component types. Follow the `readme.md` inside the example.
 
-Refer [choreo samples](https://github.com/wso2/choreo-samples) for more examples.
+    | Component Type  | Example            |
+    |---------------- |--------------------|
+    | Service| [Reading Books List Service](https://github.com/wso2/choreo-samples/tree/main/reading-books-list-service-python)|
+    | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-python-task)|
 
-## Procfile
+    ### Procfile
+    A `Procfile` is a configuration file used to declare the commands that are run by your application's containers. 
+    
+    !!! info 
+        In **Python** projects, it is mandatory to have a `Procfile` with the `web` process type in the project root directory.
 
-A `Procfile` is a configuration file used to declare what commands are run by your application's containers. It is mandatory to have a Procfile for `Python`. For other buildpacks(Java, PHP, NodeJS, Ruby and Go), you can add a Procfile if you want to override the default entrypoint of the container. Procfile should be located in project root directory.
+    Here's an example `Procfile` for an application:
 
-Here's an example `Procfile` for an application:
+    ```
+    web: <command to start your application>
+    ```
 
-```
-web: <command to start your application>
-```
+    Eg:-
 
-Eg:-
+    `web: python main.py` <br>
+    `web: gunicorn --bind :8080 --workers 1 --threads 8 --timeout 0 main:app` <br>
+    `web: flask run --host=0.0.0.0`
 
-Python - `web: python main.py` <br>
-Go - `web: go run main.go` <br>
-Java - `web: java -jar target/sample.jar` <br>
+    For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
+
+=== "Ballerina"
+
+    Supported Versions - 2201.3.5, 2201.4.1, 2201.5.0, 2201.5.1, 201.6.0,  2201.7.0
+
+    Refer below examples for different component types. Follow the `readme.md` inside the example.
+
+    | Component Type  | Example            |
+    |---------------- |--------------------|
+    | Service| [Echo Service](https://github.com/wso2/choreo-samples/tree/main/echo-service)|
+    | Manual Task | [Covid19 Statistics To Email](https://github.com/wso2/choreo-samples/tree/main//covid19-statistics-to-email)|
+    | Webhook | [Salesforce New Case To Google Sheet](https://github.com/wso2/choreo-samples/tree/main/sfdc-new-case-to-gsheet)|
+    | Scheduled Task | [Shopify New Customers to HubSpot Create/Update Contact](https://github.com/wso2/choreo-samples/tree/main/shopify-new-customers-to-hubspot-contact)|
+
+    For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
+
+=== "Go"
+
+    Supported Versions - 1.x
+
+    Refer below examples for different component types. Follow the `readme.md` inside the example.
+
+    | Component Type  | Example            |
+    |---------------- |--------------------|
+    | Service| [Greeting Service](https://github.com/wso2/choreo-samples/tree/main/greeting-service-go)|
+    | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-go-task)|
+    | Web Application | [Hello World Web Application](https://github.com/wso2/choreo-samples/tree/main/hello-world-go-webapp)|
+
+    #### Procfile 
+
+    A `Procfile` is a configuration file used to declare the commands that are run by your application's containers. 
+    If you want to customize the default entry point of the container, you can include a `Procfile` with the `web` process type in the project root directory. 
+    In **Go** projects, it is optional to include a `Procfile`.
+
+    Here's an example `Procfile` for an application:
+
+    ```
+    web: <command to start your application>
+    ```
+
+    Eg:-
+
+    `web: go run main.go` <br>
+
+    For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
+
+=== "Java"
+    Supported Versions
+        - 8, 11, 17, 18 (OpenJDK Runtime Environment Temurin)
+
+    Refer below examples for different component types. Follow the `readme.md` inside the example.
+
+    | Component Type  | Example            |
+    |---------------- |--------------------|
+    | Service| [Product Management Service](https://github.com/wso2/choreo-samples/tree/main/product-management-service)|
+    | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-java-task)|
+
+    !!! info
+
+         When working on Java projects:
+
+           - The `Main` class should be defined in the manifest file.
+           - If Maven files such as `mvn.cmd` exist in the project without the `.mvn` directory, the build will fail. To ensure a successful build, you must either commit the `.mvn` directory along with any Maven files or not include any Maven files in the project if you choose not to commit the `.mvn` directory.
+    
+    #### Procfile 
+
+    A `Procfile` is a configuration file used to declare the commands that are run by your application's containers. 
+    If you want to customize the default entry point of the container, you can include a `Procfile` with the `web` process type in the project root directory. 
+    In **Java** projects, it is optional to include a `Procfile`.
+
+    Here's an example `Procfile` for an application:
+
+    ```
+    web: <command to start your application>
+    ```
+
+    Eg:-
+
+    `web: java -jar target/sample.jar` <br>
+
+    For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
+
+=== "NodeJS"
+    Supported Versions - 12.x.x, 14.x.x, 16.x.x, 18.x.x, 20.x.x
+
+    Refer below examples for different component types. Follow the `readme.md` inside the example.
+
+    | Component Type  | Example            |
+    |---------------- |--------------------|
+    | Service| [Reading Books List Service](https://github.com/wso2/choreo-samples/tree/main/reading-books-list-service-nodejs)|
+    | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-nodejs-task)|
+
+    #### Procfile 
+
+    A `Procfile` is a configuration file used to declare the commands that are run by your application's containers. 
+    If you want to customize the default entry point of the container, you can include a `Procfile` with the `web` process type in the project root directory. 
+    In **NodeJS** projects, it is optional to include a `Procfile`.
+
+    Here's an example `Procfile` for an application:
+
+    ```
+    web: <command to start your application>
+    ```
+
+    Eg:-
+
+    `web: node app.js` <br>
+
+    For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
+
+=== "PHP"
+    Supported Versions - 8.1.x, 8.2.x
+
+    Refer below examples for different component types. Follow the `readme.md` inside the example.
+
+    | Component Type  | Example            |
+    |---------------- |--------------------|
+    | Service| [Hello World Service](https://github.com/wso2/choreo-samples/tree/main/hello-world-php-service)|
+    | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-php-task)|
+    | Web Application | [Hello World Web Application](https://github.com/wso2/choreo-samples/tree/main/hello-world-php-webapp)|
+
+    #### Procfile 
+
+    A `Procfile` is a configuration file used to declare the commands that are run by your application's containers. 
+    If you want to customize the default entry point of the container, you can include a `Procfile` with the `web` process type in the project root directory. 
+    In **PHP** projects, it is optional to include a `Procfile`.
+
+    Here's an example `Procfile` for an application:
+
+    ```
+    web: <command to start your application>
+    ```
+
+    Eg:-
+
+    `web:php -S 0.0.0.0:8000 index.php` <br>
+
+    For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
+
+=== "Ruby"
+    Supported Versions - 3.1.x, 3.2.x
+
+    Refer below examples for different component types. Follow the `readme.md` inside the example.
+
+    | Component Type  | Example            |
+    |---------------- |--------------------|
+    | Service | [Hello World Service](https://github.com/wso2/choreo-samples/tree/main/hello-world-ruby-service)|
+    | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-ruby-task)|
+    | Web Application | [Hello World Web Application](https://github.com/wso2/choreo-samples/tree/main/hello-world-ruby-webapp)|
+
+    #### Procfile 
+
+    A `Procfile` is a configuration file used to declare the commands that are run by your application's containers. 
+    If you want to customize the default entry point of the container, you can include a `Procfile` with the `web` process type in the project root directory. 
+    In **Ruby** projects, it is optional to include a `Procfile`.
+
+    Here's an example `Procfile` for an application:
+
+    ```
+    web: <command to start your application>
+    ```
+
+    Eg:-
+
+    `web: ruby app.rb` <br>
+    `web:bundle exec ruby app.rb -p 8080` <br>
+
+    For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
+
+=== "WSO2 MI"
+    Supported Versions - 4.1.0.x, 4.2.0.x
+
+    Refer below examples for different component types. Follow the `readme.md` inside the example.
+
+    | Component Type  | Example            |
+    |---------------- |--------------------|
+    | Service |[Hello World Service](https://github.com/wso2/choreo-samples/tree/main/hello-world-mi)|
+
+    For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).

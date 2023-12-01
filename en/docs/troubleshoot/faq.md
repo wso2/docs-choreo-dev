@@ -32,6 +32,9 @@ You can find information about our support plans, including `free`, `basic`, and
 ### Q: How can I perform log monitoring or analytics for the Azure environment?
 If you have a log monitoring product or service, such as Azure Monitor, you can use it together with Choreo. Note: The log monitoring tool is not included in the infrastructure cost.
 
+### Q: What is the maximum request payload size supported by Choreo?
+Choreo allows a maximum request payload size of 10 MB. 
+
 ### Q: What source control software does Choreo support?
 Choreo currently supports GitHub and Bitbucket. Support for GitLab is on our roadmap. 
 
@@ -53,12 +56,14 @@ This is a detailed list of all subprocessors used by WSO2, including their name,
 WSO2 uses a range of security controls and design patterns to protect against several threats, including internal attacks, software supply chain attacks, service and platform attacks, and more. Find out more regarding this [here](https://wso2.cachefly.net/wso2/sites/all/2023/pdf/securing-wso2-private-and-public-clouds.pdf).
 
 ### Q: How can I connect a Choreo component with a protected third-party application?
-To connect your Choreo component with a protected third-party application, add the following public IP ranges to the allowlist. These IP ranges are assigned by Choreo as client IPs:
+To connect a Choreo component with a third-party application, it is necessary to establish seamless communication between the component and the protected third-party application, especially when connecting to external databases like MySQL, MSSQL, PGSQL, Oracle DB, etc.
+To ensure this, the requests coming from the Choreo data plane must be allowed by adding the specific data plane IP ranges to your allowlist.
 
- - 20.22.170.144/28
- - 20.22.170.176/28
+- If your component is deployed in the Choreo US data plane, add the following IP range to your allowlist:
+    - 20.22.170.144/28
 
-By including these IP ranges, you ensure that Choreo can establish a secure connection and overcome any firewall restrictions. This enables seamless communication between your Choreo component and the protected third-party application, especially when using connectors for external databases like MySQL, MSSQL, PGSQL, Oracle DB, etc.
+- If your component is deployed in the Choreo EU data plane, add the following IP range to your allowlist:
+    - 20.166.183.112/28
 
 ## Data planes
 

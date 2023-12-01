@@ -57,13 +57,13 @@ You can invoke the API/service using the credentials you created above. Since Ch
 In this guide, you will be using the following product and examples:
 
 -  WSO2 Asgardeo as the IdP
-- [choreo-examples/cloud-native-app-developer/reading-list-front-end](https://github.com/wso2/choreo-examples/tree/main/cloud-native-app-developer/reading-list-front-end) as the web application. This is a React SPA that invokes the service using Axios. This web application is configured to read the
-[choreo-examples/cloud-native-app-developer/reading-list-service/](https://github.com/wso2/choreo-examples/tree/main/cloud-native-app-developer/reading-list-service) as the service. You can modify this web application to read your service, or [deploy the choreo-examples/cloud-native-app-developer/reading-list-service/](https://wso2.com/choreo/docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo/#step-1-create-a-service-component-and-publish-it-as-a-rest-api) in Choreo and use it. 
+- [choreo-samples/reading-list-app/frontend](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/frontend) as the web application. This is a React SPA that invokes the service using Axios. This web application is configured to read the
+[choreo-samples/reading-list-app/backend/](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/backend) as the service. You can modify this web application to read your service, or [deploy the choreo-samples/reading-list-app/backend/](https://wso2.com/choreo/docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo/#step-1-create-a-service-component-and-publish-it-as-a-rest-api) in Choreo and use it. 
 
 ### Step 1: Create a web application component
 
 !!! info
-    You can use your own web application implementation in place of the sample web application. For this exercise, let's use the [choreo-examples/cloud-native-app-developer/reading-list-front-end](https://github.com/wso2/choreo-examples/tree/main/cloud-native-app-developer/reading-list-front-end) as the web application.
+    You can use your own web application implementation in place of the sample web application. For this exercise, let's use the [choreo-samples/reading-list-app/frontend](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/frontend) as the web application.
 
 {% include "../quick-start-guides/create-web-application-qsg.md" %}
 

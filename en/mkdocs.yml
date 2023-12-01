@@ -78,7 +78,6 @@ nav:
       - Build Your First Cloud Native Application with Choreo: quick-start-guides/build-your-first-cloud-native-application-with-choreo.md
   - Tutorials:
       - Expose a Service as a Managed API: tutorials/expose-a-service-as-a-managed-api.md
-      - Build Your First Integration: tutorials/build-your-first-integration.md
       - Secure an API with Role-Based Access Control: tutorials/secure-an-api-with-role-based-access-control.md
   - Choreo Concepts:
       - Resource Hierarchy: choreo-concepts/resource-hierarchy.md
@@ -86,7 +85,9 @@ nav:
       - Project: choreo-concepts/project.md
       - Component: choreo-concepts/component.md
       - Endpoint: choreo-concepts/endpoint.md
+      - CI/CD: choreo-concepts/ci-cd.md
       - Deployment Tracks: choreo-concepts/deployment-tracks.md
+      - Configuration Management: choreo-concepts/configuration-management.md
       - Data Planes: choreo-concepts/data-planes.md
       - Environments: choreo-concepts/environments.md
       - Choreo Marketplace: choreo-concepts/choreo-marketplace.md
@@ -100,13 +101,14 @@ nav:
           - Develop a UDP Service: develop-components/develop-services/develop-a-udp-service.md
           - Develop a Ballerina REST API:  develop-components/develop-services/develop-a-ballerina-rest-api.md
           - Develop a Ballerina GraphQL API: develop-components/develop-services/develop-a-ballerina-graphql-api.md
-      - Develop an API Proxy: develop-components/develop-a-rest-api-proxy.md
+      - Develop an API Proxy: develop-components/develop-an-api-proxy.md
       - Develop a Web Application: develop-components/develop-a-web-application.md
       - Develop a Webhook: develop-components/develop-a-webhook.md 
       - Develop Integrations:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
-          - Develop an Event-Triggered Integration: develop-components/develop-integrations/develop-an-event-triggered-integration.md
-          - Develop a Scheduled Integration: develop-components/develop-integrations/develop-a-scheduled-integration.md 
+          - Develop an Event Handler: develop-components/develop-integrations/develop-an-event-handler.md
+          - Develop a Scheduled Task: develop-components/develop-integrations/develop-a-scheduled-task.md
+          - Develop a Manual Task: develop-components/develop-integrations/develop-a-manual-task.md
       - Work with the Micro Integrator Runtime:
           - Get Started with the Micro Integrator Runtime: develop-components/work-with-the-micro-integrator-runtime-in-choreo.md
           - Manage the Micro Integrator Runtime Version in Your Integration Project: develop-components/manage-the-micro-integrator-runtime-version-in-your-integration-project.md
@@ -115,21 +117,30 @@ nav:
       - Deploy an Application with Buildpacks: develop-components/deploy-an-application-with-buildpacks.md
       - Deploy a Containerized Application: develop-components/deploy-a-containerized-application.md  
       - Sharing and Reusing Services: develop-components/sharing-and-reusing-services.md
+      - Manage Configurations: develop-components/manage-configurations.md
       - Configure Mutual TLS Between Components: develop-components/configure-mutual-tls-between-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
+  - Choreo-Managed Databases and Caches: 
+          - Overview: manage-databases-and-caches/choreo-managed-databases-and-caches.md
+          - PostgreSQL:  manage-databases-and-caches/choreo-managed-postgresql-databases.md
+          - MySQL: manage-databases-and-caches/choreo-managed-mysql-databases.md
+          - Redis: manage-databases-and-caches/choreo-managed-redis-datastores.md
+          - Billing: manage-databases-and-caches/billing-for-platform-services.md
   - Authentication and Authorization:
-      - Pass End-User Attributes to Upstream Services: authentication-and-authorization/pass-end-user-attributes-to-upstream-services.md
       - Secure API Access with Asgardeo: authentication-and-authorization/secure-api-access-with-asgardeo.md
       - Secure API Access with Azure: authentication-and-authorization/secure-api-access-with-azure-ad.md
       - Secure Web Applications with Managed Authentication: authentication-and-authorization/secure-web-applications-with-managed-authentication.md
+      - Test Secure API Access with Choreo Built-In Security Token Service: authentication-and-authorization/test-secure-api-access-with-choreo-built-in-security-token-service.md
+      - Pass End-User Attributes to Upstream Services: authentication-and-authorization/pass-end-user-attributes-to-upstream-services.md
   - DevOps and CI/CD: 
       - Builds and Deployments: devops-and-ci-cd/builds-and-deployments.md
       - Manage Configurations and Secrets: devops-and-ci-cd/manage-configurations-and-secrets.md
       - View Runtime Details: devops-and-ci-cd/view-runtime-details.md
       - Configure Container Resources, Commands, and Arguments: devops-and-ci-cd/configure-container-resources-commands-and-arguments.md
       - Set Up Health Checks: devops-and-ci-cd/set-up-health-checks.md
-      - Autoscale Component Replicas: devops-and-ci-cd/autoscale-component-replicas.md
+      - Autoscale:
+        - Autoscale Component Replicas: devops-and-ci-cd/autoscale/autoscale-component-replicas.md
       - Configure Storage: devops-and-ci-cd/configure-storage.md
       - Manage Environments: devops-and-ci-cd/manage-environments.md
   - Testing: 
@@ -138,6 +149,7 @@ nav:
       - Test APIs with cURL: testing/test-apis-with-curl.md
       - Test APIs using Postman: testing/test-apis-using-postman.md
       - Test APIs with Choreo API Chat: testing/test-apis-with-choreo-apichat.md
+      - Test Components with Test Runner: testing/test-components-with-test-runner.md
   - Consuming Services:
       - Consume a Service: consuming-services/consuming-a-sevice.md
       - Manage Application: consuming-services/manage-application.md
@@ -169,10 +181,12 @@ nav:
       - Configure an External IdP:
           - Configure Asgardeo as an External IdP: administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md
           - Configure Azure as an External IdP: administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp.md
+      - Configure a User Store with the Built-In Identity Provider: administer/configure-a-user-store-with-built-in-idp.md
       - Developer Portal:
           - Customize the Developer Portal: administer/customize-the-developer-portal.md
           - Configure Self-Sign-Up: administer/configure-self-sign-up.md
           - Customize the Developer Portal Domain: administer/customize-the-developer-portal-domain.md
+
   - Troubleshoot:
       - FAQ: troubleshoot/faq.md
 # Extensions
@@ -317,7 +331,13 @@ plugins:
           'monitoring-and-insights/engineering-insights/configure-cio-dashboard.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/delivery-insights/configure-dora-metrics/'
           'monitoring-and-insights/engineering-insights/view-dora-metrics.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/delivery-insights/view-dora-metrics/'
           'monitoring-and-insights/view-api-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/usage-insights/'
+          'devops-and-ci-cd/autoscale-component-replicas.md': 'https://wso2.com/choreo/docs/devops-and-ci-cd/autoscale/autoscale-component-replicas'
           'testing/test-apis-with-choreo-testgpt.md': 'https://wso2.com/choreo/docs/testing/test-apis-with-choreo-apichat/'
+          'develop-integrations/develop-an-event-triggered-integration.md': 'https://wso2.com/choreo/docs/develop-components/develop-integrations/develop-an-event-handler/'
+          'develop-integrations/develop-a-scheduled-integration.md': 'https://wso2.com/choreo/docs/develop-components/develop-integrations/develop-a-scheduled-task/'
+          'develop-components/develop-a-rest-api-proxy.md': 'https://wso2.com/choreo/docs/develop-components/develop-an-api-proxy/'
+          'devops-and-ci-cd/builds-and-deployments.md' : 'https://wso2.com/choreo/docs/choreo-concepts/ci-cd/'
+          
 extra_css:
   # - assets/lib/highlightjs/default.min.css
   # - assets/css/theme.css

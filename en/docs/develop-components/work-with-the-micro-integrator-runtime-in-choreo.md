@@ -8,10 +8,10 @@ The topics on this page walk you through the key aspects you need to understand 
 
 Choreo supports the following WSO2 MI integrations that cater to different use cases and requirements. Each integration type serves a specific purpose. Therefore, it is essential to understand their differences to easily choose the most appropriate integration for your use case.
 
-- **Integration as an API**: Exposes an integration as an API via HTTP, making it possible to create a RESTful interface for your integration services. This type is ideal for scenarios where you need to provide an API for external systems or clients to interact with your integration.
-- **Event-triggered integration**: Triggers an integration based on external events such as messages arriving on a queue or updates in a database. This type is well-suited for implementing event-driven architectures or responding to changes in your system's environment.
-- **Scheduled integration**: Runs an integration automatically at predefined time intervals, ensuring that specific integration tasks occur at regular intervals. This type is ideal for batch processing, data synchronization, or periodic maintenance tasks.
-- **Manually-triggered integration**: Initiates an integration via user action, giving you full control over when the integration executes. This type is useful for on-demand tasks, testing, or debugging purposes.
+- **Service**: Exposes an integration as an API via HTTP, making it possible to create a RESTful interface for your integration services. This type is ideal for scenarios where you need to provide an API for external systems or clients to interact with your integration.
+- **Event Handler**: Triggers an integration based on external events such as messages arriving on a queue or updates in a database. This type is well-suited for implementing event-driven architectures or responding to changes in your system's environment.
+- **Scheduled Task**: Runs an integration automatically at predefined time intervals, ensuring that specific integration tasks occur at regular intervals. This type is ideal for batch processing, data synchronization, or periodic maintenance tasks.
+- **Manual Task**: Initiates an integration via user action, giving you full control over when the integration executes. This type is useful for on-demand tasks, testing, or debugging purposes.
 
 ## Develop integrations with WSO2 Integration Studio
 
@@ -242,13 +242,11 @@ For more information, see the following topics in the WSO2 API Manager documenta
 
 ## Explore Choreo examples on GitHub
 
-For a hands-on experience with MI-based integrations in Choreo, we recommend exploring our GitHub repository filled with practical code examples.
+For a hands-on experience with MI-based integrations in Choreo, we recommend exploring our samples in Choreo Console. You can filter out the samples based on the buildpack `WSO2 MI`. This will point you to the samples in the [Choreo samples GitHub repository](https://github.com/wso2/choreo-samples)
 
-### [Choreo examples - GitHub Repository](https://github.com/wso2/choreo-examples)
+### [Choreo samples - GitHub Repository](https://github.com/wso2/choreo-samples)
 
-- **Fork & clone**: Start by forking the repository to your account. Once forked, clone your fork to your local machine.
-   ```
-   git clone https://github.com/wso2/choreo-examples.git
-   ```
-- **Explore & run**: Navigate through the different integration scenarios under the `integrations/micro-integrator` subdirectory. Each example has a README.md with setup and execution instructions.
+- **Fork the Repository**: Start by forking the repository to your account.
+
+- **Explore & run**: Navigate through the different integration scenarios. Each example has a README.md with setup and execution instructions.
 

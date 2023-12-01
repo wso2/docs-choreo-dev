@@ -1,13 +1,20 @@
 >
 Choreo
 OpenWeatherMap
+choreo-samples
+intra-project
 json
 recipientAddress
 apiKey
 DockerHub
+Quickstart
+Entra
+AzureAD
 buildpack
 buildpacks
 Temurin
+RabbitMQ
+SalesOrderQueue
 1.x
 12.x.x
 14.x.x 
@@ -84,6 +91,7 @@ Petstore
 build-your-first-cloud-native-application-with-choreo
 expose-a-service-as-a-managed-api
 build-your-first-integration
+configure-a-user-store-with-built-in-idp
 devops-and-ci-cd
 autoscale-component-replicas
 test-rest-endpoints-via-the-openapi-console
@@ -99,6 +107,7 @@ subpath
 codebase
 libs
 work-with-the-micro-integrator-runtime-in-choreo
+test-secure-api-access-with-choreo-built-in-security-token-service
 project.md
 component.md
 endpoint.md
@@ -659,6 +668,8 @@ configure-an-external-idp
 configure-asgardeo-as-an-external-idp
 configure-azure-ad-as-an-external-idp
 test-apis-with-choreo-apichat
+ci-cd
+autoscale
  - theme/material/templates/home-page.html
 doctype
 html
@@ -801,9 +812,6 @@ findByStatus
  - docs/authentication-and-authorization/secure-api-access-with-asgardeo.md
 x-www-form-urlencoded
  - docs/authentication-and-authorization/secure-api-access-with-azure-ad.md
-Quickstart
-Entra
-AzureAD
  - docs/administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md
 identity-as-a-soluton
  - docs/testing/test-apis-with-choreo-apichat.md
@@ -814,3 +822,15 @@ Postgres
  - docs/authentication-and-authorization/secure-web-applications-with-managed-authentication.md
 userinfo
 choreo-apis
+ - docs/administer/configure-in-built-idp.md
+Uploader
+ - docs/choreo-concepts/configuration-management.md
+reusability
+ - docs/devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero.md
+intra-project
+x-choreo-project-ns
+userinfo
+choreo-apis
+ - docs/administer/configure-a-user-store-with-built-in-idp.md
+Uploader
+built-in
