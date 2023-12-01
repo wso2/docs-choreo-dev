@@ -84,7 +84,11 @@ spec:
             - name: secret-dp-garbage-collector
               mountPath: "/mnt/csi/secret-dp-garbage-collector"
               readOnly: true
+            - name: npm-cache
+              mountPath: /.npm
       volumes:
+        - name: npm-cache
+          emptyDir: {}
         - name: secret-dp-garbage-collector
           csi:
             driver: secrets-store.csi.k8s.io
