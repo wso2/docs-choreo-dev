@@ -4,3 +4,4 @@ resources:
   - choreo-observability
   - csi-secret-store-driver
   - keda
+  - reloader
