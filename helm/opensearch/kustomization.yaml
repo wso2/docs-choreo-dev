@@ -1,118 +1,118 @@
 helmCharts:
-- name: opensearch
-  releaseName: opensearch
-  namespace: choreo-observability
-  version: 2.13.2
-  repo: oci://choreocontrolplane.azurecr.io/helm
-  valuesInline:
-    ## Please refer https://github.com/opensearch-project/helm-charts/blob/main/charts/opensearch/values.yaml for details
-    ## about these values
+  - name: opensearch
+    releaseName: opensearch
+    namespace: choreo-observability
+    version: 2.13.2
+    repo: oci://choreocontrolplane.azurecr.io/helm
+    valuesInline:
+      ## Please refer https://github.com/opensearch-project/helm-charts/blob/main/charts/opensearch/values.yaml for details
+      ## about these values
 
-    extraEnvs:
-    - name: OPENSEARCH_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: opensearch-password
-          key: password
-    
-    extraInitContainers:
-    - name: set-vm-max-map-count
-      image: choreocontrolplane.azurecr.io/busybox@sha256:98de1ad411c6d08e50f26f392f3bc6cd65f686469b7c22a85c7b5fb1b820c154
-      securityContext:
-        capabilities:
-          drop:
-          - ALL
-        privileged: true
-        readOnlyRootFilesystem: true
-        runAsUser: 0
-      command: ['sh', '-c', 'sysctl -w vm.max_map_count=262144']
-      resources:
+      extraEnvs:
+        - name: OPENSEARCH_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: opensearch-password
+              key: password
+
+      extraInitContainers:
+        - name: set-vm-max-map-count
+          image: choreocontrolplane.azurecr.io/busybox@sha256:98de1ad411c6d08e50f26f392f3bc6cd65f686469b7c22a85c7b5fb1b820c154
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            privileged: true
+            readOnlyRootFilesystem: true
+            runAsUser: 0
+          command: [ 'sh', '-c', 'sysctl -w vm.max_map_count=262144' ]
+          resources:
+            limits:
+              cpu: "25m"
+              memory: "128Mi"
+            requests:
+              cpu: "25m"
+              memory: "128Mi"
+
+      extraVolumes:
+        - name: opensearch-csi-secret-store
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: opensearch
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+
+      extraVolumeMounts:
+        - name: opensearch-csi-secret-store
+          mountPath: "/mnt/csi/opensearch-csi-secret-store"
+          readOnly: true
+
+      initResources:
         limits:
           cpu: "25m"
           memory: "128Mi"
         requests:
           cpu: "25m"
           memory: "128Mi"
-    
-    extraVolumes:
-    - name: opensearch-csi-secret-store
-      csi:
-        driver: secrets-store.csi.k8s.io
-        readOnly: true
-        volumeAttributes:
-          secretProviderClass: opensearch
-        nodePublishSecretRef:
-          name: csi-secret-store-azure
-    
-    extraVolumeMounts:
-    - name: opensearch-csi-secret-store
-      mountPath: "/mnt/csi/opensearch-csi-secret-store"
-      readOnly: true
-    
-    initResources:
-      limits:
-        cpu: "25m"
-        memory: "128Mi"
-      requests:
-        cpu: "25m"
-        memory: "128Mi"
-    
-    image:
-      pullPolicy: "Always"
-      repository: "choreocontrolplane.azurecr.io/choreoipaas/choreo-opensearch"
-      tag: "dataplane-db78848ce2a7e75814d7c27530b4f329ada85c4c"
-    
-    imagePullSecrets:
-    - name: choreo-image-pull-secret
-    
-    livenessProbe:
-      periodSeconds: 30
-      timeoutSeconds: 5
-      failureThreshold: 3
-      successThreshold: 1
-      initialDelaySeconds: 30
-      tcpSocket:
-        port: 9200
-    
-    majorVersion: "2.8.0"
-    
-    opensearchJavaOpts: "-Xmx1024M -Xms1024M"
 
-    opensearchLifecycle:
-      postStart:
-        exec:
-          command:
-          - "/bin/bash"
-          - "-c"
-          - "sleep 120 && bash post-start.sh 2>&1 > /tmp/post-start.log"
-          
-    persistence:
-      image: choreocontrolplane.azurecr.io/busybox
-      imageTag: 1.36
+      image:
+        pullPolicy: "Always"
+        repository: "choreocontrolplane.azurecr.io/choreoipaas/choreo-opensearch"
+        tag: "dataplane-db78848ce2a7e75814d7c27530b4f329ada85c4c"
 
-    podAnnotations:
-      container.apparmor.security.beta.kubernetes.io/opensearch: runtime/default
-      container.apparmor.security.beta.kubernetes.io/fsgroup-volume: runtime/default
-      container.apparmor.security.beta.kubernetes.io/set-vm-max-map-count: runtime/default
-    
-    podSecurityContext:
-      seccompProfile:
-        type: RuntimeDefault
-          
-    resources:
-      limits:
-        cpu: "1000m"
-        memory: "2000Mi"
-      requests:
-        cpu: "1000m"
-        memory: "2000Mi"
-    
-    securityConfig:
-      internalUsersSecret: opensearch-internal-users
-    
-    securityContext:
-      allowPrivilegeEscalation: false
-      privileged: false
+      imagePullSecrets:
+        - name: choreo-image-pull-secret
+
+      livenessProbe:
+        periodSeconds: 30
+        timeoutSeconds: 5
+        failureThreshold: 3
+        successThreshold: 1
+        initialDelaySeconds: 30
+        tcpSocket:
+          port: 9200
+
+      majorVersion: "2.8.0"
+
+      opensearchJavaOpts: "-Xmx1024M -Xms1024M"
+
+      opensearchLifecycle:
+        postStart:
+          exec:
+            command:
+              - "/bin/bash"
+              - "-c"
+              - "sleep 120 && bash post-start.sh 2>&1 > /tmp/post-start.log"
+
+      persistence:
+        image: choreocontrolplane.azurecr.io/busybox
+        imageTag: 1.36
+
+      podAnnotations:
+        container.apparmor.security.beta.kubernetes.io/opensearch: runtime/default
+        container.apparmor.security.beta.kubernetes.io/fsgroup-volume: runtime/default
+        container.apparmor.security.beta.kubernetes.io/set-vm-max-map-count: runtime/default
+
+      podSecurityContext:
+        seccompProfile:
+          type: RuntimeDefault
+
+      resources:
+        limits:
+          cpu: "1000m"
+          memory: "2000Mi"
+        requests:
+          cpu: "1000m"
+          memory: "2000Mi"
+
+      securityConfig:
+        internalUsersSecret: opensearch-internal-users
+
+      securityContext:
+        allowPrivilegeEscalation: false
+        privileged: false
 
 commonAnnotations:
   checkov.io/skip1: CKV_K8S_37=Helm chart doesn't provide a way to fix this
@@ -122,5 +122,3 @@ commonAnnotations:
   checkov.io/skip5: CKV_K8S_40=Container enters a crashLoopBackoff when this is set. But already runs with UID 1000
   checkov.io/skip6: CKV_K8S_16=An init-container needs to run as a privileged container
 
-resources:
-- network-policy.yaml
