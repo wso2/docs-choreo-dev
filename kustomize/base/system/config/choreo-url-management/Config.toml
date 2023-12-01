@@ -11,13 +11,13 @@ hcCachedTimeDuration = 30000
 devportalCname = "{{.DEVPORTAL_CNAME}}"
 devportalUpstreamHost = "{{.DEVPORTAL_UPSTREAM_SERVICE_NAME}}"
 devportalIngressClusterId = "{{.DEVPORTAL_INGRESS_CLUSTER_ID}}"
-cacheDefaultMaxAge = 3600
+cacheDefaultMaxAge = 3600.0
 cacheCapacity = 100
 cacheEvictionFactor = 0.1
-cacheCleanUpInterval = 1800
+cacheCleanUpInterval = 1800.0
 enableLocalMode = false
-httpClientTimeout = 10
-retryInterval = 1
+httpClientTimeout = 10.0
+retryInterval = 1.0
 retryCount = 3
 retryBackOffFactor = 2.0
 
