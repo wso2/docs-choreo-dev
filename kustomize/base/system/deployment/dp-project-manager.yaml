@@ -92,7 +92,11 @@ spec:
             - name: secret-dp-project-manager
               mountPath: "/mnt/csi/secret-dp-project-manager"
               readOnly: true
+            - name: npm-cache
+              mountPath: /home/node/.npm
       volumes:
+        - name: npm-cache
+          emptyDir: {}
         - name: secret-dp-project-manager
           csi:
             driver: secrets-store.csi.k8s.io
