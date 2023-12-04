@@ -1,4 +1,5 @@
 resources:
+  - ../../../helm/keda-core
   - rbac
 
 namespace: keda
