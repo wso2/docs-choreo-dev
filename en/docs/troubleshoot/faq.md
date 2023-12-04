@@ -50,7 +50,7 @@ If you are a Choreo cloud data plane user, you can create projects in multiple r
 If you are a private data plane user, there will be no region selector in project creation at all.
 
 ### Q: As a Cloud Data Plane user, how can I create components in multiple data planes?
-When an organization admin onboards a new organization to Choreo, the organization admin can select the preferred data plane. Choreo sets the selected data plane as the default data plane for the organization. Thereafter, all the users in the cloud data plane under the free tier will only be able to create components in the default data plane. If a free-tier user needs to create components in a different data plane, the user must get a paid subscription.
+When an organization admin onboards a new organization in Choreo, they can choose the preferred data plane. Choreo then sets the selected data plane as the default for the entire organization. Subsequently, users within the free tier of the cloud data plane can create components only in the set default data plane. If a free-tier user needs to create components in a different data plane, the user must get a paid subscription.
 
 ## Security and data protection
 
