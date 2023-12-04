@@ -60,10 +60,10 @@ helmCharts:
         resources:
           limits:
             cpu: 1000m
-            memory: 1Gi
+            memory: 2Gi
           requests:
             cpu: 100m
-            memory: 128Mi
+            memory: 512Mi
         image:
           repository: choreocontrolplane.azurecr.io/cilium/operator
           useDigest: false
