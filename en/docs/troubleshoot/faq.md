@@ -44,6 +44,14 @@ Ballerina is an open-source programming language designed for the cloud. It simp
 ### Q: What is Asgardeo?
 Asgardeo is an identity provider (IdP) that allows developers to secure access for consumers, business partners, employees, and APIs. Asgardeo is Choreo’s default IDP. To learn more, visit https://wso2.com/asgardeo/.
 
+### Q: Why don’t I see the region selector on the project creation page?
+If you are a Choreo cloud data plane user, you can create projects in multiple regions only if you have a paid subscription in Choreo. Otherwise, your projects will be created in the same region you selected when onboarding the organization.
+
+If you are a private data plane user, there will be no region selector in project creation at all.
+
+### Q: As a Cloud Data Plane user, how can I create components in multiple data planes?
+When a new organization is onboarding to Choreo, a default data plane is set for the organization by getting the preference of the org admin. Hereafter, for all the free tier cloud data plane users, they will only be able to create components in the initially selected data plane. If a free-tier user needs to create components in a different data plane, the user must get a paid subscription.
+
 ## Security and data protection
 
 ### Q: How is data managed in Choreo?
@@ -90,6 +98,20 @@ We recommend using a minimum of two (2) workload nodes to ensure high availabili
 
 ### Q: Are the Choreo control plane and data planes highly available? Are they running on multiple clusters?
 The Choreo control plane and data plane are designed for high availability using Azure components like AKS, MSSQL, ACR, KV, Service Bus, and so on, with a high availability of 99.99%, which allows at least three workload nodes. In the event of a node failure or upgrade, this setup provides reliable failover. WSO2 also has a backup and recovery strategy in place, including continuous restore drills. If you require AKS cluster-level redundancy, we can consider multiple zones. In this case, the cost will include an additional infrastructure cost.
+
+## Environments
+
+### Q: As a Choreo cloud data plane user, why can't I create environments?
+You can create environments only if you have a paid subscription in Choreo. It can be either Pay-as-you-Go (PAYG) or an Enterprise plan.
+
+### Q: I am a Pay-As-You-Go (PAYG) customer using the Choreo cloud data plane. How many environments can I create?
+You can create up to 5 environments at the organization level, including the existing Development & Production environments by default. If you have projects in both data planes (US & EU), there will be 4 environments already created, and you are allowed to create only one additional environment either in the US or EU data plane.
+
+### Q: As a Choreo cloud data plane user, why don’t I see both US & EU data planes in the data plane selector when creating an environment?
+You will see both US & EU data planes only if you have a paid subscription and have created projects in both US & EU data planes.
+
+### Q: I am a customer who use Choreo in a private data plane. How many environments can I create?
+You will initially get any number of environments as you requested when setting up your private data plane, and later on, you will be able to create as many environments as you need.
 
 ## Billing and support
 
