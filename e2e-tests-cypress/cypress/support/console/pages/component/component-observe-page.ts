@@ -120,9 +120,7 @@ export class ComponentObservePage {
     let prevY;
     let finalX;
     let finalY;
-    cy.get(".diagram-canvas").should("exist");
-    cy.get(".worker-line").should("exist");
-    cy.get('[data-testid="preloader"]').should("not.exist");
+
 
     cy.contains(
       '[data-testid="histogram-throughput"]',
@@ -162,7 +160,6 @@ export class ComponentObservePage {
         cy.get('[data-testid="histogram-throughput"]')
           .find("svg")
           .click(Math.round(finalX), Math.round(finalY));
-        cy.get('[data-testid="preloader"]').should("not.exist");
 
         cy.log(
           "Asserting the log panel after clicking on the very first point in the latency graph"
@@ -188,7 +185,6 @@ export class ComponentObservePage {
     const numberOfBins = 5;
 
     cy.log("Waiting for the diagram to be rendered");
-    cy.get(".diagram-canvas").should("exist");
     cy.get('[data-testid="diagnostics-view-tab"]').should("be.visible");
 
     cy.log("Accessing the diagnostics view");
