@@ -86,7 +86,7 @@ describe(`Graphql GQL service functionality`, () => {
       PROJECT_NAME,
       COMPONENT_NAME,
       ENDPOINT_NAME,
-      true,
+      false,
       true
     );
   });

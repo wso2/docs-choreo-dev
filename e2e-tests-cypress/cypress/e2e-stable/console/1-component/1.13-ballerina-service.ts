@@ -152,14 +152,14 @@ describe("Verify Ballerina service functionality", () => {
   it("Verify new version creation and deploy to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.addNewVersion();
-    if (Utils.isBuildDeployEnabled()) {
-      ComponentOverviewPage.navigateToBuild();
-      ComponentBuild.buildComponent();
-    }
-    ComponentOverviewPage.navigateToDeploy();
   });
 
   it("Verify new version deployment", () => {
+    if (Utils.isBuildDeployEnabled()) {
+      ComponentOverviewPage.navigateToBuild();
+      ComponentBuild.buildComponent();
+      ComponentOverviewPage.navigateToDeploy();
+    }
     ComponentDeployPage.deployService(
       PROJECT_NAME,
       COMPONENT_NAME,

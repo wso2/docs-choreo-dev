@@ -16,6 +16,7 @@ import { Utils } from "../../commons/utils";
 import { GraphQLQueryBuilder } from "../../console/apis/gql-query-builder";
 import { GraphQL } from "../../console/apis/graphql";
 import { APIDeployment } from "../../console/pages/apis/api-deployment";
+import { ComponentBuild } from "../../console/pages/component/Functionalities/Component-build";
 import { ComponentDeployPage } from "../../console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../console/pages/component/component-listing-page";
 import { ComponentAPILifecycle } from "../../console/pages/component/component-manage-page";
@@ -74,11 +75,16 @@ export class DevPortalHelper {
       GraphQLQueryBuilder.getRestComponentCreationQuery
     ).then(() => {
       ComponentListingPage.visitToAComponent(API_Name);
+      if (Utils.isBuildDeployEnabled()) {
+        ComponentOverviewPage.navigateToBuild();
+        ComponentBuild.buildComponent();
+      }
       ComponentOverviewPage.navigateToDeploy();
       ComponentDeployPage.deployService(
         projectName,
         API_Name,
         this.ENDPOINT_NAME,
+        true,
         true
       );
       ComponentOverviewPage.navigateToManage();
