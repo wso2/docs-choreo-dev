@@ -50,7 +50,7 @@ If you are a Choreo cloud data plane user, you can create projects in multiple r
 If you are a private data plane user, there will be no region selector in project creation at all.
 
 ### Q: As a Cloud Data Plane user, how can I create components in multiple data planes?
-When a new organization is onboarding to Choreo, a default data plane is set for the organization by getting the preference of the org admin. Hereafter, for all the free tier cloud data plane users, they will only be able to create components in the initially selected data plane. If a free-tier user needs to create components in a different data plane, the user must get a paid subscription.
+When an organization admin onboards a new organization in Choreo, they can choose the preferred data plane. Choreo then sets the selected data plane as the default for the entire organization. Subsequently, users within the free tier of the cloud data plane can create components only in the set default data plane. If a free-tier user needs to create components in a different data plane, the user must get a paid subscription.
 
 ## Security and data protection
 
@@ -81,12 +81,6 @@ The Choreo control plane is a centralized management component that oversees and
 ### Q: What is a data plane?
 A data plane in Choreo is a computing environment designed for running customer workloads. These environments are hosted in either a dedicated cloud infrastructure owned by the customer (private data planes) or on public cloud infrastructure owned by WSO2, also known as the Choreo data plane.
 
-### Q: I am a Pay-As-You-Go (PAYG) customer using the Choreo cloud data plane. How many environments do I get?
-As a PAYG customer, you will receive two environments at no additional cost.
-
-### Q: I am an Enterprise subscription customer using the Choreo private data plane. How many environments do I get?
-As an Enterprise subscription customer, the number of environments you can use is **not** limited.  However, the more environments you use, the more resources you will consume in the data plane for the workload you deploy. This may result in higher infrastructure costs for the private data plane.
-
 ### Q: Which regions support the Choreo data plane(CDP)?
 The Choreo data plane is currently supported in the US East 2 and North Europe. However, WSO2 is planning to add support for additional regions as needed.
 
@@ -105,13 +99,16 @@ The Choreo control plane and data plane are designed for high availability using
 You can create environments only if you have a paid subscription in Choreo. It can be either Pay-as-you-Go (PAYG) or an Enterprise plan.
 
 ### Q: I am a Pay-As-You-Go (PAYG) customer using the Choreo cloud data plane. How many environments can I create?
-You can create up to 5 environments at the organization level, including the existing Development & Production environments by default. If you have projects in both data planes (US & EU), there will be 4 environments already created, and you are allowed to create only one additional environment either in the US or EU data plane.
+You can create up to 5 environments at the organization level, including the existing Development & Production environments by default. If you have projects in both data planes (US & EU), there will be 4 environments already created in total, and you will only be allowed to create one additional environment either in the US or EU data plane.
+
+### Q: I am an Enterprise subscription customer using the Choreo private data plane. How many environments do I get?
+As an Enterprise subscription customer, the number of environments you can use is **not** limited.  However, the more environments you use, the more resources you will consume in the data plane for the workload you deploy. This may result in higher infrastructure costs for the private data plane.
 
 ### Q: As a Choreo cloud data plane user, why don’t I see both US & EU data planes in the data plane selector when creating an environment?
 You will see both US & EU data planes only if you have a paid subscription and have created projects in both US & EU data planes.
 
 ### Q: I am a customer who use Choreo in a private data plane. How many environments can I create?
-You will initially get any number of environments as you requested when setting up your private data plane, and later on, you will be able to create as many environments as you need.
+Initially, you will receive the requested number of environments when establishing your private data plane. Subsequently, you can create additional environments as needed.
 
 ## Billing and support
 
