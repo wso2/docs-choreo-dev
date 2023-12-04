@@ -64,9 +64,9 @@ describe("Verify containerized service functionality", () => {
       labels: "",
       projectId: "",
       byocWebAppsConfig: {
-        dockerContext: "cloud-native-app-developer/reading-list-front-end",
-        srcGitRepoUrl: "https://github.com/rajithacharith/choreo-examples",
-        srcGitRepoBranch: "app-gw",
+        dockerContext: "cloud-native-app-developer/reading-list-front-end-with-managed-auth",
+        srcGitRepoUrl: "https://github.com/choreo-test-apps/choreo-examples",
+        srcGitRepoBranch: "main",
         webAppType: "React",
         webAppBuildCommand: "npm install && npm run build",
         webAppPackageManagerVersion: "18",
