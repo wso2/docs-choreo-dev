@@ -35,3 +35,6 @@ helmCharts:
 
 commonAnnotations:
   kapp.k14s.io/disable-default-label-scoping-rules: ""
+
+resources:
+  - namespace.yaml

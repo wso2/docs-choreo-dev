@@ -63,6 +63,9 @@ commonAnnotations:
   checkov.io/skip20: CKV_K8S_38=Managed by csi-secret-store-provider-azure
   checkov.io/skip21: CKV_K8S_40=Managed by csi-secret-store-provider-azure
 
+resources:
+  - namespace.yaml
+
 patches:
   - path: job-remover.yaml
     target:
