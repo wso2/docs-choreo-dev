@@ -19,7 +19,7 @@ helmCharts:
               type: RuntimeDefault
           resources:
             limits:
-              cpu: 150m
+              cpu: 200m
               memory: 200Mi
             requests:
               cpu: 100m
