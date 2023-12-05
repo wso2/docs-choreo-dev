@@ -57,13 +57,3 @@ The service name follows the convention of `component name - endpoint name`, whi
 ## Edit services in the marketplace
 
 You can edit services in the Choreo Marketplace. During redeployment to any environment, Choreo automatically updates service definitions, visibility, and descriptions.
-
-
-## Scratch Pad
-
-The Marketplace view is contextually aware of the top navigation, ensuring that the displayed services are specific to the chosen organization, project, or component. Based on the project and the component you select, Choreo displays the services as follows: 
-
-- All public services deployed in the organization.
-- All organization-level services deployed in the organization.
-- All project-level services associated with the selected project.
-- This scoping functionality empowers you to tailor your search based on the consumer context.
