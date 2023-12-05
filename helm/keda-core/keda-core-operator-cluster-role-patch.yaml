@@ -12,13 +12,14 @@ rules:
   - configmaps/status
   - events
   verbs:
-  - '*'
+  - get
+  - list
+  - watch
 - apiGroups:
   - ""
   resources:
   - external
   - pods
-  - secrets
   - services
   verbs:
   - get
@@ -55,18 +56,6 @@ rules:
   - autoscaling
   resources:
   - horizontalpodautoscalers
-  verbs:
-  - '*'
-- apiGroups:
-  - batch
-  resources:
-  - jobs
-  verbs:
-  - '*'
-- apiGroups:
-  - coordination.k8s.io
-  resources:
-  - leases
   verbs:
   - '*'
 - apiGroups:
