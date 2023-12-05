@@ -42,7 +42,7 @@ If the user does not specify an API definition, this tab remains empty.
 
 - **Related documents**: Includes any additional content the user has provided as documents through the Manage → Marketplace section of the component.
 
-## Add a service to the Choore Marketplace
+## Add a service to the Choreo Marketplace
 
 You can add services to the marketplace as Choreo services as follows: 
 

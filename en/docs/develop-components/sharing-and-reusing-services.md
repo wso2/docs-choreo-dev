@@ -8,7 +8,7 @@ To learn more about Choreo Connections refer to the [documentation](../choreo-co
 
 ## Create a connection to a service
 
-To consume a service deployed on Chorreo within your service, you need to create a connection to the service you wish to consume. Follow the steps below.
+To consume a service deployed on Choreo within your service, you need to create a connection to the service you wish to consume. Follow the steps below.
 
 1. In the Choreo Console, go to the top navigation menu, and set the visibility level as [organization](../choreo-concepts/connections.md#organization-connections), [project](../choreo-concepts/connections.md#project-connections), or [component](../choreo-concepts/connections.md#component-connections) as follows: 
 
