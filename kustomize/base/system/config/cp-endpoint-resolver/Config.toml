@@ -10,4 +10,3 @@ apimClientId = "{{.APIM_REST_API_CONSUMER_KEY}}"
 
 [ballerina.log]
 format="json"
-level="{{.LOG_LEVEL}}"
