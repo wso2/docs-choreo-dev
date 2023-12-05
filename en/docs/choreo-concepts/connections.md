@@ -6,23 +6,23 @@ Connections in Choreo allows you to integrate Choreo components, or to integrate
  
 You can add Connections in different visibility levels: Organization, Project, and Component. The visibility levels are described below:
 
-## Organization connections
+## Organization Connections
 
-Organization connections are Connections created for services within a particular organization. These Connections **can be used by any component within the organization**.
+Organization Connections are Connections created for services within a particular organization. These Connections **can be used by any component within the organization**.
 
 For example, create an Organization Connection to share a database across the organization for all the projects and components to reuse. Components can refer to Organization Connections using the connection id. 
 Organization connections created to consume Choreo services under the OAuth security scheme will have their own OAuth application per connection. Any component reusing such a connection will use the same client id and client secret.
 
-## Project connections
+## Project Connections
 
-Project connections are Connections created for Services at the project level. The Connections **can be used by any component within the project**. 
+Project Connections are Connections created for Services at the project level. The Connections **can be used by any component within the project**. 
 
 For example, if you want to share a third-party service like Twilio across the project for all the components within that project to reuse, you can create a project connection. Components can refer to Project Connections using the connection id. 
 Project connections created to consume Choreo services under the OAuth security scheme will share the same OAuth application across the project. Any component reusing such a connection will use the same client id and client secret.
 
-## Component connections
+## Component Connections
 
-Component connections are Connections you define at the component level and **used by only that component**. 
+Component Connections are Connections you define at the component level and **used by only that component**. 
 
 For example, create a component connection if you want to connect a legacy service to a given component. Components can refer to the Component Connection using the connection id. 
 If your component consumes more than one Choreo service, the Component connections created to consume those Choreo services under the OAuth security scheme can share the same OAuth application by sharing the same client ID and secret between all such connections.
