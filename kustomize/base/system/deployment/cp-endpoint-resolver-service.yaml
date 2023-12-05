@@ -82,7 +82,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: cm-file-endpoint-resolver
+            name: cm-file-cp-endpoint-resolver
         - name: secret-endpoint-resolver
           csi:
             driver: secrets-store.csi.k8s.io
