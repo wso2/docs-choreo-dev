@@ -34,7 +34,7 @@ Consuming connections from within Choreo services is seamless and straightforwar
 
 You can consume a Choreo service via another service you plan to deploy in Choreo as follows: 
 
-1. In the Choreo console navigate to the project or component to view the connections in the respective visibility level.
+1. In the Choreo Console, navigate to the project or component to view the connections in the respective visibility level.
 2. In the left navigation menu, click **Dependencies** and then **Connections**. The **Create Connection** page will display the marketplace view for you to browse the available services. You can search and apply filters to find services efficiently.
 3. Click on the service you wish to consume. 
 4. Refer to the **Adding Connection Configuration to Application** section in your component-config file. 
