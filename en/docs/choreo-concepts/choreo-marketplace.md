@@ -35,7 +35,7 @@ Choreo organizes the service content into four tabs. The four tabs contain infor
 
 - **Overview**: Choreo displays the service overview provided by the service developer. If the service developer has not provided any content at service creation, this section will be disabled. The service developer can provide the overview content via the Manage → Marketplace section of the component.
 
-- **API definition**: Includes the service's API definition, extracted from the user repository using the component-config file or endpoints.yaml. 
+- **API definition**: Includes the service's API definition, extracted from the user repository using the `component-config` file or `endpoints.yaml` file. 
 If the user does not specify an API definition, this tab remains empty.
 
 - **How to use**: Includes instructions on how to use the selected service. This includes instructions on creating a connection (refer to the [connection documentation]), to consume this service. This section is accessible for any connections that you create.
