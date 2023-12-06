@@ -161,11 +161,11 @@ configMapGenerator:
       - DB_DRIVER=sqlserver
       - ORG_REMOVER_REQUEST_TOPIC=org-remover-request
       - ORG_REMOVER_RESULT_TOPIC=org-remover-result
-      - MARKETING_CONSENT_APP_CLIENT_KEY=0S5JcJ6y3BAIvUuY_mJ6aqKBhfQa
-      - APIM_TOKEN_EP=https://sts.choreo.dev/oauth2/token
+      - MARKETING_CONSENT_APP_CLIENT_KEY=Nu6mQCnJfoEARU6dQm3PMZnoai0a
+      - APIM_TOKEN_EP=https://api.asgardeo.io/t/wso2/oauth2/token
       - PARDOT_EP=2021-11-01/9yzthx
-      - PARDOT_SVC_URL=https://api.wso2.com/zyup/lead-form-handler/1.0.0/lead-form
-      - EMAIL_CONSENT_SVC_URL=https://api.wso2.com/zyup/gdpr-mailing-consent/1.0.0
+      - PARDOT_SVC_URL=https://apis.wso2.com/gnvy/lead-form-submission/endpoint-9090-803/v1.0/lead-form
+      - EMAIL_CONSENT_SVC_URL=https://apis.wso2.com/gnvy/gdpr-mailing-consent-check/endpoint-9090-803/v1.0
   - name: cm-perf-analyzer
     behavior: create
     literals:
