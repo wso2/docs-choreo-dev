@@ -71,6 +71,12 @@ spec:
             httpGet:
               path: /health
               port: healthz
+          env:
+            - name: APIM_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-endpoint-resolver
+                  key: APIM_CLIENT_SECRET
           volumeMounts:
             - name: config
               mountPath: /home/ballerina/Config.toml
