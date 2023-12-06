@@ -1,52 +1,59 @@
 # Choreo Marketplace
 
-The Choreo Marketplace promotes and facilitates API reuse. It offers a comprehensive collection of prebuilt connectors and triggers, which developers can use to design their cloud-native applications. Using the prebuilt connectors and triggers can save significant time and effort that otherwise would be spent on developing functionality from scratch.
+The Choreo Marketplace promotes and facilitates reusing and sharing services. It allows you to share all the services deployed in Choreo.
+You can easily browse and search available services within the Marketplace and refer to the service definitions, documentation, instructions on how you can use it, etc. 
 
-The Choreo Marketplace also serves as a platform for API developers to publish their own connectors for Choreo users to access. These connectors can be made available for purchase or offered free of charge.
+## Discover services
 
-When you discover a connector or trigger in the Choreo Marketplace that meets your requirements, you can either purchase it, acquire it through a Freemium account or use it for free.
+The Marketplace includes all services deployed in your organization. This may be a large number of services. Therefore, effective discoverability is desirable.
 
-## Access the Choreo Marketplace
+You can use the search or apply various filter criteria to explore the services available.
 
-To access the Choreo Marketplace, follow the steps given below:
+### Search
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+The top search bar provides universal searching to find the services. It allows you to search for a text in the following search attributes:
 
-2. In the left navigation menu, click **Marketplace**. This opens the Choreo Marketplace with the prebuilt connectors. 
+- **Name**: The service name.
+- **Label**: The service labels.
+- **Content**: The service content: overview, summary, and documentation.
+- **All**: All of the above criteria.
 
-    ![Marketplace default view](../assets/img/choreo-concepts/marketplace/marketplace-default-view.png){.cInlineImage-full}
+### Filter
 
-    If you want to view the triggers published by Choreo, click the **Triggers** tab.
+The Choreo Marketplace provides a filtering capability through the left-hand side filter panel. It allows you to filter with the following filter attributes:
 
-     ![Marketplace triggers](../assets/img/choreo-concepts/marketplace/choreo-triggers.png){.cInlineImage-full}
+- **Type**: This filter enables you to categorize services based on their type, with two available options: "Internal" and "Third-party". "Internal" refers to services deployed within Choreo, while "Third-party" refers to services running externally to Choreo, independently added to the Marketplace.
 
-    If you want to view the connectors and triggers published by your organization, click **My Organization** under **Filter By**.
+- **Network Visibility**: This filter enables you to categorize services based on their network visibility level, with three choices: "Public," "Organization," and "Project".  "Public" filters services exposed publicly, "Organization" represents services exposed across the entire organization, and "Project" represents services exposed at the project level.
 
-You can use the search or apply various filter criteria to easily find a connector or trigger that meets the requirements of the application you are designing.
 
-When you filter or search for a connector or trigger, you can view the following details for each connector or trigger in the list:
+## Explore a service 
 
-- A brief description of the functionality.
-- A label indicating the category.
-- A label indicating whether the connector/trigger is free, available via Freemium, or paid.
-- The vendor.
-- The published date.
-- The number of instances the connector/trigger is currently used.
+You can click on the service card to open the detailed view of the service. The detailed service page features the service name, summary, version, labels, and service icon as the header.
 
-![Connector details](../assets/img/choreo-concepts/marketplace/connector-details.png)
+Choreo organizes the service content into four tabs. The four tabs contain information as follows: 
 
-If you want to view more information about a specific connector, click on it. This directs you to an overview page with details about versions, compatibility, and links for reporting issues, accessing API documentation, contacting the vendor, and more.
+- **Overview**: Choreo displays the service overview provided by the service developer. If the service developer has not provided any content at service creation, this section will be disabled. The service developer can provide the overview content via the Manage → Marketplace section of the component.
 
-## Filter by category
+- **API definition**: Includes the service's API definition, extracted from the user repository using the `component-config` file or `endpoints.yaml` file. 
+If the user does not specify an API definition, this tab remains empty.
 
-To filter connectors and triggers by a specific category, click on a required category (for example, Finance) and then click on a required subcategory (for example, Accounting).
+- **How to use**: Includes instructions on how to use the selected service. This includes instructions on creating a connection (refer to the [connection documentation]), to consume this service. This section is accessible for any connections that you create.
 
-This displays the connectors and triggers that meet the filter criteria.
+- **Related documents**: Includes any additional content the user has provided as documents through the Manage → Marketplace section of the component.
 
-![Filter by category](../assets/img/choreo-concepts/marketplace/filter-by-category.png){.cInlineImage-full}
+## Add a service to the Choreo Marketplace
 
-## Filter by price
+You can add services to the Marketplace as Choreo services as follows: 
 
-To filter connectors and triggers on pricing, select one or more checkboxes under **Price** according to your requirement.
+### Add a Choreo service
 
-![Filter by price](../assets/img/choreo-concepts/marketplace/filter-by-price.png){.cInlineImage-full}
+In Choreo, a service exposed through the platform is termed a Choreo service, with each service being identifiable by an endpoint within a Choreo service component. The Marketplace showcases a service for each endpoint within a service component.
+
+Upon deployment to the initial environment, services get automatically added to the Marketplace. Choreo effortlessly collects essential details such as component name, endpoint name, description, and service definitions during this deployment, utilizing them to generate the corresponding service entries in the Marketplace.
+
+The service name follows the convention of `component name - endpoint name`, while all other details remain unchanged.
+
+## Edit services in the Choreo Marketplace
+
+You can edit services in the Choreo Marketplace. During redeployment to any environment, Choreo automatically updates service definitions, visibility, and descriptions.

@@ -1,36 +1,53 @@
 # Sharing and Reusing Services
 
-Choreo allows you to share and reuse your services, promoting faster development and increased efficiency in building integrated applications, through the use of Ballerina Private Packages.
+Choreo allows you to share and reuse your services, promoting faster development and increased efficiency in building integrated applications, through Connections.
 
-Ballerina private packages allow developers to share the reusable code within the organization via Ballerina central without making it available to the public.
-Choreo allows you to use Ballerina private packages to create components when you use the the `Ballerina` buildpack.
+Connections in Choreo allows you to integrate Choreo components, or to integrate Choreo components to external services or resources. Connections provide a simple and uniform way to integrate with services and resources.
 
-In order to use Ballerina private packages, you need to make sure that you are using the same organization in Choreo and Ballerina Central.
-For example, if you are using `choreo` as the organization name in Choreo, following conditions should be met. 
+To learn more about Choreo Connections refer to the [documentation](../choreo-concepts/connections.md).
 
-- The `Ballerina.toml` in the private package should have the `choreo` as the organization name.
-    ```
-    [package]
-    org = "choreo"
-    name = "greeting_lib"
-    ```
-- The package should be published to the Ballerina Central using a token that is generated for the `choreo` organization.
+## Create a connection to a service
 
-    !!! tip
-        You can refer to the [Publish packages to Ballerina Central](https://ballerina.io/learn/publish-packages-to-ballerina-central/) documentation to learn how to publish a Ballerina package to the Ballerina Central.
-    
+To consume a service deployed on Choreo within your service, you need to create a connection to the service you wish to consume. Follow the steps below.
 
-- The `Ballerina.toml` in the application should have the `choreo` as the organization name.
-    ```
-    [package]
-    org = "choreo"
-    name = "greeting_service"
-    ```
-- The component should be created inside the `choreo` organization in the Choreo.
+1. In the Choreo Console, go to the top navigation menu, and set the visibility level as [organization](../choreo-concepts/connections.md#organization-connections), [project](../choreo-concepts/connections.md#project-connections), or [component](../choreo-concepts/connections.md#component-connections) as follows: 
 
-    !!! tip
-        You can use the organization settings page to retrieve the organization name.
+    - **Organization Connection** : Select only an organization.
+    - **Project Connection**: Select an organization and a project in that organization. 
+    - **Component Connection**: Select an organization, a project in that organization, and a component in the selected project. 
 
+2. From the left navigation menu, click **Dependencies**  and then **Connections**. This page will list the currently available connections.
+3. Click **+Create**. The **Create Connection** page will display the marketplace view for you to browse the available services. You can search and apply filters to find services efficiently.
+4. Click on the service to wish to connect to. 
+5. Enter a name and a description for the connection and click **Next**.
+6. You will receive the ServiceURL for the development and production environments. Click **Finish**.
 
+Now you have created a connection to the service. Let's see how you can consume it. 
 
-Refer to the [Private Package Usage](https://github.com/wso2/choreo-sample-apps/tree/main/ballerina/private-package-usage) sample to learn more about using Ballerina private packages in Choreo.
+## Consuming a service through a connection
+
+You can consume a Choreo-deployed service within another service
+
+Consuming connections from within Choreo services is seamless and straightforward. Follow the steps below to consume a Choreo service. 
+
+### Consuming services via the Choreo Console
+
+You can consume a Choreo service via another service you plan to deploy in Choreo as follows: 
+
+1. In the Choreo Console, navigate to the project or component to view the connections in the respective visibility level.
+2. In the left navigation menu, click **Dependencies** and then **Connections**. The **Create Connection** page will display the marketplace view for you to browse the available services. You can search and apply filters to find services efficiently.
+3. Click on the service you wish to consume. 
+4. Refer to the **Adding Connection Configuration to Application** section in your component-config file. 
+5. Replace the placeholder <YOUR_ENVIRONMENT_VAR_HERE> with the environment variable names. When you deploy your component, the configured environment variables will be available with their values. Refer to the service's **Read configurations** section (exploring the service via the Choreo marketplace) to learn how to read these environment variables and use them in your code.  
+6. Refer to the entire **Developer Guide** pane to learn how to obtain a token and consume the service.
+
+### Consuming Choreo services via external applications
+
+You can consume a service deployed on Choreo via an external application. To consume a Choreo deployed service you need to create a project-level connection. You can then consume the connection as follows: 
+
+1. In the Choreo Console, select the project to view the connections in the respective visibility level.
+2. In the left navigation menu, click **Dependencies** and then **Connections**. The **Create Connection** page will display the marketplace view for you to browse the available services. You can search and apply filters to find services efficiently.
+3. Click on the service you wish to consume. 
+4. Refer to the **Adding Connection Configuration to Application** section in your component-config file. 
+5. Replace the placeholder <YOUR_ENVIRONMENT_VAR_HERE> with the environment variable names. When you deploy your component, the configured environment variables will be available with their values. Refer to the service's **Read configurations** section (exploring the service via the Choreo marketplace) to learn how to read these environment variables and use them in your code.  
+6. Refer to the entire **Developer Guide** pane to learn how to obtain a token and consume the service.

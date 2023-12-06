@@ -835,3 +835,6 @@ choreo-apis
  - docs/administer/configure-built-in-idp/configure-built-in-idp-userstore.md
 Uploader
 buil-in
+ - docs/develop-components/sharing-and-reusing-services.md
+ServiceURL
+YOUR_ENVIRONMENT_VAR_HERE
