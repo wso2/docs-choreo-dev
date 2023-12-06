@@ -62,7 +62,7 @@ The recommended approach is to retrieve user information from the cookie and sub
 ```
 #### Obtain user information via a GET endpoint
 
-Choreo's managed authentication provides a GET endpoint, `/auth/userinfo` in addition to the `userinfo` cookie that it sets after successful sign-in. You can use this endpoint to query information about users who have signed in. It also serves as a way to check the state of a user who has signed in.'
+Choreo's managed authentication provides the GET endpoint `/auth/userinfo` in addition to the `userinfo` cookie that it sets after successful sign-in. You can use this endpoint to query information about users who have signed in. It also serves as a mechanism to check the state of a user who has signed in.
 
 The following is an example of a request to this endpoint:
 
@@ -199,8 +199,8 @@ You can enable managed authentication for your web application component at the 
 
     | Field            |  Description      | Default value      |
     | ----------------- | ----------------- | ----------------- |
-    | Post Login Path   | The relative path that the application will be redirected to on successful sign in. In your code, you must implement the necessary logic to handle the `userinfo` cookie set by managed authentication. | /                      |
-    | Post Logout Path  | The relative path to which Choreo redirects you on successful sign out.  | /                      |
+    | Post Login Path   | The relative path that the application will be redirected to on successful sign-in. In your code, you must implement the necessary logic to handle the `userinfo` cookie set by managed authentication. | /                      |
+    | Post Logout Path  | The relative path to which Choreo redirects you on successful sign-out.  | /                      |
     | Error Path        | The relative path to which Choreo redirects you when an error occurs during a redirection-based flow (i.e., sign in or sign out). See [Set up a custom error page](#step-16-set-up-a-custom-error-page)             | Built-in error page     |
     | Session Expiry Time | The time in minutes after which the user session expires. For a seamless experience, the session expiry value should match the refresh token expiry time of the OIDC application in your identity provider.               | 10080 Minutes (7 Days)                   |
     | Additional Scopes | All additional scopes required by the web application. The `openid`, `profile`, and `email` scopes are added by default together with the scopes required to invoke subscribed APIs.               | none                   |
