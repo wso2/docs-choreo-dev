@@ -15,7 +15,7 @@ Organization connections created to consume Choreo services under the OAuth secu
 
 ## Project Connections
 
-Project Connections are Connections created for Services at the project level. The Connections **can be used by any component within the project**. 
+Project Connections are Connections you create to connect to services within a particular project. The Connections **can be used by any component within the project**. 
 
 For example, if you want to share a third-party service like Twilio across the project for all the components within that project to reuse, you can create a project connection. Components can refer to Project Connections using the connection ID. 
 Project connections created to consume Choreo services under the OAuth security scheme will share the same OAuth application across the project. Any component reusing such a connection will use the same client ID and client secret.
