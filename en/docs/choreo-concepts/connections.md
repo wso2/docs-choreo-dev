@@ -8,7 +8,7 @@ You can add Connections in different visibility levels: Organization, Project, a
 
 ## Organization Connections
 
-Organization Connections are Connections created for services within a particular organization. These Connections **can be used by any component within the organization**.
+Organization Connections are Connections you create to connect to services within a particular organization. These Connections **can be used by any component within the organization**.
 
 For example, create an Organization Connection to share a database across the organization for all the projects and components to reuse. Components can refer to Organization Connections using the connection id. 
 Organization connections created to consume Choreo services under the OAuth security scheme will have their own OAuth application per connection. Any component reusing such a connection will use the same client id and client secret.
