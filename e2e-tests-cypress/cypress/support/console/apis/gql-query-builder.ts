@@ -235,6 +235,7 @@ export class GraphQLQueryBuilder {
             webAppBuildCommand: "${byocComponent.byocWebAppsConfig.webAppBuildCommand}",
             webAppPackageManagerVersion: "${byocComponent.byocWebAppsConfig.webAppPackageManagerVersion}",
             webAppOutputDirectory: "${byocComponent.byocWebAppsConfig.webAppOutputDirectory}",
+            isAppGatewayEnabled: ${byocComponent.byocWebAppsConfig.isAppGatewayEnabled},
           }
         }
       ) 

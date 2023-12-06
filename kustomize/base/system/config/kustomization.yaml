@@ -587,7 +587,7 @@ configMapGenerator:
     behavior: create
     files:
       - app-dev-authorization-service/Config.toml
-  - name: cm-file-endpoint-resolver
+  - name: cm-file-cp-endpoint-resolver
     behavior: create
     files:
       - cp-endpoint-resolver/Config.toml

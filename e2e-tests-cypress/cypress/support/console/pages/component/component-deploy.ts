@@ -72,10 +72,23 @@ export class ComponentDeployPage {
     cy.get('[data-testid="btn-next"]').click();
   }
 
+  private static configWebAppComponentWithAuthenticationSettings(environment:string = "dev") {
+    cy.get('[class="view-lines monaco-mouse-cursor-text"]')
+      .type("{backspace}")
+      .type(CONFIG_CONTENT);
+    cy.get('[data-testid="btn-next"]').click();
+    cy.contains('h5','Authentication Settings').click();
+    cy.get('[data-cyid="btn-next-button"]').should('be.visible').click();
+  }
+
   private static configWebAppComponentPromote() {
     cy.get('[data-cyid="promote-selector-default-configs"]').click();
     cy.get('[data-cyid="btn-next-button"]').click();
-    this.configWebappComponent();
+    if (Utils.isWebAppAuthenticationEnabled) {
+      this.configWebAppComponentWithAuthenticationSettings("prod");
+    } else {
+      this.configWebappComponent();
+    }
   }
 
   static reDeployToDev(
@@ -216,7 +229,11 @@ export class ComponentDeployPage {
           this.pollElement('[data-cyid="btn-next-button"]').click();
         }
       } else {
-        this.configWebappComponent();
+        if (Utils.isWebAppAuthenticationEnabled) {
+          this.configWebAppComponentWithAuthenticationSettings();
+        } else {
+          this.configWebappComponent();
+        }
       }
     }
 

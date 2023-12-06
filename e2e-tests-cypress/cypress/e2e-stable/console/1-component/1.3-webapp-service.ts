@@ -24,6 +24,9 @@ import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { WebappComponent } from "../../../support/interfaces/choreo-components/webapp-component";
+import { MEDIUM_TIME } from "../../../support/commons/timeouts";
+import { OrganizationSettingsPage } from "../../../support/console/pages/organization/org-settings-page";
+import { SampleWebAppPage } from "../../../support/console/pages/component/sample-webapp-page";
 
 before(() => {
   LoginPage.login();
@@ -39,6 +42,14 @@ describe("Verify containerized service functionality", () => {
   const PROJECT_DESCRIPTION = "Webapp SPA service";
   const REPO_NAME = Utils.generateComponentName("repo");
 
+  it("Adding users for E2E tests", () => {
+    ChoreoHomePage.navigateToSettings();
+    OrganizationSettingsPage.navigateToApplicationSecurity();
+    OrganizationSettingsPage.navigateToChoreoInbuiltIDP();
+    OrganizationSettingsPage.waitTillUserstoreLoad();
+    OrganizationSettingsPage.addTestUsers();
+  });
+
   it("Creating a project", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
   });
@@ -53,13 +64,14 @@ describe("Verify containerized service functionality", () => {
       labels: "",
       projectId: "",
       byocWebAppsConfig: {
-        dockerContext: "react-spa",
-        srcGitRepoUrl: "https://github.com/choreo-test-apps/web-apps",
+        dockerContext: "cloud-native-app-developer/reading-list-front-end-with-managed-auth",
+        srcGitRepoUrl: "https://github.com/choreo-test-apps/choreo-examples",
         srcGitRepoBranch: "main",
         webAppType: "React",
-        webAppBuildCommand: "npm run build",
+        webAppBuildCommand: "npm install && npm run build",
         webAppPackageManagerVersion: "18",
-        webAppOutputDirectory: "build",
+        webAppOutputDirectory: "dist",
+        isAppGatewayEnabled: true,
       },
     };
 
@@ -115,8 +127,19 @@ describe("Verify containerized service functionality", () => {
     cy.get('[data-cyid="link-manage"]').should("have.attr", "disabled");
   });
 
-  it("Verify suspending all component deployments", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
+  it("Retrieve webapp url", () => {
+    ComponentOverviewPage.navigateToOverview();
+    cy.contains('span', "Active", MEDIUM_TIME)
+    ComponentOverviewPage.getDeployedURLofInitialEnv("webAppUrl");
+    cy.get("@webAppUrl").then((url) => {
+      Cypress.env("webAppUrl", url.toString());
+    });
   });
+
+  it("Access webapp and login", () => {
+    SampleWebAppPage.visitSampleWebsite();
+    SampleWebAppPage.submitLoginCredentials();
+    SampleWebAppPage.verifyLoginAndLogout();
+  });
+
 });
