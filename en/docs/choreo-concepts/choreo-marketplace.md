@@ -44,7 +44,7 @@ If the user does not specify an API definition, this tab remains empty.
 
 ## Add a service to the Choreo Marketplace
 
-You can add services to the marketplace as Choreo services as follows: 
+You can add services to the Marketplace as Choreo services as follows: 
 
 ### Add a Choreo service
 
@@ -54,6 +54,6 @@ Upon deployment to the initial environment, services get automatically added to 
 
 The service name follows the convention of `component name - endpoint name`, while all other details remain unchanged.
 
-## Edit services in the marketplace
+## Edit services in the Choreo Marketplace
 
 You can edit services in the Choreo Marketplace. During redeployment to any environment, Choreo automatically updates service definitions, visibility, and descriptions.
