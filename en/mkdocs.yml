@@ -88,6 +88,7 @@ nav:
       - CI/CD: choreo-concepts/ci-cd.md
       - Deployment Tracks: choreo-concepts/deployment-tracks.md
       - Configuration Management: choreo-concepts/configuration-management.md
+      - Connections: choreo-concepts/connections.md
       - Data Planes: choreo-concepts/data-planes.md
       - Environments: choreo-concepts/environments.md
       - Choreo Marketplace: choreo-concepts/choreo-marketplace.md
