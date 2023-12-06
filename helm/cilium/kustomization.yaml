@@ -19,7 +19,7 @@ helmCharts:
               type: RuntimeDefault
           resources:
             limits:
-              cpu: 150m
+              cpu: 200m
               memory: 200Mi
             requests:
               cpu: 100m
@@ -75,11 +75,11 @@ helmCharts:
         priorityClassName: system-cluster-critical
       resources:
         limits:
-          cpu: 2500m
-          memory: 6Gi
-        requests:
-          cpu: 1500m
+          cpu: 4000m
           memory: 4Gi
+        requests:
+          cpu: 100m
+          memory: 512Mi
       livenessProbe:
         failureThreshold: 10
         periodSeconds: 30

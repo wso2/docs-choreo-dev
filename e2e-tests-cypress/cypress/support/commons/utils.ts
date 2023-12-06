@@ -363,6 +363,21 @@ export class Utils {
     return false;
   }
 
+  static isWebAppAuthenticationEnabled() {
+    const enableWebAppAuthentication = Cypress.env(
+      "enableWebAppAuthentication"
+    );
+
+    if (enableWebAppAuthentication != null) {
+      return (
+        enableWebAppAuthentication == true ||
+        enableWebAppAuthentication == "true"
+      );
+    }
+    
+    return false;
+  }
+
   static moveMouseAwayFromLeftMenu() {
     cy.get("body").realMouseMove(250, 250);
   }

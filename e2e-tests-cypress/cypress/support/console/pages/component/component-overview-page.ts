@@ -43,6 +43,29 @@ export class ComponentOverviewPage {
     });
   }
 
+  static getDeployedURLofInitialEnv(alias: string) {
+    cy.get("body").then((body) => {
+      const endpointCount = body.find(
+        '[data-cyid="text-field-endpoint"]'
+      ).length;
+
+      for (let i = 0; i < endpointCount; i++) {
+        cy.get('[data-cyid="text-field-endpoint"]')
+          .eq(i)
+          .within(() => {
+            cy.get("input")
+              .invoke("val")
+              .then((text) => {
+                if (i == 0) {
+                  cy.wrap(text).as(alias);
+                  return;
+                }
+              });
+          });
+      }
+    });
+  }
+
   static navigateToBuild() {
     this.scrollToTopOfMenu();
     cy.get("[data-cyid=link-build]").should("be.visible").realHover({ position: "left" })

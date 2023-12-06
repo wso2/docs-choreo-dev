@@ -285,6 +285,8 @@ defaultRoles:
         - {{.PERMISSION_COMPONENT_LOGS_VIEW}}
         - {{.PERMISSION_CUSTOM_DOMAIN_VIEW}}
         - {{.PERMISSION_CUSTOM_THEME_VIEW}}
+        - {{.PERMISSION_SELF_SIGNUP_CONFIG_VIEW}}
+        - {{.PERMISSION_SELF_SIGNUP_APPROVAL_VIEW}}
 roleBasedUserMgt:
   enabled: ${ROLE_BASED_USER_MGT_ENABLED}
 onPremKeySubscription:
