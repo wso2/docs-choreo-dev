@@ -29,7 +29,6 @@ kind: Role
 metadata:
   creationTimestamp: null
   name: keda-http-add-on-scaler
-  namespace: keda
   labels:
     app.kubernetes.io/instance: external-scaler
 rules:

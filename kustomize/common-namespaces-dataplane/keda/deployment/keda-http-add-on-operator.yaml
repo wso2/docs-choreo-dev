@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: keda-http-add-on-operator
-  namespace: keda
   labels:
     app.kubernetes.io/instance: operator
   annotations:

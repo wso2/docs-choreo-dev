@@ -4,7 +4,6 @@ metadata:
   name: keda-http-add-on-operator-admin
   labels:
     app.kubernetes.io/instance: operator
-  namespace: keda
 spec:
   type: ClusterIP
   selector:
