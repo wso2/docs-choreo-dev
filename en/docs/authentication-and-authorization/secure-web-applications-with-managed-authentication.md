@@ -1,44 +1,50 @@
 # Secure Web Applications with Managed Authentication
 
-Choreo's Managed Authentication simplifies the process of adding authentication and authorization to a single-page web application. It handles the complexities of authentication internally, freeing the application developer from the need to understand the OIDC/OAuth2.0 protocol. By enabling Choreo's Managed Authentication, configuring the IdP, and allowing the web application to connect to Choreo, developers can seamlessly integrate authentication into their web applications without dealing with the intricacies of the underlying protocol.
+The managed authentication capability of Choreo simplifies adding authentication and authorization to a single-page web application.
 
-Moreover, Choreo's Managed Authentication introduces the concept of a Backend For Frontend (BFF) architecture, a secure pattern recommended for browser-based applications that utilize OIDC/OAuth2.0 for authentication and authorization. This architecture ensures that OAuth tokens remain secure from browser-side code, making them immune to potential attacks like Cross-Site Scripting (XSS). 
+As a developer, you can easily set up Choreo's managed authentication to seamlessly integrate authentication into your web application. You just need to enable Choreo’s managed authentication, configure the built-in identity provider, and connect to Choreo without having to deal with the complexities of underlying OIDC/OAuth2.0 protocols.
+
+Choreo's managed authentication follows the backend for frontend (BFF) architecture, which is a secure pattern recommended for browser-based applications that utilize OIDC/OAuth2.0 for authentication and authorization. This architecture ensures that OAuth tokens remain secure from browser-side code, making them immune to potential attacks like cross-site scripting (XSS).
 
 !!! note
-    Managed Authentication is currently available only for React, Angular, and Vue.js buildpacks.
+     Choreo's managed authentication is currently available only for web applications created with **React**, **Angular**, or **Vue.js** buildpacks.
 
 !!! warning
-    Managed Authentication employs the 'SAMESITE' cookie attribute to safeguard against CSRF attacks. It is recommended for use with modern browsers that support this attribute.
+     Managed authentication uses the 'SAMESITE' cookie attribute to prevent CSRF attacks. Therefore, it is recommended to use managed authentication with modern browsers that support the 'SAMESITE' attribute.
 
-## Step 1: Utilizing Managed Authentication in your web application
+## Step 1: Set up managed authentication for your web application
 
-To secure your web application, you need to implement authentication. You can utilize Choreo's Managed Authentication to secure your web application as follows: 
+To secure your web application, you must implement authentication and authorization for it. 
 
-### Login
+To easily set up authentication for your web application with Choreo's managed authentication, follow the steps given below: 
 
-To enable Choreo to manage the login functionality of your web application, you need to implement a login button that redirects users to /auth/login when clicked. You can use the following code snippet or any custom button component from your preferred UI component library:
+### Step 1.1: Implement the sign-in functionality
+
+To allow Choreo to manage the sign-in functionality for your web application, you must implement a sign-in button that redirects users to the `/auth/login` path on click. You can use the following code snippet or any custom button component from a preferred UI component library:
 
 ``` javascript
 <button onClick={() => {window.location.href="/auth/login"}}>Login</button>
 ```
 
-When a user clicks on the login button within your web application, Choreo will redirect them to the preconfigured Identity Provider and handle the authentication process, conforming to the OICD/OAuth2.0 protocols. After a successful login, Choreo will set the relevant session cookies and redirect the user to the post-login path (default is `/`). The user can then invoke any Choreo-deployed APIs permitted to them.
+This code snippet works as follows:
 
-### Obtaining user info claims
+When a user clicks sign in on your web application, Choreo will redirect the user to the preconfigured identity provider and handle the authentication process, conforming to the OICD/OAuth2.0 protocols. On successful sign-in, Choreo will set the relevant session cookies and redirect the user to the post-sign-in path (default is `/`). The user can then invoke any Choreo-deployed APIs depending on the permission granted.
 
-Choreo's Managed Authentication allows you to access user info claims that the Identity Provider returns post login, either via a cookie or by invoking a GET resource.
+### Step 1.2: Obtain user information claims
+
+Choreo's managed authentication allows you to access user information claims that the identity provider returns post-sign-in, either via a cookie or by invoking a GET resource.
 
 
-#### Obtain user info via the userinfo cookie
+#### Obtain user information via the `userinfo` cookie
 
-Upon successful login, Choreo's Managed Authentication establishes a userinfo cookie, which is accessible from the post-login path you've configured (by default, set to /). This `userinfo` cookie, provided by the Identity Provider, contains encoded user info claims.
+Upon successful sign-in, Choreo's managed authentication establishes a `userinfo` cookie that is accessible from the post-sign-in path you configured (by default, set to /). This `userinfo` cookie, provided by the identity provider, contains encoded user information claims.
 
 !!! note
     - The `userinfo` cookie is intentionally set to have a short lifespan of only 2 minutes.
-    - The developer can decide how to utilize the retrieved user info. We recommend securely storing the user info, as the stored information can also serve as a means to verify the logged-in state of a user.
-    - The below example uses the `js-cookie` library for cookie parsing. You can use any cookie-parsing library of your choice. 
+    - As a developer, you can decide how to utilize the user information that you retrieve. You must securely store the user information because the stored information can also serve as a means to verify the logged-in state of a user.
+    - The following example uses the `js-cookie` library for cookie parsing. You can use any cookie-parsing library of your choice. 
 
-We recommend you retrieve the user info from the cookie and subsequently clear the cookie. Below is a sample code snippet that you can include in your post-login path for this purpose:
+The recommended approach is to retrieve user information from the cookie and subsequently clear the cookie. The following is a sample code snippet that you can include in your post-sign-in path to retrieve user information from the cookie and subsequently clear the cookie:
 
 ``` javascript
     import Cookies from 'js-cookie';
@@ -54,25 +60,25 @@ We recommend you retrieve the user info from the cookie and subsequently clear t
     // Clear the cookie.
     Cookies.remove('userinfo', { path: <post-login-path> })
 ```
-#### Obtain user info via a GET endpoint
+#### Obtain user information via a GET endpoint
 
-Choreo's Managed Authentication provides a GET endpoint, `/auth/userinfo`, in addition to the userinfo cookie that it sets after a successful login. You can utilize this endpoint to query logged-in user info, and it can also serve as a way to check the logged-in state of a user.'
+Choreo's managed authentication provides a GET endpoint, `/auth/userinfo` in addition to the `userinfo` cookie that it sets after successful sign-in. You can use this endpoint to query information about users who have signed in. It also serves as a way to check the state of a user who has signed in.'
 
-Below is an example of a request to this endpoint:
+The following is an example of a request to this endpoint:
 
 ``` javascript
 const response = await fetch('/auth/userinfo')
 ```
 
-If the user has logged in, the server will send a 200 OK response with the user info in the body in JSON format. However, if the user has not logged in, the server will send a 401 Unauthorized response.
+If a user has signed in, the server sends a `200 OK` response with the user information in JSON format in the response body. However, if the user is not signed in, the server sends a `401 Unauthorized` response.
 
-### Logout
+### Step 1.3: Implement the sign-out functionality
 
-To enable Choreo-managed logout capability to your web application, you can implement a login button redirecting users to `/auth/logout` along with the `session_hint` cookie value when clicked. You can use the following code snippet or any custom button component from your preferred UI component library.
+To allow Choreo to manage the sign-out functionality of your web application, you can implement a sign-out button to redirect users to the `/auth/logout` path along with the `session_hint` cookie value on click. You can use the following code snippet or any custom button component from a preferred UI component library:
 
 !!! note
-    - It is recommended to clear the user info (if stored) at logout.
-    - The below example uses the `js-cookie` library for cookie parsing. You can use any cookie-parsing library of your choice.   
+    - It is recommended to clear any user information (if stored) at the time of sign-out.
+    - The following example uses the `js-cookie` library for cookie parsing. You can use any cookie-parsing library of your choice.   
     
 ``` javascript
 <button onClick={async () => {
@@ -80,32 +86,34 @@ To enable Choreo-managed logout capability to your web application, you can impl
 }}>Login</button>`
 ```
 
-When a user clicks on the logout button, Choreo will clear the session cookies and redirect the users to the OIDC logout endpoint of the configured Identity Provider (if available).  
+When a user clicks the sign-out button, Choreo will clear the session cookies and redirect the users to the OIDC logout endpoint of the configured identity provider (if available).  
 
-### API calls
+### Step 1.4: Invoke APIs
 
-You can invoke Choreo APIs within the same organization as your web application using the relative path /choreo-apis/<api-suffix>, regardless of whether managed authentication is enabled for the web application or not.
+TO invoke Choreo APIs within the same organization as your web application, you can use the relative path `/choreo-apis/<api-suffix>`, regardless of whether managed authentication is enabled for the web application or not.
 
-For example, if the API URL is `https://2d9ec1f6-2f04-4127-974f-0a3b20e97af5-dev.e1-us-east-azure.choreoapis.dev/rbln/item-service/api-e04/1.0.0`, the `<api-suffix>` would be `/rbln/item-service/api-e04/1.0.0`. From your Single Page Application, you can invoke the API using `/choreo-apis/rbln/item-service/api-e04/1.0.0` relative path.
+For example, if the API URL is `https://2d9ec1f6-2f04-4127-974f-0a3b20e97af5-dev.e1-us-east-azure.choreoapis.dev/rbln/item-service/api-e04/1.0.0`, the `<api-suffix>` would be `/rbln/item-service/api-e04/1.0.0`. You can invoke the API using the `/choreo-apis/rbln/item-service/api-e04/1.0.0` relative path from your single-page application.
 
 !!! info
-    The relative path will be shown in the relavent **Connections** page under **Dependencies** section in the left navigation of the web application component view.
+     To copy the exact service URL of a Connection, you can follow the steps given below:
+      1. In the Choreo Console, go to the appropriate web application component.
+      2. In the left navigation menu, click **Connections** under **Dependencies**.
+      3. Click on the required Connection and copy the service URL.
 
-If you enable Choreo's Managed Authentication, you don't have to manually add any logic to attach an access token in the API call, as Choreo APIs will accept the cookies set by Choreo's Managed Authentication.
-You can directly invoke the API. For example:
+If you enable Choreo's managed authentication, you don't have to manually add any logic to attach an access token to the API call because Choreo APIs accept the cookies set by Choreo's managed authentication. You can directly invoke the API as follows:
 
 ```
     const response = await fetch('/choreo-apis/<api-suffix>')
 ```
 
-If Choreo's Managed Authentication is disabled, you need to ensure that your web application attaches a valid access token to the API call.
+If Choreo's managed authentication is disabled, you must ensure that your web application attaches a valid access token to the API call.
 
 
-### Token Refresh
+### Step 1.5: Refresh access tokens
 
-If the access token provided by your configured Identity Provider expires, you must refresh the tokens before successfully calling a Choreo-deployed API. For token refresh to function,  you need to set up the Identity Provider to issue a refresh token in addition to the access token.
+If the access token provided by the identity provider you have configured expires, you must refresh the tokens to successfully call a Choreo-deployed API. For token refresh to function, you must set up the identity provider to issue a refresh token in addition to the access token.
 
-To refresh the tokens, you can make a POST request to the `/auth/refresh` endpoint.
+To refresh access tokens, you can make a POST request to the `/auth/refresh` endpoint.
 
 For example:
 
@@ -113,11 +121,11 @@ For example:
 const response = await fetch("/auth/refresh", { method: "POST" })
 ```
 
-If the refresh token is valid, it will undergo a refresh, and the system will respond with a 204 No Content status.
+If the refresh token is valid, it will undergo a refresh, and the system will respond with a `204 No Content` status.
 
-However, if the refresh token has expired, the system will respond with a 401 Unauthorized status.
+If the refresh token has expired, the system will respond with a `401 Unauthorized` status.
 
-To automate the token refresh process when receiving a 401 unauthorized response from the Choreo API, you can encapsulate the requests with the refresh logic. Below is an example code snippet that wraps GET requests.
+To automate the token refresh process on receiving a `401 unauthorized` response from the Choreo API, you can encapsulate the requests with the refresh logic. The following is an example code snippet that wraps GET requests:
 
 ``` javascript
     export const performGetWithRetry = async (url) => {
@@ -155,126 +163,127 @@ To automate the token refresh process when receiving a 401 unauthorized response
     };
 ```
 
-### Custom Error Page
+### Step 1.6: Set up a custom error page
 
-You can set up Choreo's Managed Authentication to redirect to a customized error page within your Web Application by defining the Error Path in the configuration. In the event of an error during a redirection-based process, such as login or logout, Choreo will automatically direct the users to this designated custom error page.
-
-!!! note
-    If you have not configured an Error Path, Managed Authentication will utilize its default error page whenever an error occurs.
-
-Choreo's Managed Authentication will include the following query parameters in the URL when redirecting to the custom error page:
-
-| parameter name | parameter description                         |
-|----------------|-----------------------------------------------|
-| code           | short textual error code indicating the error |
-| message        | description of the error                      |
-
-
-You have successfully implemented Choreo's Managed Authentication for your web application. Your next step involves creating a web application component in Choreo, enabling Managed Authentication for the component, and subsequently deploying it.
-
-## Step 2: Enable Managed Authentication
-
-To ensure that your web application functions seamlessly with Managed Authentication, it is essential to enable Managed Authentication for your web application component within Choreo.
+You can set up Choreo's managed authentication to redirect to a customized error page within your web application by defining the error path in the configuration. In the event of an error during a redirection-based process, such as sign in or sign out, Choreo will automatically redirect the user to the designated custom error page.
 
 !!! note
-    Managed Authentication is currently available only for React, Angular, and Vue.js buildpacks.
+    If you have not configured an error path, Choreo's managed authentication will use its default error page whenever an error occurs.
 
-You can enable Managed Authentication for your Web Application component at component deployment in the Choreo Console. By default, Managed Authentication is enabled for React, Angular and Vue.js buildpacks.
+Choreo's managed authentication will include the following query parameters in the URL when redirecting to the custom error page:
 
-1. Go to the **Deploy** view of your component.
-2. Click **Configure & Deploy** on the **Set Up** card.
-3. Add the necessary configurations for your component if applicable and click **Next**.
-4. Enable/Disable Managed Authentication using the toggle in the sidebar.
-
-## Step 3: Configure Managed Authentication
-
-To configure the necessary paths and scopes for managed authentication, follow the steps below:
-
-1. Go to the **Deploy** view of your component.
-2. Click **Configure & Deploy** on the **Set Up** card.
-3. Add the necessary configurations for your component if applicable and click **Next**.
-4. Enable Managed Authentication using the toggle in the sidebar.
-5. Configure the following fields:
+| Parameter      |  Description                                    |
+|----------------|-------------------------------------------------|
+| code           | A short textual error code indicating the error |
+| message        | The description of the error                    |
 
 
-| Option            |  Description      | Default           |
-| ----------------- | ----------------- | ----------------- |
-| Post Login Path   | This represents the relative path that the application will be redirected to following a successful login. In your code, you will need to implement the necessary logic to handle the userinfo cookie set by Managed Authentication. See [ Handling user info post-login](#handling-user-info-post-login)       | /                      |
-| Post Logout Path  | The relative path to which Choreo redirects after a successful logout.  | /                      |
-| Error Path        | The relative path to which Choreo redirects to if an error occurs during a redirection-based flow (i.e. Login, Logout). See [Custom Error Page](#custom-error-page)             | Builtin error page     |
-| Session Expiry Time | The time in minutes after which the user session expires. For a seamless experience, the session expiry value should match the refresh token expiry time of the OIDC application in your Identity Provider.               | 10080 Minutes (7 Days)                   |
-| Additional Scopes | All additional scopes required by the web application. The following scopes will be added by default. `openid`, `profile`, `email`, and scopes required to invoke subscribed APIs.               | none                   |
+Now have successfully implemented Choreo's managed authentication for your web application. The next step is to enable managed authentication for the component, and subsequently deploy it.
 
-!!! note
-    If you need to change these configurations after deployment, you can do so by clicking on the **Authentication Settings** button on the **Set Up** card.
+## Step 2: Enable managed authentication and configure the paths
 
-## Step 4.a: Manage OAuth Keys with Choreo Built-in Identity Provider
+To ensure that your web application functions seamlessly with managed authentication, it is essential to enable managed authentication for your web application component within Choreo.
 
-!!! note
-    This step is optional. When you are using `Choreo Built-in Identity Provider`, we auto generate keys during the component deployment if keys are not available.
+You can enable managed authentication for your web application component at the time you deploy the component.
 
-1. In the left navigation of your component view, click **Settings**.
-2. Click **Authentication Keys** tab.
-3. Select the environment that you need to manage keys for.
-4. Select **Choreo Built-In Identity Provider**.
-5. Click on the **Generate Keys** button. 
+!!! tip
+     Managed authentication is enabled by default when you create a web application using **React**, **Angular**, or **Vue.js** buildpacks.
 
-!!! note
-    If the **Generate Keys** button is not visible, it means that OAuth keys have already been generated for the component for the selected environment.
+1. Sign in to the [Choreo Console](https://console.choreo.dev/). This opens the project home page.
+2. In the **Component Listing** pane, click on the web application for which you want to enable managed authentication.
+3. In the left navigation menu, click **Deploy**.
+4. In the **Set Up** card, click **Configure & Deploy**.
+5. Add the necessary configurations for your component if applicable and click **Next**.
+6. Click the **Managed Authentication with Choreo** toggle to enable the setting.
+7. Specify appropriate values for the following fields:
 
-## Step 4.b: Manage OAuth Keys with Asgardeo
+    | Field            |  Description      | Default value      |
+    | ----------------- | ----------------- | ----------------- |
+    | Post Login Path   | The relative path that the application will be redirected to on successful sign in. In your code, you must implement the necessary logic to handle the `userinfo` cookie set by managed authentication. | /                      |
+    | Post Logout Path  | The relative path to which Choreo redirects you on successful sign out.  | /                      |
+    | Error Path        | The relative path to which Choreo redirects you when an error occurs during a redirection-based flow (i.e., sign in or sign out). See [Set up a custom error page](#step-16-set-up-a-custom-error-page)             | Built-in error page     |
+    | Session Expiry Time | The time in minutes after which the user session expires. For a seamless experience, the session expiry value should match the refresh token expiry time of the OIDC application in your identity provider.               | 10080 Minutes (7 Days)                   |
+    | Additional Scopes | All additional scopes required by the web application. The `openid`, `profile`, and `email` scopes are added by default together with the scopes required to invoke subscribed APIs.               | none                   |
 
-### Create OIDC/OAuth2.0 Application in Asgardeo
+    !!! note
+         If you need to change these configurations after you deploy the component, you can click **Authentication Settings** on the **Set Up** card, make the necessary changes, and deploy the component once again.
 
-1. Login to [Asgardeo](https://console.asgardeo.io/).
-2. Select your organization.
-3. Click **Applications** in the left navigation.
-4. Click **+ New Application**.
-5. Select **Standard Based Application**.
-6. Provide a name for the application.
-7. Select **OAuth2.0 OpenID Connect** as the protocol.
-8. Click Register.
-9. Go to **Protocol** tab of the top navigation of the created application.
-10. Select `Code` and `Refresh Token` as the **Allowed grant types**.
-11. Add the following as **Authorized redirect URLs**.
-    - [your-web-application-url]/auth/login/callback
-    - [your-web-application-url]/auth/logout/callback
-12. Add [your-web-application-url] under **Allowed origins**
-13. Under **Access Token** section, select JWT as **Token Type**.
-14. Click **Update**.
-15. If you need to invoke APIs secured with Role Based Access Control, you need to create roles in the application and map those roles to relevant permissions (scope). Then those roles should be assigned to user groups. Refer the [Asgardeo API Authorization guide](https://wso2.com/asgardeo/docs/guides/api-authorization/) for additional details.  
-16. Copy the **Client ID** and **Client Secret** of the application. 
+## Step 3: Manage OAuth keys
 
-### Link OIDC/OAuth2.0 Application to the Choreo Component
+You can manage OAuth keys either with the Choreo built-in identity provider, Asgardeo, or an external identity provider. Click the respective tab for details depending on how you want to manage OAuth keys: 
 
-1. In the left navigation of your component view, click **Settings**.
-2. Click **Authentication Keys** tab.
-3. Select the environment that you need to manage keys for.
-4. Select **Asgardeo - [your-org-name]**.
-5. Paste the **Client ID** and **Client Secret** of the OIDC/OAuth2.0 Application created in Asgardeo. 
-6. Click **Add Keys**.
+=== "Manage OAuth keys with the Choreo built-in identity provider"
 
-## Step 4.c: Manage OAuth Keys with an External Identity Provider
+     Follow the steps given below to generate authentication keys:
 
-### Create OIDC/OAuth2.0 Application in the External Identity Provider
+    !!! note
+         When you use the Choreo built-in identity provider, keys are auto-generated during component deployment. Therefore, this step is optional.
 
-1. Create a OIDC/OAuth2.0 Application.
-2. Configure `Code` and `Refresh Token` as **Allowed grant types**.
-3. Add the following as **Authorized redirect URLs**.
-    - [your-web-application-url]/auth/login/callback
-    - [your-web-application-url]/auth/logout/callback
-4. Set Access token type to **JWT**.
-5. Set Refresh token expiry time to 1 Day.
-6. If you need to invoke APIs secured with Role Based Access Control, you need to make sure that the users have a role mapping which sets relevant permissions to invoke the APIs. 
+     1. In the Choreo Console, go to the component for which you want to manage OAuth keys.
+     2. In the left navigation menu, click **Settings**.
+     3. Click the **Authentication Keys** tab and then click on the environment for which you want to generate keys.
+     4. In the **Identity Provider** list, select **Choreo Built-In Identity Provider**.
+     5. Click **Regenerate Secret**. 
 
-!!! note
-    The specific implementation of how application roles are mapped to users will depend on the Identity Provider.
+        !!! tip
+             If the **Regenerate Secret** button is disabled, it indicates that OAuth keys are already generated for the component for the selected environment.
 
-### Link OIDC/OAuth2.0 Application to the Choreo Component
+=== "Manage OAuth keys with Asgardeo"
 
-1. In the left navigation of your component view, click **Settings**.
-2. Click **Authentication Keys** tab.
-3. Select the environment that you need to manage keys for.
-4. Select the External Identity Provider.
-5. Paste the **Client ID** and **Client Secret** of the OIDC/OAuth2.0 Application created in the External Identity Provider. 
-6. Click **Add Keys**.
+     **Step 3.1: Create and configure an OIDC/OAuth2.0 application in Asgardeo**
+
+     1. Sign in to [Asgardeo](https://console.asgardeo.io/).
+     2. In the top navigation menu, click the **Organization** list and select your organization.
+     3. In the Asgardeo Console left navigation menu, click **Applications**.
+     4. Click **+ New Application**.
+     5. Click **Standard-Based Application**.
+     6. Specify a name for the application and select **OAuth2.0 OpenID Connect** as the protocol.
+     7. Click **Register**.
+     8. Click the **Protocol** tab and follow these steps:
+
+         1. Select `Code` and `Refresh Token` as the **Allowed grant types**.
+         2. Specify the following as **Authorized redirect URLs**:
+             - [your-web-application-url]/auth/login/callback
+             - [your-web-application-url]/auth/logout/callback
+         3. Specify your web application URL under **Allowed origins**.
+         4. In the **Access Token** section, select JWT as the **Token type**.
+         5. Click **Update**. 
+
+            !!! tip
+                 If you need to invoke APIs secured with role-based access control, you must create roles in the application and map those roles to relevant permissions (scope). Then those roles should be assigned to user groups. For more information, see the [Asgardeo API authorization guide](https://wso2.com/asgardeo/docs/guides/api-authorization/).
+
+         6. Copy the **Client ID** and **Client Secret** of the application. You will need to use these values in the next step to link the OIDC/OAuth2.0 application to your Choreo component.
+
+     **Step 3.2: Link the OIDC/OAuth2.0 application to the Choreo component**
+
+     1. In the Choreo Console, go to the component for which you want to manage OAuth keys.
+     2. In the left navigation menu, click **Settings**.
+     3. Click the **Authentication Keys** tab and then click on the environment for which you want to generate keys.
+     4. In the **Identity Provider** list, select **Asgardeo - [your-org-name]**.
+     5. Paste the **Client ID** and **Client Secret** of the OIDC/OAuth2.0 application you created in Asgardeo. 
+     6. Click **Add Keys**.
+
+=== "Manage OAuth keys with an external identity provider"
+
+     **Step 3.1: Create and configure an OIDC/OAuth2.0 application in the external identity provider**
+
+     1. Create an OIDC/OAuth2.0 application in your external identity provider.
+     2. Configure the OIDC/OAuth2.0 application as follows:
+
+         1. Set `Code` and `Refresh Token` as allowed grant types.
+         2. Add the following as authorized redirect URL.
+         3. Specify the following as authorized redirect URLs:
+         4. Specify the access token type as JWT.
+         5. Set the refresh token expiry time to 1 day. 
+
+            !!! tip
+                 If you want to invoke APIs secured with role-based access control, you must ensure that users are assigned a role mapping that grants the necessary permission for API invocation. The approach of mapping application roles to users can vary depending on the identity provider.
+
+     **Step 3.2: Link the OIDC/OAuth2.0 application to the Choreo component**
+
+     1. In the Choreo Console, go to the component for which you want to manage OAuth keys.
+     2. In the left navigation menu, click **Settings**.
+     3. Click the **Authentication Keys** tab and then click on the environment for which you want to generate keys.
+     4. In the **Identity Provider** list, select your identity provider.
+     5. Paste the **Client ID** and **Client Secret** of the OIDC/OAuth2.0 application you created in your external identity provider.
+     6. Click **Add Keys**.
