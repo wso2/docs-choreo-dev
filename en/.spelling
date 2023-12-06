@@ -485,6 +485,8 @@ connectionless
 Nginx
 schemas
 TestGPT
+onboarding
+onboards
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -670,6 +672,7 @@ configure-azure-ad-as-an-external-idp
 test-apis-with-choreo-apichat
 ci-cd
 autoscale
+connections.md
  - theme/material/templates/home-page.html
 doctype
 html
@@ -829,8 +832,10 @@ reusability
  - docs/devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero.md
 intra-project
 x-choreo-project-ns
-userinfo
-choreo-apis
+
  - docs/administer/configure-a-user-store-with-built-in-idp.md
 Uploader
 built-in
+ - docs/develop-components/sharing-and-reusing-services.md
+ServiceURL
+YOUR_ENVIRONMENT_VAR_HERE
