@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keda-http-add-on-operator
+  namespace: keda
+  labels:
+    app.kubernetes.io/instance: operator
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=Service account is needed
+    checkov.io/skip2: CKV_K8S_29=Container level security context is set
+    checkov.io/skip3: CKV_K8S_AZURE_WSO2_2=Default is set by NIC
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: operator
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: operator
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                - linux
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
+                - arm64
+      containers:
+      - name: operator
+        image: choreocontrolplane.azurecr.io/choreoipaas/dp-keda-http-add-on-operator:latest
+        args:
+        - --leader-elect
+        # TODO(pedrotorres): remove after implementing new routing table
+        - --admin-port=9090
+        env:
+        # TODO(pedrotorres): remove after implementing new routing table
+        - name: KEDAHTTP_INTERCEPTOR_SERVICE
+          value: "keda-http-add-on-interceptor-admin"
+        - name: KEDAHTTP_OPERATOR_EXTERNAL_SCALER_SERVICE
+          value: "keda-http-add-on-external-scaler"
+        - name: KEDAHTTP_OPERATOR_EXTERNAL_SCALER_PORT
+          value: "9090"
+        - name: KEDAHTTP_INTERCEPTOR_ADMIN_PORT
+          value: "9090"
+        - name: KEDAHTTP_INTERCEPTOR_PROXY_PORT
+          value: "8080"
+        - name: KEDA_HTTP_OPERATOR_NAMESPACE
+          value: "keda"
+        - name: KEDA_HTTP_OPERATOR_WATCH_NAMESPACE
+          value: ""
+        # TODO(pedrotorres): remove after implementing new routing table
+        ports:
+        - name: admin
+          containerPort: 9090
+        # TODO(pedrotorres): set better default values avoiding overcommitment
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 1000m
+            memory: 1000Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          # choreo changes
+          # runAsNonRoot: true
+          runAsUser: 10001
+          # choreo changes
+          capabilities:
+            drop:
+            - ALL
+          seccompProfile:
+            type: RuntimeDefault
+        # added by choreo
+        readinessProbe:
+          tcpSocket:
+            port: 9090
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 9090
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        # added by choreo
+      serviceAccountName: keda-http-add-on-operator
+      terminationGracePeriodSeconds: 10
