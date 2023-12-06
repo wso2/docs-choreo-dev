@@ -30,7 +30,7 @@ You can consume a Choreo-deployed service within another service
 
 Consuming connections from within Choreo services is seamless and straightforward. Follow the steps below to consume a Choreo service. 
 
-### Consuming services via the Choreo console
+### Consuming services via the Choreo Console
 
 You can consume a Choreo service via another service you plan to deploy in Choreo as follows: 
 
