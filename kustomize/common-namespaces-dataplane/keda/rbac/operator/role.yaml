@@ -51,7 +51,6 @@ kind: Role
 metadata:
   creationTimestamp: null
   name: keda-http-add-on-operator
-  namespace: keda
   labels:
     app.kubernetes.io/instance: operator
 rules:
