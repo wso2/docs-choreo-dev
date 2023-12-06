@@ -2,7 +2,7 @@
 
 Services can exist in two main forms: standalone and integrated. By connecting services, organizations can access and benefit from the combined strength of various features and capabilities. Choreo allows you to connect services using Connections. 
 
-Connections in Choreo allows you to integrate Choreo components, or to integrate Choreo components to external services or resources. Connections provIDe a simple and uniform way to integrate with services and resources. A Connection will include the set of parameters that the application requires to create a connection at runtime. The visibility level of the Connection and the service for which it is created determine these parameters. You can easily refer to these parameters in the application runtime.
+Connections in Choreo allows you to integrate Choreo components, or to integrate Choreo components to external services or resources. Connections provide a simple and uniform way to integrate with services and resources. A Connection will include the set of parameters that the application requires to create a connection at runtime. The visibility level of the Connection and the service for which it is created determine these parameters. You can easily refer to these parameters in the application runtime.
  
 You can add Connections in different visibility levels: Organization, Project, and Component. The visibility levels are described below:
 
