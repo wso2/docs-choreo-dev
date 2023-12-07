@@ -12,6 +12,7 @@ cloudManagerServiceUrl = "http://dp-cloud-manager:80/api/v1"
 deleteManagerUrl =  "http://delete-manager:8000/api/v1"
 subscriptionServiceUrl = "http://subscriptions:9090"
 proxyDeployerServiceUrl = "http://choreo-apim-proxy-deployer:9095"
+urlManagerServiceUrl = "http://choreo-url-management:9090/url-mgt"
 apimUrl = "{{.APIM_URL}}"
 apimClientId = "{{.APIM_CLIENT_ID}}"
 apimClientSecret = "{{.APIM_CLIENT_SECRET}}"
@@ -47,6 +48,7 @@ enableEventPublisherMTLS = {{.ENABLE_GRAPHQL_EVENT_PUBLISHER_MTLS}}
 apimSecretPath = "/mnt/csi/secret-cp-graphql/APIM_REST_API_CONSUMER_SECRET"
 enableDBBasedNotifications = {{.ENABLE_DB_BASED_NOTIFICATIONS}}
 invokeUrlOrgIdPrefixExcludedOrgs = "{{.INVOKE_URL_ORG_ID_PREFIX_EXCLUDED_ORGS}}"
+enableCustomURLMappings = "{{.ENABLE_GRAPHQL_CUSTOM_URL_MAPPINGS}}"
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
