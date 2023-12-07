@@ -1,17 +1,12 @@
 # Connections
 
-Services can exist in two main forms: standalone and integrated. By connecting services, organizations can access and benefit from the combined strength of various features and capabilities. Choreo allows you to connect services using Connections. 
+Services can exist in two main forms: standalone and integrated. Connecting services is an integral part in creating integrated solutions. Choreo allows you to connect services using Connections. 
 
-Connections in Choreo allows you to integrate Choreo components, or to integrate Choreo components to external services or resources. Connections provide a simple and uniform way to integrate with services and resources. A Connection will include the set of parameters that the application requires to create a connection at runtime. The visibility level of the Connection and the service for which it is created determine these parameters. You can easily refer to these parameters in the application runtime.
- 
+Using Connections, you can integrate the service you intend to deploy on Choreo with other services on Choreo or external resources. Upon creating a connection to a service on Choreo, Choreo provides you a Connection ID along with a set of connection parameters. Thereafter, you have the capability to configure your service to establish a connection using this Connection ID and map connection parameters to environment variable names in your Choreo component. You can read these environment variable names in your service implementation to retrieve the values, to create a programmatic connection to the service you want to consume. 
+
+At runtime, Choreo dynamically injects values into the environment variables based on the configured mapping. This approach ensures that the connection parameter values and the service connection creation remain loosely coupled, providing developers with flexibility and ease of maintenance.
+
 You can add Connections in different visibility levels: Organization, Project, and Component. The visibility levels are described below:
-
-## Organization Connections
-
-Organization Connections are Connections you create to connect to services within a particular organization. These Connections **can be used by any component within the organization**.
-
-For example, create an Organization Connection to share a database across the organization for all the projects and components to reuse. Components can refer to Organization Connections using the connection ID. 
-Organization connections created to consume Choreo services under the OAuth security scheme will have their own OAuth application per connection. Any component reusing such a connection will use the same client ID and client secret.
 
 ## Project Connections
 
