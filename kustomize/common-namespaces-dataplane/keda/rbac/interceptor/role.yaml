@@ -21,7 +21,6 @@ kind: Role
 metadata:
   creationTimestamp: null
   name: keda-http-add-on-interceptor
-  namespace: keda
   labels:
     app.kubernetes.io/instance: interceptor
 rules:

@@ -1,5 +1,5 @@
 {
-  
+
   "compilerOptions": {
     "allowJs": true,
     "esModuleInterop": true,
@@ -16,7 +16,6 @@
     "types": [
       "cypress",
       "node",
-      "@testing-library/cypress",
       "cypress-file-upload",
       "cypress-real-events"
     ],

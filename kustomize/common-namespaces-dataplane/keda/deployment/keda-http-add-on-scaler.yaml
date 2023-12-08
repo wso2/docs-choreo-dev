@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keda-http-add-on-scaler
+  labels:
+    app.kubernetes.io/instance: external-scaler
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=Service account is needed
+    checkov.io/skip2: CKV_K8S_29=Container level security context is set
+    checkov.io/skip3: CKV_K8S_AZURE_WSO2_2=Default is set by NIC
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: external-scaler
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: external-scaler
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                - linux
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
+                - arm64
+      containers:
+      - name: scaler
+        image: choreocontrolplane.azurecr.io/choreoipaas/dp-keda-http-add-on-scaler:latest
+        env:
+        # TODO(pedrotorres): remove after implementing new routing table
+        - name: KEDA_HTTP_SCALER_TARGET_ADMIN_DEPLOYMENT
+          value: "keda-http-add-on-interceptor"
+        - name: KEDA_HTTP_SCALER_PORT
+          value: "9090"
+        - name: KEDA_HTTP_HEALTH_PORT
+          value: "9091"
+        - name: KEDA_HTTP_SCALER_TARGET_ADMIN_NAMESPACE
+          value: "keda"
+          # TODO(pedrotorres): remove after implementing new routing table
+        - name: KEDA_HTTP_SCALER_TARGET_ADMIN_SERVICE
+          value: "keda-http-add-on-interceptor-admin"
+          # TODO(pedrotorres): remove after implementing new routing table
+        - name: KEDA_HTTP_SCALER_TARGET_ADMIN_PORT
+          value: "9090"
+        - name: KEDA_HTTP_SCALER_TARGET_PENDING_REQUESTS_INTERCEPTOR
+          value: "200"
+        ports:
+        - name: grpc
+          containerPort: 9090
+        - name: health
+          containerPort: 9091
+        # TODO(pedrotorres): set better default values avoiding overcommitment
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 1000m
+            memory: 1000Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          # choreo changes
+          # runAsNonRoot: true
+          runAsUser: 10001
+          # choreo changes
+          capabilities:
+            drop:
+            - ALL
+          seccompProfile:
+            type: RuntimeDefault
+        # added by choreo
+        readinessProbe:
+          tcpSocket:
+            port: 9091
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 9091
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        # added by choreo
+      serviceAccountName: keda-http-add-on-scaler
+      terminationGracePeriodSeconds: 10

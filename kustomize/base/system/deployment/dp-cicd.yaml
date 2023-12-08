@@ -92,7 +92,7 @@ spec:
             initialDelaySeconds: 5
             timeoutSeconds: 15
             periodSeconds: 10
-            failureThreshold: 3
+            failureThreshold: 1
             successThreshold: 1
             httpGet:
               path: /healthz
@@ -100,8 +100,8 @@ spec:
           livenessProbe:
             initialDelaySeconds: 10
             timeoutSeconds: 15
-            periodSeconds: 30
-            failureThreshold: 3
+            periodSeconds: 5
+            failureThreshold: 1
             successThreshold: 1
             httpGet:
               path: /healthz
