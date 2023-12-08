@@ -836,6 +836,7 @@ x-choreo-project-ns
  - docs/administer/configure-a-user-store-with-built-in-idp.md
 Uploader
 built-in
+csv
  - docs/develop-components/sharing-and-reusing-services.md
 ServiceURL
 YOUR_ENVIRONMENT_VAR_HERE
