@@ -19,6 +19,12 @@ Follow the steps given below to configure a Choreo built-in IdP user store for a
 4. Click the **Application Security** tab and then click the **Identity Providers** tab.
 5. On the **Identity Providers** tab, click **Manage** in the **Choreo Built-in Identity Provider** pane.
 6. In the Manage IdP pane, click on a specific environment tab depending on where you want to configure the built-in IdP user store.
-7. To download the template file for a user store, click **User store template file**. 
+7. You can download a sample **User store template file(.csv )** from the User store file upload section. The template file content is similar to the following
+   !!! note
+   The provided template file includes a sample user with associated attributes. To add new users, insert additional rows in the .csv file, and expand the user attributes by adding more columns to the .csv file.
+   ```csv
+   username,password,groups,first_name,last_name,email
+   "demouser","password1","[manager, engineering]","John","Doe","john@acme.org"
+   ```
 8. Specify appropriate user details in the template file and save it.
 9. Select the template file that you saved and click **Upload**. A successful upload creates the user store and displays the configured users in the **Users** section.
