@@ -4,7 +4,7 @@ Choreo is a platform that allows you to create, deploy, and consume services sea
 
 Typically, an application developer who may be internal or external to your organization would want to consume the APIs published in the Developer Portal to develop their applications. In this guide, you will learn how to discover, generate credentials, and test the consumption of a service published in the Choreo Developer Portal. You will also learn how to invoke the service via a web application. 
 
-This guide is an end-to-end guide that walks you through the following steps:
+This is an end-to-end guide that walks you through the following steps:
 
 - Create an application in the Developer Portal and generate credentials for the application. 
 - Subscribe the API to the application.
