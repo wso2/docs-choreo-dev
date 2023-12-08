@@ -4,9 +4,9 @@ Services can exist in two main forms: standalone and integrated. Connecting serv
 
 Using Connections, you can integrate the service you intend to deploy on Choreo with other services on Choreo or external resources. Upon creating a connection to a service on Choreo, Choreo provides you a Connection ID along with a set of connection parameters. Thereafter, you have the capability to configure your service to establish a connection using this Connection ID and map connection parameters to environment variable names in your Choreo component. You can read these environment variable names in your service implementation to retrieve the values, to create a programmatic connection to the service you want to consume. 
 
-At runtime, Choreo dynamically injects values into the environment variables based on the configured mapping. This approach ensures that the connection parameter values and the service connection creation remain loosely coupled, providing developers with flexibility and ease of maintenance.
+At runtime, Choreo dynamically injects values into the environment variables based on the configured mapping.This approach ensures that the connection parameter values and the service connection creation remain loosely coupled, providing developers with flexibility and ease of maintenance.
 
-You can add Connections in different visibility levels: Organization, Project, and Component. The visibility levels are described below:
+You can add Connections in different visibility levels: Project and Component. The visibility levels are described below:
 
 ## Project Connections
 
