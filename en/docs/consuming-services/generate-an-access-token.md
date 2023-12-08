@@ -18,7 +18,7 @@ Before you try out this guide, be sure you have the following:
 
 ## Generate an access token
 
-You can generate an access token using a cURL command or a test token in the Choreo console. Follow the steps below:
+You can generate an access token using a cURL command or a test token in the Choreo Console. Follow the steps below:
 
 {% include "generate-an-access-token-body.md" %}
 
