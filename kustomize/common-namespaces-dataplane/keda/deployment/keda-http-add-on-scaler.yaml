@@ -6,8 +6,8 @@ metadata:
     app.kubernetes.io/instance: external-scaler
   annotations:
     checkov.io/skip1: CKV_K8S_38=Service account is needed
-    checkov.io/skip2: CKV_K8S_29=Container level security context is set
-    checkov.io/skip3: CKV_K8S_AZURE_WSO2_2=Default is set by NIC
+    checkov.io/skip2: CKV_K8S_29=Not an Issue, https://github.com/wso2-enterprise/choreo/issues/20999
+    checkov.io/skip3: CKV_K8S_38=Not a coniderable threat, https://github.com/wso2-enterprise/choreo/issues/20999
 spec:
   selector:
     matchLabels:
