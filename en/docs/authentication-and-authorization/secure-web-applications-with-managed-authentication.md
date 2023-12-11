@@ -16,7 +16,7 @@ Choreo's managed authentication follows the backend for frontend (BFF) architect
 
 To secure your web application, you must implement authentication and authorization for it. 
 
-To easily set up authentication for your web application with Choreo's managed authentication, follow the steps given below: 
+To easily set up authentication for your web application with Choreo's managed authentication, follow the steps given below. You can also refer to a sample [React app with managed authentication](https://github.com/wso2/choreo-examples/tree/main/cloud-native-app-developer/reading-list-front-end-with-managed-auth).  
 
 ### Step 1.1: Implement the sign-in functionality
 
