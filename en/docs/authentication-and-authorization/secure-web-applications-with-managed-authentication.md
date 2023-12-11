@@ -232,7 +232,7 @@ You can manage OAuth keys either with the Choreo built-in identity provider, Asg
              If the **Regenerate Secret** button is shown instead of the **Generate Secret** button, it indicates that OAuth keys are already generated for the component for the selected environment.
 
     !!! tip
-        If you need to invoke APIs secured with role-based access control, you must create roles in the application and map those roles to relevant permissions (scope). Then those roles should be assigned to user groups. For more information, see [Create roles and assign permissions](../test-secure-api-access-with-choreo-built-in-security-token-service/#step-2-create-roles-and-assign-permissions) and [Assign roles to user groups](../test-secure-api-access-with-choreo-built-in-security-token-service/#step-3-assign-roles-to-user-groups) sections in [Test Secure API Access with Choreo Built-In Security Token Service](../test-secure-api-access-with-choreo-built-in-security-token-service).
+        If you need to invoke APIs secured with role-based access control, you can test this within Choreo itself by creating roles for the application and mapping those roles to relevant permissions (scope) and user groups. For more information, see [Create roles and assign permissions](../test-secure-api-access-with-choreo-built-in-security-token-service/#step-2-create-roles-and-assign-permissions) and [Assign roles to user groups](../test-secure-api-access-with-choreo-built-in-security-token-service/#step-3-assign-roles-to-user-groups) sections in [Test Secure API Access with Choreo Built-In Security Token Service](../test-secure-api-access-with-choreo-built-in-security-token-service).
 
 === "Manage OAuth keys with Asgardeo"
 
