@@ -90,6 +90,10 @@ mv conf/view-cluster-role-binding.yaml.backup conf/view-cluster-role-binding.yam
 echo "--- Add OMS Agent Config"
 bash dataplane/oms-agent/configure-oms-agent.sh
 
+
+echo "--- Add keda namespace and keda-http-add-on-routing-table configMap"
+bash keda/keda-setup.sh
+
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"
 if [[ -r ${azuredfile} ]]
