@@ -34,7 +34,7 @@ export class SampleWebAppPage {
 
     static verifyLoginAndLogout() {
         cy.origin(Cypress.env("webAppUrl"), () => {
-            cy.contains('p', 'Reading List');
+            cy.get("[data-cyid=welcome-msg-box]").contains('john1@acme.org');
             cy.contains('button', 'Logout').click();
         });
     }
