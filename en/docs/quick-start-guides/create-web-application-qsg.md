@@ -20,7 +20,7 @@ To host the front-end application in Choreo, you must create a web application c
     | **GitHub Repository** | **`choreo-samples`** |
     | **Branch**            | **`main`**                               |
     | **Buildpack**      | Click **React** since the frontend is a React application built with Vite|
-    | **Build Context Path**              | **`reading-list-app/frontend`** |
+    | **Build Context Path**              | **`reading-list-app/reading-list-front-end`** |
     | **Build Command**     | **`npm install && npm run build`**             |
     | **Build Output**      | **`dist`**                                    |
     | **Node Version**      | **`18`**                                      |
