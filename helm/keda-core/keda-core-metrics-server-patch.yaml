@@ -7,6 +7,7 @@ metadata:
     checkov.io/skip1: CKV_K8S_38=Not an Issue, https://github.com/wso2-enterprise/choreo/issues/20999
     checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=Not an Issue, https://github.com/wso2-enterprise/choreo/issues/20999
     checkov.io/skip3: CKV_K8S_22=Not a coniderable threat, https://github.com/wso2-enterprise/choreo/issues/20999
+    checkov.io/skip4: CKV_K8S_49=Not an Issue, https://github.com/wso2-enterprise/choreo/issues/20999
 spec:
   template:
     spec:
