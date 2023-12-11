@@ -168,17 +168,23 @@ INSERT INTO tierV2 (id,name,description,is_paid,created_at,is_internal) VALUES
      (N'41e29802-f4bb-456c-a92e-b14cca67c4bb',N'Developer',N'Developer Paid tier for users adding payment methods with component based pricing',1,1689683632,0),
 	 (N'c971b211-bc44-4f35-90ad-4d62b313b466',N'Pay As You Go',N'New PAYG tier for paid users with component based pricing',1,1689683632,0),
      (N'ac5b54f5-d665-4515-ae17-95eac201ecaa',N'Developer Infrastructure',N'Tier for infrastructure costs associated with Developer Paid users',1,1689683632,0),
-     (N'd3bd7035-162d-49dd-8b20-2f8bf095a889',N'Pay As You Go Infrastructure',N'Tier for infrastructure costs associated with new PAYG users',1,1689683632,0);
+     (N'd3bd7035-162d-49dd-8b20-2f8bf095a889',N'Pay As You Go Infrastructure',N'Tier for infrastructure costs associated with new PAYG users',1,1689683632,0),
+     (N'3fa450c2-d47f-4fcb-9711-9727815cd0ee',N'Developer Platform Services',N'Tier for platform services costs associated with Developer users',1,1689683632,0),
+     (N'01ee409e-cdfd-13d6-86c6-1a523acc861b',N'Pay As You Go Platform Services',N'Tier for platform services costs associated with PAYG users',1,1689683632,0);
 GO
 
-INSERT INTO threshold(id,tier_id,threshold) values 
-	(N'01ee409e-cdfd-13d6-86c6-1a523acc861b',N'8de71e7a-adc2-4de4-a1b4-5b79d450f3ff', N'{"components": 5}'),
-	(N'01ee40ac-d78d-1a18-aefa-7525b354b84a',N'4abe3757-86f6-47de-994f-f02fb0522e99', N'{"components": 0}'),
+INSERT INTO threshold(id,tier_id,threshold,billing_provider) values
+	(N'01ee409e-cdfd-13d6-86c6-1a523acc861b',N'8de71e7a-adc2-4de4-a1b4-5b79d450f3ff', N'{"components": 5}',NULL),
+	(N'01ee40ac-d78d-1a18-aefa-7525b354b84a',N'4abe3757-86f6-47de-994f-f02fb0522e99', N'{"components": 0}',NULL),
 	(N'01ee40ac-d78d-1a18-ba66-569b6fbd58f5',N'352dd60e-8e14-4bb3-9dab-395a16fbfe88', N'{"components": 5}',N'stripe'),
 	(N'01ee40ac-d78d-1a18-ba37-e45d158efa93',N'352dd60e-8e14-4bb3-9dab-395a16fbfe88', N'{"components": 0}',N'stripe'),
 	(N'01ee40ac-d78d-1a18-af90-996025312323',N'c971b211-bc44-4f35-90ad-4d62b313b466', N'{"components": 0}',N'stripe'),
 	(N'01ee40ac-d78d-1a18-8651-eb07c06ff29b',N'01eca429-cdf8-1ece-9c04-755f5d6a2c77', N'{"components": 5}',N'stripe'),
 	(N'01ee40ac-d78d-1a18-9dde-008734339a61',N'01eca429-cdf8-1ece-9c04-755f5d6a2c77', N'{"components": 0}',N'azure'),
 	(N'01ee40ac-d78d-1a18-b26a-3bbb0a3feedc',N'9819cdd6-d2df-47cb-8954-8c1a80cb06cc', N'{"components": 0}',N'stripe'),
-	(N'01ee40ac-d78d-1a18-a135-9f837397bb80',N'd3bd7035-162d-49dd-8b20-2f8bf095a889', N'{"components": 0}',N'stripe');
+	(N'01ee40ac-d78d-1a18-a135-9f837397bb80',N'd3bd7035-162d-49dd-8b20-2f8bf095a889', N'{"components": 0}',N'stripe'),
+	(N'01ee8473-9bbf-1ae4-b8a5-bc3ea34ba246',N'01ee409e-cdfd-13d6-86c6-1a523acc861b',N'{"components": 0}','stripe'),
+	(N'85acb04d-c935-4c62-91c5-99837fa51985',N'41e29802-f4bb-456c-a92e-b14cca67c4bb',N'{"components": 5}','stripe'),
+    (N'2982035b-2936-4604-a9f4-67b16c6135d3',N'ac5b54f5-d665-4515-ae17-95eac201ecaa',N'{"components": 0}','stripe'),
+    (N'cf2fe7ca-624d-4d9d-8963-1ea4ae5a04b4',N'3fa450c2-d47f-4fcb-9711-9727815cd0ee',N'{"components": 0}','stripe');
 GO
