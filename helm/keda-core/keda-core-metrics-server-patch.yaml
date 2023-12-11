@@ -4,10 +4,9 @@ metadata:
   name: keda-operator-metrics-apiserver
   namespace: keda
   annotations:
-    checkov.io/skip1: CKV_K8S_49=Default is set by NIC
-    checkov.io/skip2: CKV_K8S_38=Default is set by NIC
-    checkov.io/skip3: CKV_K8S_AZURE_WSO2_2=Default is set by NIC
-    checkov.io/skip4: CKV_K8S_22=keda-operator-metrics-apiserver needs file write access
+    checkov.io/skip1: CKV_K8S_38=Not an Issue, https://github.com/wso2-enterprise/choreo/issues/20999
+    checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=Not an Issue, https://github.com/wso2-enterprise/choreo/issues/20999
+    checkov.io/skip3: CKV_K8S_22=Not a coniderable threat, https://github.com/wso2-enterprise/choreo/issues/20999
 spec:
   template:
     spec:
