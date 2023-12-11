@@ -22,6 +22,7 @@ import com.wso2.choreo.integration.apis.DataPlaneSystemAPI;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.config.TimeRangeISO;
 import com.wso2.choreo.integration.common.Endpoints;
+import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
@@ -31,6 +32,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -39,6 +41,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.container.RepeatUntilTrue.Builder.repeat;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
@@ -253,4 +256,53 @@ public class DPLogsService extends DataPlaneSystemAPI {
         );
     }
 
+    private static HashMap<String, String> getProjectMetricsBody(Environment environment, ChoreoProject choreoProject) {
+        TimeRangeISO timeRangeISO = getTimeRangeISO();
+        
+        return new HashMap<>() {
+            {
+                put("environmentId", environment.getId());
+                put("projectId", choreoProject.getId());
+                put("fromTime", timeRangeISO.getStartTime());
+                put("toTime", timeRangeISO.getEndTime());
+            }
+        };
+    }
+    public static void getProjectMetrics(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients, 
+        String accessToken, ChoreoProject choreoProject, ChoreoComponent choreoComponent, Environment environment, 
+        Boolean enableLive) throws IOException {
+        HashMap<String, String> params = getProjectMetricsBody(environment, choreoProject);
+        String body = MessageUtils.
+        generateStringFromTemplate("templates/observability/graphql/queryForProjectDiagram.mustache", params);
+         HttpClient client = citrusClients.get(Endpoints.CHOREO_EU_DP_URL);
+        if (Constant.region.US.toString().equals(choreoProject.getRegion().toString())) {
+            client = citrusClients.get(Endpoints.CHOREO_US_DP_URL);
+        }
+        runner.$(repeatOnError()
+        .until("i = 1")
+        .index("i")
+        .autoSleep(30000)
+        .actions(
+                http()
+                        .client(client)
+                        .send()
+                        .post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(body)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                http()
+                        .client(client)
+                        .receive()
+                        .response(HttpStatus.OK)
+                        .message()
+                        .type(MessageType.JSON)
+                        .validate(((message, context) -> {
+                            System.out.println(message.getPayload());
+                                })
+                        )
+        ));
+
+    }
 }

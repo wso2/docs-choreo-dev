@@ -1065,6 +1065,12 @@ public class ComponentUtils {
         DPLogsService.getProjectLogs(runner, citrusDPClients, accessToken,
                 project, choreoComponent, env, true);
     }
+      public static void verifyProjectLevelDPMetrics(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusDPClients,
+            String accessToken, ChoreoProject project, ChoreoComponent choreoComponent, Environment env)
+            throws Exception {
+        DPLogsService.getProjectMetrics(runner, citrusDPClients, accessToken,
+                project, choreoComponent, env, true);
+    }
 
     public static void verifyComponentLevelDPLogsLive(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusDPClients,
             String accessToken, ChoreoProject project, ChoreoComponent component, Environment env) throws Exception {
@@ -1072,103 +1078,13 @@ public class ComponentUtils {
                 component, env, true);
     }
 
+
     public static void verifyGatewayDPLogsLive(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients,
             String accessToken, ChoreoProject project, ChoreoComponent component, Environment env) throws Exception {
         DPLogsService.getGatewayLogs(runner, citrusClients, accessToken, project,
                 component, env, true);
     }
 
-    public static void verifyZipLogs(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-            String accessToken, ChoreoComponent component, Environment env,
-            String region) throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
-
-        String releaseId = component.getReleaseIdForEnvironment(env);
-        String namespace = env.getNamespace();
-
-        List<ObservabilityIdInformation> observabilityIds = getObservabilityIds(runner, citrusClients, accessToken,
-                component);
-
-        Optional<ObservabilityIdInformation> obsIdInfo = observabilityIds.stream()
-                .filter(o -> o.getReleaseId().equals(releaseId)).findFirst();
-
-        if (obsIdInfo.isPresent()) {
-            ObservabilityService.verifyZipLogsOverLongerDuration(runner, choreoCPTestClient, accessToken,
-                    releaseId, namespace, region, obsIdInfo.get().getObsId());
-        } else {
-            throw new RuntimeException(
-                    "Observability information for the given releaseId: " + releaseId + " does not exist");
-        }
-    }
-
-    public static void verifyGroupLogs(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-            String accessToken, ChoreoComponent component, Environment env,
-            String region) throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
-
-        if (region.isEmpty()) {
-            region = Constant.region.US.name();
-        }
-
-        String releaseId = component.getReleaseIdForEnvironment(env);
-        String namespace = env.getNamespace();
-
-        ObservabilityService.verifyGroupLogsOverShorterDuration(runner, choreoCPTestClient, accessToken,
-                releaseId, namespace, region);
-
-        ObservabilityService.verifyGroupLogsOverLongerDuration(runner, choreoCPTestClient, accessToken,
-                releaseId, namespace, region);
-    }
-
-    public static void verifyMetrics(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-            String accessToken, ChoreoComponent component, String region) throws Exception {
-        HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
-
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder()
-                .orgUuid(component.getOrganization().getOrgUUID())
-                .projectId(component.getProjectId()).build();
-
-        List<Environment> environments = GraphQL.getEnvironments(runner, cpProjectsClient, accessToken, graphqlDTO);
-
-        Optional<Environment> devEnv = environments.stream()
-                .filter(e -> e.getName().equals(Constant.Environment.Development.name())).findFirst();
-
-        Optional<Environment> prodEnv = environments.stream()
-                .filter(e -> e.getName().equals(Constant.Environment.Production.name())).findFirst();
-
-        String devReleaseId = component.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT);
-        String prodReleaseId = component.getReleaseIdForEnvironment(Constant.PROD_ENVIRONMENT);
-
-        graphqlDTO = GraphqlDTO.builder().releaseIds(devReleaseId + "," + prodReleaseId).build();
-        List<ObservabilityIdInformation> observabilityIds = GraphQL.getObservabilityIds(runner, cpProjectsClient,
-                accessToken, graphqlDTO);
-
-        if (devEnv.isPresent()) {
-            String namespace = devEnv.get().getNamespace();
-
-            ObservabilityService.verifyMetricsOverShorterDuration(runner, choreoCPTestClient, accessToken,
-                    devReleaseId, namespace, region);
-
-            ObservabilityService.verifyMetricsOverLongerDuration(runner, choreoCPTestClient, accessToken,
-                    devReleaseId, namespace, region);
-        } else {
-            throw new RuntimeException("Dev env does not exist");
-        }
-
-        if (prodEnv.isPresent()) {
-            String namespace = prodEnv.get().getNamespace();
-
-            ObservabilityService.verifyMetricsOverShorterDuration(runner, choreoCPTestClient, accessToken,
-                    devReleaseId, namespace, region);
-
-            ObservabilityService.verifyMetricsOverLongerDuration(runner, choreoCPTestClient, accessToken,
-                    devReleaseId, namespace, region);
-
-        } else {
-            throw new RuntimeException("Prod env does not exist");
-        }
-    }
 
     public static RevisionWrapper getRevisions(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients , String accessToken, String apiId, String orgUuid) throws Exception {
         HttpClient httpClient = citrusClients.get(Endpoints.STS_ENDPOINT);
@@ -1185,57 +1101,6 @@ public class ComponentUtils {
         Component.waitForComponentCreationSuccess(runner, appServiceClient, accessToken, graphqlDTO.getProjectId(), graphqlDTO.getComponentId());
     }
 
-    public static SyntaxTree verifyObservabilityAST(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-                                              String accessToken, List<ObservabilityIdInformation> observabilityIds,
-                                                    ChoreoComponent component) throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
-
-        return ObservabilityService.verifyObservabilityAST(runner, choreoCPTestClient, accessToken, observabilityIds, component);
-    }
-
-    public static void verifyObservabilityMetricDensity(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-                                                        String accessToken, ObservabilityIdInformation observabilityId) throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
-
-        ObservabilityService.verifyObservabilityMetricDensity(runner, choreoCPTestClient, accessToken, observabilityId);
-    }
-
-    public static void verifyObservabilityMetricDensityHistrogram(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-                                                                  String accessToken, List<ObservabilityIdInformation> observabilityIds,
-                                                                  ChoreoComponent component) throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
-
-        ObservabilityService.verifyObservabilityMetricDensityHistrogram(runner, choreoCPTestClient, accessToken, observabilityIds, component);
-    }
-
-    public static void verifyObservabilityAPI(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-                                              String accessToken, List<ObservabilityIdInformation> observabilityIds,
-                                              ChoreoComponent component, SyntaxTree syntaxTree) throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
-
-        ObservabilityService.verifyObservabilityAPI(runner, choreoCPTestClient, accessToken, observabilityIds,
-                component, syntaxTree);
-    }
-
-    public static String verifyObservabilityTraceList(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-                                                      String accessToken, List<ObservabilityIdInformation> observabilityIds,
-                                                      ChoreoComponent component, SyntaxTree syntaxTree, int requestCount,
-                                                      String entryPointSvcName, String entryPointFuncName) throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
-
-        return ObservabilityService.verifyObservabilityTraceList(runner, choreoCPTestClient, accessToken,
-                observabilityIds, component, syntaxTree, requestCount, entryPointSvcName, entryPointFuncName);
-    }
-
-    public static void verifyObservabilityTraceInformation(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-                                                           String accessToken, List<ObservabilityIdInformation> observabilityIds,
-                                                           ChoreoComponent component, SyntaxTree syntaxTree,
-                                                           String traceId) throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
-
-        ObservabilityService.verifyObservabilityTraceInformation(runner, choreoCPTestClient, accessToken,
-                observabilityIds, component, syntaxTree, traceId);
-    }
     
     public static ComponentDeploymentStatusDTO deployComponentInBranch(TestNGCitrusSpringSupport runner,
                     Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component,
