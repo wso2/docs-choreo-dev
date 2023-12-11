@@ -11,9 +11,17 @@
  * associated services.
  */
 
+import { login } from "../console/concepts/login/login";
 
-export const OK = 200
-export const UNAUTHORIZED = 401
-export const FORBIDDEN = 403
-export const NOT_FOUND = 404
-export const AUTH_HEADER = () => ({ Authorization: `Bearer ${Cypress.env("apim_token")}`, "content-type": "application/json" })
+export const OK = 200;
+export const UNAUTHORIZED = 401;
+export const FORBIDDEN = 403;
+export const NOT_FOUND = 404;
+export const AUTH_HEADER = () => ({
+  Authorization: `Bearer ${Cypress.env("apim_token")}`,
+  "content-type": "application/json",
+});
+export const AUTH_HEADER2 = () => ({
+  Authorization: `Bearer ${login.getAccessToken()}`,
+  "content-type": "application/json",
+});

@@ -32,6 +32,7 @@ export class ComponentTestPage {
   }
 
   static selectEndpoint(endpoint: string) {
+    cy.get('[data-cyid="select-endpoint-select"]').scrollIntoView();
     Utils.getRenderedElement('[data-cyid="select-endpoint-select"]').click();
     Utils.getRenderedElement('ul>li[role="option"]').contains(endpoint).click();
   }

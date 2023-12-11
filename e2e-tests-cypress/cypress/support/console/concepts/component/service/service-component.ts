@@ -1,0 +1,87 @@
+import { Enums } from "../../../../commons/enums";
+import { Component } from "../component";
+import { _ServiceBuild } from "./service-build";
+import {
+  EndpointAccessibility,
+  _ServiceDeployment,
+} from "./service-deployment";
+import { UsagePlan, _ServiceManagement } from "./service-management";
+import { _ServiceStats } from "./service-stats";
+import { InvokeInfo, _ServiceTest } from "./service-test";
+
+export class Service extends Component {
+  private endpointName: string;
+
+  private build = new _ServiceBuild();
+  private deployment = new _ServiceDeployment();
+  private test = new _ServiceTest();
+  private manage = new _ServiceManagement();
+  private stats = new _ServiceStats();
+
+  constructor(
+    name: string,
+    id: string,
+    handler: string,
+    projectId: string,
+    endpointName: string
+  ) {
+    super(name, "1.0", id, handler, projectId);
+
+    this.endpointName = endpointName;
+
+    this.visitComponent(name);
+  }
+
+  getEndpointName() {
+    return this.endpointName;
+  }
+
+  buildComponent() {
+    this.build.build(this);
+  }
+
+  deployProjectLevelAccessibility() {
+    this.deployment.deploy(this, EndpointAccessibility.Project);
+  }
+
+  deployPublicLevelAccessibility() {
+    this.deployment.deploy(this, EndpointAccessibility.Public);
+  }
+
+  testConsole(invokeInfo: InvokeInfo) {
+    return this.test.testConsole(this, invokeInfo);
+  }
+
+  promotePublicLevelAccessibility() {
+    this.deployment.promote(this, EndpointAccessibility.Public);
+  }
+
+  addVersion() {
+    this.deployment.addNewVersion(this);
+  }
+
+  publish() {
+    this.manage.changeLifeCycleState(this, Enums.LifeCycleState.Publish);
+  }
+
+  updateUsagePlans(plans: UsagePlan[]) {
+    this.manage.updateUsagePlans(this, plans);
+  }
+
+  enableCors() {
+    this.manage.enableCors(this);
+  }
+
+  stopDeployment() {
+    this.deployment.stopDeployment();
+  }
+
+  stopPromotion() {
+    this.deployment.stopPromotion();
+  }
+
+  verifyUsageInsights() {
+    this.stats.viewUsageInsights();
+    this.stats.navigateFromComponentToProjectInsights();
+  }
+}
