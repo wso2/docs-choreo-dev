@@ -57,6 +57,7 @@ import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.graphql.CreateByocComponentResponseDTO;
 import com.wso2.choreo.integration.models.graphql.CreateComponentResponseDTO;
 import com.wso2.choreo.integration.models.graphql.CreateNewVersionResponseDTO;
+import com.wso2.choreo.integration.models.images.Image;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.models.proxyapi.ProxyDeployment;
 import com.wso2.choreo.integration.models.response.ProxyResponse;
@@ -750,6 +751,68 @@ public class GraphQL extends ControlPlaneAPI {
                 .body(new ClassPathResource("templates/graphql/responses/deployComponentSuccess.json"))
                 .validate(json()));
     }
+
+     public static JsonArray getImageList(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+                                        GraphqlDTO graphqlDTO) throws IOException {
+         String requestQuery = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/images.mustache", graphqlDTO);
+         String requestBody = ObjectMapperUtil.mapToGraphQLQuery(requestQuery);
+         final AtomicReference<JsonArray> runIdRef = new AtomicReference<>();
+
+         runner.$(http()
+                 .client(client)
+                 .send()
+                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                 .message()
+                 .header(HttpHeaders.AUTHORIZATION, accessToken)
+                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                 .body(requestBody)
+                 .accept(MediaType.APPLICATION_JSON_VALUE));
+         runner.$(http()
+                 .client(client)
+                 .receive()
+                 .response(HttpStatus.OK)
+                 .message()
+                 .type(MessageType.JSON)
+                 .validate((message, context) -> {
+                     JsonArray runId = new JsonParser().parse((String) message.getPayload())
+                             .getAsJsonObject()
+                             .getAsJsonObject("data").getAsJsonArray("deploymentTrackImages");
+                     runIdRef.set(runId);
+                 }));
+         return runIdRef.get();
+    }
+
+
+  public static void deployBuildedComponent(TestActionRunner runner, HttpClient client, String accessToken,
+                                       GraphqlDTO graphqlDTO) throws IOException {
+
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/deployBuildedComponent.mustache", graphqlDTO);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        runner.$(repeatOnError()
+                .until("i = 20")
+                .index("i")
+                .autoSleep(10000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(MediaType.APPLICATION_JSON_VALUE)));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON));
+    }
+
+
 
     /**
      * Get deployment status of the component by version with validation

@@ -18,6 +18,9 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.DataPlaneSystemAPI;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.config.TimeRangeISO;
@@ -274,19 +277,19 @@ public class DPLogsService extends DataPlaneSystemAPI {
         HashMap<String, String> params = getProjectMetricsBody(environment, choreoProject);
         String body = MessageUtils.
         generateStringFromTemplate("templates/observability/graphql/queryForProjectDiagram.mustache", params);
-         HttpClient client = citrusClients.get(Endpoints.CHOREO_EU_DP_URL);
-        if (Constant.region.US.toString().equals(choreoProject.getRegion().toString())) {
-            client = citrusClients.get(Endpoints.CHOREO_US_DP_URL);
+         HttpClient client = citrusClients.get(Endpoints.CHOREO_US_DP_URL);
+        if (Constant.region.EU.toString().equals(choreoProject.getRegion().toString())) {
+            client = citrusClients.get(Endpoints.CHOREO_EU_DP_URL);
         }
-        runner.$(repeatOnError()
-        .until("i = 1")
+        runner.variable("isGatewayLogsRetrievalSuccess", false);
+        AtomicInteger successiveFailureCount = new AtomicInteger(0);
+        runner.$(repeat().until("(i = 5) or ( ${isGatewayLogsRetrievalSuccess} = true )")
         .index("i")
-        .autoSleep(30000)
         .actions(
                 http()
                         .client(client)
                         .send()
-                        .post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX)
+                        .post(Constant.DP_OBSERVABILITY_ENDPOINT_SUFFIX)
                         .message()
                         .header(HttpHeaders.AUTHORIZATION, accessToken)
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -299,7 +302,9 @@ public class DPLogsService extends DataPlaneSystemAPI {
                         .message()
                         .type(MessageType.JSON)
                         .validate(((message, context) -> {
-                            System.out.println(message.getPayload());
+                            JsonArray result = new JsonParser().parse((String) message.getPayload())
+                                    .getAsJsonObject()
+                                    .getAsJsonObject("data").getAsJsonObject("hubbleProjectDiagram").getAsJsonArray("linkList");
                                 })
                         )
         ));

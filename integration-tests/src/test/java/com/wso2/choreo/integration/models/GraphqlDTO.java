@@ -60,6 +60,7 @@ public class GraphqlDTO {
     private String triggerChannels;
     private String triggerID;
     private String versionId;
+    private String imageId;
     private boolean enableCellDiagram;
     private int orgId;
     private String version;

@@ -21,6 +21,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
+import com.google.gson.JsonArray;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.component.Component;
 import com.wso2.choreo.integration.apis.configmgt.ConfigManagement;
@@ -55,6 +56,7 @@ import com.wso2.choreo.integration.models.environments.ProxyEnvironment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.graphql.CreateByocComponentResponseDTO;
 import com.wso2.choreo.integration.models.graphql.CreateComponentResponseDTO;
+import com.wso2.choreo.integration.models.images.Image;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.models.observability.SyntaxTree;
@@ -407,11 +409,25 @@ public class ComponentUtils {
 
         ComponentDeploymentStatusDTO deploymentStatusDTO = null;
         for (int i = 0; i < MAX_DEPLOY_RETRY_COUNT; ++i) {
-            // Deploy component
+            // Build component
             GraphQL.deployComponent(runner, appServiceClient, accessToken, graphqlDTO);
-
             try {
-                deploymentStatusDTO = validateComponentDeployment(runner, citrusClients, accessToken, component, latestCommit, environments);
+                validateBuild(runner, citrusClients, accessToken, component, latestCommit, environments);
+                break;
+            } catch (Exception e) {
+                if (e.getCause() instanceof DeploymentStatusByVersionFailureException) {
+                    log.error("Build failure detected, attempt number " + (i + 1), e);
+                } else {
+                    throw e;
+                }
+            }
+        }
+       
+        for (int i = 0; i < MAX_DEPLOY_RETRY_COUNT; ++i) {
+            // Build component
+            deploymentStatusDTO = deployBuildedComponent(runner, citrusClients, accessToken, component, latestCommit, environments);
+            try {
+                validateComponentDeployment(runner, citrusClients, accessToken, component, latestCommit, environments);
                 break;
             } catch (Exception e) {
                 if (e.getCause() instanceof DeploymentStatusByVersionFailureException) {
@@ -421,7 +437,6 @@ public class ComponentUtils {
                 }
             }
         }
-
         if (deploymentStatusDTO == null) {
             throw new Exception("Component deployment failed");
         }
@@ -447,6 +462,57 @@ public class ComponentUtils {
         ChoreoOrganization org = component.getOrganization();
         graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(org.getOrgHandle())
                 .orgUuid(org.getOrgUUID()).versionId(latestVersionId).environmentId(devEnvIdToDeploy).build();
+
+        Map<String, String> responseParams = new HashMap<>();
+        responseParams.put("environmentId", devEnvIdToDeploy);
+        responseParams.put("sha", latestCommit.getSha());
+        responseParams.put("versionId", latestVersionId);
+
+        // Todo: Move this to a separate method
+        // GraphqlDTO imageDTO = GraphqlDTO.builder().componentId(componentId).versionId(latestVersionId).build();
+        // JsonArray images = GraphQL.getImageList(runner, appServiceClient, accessToken, imageDTO);
+
+        // GraphqlDTO graphqlDeployDTO = GraphqlDTO.builder().componentId(componentId).versionId(latestVersionId).imageId(images.get(0).getAsJsonObject().get("imageId").getAsString()).environmentId(devEnvIdToDeploy).build();
+        // GraphQL.deployBuildedComponent(runner, appServiceClient, accessToken, graphqlDeployDTO);
+
+
+        return GraphQL.getComponentDeploymentStatus(runner, appServiceClient, accessToken, graphqlDTO, responseParams);
+    }
+
+      public static void validateBuild(TestNGCitrusSpringSupport runner,
+                                                   Map<Endpoints, HttpClient> citrusClients, String accessToken,
+                                                        ChoreoComponent component, Commit latestCommit,
+                                                                List<Environment> environments) throws Exception {
+        HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+
+        GraphqlDTO graphqlDTO = createDeploymentRequest(component, latestCommit, environments);
+
+        GraphQL.getDeploymentStatusByVersion(runner, appServiceClient, accessToken, graphqlDTO);
+    }
+
+     public static ComponentDeploymentStatusDTO deployBuildedComponent(TestNGCitrusSpringSupport runner,
+                                                   Map<Endpoints, HttpClient> citrusClients, String accessToken,
+                                                        ChoreoComponent component, Commit latestCommit,
+                                                                List<Environment> environments) throws Exception {
+        HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+
+        GraphqlDTO graphqlDTO = createDeploymentRequest(component, latestCommit, environments);
+
+        String componentId = component.getId();
+        ApiVersion apiVersion = component.getLatestApiVersion();
+        String latestVersionId = apiVersion.getId();
+        String devEnvIdToDeploy = environments.get(0).getId();
+
+        ChoreoOrganization org = component.getOrganization();
+        graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(org.getOrgHandle())
+                .orgUuid(org.getOrgUUID()).versionId(latestVersionId).environmentId(devEnvIdToDeploy).build();
+
+
+        GraphqlDTO imageDTO = GraphqlDTO.builder().componentId(componentId).versionId(latestVersionId).build();
+        JsonArray images = GraphQL.getImageList(runner, appServiceClient, accessToken, imageDTO);
+
+        GraphqlDTO graphqlDeployDTO = GraphqlDTO.builder().componentId(componentId).versionId(latestVersionId).imageId(images.get(0).getAsJsonObject().get("imageId").getAsString()).environmentId(devEnvIdToDeploy).build();
+        GraphQL.deployBuildedComponent(runner, appServiceClient, accessToken, graphqlDeployDTO);
 
         Map<String, String> responseParams = new HashMap<>();
         responseParams.put("environmentId", devEnvIdToDeploy);
@@ -999,28 +1065,6 @@ public class ComponentUtils {
         return GraphQL.getObservabilityIds(runner, cpProjectsClient, accessToken, graphqlDTO);
     }
 
-    public static void verifyLogs(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-            String accessToken, ChoreoComponent component, Environment env,
-            String region) throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
-
-        if (region.isEmpty()) {
-            region = Constant.region.US.name();
-        }
-
-        String releaseId = component.getReleaseIdForEnvironment(env);
-        String namespace = env.getNamespace();
-
-        Map<String, Object> validationMap = new HashMap<>();
-        validationMap.put("$.rows.size()", greaterThan(0));
-        validationMap.put("$.rows[*][0]", everyItem(StringRegularExpression.matchesRegex(timestampRegexMatch)));
-
-        ObservabilityService.verifyLogsOverShorterDuration(runner, choreoCPTestClient, accessToken,
-                releaseId, namespace, region, validationMap);
-
-        ObservabilityService.verifyLogsOverLongerDuration(runner, choreoCPTestClient, accessToken,
-                releaseId, namespace, region, validationMap);
-    }
 
     public static void verifyAuditLogs(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
             String accessToken) throws Exception {
@@ -1065,6 +1109,7 @@ public class ComponentUtils {
         DPLogsService.getProjectLogs(runner, citrusDPClients, accessToken,
                 project, choreoComponent, env, true);
     }
+
       public static void verifyProjectLevelDPMetrics(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusDPClients,
             String accessToken, ChoreoProject project, ChoreoComponent choreoComponent, Environment env)
             throws Exception {
@@ -1078,7 +1123,7 @@ public class ComponentUtils {
                 component, env, true);
     }
 
-
+    
     public static void verifyGatewayDPLogsLive(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients,
             String accessToken, ChoreoProject project, ChoreoComponent component, Environment env) throws Exception {
         DPLogsService.getGatewayLogs(runner, citrusClients, accessToken, project,

@@ -1,0 +1,14 @@
+query {
+      deploymentTrackImages(
+        input: {
+          componentId: "{{componentId}}"
+          id: "{{versionId}}"
+        }
+      ) {
+        imageId
+        createdAt
+        updatedAt
+        commitHash
+        commitMessage
+      }
+}
