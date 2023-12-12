@@ -12,27 +12,14 @@
  */
 
 import { TestIds } from "../../../constants/TestIds";
-import { ServiceLeftMenu } from "../../../ui-elements/left-menus/service-left-menu";
+import { Service } from "./service-component";
 
-export class _ServiceStats {
-  private sideMenu = new ServiceLeftMenu();
-
-  viewUsageInsights() {
-    this.sideMenu.navigateToUsageInsights();
-    this.verifyUsageInsights();
-  }
-
-  navigateFromComponentToProjectInsights() {
-    this.sideMenu.navigateToUsageInsights();
-    this.navigateToProjectInsights();
-  }
-
-  private verifyUsageInsights() {
-    cy.contains("Coming Soon").should("be.visible");
-  }
-
-  private navigateToProjectInsights() {
-    cy.get(TestIds.projectInsights).should("be.visible").click();
+export class ServiceUtils {
+  static validateDeploymentTrack(component: Service) {
     cy.get(TestIds.backdropLoader).should("not.exist");
+
+    const version = component.getLatestVersion();
+
+    cy.get(TestIds.selectVersion).contains(`API v${version}`);
   }
 }

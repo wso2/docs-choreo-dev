@@ -80,7 +80,6 @@ describe("Create proxy using existing url", () => {
 
   it("Deploy proxy", () => {
     proxy.deploy();
-    ``;
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
