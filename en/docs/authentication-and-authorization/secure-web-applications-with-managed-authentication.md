@@ -16,7 +16,7 @@ Choreo's managed authentication follows the backend for frontend (BFF) architect
 
 To secure your web application, you must implement authentication and authorization for it. 
 
-To easily set up authentication for your web application with Choreo's managed authentication, follow the steps given below: 
+To easily set up authentication for your web application with Choreo's managed authentication, follow the steps given below. You can also refer to a sample [React app with managed authentication](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-front-end-with-managed-auth).  
 
 ### Step 1.1: Implement the sign-in functionality
 
@@ -83,14 +83,17 @@ To allow Choreo to manage the sign-out functionality of your web application, yo
 ``` javascript
 <button onClick={async () => {
     window.location.href = `/auth/logout?session_hint=${Cookies.get('session_hint')}`;
-}}>Login</button>`
+}}>Logout</button>`
 ```
 
 When a user clicks the sign-out button, Choreo will clear the session cookies and redirect the users to the OIDC logout endpoint of the configured identity provider (if available).  
 
 ### Step 1.4: Invoke APIs
 
-TO invoke Choreo APIs within the same organization as your web application, you can use the relative path `/choreo-apis/<api-suffix>`, regardless of whether managed authentication is enabled for the web application or not.
+To invoke Choreo APIs within the same organization as your web application, you can use the relative path `/choreo-apis/<api-suffix>`, regardless of whether managed authentication is enabled for the web application or not.
+
+!!! note
+    To invoke a Choreo API from a web application, you need to [create a Connection](../../develop-components/sharing-and-reusing-services/#create-a-connection-to-a-service) from the web application to the Choreo API. 
 
 For example, if the API URL is `https://2d9ec1f6-2f04-4127-974f-0a3b20e97af5-dev.e1-us-east-azure.choreoapis.dev/rbln/item-service/api-e04/1.0.0`, the `<api-suffix>` would be `/rbln/item-service/api-e04/1.0.0`. You can invoke the API using the `/choreo-apis/rbln/item-service/api-e04/1.0.0` relative path from your single-page application.
 
@@ -109,11 +112,11 @@ If you enable Choreo's managed authentication, you don't have to manually add an
 If Choreo's managed authentication is disabled, you must ensure that your web application attaches a valid access token to the API call.
 
 
-### Step 1.5: Refresh access tokens
+### Step 1.5: Refresh session
 
-If the access token provided by the identity provider you have configured expires, you must refresh the tokens to successfully call a Choreo-deployed API. For token refresh to function, you must set up the identity provider to issue a refresh token in addition to the access token.
+The logged is user's session expires when the access token provided by the identity provider you have configured expires. After the session expires, the session must be refreshed to successfully call a Choreo-deployed API. For session refresh to function, you must set up the identity provider to issue a refresh token in addition to the access token.
 
-To refresh access tokens, you can make a POST request to the `/auth/refresh` endpoint.
+`401 Unauthorized` response status code for a Choreo API request from a logged in user with the necessary permissions indicates a possible session expiry. To refresh the session, you can make a POST request to the `/auth/refresh` endpoint.
 
 For example:
 
@@ -121,11 +124,11 @@ For example:
 const response = await fetch("/auth/refresh", { method: "POST" })
 ```
 
-If the refresh token is valid, it will undergo a refresh, and the system will respond with a `204 No Content` status.
+If the refresh token is valid, the session will be refreshed, and the system will respond with a `204 No Content` status.
 
-If the refresh token has expired, the system will respond with a `401 Unauthorized` status.
+If the refresh token has expired, the session will not be refreshed, and the system will respond with a `401 Unauthorized` status.
 
-To automate the token refresh process on receiving a `401 unauthorized` response from the Choreo API, you can encapsulate the requests with the refresh logic. The following is an example code snippet that wraps GET requests:
+To automate the session refresh process on receiving a `401 unauthorized` response from the Choreo API, you can encapsulate the requests with the refresh logic. The following is an example code snippet that wraps GET requests:
 
 ``` javascript
     export const performGetWithRetry = async (url) => {
@@ -194,14 +197,14 @@ You can enable managed authentication for your web application component at the 
 3. In the left navigation menu, click **Deploy**.
 4. In the **Set Up** card, click **Configure & Deploy**.
 5. Add the necessary configurations for your component if applicable and click **Next**.
-6. Click the **Managed Authentication with Choreo** toggle to enable the setting.
+6. Make sure **Managed Authentication with Choreo** toggle is enabled.
 7. Specify appropriate values for the following fields:
 
     | Field            |  Description      | Default value      |
     | ----------------- | ----------------- | ----------------- |
-    | Post Login Path   | The relative path that the application will be redirected to on successful sign-in. In your code, you must implement the necessary logic to handle the `userinfo` cookie set by managed authentication. | /                      |
+    | Post Login Path   | The relative path that the application will be redirected to on successful sign-in. In your code, you must implement the necessary logic to obtain signed-in user's information from the `userinfo` cookie set by managed authentication. See **Obtain user information via the `userinfo` cookie** section in [Obtain user information claims](#step-12-obtain-user-information-claims). | /                      |
     | Post Logout Path  | The relative path to which Choreo redirects you on successful sign-out.  | /                      |
-    | Error Path        | The relative path to which Choreo redirects you when an error occurs during a redirection-based flow (i.e., sign in or sign out). See [Set up a custom error page](#step-16-set-up-a-custom-error-page)             | Built-in error page     |
+    | Error Path        | The relative path to which Choreo redirects you when an error occurs during a redirection-based flow (i.e., sign in or sign out). See [Set up a custom error page](#step-16-set-up-a-custom-error-page).             | Built-in error page     |
     | Session Expiry Time | The time in minutes after which the user session expires. For a seamless experience, the session expiry value should match the refresh token expiry time of the OIDC application in your identity provider.               | 10080 Minutes (7 Days)                   |
     | Additional Scopes | All additional scopes required by the web application. The `openid`, `profile`, and `email` scopes are added by default together with the scopes required to invoke subscribed APIs.               | none                   |
 
@@ -223,10 +226,13 @@ You can manage OAuth keys either with the Choreo built-in identity provider, Asg
      2. In the left navigation menu, click **Settings**.
      3. Click the **Authentication Keys** tab and then click on the environment for which you want to generate keys.
      4. In the **Identity Provider** list, select **Choreo Built-In Identity Provider**.
-     5. Click **Regenerate Secret**. 
+     5. Click **Generate Secret**. 
 
-        !!! tip
-             If the **Regenerate Secret** button is disabled, it indicates that OAuth keys are already generated for the component for the selected environment.
+        !!! Note
+             If the **Regenerate Secret** button is shown instead of the **Generate Secret** button, it indicates that OAuth keys are already generated for the component for the selected environment.
+
+    !!! tip
+        If you need to invoke APIs secured with role-based access control, you can test this within Choreo by creating roles for the application and mapping those roles to relevant permissions (scope) and user groups. For more information, see [create roles and assign permissions](../test-secure-api-access-with-choreo-built-in-security-token-service/#step-2-create-roles-and-assign-permissions) and [assign roles to user groups](../test-secure-api-access-with-choreo-built-in-security-token-service/#step-3-assign-roles-to-user-groups) sections in [Test Secure API Access with Choreo Built-In Security Token Service](../test-secure-api-access-with-choreo-built-in-security-token-service).
 
 === "Manage OAuth keys with Asgardeo"
 
@@ -246,7 +252,7 @@ You can manage OAuth keys either with the Choreo built-in identity provider, Asg
              - [your-web-application-url]/auth/login/callback
              - [your-web-application-url]/auth/logout/callback
          3. Specify your web application URL under **Allowed origins**.
-         4. In the **Access Token** section, select JWT as the **Token type**.
+         4. In the **Access Token** section, select `JWT` as the **Token type**.
          5. Click **Update**. 
 
             !!! tip
@@ -274,7 +280,6 @@ You can manage OAuth keys either with the Choreo built-in identity provider, Asg
          2. Add the following as authorized redirect URL.
          3. Specify the following as authorized redirect URLs:
          4. Specify the access token type as JWT.
-         5. Set the refresh token expiry time to 1 day. 
 
             !!! tip
                  If you want to invoke APIs secured with role-based access control, you must ensure that users are assigned a role mapping that grants the necessary permission for API invocation. The approach of mapping application roles to users can vary depending on the identity provider.
