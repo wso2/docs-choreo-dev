@@ -24,8 +24,8 @@ patchesStrategicMerge:
   - keda-core-operator-patch.yaml
   - keda-core-metrics-server-patch.yaml
   - keda-core-operator-cluster-role-patch.yaml
-  - keda-core-operator-external-metrics-reader-cluster-role-patch.yaml
   - keda-core-operator-hpa-controller-external-metrics-cluster-role-patch.yaml
+  - keda-core-operator-external-metrics-reader-cluster-role-patch.yaml
 resources:
   - namespace.yaml
   - keda-core-operator-role.yaml
