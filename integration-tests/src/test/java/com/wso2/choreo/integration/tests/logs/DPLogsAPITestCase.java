@@ -170,6 +170,18 @@ public class DPLogsAPITestCase extends TestNGCitrusSpringSupport {
         }
     }
 
+    @Test(dependsOnMethods = { "invokeAPIProd_DPLogsAPITestCase" })
+    @CitrusTest
+    public void verifyProjectLevelDPMetrics_DPMetricsLiveAPITestCase() throws Exception {
+        ComponentUtils.updateEnvironments(environments, ComponentUtils.getEnvironments(this, citrusClients,
+                accessToken, choreoComponent));
+        for (Environment env : environments) {
+            ComponentUtils.verifyProjectLevelDPMetrics(this, citrusClients, accessToken, project, choreoComponent,
+                    env);
+        }
+    }
+
+    
     @Test(dependsOnMethods = { "verifyProjectLevelDPLogs_DPLogsLiveAPITestCase" })
     @CitrusTest
     public void verifyComponentLevelDPLogs_DPLogsLiveAPITestCase() throws Exception {

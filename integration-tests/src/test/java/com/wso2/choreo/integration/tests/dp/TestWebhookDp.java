@@ -168,7 +168,7 @@ public class TestWebhookDp extends TestBase {
     @CitrusTest
     public void testLiveLogs_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
         for (Environment env : dp.getEnvironments()) {
-            ComponentUtils.verifyLogs(this, citrusClients, accessToken, dp.getChoreoComponent(), env, dp.getRegion());
+            ComponentUtils.verifyComponentLevelDPLogsLive(this,citrusClients, accessToken,dp.getChoreoProject(), dp.getChoreoComponent(),env);
         }
     }
 
@@ -176,7 +176,7 @@ public class TestWebhookDp extends TestBase {
     @CitrusTest
     public void testGroupedLogs_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
         for (Environment env : dp.getEnvironments()) {
-            ComponentUtils.verifyGroupLogs(this, citrusClients, accessToken, dp.getChoreoComponent(), env, dp.getRegion());
+           ComponentUtils.verifyComponentLevelDPLogsLive(this,citrusClients, accessToken,dp.getChoreoProject(), dp.getChoreoComponent(),env);
         }
     }
 

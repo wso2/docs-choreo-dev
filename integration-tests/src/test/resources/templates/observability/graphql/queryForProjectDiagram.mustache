@@ -1,0 +1,10 @@
+{
+  "operationName": "hubbleProjectDiagram",
+  "variables": {
+    "environmentId": "{{environmentId}}",
+    "toTime":  "{{toTime}}",
+    "fromTime":  "{{fromTime}}",
+    "projectId":  "{{projectId}}"
+  },
+  "query": "query hubbleProjectDiagram(\n    $environmentId: String!\n    $projectId: String!\n    $fromTime: String!\n    $toTime: String!\n  ) {\n    hubbleProjectDiagram(\n      projectId: $projectId\n      environmentId: $environmentId\n      from: $fromTime\n      to: $toTime\n    ) {\n      linkList {\n        sourceNodeId\n        destinationNodeId\n        requestCount\n        errorCount\n        avgLatency\n        p99Latency\n        p90Latency\n        p50Latency\n      }\n      nodeList {\n        nodeId\n        nodeType\n        componentId\n        componentName\n        apiVersion\n        ip\n      }\n    }\n  }"
+}
