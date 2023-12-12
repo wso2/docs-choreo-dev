@@ -24,6 +24,7 @@ configMapGenerator:
     behavior: create
     literals:
       - AZURE_LA_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+      - CLOUD_VENDOR=azure
   - name: cm-hubble-exporter
     behavior: create
     literals:
