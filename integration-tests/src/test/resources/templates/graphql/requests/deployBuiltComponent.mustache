@@ -1,16 +1,12 @@
 mutation {
-    deployComponent(
-      deployment: {
-        componentId: "{{componentId}}"
-        versionId: "{{latestVersionId}}"
-        envId: "{{devEnvIdToDeploy}}"
-        branch: "{{branch}}"
-        sha: "{{sha}}"
-        cron: ""
-        shaDate: "{{shaDate}}"
-      }
-    ) {
-      message
-      success
+      deployDeploymentTrack(
+        input: {
+          componentId:  "{{componentId}}"
+          id: "{{versionId}}",
+          imageId: "{{imageId}}",
+          environmentId:"{{environmentId}}",
+          cron: "",
+          cronTimezone: "",
+        }
+      )
     }
-}
