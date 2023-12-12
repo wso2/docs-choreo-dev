@@ -1,5 +1,4 @@
-#! /bin/sh
-set -e
+#!/bin/bash
 mdspell  -n -a --en-us docs/**/*.md -d dictionary/en_US-large
 mdspell  -n -a --en-us docs/**/**/*.md -d dictionary/en_US-large
 mdspell  -n -a --en-us mkdocs.yml -d dictionary/en_US-large
