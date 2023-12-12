@@ -425,7 +425,7 @@ public class ComponentUtils {
        
         for (int i = 0; i < MAX_DEPLOY_RETRY_COUNT; ++i) {
             // Build component
-            deploymentStatusDTO = deployBuildedComponent(runner, citrusClients, accessToken, component, latestCommit, environments);
+            deploymentStatusDTO = deployBuiltComponent(runner, citrusClients, accessToken, component, latestCommit, environments);
             try {
                 validateComponentDeployment(runner, citrusClients, accessToken, component, latestCommit, environments);
                 break;
@@ -468,14 +468,6 @@ public class ComponentUtils {
         responseParams.put("sha", latestCommit.getSha());
         responseParams.put("versionId", latestVersionId);
 
-        // Todo: Move this to a separate method
-        // GraphqlDTO imageDTO = GraphqlDTO.builder().componentId(componentId).versionId(latestVersionId).build();
-        // JsonArray images = GraphQL.getImageList(runner, appServiceClient, accessToken, imageDTO);
-
-        // GraphqlDTO graphqlDeployDTO = GraphqlDTO.builder().componentId(componentId).versionId(latestVersionId).imageId(images.get(0).getAsJsonObject().get("imageId").getAsString()).environmentId(devEnvIdToDeploy).build();
-        // GraphQL.deployBuildedComponent(runner, appServiceClient, accessToken, graphqlDeployDTO);
-
-
         return GraphQL.getComponentDeploymentStatus(runner, appServiceClient, accessToken, graphqlDTO, responseParams);
     }
 
@@ -490,7 +482,7 @@ public class ComponentUtils {
         GraphQL.getDeploymentStatusByVersion(runner, appServiceClient, accessToken, graphqlDTO);
     }
 
-     public static ComponentDeploymentStatusDTO deployBuildedComponent(TestNGCitrusSpringSupport runner,
+     public static ComponentDeploymentStatusDTO deployBuiltComponent(TestNGCitrusSpringSupport runner,
                                                    Map<Endpoints, HttpClient> citrusClients, String accessToken,
                                                         ChoreoComponent component, Commit latestCommit,
                                                                 List<Environment> environments) throws Exception {
@@ -512,7 +504,7 @@ public class ComponentUtils {
         JsonArray images = GraphQL.getImageList(runner, appServiceClient, accessToken, imageDTO);
 
         GraphqlDTO graphqlDeployDTO = GraphqlDTO.builder().componentId(componentId).versionId(latestVersionId).imageId(images.get(0).getAsJsonObject().get("imageId").getAsString()).environmentId(devEnvIdToDeploy).build();
-        GraphQL.deployBuildedComponent(runner, appServiceClient, accessToken, graphqlDeployDTO);
+        GraphQL.deployBuiltComponent(runner, appServiceClient, accessToken, graphqlDeployDTO);
 
         Map<String, String> responseParams = new HashMap<>();
         responseParams.put("environmentId", devEnvIdToDeploy);

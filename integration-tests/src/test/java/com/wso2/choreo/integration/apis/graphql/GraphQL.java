@@ -783,11 +783,11 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
 
-  public static void deployBuildedComponent(TestActionRunner runner, HttpClient client, String accessToken,
+  public static void deployBuiltComponent(TestActionRunner runner, HttpClient client, String accessToken,
                                        GraphqlDTO graphqlDTO) throws IOException {
 
         String queryString = ObjectMapperUtil.mapObjectToString(
-                "templates/graphql/requests/deployBuildedComponent.mustache", graphqlDTO);
+                "templates/graphql/requests/deployBuiltComponent.mustache", graphqlDTO);
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
         runner.$(repeatOnError()
