@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ * Copyright (c) 2023, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
  * This software is the property of WSO2 Inc. and its suppliers, if any.
  * Dissemination of any information or reproduction of any material contained
@@ -11,17 +11,10 @@
  * associated services.
  */
 
-import { login } from "../console/concepts/login/login";
+import { TestIds } from "../../constants/TestIds";
 
-export const OK = 200;
-export const UNAUTHORIZED = 401;
-export const FORBIDDEN = 403;
-export const NOT_FOUND = 404;
-export const AUTH_HEADER = () => ({
-  Authorization: `Bearer ${Cypress.env("apim_token")}`,
-  "content-type": "application/json",
-});
-export const AUTH_HEADER2 = () => ({
-  Authorization: `Bearer ${login.getAccessToken()}`,
-  "content-type": "application/json",
-});
+export class _BuildPacks {
+  createProxy() {
+    cy.get(TestIds.proxyBuildPack).should("be.visible").click();
+  }
+}

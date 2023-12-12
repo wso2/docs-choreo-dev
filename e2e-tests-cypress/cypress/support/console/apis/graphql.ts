@@ -13,7 +13,7 @@
 
 import { ACTIVE, ERROR, ONE_HOUR } from "../../commons/constants";
 import { cyLog } from "../../commons/cy";
-import { AUTH_HEADER, OK } from "../../commons/http";
+import { AUTH_HEADER, AUTH_HEADER2, OK } from "../../commons/http";
 import { Utils } from "../../commons/utils";
 import { GitHub } from "../../github/github";
 import { AbsComponent } from "../../interfaces/abs-component";
@@ -31,9 +31,16 @@ import { Enums } from "../../commons/enums";
 import { PROXY_DEPLOYER_EP, PUBLISHER_URL } from "../../commons/urls";
 import { ProjectEnvironment } from "../../interfaces/choreo-components/project-environments";
 import { VERY_SHORT_TIME } from "../../commons/timeouts";
+import { login } from "../concepts/login/login";
 
 export const SUCCESS_STATUS_CODE = 200;
 export const NO_CONTENT_STATUS_CODE = 204;
+
+export interface ComponentDetails {
+  id: string;
+  projectId: string;
+  handler: string;
+}
 
 export class GraphQL {
   static count = 0;
@@ -73,6 +80,44 @@ export class GraphQL {
     });
     return cy.wrap({});
   }
+
+  static createComponentV2(
+    projectName: string,
+    repoName: string,
+    componentData: AbsComponent,
+    callback
+  ) {
+    return this.getProjectsV2(login.getOrgId()).then((p) => {
+      const projectId = p.projects.find((p) => p.name === projectName).id;
+
+      componentData.handle = login.getOrgHandle();
+      componentData.orgId = login.getOrgId();
+
+      const query = callback(componentData, projectId);
+      cy.wait(3000); // Wait before doing next call to prevent browser queueing or to wait for server to be free
+      return this.callGraphQLV2(query).then((res) => {
+        let id, projectId, handler;
+        if (res.body.createComponent) {
+          id = res.body.createComponent["id"];
+          projectId = res.body.createComponent["projectId"];
+          handler = res.body.createComponent["handler"];
+        }
+        if (res.body.createByocComponent) {
+          id = res.body.createByocComponent["id"];
+          projectId = res.body.createByocComponent["projectId"];
+          handler = res.body.createByocComponent["handle"];
+        }
+        cy.log(`Component Id :: ${id}`);
+        Cypress.env("component", { id, projectId, handler });
+        if (componentData.initializeAsBallerinaProject) {
+          this.getPullRequests(id, repoName);
+        }
+
+        return Promise.resolve({ id, projectId, handler });
+      });
+    });
+  }
+
   static deleteProjectsCreatedByTests(
     orgId: number,
     orgHandle: string,
@@ -254,6 +299,17 @@ export class GraphQL {
     });
   }
 
+  static getProjectsV2(orgId: number) {
+    const query = {
+      query: `query{projects(orgId: ${orgId}){ id, orgId, name, version, createdDate,handler }}`,
+    };
+    return this.callGraphQLV2(query).then((res) => {
+      const projects = res.body.projects as Project[];
+      const status = res.status;
+      return Promise.resolve({ projects, status });
+    });
+  }
+
   static callGraphQL(query: any) {
     const appSvcURL = Cypress.env("newAppSvcURL");
     return cy
@@ -262,6 +318,28 @@ export class GraphQL {
         url: `${appSvcURL}/projects/1.0.0/graphql`,
         body: JSON.stringify(query),
         headers: AUTH_HEADER(),
+        failOnStatusCode: false,
+      })
+      .then((resp) => {
+        if (resp.status > 205) {
+          cy.log(query);
+          cy.log(resp.body);
+        }
+        return Promise.resolve({
+          body: resp.body.data,
+          status: resp.status,
+        });
+      });
+  }
+
+  static callGraphQLV2(query: any) {
+    const appSvcURL = Cypress.env("newAppSvcURL");
+    return cy
+      .request({
+        method: "POST",
+        url: `${appSvcURL}/projects/1.0.0/graphql`,
+        body: JSON.stringify(query),
+        headers: AUTH_HEADER2(),
         failOnStatusCode: false,
       })
       .then((resp) => {

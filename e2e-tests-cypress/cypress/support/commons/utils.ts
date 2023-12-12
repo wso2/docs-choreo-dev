@@ -1,6 +1,4 @@
 import { MIN_RENDERING_WAIT_TIME } from "./constants";
-import { cyLog } from "./cy";
-import { Enums } from "./enums";
 import { VERY_SHORT_TIME } from "./timeouts";
 
 /*

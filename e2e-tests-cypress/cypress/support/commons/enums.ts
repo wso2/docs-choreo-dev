@@ -12,13 +12,9 @@
  */
 
 export namespace Enums {
-
-
   export enum PolicyType {
-    setHeader = "Set Header (2.0.0)"
+    setHeader = "Set Header (2.0.0)",
   }
-
-
 
   export enum DisplayType {
     restAPI = "restAPI",
@@ -44,7 +40,7 @@ export namespace Enums {
     DEVELOPMENT = "Development",
     PRODUCTION = "Production",
     STAGING = "Staging",
-    SANDBOX = "Sandbox"
+    SANDBOX = "Sandbox",
   }
 
   export enum HTTPMethod {
@@ -63,7 +59,7 @@ export namespace Enums {
   export enum Region {
     EU = "EU",
     US = "US",
-    IND = "IND"
+    IND = "IND",
   }
 
   export enum Perspective {
@@ -74,7 +70,7 @@ export namespace Enums {
   export enum ComponentType {
     MI_REST_API = "miRestApi",
     BYOC_REST_API = "byocRestApi",
-    MI_API_SERVICE = "miApiService"
+    MI_API_SERVICE = "miApiService",
   }
 
   export enum RepoType {
@@ -82,13 +78,11 @@ export namespace Enums {
     UserManagedNonEmpty = "UserManagedNonEmpty",
   }
 
-
   export enum DeploymentStages {
     CODE_GEN = "CODE_GEN",
     PROXY_DEPLOY = "PROXY_DEPLOY",
-    DEPLOY = "DEPLOY"
+    DEPLOY = "DEPLOY",
   }
-
 
   export enum ResponseStatus {
     success = "success",
@@ -97,7 +91,11 @@ export namespace Enums {
     failure = "failure",
     error = "error",
     Error = "Error",
-    ERROR="ERROR",
-    Active="Active",
+    ERROR = "ERROR",
+    Active = "Active",
+  }
+
+  export enum LifeCycleState {
+    Publish = "Publish",
   }
 }
