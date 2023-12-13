@@ -10,3 +10,4 @@ find docs/**/* -type f -name '*.md' | xargs -L1 markdown-link-check -c ./markdow
 mkdocs build -c
 
 ls site/
+
