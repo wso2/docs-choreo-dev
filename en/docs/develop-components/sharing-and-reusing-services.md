@@ -9,7 +9,7 @@ To learn more about Choreo Connections refer to the [documentation](../choreo-co
 ## Create a connection to a service
 
 !!! info
-    From November 8, 2023, at 10:20 AM UTC, you can create Connections for new components, excluding Ballerina and MI. From December 4, 2023 onwards, you can also create Connections for MI components.
+    From November 8, 2023, at 10:20 AM UTC, you can create Connections for new components, excluding Ballerina and MI.
 
 To consume a service deployed on Choreo within your service, you need to create a connection to the service you wish to consume. Follow the steps below.
 
