@@ -24,6 +24,7 @@ import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-bui
 import { GitHub } from "../../../support/github/github";
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
+import { ComponentBuild } from "../../../support/console/pages/component/Functionalities/Component-build";
 
 describe("Verify BYOR functionality", () => {
   const PROJECT_DESCRIPTION = "Internal API Test";
@@ -74,11 +75,15 @@ describe("Verify BYOR functionality", () => {
 
   it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(REST_API_NAME);
+    if (Utils.isBuildDeployEnabled()) {
+      ComponentOverviewPage.navigateToBuild();
+      ComponentBuild.buildComponent();
+    }
     ComponentOverviewPage.navigateToDeploy();
   });
 
   it("Deploy component", () => {
-    ComponentDeployPage.deployToDev(PROJECT_NAME,REST_API_NAME);
+    ComponentDeployPage.deployToDev(PROJECT_NAME, REST_API_NAME);
   });
 
   it("Verify test functionality of root resource on swagger in dev", () => {
