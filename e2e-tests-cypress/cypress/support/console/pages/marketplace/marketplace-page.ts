@@ -17,25 +17,34 @@ import { MEDIUM_TIME } from "../../../commons/timeouts";
 
 
 export class Marketplace {
+
   static searchConnector(connectorName: string) {
     cy.get('[data-testid="search-field"]').type(connectorName);
     cy.get('[data-testid="search-button"]').click();
     return cy.get(`[data-testid*="${connectorName}"]`);
   }
 
-  static filterByChoreo() {
-    cy.get('[data-testid="choreo-filter"]').click();
-    cy.get('[data-testid="choreo-filter"]').contains("Choreo").should("be.visible");
+  static filterByInternal() {
+    cy.get('[data-cyid="filtering-item-Internal-check-box"]').should("be.visible").click();
   }
 
-  static filterByMyOrganization() {
-    cy.get('[data-testid="my-organization-filter"]').click();
-    cy.get('[data-testid="my-organization-filter"]').contains("My Organization").should("be.visible");
+  static filterByThirdParty() {
+    cy.get('[data-cyid="filtering-item-Third Party-check-box"]').should("be.visible").click();
+  }
+  
+  static filterByOrganization() {
+    cy.get('[data-cyid="filtering-item-Organization-check-box"]').should("be.visible").click();
   }
 
-  static filterByFree() {
-    cy.get('[data-testid="Free-checkbox"]').click();
+  static filterByPublic() {
+    cy.get('[data-cyid="filtering-item-Public-check-box"]').should("be.visible").click();
   }
+
+  static uncheckFilter(checkboxTestId: string) {
+    cy.wait(3000);
+    cy.get(`[data-cyid="${checkboxTestId}"]`).should('be.visible').uncheck();
+  }
+
 
   static filterByFreemium() {
     cy.get('[data-testid="Freemium-checkbox"]').click();
@@ -44,12 +53,6 @@ export class Marketplace {
   static filterByPaid() {
     cy.get('[data-testid="Paid-checkbox"]').click();
   }
-
-  static clearSelectedFilters() {
-    cy.get('[aria-label="delete-filter-chip"]').click({ multiple: true });
-  }
-
-
 
   static filterByCategory(mainCategory: string, subCategory: string) {
     cy.get('[role="group"]>div>div').then((ele) => {
