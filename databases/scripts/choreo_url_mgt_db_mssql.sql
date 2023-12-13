@@ -79,6 +79,18 @@ CREATE TABLE [KeyVaultSecret] (
 	PRIMARY KEY([id])
 );
 
+CREATE TABLE [LoadBalancerConfigValue] (
+	[id] VARCHAR(191) NOT NULL,
+	[name] VARCHAR(191) NOT NULL,
+	[value] VARCHAR(191) NOT NULL,
+	[url_mapping_id] VARCHAR(191) NOT NULL,
+	[created_time] DATETIME2 NOT NULL,
+	[updated_time] DATETIME2,    
+	CONSTRAINT key_url_mapping_id_unique_constraint UNIQUE ([name], [url_mapping_id]),
+	FOREIGN KEY([url_mapping_id]) REFERENCES [URLMapping]([id]) ON DELETE CASCADE,
+	PRIMARY KEY([id])
+);
+
 -- This is for checking the conflicts for the custom path under the same domain
 
 DROP TRIGGER IF EXISTS CheckURLPathConflictOnInsert;
