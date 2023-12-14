@@ -174,6 +174,7 @@ public final class Constant {
     public static final String DEVOPS_ORGANIZATIONS = DEVOPS_API_CONTEXT + "/organizations/";
     public static final String DEVOPS_VOLUME = DEVOPS_API_CONTEXT + "/volume/";
     public static final String DEVOPS_COMPONENTS_API = DEVOPS_API_CONTEXT + "/components/";
+    public static final String DEVOPS_BUILDPACKS = DEVOPS_API_CONTEXT + "/buildpacks";
 
     // Devportal related constants
     public static final String DEVPORTAL_ENDPOINT_SUFFIX = "/api/am/devportal/v2";
