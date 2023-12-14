@@ -68,8 +68,11 @@ export class ComponentOverviewPage {
 
   static navigateToBuild() {
     this.scrollToTopOfMenu();
-    cy.get("[data-cyid=link-build]").should("be.visible").realHover({ position: "left" })
-      .wait(MENU_RENDERING_TIME).click({ force: true })
+    cy.get("[data-cyid=link-build]")
+      .should("be.visible")
+      .realHover({ position: "left" })
+      .wait(MENU_RENDERING_TIME)
+      .click({ force: true })
       .wait(MENU_RENDERING_TIME);
     cy.get('[id="backdrop-loader"]').should("not.exist");
     Utils.moveMouseAwayFromLeftMenu();
@@ -89,7 +92,8 @@ export class ComponentOverviewPage {
 
   static navigateToExecute() {
     this.scrollToTopOfMenu();
-    cy.get("[data-cyid=link-execute]").should("be.visible")
+    cy.get("[data-cyid=link-execute]")
+      .should("be.visible")
       .realHover({ position: "left" })
       .wait(MENU_RENDERING_TIME)
       .click({ force: true })
@@ -135,7 +139,10 @@ export class ComponentOverviewPage {
 
   static navigateToObserve(timeToWait = 0) {
     cy.wait(timeToWait);
-    cy.get('[data-cyid="observability"]').should("be.visible").click();
+    this.navigateToSubMenu(
+      '[data-cyid="observability"]',
+      new Array('[data-cyid="metrics"]')
+    );
   }
 
   static navigateProxyResources() {
