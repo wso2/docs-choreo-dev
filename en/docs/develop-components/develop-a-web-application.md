@@ -68,8 +68,11 @@ Follow the steps below to create a sample Web Application component and deploy i
     | **Build Command**             | npm run build      |
     | **Build output directory**    | build              |
     | **Node Version**              | 18                 |
+
+    !!! tip
+         Managed authentication is enabled by default when you create a web application using **React**, **Angular**, or **Vue.js** buildpacks. To learn how to set up authentication for your web application with Choreo's managed authentication, see [Secure Web Applications with Managed Authentication](../authentication-and-authorization/secure-web-applications-with-managed-authentication.md).
          
-7. Click Create. Once the component creation is complete, you will see the **Build and Deploy** page.
+7. Click **Create**. Once the component creation is complete, you will see the **Build and Deploy** page.
 
 You have successfully created a Web Application component from the source code. Now let's build and deploy the Web Application.
 

@@ -1,36 +1,42 @@
 # Sharing and Reusing Services
 
-Choreo allows you to share and reuse your services, promoting faster development and increased efficiency in building integrated applications, through the use of Ballerina Private Packages.
+Choreo allows you to share and reuse your services, promoting faster development and increased efficiency in building integrated applications, through Connections.
 
-Ballerina private packages allow developers to share the reusable code within the organization via Ballerina central without making it available to the public.
-Choreo allows you to use Ballerina private packages to create components when you use the the `Ballerina` buildpack.
+Connections in Choreo allows you to integrate Choreo components, or to integrate Choreo components to external services or resources. Connections provide a simple and uniform way to integrate with services and resources.
 
-In order to use Ballerina private packages, you need to make sure that you are using the same organization in Choreo and Ballerina Central.
-For example, if you are using `choreo` as the organization name in Choreo, following conditions should be met. 
+To learn more about Choreo Connections refer to the [documentation](../choreo-concepts/connections.md).
 
-- The `Ballerina.toml` in the private package should have the `choreo` as the organization name.
-    ```
-    [package]
-    org = "choreo"
-    name = "greeting_lib"
-    ```
-- The package should be published to the Ballerina Central using a token that is generated for the `choreo` organization.
+## Create a connection to a service
 
-    !!! tip
-        You can refer to the [Publish packages to Ballerina Central](https://ballerina.io/learn/publish-packages-to-ballerina-central/) documentation to learn how to publish a Ballerina package to the Ballerina Central.
-    
+!!! info
+    From November 8, 2023, at 10:20 AM UTC, you can create Connections for new components, excluding Ballerina and MI.
 
-- The `Ballerina.toml` in the application should have the `choreo` as the organization name.
-    ```
-    [package]
-    org = "choreo"
-    name = "greeting_service"
-    ```
-- The component should be created inside the `choreo` organization in the Choreo.
+To consume a service deployed on Choreo within your service, you need to create a connection to the service you wish to consume. Follow the steps below.
 
-    !!! tip
-        You can use the organization settings page to retrieve the organization name.
+1. In the Choreo Console, go to the top navigation menu, and set the visibility level as [project](../choreo-concepts/connections.md#project-connections), or [component](../choreo-concepts/connections.md#component-connections) as follows: 
 
+    - **Project Connection**: Select an organization and a project in that organization. 
+    - **Component Connection**: Select an organization, a project in that organization, and a component in the selected project. 
 
+2. From the left navigation menu, click **Dependencies**  and then **Connections**. This page will list the currently available connections.
+3. Click **+Create**. The **Create Connection** page will display the marketplace view for you to browse the available services. You can search and apply filters to find services efficiently.
+4. Click on the service to wish to connect to. 
+5. Enter a name and a description for the connection and click **Next**.
+6. You will receive the ServiceURL for the development and production environments. Click **Finish**.
 
-Refer to the [Private Package Usage](https://github.com/wso2/choreo-sample-apps/tree/main/ballerina/private-package-usage) sample to learn more about using Ballerina private packages in Choreo.
+Now you have created a connection to the service. Let's see how you can consume it. 
+
+## Consuming a service through a connection
+
+You can consume a Choreo-deployed service within another service
+
+Consuming connections from within Choreo services is seamless and straightforward. Follow the steps below to consume a Choreo service. 
+
+### Consuming services 
+
+You can consume a Choreo service as follows: 
+
+1. In the Choreo Console, navigate to the project or component to view the connections in the respective visibility level.
+2. In the left navigation menu, click **Dependencies** and then **Connections**. 
+3. Click on the Connection you wish to consume. 
+4. Refer to the **Developer Guide** pane for instructions on how to consume the relevant service..

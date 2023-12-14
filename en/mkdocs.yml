@@ -88,6 +88,7 @@ nav:
       - CI/CD: choreo-concepts/ci-cd.md
       - Deployment Tracks: choreo-concepts/deployment-tracks.md
       - Configuration Management: choreo-concepts/configuration-management.md
+      - Connections: choreo-concepts/connections.md
       - Data Planes: choreo-concepts/data-planes.md
       - Environments: choreo-concepts/environments.md
       - Choreo Marketplace: choreo-concepts/choreo-marketplace.md
@@ -128,9 +129,11 @@ nav:
           - Redis: manage-databases-and-caches/choreo-managed-redis-datastores.md
           - Billing: manage-databases-and-caches/billing-for-platform-services.md
   - Authentication and Authorization:
-      - Pass End-User Attributes to Upstream Services: authentication-and-authorization/pass-end-user-attributes-to-upstream-services.md
       - Secure API Access with Asgardeo: authentication-and-authorization/secure-api-access-with-asgardeo.md
       - Secure API Access with Azure: authentication-and-authorization/secure-api-access-with-azure-ad.md
+      - Secure Web Applications with Managed Authentication: authentication-and-authorization/secure-web-applications-with-managed-authentication.md
+      - Test Secure API Access with Choreo Built-In Security Token Service: authentication-and-authorization/test-secure-api-access-with-choreo-built-in-security-token-service.md
+      - Pass End-User Attributes to Upstream Services: authentication-and-authorization/pass-end-user-attributes-to-upstream-services.md
   - DevOps and CI/CD: 
       - Builds and Deployments: devops-and-ci-cd/builds-and-deployments.md
       - Manage Configurations and Secrets: devops-and-ci-cd/manage-configurations-and-secrets.md
@@ -179,6 +182,7 @@ nav:
       - Configure an External IdP:
           - Configure Asgardeo as an External IdP: administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md
           - Configure Azure as an External IdP: administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp.md
+      - Configure a User Store with the Built-In Identity Provider: administer/configure-a-user-store-with-built-in-idp.md
       - Developer Portal:
           - Customize the Developer Portal: administer/customize-the-developer-portal.md
           - Configure Self-Sign-Up: administer/configure-self-sign-up.md

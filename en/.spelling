@@ -7,6 +7,9 @@ json
 recipientAddress
 apiKey
 DockerHub
+Quickstart
+Entra
+AzureAD
 buildpack
 buildpacks
 Temurin
@@ -88,6 +91,7 @@ Petstore
 build-your-first-cloud-native-application-with-choreo
 expose-a-service-as-a-managed-api
 build-your-first-integration
+configure-a-user-store-with-built-in-idp
 devops-and-ci-cd
 autoscale-component-replicas
 test-rest-endpoints-via-the-openapi-console
@@ -103,6 +107,7 @@ subpath
 codebase
 libs
 work-with-the-micro-integrator-runtime-in-choreo
+test-secure-api-access-with-choreo-built-in-security-token-service
 project.md
 component.md
 endpoint.md
@@ -480,6 +485,8 @@ connectionless
 Nginx
 schemas
 TestGPT
+onboarding
+onboards
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -665,6 +672,7 @@ configure-azure-ad-as-an-external-idp
 test-apis-with-choreo-apichat
 ci-cd
 autoscale
+connections.md
  - theme/material/templates/home-page.html
 doctype
 html
@@ -807,9 +815,6 @@ findByStatus
  - docs/authentication-and-authorization/secure-api-access-with-asgardeo.md
 x-www-form-urlencoded
  - docs/authentication-and-authorization/secure-api-access-with-azure-ad.md
-Quickstart
-Entra
-AzureAD
  - docs/administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md
 identity-as-a-soluton
  - docs/testing/test-apis-with-choreo-apichat.md
@@ -817,6 +822,9 @@ findByStatus
  - docs/manage-databases-and-caches/choreo-managed-databases-and-caches.md
 DigitalOcean
 Postgres
+ - docs/authentication-and-authorization/secure-web-applications-with-managed-authentication.md
+userinfo
+choreo-apis
  - docs/administer/configure-in-built-idp.md
 Uploader
  - docs/choreo-concepts/configuration-management.md
@@ -824,3 +832,11 @@ reusability
  - docs/devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero.md
 intra-project
 x-choreo-project-ns
+
+ - docs/administer/configure-a-user-store-with-built-in-idp.md
+Uploader
+built-in
+csv
+ - docs/develop-components/sharing-and-reusing-services.md
+ServiceURL
+YOUR_ENVIRONMENT_VAR_HERE
