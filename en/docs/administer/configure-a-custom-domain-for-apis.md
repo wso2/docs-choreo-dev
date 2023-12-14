@@ -48,3 +48,4 @@ That's it! You have successfully configured a custom domain for your API Gateway
 
 ![API with custom URL](../assets/img/administer/api-with-custom-url.png){.cInlineImage-threeQuarter}
 
+You can also configure a custom domain for your developer portal. See the documentation [Customize the Developer Portal Domain](customize-the-developer-portal-domain.md) for instructions. 
