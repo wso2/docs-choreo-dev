@@ -29,3 +29,20 @@ database = "choreo_url_mgt_db"
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
+
+# Annotations allowed to be configured by the user
+[[choreo_url_management.configs.allowedLoadBalancerConfigs]]
+name = "connect-timeout"
+displayName = "Connection Timeout"
+fqName = "nginx.ingress.kubernetes.io/proxy-connect-timeout"
+default = "60"
+min = "30"
+max = "300"
+
+[[choreo_url_management.configs.allowedLoadBalancerConfigs]]
+name = "body-size"
+displayName = "Request Body Size"
+fqName = "nginx.ingress.kubernetes.io/proxy-body-size"
+default = "10m"
+min = "1m"
+max = "50m"
