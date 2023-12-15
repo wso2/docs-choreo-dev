@@ -21,5 +21,6 @@ public enum ComponentFlavour {
     MI,
     BYOC,
     PROXY,
-    CONTAINERIZED_EVENT_HANDLER
+    CONTAINERIZED_EVENT_HANDLER,
+    BUILDPACK
 }
