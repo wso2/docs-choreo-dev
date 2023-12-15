@@ -17,6 +17,7 @@ import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.tests.graphqlservice.GqlServiceTestHelper;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -87,7 +88,7 @@ public class TestGraphQLServiceDp extends TestBase {
         Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken, dp.getChoreoComponent(),
                 dp.getDeploymentStatusDTO(), dp.getEnvironments());
         ComponentUtils.invokeApiPOST(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/",
-                GqlServiceTestHelper.getGqlQueryRequest(), GqlServiceTestHelper.getGqlQueryResponse());
+                GqlServiceTestHelper.getGqlQueryRequest(), GqlServiceTestHelper.getGqlQueryResponse(), HttpStatus.OK);
     }
 
     @Test(dependsOnMethods = {"invokeQueryInDev_GraphQLServiceDpIT"}, dataProvider = "dps")
@@ -97,7 +98,7 @@ public class TestGraphQLServiceDp extends TestBase {
             Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken, dp.getChoreoComponent(),
                     statusDTO, dp.getEnvironments());
             ComponentUtils.invokeApiPOST(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/",
-                    GqlServiceTestHelper.getGqlQueryRequest(), GqlServiceTestHelper.getGqlQueryResponse());
+                    GqlServiceTestHelper.getGqlQueryRequest(), GqlServiceTestHelper.getGqlQueryResponse(), HttpStatus.OK);
         }
     }
 
@@ -108,7 +109,7 @@ public class TestGraphQLServiceDp extends TestBase {
         Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken, dp.getChoreoComponent(),
                 dp.getDeploymentStatusDTO(), dp.getEnvironments());
         ComponentUtils.invokeApiPOST(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/",
-                GqlServiceTestHelper.getGqlMutationRequest(), GqlServiceTestHelper.getGqlMutationResponse());
+                GqlServiceTestHelper.getGqlMutationRequest(), GqlServiceTestHelper.getGqlMutationResponse(), HttpStatus.OK);
     }
 
     @Test(dependsOnMethods = {"invokeMutationInDev_GraphQLServiceDpIT"}, dataProvider = "dps")
@@ -118,7 +119,7 @@ public class TestGraphQLServiceDp extends TestBase {
             Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken, dp.getChoreoComponent(),
                     statusDTO, dp.getEnvironments());
             ComponentUtils.invokeApiPOST(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/",
-                    GqlServiceTestHelper.getGqlMutationRequest(), GqlServiceTestHelper.getGqlMutationResponse());
+                    GqlServiceTestHelper.getGqlMutationRequest(), GqlServiceTestHelper.getGqlMutationResponse(), HttpStatus.OK);
         }
     }
 

@@ -27,6 +27,7 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.apimanager.KeyData;
 import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.endpoints.Endpoint;
 import com.wso2.choreo.integration.models.environments.Environment;
@@ -35,8 +36,10 @@ import com.wso2.choreo.integration.models.marketplace.ConnectionCreateRequest;
 import com.wso2.choreo.integration.models.marketplace.ServiceInfo;
 import com.wso2.choreo.integration.models.marketplace.ServiceVisibility;
 import com.wso2.choreo.integration.models.marketplace.Visibility;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -68,7 +71,7 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
     ChoreoProject project;
     private ChoreoComponent serviceChoreoComponent;
     private ChoreoComponent clientChoreoComponent;
-    private List<Environment> environments;
+    private List<Environment> clientComponentEnvironments;
     private ComponentDeploymentStatusDTO serviceDeploymentStatusDTO, servicePromotionStatusDTO;
     private ComponentDeploymentStatusDTO clientDeploymentStatusDTO, clientPromotionStatusDTO;
     private String githubOrg;
@@ -98,7 +101,7 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
                 "  \"userId\": \"U451298\"\n" +
                 "}";
         REST_API_EXPECTED_RESPONSE = new String(new ClassPathResource(
-                "templates/connectionManagement/loyaltyServiceResponse.json").getInputStream().readAllBytes());   //TODO: fix
+                "templates/connectionManagement/loyaltyServiceResponse.json").getInputStream().readAllBytes());
     }
 
     @Test
@@ -124,7 +127,7 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createServicePublisherComponent_TestChoreoConnections"})
     @CitrusTest
     public void deployServicePublisherComponent_TestChoreoConnections() throws Exception {
-        environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 serviceChoreoComponent);
         serviceDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
                 serviceChoreoComponent, environments, ComponentFlavour.BYOC);
@@ -143,7 +146,10 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
 
         clientChoreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken,
                 dto, ComponentFlavour.BYOC);
+        clientComponentEnvironments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
+                clientChoreoComponent);
     }
+
     @Test(dependsOnMethods = {"createServiceConsumerComponent_TestChoreoConnections", "deployServicePublisherComponent_TestChoreoConnections"})
     @CitrusTest
     public void createComponentLevelConnection_TestChoreoConnections() throws Exception {
@@ -160,7 +166,7 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
         HttpClient connectionServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         ArrayList<com.wso2.choreo.integration.models.marketplace.Environment> environmentsToQuery =
                 new ArrayList<>();
-        for (Environment env : environments) {
+        for (Environment env : clientComponentEnvironments) {
             environmentsToQuery.add(
                     com.wso2.choreo.integration.models.marketplace.Environment.builder()
                             .id(env.getTemplateId())
@@ -196,37 +202,37 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
                 encodeToString(updatedComponentConfigFileContent.getBytes(StandardCharsets.UTF_8));
         GitHub.mergeNewCode(repoName, ".choreo/component-config.yaml", "Update component-config file", encodedFileContent);
     }
-    @Test(enabled = false)
+    @Test(dependsOnMethods = {"createComponentLevelConnection_TestChoreoConnections"})
     @CitrusTest
     public void deployServiceConsumerComponent_TestChoreoConnections() throws Exception {
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 clientChoreoComponent);
         clientDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, clientChoreoComponent,
-                environments, ComponentFlavour.STANDARD);
+                environments, ComponentFlavour.BYOC);
     }
 
     //consider promoting
 
-    @Test(enabled = false)
+
+    @Test(dependsOnMethods = {"deployServiceConsumerComponent_TestChoreoConnections"})
     @CitrusTest
     public void invokeAPIDev_TestChoreoConnections() throws Exception {
-        Endpoint endpoint = ComponentUtils.getEndpoints(this, citrusClients, accessToken,
-                clientChoreoComponent, Constant.DEV_ENVIRONMENT).get(0);
-        String devApiKey = clientChoreoComponent.getAPIKeyForInvoke(accessToken, endpoint.getApimId(),
-                environments.get(0).getName()).replace("\"", "");
-        String invokeUrlDev = endpoint.getPublicUrl();
-        ComponentUtils.invokeApiPOST(this, devApiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI,
-                API_INVOCATION_REQUEST_BODY, REST_API_EXPECTED_RESPONSE);
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
+                clientChoreoComponent);
+        Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
+                clientChoreoComponent, clientDeploymentStatusDTO, environments);
+        ComponentUtils.invokeApiPOST(this, invokeData.getRight().getApikey(), invokeData.getLeft(), API_INVOCATION_REQUEST_URI,
+                API_INVOCATION_REQUEST_BODY, REST_API_EXPECTED_RESPONSE, HttpStatus.ACCEPTED);
     }
 
-    @Test(enabled = false)
+    @Test(dependsOnMethods = {"invokeAPIDev_TestChoreoConnections"})
     @CitrusTest
     public void undeployClientComponent_TestChoreoConnections() throws Exception {
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(clientChoreoComponent.getId()).orgHandler(orgHandle)
                 .componentType("byocRestApi").releaseId(clientDeploymentStatusDTO.getReleaseId()).build();
         GraphQL.stopDeployment(this, appServiceClient, accessToken, graphqlDTO);
     }
-    @Test(enabled = false)
+    @Test(dependsOnMethods = {"undeployClientComponent_TestChoreoConnections"})
     @CitrusTest
     public void undeployServiceComponent_TestChoreoConnections() throws Exception {
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(serviceChoreoComponent.getId()).orgHandler(orgHandle)
