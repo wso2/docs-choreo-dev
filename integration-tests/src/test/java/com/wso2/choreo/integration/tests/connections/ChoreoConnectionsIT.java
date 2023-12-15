@@ -54,7 +54,6 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
     private static final String SVC_COMPONENT_NAME = "";
     private static final String SVC_COMPONENT_REPO_URL = "https://github.com/choreo-test-apps/connection-test-loyalty-service";
     private static final String SVC_COMPONENT_DOCKER_FILE_PATH = "Dockerfile";
-
     private static final String SVC_COMPONENT_ENDPOINT_NAME = "Loyalty Engine";
     private static String SVC_COMPONENT_SERVICE_NAME = "";
     private static final String CLIENT_COMPONENT_NAME = "";
@@ -74,15 +73,10 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
     private List<Environment> clientComponentEnvironments;
     private ComponentDeploymentStatusDTO serviceDeploymentStatusDTO, servicePromotionStatusDTO;
     private ComponentDeploymentStatusDTO clientDeploymentStatusDTO, clientPromotionStatusDTO;
-    private String githubOrg;
-
     private final String repoName = "connection-test-reward-management-api";
-
-
     private String API_INVOCATION_REQUEST_URI;
     private String API_INVOCATION_REQUEST_BODY;
     private String REST_API_EXPECTED_RESPONSE;
-    private static final int REQUEST_COUNT = 5;
 
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
