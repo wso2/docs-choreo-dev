@@ -11,6 +11,7 @@ configMapGenerator:
     behavior: create
     literals:
       - ENC_KEY_FILE_PATH="/etc/secrets/OAUTH_AGENT_ENC_KEY"
+      - CACHE_ENC_KEY_FILE_PATH="/etc/secrets/OAUTH_AGENT_CACHE_ENC_KEY"
       - REDIS_PORT="6380"
       - REDIS_PWD_FILE_PATH="/etc/secrets/OAUTH_AGENT_REDIS_PWD"
       - REDIS_DB="5"
