@@ -85,7 +85,19 @@ import java.util.Map;
             GraphQL.handleConfigInit(this, appServiceClient, accessToken, choreoComponent.getId());
         }
 
-        @Test(dependsOnMethods = {"handleConfigInit_AutoDeployOnCommitIT"})
+    @Test(dependsOnMethods = {"handleConfigInit_AutoDeployOnCommitIT"})
+    @CitrusTest
+    public void enableAutoBuild_AutoDeployOnCommitIT() throws Exception {
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
+
+        GraphqlDTO dto = GraphqlDTO.builder().componentId(choreoComponent.getId()).environmentId(environments.get(0).getId()).versionId(choreoComponent.getLatestApiVersion().getId()).build();
+
+        GraphQL.enableAutoBuild(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken,
+                dto);
+    }
+
+
+    @Test(dependsOnMethods = {"handleConfigInit_AutoDeployOnCommitIT"})
         @CitrusTest
         public void mergeNewCode_AutoDeployOnCommitIT() throws IOException {
             String timeStamp = String.valueOf(new Date().getTime());

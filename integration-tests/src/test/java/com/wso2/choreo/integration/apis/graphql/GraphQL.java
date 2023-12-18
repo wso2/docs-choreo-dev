@@ -62,6 +62,7 @@ import com.wso2.choreo.integration.models.observability.ObservabilityIdInformati
 import com.wso2.choreo.integration.models.proxyapi.ProxyDeployment;
 import com.wso2.choreo.integration.models.response.ProxyResponse;
 import com.wso2.choreo.integration.models.response.Response;
+import com.wso2.choreo.integration.tests.deploy.AutoDeployOnCommitIT;
 import lombok.extern.log4j.Log4j2;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -115,7 +116,7 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
     private static String getComponentQuery(String componentHandler, String id) {
-        return  "query{" +
+        return "query{" +
                 "      component(" +
                 "        projectId: \"" + id + "\"" +
                 "        componentHandler: \"" + componentHandler + "\"" +
@@ -172,11 +173,9 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
 
-
-
     public static Optional<CreateComponentResponseDTO> createUserManagedComponent(TestNGCitrusSpringSupport runner, HttpClient client,
-                                                                        String queryString, String projectId,
-                                                                        String accessToken) throws Exception {
+                                                                                  String queryString, String projectId,
+                                                                                  String accessToken) throws Exception {
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
         AtomicReference<CreateComponentResponseDTO> responseDTO = new AtomicReference<>();
         runner.variable("isComponentCreationSuccess", false);
@@ -184,37 +183,37 @@ public class GraphQL extends ControlPlaneAPI {
                 .until("(i = 5) or ( ${isComponentCreationSuccess} = true )")
                 .index("i")
                 .actions(
-                    http()
-                        .client(client)
-                        .send()
-                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                        .message()
-                        .header(HttpHeaders.AUTHORIZATION, accessToken)
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .body(requestBody)
-                        .accept(String.valueOf(MediaType.APPLICATION_JSON)),
-                    http().client(client)
-                        .receive()
-                        .response()
-                        .message()
-                        .type(MessageType.JSON)
-                        .validate((message, context) -> {
-                                int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
-                                if (code == HttpStatus.OK.value()) {
-                                     context.setVariable("isComponentCreationSuccess", true);  
-                                responseDTO.set(ObjectMapperUtil.mapStringToObject(CreateComponentResponseDTO.class,
-                                   (String) message.getPayload(), "createComponent"));
-                                } else {
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(requestBody)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .type(MessageType.JSON)
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code == HttpStatus.OK.value()) {
+                                        context.setVariable("isComponentCreationSuccess", true);
+                                        responseDTO.set(ObjectMapperUtil.mapStringToObject(CreateComponentResponseDTO.class,
+                                                (String) message.getPayload(), "createComponent"));
+                                    } else {
                                         SleepUtil.sleep(5);
-                                }        
-                        })
+                                    }
+                                })
                 )
         );
-        
+
         if (responseDTO.get() == null) {
-                throw new ComponentCreationException("Component creation response retrieval failure.");
+            throw new ComponentCreationException("Component creation response retrieval failure.");
         } else {
-                return Optional.of(responseDTO.get());
+            return Optional.of(responseDTO.get());
         }
     }
 
@@ -236,43 +235,43 @@ public class GraphQL extends ControlPlaneAPI {
                 .until("(i = 5) or ( ${isComponentCreationSuccess} = true )")
                 .index("i")
                 .actions(
-                    http()
-                        .client(client)
-                        .send()
-                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                        .message()
-                        .header(HttpHeaders.AUTHORIZATION, accessToken)
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .body(requestBody)
-                        .accept(String.valueOf(MediaType.APPLICATION_JSON)),
-                    http().client(client)
-                        .receive()
-                        .response()
-                        .message()
-                        .type(MessageType.JSON)
-                        .validate((message, context) -> {
-                                int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
-                                if (code == HttpStatus.OK.value()) {
-                                     context.setVariable("isComponentCreationSuccess", true);  
-                                     responseDTO.set(ObjectMapperUtil.mapStringToObject(
-                                                CreateByocComponentResponseDTO.class, (String) message.getPayload(), 
-                                                        "createByocComponent"));
-                                } else {
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(requestBody)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .type(MessageType.JSON)
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code == HttpStatus.OK.value()) {
+                                        context.setVariable("isComponentCreationSuccess", true);
+                                        responseDTO.set(ObjectMapperUtil.mapStringToObject(
+                                                CreateByocComponentResponseDTO.class, (String) message.getPayload(),
+                                                "createByocComponent"));
+                                    } else {
                                         SleepUtil.sleep(5);
-                                }        
-                        })
+                                    }
+                                })
                 )
         );
 
         if (responseDTO.get() == null) {
-                throw new ComponentCreationException("BYOC component creation response retrieval failure.");
+            throw new ComponentCreationException("BYOC component creation response retrieval failure.");
         } else {
-                return Optional.of(responseDTO.get());
+            return Optional.of(responseDTO.get());
         }
     }
 
     public static List<Commit> getCommitHistory(TestNGCitrusSpringSupport runner, HttpClient client, String componentId,
-                                            String accessToken) throws Exception {
+                                                String accessToken) throws Exception {
         GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).build();
         String queryString = ObjectMapperUtil.
                 mapObjectToString("templates/graphql/requests/commitHistory.mustache", dto);
@@ -298,30 +297,30 @@ public class GraphQL extends ControlPlaneAPI {
                                 .response()
                                 .message()
                                 .validate((message, context) -> {
-                                        int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
-                                        if (code == HttpStatus.OK.value()) {
-                                                Commit[] commits = ObjectMapperUtil.mapToCollection(
-                                                        Commit[].class, message.getPayload(String.class), 
-                                                        "commitHistory");
-                                                commitList.addAll(List.of(commits));
-                                                if (commits.length > 0) {
-                                                        context.setVariable("isCommitHistoryRetrieved",
-                                                        true); 
-                                                }     
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code == HttpStatus.OK.value()) {
+                                        Commit[] commits = ObjectMapperUtil.mapToCollection(
+                                                Commit[].class, message.getPayload(String.class),
+                                                "commitHistory");
+                                        commitList.addAll(List.of(commits));
+                                        if (commits.length > 0) {
+                                            context.setVariable("isCommitHistoryRetrieved",
+                                                    true);
                                         }
-                                })       
-                        )
-                );
-        
+                                    }
+                                })
+                )
+        );
+
         if (commitList.size() == 0) {
-               throw new NoLatestCommitHashFoundException(); 
+            throw new NoLatestCommitHashFoundException();
         }
-        
+
         return commitList;
     }
 
     public static void handleConfigInit(TestActionRunner runner, HttpClient client,
-                                        String accessToken , String componentId) throws Exception {
+                                        String accessToken, String componentId) throws Exception {
         GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).build();
         String queryString = ObjectMapperUtil.
                 mapObjectToString("templates/graphql/requests/handleConfigInit.mustache", dto);
@@ -376,27 +375,27 @@ public class GraphQL extends ControlPlaneAPI {
                 .until("(i = 5) or ( ${isProjectCreationSuccess} = true )")
                 .index("i")
                 .actions(
-                    http()
-                        .client(client)
-                        .send()
-                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                        .message()
-                        .header(HttpHeaders.AUTHORIZATION, accessToken)
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .body(requestBody)
-                        .accept(MediaType.APPLICATION_JSON_VALUE),
-                    http().client(client)
-                        .receive()
-                        .response()
-                        .message()
-                        .validate((message, context) -> {
-                                int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
-                                if (code == HttpStatus.OK.value()) {
-                                     context.setVariable("isProjectCreationSuccess", true);  
-                                     project.set(ObjectMapperUtil.mapStringToObject(ChoreoProject.class, message
-                                        .getPayload(String.class), "createProject")); 
-                                }        
-                        })
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(requestBody)
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
+                        http().client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code == HttpStatus.OK.value()) {
+                                        context.setVariable("isProjectCreationSuccess", true);
+                                        project.set(ObjectMapperUtil.mapStringToObject(ChoreoProject.class, message
+                                                .getPayload(String.class), "createProject"));
+                                    }
+                                })
                 )
         );
         return project.get();
@@ -412,7 +411,7 @@ public class GraphQL extends ControlPlaneAPI {
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         return ObjectMapperUtil.mapStringToObject(ChoreoComponent.class, response.getRes(), "createByocComponent");
     }
-    
+
     public static Environment[] getNamespaceForEnvironment(String projectId, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().orgUuid(ORG_UUID).projectId(projectId).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getEnvironments.mustache", dto);
@@ -443,7 +442,7 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
     public static List<ChoreoComponent> getProjectComponents(TestActionRunner runner, HttpClient client,
-             String projectId, String accessToken) throws IOException {
+                                                             String projectId, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().orgHandler(ORG_HANDLE).projectId(projectId).build();
         String queryString = ObjectMapperUtil.
                 mapObjectToString("templates/graphql/requests/getProjectComponents.mustache", dto);
@@ -476,7 +475,7 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
     public static ChoreoComponent getComponentDetails(TestActionRunner runner, HttpClient client, String projectId,
-              String componentHandler, String accessToken) throws IOException {
+                                                      String componentHandler, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
         String queryString = ObjectMapperUtil.
                 mapObjectToString("templates/observability/graphql/queryForComponentInformation.mustache", dto);
@@ -672,12 +671,12 @@ public class GraphQL extends ControlPlaneAPI {
                                 .message()
                                 .type(MessageType.JSON)
                                 .validate((message, context) -> {
-                                        JsonObject component = new JsonParser().parse((String) message.getPayload())
-                                                .getAsJsonObject()
-                                                .getAsJsonObject("data")
-                                                .getAsJsonObject("component");
-                                        Gson gson = new Gson();
-                                        componentArray[0] = gson.fromJson(component.toString(), ChoreoComponent.class);
+                                    JsonObject component = new JsonParser().parse((String) message.getPayload())
+                                            .getAsJsonObject()
+                                            .getAsJsonObject("data")
+                                            .getAsJsonObject("component");
+                                    Gson gson = new Gson();
+                                    componentArray[0] = gson.fromJson(component.toString(), ChoreoComponent.class);
                                 })));
 
         return componentArray[0];
@@ -736,12 +735,12 @@ public class GraphQL extends ControlPlaneAPI {
                         http()
                                 .client(client)
                                 .send()
-                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(requestBody)
-                .accept(MediaType.APPLICATION_JSON_VALUE)));
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(requestBody)
+                                .accept(MediaType.APPLICATION_JSON_VALUE)));
         runner.$(http()
                 .client(client)
                 .receive()
@@ -752,39 +751,39 @@ public class GraphQL extends ControlPlaneAPI {
                 .validate(json()));
     }
 
-     public static JsonArray getImageList(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
-                                        GraphqlDTO graphqlDTO) throws IOException {
-         String requestQuery = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/images.mustache", graphqlDTO);
-         String requestBody = ObjectMapperUtil.mapToGraphQLQuery(requestQuery);
-         final AtomicReference<JsonArray> runIdRef = new AtomicReference<>();
+    public static JsonArray getImageList(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+                                         GraphqlDTO graphqlDTO) throws IOException {
+        String requestQuery = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/images.mustache", graphqlDTO);
+        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(requestQuery);
+        final AtomicReference<JsonArray> runIdRef = new AtomicReference<>();
 
-         runner.$(http()
-                 .client(client)
-                 .send()
-                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                 .message()
-                 .header(HttpHeaders.AUTHORIZATION, accessToken)
-                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                 .body(requestBody)
-                 .accept(MediaType.APPLICATION_JSON_VALUE));
-         runner.$(http()
-                 .client(client)
-                 .receive()
-                 .response(HttpStatus.OK)
-                 .message()
-                 .type(MessageType.JSON)
-                 .validate((message, context) -> {
-                     JsonArray runId = new JsonParser().parse((String) message.getPayload())
-                             .getAsJsonObject()
-                             .getAsJsonObject("data").getAsJsonArray("deploymentTrackImages");
-                     runIdRef.set(runId);
-                 }));
-         return runIdRef.get();
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate((message, context) -> {
+                    JsonArray runId = new JsonParser().parse((String) message.getPayload())
+                            .getAsJsonObject()
+                            .getAsJsonObject("data").getAsJsonArray("deploymentTrackImages");
+                    runIdRef.set(runId);
+                }));
+        return runIdRef.get();
     }
 
 
-  public static void deployBuiltComponent(TestActionRunner runner, HttpClient client, String accessToken,
-                                       GraphqlDTO graphqlDTO) throws IOException {
+    public static void deployBuiltComponent(TestActionRunner runner, HttpClient client, String accessToken,
+                                            GraphqlDTO graphqlDTO) throws IOException {
 
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/deployBuiltComponent.mustache", graphqlDTO);
@@ -798,12 +797,12 @@ public class GraphQL extends ControlPlaneAPI {
                         http()
                                 .client(client)
                                 .send()
-                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(requestBody)
-                .accept(MediaType.APPLICATION_JSON_VALUE)));
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(requestBody)
+                                .accept(MediaType.APPLICATION_JSON_VALUE)));
         runner.$(http()
                 .client(client)
                 .receive()
@@ -811,7 +810,6 @@ public class GraphQL extends ControlPlaneAPI {
                 .message()
                 .type(MessageType.JSON));
     }
-
 
 
     /**
@@ -824,7 +822,7 @@ public class GraphQL extends ControlPlaneAPI {
      * @throws IOException If error occurred in object mapping
      */
     public static void getDeploymentStatusByVersion(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
-                                                     GraphqlDTO graphqlDTO) throws Exception {
+                                                    GraphqlDTO graphqlDTO) throws Exception {
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/deploymentStatusByVersion.mustache", graphqlDTO);
         String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
@@ -838,52 +836,52 @@ public class GraphQL extends ControlPlaneAPI {
                 .until("(i = 20) or ( ${deploymentSuccess} = true )")
                 .index("i")
                 .actions(
-                    http()
-                        .client(client)
-                        .send()
-                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                        .message()
-                        .header(HttpHeaders.AUTHORIZATION, accessToken)
-                        .body(requestBody)
-                        .accept(MediaType.APPLICATION_JSON_VALUE),
-                    http()
-                        .client(client)
-                        .receive()
-                        .response()
-                        .message()
-                        .validate((message, context) -> {
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .body(requestBody)
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .validate((message, context) -> {
 
-                            int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
 
-                            if (code != HttpStatus.OK.value()) {
-                                if (4 < successiveFailureCount.incrementAndGet()) {
-                                    throw new ValidationException("Too many successive calls with response code != 200");
-                                }
-                            } else {
-                                successiveFailureCount.set(0);
-                                JsonArray deploymentStatusByVersion = new JsonParser().parse(message.getPayload(String.class))
-                                        .getAsJsonObject()
-                                        .getAsJsonObject("data")
-                                        .getAsJsonArray("deploymentStatusByVersion");
-                                if (deploymentStatusByVersion.size() > 0) {
-                                    String status = deploymentStatusByVersion.get(0).getAsJsonObject().get("status").getAsString();
-                                    if ("completed".equals(status)) {
-                                        String conclusion = deploymentStatusByVersion.get(0).getAsJsonObject().get("conclusion").getAsString();
-                                        if ("failure".equals(conclusion)) {
-                                            throw new DeploymentStatusByVersionFailureException("deploymentStatusByVersion[0].conclusion is failure");
+                                    if (code != HttpStatus.OK.value()) {
+                                        if (4 < successiveFailureCount.incrementAndGet()) {
+                                            throw new ValidationException("Too many successive calls with response code != 200");
                                         }
+                                    } else {
+                                        successiveFailureCount.set(0);
+                                        JsonArray deploymentStatusByVersion = new JsonParser().parse(message.getPayload(String.class))
+                                                .getAsJsonObject()
+                                                .getAsJsonObject("data")
+                                                .getAsJsonArray("deploymentStatusByVersion");
+                                        if (deploymentStatusByVersion.size() > 0) {
+                                            String status = deploymentStatusByVersion.get(0).getAsJsonObject().get("status").getAsString();
+                                            if ("completed".equals(status)) {
+                                                String conclusion = deploymentStatusByVersion.get(0).getAsJsonObject().get("conclusion").getAsString();
+                                                if ("failure".equals(conclusion)) {
+                                                    throw new DeploymentStatusByVersionFailureException("deploymentStatusByVersion[0].conclusion is failure");
+                                                }
 
-                                        isPassed.set("success".equals(conclusion));
-                                        context.setVariable("deploymentSuccess", isPassed.get());
+                                                isPassed.set("success".equals(conclusion));
+                                                context.setVariable("deploymentSuccess", isPassed.get());
+                                            }
+                                        }
                                     }
-                                }
-                            }
 
-                            if (!isPassed.get()) {
-                               SleepUtil.sleep(30);
-                            }
-                        }))
-                );
+                                    if (!isPassed.get()) {
+                                        SleepUtil.sleep(30);
+                                    }
+                                }))
+        );
 
         if (!isPassed.get()) {
             throw new ValidationException("Deployment conclusion is not success");
@@ -900,7 +898,7 @@ public class GraphQL extends ControlPlaneAPI {
      * @throws IOException If error occurred in object mapping
      */
     public static void getDeploymentStatusOfFailureByVersion(TestActionRunner runner, HttpClient client,
-            String accessToken, GraphqlDTO graphqlDTO) throws Exception {
+                                                             String accessToken, GraphqlDTO graphqlDTO) throws Exception {
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/deploymentStatusByVersion.mustache", graphqlDTO);
         String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
@@ -1053,7 +1051,7 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
     public static ProxyDeployment getProxyComponentDeployment(TestActionRunner runner, HttpClient client, String accessToken,
-                                                                            GraphqlDTO graphqlDTO) throws IOException {
+                                                              GraphqlDTO graphqlDTO) throws IOException {
         String queryString = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getProxyDeploymentDetails.mustache", graphqlDTO);
         String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
@@ -1172,7 +1170,7 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
     public static List<Environment> getEnvironments(TestActionRunner runner, HttpClient client, String accessToken,
-                                       GraphqlDTO graphqlDTO) throws IOException {
+                                                    GraphqlDTO graphqlDTO) throws IOException {
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/getEnvironments.mustache", graphqlDTO);
 
@@ -1206,7 +1204,7 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
     public static List<ObservabilityIdInformation> getObservabilityIds(TestActionRunner runner, HttpClient client, String accessToken,
-                                                    GraphqlDTO graphqlDTO) throws IOException {
+                                                                       GraphqlDTO graphqlDTO) throws IOException {
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/getObservabilityIds.mustache", graphqlDTO);
 
@@ -1238,15 +1236,15 @@ public class GraphQL extends ControlPlaneAPI {
 
         return observabilityIds;
     }
-    
+
     public static void createNewVersion(TestActionRunner runner, HttpClient choreoProjectsTestClient,
                                         String accessToken, GraphqlDTO graphqlDTO) throws IOException {
 
-            String queryString = ObjectMapperUtil.mapObjectToString(
-                            "templates/graphql/requests/createNewVersion.mustache", graphqlDTO);
-            String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
-            AtomicReference<CreateNewVersionResponseDTO> mapStringToObject = new AtomicReference<>();
-            runner.$(http()
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/createNewVersion.mustache", graphqlDTO);
+        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+        AtomicReference<CreateNewVersionResponseDTO> mapStringToObject = new AtomicReference<>();
+        runner.$(http()
                 .client(choreoProjectsTestClient)
                 .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
@@ -1255,7 +1253,7 @@ public class GraphQL extends ControlPlaneAPI {
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-            runner.$(http()
+        runner.$(http()
                 .client(choreoProjectsTestClient)
                 .receive()
                 .response(HttpStatus.OK)
@@ -1263,9 +1261,9 @@ public class GraphQL extends ControlPlaneAPI {
                 .type(MessageType.JSON)
                 .body(new ClassPathResource("templates/graphql/responses/createNewVersionSuccess.json")));
     }
-    
+
     public static List<Commit> getCommitHistory(TestActionRunner runner, HttpClient client, String componentId,
-                                            String accessToken, String branchName) throws Exception {
+                                                String accessToken, String branchName) throws Exception {
         GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).branch(branchName).build();
         String queryString = ObjectMapperUtil.
                 mapObjectToString("templates/graphql/requests/commitHistoryBranch.mustache", dto);
@@ -1298,9 +1296,10 @@ public class GraphQL extends ControlPlaneAPI {
 
     /**
      * Generate component endpoints
-     * @param runner TestActionRunner
-     * @param client HttpClient
-     * @param accessToken Access token
+     *
+     * @param runner        TestActionRunner
+     * @param client        HttpClient
+     * @param accessToken   Access token
      * @param requestParams Request parameters
      * @throws IOException If an error occurs while reading the request template file
      */
@@ -1337,9 +1336,10 @@ public class GraphQL extends ControlPlaneAPI {
 
     /**
      * Get endpoints of a component
-     * @param runner TestActionRunner
-     * @param client HttpClient
-     * @param accessToken Access token
+     *
+     * @param runner        TestActionRunner
+     * @param client        HttpClient
+     * @param accessToken   Access token
      * @param requestParams Request parameters
      * @return List of component endpoints
      * @throws IOException If an error occurs while reading the request template file
@@ -1377,15 +1377,16 @@ public class GraphQL extends ControlPlaneAPI {
 
     /**
      * Update Component Endpoint
-     * @param runner TestActionRunner
-     * @param client HttpClient
-     * @param accessToken Access Token
+     *
+     * @param runner        TestActionRunner
+     * @param client        HttpClient
+     * @param accessToken   Access Token
      * @param requestParams Request Parameters
      * @return Updated Endpoint
      * @throws IOException If an error occurs while reading the request template file
      */
     public static Endpoint updateEndpoint(TestActionRunner runner, HttpClient client, String accessToken,
-                                                Map<String, String> requestParams) throws IOException {
+                                          Map<String, String> requestParams) throws IOException {
 
         final String queryString = ComponentUtils.generateStringFromTemplate(
                 "templates/endpoints/UpdateEndpoint.mustache", requestParams);
@@ -1418,15 +1419,15 @@ public class GraphQL extends ControlPlaneAPI {
     /**
      * Promote component endpoints
      *
-     * @param runner TestActionRunner
-     * @param client HttpClient
-     * @param accessToken Access token
+     * @param runner        TestActionRunner
+     * @param client        HttpClient
+     * @param accessToken   Access token
      * @param requestParams Request parameters
      * @return Promoted Endpoints List
      * @throws IOException If an error occurs while reading the request template file
      */
     public static List<Endpoint> promoteEndpoints(TestActionRunner runner, HttpClient client, String accessToken,
-                                              Map<String, String> requestParams) throws IOException {
+                                                  Map<String, String> requestParams) throws IOException {
 
         final String queryString = ComponentUtils.generateStringFromTemplate(
                 "templates/endpoints/PromoteComponentEndpoints.mustache", requestParams);
@@ -1458,14 +1459,15 @@ public class GraphQL extends ControlPlaneAPI {
 
     /**
      * Validate endpoint deployment
-     * @param runner TestActionRunner
-     * @param client HttpClient
-     * @param accessToken Access token
+     *
+     * @param runner        TestActionRunner
+     * @param client        HttpClient
+     * @param accessToken   Access token
      * @param requestParams Request parameters
      * @throws IOException If an error occurs while reading the request template file
      */
     public static void validateEndpointDeployment(TestActionRunner runner, HttpClient client, String accessToken,
-                                         Map<String, String> requestParams) throws IOException {
+                                                  Map<String, String> requestParams) throws IOException {
 
         final String queryString = ComponentUtils.generateStringFromTemplate(
                 "templates/endpoints/GetEndpoints.mustache", requestParams);
@@ -1542,5 +1544,40 @@ public class GraphQL extends ControlPlaneAPI {
         } catch (IOException e) {
             throw new GraphQLException(e);
         }
+    }
+
+
+    public static void enableAutoBuild(TestActionRunner runner, HttpClient client, String accessToken,
+                                       GraphqlDTO graphqlDTO) throws IOException {
+
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/autobuildTriggerEnable.mustache", graphqlDTO);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        runner.$(repeatOnError()
+                .until("i = 20")
+                .index("i")
+                .autoSleep(10000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(requestBody)
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
+                        http().client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .body(new ClassPathResource("templates/graphql/responses/autoBuildEnabledSuccess.json"))
+                                .validate(jsonPath()
+                                .expression("$.data.handleEnableAutoBuild.success", true)
+                                .expression("$.data.handleEnableAutoBuild.message", "GITHUB WEBHOOK CONFIGURED")
+                ))
+                );
     }
 }
