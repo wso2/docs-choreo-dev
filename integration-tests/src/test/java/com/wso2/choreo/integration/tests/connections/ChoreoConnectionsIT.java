@@ -20,7 +20,11 @@ import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.apis.marketplace.ConnectionService;
 import com.wso2.choreo.integration.apis.marketplace.MarketplaceService;
-import com.wso2.choreo.integration.common.*;
+import com.wso2.choreo.integration.common.ComponentFlavour;
+import com.wso2.choreo.integration.common.ComponentUtils;
+import com.wso2.choreo.integration.common.Endpoints;
+import com.wso2.choreo.integration.common.MessageUtils;
+import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.config.ConfigDefinition;
@@ -29,7 +33,6 @@ import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
 import com.wso2.choreo.integration.models.code.Repository;
-import com.wso2.choreo.integration.models.endpoints.Endpoint;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.marketplace.ConnectionCreateRequest;
@@ -44,7 +47,12 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Tests related to Choreo connection creation and use.
