@@ -29,4 +29,5 @@ public class Repository {
     String oasFilePath;
     String dockerContext;
     String dockerfilePath;
+    String buildContext;
 }
