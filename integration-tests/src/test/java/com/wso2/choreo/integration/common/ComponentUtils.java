@@ -237,14 +237,16 @@ public class ComponentUtils {
     public static GraphqlDTO createBuildpackComponentRequest(String name, ChoreoProject project, Repository repo) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+        String buildpackId = Configuration.getConfig(ConfigDefinition.BUILDPACK_ID);
+        String languageVersion = Configuration.getConfig(ConfigDefinition.LANGUAGE_VERSION);
 
         return GraphqlDTO.builder().name(name).
                 srcGitRepoUrl(repo.getRepoUrl()).
                 projectId(project.getId()).
                 orgId(orgId).
                 orgHandler(orgHandle).
-                buildpackId("F9E4820E-6284-11EE-8C99-0242AC120005").
-                languageVersion("1.x").
+                buildpackId(buildpackId).
+                languageVersion(languageVersion).
                 buildContext(repo.getBuildContext()).build();
     }
 
