@@ -16,5 +16,6 @@ public class Environment {
     private String apimEnvId;
     private String sandboxVhost;
     private boolean critical;
+    private String templateId;
     private boolean isPdp;
 }

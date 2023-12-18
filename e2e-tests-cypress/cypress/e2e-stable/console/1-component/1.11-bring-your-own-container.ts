@@ -74,6 +74,10 @@ describe(`Verify BYOC functionality`, () => {
 
   it("Navigate to deployment", () => {
     ComponentListingPage.visitToAComponent(REST_API_NAME);
+    if (Utils.isBuildDeployEnabled()) {
+      ComponentOverviewPage.navigateToBuild();
+      ComponentBuild.buildComponent();
+    }
     ComponentOverviewPage.navigateToDeploy();
   });
 

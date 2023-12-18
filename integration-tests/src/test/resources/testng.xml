@@ -29,6 +29,8 @@
             <class name="com.wso2.choreo.integration.tests.dp.TestWebhookDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestBallerinaServiceDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestManualTriggerDp"/>
+            <class name="com.wso2.choreo.integration.tests.buildpacks.Buildpack"/>
+            <class name="com.wso2.choreo.integration.tests.connections.ChoreoConnectionsIT"/>
         </classes>
     </test>
 </suite>
