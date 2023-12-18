@@ -227,6 +227,7 @@ public class ComponentUtils {
                 srcGitRepoUrl(repo.getRepoUrl()).
                 projectId(project.getId()).
                 orgId(orgId).
+                displayType(Constant.displayType.restAPI.name()).
                 orgHandler(orgHandle).
                 oasFilePath(repo.getOasFilePath()).
                 dockerContext(repo.getDockerContext()).
@@ -285,7 +286,7 @@ public class ComponentUtils {
         GraphqlDTO graphqlDTO;
 
         if (componentFlavour.equals(ComponentFlavour.BYOC)) {
-            dto.setComponentType("byocRestApi");
+            dto.setComponentType("byocService");
             Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createBYOCComponent(runner, appServiceClient,
                     dto, accessToken);
 
@@ -904,8 +905,9 @@ public class ComponentUtils {
      * @param expectedResponse Expected response
      *
      */
-    public static void invokeApiPOST(TestActionRunner runner, String apiKey, String invokeUrl, String resource,
-            String requestBody, String expectedResponse) {
+    public static void  invokeApiPOST(TestActionRunner runner, String apiKey, String invokeUrl, String resource,
+                                      String requestBody, String expectedResponse,
+                                      org.springframework.http.HttpStatus expectedHttpStatus) {
         // Test API Invocation
         runner.$(repeatOnError()
                 .until("i = 5")
@@ -923,7 +925,7 @@ public class ComponentUtils {
                         http()
                                 .client(invokeUrl)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response(expectedHttpStatus)
                                 .message()
                                 .type(MessageType.JSON)
                                 .body(expectedResponse)));
@@ -981,14 +983,10 @@ public class ComponentUtils {
     public static Pair<String, KeyData> getInvokeInfo(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients,
                                                         String accessToken, ChoreoComponent component, ComponentDeploymentStatusDTO statusDTO,
                                                         List<Environment> environments) throws Exception {
-        String apimId = statusDTO.getApiId();
-        String invokeUrl = statusDTO.getInvokeUrl();
-        if (component.getDisplayType().equals(Constant.displayType.ballerinaService.name())) {
-            List<Endpoint> endpoints = getEndpoints(runner, citrusClients, accessToken, component, statusDTO);
-            Endpoint endpoint = endpoints.get(0);
-            apimId = endpoint.getApimId();
-            invokeUrl = endpoint.getPublicUrl();
-        }
+        List<Endpoint> endpoints = getEndpoints(runner, citrusClients, accessToken, component, statusDTO);
+        Endpoint endpoint = endpoints.get(0);
+        String apimId = endpoint.getApimId();
+        String invokeUrl = endpoint.getPublicUrl();
 
         Optional<Environment> matchingAPIMEnv = environments.stream()
                 .filter(env -> env.getId().equals(statusDTO.getEnvironmentId())).findFirst();

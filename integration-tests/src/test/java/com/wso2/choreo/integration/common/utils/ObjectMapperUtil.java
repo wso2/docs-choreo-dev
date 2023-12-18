@@ -60,6 +60,12 @@ public class ObjectMapperUtil {
         return GSON.fromJson(jsonString, tClass);
     }
 
+    public static <T> T[] mapDataToCollection(Class<T[]> tClass, String jsonString, String val) {
+        JsonElement je = new JsonParser().parse(jsonString).getAsJsonObject().
+                getAsJsonArray(val);
+        return GSON.fromJson(je, tClass);
+    }
+
 
     public static<T> String mapObjectToString(String template, T dto) throws IOException {
         MustacheFactory mf = new DefaultMustacheFactory();
