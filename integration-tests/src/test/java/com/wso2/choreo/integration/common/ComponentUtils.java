@@ -43,6 +43,7 @@ import com.wso2.choreo.integration.common.exceptions.ProjectRetrievalException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.common.Buildpack;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -234,6 +235,21 @@ public class ComponentUtils {
                 dockerfilePath(repo.getDockerfilePath()).build();
     }
 
+    public static GraphqlDTO createBuildpackComponentRequest(String name, ChoreoProject project, Repository repo) {
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+        Buildpack buildpack = Buildpack.GOLANG;
+        
+        return GraphqlDTO.builder().name(name).
+                srcGitRepoUrl(repo.getRepoUrl()).
+                projectId(project.getId()).
+                orgId(orgId).
+                orgHandler(orgHandle).
+                buildpackId(buildpack.getId()).
+                languageVersion(buildpack.getVersion()).
+                buildContext(repo.getBuildContext()).build();
+    }
+
     public static GraphqlDTO createGrpahQLComponentRequest(String name, ChoreoProject project, Repository repo) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
@@ -288,6 +304,13 @@ public class ComponentUtils {
         if (componentFlavour.equals(ComponentFlavour.BYOC)) {
             dto.setComponentType("byocService");
             Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createBYOCComponent(runner, appServiceClient,
+                    dto, accessToken);
+
+            graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
+                    .componentHandler(responseDTO.get().getHandle()).build();
+        } else if (componentFlavour.equals(ComponentFlavour.BUILDPACK)) {
+            dto.setComponentType("buildpackService");
+            Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createBuildpackComponent(runner, appServiceClient,
                     dto, accessToken);
 
             graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())

@@ -64,4 +64,7 @@ public class GraphqlDTO {
     private boolean enableCellDiagram;
     private int orgId;
     private String version;
+    private String buildContext;
+    private String buildpackId;
+    private String languageVersion;
 }

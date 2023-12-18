@@ -41,4 +41,3 @@ logs:
   CHOREO_SYSTEM_API_PREFIX: https://c1b2cfb2-e965-4d28-b36d-b34f162ecc30-systemapis.
   CHOREO_US_DP_URL: e1-us-east-azure.st.choreoapis.dev
   CHOREO_EU_DP_URL: e1-eu-north-azure.st.choreoapis.dev
-
