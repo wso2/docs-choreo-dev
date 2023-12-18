@@ -41,6 +41,3 @@ logs:
   CHOREO_SYSTEM_API_PREFIX: https://5659b6b7-1063-41ed-8e39-d91857699255-systemapis.
   CHOREO_US_DP_URL: e1-us-east-azure.choreoapis.dev
   CHOREO_EU_DP_URL: e1-eu-north-azure.choreoapis.dev
-buildpacks:
-  BUILDPACK_ID: F9E4820E-6284-11EE-8C99-0242AC120005
-  LANGUAGE_VERSION: 1.x

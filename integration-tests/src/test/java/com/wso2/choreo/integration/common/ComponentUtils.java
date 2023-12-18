@@ -43,6 +43,7 @@ import com.wso2.choreo.integration.common.exceptions.ProjectRetrievalException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.common.Buildpack;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -237,16 +238,15 @@ public class ComponentUtils {
     public static GraphqlDTO createBuildpackComponentRequest(String name, ChoreoProject project, Repository repo) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
-        String buildpackId = Configuration.getConfig(ConfigDefinition.BUILDPACK_ID);
-        String languageVersion = Configuration.getConfig(ConfigDefinition.LANGUAGE_VERSION);
-
+        Buildpack buildpack = Buildpack.GOLANG;
+        
         return GraphqlDTO.builder().name(name).
                 srcGitRepoUrl(repo.getRepoUrl()).
                 projectId(project.getId()).
                 orgId(orgId).
                 orgHandler(orgHandle).
-                buildpackId(buildpackId).
-                languageVersion(languageVersion).
+                buildpackId(buildpack.getId()).
+                languageVersion(buildpack.getVersion()).
                 buildContext(repo.getBuildContext()).build();
     }
 
