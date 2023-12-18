@@ -1,0 +1,8 @@
+{
+  "data": {
+    "handleEnableAutoBuild": {
+      "success": true,
+      "message": "GITHUB WEBHOOK CONFIGURED"
+    }
+  }
+}
