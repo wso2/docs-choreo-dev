@@ -96,7 +96,6 @@ import java.util.Map;
                 dto);
     }
 
-
     @Test(dependsOnMethods = {"handleConfigInit_AutoDeployOnCommitIT"})
         @CitrusTest
         public void mergeNewCode_AutoDeployOnCommitIT() throws IOException {
