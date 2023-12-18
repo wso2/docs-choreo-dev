@@ -1555,7 +1555,7 @@ public class GraphQL extends ControlPlaneAPI {
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
         runner.$(repeatOnError()
-                .until("i = 20")
+                .until("i = 5")
                 .index("i")
                 .autoSleep(10000)
                 .actions(
