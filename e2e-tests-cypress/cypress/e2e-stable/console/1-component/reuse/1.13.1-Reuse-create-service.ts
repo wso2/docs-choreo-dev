@@ -62,7 +62,7 @@ describe("Verify Ballerina service functionality", () => {
   });
 
   it("Verify component deployment with public level endpoint", () => {
-    ComponentDeployPage.reDeployService(PROJECT_NAME,COMPONENT_NAME,ENDPOINT_NAME, true);
+    ComponentDeployPage.reDeployService(PROJECT_NAME,COMPONENT_NAME,ENDPOINT_NAME, true, true);
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
