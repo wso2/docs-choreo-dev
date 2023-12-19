@@ -84,7 +84,7 @@ helmCharts:
             command:
               - "/bin/bash"
               - "-c"
-              - "sleep 120 && bash post-start.sh 2>&1 > /tmp/post-start.log"
+              - "sleep 120 && bash post-start.sh 2>&1 >> /proc/1/fd/1"
 
       persistence:
         image: choreocontrolplane.azurecr.io/busybox
