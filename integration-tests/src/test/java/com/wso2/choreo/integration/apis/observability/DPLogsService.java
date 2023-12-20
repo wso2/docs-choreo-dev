@@ -302,10 +302,24 @@ public class DPLogsService extends DataPlaneSystemAPI {
                         .message()
                         .type(MessageType.JSON)
                         .validate(((message, context) -> {
-                            JsonArray result = new JsonParser().parse((String) message.getPayload())
+                            JsonArray linkList = new JsonParser().parse((String) message.getPayload())
                                     .getAsJsonObject()
                                     .getAsJsonObject("data").getAsJsonObject("hubbleProjectDiagram").getAsJsonArray("linkList");
+                            JsonArray nodeList = new JsonParser().parse((String) message.getPayload())
+                                    .getAsJsonObject()
+                                    .getAsJsonObject("data").getAsJsonObject("hubbleProjectDiagram").getAsJsonArray("nodeList");
+                             if(linkList.size() > 0 && nodeList.size() > 0) {
+                                    successiveFailureCount.set(0);
+                                    context.setVariable("isGatewayLogsRetrievalSuccess", true);
+                                } else {
+                                    if (5 < successiveFailureCount.incrementAndGet()) {
+                                        throw new ValidationException("Did not recived the metrics data");
+                                    }
+                                    SleepUtil.sleep(30);
+                                }
                                 })
+                               
+                               
                         )
         ));
 
