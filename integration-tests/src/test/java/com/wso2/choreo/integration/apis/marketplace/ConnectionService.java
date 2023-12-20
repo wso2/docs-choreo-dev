@@ -75,4 +75,33 @@ public class ConnectionService extends ControlPlaneAPI {
                                 )));
         return connectionId.get();
     }
+
+    public static String deleteChoreoConnection(TestActionRunner runner, HttpClient client, String accessToken,
+                                                String  connectionId) throws IOException {
+        String deleteChoreoConnectionURI = CONTEXT.concat("/configurations/service-configs/choreo-connections/").concat(connectionId);
+        AtomicReference<String> responseMessage = new AtomicReference<>();
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .delete(deleteChoreoConnectionURI)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .validate((message, context) -> {
+                                            String payload = message.getPayload(String.class);
+                                            responseMessage.set(payload);
+                                        }
+                                )));
+        return responseMessage.get();
+    }
 }
