@@ -1866,6 +1866,18 @@ CREATE TABLE [dbo].[global_configuration_data](
     CONSTRAINT [global_configuration_data$config_uuid_fk] FOREIGN KEY (config_uuid) REFERENCES dbo.global_configuration(uuid)
 )
 
+CREATE TABLE [dbo].[suspended_members]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [user_idp_id] [nvarchar](255) NOT NULL,
+    [organization_uuid] [nvarchar](255) NOT NULL,
+    [user_email] [nvarchar](255),
+    [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT unique_suspended_members UNIQUE(user_idp_id, organization_uuid)
+)
+
 /****** Object:  Trigger [dbo].[global_configuration_UpdateTimeTrigger] ******/
 SET ANSI_NULLS ON
     GO
