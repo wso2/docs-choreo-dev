@@ -97,7 +97,8 @@ public final class Constant {
         webhook,
         graphql,
         ballerinaService,
-        manualTrigger
+        manualTrigger,
+        buildpackService,
     }
     public enum apiLIifCycleState {
         Publish
