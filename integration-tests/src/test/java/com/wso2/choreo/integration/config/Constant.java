@@ -99,6 +99,7 @@ public final class Constant {
         ballerinaService,
         manualTrigger,
         buildpackService,
+        byocService
     }
     public enum apiLIifCycleState {
         Publish

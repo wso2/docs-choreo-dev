@@ -686,7 +686,7 @@ public class ComponentUtils {
 
             for (int i = 0; i < 5; i++) { // Retry up to 5 times if Endpoint is not active after promotion
                 if (displayType.equals(Constant.displayType.ballerinaService.name()) || displayType.equals(Constant.AppType.MI_API_SERVICE.value) 
-                        || displayType.equals(Constant.displayType.buildpackService.name())) {
+                        || displayType.equals(Constant.displayType.buildpackService.name()) || displayType.equals(Constant.displayType.byocService.name())) {
                     Map<String, String> argMap = new HashMap<>();
                     argMap.put("componentId", component.getId());
                     argMap.put("versionId", component.getLatestApiVersion().getId());
