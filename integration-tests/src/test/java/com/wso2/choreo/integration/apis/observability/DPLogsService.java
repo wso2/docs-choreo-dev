@@ -281,9 +281,9 @@ public class DPLogsService extends DataPlaneSystemAPI {
         if (Constant.region.EU.toString().equals(choreoProject.getRegion().toString())) {
             client = citrusClients.get(Endpoints.CHOREO_EU_DP_URL);
         }
-        runner.variable("isGatewayLogsRetrievalSuccess", false);
+        runner.variable("isMetricsRecievedSuccess", false);
         AtomicInteger successiveFailureCount = new AtomicInteger(0);
-        runner.$(repeat().until("(i = 5) or ( ${isGatewayLogsRetrievalSuccess} = true )")
+        runner.$(repeat().until("(i = 5) or ( ${isMetricsRecievedSuccess} = true )")
         .index("i")
         .actions(
                 http()
@@ -310,7 +310,7 @@ public class DPLogsService extends DataPlaneSystemAPI {
                                     .getAsJsonObject("data").getAsJsonObject("hubbleProjectDiagram").getAsJsonArray("nodeList");
                              if(linkList.size() > 0 && nodeList.size() > 0) {
                                     successiveFailureCount.set(0);
-                                    context.setVariable("isGatewayLogsRetrievalSuccess", true);
+                                    context.setVariable("isMetricsRecievedSuccess", true);
                                 } else {
                                     if (5 < successiveFailureCount.incrementAndGet()) {
                                         throw new ValidationException("Did not recived the metrics data");
