@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Enums } from "../../../../commons/enums";
+import { Enums, UsagePlan } from "../../../../commons/enums";
 import { Types } from "../../../../commons/types";
 import { Component } from "../component";
 import { _ProxyDeployment } from "./proxy-deployment";
@@ -86,6 +86,10 @@ export class Proxy extends Component {
     return this.test.testCurl(this, environment, method, resource);
   }
 
+  updateUsagePlans(plans: UsagePlan[]) {
+    this.manage.updateUsagePlans(this, plans);
+  }
+
   addVersion() {
     this.deployment.addNewVersion(this);
   }
@@ -102,7 +106,27 @@ export class Proxy extends Component {
     this.overview.navigateToDevPortal(this, "choreoe2etest");
   }
 
-  stop(env: Enums.Environment.DEVELOPMENT | Enums.Environment.PRODUCTION) {
-    this.deployment.stop(env);
+  enableCors() {
+    this.manage.enableCors(this);
+  }
+
+  addPermissions(permissions: string[]) {
+    this.manage.addPermissions(this, permissions);
+  }
+
+  applyAllPermissionsToResources(permissions: string[]) {
+    this.manage.applyAllPermissionsToResources(this, permissions);
+  }
+
+  applyPermissionToResources(permission: string) {
+    this.manage.applyPermissionToResources(this, permission);
+  }
+
+  deleteAllPermissionsFromResources(permissions: string[]) {
+    this.manage.deleteAllPermissionsFromResources(this, permissions);
+  }
+
+  verifyConsumer(appName: string) {
+    this.manage.verifyConsumer(appName);
   }
 }

@@ -13,19 +13,27 @@
 
 import { cyGet } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
+import { SHORT_TIME } from "../../../commons/timeouts";
 import { TryOut } from "../../../devportal/pages/apis/try-out";
+import { generateAppName } from "../../../devportal/utils";
 import { TestIds } from "../../constants/TestIds";
 import { DevPortalLeftMenu } from "../../ui-elements/left-menus/dev-portal-left-menu";
+import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
+import { Application } from "../application/application";
+import { _Stats } from "./stats";
 
 export abstract class Component {
-  name: string;
-  versions: string[] = [];
-  id: string;
-  handler: string;
-  projectId: string;
-  componentUrl: string;
+  private name: string;
+  private versions: string[] = [];
+  private id: string;
+  private handler: string;
+  private projectId: string;
+  private componentUrl: string;
+  private devPortalUrl: string;
 
   private devPortalMenu = new DevPortalLeftMenu();
+  private stats = new _Stats();
+  private sideMenu = new ServiceLeftMenu();
 
   constructor(
     name: string,
@@ -80,6 +88,14 @@ export abstract class Component {
     return this.componentUrl;
   }
 
+  getDevPortalUrl() {
+    return this.devPortalUrl;
+  }
+
+  setDevPortalUrl(url: string) {
+    this.devPortalUrl = url;
+  }
+
   generateCredentials_DevPortal(
     env: Enums.Environment.PRODUCTION | Enums.Environment.SANDBOX
   ) {
@@ -97,10 +113,55 @@ export abstract class Component {
     cy.get(TestIds.generateAccessToken).should("be.visible");
   }
 
-  testSwaggerConsole_DevPortal(resource: string) {
+  createApplication_DevPortal() {
+    const appName = generateAppName("-e2etest");
+    const appDescription = "Application for e2e testing";
+
+    cy.get(TestIds.applicationBar).should("be.visible").click();
+
+    cy.get(TestIds.createApplication).click();
+    cy.get(TestIds.applicationName).type(appName);
+    cy.get(TestIds.applicationDescription).type(appDescription);
+    cy.get(TestIds.createBtn).click({ force: true });
+    cy.wait(5000);
+    cy.get(TestIds.applicationDescription).should("have.text", appDescription);
+    cy.get(TestIds.applicationTokenType).should("have.text", "JWT");
+
+    return new Application(appName, appDescription);
+  }
+
+  deleteApplication_DevPortal(application: Application) {
+    const appName = application.getName();
+    cy.get(TestIds.applicationBar).should("be.visible").click();
+    cyGet(TestIds.search).trigger("mouseover");
+    cyGet(TestIds.searchAppText).type(appName);
+    cy.contains(appName).trigger("mouseover");
+    cyGet(TestIds.appDeleteBtn(appName)).trigger("mouseover").click();
+    cyGet(TestIds.deleteDialogOk).click();
+    cyGet(TestIds.createApplication, SHORT_TIME).should("be.visible");
+  }
+
+  testSwaggerConsole_DevPortal(resource: string, application?: string) {
     this.devPortalMenu.navigateToTryOut();
+
+    if (application) {
+      cy.wait(3000)
+        .get(TestIds.applicationSelect)
+        .should("be.visible")
+        .click()
+        .wait(3000);
+      cy.get(TestIds.applicationSelectItem(application))
+        .should("be.visible")
+        .click();
+    }
+
     // Add slight wait to account for rerendering of elements without any visible indication
-    cyGet(TestIds.getTestKey).should("be.enabled").wait(5000).click();
+    cyGet(TestIds.getTestKey)
+      .should("be.enabled")
+      .wait(5000)
+      .get(TestIds.getTestKey)
+      .should("be.enabled")
+      .click();
     cy.get(TestIds.getTestKey).within(() => {
       cy.get(TestIds.progressBar).should("not.exist");
     });
@@ -117,6 +178,29 @@ export abstract class Component {
     cy.visit(this.getComponentUrl()).then(() => {
       cy.get(TestIds.backdropLoader).should("not.exist");
       cy.get(TestIds.createTime).should("be.visible");
+    });
+  }
+
+  verifyUsageInsights() {
+    this.stats.viewUsageInsights();
+    this.stats.navigateFromComponentToProjectInsights();
+  }
+
+  stopDeployment() {
+    this.sideMenu.navigateToDeploy();
+
+    cy.get(TestIds.devEnvCard).within(() => {
+      cy.get(TestIds.stop).click();
+      cy.get(TestIds.stop).should("not.exist");
+      cy.get(TestIds.reDeploy).should("exist");
+    });
+  }
+
+  stopPromotion() {
+    cy.get(TestIds.prodEnvCard).within(() => {
+      cy.get(TestIds.stop).click();
+      cy.get(TestIds.stop).should("not.exist");
+      cy.get(TestIds.reDeploy).should("exist");
     });
   }
 

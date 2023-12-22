@@ -40,6 +40,8 @@ export class _ProxyDeployment {
 
     this.waitTillReadyToDeploy();
 
+    this.RetryDevDeployment();
+
     this.startDeployment();
 
     this.verifyDeploymentStatus();
@@ -49,6 +51,8 @@ export class _ProxyDeployment {
     this.sideMenu.navigateToDeploy();
 
     ProxyUtils.validateDeploymentTrack(component);
+
+    this.waitTillReadyToDeploy();
 
     this.RetryPromotionToProd();
     cyGet(TestIds.promote).should("be.enabled").click();
@@ -86,20 +90,6 @@ export class _ProxyDeployment {
     });
   }
 
-  stop(envs: Enums.Environment.DEVELOPMENT | Enums.Environment.PRODUCTION) {
-    this.sideMenu.navigateToDeploy();
-    let envCard = TestIds.devEnvCard;
-
-    if (envs === Enums.Environment.PRODUCTION) {
-      envCard = TestIds.prodEnvCard;
-    }
-
-    cy.get(envCard).within(() => {
-      cy.get(TestIds.stop).should("be.visible").click();
-      cy.get(TestIds.deploymentStatus).should("contain", DEPLOYMENT_STOPPED);
-    });
-  }
-
   private RetryPromotionToProd(retryCount = 0) {
     cy.log("Checking for retry for promotion to prod");
     retryCount++;
@@ -134,8 +124,6 @@ export class _ProxyDeployment {
     cyGet(TestIds.buildCard, MEDIUM_TIME)
       .contains("Loading", MEDIUM_TIME)
       .should("not.exist");
-
-    this.RetryDevDeployment();
   }
 
   private RetryDevDeployment() {

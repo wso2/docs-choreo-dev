@@ -18,8 +18,9 @@ import {
   EndpointAccessibility,
   _ServiceDeployment,
 } from "./service-deployment";
-import { UsagePlan, _ServiceManagement } from "./service-management";
-import { _ServiceStats } from "./service-stats";
+import { _ServiceManagement } from "./service-management";
+import { UsagePlan } from "../../../../commons/enums";
+import { _Stats } from "../stats";
 import { InvokeInfo, _ServiceTest } from "./service-test";
 
 export class Service extends Component {
@@ -29,7 +30,6 @@ export class Service extends Component {
   private deployment = new _ServiceDeployment();
   private test = new _ServiceTest();
   private manage = new _ServiceManagement();
-  private stats = new _ServiceStats();
 
   constructor(
     name: string,
@@ -83,18 +83,5 @@ export class Service extends Component {
 
   enableCors() {
     this.manage.enableCors(this);
-  }
-
-  stopDeployment() {
-    this.deployment.stopDeployment();
-  }
-
-  stopPromotion() {
-    this.deployment.stopPromotion();
-  }
-
-  verifyUsageInsights() {
-    this.stats.viewUsageInsights();
-    this.stats.navigateFromComponentToProjectInsights();
   }
 }

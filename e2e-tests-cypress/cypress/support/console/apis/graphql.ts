@@ -148,6 +148,37 @@ export class GraphQL {
       });
     });
   }
+
+  static deleteProjectsCreatedByTestsV2(
+    orgId: number,
+    orgHandle: string,
+    token: string
+  ) {
+    this.getProjectsV2(orgId).then((response) => {
+      if (response.status > 205) {
+        cy.log(`getProjects failed, status returned: ${response.status}`);
+        return;
+      }
+
+      const projects = response.projects;
+
+      const e2eProjects = projects.filter(
+        ({ name }) =>
+          name.includes(Utils.projectNamePrefix) ||
+          name.includes(Utils.oldProjectNamePrefix)
+      );
+      cy.log(`Total projects found : ${projects.length}`);
+      cy.log(`E2E projects found : ${e2eProjects.length}`);
+
+      e2eProjects.forEach((project) => {
+        if (this.isProjectOld(project.name)) {
+          this.deleteComponentsInProjectV2(project.id, orgHandle, token);
+          this.deleteProjectV2(orgId, project.id);
+        }
+      });
+    });
+  }
+
   private static isProjectOld(projectName: string) {
     // Previous project name format signifies old projects
     if (projectName.includes(Utils.oldProjectNamePrefix)) {
@@ -186,6 +217,33 @@ export class GraphQL {
       return Promise.resolve({ components: [], status: -1 });
     });
   }
+
+  static getComponentsV2(projectId: string, handle: string) {
+    const query = {
+      query: `query{ components(orgHandler: "${handle}", projectId: "${projectId}"){
+        projectId, id, description, name, handler, displayName, displayType, version, createdAt, orgHandler,apiVersions {
+            apiVersion,
+            proxyName,
+            proxyUrl,
+            proxyId,
+            id,
+            state,
+            latest,
+            branch,
+            accessibility
+          } } }`,
+    };
+
+    return this.callGraphQLV2(query).then((res) => {
+      if (res.status === SUCCESS_STATUS_CODE) {
+        const components = res.body.components as Component[];
+        const status = res.status;
+        return Promise.resolve({ components, status });
+      }
+      return Promise.resolve({ components: [], status: -1 });
+    });
+  }
+
   static getComponentByName(projectId: string, componentName: string) {
     return this.getComponents(projectId).then((response) => {
       if (response.status == OK) {
@@ -247,6 +305,26 @@ export class GraphQL {
     });
   }
 
+  private static deleteComponentsInProjectV2(
+    projectId: string,
+    orgHandle: string,
+    token: string
+  ) {
+    cy.log("deleteComponentsInProject()");
+    this.getComponentsV2(projectId, orgHandle).then((response) => {
+      if (response.status === OK && response.components.length > 0) {
+        response.components.forEach((component) => {
+          const { handler } = component;
+          BallerinaService.deleteConnectorsV2(token, orgHandle);
+          this.changeComponentLifeCycleV2(projectId, handler, token);
+          this.deleteComponentV2(component.id, projectId, orgHandle);
+        });
+      } else {
+        cy.log(`getComponents failed, status returned: ${response.status}`);
+      }
+    });
+  }
+
   public static deleteComponent(
     componentId: string,
     projectId: string,
@@ -270,6 +348,29 @@ export class GraphQL {
     });
   }
 
+  public static deleteComponentV2(
+    componentId: string,
+    projectId: string,
+    orgHandle: string
+  ) {
+    const query = {
+      query: `mutation{ deleteComponentV2(
+        orgHandler: "${orgHandle}",
+        projectId: "${projectId}",
+        componentId: "${componentId}"){status, canDelete, message}}`,
+    };
+
+    this.callGraphQLV2(query).then((response) => {
+      if (response.status === OK) {
+        cy.log(`Successfully deleted Component  ${componentId}`);
+      } else {
+        cy.log(
+          `Could not delete Component: ${componentId}, status returned: ${response.status}`
+        );
+      }
+    });
+  }
+
   private static deleteProject(orgId: number, projectId: string) {
     const query = {
       query: `mutation{ deleteProject(
@@ -277,6 +378,23 @@ export class GraphQL {
     };
 
     this.callGraphQL(query).then((response) => {
+      if (response.status === SUCCESS_STATUS_CODE) {
+        cy.log(`Successfully deleted Project  ${projectId}`);
+      } else {
+        cy.log(
+          `Could not delete Project: ${projectId}, status returned: ${response.status}`
+        );
+      }
+    });
+  }
+
+  private static deleteProjectV2(orgId: number, projectId: string) {
+    const query = {
+      query: `mutation{ deleteProject(
+        orgId: ${orgId}, projectId: "${projectId}"){ status, details }}`,
+    };
+
+    this.callGraphQLV2(query).then((response) => {
       if (response.status === SUCCESS_STATUS_CODE) {
         cy.log(`Successfully deleted Project  ${projectId}`);
       } else {
@@ -711,6 +829,34 @@ export class GraphQL {
     });
   }
 
+  private static changeComponentLifeCycleV2(
+    projectId: string,
+    componentHandler,
+    token: string
+  ) {
+    cy.log(`changeComponentLifeCycle ==> Project Id ${projectId}`);
+    const query = GraphQLQueryBuilder.getLifeCycleChangeQuery(
+      projectId,
+      componentHandler
+    );
+
+    this.callGraphQLV2(query).then((res) => {
+      if (res.status === SUCCESS_STATUS_CODE) {
+        const apiVersion: [] = res.body.component.apiVersions;
+        apiVersion.forEach((e) => {
+          const { proxyId } = e;
+          if (proxyId) {
+            this.deprecateComponentV2(proxyId, token);
+          } else {
+            cy.log(`ProxyID is :: ${proxyId}`);
+          }
+        });
+      } else {
+        cy.log(`Status Code For changeComponentLifeCycle ==> ${res.status}`);
+      }
+    });
+  }
+
   private static deprecateComponent(apiId: string, token: string) {
     const { uuid } = Cypress.env("userData");
     cy.log(`Current UUID ==> ${uuid}`);
@@ -726,9 +872,29 @@ export class GraphQL {
     });
   }
 
+  private static deprecateComponentV2(apiId: string, token: string) {
+    const uuid = login.getOrgUuid();
+    cy.log(`Current UUID ==> ${uuid}`);
+    const statusRequest = `${Cypress.env(
+      "apimSvcURL"
+    )}/api/am/publisher/v2/apis/${apiId}/lifecycle-state?organizationId=${uuid}`;
+    const headers = { Authorization: `Bearer ${token}` };
+    return Utils.sendGetRequest(statusRequest, headers).then((res) => {
+      const { state } = res.body;
+      if (state === "Published") {
+        this.sendDeprecateRetireRequestV2(apiId);
+      }
+    });
+  }
+
   private static sendDeprecateRetireRequest(apiId: string) {
     APILifeCycleService.deprecateAPI(apiId);
     APILifeCycleService.retireAPI(apiId);
+  }
+
+  private static sendDeprecateRetireRequestV2(apiId: string) {
+    APILifeCycleService.deprecateAPIV2(apiId);
+    APILifeCycleService.retireAPIV2(apiId);
   }
 
   static _getProxyDeployment(

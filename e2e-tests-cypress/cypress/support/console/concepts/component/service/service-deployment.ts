@@ -74,24 +74,6 @@ export class _ServiceDeployment {
     this.verifyPromotionStatus();
   }
 
-  stopDeployment() {
-    this.sideMenu.navigateToDeploy();
-
-    cy.get(TestIds.devEnvCard).within(() => {
-      cy.get(TestIds.stop).click();
-      cy.get(TestIds.stop).should("not.exist");
-      cy.get(TestIds.reDeploy).should("exist");
-    });
-  }
-
-  stopPromotion() {
-    cy.get(TestIds.prodEnvCard).within(() => {
-      cy.get(TestIds.stop).click();
-      cy.get(TestIds.stop).should("not.exist");
-      cy.get(TestIds.reDeploy).should("exist");
-    });
-  }
-
   private getDevEndpointURL(endpointVisibility: EndpointAccessibility) {
     cy.get(TestIds.devEnvCard).within(() => {
       cy.get(TestIds.availableEndpoints).within(() => {

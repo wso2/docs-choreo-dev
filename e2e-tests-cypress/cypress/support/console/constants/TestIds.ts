@@ -11,6 +11,8 @@
  * associated services.
  */
 
+import { Enums } from "../../commons/enums";
+
 export namespace TestIds {
   export const userProfile = '[data-testid="header-user-profile-menu"]';
   export const backdropLoader = '[data-testid="backdrop-loader"]';
@@ -121,4 +123,58 @@ export namespace TestIds {
   export const getTestKey = '[data-testid="get-test-key-btn"]';
   export const accessToken = '[data-testid="accessTokenInput"]';
   export const apiNameDevPortal = '[data-testid="txt-api-name"]';
+  export const addScopeBtn = '[data-testid="scope-add-icon-button"]';
+  export const addNewScope = '[data-testid="scope-add-new-btn"]';
+  export const scopeTextInput = '[data-testid="scope-text-input"]';
+  export const selectAllScopes = '[data-testid="scope-select-all-btn"]';
+  export const applyScopesToAll = '[data-testid="scope-apply-to-all-btn"]';
+  export const scopeSaveAndDeploy =
+    '[data-cyid="scope-save-and-deploy-button"]';
+  export const deleteAllScopes = '[data-testid="scope-delete-all-btn"]';
+  export const permissionTag = (permission: string) =>
+    `[data-cyid="${permission}-multiselect-tag"]`;
+  export const scopeItem = (permission: string) =>
+    `[data-testid="scope-item-${permission}"]`;
+  export const scopeItemCheckBox = (permission: string) =>
+    `[data-testid="scope-item-checkbox-${permission}"]`;
+  export const applicationBar = '[data-testid="applications-appbar-btn"]';
+  export const createApplication = '[data-testid="create-application-btn"]';
+  export const applicationName = '[data-testid="app-name"]';
+  export const applicationDescription =
+    '[data-testid="application-description"]';
+  export const createBtn = '[data-testid="create-button"]';
+  export const applicationTokenType = '[data-testid="application-token-type"]';
+  export const envCredentialsMenu = (env: Enums.Environment) =>
+    `[data-testid="${env.toLowerCase()}-credentials-menu-item"]`;
+
+  export const linkKeys = '[data-testid="link-production-keys"]';
+  export const generateKey = '[data-testid="generate-oauth-key"]';
+  export const consumerKey = "#consumer-key-text";
+  export const subscriptions = '[data-testid="subscriptions"]';
+  export const createSubscription = '[data-testid="create-subscription-btn"]';
+  export const addApiSubscription = (apiName: string) =>
+    `[data-testid="add-api-${apiName}"]`;
+  export const subscriptionClose =
+    '[data-testid="subscription-dialog-close-btn"]';
+  export const applicationList = (appName: string) =>
+    `[data-testid="application-list-${appName}"]`;
+  export const applicationEdit = '[data-testid="appliation-edit-btn"]';
+  export const permissionsField = '[data-testid="autocomplete-textfield"]';
+  export const apiBar = '[data-testid="apis-appbar-btn"]';
+  export const apiSearch = "#outlined-search-bar-api-listing";
+  export const apiCard = (apiName: string) =>
+    `[data-testid="apiCard-${apiName}"`;
+  export const apiOverviewDevPortal = '[data-testid="li-overview-item-link"]';
+  export const applicationSelect = '[data-testid="application-selector"]';
+  export const applicationSelectItem = (application: string) =>
+    `[data-value="${application}"]`;
+  export const value = (value: string) => `[value=${value}]`;
+  export const search = '[data-testid="search-btn"]';
+  export const searchAppText =
+    '[data-testid="search-app"] [placeholder="Search"]';
+  export const appDeleteBtn = (appName: string) =>
+    `[data-testid="delete-btn-${appName}"]`;
+  export const deleteDialogOk = '[data-testid="delete-dialog-ok-button"]';
+  export const applicationListEdit = (appName: string) =>
+    `[data-testid="edit-btn-${appName}"]`;
 }
