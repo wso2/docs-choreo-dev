@@ -1,6 +1,6 @@
 # Build Your First Cloud Native Application with Choreo
 
-Choreo is an Internal Developer Platform (IDevP) that streamlines the entire process of building, deploying, monitoring, and managing your cloud-native applications effortlessly.
+Choreo is an Internal Developer Platform (IDevP) that streamlines the entire process of building, deploying, monitoring, and managing your cloud-native applications easily.
 
 In this quick start guide, you will explore how to expose a service endpoint via Choreo and securely consume the service from a web application. You will use a simple reading list web application with a sign-in page and functionality to interact with a secure backend service. You will also use Choreo's managed authentication to easily set up authentication for your web application without having to dive into the details of security protocols. The application will allow users to sign in and view their reading lists, add books to a reading list, delete books from the reading list, and sign out of the application effortlessly.
 
@@ -143,7 +143,7 @@ You can proceed to the next section to fix the JWT error and test the service on
 
 ## Step 5: Fix the JWT error and retest the service
 
-To fix the JWT error and test  the service once again, follow the steps given below:
+To fix the JWT error and test the service once again, follow the steps given below:
 
 1. In the left navigation menu, click **Manage** and then click **Settings**.
 2. Under **API Settings**, click **Edit**.
@@ -236,7 +236,7 @@ each environment the service is deployed in. In this guide, you will see the ser
 To build the web application, follow the steps given below:
 
 1. In the left navigation menu, click **Build**.
-2. In the **Builds** pane, click **Build**. This opens the **Commits** pane where you can see all the commits related to the component.
+2. In the **Builds** pane, click **Build**. This opens the **Commits** pane, where you can see all the commits related to the component.
 3. Select the latest commit and click **Build**. This triggers the build process and displays the build progress in the **Build Logs** pane.
 
     !!! info
@@ -251,14 +251,16 @@ In this step, you will configure managed authentication, create a user to access
 To configure managed authentication, follow the steps given below:
 
 1. In the left navigation menu, click **Deploy**.
-2. In the **Set Up** card, click **Configure and Deploy**. This opens the **Configure & Deploy** pane where you can specify values for the mount file.
-3. Specify the following in the `config.js` file mount. You must replace `<Service URL>` with the value that you copied when creating a connection to the `Reading List Service` in [step 6.2](#step-62-create-a-connection-to-the-deployed-service).
+2. In the **Set Up** card, click **Configure and Deploy**. This opens the **Configure & Deploy** pane, where you can specify values for the mount file.
+3. Specify the following in the `config.js` file mount.
+    - Make sure you **replace the existing content of the`config.js` file** with the configuration given below.
+    - You must also replace `<Service URL>` with the value that you copied when creating a connection to the `Reading List Service` in [step 6.2](#step-62-create-a-connection-to-the-deployed-service).
 
-    ```javascript
-    window.config = {
-        apiUrl: '<Service URL>',
-    };
-    ```
+        ```javascript
+        window.config = {
+            apiUrl: '<Service URL>',
+        };
+        ```
 
 4. Click **Next**. This opens the **Authentication** pane.
 5. Under **Authentication Settings**, make sure that you have the **Managed authentication with Choreo** toggle enabled.
