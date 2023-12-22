@@ -119,10 +119,10 @@ spec:
           resources:
             limits:
               cpu: 300m
-              memory: 400Mi
+              memory: 450Mi
             requests:
               cpu: 200m
-              memory: 200Mi
+              memory: 350Mi
           volumeMounts:
             - mountPath: /mnt/csi/secret-app-db
               name: secret-app-db
