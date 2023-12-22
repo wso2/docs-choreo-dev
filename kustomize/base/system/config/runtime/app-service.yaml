@@ -465,7 +465,7 @@ asgardeoOrgManagement:
   asgardeoKeyManagerBaseUrl: ${ASGARDEO_KEY_MANAGER_BASE_URL}
 asgardeoInvitation:
   enable: ${IS_ASGARDEO_INVITATION_ENABLED}
-  enableDeleteSuspendedUser: ${IS_DELETE_SUSPENDED_USER_ENABLED}
+  enableReinvite: ${IS_REINVITATION_ENABLED}
 marketingConsent:
   clientKey: ${MARKETING_CONSENT_APP_CLIENT_KEY}
   clientSecret: ${MARKETING_CONSENT_APP_CLIENT_SECRET}
