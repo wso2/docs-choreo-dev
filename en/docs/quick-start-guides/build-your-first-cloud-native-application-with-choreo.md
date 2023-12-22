@@ -222,10 +222,10 @@ To establish a connection between the web application you created and the deploy
 3. In the **Create Connection** pane, click `Reading List Service-Readinglist`.`
 4. Specify values as follows for each of the fields:
 
-    | **Field**        | **Value**                  |
-    |------------------|----------------------------|
-    | **Name**         | `Reading List Connection`  |
-    | **Description**  | `Connection between the web application and the reading list service`|
+    | **Field**        | **Value**                       |
+    |------------------|---------------------------------|
+    | **Name**         | `Reading List Connection`       |
+    | **Description**  | `Connection to the reading list`|
     
 5. Click **Next**. This displays the service URL of the connection for
 each environment the service is deployed in. In this guide, you will see the service URL for the Development environment.
