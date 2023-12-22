@@ -11,10 +11,10 @@
  * associated services.
  */
 
-import { TestIds } from "../../../constants/TestIds";
-import { ServiceLeftMenu } from "../../../ui-elements/left-menus/service-left-menu";
+import { TestIds } from "../../constants/TestIds";
+import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
 
-export class _ServiceStats {
+export class _Stats {
   private sideMenu = new ServiceLeftMenu();
 
   viewUsageInsights() {

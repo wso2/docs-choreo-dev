@@ -182,6 +182,9 @@ describe("Create proxy using existing url", () => {
 
   it("Publish proxy to Dev portal", () => {
     proxy.publish();
+  });
+
+  it("Navigate to Dev portal", () => {
     proxy.navigateToDevPortal();
   });
 
@@ -195,7 +198,7 @@ describe("Create proxy using existing url", () => {
 
   it("Stop proxy", () => {
     proxy.navigateToComponentInConsole();
-    proxy.stop(Enums.Environment.DEVELOPMENT);
-    proxy.stop(Enums.Environment.PRODUCTION);
+    proxy.stopDeployment();
+    proxy.stopPromotion();
   });
 });

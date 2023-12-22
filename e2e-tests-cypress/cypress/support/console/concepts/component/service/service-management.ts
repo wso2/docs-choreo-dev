@@ -16,13 +16,7 @@ import { ServiceLeftMenu } from "../../../ui-elements/left-menus/service-left-me
 import { Service } from "./service-component";
 import { Enums } from "../../../../commons/enums";
 import { ServiceUtils } from "./service-utils";
-
-export enum UsagePlan {
-  Gold = "Gold",
-  Silver = "Silver",
-  Bronze = "Bronze",
-  Unlimited = "Unlimited",
-}
+import { UsagePlan } from "../../../../commons/enums";
 
 export class _ServiceManagement {
   private sideMenu = new ServiceLeftMenu();
@@ -83,7 +77,7 @@ export class _ServiceManagement {
     ServiceUtils.validateDeploymentTrack(component);
 
     cy.get(TestIds.editSettings).click();
-    cy.get(TestIds.corsConfig).click();
+    cy.get(TestIds.corsConfig).click({ force: true });
 
     cy.get(TestIds.saveSettings).should("be.visible");
     cy.get(TestIds.corsConfig).within(() => {

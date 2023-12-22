@@ -41,7 +41,9 @@ export class _ProxyOverview {
           }
         }
 
-        cy.visit(`${url}?${updatedQueryParams}`).then(() => {
+        component.setDevPortalUrl(`${url}?${updatedQueryParams}`);
+
+        cy.visit(component.getDevPortalUrl()).then(() => {
           cy.get(TestIds.backdropLoader).should("not.exist");
           cy.get(TestIds.apiNameDevPortal)
             .should("be.visible")

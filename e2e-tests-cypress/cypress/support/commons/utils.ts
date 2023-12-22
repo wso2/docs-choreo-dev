@@ -372,7 +372,7 @@ export class Utils {
         enableWebAppAuthentication == "true"
       );
     }
-    
+
     return false;
   }
 
@@ -455,5 +455,29 @@ export class Utils {
     ) {
       throw Error(errorMessage);
     }
+  }
+
+  static unCheckIfChecked(locator: string) {
+    cy.get(locator).within(() => {
+      cy.get("input")
+        .invoke("attr", "checked")
+        .then((checked) => {
+          if (checked !== "undefined" && checked) {
+            cy.get("input").click();
+          }
+        });
+    });
+  }
+
+  static checkIfUnchecked(locator: string) {
+    cy.get(locator).within(() => {
+      cy.get("input")
+        .invoke("attr", "checked")
+        .then((checked) => {
+          if (checked === "undefined" || !checked) {
+            cy.get("input").click();
+          }
+        });
+    });
   }
 }

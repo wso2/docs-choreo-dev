@@ -77,6 +77,22 @@ export class ProxyLeftMenu extends LeftMenu {
     );
   }
 
+  navigateToPermissions() {
+    this.scrollToTopOfMenu();
+    this.navigateToSubMenu(
+      "[data-cyid=link-manage]",
+      new Array('[data-cyid="manage-permissions"]')
+    );
+  }
+
+  navigateToConsumers() {
+    this.scrollToTopOfMenu();
+    this.navigateToSubMenu(
+      "[data-cyid=link-manage]",
+      new Array('[data-cyid="manage-consumers"]')
+    );
+  }
+
   navigateToUsageInsights() {
     this.scrollToTopOfMenu();
     this.navigateToMenuItem('[data-cyid="usage-insights"]');

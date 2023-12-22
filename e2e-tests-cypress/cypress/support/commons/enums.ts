@@ -99,3 +99,10 @@ export namespace Enums {
     Publish = "Publish",
   }
 }
+
+export enum UsagePlan {
+  Gold = "Gold",
+  Silver = "Silver",
+  Bronze = "Bronze",
+  Unlimited = "Unlimited",
+}
