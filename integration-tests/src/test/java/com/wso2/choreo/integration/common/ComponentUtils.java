@@ -685,8 +685,11 @@ public class ComponentUtils {
             Environment destEnv = environments.get(destEnvIndex);
 
             for (int i = 0; i < 5; i++) { // Retry up to 5 times if Endpoint is not active after promotion
-                if (displayType.equals(Constant.displayType.ballerinaService.name()) || displayType.equals(Constant.AppType.MI_API_SERVICE.value) 
-                        || displayType.equals(Constant.displayType.buildpackService.name()) || displayType.equals(Constant.displayType.byocService.name())) {
+
+                if (displayType.equals(Constant.displayType.ballerinaService.name())
+                        || displayType.equals(Constant.displayType.byocService.name())
+                        || displayType.equals(Constant.displayType.buildpackService.name())
+                        || displayType.equals(Constant.AppType.MI_API_SERVICE.value)) {
                     Map<String, String> argMap = new HashMap<>();
                     argMap.put("componentId", component.getId());
                     argMap.put("versionId", component.getLatestApiVersion().getId());
@@ -714,7 +717,8 @@ public class ComponentUtils {
                 deploymentStatus.add(statusDTO);
 
                 if (displayType.equals(Constant.displayType.ballerinaService.name())
-                        || displayType.equals(Constant.AppType.MI_API_SERVICE.value)) {
+                        || displayType.equals(Constant.AppType.MI_API_SERVICE.value)
+                        || displayType.equals(Constant.displayType.byocService.name())) {
                     if (isPromotionEndpointStatusActive(runner, citrusClients, accessToken, component,
                             statusDTO, srcEnv)) {
                         break;

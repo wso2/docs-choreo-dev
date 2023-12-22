@@ -89,7 +89,9 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
     private ChoreoComponent proxyComponent;
     private String componentLevelConnectionId;
     private String projectLevelConnectionId;
+    private List<Environment> servicePublisherComponentEnvironments;
     private List<Environment> clientComponentEnvironments;
+    private ConnectionCreateRequest connectionCreationReq;
     private ComponentDeploymentStatusDTO serviceDeploymentStatusDTO, servicePromotionStatusDTO;
     private ComponentDeploymentStatusDTO clientDeploymentStatusDTO, clientPromotionStatusDTO;
     private final String repoName = "connection-test-reward-management-api";
@@ -140,10 +142,10 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createServicePublisherComponent_TestChoreoConnections"})
     @CitrusTest
     public void deployServicePublisherComponent_TestChoreoConnections() throws Exception {
-        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
+        servicePublisherComponentEnvironments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 serviceChoreoComponent);
         serviceDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
-                serviceChoreoComponent, environments, ComponentFlavour.BYOC);
+                serviceChoreoComponent, servicePublisherComponentEnvironments, ComponentFlavour.BYOC);
         SVC_COMPONENT_SERVICE_NAME = serviceChoreoComponent.getName().concat("-").concat(SVC_COMPONENT_ENDPOINT_NAME);
     }
     @Test(dependsOnMethods = {"createProject_TestChoreoConnections"})
@@ -191,7 +193,7 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
                 organizationUuid(orgUUID).projectUuid(projectOne.getId()).componentUuid(clientChoreoComponent.getId()).build();
         visibilities.add(componentVisibility);
 
-        ConnectionCreateRequest connectionReq = ConnectionCreateRequest.builder().name("Loyalty-svc-connection")
+        connectionCreationReq = ConnectionCreateRequest.builder().name("Loyalty-svc-connection")
                 .description("Connection for loyalty service")
                 .serviceId(serviceId)
                 .schemaReference(schemaReference)
@@ -200,7 +202,7 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
                 .requestingServiceVisibility("PUBLIC")
                 .orgIdInteger(orgId).build();
         String connectionId = ConnectionService.createChoreoConnection(this, connectionServiceClient,
-                accessToken, connectionReq);
+                accessToken, connectionCreationReq);
         componentLevelConnectionId = connectionId;
         //update component-config.yaml file
         //Let's consume service using organization visibility
@@ -242,6 +244,41 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = {"invokeAPIDev_TestChoreoConnections"})
+    @CitrusTest
+    public void promoteServiceComponent_TestChoreoConnections() throws Exception {
+        List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients, accessToken, serviceChoreoComponent,
+                servicePublisherComponentEnvironments, ComponentFlavour.BYOC);
+        servicePromotionStatusDTO = statusDTO.get(0);  // we'll consider only the first promotion
+
+    }
+    @Test(dependsOnMethods = {"promoteServiceComponent_TestChoreoConnections"})
+    @CitrusTest
+    public void refreshComponentLevelConnection_TestChoreoConnections() throws Exception {
+        HttpClient connectionServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        ConnectionService.refreshChoreoConnection(this, connectionServiceClient,
+                accessToken, componentLevelConnectionId, connectionCreationReq);
+    }
+
+    @Test(dependsOnMethods = {"refreshComponentLevelConnection_TestChoreoConnections"})
+    @CitrusTest
+    public void promoteClientComponent_TestChoreoConnections() throws Exception {
+        List<ComponentDeploymentStatusDTO> statusDTO =  ComponentUtils.promoteComponent(this, citrusClients, accessToken, clientChoreoComponent,
+                clientComponentEnvironments, ComponentFlavour.BYOC);
+        clientPromotionStatusDTO = statusDTO.get(0);  //we'll consider only the first promotion
+    }
+
+    @Test(dependsOnMethods = {"promoteClientComponent_TestChoreoConnections"})
+    @CitrusTest
+    public void invokeAPIStage_TestChoreoConnections() throws Exception {
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
+                clientChoreoComponent);
+        Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
+                clientChoreoComponent, clientPromotionStatusDTO, environments);
+        ComponentUtils.invokeApiPOST(this, invokeData.getRight().getApikey(), invokeData.getLeft(), API_INVOCATION_REQUEST_URI,
+                API_INVOCATION_REQUEST_BODY, REST_API_EXPECTED_RESPONSE, HttpStatus.ACCEPTED);
+    }
+
+    @Test(dependsOnMethods = {"invokeAPIStage_TestChoreoConnections"})
     @CitrusTest
     public void createAPIProxyComponent_TestChoreoConnections() throws Exception {
         //create new project
@@ -313,11 +350,6 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
                 Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
         Assert.assertTrue(UUID_REGEX.matcher(connectionId).matches());
     }
-
-
-    //TODO: promote service component, refrsh connection
-    //TODO: invoke new env connection
-
 
     @Test(dependsOnMethods = {"createProjectLevelConnectionToProxy_TestChoreoConnections"})
     @CitrusTest

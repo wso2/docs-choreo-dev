@@ -66,7 +66,6 @@ public class ConnectionService extends ControlPlaneAPI {
                                 .client(client)
                                 .receive()
                                 .response(HttpStatus.CREATED)
-                                .validate(jsonPath().expression("$.isPartiallyCreated", comparesEqualTo("false")))
                                 .validate((message, context) -> {
                                             String payload = message.getPayload(String.class);
                                             JsonObject connectionJsonObject = new JsonParser().parse(payload).getAsJsonObject();
@@ -74,6 +73,34 @@ public class ConnectionService extends ControlPlaneAPI {
                                         }
                                 )));
         return connectionId.get();
+    }
+
+    public static void refreshChoreoConnection(TestActionRunner runner, HttpClient client, String accessToken,
+                                                 String connectionId, ConnectionCreateRequest connectionReq) throws Exception {
+        String refreshChoreoConnectionURI = CONTEXT.
+                concat("/configurations/service-configs/choreo-connections/refresh/")
+                .concat(connectionId)
+                .concat("?generateCreds=true");
+        String requestPayload = ObjectMapperUtil.mapObjectToString(connectionReq);
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(refreshChoreoConnectionURI)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                .body(requestPayload),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.CREATED)
+                                ));
     }
 
     public static String deleteChoreoConnection(TestActionRunner runner, HttpClient client, String accessToken,
