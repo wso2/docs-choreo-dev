@@ -1,0 +1,98 @@
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: deny-azure-metadata-endpoint
+spec:
+  endpointSelector:
+    matchLabels:
+      user_app: 'true'
+  egress:
+    - toCIDRSet:
+        - cidr: 0.0.0.0/0
+          except:
+            - 169.254.169.254/32
+---
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: deny-all-default-traffic
+specs:
+  - endpointSelector:
+      matchLabels:
+        user_app: 'true'
+    egress:
+      - {}
+  - endpointSelector:
+      matchLabels:
+        user_app: 'true'
+    ingress:
+      - {}
+---
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: allow-kube-dns
+spec:
+  endpointSelector:
+    matchLabels:
+      user_app: 'true'
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s-app: kube-dns
+            k8s:io.kubernetes.pod.namespace: kube-system
+      toPorts:
+        - ports:
+            - port: '53'
+              protocol: UDP
+---
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: allow-system-ingress
+spec:
+  endpointSelector:
+    matchLabels:
+      user_app: 'true'
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            userapp-ingress-allowed: 'true'
+---
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: allow-comminucation-with-keda
+specs:
+  - endpointSelector:
+      matchLabels:
+        user_app: 'true'
+    egress:
+      - toEndpoints:
+          - matchLabels:
+              app.kubernetes.io/instance: keda
+              k8s:io.kubernetes.pod.namespace: keda
+        toPorts:
+          - ports:
+              - port: '8080'
+                protocol: TCP
+  - endpointSelector:
+      matchLabels:
+        user_app: 'true'
+    ingress:
+      - fromEndpoints:
+          - matchLabels:
+              app.kubernetes.io/instance: interceptor
+              k8s:io.kubernetes.pod.namespace: keda
+---
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: allow-traffic-from-kubelet
+spec:
+  endpointSelector:
+    matchLabels:
+      user_app: 'true'
+  ingress:
+    - fromEntities:
+        - host
