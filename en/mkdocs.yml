@@ -187,6 +187,7 @@ nav:
           - Customize the Developer Portal: administer/customize-the-developer-portal.md
           - Configure Self-Sign-Up: administer/configure-self-sign-up.md
           - Customize the Developer Portal Domain: administer/customize-the-developer-portal-domain.md
+      - Manage Members of an Organization: administer/manage-members-of-an-organization.md
 
   - Troubleshoot:
       - FAQ: troubleshoot/faq.md

@@ -6,21 +6,8 @@ An organization in Choreo is a logical grouping of users and user resources. A f
 
 If you are a member of more than one organization, you can switch from one organization to another when necessary. To do this, select the required organization from the **Organization** list in the Choreo Console header.
 
-## Inviting members
 
-An organization administrator can invite members to the organization by assigning them specific roles. Invited members receive an invitation via email. An invited member must accept the invitation to join the organization and access the resources of that organization.
-
-## Roles
-
-Choreo roles are defined as follows:
-
-- API publisher: An API publisher can discover, create, publish, delete, test, and manage an API.
-- API subscriber: An API subscriber is a developer in a particular organization. An API subscriber can subscribe to an application, manage subscriptions, manage applications, generate API keys, and manage API keys.
-- Administrator: An administrator is responsible for all administration tasks, including user management, customizing the Developer Portal, managing projects, enabling analytics, managing domains, etc.
-- Billing administrator: Is responsible for billing administration that includes viewing tiers, creating and viewing organizations, managing invoices, viewing and creating subscriptions, and viewing and creating payment methods.
-- Developer: A user with a developer role focuses on developing components and solutions in Choreo. Developers can create, build, test, and manage any component type in Choreo: API, services, triggers, scheduled jobs, and Webhooks.
-- Environment manager: Manages deployment environments.
-- External API subscriber: External API subscribers are API consumers who have access only to the API Developer Portal. They can join an organization with the sole purpose of consuming APIs.
+{% include "../administer/inviting-members.md" %}
 
 ## Organization ID
 
