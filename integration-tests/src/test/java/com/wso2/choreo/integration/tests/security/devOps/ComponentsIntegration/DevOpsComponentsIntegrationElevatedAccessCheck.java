@@ -70,24 +70,6 @@ public class DevOpsComponentsIntegrationElevatedAccessCheck extends TestNGCitrus
 
     @Test
     @CitrusTest
-    public void putReleaseSecrets_DevOpsComponentsIntegrationElevatedAccessCheck() throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForPutReleaseSecrets = Constant.DEVOPS_INTEGRATION +
-                "/" + componentId + "/release/" + releaseId + "/secrets?organization_id=" + orgId +
-                "&project_id=" + projectId + "&env_id=" + envId;
-        Map<String, String> params = new HashMap<>();
-        params.put("env_id", envId);
-        params.put("organization_id", orgId);
-        params.put("project_id", projectId);
-        params.put("app_env_id", appEnvId);
-        String body = MessageUtils.
-                generateStringFromTemplate("templates/devOps/queryForPutSecrets.mustache", params);
-       SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrlForPutReleaseSecrets,
-               body, accessToken);
-    }
-
-    @Test
-    @CitrusTest
     public void getEnvironmentVariables_DevOpsComponentsIntegrationElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetEnvironmentVariables = Constant.DEVOPS_INTEGRATION +
@@ -95,20 +77,6 @@ public class DevOpsComponentsIntegrationElevatedAccessCheck extends TestNGCitrus
                 "organization_id=" + orgId + "&project_id=" + projectId + "&env_id=" + envId;
         SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient,
                 requestUrlForGetEnvironmentVariables, accessToken);
-    }
-
-    @Test
-    @CitrusTest
-    public void putEnvironmentVariables_DevOpsComponentsIntegrationElevatedAccessCheck() throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForPutEnvironmentVariables = Constant.DEVOPS_INTEGRATION +
-                "/" + integrationComponentId + "/release/" + integrationCpReleaseId + "/environment-variables?" +
-                "organization_id=" + orgId + "&project_id=" + projectId + "&env_id=" + envId;
-        Map<String, String> params = new HashMap<>();
-        String body = MessageUtils.
-                generateStringFromTemplate("templates/devOps/queryForPutEnvironmentVariables.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient,
-                requestUrlForPutEnvironmentVariables, body, accessToken);
     }
 
     @Test

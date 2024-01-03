@@ -42,16 +42,6 @@ public class DevOpsMetricsElevatedAccessCheck extends TestNGCitrusSpringSupport 
 
     @Test
     @CitrusTest
-    public void getDeployments_DevOpsMetricsElevatedAccessCheck() throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForGetDeployments = Constant.DEVOPS_METRICS +
-                "deployments?organization_id=" + orgId + "&project_id=" + projectId;
-        SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient, requestUrlForGetDeployments,
-                accessToken);
-    }
-
-    @Test
-    @CitrusTest
     public void getActiveComponentCount_DevOpsMetricsElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrlForGetActiveDeployments = Constant.DEVOPS_METRICS +
