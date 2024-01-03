@@ -22,6 +22,8 @@ export class _ProxyOverview {
   navigateToDevPortal(component: Proxy, idp: string) {
     this.menu.navigateToOverview();
     cy.get(TestIds.createTime).should("be.visible");
+    cy.get(TestIds.progressBar).should("not.exist");
+    cy.get(TestIds.deploymentStatusChip).should("be.visible");
     cy.get(TestIds.devPortalLink)
       .invoke("attr", "href")
       .then((href) => {
