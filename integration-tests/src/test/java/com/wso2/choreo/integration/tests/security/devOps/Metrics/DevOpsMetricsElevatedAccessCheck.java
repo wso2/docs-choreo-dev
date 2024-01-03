@@ -50,3 +50,4 @@ public class DevOpsMetricsElevatedAccessCheck extends TestNGCitrusSpringSupport 
                 requestUrlForGetActiveDeployments, accessToken);
     }
 }
+
