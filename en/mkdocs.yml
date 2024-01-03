@@ -135,7 +135,6 @@ nav:
       - Test Secure API Access with Choreo Built-In Security Token Service: authentication-and-authorization/test-secure-api-access-with-choreo-built-in-security-token-service.md
       - Pass End-User Attributes to Upstream Services: authentication-and-authorization/pass-end-user-attributes-to-upstream-services.md
   - DevOps and CI/CD: 
-      - Builds and Deployments: devops-and-ci-cd/builds-and-deployments.md
       - Manage Configurations and Secrets: devops-and-ci-cd/manage-configurations-and-secrets.md
       - View Runtime Details: devops-and-ci-cd/view-runtime-details.md
       - Configure Container Resources, Commands, and Arguments: devops-and-ci-cd/configure-container-resources-commands-and-arguments.md
