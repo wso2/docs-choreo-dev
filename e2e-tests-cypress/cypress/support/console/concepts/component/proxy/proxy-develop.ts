@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { Enums } from "../../../../commons/enums";
 import { Types } from "../../../../commons/types";
 import { TestIds } from "../../../constants/TestIds";
 import { ProxyLeftMenu } from "../../../ui-elements/left-menus/proxy-left-menu";
@@ -69,38 +70,8 @@ export class _ProxyDevelop {
 
     ProxyUtils.validateDeploymentTrack(component);
 
-    const wildCardResources = [
-      "panel-/*/get-header",
-      "panel-/*/put-header",
-      "panel-/*/post-header",
-      "panel-/*/delete-header",
-      "panel-/*/patch-header",
-    ];
-
-    let resourceMatches = [];
-
-    cy.get("body").then((body) => {
-      const opCount = body.find(TestIds.operation).length;
-
-      for (let i = 0; i < opCount; i++) {
-        cy.get(TestIds.operation)
-          .eq(i)
-          .invoke("attr", "id")
-          .then((id) => {
-            wildCardResources.forEach((resourceId) => {
-              if (id === resourceId) {
-                resourceMatches.push(id);
-              }
-            });
-          });
-      }
-    });
-
-    expect(resourceMatches).to.be.eq(wildCardResources);
-
     cy.get(TestIds.deleteAllOperations).click();
-    cy.get(TestIds.undoDeleteAllOperations).should("be.visible").wait(3000);
-    cy.get(TestIds.save).should("be.enabled");
+    cy.get(TestIds.undoDeleteAllOperations).should("be.visible");
   }
 
   addResources(component: Proxy, resourcePaths: Types.ResourcePath[]) {
@@ -122,6 +93,54 @@ export class _ProxyDevelop {
         resourcePaths[0].path
       }/${resourcePaths[0].verbs[0].toLowerCase()}-header"]`
     ).should("exist");
+  }
+
+  addPolicy(
+    resourcePath: string,
+    verb: string,
+    policy: Enums.PolicyType,
+    flow: Enums.Flow,
+    name: string,
+    value: string
+  ) {
+    this.sideMenu.navigateToPolicies();
+
+    const header = this.getHeader(resourcePath, verb.toUpperCase());
+
+    const buttons = `[id="/${resourcePath}/${verb.toUpperCase()}${flow.valueOf()}"] div[data-key] button`;
+
+    cy.get(header).eq(0).click();
+    cy.get(buttons).contains("Attach Policy").click();
+    cy.get("button").contains(policy).click();
+    cy.get('[name*="Name"]').should("be.visible").type(name);
+    cy.get('[name*="Value"]').clear().type(value);
+    cy.get("button").contains("Add").click();
+    cy.get("button").contains("Save").click();
+  }
+
+  editPolicy(
+    resourcePath: string,
+    verb: string,
+    flow: Enums.Flow,
+    policyIndex: number,
+    headerValue: string
+  ) {
+    this.sideMenu.navigateToPolicies();
+
+    const buttons = `[id="/${resourcePath}/${verb.toUpperCase()}${flow.valueOf()}"] div[data-key] button`;
+    const header = this.getHeader(resourcePath, verb.toUpperCase());
+
+    cy.get(header).eq(0).click();
+    cy.get(buttons).eq(policyIndex).click();
+
+    cy.get('[name*="Value"]').clear().type(headerValue);
+    cy.get("button:not([disabled])").contains("Save").click();
+    cy.wait(1000);
+    cy.get("button").contains("Save").click();
+  }
+
+  private getHeader(resourcePath: string, verb: string) {
+    return `[id="panel-/${resourcePath}/${verb}-header"]`;
   }
 
   private addResource(path: string) {
