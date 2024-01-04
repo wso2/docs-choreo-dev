@@ -272,8 +272,6 @@ export class _ServiceDeployment {
   }
 
   private retryEnvCardDataRetrieval() {
-    cy.contains(TestIds.progressBar).should("not.exist");
-
     cy.log("Checking for retry deployment");
     for (let i = 0; i < 4; i++) {
       Utils.clickOnOptionalElement(TestIds.retry, LONG_TIME.timeout);
@@ -288,24 +286,22 @@ export class _ServiceDeployment {
   }
 
   private retryPromotionToProd(retryCount = 0) {
-    cy.log("Checking for retry for promotion to prod");
     retryCount++;
+    cy.log("Checking for retry for promotion to prod, attempt: " + retryCount);
     if (retryCount > 4) {
       return;
     }
 
-    cy.contains(TestIds.progressBar).should("not.exist");
-
-    cy.get("body").then((bdy) => {
+    cy.get("body", { log: false }).then((bdy) => {
       if (bdy.find(TestIds.deploymentFetchError).length > 0) {
         cy.log("Retry count: " + retryCount);
         cy.get(TestIds.deploymentFetchError).within(() => {
           cy.get(TestIds.retry).click();
           cy.wait(LONG_TIME.timeout);
         });
-      } else {
-        return;
       }
+
+      cy.wait(1300, { log: false });
       this.retryPromotionToProd(retryCount);
     });
   }

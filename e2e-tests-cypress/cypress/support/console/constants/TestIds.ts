@@ -33,6 +33,7 @@ export namespace TestIds {
   export const devEnvCard = '[data-cyid="env-baseDevelopment-env-card"]';
   export const prodEnvCard = '[data-cyid="env-baseProduction-env-card"]';
   export const deploymentStatus = '[data-cyid="deployment-status"]';
+  export const deploymentStatusChip = '[data-cyid="deployment-status-chip"]';
   export const availableEndpoints = '[data-testid="Endpoints-env-artifact"]';
   export const viewArtifact = '[data-cyid="btn-view-artifact-icon-button"]';
   export const endpointCard = '[data-cyid="endponint-selector-card-card"]';
@@ -177,4 +178,5 @@ export namespace TestIds {
   export const deleteDialogOk = '[data-testid="delete-dialog-ok-button"]';
   export const applicationListEdit = (appName: string) =>
     `[data-testid="edit-btn-${appName}"]`;
+  export const configSubmit = '[data-cyid="btn-submit-configform"]';
 }

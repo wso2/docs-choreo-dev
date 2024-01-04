@@ -12,6 +12,8 @@
  */
 
 import {
+  BUILD_IN_PROGRESS,
+  BUILD_QUEUED,
   DEPLOYMENT_STOPPED,
   DEPLOYMENT_SUCCESS,
 } from "../../../../commons/constants";
@@ -44,7 +46,7 @@ export class _ProxyDeployment {
 
     this.startDeployment();
 
-    this.verifyDeploymentStatus();
+    this.verifyDeploymentStatus(component);
   }
 
   promote(component: Proxy) {
@@ -56,13 +58,18 @@ export class _ProxyDeployment {
 
     this.RetryPromotionToProd();
     cyGet(TestIds.promote).should("be.enabled").click();
-    cy.wait(5000);
-    cy.contains(TestIds.progressBar).should("not.exist");
-    cy.get("body").then((bdy) => {
-      if (bdy.find(TestIds.next).length > 0) {
-        cy.get(TestIds.next).should("be.visible").click();
-      }
-    });
+
+    if (component.isPolicyAdded()) {
+      cy.get(TestIds.configSubmit, VERY_SHORT_TIME)
+        .should("be.visible")
+        .click();
+      cy.get(TestIds.configSubmit).should("not.exist");
+    } else {
+      cy.get(TestIds.next, SHORT_TIME).should("be.visible").click();
+      cy.get(TestIds.next).should("not.exist");
+    }
+
+    cy.get(TestIds.progressBar, SHORT_TIME).eq(0).should("not.be.visible");
 
     this.RetryPromotionToProd();
     cy.get(TestIds.prodEnvCard).should("exist");
@@ -91,24 +98,22 @@ export class _ProxyDeployment {
   }
 
   private RetryPromotionToProd(retryCount = 0) {
-    cy.log("Checking for retry for promotion to prod");
     retryCount++;
+    cy.log("Checking for retry for promotion to prod, attempt: " + retryCount);
     if (retryCount > 4) {
       return;
     }
 
-    cy.contains('role="progressbar"').should("not.exist");
-
-    cy.get("body").then((bdy) => {
+    cy.get("body", { log: false }).then((bdy) => {
       if (bdy.find('[data-testid="deployment-fetch-error"]').length > 0) {
         cy.log("Retry count: " + retryCount);
         cy.get('[data-testid="deployment-fetch-error"]').within(() => {
           cy.get('[data-testid="retry-btn"]').click();
           cy.wait(LONG_TIME.timeout);
         });
-      } else {
-        return;
       }
+
+      cy.wait(1300, { log: false });
       this.RetryPromotionToProd(retryCount);
     });
   }
@@ -127,8 +132,6 @@ export class _ProxyDeployment {
   }
 
   private RetryDevDeployment() {
-    cy.contains('role="progressbar"').should("not.exist");
-
     cy.log("Checking for retry deployment");
     for (let i = 0; i < 4; i++) {
       Utils.clickOnOptionalElement(
@@ -163,28 +166,41 @@ export class _ProxyDeployment {
       .click();
   }
 
-  private verifyDeploymentStatus() {
+  private verifyDeploymentStatus(component: Proxy) {
     cy.get(TestIds.backdropLoader).should("not.exist");
-    cy.get(TestIds.next, VERY_SHORT_TIME).should("be.visible").click();
+    cy.get(TestIds.buildStatus)
+      .eq(0)
+      .contains(BUILD_IN_PROGRESS, LONG_TIME)
+      .should("not.exist");
+
+    if (component.isPolicyAdded()) {
+      cy.get(TestIds.configSubmit, SHORT_TIME).should("be.visible").click();
+    } else {
+      cy.get(TestIds.next, VERY_SHORT_TIME).should("be.visible").click();
+    }
     cy.get(TestIds.buildStatus, SHORT_TIME)
-      .contains("Queued")
+      .eq(0)
+      .contains(BUILD_QUEUED)
       .should("not.exist");
     this.RetryDevDeployment();
     cy.get(TestIds.componentLoader).should("not.exist");
 
-    cy.get(TestIds.devEnvCard).within(() => {
-      cyGet(TestIds.deploymentStatus, VERY_LONG_TIME).should(
-        "not.contain",
-        DEPLOYMENT_STOPPED
-      );
+    cy.get(TestIds.buildStatus)
+      .eq(0)
+      .contains(BUILD_IN_PROGRESS, LONG_TIME)
+      .should("not.exist");
 
-      cyGet(TestIds.deploymentStatus, VERY_LONG_TIME).should(
-        "contain",
-        DEPLOYMENT_SUCCESS
-      );
+    cy.get(TestIds.devEnvCard).within(() => {
+      cy.get(TestIds.deploymentStatus, LONG_TIME)
+        .contains(DEPLOYMENT_STOPPED, LONG_TIME)
+        .should("not.exist");
+
+      cy.get(TestIds.deploymentStatus, LONG_TIME)
+        .contains(DEPLOYMENT_SUCCESS, VERY_LONG_TIME)
+        .should("be.visible");
     });
 
-    cyGet(TestIds.promote).should("not.be.disabled");
+    cy.get(TestIds.promote).should("not.be.disabled");
     cy.get(TestIds.componentLoader).should("not.exist");
   }
 }

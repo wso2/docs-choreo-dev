@@ -115,12 +115,11 @@ export class _ProxyManagement {
     cy.get(TestIds.backdropLoader).should("not.exist");
     cy.get(TestIds.componentLoader).should("not.exist");
 
+    cy.get(TestIds.publishLifecycle).should("not.exist");
     cy.get(TestIds.blockLifecycle).should("be.visible");
     cy.get(TestIds.prereleaseLifecycle).should("be.visible");
     cy.get(TestIds.demoteLifecycle).should("be.visible");
     cy.get(TestIds.deprecateLifecycle).should("be.visible");
-
-    cy.wait(30000); // Extra wait because the proxy is not updated immediately
   }
 
   private saveUsagePlans(component: Proxy, plans: UsagePlan[]) {

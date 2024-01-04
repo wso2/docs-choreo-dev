@@ -12,10 +12,13 @@
  */
 
 export const USER_MGT_URL = Cypress.env("newAppSvcURL") + "/user-mgt/1.0.0";
-export const USER_STORE_MGT_URL = Cypress.env("newAppSvcURL") + "/user-store-mgt/v1.0/user-stores";
+export const USER_STORE_MGT_URL =
+  Cypress.env("newAppSvcURL") + "/user-store-mgt/v1.0/user-stores";
 export const VALIDATE_USER_URL = USER_MGT_URL + "/validate/user";
 export const USER_ORGS_URL = USER_MGT_URL + "/orgs";
 export const PUBLISHER_URL = Cypress.env("apimSvcURL") + "/api/am/publisher/v2";
+export const PUBLISHER_APIS = PUBLISHER_URL + "/apis/**";
+export const INSIGHTS_URL = "/insights/1.0.0/query-api";
 export const PUBLISHER_API_KEYS_URL =
   PUBLISHER_URL + "/apis/*/environments/*/keys?organizationId=*";
 export const DEV_PORTAL_URL =

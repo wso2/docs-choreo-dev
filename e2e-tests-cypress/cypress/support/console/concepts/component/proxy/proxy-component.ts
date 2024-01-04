@@ -12,7 +12,9 @@
  */
 
 import { Enums, UsagePlan } from "../../../../commons/enums";
+import { VERY_SHORT_TIME } from "../../../../commons/timeouts";
 import { Types } from "../../../../commons/types";
+import { TestIds } from "../../../constants/TestIds";
 import { Component } from "../component";
 import { _ProxyDeployment } from "./proxy-deployment";
 import { _ProxyDevelop } from "./proxy-develop";
@@ -23,6 +25,7 @@ import { _ProxyTest } from "./proxy-test";
 export class Proxy extends Component {
   private endpointUrl: string;
   private basePath: string;
+  private hasPolicy: boolean = false;
 
   private overview = new _ProxyOverview();
   private develop = new _ProxyDevelop();
@@ -51,8 +54,16 @@ export class Proxy extends Component {
     return this.endpointUrl;
   }
 
+  isPolicyAdded() {
+    return this.hasPolicy;
+  }
+
   removeResources(resourceIds: string[]) {
     this.develop.removeResources(this, resourceIds);
+  }
+
+  removeDefaultResources() {
+    this.develop.removeDefaultResources(this);
   }
 
   deploy() {
@@ -96,6 +107,39 @@ export class Proxy extends Component {
 
   addResources(resourcePaths: Types.ResourcePath[]) {
     this.develop.addResources(this, resourcePaths);
+  }
+
+  addResponseFlowHeaderPolicy(
+    resourcePath: string,
+    verb: string,
+    headerName: string,
+    headerValue: string
+  ) {
+    this.develop.addPolicy(
+      resourcePath,
+      verb,
+      Enums.PolicyType.setHeader,
+      Enums.Flow.RESPONSE,
+      headerName,
+      headerValue
+    );
+
+    this.hasPolicy = true;
+  }
+
+  editResponseFlowHeaderPolicy(
+    resourcePath: string,
+    verb: string,
+    policyIndex: number,
+    headerValue: string
+  ) {
+    this.develop.editPolicy(
+      resourcePath,
+      verb,
+      Enums.Flow.RESPONSE,
+      policyIndex,
+      headerValue
+    );
   }
 
   publish() {
