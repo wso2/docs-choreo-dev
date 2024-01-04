@@ -1,7 +1,7 @@
 apiVersion: cilium.io/v2
 kind: CiliumClusterwideNetworkPolicy
 metadata:
-  name: deny-azure-metadata-endpoint
+  name: allow-world-except-az-metadata
 spec:
   endpointSelector:
     matchLabels:
@@ -11,22 +11,6 @@ spec:
         - cidr: 0.0.0.0/0
           except:
             - 169.254.169.254/32
----
-apiVersion: cilium.io/v2
-kind: CiliumClusterwideNetworkPolicy
-metadata:
-  name: deny-all-default-traffic
-specs:
-  - endpointSelector:
-      matchLabels:
-        user_app: 'true'
-    egress:
-      - {}
-  - endpointSelector:
-      matchLabels:
-        user_app: 'true'
-    ingress:
-      - {}
 ---
 apiVersion: cilium.io/v2
 kind: CiliumClusterwideNetworkPolicy
