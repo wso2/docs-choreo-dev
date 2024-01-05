@@ -96,7 +96,7 @@ CREATE TRIGGER TR_ConfigurationKeys_AfterKeyUpdate
 AS 
 BEGIN
     SET NOCOUNT ON;
-   	UPDATE configuration_keys
+    UPDATE configuration_keys
     SET [updated_at] = GETDATE()
     WHERE updated_at IN (SELECT updated_at FROM inserted)
 END
@@ -114,10 +114,28 @@ CREATE TRIGGER TR_ConfigurationScopes_AfterScopeUpdate
 AS 
 BEGIN
     SET NOCOUNT ON;
-   	UPDATE configuration_scopes
+    UPDATE configuration_scopes
     SET [updated_at] = GETDATE()
     WHERE updated_at IN (SELECT updated_at FROM inserted)
 END
 GO
 ALTER TABLE configuration_scopes ENABLE TRIGGER TR_ConfigurationScopes_AfterScopeUpdate
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TRIGGER TR_ConfigurationValues_AfterValueUpdate
+   ON  configuration_values
+   FOR UPDATE
+AS 
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE configuration_values
+    SET [updated_at] = GETDATE()
+    WHERE updated_at IN (SELECT updated_at FROM inserted)
+END
+GO
+ALTER TABLE configuration_values ENABLE TRIGGER TR_ConfigurationValues_AfterValueUpdate
 GO
