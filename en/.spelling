@@ -673,6 +673,7 @@ test-apis-with-choreo-apichat
 ci-cd
 autoscale
 connections.md
+choreo-limitations
  - theme/material/templates/home-page.html
 doctype
 html
@@ -850,3 +851,5 @@ csv
  - docs/develop-components/sharing-and-reusing-services.md
 ServiceURL
 YOUR_ENVIRONMENT_VAR_HERE
+ - docs/references/faq.md
+2-3x
