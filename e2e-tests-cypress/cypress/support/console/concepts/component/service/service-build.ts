@@ -23,13 +23,11 @@ export class _ServiceBuild {
 
   build(component: Service) {
     this.sideMenu.navigateToBuild();
-
     this.triggerBuild(component);
   }
 
   private triggerBuild(component: Service) {
     ServiceUtils.validateDeploymentTrack(component);
-
     cy.get(TestIds.build).should("be.enabled").click();
     cy.get(TestIds.next).should("be.visible").click();
     cy.get(TestIds.tableTitle).within(() => {
