@@ -18,7 +18,6 @@ import {
   DEPLOYMENT_SUCCESS,
 } from "../../../../commons/constants";
 import { cyGet } from "../../../../commons/cy";
-import { Enums } from "../../../../commons/enums";
 import {
   LONG_TIME,
   MEDIUM_TIME,

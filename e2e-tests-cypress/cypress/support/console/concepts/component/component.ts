@@ -25,55 +25,20 @@ import { _Stats } from "./stats";
 export abstract class Component {
   private name: string;
   private versions: string[] = [];
-  private id: string;
-  private handler: string;
-  private projectId: string;
-  private componentUrl: string;
+  protected componentUrl: string;
   private devPortalUrl: string;
 
   private devPortalMenu = new DevPortalLeftMenu();
   private stats = new _Stats();
   private sideMenu = new ServiceLeftMenu();
 
-  constructor(
-    name: string,
-    version: string,
-    componentUrl: string,
-    id?: string,
-    handler?: string,
-    projectId?: string
-  ) {
+  constructor(name: string, version: string) {
     this.name = name;
     this.versions.push(version);
-    this.componentUrl = componentUrl;
-
-    if (id) {
-      this.id = id;
-    }
-
-    if (handler) {
-      this.handler = handler;
-    }
-
-    if (projectId) {
-      this.projectId = projectId;
-    }
   }
 
   getName() {
     return this.name;
-  }
-
-  getId() {
-    return this.id;
-  }
-
-  getHandler() {
-    return this.handler;
-  }
-
-  getProjectId() {
-    return this.projectId;
   }
 
   getLatestVersion() {

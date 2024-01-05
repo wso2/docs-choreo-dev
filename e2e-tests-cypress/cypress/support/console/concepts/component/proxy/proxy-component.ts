@@ -40,7 +40,9 @@ export class Proxy extends Component {
     endpointUrl: string,
     componentUrl: string
   ) {
-    super(name, version, componentUrl.toString());
+    super(name, version);
+
+    this.componentUrl = componentUrl;
 
     this.basePath = basePath;
     this.endpointUrl = endpointUrl;

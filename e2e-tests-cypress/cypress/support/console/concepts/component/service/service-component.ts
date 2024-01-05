@@ -31,14 +31,8 @@ export class Service extends Component {
   private test = new _ServiceTest();
   private manage = new _ServiceManagement();
 
-  constructor(
-    name: string,
-    id: string,
-    handler: string,
-    projectId: string,
-    endpointName: string
-  ) {
-    super(name, "1.0", id, handler, projectId);
+  constructor(name: string, endpointName: string) {
+    super(name, "1.0");
 
     this.endpointName = endpointName;
 
