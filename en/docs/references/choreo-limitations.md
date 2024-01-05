@@ -27,14 +27,3 @@ Below are key limitations when working with web application in the Choreo Cloud 
 | Request size limit (including headers, cookies, and payloads)   | 256 KB                                                          |
 | Response body size limit                         | 20 MB |
 | Number of open ports permitted per web application| 1 <br/> While it is possible to have multiple ports open for project-level communication within a data plane, incoming internet traffic can only be directed to a single port. This contrasts with Service-type components, which allow for multiple endpoints.|
-
-
-
-
-
-
-
-
-
-
-#
