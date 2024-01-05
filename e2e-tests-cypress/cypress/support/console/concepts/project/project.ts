@@ -26,11 +26,15 @@ import { TestIds } from "../../constants/TestIds";
 import { _ProxyCreationWizard } from "../../ui-elements/wizards/proxy-creation-wizard";
 import { Service } from "../component/service/service-component";
 import { Proxy } from "../component/proxy/proxy-component";
+import { WebappComponent } from "../../../interfaces/choreo-components/webapp-component";
+import { WebApp } from "../component/webapp/webapp-component";
+import { web } from "webpack";
 
 export interface RepoInfo {
   readonly url: string;
   readonly branch: string;
   readonly subPath?: string;
+  readonly dockerContext?: string;
 }
 
 export interface ProxyInfo {
@@ -39,6 +43,13 @@ export interface ProxyInfo {
   readonly oasUrl?: string;
   readonly oasFilePath?: string;
   readonly isInternal?: boolean;
+}
+
+export interface WebAppInfo {
+  readonly webAppType: string;
+  readonly webAppBuildCommand: string;
+  readonly webAppPackageManagerVersion: string;
+  readonly webAppOutputDirectory: string;
 }
 
 export class Project {
@@ -131,15 +142,45 @@ export class Project {
       componentData,
       GraphQLQueryBuilder.getRestComponentCreationQuery
     ).then((componentDetails: ComponentDetails) => {
-      return Promise.resolve(
-        new Service(
-          componentName,
-          componentDetails.id,
-          componentDetails.handler,
-          componentDetails.projectId,
-          endpointName
-        )
-      );
+      return Promise.resolve(new Service(componentName, endpointName));
+    });
+  }
+
+  createWebAppComponent(
+    accessibility: Enums.Accessibility,
+    repoInfo: RepoInfo,
+    webAppInfo: WebAppInfo
+  ) {
+    const componentName = Utils.generateComponentName();
+
+    let componentData: WebappComponent = {
+      name: componentName,
+      displayName: componentName,
+      accessibility: accessibility,
+      componentType: Enums.DisplayType.byocWebAppsDockerfileLess,
+      description: "Web app Component",
+      labels: "",
+      projectId: "",
+      byocWebAppsConfig: {
+        dockerContext:
+          repoInfo.dockerContext == undefined ? "" : repoInfo.dockerContext,
+        srcGitRepoUrl: repoInfo.url,
+        srcGitRepoBranch: repoInfo.branch,
+        webAppType: webAppInfo.webAppType,
+        webAppBuildCommand: webAppInfo.webAppBuildCommand,
+        webAppPackageManagerVersion: webAppInfo.webAppPackageManagerVersion,
+        webAppOutputDirectory: webAppInfo.webAppOutputDirectory,
+        isAppGatewayEnabled: true,
+      },
+    };
+
+    GraphQL.createComponentV2(
+      this.name,
+      "",
+      componentData,
+      GraphQLQueryBuilder.getWebAppComponentCreationQuery
+    ).then(() => {
+      return Promise.resolve(new WebApp(componentName));
     });
   }
 
