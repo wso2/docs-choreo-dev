@@ -20,7 +20,7 @@ Below are key limitations when working with APIs in Choreo:
 
 ## Choreo Cloud Data Plane limits
 
-Below are key limitations when working with web application in the Choreo Cloud Data Plane:
+Below are key limitations when working with web applications in the Choreo cloud data plane:
 
 | Resource                            |  Limit                                                                                     |
 |------------------------------------|---------------------------------------------------------------------------------------------|
