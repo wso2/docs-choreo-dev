@@ -2,7 +2,7 @@
 
 Explore key limitations in Choreo, covering areas like HTTP request parameters, components, applications, and API definition files. You can gain insights into the limitations to enhance your understanding and optimize your use of Choreo effectively.
 
-## API Management Limits
+## API management limits
 
 Below are key limitations when working with APIs in Choreo:
 
@@ -18,7 +18,7 @@ Below are key limitations when working with APIs in Choreo:
 | Number of Developer Portal applications per organization (free tier)  | 10 applications for free users                                                          |
 
 
-## Choreo Cloud Data Plane Limits
+## Choreo Cloud Data Plane limits
 
 Below are key limitations when working with web application in the Choreo Cloud Data Plane:
 
