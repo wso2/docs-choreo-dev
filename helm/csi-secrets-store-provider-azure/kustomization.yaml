@@ -24,11 +24,11 @@ helmCharts:
             tag: v2.8.0
           image:
             repository: choreocontrolplane.azurecr.io/oss/kubernetes-csi/secrets-store/driver
-            tag: v1.3.3
+            tag: v1.3.4
           crds:
             image:
               repository: choreocontrolplane.azurecr.io/oss/kubernetes-csi/secrets-store/driver-crds
-              tag: v1.3.3
+              tag: v1.3.4
           tolerations:
             - key: ghrunner
               operator: Equal
