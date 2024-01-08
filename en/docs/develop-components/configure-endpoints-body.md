@@ -18,7 +18,10 @@ The method of defining endpoints depends on the buildpack. For buildpacks other 
 
 ### Configure endpoints with the Ballerina buildpack
 
-When you create a service component with the `Ballerina buildpack`, Choreo automatically detects the endpoint details for REST APIs. You can override the auto-generated endpoint configuration by providing the `endpoints.yaml` file in the source directory
+When you create a service component with the `Ballerina buildpack`, Choreo automatically detects the endpoint details for REST APIs. You can override the auto-generated endpoint configuration by providing the `endpoints.yaml` file in the source directory.
+
+!!! note
+    Automatic endpoint generation is not supported for dynamic endpoint parameters such as variable ports. Therefore, you must use an `endpoint.yaml` file to define dynamic endpoint parameters.
 
 See [Understanding the endpoints.yaml file](#learn-the-endpointsyaml-file) to learn about the `endpoints.yaml` file.
 
