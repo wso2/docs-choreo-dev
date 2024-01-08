@@ -33,7 +33,6 @@ resources:
   - quota-limiter.yaml
   - subscriptions.yaml
   - sys-obsapi.yaml
-  #  - telemetry.yaml
   - telemetry-go.yaml
   - test-assistant.yaml
   - testbase.yaml
@@ -41,7 +40,6 @@ resources:
   - organization-management.yaml
   - choreo-apim-proxy-deployer.yaml
   - choreo-admin-api.yaml
-  - opentelemetry-collector.yaml
   - cio-event-collector-service.yaml
   - cio-query-api-service.yaml
   - cio-incident-configurator.yaml

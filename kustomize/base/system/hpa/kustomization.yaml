@@ -41,7 +41,6 @@ resources:
   - organization-management.yaml
   - choreo-apim-proxy-deployer.yaml
   - choreo-admin-api.yaml
-  - opentelemetry-collector.yaml
   - cio-event-collector-service.yaml
   - cio-query-api-service.yaml
   - cio-incident-configurator.yaml
