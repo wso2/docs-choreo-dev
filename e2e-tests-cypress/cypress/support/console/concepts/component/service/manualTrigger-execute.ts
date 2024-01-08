@@ -29,5 +29,4 @@ export class _ManualTriggerExecute {
     cy.log("Task executed Successfully");
   }
 
-
 }
