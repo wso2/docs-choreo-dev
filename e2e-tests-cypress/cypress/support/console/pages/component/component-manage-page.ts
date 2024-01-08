@@ -153,8 +153,6 @@ export class ComponentAPILifecycle {
 
   static publishToDevportal() {
     cy.get('[data-testid="Publish-lc-btn"]').click();
-    cy.get('[aria-labelledby="confirmation-dialog"]').should("be.visible");
-    cy.contains("No, Thanks").should("be.enabled").click();
   }
 
   static configureSecuritySettings(
@@ -406,7 +404,9 @@ export class ComponentAPILifecycle {
   static verifyOverviewForProjectLevelEndpoints() {
     if (Utils.isKubeConFeaturesEnabled()) {
       ComponentOverviewPage.navigateToTest();
-      cy.get('[data-testid="notification-with-icon-and-button"]').should("be.visible");
+      cy.get('[data-testid="notification-with-icon-and-button"]').should(
+        "be.visible"
+      );
     } else {
       cy.get('[data-testid="no-endpoints-notification"]').should("be.visible");
     }
