@@ -186,9 +186,10 @@ nav:
           - Customize the Developer Portal: administer/customize-the-developer-portal.md
           - Configure Self-Sign-Up: administer/configure-self-sign-up.md
           - Customize the Developer Portal Domain: administer/customize-the-developer-portal-domain.md
-
-  - Troubleshoot:
-      - FAQ: troubleshoot/faq.md
+      - Manage Members of an Organization: administer/manage-members-of-an-organization.md
+  - References:
+      - FAQ: references/faq.md
+      - Choreo Limitations: references/choreo-limitations.md
 # Extensions
 # Extensions
 markdown_extensions:
@@ -337,6 +338,7 @@ plugins:
           'develop-integrations/develop-a-scheduled-integration.md': 'https://wso2.com/choreo/docs/develop-components/develop-integrations/develop-a-scheduled-task/'
           'develop-components/develop-a-rest-api-proxy.md': 'https://wso2.com/choreo/docs/develop-components/develop-an-api-proxy/'
           'devops-and-ci-cd/builds-and-deployments.md' : 'https://wso2.com/choreo/docs/choreo-concepts/ci-cd/'
+          'troubleshoot/faq.md': 'https://wso2.com/choreo/docs/references/faq/'
           
 extra_css:
   # - assets/lib/highlightjs/default.min.css
