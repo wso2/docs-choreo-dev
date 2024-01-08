@@ -26,6 +26,9 @@ import { TestIds } from "../../constants/TestIds";
 import { _ProxyCreationWizard } from "../../ui-elements/wizards/proxy-creation-wizard";
 import { Service } from "../component/service/service-component";
 import { Proxy } from "../component/proxy/proxy-component";
+import { ManualTrigger } from "../component/service/manualTrigger-component";
+import { WebappComponent } from "../../../interfaces/choreo-components/webapp-component";
+import { WebApp } from "../component/webapp/webapp-component";
 
 export interface RepoInfo {
   readonly url: string;
@@ -237,9 +240,6 @@ export class Project {
       return Promise.resolve(
         new ManualTrigger(
           componentName,
-          componentDetails.id,
-          componentDetails.handler,
-          componentDetails.projectId,
         )
       );
     });

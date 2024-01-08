@@ -13,9 +13,6 @@
 
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
-import { ComponentExecutePage } from "../../../support/console/pages/component/UI-components/Component-execute-page";
-import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/concepts/project/project";
 import { ManualTrigger } from "../../../support/console/concepts/component/service/manualTrigger-component";
@@ -50,42 +47,31 @@ describe("Verify manual trigger creation functionality", () => {
         {
           url: "https://github.com/choreo-test-apps/manual-trigger",
           branch: "main",
-        },
-        
+        }, 
       )
       .then((ManualTriggerComponent: ManualTrigger) => {
         component = ManualTriggerComponent;
       });
   });
 
-  
   it("Build the component", () => {
     component.buildComponent();
   });
 
-  it("Verify component deployment", () => {
-    ComponentDeployPage.deployToDevWithoutSplitButton(
-      PROJECT_NAME,
-      MANUAL_NAME,
-      false,
-      false,
-      true
-    );
+  it("Deploying to Dev", () => {
+    component.deployToDevWithoutSplitButton();
   });
 
-  it("Verify component promotion to prod", () => {
-    ComponentDeployPage.promoteManualTriggerToProd();
+  it("Verify component promotion to Prod", () => {
+    component.promoteProd();
   });
 
   it("Verify execution in dev", () => {
-    ComponentOverviewPage.navigateToExecute();
-    ComponentExecutePage.selectEnvironment(Enums.Environment.DEVELOPMENT);
-    ComponentExecutePage.verifyExecution();
+    component.executeComponent(Enums.Environment.DEVELOPMENT);
   });
 
   it("Verify execution in prod", () => {
-    ComponentOverviewPage.navigateToExecute();
-    ComponentExecutePage.selectEnvironment(Enums.Environment.PRODUCTION);
-    ComponentExecutePage.verifyExecution();
+    component.executeComponent(Enums.Environment.PRODUCTION);
   });
+
 });

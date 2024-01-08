@@ -30,7 +30,7 @@ export abstract class Component {
 
   private devPortalMenu = new DevPortalLeftMenu();
   private stats = new _Stats();
-  private sideMenu = new ServiceLeftMenu();
+  protected sideMenu = new ServiceLeftMenu();
 
   constructor(name: string, version: string) {
     this.name = name;
