@@ -487,6 +487,9 @@ schemas
 TestGPT
 onboarding
 onboards
+6.x
+7.x
+8.x
 
 
  - docs/references/upgrading-from-the-previous-version.md
