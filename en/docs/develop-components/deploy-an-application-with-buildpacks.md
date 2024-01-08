@@ -223,7 +223,7 @@ Follow the guidelines below based on your language:
     For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
 
 === ".NET"
-    Supported Versions - 6.x, 7.x
+    Supported Versions - 6.x, 7.x, 8.x
 
     Refer below examples for different component types. Follow the `readme.md` inside the example.
 
