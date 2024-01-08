@@ -26,9 +26,9 @@ import { TestIds } from "../../constants/TestIds";
 import { _ProxyCreationWizard } from "../../ui-elements/wizards/proxy-creation-wizard";
 import { Service } from "../component/service/service-component";
 import { Proxy } from "../component/proxy/proxy-component";
+import { ManualTrigger } from "../component/service/manualTrigger-component";
 import { WebappComponent } from "../../../interfaces/choreo-components/webapp-component";
 import { WebApp } from "../component/webapp/webapp-component";
-import { web } from "webpack";
 
 export interface RepoInfo {
   readonly url: string;
@@ -207,6 +207,40 @@ export class Project {
         basePath,
         proxyInfo.endpointUrl,
         url
+      );
+    });
+  }
+
+
+  createManualTriggerComponent(
+    accessibility: Enums.Accessibility,
+    repoInfo: RepoInfo
+  ) {
+    const componentName = Utils.generateComponentName();
+    let componentData: ComponentData = {
+      componentName: componentName,
+      displayType: Enums.DisplayType.manualTrigger,
+      accessibility: accessibility,
+      projectName: this.name,
+      triggerChannels: "",
+      triggerId: null,
+      srcGitRepoUrl: repoInfo.url,
+      initializeAsBallerinaProject: false,
+      repositoryType: Enums.RepoType.UserManagedNonEmpty,
+      repositorySubPath: repoInfo.subPath == undefined ? "" : repoInfo.subPath,
+      sampleTemplate: "",
+    };
+  
+    return GraphQL.createComponentV2(
+      this.name,
+      "",
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
+    ).then((componentDetails: ComponentDetails) => {
+      return Promise.resolve(
+        new ManualTrigger(
+          componentName,
+        )
       );
     });
   }

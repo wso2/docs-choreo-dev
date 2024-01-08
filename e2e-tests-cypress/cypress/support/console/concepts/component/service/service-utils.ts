@@ -15,7 +15,7 @@ import { TestIds } from "../../../constants/TestIds";
 import { Service } from "./service-component";
 
 export class ServiceUtils {
-  static validateDeploymentTrack(component: Service) {
+  static validateDeploymentTrack(component: Service | any) {
     cy.get(TestIds.backdropLoader).should("not.exist");
 
     const version = component.getLatestVersion();

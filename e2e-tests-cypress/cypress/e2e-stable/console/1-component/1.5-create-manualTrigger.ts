@@ -13,91 +13,65 @@
 
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
-import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
-import { GraphQL } from "../../../support/console/apis/graphql";
-import { ComponentBuild } from "../../../support/console/pages/component/Functionalities/Component-build";
-import { ComponentExecutePage } from "../../../support/console/pages/component/UI-components/Component-execute-page";
-import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
-import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { LoginPage } from "../../../support/console/pages/login-page";
-import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { GitHub } from "../../../support/github/github";
-import { ComponentData } from "../../../support/interfaces/component-data";
+import { console } from "../../../support/console/console";
+import { Project } from "../../../support/console/concepts/project/project";
+import { ManualTrigger } from "../../../support/console/concepts/component/service/manualTrigger-component";
+
+
+after(() => {
+  console.logout();
+});
+
 
 describe("Verify manual trigger creation functionality", () => {
   const MANUAL_NAME = Utils.generateComponentName();
-  const REPO_NAME = Utils.generateComponentName("repo");
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Manual Trigger";
+  let project: Project;
+  let component: ManualTrigger;
 
-  before(() => {
-    LoginPage.login();
+  it("Login to Console", () => {
+    console.login();
   });
 
+ 
   it("Creating a project", () => {
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+    project = console.createNewProject(PROJECT_DESCRIPTION);
   });
+
 
   it("Verify Manual Trigger component creation", () => {
-    let componentData: ComponentData = {
-      componentName: MANUAL_NAME,
-      displayType: Enums.DisplayType.manualTrigger,
-      accessibility: Enums.Accessibility.EXTERNAL,
-      projectName: PROJECT_NAME,
-      triggerChannels: "",
-      triggerId: null,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/manual-trigger",
-      repositoryType: Enums.RepoType.UserManagedNonEmpty,
-      initializeAsBallerinaProject: false,
-      repositorySubPath: "",
-      sampleTemplate: "",
-    };
-
-    GraphQL.createComponent(
-      PROJECT_NAME,
-      REPO_NAME,
-      componentData,
-      GraphQLQueryBuilder.getRestComponentCreationQuery
-    );
-  });
-  after(() => {
-    ChoreoHomePage.logout();
+    project
+      .createManualTriggerComponent(
+        Enums.Accessibility.EXTERNAL,
+        {
+          url: "https://github.com/choreo-test-apps/manual-trigger",
+          branch: "main",
+        }, 
+      )
+      .then((ManualTriggerComponent: ManualTrigger) => {
+        component = ManualTriggerComponent;
+      });
   });
 
-  it("Navigate to deployment", () => {
-    ComponentListingPage.visitToAComponent(MANUAL_NAME);
-    if (Utils.isBuildDeployEnabled()) {
-      ComponentOverviewPage.navigateToBuild();
-      ComponentBuild.buildComponent();
-    }
-    ComponentOverviewPage.navigateToDeploy();
+  it("Build the component", () => {
+    component.buildComponent();
   });
 
-  it("Verify component deployment", () => {
-    ComponentDeployPage.deployToDevWithoutSplitButton(
-      PROJECT_NAME,
-      MANUAL_NAME,
-      false,
-      false,
-      true
-    );
+  it("Deploying to Dev", () => {
+    component.deployToDevWithoutSplitButton();
   });
 
-  it("Verify component promotion to prod", () => {
-    ComponentDeployPage.promoteManualTriggerToProd();
+  it("Verify component promotion to Prod", () => {
+    component.promoteProd();
   });
 
   it("Verify execution in dev", () => {
-    ComponentOverviewPage.navigateToExecute();
-    ComponentExecutePage.selectEnvironment(Enums.Environment.DEVELOPMENT);
-    ComponentExecutePage.verifyExecution();
+    component.executeComponent(Enums.Environment.DEVELOPMENT);
   });
 
   it("Verify execution in prod", () => {
-    ComponentOverviewPage.navigateToExecute();
-    ComponentExecutePage.selectEnvironment(Enums.Environment.PRODUCTION);
-    ComponentExecutePage.verifyExecution();
+    component.executeComponent(Enums.Environment.PRODUCTION);
   });
+
 });

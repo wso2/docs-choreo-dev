@@ -179,4 +179,6 @@ export namespace TestIds {
   export const applicationListEdit = (appName: string) =>
     `[data-testid="edit-btn-${appName}"]`;
   export const configSubmit = '[data-cyid="btn-submit-configform"]';
+  export const runNow = '[data-cyid="run-now-button"]';
+  export const runNowNotification = '[data-testid="snackbar-notification"]';
 }

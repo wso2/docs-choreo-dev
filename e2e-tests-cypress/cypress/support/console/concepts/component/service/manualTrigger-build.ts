@@ -15,19 +15,17 @@ import { BUILD_SUCCESS } from "../../../../commons/constants";
 import { LONG_TIME } from "../../../../commons/timeouts";
 import { TestIds } from "../../../constants/TestIds";
 import { ServiceLeftMenu } from "../../../ui-elements/left-menus/service-left-menu";
-import { Service } from "./service-component";
-import { ServiceUtils } from "./service-utils";
+import { ManualTrigger } from "./manualTrigger-component";
 
-export class _ServiceBuild {
+export class _ManualTriggerBuild {
   private sideMenu = new ServiceLeftMenu();
 
-  build(component: Service) {
+  build(component: ManualTrigger) {
     this.sideMenu.navigateToBuild();
     this.triggerBuild(component);
   }
 
-  private triggerBuild(component: Service) {
-    ServiceUtils.validateDeploymentTrack(component);
+  private triggerBuild(component: ManualTrigger) {
     cy.get(TestIds.build).should("be.enabled").click();
     cy.get(TestIds.next).should("be.visible").click();
     cy.get(TestIds.tableTitle).within(() => {

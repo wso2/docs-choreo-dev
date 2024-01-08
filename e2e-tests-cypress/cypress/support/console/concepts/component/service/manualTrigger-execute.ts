@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ * Copyright (c) 2024, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
  * This software is the property of WSO2 Inc. and its suppliers, if any.
  * Dissemination of any information or reproduction of any material contained
@@ -11,27 +11,22 @@
  * associated services.
  */
 
-import { BUILD_SUCCESS } from "../../../../commons/constants";
-import { LONG_TIME } from "../../../../commons/timeouts";
 import { TestIds } from "../../../constants/TestIds";
 import { ServiceLeftMenu } from "../../../ui-elements/left-menus/service-left-menu";
-import { Service } from "./service-component";
-import { ServiceUtils } from "./service-utils";
+import { ManualTrigger } from "./manualTrigger-component";
 
-export class _ServiceBuild {
+export class _ManualTriggerExecute {
   private sideMenu = new ServiceLeftMenu();
 
-  build(component: Service) {
-    this.sideMenu.navigateToBuild();
-    this.triggerBuild(component);
+  execute(component: ManualTrigger ) {
+    this.sideMenu.navigateToExecute();
+    this.executeManualTrigger(component);
   }
 
-  private triggerBuild(component: Service) {
-    ServiceUtils.validateDeploymentTrack(component);
-    cy.get(TestIds.build).should("be.enabled").click();
-    cy.get(TestIds.next).should("be.visible").click();
-    cy.get(TestIds.tableTitle).within(() => {
-      cy.contains(BUILD_SUCCESS, LONG_TIME);
-    });
+  private executeManualTrigger(component: ManualTrigger) {
+    cy.get(TestIds.runNow).should("be.enabled").click();
+    cy.get(TestIds.runNowNotification).should("be.visible").contains('Task triggered successfully');
+    cy.log("Task executed Successfully");
   }
+
 }
