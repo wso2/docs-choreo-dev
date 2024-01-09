@@ -21,6 +21,7 @@
             <class name="com.wso2.choreo.integration.tests.security.billing.BillingElevatedAccessCheck"/>
             <class name="com.wso2.choreo.integration.tests.security.integrationComponents.IntegrationComponentsElevatedAccessCheck"/>
             <class name="com.wso2.choreo.integration.tests.security.configManagement.ConfigManagementElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.apim.Publisher.ApimPublisherElevatedAccessCheck"/>
         </classes>
     </test>
 </suite>
