@@ -38,6 +38,7 @@ export namespace TestIds {
   export const viewArtifact = '[data-cyid="btn-view-artifact-icon-button"]';
   export const endpointCard = '[data-cyid="endponint-selector-card-card"]';
   export const selectVersion = '[data-cyid="deployment-track-picker-chip"]';
+  export const selectBranch = '[data-cyid="deployment-track-picker"]';
   export const deploySplitToggle =
     '[data-cyid="direct-deploy-option-split-toggle-button-button"]';
   export const configureDeploy = '[data-cyid="configure-&-deploy-option"]';
@@ -181,4 +182,6 @@ export namespace TestIds {
   export const configSubmit = '[data-cyid="btn-submit-configform"]';
   export const runNow = '[data-cyid="run-now-button"]';
   export const runNowNotification = '[data-testid="snackbar-notification"]';
+  export const refreshTasks = '[data-cyid="refresh-tasks-button"]';
+  export const executionCount = '[data-cyid="total-executions-count"]';
 }

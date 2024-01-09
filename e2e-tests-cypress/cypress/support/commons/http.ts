@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { login } from "../console/concepts/login/login";
+import { login } from "../console/entities/login/login";
 
 export const OK = 200;
 export const UNAUTHORIZED = 401;

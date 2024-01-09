@@ -11,8 +11,8 @@
  * associated services.
  */
 
-import { Project } from "./concepts/project/project";
-import { login } from "./concepts/login/login";
+import { Project } from "./entities/project/project";
+import { login } from "./entities/login/login";
 import { OnPremKeyService } from "./apis/on-prem-key-service";
 import { Utils } from "../commons/utils";
 import { AUTH_HEADER2, OK } from "../commons/http";

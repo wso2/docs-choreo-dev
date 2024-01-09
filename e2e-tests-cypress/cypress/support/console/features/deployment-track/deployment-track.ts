@@ -12,8 +12,9 @@
  */
 
 import { TestIds } from "../../constants/TestIds";
-import { Proxy } from "../../concepts/component/proxy/proxy-component";
-import { Component } from "../../concepts/component/component";
+import { Proxy } from "../../entities/component/proxy-component";
+import { Component } from "../../entities/component/component";
+import { ManualTrigger } from "../../entities/component/manual-trigger-component";
 
 export class DeploymentTrack {
   validate(component: Component) {
@@ -23,6 +24,8 @@ export class DeploymentTrack {
 
     if (component instanceof Proxy) {
       cy.get(TestIds.versionPicker).contains(`v${version}`);
+    } else if (component instanceof ManualTrigger) {
+      cy.get(TestIds.selectBranch).contains(version);
     } else {
       cy.get(TestIds.selectVersion).contains(`API v${version}`);
     }

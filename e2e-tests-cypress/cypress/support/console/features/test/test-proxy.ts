@@ -15,7 +15,7 @@ import { Enums } from "../../../commons/enums";
 import { Utils } from "../../../commons/utils";
 import { TestHelper } from "../../pages/component/common/test-helper";
 import { ProxyLeftMenu } from "../../ui-elements/left-menus/proxy-left-menu";
-import { Proxy } from "../../concepts/component/proxy/proxy-component";
+import { Proxy } from "../../entities/component/proxy-component";
 import { Types } from "../../../commons/types";
 import { DeploymentTrack } from "../deployment-track/deployment-track";
 

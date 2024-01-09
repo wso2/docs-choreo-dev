@@ -13,7 +13,7 @@
 
 import { TestHelper } from "../../pages/component/common/test-helper";
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
-import { Service } from "../../concepts/component/service/service-component";
+import { Service } from "../../entities/component/service-component";
 import { DeploymentTrack } from "../deployment-track/deployment-track";
 import { Types } from "../../../commons/types";
 import { Enums } from "../../../commons/enums";

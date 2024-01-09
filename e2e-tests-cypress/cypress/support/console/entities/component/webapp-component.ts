@@ -11,8 +11,8 @@
  * associated services.
  */
 
-import { mixinBuild } from "../../../features/component-build/build";
-import { Component } from "../component";
+import { mixinBuild } from "../../features/component-build/build";
+import { Component } from "./component";
 
 export class WebApp extends mixinBuild(Component) {
   constructor(name: string) {

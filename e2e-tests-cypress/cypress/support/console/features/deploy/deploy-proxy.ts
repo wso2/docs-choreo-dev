@@ -28,7 +28,7 @@ import {
 import { Utils } from "../../../commons/utils";
 import { TestIds } from "../../constants/TestIds";
 import { ProxyLeftMenu } from "../../ui-elements/left-menus/proxy-left-menu";
-import { Proxy } from "../../concepts/component/proxy/proxy-component";
+import { Proxy } from "../../entities/component/proxy-component";
 import { Types } from "../../../commons/types";
 import { DeploymentTrack } from "../deployment-track/deployment-track";
 

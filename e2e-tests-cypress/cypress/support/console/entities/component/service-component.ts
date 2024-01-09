@@ -11,21 +11,17 @@
  * associated services.
  */
 
-import { Enums } from "../../../../commons/enums";
-import { Component } from "../component";
+import { Enums } from "../../../commons/enums";
+import { Component } from "./component";
 
-import { UsagePlan } from "../../../../commons/enums";
-import { _Stats } from "../stats";
-import { mixinBuild } from "../../../features/component-build/build";
-import {
-  InvokeInfo,
-  mixinTestService,
-} from "../../../features/test/test-service";
+import { UsagePlan } from "../../../commons/enums";
+import { mixinBuild } from "../../features/component-build/build";
+import { InvokeInfo, mixinTestService } from "../../features/test/test-service";
 import {
   EndpointAccessibility,
   mixinServiceDeploy,
-} from "../../../features/deploy/deploy-service";
-import { mixinManage } from "../../../features/manage/manage";
+} from "../../features/deploy/deploy-service";
+import { mixinManage } from "../../features/manage/manage";
 
 export class Service extends mixinBuild(
   mixinManage(mixinServiceDeploy(mixinTestService(Component)))
@@ -49,11 +45,11 @@ export class Service extends mixinBuild(
   }
 
   deployProjectLevelAccessibility() {
-    this._deploy(this, EndpointAccessibility.Project, 1);
+    this._deployService(this, EndpointAccessibility.Project, 1);
   }
 
   deployPublicLevelAccessibility() {
-    this._deploy(this, EndpointAccessibility.Public, 1);
+    this._deployService(this, EndpointAccessibility.Public, 1);
   }
 
   testConsole(invokeInfo: InvokeInfo) {
@@ -61,7 +57,7 @@ export class Service extends mixinBuild(
   }
 
   promotePublicLevelAccessibility() {
-    this._promote(this, EndpointAccessibility.Public, 0);
+    this._promoteService(this, EndpointAccessibility.Public, 0);
   }
 
   addVersion() {

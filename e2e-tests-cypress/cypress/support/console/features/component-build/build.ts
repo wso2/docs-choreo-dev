@@ -15,12 +15,13 @@ import { BUILD_SUCCESS } from "../../../commons/constants";
 import { LONG_TIME } from "../../../commons/timeouts";
 import { TestIds } from "../../constants/TestIds";
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
-import { Service } from "../../concepts/component/service/service-component";
+import { Service } from "../../entities/component/service-component";
 import { Types } from "../../../commons/types";
 import { DeploymentTrack } from "../deployment-track/deployment-track";
+import { ManualTrigger } from "../../entities/component/manual-trigger-component";
 
 export interface BuildFeature {
-  _build(component: Service): void;
+  _build(component: Service | ManualTrigger): void;
 }
 
 export function mixinBuild<T extends Types.Constructor>(
@@ -30,13 +31,13 @@ export function mixinBuild<T extends Types.Constructor>(
     private sideMenu = new ServiceLeftMenu();
     private deploymentTrack = new DeploymentTrack();
 
-    _build(component: Service) {
+    _build(component: Service | ManualTrigger) {
       this.sideMenu.navigateToBuild();
 
       this.triggerBuild(component);
     }
 
-    private triggerBuild(component: Service) {
+    private triggerBuild(component: Service | ManualTrigger) {
       this.deploymentTrack.validate(component);
 
       cy.get(TestIds.build).should("be.enabled").click();

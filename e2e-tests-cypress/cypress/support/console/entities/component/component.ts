@@ -20,8 +20,11 @@ import { TestIds } from "../../constants/TestIds";
 import { DevPortalLeftMenu } from "../../ui-elements/left-menus/dev-portal-left-menu";
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
 import { Application } from "../application/application";
-import { _Stats } from "./stats";
+import { _Stats } from "../../features/stats/stats";
 
+/**
+ * This is the base class for all the components in the Console
+ */
 export class Component {
   private name: string;
   private versions: string[] = [];

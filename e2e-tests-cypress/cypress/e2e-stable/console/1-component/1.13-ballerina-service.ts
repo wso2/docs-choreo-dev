@@ -13,8 +13,8 @@
 
 import { Enums } from "../../../support/commons/enums";
 import { console } from "../../../support/console/console";
-import { Project } from "../../../support/console/concepts/project/project";
-import { Service } from "../../../support/console/concepts/component/service/service-component";
+import { Project } from "../../../support/console/entities/project/project";
+import { Service } from "../../../support/console/entities/component/service-component";
 import { UsagePlan } from "../../../support/commons/enums";
 
 after(() => {

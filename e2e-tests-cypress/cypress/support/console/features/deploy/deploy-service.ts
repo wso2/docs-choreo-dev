@@ -23,8 +23,9 @@ import { Types } from "../../../commons/types";
 import { Utils } from "../../../commons/utils";
 import { TestIds } from "../../constants/TestIds";
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
-import { Service } from "../../concepts/component/service/service-component";
+import { Service } from "../../entities/component/service-component";
 import { DeploymentTrack } from "../deployment-track/deployment-track";
+import { ManualTrigger } from "../../entities/component/manual-trigger-component";
 
 export enum EndpointAccessibility {
   Public = "Public",
@@ -35,17 +36,21 @@ export enum EndpointAccessibility {
 export interface DeployServiceFeature {
   _addNewVersion(component: Service, branch: string, version: string);
 
-  _deploy(
+  _deployService(
     component: Service,
     endpointVisibility: EndpointAccessibility,
     configStepsAvailable: number
   );
 
-  _promote(
+  _deployTask(component: ManualTrigger, configStepsAvailable: number);
+
+  _promoteService(
     component: Service,
     endpointVisibility: EndpointAccessibility,
     configStepsAvailable: number
   );
+
+  _promoteTask(component: ManualTrigger);
 }
 
 export function mixinServiceDeploy<T extends Types.Constructor>(
@@ -55,7 +60,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     private sideMenu = new ServiceLeftMenu();
     private deploymentTrack = new DeploymentTrack();
 
-    _deploy(
+    _deployService(
       component: Service,
       endpointVisibility: EndpointAccessibility,
       configStepsAvailable: number
@@ -75,7 +80,17 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.verifyDevAccessibility(component, endpointVisibility);
     }
 
-    _promote(
+    _deployTask(component: ManualTrigger, configStepsAvailable: number) {
+      this.sideMenu.navigateToDeploy();
+
+      this.waitTillReadyToDeploy();
+
+      this.startDeployment(component);
+
+      this.stepThroughConfigSteps(configStepsAvailable);
+    }
+
+    _promoteService(
       component: Service,
       endpointVisibility: EndpointAccessibility,
       configStepsAvailable: number
@@ -89,6 +104,12 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.reviewAndUpdateEndpoint(component, endpointVisibility);
 
       this.verifyPromotionStatus();
+    }
+
+    _promoteTask(component: ManualTrigger) {
+      this.sideMenu.navigateToDeploy();
+
+      this.startPromotion(component);
     }
 
     _addNewVersion(component: Service, branch: string, version: string) {
@@ -153,7 +174,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.retryEnvCardDataRetrieval();
     }
 
-    private startDeployment(component: Service) {
+    private startDeployment(component: Service | ManualTrigger) {
       this.deploymentTrack.validate(component);
 
       cyGet(TestIds.deploySplitToggle, MEDIUM_TIME)
@@ -345,7 +366,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       });
     }
 
-    private startPromotion(component: Service) {
+    private startPromotion(component: Service | ManualTrigger) {
       this.deploymentTrack.validate(component);
 
       this.retryPromotionToProd();

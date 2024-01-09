@@ -12,11 +12,11 @@
  */
 
 import { console } from "../../../support/console/console";
-import { Project } from "../../../support/console/concepts/project/project";
-import { Proxy } from "../../../support/console/concepts/component/proxy/proxy-component";
+import { Project } from "../../../support/console/entities/project/project";
+import { Proxy } from "../../../support/console/entities/component/proxy-component";
 import { Enums, UsagePlan } from "../../../support/commons/enums";
 import { OK } from "../../../support/commons/http";
-import { Application } from "../../../support/console/concepts/application/application";
+import { Application } from "../../../support/console/entities/application/application";
 import { devPortal } from "../../../support/console/devportal";
 
 describe("Create Proxy from OAS file", () => {

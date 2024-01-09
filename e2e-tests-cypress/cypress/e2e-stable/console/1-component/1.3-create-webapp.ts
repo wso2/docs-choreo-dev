@@ -12,7 +12,7 @@
  */
 
 import { Enums } from "../../../support/commons/enums";
-import { WebApp } from "../../../support/console/concepts/component/webapp/webapp-component";
+import { WebApp } from "../../../support/console/concepts/component/webapp-component";
 import {
   Project,
   RepoInfo,

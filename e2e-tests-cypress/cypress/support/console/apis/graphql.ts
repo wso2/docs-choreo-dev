@@ -31,7 +31,7 @@ import { Enums } from "../../commons/enums";
 import { PROXY_DEPLOYER_EP, PUBLISHER_URL } from "../../commons/urls";
 import { ProjectEnvironment } from "../../interfaces/choreo-components/project-environments";
 import { VERY_SHORT_TIME } from "../../commons/timeouts";
-import { login } from "../concepts/login/login";
+import { login } from "../entities/login/login";
 
 export const SUCCESS_STATUS_CODE = 200;
 export const NO_CONTENT_STATUS_CODE = 204;

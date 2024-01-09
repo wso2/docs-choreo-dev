@@ -11,13 +11,13 @@
  * associated services.
  */
 
-import { Enums, UsagePlan } from "../../../../commons/enums";
-import { Types } from "../../../../commons/types";
-import { Component } from "../component";
-import { mixinProxyDeploy } from "../../../features/deploy/deploy-proxy";
-import { mixinDevelop } from "../../../features/develop/develop";
-import { mixinTestProxy } from "../../../features/test/test-proxy";
-import { mixinManage } from "../../../features/manage/manage";
+import { Enums, UsagePlan } from "../../../commons/enums";
+import { Types } from "../../../commons/types";
+import { Component } from "./component";
+import { mixinProxyDeploy } from "../../features/deploy/deploy-proxy";
+import { mixinDevelop } from "../../features/develop/develop";
+import { mixinTestProxy } from "../../features/test/test-proxy";
+import { mixinManage } from "../../features/manage/manage";
 
 export class Proxy extends mixinDevelop(
   mixinManage(mixinProxyDeploy(mixinTestProxy(Component)))

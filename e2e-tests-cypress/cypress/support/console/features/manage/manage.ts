@@ -17,7 +17,7 @@ import { Enums } from "../../../commons/enums";
 import { DeploymentTrack } from "../deployment-track/deployment-track";
 import { UsagePlan } from "../../../commons/enums";
 import { Types } from "../../../commons/types";
-import { Component } from "../../concepts/component/component";
+import { Component } from "../../entities/component/component";
 import { Utils } from "../../../commons/utils";
 
 export interface ManageFeature {
