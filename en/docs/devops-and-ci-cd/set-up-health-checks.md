@@ -9,8 +9,8 @@ This allows the container to self-heal in scenarios where the application may ha
 
 ## Readiness probes
 
-Similar to liveliness probes, readiness probes run periodically throughout the lifecycle of a container.
-However, unlike liveliness probes, it does not restart the container if the probe fails. Instead, it stops the container from receiving network traffic.
+Similar to liveness probes, readiness probes run periodically throughout the lifecycle of a container.
+However, unlike liveness probes, these probes do not restart the container if the probe fails. Instead, they stop the container from receiving network traffic.
 
 !!! warning "Readiness probes on single replicas"
     You must be mindful when you configure readiness probes on a single-running replica. If the readiness probe fails, your application stops receiving traffic  because there is only one active replica. The application may not recover unless the liveness probe fails and restarts the container.
@@ -35,21 +35,26 @@ This probe attempts to open a socket to the container on the specified port. If 
 
 ### Execute a command
 
-This probe executes the given script inside the container. A non-zero return from the command is considered a failure.
+This probe executes a given script inside the container. A non-zero return from the command is considered a failure.
 
 For example, `["cat", "/tmp/healthy"]` is considered healthy if the file `/tmp/healthy` is present. If not, it becomes a failure (non-zero exit code).
 In such scenarios, the application is responsible for writing and maintaining this file in the specified location.
 
 ## Configure liveness and readiness probes
 
-Follow these steps to configure liveliness and readiness probes on a container:
+Follow these steps to configure liveness and readiness probes on a container:
 
-1. Go to the **Deploy** view of the component for which you want to configure liveliness and readiness probes.
-2. Click **Health Checks**.
-3. In the **Health Checks** pane, click **+ Create**.
-4. Configure the liveness probe and readiness probe depending on your requirement.
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. In the **Component Listing** pane, click on the component for which you want to configure liveness and readiness probes.
+3. In the left navigation menu, click **DevOps** and then click **Health Checks**.
+4. On the **Health Checks** page, click **+ Create**.
+5. Configure the liveness probe depending on your requirement.
 
     ![Configure probe](../assets/img/devops-and-ci-cd/healthchecks/confgure-probes.png){.cInlineImage-full}
+
+6. Click **Save**.
+7. Configure the readiness probe depending on your requirement.
+8. Click **Save**.
   
     !!!info "Note"
 
@@ -57,5 +62,5 @@ Follow these steps to configure liveliness and readiness probes on a container:
 
 Follow these steps to ensure that the container works as expected:
 
-1. In the left navigation menu, click **Runtime**.
-2. In the **Runtime** pane, check the details to confirm that the container works as expected. If the container does not start, check the **events and conditions** to see if any of the probes are causing the container to fail.
+1. In the left navigation menu, click **Runtime** under **DevOps**.
+2. On the **Runtime** page, check the details to confirm that the container works as expected. If the container does not start, check the **events and conditions** to see if any of the probes are causing the container to fail.
