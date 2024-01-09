@@ -16,4 +16,6 @@ export namespace Types {
     path: string;
     verbs: string[];
   }
+
+  export type Constructor<T = any> = new (...args: any[]) => T;
 }

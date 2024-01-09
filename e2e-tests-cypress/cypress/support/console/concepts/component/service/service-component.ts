@@ -13,23 +13,24 @@
 
 import { Enums } from "../../../../commons/enums";
 import { Component } from "../component";
-import { _ServiceBuild } from "./service-build";
-import {
-  EndpointAccessibility,
-  _ServiceDeployment,
-} from "./service-deployment";
-import { _ServiceManagement } from "./service-management";
+
 import { UsagePlan } from "../../../../commons/enums";
 import { _Stats } from "../stats";
-import { InvokeInfo, _ServiceTest } from "./service-test";
+import { mixinBuild } from "../../../features/component-build/build";
+import {
+  InvokeInfo,
+  mixinTestService,
+} from "../../../features/test/test-service";
+import {
+  EndpointAccessibility,
+  mixinServiceDeploy,
+} from "../../../features/deploy/deploy-service";
+import { mixinManage } from "../../../features/manage/manage";
 
-export class Service extends Component {
+export class Service extends mixinBuild(
+  mixinManage(mixinServiceDeploy(mixinTestService(Component)))
+) {
   private endpointName: string;
-
-  private build = new _ServiceBuild();
-  private deployment = new _ServiceDeployment();
-  private test = new _ServiceTest();
-  private manage = new _ServiceManagement();
 
   constructor(name: string, endpointName: string) {
     super(name, "1.0");
@@ -43,39 +44,39 @@ export class Service extends Component {
     return this.endpointName;
   }
 
-  buildComponent() {
-    this.build.build(this);
+  build() {
+    this._build(this);
   }
 
   deployProjectLevelAccessibility() {
-    this.deployment.deploy(this, EndpointAccessibility.Project);
+    this._deploy(this, EndpointAccessibility.Project, 1);
   }
 
   deployPublicLevelAccessibility() {
-    this.deployment.deploy(this, EndpointAccessibility.Public);
+    this._deploy(this, EndpointAccessibility.Public, 1);
   }
 
   testConsole(invokeInfo: InvokeInfo) {
-    return this.test.testConsole(this, invokeInfo);
+    return this._testConsole(this, invokeInfo);
   }
 
   promotePublicLevelAccessibility() {
-    this.deployment.promote(this, EndpointAccessibility.Public);
+    this._promote(this, EndpointAccessibility.Public, 0);
   }
 
   addVersion() {
-    this.deployment.addNewVersion(this);
+    this._addNewVersion(this, "feature", "1.1");
   }
 
   publish() {
-    this.manage.changeLifeCycleState(this, Enums.LifeCycleState.Publish);
+    this._changeLifeCycleState(this, Enums.LifeCycleState.Publish);
   }
 
   updateUsagePlans(plans: UsagePlan[]) {
-    this.manage.updateUsagePlans(this, plans);
+    this._updateUsagePlans(this, plans);
   }
 
   enableCors() {
-    this.manage.enableCors(this);
+    this._enableCors(this);
   }
 }

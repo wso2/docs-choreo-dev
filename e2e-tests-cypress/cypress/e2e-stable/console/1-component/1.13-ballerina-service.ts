@@ -51,7 +51,7 @@ describe("Verify Ballerina service functionality", () => {
   });
 
   it("Build the component", () => {
-    component.buildComponent();
+    component.build();
   });
 
   it("Deploying the component with Project level visibility", () => {
@@ -105,7 +105,7 @@ describe("Verify Ballerina service functionality", () => {
   });
 
   it("Build the new version", () => {
-    component.buildComponent();
+    component.build();
   });
 
   it("Deploying the new version", () => {

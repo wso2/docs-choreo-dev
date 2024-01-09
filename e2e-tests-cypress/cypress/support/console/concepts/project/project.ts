@@ -174,7 +174,7 @@ export class Project {
       },
     };
 
-    GraphQL.createComponentV2(
+    return GraphQL.createComponentV2(
       this.name,
       "",
       componentData,

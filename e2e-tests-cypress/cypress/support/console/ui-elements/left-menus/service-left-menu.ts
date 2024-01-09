@@ -50,6 +50,22 @@ export class ServiceLeftMenu extends LeftMenu {
     );
   }
 
+  navigateToPermissions() {
+    this.scrollToTopOfMenu();
+    this.navigateToSubMenu(
+      "[data-cyid=link-manage]",
+      new Array('[data-cyid="manage-permissions"]')
+    );
+  }
+
+  navigateToConsumers() {
+    this.scrollToTopOfMenu();
+    this.navigateToSubMenu(
+      "[data-cyid=link-manage]",
+      new Array('[data-cyid="manage-consumers"]')
+    );
+  }
+
   navigateToLifecycle() {
     this.scrollToTopOfMenu();
     this.navigateToSubMenu(
