@@ -9,19 +9,21 @@ Each component in Choreo is limited to a single main container.
 !!! info "Resource Limits"
     Resource limits ensure that a single component does not take up more resources than it requires, which can affect other workloads on the data plane. If a process exceeds the allocated memory limit, the corresponding container will be forcefully shut down and restarted. If the process exceeds the allocated CPU limit, it gets throttled and can result in significant latencies in compute and I/O operations.
 
-Choreo allows you to edit the default container configurations depending on your requirement.
+Choreo allows you to edit the default container configuration depending on your requirement.
 
 ## Update container configurations
 
 Follow these steps to update container configurations:
 
-1. Go to the **Deploy** view of the component for which you want to edit container configurations.
-2. Click **Containers**.
-3. In the **Containers** pane, click **Edit** to update the corresponding container configuration.
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. In the **Component Listing** pane, click on the component for which you want to edit container configurations.
+3. In the left navigation menu, click **DevOps** and then click **Containers**.
+4. On the **Containers** page, click **Edit** to update the corresponding container configuration.
+5. Apply the necessary changes and click **Save**.
 
     ![Edit container configurations](../assets/img/devops-and-ci-cd/containers/edit-container-form.png){.cInlineImage-full}
 
-The following topics walk you through the container configuration changes you can make.
+The following topics walk you through the container configuration changes you can apply.
 
 ### Update resource requests and limits
 
