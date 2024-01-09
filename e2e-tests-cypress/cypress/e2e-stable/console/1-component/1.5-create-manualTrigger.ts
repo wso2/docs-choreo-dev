@@ -14,18 +14,14 @@
 import { Enums } from "../../../support/commons/enums";
 import { Utils } from "../../../support/commons/utils";
 import { console } from "../../../support/console/console";
-import { Project } from "../../../support/console/concepts/project/project";
-import { ManualTrigger } from "../../../support/console/concepts/component/service/manualTrigger-component";
-
+import { Project } from "../../../support/console/entities/project/project";
+import { ManualTrigger } from "../../../support/console/entities/component/manual-trigger-component";
 
 after(() => {
   console.logout();
 });
 
-
 describe("Verify manual trigger creation functionality", () => {
-  const MANUAL_NAME = Utils.generateComponentName();
-  const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Manual Trigger";
   let project: Project;
   let component: ManualTrigger;
@@ -34,28 +30,23 @@ describe("Verify manual trigger creation functionality", () => {
     console.login();
   });
 
- 
   it("Creating a project", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-
   it("Verify Manual Trigger component creation", () => {
     project
-      .createManualTriggerComponent(
-        Enums.Accessibility.EXTERNAL,
-        {
-          url: "https://github.com/choreo-test-apps/manual-trigger",
-          branch: "main",
-        }, 
-      )
-      .then((ManualTriggerComponent: ManualTrigger) => {
-        component = ManualTriggerComponent;
+      .createManualTriggerComponent(Enums.Accessibility.EXTERNAL, {
+        url: "https://github.com/choreo-test-apps/manual-trigger",
+        branch: "main",
+      })
+      .then((comp: ManualTrigger) => {
+        component = comp;
       });
   });
 
   it("Build the component", () => {
-    component.buildComponent();
+    component.build();
   });
 
   it("Deploying to Dev", () => {
@@ -73,5 +64,4 @@ describe("Verify manual trigger creation functionality", () => {
   it("Verify execution in prod", () => {
     component.executeComponent(Enums.Environment.PRODUCTION);
   });
-
 });

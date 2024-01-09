@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { ProxyInfo } from "../../concepts/project/project";
+import { ProxyInfo } from "../../entities/project/project";
 import { TestIds } from "../../constants/TestIds";
 
 export class _ProxyCreationWizard {

@@ -13,16 +13,19 @@
 
 import { cyGet } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
-import { SHORT_TIME } from "../../../commons/timeouts";
+import { SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { TryOut } from "../../../devportal/pages/apis/try-out";
 import { generateAppName } from "../../../devportal/utils";
 import { TestIds } from "../../constants/TestIds";
 import { DevPortalLeftMenu } from "../../ui-elements/left-menus/dev-portal-left-menu";
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
 import { Application } from "../application/application";
-import { _Stats } from "./stats";
+import { _Stats } from "../../features/stats/stats";
 
-export abstract class Component {
+/**
+ * This is the base class for all the components in the Console
+ */
+export class Component {
   private name: string;
   private versions: string[] = [];
   protected componentUrl: string;
@@ -167,6 +170,50 @@ export abstract class Component {
       cy.get(TestIds.stop).should("not.exist");
       cy.get(TestIds.reDeploy).should("exist");
     });
+  }
+
+  _navigateToDevPortal(idp: string) {
+    this.sideMenu.navigateToOverview();
+
+    cy.get(TestIds.createTime).should("be.visible");
+    cy.get(TestIds.progressBar).should("not.exist");
+    cy.get(TestIds.deploymentStatusChip).should("be.visible");
+
+    cy.contains("Requests", SHORT_TIME).should("be.visible");
+    cy.contains("Errors", SHORT_TIME).should("be.visible");
+    cy.contains("Average TPS", SHORT_TIME).should("be.visible");
+    cy.contains("Latency", SHORT_TIME)
+      .should("be.visible")
+      .wait(VERY_SHORT_TIME.timeout); // Wait for the latency stats to load
+
+    cy.get(TestIds.devPortalLink)
+      .invoke("attr", "href")
+      .then((href) => {
+        const linkParts = href.split("?");
+        const url = linkParts[0];
+        const queryParams = linkParts[1].split("&amp;");
+
+        let updatedQueryParams = "";
+
+        for (let i = 0; i < queryParams.length; i++) {
+          const keyValues = queryParams[i].split("=");
+
+          if (keyValues[0] === "idp") {
+            updatedQueryParams += `${keyValues[0]}=${idp}`;
+          } else {
+            updatedQueryParams += queryParams[i];
+          }
+        }
+
+        this.setDevPortalUrl(`${url}?${updatedQueryParams}`);
+
+        cy.visit(this.getDevPortalUrl()).then(() => {
+          cy.get(TestIds.backdropLoader).should("not.exist");
+          cy.get(TestIds.apiNameDevPortal)
+            .should("be.visible")
+            .contains(this.getName(), VERY_SHORT_TIME);
+        });
+      });
   }
 
   protected visitComponent(name: string): string {

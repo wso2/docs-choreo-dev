@@ -11,27 +11,20 @@
  * associated services.
  */
 
-import { Enums, UsagePlan } from "../../../../commons/enums";
-import { VERY_SHORT_TIME } from "../../../../commons/timeouts";
-import { Types } from "../../../../commons/types";
-import { TestIds } from "../../../constants/TestIds";
-import { Component } from "../component";
-import { _ProxyDeployment } from "./proxy-deployment";
-import { _ProxyDevelop } from "./proxy-develop";
-import { _ProxyManagement } from "./proxy-management";
-import { _ProxyOverview } from "./proxy-overview";
-import { _ProxyTest } from "./proxy-test";
+import { Enums, UsagePlan } from "../../../commons/enums";
+import { Types } from "../../../commons/types";
+import { Component } from "./component";
+import { mixinProxyDeploy } from "../../features/deploy/deploy-proxy";
+import { mixinDevelop } from "../../features/develop/develop";
+import { mixinTestProxy } from "../../features/test/test-proxy";
+import { mixinManage } from "../../features/manage/manage";
 
-export class Proxy extends Component {
+export class Proxy extends mixinDevelop(
+  mixinManage(mixinProxyDeploy(mixinTestProxy(Component)))
+) {
   private endpointUrl: string;
   private basePath: string;
   private hasPolicy: boolean = false;
-
-  private overview = new _ProxyOverview();
-  private develop = new _ProxyDevelop();
-  private deployment = new _ProxyDeployment();
-  private test = new _ProxyTest();
-  private manage = new _ProxyManagement();
 
   constructor(
     name: string,
@@ -61,19 +54,19 @@ export class Proxy extends Component {
   }
 
   removeResources(resourceIds: string[]) {
-    this.develop.removeResources(this, resourceIds);
+    this._removeResources(this, resourceIds);
   }
 
   removeDefaultResources() {
-    this.develop.removeDefaultResources(this);
+    this._removeDefaultResources(this);
   }
 
   deploy() {
-    this.deployment.deploy(this);
+    this._deploy(this);
   }
 
   promote() {
-    this.deployment.promote(this);
+    this._promote(this);
   }
 
   testSwaggerConsole(
@@ -82,13 +75,7 @@ export class Proxy extends Component {
     key?: string,
     value?: string
   ) {
-    return this.test.testSwaggerConsole(
-      this,
-      environment,
-      resource,
-      key,
-      value
-    );
+    return this._testSwaggerConsole(this, environment, resource, key, value);
   }
 
   testCurl(
@@ -96,19 +83,19 @@ export class Proxy extends Component {
     method: Enums.HTTPMethod,
     resource: string
   ) {
-    return this.test.testCurl(this, environment, method, resource);
+    return this._testCurl(this, environment, method, resource);
   }
 
   updateUsagePlans(plans: UsagePlan[]) {
-    this.manage.updateUsagePlans(this, plans);
+    this._updateUsagePlans(this, plans);
   }
 
   addVersion() {
-    this.deployment.addNewVersion(this);
+    this._addNewVersion(this, "1.1");
   }
 
   addResources(resourcePaths: Types.ResourcePath[]) {
-    this.develop.addResources(this, resourcePaths);
+    this._addResources(this, resourcePaths);
   }
 
   addResponseFlowHeaderPolicy(
@@ -117,7 +104,7 @@ export class Proxy extends Component {
     headerName: string,
     headerValue: string
   ) {
-    this.develop.addPolicy(
+    this._addPolicy(
       resourcePath,
       verb,
       Enums.PolicyType.setHeader,
@@ -135,7 +122,7 @@ export class Proxy extends Component {
     policyIndex: number,
     headerValue: string
   ) {
-    this.develop.editPolicy(
+    this._editPolicy(
       resourcePath,
       verb,
       Enums.Flow.RESPONSE,
@@ -145,34 +132,34 @@ export class Proxy extends Component {
   }
 
   publish() {
-    this.manage.changeLifeCycleState(this, Enums.LifeCycleState.Publish);
+    this._changeLifeCycleState(this, Enums.LifeCycleState.Publish);
   }
 
   navigateToDevPortal() {
-    this.overview.navigateToDevPortal(this, "choreoe2etest");
+    this._navigateToDevPortal("choreoe2etest");
   }
 
   enableCors() {
-    this.manage.enableCors(this);
+    this._enableCors(this);
   }
 
   addPermissions(permissions: string[]) {
-    this.manage.addPermissions(this, permissions);
+    this._addPermissions(this, permissions);
   }
 
   applyAllPermissionsToResources(permissions: string[]) {
-    this.manage.applyAllPermissionsToResources(this, permissions);
+    this._applyAllPermissionsToResources(this, permissions);
   }
 
   applyPermissionToResources(permission: string) {
-    this.manage.applyPermissionToResources(this, permission);
+    this._applyPermissionToResources(this, permission);
   }
 
   deleteAllPermissionsFromResources(permissions: string[]) {
-    this.manage.deleteAllPermissionsFromResources(this, permissions);
+    this._deleteAllPermissionsFromResources(this, permissions);
   }
 
   verifyConsumer(appName: string) {
-    this.manage.verifyConsumer(appName);
+    this._verifyConsumer(appName);
   }
 }

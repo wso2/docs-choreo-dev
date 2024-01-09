@@ -11,15 +11,23 @@
  * associated services.
  */
 
-import { TestIds } from "../../../constants/TestIds";
-import { Service } from "./service-component";
+import { TestIds } from "../../constants/TestIds";
+import { Proxy } from "../../entities/component/proxy-component";
+import { Component } from "../../entities/component/component";
+import { ManualTrigger } from "../../entities/component/manual-trigger-component";
 
-export class ServiceUtils {
-  static validateDeploymentTrack(component: Service | any) {
+export class DeploymentTrack {
+  validate(component: Component) {
     cy.get(TestIds.backdropLoader).should("not.exist");
 
     const version = component.getLatestVersion();
 
-    cy.get(TestIds.selectVersion).contains(`API v${version}`);
+    if (component instanceof Proxy) {
+      cy.get(TestIds.versionPicker).contains(`v${version}`);
+    } else if (component instanceof ManualTrigger) {
+      cy.get(TestIds.selectBranch).contains(version);
+    } else {
+      cy.get(TestIds.selectVersion).contains(`API v${version}`);
+    }
   }
 }

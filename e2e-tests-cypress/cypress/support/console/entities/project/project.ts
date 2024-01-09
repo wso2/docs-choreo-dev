@@ -24,11 +24,11 @@ import { ComponentDetails, GraphQL } from "../../apis/graphql";
 import { console } from "../../console";
 import { TestIds } from "../../constants/TestIds";
 import { _ProxyCreationWizard } from "../../ui-elements/wizards/proxy-creation-wizard";
-import { Service } from "../component/service/service-component";
-import { Proxy } from "../component/proxy/proxy-component";
-import { ManualTrigger } from "../component/service/manualTrigger-component";
+import { Service } from "../component/service-component";
+import { Proxy } from "../component/proxy-component";
+import { ManualTrigger } from "../component/manual-trigger-component";
 import { WebappComponent } from "../../../interfaces/choreo-components/webapp-component";
-import { WebApp } from "../component/webapp/webapp-component";
+import { WebApp } from "../component/webapp-component";
 
 export interface RepoInfo {
   readonly url: string;
@@ -174,7 +174,7 @@ export class Project {
       },
     };
 
-    GraphQL.createComponentV2(
+    return GraphQL.createComponentV2(
       this.name,
       "",
       componentData,
@@ -211,7 +211,6 @@ export class Project {
     });
   }
 
-
   createManualTriggerComponent(
     accessibility: Enums.Accessibility,
     repoInfo: RepoInfo
@@ -230,18 +229,14 @@ export class Project {
       repositorySubPath: repoInfo.subPath == undefined ? "" : repoInfo.subPath,
       sampleTemplate: "",
     };
-  
+
     return GraphQL.createComponentV2(
       this.name,
       "",
       componentData,
       GraphQLQueryBuilder.getRestComponentCreationQuery
     ).then((componentDetails: ComponentDetails) => {
-      return Promise.resolve(
-        new ManualTrigger(
-          componentName,
-        )
-      );
+      return Promise.resolve(new ManualTrigger(componentName));
     });
   }
 
