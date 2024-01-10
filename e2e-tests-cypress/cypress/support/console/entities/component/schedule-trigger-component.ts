@@ -12,12 +12,12 @@
  */
 
 import { Component } from "./component";
-import { Enums } from "../../../commons/enums";
 import { mixinBuild } from "../../features/component-build/build";
 import { mixinServiceDeploy } from "../../features/deploy/deploy-service";
 import { mixinExecute } from "../../features/execute/execute";
+import { Enums } from "../../../commons/enums";
 
-export class ManualTrigger extends mixinBuild(
+export class ScheduleTrigger extends mixinBuild(
   mixinExecute(mixinServiceDeploy(Component))
 ) {
   constructor(name: string) {
@@ -29,15 +29,18 @@ export class ManualTrigger extends mixinBuild(
     this._build(this);
   }
 
-  deployToDevWithoutSplitButton() {
-    this._deployTask(this, 1);
+  deployToDev() {
+    this._deployTask(this, 2);
   }
 
   promoteProd() {
-    this._promoteTask(this, 0);
+    this._promoteTask(this, 2);
+  }
+  
+  verifyObservabilityMetrics(env: Enums.Environment) {
+    this.observability.viewObservabilityMetrics(env);
   }
 
-  executeComponent(env: Enums.Environment) {
-    this._execute(this, env);
-  }
+
+
 }

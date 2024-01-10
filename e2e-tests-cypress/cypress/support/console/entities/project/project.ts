@@ -29,6 +29,7 @@ import { Proxy } from "../component/proxy-component";
 import { ManualTrigger } from "../component/manual-trigger-component";
 import { WebappComponent } from "../../../interfaces/choreo-components/webapp-component";
 import { WebApp } from "../component/webapp-component";
+import { ScheduleTrigger } from "../component/schedule-trigger-component";
 
 export interface RepoInfo {
   readonly url: string;
@@ -237,6 +238,35 @@ export class Project {
       GraphQLQueryBuilder.getRestComponentCreationQuery
     ).then((componentDetails: ComponentDetails) => {
       return Promise.resolve(new ManualTrigger(componentName));
+    });
+  }
+
+  createScheduleTriggerComponent(
+    accessibility: Enums.Accessibility,
+    repoInfo: RepoInfo
+  ) {
+    const componentName = Utils.generateComponentName();
+    let componentData: ComponentData = {
+      componentName: componentName,
+      displayType: Enums.DisplayType.scheduledTask,
+      accessibility: accessibility,
+      projectName: this.name,
+      triggerChannels: "",
+      triggerId: null,
+      srcGitRepoUrl: repoInfo.url,
+      initializeAsBallerinaProject: false,
+      repositoryType: Enums.RepoType.UserManagedNonEmpty,
+      repositorySubPath: repoInfo.subPath == undefined ? "" : repoInfo.subPath,
+      sampleTemplate: "",
+    };
+
+    return GraphQL.createComponentV2(
+      this.name,
+      "",
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
+    ).then((componentDetails: ComponentDetails) => {
+      return Promise.resolve(new ScheduleTrigger(componentName));
     });
   }
 

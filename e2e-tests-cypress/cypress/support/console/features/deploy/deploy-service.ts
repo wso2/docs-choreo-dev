@@ -26,6 +26,7 @@ import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu"
 import { Service } from "../../entities/component/service-component";
 import { DeploymentTrack } from "../deployment-track/deployment-track";
 import { ManualTrigger } from "../../entities/component/manual-trigger-component";
+import { ScheduleTrigger } from "../../entities/component/schedule-trigger-component";
 
 export enum EndpointAccessibility {
   Public = "Public",
@@ -42,7 +43,7 @@ export interface DeployServiceFeature {
     configStepsAvailable: number
   );
 
-  _deployTask(component: ManualTrigger, configStepsAvailable: number);
+  _deployTask(component: ManualTrigger | ScheduleTrigger, configStepsAvailable: number);
 
   _promoteService(
     component: Service,
@@ -50,8 +51,10 @@ export interface DeployServiceFeature {
     configStepsAvailable: number
   );
 
-  _promoteTask(component: ManualTrigger);
+  _promoteTask(component: ManualTrigger | ScheduleTrigger, configStepsAvailable: number);
 }
+
+
 
 export function mixinServiceDeploy<T extends Types.Constructor>(
   base: T
@@ -80,7 +83,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.verifyDevAccessibility(component, endpointVisibility);
     }
 
-    _deployTask(component: ManualTrigger, configStepsAvailable: number) {
+    _deployTask(component: ManualTrigger | ScheduleTrigger , configStepsAvailable: number) {
       this.sideMenu.navigateToDeploy();
 
       this.waitTillReadyToDeploy();
@@ -106,9 +109,8 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.verifyPromotionStatus();
     }
 
-    _promoteTask(component: ManualTrigger) {
+    _promoteTask(component: ManualTrigger | ScheduleTrigger) {
       this.sideMenu.navigateToDeploy();
-
       this.startPromotion(component);
     }
 
@@ -174,7 +176,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.retryEnvCardDataRetrieval();
     }
 
-    private startDeployment(component: Service | ManualTrigger) {
+    private startDeployment(component: Service | ManualTrigger | ScheduleTrigger) {
       this.deploymentTrack.validate(component);
 
       cyGet(TestIds.deploySplitToggle, MEDIUM_TIME)
@@ -366,11 +368,16 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       });
     }
 
-    private startPromotion(component: Service | ManualTrigger) {
+    private startPromotion(component: Service | ManualTrigger | ScheduleTrigger) {
       this.deploymentTrack.validate(component);
 
       this.retryPromotionToProd();
+
       cy.get(TestIds.promote, LONG_TIME).should("be.enabled").click();
+      if (component instanceof ScheduleTrigger) {
+        cy.get(TestIds.promoteScheduleTask, LONG_TIME).should("be.enabled").click();
+        cy.get('[value="*/1 * * * *"]', LONG_TIME).eq(1).should("be.visible");
+      }
     }
   };
 }
