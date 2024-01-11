@@ -81,21 +81,16 @@ Follow the guidelines below based on your language:
     | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-go-task)|
     | Web Application | [Hello World Web Application](https://github.com/wso2/choreo-samples/tree/main/hello-world-go-webapp)|
 
-    #### Procfile 
+    For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
 
-    A `Procfile` is a configuration file used to declare the commands that are run by your application's containers. 
-    If you want to customize the default entry point of the container, you can include a `Procfile` with the `web` process type in the project root directory. 
-    In **Go** projects, it is optional to include a `Procfile`.
+=== ".NET"
+    Supported Versions - 6.x, 7.x, 8.x
 
-    Here's an example `Procfile` for an application:
+    Refer below examples for different component types. Follow the `readme.md` inside the example.
 
-    ```
-    web: <command to start your application>
-    ```
-
-    Eg:-
-
-    `web: go run main.go` <br>
+    | Component Type  | Example            |
+    |---------------- |--------------------|
+    | Service | [Greeting Service](https://github.com/wso2/choreo-samples/tree/main/dotnet-greeter)|
 
     For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
 
