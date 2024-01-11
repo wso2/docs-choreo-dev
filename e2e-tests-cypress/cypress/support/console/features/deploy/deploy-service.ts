@@ -13,6 +13,7 @@
 
 import {
   BUILD_FAILED,
+  CONFIG_CONTENT,
   DEPLOYMENT_PENDING,
   DEPLOYMENT_PROGRESSING,
   DEPLOYMENT_SUCCESS,
@@ -27,6 +28,8 @@ import { Service } from "../../entities/component/service-component";
 import { DeploymentTrack } from "../deployment-track/deployment-track";
 import { ManualTrigger } from "../../entities/component/manual-trigger-component";
 import { ScheduleTrigger } from "../../entities/component/schedule-trigger-component";
+import { WebApp } from "../../entities/component/webapp-component";
+import { Enums } from "../../../commons/enums";
 
 export enum EndpointAccessibility {
   Public = "Public",
@@ -43,7 +46,12 @@ export interface DeployServiceFeature {
     configStepsAvailable: number
   );
 
-  _deployTask(component: ManualTrigger | ScheduleTrigger, configStepsAvailable: number);
+  _deployTask(
+    component: ManualTrigger | ScheduleTrigger,
+    configStepsAvailable: number
+  );
+
+  _deployWebapp(component: WebApp, hasAuthSettings: boolean);
 
   _promoteService(
     component: Service,
@@ -51,10 +59,17 @@ export interface DeployServiceFeature {
     configStepsAvailable: number
   );
 
-  _promoteTask(component: ManualTrigger | ScheduleTrigger, configStepsAvailable: number);
+  _promoteTask(
+    component: ManualTrigger | ScheduleTrigger,
+    configStepsAvailable: number
+  );
+
+  _promoteWebapp(
+    component: WebApp,
+    hasAuthSettings: boolean,
+    configStepsAvailable: number
+  );
 }
-
-
 
 export function mixinServiceDeploy<T extends Types.Constructor>(
   base: T
@@ -80,10 +95,15 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.verifyDeploymentStatus();
 
+      this.verifyDevEndpoint();
+
       this.verifyDevAccessibility(component, endpointVisibility);
     }
 
-    _deployTask(component: ManualTrigger | ScheduleTrigger , configStepsAvailable: number) {
+    _deployTask(
+      component: ManualTrigger | ScheduleTrigger,
+      configStepsAvailable: number
+    ) {
       this.sideMenu.navigateToDeploy();
 
       this.waitTillReadyToDeploy();
@@ -91,6 +111,20 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.startDeployment(component);
 
       this.stepThroughConfigSteps(configStepsAvailable);
+    }
+
+    _deployWebapp(component: WebApp, hasAuthSettings: boolean) {
+      this.sideMenu.navigateToDeploy();
+
+      this.waitTillReadyToDeploy();
+
+      this.startDeployment(component);
+
+      this.configureWebApp(hasAuthSettings);
+
+      this.verifyDeploymentStatus();
+
+      this.storeDevWebAppUrl(component);
     }
 
     _promoteService(
@@ -107,11 +141,32 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.reviewAndUpdateEndpoint(component, endpointVisibility);
 
       this.verifyPromotionStatus();
+
+      this.verifyProdEndpoint();
     }
 
     _promoteTask(component: ManualTrigger | ScheduleTrigger) {
       this.sideMenu.navigateToDeploy();
+
       this.startPromotion(component);
+    }
+
+    _promoteWebapp(
+      component: WebApp,
+      hasAuthSettings: boolean,
+      configStepsAvailable: number
+    ) {
+      this.sideMenu.navigateToDeploy();
+
+      this.startPromotion(component);
+
+      this.stepThroughConfigSteps(configStepsAvailable);
+
+      this.configureWebApp(hasAuthSettings);
+
+      this.verifyPromotionStatus();
+
+      this.storeProdWebAppUrl(component);
     }
 
     _addNewVersion(component: Service, branch: string, version: string) {
@@ -176,7 +231,9 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.retryEnvCardDataRetrieval();
     }
 
-    private startDeployment(component: Service | ManualTrigger | ScheduleTrigger) {
+    private startDeployment(
+      component: Service | ManualTrigger | ScheduleTrigger | WebApp
+    ) {
       this.deploymentTrack.validate(component);
 
       cyGet(TestIds.deploySplitToggle, MEDIUM_TIME)
@@ -222,7 +279,11 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
         cy.get(TestIds.deploymentStatus, LONG_TIME)
           .contains(DEPLOYMENT_SUCCESS, LONG_TIME)
           .should("be.visible");
+      });
+    }
 
+    private verifyDevEndpoint() {
+      cy.get(TestIds.devEnvCard).within(() => {
         cyGet(TestIds.availableEndpoints).should("be.visible");
       });
 
@@ -249,7 +310,11 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
         cy.get(TestIds.deploymentStatus, LONG_TIME)
           .contains(DEPLOYMENT_SUCCESS, LONG_TIME)
           .should("be.visible");
+      });
+    }
 
+    private verifyProdEndpoint() {
+      cy.get(TestIds.prodEnvCard).within(() => {
         cyGet(TestIds.availableEndpoints).should("be.visible");
       });
 
@@ -368,16 +433,48 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       });
     }
 
-    private startPromotion(component: Service | ManualTrigger | ScheduleTrigger) {
+    private startPromotion(
+      component: Service | ManualTrigger | ScheduleTrigger | WebApp
+    ) {
       this.deploymentTrack.validate(component);
 
       this.retryPromotionToProd();
-
       cy.get(TestIds.promote, LONG_TIME).should("be.enabled").click();
+
       if (component instanceof ScheduleTrigger) {
-        cy.get(TestIds.promoteScheduleTask, LONG_TIME).should("be.enabled").click();
+        cy.get(TestIds.next, LONG_TIME).should("be.enabled").click();
         cy.get('[value="*/1 * * * *"]', LONG_TIME).eq(1).should("be.visible");
       }
+    }
+
+    private configureWebApp(hasAuthSettings: boolean) {
+      cy.get(TestIds.formConfigField).type("{backspace}").type(CONFIG_CONTENT);
+      cy.get(TestIds.next).click();
+
+      if (hasAuthSettings) {
+        cy.contains("h5", "Authentication Settings").click();
+        cy.get(TestIds.next).should("be.visible").click();
+      }
+    }
+
+    private storeDevWebAppUrl(component: WebApp) {
+      cy.get(TestIds.devEnvCard).within(() => {
+        cy.get(TestIds.appUrl)
+          .invoke("attr", "href")
+          .then((url) => {
+            component.setDevWebAppUrl(url);
+          });
+      });
+    }
+
+    private storeProdWebAppUrl(component: WebApp) {
+      cy.get(TestIds.prodEnvCard).within(() => {
+        cy.get(TestIds.appUrl)
+          .invoke("attr", "href")
+          .then((url) => {
+            component.setProdWebAppUrl(url);
+          });
+      });
     }
   };
 }

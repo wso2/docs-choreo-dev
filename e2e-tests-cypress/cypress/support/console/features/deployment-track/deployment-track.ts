@@ -16,6 +16,7 @@ import { Proxy } from "../../entities/component/proxy-component";
 import { Component } from "../../entities/component/component";
 import { ManualTrigger } from "../../entities/component/manual-trigger-component";
 import { ScheduleTrigger } from "../../entities/component/schedule-trigger-component";
+import { WebApp } from "../../entities/component/webapp-component";
 
 export class DeploymentTrack {
   validate(component: Component) {
@@ -25,7 +26,9 @@ export class DeploymentTrack {
 
     if (component instanceof Proxy) {
       cy.get(TestIds.versionPicker).contains(`v${version}`);
-    } else if (component instanceof ManualTrigger || component instanceof ScheduleTrigger) {
+    } else if (component instanceof ManualTrigger || 
+		component instanceof ScheduleTrigger ||
+                component instanceof WebApp) {
       cy.get(TestIds.selectBranch).contains(version);
     } else {
       cy.get(TestIds.selectVersion).contains(`API v${version}`);
