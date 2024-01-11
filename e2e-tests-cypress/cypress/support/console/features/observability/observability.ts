@@ -21,11 +21,22 @@ export class _Observability {
 
   viewObservabilityMetrics(env: Enums.Environment) {
     this.sideMenu.navigateToObserve();
-    this.verifyObservabilityMetrics("ballerina: sending metrics to Choreo");
+    this.selectEnvironment(env);
+    this.verifyObservabilityMetrics("ballerina: sending metrics to Choreo" );
   }
 
+  private selectEnvironment(env: Enums.Environment) {
+    let index = 1;
+        if (env == Enums.Environment.DEVELOPMENT) {
+          index = 0;
+        }
+    cy.get(TestIds.environmentPickerObsMetrics).should("be.visible").click();
+        cy.get(`[id="environment-selector-label-option-${index}"]`).click({
+          force: true,
+        });
+      }
 
-  private verifyObservabilityMetrics(text: string) {
+  private verifyObservabilityMetrics(text: string ) {
     cy.get(TestIds.observabilityLogPanelEntry).should("be.visible").each(($e) => {
       let log = $e
         .text()

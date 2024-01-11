@@ -186,4 +186,5 @@ export namespace TestIds {
   export const executionCount = '[data-cyid="total-executions-count"]';
   export const promoteScheduleTask = '[data-cyid="btn-next-button"]';
   export const observabilityLogPanelEntry = '[data-testid="log-panel-entry"]';
+  export const environmentPickerObsMetrics = '[data-cyid="environment-selector-select"]';
 }
