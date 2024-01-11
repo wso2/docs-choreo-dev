@@ -1,9 +1,0 @@
-apiVersion: policy/v1
-kind: PodDisruptionBudget
-metadata:
-  name: loggingapi
-spec:
-  minAvailable: "50%"
-  selector:
-    matchLabels:
-      choreo.component: loggingapi
