@@ -12,10 +12,52 @@
  */
 
 import { mixinBuild } from "../../features/component-build/build";
+import { mixinServiceDeploy } from "../../features/deploy/deploy-service";
 import { Component } from "./component";
 
-export class WebApp extends mixinBuild(Component) {
+export class WebApp extends mixinBuild(mixinServiceDeploy(Component)) {
+  private devWebAppUrl: string;
+  private prodWebAppUrl: string;
+
   constructor(name: string) {
-    super(name, "1.0");
+    super(name, "main");
+
+    this.visitComponent(name);
+  }
+
+  setDevWebAppUrl(url: string) {
+    this.devWebAppUrl = url;
+  }
+
+  getDevWebAppUrl() {
+    return this.devWebAppUrl;
+  }
+
+  setProdWebAppUrl(url: string) {
+    this.prodWebAppUrl = url;
+  }
+
+  getProdWebAppUrl() {
+    return this.prodWebAppUrl;
+  }
+
+  build() {
+    this._build(this);
+  }
+
+  deployToDevWithAuthConfiguration() {
+    this._deployWebapp(this, true);
+  }
+
+  promoteToProdWithAuthConfiguration() {
+    this._promoteWebapp(this, true, 1);
+  }
+
+  verifyTestPageIsDisabled() {
+    cy.get('[data-cyid="link-test"]').should("have.attr", "disabled");
+  }
+
+  verifyManagePageIsDisabled() {
+    cy.get('[data-cyid="link-manage"]').should("have.attr", "disabled");
   }
 }

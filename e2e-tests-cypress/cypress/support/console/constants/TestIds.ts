@@ -184,7 +184,21 @@ export namespace TestIds {
   export const runNowNotification = '[data-testid="snackbar-notification"]';
   export const refreshTasks = '[data-cyid="refresh-tasks-button"]';
   export const executionCount = '[data-cyid="total-executions-count"]';
-  export const promoteScheduleTask = '[data-cyid="btn-next-button"]';
-  export const observabilityLogPanelEntry = '[data-testid="log-panel-entry"]';
+  export const link = '[data-cyid="btn-link-button"]';
+  export const mountPath = '[data-cyid="mount-path"]';
+  export const formConfigField =
+    '[class="view-lines monaco-mouse-cursor-text"]';
+  export const appUrl = '[data-cyid="app-url-link"]';
+  export const orgAppSecurity =
+    '[data-cyid="nav-link-application-security-link-tabs-link-tab"]';
+  export const builtInIdpCard = '[data-cyid="choreo-built-in-idp-card"]';
+  export const linkBtn = '[data-cyid="link-button"]';
+  export const selectUserStoreFile =
+    '[data-cyid="userstore-file-uploader-button-button"]';
+  export const uploadUserStoreFile = '[data-cyid="upload-csv-button"]';
+  export const idpEnv = (env: Enums.Environment) =>
+    `[data-cyid="choreo-idp-environments-${env.toLowerCase()}"]`;
+  export const uploadUserStoreCard = '[data-cyid="upload-userstores-card"]';
+export const observabilityLogPanelEntry = '[data-testid="log-panel-entry"]';
   export const environmentPickerObsMetrics = '[data-cyid="environment-selector-select"]';
 }

@@ -20,9 +20,10 @@ import { Types } from "../../../commons/types";
 import { DeploymentTrack } from "../deployment-track/deployment-track";
 import { ManualTrigger } from "../../entities/component/manual-trigger-component";
 import { ScheduleTrigger } from "../../entities/component/schedule-trigger-component";
+import { WebApp } from "../../entities/component/webapp-component";
 
 export interface BuildFeature {
-  _build(component: Service | ManualTrigger | ScheduleTrigger): void;
+  _build(component: Service | ManualTrigger | ScheduleTrigger | WebApp): void;
 }
 
 export function mixinBuild<T extends Types.Constructor>(
@@ -32,17 +33,17 @@ export function mixinBuild<T extends Types.Constructor>(
     private sideMenu = new ServiceLeftMenu();
     private deploymentTrack = new DeploymentTrack();
 
-    _build(component: Service | ManualTrigger | ScheduleTrigger) {
+    _build(component: Service | ManualTrigger | ScheduleTrigger | WebApp) {
       this.sideMenu.navigateToBuild();
 
       this.triggerBuild(component);
     }
 
-    private triggerBuild(component: Service | ManualTrigger | ScheduleTrigger) {
+    private triggerBuild(component: Service | ManualTrigger | ScheduleTrigger | WebApp) {
       this.deploymentTrack.validate(component);
 
       cy.get(TestIds.build).should("be.enabled").click();
-      cy.get(TestIds.next).should("be.visible").click();
+      cy.get(TestIds.next).should("be.visible").should("be.enabled").click();
       cy.get(TestIds.tableTitle).within(() => {
         cy.contains(BUILD_SUCCESS, LONG_TIME);
       });
