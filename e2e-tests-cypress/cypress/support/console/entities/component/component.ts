@@ -21,6 +21,7 @@ import { DevPortalLeftMenu } from "../../ui-elements/left-menus/dev-portal-left-
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
 import { Application } from "../application/application";
 import { _Stats } from "../../features/stats/stats";
+import { _Observability } from "../../features/observability/observability";
 
 /**
  * This is the base class for all the components in the Console
@@ -34,6 +35,7 @@ export class Component {
   private devPortalMenu = new DevPortalLeftMenu();
   private stats = new _Stats();
   protected sideMenu = new ServiceLeftMenu();
+  protected observability = new _Observability();
 
   constructor(name: string, version: string) {
     this.name = name;

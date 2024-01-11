@@ -184,4 +184,7 @@ export namespace TestIds {
   export const runNowNotification = '[data-testid="snackbar-notification"]';
   export const refreshTasks = '[data-cyid="refresh-tasks-button"]';
   export const executionCount = '[data-cyid="total-executions-count"]';
+  export const promoteScheduleTask = '[data-cyid="btn-next-button"]';
+  export const observabilityLogPanelEntry = '[data-testid="log-panel-entry"]';
+  export const environmentPickerObsMetrics = '[data-cyid="environment-selector-select"]';
 }

@@ -11,102 +11,67 @@
  * associated services.
  */
 
-import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
-import { ComponentObservePage } from "../../../support/console/pages/component/component-observe-page";
-import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { LoginPage } from "../../../support/console/pages/login-page";
-import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { GraphQL } from "../../../support/console/apis/graphql";
-import { ComponentData } from "../../../support/interfaces/component-data";
-import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
-import { GitHub } from "../../../support/github/github";
+
 import { Enums } from "../../../support/commons/enums";
-import { Utils } from "../../../support/commons/utils";
-import { MEDIUM_TIME, SHORT_TIME } from "../../../support/commons/timeouts";
-import { ComponentBuild } from "../../../support/console/pages/component/Functionalities/Component-build";
+import { console } from "../../../support/console/console";
+import { Project } from "../../../support/console/entities/project/project";
+import { ScheduleTrigger } from "../../../support/console/entities/component/schedule-trigger-component";
+import { _Observability } from "../../../support/console/features/observability/observability";
+import { ComponentObservePage } from "../../../support/console/pages/component/component-observe-page";
+
+after(() => {
+  console.logout();
+});
+
 
 describe("Create Schedule Trigger", () => {
-  const SCHEDULE_NAME = Utils.generateComponentName();
-  const EXPECTED_RESULT =
-    '{"userId":1,"id":1,"title":"delectus aut autem","completed":false}';
-  const REPO_NAME = Utils.generateComponentName("repo");
-  const PROJECT_NAME = Utils.generateProjectName();
+ 
   const PROJECT_DESCRIPTION = "Schedule Trigger Test Project";
+  let project: Project;
+  let component: ScheduleTrigger;
 
-  before(() => {
-    LoginPage.login();
-  });
-
-  after(() => {
-    ChoreoHomePage.logout();
+  it("Login to Console", () => {
+    console.login();
   });
 
   it("Creating a project", () => {
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.EU
-    );
+    project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
   it("Verify Schedule Trigger component creation", () => {
-    let componentData: ComponentData = {
-      componentName: SCHEDULE_NAME,
-      displayType: Enums.DisplayType.scheduledTask,
-      accessibility: Enums.Accessibility.EXTERNAL,
-      projectName: PROJECT_NAME,
-      triggerChannels: "",
-      triggerId: null,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/schedule-trigger",
-      initializeAsBallerinaProject: false,
-      repositoryType: Enums.RepoType.UserManagedNonEmpty,
-      repositorySubPath: "",
-      sampleTemplate: "",
-    };
 
-    GraphQL.createComponent(
-      PROJECT_NAME,
-      REPO_NAME,
-      componentData,
-      GraphQLQueryBuilder.getRestComponentCreationQuery
-    );
+    project.createScheduleTriggerComponent(Enums.Accessibility.EXTERNAL, {
+        url: "https://github.com/choreo-test-apps/schedule-trigger",
+        branch: "main",
+      })
+      .then((comp: ScheduleTrigger) => {
+        component = comp;
+      });
   });
 
-  it("Navigate to deployment", () => {
-    ComponentListingPage.visitToAComponent(SCHEDULE_NAME);
-    if (Utils.isBuildDeployEnabled()) {
-      ComponentOverviewPage.navigateToBuild();
-      ComponentBuild.buildComponent();
-    }
-    ComponentOverviewPage.navigateToDeploy();
+  it("Build the component", () => {
+    component.build();
   });
 
-  it("Verify component deployment", () => {
-    ComponentDeployPage.deployScheduleTask();
+  it("Deploying to Dev", () => {
+    component.deployToDev();
   });
 
-  it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteScheduleTask();
-  });
-
-  it("Verify navigate to observability Page", () => {
-    ComponentOverviewPage.navigateToObserve(MEDIUM_TIME.timeout);
+  it("Verify component promotion to Prod", () => {
+    component.promoteProd();
   });
 
   it("Verify dev env logs", () => {
-    ComponentObservePage.selectEnv(Enums.Environment.DEVELOPMENT);
-    ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT);
+   component.verifyObservabilityMetrics(Enums.Environment.DEVELOPMENT);
   });
 
-  it("Verify prod env logs", () => {
-    ComponentObservePage.selectEnv(Enums.Environment.PRODUCTION);
-    ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT);
-  });
+ it("Verify prod env logs", () => {
+  component.verifyObservabilityMetrics(Enums.Environment.PRODUCTION);
+   });
 
-  it("Verify application suspension", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
+  it("Stop deployments", () => {
+    component.stopDeployment();
+    component.stopPromotion();
   });
 });
+   

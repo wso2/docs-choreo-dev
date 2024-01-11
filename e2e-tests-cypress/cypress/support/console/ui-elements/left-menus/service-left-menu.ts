@@ -100,5 +100,13 @@ export class ServiceLeftMenu extends LeftMenu {
     this.navigateToMenuItem("[data-cyid=link-execute]");
   }
 
+  navigateToObserve() {
+    this.scrollToTopOfMenu();
+    this.navigateToSubMenu(
+      "[data-cyid=observability]",
+      new Array('[data-cyid="metrics"]')
+      );
+    }
+
 
 }

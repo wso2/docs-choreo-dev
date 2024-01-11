@@ -12,7 +12,6 @@
  */
 
 import { Enums } from "../../../support/commons/enums";
-import { Utils } from "../../../support/commons/utils";
 import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
 import { ManualTrigger } from "../../../support/console/entities/component/manual-trigger-component";
