@@ -111,6 +111,8 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.startDeployment(component);
 
       this.stepThroughConfigSteps(configStepsAvailable);
+
+      this.verifyTaskDeploymentStatus();
     }
 
     _deployWebapp(component: WebApp, hasAuthSettings: boolean) {
@@ -149,6 +151,8 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.sideMenu.navigateToDeploy();
 
       this.startPromotion(component);
+
+      this.verifyTaskPromotionStatus();
     }
 
     _promoteWebapp(
@@ -299,6 +303,12 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       });
     }
 
+    private verifyTaskDeploymentStatus() {
+      cy.get(TestIds.devEnvCard).within(() => {
+        cy.get(TestIds.deploymentHistory).should("be.visible");
+      });
+    }
+
     private verifyPromotionStatus() {
       this.retryEnvCardDataRetrieval();
 
@@ -327,6 +337,12 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
         cyGet(TestIds.deploymentStatus, SHORT_TIME)
           .contains(DEPLOYMENT_PROGRESSING, SHORT_TIME)
           .should("not.exist");
+      });
+    }
+
+    private verifyTaskPromotionStatus() {
+      cy.get(TestIds.prodEnvCard).within(() => {
+        cy.get(TestIds.deploymentHistory).should("be.visible");
       });
     }
 

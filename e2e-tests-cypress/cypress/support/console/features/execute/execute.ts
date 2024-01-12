@@ -50,7 +50,7 @@ export function mixinExecute<T extends Types.Constructor>(
       cy.get(TestIds.refreshTasks).should("be.visible").click();
 
       cy.get(TestIds.executionCount, VERY_SHORT_TIME).then(($count) => {
-        expect(Number($count.text())).gte(0);
+        expect(Number($count.text())).gt(0);
       });
     }
   };

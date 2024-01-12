@@ -180,7 +180,7 @@ export namespace TestIds {
   export const applicationListEdit = (appName: string) =>
     `[data-testid="edit-btn-${appName}"]`;
   export const configSubmit = '[data-cyid="btn-submit-configform"]';
-  export const runNow = '[data-cyid="run-now-button"]';
+  export const runNow = '[data-cyid="run-now-split-group-button-button"]';
   export const runNowNotification = '[data-testid="snackbar-notification"]';
   export const refreshTasks = '[data-cyid="refresh-tasks-button"]';
   export const executionCount = '[data-cyid="total-executions-count"]';
@@ -199,6 +199,9 @@ export namespace TestIds {
   export const idpEnv = (env: Enums.Environment) =>
     `[data-cyid="choreo-idp-environments-${env.toLowerCase()}"]`;
   export const uploadUserStoreCard = '[data-cyid="upload-userstores-card"]';
-export const observabilityLogPanelEntry = '[data-testid="log-panel-entry"]';
-  export const environmentPickerObsMetrics = '[data-cyid="environment-selector-select"]';
+  export const observabilityLogPanelEntry = '[data-testid="log-panel-entry"]';
+  export const environmentPickerObsMetrics =
+    '[data-cyid="environment-selector-select"]';
+  export const deploymentHistory =
+    '[data-cyid="deployment-history-btn-button"]';
 }
