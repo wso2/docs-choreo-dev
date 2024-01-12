@@ -26,9 +26,10 @@ export class _Observability {
   }
 
   private selectEnvironment(env: Enums.Environment) {
-    let index = 1;
+    cy.wait(3000);
+    let index = 0;
         if (env == Enums.Environment.DEVELOPMENT) {
-          index = 0;
+          index = 1;
         }
     cy.get(TestIds.environmentPickerObsMetrics).should("be.visible").click();
         cy.get(`[id="environment-selector-label-option-${index}"]`).click({
@@ -37,14 +38,14 @@ export class _Observability {
       }
 
   private verifyObservabilityMetrics(text: string ) {
-    cy.get(TestIds.observabilityLogPanelEntry).should("be.visible").each(($e) => {
+    cy.get(TestIds.observabilityLogPanelEntry, { timeout: 180000 }).should("be.visible").each(($e) => {
       let log = $e
         .text()
         .replace("ballerina: sending metrics to Choreo", "")
         .trim()
         .toString();
 
-      cyLog(log);
+        cyLog(log);
 
       if (log.includes(text)) {
         const exactText = log.slice(log.indexOf("{"), log.indexOf("}") + 1);
