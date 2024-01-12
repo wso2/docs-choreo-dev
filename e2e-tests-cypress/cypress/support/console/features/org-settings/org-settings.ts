@@ -22,7 +22,15 @@ export class OrganizationSettings {
       cy.get(TestIds.linkBtn).click();
     });
 
-    cy.get(TestIds.idpEnv(env)).should("be.visible").click();
+    cy.get(TestIds.choreoIdpEnvs).should("be.visible");
+
+    cy.get("body").then((bdy) => {
+      if (bdy.find(TestIds.idpEnv(env)).length > 0) {
+        cy.get(TestIds.idpEnv(env)).should("be.visible").click();
+      } else {
+        cy.get(TestIds.idpEnvUS(env)).should("be.visible").click();
+      }
+    });
 
     cy.get(TestIds.tableTitle).find("tbody tr").should("have.length", 1);
 

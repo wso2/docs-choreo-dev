@@ -196,8 +196,11 @@ export namespace TestIds {
   export const selectUserStoreFile =
     '[data-cyid="userstore-file-uploader-button-button"]';
   export const uploadUserStoreFile = '[data-cyid="upload-csv-button"]';
+  export const choreoIdpEnvs = '[data-cyid="choreo-idp-environments"]';
   export const idpEnv = (env: Enums.Environment) =>
     `[data-cyid="choreo-idp-environments-${env.toLowerCase()}"]`;
+  export const idpEnvUS = (env: Enums.Environment) =>
+    `[data-cyid="choreo-idp-environments-${env.toLowerCase()}---us"]`;
   export const uploadUserStoreCard = '[data-cyid="upload-userstores-card"]';
   export const observabilityLogPanelEntry = '[data-testid="log-panel-entry"]';
   export const environmentPickerObsMetrics =
