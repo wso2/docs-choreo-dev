@@ -9,6 +9,8 @@ healthCheckPort = 9091
 
 jwtTokenScopes = ["apim:api_manage", "apim:publisher_settings"]
 
+mizzenServerBasePath = "http://dp-mizzen:80"
+
 [ballerina.http.accessLogConfig]
 console = true
 
