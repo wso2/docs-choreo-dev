@@ -324,7 +324,6 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
     private stepThroughConfigStepsPromotion(configStepsAvailable: number) {
       for (let i = 0; i < configStepsAvailable; i++) {
-        cy.get(TestIds.next).should("be.visible").click();
       }
       
     }

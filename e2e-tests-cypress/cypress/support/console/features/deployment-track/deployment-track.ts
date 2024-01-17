@@ -17,6 +17,9 @@ import { Component } from "../../entities/component/component";
 import { ManualTrigger } from "../../entities/component/manual-trigger-component";
 import { ScheduleTrigger } from "../../entities/component/schedule-trigger-component";
 import { WebApp } from "../../entities/component/webapp-component";
+import { Webhook } from "../../entities/component/webhook-component";
+import { Test } from "mocha";
+import { TestRunner } from "../../entities/component/test-runner-component";
 
 export class DeploymentTrack {
   validate(component: Component) {
@@ -28,7 +31,8 @@ export class DeploymentTrack {
       cy.get(TestIds.versionPicker).contains(`v${version}`);
     } else if (component instanceof ManualTrigger || 
       component instanceof ScheduleTrigger ||
-      component instanceof WebApp) {
+      component instanceof WebApp ||
+      component instanceof Webhook || component instanceof TestRunner) {
       cy.get(TestIds.selectBranch).contains(version);
     } else {
       cy.get(TestIds.selectVersion).contains(`API v${version}`);
