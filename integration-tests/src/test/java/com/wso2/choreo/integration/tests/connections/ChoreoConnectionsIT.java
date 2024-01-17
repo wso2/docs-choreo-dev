@@ -20,6 +20,7 @@ import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.apis.marketplace.ConnectionService;
 import com.wso2.choreo.integration.apis.marketplace.MarketplaceService;
+import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
@@ -27,9 +28,11 @@ import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.ApiDTO;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
 import com.wso2.choreo.integration.models.code.Repository;
@@ -39,10 +42,13 @@ import com.wso2.choreo.integration.models.marketplace.ConnectionCreateRequest;
 import com.wso2.choreo.integration.models.marketplace.ServiceInfo;
 import com.wso2.choreo.integration.models.marketplace.ServiceVisibility;
 import com.wso2.choreo.integration.models.marketplace.Visibility;
+import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
+import com.wso2.choreo.integration.models.response.Response;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -53,6 +59,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * Tests related to Choreo connection creation and use.
@@ -75,10 +82,16 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
     private String orgHandle;
     private int orgId;
     private String orgUUID;
-    ChoreoProject project;
+    ChoreoProject projectOne;
+    ChoreoProject projectTwo;
     private ChoreoComponent serviceChoreoComponent;
     private ChoreoComponent clientChoreoComponent;
+    private ChoreoComponent proxyComponent;
+    private String componentLevelConnectionId;
+    private String projectLevelConnectionId;
+    private List<Environment> servicePublisherComponentEnvironments;
     private List<Environment> clientComponentEnvironments;
+    private ConnectionCreateRequest connectionCreationReq;
     private ComponentDeploymentStatusDTO serviceDeploymentStatusDTO, servicePromotionStatusDTO;
     private ComponentDeploymentStatusDTO clientDeploymentStatusDTO, clientPromotionStatusDTO;
     private final String repoName = "connection-test-reward-management-api";
@@ -109,7 +122,7 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
     @Test
     @CitrusTest
     public void createProject_TestChoreoConnections() throws Exception {
-        project = ComponentUtils.createProject(this, citrusClients, accessToken,
+        projectOne = ComponentUtils.createProject(this, citrusClients, accessToken,
                 Constant.region.US.toString());
     }
     @Test(dependsOnMethods = {"createProject_TestChoreoConnections"})
@@ -121,7 +134,7 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
                 oasFilePath("openapi.yaml").
                 dockerfilePath(SVC_COMPONENT_DOCKER_FILE_PATH).build();
 
-        GraphqlDTO dto = ComponentUtils.createByocComponentRequest(componentName, project, repo);
+        GraphqlDTO dto = ComponentUtils.createByocComponentRequest(componentName, projectOne, repo);
 
         serviceChoreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken,
                 dto, ComponentFlavour.BYOC);
@@ -129,10 +142,10 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createServicePublisherComponent_TestChoreoConnections"})
     @CitrusTest
     public void deployServicePublisherComponent_TestChoreoConnections() throws Exception {
-        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
+        servicePublisherComponentEnvironments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 serviceChoreoComponent);
         serviceDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
-                serviceChoreoComponent, environments, ComponentFlavour.BYOC);
+                serviceChoreoComponent, servicePublisherComponentEnvironments, ComponentFlavour.BYOC);
         SVC_COMPONENT_SERVICE_NAME = serviceChoreoComponent.getName().concat("-").concat(SVC_COMPONENT_ENDPOINT_NAME);
     }
     @Test(dependsOnMethods = {"createProject_TestChoreoConnections"})
@@ -144,7 +157,7 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
                 oasFilePath("openapi.yaml").
                 dockerfilePath(CLIENT_COMPONENT_DOCKER_FILE_PATH).build();
 
-        GraphqlDTO dto = ComponentUtils.createByocComponentRequest(componentName, project, repo);
+        GraphqlDTO dto = ComponentUtils.createByocComponentRequest(componentName, projectOne, repo);
 
         clientChoreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken,
                 dto, ComponentFlavour.BYOC);
@@ -177,10 +190,10 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
         }
         ArrayList<Visibility> visibilities = new ArrayList<>();
         Visibility componentVisibility = Visibility.builder().
-                organizationUuid(orgUUID).projectUuid(project.getId()).componentUuid(clientChoreoComponent.getId()).build();
+                organizationUuid(orgUUID).projectUuid(projectOne.getId()).componentUuid(clientChoreoComponent.getId()).build();
         visibilities.add(componentVisibility);
 
-        ConnectionCreateRequest connectionReq = ConnectionCreateRequest.builder().name("Loyalty-svc-connection")
+        connectionCreationReq = ConnectionCreateRequest.builder().name("Loyalty-svc-connection")
                 .description("Connection for loyalty service")
                 .serviceId(serviceId)
                 .schemaReference(schemaReference)
@@ -189,8 +202,8 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
                 .requestingServiceVisibility("PUBLIC")
                 .orgIdInteger(orgId).build();
         String connectionId = ConnectionService.createChoreoConnection(this, connectionServiceClient,
-                accessToken, connectionReq);
-
+                accessToken, connectionCreationReq);
+        componentLevelConnectionId = connectionId;
         //update component-config.yaml file
         //Let's consume service using organization visibility
         String serviceIdentifier = MarketplaceService.getChoreoServiceIdentifier(this,
@@ -213,7 +226,10 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
                 environments, ComponentFlavour.BYOC);
     }
 
-    //consider promoting
+    //TODO: verify connection is partial
+    public void verifyPartialConnection_TestChoreoConnections() throws Exception {
+
+    }
 
 
     @Test(dependsOnMethods = {"deployServiceConsumerComponent_TestChoreoConnections"})
@@ -225,6 +241,126 @@ public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
                 clientChoreoComponent, clientDeploymentStatusDTO, environments);
         ComponentUtils.invokeApiPOST(this, invokeData.getRight().getApikey(), invokeData.getLeft(), API_INVOCATION_REQUEST_URI,
                 API_INVOCATION_REQUEST_BODY, REST_API_EXPECTED_RESPONSE, HttpStatus.ACCEPTED);
+    }
+
+    @Test(dependsOnMethods = {"invokeAPIDev_TestChoreoConnections"})
+    @CitrusTest
+    public void promoteServiceComponent_TestChoreoConnections() throws Exception {
+        List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients, accessToken, serviceChoreoComponent,
+                servicePublisherComponentEnvironments, ComponentFlavour.BYOC);
+        servicePromotionStatusDTO = statusDTO.get(0);  // we'll consider only the first promotion
+
+    }
+    @Test(dependsOnMethods = {"promoteServiceComponent_TestChoreoConnections"})
+    @CitrusTest
+    public void refreshComponentLevelConnection_TestChoreoConnections() throws Exception {
+        HttpClient connectionServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        ConnectionService.refreshChoreoConnection(this, connectionServiceClient,
+                accessToken, componentLevelConnectionId, connectionCreationReq);
+    }
+
+    @Test(dependsOnMethods = {"refreshComponentLevelConnection_TestChoreoConnections"})
+    @CitrusTest
+    public void promoteClientComponent_TestChoreoConnections() throws Exception {
+        List<ComponentDeploymentStatusDTO> statusDTO =  ComponentUtils.promoteComponent(this, citrusClients, accessToken, clientChoreoComponent,
+                clientComponentEnvironments, ComponentFlavour.BYOC);
+        clientPromotionStatusDTO = statusDTO.get(0);  //we'll consider only the first promotion
+    }
+
+    @Test(dependsOnMethods = {"promoteClientComponent_TestChoreoConnections"})
+    @CitrusTest
+    public void invokeAPIStage_TestChoreoConnections() throws Exception {
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
+                clientChoreoComponent);
+        Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
+                clientChoreoComponent, clientPromotionStatusDTO, environments);
+        ComponentUtils.invokeApiPOST(this, invokeData.getRight().getApikey(), invokeData.getLeft(), API_INVOCATION_REQUEST_URI,
+                API_INVOCATION_REQUEST_BODY, REST_API_EXPECTED_RESPONSE, HttpStatus.ACCEPTED);
+    }
+
+    @Test(dependsOnMethods = {"invokeAPIStage_TestChoreoConnections"})
+    @CitrusTest
+    public void createAPIProxyComponent_TestChoreoConnections() throws Exception {
+        //create new project
+        projectTwo = ComponentUtils.createProject(this, citrusClients, accessToken,
+                Constant.region.US.toString());
+        //create a proxy component
+        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String apiName = Constant.DEFAULT_API_NAME.concat(String.valueOf(new Date().getTime()));
+        Pair<ChoreoComponent, ProxyAPI> componentDetail = ComponentUtils.createProxyComponent(this, citrusClients,
+                accessToken, componentName, apiName, projectTwo);
+        //update proxy with details
+        ProxyAPI proxyApi = componentDetail.getRight();
+        ApiDTO apiDTO = ApiDTO.builder().apiName(proxyApi.getName()).
+                description(proxyApi.getDescription()).
+                productionEndpoint(Constant.DEFAULT_ENDPOINT).
+                sandboxEndpoint(Constant.DEFAULT_ENDPOINT).
+                basePath(proxyApi.getContext() + "/1.0.0").build();
+        String apiPayload = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/proxyAPIUpdateRequestWithAPIRateLimit.mustache", apiDTO);  //This api is exposed in public
+        Response response = APICreator.updateAPIWithRestAPIContent(proxyApi, apiPayload, accessToken);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
+        //deploy proxy component
+        proxyComponent = componentDetail.getLeft();
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
+                proxyComponent);
+        ComponentUtils.deployProxyComponent(this, citrusClients, accessToken,
+                proxyComponent , environments);
+    }
+
+    @Test(dependsOnMethods = {"createAPIProxyComponent_TestChoreoConnections"})
+    @CitrusTest
+    public void createProjectLevelConnectionToProxy_TestChoreoConnections() throws Exception {
+        //Get created service from resource registry
+        HttpClient marketplaceServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        List<ServiceInfo> services = MarketplaceService.searchForServices(this,
+                marketplaceServiceClient, accessToken, proxyComponent.getName(), NETWORK_VISIBILITY_FILTER);
+        ServiceInfo serviceFound = services.get(0);  //we will only get one as we search by exact name
+        String serviceId = serviceFound.getServiceId();
+        String schemaReference = serviceFound.getConnectionSchemas()[0].getId();  //this will only have one schema
+        //create connection under project two with project level visibility
+        HttpClient connectionServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        ArrayList<com.wso2.choreo.integration.models.marketplace.Environment> environmentsToQuery =
+                new ArrayList<>();
+        for (Environment env : clientComponentEnvironments) {
+            environmentsToQuery.add(
+                    com.wso2.choreo.integration.models.marketplace.Environment.builder()
+                            .id(env.getTemplateId())
+                            .isCritical(env.isCritical()).build()
+            );
+        }
+        ArrayList<Visibility> visibilities = new ArrayList<>();
+        Visibility projectVisibility = Visibility.builder().
+                organizationUuid(orgUUID).projectUuid(projectTwo.getId()).build();
+        visibilities.add(projectVisibility);
+
+        ConnectionCreateRequest connectionReq = ConnectionCreateRequest.builder().name("Loyalty-svc-connection")
+                .description("Connection for loyalty service")
+                .serviceId(serviceId)
+                .schemaReference(schemaReference)
+                .environments(environmentsToQuery.toArray(new com.wso2.choreo.integration.models.marketplace.Environment[0]))
+                .visibilities(visibilities.toArray(new Visibility[0]))
+                .requestingServiceVisibility("PUBLIC")  // we are consuming a proxy exposed in public visibility
+                .orgIdInteger(orgId).build();
+        String connectionId = ConnectionService.createChoreoConnection(this, connectionServiceClient,
+                accessToken, connectionReq);
+        projectLevelConnectionId = connectionId;
+        //check if connection id is a valid uuid
+        Pattern UUID_REGEX =
+                Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
+        Assert.assertTrue(UUID_REGEX.matcher(connectionId).matches());
+    }
+
+    @Test(dependsOnMethods = {"createProjectLevelConnectionToProxy_TestChoreoConnections"})
+    @CitrusTest
+    public void deleteConnections_TestChoreoConnections() throws Exception {
+        HttpClient connectionServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        String projectLevelConnectionDeleteMsg = ConnectionService.deleteChoreoConnection(this, connectionServiceClient,
+                accessToken, projectLevelConnectionId);
+        Assert.assertNotEquals(projectLevelConnectionDeleteMsg, "");
+        String componentLevelConnectionDeleteMsg = ConnectionService.deleteChoreoConnection(this, connectionServiceClient,
+                accessToken, componentLevelConnectionId);
+        Assert.assertNotEquals(componentLevelConnectionDeleteMsg, "");
     }
 
     @Test(dependsOnMethods = {"invokeAPIDev_TestChoreoConnections"})

@@ -1,7 +1,6 @@
 resources:
   - connector-builder.yaml
   - testbase.yaml
-  - obsapi.yaml
   - email-service.yaml
   - api-server.yaml
   - app-deployer.yaml
@@ -9,9 +8,7 @@ resources:
   - audit-logging.yaml
   #  - telemetry.yaml
   - telemetry-go.yaml
-  - sys-obsapi.yaml
   - negotiator.yaml
-  - loggingapi.yaml
   - connectords.yaml
   - perfanalyzer-estimator.yaml
   - platform-services-manager.yaml
@@ -41,7 +38,6 @@ resources:
   - organization-management.yaml
   - choreo-apim-proxy-deployer.yaml
   - choreo-admin-api.yaml
-  - opentelemetry-collector.yaml
   - cio-event-collector-service.yaml
   - cio-query-api-service.yaml
   - cio-incident-configurator.yaml

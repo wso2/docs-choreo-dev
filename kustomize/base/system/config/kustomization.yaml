@@ -446,11 +446,6 @@ configMapGenerator:
     behavior: create
     files:
       - step-aggregator/Config.toml
-  - name: cm-file-opentelemetry-collector
-    behavior: create
-    files:
-      - opentelemetry-collector/config.yaml
-      - opentelemetry-collector/data-planes.yaml
   - name: cm-file-negotiator
     behavior: create
     files:

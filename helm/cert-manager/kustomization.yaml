@@ -33,6 +33,10 @@ helmCharts:
         replicaCount: 2
         podDisruptionBudget:
           enabled: true
+      acmesolver:
+        image:
+          registry: choreocontrolplane.azurecr.io
+          repository: jetstack/cert-manager-acmesolver
     releaseName: cert-manager
     version: v1.12.2
     namespace: cert-manager

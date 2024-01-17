@@ -9,10 +9,10 @@
     "resolveJsonModule": true,
     "declaration": true,
     "lib": [
-      "es5",
+      "ES6",
       "dom"
     ],
-    "target": "es5",
+    "target": "ES6",
     "types": [
       "cypress",
       "node",

@@ -22,6 +22,7 @@ import { Curl } from "../UI-components/curl-component";
 import { SwaggerUI } from "../UI-components/swagger-UI-component";
 import { ComponentOverviewPage } from "../component-overview-page";
 import { ComponentTestPage } from "../component-test-page";
+import { TestIds } from "../../../constants/TestIds";
 
 export class TestHelper {
   static testOnSwagger(
@@ -32,6 +33,7 @@ export class TestHelper {
   ) {
     this.selectOpenApiConsole();
     cy.wait(5000); // Attempting to select the environment too quickly causes wrong environment to be selected
+    cy.get(TestIds.progressBar).should("not.exist");
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.getTestKey();
     this.invokeSwaggerResource(env, resourcePath, key, value, "", "");
@@ -160,9 +162,13 @@ export class TestHelper {
 
   static verifyProjectLevelEndpoint() {
     if (Utils.isKubeConFeaturesEnabled()) {
-      cy.get('[data-testid="notification-with-icon-and-button"]').should("be.visible");
+      cy.get('[data-testid="notification-with-icon-and-button"]').should(
+        "be.visible"
+      );
     } else {
-      cy.get('[data-testid="no-public-endpoints-notification"]').should("be.visible");
+      cy.get('[data-testid="no-public-endpoints-notification"]').should(
+        "be.visible"
+      );
     }
   }
 

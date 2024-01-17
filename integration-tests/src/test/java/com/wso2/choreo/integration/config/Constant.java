@@ -93,11 +93,13 @@ public final class Constant {
     }
     public enum displayType {
         restAPI,
+        byocService,
         proxy,
         webhook,
         graphql,
         ballerinaService,
-        manualTrigger
+        manualTrigger,
+        buildpackService
     }
     public enum apiLIifCycleState {
         Publish

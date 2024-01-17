@@ -124,7 +124,7 @@ spec:
                 fieldRef:
                   fieldPath: status.podIP
             - name: JVM_MEM_OPTS
-              value: "-Xms2048m -Xmx2048m"
+              value: "-Xms2750m -Xmx2750m"
             - name: PROFILE_NAME
               value: control-plane
             - name: DEPLOYMENT_TYPE_PROD_PREFIXES

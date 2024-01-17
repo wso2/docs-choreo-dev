@@ -16,6 +16,13 @@ export namespace Enums {
     setHeader = "Set Header (2.0.0)",
   }
 
+  export enum Flow {
+    REQUEST = "/in-flow",
+    RESPONSE = "/out-flow",
+    ERROR = "/fault-flow",
+  }
+
+
   export enum DisplayType {
     restAPI = "restAPI",
     proxy = "proxy",
@@ -98,4 +105,11 @@ export namespace Enums {
   export enum LifeCycleState {
     Publish = "Publish",
   }
+}
+
+export enum UsagePlan {
+  Gold = "Gold",
+  Silver = "Silver",
+  Bronze = "Bronze",
+  Unlimited = "Unlimited",
 }

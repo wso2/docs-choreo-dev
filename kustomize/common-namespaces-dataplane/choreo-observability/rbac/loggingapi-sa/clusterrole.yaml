@@ -21,9 +21,11 @@ metadata:
 rules:
   - apiGroups:
       - ""
+      - "batch"
     resources:
       - pods
       - pods/log
+      - jobs
     verbs:
       - get
       - list

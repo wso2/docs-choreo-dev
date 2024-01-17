@@ -27,6 +27,14 @@ export class ProxyLeftMenu extends LeftMenu {
     );
   }
 
+  navigateToPolicies() {
+    this.scrollToTopOfMenu();
+    this.navigateToSubMenu(
+      "[data-cyid=link-develop]",
+      new Array('[data-cyid="develop-policies"]')
+    );
+  }
+
   navigateToDeploy() {
     this.scrollToTopOfMenu();
     this.navigateToMenuItem("[data-cyid=link-deploy]");
@@ -74,6 +82,22 @@ export class ProxyLeftMenu extends LeftMenu {
     this.navigateToSubMenu(
       "[data-cyid=link-manage]",
       new Array('[data-cyid="manage-settings"]')
+    );
+  }
+
+  navigateToPermissions() {
+    this.scrollToTopOfMenu();
+    this.navigateToSubMenu(
+      "[data-cyid=link-manage]",
+      new Array('[data-cyid="manage-permissions"]')
+    );
+  }
+
+  navigateToConsumers() {
+    this.scrollToTopOfMenu();
+    this.navigateToSubMenu(
+      "[data-cyid=link-manage]",
+      new Array('[data-cyid="manage-consumers"]')
     );
   }
 

@@ -68,15 +68,18 @@ public class IntegrationComponentsElevatedAccessCheck extends TestNGCitrusSpring
         params.put("orgId", orgId);
         params.put("orgHandler", orgHandler);
         params.put("projectId", projectId);
+        params.put("componentName", componentName);
+        params.put("srcGitRepoUrl", srcGitRepoUrl);
         String body = MessageUtils.generateStringFromTemplate("templates/integrationComponents/" +
                 "createMIComponent.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+        body = ObjectMapperUtil.mapToGraphQLQuery(body);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 
     @Test
     @CitrusTest
     public void createMIEventComponent_DevportalElevatedAccessCheck() throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
+        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrl = Constant.PROJECTS_GRAPHQL;
         Map<String, String> params = new HashMap<>();
         params.put("componentName", componentName);
@@ -93,45 +96,10 @@ public class IntegrationComponentsElevatedAccessCheck extends TestNGCitrusSpring
 
     @Test
     @CitrusTest
-    public void createBYOCComponent_DevportalElevatedAccessCheck() throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrl = Constant.PROJECTS_GRAPHQL;
-        Map<String, String> params = new HashMap<>();
-        params.put("orgId", orgId);
-        params.put("orgHandler", orgHandler);
-        params.put("projectId", projectId);
-        params.put("oasFilePath", oasFilePath);
-        params.put("dockerfilePath", dockerfilePath);
-        params.put("dockerContext", dockerContext);
-        params.put("srcGitRepoUrl", srcGitRepoUrl);
-        String body = MessageUtils.generateStringFromTemplate("templates/integrationComponents/" +
-                "createBYOCComponent.mustache", params);
-        body = ObjectMapperUtil.mapToGraphQLQuery(body);
-        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
-    }
-
-    @Test
-    @CitrusTest
     public void createEnvVariable_DevportalElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String requestUrl = "/devops/1.0.0/api/v1/components/integration/" + componentId + "/release/" +
                 releaseId + "/environment-variables?project_id=" + projectId + "&env_id=" + devEnvironmentId +
-                "&organization_id=" + orgUuid;
-        Map<String, String> params = new HashMap<>();
-        params.put("orgId", orgId);
-        params.put("orgHandler", orgHandler);
-        params.put("projectId", projectId);
-        String body = MessageUtils.generateStringFromTemplate("templates/integrationComponents/" +
-                "createBYOCComponent.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPutRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
-    }
-
-    @Test
-    @CitrusTest
-    public void createSecret_DevportalElevatedAccessCheck() throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrl = "/devops/1.0.0/api/v1/components/integration/" + componentId + "/release/" +
-                releaseId + "/secrets?project_id=" + projectId + "&env_id=" + devEnvironmentId +
                 "&organization_id=" + orgUuid;
         String body = MessageUtils.generateStringFromTemplate("templates/integrationComponents/" +
                 "createSecret.mustache", null);
@@ -140,28 +108,14 @@ public class IntegrationComponentsElevatedAccessCheck extends TestNGCitrusSpring
 
     @Test
     @CitrusTest
-    public void usageInsightsListEnvironments_DevportalElevatedAccessCheck() throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
-        String requestUrl = Constant.INSIGHTS_SUFFIX;
-        Map<String, String> params = new HashMap<>();
-        params.put("orgUuid", orgUuid);
-        params.put("projectId", projectId);
-        String body = MessageUtils.generateStringFromTemplate("templates/integrationComponents/" +
-                "usageInsightsListEnvironments.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
-    }
+    public void createSecret_DevportalElevatedAccessCheck() throws Exception {
 
-    @Test
-    @CitrusTest
-    public void insights_DevportalElevatedAccessCheck() throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_CP_GW_ENDPOINT);
-        String requestUrl = Constant.INSIGHTS_SUFFIX;
-        Map<String, String> params = new HashMap<>();
-        params.put("orgUuid", orgUuid);
-        params.put("devEnvironmentId", devEnvironmentId);
-        params.put("projectId", projectId);
+        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        String requestUrl = "/devops/1.0.0/api/v1/components/integration/" + componentId + "/release/" +
+                releaseId + "/secrets?project_id=" + projectId + "&env_id=" + devEnvironmentId +
+                "&organization_id=" + orgUuid;
         String body = MessageUtils.generateStringFromTemplate("templates/integrationComponents/" +
-                "insights.mustache", params);
-        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+                "createSecret.mustache", null);
+        SecurityUtils.elevatedAccessCheckForPutRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 }

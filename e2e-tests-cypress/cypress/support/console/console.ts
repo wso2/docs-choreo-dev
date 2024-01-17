@@ -11,17 +11,29 @@
  * associated services.
  */
 
-import { Project } from "./concepts/project/project";
-import { login } from "./concepts/login/login";
+import { Project } from "./entities/project/project";
+import { login } from "./entities/login/login";
+import { OnPremKeyService } from "./apis/on-prem-key-service";
+import { Utils } from "../commons/utils";
+import { AUTH_HEADER2, OK } from "../commons/http";
+import { GraphQL } from "./apis/graphql";
+import { ApiDevPortalService } from "./apis/api-devportal-service";
+import { Test } from "mocha";
+import { TestIds } from "./constants/TestIds";
+import { OrganizationSettings } from "./features/org-settings/org-settings";
+import { Enums } from "../commons/enums";
 
 /**
  * Represents the Choreo Console, the entry point for all tests.
  */
 class Console {
+  private _orgSettings = new OrganizationSettings();
+
   static projectNamePrefix = "autotest";
 
   login() {
     login.login();
+    return cy.wrap({});
   }
 
   logout() {
@@ -33,16 +45,61 @@ class Console {
     });
   }
 
+  addUserStore(userStoreFile: string, env: Enums.Environment) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this._orgSettings.addUserStore(userStoreFile, env);
+  }
+
   navigateToHome() {
     cy.get('[data-cyid="organization-home"]').click();
+    cy.get(TestIds.projectCard).should("be.visible");
+  }
+
+  navigateToSettings() {
+    this.navigateToHome();
+    cy.get('[data-cyid="settings"]').should("be.visible").click();
   }
 
   createNewProject(description: string): Project {
     return new Project(this.generateProjectName(), description);
   }
 
+  cleanUpData() {
+    let orgId = login.getOrgId();
+    let token = login.getAccessToken();
+    let handle = login.getOrgHandle();
+
+    ApiDevPortalService.deleteApplications();
+    GraphQL.deleteProjectsCreatedByTestsV2(orgId, handle, token);
+    this.deleteOnPremKeys(handle);
+  }
+
   private generateProjectName() {
     return `${Console.projectNamePrefix}${Date.now()}`;
+  }
+
+  private deleteOnPremKeys(handle: string) {
+    this.getOnPremKeys(handle, AUTH_HEADER2()).then((keys) => {
+      keys.forEach((key) => {
+        Utils.sendPostRequest(
+          OnPremKeyService.deleteOnPremKey(handle, key.handle),
+          AUTH_HEADER2(),
+          ""
+        );
+      });
+    });
+  }
+
+  private getOnPremKeys(handle: string, header: any) {
+    const url = OnPremKeyService.getOnPremKeys(handle);
+    return Utils.sendGetRequest(url, header).then((res) => {
+      if (res.status == OK) {
+        return res.body as { handle: string }[];
+      } else {
+        throw new Error("Error While Getting On Prem Keys");
+      }
+    });
   }
 }
 
