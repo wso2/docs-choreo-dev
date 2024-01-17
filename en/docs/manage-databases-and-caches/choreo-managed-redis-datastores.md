@@ -1,6 +1,6 @@
 # Choreo-Managed Redis Data Stores
 
-Redis on Choreo offers fully Choreo-managed in-memory data stores on AWS, Azure, GCP, and Digital Ocean and can be used as a cache, database, streaming engine, and a message broker.
+Redis on Choreo offers fully Choreo-managed in-memory data stores on AWS, Azure, GCP, and Digital Ocean and can be used as a cache, database, streaming engine, and message broker.
 
 ## Create a Redis data store
 
@@ -9,52 +9,52 @@ Follow the steps below to create a Choreo-managed Redis data store:
 1. From the environment list on the header, located next to the **Deployment Tracks** list, select your **Organization**.
 2. In the left navigation menu, click **Dependencies** and then **Databases**.
 3. Click **Create** and select **Redis** as the data store type. Provide a display name for this server and follow the instructions.
-4. Select your preferred cloud provider (AWS, Azure, GCP or Digital Ocean).
+4. Select your preferred cloud provider (AWS, Azure, GCP, or Digital Ocean).
    - The cloud provider is used to provision the compute and storage infrastructure for your data store.
    - There is no functional difference between databases created on different cloud providers, apart from changes to service plans (and associated costs).
 5. Choose the region for your data store.
    - Available regions will depend on the selected cloud provider. Choreo currently supports US and EU regions across all providers.
 6. Select the service plan.
-   - Service plans vary in the dedicated CPU, memory (RAM), storage space allocated for your data store and high-availability configurations for production use-cases.
+   - Service plans vary in the dedicated CPU, memory (RAM), storage space allocated for your data store, and high-availability configurations for production use cases.
 
 ## Connecting to your Redis data store on Choreo
 
 To connect to your Choreo-managed Redis data store, consider the following guidelines:
 
 - You can use any Redis driver (in any programming language) to connect to your data store.[See recommended Redis clients on the project website.](https://redis.io/resources/clients/) 
-- The connection parameters can be found in the **Overview** section in the Choreo Console under the relevant database. Note that Redis on Choreo enforces TLS.
+- You can find the connection parameters in the **Overview** section in the Choreo Console under the relevant database. Note that Redis on Choreo enforces TLS.
 - Redis instances accept traffic from the internet by default. You can restrict access to specific IP addresses and CIDR blocks under **Advanced Settings**.
 
 ## High Availability and Automatic Backups
 
-The high availability characteristics and the automatic backup retention periods for Choreo-managed Redis data stores vary based on the selected service plan as shown below.
+The high availability characteristics and the automatic backup retention periods for Choreo-managed Redis data stores vary based on the service plan you select as explained below:
 
 | Service Plan | High Availability                                                                                              | Backup Features                          | Backup History |
 |--------------|----------------------------------------------------------------------------------------------------------------|------------------------------------------|----------------|
 | Hobbyist     | Single-node with limited availability.                                                                         | Single backup only for disaster recovery | None           |
 | Startup      | Single-node with limited availability.                                                                         | Single backup only for disaster recovery | 1 days         |
-| Business     | Two-node (primary + standby) with higher availability (automatic failover if primary node fails)               | Automatic backups                        | 3 days         |
-| Premium      | Three-node (primary + standby + standby) with highest availability  (automatic failover if primary node fails) | Automatic backups                        | 13 days        |
+| Business     | Two-node (primary + standby) with higher availability (automatic failover if the primary node fails)               | Automatic backups                        | 3 days         |
+| Premium      | Three-node (primary + standby + standby) with highest availability  (automatic failover if the primary node fails) | Automatic backups                        | 13 days        |
 
-Service plans with standby nodes are generally recommended for production scenarios for multiple reasons:
+In general, we recommend service plans for production scenarios for multiple reasons:
 - Provides another physical copy of the data in case of hardware, software, or network failures.
 - Typically reduces the data loss window in disaster scenarios.
 - Provides a quicker time to restore with a controlled failover in case of failures, as the standby is already installed and running.
 
 ### Automatic Backups
 
-- Choreo-managed Redis data stores are automatically backed up, with full backups made daily, and write-ahead logs (WAL) copied at 5 minute intervals, or for every new file generated. 
-All backups are encrypted at rest.
+- Choreo runs full backups daily to automatically back up Choreo-managed Redis data stores and write-ahead logs (WAL) copied at 5-minute intervals or for every new file generated. 
+Choreo encrypts all backups at rest.
 
 - Choreo automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the data store.
 
 ### Failure Recovery
 
-- **Minor failures**, such as service process crashes or temporary loss of network access, are handled automatically in all plans without any major changes to the service deployment. The service automatically restores normal operation once the crashed process is automatically restarted or when network access is restored.
+- **Minor failures**:  Choreo automatically handles minor failures such as service process crashes or temporary loss of network access in all plans without requiring significant changes to the service deployment. Choreo automatically restores the service to normal operation once Choreo automatically restarts the crashed process or when Choreo restores the network access.
 
-- **Severe failures**, such as losing a node entirely in case of hardware or severe software problems, require more drastic recovery measures. The monitoring infrastructure automatically detects a failing node both when the node starts reporting issues in the self-diagnostics or when stops communicating. In such cases, the monitoring infrastructure automatically schedules a new replacement node to be created.
+- **Severe failures**, such as losing a node entirely in case of hardware or severe software problems, require more drastic recovery measures. The monitoring infrastructure automatically detects a failing node when the node starts reporting issues in the self-diagnostics or when it stops communicating. In such cases, the monitoring infrastructure automatically schedules a new replacement node to be created.
 > - In the event of data store failover, the Service URI of your service remains the same; only the IP address will change to point to the new primary node.
-> - Hobbyist and Startup plans provide a single node; and in case of failure, a new node starts up, restores its state from the latest available backup, and resumes serving traffic.
+> - Hobbyist and Startup plan provide a single node, and in case of failure, a new node starts up, restores its state from the latest available backup, and resumes serving traffic.
 As there is just a single/primary node, the Redis service will become unavailable for the duration of the restoration operation. All write operations made since the last backup will be lost.
 
 ## Limitations
@@ -84,10 +84,10 @@ echo "info" | redis-cli -u REDIS_URI | grep maxclients
 
 ### Restricted Redis Commands
 
-To maintain the stability and security of a managed Redis environment, Choreo-managed Redis services restrict certain Redis commands. 
+To maintain the stability and security of a managed Redis environment, Choreo restricts certain Redis commands on Choreo-managed Redis services.
 
-!!!note "Support for Lua scripts on Redis"
-      Redis has inbuilt support for running Lua scripts to perform various actions directly on the Redis server. Scripting is typically controlled using the `EVAL` , `EVALSHA` and `SCRIPT LOAD` commands.
+!!! note "Support for Lua scripts on Redis"
+      Redis has built-in support for running Lua scripts to perform various actions directly on the Redis server. Scripting is typically controlled using the `EVAL`, `EVALSHA`, and `SCRIPT LOAD` commands.
       For all newly-created Redis instances, `EVAL`, `EVALSHA` and `SCRIPT LOAD` commands are enabled by default.
 
 The following Redis commands are disabled on Choreo:
