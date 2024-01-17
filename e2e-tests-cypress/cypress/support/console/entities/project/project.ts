@@ -31,6 +31,8 @@ import { WebappComponent } from "../../../interfaces/choreo-components/webapp-co
 import { WebApp } from "../component/webapp-component";
 import { ScheduleTrigger } from "../component/schedule-trigger-component";
 import { Webhook } from "../component/webhook-component";
+import { TestRunnerComponent } from "../../../interfaces/choreo-components/testrunner-component";
+import { TestRunner } from "../component/test-runner-component";
 
 export interface RepoInfo {
   readonly url: string;
@@ -54,10 +56,18 @@ export interface WebAppInfo {
   readonly webAppOutputDirectory: string;
 }
 
+export interface BuildPackInfo {
+  readonly buildpackId: string;
+  readonly languageVersion: string;
+  readonly buildContext?: string;
+}
+
 export interface WebhookInfo {
   readonly triggerChannels: string;
   readonly triggerId: string;
 }
+
+
 
 export class Project {
   name: string;
@@ -276,6 +286,52 @@ export class Project {
     });
   }
 
+  createTestRunnerComponent(repoInfo: RepoInfo, buildPackInfo: BuildPackInfo) {
+    const componentName = Utils.generateComponentName();
+    let componentData: TestRunnerComponent = {
+      name: componentName,
+      displayName: componentName,
+      accessibility: Enums.Accessibility.NONE,
+      componentType: Enums.DisplayType.buildpackTestRunner,
+      description: "Test runner Component",
+      labels: "",
+      projectId: "",
+      oasFilePath: "",
+      port: null,
+      buildpackConfig: {
+        buildContext:
+          buildPackInfo.buildContext == undefined
+            ? ""
+            : buildPackInfo.buildContext,
+        srcGitRepoUrl: repoInfo.url,
+        srcGitRepoBranch: repoInfo.branch,
+        languageVersion: buildPackInfo.languageVersion,
+        buildpackId: buildPackInfo.buildpackId,
+      },
+    };
+
+    return GraphQL.createComponentV2(
+      this.name,
+      "",
+      componentData,
+      GraphQLQueryBuilder.getTestRunnerComponentCreationQuery
+    ).then(() => {
+      return Promise.resolve(new TestRunner(componentName));
+    });
+  }
+
+
+
+
+
+  verifyUsageInsights(env: Enums.Environment) {
+    this.selectTimePeriod();
+    this.selectEnvironment(env);
+    this.getTotalTraffic().should((value) => {
+      expect(Number(value)).gte(2);
+    });
+  }
+
   createWebhookComponent(
     accessibility: Enums.Accessibility,
     repoInfo: RepoInfo,
@@ -306,13 +362,11 @@ export class Project {
     });
   }
 
-  verifyUsageInsights(env: Enums.Environment) {
-    this.selectTimePeriod();
-    this.selectEnvironment(env);
-    this.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(2);
-    });
-  }
+
+
+
+
+
 
   private createComponentIfEmptyProject() {
     cy.get("body").then((body) => {

@@ -21,6 +21,7 @@ metadata:
 rules:
   - apiGroups:
       - ""
+      - "batch"
     resources:
       - pods
       - pods/log

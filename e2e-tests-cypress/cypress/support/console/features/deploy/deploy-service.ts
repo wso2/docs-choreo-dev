@@ -31,6 +31,7 @@ import { ScheduleTrigger } from "../../entities/component/schedule-trigger-compo
 import { WebApp } from "../../entities/component/webapp-component";
 import { Enums } from "../../../commons/enums";
 import { Webhook } from "../../entities/component/webhook-component";
+import { TestRunner } from "../../entities/component/test-runner-component";
 
 export enum EndpointAccessibility {
   Public = "Public",
@@ -48,7 +49,7 @@ export interface DeployServiceFeature {
   );
 
   _deployTask(
-    component: ManualTrigger | ScheduleTrigger,
+    component: ManualTrigger | ScheduleTrigger | TestRunner,
     configStepsAvailable: number
   );
 
@@ -67,7 +68,7 @@ export interface DeployServiceFeature {
   );
 
   _promoteTask(
-    component: ManualTrigger | ScheduleTrigger,
+    component: ManualTrigger | ScheduleTrigger | TestRunner,
     configStepsAvailable: number
   );
 
@@ -115,7 +116,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     }
 
     _deployTask(
-      component: ManualTrigger | ScheduleTrigger,
+      component: ManualTrigger | ScheduleTrigger | TestRunner,
       configStepsAvailable: number
     ) {
       this.sideMenu.navigateToDeploy();
@@ -187,7 +188,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.verifyProdEndpoint();
     }
 
-    _promoteTask(component: ManualTrigger | ScheduleTrigger) {
+    _promoteTask(component: ManualTrigger | ScheduleTrigger | TestRunner) {
       this.sideMenu.navigateToDeploy();
 
       this.startPromotion(component);
@@ -276,7 +277,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     }
 
     private startDeployment(
-      component: Service | ManualTrigger | ScheduleTrigger | WebApp
+      component: Service | ManualTrigger | ScheduleTrigger | TestRunner | WebApp
     ) {
       this.deploymentTrack.validate(component);
 
@@ -523,7 +524,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     }
 
     private startPromotion(
-      component: Service | ManualTrigger | ScheduleTrigger | WebApp
+      component: Service | ManualTrigger | ScheduleTrigger | TestRunner | WebApp
     ) {
       this.deploymentTrack.validate(component);
 
