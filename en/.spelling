@@ -490,6 +490,11 @@ onboards
 6.x
 7.x
 8.x
+redis-cli
+Lua
+eval
+evalsha
+fcall
 
  - docs/references/upgrading-from-the-previous-version.md
 DefaultProject
@@ -855,3 +860,5 @@ ServiceURL
 YOUR_ENVIRONMENT_VAR_HERE
  - docs/references/faq.md
 2-3x
+ - docs/manage-databases-and-caches/choreo-managed-postgresql-databases.md
+Business-16

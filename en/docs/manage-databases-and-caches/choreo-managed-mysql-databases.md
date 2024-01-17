@@ -55,7 +55,7 @@ The maximum number of simultaneous connections to MySQL databases is fixed for e
 !!! note
     An `extra_connection` with a value of `1` is added for system processes for all MySQL databases, regardless of the service plan.
 
-### For plans under 4GiB RAM
+### For plans under 4 GiB RAM
 
 For plans under 4 GiB of RAM, the number of allowed connections is `75` per GiB:
 
@@ -63,9 +63,9 @@ For plans under 4 GiB of RAM, the number of allowed connections is `75` per GiB:
 max_connections = 75 x RAM + extra_connection
 ```
 
-### For plans with over 4GiB RAM:
+### For plans with over 4 GiB RAM:
 
-For plans with 4GiB or more RAM, the number of allowed connections is `100` per GiB:
+For plans with 4 GiB or more RAM, the number of allowed connections is `100` per GiB:
 
 ```
 max_connections = 100 x RAM + extra_connection
