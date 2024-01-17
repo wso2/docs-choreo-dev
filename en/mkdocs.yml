@@ -118,6 +118,7 @@ nav:
       - Deploy an Application with Buildpacks: develop-components/deploy-an-application-with-buildpacks.md
       - Deploy a Containerized Application: develop-components/deploy-a-containerized-application.md  
       - Sharing and Reusing Services: develop-components/sharing-and-reusing-services.md
+      - Manage Deployment Tracks for Choreo Components: develop-components/manage-deployment-tracks-for-choreo-components.md
       - Manage Configurations: develop-components/manage-configurations.md
       - Configure Mutual TLS Between Components: develop-components/configure-mutual-tls-between-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
