@@ -46,7 +46,7 @@ import java.util.Optional;
 
 public class TestCreateIntegrationEventContainerComponent extends TestNGCitrusSpringSupport {
 
-    public static final String CONTAINERIZED_EVENT_HANDLER = "byocWebhook";
+    public static final String CONTAINERIZED_EVENT_HANDLER = "byocEventHandler";
     public static final String WS_URL = "wss://ws.postman-echo.com/raw/";
 
     private static String accessToken;
