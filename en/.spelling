@@ -490,6 +490,7 @@ onboards
 6.x
 7.x
 8.x
+GitFlow
 
  - docs/references/upgrading-from-the-previous-version.md
 DefaultProject
@@ -610,6 +611,7 @@ choreo-insights-api
 programmatic-access-choreo-insights-api
 pricing.md
 create-your-first-integration-as-an-api
+manage-deployment-tracks-for-choreo-components
 api-proxy
 configs-and-secrets
 runtime.md
