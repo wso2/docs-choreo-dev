@@ -36,14 +36,16 @@ export function mixinBuild<T extends Types.Constructor>(
     private sideMenu = new ServiceLeftMenu();
     private deploymentTrack = new DeploymentTrack();
 
-    _build(component: Service | ManualTrigger | ScheduleTrigger | WebApp) {
+    _build(
+      component: Service | ManualTrigger | ScheduleTrigger | TestRunner | WebApp
+    ) {
       this.sideMenu.navigateToBuild();
 
       this.triggerBuild(component);
     }
 
     private triggerBuild(
-      component: Service | ManualTrigger | ScheduleTrigger | WebApp
+      component: Service | ManualTrigger | ScheduleTrigger | TestRunner | WebApp
     ) {
       this.deploymentTrack.validate(component);
 
