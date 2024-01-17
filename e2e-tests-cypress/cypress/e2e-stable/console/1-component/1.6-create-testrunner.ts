@@ -33,7 +33,7 @@ describe("Verify Test Runner Component functionality", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-  it("Verify Manual Trigger component creation", () => {
+  it("Verify test runner component creation", () => {
     project
       .createTestRunnerComponent(
         {
