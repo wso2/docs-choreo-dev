@@ -21,9 +21,12 @@ import { DeploymentTrack } from "../deployment-track/deployment-track";
 import { ManualTrigger } from "../../entities/component/manual-trigger-component";
 import { ScheduleTrigger } from "../../entities/component/schedule-trigger-component";
 import { WebApp } from "../../entities/component/webapp-component";
+import { TestRunner } from "../../entities/component/test-runner-component";
 
 export interface BuildFeature {
-  _build(component: Service | ManualTrigger | ScheduleTrigger | WebApp): void;
+  _build(
+    component: Service | ManualTrigger | ScheduleTrigger | TestRunner | WebApp
+  ): void;
 }
 
 export function mixinBuild<T extends Types.Constructor>(
@@ -39,7 +42,9 @@ export function mixinBuild<T extends Types.Constructor>(
       this.triggerBuild(component);
     }
 
-    private triggerBuild(component: Service | ManualTrigger | ScheduleTrigger | WebApp) {
+    private triggerBuild(
+      component: Service | ManualTrigger | ScheduleTrigger | WebApp
+    ) {
       this.deploymentTrack.validate(component);
 
       cy.get(TestIds.build).should("be.enabled").click();
