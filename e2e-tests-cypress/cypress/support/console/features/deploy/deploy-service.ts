@@ -29,7 +29,7 @@ import { DeploymentTrack } from "../deployment-track/deployment-track";
 import { ManualTrigger } from "../../entities/component/manual-trigger-component";
 import { ScheduleTrigger } from "../../entities/component/schedule-trigger-component";
 import { WebApp } from "../../entities/component/webapp-component";
-import { Enums } from "../../../commons/enums";
+import { TestRunner } from "../../entities/component/test-runner-component";
 
 export enum EndpointAccessibility {
   Public = "Public",
@@ -47,7 +47,7 @@ export interface DeployServiceFeature {
   );
 
   _deployTask(
-    component: ManualTrigger | ScheduleTrigger,
+    component: ManualTrigger | ScheduleTrigger | TestRunner,
     configStepsAvailable: number
   );
 
@@ -60,7 +60,7 @@ export interface DeployServiceFeature {
   );
 
   _promoteTask(
-    component: ManualTrigger | ScheduleTrigger,
+    component: ManualTrigger | ScheduleTrigger | TestRunner,
     configStepsAvailable: number
   );
 

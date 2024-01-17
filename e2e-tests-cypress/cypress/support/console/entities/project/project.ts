@@ -30,6 +30,8 @@ import { ManualTrigger } from "../component/manual-trigger-component";
 import { WebappComponent } from "../../../interfaces/choreo-components/webapp-component";
 import { WebApp } from "../component/webapp-component";
 import { ScheduleTrigger } from "../component/schedule-trigger-component";
+import { TestRunnerComponent } from "../../../interfaces/choreo-components/testrunner-component";
+import { TestRunner } from "../component/test-runner-component";
 
 export interface RepoInfo {
   readonly url: string;
@@ -51,6 +53,12 @@ export interface WebAppInfo {
   readonly webAppBuildCommand: string;
   readonly webAppPackageManagerVersion: string;
   readonly webAppOutputDirectory: string;
+}
+
+export interface BuildPackInfo {
+  readonly buildpackId: string;
+  readonly languageVersion: string;
+  readonly buildContext?: string;
 }
 
 export class Project {
@@ -267,6 +275,40 @@ export class Project {
       GraphQLQueryBuilder.getRestComponentCreationQuery
     ).then((componentDetails: ComponentDetails) => {
       return Promise.resolve(new ScheduleTrigger(componentName));
+    });
+  }
+
+  createTestRunnerComponent(repoInfo: RepoInfo, buildPackInfo: BuildPackInfo) {
+    const componentName = Utils.generateComponentName();
+    let componentData: TestRunnerComponent = {
+      name: componentName,
+      displayName: componentName,
+      accessibility: Enums.Accessibility.NONE,
+      componentType: Enums.DisplayType.buildpackTestRunner,
+      description: "Test runner Component",
+      labels: "",
+      projectId: "",
+      oasFilePath: "",
+      port: null,
+      buildpackConfig: {
+        buildContext:
+          buildPackInfo.buildContext == undefined
+            ? ""
+            : buildPackInfo.buildContext,
+        srcGitRepoUrl: repoInfo.url,
+        srcGitRepoBranch: repoInfo.branch,
+        languageVersion: buildPackInfo.languageVersion,
+        buildpackId: buildPackInfo.buildpackId,
+      },
+    };
+
+    return GraphQL.createComponentV2(
+      this.name,
+      "",
+      componentData,
+      GraphQLQueryBuilder.getTestRunnerComponentCreationQuery
+    ).then(() => {
+      return Promise.resolve(new TestRunner(componentName));
     });
   }
 
