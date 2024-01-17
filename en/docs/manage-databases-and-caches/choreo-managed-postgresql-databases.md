@@ -1,6 +1,6 @@
 # Choreo-Managed PostgreSQL Databases
 
-PostgreSQL on Choreo offers a fully Choreo-managed, efficient object-relational databases on AWS, Azure, GCP and Digital Ocean.
+PostgreSQL on Choreo offers fully Choreo-managed, efficient object-relational databases on AWS, Azure, GCP, and Digital Ocean.
 
 ## Create a Choreo-managed PostgreSQL database
 
@@ -15,13 +15,13 @@ Follow the steps below to create a Choreo-managed PostgreSQL database:
 5. Choose the region for your database.
    - Available regions will depend on the selected cloud provider. Choreo currently supports US and EU regions across all providers.
 6. Select the service plan.
-   - Service plans vary in the dedicated CPU, memory (RAM), storage space allocated for your database, the backup retention periods, and high-availability configurations for production use-cases.
+   - Service plans vary in the dedicated CPU, memory (RAM), storage space allocated for your database, the backup retention periods, and high-availability configurations for production use cases.
 
 ## Connecting to your Choreo-managed PostgreSQL database
 
 To connect to your Choreo-managed PostgreSQL database, consider the following guidelines:
 
-- You can use any PostgreSQL driver, ORM or supported generic SQL library (may depend on the programming language) to connect to the database.
+- You can use any PostgreSQL driver, ORM, or supported generic SQL library (may depend on the programming language) to connect to the database.
 - The connection parameters can be found in the **Overview** section in the Choreo Console under the relevant database.
 - PostgreSQL databases accept traffic from the internet by default. You can restrict access to specific IP addresses and CIDR blocks under **Advanced Settings**.
 
@@ -44,19 +44,20 @@ Service plans with standby nodes are generally recommended for production scenar
 
 ### Automatic Backups
 
-- Choreo-managed PostgreSQL databases are automatically backed up, with full backups made daily, and write-ahead logs (WAL) copied at 5 minute intervals, or for every new file generated. 
-All backups are encrypted at rest.
+
+- Choreo runs full backups daily to automatically back up Choreo-managed PostgreSQL databases and copies the write-ahead logs (WAL)  at 5-minute intervals or for every new file generated.
+Choreo encrypts all backups at rest.
 
 - Choreo automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the database.
 
 ### Failure Recovery
 
-- **Minor failures**, such as service process crashes or temporary loss of network access, are handled automatically in all plans without any major changes to the service deployment. The service automatically restores normal operation once the crashed process is automatically restarted or when network access is restored.
+- **Minor failures**: Choreo automatically handles minor failures such as service process crashes or temporary loss of network access in all plans without requiring significant changes to the service deployment. Choreo automatically restores the service to normal operation once Choreo automatically restarts the crashed process or when Choreo restores the network access.
 
-- **Severe failures**, such as losing a node entirely in case of hardware or severe software problems, require more drastic recovery measures. The monitoring infrastructure automatically detects a failing node both when the node starts reporting issues in the self-diagnostics or when stops communicating. In such cases, the monitoring infrastructure automatically schedules a new replacement node to be created.
+- **Severe failures**: To handle severe failures such as losing a node entirely in case of hardware or severe software problems, requires more drastic recovery measures. The monitoring infrastructure automatically detects a failing node, both when the node starts reporting issues in the self-diagnostics or when it stops communicating. In such cases, the monitoring infrastructure automatically schedules a new replacement node to be created.
 > - In the event of database failover, the Service URI of your service remains the same; only the IP address will change to point to the new primary node.
-> - Hobbyist and Startup plans provide a single node; and in case of failure, a new node starts up, restores its state from the latest available backup, and resumes serving traffic.
-As there is just a single node providing the service, the service will become unavailable for the duration of the restoration. In addition, any write operations made since the backup of the latest WAL file will be lost. Typically, this time window is limited to either five minutes of time or one WAL file.
+> - Hobbyist and Startup plan provide a single node, and in case of failure, a new node starts up, restores its state from the latest available backup, and resumes serving traffic.
+In this plan, as there is just a single node providing the service, the service will become unavailable for the duration of the restoration. In addition, any write operations made since the backup of the latest WAL file will be lost. Typically, this time window is limited to either five minutes of time or one WAL file.
 
 ## Connection limits
 
