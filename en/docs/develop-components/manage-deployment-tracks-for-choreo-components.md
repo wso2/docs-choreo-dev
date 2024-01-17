@@ -46,7 +46,7 @@ Follow the steps below to unlink a deployment track of a component:
 To associate a branch reference to an unlinked deployment track, you must link a branch.
 
 !!! info
-    When you link a branch that you have not used previously for an active deployment, it requires manual building and deployment for the associated deployment track.
+    When you link a branch that you have not used previously for an active deployment, it requires performing a manual build and deployment for the associated deployment track.
 
 **Prerequisites**:
 
@@ -66,7 +66,7 @@ Follow the steps below to link a branch to an unlinked deployment track:
 To switch the branch reference of a linked deployment track, you must relink to an appropriate branch.
 
 !!! info
-     Relinking a branch that was not previously used for an active deployment requires manual building and deployment for the associated deployment track.
+     When you relink a branch that you have not previously used for an active deployment, it requires performing a manual build and deployment for the associated deployment track.
 
 **Prerequisites**:
 
