@@ -27,7 +27,7 @@ To connect to your Choreo-managed Redis data store, consider the following guide
 
 ## High Availability and Automatic Backups
 
-The high availability characteristics and the automatic backup retention periods for Choreo-managed Redis datastores vary based on the selected service plan as shown below.
+The high availability characteristics and the automatic backup retention periods for Choreo-managed Redis data stores vary based on the selected service plan as shown below.
 
 | Service Plan | High Availability                                                                                              | Backup Features                          | Backup History |
 |--------------|----------------------------------------------------------------------------------------------------------------|------------------------------------------|----------------|
@@ -43,21 +43,23 @@ Service plans with standby nodes are generally recommended for production scenar
 
 ### Automatic Backups
 
-- Choreo-managed Redis datastores are automatically backed up, with full backups made daily, and write-ahead logs (WAL) copied at 5 minute intervals, or for every new file generated. 
+- Choreo-managed Redis data stores are automatically backed up, with full backups made daily, and write-ahead logs (WAL) copied at 5 minute intervals, or for every new file generated. 
 All backups are encrypted at rest.
 
-- Choreo automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the datastore.
+- Choreo automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the data store.
 
 ### Failure Recovery
 
 - **Minor failures**, such as service process crashes or temporary loss of network access, are handled automatically in all plans without any major changes to the service deployment. The service automatically restores normal operation once the crashed process is automatically restarted or when network access is restored.
 
 - **Severe failures**, such as losing a node entirely in case of hardware or severe software problems, require more drastic recovery measures. The monitoring infrastructure automatically detects a failing node both when the node starts reporting issues in the self-diagnostics or when stops communicating. In such cases, the monitoring infrastructure automatically schedules a new replacement node to be created.
-> - In the event of datastore failover, the Service URI of your service remains the same; only the IP address will change to point to the new primary node.
+> - In the event of data store failover, the Service URI of your service remains the same; only the IP address will change to point to the new primary node.
 > - Hobbyist and Startup plans provide a single node; and in case of failure, a new node starts up, restores its state from the latest available backup, and resumes serving traffic.
 As there is just a single/primary node, the Redis service will become unavailable for the duration of the restoration operation. All write operations made since the last backup will be lost.
 
-## Connection Limits
+## Limitations
+
+### Connection Limits
 
 The number of simultaneous connections in Choreo-managed Redis depends on the total available memory on the Redis server.
 
@@ -79,3 +81,41 @@ This number is estimated by the exact available memory so it varies between diff
 ```
 echo "info" | redis-cli -u REDIS_URI | grep maxclients
 ```
+
+### Restricted Redis Commands
+
+To maintain the stability and security of a managed Redis environment, Choreo-managed Redis services restrict certain Redis commands. 
+
+!!!note "Support for Lua scripts on Redis"
+      Redis has inbuilt support for running Lua scripts to perform various actions directly on the Redis server. Scripting is typically controlled using the `EVAL` , `EVALSHA` and `SCRIPT LOAD` commands.
+      For all newly-created Redis instances, `EVAL`, `EVALSHA` and `SCRIPT LOAD` commands are enabled by default.
+
+The following Redis commands are disabled on Choreo:
+
+- `bgrewriteaof`: Initiates a background append-only file rewrite.
+- `cluster`: Manages Redis cluster commands.
+- `command`: Provides details about all Redis commands.
+- `debug`: Contains sub-commands for debugging Redis.
+- `failover`: Manages manual failover of a master to a replica.
+- `migrate`: Atomically transfers a key from a Redis instance to another one.
+- `role`: Returns the role of the instance in the context of replication.
+- `slaveof`: Makes the server a replica of another instance, or promotes it as master.
+- `acl`: Manages Redis Access Control Lists.
+- `bgsave`: Creates a snapshot of the dataset into a dump file.
+- `config`: Alters the configuration of a running Redis server.
+- `lastsave`: Returns the UNIX timestamp of the last successful save to disk.
+- `monitor`: Streams back every command processed by the Redis server.
+- `replicaof`: Makes the server a replica of another instance.
+- `save`: Synchronously saves the dataset to disk.
+- `shutdown`: Synchronously saves the dataset to disk and then shuts down the server.
+
+The following eval commands are disabled as well:
+
+- `eval`: Executes a Lua script server-side.
+- `eval_ro`: Read-only variant of the eval command.
+- `evalsha`: Executes a script cached on the server side by its SHA1 digest.
+- `evalsha_ro`: Read-only variant of the evalsha command.
+- `fcall`: Calls a Redis function.
+- `fcall_ro`: Read-only variant of the fcall command.
+- `function`: Manages Redis functions.
+- `script`: Manages the script cache.
