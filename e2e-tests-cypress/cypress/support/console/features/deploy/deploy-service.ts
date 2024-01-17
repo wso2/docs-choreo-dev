@@ -101,7 +101,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     }
 
     _deployTask(
-      component: ManualTrigger | ScheduleTrigger,
+      component: ManualTrigger | ScheduleTrigger | TestRunner,
       configStepsAvailable: number
     ) {
       this.sideMenu.navigateToDeploy();
@@ -147,7 +147,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.verifyProdEndpoint();
     }
 
-    _promoteTask(component: ManualTrigger | ScheduleTrigger) {
+    _promoteTask(component: ManualTrigger | ScheduleTrigger | TestRunner) {
       this.sideMenu.navigateToDeploy();
 
       this.startPromotion(component);
@@ -236,7 +236,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     }
 
     private startDeployment(
-      component: Service | ManualTrigger | ScheduleTrigger | WebApp
+      component: Service | ManualTrigger | ScheduleTrigger | TestRunner | WebApp
     ) {
       this.deploymentTrack.validate(component);
 
@@ -450,7 +450,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     }
 
     private startPromotion(
-      component: Service | ManualTrigger | ScheduleTrigger | WebApp
+      component: Service | ManualTrigger | ScheduleTrigger | TestRunner | WebApp
     ) {
       this.deploymentTrack.validate(component);
 
