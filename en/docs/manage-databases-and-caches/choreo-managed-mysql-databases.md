@@ -24,3 +24,47 @@ To connect to your Choreo-managed MySQL database, consider the following guideli
 - You can use any MySQL driver, ORM, or supported generic SQL library (may depend on the programming language) to connect to the database.
 - The connection parameters can be found in the **Overview** section in the Choreo Console under the relevant database.
 - MySQL databases accepts traffic from the internet by default. You can restrict access to specific IP addresses and CIDR blocks under **Advanced Settings**.
+
+## High Availability and Automatic Backups
+
+The high availability characteristics and the automatic backup retention periods for Choreo-managed MySQL databases vary based on the selected service plan as shown below.
+
+| Service Plan | High Availability                                                  | Backup Retention Time |
+|--------------|--------------------------------------------------------------------|-----------------------|
+| Hobbyist     | Single-node with limited availability                              | None                  |
+| Startup      | Single-node with limited availability                              | 2 days                |
+| Business     | Two-node (primary + standby) with higher availability              | 14 days               |
+| Premium      | Three-node (primary + standby + standby) with highest availability | 30 days               |
+
+Service plans with standby nodes are generally recommended for production scenarios for multiple reasons:
+- Provides another physical copy of the data in case of hardware, software, or network failures.
+- Typically reduces the data loss window in disaster scenarios.
+- Provides a quicker time to restore with a controlled failover in case of failures, as the standby is already installed and running.
+
+### Automatic Backups
+
+- Choreo-managed MySQL databases are automatically backed-up, with full backups daily, and binary logs recorded continuously.
+All backups are encrypted at rest.
+
+- Choreo automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the database.
+
+## Connection Limits
+
+The maximum number of simultaneous connections MySQL databases depends on how much RAM your service plan offers and is fixed for each service plan.
+
+!!!note
+    An `extra_connection` with a value of `1` is added for system processes for all MySQL databases, regardless of the service plan.
+
+### For plans under 4GiB RAM
+
+For plans under 4 GiB of RAM, the number of allowed connections is `75` per GiB:
+```
+max_connections = 75 x RAM + extra_connection
+```
+
+### For plans with over 4GiB RAM:
+
+For plans with 4GiB or more RAM, the number of allowed connections is `100` per GiB:
+```
+max_connections = 100 x RAM + extra_connection
+```

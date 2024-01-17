@@ -24,3 +24,58 @@ To connect to your Choreo-managed Redis data store, consider the following guide
 - You can use any Redis driver (in any programming language) to connect to your data store.[See recommended Redis clients on the project website.](https://redis.io/resources/clients/) 
 - The connection parameters can be found in the **Overview** section in the Choreo Console under the relevant database. Note that Redis on Choreo enforces TLS.
 - Redis instances accept traffic from the internet by default. You can restrict access to specific IP addresses and CIDR blocks under **Advanced Settings**.
+
+## High Availability and Automatic Backups
+
+The high availability characteristics and the automatic backup retention periods for Choreo-managed Redis datastores vary based on the selected service plan as shown below.
+
+| Service Plan | High Availability                                                                                              | Backup Features                          | Backup History |
+|--------------|----------------------------------------------------------------------------------------------------------------|------------------------------------------|----------------|
+| Hobbyist     | Single-node with limited availability.                                                                         | Single backup only for disaster recovery | None           |
+| Startup      | Single-node with limited availability.                                                                         | Single backup only for disaster recovery | 1 days         |
+| Business     | Two-node (primary + standby) with higher availability (automatic failover if primary node fails)               | Automatic backups                        | 3 days         |
+| Premium      | Three-node (primary + standby + standby) with highest availability  (automatic failover if primary node fails) | Automatic backups                        | 13 days        |
+
+Service plans with standby nodes are generally recommended for production scenarios for multiple reasons:
+- Provides another physical copy of the data in case of hardware, software, or network failures.
+- Typically reduces the data loss window in disaster scenarios.
+- Provides a quicker time to restore with a controlled failover in case of failures, as the standby is already installed and running.
+
+### Automatic Backups
+
+- Choreo-managed Redis datastores are automatically backed up, with full backups made daily, and write-ahead logs (WAL) copied at 5 minute intervals, or for every new file generated. 
+All backups are encrypted at rest.
+
+- Choreo automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the datastore.
+
+### Failure Recovery
+
+- **Minor failures**, such as service process crashes or temporary loss of network access, are handled automatically in all plans without any major changes to the service deployment. The service automatically restores normal operation once the crashed process is automatically restarted or when network access is restored.
+
+- **Severe failures**, such as losing a node entirely in case of hardware or severe software problems, require more drastic recovery measures. The monitoring infrastructure automatically detects a failing node both when the node starts reporting issues in the self-diagnostics or when stops communicating. In such cases, the monitoring infrastructure automatically schedules a new replacement node to be created.
+> - In the event of datastore failover, the Service URI of your service remains the same; only the IP address will change to point to the new primary node.
+> - Hobbyist and Startup plans provide a single node; and in case of failure, a new node starts up, restores its state from the latest available backup, and resumes serving traffic.
+As there is just a single/primary node, the Redis service will become unavailable for the duration of the restoration operation. All write operations made since the last backup will be lost.
+
+## Connection Limits
+
+The number of simultaneous connections in Choreo-managed Redis depends on the total available memory on the Redis server.
+
+You can use the following to estimate:
+
+```
+max_number_of_connections = 4 x m
+```
+
+where `m` represents the memory in megabytes. With at least 10,000 connections available, even on the smallest servers. 
+For example, on a server with 4GB memory (4,096 MB), the simultaneous connections are:
+
+```
+4 x 4096 = 16384 // 16k connections
+```
+
+This number is estimated by the exact available memory so it varies between different plans and cloud providers, to see the exact maximum connections allowed, use * redis-cli and info command as the following:
+
+```
+echo "info" | redis-cli -u REDIS_URI | grep maxclients
+```
