@@ -17,7 +17,6 @@ import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
 import { ScheduleTrigger } from "../../../support/console/entities/component/schedule-trigger-component";
 import { _Observability } from "../../../support/console/features/observability/observability";
-import { ComponentObservePage } from "../../../support/console/pages/component/component-observe-page";
 
 after(() => {
   console.logout();

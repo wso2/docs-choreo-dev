@@ -30,6 +30,7 @@ import { ManualTrigger } from "../component/manual-trigger-component";
 import { WebappComponent } from "../../../interfaces/choreo-components/webapp-component";
 import { WebApp } from "../component/webapp-component";
 import { ScheduleTrigger } from "../component/schedule-trigger-component";
+import { Webhook } from "../component/webhook-component";
 
 export interface RepoInfo {
   readonly url: string;
@@ -51,6 +52,11 @@ export interface WebAppInfo {
   readonly webAppBuildCommand: string;
   readonly webAppPackageManagerVersion: string;
   readonly webAppOutputDirectory: string;
+}
+
+export interface WebhookInfo {
+  readonly triggerChannels: string;
+  readonly triggerId: string;
 }
 
 export class Project {
@@ -267,6 +273,36 @@ export class Project {
       GraphQLQueryBuilder.getRestComponentCreationQuery
     ).then((componentDetails: ComponentDetails) => {
       return Promise.resolve(new ScheduleTrigger(componentName));
+    });
+  }
+
+  createWebhookComponent(
+    accessibility: Enums.Accessibility,
+    repoInfo: RepoInfo,
+    webhookInfo: WebhookInfo
+  ) {
+    const componentName = Utils.generateComponentName();
+    let componentData: ComponentData = {
+      componentName: componentName,
+      displayType: Enums.DisplayType.webhook,
+      accessibility: accessibility,
+      projectName: this.name,
+      srcGitRepoUrl: repoInfo.url,
+      initializeAsBallerinaProject: false,
+      repositoryType: Enums.RepoType.UserManagedNonEmpty,
+      repositorySubPath: repoInfo.subPath == undefined ? "" : repoInfo.subPath,
+      sampleTemplate: "",
+      triggerChannels: webhookInfo.triggerChannels,
+      triggerId: webhookInfo.triggerId,
+    };
+
+    return GraphQL.createComponentV2(
+      this.name,
+      "",
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
+    ).then((componentDetails: ComponentDetails) => {
+      return Promise.resolve(new Webhook(componentName));
     });
   }
 
