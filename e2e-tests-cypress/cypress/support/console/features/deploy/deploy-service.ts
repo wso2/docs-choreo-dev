@@ -29,6 +29,8 @@ import { DeploymentTrack } from "../deployment-track/deployment-track";
 import { ManualTrigger } from "../../entities/component/manual-trigger-component";
 import { ScheduleTrigger } from "../../entities/component/schedule-trigger-component";
 import { WebApp } from "../../entities/component/webapp-component";
+import { Enums } from "../../../commons/enums";
+import { Webhook } from "../../entities/component/webhook-component";
 import { TestRunner } from "../../entities/component/test-runner-component";
 
 export enum EndpointAccessibility {
@@ -53,6 +55,12 @@ export interface DeployServiceFeature {
 
   _deployWebapp(component: WebApp, hasAuthSettings: boolean);
 
+  _deployWebhook(
+    component: Webhook,
+    configStepsAvailable: number,
+    configValue: string
+  );
+
   _promoteService(
     component: Service,
     endpointVisibility: EndpointAccessibility,
@@ -69,6 +77,13 @@ export interface DeployServiceFeature {
     hasAuthSettings: boolean,
     configStepsAvailable: number
   );
+
+  _promoteWebhook(
+    component: Webhook,
+    configStepsAvailable: number,
+    configValue: string,
+  );
+
 }
 
 export function mixinServiceDeploy<T extends Types.Constructor>(
@@ -89,7 +104,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.startDeployment(component);
 
-      this.stepThroughConfigSteps(configStepsAvailable);
+      this.stepThroughConfigSteps(component,configStepsAvailable);
 
       this.reviewAndUpdateEndpoint(component, endpointVisibility);
 
@@ -110,7 +125,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.startDeployment(component);
 
-      this.stepThroughConfigSteps(configStepsAvailable);
+      this.stepThroughConfigSteps(component,configStepsAvailable, );
 
       this.verifyTaskDeploymentStatus();
     }
@@ -129,6 +144,32 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.storeDevWebAppUrl(component);
     }
 
+    _deployWebhook(
+      component: Webhook,
+      configStepsAvailable: number,
+      configValue: string
+    ) {
+      this.sideMenu.navigateToDeploy();
+      this.waitTillReadyToDeploy();
+      this.startWebhookDeployment(component, configValue);
+      this.stepThroughConfigSteps(component,configStepsAvailable);
+      this.verifyDeploymentStatus();
+
+    }
+
+    //Promotion methods start here
+
+    _promoteWebhook(
+      component: Webhook,
+      configStepsAvailable: number,
+      configValue: string
+    ) {
+      this.sideMenu.navigateToDeploy();
+      this.webhookPromotion(component, configValue);
+      this.stepThroughConfigStepsPromotion(configStepsAvailable);
+      this.verifyPromotionStatus();
+    }
+
     _promoteService(
       component: Service,
       endpointVisibility: EndpointAccessibility,
@@ -138,7 +179,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.startPromotion(component);
 
-      this.stepThroughConfigSteps(configStepsAvailable);
+      this.stepThroughConfigSteps(component,configStepsAvailable);
 
       this.reviewAndUpdateEndpoint(component, endpointVisibility);
 
@@ -164,7 +205,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.startPromotion(component);
 
-      this.stepThroughConfigSteps(configStepsAvailable);
+      this.stepThroughConfigSteps(component,configStepsAvailable);
 
       this.configureWebApp(hasAuthSettings);
 
@@ -240,19 +281,51 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     ) {
       this.deploymentTrack.validate(component);
 
-      cyGet(TestIds.deploySplitToggle, MEDIUM_TIME)
-        .should("be.enabled")
-        .click();
-
+      cyGet(TestIds.deploySplitToggle, MEDIUM_TIME).should("be.enabled").click();
       cyGet(TestIds.configureDeploy).click();
-
       cyGet(TestIds.executeDeploy, MEDIUM_TIME).should("be.enabled").click();
     }
 
-    private stepThroughConfigSteps(configStepsAvailable: number) {
+    private startWebhookDeployment(
+      component: Webhook , configValue: string
+    ) {
+      
+      cyGet(TestIds.deploySplitToggle, MEDIUM_TIME).should("be.enabled").click();
+      cyGet(TestIds.configureDeploy).click();
+      cyGet(TestIds.executeDeploy, MEDIUM_TIME).should("be.enabled").click();
+      this.addConfiguration(configValue);
+    }
+
+    private addConfiguration(value: string) {
+      cy.get(".ConfigForm", MEDIUM_TIME).should("be.visible");
+      cy.get(".ConfigForm div input").clear().type(value);
+      cy.get('.ConfigForm button[type="submit"]').click();
+    }
+  
+    private webhookPromotion(
+      component: Webhook , configValue: string
+    ) {
+      
+      cy.wait(3000);
+      cyGet(TestIds.promote, MEDIUM_TIME).should("be.enabled").click();
+      cy.get(TestIds.next).should("be.visible").click();
+      this.addConfiguration(configValue);
+      
+    }
+
+    private stepThroughConfigSteps(component: Webhook | Service | ManualTrigger | ScheduleTrigger | WebApp, configStepsAvailable: number) {
       for (let i = 0; i < configStepsAvailable; i++) {
-        cy.get(TestIds.next).should("be.visible").click();
+        if (!(component instanceof Webhook)) {
+          cy.get(TestIds.next).should("be.visible").click();
+        }
       }
+    }
+
+
+    private stepThroughConfigStepsPromotion(configStepsAvailable: number) {
+      for (let i = 0; i < configStepsAvailable; i++) {
+      }
+      
     }
 
     private reviewAndUpdateEndpoint(

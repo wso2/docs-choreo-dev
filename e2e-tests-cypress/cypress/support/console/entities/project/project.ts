@@ -30,6 +30,7 @@ import { ManualTrigger } from "../component/manual-trigger-component";
 import { WebappComponent } from "../../../interfaces/choreo-components/webapp-component";
 import { WebApp } from "../component/webapp-component";
 import { ScheduleTrigger } from "../component/schedule-trigger-component";
+import { Webhook } from "../component/webhook-component";
 import { TestRunnerComponent } from "../../../interfaces/choreo-components/testrunner-component";
 import { TestRunner } from "../component/test-runner-component";
 
@@ -60,6 +61,13 @@ export interface BuildPackInfo {
   readonly languageVersion: string;
   readonly buildContext?: string;
 }
+
+export interface WebhookInfo {
+  readonly triggerChannels: string;
+  readonly triggerId: string;
+}
+
+
 
 export class Project {
   name: string;
@@ -312,6 +320,10 @@ export class Project {
     });
   }
 
+
+
+
+
   verifyUsageInsights(env: Enums.Environment) {
     this.selectTimePeriod();
     this.selectEnvironment(env);
@@ -319,6 +331,42 @@ export class Project {
       expect(Number(value)).gte(2);
     });
   }
+
+  createWebhookComponent(
+    accessibility: Enums.Accessibility,
+    repoInfo: RepoInfo,
+    webhookInfo: WebhookInfo
+  ) {
+    const componentName = Utils.generateComponentName();
+    let componentData: ComponentData = {
+      componentName: componentName,
+      displayType: Enums.DisplayType.webhook,
+      accessibility: accessibility,
+      projectName: this.name,
+      srcGitRepoUrl: repoInfo.url,
+      initializeAsBallerinaProject: false,
+      repositoryType: Enums.RepoType.UserManagedNonEmpty,
+      repositorySubPath: repoInfo.subPath == undefined ? "" : repoInfo.subPath,
+      sampleTemplate: "",
+      triggerChannels: webhookInfo.triggerChannels,
+      triggerId: webhookInfo.triggerId,
+    };
+
+    return GraphQL.createComponentV2(
+      this.name,
+      "",
+      componentData,
+      GraphQLQueryBuilder.getRestComponentCreationQuery
+    ).then((componentDetails: ComponentDetails) => {
+      return Promise.resolve(new Webhook(componentName));
+    });
+  }
+
+
+
+
+
+
 
   private createComponentIfEmptyProject() {
     cy.get("body").then((body) => {

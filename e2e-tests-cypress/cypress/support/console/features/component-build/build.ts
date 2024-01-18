@@ -21,11 +21,13 @@ import { DeploymentTrack } from "../deployment-track/deployment-track";
 import { ManualTrigger } from "../../entities/component/manual-trigger-component";
 import { ScheduleTrigger } from "../../entities/component/schedule-trigger-component";
 import { WebApp } from "../../entities/component/webapp-component";
+import { Webhook } from "../../entities/component/webhook-component";
 import { TestRunner } from "../../entities/component/test-runner-component";
 
 export interface BuildFeature {
+
   _build(
-    component: Service | ManualTrigger | ScheduleTrigger | TestRunner | WebApp
+    component: Service | ManualTrigger | ScheduleTrigger | TestRunner | WebApp | Webhook
   ): void;
 }
 
@@ -36,16 +38,13 @@ export function mixinBuild<T extends Types.Constructor>(
     private sideMenu = new ServiceLeftMenu();
     private deploymentTrack = new DeploymentTrack();
 
-    _build(
-      component: Service | ManualTrigger | ScheduleTrigger | TestRunner | WebApp
-    ) {
+    _build(component: Service | ManualTrigger | ScheduleTrigger | WebApp | Webhook | TestRunner) {
       this.sideMenu.navigateToBuild();
-
       this.triggerBuild(component);
     }
 
     private triggerBuild(
-      component: Service | ManualTrigger | ScheduleTrigger | TestRunner | WebApp
+      component: Service | ManualTrigger | ScheduleTrigger | TestRunner | WebApp | Webhook
     ) {
       this.deploymentTrack.validate(component);
 
