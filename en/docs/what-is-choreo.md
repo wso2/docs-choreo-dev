@@ -7,7 +7,6 @@ The following are some of the cutting-edge capabilities of Choreo:
  - Design that leads to end-to-end security, governance, and operational efficiency:
     - **Domain-driven design**: Organize your enterprise systems into domains, exposing managed APIs, events, and data through projects., A project consists of components representing units of deployment.
     - **Application security design**: [Cell-based architecture](https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md), where projects become governable units from development to deployment, ensuring managed access via APIs, events, and data.
-    - **Architecture and code parity**: Application architecture design that allows the code to be the architecture, preventing architecture drift. Powered by [Ballerina](https://ballerina.io/).
 
  - Efficient and effective development:
     - **Code in any language**: Develop applications in your team's preferred programming language, harnessing existing skill sets to build powerful polyglot APIs, services, events, tasks, and more.
