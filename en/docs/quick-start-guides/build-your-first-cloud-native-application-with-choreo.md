@@ -27,16 +27,6 @@ Before you try out this guide, complete the following:
 
     This creates the organization and opens the organization home page.
 
-    !!! info "Enable Asgardeo as the key manager"
-
-         If you created your organization in Choreo before the 21st of February 2023, and you have not already enabled Asgardeo as the key manager, follow these steps to enable Asgardeo as the default key manager:
-
-         1. In the Choreo Console, go to the top navigation menu and click **Organization**. This takes you to the organization's home page.
-         2. In the left navigation menu, click **Settings**.
-         3. In the header, click the **Organization** list. This will open the organization-level settings page. 
-         4. Click the **API Management** tab and then click **Enable Asgardeo Key Manager**.
-         5. In the confirmation dialog that opens, click **Yes**.
-
 ## Step 1: Create a project and configure the sample service 
 
 In this step, you are playing the role of an API developer. You will create a project, configure the sample service, and publish it as a REST API for your web application to consume.
