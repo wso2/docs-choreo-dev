@@ -1,42 +1,40 @@
 # Manage Deployment Tracks for Choreo Components
 
-Choreo allows you to create and manage dedicated [deployment tracks](../choreo-concepts/deployment-tracks.md) for components, facilitating independent version control and deployment. This capability also allows you to unlink deployment tracks from associated branches or relink them to different branches so that you can align with your preferred Git workflows such as the feature branch workflow or GitFlow workflow.
+Choreo allows you to create and manage dedicated [deployment tracks](../choreo-concepts/deployment-tracks.md) for components, facilitating independent version control and deployment. This capability also allows you to unlink deployment tracks from associated branches or relink them to different branches so that you can align with your preferred Git workflows, such as the feature branch workflow or GitFlow workflow.
 
 !!! info
      Deployment track creation and management does not apply to API Proxy and [BYOI components](../develop-components/bring-your-own-image.md).
-
 
 ## Create a deployment track
 
 **Prerequisites**:
 
- - A component created in Choreo.
+ - Create a component in Choreo.
 
 Follow the steps below to create a deployment track for a component:
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the **Component Listing** pane, click on the component for which you want to create a deployment track.
-3. On the component overview page header, click the **Deployment Track** drop-down list.
-4. Click **+ Create New**. This opens the **Create Deployment Track** dialog.
+2. In the **Component Listing** pane, click on the component you want to create a deployment track for.
+3. On the header of the component overview page, click the **Deployment Track** drop-down list.
+4. Click **+ Create New** to open the **Create Deployment Track** dialog.
 5. In the **Create Deployment Track** dialog, do the following:
     1. Select a branch to associate with the deployment track.
-    2. Specify a description for the deployment track. This is optional.
-    3. If you are creating the deployment track for a service component, specify a unique API version indicating the major and minor version numbers.
+    2. Optionally, specify a description for the deployment track. 
+    3. To create a deployment track for a service component, specify a unique API version indicating the major and minor version numbers.
 6. Click **Create**.
 
 ## Unlink a deployment track
 
 If you want to detach a branch reference from a deployment track, you must unlink the branch.
 
-!!! tip
-     When you unlink an active deployment track, it doesn't stop ongoing deployments. However, it restricts future deployment actions to redeploy the same builds.
-
+!!! info
+     When you unlink the branch of a deployment track, the active deployments are unaffected. However, while you can redeploy the existing deployment, you cannot perform a new deployment.
 
 Follow the steps below to unlink a deployment track of a component:
   
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component for which you want to unlink a deployment track.
-3. On the component overview page header, click the **Deployment Track** drop-down list and then click **View All**. This takes you to the component settings page where you can see all the deployment tracks linked to the component.
+3. On the header of the component overview page, click the **Deployment Track** drop-down list and then click **View All**. This takes you to the component settings page where you can see all the deployment tracks linked to the component.
 4. Click the edit icon corresponding to the deployment track you want to unlink.
 5. In the **Edit Branch** dialog that opens, click the **Branch Name** list and select **None**.
 6. Click **Save**.
@@ -45,8 +43,8 @@ Follow the steps below to unlink a deployment track of a component:
 
 To associate a branch reference to an unlinked deployment track, you must link a branch.
 
-!!! tip
-    When you link a branch that you have not used previously for an active deployment, it requires manual building and deployment for the associated deployment track.
+!!! info
+    To build and deploy the contents of the linked branch,  you must perform a manual build and deploy.
 
 **Prerequisites**:
 
@@ -55,8 +53,8 @@ To associate a branch reference to an unlinked deployment track, you must link a
 Follow the steps below to link a branch to an unlinked deployment track:
   
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the **Component Listing** pane, click on the component for which you want to associate a branch reference.
-3. On the component overview page header, click the **Deployment Track** drop-down list and then click **View All**. This takes you to the component settings page where you can see all the deployment tracks linked to the component.
+2. In the **Component Listing** pane, click on the component you want to associate a branch reference for.
+3. On the header of the component overview page, click the **Deployment Track** drop-down list and then click **View All**. This takes you to the component settings page where you can see all the deployment tracks linked to the component.
 4. Click **+ Link Branch** corresponding to the unlinked deployment track for which you want to associate a branch.
 5. In the **Link Branch** dialog that opens, click the **Branch Name** list and select the branch you want to relink.
 6. Click **Save**.
@@ -65,8 +63,8 @@ Follow the steps below to link a branch to an unlinked deployment track:
 
 To switch the branch reference of a linked deployment track, you must relink to an appropriate branch.
 
-!!! tip
-     Relinking a branch that was not previously used for an active deployment requires manual building and deployment for the associated deployment track.
+!!! info
+      If you unlink the existing branch of a deployment track and link a different branch, you must perform a manual build and deploy to build and deploy the contents of the recently linked branch.
 
 **Prerequisites**:
 
@@ -75,15 +73,15 @@ To switch the branch reference of a linked deployment track, you must relink to 
 Follow the steps below to switch the branch reference of a linked deployment track:
   
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the **Component Listing** pane, click on the component for which you want to relink a deployment track.
-3. On the component overview page header, click the **Deployment Track** drop-down list and then click **View All**. This takes you to the component settings page where you can see all the deployment tracks linked to the component.
+2. In the **Component Listing** pane, click on the component you want to relink a deployment track for.
+3. On the header of the component overview page,  click the **Deployment Track** drop-down list and then click **View All**. This takes you to the component settings page where you can see all the deployment tracks linked to the component.
 4. Click the **Edit Branch** icon corresponding to the deployment track you want to relink.
 5. In the **Edit Branch** dialog that opens, click the **Branch Name** list and select the branch you want to relink.
 6. Click **Save**.
 
-## Sample Scenario: Manage version releases with deployment tracks
+Now that you understand how to create and manage deployment tracks for components, let’s explore a sample scenario to see how a developer can use deployment tracks to manage version releases in Choreo.
 
-Now, let’s take a look at a sample scenario to understand how a developer can use deployment tracks to manage version releases within Choreo:
+## Sample Scenario: Manage version releases with deployment tracks
 
 Let’s consider the following version release scenario: 
 
@@ -91,11 +89,11 @@ Let’s consider the following version release scenario:
 - Once development is complete, the developer proceeds to merge the `feature-x` branch into the `dev` branch for testing.
 - Upon successful testing in the `dev` branch, the developer proceeds to merge all the changes into the `main` branch for production deployment.
 
-Following are the actions to take from a deployment tracks perspective in Choreo:
+Following are the actions you need to take from a deployment track perspective to manage the version release:
 
-1. To prepare for the new version release, unlink the `main` branch from the associated deployment track (let’s consider this as deployment track 1).
-2. Proceeds to merge the `dev` branch containing the tested changes into the `main` branch.
-3. Unlink the dev branch from the associated deployment track (let’s consider this as deployment track 2).
+1. To prepare for the new version release, unlink the `main` branch from the associated deployment track (let’s consider this as the deployment track 1).
+2. Proceed to merge the `dev` branch containing the tested changes into the `main` branch.
+3. Unlink the `dev` branch from the associated deployment track (let’s consider this as deployment track 2).
 4. Link deployment track 2 containing the latest version of the service to the `main` branch for deployment.
 5. To facilitate ongoing development and testing, create another deployment track (let’s consider this as deployment track 3) and link it to the `dev` branch.
 
