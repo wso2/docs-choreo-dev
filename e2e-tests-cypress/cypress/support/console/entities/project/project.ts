@@ -67,8 +67,6 @@ export interface WebhookInfo {
   readonly triggerId: string;
 }
 
-
-
 export class Project {
   name: string;
   description: string;
@@ -320,18 +318,6 @@ export class Project {
     });
   }
 
-
-
-
-
-  verifyUsageInsights(env: Enums.Environment) {
-    this.selectTimePeriod();
-    this.selectEnvironment(env);
-    this.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(2);
-    });
-  }
-
   createWebhookComponent(
     accessibility: Enums.Accessibility,
     repoInfo: RepoInfo,
@@ -362,11 +348,13 @@ export class Project {
     });
   }
 
-
-
-
-
-
+  verifyUsageInsights(env: Enums.Environment) {
+    this.selectEnvironment(env);
+    this.selectTimePeriod();
+    this.getTotalTraffic().should((value) => {
+      expect(Number(value)).gte(2);
+    });
+  }
 
   private createComponentIfEmptyProject() {
     cy.get("body").then((body) => {
