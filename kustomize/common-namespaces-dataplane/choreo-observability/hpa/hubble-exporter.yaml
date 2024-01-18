@@ -3,8 +3,8 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: hubble-exporter
 spec:
-  maxReplicas: 3
-  minReplicas: 2
+  maxReplicas: 1
+  minReplicas: 1
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
