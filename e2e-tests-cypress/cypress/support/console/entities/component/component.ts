@@ -151,6 +151,31 @@ export class Component {
     });
   }
 
+  copyEndpointUrl(env: string) {
+    this.sideMenu.navigateToOverview();
+
+    cy.get("body").then((body) => {
+      const endpointCount = body.find(
+        '[data-cyid="text-field-endpoint"]'
+      ).length;
+
+      for (let i = 0; i < endpointCount; i++) {
+        cy.get('[data-cyid="text-field-endpoint"]')
+          .eq(i)
+          .within(() => {
+            cy.get("input")
+              .invoke("val")
+              .then((text) => {
+                if (text.toString().includes(env)) {
+                  cy.log(`url of ${env}: `, text.toString());
+                  cy.wrap(text).as(env);
+                }
+              });
+          });
+      }
+    });
+  }
+
   verifyUsageInsights() {
     this.stats.viewUsageInsights();
     this.stats.navigateFromComponentToProjectInsights();

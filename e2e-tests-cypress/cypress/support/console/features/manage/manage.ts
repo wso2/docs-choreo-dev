@@ -30,6 +30,11 @@ export interface ManageFeature {
     component: Component,
     permissions: string[]
   );
+  _disableSecurity(
+    component: Component,
+    env: Enums.Environment,
+    resource: string
+  );
   _applyPermissionToResources(component: Component, permission: string);
   _verifyConsumer(appName: string);
 }
@@ -124,6 +129,23 @@ export function mixinManage<T extends Types.Constructor>(
       cy.get(TestIds.progressBar).should("not.exist");
     }
 
+    _disableSecurity(
+      component: Component,
+      env: Enums.Environment,
+      resource: string
+    ) {
+      this.sideMenu.navigateToSettings();
+
+      this.deploymentTrack.validate(component);
+
+      this.selectResources();
+      this.selectEnvironment(env);
+      this.selectRevision(env);
+      this.editResource();
+      this.selectResources();
+      this.toggleResourceSecurity(resource);
+    }
+
     private saveAndDeployPermissions(componentName: string) {
       cy.get(TestIds.scopeSaveAndDeploy).click();
       cy.get(TestIds.backdropLoader).should("not.exist");
@@ -166,7 +188,7 @@ export function mixinManage<T extends Types.Constructor>(
     private toggleCors(component: Component, isEnabled: boolean) {
       this.deploymentTrack.validate(component);
 
-      cy.get(TestIds.editSettings).click();
+      this.editResource();
       cy.get(TestIds.corsConfig).click({ force: true });
 
       cy.get(TestIds.saveSettings).should("be.visible");
@@ -190,6 +212,37 @@ export function mixinManage<T extends Types.Constructor>(
       // Wait short time for setting changes to be applied.
       // UI seems to work in a slightly async manner giving a misleading indication that the action has completed
       cy.get(TestIds.editSettings).should("be.enabled").wait(3000);
+    }
+
+    private selectResources() {
+      cy.get(TestIds.resourceTab).click({ force: true });
+    }
+
+    private selectEnvironment(env: Enums.Environment) {
+      cy.get(TestIds.envSelector).should("be.visible").scrollIntoView().click();
+      cy.get(`[data-value="${env}"]`).click();
+      cy.get(TestIds.envSelectorItems)
+        .invoke("text")
+        .then((text) => {
+          expect(text).equal(env);
+        });
+    }
+
+    private selectRevision(env: Enums.Environment) {
+      cy.get(TestIds.revision).click();
+      cy.get(TestIds.revisionHistory).should("be.visible");
+      cy.get(TestIds.revisionItem).contains(env).click({ force: true });
+    }
+
+    private editResource() {
+      cy.get(TestIds.editSettings).click();
+    }
+
+    private toggleResourceSecurity(resource: string) {
+      cy.get(`[id="panel-/${resource}/get-header"]`).scrollIntoView().click();
+      cy.get(TestIds.security).scrollIntoView().click();
+
+      this.applySettingChanges();
     }
   };
 }

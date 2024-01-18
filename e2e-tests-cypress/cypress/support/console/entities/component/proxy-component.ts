@@ -162,4 +162,12 @@ export class Proxy extends mixinDevelop(
   verifyConsumer(appName: string) {
     this._verifyConsumer(appName);
   }
+
+  disableSecurityInDev(resource: string) {
+    this._disableSecurity(this, Enums.Environment.DEVELOPMENT, resource);
+  }
+
+  disableSecurityInProd(resource: string) {
+    this._disableSecurity(this, Enums.Environment.PRODUCTION, resource);
+  }
 }

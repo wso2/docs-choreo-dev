@@ -207,4 +207,11 @@ export namespace TestIds {
     '[data-cyid="environment-selector-select"]';
   export const deploymentHistory =
     '[data-cyid="deployment-history-btn-button"]';
+  export const resourceTab = '[data-cyid="tab-resource-settings"]';
+  export const envSelector = '[data-cyid="environment-selector"]';
+  export const envSelectorItems = '[data-cyid="environment-selector"]>div>div';
+  export const revision = '[testid="selected-revision-link"]';
+  export const revisionHistory = '[data-testid="revision-history-header"]';
+  export const revisionItem = '[data-cyid*="revision-list-item"]';
+  export const security = `[data-testid="security"]`;
 }
