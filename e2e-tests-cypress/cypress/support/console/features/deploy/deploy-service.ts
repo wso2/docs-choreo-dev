@@ -125,7 +125,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.startDeployment(component);
 
-      this.stepThroughConfigSteps(component,configStepsAvailable, );
+      this.stepThroughConfigSteps(component,configStepsAvailable);
 
       this.verifyTaskDeploymentStatus();
     }
