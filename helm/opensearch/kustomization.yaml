@@ -8,6 +8,10 @@ helmCharts:
       ## Please refer https://github.com/opensearch-project/helm-charts/blob/main/charts/opensearch/values.yaml for details
       ## about these values
 
+      envFrom:
+       - configMapRef:
+         name: opensearch
+
       extraEnvs:
         - name: OPENSEARCH_PASSWORD
           valueFrom:
