@@ -490,6 +490,12 @@ onboards
 6.x
 7.x
 8.x
+redis-cli
+Lua
+eval
+evalsha
+fcall
+GitFlow
 
  - docs/references/upgrading-from-the-previous-version.md
 DefaultProject
@@ -610,6 +616,7 @@ choreo-insights-api
 programmatic-access-choreo-insights-api
 pricing.md
 create-your-first-integration-as-an-api
+manage-deployment-tracks-for-choreo-components
 api-proxy
 configs-and-secrets
 runtime.md
@@ -855,3 +862,5 @@ ServiceURL
 YOUR_ENVIRONMENT_VAR_HERE
  - docs/references/faq.md
 2-3x
+ - docs/manage-databases-and-caches/choreo-managed-postgresql-databases.md
+Business-16
