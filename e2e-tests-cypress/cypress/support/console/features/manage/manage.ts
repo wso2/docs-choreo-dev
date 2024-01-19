@@ -19,6 +19,7 @@ import { UsagePlan } from "../../../commons/enums";
 import { Types } from "../../../commons/types";
 import { Component } from "../../entities/component/component";
 import { Utils } from "../../../commons/utils";
+import { LONG_TIME } from "../../../commons/timeouts";
 
 export interface ManageFeature {
   _changeLifeCycleState(component: Component, state: Enums.LifeCycleState);
@@ -37,6 +38,7 @@ export interface ManageFeature {
   );
   _applyPermissionToResources(component: Component, permission: string);
   _verifyConsumer(appName: string);
+  _updateAccessMode(component: Component, accessMode: Enums.Accessibility);
 }
 
 export function mixinManage<T extends Types.Constructor>(
@@ -144,6 +146,20 @@ export function mixinManage<T extends Types.Constructor>(
       this.editResource();
       this.selectResources();
       this.toggleResourceSecurity(resource);
+    }
+
+    _updateAccessMode(component: Component, accessMode: Enums.Accessibility) {
+      this.sideMenu.navigateToSettings();
+
+      this.deploymentTrack.validate(component);
+
+      cy.get(TestIds.accessMode, LONG_TIME).should("be.visible").click();
+      cy.contains(accessMode, { matchCase: false }).should("exist").realClick();
+      cy.get(TestIds.warningBanner).should("be.visible");
+      cy.get(TestIds.dialogPrimaryAction).should("exist").click();
+      cy.contains(
+        `Successfully converted to an ${accessMode.toLowerCase()} API.`
+      ).should("be.visible");
     }
 
     private saveAndDeployPermissions(componentName: string) {

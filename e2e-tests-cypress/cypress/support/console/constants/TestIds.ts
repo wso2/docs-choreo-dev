@@ -214,4 +214,8 @@ export namespace TestIds {
   export const revisionHistory = '[data-testid="revision-history-header"]';
   export const revisionItem = '[data-cyid*="revision-list-item"]';
   export const security = `[data-testid="security"]`;
+  export const project = '[data-cyid="project-picker-button"]';
+  export const endpoint = '[data-cyid="text-field-endpoint"]';
+  export const accessMode = '[data-testid="access-mode"]';
+  export const warningBanner = '[data-testid="warning-banner"]';
 }

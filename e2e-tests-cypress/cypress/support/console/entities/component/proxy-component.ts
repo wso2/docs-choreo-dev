@@ -170,4 +170,8 @@ export class Proxy extends mixinDevelop(
   disableSecurityInProd(resource: string) {
     this._disableSecurity(this, Enums.Environment.PRODUCTION, resource);
   }
+
+  updateAccessMode(accessMode: Enums.Accessibility) {
+    this._updateAccessMode(this, accessMode);
+  }
 }
