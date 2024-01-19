@@ -1,7 +1,7 @@
 [cp.resilient_invoker]
 healthCheckPort = 9093
 queueName = "resilient-invoker"
-timeToLive = 300
+timeToLive = "{{.MESSAGE_TTL}}"
 asbConnectionStringPath = "/mnt/csi/secret-cp-rrs/CP_RRS_ASB_CONNECTION_STRING"
 
 [ballerina.log]
