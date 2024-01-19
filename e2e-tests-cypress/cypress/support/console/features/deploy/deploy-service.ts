@@ -125,7 +125,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.startDeployment(component);
 
-      this.stepThroughConfigSteps(component,configStepsAvailable, );
+      this.stepThroughConfigSteps(component,configStepsAvailable);
 
       this.verifyTaskDeploymentStatus();
     }
@@ -313,7 +313,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       
     }
 
-    private stepThroughConfigSteps(component: Webhook | Service | ManualTrigger | ScheduleTrigger | WebApp, configStepsAvailable: number) {
+    private stepThroughConfigSteps(component: Webhook | Service | TestRunner | ManualTrigger | ScheduleTrigger | WebApp, configStepsAvailable: number) {
       for (let i = 0; i < configStepsAvailable; i++) {
         if (!(component instanceof Webhook)) {
           cy.get(TestIds.next).should("be.visible").click();
