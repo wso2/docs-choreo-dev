@@ -5,7 +5,7 @@ helmCharts:
       linux:
         image:
           repository: choreocontrolplane.azurecr.io/oss/azure/secrets-store/provider-azure
-          tag: v1.4.1
+          tag: v1.5.0
         tolerations:
           - operator: Exists
           - key: ghrunner
@@ -24,11 +24,11 @@ helmCharts:
             tag: v2.8.0
           image:
             repository: choreocontrolplane.azurecr.io/oss/kubernetes-csi/secrets-store/driver
-            tag: v1.3.3
+            tag: v1.4.0
           crds:
             image:
               repository: choreocontrolplane.azurecr.io/oss/kubernetes-csi/secrets-store/driver-crds
-              tag: v1.3.3
+              tag: v1.4.0
           tolerations:
             - key: ghrunner
               operator: Equal
@@ -36,7 +36,7 @@ helmCharts:
               effect: NoSchedule
     releaseName: csi-secrets-store-provider-azure
     namespace: csi-secret-store-driver
-    version: 1.4.3
+    version: 1.5.0
     repo: oci://choreocontrolplane.azurecr.io/helm
 
 commonAnnotations:

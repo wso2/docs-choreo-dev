@@ -1,6 +1,6 @@
 import { Utils } from "../../commons/utils";
 import { AUTH_HEADER, AUTH_HEADER2 } from "../../commons/http";
-import { login } from "../concepts/login/login";
+import { login } from "../entities/login/login";
 
 export class APILifeCycleService {
   static deprecateAPI(apiId: string) {

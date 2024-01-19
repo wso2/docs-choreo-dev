@@ -11,18 +11,24 @@
  * associated services.
  */
 
-import { Project } from "./concepts/project/project";
-import { login } from "./concepts/login/login";
+import { Project } from "./entities/project/project";
+import { login } from "./entities/login/login";
 import { OnPremKeyService } from "./apis/on-prem-key-service";
 import { Utils } from "../commons/utils";
 import { AUTH_HEADER2, OK } from "../commons/http";
 import { GraphQL } from "./apis/graphql";
 import { ApiDevPortalService } from "./apis/api-devportal-service";
+import { Test } from "mocha";
+import { TestIds } from "./constants/TestIds";
+import { OrganizationSettings } from "./features/org-settings/org-settings";
+import { Enums } from "../commons/enums";
 
 /**
  * Represents the Choreo Console, the entry point for all tests.
  */
 class Console {
+  private _orgSettings = new OrganizationSettings();
+
   static projectNamePrefix = "autotest";
 
   login() {
@@ -39,8 +45,20 @@ class Console {
     });
   }
 
+  addUserStore(userStoreFile: string, env: Enums.Environment) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this._orgSettings.addUserStore(userStoreFile, env);
+  }
+
   navigateToHome() {
     cy.get('[data-cyid="organization-home"]').click();
+    cy.get(TestIds.projectCard).should("be.visible");
+  }
+
+  navigateToSettings() {
+    this.navigateToHome();
+    cy.get('[data-cyid="settings"]').should("be.visible").click();
   }
 
   createNewProject(description: string): Project {

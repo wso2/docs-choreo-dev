@@ -12,8 +12,8 @@
  */
 
 import { console } from "../../../support/console/console";
-import { Project } from "../../../support/console/concepts/project/project";
-import { Proxy } from "../../../support/console/concepts/component/proxy/proxy-component";
+import { Project } from "../../../support/console/entities/project/project";
+import { Proxy } from "../../../support/console/entities/component/proxy-component";
 import { Enums } from "../../../support/commons/enums";
 import { OK } from "../../../support/commons/http";
 

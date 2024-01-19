@@ -15,7 +15,7 @@ import { ONE_HOUR } from "../../commons/constants";
 import { AUTH_HEADER2 } from "../../commons/http";
 import { Utils } from "../../commons/utils";
 import { appNamePrefix } from "../../devportal/utils";
-import { login } from "../concepts/login/login";
+import { login } from "../entities/login/login";
 
 export class ApiDevPortalService {
   private static devPortalUrl = `${Cypress.env(

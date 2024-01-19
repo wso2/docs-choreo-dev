@@ -22,6 +22,7 @@ export namespace Enums {
     ERROR = "/fault-flow",
   }
 
+
   export enum DisplayType {
     restAPI = "restAPI",
     proxy = "proxy",

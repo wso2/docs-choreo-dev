@@ -38,6 +38,7 @@ export namespace TestIds {
   export const viewArtifact = '[data-cyid="btn-view-artifact-icon-button"]';
   export const endpointCard = '[data-cyid="endponint-selector-card-card"]';
   export const selectVersion = '[data-cyid="deployment-track-picker-chip"]';
+  export const selectBranch = '[data-cyid="deployment-track-picker"]';
   export const deploySplitToggle =
     '[data-cyid="direct-deploy-option-split-toggle-button-button"]';
   export const configureDeploy = '[data-cyid="configure-&-deploy-option"]';
@@ -179,6 +180,31 @@ export namespace TestIds {
   export const applicationListEdit = (appName: string) =>
     `[data-testid="edit-btn-${appName}"]`;
   export const configSubmit = '[data-cyid="btn-submit-configform"]';
-  export const runNow = '[data-cyid="run-now-button"]';
+  export const runNow = '[data-cyid="run-now-split-group-button-button"]';
   export const runNowNotification = '[data-testid="snackbar-notification"]';
+  export const refreshTasks = '[data-cyid="refresh-tasks-button"]';
+  export const executionCount = '[data-cyid="total-executions-count"]';
+  export const link = '[data-cyid="btn-link-button"]';
+  export const mountPath = '[data-cyid="mount-path"]';
+  export const formConfigField =
+    '[class="view-lines monaco-mouse-cursor-text"]';
+  export const appUrl = '[data-cyid="app-url-link"]';
+  export const orgAppSecurity =
+    '[data-cyid="nav-link-application-security-link-tabs-link-tab"]';
+  export const builtInIdpCard = '[data-cyid="choreo-built-in-idp-card"]';
+  export const linkBtn = '[data-cyid="link-button"]';
+  export const selectUserStoreFile =
+    '[data-cyid="userstore-file-uploader-button-button"]';
+  export const uploadUserStoreFile = '[data-cyid="upload-csv-button"]';
+  export const choreoIdpEnvs = '[data-cyid="choreo-idp-environments"]';
+  export const idpEnv = (env: Enums.Environment) =>
+    `[data-cyid="choreo-idp-environments-${env.toLowerCase()}"]`;
+  export const idpEnvUS = (env: Enums.Environment) =>
+    `[data-cyid="choreo-idp-environments-${env.toLowerCase()}---us"]`;
+  export const uploadUserStoreCard = '[data-cyid="upload-userstores-card"]';
+  export const observabilityLogPanelEntry = '[data-testid="log-panel-entry"]';
+  export const environmentPickerObsMetrics =
+    '[data-cyid="environment-selector-select"]';
+  export const deploymentHistory =
+    '[data-cyid="deployment-history-btn-button"]';
 }

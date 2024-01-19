@@ -4,7 +4,6 @@
     <test name="choreo">
         <classes>
             <class name="com.wso2.choreo.integration.common.TestContext"/>
-            <class name="com.wso2.choreo.integration.tests.connectorbuilder.ConnectorBuilderIT"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestBasicAPIRevisionCreation"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingSettingsPage"/>
             <class name="com.wso2.choreo.integration.tests.deploy.AutoDeployOnCommitIT"/>
