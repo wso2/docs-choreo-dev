@@ -32,6 +32,10 @@ export class Component {
   protected componentUrl: string;
   private devPortalUrl: string;
 
+  private devEndpointUrl: string;
+
+  private prodEndpointUrl: string;
+
   private devPortalMenu = new DevPortalLeftMenu();
   private stats = new _Stats();
   protected sideMenu = new ServiceLeftMenu();
@@ -64,6 +68,14 @@ export class Component {
 
   setDevPortalUrl(url: string) {
     this.devPortalUrl = url;
+  }
+
+  getDevEndpointUrl(): string {
+    return this.devEndpointUrl;
+  }
+
+  getProdEndpointUrl(): string {
+    return this.prodEndpointUrl;
   }
 
   generateCredentials_DevPortal(
@@ -151,6 +163,41 @@ export class Component {
     });
   }
 
+  saveEndpointUrls(endpointMatcher: Map<string, Enums.Environment>) {
+    this.sideMenu.navigateToOverview();
+
+    cy.get(TestIds.createTime).should("be.visible");
+    cy.get(TestIds.progressBar).should("not.exist");
+    cy.get(TestIds.deploymentStatusChip).should("be.visible");
+    cy.get(TestIds.endpoint).should("be.visible");
+
+    return cy.get(TestIds.endpoint).then(($endpoint) => {
+      const endpointCount = $endpoint.length;
+
+      for (let i = 0; i < endpointCount; i++) {
+        cy.get(TestIds.endpoint)
+          .eq(i)
+          .within(() => {
+            cy.get("input")
+              .invoke("val")
+              .then((text) => {
+                for (let [matcher, env] of endpointMatcher) {
+                  if (text.toString().includes(matcher)) {
+                    if (env === Enums.Environment.PRODUCTION) {
+                      this.prodEndpointUrl = text.toString();
+                    } else {
+                      this.devEndpointUrl = text.toString();
+                    }
+                  }
+                }
+              });
+          });
+      }
+
+      return cy.wrap({});
+    });
+  }
+
   verifyUsageInsights() {
     this.stats.viewUsageInsights();
     this.stats.navigateFromComponentToProjectInsights();
@@ -174,19 +221,14 @@ export class Component {
     });
   }
 
+  goBackToProject() {
+    cy.get(TestIds.project).should("be.visible").click();
+  }
+
   _navigateToDevPortal(idp: string) {
     this.sideMenu.navigateToOverview();
 
-    cy.get(TestIds.createTime).should("be.visible");
-    cy.get(TestIds.progressBar).should("not.exist");
-    cy.get(TestIds.deploymentStatusChip).should("be.visible");
-
-    cy.contains("Requests", SHORT_TIME).should("be.visible");
-    cy.contains("Errors", SHORT_TIME).should("be.visible");
-    cy.contains("Average TPS", SHORT_TIME).should("be.visible");
-    cy.contains("Latency", SHORT_TIME)
-      .should("be.visible")
-      .wait(VERY_SHORT_TIME.timeout); // Wait for the latency stats to load
+    this.waitForOverviewToLoad();
 
     cy.get(TestIds.devPortalLink)
       .invoke("attr", "href")
@@ -218,7 +260,20 @@ export class Component {
       });
   }
 
-  protected visitComponent(name: string): string {
+  private waitForOverviewToLoad() {
+    cy.get(TestIds.createTime).should("be.visible");
+    cy.get(TestIds.progressBar).should("not.exist");
+    cy.get(TestIds.deploymentStatusChip).should("be.visible");
+
+    cy.contains("Requests", SHORT_TIME).should("be.visible");
+    cy.contains("Errors", SHORT_TIME).should("be.visible");
+    cy.contains("Average TPS", SHORT_TIME).should("be.visible");
+    cy.contains("Latency", SHORT_TIME)
+      .should("be.visible")
+      .wait(VERY_SHORT_TIME.timeout); // Wait for the latency stats to load
+  }
+
+  visitComponent(name: string): string {
     cy.get('[data-cyid="listing"]').should("be.visible").click();
 
     cy.get('[data-cyid="project-components-multi-select"]').should(
