@@ -120,7 +120,7 @@ The following sections walk you through sample implementations for the **Request
 
 The following is a sample implementation for the request flow:
  
-```
+```ballerina
 @mediation:RequestFlow
 public function validateRequestHeader(mediation:Context ctx, http:Request req, string headerName, string headerValue) returns http:Response|false|error|() {
    string|http:HeaderNotFoundError header = req.getHeader(headerName);
@@ -136,7 +136,8 @@ public function validateRequestHeader(mediation:Context ctx, http:Request req, s
     }
     log:printInfo("Header validation successful");
     return ();
-}
+};
+    
 function generateResponse(string message, int statusCode) returns http:Response {
     http:Response response = new();
     response.setTextPayload(message); 
@@ -150,12 +151,12 @@ function generateResponse(string message, int statusCode) returns http:Response 
 
 The following is a sample implementation for the response flow:
 
-```
+```ballerina
 @mediation:ResponseFlow
 public function validateResponseHeader(mediation:Context ctx, http:Request req, http:Response res, string headerName, string headerValue) returns http:Response|false|error|() { 
    string|http:HeaderNotFoundError header = res.getHeader(headerName);
    if (header is http:HeaderNotFoundError) {
-       string message = string `Header ${headerName} is not found`;
+    string message = string `Header ${headerName} is not found`;
     log:printError(message);
     return ();
    }
