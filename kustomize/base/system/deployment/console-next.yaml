@@ -71,7 +71,7 @@ spec:
                 configMapKeyRef:
                   name: common-env-variables
                   key: SAMPLE_BALLERINA_VERSION
-            - name: CHOREO_SAMPLES_VERSION
+            - name: REACT_APP_CHOREO_SAMPLES_VERSION
               valueFrom:
                 configMapKeyRef:
                   name: common-env-variables
