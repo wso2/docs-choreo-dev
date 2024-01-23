@@ -98,7 +98,7 @@ spec:
               memory: 1Gi
             requests:
               cpu: 500m
-              memory: 200mi
+              memory: 200Mi
       volumes:
         - name: config
           configMap:
