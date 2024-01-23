@@ -33,6 +33,7 @@ import { ScheduleTrigger } from "../component/schedule-trigger-component";
 import { Webhook } from "../component/webhook-component";
 import { TestRunnerComponent } from "../../../interfaces/choreo-components/testrunner-component";
 import { TestRunner } from "../component/test-runner-component";
+import { IntegrationComponentData } from "../../../interfaces/integration-component-data";
 
 export interface RepoInfo {
   readonly url: string;
@@ -43,7 +44,7 @@ export interface RepoInfo {
 
 export interface ProxyInfo {
   readonly version: string;
-  readonly endpointUrl?: string;
+  readonly endpointUrl: string;
   readonly oasUrl?: string;
   readonly oasFilePath?: string;
   readonly isInternal?: boolean;
@@ -345,6 +346,34 @@ export class Project {
       GraphQLQueryBuilder.getRestComponentCreationQuery
     ).then((componentDetails: ComponentDetails) => {
       return Promise.resolve(new Webhook(componentName));
+    });
+  }
+
+  createMIServiceComponent(
+    accessibility: Enums.Accessibility,
+    repoInfo: RepoInfo,
+    endpointName: string
+  ) {
+    const componentName = Utils.generateComponentName();
+
+    let componentData: IntegrationComponentData = {
+      componentName: componentName,
+      componentType: Enums.ComponentType.MI_API_SERVICE,
+      accessibility: accessibility,
+      projectName: this.name,
+      srcGitRepoUrl: repoInfo.url,
+      repositorySubPath: repoInfo.subPath == undefined ? "" : repoInfo.subPath,
+      oasFilePath: "",
+      srcGitRepoBranch: repoInfo.branch,
+    };
+
+    return GraphQL.createComponentV2(
+      this.name,
+      "",
+      componentData,
+      GraphQLQueryBuilder.getMIComponentCreationQuery
+    ).then(() => {
+      return Promise.resolve(new Service(componentName, endpointName));
     });
   }
 

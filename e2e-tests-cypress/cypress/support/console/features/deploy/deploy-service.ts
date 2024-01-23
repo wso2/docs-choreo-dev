@@ -29,7 +29,6 @@ import { DeploymentTrack } from "../deployment-track/deployment-track";
 import { ManualTrigger } from "../../entities/component/manual-trigger-component";
 import { ScheduleTrigger } from "../../entities/component/schedule-trigger-component";
 import { WebApp } from "../../entities/component/webapp-component";
-import { Enums } from "../../../commons/enums";
 import { Webhook } from "../../entities/component/webhook-component";
 import { TestRunner } from "../../entities/component/test-runner-component";
 
@@ -81,9 +80,8 @@ export interface DeployServiceFeature {
   _promoteWebhook(
     component: Webhook,
     configStepsAvailable: number,
-    configValue: string,
+    configValue: string
   );
-
 }
 
 export function mixinServiceDeploy<T extends Types.Constructor>(
@@ -104,7 +102,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.startDeployment(component);
 
-      this.stepThroughConfigSteps(component,configStepsAvailable);
+      this.stepThroughConfigSteps(component, configStepsAvailable);
 
       this.reviewAndUpdateEndpoint(component, endpointVisibility);
 
@@ -112,7 +110,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.verifyDevEndpoint();
 
-      this.verifyDevAccessibility(component, endpointVisibility);
+      this.verifyDevAccessibility(endpointVisibility);
     }
 
     _deployTask(
@@ -125,7 +123,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.startDeployment(component);
 
-      this.stepThroughConfigSteps(component,configStepsAvailable);
+      this.stepThroughConfigSteps(component, configStepsAvailable);
 
       this.verifyTaskDeploymentStatus();
     }
@@ -152,9 +150,8 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.sideMenu.navigateToDeploy();
       this.waitTillReadyToDeploy();
       this.startWebhookDeployment(component, configValue);
-      this.stepThroughConfigSteps(component,configStepsAvailable);
+      this.stepThroughConfigSteps(component, configStepsAvailable);
       this.verifyDeploymentStatus();
-
     }
 
     //Promotion methods start here
@@ -179,7 +176,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.startPromotion(component);
 
-      this.stepThroughConfigSteps(component,configStepsAvailable);
+      this.stepThroughConfigSteps(component, configStepsAvailable);
 
       this.reviewAndUpdateEndpoint(component, endpointVisibility);
 
@@ -205,7 +202,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.startPromotion(component);
 
-      this.stepThroughConfigSteps(component,configStepsAvailable);
+      this.stepThroughConfigSteps(component, configStepsAvailable);
 
       this.configureWebApp(hasAuthSettings);
 
@@ -281,16 +278,17 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     ) {
       this.deploymentTrack.validate(component);
 
-      cyGet(TestIds.deploySplitToggle, MEDIUM_TIME).should("be.enabled").click();
+      cyGet(TestIds.deploySplitToggle, MEDIUM_TIME)
+        .should("be.enabled")
+        .click();
       cyGet(TestIds.configureDeploy).click();
       cyGet(TestIds.executeDeploy, MEDIUM_TIME).should("be.enabled").click();
     }
 
-    private startWebhookDeployment(
-      component: Webhook , configValue: string
-    ) {
-      
-      cyGet(TestIds.deploySplitToggle, MEDIUM_TIME).should("be.enabled").click();
+    private startWebhookDeployment(component: Webhook, configValue: string) {
+      cyGet(TestIds.deploySplitToggle, MEDIUM_TIME)
+        .should("be.enabled")
+        .click();
       cyGet(TestIds.configureDeploy).click();
       cyGet(TestIds.executeDeploy, MEDIUM_TIME).should("be.enabled").click();
       this.addConfiguration(configValue);
@@ -301,19 +299,24 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       cy.get(".ConfigForm div input").clear().type(value);
       cy.get('.ConfigForm button[type="submit"]').click();
     }
-  
-    private webhookPromotion(
-      component: Webhook , configValue: string
-    ) {
-      
+
+    private webhookPromotion(component: Webhook, configValue: string) {
       cy.wait(3000);
       cyGet(TestIds.promote, MEDIUM_TIME).should("be.enabled").click();
       cy.get(TestIds.next).should("be.visible").click();
       this.addConfiguration(configValue);
-      
     }
 
-    private stepThroughConfigSteps(component: Webhook | Service | TestRunner | ManualTrigger | ScheduleTrigger | WebApp, configStepsAvailable: number) {
+    private stepThroughConfigSteps(
+      component:
+        | Webhook
+        | Service
+        | TestRunner
+        | ManualTrigger
+        | ScheduleTrigger
+        | WebApp,
+      configStepsAvailable: number
+    ) {
       for (let i = 0; i < configStepsAvailable; i++) {
         if (!(component instanceof Webhook)) {
           cy.get(TestIds.next).should("be.visible").click();
@@ -321,11 +324,8 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       }
     }
 
-
     private stepThroughConfigStepsPromotion(configStepsAvailable: number) {
-      for (let i = 0; i < configStepsAvailable; i++) {
-      }
-      
+      for (let i = 0; i < configStepsAvailable; i++) {}
     }
 
     private reviewAndUpdateEndpoint(
@@ -419,10 +419,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       });
     }
 
-    private verifyDevAccessibility(
-      component: Service,
-      endpointVisibility: EndpointAccessibility
-    ) {
+    private verifyDevAccessibility(endpointVisibility: EndpointAccessibility) {
       // Begin workaround for https://github.com/wso2-enterprise/choreo/issues/25414
       this.sideMenu.navigateToOverview();
       this.sideMenu.navigateToDeploy();
@@ -551,7 +548,11 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
         cy.get(TestIds.appUrl)
           .invoke("attr", "href")
           .then((url) => {
-            component.setDevWebAppUrl(url);
+            if (url) {
+              component.setDevWebAppUrl(url);
+            } else {
+              throw new Error("href attribute is undefined");
+            }
           });
       });
     }
@@ -561,7 +562,11 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
         cy.get(TestIds.appUrl)
           .invoke("attr", "href")
           .then((url) => {
-            component.setProdWebAppUrl(url);
+            if (url) {
+              component.setProdWebAppUrl(url);
+            } else {
+              throw new Error("href attribute is undefined");
+            }
           });
       });
     }
