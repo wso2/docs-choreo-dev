@@ -1,10 +1,4 @@
 configMapGenerator:
-  - name: nginx-lua-modules
-    behavior: create
-    files:
-      - cache.lua
-      - split.lua
-      - util.lua
   - name: ic-nginx-lua-modules
     behavior: create
     files:
