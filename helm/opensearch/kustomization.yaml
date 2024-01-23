@@ -10,7 +10,7 @@ helmCharts:
 
       envFrom:
        - configMapRef:
-         name: opensearch
+           name: opensearch
 
       extraEnvs:
         - name: OPENSEARCH_PASSWORD
