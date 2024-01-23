@@ -22,6 +22,7 @@ metadata:
   annotations:
     checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
     checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
+    secret.reloader.stakater.com/reload: "rate-limiter-cert"
   name: choreo-connect-rate-limiter
 spec:
   replicas: 1
