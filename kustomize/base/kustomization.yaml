@@ -4,6 +4,7 @@ resources:
   - actions-runner-system
   - apim
   - apim-analytics
+  - authz
   - clusterissuers
   - idp
   - system
