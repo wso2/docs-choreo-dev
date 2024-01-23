@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
   - ../base/clusterissuers
-  - ../base/certificates
+  - choreo-apim
   - choreodp-system
   - crd
   - priorityclass
