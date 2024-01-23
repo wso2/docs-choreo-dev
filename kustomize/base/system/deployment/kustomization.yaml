@@ -31,7 +31,6 @@ resources:
   - platform-services-manager.yaml
   - quota-limiter.yaml
   - subscriptions.yaml
-  - telemetry.yaml
   - telemetry-go.yaml
   - test-assistant.yaml
   - testbase.yaml
