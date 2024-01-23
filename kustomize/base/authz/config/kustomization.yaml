@@ -1,5 +1,0 @@
-configMapGenerator:
-  - name: cm-file-choreo-resource-authorization-service
-    behavior: create
-    files:
-      - choreo-resource-authorization-service/Config.toml
