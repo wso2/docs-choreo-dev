@@ -1,12 +1,10 @@
-import { ByocComponent } from "../../interfaces/byoc-component"
+import { ByocComponent } from "../../interfaces/byoc-component";
 import { TestRunnerComponent } from "../../interfaces/choreo-components/testrunner-component";
 import { WebappComponent } from "../../interfaces/choreo-components/webapp-component";
 import { ComponentData } from "../../interfaces/component-data";
-
+import { IntegrationComponentData } from "../../interfaces/integration-component-data";
 
 export class GraphQLQueryBuilder {
-
-
   static getComponentDetails(projectId: string, componentHandler: string) {
     return {
       query: `query{
@@ -63,11 +61,15 @@ export class GraphQLQueryBuilder {
         }
       }
     }
-`
-    }
+`,
+    };
   }
 
-  static getEndpointStatusQuery(componentId: string, versionId: string, releaseId: string) {
+  static getEndpointStatusQuery(
+    componentId: string,
+    versionId: string,
+    releaseId: string
+  ) {
     return {
       query: `query List {
       componentEndpoints(
@@ -79,7 +81,7 @@ export class GraphQLQueryBuilder {
             releaseIds: ["${releaseId}"]
           }
         }
-      }) 
+      })
         {
           id
           createdAt
@@ -109,12 +111,18 @@ export class GraphQLQueryBuilder {
           }
           isDeleted
           deletedAt
-        } 
-      }`
-    }
+        }
+      }`,
+    };
   }
 
-  static getComponentDeploymentStatusQuery(orgHandler: string, orgUuid: string, componentId: string, versionId: string, environmentId: string) {
+  static getComponentDeploymentStatusQuery(
+    orgHandler: string,
+    orgUuid: string,
+    componentId: string,
+    versionId: string,
+    environmentId: string
+  ) {
     return {
       query: `query {
                          componentDeployment(
@@ -123,7 +131,7 @@ export class GraphQLQueryBuilder {
                                 componentId: "${componentId}"
                                 versionId: "${versionId}"
                                 environmentId: "${environmentId}"
-                                             ) 
+                                             )
                                              {
         environmentId
         configCount
@@ -156,12 +164,14 @@ export class GraphQLQueryBuilder {
         cron
       }
     }
-`
-    }
+`,
+    };
   }
 
-
-  static getBYOCComponentCreationQuery(byocComponent: ByocComponent, projectId: string) {
+  static getBYOCComponentCreationQuery(
+    byocComponent: ByocComponent,
+    projectId: string
+  ) {
     return {
       query: `mutation {
       createByocComponent(
@@ -184,7 +194,7 @@ export class GraphQLQueryBuilder {
             srcGitRepoBranch: "${byocComponent.byocConfig.srcGitRepoBranch}",
           }
         }
-      ) 
+      )
       {
         id,
         createdAt,
@@ -207,13 +217,14 @@ export class GraphQLQueryBuilder {
         componentType,
         httpBased
       }
-    }`
-    }
-
+    }`,
+    };
   }
 
-
-  static getWebAppComponentCreationQuery(byocComponent: WebappComponent, projectId: string) {
+  static getWebAppComponentCreationQuery(
+    byocComponent: WebappComponent,
+    projectId: string
+  ) {
     return {
       query: `mutation {
       createByocComponent(
@@ -238,7 +249,7 @@ export class GraphQLQueryBuilder {
             isAppGatewayEnabled: ${byocComponent.byocWebAppsConfig.isAppGatewayEnabled},
           }
         }
-      ) 
+      )
       {
         id,
         createdAt,
@@ -261,13 +272,14 @@ export class GraphQLQueryBuilder {
         componentType,
         httpBased
       }
-    }`
-    }
-
+    }`,
+    };
   }
 
-
-  static getTestRunnerComponentCreationQuery(testRunnerComponent: TestRunnerComponent, projectId: string) {
+  static getTestRunnerComponentCreationQuery(
+    testRunnerComponent: TestRunnerComponent,
+    projectId: string
+  ) {
     return {
       query: `mutation {
         createBuildpackComponent(
@@ -292,7 +304,7 @@ export class GraphQLQueryBuilder {
           }
           secretRef: "",
         }
-      ) 
+      )
       {
         id,
         createdAt,
@@ -315,13 +327,47 @@ export class GraphQLQueryBuilder {
         componentType,
         httpBased
       }
-    }`
-    }
-
+    }`,
+    };
   }
 
+  static getMIComponentCreationQuery(
+    componentData: IntegrationComponentData,
+    projectId: string
+  ) {
+    return {
+      query: `mutation{
+                      createIntegrationComponent(
+                               component: {
+                                    name: "${componentData.componentName}",
+                                    displayName: "${componentData.componentName}",
+                                    description: "",
+                                    orgId: ${componentData.orgId},
+                                    orgHandler: "${componentData.handle}",
+                                    projectId: "${projectId}",
+                                    labels: "",
+                                    componentType: "${componentData.componentType}",
+                                    accessibility: "${componentData.accessibility}",
+                                    srcGitRepoUrl: "${componentData.srcGitRepoUrl}",
+                                    srcGitRepoBranch: "${componentData.srcGitRepoBranch}",
+                                    repositorySubPath: "${componentData.repositorySubPath}",
+                                    oasFilePath: "${componentData.oasFilePath}"
+                                    version: "1.0.0"
+                                  } )
+                                  { id,
+                                    handle,
+                                    organizationId,
+                                    projectId,
 
-  static getRestComponentCreationQuery(componentData: ComponentData, projectId: string) {
+                                  }
+                        }`,
+    };
+  }
+
+  static getRestComponentCreationQuery(
+    componentData: ComponentData,
+    projectId: string
+  ) {
     return {
       query: `mutation{
                   createComponent(
@@ -351,13 +397,13 @@ export class GraphQLQueryBuilder {
                                 {id, orgId, projectId, handler    }
                       }`,
     };
-
   }
 
-
-
-  static getBuildsByVersionQuery(orgHandler: string, componentId: string, versionId: string) {
-
+  static getBuildsByVersionQuery(
+    orgHandler: string,
+    componentId: string,
+    versionId: string
+  ) {
     return {
       query: `query {
       buildsByVersion(
@@ -380,13 +426,9 @@ export class GraphQLQueryBuilder {
           environments
         }
     }
-}`
-    }
+}`,
+    };
   }
-
-
-
-
 
   static getEnvironments(uuid: string, projectId: string) {
     return {
@@ -406,12 +448,17 @@ export class GraphQLQueryBuilder {
           critical,
           isPdp
         }
-      }`
-    }
+      }`,
+    };
   }
 
-
-  static getPrxoyDeployments(orgHandle: string, orgUUID: string, componentId: string, versionId: string, environmentId: string) {
+  static getPrxoyDeployments(
+    orgHandle: string,
+    orgUUID: string,
+    componentId: string,
+    versionId: string,
+    environmentId: string
+  ) {
     return {
       query: `query {
         proxyDeployment(
@@ -445,11 +492,9 @@ export class GraphQLQueryBuilder {
           deployedTime,
           successDeployedTime
         }
-      }`
-    }
+      }`,
+    };
   }
-
-
 
   static getLifeCycleChangeQuery(projectId: string, componentHandler: string) {
     return {

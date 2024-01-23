@@ -44,20 +44,20 @@ export class Service extends mixinBuild(
     this._build(this);
   }
 
-  deployProjectLevelAccessibility() {
-    this._deployService(this, EndpointAccessibility.Project, 1);
+  deployProjectLevelAccessibility(numberOfSteps: number = 1) {
+    this._deployService(this, EndpointAccessibility.Project, numberOfSteps);
   }
 
-  deployPublicLevelAccessibility() {
-    this._deployService(this, EndpointAccessibility.Public, 1);
+  deployPublicLevelAccessibility(numberOfSteps: number = 1) {
+    this._deployService(this, EndpointAccessibility.Public, numberOfSteps);
   }
 
   testConsole(invokeInfo: InvokeInfo) {
     return this._testConsole(this, invokeInfo);
   }
 
-  promotePublicLevelAccessibility() {
-    this._promoteService(this, EndpointAccessibility.Public, 0);
+  promotePublicLevelAccessibility(numberOfSteps: number = 0) {
+    this._promoteService(this, EndpointAccessibility.Public, numberOfSteps);
   }
 
   addVersion() {
