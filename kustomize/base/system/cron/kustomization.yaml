@@ -1,8 +1,6 @@
 resources:
-  - ast-archiver.yaml
   - observability-data-generator.yaml
   - perfanalyzer-updater.yaml
-  - program-cleaner.yaml
   - choreo-userapps-image-deleter.yaml
   - cio-internal-metric-collector.yaml
   - choreo-daily-usage-publisher.yaml
