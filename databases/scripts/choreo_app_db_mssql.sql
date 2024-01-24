@@ -959,6 +959,8 @@ ALTER TABLE [dbo].[group] ADD  DEFAULT (getdate()) FOR [created_at]
     GO
 ALTER TABLE [dbo].[group] ADD  DEFAULT (getdate()) FOR [updated_at]
     GO
+ALTER TABLE [dbo].[group] ADD uuid nvarchar(255) DEFAULT LOWER(newid()) NOT null
+    GO
 ALTER TABLE [dbo].[group_member_mapping] ADD  DEFAULT (getdate()) FOR [created_at]
     GO
 ALTER TABLE [dbo].[group_member_mapping] ADD  DEFAULT (getdate()) FOR [updated_at]
@@ -1014,6 +1016,8 @@ ALTER TABLE [dbo].[role] ADD  DEFAULT (NULL) FOR [updated_by]
 ALTER TABLE [dbo].[role] ADD  DEFAULT (getdate()) FOR [created_at]
     GO
 ALTER TABLE [dbo].[role] ADD  DEFAULT (getdate()) FOR [updated_at]
+    GO
+ALTER TABLE [dbo].[role] ADD uuid nvarchar(255) DEFAULT LOWER(newid()) NOT null
     GO
 ALTER TABLE [dbo].[support_user_creation_status] ADD  DEFAULT (N'incomplete') FOR [status]
     GO
