@@ -33,7 +33,7 @@ import static com.wso2.choreo.integration.config.Constant.INSIGHTS_AUTH_API_RESO
 /**
  * Insights Auth API test cases.
  */
-public class InsightsAuthAPIIT extends TestNGCitrusSpringSupport {
+public class InsightsAuthAPI extends TestNGCitrusSpringSupport {
     private static String accessToken;
 
 

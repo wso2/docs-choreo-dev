@@ -1,11 +1,10 @@
-package com.wso2.choreo.integration.tests.jwt;
+package com.wso2.choreo.integration.tests.jwtValidation;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.consol.citrus.validation.json.JsonMessageValidationContext;
-import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
@@ -31,7 +30,7 @@ import java.util.Map;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
-public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
+public class TestClientJWTValidation extends TestNGCitrusSpringSupport {
     private String accessToken;
     private ChoreoProject project;
     private ChoreoComponent choreoComponent;

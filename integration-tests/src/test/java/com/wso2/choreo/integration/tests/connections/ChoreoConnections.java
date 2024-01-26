@@ -64,7 +64,7 @@ import java.util.regex.Pattern;
 /**
  * Tests related to Choreo connection creation and use.
  */
-public class ChoreoConnectionsIT extends TestNGCitrusSpringSupport {
+public class ChoreoConnections extends TestNGCitrusSpringSupport {
 
     private static final String SVC_COMPONENT_NAME = "";
     private static final String SVC_COMPONENT_REPO_URL = "https://github.com/choreo-test-apps/connection-test-loyalty-service";

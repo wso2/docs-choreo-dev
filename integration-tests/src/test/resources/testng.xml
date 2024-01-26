@@ -6,10 +6,10 @@
             <class name="com.wso2.choreo.integration.common.TestContext"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestBasicAPIRevisionCreation"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingSettingsPage"/>
-            <class name="com.wso2.choreo.integration.tests.deploy.AutoDeployOnCommitIT"/>
-            <class name="com.wso2.choreo.integration.tests.insights.InsightsAPIIT"/>
-            <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPIIT"/>
-            <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertAPIIT"/>
+            <class name="com.wso2.choreo.integration.tests.deploy.AutoDeployOnCommit"/>
+            <class name="com.wso2.choreo.integration.tests.insights.InsightsAPI"/>
+            <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPI"/>
+            <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertsAPI"/>
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationRestComponentFromRoot"/>
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateMiMultiRestEndpointServiceFromSubPath"/>
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestIntegrationRestComponentWithVulnerable"/>
@@ -20,7 +20,7 @@
             <class name="com.wso2.choreo.integration.tests.observability.SysObservabilityAPITestCase"/>
             <class name="com.wso2.choreo.integration.tests.logs.DPLogsAPITestCase"/>
             <class name="com.wso2.choreo.integration.tests.themeManagement.ThemePreference"/>
-            <class name="com.wso2.choreo.integration.tests.jwt.TestClientJwTValidation"/>
+            <class name="com.wso2.choreo.integration.tests.jwtValidation.TestClientJWTValidation"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestGraphQLServiceDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestBYOCDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiDpWithOperationRateLimit"/>
@@ -30,7 +30,7 @@
             <class name="com.wso2.choreo.integration.tests.dp.TestManualTriggerDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestBuildpackDp"/>
             <class name="com.wso2.choreo.integration.tests.buildpacks.Buildpack"/>
-            <class name="com.wso2.choreo.integration.tests.connections.ChoreoConnectionsIT"/>
+            <class name="com.wso2.choreo.integration.tests.connections.ChoreoConnections"/>
         </classes>
     </test>
 </suite>

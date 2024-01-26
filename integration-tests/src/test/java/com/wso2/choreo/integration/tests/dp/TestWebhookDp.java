@@ -65,13 +65,13 @@ public class TestWebhookDp extends TestBase {
     }
 
     @BeforeClass
-    public void setup_CreateDeployInvokeWebhookIT() throws Exception {
+    public void setup_CreateDeployInvokeWebhook() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     }
 
     @Test(dataProvider = "dps")
     @CitrusTest
-    public void createUserManagedComponent_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
+    public void createUserManagedComponent_CreateDeployInvokeWebhook(DataProviderWrapper dp) throws Exception {
         // Creating component
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, dp.getRegion());
@@ -94,26 +94,26 @@ public class TestWebhookDp extends TestBase {
         dp.setEnvironments(environments);
     }
 
-    @Test(dependsOnMethods = {"createUserManagedComponent_CreateDeployInvokeWebhookIT"}, dataProvider = "dps")
+    @Test(dependsOnMethods = {"createUserManagedComponent_CreateDeployInvokeWebhook"}, dataProvider = "dps")
     @CitrusTest
-    public void componentDeployment_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
+    public void componentDeployment_CreateDeployInvokeWebhook(DataProviderWrapper dp) throws Exception {
         BalConfig balConfigs = BalConfig.builder().isRequired(true).configKeyName("config.webhookSecret").valueType("string").valueOrSource("abcd").build();
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
                 dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD, balConfigs);
         dp.setDeploymentStatusDTO(statusDTO);
     }
 
-    @Test(dependsOnMethods = {"componentDeployment_CreateDeployInvokeWebhookIT"}, dataProvider = "dps")
+    @Test(dependsOnMethods = {"componentDeployment_CreateDeployInvokeWebhook"}, dataProvider = "dps")
     @CitrusTest
-    public void promote_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
+    public void promote_CreateDeployInvokeWebhook(DataProviderWrapper dp) throws Exception {
         List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
                 accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD);
         dp.setPromoteStatusDTO(statusDTO);
     }
 
-    @Test(dependsOnMethods = {"promote_CreateDeployInvokeWebhookIT"}, dataProvider = "dps")
+    @Test(dependsOnMethods = {"promote_CreateDeployInvokeWebhook"}, dataProvider = "dps")
     @CitrusTest
-    public void invokeAPI_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
+    public void invokeAPI_CreateDeployInvokeWebhook(DataProviderWrapper dp) throws Exception {
         String apiKey = APICreator.getAPIKey(dp.getChoreoComponent().getApiId(), accessToken).getApikey();
 
         // Read the request as a json make it as a compact json string
@@ -156,33 +156,33 @@ public class TestWebhookDp extends TestBase {
                                 .type(MessageType.PLAINTEXT)));
     }
 
-    @Test(dependsOnMethods = {"invokeAPI_CreateDeployInvokeWebhookIT"}, dataProvider = "dps")
+    @Test(dependsOnMethods = {"invokeAPI_CreateDeployInvokeWebhook"}, dataProvider = "dps")
     @CitrusTest
-    public void waitForObservabilityLogs_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
+    public void waitForObservabilityLogs_CreateDeployInvokeWebhook(DataProviderWrapper dp) throws Exception {
 
         dp.updateEnvironments(ComponentUtils.getEnvironments(this, citrusClients, accessToken, dp.getChoreoComponent()));
     }
 
 
-    @Test(dependsOnMethods = {"waitForObservabilityLogs_CreateDeployInvokeWebhookIT"}, dataProvider = "dps")
+    @Test(dependsOnMethods = {"waitForObservabilityLogs_CreateDeployInvokeWebhook"}, dataProvider = "dps")
     @CitrusTest
-    public void testLiveLogs_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
+    public void testLiveLogs_CreateDeployInvokeWebhook(DataProviderWrapper dp) throws Exception {
         for (Environment env : dp.getEnvironments()) {
             ComponentUtils.verifyComponentLevelDPLogsLive(this,citrusClients, accessToken,dp.getChoreoProject(), dp.getChoreoComponent(),env);
         }
     }
 
-    @Test(dependsOnMethods = {"testLiveLogs_CreateDeployInvokeWebhookIT"}, dataProvider = "dps")
+    @Test(dependsOnMethods = {"testLiveLogs_CreateDeployInvokeWebhook"}, dataProvider = "dps")
     @CitrusTest
-    public void testGroupedLogs_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
+    public void testGroupedLogs_CreateDeployInvokeWebhook(DataProviderWrapper dp) throws Exception {
         for (Environment env : dp.getEnvironments()) {
            ComponentUtils.verifyComponentLevelDPLogsLive(this,citrusClients, accessToken,dp.getChoreoProject(), dp.getChoreoComponent(),env);
         }
     }
 
-    @Test(dependsOnMethods = {"testGroupedLogs_CreateDeployInvokeWebhookIT"}, dataProvider = "dps")
+    @Test(dependsOnMethods = {"testGroupedLogs_CreateDeployInvokeWebhook"}, dataProvider = "dps")
     @CitrusTest
-    public void deleteWebhookComponent_CreateDeployInvokeWebhookIT(DataProviderWrapper dp) throws Exception {
+    public void deleteWebhookComponent_CreateDeployInvokeWebhook(DataProviderWrapper dp) throws Exception {
         Response res = GraphQL.deleteComponent(dp.getChoreoComponent().getId(), dp.getChoreoProject().getId(), accessToken);
         Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
     }

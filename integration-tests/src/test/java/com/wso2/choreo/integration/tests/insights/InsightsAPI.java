@@ -31,7 +31,7 @@ import static com.wso2.choreo.integration.config.Constant.INSIGHTS_API_RESOURCE;
 /**
  * Insights API test cases.
  */
-public class InsightsAPIIT extends TestNGCitrusSpringSupport {
+public class InsightsAPI extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private static String orgUUID;
     private InsightDTO dto;

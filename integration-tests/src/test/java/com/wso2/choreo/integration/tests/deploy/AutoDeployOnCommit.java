@@ -46,7 +46,7 @@ import java.util.Map;
  * $(http()
  * tests related to component deployment using auto deploy on commit trigger on
  */
-    public class AutoDeployOnCommitIT extends TestNGCitrusSpringSupport {
+    public class AutoDeployOnCommit extends TestNGCitrusSpringSupport {
         private static String accessToken;
         private final String repoName = "empty-repo";
         private static ChoreoComponent choreoComponent;
@@ -56,20 +56,20 @@ import java.util.Map;
         Map<Endpoints, HttpClient> citrusClients;
 
         @BeforeClass
-        public void setup_AutoDeployOnCommitIT()
+        public void setup_AutoDeployOnCommit()
                 throws Exception {
             accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         }
 
         @Test
         @CitrusTest
-        public void createProject_AutoDeployOnCommitIT() throws Exception {
+        public void createProject_AutoDeployOnCommit() throws Exception {
             project =  ComponentUtils.createProject(this, citrusClients, accessToken, Constant.region.US.toString());
         }
 
-        @Test(dependsOnMethods = {"createProject_AutoDeployOnCommitIT"})
+        @Test(dependsOnMethods = {"createProject_AutoDeployOnCommit"})
         @CitrusTest
-        public void createUserManagedComponent_AutoDeployOnCommitIT() throws Exception {
+        public void createUserManagedComponent_AutoDeployOnCommit() throws Exception {
             String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
             Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/empty-repo").branch("main").subPath("").build();
             GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);
@@ -78,16 +78,16 @@ import java.util.Map;
             Assert.assertNotNull(choreoComponent.getId());
         }
 
-        @Test(dependsOnMethods = {"createUserManagedComponent_AutoDeployOnCommitIT"})
+        @Test(dependsOnMethods = {"createUserManagedComponent_AutoDeployOnCommit"})
         @CitrusTest
-        public void handleConfigInit_AutoDeployOnCommitIT() throws Exception {
+        public void handleConfigInit_AutoDeployOnCommit() throws Exception {
             HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
             GraphQL.handleConfigInit(this, appServiceClient, accessToken, choreoComponent.getId());
         }
 
-    @Test(dependsOnMethods = {"handleConfigInit_AutoDeployOnCommitIT"})
+    @Test(dependsOnMethods = {"handleConfigInit_AutoDeployOnCommit"})
     @CitrusTest
-    public void enableAutoBuild_AutoDeployOnCommitIT() throws Exception {
+    public void enableAutoBuild_AutoDeployOnCommit() throws Exception {
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
 
         GraphqlDTO dto = GraphqlDTO.builder().componentId(choreoComponent.getId()).environmentId(environments.get(0).getId()).versionId(choreoComponent.getLatestApiVersion().getId()).build();
@@ -96,9 +96,9 @@ import java.util.Map;
                 dto);
     }
 
-    @Test(dependsOnMethods = {"handleConfigInit_AutoDeployOnCommitIT"})
+    @Test(dependsOnMethods = {"handleConfigInit_AutoDeployOnCommit"})
         @CitrusTest
-        public void mergeNewCode_AutoDeployOnCommitIT() throws IOException {
+        public void mergeNewCode_AutoDeployOnCommit() throws IOException {
             String timeStamp = String.valueOf(new Date().getTime());
             Map<String, String> params = new HashMap<>();
             params.put("timeStamp", timeStamp);
@@ -108,9 +108,9 @@ import java.util.Map;
             GitHub.mergeNewCode(repoName, "service.bal", " change on DeployIT ", encodedCode);
         }
 
-        @Test(dependsOnMethods = {"mergeNewCode_AutoDeployOnCommitIT"})
+        @Test(dependsOnMethods = {"mergeNewCode_AutoDeployOnCommit"})
         @CitrusTest
-        public void deploymentStatusByVersion_AutoDeployOnCommitIT() throws Exception {
+        public void deploymentStatusByVersion_AutoDeployOnCommit() throws Exception {
             List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
             Commit latestCommit = ComponentUtils.getLatestCommit(this, citrusClients, accessToken, choreoComponent);
             ComponentUtils.validateComponentDeployment(this, citrusClients, accessToken, choreoComponent,
