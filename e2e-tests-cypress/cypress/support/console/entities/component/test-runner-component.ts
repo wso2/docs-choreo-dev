@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { createDefaultSteps } from "../../../commons/types";
 import { mixinBuild } from "../../features/component-build/build";
 import { mixinServiceDeploy } from "../../features/deploy/deploy-service";
 import { Component } from "./component";
@@ -27,11 +28,11 @@ export class TestRunner extends mixinBuild(mixinServiceDeploy(Component)) {
   }
 
   deployToDev() {
-    this._deployTask(this, 2);
+    this._deployTask(this, createDefaultSteps(2));
   }
 
   promoteProd() {
-    this._promoteTask(this, 0);
+    this._promoteTask(this);
   }
 
   verifyTestPageIsDisabled() {

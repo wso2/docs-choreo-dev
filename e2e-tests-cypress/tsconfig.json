@@ -4,7 +4,7 @@
     "strict": true,
     "allowJs": true,
     "esModuleInterop": true,
-    "module": "esnext",
+    "module": "ES6",
     "moduleResolution": "node",
     "noImplicitAny": false,
     "resolveJsonModule": true,

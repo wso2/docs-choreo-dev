@@ -19,3 +19,26 @@ export namespace Types {
 
   export type Constructor<T = any> = new (...args: any[]) => T;
 }
+
+export class ConfigEntryStep {
+  configEntryFunction: ((args?: string[]) => void) | undefined;
+  args: string[] | undefined;
+
+  constructor(config?: (args?: string[]) => void, args?: string[]) {
+    if (config !== undefined) {
+      this.configEntryFunction = config;
+    }
+
+    if (args !== undefined) {
+      this.args = args;
+    }
+  }
+}
+
+export function createDefaultSteps(numberOfSteps: number) {
+  const configSteps: ConfigEntryStep[] = [];
+  for (let i = 0; i < numberOfSteps; i++) {
+    configSteps.push(new ConfigEntryStep());
+  }
+  return configSteps;
+}

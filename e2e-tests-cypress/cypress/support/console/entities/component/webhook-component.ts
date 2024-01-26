@@ -15,7 +15,7 @@ import { Component } from "./component";
 import { mixinBuild } from "../../features/component-build/build";
 import { mixinServiceDeploy } from "../../features/deploy/deploy-service";
 import { mixinExecute } from "../../features/execute/execute";
-import { Enums } from "../../../commons/enums";
+import { ConfigEntryStep, createDefaultSteps } from "../../../commons/types";
 
 export class Webhook extends mixinBuild(
   mixinExecute(mixinServiceDeploy(Component))
@@ -29,14 +29,11 @@ export class Webhook extends mixinBuild(
     this._build(this);
   }
 
-  deployToDev(configValue: string) {
-    this._deployWebhook(this, 2, configValue);
+  deployToDev(configSteps?: ConfigEntryStep[]) {
+    this._deployWebhook(this, configSteps);
   }
 
-   promoteProd(configValue: string) {
-     this._promoteWebhook(this, 2, configValue);
-   }
-  
-
-
+  promoteProd(configSteps?: ConfigEntryStep[]) {
+    this._promoteWebhook(this, configSteps);
+  }
 }

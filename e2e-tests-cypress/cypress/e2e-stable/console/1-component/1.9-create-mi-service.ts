@@ -15,6 +15,7 @@ import { Enums } from "../../../support/commons/enums";
 import { console } from "../../../support/console/console";
 import { Service } from "../../../support/console/entities/component/service-component";
 import { Project } from "../../../support/console/entities/project/project";
+import { createDefaultSteps } from "../../../support/commons/types";
 
 describe("Verify MI service component functionality", () => {
   const PROJECT_DESCRIPTION = "MI Service component";
@@ -75,7 +76,7 @@ describe("Verify MI service component functionality", () => {
   });
 
   it("Verifying component promotion to Prod", () => {
-    service.promotePublicLevelAccessibility(1);
+    service.promotePublicLevelAccessibility(createDefaultSteps(1));
   });
 
   it("Testing the component in Prod", () => {

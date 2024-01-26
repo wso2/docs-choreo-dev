@@ -22,7 +22,6 @@ export namespace Enums {
     ERROR = "/fault-flow",
   }
 
-
   export enum DisplayType {
     restAPI = "restAPI",
     proxy = "proxy",
@@ -112,4 +111,9 @@ export enum UsagePlan {
   Silver = "Silver",
   Bronze = "Bronze",
   Unlimited = "Unlimited",
+}
+export enum EndpointAccessibility {
+  Public = "Public",
+  Project = "Project",
+  Organization = "Organization",
 }

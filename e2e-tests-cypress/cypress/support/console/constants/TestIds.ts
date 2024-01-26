@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Enums } from "../../commons/enums";
+import { EndpointAccessibility, Enums } from "../../commons/enums";
 
 export namespace TestIds {
   export const userProfile = '[data-testid="header-user-profile-menu"]';
@@ -44,7 +44,8 @@ export namespace TestIds {
   export const configureDeploy = '[data-cyid="configure-&-deploy-option"]';
   export const executeDeploy =
     '[data-cyid="direct-deploy-option-split-group-button-button"]';
-  export const publicVisibility = '[data-testid="Public-visibility-option"]';
+  export const endpointVisibility = (visibility: EndpointAccessibility) =>
+    `[data-testid="${visibility}-visibility-option"]`;
   export const endpointSubmit = '[data-cyid="endpoint-submit-btn-button"]';
   export const stop = '[data-testid="btn-stop"]';
   export const reDeploy = '[data-cyid="btn-redeploy-button"]';
@@ -180,7 +181,7 @@ export namespace TestIds {
   export const applicationListEdit = (appName: string) =>
     `[data-testid="edit-btn-${appName}"]`;
   export const configSubmit = '[data-cyid="btn-submit-configform"]';
-  export const runNow = '[data-cyid="run-now-split-group-button-button"]';
+  export const runNow = '[data-cyid="run-now-button"]';
   export const runNowNotification = '[data-testid="snackbar-notification"]';
   export const refreshTasks = '[data-cyid="refresh-tasks-button"]';
   export const executionCount = '[data-cyid="total-executions-count"]';
