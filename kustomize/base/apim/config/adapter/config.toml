@@ -56,6 +56,7 @@ allowMethods = ["GET","PUT","POST","DELETE","PATCH","OPTIONS"]
 allowHeaders = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey","testKey","Internal-Key","API-Key"]
 exposeHeaders = []
 allowCredentials = false
+mandatoryHeaders = ["x-choreo-test-session-id"]
 
 [router.upstream]
 [router.upstream.tls]
