@@ -11,13 +11,14 @@
  * associated services.
  */
 
+import { createDefaultSteps } from "../../../commons/types";
 import { mixinBuild } from "../../features/component-build/build";
 import { mixinServiceDeploy } from "../../features/deploy/deploy-service";
 import { Component } from "./component";
 
 export class WebApp extends mixinBuild(mixinServiceDeploy(Component)) {
-  private devWebAppUrl: string;
-  private prodWebAppUrl: string;
+  private devWebAppUrl: string = "";
+  private prodWebAppUrl: string = "";
 
   constructor(name: string) {
     super(name, "main");
@@ -50,7 +51,7 @@ export class WebApp extends mixinBuild(mixinServiceDeploy(Component)) {
   }
 
   promoteToProdWithAuthConfiguration() {
-    this._promoteWebapp(this, true, 1);
+    this._promoteWebapp(this, true, createDefaultSteps(1));
   }
 
   verifyTestPageIsDisabled() {

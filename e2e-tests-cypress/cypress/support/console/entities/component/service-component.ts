@@ -11,17 +11,15 @@
  * associated services.
  */
 
-import { Enums } from "../../../commons/enums";
+import { EndpointAccessibility, Enums } from "../../../commons/enums";
 import { Component } from "./component";
 
 import { UsagePlan } from "../../../commons/enums";
 import { mixinBuild } from "../../features/component-build/build";
 import { InvokeInfo, mixinTestService } from "../../features/test/test-service";
-import {
-  EndpointAccessibility,
-  mixinServiceDeploy,
-} from "../../features/deploy/deploy-service";
+import { mixinServiceDeploy } from "../../features/deploy/deploy-service";
 import { mixinManage } from "../../features/manage/manage";
+import { ConfigEntryStep, createDefaultSteps } from "../../../commons/types";
 
 export class Service extends mixinBuild(
   mixinManage(mixinServiceDeploy(mixinTestService(Component)))
@@ -44,20 +42,32 @@ export class Service extends mixinBuild(
     this._build(this);
   }
 
-  deployProjectLevelAccessibility(numberOfSteps: number = 1) {
-    this._deployService(this, EndpointAccessibility.Project, numberOfSteps);
+  deployProjectLevelAccessibility() {
+    this._deployService(
+      this,
+      EndpointAccessibility.Project,
+      createDefaultSteps(1)
+    );
   }
 
-  deployPublicLevelAccessibility(numberOfSteps: number = 1) {
-    this._deployService(this, EndpointAccessibility.Public, numberOfSteps);
+  deployPublicLevelAccessibility() {
+    this._deployService(
+      this,
+      EndpointAccessibility.Public,
+      createDefaultSteps(1)
+    );
   }
 
   testConsole(invokeInfo: InvokeInfo) {
     return this._testConsole(this, invokeInfo);
   }
 
-  promotePublicLevelAccessibility(numberOfSteps: number = 0) {
-    this._promoteService(this, EndpointAccessibility.Public, numberOfSteps);
+  promoteProjectLevelAccessibility() {
+    this._promoteService(this, EndpointAccessibility.Project);
+  }
+
+  promotePublicLevelAccessibility(configSteps?: ConfigEntryStep[]) {
+    this._promoteService(this, EndpointAccessibility.Public, configSteps);
   }
 
   addVersion() {

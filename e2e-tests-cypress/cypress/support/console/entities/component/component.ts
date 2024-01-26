@@ -29,12 +29,12 @@ import { _Observability } from "../../features/observability/observability";
 export class Component {
   private name: string;
   private versions: string[] = [];
-  protected componentUrl: string;
-  private devPortalUrl: string;
+  protected componentUrl: string = "";
+  private devPortalUrl: string = "";
 
-  private devEndpointUrl: string;
+  private devEndpointUrl: string = "";
 
-  private prodEndpointUrl: string;
+  private prodEndpointUrl: string = "";
 
   private devPortalMenu = new DevPortalLeftMenu();
   private stats = new _Stats();
@@ -74,8 +74,16 @@ export class Component {
     return this.devEndpointUrl;
   }
 
+  setDevEndpointUrl(url: string) {
+    this.devEndpointUrl = url;
+  }
+
   getProdEndpointUrl(): string {
     return this.prodEndpointUrl;
+  }
+
+  setProdEndpointUrl(url: string) {
+    this.prodEndpointUrl = url;
   }
 
   generateCredentials_DevPortal(
@@ -182,6 +190,10 @@ export class Component {
               .invoke("val")
               .then((text) => {
                 for (let [matcher, env] of endpointMatcher) {
+                  if (text === undefined) {
+                    throw new Error("Endpoint URL is not defined");
+                  }
+
                   if (text.toString().includes(matcher)) {
                     if (env === Enums.Environment.PRODUCTION) {
                       this.prodEndpointUrl = text.toString();
@@ -233,6 +245,10 @@ export class Component {
     cy.get(TestIds.devPortalLink)
       .invoke("attr", "href")
       .then((href) => {
+        if (href === undefined) {
+          throw new Error("Dev Portal URL is not defined");
+        }
+
         const linkParts = href.split("?");
         const url = linkParts[0];
         const queryParams = linkParts[1].split("&amp;");

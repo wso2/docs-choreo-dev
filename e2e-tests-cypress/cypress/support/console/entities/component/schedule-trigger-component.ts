@@ -16,6 +16,7 @@ import { mixinBuild } from "../../features/component-build/build";
 import { mixinServiceDeploy } from "../../features/deploy/deploy-service";
 import { mixinExecute } from "../../features/execute/execute";
 import { Enums } from "../../../commons/enums";
+import { createDefaultSteps } from "../../../commons/types";
 
 export class ScheduleTrigger extends mixinBuild(
   mixinExecute(mixinServiceDeploy(Component))
@@ -30,17 +31,14 @@ export class ScheduleTrigger extends mixinBuild(
   }
 
   deployToDev() {
-    this._deployTask(this, 2);
+    this._deployTask(this, createDefaultSteps(2));
   }
 
   promoteProd() {
-    this._promoteTask(this, 2);
+    this._promoteTask(this, createDefaultSteps(2));
   }
-  
+
   verifyObservabilityMetrics(env: Enums.Environment) {
     this.observability.viewObservabilityMetrics(env);
   }
-
-
-
 }

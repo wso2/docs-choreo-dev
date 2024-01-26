@@ -53,7 +53,7 @@ describe("Verify manual trigger creation functionality", () => {
   });
 
   it("Verify component promotion to Prod", () => {
-    component.promoteProd();
+    component.promoteToProd();
   });
 
   it("Verify execution in dev", () => {

@@ -16,6 +16,7 @@ import { Enums } from "../../../commons/enums";
 import { mixinBuild } from "../../features/component-build/build";
 import { mixinServiceDeploy } from "../../features/deploy/deploy-service";
 import { mixinExecute } from "../../features/execute/execute";
+import { ConfigEntryStep, createDefaultSteps } from "../../../commons/types";
 
 export class ManualTrigger extends mixinBuild(
   mixinExecute(mixinServiceDeploy(Component))
@@ -30,11 +31,19 @@ export class ManualTrigger extends mixinBuild(
   }
 
   deployToDevWithoutSplitButton() {
-    this._deployTask(this, 1);
+    this._deployTask(this, createDefaultSteps(1));
   }
 
-  promoteProd() {
-    this._promoteTask(this, 0);
+  deployToDevWithConfigs(configs: ConfigEntryStep[]) {
+    this._deployTask(this, configs);
+  }
+
+  promoteToProd() {
+    this._promoteTask(this);
+  }
+
+  promoteToProdWithConfigs(configs: ConfigEntryStep[]) {
+    this._promoteTask(this, configs);
   }
 
   executeComponent(env: Enums.Environment) {

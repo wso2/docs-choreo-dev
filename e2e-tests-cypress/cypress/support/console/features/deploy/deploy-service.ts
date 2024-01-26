@@ -20,7 +20,7 @@ import {
 } from "../../../commons/constants";
 import { cyGet } from "../../../commons/cy";
 import { LONG_TIME, MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
-import { Types } from "../../../commons/types";
+import { ConfigEntryStep, Types } from "../../../commons/types";
 import { Utils } from "../../../commons/utils";
 import { TestIds } from "../../constants/TestIds";
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
@@ -31,12 +31,7 @@ import { ScheduleTrigger } from "../../entities/component/schedule-trigger-compo
 import { WebApp } from "../../entities/component/webapp-component";
 import { Webhook } from "../../entities/component/webhook-component";
 import { TestRunner } from "../../entities/component/test-runner-component";
-
-export enum EndpointAccessibility {
-  Public = "Public",
-  Project = "Project",
-  Organization = "Organization",
-}
+import { EndpointAccessibility, Enums } from "../../../commons/enums";
 
 export interface DeployServiceFeature {
   _addNewVersion(component: Service, branch: string, version: string);
@@ -44,44 +39,36 @@ export interface DeployServiceFeature {
   _deployService(
     component: Service,
     endpointVisibility: EndpointAccessibility,
-    configStepsAvailable: number
+    configStepsAvailable: ConfigEntryStep[]
   );
 
   _deployTask(
     component: ManualTrigger | ScheduleTrigger | TestRunner,
-    configStepsAvailable: number
+    configStepsAvailable?: ConfigEntryStep[]
   );
 
   _deployWebapp(component: WebApp, hasAuthSettings: boolean);
 
-  _deployWebhook(
-    component: Webhook,
-    configStepsAvailable: number,
-    configValue: string
-  );
+  _deployWebhook(component: Webhook, configStepsAvailable?: ConfigEntryStep[]);
 
   _promoteService(
     component: Service,
     endpointVisibility: EndpointAccessibility,
-    configStepsAvailable: number
+    configStepsAvailable?: ConfigEntryStep[]
   );
 
   _promoteTask(
     component: ManualTrigger | ScheduleTrigger | TestRunner,
-    configStepsAvailable: number
+    configStepsAvailable?: ConfigEntryStep[]
   );
 
   _promoteWebapp(
     component: WebApp,
     hasAuthSettings: boolean,
-    configStepsAvailable: number
+    configStepsAvailable?: ConfigEntryStep[]
   );
 
-  _promoteWebhook(
-    component: Webhook,
-    configStepsAvailable: number,
-    configValue: string
-  );
+  _promoteWebhook(component: Webhook, configStepsAvailable?: ConfigEntryStep[]);
 }
 
 export function mixinServiceDeploy<T extends Types.Constructor>(
@@ -94,7 +81,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     _deployService(
       component: Service,
       endpointVisibility: EndpointAccessibility,
-      configStepsAvailable: number
+      configStepsAvailable?: ConfigEntryStep[]
     ) {
       this.sideMenu.navigateToDeploy();
 
@@ -108,14 +95,18 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.verifyDeploymentStatus();
 
-      this.verifyDevEndpoint();
+      this.verifyEndpointStatus(Enums.Environment.DEVELOPMENT);
 
-      this.verifyDevAccessibility(endpointVisibility);
+      this.verifyEndpointAccessibility(
+        component,
+        endpointVisibility,
+        Enums.Environment.DEVELOPMENT
+      );
     }
 
     _deployTask(
       component: ManualTrigger | ScheduleTrigger | TestRunner,
-      configStepsAvailable: number
+      configStepsAvailable?: ConfigEntryStep[]
     ) {
       this.sideMenu.navigateToDeploy();
 
@@ -144,12 +135,11 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
     _deployWebhook(
       component: Webhook,
-      configStepsAvailable: number,
-      configValue: string
+      configStepsAvailable?: ConfigEntryStep[]
     ) {
       this.sideMenu.navigateToDeploy();
       this.waitTillReadyToDeploy();
-      this.startWebhookDeployment(component, configValue);
+      this.startWebhookDeployment(component);
       this.stepThroughConfigSteps(component, configStepsAvailable);
       this.verifyDeploymentStatus();
     }
@@ -158,19 +148,18 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
     _promoteWebhook(
       component: Webhook,
-      configStepsAvailable: number,
-      configValue: string
+      configStepsAvailable?: ConfigEntryStep[]
     ) {
       this.sideMenu.navigateToDeploy();
-      this.webhookPromotion(component, configValue);
-      this.stepThroughConfigStepsPromotion(configStepsAvailable);
+      this.webhookPromotion(component);
+      this.stepThroughConfigSteps(component, configStepsAvailable);
       this.verifyPromotionStatus();
     }
 
     _promoteService(
       component: Service,
       endpointVisibility: EndpointAccessibility,
-      configStepsAvailable: number
+      configStepsAvailable: ConfigEntryStep[]
     ) {
       this.sideMenu.navigateToDeploy();
 
@@ -182,13 +171,24 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.verifyPromotionStatus();
 
-      this.verifyProdEndpoint();
+      this.verifyEndpointStatus(Enums.Environment.PRODUCTION);
+
+      this.verifyEndpointAccessibility(
+        component,
+        endpointVisibility,
+        Enums.Environment.PRODUCTION
+      );
     }
 
-    _promoteTask(component: ManualTrigger | ScheduleTrigger | TestRunner) {
+    _promoteTask(
+      component: ManualTrigger | ScheduleTrigger | TestRunner,
+      configStepsAvailable?: ConfigEntryStep[]
+    ) {
       this.sideMenu.navigateToDeploy();
 
       this.startPromotion(component);
+
+      this.stepThroughConfigSteps(component, configStepsAvailable);
 
       this.verifyTaskPromotionStatus();
     }
@@ -196,7 +196,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     _promoteWebapp(
       component: WebApp,
       hasAuthSettings: boolean,
-      configStepsAvailable: number
+      configStepsAvailable: ConfigEntryStep[]
     ) {
       this.sideMenu.navigateToDeploy();
 
@@ -229,8 +229,18 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       });
     }
 
-    private getDevEndpointURL(endpointVisibility: EndpointAccessibility) {
-      cy.get(TestIds.devEnvCard).within(() => {
+    private saveEndpointUrls(
+      service: Service,
+      endpointVisibility: EndpointAccessibility,
+      environment: Enums.Environment
+    ) {
+      let envCardSelector = TestIds.devEnvCard;
+
+      if (environment === Enums.Environment.PRODUCTION) {
+        envCardSelector = TestIds.prodEnvCard;
+      }
+
+      cy.get(envCardSelector).within(() => {
         cy.get(TestIds.availableEndpoints).within(() => {
           cy.get(TestIds.viewArtifact).click();
         });
@@ -244,17 +254,27 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       if (endpointVisibility === EndpointAccessibility.Public) {
         urlTypeRegex = /^Public URL.*/;
         urlMatcher = /^https:\/\/.*/;
+      } else if (endpointVisibility === EndpointAccessibility.Organization) {
+        urlTypeRegex = /^Organization URL.*/;
+        urlMatcher = /^https:\/\/.*/;
       }
 
-      return cy
-        .get(TestIds.endpointCard)
+      cy.get(TestIds.endpointCard)
         .should("be.visible")
         .contains(urlTypeRegex)
         .next()
         .invoke("attr", "title")
         .then((url) => {
+          if (url === undefined) {
+            throw new Error("URL is undefined");
+          }
+
           expect(url).to.match(urlMatcher);
-          return Promise.resolve(url);
+          if (environment == Enums.Environment.DEVELOPMENT) {
+            service.setDevEndpointUrl(url);
+          } else {
+            service.setProdEndpointUrl(url);
+          }
         });
     }
 
@@ -285,26 +305,18 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       cyGet(TestIds.executeDeploy, MEDIUM_TIME).should("be.enabled").click();
     }
 
-    private startWebhookDeployment(component: Webhook, configValue: string) {
+    private startWebhookDeployment(component: Webhook) {
       cyGet(TestIds.deploySplitToggle, MEDIUM_TIME)
         .should("be.enabled")
         .click();
       cyGet(TestIds.configureDeploy).click();
       cyGet(TestIds.executeDeploy, MEDIUM_TIME).should("be.enabled").click();
-      this.addConfiguration(configValue);
     }
 
-    private addConfiguration(value: string) {
-      cy.get(".ConfigForm", MEDIUM_TIME).should("be.visible");
-      cy.get(".ConfigForm div input").clear().type(value);
-      cy.get('.ConfigForm button[type="submit"]').click();
-    }
-
-    private webhookPromotion(component: Webhook, configValue: string) {
+    private webhookPromotion(component: Webhook) {
       cy.wait(3000);
       cyGet(TestIds.promote, MEDIUM_TIME).should("be.enabled").click();
       cy.get(TestIds.next).should("be.visible").click();
-      this.addConfiguration(configValue);
     }
 
     private stepThroughConfigSteps(
@@ -315,17 +327,25 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
         | ManualTrigger
         | ScheduleTrigger
         | WebApp,
-      configStepsAvailable: number
+      configStepsAvailable?: ConfigEntryStep[]
     ) {
-      for (let i = 0; i < configStepsAvailable; i++) {
-        if (!(component instanceof Webhook)) {
+      if (configStepsAvailable === undefined) {
+        return;
+      }
+
+      for (let i = 0; i < configStepsAvailable.length; i++) {
+        const configStep = configStepsAvailable[i];
+        // undefined means that there are no config values to enter for respective step
+        if (configStep.configEntryFunction !== undefined) {
+          if (configStep.args !== undefined) {
+            configStep.configEntryFunction(configStep.args);
+          } else {
+            configStep.configEntryFunction();
+          }
+        } else {
           cy.get(TestIds.next).should("be.visible").click();
         }
       }
-    }
-
-    private stepThroughConfigStepsPromotion(configStepsAvailable: number) {
-      for (let i = 0; i < configStepsAvailable; i++) {}
     }
 
     private reviewAndUpdateEndpoint(
@@ -335,13 +355,15 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       cy.get(
         `[data-cyid="${component.getEndpointName()}-endpoint-accordion"]`
       ).should("be.visible");
-      if (endpointVisibility === EndpointAccessibility.Public) {
-        cy.get(`[data-testid="${component.getEndpointName()}-edit-btn"]`)
-          .should("be.visible")
-          .click();
-        cy.get(TestIds.publicVisibility).should("be.visible").click();
-        cy.get(TestIds.endpointSubmit).click();
-      }
+
+      cy.get(`[data-testid="${component.getEndpointName()}-edit-btn"]`)
+        .should("be.visible")
+        .click();
+      cy.get(TestIds.endpointVisibility(endpointVisibility))
+        .should("be.visible")
+        .click();
+      cy.get(TestIds.endpointSubmit).click();
+
       cyGet(TestIds.next).click();
     }
 
@@ -359,14 +381,20 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       });
     }
 
-    private verifyDevEndpoint() {
-      cy.get(TestIds.devEnvCard).within(() => {
+    private verifyEndpointStatus(env: Enums.Environment) {
+      let envCardSelector = TestIds.devEnvCard;
+
+      if (env === Enums.Environment.PRODUCTION) {
+        envCardSelector = TestIds.prodEnvCard;
+      }
+
+      cy.get(envCardSelector).within(() => {
         cyGet(TestIds.availableEndpoints).should("be.visible");
       });
 
-      this.verifyEndpointIsDeployed(TestIds.devEnvCard);
+      this.verifyEndpointIsDeployed(envCardSelector);
 
-      cy.get(TestIds.devEnvCard).within(() => {
+      cy.get(envCardSelector).within(() => {
         cyGet(TestIds.deploymentStatus, SHORT_TIME)
           .contains(DEPLOYMENT_PENDING, SHORT_TIME)
           .should("not.exist");
@@ -396,46 +424,30 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       });
     }
 
-    private verifyProdEndpoint() {
-      cy.get(TestIds.prodEnvCard).within(() => {
-        cyGet(TestIds.availableEndpoints).should("be.visible");
-      });
-
-      this.verifyEndpointIsDeployed(TestIds.prodEnvCard);
-
-      cy.get(TestIds.prodEnvCard).within(() => {
-        cyGet(TestIds.deploymentStatus, SHORT_TIME)
-          .contains(DEPLOYMENT_PENDING, SHORT_TIME)
-          .should("not.exist");
-        cyGet(TestIds.deploymentStatus, SHORT_TIME)
-          .contains(DEPLOYMENT_PROGRESSING, SHORT_TIME)
-          .should("not.exist");
-      });
-    }
-
     private verifyTaskPromotionStatus() {
       cy.get(TestIds.prodEnvCard).within(() => {
         cy.get(TestIds.deploymentHistory).should("be.visible");
       });
     }
 
-    private verifyDevAccessibility(endpointVisibility: EndpointAccessibility) {
+    private verifyEndpointAccessibility(
+      service: Service,
+      endpointVisibility: EndpointAccessibility,
+      env: Enums.Environment
+    ) {
       // Begin workaround for https://github.com/wso2-enterprise/choreo/issues/25414
       this.sideMenu.navigateToOverview();
       this.sideMenu.navigateToDeploy();
       // End workaround for https://github.com/wso2-enterprise/choreo/issues/25414
 
-      this.getDevEndpointURL(endpointVisibility).then((endpointURL) => {
-        cy.log(`Endpoint URL: ${endpointURL}`);
-
-        // Non public endpoints are not accessible over the internet
-        if (endpointVisibility !== EndpointAccessibility.Public) {
-          this.sideMenu.navigateToTest();
-          cy.get(TestIds.notificationBanner).should("be.visible");
-          this.sideMenu.navigateToManage();
-          cy.get(TestIds.noEndpointNotification).should("be.visible");
-        }
-      });
+      this.saveEndpointUrls(service, endpointVisibility, env);
+      // Non public endpoints are not accessible over the internet
+      if (endpointVisibility !== EndpointAccessibility.Public) {
+        this.sideMenu.navigateToTest();
+        cy.get(TestIds.notificationBanner).should("be.visible");
+        this.sideMenu.navigateToManage();
+        cy.get(TestIds.noEndpointNotification).should("be.visible");
+      }
     }
 
     private verifyEndpointIsDeployed(envCardLocator: string) {
