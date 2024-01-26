@@ -12,12 +12,14 @@
  */
 
 import { Enums } from "../../../support/commons/enums";
-import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
-import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { console } from "../../../support/console/console";
-import { Project, WebhookInfo } from "../../../support/console/entities/project/project";
+import {
+  Project,
+  WebhookInfo,
+} from "../../../support/console/entities/project/project";
 import { Webhook } from "../../../support/console/entities/component/webhook-component";
+import { MEDIUM_TIME } from "../../../support/commons/timeouts";
+import { ConfigEntryStep } from "../../../support/commons/types";
 
 after(() => {
   console.logout();
@@ -31,42 +33,49 @@ describe("Verify webhook creation functionality", () => {
     triggerChannels: "AppService",
     triggerId: "126",
   };
-  
+
   let project: Project;
   let webhook: Webhook;
 
+  function addConfiguration() {
+    cy.get(".ConfigForm", MEDIUM_TIME).should("be.visible");
+    cy.get(".ConfigForm div input").clear().type(CONFIG);
+    cy.get('.ConfigForm button[type="submit"]').click();
+  }
 
   it("Login to Console", () => {
     console.login();
   });
-  
+
   it("Creating a project", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-
   it("Verify Webhook component creation", () => {
-    project.createWebhookComponent(Enums.Accessibility.EXTERNAL, {
-      url: "https://github.com/choreo-test-apps/slack-web-hook",
-      branch: "main",
-    },  webhookInfo,)
-    .then((app: Webhook) => {
-      webhook = app;
-    });
+    project
+      .createWebhookComponent(
+        Enums.Accessibility.EXTERNAL,
+        {
+          url: "https://github.com/choreo-test-apps/slack-web-hook",
+          branch: "main",
+        },
+        webhookInfo
+      )
+      .then((app: Webhook) => {
+        webhook = app;
+      });
   });
 
   it("Build Webhook", () => {
     webhook.build();
   });
 
-
   it("Deploy Webhook to dev", () => {
-    webhook.deployToDev(CONFIG);
+    webhook.deployToDev([new ConfigEntryStep(addConfiguration)]);
   });
 
-
   it("Verify component promotion to Prod", () => {
-    webhook.promoteProd(CONFIG);
+    webhook.promoteProd([new ConfigEntryStep(addConfiguration)]);
   });
 
   it("Stop deployments", () => {
