@@ -30,7 +30,7 @@ import java.util.Map;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
-public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
+public class TestClientJWTValidation extends TestNGCitrusSpringSupport {
     private String accessToken;
     private ChoreoProject project;
     private ChoreoComponent choreoComponent;
