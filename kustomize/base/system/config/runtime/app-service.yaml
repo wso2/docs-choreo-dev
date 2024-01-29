@@ -101,6 +101,10 @@ scim2:
   scimUsersEndpoint: /scim2/Users
   idpUsername: ${SCIM_BACKEND_API_USERNAME}
   idpPassword: ${SCIM_BACKEND_API_USER_PASSWORD}
+  idpAppClientId: CHOREO_SYSTEM_USER_MANAGER
+  idpAppClientSecret: ${IDP_APP_CLIENT_SECRET}
+  idpTokenUrl: ${IDP_TOKEN_URL}
+  IdpTokenScope: 'internal_user_mgt_list internal_user_mgt_view'
 userSupport:
   isEnabled: false
   host: ${USER_SUPPORT_HOST}
@@ -466,6 +470,8 @@ asgardeoOrgManagement:
 asgardeoInvitation:
   enable: ${IS_ASGARDEO_INVITATION_ENABLED}
   enableReinvite: ${IS_REINVITATION_ENABLED}
+asgardeoUserManagement:
+  enableOrgLevelUserDataAccess: ${ENABLE_ASGARDEO_ORG_LEVEL_USER_DATA_ACCESS}
 marketingConsent:
   clientKey: ${MARKETING_CONSENT_APP_CLIENT_KEY}
   clientSecret: ${MARKETING_CONSENT_APP_CLIENT_SECRET}
