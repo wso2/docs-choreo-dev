@@ -1,6 +1,6 @@
 # Private Data Plane Security Levels
 
-The following table outlines the private data plane security levels supported in Choreo pricing plans:
+The following table outlines the private data plane security levels supported in Choreo:
 
 <table border=1>
 <thead>
