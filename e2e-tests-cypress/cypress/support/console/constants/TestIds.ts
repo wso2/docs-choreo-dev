@@ -211,6 +211,12 @@ export namespace TestIds {
   export const resourceTab = '[data-cyid="tab-resource-settings"]';
   export const envSelector = '[data-cyid="environment-selector"]';
   export const envSelectorItems = '[data-cyid="environment-selector"]>div>div';
+  export const diagramLoader = '[data-testid="diagram-loader"]';
+  export const envSelectorItemsObservability =
+    '[id="environment-selector-label-popup"]';
+  export const durationSelector =
+    '[data-cyid="undefined-date-time-container-button-button"]';
+  export const refreshLogs = '[data-cyid="refresh-logs-button-button"]';
   export const revision = '[testid="selected-revision-link"]';
   export const revisionHistory = '[data-testid="revision-history-header"]';
   export const revisionItem = '[data-cyid*="revision-list-item"]';
