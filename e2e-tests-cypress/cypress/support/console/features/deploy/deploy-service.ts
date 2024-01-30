@@ -32,6 +32,7 @@ import { WebApp } from "../../entities/component/webapp-component";
 import { Webhook } from "../../entities/component/webhook-component";
 import { TestRunner } from "../../entities/component/test-runner-component";
 import { EndpointAccessibility, Enums } from "../../../commons/enums";
+import { Byoc } from "../../entities/component/byoc-component";
 
 export interface DeployServiceFeature {
   _addNewVersion(component: Service, branch: string, version: string);
@@ -43,7 +44,7 @@ export interface DeployServiceFeature {
   );
 
   _deployTask(
-    component: ManualTrigger | ScheduleTrigger | TestRunner,
+    component: ManualTrigger | ScheduleTrigger | TestRunner | Byoc,
     configStepsAvailable?: ConfigEntryStep[]
   );
 
@@ -58,7 +59,7 @@ export interface DeployServiceFeature {
   );
 
   _promoteTask(
-    component: ManualTrigger | ScheduleTrigger | TestRunner,
+    component: ManualTrigger | ScheduleTrigger | TestRunner | Byoc,
     configStepsAvailable?: ConfigEntryStep[]
   );
 
@@ -181,7 +182,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     }
 
     _promoteTask(
-      component: ManualTrigger | ScheduleTrigger | TestRunner,
+      component: ManualTrigger | ScheduleTrigger | TestRunner | Byoc,
       configStepsAvailable?: ConfigEntryStep[]
     ) {
       this.sideMenu.navigateToDeploy();
@@ -326,7 +327,8 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
         | TestRunner
         | ManualTrigger
         | ScheduleTrigger
-        | WebApp,
+        | WebApp
+        | Byoc,
       configStepsAvailable?: ConfigEntryStep[]
     ) {
       if (configStepsAvailable === undefined) {
@@ -532,7 +534,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     }
 
     private startPromotion(
-      component: Service | ManualTrigger | ScheduleTrigger | TestRunner | WebApp
+      component: Service | ManualTrigger | ScheduleTrigger | TestRunner | WebApp | Byoc
     ) {
       this.deploymentTrack.validate(component);
 

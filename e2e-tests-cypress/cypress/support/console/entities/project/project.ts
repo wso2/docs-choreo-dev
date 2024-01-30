@@ -34,6 +34,8 @@ import { Webhook } from "../component/webhook-component";
 import { TestRunnerComponent } from "../../../interfaces/choreo-components/testrunner-component";
 import { TestRunner } from "../component/test-runner-component";
 import { IntegrationComponentData } from "../../../interfaces/integration-component-data";
+import { Byoc } from "../component/byoc-component";
+import { ByocComponent } from "../../../interfaces/choreo-components/byoc-component";
 
 export interface RepoInfo {
   readonly url: string;
@@ -66,6 +68,11 @@ export interface BuildPackInfo {
 export interface WebhookInfo {
   readonly triggerChannels: string;
   readonly triggerId: string;
+}
+
+export interface ByocInfo {
+  readonly dockerfilePath: string;
+  readonly dockerContext: string;
 }
 
 export class Project {
@@ -376,6 +383,37 @@ export class Project {
       return Promise.resolve(new Service(componentName, endpointName));
     });
   }
+
+
+createByocComponent(repoInfo: RepoInfo, byocInfo: ByocInfo, oasFilePath: string) {
+  const componentName = Utils.generateComponentName();
+  let componentData: ByocComponent = {
+    name: componentName,
+    displayName: componentName,
+    accessibility: Enums.Accessibility.EXTERNAL,
+    componentType: Enums.DisplayType.byocRestApi,
+    description: "BYOC Component",
+    labels: "",
+    projectId: "",
+    oasFilePath: oasFilePath,
+    port: 8080,
+    byocConfig: {
+      srcGitRepoUrl: repoInfo.url,
+      srcGitRepoBranch: repoInfo.branch,
+      dockerfilePath: byocInfo.dockerfilePath,
+      dockerContext: byocInfo.dockerContext,
+    },
+  };
+
+  return GraphQL.createComponentV2(
+    this.name,
+    "",
+    componentData,
+    GraphQLQueryBuilder.getBYOCComponentCreationQuery
+  ).then(() => {
+    return Promise.resolve(new Byoc(componentName));
+  });
+}
 
   verifyUsageInsights(env: Enums.Environment) {
     this.selectEnvironment(env);

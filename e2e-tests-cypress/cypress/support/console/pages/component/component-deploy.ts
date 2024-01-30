@@ -84,7 +84,7 @@ export class ComponentDeployPage {
   private static configWebAppComponentPromote() {
     cy.get('[data-cyid="promote-selector-default-configs"]').click();
     cy.get('[data-cyid="btn-next-button"]').click();
-    if (Utils.isWebAppAuthenticationEnabled) {
+    if (Utils.isWebAppAuthenticationEnabled()) {
       this.configWebAppComponentWithAuthenticationSettings("prod");
     } else {
       this.configWebappComponent();
@@ -229,7 +229,7 @@ export class ComponentDeployPage {
           this.pollElement('[data-cyid="btn-next-button"]').click();
         }
       } else {
-        if (Utils.isWebAppAuthenticationEnabled) {
+        if (Utils.isWebAppAuthenticationEnabled()) {
           this.configWebAppComponentWithAuthenticationSettings();
         } else {
           this.configWebappComponent();

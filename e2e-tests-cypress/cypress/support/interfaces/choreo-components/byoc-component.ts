@@ -1,6 +1,6 @@
-import { Enums } from "../commons/enums";
-import { AbsComponent } from "./abs-component";
-import { ByocConfig } from "./byco-config";
+import { Enums } from "../../commons/enums";
+import { AbsComponent } from "../abs-component";
+import { ByocConfig } from "./byoc-config";
 
 export interface ByocComponent extends AbsComponent {
   name: string;

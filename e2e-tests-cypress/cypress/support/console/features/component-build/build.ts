@@ -23,6 +23,7 @@ import { ScheduleTrigger } from "../../entities/component/schedule-trigger-compo
 import { WebApp } from "../../entities/component/webapp-component";
 import { Webhook } from "../../entities/component/webhook-component";
 import { TestRunner } from "../../entities/component/test-runner-component";
+import { Byoc } from "../../entities/component/byoc-component";
 
 export interface BuildFeature {
   _build(
@@ -33,6 +34,7 @@ export interface BuildFeature {
       | TestRunner
       | WebApp
       | Webhook
+      | Byoc
   ): void;
 }
 
@@ -51,6 +53,7 @@ export function mixinBuild<T extends Types.Constructor>(
         | WebApp
         | Webhook
         | TestRunner
+        | Byoc
     ) {
       this.sideMenu.navigateToBuild();
       this.triggerBuild(component);
@@ -64,6 +67,7 @@ export function mixinBuild<T extends Types.Constructor>(
         | TestRunner
         | WebApp
         | Webhook
+        | Byoc
     ) {
       this.deploymentTrack.validate(component);
 
