@@ -75,16 +75,32 @@ Before you try out the steps in this guide, complete the following:
 
 8. Click **Create**. Choreo initializes the component with the sample implementation and opens the **Overview** page of the component.
 
-## Step 2: Deploy the scheduled task
+Now you can proceed to build and deploy the scheduled task.
+
+## Step 2: Build the scheduled task
+
+To build the scheduled task, follow the steps given below:
+
+1. In the left navigation menu, click **Build**.
+2. In the **Builds** pane, click **Build**. This opens the **Commits** pane where you can see all the commits related to the component.
+3. Select the latest commit and click **Build**. This triggers the build process and displays the build progress in the **Build Logs** pane.
+
+    !!! info
+         The build process can take a while to complete. When the build process is complete, the build will be listed in the **Builds** pane along with the build status. 
+
+   Here, you will see the build status as **Success**.
+
+## Step 3: Deploy the scheduled task
 
 To deploy the scheduled task, follow the steps given below:
 
 1. In the left navigation menu, click **Deploy**.
-2. In the **Build Area** card, click **Configure & Deploy**.
+2. In the **Set Up** card, click **Configure & Deploy**.
 3. In the **Configurations** pane, specify values as follows for the configurable variables:
 
     !!! tip
-        The configurable variables populated here are defined in the sample Ballerina project used in this guide. To learn how to declare configurable variables in Ballerina, see the [Ballerina documentation on declaring configurable variables](https://ballerina.io/learn/by-example/configurable-variables/). If configurable variables are detected in a connected Ballerina project, Choreo prompts for the respective values during component deployment.
+         The configurable variables populated here are defined in the sample Ballerina project used in this guide. To learn how to declare configurable variables in Ballerina, see the [Ballerina documentation on declaring configurable variables](https://ballerina.io/learn/by-example/configurable-variables/). If configurable variables are detected in a connected Ballerina project, Choreo prompts for the respective values during component deployment.
+
 
     | **Field**     | **Value**                                                               |
     | ------------- | ----------------------------------------------------------------------- |
@@ -92,6 +108,17 @@ To deploy the scheduled task, follow the steps given below:
     | **latitude**  | Latitude of the location to get the weather forecast                    |
     | **longitude** | Longitude of the location to get the weather forecast                   |
     | **email**     | The email address to receive the formatted weather forecast information |
+
+    !!! note
+        If you use **Ballerina** as the buildpack and you want to set a configurable variable as a secret, click the lock icon corresponding to the configurable variable. This marks it as a secret and conceals the input value.
+
+        For example, if you consider the configurable variables in this guide and set the **apiKey** as a secret, its input value will be concealed as follows:
+
+          ![Configurable variable as a secret](../../assets/img/develop-components/develop-a-scheduled-integration/configurable-variable-as-a-secret.png)
+
+        If you want to update the input value at a later time, you can click **Update Secret Content** and specify a new value.
+
+          ![Update secret](../../assets/img/develop-components/develop-a-scheduled-integration/update-secret.png)
 
 4.  Click **Next**. 
 5.  In this step, you must define a schedule to run the task. In this guide, you set the schedule to receive the weather information daily at 8.00 AM UTC. Enter values as follows to configure the schedule:
@@ -104,13 +131,13 @@ To deploy the scheduled task, follow the steps given below:
     | **At**               | `08:00`                                               |
     
     !!! tip
-         - When you develop a scheduled task, you can define a schedule depending on your requirement. If you want to test and verify the  immediately, you can schedule the deployment to run in just a few minutes after you create it. However, to avoid unnecessary expenses, make sure you reschedule or stop the deployment once you test and verify.
+         When you develop a scheduled task, you can define a schedule depending on your requirement. If you want to test and verify the  immediately, you can schedule the deployment to run in just a few minutes after you create it. However, to avoid unnecessary expenses, make sure you reschedule or stop the deployment once you test and verify.
 
 6. Click **Deploy**. This deploys the scheduled task to the development environment and indicates the **Scheduled Status** as **Active** in the **Development** card.
 
    You can test the scheduled task when it runs at the configured time. 
 
-## Step 3: Test the scheduled task
+## Step 4: Test the scheduled task
 
 When the scheduled task runs at the configured time, an email with the subject `[WSO2 Choreo Demo] Next 24H Weather Forecast` is sent from `choreo.demo@gmail.com` to the email address specified as the **email** configurable variable value in [Step 2](#step-2-deploy-the-scheduled-task). 
 
@@ -118,7 +145,7 @@ If the scheduled task ran successfully, you should receive an email similar to t
 
 ![Received email](../../assets/img/develop-components/develop-a-scheduled-integration/Received-email.png)
 
-## Step 4: Observe the scheduled task
+## Step 5: Observe the scheduled task
 
 The observability view in Choreo displays graphs that depict details such as throughput, latency, diagnostic data, and logs to identify and troubleshoot anomalies in components you deploy.
 
@@ -131,7 +158,7 @@ To visualize and monitor the performance of the scheduled task you deployed, cli
   
 To learn more about the observability details you can view via Choreo observability, see [Observability Overview](../../monitoring-and-insights/observability-overview.md).
 
-## Step 5: Monitor executions
+## Step 6: Monitor executions
 
 To track and monitor executions associated with the deployed scheduled task, go to the left navigation menu and click **Execute**. 
 
