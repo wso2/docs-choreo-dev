@@ -68,20 +68,20 @@ spec:
               readOnly: true
               subPath: publisher-truststore.pem
             - mountPath: /home/wso2/security/truststore/mg.pem
-              name: mgw-cert
+              name: mgw-common-cert-vol
               readOnly: true
-              subPath: tls.crt
+              subPath: mg.pem
             - name: enforcer-truststore
               mountPath: /home/wso2/security/truststore/apim-service-root.pem
               subPath: apim-service-root.pem
             - mountPath: /home/wso2/security/keystore/mg.key
-              name: mgw-cert
+              name: secret-cc-deployment
               readOnly: true
-              subPath: tls.key
+              subPath: ENFORCER_KEYSTORE_KEY
             - mountPath: /home/wso2/security/keystore/mg.pem
-              name: mgw-cert
+              name: mgw-common-cert-vol
               readOnly: true
-              subPath: tls.crt
+              subPath: mg.pem
             - mountPath: /home/wso2/security/jwt/key.pem
               name: secret-cc-deployment
               readOnly: true
@@ -159,17 +159,17 @@ spec:
         - name: choreo-connect-router
           volumeMounts:
             - mountPath: /home/wso2/security/keystore/mg.pem
-              name: mgw-cert
+              name: mgw-common-cert-vol
               readOnly: true
-              subPath: tls.crt
+              subPath: mg.pem
             - mountPath: /home/wso2/security/keystore/mg.key
-              name: mgw-cert
+              name: secret-cc-deployment
               readOnly: true
-              subPath: tls.key
+              subPath: ROUTER_KEYSTORE_KEY
             - mountPath: /home/wso2/security/truststore/mg.pem
-              name: mgw-cert
+              name: mgw-common-cert-vol
               readOnly: true
-              subPath: tls.crt
+              subPath: mg.pem
             - name: rate-limiter-cert
               mountPath: /home/wso2/security/truststore/rate-limiter.pem
               subPath: tls.crt
@@ -239,6 +239,9 @@ spec:
         - name: enforcer-truststore
           configMap:
             name: mgw-enforcer-truststore
+        - name: mgw-common-cert-vol
+          configMap:
+            name: mgw-common-cert
         - name: secret-apim
           csi:
             driver: secrets-store.csi.k8s.io
@@ -263,9 +266,6 @@ spec:
               secretProviderClass: secret-cc-deployment
             nodePublishSecretRef:
               name: csi-secret-store-azure
-        - name: mgw-cert
-          secret:
-            secretName: mgw-cert
         - name: rate-limiter-cert
           secret:
             secretName: rate-limiter-cert
