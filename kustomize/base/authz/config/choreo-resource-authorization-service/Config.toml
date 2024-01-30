@@ -11,6 +11,7 @@ getProjectUuidRegexConf = '^.*/|\+.+'
 getGroupUuidRegexConf =  '^.*\+'
 objectUuidRegexConf = '^([a-zA-Z0-9_\-=]{20,36})$'
 permissionRegexConf = '^(([a-zA-Z0-9_\-]+:)+[a-zA-Z0-9_\-]+)$'
+isActionAuthorizationEnabled = true
 
 # SpiceDB configs
 enableCheckPermissionConsistencyConf = true
@@ -24,6 +25,12 @@ roleViewPermissionConf = "urn:choreosystem:usersmanagement:role_view"
 roleCreatePermissionConf = "urn:choreosystem:usersmanagement:role_create"
 roleUpdatePermissionConf = "urn:choreosystem:usersmanagement:role_update"
 roleDeletePermissionConf = "urn:choreosystem:usersmanagement:role_delete"
+
+# Asgardeo token validation
+asgardeoTokenIssuerConf = "{{.ASGARDEO_TOKEN_ISSUER}}"
+asgardeoTokenAudienceConf = "{{.ASGARDEO_TOKEN_AUDIENCE}}"
+asgardeoTokenClockSkew = 60.0
+asgardeoJwksUrl = "{{.ASGARDEO_JWKS_URL}}"
 
 [choreo.resource_authz_service.spicedbGrpcClient]
 # SpiceDB configs

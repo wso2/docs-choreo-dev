@@ -11,21 +11,19 @@
  * associated services.
  */
 
-
 import { Enums } from "../../../support/commons/enums";
 import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
 import { ScheduleTrigger } from "../../../support/console/entities/component/schedule-trigger-component";
-import { _Observability } from "../../../support/console/features/observability/observability";
+import { SHORT_TIME } from "../../../support/commons/timeouts";
 
 after(() => {
   console.logout();
 });
 
-
 describe("Create Schedule Trigger", () => {
- 
   const PROJECT_DESCRIPTION = "Schedule Trigger Test Project";
+  const MATCHING_STRING = "Hello, User";
   let project: Project;
   let component: ScheduleTrigger;
 
@@ -38,8 +36,8 @@ describe("Create Schedule Trigger", () => {
   });
 
   it("Verify Schedule Trigger component creation", () => {
-
-    project.createScheduleTriggerComponent(Enums.Accessibility.EXTERNAL, {
+    project
+      .createScheduleTriggerComponent(Enums.Accessibility.EXTERNAL, {
         url: "https://github.com/choreo-test-apps/schedule-trigger",
         branch: "main",
       })
@@ -61,16 +59,23 @@ describe("Create Schedule Trigger", () => {
   });
 
   it("Verify dev env logs", () => {
-   component.verifyObservabilityMetrics(Enums.Environment.DEVELOPMENT);
+    component.verifyObservabilityMetricsLogs(
+      Enums.Environment.DEVELOPMENT,
+      MATCHING_STRING,
+      SHORT_TIME.timeout
+    );
   });
 
- it("Verify prod env logs", () => {
-  component.verifyObservabilityMetrics(Enums.Environment.PRODUCTION);
-   });
+  it("Verify prod env logs", () => {
+    component.verifyObservabilityMetricsLogs(
+      Enums.Environment.PRODUCTION,
+      MATCHING_STRING,
+      0
+    );
+  });
 
   it("Stop deployments", () => {
     component.stopDeployment();
     component.stopPromotion();
   });
 });
-   
