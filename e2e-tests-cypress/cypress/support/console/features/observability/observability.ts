@@ -13,59 +13,77 @@
 
 import { cyLog } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
+import { VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { TestIds } from "../../constants/TestIds";
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
 
 export class _Observability {
   private sideMenu = new ServiceLeftMenu();
 
-  viewObservabilityMetrics(env: Enums.Environment) {
-    this.sideMenu.navigateToObserve();
-    this.selectEnvironment(env);
-    this.verifyObservabilityMetrics("ballerina: sending metrics to Choreo" );
+  verifyObservabilityMetricsLogs(
+    env: Enums.Environment,
+    matchingText: string,
+    delay: number = VERY_SHORT_TIME.timeout
+  ) {
+    cy.log(`Wait ${delay / 1000}s for stats to be collected`);
+    cy.wait(delay, { log: false });
+    this.sideMenu.navigateToMetrics();
+
+    this.loadLogs(env);
+    this.verifyLogsAreFound(matchingText);
   }
 
-  private selectEnvironment(env: Enums.Environment) {
-    cy.wait(3000);
-    let index = 0;
-        if (env == Enums.Environment.DEVELOPMENT) {
-          index = 1;
+  private loadLogs(env: Enums.Environment) {
+    cy.get(TestIds.diagramLoader).should("not.exist");
+
+    cy.get(TestIds.environmentPickerObsMetrics)
+      .should("be.visible")
+      .click()
+      .then(() => {
+        cy.get(TestIds.envSelectorItemsObservability)
+          .should("be.visible")
+          .within(() => {
+            // Due to rerendering query the env again after the initial load
+            cy.contains(env).should("be.visible");
+            cy.contains(env).click();
+          });
+      });
+
+    cy.get(TestIds.diagramLoader).should("not.exist");
+
+    for (let i = 0; i < 10; i++) {
+      cy.get("body", { log: false }).then((body) => {
+        if (body.find(TestIds.refreshLogs).length > 0) {
+          cy.get(TestIds.refreshLogs).click();
+          cy.get(TestIds.diagramLoader).should("not.exist");
+          const waitTime = 8000 * (i + 1);
+          cy.log(`Waiting ${waitTime / 1000}s for logs to load after refresh`);
+          cy.wait(waitTime, { log: false });
+        } else if (body.find(TestIds.observabilityLogPanelEntry).length > 0) {
+          return;
+        } else {
+          cy.wait(300, { log: false }); // Slow down the loop a little to give time for log window to load
         }
-    cy.get(TestIds.environmentPickerObsMetrics).should("be.visible").click();
-        cy.get(`[id="environment-selector-label-option-${index}"]`).click({
-          force: true,
-        });
-      }
+      });
+    }
+  }
 
-  private verifyObservabilityMetrics(text: string ) {
-    cy.get(TestIds.observabilityLogPanelEntry, { timeout: 180000 }).should("be.visible").each(($e) => {
-      let log = $e
-        .text()
-        .replace("ballerina: sending metrics to Choreo", "")
-        .trim()
-        .toString();
+  private verifyLogsAreFound(text: string) {
+    let isFound = false;
 
+    cy.get(TestIds.observabilityLogPanelEntry, { timeout: 180000 })
+      .should("be.visible")
+      .each((logElement) => {
+        const log = logElement.text();
         cyLog(log);
 
-      if (log.includes(text)) {
-        const exactText = log.slice(log.indexOf("{"), log.indexOf("}") + 1);
-        cyLog(exactText);
-        expect(text).to.be.eq(exactText);
-      }
-    });
-}
-    
-
-
+        if (log.includes(text)) {
+          isFound = true;
+          return false;
+        }
+      })
+      .then(() => {
+        expect(isFound).to.be.true;
+      });
   }
-
-
-  
-
-
-
-
-
-
-
-
+}

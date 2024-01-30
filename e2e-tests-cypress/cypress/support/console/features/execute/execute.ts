@@ -17,6 +17,7 @@ import { ManualTrigger } from "../../entities/component/manual-trigger-component
 import { Types } from "../../../commons/types";
 import { Enums } from "../../../commons/enums";
 import { VERY_SHORT_TIME } from "../../../commons/timeouts";
+import { BUILD_QUEUED } from "../../../commons/constants";
 
 export interface ExecuteFeature {
   _execute(component: ManualTrigger, env: Enums.Environment);
@@ -46,6 +47,8 @@ export function mixinExecute<T extends Types.Constructor>(
     private executeManualTrigger(component: ManualTrigger) {
       cy.get(TestIds.runNow).should("be.enabled").click();
       cy.get(TestIds.runNow).should("be.enabled");
+
+      cy.contains(BUILD_QUEUED).should("not.exist");
 
       cy.get(TestIds.refreshTasks).should("be.visible").click();
 
