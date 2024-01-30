@@ -55,13 +55,13 @@ spec:
         - name: choreo-connect-global-adapter
           volumeMounts:
             - mountPath: /home/wso2/security/keystore/mg.key
-              name: mgw-cert
+              name: secret-mgw-keystore
               readOnly: true
-              subPath: tls.key
+              subPath: ADAPTER_KEYSTORE_KEY
             - mountPath: /home/wso2/security/keystore/mg.pem
-              name: mgw-cert
+              name: mgw-common-cert-vol
               readOnly: true
-              subPath: tls.crt
+              subPath: mg.pem
             - mountPath: /home/wso2/security/keystore/global-adapter.key
               name: secret-cc-ga-keystore
               readOnly: true
@@ -74,9 +74,9 @@ spec:
               readOnly: true
               subPath: controlplane.pem
             - mountPath: /home/wso2/security/truststore/local-adapter.pem
-              name: mgw-cert
+              name: mgw-common-cert-vol
               readOnly: true
-              subPath: tls.crt
+              subPath: mg.pem
             - mountPath: /home/wso2/conf
               name: global-adapter-config
             - name: secret-mgw
@@ -178,12 +178,20 @@ spec:
         - name: global-adapter-config
           configMap:
             name: cc-global-adapter-conf-v2
-        - name: mgw-cert
-          secret:
-            secretName: mgw-cert
+        - name: mgw-common-cert-vol
+          configMap:
+            name: mgw-common-cert
         - name: mgw-adapter-truststore-vol
           configMap:
             name: mgw-adapter-truststore
+        - name: secret-mgw-keystore
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-mgw-keystore
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
         - name: secret-mgw
           csi:
             driver: secrets-store.csi.k8s.io
