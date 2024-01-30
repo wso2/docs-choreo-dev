@@ -60,21 +60,21 @@ spec:
         - name: choreo-connect-adapter
           volumeMounts:
             - mountPath: /home/wso2/security/keystore/mg.key
-              name: secret-mgw-keystore
+              name: mgw-cert
               readOnly: true
-              subPath: ADAPTER_KEYSTORE_KEY
+              subPath: tls.key
             - mountPath: /home/wso2/security/keystore/mg.pem
-              name: mgw-common-cert-vol
+              name: mgw-cert
               readOnly: true
-              subPath: mg.pem
+              subPath: tls.crt
             - mountPath: /home/wso2/security/truststore/controlplane.pem
               name: mgw-adapter-truststore-vol
               readOnly: true
               subPath: controlplane.pem
             - mountPath: /home/wso2/security/truststore/mg.pem
-              name: mgw-common-cert-vol
+              name: mgw-cert
               readOnly: true
-              subPath: mg.pem
+              subPath: tls.crt
             - mountPath: /home/wso2/security/truststore/global-adapter.pem
               name: mgw-adapter-truststore-vol
               subPath: global-adapter.pem
@@ -164,23 +164,12 @@ spec:
         - name: mgw-adapter-truststore-vol
           configMap:
             name: mgw-adapter-truststore
-        - name: mgw-common-cert-vol
-          configMap:
-            name: mgw-common-cert
         - name: secret-mgw
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-mgw
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-mgw-keystore
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-mgw-keystore
             nodePublishSecretRef:
               name: csi-secret-store-azure
         - name: secret-asb
@@ -199,6 +188,9 @@ spec:
               secretProviderClass: secret-apim
             nodePublishSecretRef:
               name: csi-secret-store-azure
+        - name: mgw-cert
+          secret:
+            secretName: mgw-cert
         - name: rate-limiter-cert
           secret:
             secretName: rate-limiter-cert
