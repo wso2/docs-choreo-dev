@@ -82,9 +82,9 @@ spec:
         - name: choreo-connect-rate-limiter
           volumeMounts:
             - mountPath: /home/wso2/security/truststore/mg.pem
-              name: mgw-common-cert-vol
+              name: mgw-cert
               readOnly: true
-              subPath: mg.pem
+              subPath: tls.crt
             - mountPath: /home/wso2/security/keystore/rate-limiter.key
               name: rate-limiter-cert
               readOnly: true
@@ -152,9 +152,6 @@ spec:
             periodSeconds: 5
             timeoutSeconds: 5
       volumes:
-        - name: mgw-common-cert-vol
-          configMap:
-            name: mgw-common-cert
         - name: secret-cc-rate-limiter
           csi:
             driver: secrets-store.csi.k8s.io
@@ -163,6 +160,9 @@ spec:
               secretProviderClass: secret-cc-rate-limiter
             nodePublishSecretRef:
               name: csi-secret-store-azure
+        - name: mgw-cert
+          secret:
+            secretName: mgw-cert
         - name: rate-limiter-cert
           secret:
             secretName: rate-limiter-cert
