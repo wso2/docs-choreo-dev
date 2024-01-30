@@ -18,10 +18,11 @@ import { ProxyLeftMenu } from "../../ui-elements/left-menus/proxy-left-menu";
 import { Proxy } from "../../entities/component/proxy-component";
 import { Types } from "../../../commons/types";
 import { DeploymentTrack } from "../deployment-track/deployment-track";
+import { Byoc } from "../../entities/component/byoc-component";
 
 export interface TestProxyFeature {
   _testSwaggerConsole(
-    component: Proxy,
+    component: Proxy | Byoc,
     environment: Enums.Environment,
     resource: string,
     key?: string,
@@ -29,7 +30,7 @@ export interface TestProxyFeature {
   );
 
   _testCurl(
-    component: Proxy,
+    component: Proxy | Byoc,
     environment: Enums.Environment,
     method: Enums.HTTPMethod,
     resource: string

@@ -1,4 +1,4 @@
-import { ByocComponent } from "../../interfaces/byoc-component";
+import { ByocComponent } from "../../interfaces/choreo-components/byoc-component";
 import { TestRunnerComponent } from "../../interfaces/choreo-components/testrunner-component";
 import { WebappComponent } from "../../interfaces/choreo-components/webapp-component";
 import { ComponentData } from "../../interfaces/component-data";

@@ -11,12 +11,16 @@
  * associated services.
  */
 
-import { createDefaultSteps } from "../../../commons/types";
+import { Enums } from "../../../commons/enums";
+import { ConfigEntryStep, createDefaultSteps } from "../../../commons/types";
 import { mixinBuild } from "../../features/component-build/build";
 import { mixinServiceDeploy } from "../../features/deploy/deploy-service";
+import { mixinTestProxy } from "../../features/test/test-proxy";
 import { Component } from "./component";
 
-export class Byoc extends mixinBuild(mixinServiceDeploy(Component)) {
+
+export class Byoc extends  mixinBuild(mixinTestProxy(mixinServiceDeploy(Component))) {
+  
   constructor(name: string) {
     super(name, "main");
 
@@ -31,15 +35,26 @@ export class Byoc extends mixinBuild(mixinServiceDeploy(Component)) {
     this._deployTask(this, createDefaultSteps(1));
   }
 
+
+  testSwaggerConsole(
+    environment: Enums.Environment,
+    resource: string,
+    key?: string,
+    value?: string
+  ) {
+    return this._testSwaggerConsole(this,environment, resource, key, value);
+  }
+
+  testCurl(
+    environment: Enums.Environment,
+    method: Enums.HTTPMethod,
+    resource: string
+  ) {
+    return this._testCurl(this, environment, method, resource);
+  }
+
   promoteProd() {
-    this._promoteTask(this);
+    this._promoteTask(this, createDefaultSteps(2));
   }
 
-  verifyTestPageIsDisabled() {
-    cy.get('[data-cyid="link-test"]').should("have.attr", "disabled");
-  }
-
-  verifyManagePageIsDisabled() {
-    cy.get('[data-cyid="link-manage"]').should("have.attr", "disabled");
-  }
 }

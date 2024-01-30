@@ -73,7 +73,6 @@ export interface WebhookInfo {
 export interface ByocInfo {
   readonly dockerfilePath: string;
   readonly dockerContext: string;
-  readonly oasFilePath: string;
 }
 
 export class Project {
@@ -385,9 +384,8 @@ export class Project {
     });
   }
 
-///////////////////////////
 
-createByocComponent(repoInfo: RepoInfo, byocInfo: ByocInfo) {
+createByocComponent(repoInfo: RepoInfo, byocInfo: ByocInfo, oasFilePath: string) {
   const componentName = Utils.generateComponentName();
   let componentData: ByocComponent = {
     name: componentName,
@@ -397,7 +395,7 @@ createByocComponent(repoInfo: RepoInfo, byocInfo: ByocInfo) {
     description: "BYOC Component",
     labels: "",
     projectId: "",
-    oasFilePath: "",
+    oasFilePath: oasFilePath,
     port: 8080,
     byocConfig: {
       srcGitRepoUrl: repoInfo.url,
@@ -413,20 +411,9 @@ createByocComponent(repoInfo: RepoInfo, byocInfo: ByocInfo) {
     componentData,
     GraphQLQueryBuilder.getBYOCComponentCreationQuery
   ).then(() => {
-    return Promise.resolve(new TestRunner(componentName));
+    return Promise.resolve(new Byoc(componentName));
   });
 }
-
-
-
-
-
-
-
-
-
-
-
 
   verifyUsageInsights(env: Enums.Environment) {
     this.selectEnvironment(env);
