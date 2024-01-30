@@ -49,4 +49,8 @@ export class ManualTrigger extends mixinBuild(
   executeComponent(env: Enums.Environment) {
     this._execute(this, env);
   }
+
+  verifyObservabilityMetricsLogs(env: Enums.Environment, matchingText: string) {
+    this.observability.verifyObservabilityMetricsLogs(env, matchingText);
+  }
 }

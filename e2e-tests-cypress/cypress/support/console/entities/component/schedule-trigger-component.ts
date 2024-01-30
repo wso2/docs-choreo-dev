@@ -35,10 +35,18 @@ export class ScheduleTrigger extends mixinBuild(
   }
 
   promoteProd() {
-    this._promoteTask(this, createDefaultSteps(2));
+    this._promoteTask(this);
   }
 
-  verifyObservabilityMetrics(env: Enums.Environment) {
-    this.observability.viewObservabilityMetrics(env);
+  verifyObservabilityMetricsLogs(
+    env: Enums.Environment,
+    matchingText: string,
+    runInterval: number
+  ) {
+    this.observability.verifyObservabilityMetricsLogs(
+      env,
+      matchingText,
+      runInterval
+    );
   }
 }
