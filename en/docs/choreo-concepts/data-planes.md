@@ -4,12 +4,21 @@ Choreo's architecture comprises two key components: the control plane and the da
 
 The data plane is the environment where user applications are deployed based on configurations set in the control plane. These applications can range from services and web applications to APIs, integrations, and scheduled tasks. The applications can be written in various programming languages, allowing for a polyglot approach. Importantly, all traffic related to the runtime of user applications is restricted to the Choreo data plane, ensuring strict containment of user data within its boundaries.
 
-Choreo's architecture features two distinct data plane types: cloud data planes and private data planes. A cloud data plane utilizes a multi-tenanted infrastructure model for deploying user applications, creating a shared yet secure environment for application runtime. In contrast, a private data plane(PDP) provides dedicated infrastructure for a single organization to run its user applications. This ensures an added layer of privacy and control for organizations with specific requirements.
+Choreo's architecture features two distinct data plane types: cloud data plane and private data planes. 
+
+The following diagram illustrates the high-level view of Choreo:
 
 ![Choreo high-level view](../assets/img/choreo-concepts/high-level-view.png){.cInlineImage-full}
 
+## Cloud data plane
 
-## Private data planes
+The cloud data plane is the default data plane in Choreo. It is fully managed by WSO2 and runs on Microsoft Azure. The cloud data plane utilizes a multi-tenanted infrastructure model to deploy user applications, creating a shared yet secure environment for application runtime.
+
+The cloud data plane includes two preconfigured environments, namely development and production, which allow users to build, test, and deploy applications seamlessly using the Choreo Console. However, certain enterprises may require more control and flexibility beyond what is provided by the default cloud data plane. 
+
+## Private data plane
+
+A private data plane(PDP) provides dedicated infrastructure for a single organization to run its user applications. This ensures an added layer of privacy and control for organizations with specific requirements.
 
 ### Infrastructure
 
