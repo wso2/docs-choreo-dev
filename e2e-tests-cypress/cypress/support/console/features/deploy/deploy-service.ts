@@ -39,8 +39,9 @@ export interface DeployServiceFeature {
 
   _deployService(
     component: Service,
+    shouldModifyEndpoint: boolean,
     endpointVisibility: EndpointAccessibility,
-    configStepsAvailable: ConfigEntryStep[]
+    configStepsAvailable?: ConfigEntryStep[]
   );
 
   _deployTask(
@@ -54,6 +55,7 @@ export interface DeployServiceFeature {
 
   _promoteService(
     component: Service,
+    shouldModifyEndpoint: boolean,
     endpointVisibility: EndpointAccessibility,
     configStepsAvailable?: ConfigEntryStep[]
   );
@@ -81,6 +83,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
     _deployService(
       component: Service,
+      shouldModifyEndpoint: boolean,
       endpointVisibility: EndpointAccessibility,
       configStepsAvailable?: ConfigEntryStep[]
     ) {
@@ -92,7 +95,11 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.stepThroughConfigSteps(component, configStepsAvailable);
 
-      this.reviewAndUpdateEndpoint(component, endpointVisibility);
+      this.reviewAndUpdateEndpoint(
+        component,
+        shouldModifyEndpoint,
+        endpointVisibility
+      );
 
       this.verifyDeploymentStatus();
 
@@ -159,6 +166,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
     _promoteService(
       component: Service,
+      shouldModifyEndpoint: boolean,
       endpointVisibility: EndpointAccessibility,
       configStepsAvailable: ConfigEntryStep[]
     ) {
@@ -168,7 +176,11 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.stepThroughConfigSteps(component, configStepsAvailable);
 
-      this.reviewAndUpdateEndpoint(component, endpointVisibility);
+      this.reviewAndUpdateEndpoint(
+        component,
+        shouldModifyEndpoint,
+        endpointVisibility
+      );
 
       this.verifyPromotionStatus();
 
@@ -352,19 +364,22 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
     private reviewAndUpdateEndpoint(
       component: Service,
+      shouldModifyEndpoint: boolean,
       endpointVisibility: EndpointAccessibility
     ) {
       cy.get(
         `[data-cyid="${component.getEndpointName()}-endpoint-accordion"]`
       ).should("be.visible");
 
-      cy.get(`[data-testid="${component.getEndpointName()}-edit-btn"]`)
-        .should("be.visible")
-        .click();
-      cy.get(TestIds.endpointVisibility(endpointVisibility))
-        .should("be.visible")
-        .click();
-      cy.get(TestIds.endpointSubmit).click();
+      if (shouldModifyEndpoint) {
+        cy.get(`[data-testid="${component.getEndpointName()}-edit-btn"]`)
+          .should("be.visible")
+          .click();
+        cy.get(TestIds.endpointVisibility(endpointVisibility))
+          .should("be.visible")
+          .click();
+        cy.get(TestIds.endpointSubmit).click();
+      }
 
       cyGet(TestIds.next).click();
     }

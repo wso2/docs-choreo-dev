@@ -42,17 +42,19 @@ export class Service extends mixinBuild(
     this._build(this);
   }
 
-  deployProjectLevelAccessibility() {
+  deployProjectLevelAccessibility(shouldModifyEndpoint: boolean = true) {
     this._deployService(
       this,
+      shouldModifyEndpoint,
       EndpointAccessibility.Project,
       createDefaultSteps(1)
     );
   }
 
-  deployPublicLevelAccessibility() {
+  deployPublicLevelAccessibility(shouldModifyEndpoint: boolean = true) {
     this._deployService(
       this,
+      shouldModifyEndpoint,
       EndpointAccessibility.Public,
       createDefaultSteps(1)
     );
@@ -62,12 +64,24 @@ export class Service extends mixinBuild(
     return this._testConsole(this, invokeInfo);
   }
 
-  promoteProjectLevelAccessibility() {
-    this._promoteService(this, EndpointAccessibility.Project);
+  promoteProjectLevelAccessibility(shouldModifyEndpoint: boolean = true) {
+    this._promoteService(
+      this,
+      shouldModifyEndpoint,
+      EndpointAccessibility.Project
+    );
   }
 
-  promotePublicLevelAccessibility(configSteps?: ConfigEntryStep[]) {
-    this._promoteService(this, EndpointAccessibility.Public, configSteps);
+  promotePublicLevelAccessibility(
+    configSteps?: ConfigEntryStep[],
+    shouldModifyEndpoint: boolean = true
+  ) {
+    this._promoteService(
+      this,
+      shouldModifyEndpoint,
+      EndpointAccessibility.Public,
+      configSteps
+    );
   }
 
   addVersion() {
