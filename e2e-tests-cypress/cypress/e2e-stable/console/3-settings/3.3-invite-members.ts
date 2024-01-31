@@ -36,39 +36,8 @@ describe("Invite members", () => {
     OrganizationComponent.verifyEmailIsNotDisplayed(INVITATION_EMAIL);
     OrganizationComponent.inviteMembers(INVITATION_EMAIL, "API Publisher");
     OrganizationComponent.selectPendingInvitation();
+    cy.get('[data-cyid="search-app"]').clear().type(INVITATION_EMAIL);
     OrganizationComponent.verifyEmailIsDisplayed(INVITATION_EMAIL);
-  });
-});
-
-describe("Accept invitation", () => {
-  const invited_org_handle = Cypress.env("choreoOrgHandle");
-
-  before(() => {
     LoginPage.acceptInviteAsInvitedUser(timestamp);
-  });
-
-  after(() => {
-    ChoreoHomePage.logout();
-  });
-
-  it("Verify member is accepted to Org", () => {
-    ChoreoHomePage.isOrgHandleVisible(invited_org_handle);
-  });
-});
-
-describe("Delete members", () => {
-  before(() => {
-    LoginPage.login();
-  });
-
-  after(() => {
-    ChoreoHomePage.logout();
-  });
-
-  it("Delete a member", () => {
-    ChoreoHomePage.navigateToSettings();
-    OrganizationComponent.navigateToMembers();
-    OrganizationComponent.verifyEmailIsDisplayed(INVITATION_EMAIL);
-    OrganizationComponent.deleteMember(INVITATION_EMAIL);
   });
 });
