@@ -12,6 +12,7 @@
  */
 
 import { Enums } from "../../../support/commons/enums";
+import { OK } from "../../../support/commons/http";
 import { createDefaultSteps } from "../../../support/commons/types";
 import { console } from "../../../support/console/console";
 import { Service } from "../../../support/console/entities/component/service-component";
@@ -68,7 +69,7 @@ describe("Verify MI service with endpoint.yaml functionality", () => {
       })
       .then((res) => {
         expect(res.response).to.include(MATCHING_STRING);
-        expect(res.statusCode).to.be.eq("200");
+        expect(res.statusCode).to.be.eq(OK.toString());
       });
   });
 
@@ -87,7 +88,7 @@ describe("Verify MI service with endpoint.yaml functionality", () => {
       })
       .then((res) => {
         expect(res.response).to.include(MATCHING_STRING);
-        expect(res.statusCode).to.be.eq("200");
+        expect(res.statusCode).to.be.eq(OK.toString());
       });
   });
 
