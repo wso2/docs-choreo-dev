@@ -496,6 +496,13 @@ eval
 evalsha
 fcall
 GitFlow
+yaml
+spec.inbound
+spec.outbound
+connectionConfig
+env
+env.from
+env.to
 
  - docs/references/upgrading-from-the-previous-version.md
 DefaultProject
