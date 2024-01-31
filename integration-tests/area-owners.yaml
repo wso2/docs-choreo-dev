@@ -1,0 +1,21 @@
+emailSubject: Integration Test Failed
+releaseOwners:
+  - amilam@wso2.com
+  - uvindra@wso2.com
+  - isurupi@wso2.com
+areaOwners:
+  - testClass: com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationEventComponent
+    assignees:
+      - chameerar@wso2.com
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationMICustomConfig
+    assignees:
+      - chameerar@wso2.com
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.integrationComponent.TestIntegrationMISecretAndCert
+    assignees:
+      - chameerar@wso2.com
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.deploy.AutoDeployOnCommit
+    assignees:
+      - asankaab@wso2.com
