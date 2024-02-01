@@ -25,11 +25,12 @@ To explore the various management models for private data planes, see [Private D
 
 Setting up the Choreo PDP system involves using a Helm installation on the Kubernetes infrastructure. 
 The following software components are installed during the helm execution:
-- Cilium CNI and service mesh.
-- Choreo API Gateways and related components.
-- Choreo PDP agent.
-- Observability and logging APIs, along with observability agents.
-- Flux controller.
+
+  - Cilium CNI and service mesh.
+  - Choreo API Gateways and related components.
+  - Choreo PDP agent.
+  - Observability and logging APIs, along with observability agents.
+  - Flux controller.
 
 All of these software components receive automatic updates, including security patches and bug fixes through the flux controller connected to the Choreo Update Management System. 
 
