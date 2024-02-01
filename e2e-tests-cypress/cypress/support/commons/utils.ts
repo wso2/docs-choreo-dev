@@ -104,8 +104,11 @@ export class Utils {
           if (asgardeoAcceptUrl) {
             cy.window().then((win) => {
               win.open(asgardeoAcceptUrl, "_blank");
+              cy.wait(2000); 
+              cy.window().then((newWin) => {
+                cy.wrap(newWin.document.body).should('not.contain', 'Registration failed');
+              });
             });
-            cy.get('body', { timeout: 10000 }).should('not.contain', 'Registration failed');
           } else {
             cy.log("Asgardeo redirect URL not found");
           }

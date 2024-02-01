@@ -28,8 +28,11 @@ describe("Invite members", () => {
     ChoreoHomePage.logout();
   });
 
-  it("Invite a member to users org", () => {
+  it("Delete existing invitation", () => {
     OrganizationComponent.deleteInvitation(INVITATION_EMAIL)
+  });
+
+  it("Invite a member to users org", () => {
     ChoreoHomePage.navigateToSettings();
     OrganizationComponent.verifyEmailIsNotDisplayed(INVITATION_EMAIL);
     OrganizationComponent.selectPendingInvitation();
@@ -38,6 +41,9 @@ describe("Invite members", () => {
     OrganizationComponent.selectPendingInvitation();
     cy.get('[data-cyid="search-app"]').clear().type(INVITATION_EMAIL);
     OrganizationComponent.verifyEmailIsDisplayed(INVITATION_EMAIL);
+  });
+
+  it("Accept the invitation and open Register page", () => {
     LoginPage.acceptInviteAsInvitedUser(timestamp);
   });
 });
