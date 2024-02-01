@@ -2,7 +2,7 @@
 
 Choreo supports various management models for private data planes (PDPs), fostering collaboration between WSO2 and customers across diverse scenarios. The following sections provide insights into WSO2's fully managed solutions and shared responsibility models, allowing you to make informed decisions regarding cloud-based operations and security.
 
-## WSO2 fully managed (infrastructure and PDP in WSO2 subscription) model:
+## WSO2 fully managed (infrastructure and PDP in WSO2 subscription) model
 
 WSO2 fully managed private data planes are supported only on Azure, AWS, and GCP cloud providers.
 
@@ -168,7 +168,7 @@ WSO2 fully managed private data planes are supported only on Azure, AWS, and GCP
 </tbody>
 </table> 
 
-## WSO2 fully managed (infrastructure and PDP in customer subscription) model:
+## WSO2 fully managed (infrastructure and PDP in customer subscription) model
 
 <table border=1>
 <thead>
