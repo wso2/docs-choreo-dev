@@ -40,6 +40,7 @@ describe("Verify manual trigger creation functionality", () => {
         branch: "main",
       })
       .then((comp: ManualTrigger) => {
+        project.visitComponent(comp.getName());
         component = comp;
       });
   });

@@ -54,6 +54,7 @@ describe("Verify Component visibility functionality", () => {
         ENDPOINT_NAME
       )
       .then((serviceComponent: Service) => {
+        project.visitComponent(serviceComponent.getName());
         service = serviceComponent;
       });
   });
@@ -81,6 +82,7 @@ describe("Verify Component visibility functionality", () => {
         branch: "main",
       })
       .then((comp: ManualTrigger) => {
+        project.visitComponent(comp.getName());
         trigger = comp;
       });
   });

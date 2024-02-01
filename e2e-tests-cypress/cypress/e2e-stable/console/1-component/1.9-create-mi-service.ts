@@ -44,6 +44,7 @@ describe("Verify MI service component functionality", () => {
         ENDPOINT_NAME
       )
       .then((miServiceComponent: Service) => {
+        project.visitComponent(miServiceComponent.getName());
         service = miServiceComponent;
       });
   });

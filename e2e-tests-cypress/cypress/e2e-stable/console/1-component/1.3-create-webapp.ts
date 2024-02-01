@@ -89,6 +89,7 @@ describe("Create Web App", () => {
     project
       .createWebAppComponent(Enums.Accessibility.EXTERNAL, repoInfo, webAppInfo)
       .then((app: WebApp) => {
+        project.visitComponent(app.getName());
         webApp = app;
       });
   });

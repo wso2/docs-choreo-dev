@@ -42,6 +42,7 @@ describe("Create Schedule Trigger", () => {
         branch: "main",
       })
       .then((comp: ScheduleTrigger) => {
+        project.visitComponent(comp.getName());
         component = comp;
       });
   });

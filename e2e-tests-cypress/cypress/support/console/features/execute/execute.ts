@@ -45,15 +45,23 @@ export function mixinExecute<T extends Types.Constructor>(
     }
 
     private executeManualTrigger(component: ManualTrigger) {
-      cy.get(TestIds.runNow).should("be.enabled").click();
+      let currentExecutionCount = 0;
       cy.get(TestIds.runNow).should("be.enabled");
+      cy.get(TestIds.executionCount, VERY_SHORT_TIME)
+        .then(($count) => {
+          currentExecutionCount = Number($count.text());
+        })
+        .then(() => {
+          cy.get(TestIds.runNow).should("be.enabled").click();
+          cy.get(TestIds.runNow).should("be.enabled");
+        });
 
       cy.contains(BUILD_QUEUED).should("not.exist");
 
       cy.get(TestIds.refreshTasks).should("be.visible").click();
 
       cy.get(TestIds.executionCount, VERY_SHORT_TIME).then(($count) => {
-        expect(Number($count.text())).gt(0);
+        expect(Number($count.text())).eq(currentExecutionCount + 1);
       });
     }
   };

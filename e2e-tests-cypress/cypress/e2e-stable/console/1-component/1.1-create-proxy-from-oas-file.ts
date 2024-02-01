@@ -44,6 +44,7 @@ describe("Create Proxy from OAS file", () => {
       .createProxyComponent({
         version: "1.0",
         oasFilePath: Filepath,
+        endpointUrl: "",
       })
       .then((comp) => {
         proxy = comp;
