@@ -32,4 +32,4 @@ message["To"] = recipient_email
 message["Cc"] = cc_recipient_email
 message["Subject"] = email_subject
 message.attach(MIMEText(msg, "html"))
-connection.sendmail(message["From"], message["To"], message.as_string())
+connection.sendmail(message["From"], [message["To"], message["Cc"]], message.as_string())
