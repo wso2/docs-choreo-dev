@@ -28,22 +28,7 @@ export class LoginPage {
   static password = "#password";
 
   static acceptInviteAsInvitedUser(timestamp: string) {
-    cy.intercept({
-      method: "POST",
-      url: GRAPHQL_URL,
-      times: 1,
-    }).as("token");
-
-    this.enterUserCredentials(
-      "choreoIDPInvitedUsername",
-      "choreoIDPInvitedPassword"
-    );
-    cy.wait("@token", MEDIUM_TIME).then((intercept) => {
-      const header = intercept.request.headers["authorization"] as string;
-      const token = header.replace("Bearer", "").trim();
-      Utils.acceptEmailInviteToOrg(token, timestamp);
-      cy.reload(); // Reload in order to get updated orgs
-    });
+    Utils.acceptEmailInviteToOrg(timestamp);
   }
 
   static login(doCleanup: boolean = false) {
