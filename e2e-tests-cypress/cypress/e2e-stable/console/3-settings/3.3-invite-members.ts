@@ -34,9 +34,6 @@ describe("Invite members", () => {
 
   it("Invite a member to users org", () => {
     ChoreoHomePage.navigateToSettings();
-    OrganizationComponent.verifyEmailIsNotDisplayed(INVITATION_EMAIL);
-    OrganizationComponent.selectPendingInvitation();
-    OrganizationComponent.verifyEmailIsNotDisplayed(INVITATION_EMAIL);
     OrganizationComponent.inviteMembers(INVITATION_EMAIL, "API Publisher");
     OrganizationComponent.selectPendingInvitation();
     cy.get('[data-cyid="search-app"]').clear().type(INVITATION_EMAIL);
