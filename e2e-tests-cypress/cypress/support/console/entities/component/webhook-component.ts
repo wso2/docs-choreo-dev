@@ -22,7 +22,6 @@ export class Webhook extends mixinBuild(
 ) {
   constructor(name: string) {
     super(name, "main");
-    this.visitComponent(name);
   }
 
   build() {

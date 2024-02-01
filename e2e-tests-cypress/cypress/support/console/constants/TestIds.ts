@@ -28,6 +28,15 @@ export namespace TestIds {
   export const projectPicker = '[data-testid="project-picker"]';
   export const createNew = '[data-cyid="btn-create-new"]';
   export const projectCard = '[data-cyid="create-project-card"]';
+  export const searchIcon = '[data-cyid="search-icon-icon-button"]';
+  export const projectSearch =
+    '[data-cyid="page-action-auto-forcused-search-search-field"]';
+  export const componentSearch =
+    '[data-cyid="tab-action-auto-forcused-search-search-field"]';
+  export const listing = '[data-cyid="listing"]';
+  export const componentFilter =
+    '[data-cyid="project-components-multi-select"]';
+  export const componentTable = '[data-cyid="component-table"]';
   export const next = '[data-cyid="btn-next-button"]';
   export const buildCard = '[data-cyid="default-build-card"]';
   export const devEnvCard = '[data-cyid="env-baseDevelopment-env-card"]';

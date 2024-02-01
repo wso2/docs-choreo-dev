@@ -46,6 +46,7 @@ describe("Verify Ballerina service functionality", () => {
         ENDPOINT_NAME
       )
       .then((serviceComponent: Service) => {
+        project.visitComponent(serviceComponent.getName());
         component = serviceComponent;
       });
   });

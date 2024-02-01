@@ -30,8 +30,6 @@ export class Service extends mixinBuild(
     super(name, "1.0");
 
     this.endpointName = endpointName;
-
-    this.visitComponent(name);
   }
 
   getEndpointName() {

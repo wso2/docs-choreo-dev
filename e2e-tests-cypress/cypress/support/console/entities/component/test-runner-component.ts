@@ -19,8 +19,6 @@ import { Component } from "./component";
 export class TestRunner extends mixinBuild(mixinServiceDeploy(Component)) {
   constructor(name: string) {
     super(name, "main");
-
-    this.visitComponent(name);
   }
 
   build() {

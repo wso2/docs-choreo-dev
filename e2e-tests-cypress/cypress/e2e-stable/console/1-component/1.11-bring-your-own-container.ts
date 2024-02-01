@@ -21,15 +21,13 @@ after(() => {
   console.logout();
 });
 
-
 describe(`Verify BYOC functionality`, () => {
   const PROJECT_DESCRIPTION = "BYOC component";
   const RESOURCE_NAME = "movies";
 
-
   let project: Project;
   let byoc: Byoc;
-  
+
   it("Login to Console", () => {
     console.login();
   });
@@ -52,10 +50,10 @@ describe(`Verify BYOC functionality`, () => {
         "byoc-test/oas.yaml"
       )
       .then((comp: Byoc) => {
+        project.visitComponent(comp.getName());
         byoc = comp;
       });
   });
-
 
   it("Build the Component", () => {
     byoc.build();
@@ -64,7 +62,7 @@ describe(`Verify BYOC functionality`, () => {
   it("Deploying to Dev", () => {
     byoc.deployToDev();
   });
-  
+
   it("Verify test functionality using Swagger UI in Dev", () => {
     byoc
       .testSwaggerConsole(Enums.Environment.DEVELOPMENT, RESOURCE_NAME)
@@ -84,7 +82,6 @@ describe(`Verify BYOC functionality`, () => {
         expect(res.status).equal(OK);
       });
   });
-
 
   it("Verify component promotion to Prod", () => {
     byoc.promoteProd();
@@ -115,4 +112,3 @@ describe(`Verify BYOC functionality`, () => {
     byoc.stopPromotion();
   });
 });
-

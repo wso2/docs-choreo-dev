@@ -288,29 +288,4 @@ export class Component {
       .should("be.visible")
       .wait(VERY_SHORT_TIME.timeout); // Wait for the latency stats to load
   }
-
-  visitComponent(name: string): string {
-    cy.get('[data-cyid="listing"]').should("be.visible").click();
-
-    cy.get('[data-cyid="project-components-multi-select"]').should(
-      "be.visible"
-    );
-
-    cy.get('[data-cyid="component-table"]')
-      .contains(name)
-      .should("be.visible")
-      .click();
-
-    cy.get('[data-cyid="home"]').should("be.visible");
-
-    cy.get('[id="backdrop-loader"]').should("not.exist");
-    cy.get("[data-cyid=create-time]").should("be.visible");
-    cy.log("Successfully visited to the component");
-
-    cy.url().then((url) => {
-      return url;
-    });
-
-    return "";
-  }
 }

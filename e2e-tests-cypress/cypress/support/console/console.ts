@@ -51,6 +51,25 @@ class Console {
     this._orgSettings.addUserStore(userStoreFile, env);
   }
 
+  searchProject(projectName: string): Project {
+    this.navigateToHome();
+    cy.get(TestIds.searchIcon).click();
+    cy.get(TestIds.projectSearch)
+      .should("be.visible")
+      .type(`${projectName}{enter}`);
+
+    let projectDescription = "";
+    cy.contains(projectName)
+      .next()
+      .then((description) => {
+        projectDescription = description.text();
+      });
+
+    cy.contains(projectName).click();
+    cy.get(TestIds.createComponent).should("be.visible");
+    return new Project(projectName, projectDescription, true);
+  }
+
   navigateToHome() {
     cy.get('[data-cyid="organization-home"]').click();
     cy.get(TestIds.projectCard).should("be.visible");

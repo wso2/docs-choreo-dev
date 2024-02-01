@@ -18,13 +18,11 @@ import { mixinServiceDeploy } from "../../features/deploy/deploy-service";
 import { mixinTestProxy } from "../../features/test/test-proxy";
 import { Component } from "./component";
 
-
-export class Byoc extends  mixinBuild(mixinTestProxy(mixinServiceDeploy(Component))) {
-  
+export class Byoc extends mixinBuild(
+  mixinTestProxy(mixinServiceDeploy(Component))
+) {
   constructor(name: string) {
     super(name, "main");
-
-    this.visitComponent(name);
   }
 
   build() {
@@ -35,14 +33,13 @@ export class Byoc extends  mixinBuild(mixinTestProxy(mixinServiceDeploy(Componen
     this._deployTask(this, createDefaultSteps(1));
   }
 
-
   testSwaggerConsole(
     environment: Enums.Environment,
     resource: string,
     key?: string,
     value?: string
   ) {
-    return this._testSwaggerConsole(this,environment, resource, key, value);
+    return this._testSwaggerConsole(this, environment, resource, key, value);
   }
 
   testCurl(
@@ -56,5 +53,4 @@ export class Byoc extends  mixinBuild(mixinTestProxy(mixinServiceDeploy(Componen
   promoteProd() {
     this._promoteTask(this, createDefaultSteps(2));
   }
-
 }
