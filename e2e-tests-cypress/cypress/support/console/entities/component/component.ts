@@ -135,11 +135,9 @@ export class Component {
     this.devPortalMenu.navigateToTryOut();
 
     if (application) {
-      cy.wait(3000)
-        .get(TestIds.applicationSelect)
-        .should("be.visible")
-        .click()
-        .wait(3000);
+      cy.wait(3000);
+      cy.get(TestIds.applicationSelect).scrollIntoView();
+      cy.get(TestIds.applicationSelect).should("be.visible").click().wait(3000);
       cy.get(TestIds.applicationSelectItem(application))
         .should("be.visible")
         .click();
