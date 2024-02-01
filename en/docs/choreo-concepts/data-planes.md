@@ -6,20 +6,17 @@ The data plane is the environment where user applications are deployed based on 
 
 Choreo's architecture features two distinct data plane types: cloud data planes and private data planes. A cloud data plane utilizes a multi-tenanted infrastructure model for deploying user applications, creating a shared yet secure environment for application runtime. In contrast, a private data plane(PDP) provides dedicated infrastructure for a single organization to run its user applications. This ensures an added layer of privacy and control for organizations with specific requirements.
 
-![Choreo high-level view](../assets/img/choreo-concepts/high-level-view.png){.cInlineImage-full}
-
+![Choreo high-level view](../assets/img/choreo-concepts/high-level-view.png)
 
 ## Private data planes
 
 ### Infrastructure
 
-Choreo private data planes can be deployed with almost all major cloud providers such as Azure, AWS, and GCP, and are also compatible with on-premises infrastructure. 
+Choreo private data planes can be deployed with almost all major cloud providers, such as Azure, AWS, and GCP, and are also compatible with on-premises infrastructure.
 
-To ensure a successful deployment, it is an essential requirement to have the latest version of Kubernetes clusters, container registries, key vaults, and a logging service or log storage.
+The essential requirements for a private data plane include upstream-compatible Kubernetes clusters, a container registry, a key vault (secret store), and a logging service or log storage.
 
 ![Private data plane architecture](../assets/img/choreo-concepts/private-data-plane-architecture.png)
-
-To explore the various management models for private data planes, see [Private Data Plane Management Models](../references/private-data-plane-management-models.md).
 
 ### System components
 
@@ -131,15 +128,25 @@ The following diagram depicts the architecture overview of Choreo's in-data-plan
 
 The private data plane observability architecture is centered around a strong commitment to data privacy and compliance. This is achieved through a strategic decision to retain logs and observability data within the data planes itself. Key aspects of this architecture include:
 
-- Data storage at source: Logs and observability data are stored within the data plane itself, enhancing security, simplifying access, and ensuring compliance.
-- Direct browser-to-data-plane interaction: The Choreo Console in the user's browser directly interacts with APIs in the data plane, reducing potential data routing complexities and ensuring a more secure, direct flow of information.
-- Reduced data exposure points: Fetching data directly from the data plane's APIs minimizes the number of data transfer points, effectively decreasing the chances of data exposure or interception.
-- Compliance with regulatory standards: The architecture supports data locality, aligning with global regulatory standards like GDPR and CCPA by keeping data in its original environment.
-- Improved performance and real-time insights: Direct interaction between the browser and data plane results in faster data retrieval, providing users with immediate insights.
-- User transparency and control: Users have a clear view of their data's location and access methods, alongside granular control over data access.
+- **Data storage at source**: Logs and observability data are stored within the data plane itself, enhancing security, simplifying access, and ensuring compliance.
+- **Direct browser-to-data-plane interaction**: The Choreo Console in the user's browser directly interacts with APIs in the data plane, reducing potential data routing complexities and ensuring a more secure, direct flow of information.
+- **Reduced data exposure points**: Fetching data directly from the data plane's APIs minimizes the number of data transfer points, effectively decreasing the chances of data exposure or interception.
+- **Compliance with regulatory standards**: The architecture supports data locality, aligning with global regulatory standards like GDPR and CCPA by keeping data in its original environment.
+- **Improved performance and real-time insights**: Direct interaction between the browser and data plane results in faster data retrieval, providing users with immediate insights.
+- **User transparency and control**: Users have a clear view of their data's location and access methods, alongside granular control over data access.
 
 ### Security
 
 The Choreo private data plane ensures extensive, production-grade security, ranging from infrastructure and architecture to zero-trust network security. All incoming traffic is protected by a firewall and must undergo authentication and authorization via the API Gateway. It also provides end-to-end network traffic encryption using Cilium transparent encryption, ensuring efficient data path encryption.
 
 For details on the private data plane security levels supported in Choreo pricing plans, see [Private Data Plane Security Levels](../references/private-data-plane-security-levels.md).
+
+### Management models
+
+Choreo supports the following management models for private data planes (PDPs), fostering collaboration between WSO2 and customers across diverse scenarios:
+
+  - WSO2 fully managed (infrastructure and PDP in WSO2 subscription) model
+  - WSO2 fully managed (infrastructure and PDP in customer subscription) model
+  - Customer self-managed (WSO2 provides installation script and updates) model
+
+To explore each management model in detail so that you can make informed decisions depending on the supported cloud-based operations and security, see [Private Data Plane Management Models](../references/private-data-plane-management-models.md).
