@@ -110,7 +110,7 @@ endpoints:
 The `component-config.yaml` file allows you to apply enhancements to component configurations.
 
 !!! note "Beta release"
-      - The current version of the `component-config.yaml` file is considered stable.However, it is important to note that the configuration schema may undergo changes and improvements based on user feedback. 
+      - The current version of the `component-config.yaml` file is considered stable. However, it is important to note that the configuration schema may undergo changes and improvements based on user feedback. 
       - Support for the current schema will remain even when new versions are introduced.
 
 The `component-config.yaml` file complements the `endpoints.yaml` file and allows you to define configurations for both inbound and outbound connections.
