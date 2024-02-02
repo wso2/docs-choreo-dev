@@ -14,15 +14,10 @@
 import {
   BUILD_FAILED,
   CONFIG_CONTENT,
-  CONFIG_FILE,
-  CONFIG_KEY,
-  CONFIG_VALUE,
   DEPLOYMENT_PENDING,
   DEPLOYMENT_PROGRESSING,
   DEPLOYMENT_SUCCESS,
-  MOUNT_PATH,
-  SECRET_KEY,
-  SECRET_VALUE,
+  
 } from "../../../commons/constants";
 import { cyGet } from "../../../commons/cy";
 import { LONG_TIME, MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
@@ -572,12 +567,6 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
         cy.get(TestIds.next, LONG_TIME).should("be.enabled").click();
         cy.get('[value="*/1 * * * *"]', LONG_TIME).eq(1).should("be.visible");
       }
-    }
-
-    private configByocComponentPromote() {
-      cy.get(TestIds.byocPromote).click();
-      cy.get(TestIds.next).click();
-     // this.configureByocComponent(true);
     }
 
     private configureWebApp(hasAuthSettings: boolean) {
