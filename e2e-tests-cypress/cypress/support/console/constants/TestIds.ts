@@ -225,4 +225,13 @@ export namespace TestIds {
   export const endpoint = '[data-cyid="text-field-endpoint"]';
   export const accessMode = '[data-testid="access-mode"]';
   export const warningBanner = '[data-testid="warning-banner"]';
+  export const addConfig = '[data-cyid="add-new-button"]';
+  export const addConfigKey = '[data-cyid="key-value-card-add-new-new-input-name"]';
+  export const addConfigValue = '[data-cyid="key-value-card-add-new-new-input-value"]';
+  export const configSave = '[data-cyid="key-value-save-button"]';
+  export const keyValueCheckBox= '[data-cyid="key-value-card-add-new-secret-checkbox-check-box"]';
+  export const nextButton = '[data-testid="btn-next"]';
+  export const fileMount = '[data-cyid="file-mount-upload-button"]';
+  export const byocPromote = '[data-cyid="promote-selector-default-configs"]';
+  
 }

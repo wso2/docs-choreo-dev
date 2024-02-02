@@ -14,9 +14,15 @@
 import {
   BUILD_FAILED,
   CONFIG_CONTENT,
+  CONFIG_FILE,
+  CONFIG_KEY,
+  CONFIG_VALUE,
   DEPLOYMENT_PENDING,
   DEPLOYMENT_PROGRESSING,
   DEPLOYMENT_SUCCESS,
+  MOUNT_PATH,
+  SECRET_KEY,
+  SECRET_VALUE,
 } from "../../../commons/constants";
 import { cyGet } from "../../../commons/cy";
 import { LONG_TIME, MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
@@ -51,7 +57,7 @@ export interface DeployServiceFeature {
 
   _deployWebapp(component: WebApp, hasAuthSettings: boolean);
 
-  _deployWebhook(component: Webhook, configStepsAvailable?: ConfigEntryStep[]);
+  _deployWebhook(component: Webhook | Byoc, configStepsAvailable?: ConfigEntryStep[]);
 
   _promoteService(
     component: Service,
@@ -70,6 +76,8 @@ export interface DeployServiceFeature {
     hasAuthSettings: boolean,
     configStepsAvailable?: ConfigEntryStep[]
   );
+
+  _promoteBYOC(component: Byoc, configStepsAvailable?: ConfigEntryStep[]);
 
   _promoteWebhook(component: Webhook, configStepsAvailable?: ConfigEntryStep[]);
 }
@@ -117,15 +125,12 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       configStepsAvailable?: ConfigEntryStep[]
     ) {
       this.sideMenu.navigateToDeploy();
-
       this.waitTillReadyToDeploy();
-
       this.startDeployment(component);
-
       this.stepThroughConfigSteps(component, configStepsAvailable);
-
       this.verifyTaskDeploymentStatus();
     }
+
 
     _deployWebapp(component: WebApp, hasAuthSettings: boolean) {
       this.sideMenu.navigateToDeploy();
@@ -142,7 +147,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     }
 
     _deployWebhook(
-      component: Webhook,
+      component: Webhook | Byoc,
       configStepsAvailable?: ConfigEntryStep[]
     ) {
       this.sideMenu.navigateToDeploy();
@@ -155,7 +160,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     //Promotion methods start here
 
     _promoteWebhook(
-      component: Webhook,
+      component: Webhook ,
       configStepsAvailable?: ConfigEntryStep[]
     ) {
       this.sideMenu.navigateToDeploy();
@@ -222,6 +227,13 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.verifyPromotionStatus();
 
       this.storeProdWebAppUrl(component);
+    }
+
+    _promoteBYOC(component: Byoc , configStepsAvailable?: ConfigEntryStep[]) {
+      this.sideMenu.navigateToDeploy();
+      this.startPromotion(component);
+      this.stepThroughConfigSteps(component, configStepsAvailable);
+      this.verifyPromotionStatus();
     }
 
     _addNewVersion(component: Service, branch: string, version: string) {
@@ -307,7 +319,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     }
 
     private startDeployment(
-      component: Service | ManualTrigger | ScheduleTrigger | TestRunner | WebApp
+      component: Service | ManualTrigger | ScheduleTrigger | TestRunner | WebApp  | Byoc
     ) {
       this.deploymentTrack.validate(component);
 
@@ -318,7 +330,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       cyGet(TestIds.executeDeploy, MEDIUM_TIME).should("be.enabled").click();
     }
 
-    private startWebhookDeployment(component: Webhook) {
+    private startWebhookDeployment(component: Webhook | Byoc) {
       cyGet(TestIds.deploySplitToggle, MEDIUM_TIME)
         .should("be.enabled")
         .click();
@@ -326,7 +338,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       cyGet(TestIds.executeDeploy, MEDIUM_TIME).should("be.enabled").click();
     }
 
-    private webhookPromotion(component: Webhook) {
+    private webhookPromotion(component: Webhook | Byoc) {
       cy.wait(3000);
       cyGet(TestIds.promote, MEDIUM_TIME).should("be.enabled").click();
       cy.get(TestIds.next).should("be.visible").click();
@@ -560,6 +572,12 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
         cy.get(TestIds.next, LONG_TIME).should("be.enabled").click();
         cy.get('[value="*/1 * * * *"]', LONG_TIME).eq(1).should("be.visible");
       }
+    }
+
+    private configByocComponentPromote() {
+      cy.get(TestIds.byocPromote).click();
+      cy.get(TestIds.next).click();
+     // this.configureByocComponent(true);
     }
 
     private configureWebApp(hasAuthSettings: boolean) {

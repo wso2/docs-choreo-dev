@@ -12,148 +12,143 @@
  */
 
 import { Enums } from "../../../support/commons/enums";
-import { Utils } from "../../../support/commons/utils";
-import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
-import { GraphQL } from "../../../support/console/apis/graphql";
-import { ComponentBuild } from "../../../support/console/pages/component/Functionalities/Component-build";
-import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
-import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
-import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
-import { LoginPage } from "../../../support/console/pages/login-page";
-import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { GitHub } from "../../../support/github/github";
-import { ByocComponent } from "../../../support/interfaces/byoc-component";
+import { Project } from "../../../support/console/entities/project/project";
+import { console } from "../../../support/console/console";
+import { Byoc } from "../../../support/console/entities/component/byoc-component";
+import { OK } from "../../../support/commons/http";
+import { ConfigEntryStep } from "../../../support/commons/types";
+import { TestIds } from "../../../support/console/constants/TestIds";
 
-before(() => {
-  LoginPage.login();
-});
 
 after(() => {
-  ChoreoHomePage.logout();
+  console.logout();
 });
 
 describe("Verify containerized service functionality", () => {
-  const COMPONENT_NAME = Utils.generateComponentName("containerized-service");
-  const PROJECT_NAME = Utils.generateProjectName();
-  const PROJECT_DESCRIPTION = "sample containerized service scenario";
-  const REPO_NAME = Utils.generateComponentName("repo");
+
+  const PROJECT_DESCRIPTION = "Containerized service scenario";
   const ENDPOINT_NAME = "Go Greeter";
+  const CONFIG_KEY = "config";
+  const CONFIG_VALUE = "config-value";
+  const SECRET_KEY = "secret";
+  const SECRET_VALUE = "secret-value";
+  const MOUNT_PATH = "/app/configs/config.json";
+  const CONFIG_FILE = '{\n\t"name": "testUser"';
+
+  let project: Project;
+  let byoc: Byoc;
+
+  function addConfiguration() {
+    cy.get(TestIds.addConfig).click();
+    cy.wait(1000);
+    cy.log(`Typing CONFIG_KEY: ${CONFIG_KEY}`);
+    cy.get(TestIds.addConfigKey).should('be.visible').type(CONFIG_KEY);
+    cy.get(TestIds.addConfigValue).should('be.visible').type(CONFIG_VALUE);
+    cy.get(TestIds.configSave).click();
+    cy.get(TestIds.addConfig).click();
+    cy.get(TestIds.addConfigKey).type(SECRET_KEY);
+    cy.get(TestIds.addConfigValue).type(SECRET_VALUE);
+    cy.get(TestIds.keyValueCheckBox).click();
+    cy.get(TestIds.configSave).click();
+    cy.get(TestIds.nextButton).click();
+    cy.get(TestIds.fileMount).click();
+    cy.get(TestIds.mountPath).type(MOUNT_PATH);
+    cy.get(TestIds.formConfigField).type(CONFIG_FILE);
+    cy.get(TestIds.nextButton).click();
+    cy.get(TestIds.next).should("be.visible").click();
+  }
+
+  function addConfigurationProd() {
+      cy.get(TestIds.byocPromote).click();
+      cy.get(TestIds.next).should("be.visible").click();
+      addConfiguration();
+  }
+  
+  it("Login to Console", () => {
+    console.login();
+  });
 
   it("Creating a project", () => {
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+    project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
   it("Verify containerized service component creation", () => {
-    let componentData: ByocComponent = {
-      name: COMPONENT_NAME,
-      displayName: COMPONENT_NAME,
-      accessibility: Enums.Accessibility.EXTERNAL,
-      componentType: Enums.DisplayType.byocService,
-      description: "Containerized Service Component",
-      labels: "",
-      oasFilePath: "",
-      port: 80,
-      projectId: "",
-      byocConfig: {
-        dockerfilePath: "Dockerfile",
-        dockerContext: "",
-        srcGitRepoUrl: "https://github.com/choreo-test-apps/byoc-service-app",
-        srcGitRepoBranch: "main",
-      },
-    };
-
-    GraphQL.createComponent(
-      PROJECT_NAME,
-      REPO_NAME,
-      componentData,
-      GraphQLQueryBuilder.getBYOCComponentCreationQuery
-    );
+    project
+      .createByocServiceComponent(
+        {
+          url: "https://github.com/choreo-test-apps/byoc-service-app",
+          branch: "main",
+        },
+        {
+          dockerfilePath: "Dockerfile",
+          dockerContext: "",
+        },
+        ""
+      )
+      .then((comp: Byoc) => {
+        byoc = comp;
+      });
   });
 
-  it("Build component", () => {
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-    if (Utils.isBuildDeployEnabled()) {
-      ComponentOverviewPage.navigateToBuild();
-      ComponentBuild.buildComponent();
-    }
-    ComponentOverviewPage.navigateToDeploy();
+  it("Build the Component", () => {
+    byoc.build();
   });
 
-  it("Verify component deployment with public level endpoint", () => {
-    ComponentDeployPage.deployService(
-      PROJECT_NAME,
-      COMPONENT_NAME,
-      ENDPOINT_NAME,
-      false,
-      false,
-      true
-    );
+  it("Deploying to Dev with public level endpoint", () => {
+    byoc.deployToDevWithConfigs([new ConfigEntryStep(addConfiguration)]);
+
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testManagedEndpoint(
-      Enums.Environment.DEVELOPMENT,
-      ENDPOINT_NAME,
-      "greeter/greet",
-      "",
-      "operations-greeting-get_greeter_greet"
-    ).then((res) => {
+    byoc
+      .testConsole({
+        env: Enums.Environment.DEVELOPMENT,
+        endpoint: ENDPOINT_NAME,
+        resourcePath: "greeter/greet",
+        method: "",
+        parentComponentId: "operations-greeting-get_greeter_greet",
+      })
+   .then((res) => {
       expect(res.response).to.be.eq("Hello, Stranger!\n\n");
-      expect(res.statusCode).to.be.eq("200");
+      expect(res.statusCode).to.be.equal(OK.toString());
     });
   });
 
-  it("Verify component promote to prod", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteService(ENDPOINT_NAME, false, 0, false, true);
-  });
+it("Verify component promotion to Prod", () => {
+  byoc.promoteWithConfigs([new ConfigEntryStep(addConfigurationProd)]);
+});
 
   it("Verify test functionality of root resource in prod on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testManagedEndpoint(
-      Enums.Environment.PRODUCTION,
-      ENDPOINT_NAME,
-      "greeter/greet",
-      "",
-      "operations-greeting-get_greeter_greet"
-    ).then((res) => {
+    byoc
+      .testConsole({
+        env: Enums.Environment.PRODUCTION,
+        endpoint: ENDPOINT_NAME,
+        resourcePath: "greeter/greet",
+        method: "",
+        parentComponentId: "operations-greeting-get_greeter_greet",
+      })
+   .then((res) => {
       expect(res.response).to.be.eq("Hello, Stranger!\n\n");
-      expect(res.statusCode).to.be.eq("200");
+      expect(res.statusCode).to.be.equal(OK.toString());
     });
   });
 
-  it("Navigate to component usage insights", () => {
-    ChoreoHomePage.navigateToComponentUsageInsights();
+  it("Stop component deployments", () => {
+    byoc.stopDeployment();
+    byoc.stopPromotion();
   });
 
-  it("Navigate to project usage insights", () => {
-    ChoreoHomePage.navigateToProjectUsageInsights();
+  it("Verifying component insights", () => {
+    byoc.verifyUsageInsights();
   });
 
   it("Verify API insights for dev env", () => {
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
-    InsightsPage.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(1);
-    });
+    project.verifyUsageInsights(Enums.Environment.DEVELOPMENT, { expectedTraffic: 1 });
   });
 
   it("Verify API insights for prod env", () => {
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
-    InsightsPage.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(1);
-    });
+    project.verifyUsageInsights(Enums.Environment.PRODUCTION, { expectedTraffic: 1 });
   });
 
-  it("Verify suspending all component deployments", () => {
-    ChoreoHomePage.navigateToComponents();
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
-  });
 });
+

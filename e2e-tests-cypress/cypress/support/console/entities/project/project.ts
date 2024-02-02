@@ -415,13 +415,43 @@ createByocComponent(repoInfo: RepoInfo, byocInfo: ByocInfo, oasFilePath: string)
   });
 }
 
-  verifyUsageInsights(env: Enums.Environment) {
-    this.selectEnvironment(env);
-    this.selectTimePeriod();
-    this.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(2);
-    });
-  }
+createByocServiceComponent(repoInfo: RepoInfo, byocInfo: ByocInfo, oasFilePath: string) {
+  const componentName = Utils.generateComponentName();
+  let componentData: ByocComponent = {
+    name: componentName,
+    displayName: componentName,
+    accessibility: Enums.Accessibility.EXTERNAL,
+    componentType: Enums.DisplayType.byocService,
+    description: "Containerized Service Component",
+    labels: "",
+    projectId: "",
+    oasFilePath: oasFilePath,
+    port: 80,
+    byocConfig: {
+      srcGitRepoUrl: repoInfo.url,
+      srcGitRepoBranch: repoInfo.branch,
+      dockerfilePath: byocInfo.dockerfilePath,
+      dockerContext: byocInfo.dockerContext,
+    },
+  };
+
+  return GraphQL.createComponentV2(
+    this.name,
+    "",
+    componentData,
+    GraphQLQueryBuilder.getBYOCComponentCreationQuery
+  ).then(() => {
+    return Promise.resolve(new Byoc(componentName));
+  });
+}
+
+verifyUsageInsights(env: Enums.Environment, options?: { expectedTraffic: number }) {
+  this.selectEnvironment(env);
+  this.selectTimePeriod();
+  this.getTotalTraffic().should((value) => {
+    expect(Number(value)).gte(options?.expectedTraffic || 2); 
+  });
+}
 
   private createComponentIfEmptyProject() {
     cy.get(TestIds.backdropLoader, VERY_SHORT_TIME).should("not.exist");

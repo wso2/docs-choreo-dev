@@ -17,6 +17,8 @@ import { Service } from "../../entities/component/service-component";
 import { DeploymentTrack } from "../deployment-track/deployment-track";
 import { Types } from "../../../commons/types";
 import { Enums } from "../../../commons/enums";
+import { ByocComponent } from "../../../interfaces/choreo-components/byoc-component";
+import { Byoc } from "../../entities/component/byoc-component";
 
 export interface InvokeInfo {
   env: Enums.Environment;
@@ -29,7 +31,7 @@ export interface InvokeInfo {
 }
 
 export interface TestServiceFeature {
-  _testConsole(component: Service, invokeInfo: InvokeInfo);
+  _testConsole(component: Service | Byoc , invokeInfo: InvokeInfo);
 }
 
 export function mixinTestService<T extends Types.Constructor>(
