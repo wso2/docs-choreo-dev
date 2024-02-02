@@ -46,7 +46,8 @@ def send_email():
             message["Subject"] = email_subject
             message.attach(MIMEText(msg, "html"))
 
-            senderrs = connection.sendmail(message["From"], [message["To"], message["Cc"]], message.as_string())
+            senderrs = connection.sendmail(message["From"], message["To"].split(",") + message["Cc"].split(","),
+                                           message.as_string())
 
             if senderrs:
                 logging.error(f"Failed to send email. Errors: {senderrs}")
