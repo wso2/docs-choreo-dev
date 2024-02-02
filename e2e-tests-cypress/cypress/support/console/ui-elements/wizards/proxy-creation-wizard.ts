@@ -26,16 +26,31 @@ export class _ProxyCreationWizard {
     cy.get(TestIds.next).should("be.visible").click();
   }
 
-  enterProxyDetails(name: string, basePath: string, proxyInfo: ProxyInfo) {
+  enterProxyDetails(
+    name: string,
+    basePath: string,
+    proxyInfo: ProxyInfo
+  ): string {
     cy.get(TestIds.apiName).within(() => cy.get("input").clear().type(name));
     cy.get(TestIds.apiVersion).clear().type(proxyInfo.version);
     cy.get(TestIds.apiBasePath).within(() =>
       cy.get("input").clear().type(basePath)
     );
 
-    if (proxyInfo.endpointUrl !== undefined) {
+    let endpointUrl: string | undefined;
+
+    if (proxyInfo.endpointUrl !== "") {
       cy.get(TestIds.apiEndpoint).within(() =>
         cy.get("input").clear().type(proxyInfo.endpointUrl)
+      );
+    } else {
+      cy.get(TestIds.apiEndpoint).within(() =>
+        cy
+          .get("input")
+          .invoke("val")
+          .then((val) => {
+            endpointUrl = val?.toString();
+          })
       );
     }
 
@@ -46,5 +61,11 @@ export class _ProxyCreationWizard {
 
     cy.get(TestIds.backdropLoader).should("not.exist");
     cy.get(TestIds.createTime).should("be.visible");
+
+    if (endpointUrl !== undefined) {
+      return endpointUrl;
+    }
+
+    return proxyInfo.endpointUrl;
   }
 }

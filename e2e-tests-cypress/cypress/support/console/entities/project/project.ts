@@ -81,11 +81,17 @@ export class Project {
 
   private proxyCreationWizard = new _ProxyCreationWizard();
 
-  constructor(name: string, description: string) {
+  constructor(
+    name: string,
+    description: string,
+    isProjectExists: boolean = false
+  ) {
     this.name = name;
     this.description = description;
 
-    this.createProject();
+    if (!isProjectExists) {
+      this.createProject();
+    }
   }
 
   private createProject() {
@@ -137,6 +143,53 @@ export class Project {
         this.getCreateNewProjectPopUp(retryCount);
       }
     });
+  }
+
+  isComponentExists(name: string) {
+    this.goToComponentListing();
+
+    let isExists = false;
+
+    return cy
+      .get(TestIds.componentTable)
+      .find("tbody")
+      .find("tr")
+      .each((row) => {
+        cy.wrap(row).within(() => {
+          cy.get("td")
+            .eq(0)
+            .then((td) => {
+              cy.wrap(td.find("div").first())
+                .invoke("attr", "title")
+                .then((title) => {
+                  if (title === name) {
+                    isExists = true;
+                  }
+                });
+            });
+        });
+      })
+      .then(() => {
+        return cy.wrap(isExists);
+      });
+  }
+
+  visitComponent(name: string): string {
+    this.goToComponentListing();
+
+    cy.get(TestIds.componentTable).contains(name).should("be.visible").click();
+
+    cy.get('[data-cyid="home"]').should("be.visible");
+
+    cy.get('[id="backdrop-loader"]').should("not.exist");
+    cy.get("[data-cyid=create-time]").should("be.visible");
+    cy.log("Successfully visited to the component");
+
+    cy.url().then((url) => {
+      return url;
+    });
+
+    return "";
   }
 
   createServiceComponent(
@@ -221,14 +274,18 @@ export class Project {
 
     const proxyName = Utils.generateComponentName("oas");
     const basePath = Utils.generateBasePath();
-    this.proxyCreationWizard.enterProxyDetails(proxyName, basePath, proxyInfo);
+    const proxyEndpointUrl = this.proxyCreationWizard.enterProxyDetails(
+      proxyName,
+      basePath,
+      proxyInfo
+    );
 
     return cy.url().then((url) => {
       return new Proxy(
         proxyName,
         proxyInfo.version,
         basePath,
-        proxyInfo.endpointUrl,
+        proxyEndpointUrl,
         url
       );
     });
@@ -236,9 +293,12 @@ export class Project {
 
   createManualTriggerComponent(
     accessibility: Enums.Accessibility,
-    repoInfo: RepoInfo
+    repoInfo: RepoInfo,
+    componentName?: string
   ) {
-    const componentName = Utils.generateComponentName();
+    if (componentName === undefined) {
+      componentName = Utils.generateComponentName();
+    }
     let componentData: ComponentData = {
       componentName: componentName,
       displayType: Enums.DisplayType.manualTrigger,
@@ -384,36 +444,39 @@ export class Project {
     });
   }
 
+  createByocComponent(
+    repoInfo: RepoInfo,
+    byocInfo: ByocInfo,
+    oasFilePath: string
+  ) {
+    const componentName = Utils.generateComponentName();
+    let componentData: ByocComponent = {
+      name: componentName,
+      displayName: componentName,
+      accessibility: Enums.Accessibility.EXTERNAL,
+      componentType: Enums.DisplayType.byocRestApi,
+      description: "BYOC Component",
+      labels: "",
+      projectId: "",
+      oasFilePath: oasFilePath,
+      port: 8080,
+      byocConfig: {
+        srcGitRepoUrl: repoInfo.url,
+        srcGitRepoBranch: repoInfo.branch,
+        dockerfilePath: byocInfo.dockerfilePath,
+        dockerContext: byocInfo.dockerContext,
+      },
+    };
 
-createByocComponent(repoInfo: RepoInfo, byocInfo: ByocInfo, oasFilePath: string) {
-  const componentName = Utils.generateComponentName();
-  let componentData: ByocComponent = {
-    name: componentName,
-    displayName: componentName,
-    accessibility: Enums.Accessibility.EXTERNAL,
-    componentType: Enums.DisplayType.byocRestApi,
-    description: "BYOC Component",
-    labels: "",
-    projectId: "",
-    oasFilePath: oasFilePath,
-    port: 8080,
-    byocConfig: {
-      srcGitRepoUrl: repoInfo.url,
-      srcGitRepoBranch: repoInfo.branch,
-      dockerfilePath: byocInfo.dockerfilePath,
-      dockerContext: byocInfo.dockerContext,
-    },
-  };
-
-  return GraphQL.createComponentV2(
-    this.name,
-    "",
-    componentData,
-    GraphQLQueryBuilder.getBYOCComponentCreationQuery
-  ).then(() => {
-    return Promise.resolve(new Byoc(componentName));
-  });
-}
+    return GraphQL.createComponentV2(
+      this.name,
+      "",
+      componentData,
+      GraphQLQueryBuilder.getBYOCComponentCreationQuery
+    ).then(() => {
+      return Promise.resolve(new Byoc(componentName));
+    });
+  }
 
 createByocServiceComponent(repoInfo: RepoInfo, byocInfo: ByocInfo, oasFilePath: string) {
   const componentName = Utils.generateComponentName();
@@ -452,6 +515,12 @@ verifyUsageInsights(env: Enums.Environment, options?: { expectedTraffic: number 
     expect(Number(value)).gte(options?.expectedTraffic || 2); 
   });
 }
+
+  private goToComponentListing() {
+    cy.get(TestIds.listing).should("be.visible").click();
+
+    cy.get(TestIds.componentFilter).should("be.visible");
+  }
 
   private createComponentIfEmptyProject() {
     cy.get(TestIds.backdropLoader, VERY_SHORT_TIME).should("not.exist");

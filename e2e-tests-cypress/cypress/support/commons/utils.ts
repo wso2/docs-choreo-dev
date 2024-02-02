@@ -28,6 +28,7 @@ export class Utils {
   static APP_SVC_URL = Cypress.env("appSvcURL");
   static ORG_NAME = Cypress.env("choreoOrgHandle");
   static MAIL_READER_SVC_URL = Cypress.env("mailReaderSvcURL");
+  static ASGARDEO_MAIL_SENDER = Cypress.env("asgardeoMailSender");
   static MAIL_READER_CLIENT_ID = Cypress.env("mailReaderClientId");
   static MAIL_READER_CLIENT_SECRET = Cypress.env("mailReaderClientSecret");
   static MAIL_READER_TOKEN_URL = Cypress.env("mailReaderTokenURL");
@@ -69,7 +70,6 @@ export class Utils {
   }
 
   static acceptEmailInviteToOrg(
-    token: string,
     timestamp: string,
     retryCount = 0
   ) {
@@ -86,45 +86,36 @@ export class Utils {
       { grant_type: "client_credentials" }
     ).then((res) => {
       const accessToken = res.body.access_token;
-      this.sendGetRequest(Utils.MAIL_READER_SVC_URL + timestamp, {
+      this.sendGetRequest(Utils.MAIL_READER_SVC_URL + timestamp + "&senderEmail=" + Utils.ASGARDEO_MAIL_SENDER, {
         Authorization: `Bearer ${accessToken}`,
       }).then((res) => {
         if (res.status == 200 && res.body != "") {
           const rawMailContent = res.body;
-          //const decodedMail = atob(rawMailContent);
           const decodedMail = window.atob(rawMailContent);
           console.log(rawMailContent);
 
-          const socRegEx = /^<!DOCTYPE html PUBLIC /im;
-          const bodyPos = decodedMail.indexOf(
-            socRegEx.exec(decodedMail) as unknown as string
-          );
-          let bodyLines = decodedMail.substring(bodyPos);
-          bodyLines = bodyLines.replace(/\r?\n?[^\r\n]*$/, "");
-          bodyLines = bodyLines.replace(/\r?\n?[^\r\n]*$/, "");
-          const invitationId =
-            /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/.exec(
-              bodyLines
-            )[0];
+          const asgardeocUrlRegex =
+            /https:\/\/[a-zA-Z0-9.-]+\/invite-user-register\?email=[^'"]+/im;
+          const match = asgardeocUrlRegex.exec(decodedMail);
+          const asgardeoAcceptUrl = match
+            ? match[0].replace(/&amp;/g, "&")
+            : null;
 
-          const header = {
-            Authorization: `Bearer ${token}`,
-            "content-type": "application/json",
-          };
-          this.sendPostRequest(
-            `${Utils.NEW_APP_SVC_URL}/user-mgt/1.0.0/orgs/${Utils.ORG_NAME}/invitations/${invitationId}`,
-            header,
-            {}
-          ).then((resp) => {
-            cy.log(`Org invite accept response status: ${resp.status}`);
-            cy.log(
-              `Org invite accept response body: ${JSON.stringify(resp.body)}`
-            );
-          });
+          if (asgardeoAcceptUrl) {
+            cy.window().then((win) => {
+              win.open(asgardeoAcceptUrl, "_blank");
+              cy.wait(2000); 
+              cy.window().then((newWin) => {
+                cy.wrap(newWin.document.body).should('not.contain', 'Registration failed');
+              });
+            });
+          } else {
+            cy.log("Asgardeo redirect URL not found");
+          }
         } else {
           cy.log(`Error while reading email: ${res.status}`);
           retryCount++;
-          this.acceptEmailInviteToOrg(token, timestamp, retryCount);
+          this.acceptEmailInviteToOrg(timestamp, retryCount);
         }
       });
     });

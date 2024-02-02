@@ -22,8 +22,6 @@ export class WebApp extends mixinBuild(mixinServiceDeploy(Component)) {
 
   constructor(name: string) {
     super(name, "main");
-
-    this.visitComponent(name);
   }
 
   setDevWebAppUrl(url: string) {

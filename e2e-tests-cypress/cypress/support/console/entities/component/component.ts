@@ -135,11 +135,9 @@ export class Component {
     this.devPortalMenu.navigateToTryOut();
 
     if (application) {
-      cy.wait(3000)
-        .get(TestIds.applicationSelect)
-        .should("be.visible")
-        .click()
-        .wait(3000);
+      cy.wait(3000);
+      cy.get(TestIds.applicationSelect).scrollIntoView();
+      cy.get(TestIds.applicationSelect).should("be.visible").click().wait(3000);
       cy.get(TestIds.applicationSelectItem(application))
         .should("be.visible")
         .click();
@@ -287,30 +285,5 @@ export class Component {
     cy.contains("Latency", SHORT_TIME)
       .should("be.visible")
       .wait(VERY_SHORT_TIME.timeout); // Wait for the latency stats to load
-  }
-
-  visitComponent(name: string): string {
-    cy.get('[data-cyid="listing"]').should("be.visible").click();
-
-    cy.get('[data-cyid="project-components-multi-select"]').should(
-      "be.visible"
-    );
-
-    cy.get('[data-cyid="component-table"]')
-      .contains(name)
-      .should("be.visible")
-      .click();
-
-    cy.get('[data-cyid="home"]').should("be.visible");
-
-    cy.get('[id="backdrop-loader"]').should("not.exist");
-    cy.get("[data-cyid=create-time]").should("be.visible");
-    cy.log("Successfully visited to the component");
-
-    cy.url().then((url) => {
-      return url;
-    });
-
-    return "";
   }
 }

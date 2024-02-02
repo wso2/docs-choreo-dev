@@ -24,8 +24,6 @@ export class Byoc extends mixinBuild(mixinTestProxy(mixinServiceDeploy(mixinTest
   
   constructor(name: string) {
     super(name, "main");
-
-    this.visitComponent(name);
   }
 
   build() {
@@ -47,7 +45,7 @@ this._deployWebhook(this, configs);
     key?: string,
     value?: string
   ) {
-    return this._testSwaggerConsole(this,environment, resource, key, value);
+    return this._testSwaggerConsole(this, environment, resource, key, value);
   }
 
   testCurl(

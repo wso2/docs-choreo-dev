@@ -959,7 +959,7 @@ ALTER TABLE [dbo].[group] ADD  DEFAULT (getdate()) FOR [created_at]
     GO
 ALTER TABLE [dbo].[group] ADD  DEFAULT (getdate()) FOR [updated_at]
     GO
-ALTER TABLE [dbo].[group] ADD uuid nvarchar(255) DEFAULT LOWER(newid()) NOT null
+ALTER TABLE [dbo].[group] ADD uuid nvarchar(255) DEFAULT LOWER(newid()) NOT null UNIQUE
     GO
 ALTER TABLE [dbo].[group_member_mapping] ADD  DEFAULT (getdate()) FOR [created_at]
     GO
@@ -1017,7 +1017,7 @@ ALTER TABLE [dbo].[role] ADD  DEFAULT (getdate()) FOR [created_at]
     GO
 ALTER TABLE [dbo].[role] ADD  DEFAULT (getdate()) FOR [updated_at]
     GO
-ALTER TABLE [dbo].[role] ADD uuid nvarchar(255) DEFAULT LOWER(newid()) NOT null
+ALTER TABLE [dbo].[role] ADD uuid nvarchar(255) DEFAULT LOWER(newid()) NOT null UNIQUE
     GO
 ALTER TABLE [dbo].[support_user_creation_status] ADD  DEFAULT (N'incomplete') FOR [status]
     GO
@@ -1881,6 +1881,39 @@ CREATE TABLE [dbo].[suspended_members]
     PRIMARY KEY (id),
     CONSTRAINT unique_suspended_members UNIQUE(user_idp_id, organization_uuid)
 )
+
+CREATE TABLE [dbo].[enterprise_group_mapping]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    enterprise_group_name [nvarchar](255) NOT NULL,
+    choreo_group_uuid [nvarchar](255) NOT NULL,
+    [organization_id] [int] NOT NULL,
+    [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT unique_enterprise_group_mapping UNIQUE(user_idp_id, organization_uuid)
+    CONSTRAINT [enterprise_group_mapping$group_uuid_fk] FOREIGN KEY (choreo_group_uuid) REFERENCES [group](uuid) ON DELETE CASCADE
+)
+
+/****** Object:  Trigger [dbo].[enterprise_group_mapping_UpdateTimeTrigger] ******/
+SET ANSI_NULLS ON
+    GO
+SET QUOTED_IDENTIFIER ON
+    GO
+
+CREATE TRIGGER [dbo].[enterprise_group_mapping_UpdateTimeTrigger] ON [dbo].[enterprise_group_mapping]
+    FOR INSERT, UPDATE AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE tble
+    SET updated_at = GETDATE()
+    FROM [enterprise_group_mapping] AS tble
+    INNER JOIN inserted AS i
+    ON tble.id = i.id;
+END
+GO
+ALTER TABLE [dbo].[enterprise_group_mapping] ENABLE TRIGGER [enterprise_group_mapping_UpdateTimeTrigger]
+    GO
 
 /****** Object:  Trigger [dbo].[global_configuration_UpdateTimeTrigger] ******/
 SET ANSI_NULLS ON

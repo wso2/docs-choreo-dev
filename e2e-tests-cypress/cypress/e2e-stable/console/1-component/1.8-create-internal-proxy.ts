@@ -181,7 +181,7 @@ describe(`Verify internal API Proxy functionality`, () => {
   });
 
   it("Visit Internal Proxy", () => {
-    internalProxy.visitComponent(internalProxy.getName());
+    project.visitComponent(internalProxy.getName());
   });
 
   it("Verify change Internal Proxy to External Proxy", () => {

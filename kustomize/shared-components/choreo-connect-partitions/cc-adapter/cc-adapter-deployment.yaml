@@ -89,9 +89,9 @@ spec:
             - name: secret-apim
               mountPath: /mnt/csi/secret-apim
               readOnly: true
-            - name: rate-limiter-cert
+            - name: secret-cc-rate-limiter-cert
               mountPath: /home/wso2/security/truststore/rate-limiter.pem
-              subPath: tls.crt
+              subPath: RATE_LIMITER_KEYSTORE_CERT
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-adapter:latest
           imagePullPolicy: Always
           securityContext:
@@ -199,7 +199,12 @@ spec:
               secretProviderClass: secret-apim
             nodePublishSecretRef:
               name: csi-secret-store-azure
-        - name: rate-limiter-cert
-          secret:
-            secretName: rate-limiter-cert
+        - name: secret-cc-rate-limiter-cert
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cc-rate-limiter-cert
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       restartPolicy: Always

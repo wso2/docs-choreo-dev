@@ -1,0 +1,64 @@
+emailSubject: Integration Test Failed
+releaseOwners:
+  - amilam@wso2.com
+  - uvindra@wso2.com
+  - isurupi@wso2.com
+areaOwners:
+  - testClass: com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationEventComponent
+    assignees:
+      - chameerar@wso2.com
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationMICustomConfig
+    assignees:
+      - chameerar@wso2.com
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.integrationComponent.TestIntegrationMISecretAndCert
+    assignees:
+      - chameerar@wso2.com
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.deploy.AutoDeployOnCommit
+    assignees:
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.integrationComponent.TestCreateMiMultiRestEndpointServiceFromSubPath
+    assignees:
+      - chameerar@wso2.com
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationRestComponentFromRoot
+    assignees:
+      - chameerar@wso2.com
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.integrationComponent.TestIntegrationRestComponentWithVulnerable
+    assignees:
+      - chameerar@wso2.com
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestBYOCDp
+    assignees:
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingSettingsPage
+    assignees:
+      - malinthaa@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestProxyApiDpWithOperationRateLimit
+    assignees:
+      - malinthaa@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestProxyApiDpWithAPIRateLimit
+    assignees:
+      - malinthaa@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.buildpacks.Buildpack
+    assignees:
+      - janakas@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestWebhookDp
+    assignees:
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.connections.ChoreoConnections
+    assignees:
+      - hasithah@wso2.com
+      - tishan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestBallerinaServiceDp
+    assignees:
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestBuildpackDp
+    assignees:
+      - janakas@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.observability.SysObservabilityAPITestCase
+    assignees:
+      - rasikam@wso2.com

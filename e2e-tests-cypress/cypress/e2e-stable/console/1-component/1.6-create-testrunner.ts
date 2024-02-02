@@ -46,6 +46,7 @@ describe("Verify Test Runner Component functionality", () => {
         }
       )
       .then((comp: TestRunner) => {
+        project.visitComponent(comp.getName());
         runner = comp;
       });
   });

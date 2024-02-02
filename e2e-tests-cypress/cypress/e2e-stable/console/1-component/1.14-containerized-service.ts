@@ -86,7 +86,7 @@ describe("Verify containerized service functionality", () => {
         ""
       )
       .then((comp: Byoc) => {
-       // project.visitComponent(comp.getName());
+        project.visitComponent(comp.getName());
         byoc = comp;
       });
   });

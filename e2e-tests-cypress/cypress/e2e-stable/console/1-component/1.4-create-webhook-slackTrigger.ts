@@ -62,6 +62,7 @@ describe("Verify webhook creation functionality", () => {
         webhookInfo
       )
       .then((app: Webhook) => {
+        project.visitComponent(app.getName());
         webhook = app;
       });
   });

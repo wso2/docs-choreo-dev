@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { SHORT_TIME } from "../../../commons/timeouts";
 import { TestIds } from "../../constants/TestIds";
 
 export class LeftMenu {
@@ -32,7 +33,7 @@ export class LeftMenu {
       .wait(this.MENU_RENDERING_TIME, { log: false })
       .click({ force: true })
       .wait(this.MENU_RENDERING_TIME, { log: false });
-    cy.get(TestIds.backdropLoader).should("not.exist");
+    cy.get(TestIds.backdropLoader, SHORT_TIME).should("not.exist");
     this.moveMouseAwayFromLeftMenu();
   }
 
@@ -41,7 +42,7 @@ export class LeftMenu {
     subMenuSelectors: string[]
   ) {
     cy.get("body").then((bdy) => {
-      let subMenuSelector: string;
+      let subMenuSelector: string = "";
       let isSubmenuExpanded = false;
       // Check if at least one of the sub menus are visible
       for (subMenuSelector of subMenuSelectors) {

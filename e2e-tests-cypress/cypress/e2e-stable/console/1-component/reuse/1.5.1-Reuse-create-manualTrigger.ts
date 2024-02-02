@@ -11,60 +11,59 @@
  * associated services.
  */
 
-
 import { Enums } from "../../../../support/commons/enums";
-import { ComponentDeployPage } from "../../../../support/console/pages/component/component-deploy";
-import { ComponentListingPage } from "../../../../support/console/pages/component/component-listing-page";
-import { ComponentOverviewPage } from "../../../../support/console/pages/component/component-overview-page";
-import { ChoreoHomePage } from "../../../../support/console/pages/home/home-page";
-import { LoginPage } from "../../../../support/console/pages/login-page";
-import { ProjectOverviewPage } from "../../../../support/console/pages/projects/project-overview";
-import { ProjectListingPage } from "../../../../support/console/pages/projects/projects-listing-page";
-import { ComponentData } from "../../../../support/interfaces/component-data";
-
+import { console } from "../../../../support/console/console";
+import { ManualTrigger } from "../../../../support/console/entities/component/manual-trigger-component";
+import { Project } from "../../../../support/console/entities/project/project";
 
 describe("Verify Reusable Manual Trigger creation functionality", () => {
   const MANUAL_NAME = "create-manualTrigger-1.5.1";
-  const PROJECT_NAME = "Default Project"
+  const PROJECT_NAME = "Default Project";
+  let project: Project;
+  let component: ManualTrigger;
 
-  before(() => {
-    LoginPage.login();
+  it("Login to Console", () => {
+    console.login();
   });
 
-  after(() => {
-    ChoreoHomePage.logout();
+  it("Search reuse component project", () => {
+    project = console.searchProject(PROJECT_NAME);
   });
 
-  it("Verify Manual Trigger component creation", () => {
-
-    let componentData: ComponentData = {
-      componentName: MANUAL_NAME,
-      displayType: Enums.DisplayType.manualTrigger,
-      accessibility: Enums.Accessibility.EXTERNAL,
-      projectName: PROJECT_NAME,
-      triggerChannels: "",
-      triggerId: null,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/manual-trigger",
-      repositoryType: Enums.RepoType.UserManagedNonEmpty,
-      initializeAsBallerinaProject: false,
-      repositorySubPath: "",
-      sampleTemplate: "",
-    };
-
-    ProjectListingPage.selectProject();
-    ProjectOverviewPage.searchReuseComponent(componentData);
+  it("Navigate to existing Manual Trigger component", () => {
+    if (!project.isComponentExists(MANUAL_NAME)) {
+      project
+        .createManualTriggerComponent(
+          Enums.Accessibility.EXTERNAL,
+          {
+            url: "https://github.com/choreo-test-apps/manual-trigger",
+            branch: "main",
+          },
+          MANUAL_NAME
+        )
+        .then((comp: ManualTrigger) => {
+          project.visitComponent(MANUAL_NAME);
+          component = comp;
+        });
+    } else {
+      project.visitComponent(MANUAL_NAME);
+      component = new ManualTrigger(MANUAL_NAME);
+    }
   });
 
-  it("Navigate to deployment", () => {
-    ComponentListingPage.visitToAComponent(MANUAL_NAME);
-    ComponentOverviewPage.navigateToDeploy();
+  it("Deploying to Dev", () => {
+    component.deployToDevWithoutSplitButton();
   });
 
-  it("Verify component deployment", () => {
-    ComponentDeployPage.reDeployToDev(false, false, true);
+  it("Verify component promotion to Prod", () => {
+    component.promoteToProd();
   });
 
-  it("Verify component promotion to prod", () => {
-    ComponentDeployPage.promoteManualTriggerToProd();
+  it("Verify execution in dev", () => {
+    component.executeComponent(Enums.Environment.DEVELOPMENT);
+  });
+
+  it("Verify execution in prod", () => {
+    component.executeComponent(Enums.Environment.PRODUCTION);
   });
 });

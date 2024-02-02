@@ -46,6 +46,7 @@ describe("Verify MI service with endpoint.yaml functionality", () => {
         ENDPOINT_NAME
       )
       .then((miServiceComponent: Service) => {
+        project.visitComponent(miServiceComponent.getName());
         service = miServiceComponent;
       });
   });
