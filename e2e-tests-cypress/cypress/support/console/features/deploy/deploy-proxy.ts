@@ -56,9 +56,12 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
 
       this.RetryDevDeployment();
 
-      this.startDeployment();
+      this.getNumberOfPriorBuilds().then((buildCount) => {
+        cy.log("Number of prior builds: " + buildCount);
+        this.startDeployment();
 
-      this.verifyDeploymentStatus(component);
+        this.verifyDeploymentStatus(component, buildCount);
+      });
     }
 
     _promote(component: Proxy) {
@@ -168,6 +171,12 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
       cy.get('[data-cyid="refresh-button-button"]').should("not.exist");
     }
 
+    private getNumberOfPriorBuilds() {
+      return cy.get(TestIds.buildCard).then((buildCard) => {
+        return buildCard.find(TestIds.buildStatus).filter(":visible").length;
+      });
+    }
+
     private startDeployment() {
       cyGet(TestIds.deployProxySplitToggle, MEDIUM_TIME)
         .should("not.be.disabled")
@@ -180,8 +189,22 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
         .click();
     }
 
-    private verifyDeploymentStatus(component: Proxy) {
+    private verifyDeploymentStatus(
+      component: Proxy,
+      numberOfPriorBuilds: number
+    ) {
       cy.get(TestIds.backdropLoader).should("not.exist");
+
+      cy.get(TestIds.buildCard)
+        .find(TestIds.buildStatus, SHORT_TIME)
+        .filter(":visible")
+        .should("have.length", numberOfPriorBuilds + 1);
+
+      cy.get(TestIds.buildStatus, SHORT_TIME)
+        .eq(0)
+        .contains(BUILD_QUEUED)
+        .should("not.exist");
+
       cy.get(TestIds.buildStatus)
         .eq(0)
         .contains(BUILD_IN_PROGRESS, LONG_TIME)
