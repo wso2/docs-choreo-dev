@@ -105,30 +105,34 @@ endpoints:
   schemaFilePath: greeting_openapi.yaml
 ```
 
-### Enhanced Component Configuration
+### Apply enhancements to component configurations
 
-*Beta Release: This version is considered stable, but please note that the configuration schema may undergo changes and improvements based on user feedback. Support for this schema will be maintained even as new versions are introduced.*
+The `component-config.yaml` file allows you to apply enhancements to component configurations.
 
-The `component-config.yaml` file enhances the capabilities of `endpoints.yaml` for component configuration. It introduces support for defining outbound connection configurations alongside inbound connections (endpoints).
+!!! note "Beta release"
+      - The current version of the `component-config.yaml` file is considered stable.However, it is important to note that the configuration schema may undergo changes and improvements based on user feedback. 
+      - Support for the current schema will remain even when new versions are introduced.
 
-- **Inbound Configurations:** This section is dedicated to defining inbound connection configurations, specifically for endpoints. It seamlessly aligns with the existing endpoints object schema.
+The `component-config.yaml` file complements the `endpoints.yaml` file and allows you to define configurations for both inbound and outbound connections.
 
-- **Outbound Configurations:** In this section, users can specify outbound connection configurations, including service connection details. The Choreo internal marketplace facilitates the creation of connections with existing services. To learn more about Choreo Marketplace refer to the [documentation](https://wso2.com/choreo/docs/choreo-concepts/choreo-marketplace/#choreo-marketplace).
+- **Inbound configurations:** This configuration section is for you to define inbound connections, specifically for endpoints. It aligns seamlessly with the existing endpoint object schema.
+
+- **Outbound configurations:** This configuration section is for you to specify outbound connection details, including service connections. The Choreo internal marketplace simplifies creating connections with existing services.  To learn more about Choreo Marketplace, see [Choreo Marketplace](https://wso2.com/choreo/docs/choreo-concepts/choreo-marketplace/#choreo-marketplace).
 
 !!! note
-    - In case both `component-config.yaml` and `endpoints.yaml` are defined in the .choreo path as mentioned, `component-config.yaml` file takes priority.
-    - Outbound connections are not supported for deprecated components and  WSO2 MI buildpack components.
+    - If both `component-config.yaml` and `endpoints.yaml` are defined in the `.choreo` path, the `component-config.yaml` file takes priority.
+    - Outbound connections are not supported for deprecated components and WSO2 MI buildpack components.
 
-### Learn the component-config.yaml file
+### Learn the `component-config.yaml` file
 
 The `component-config.yaml` file has a specific structure and contains the following details:
 
-| Field                | Required     | Description                                                                      |
-|----------------------|--------------|----------------------------------------------------------------------------------|
-| **apiVersion**       | Required     | The version of the `component-config.yaml` file, default to `core.choreo.dev/v1beta1` |
-| **kind**             | Required     | The resource type of the file, default to `ComponentConfig`.                     |
-| **spec.inbound**     | Optional     | List of inbound connection configurations.                                       |
-| **spec.outbound**    | Optional     | List of outbound connection configurations.                                      |
+| Field                | Required     | Description                                                                           |
+|----------------------|--------------|---------------------------------------------------------------------------------------|
+| **apiVersion**       | Required     | The version of the `component-config.yaml` file defaults to `core.choreo.dev/v1beta1`.|
+| **kind**             | Required     | The resource type of the file defaults to `ComponentConfig`.                          |
+| **spec.inbound**     | Optional     | The list of inbound connection configurations.                                        |
+| **spec.outbound**    | Optional     | The list of outbound connection configurations.                                       |
 
 
 #### Inbound connection configurations (spec.inbound)
