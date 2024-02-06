@@ -496,6 +496,14 @@ eval
 evalsha
 fcall
 GitFlow
+component-config-documentation
+yaml
+spec.inbound
+spec.outbound
+connectionConfig
+env
+env.from
+env.to
 CIOs
 adaptor
 LetsEncrypt
