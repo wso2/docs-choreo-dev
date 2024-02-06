@@ -105,19 +105,19 @@ endpoints:
   schemaFilePath: greeting_openapi.yaml
 ```
 
-### Apply enhancements to component configurations
+### Apply advanced component connection configurations
 
-The `component-config.yaml` file allows you to apply enhancements to component configurations.
+The `component-config.yaml` file extends the capabilities of `endpoints.yaml` by introducing enhancements that allow for detailed inbound and outbound connection configurations.
 
 !!! note "Beta release"
       - The current version of the `component-config.yaml` file is considered stable. However, it is important to note that the configuration schema may undergo changes and improvements based on user feedback. 
       - Support for the current schema will remain even when new versions are introduced.
 
-The `component-config.yaml` file complements the `endpoints.yaml` file and allows you to define configurations for both inbound and outbound connections.
+The `component-config.yaml` file complements and enhances the existing endpoint configuration process. It allows you to define both how your service's endpoints (inbound connections) are exposed and how your service connects to external services or components (outbound connections).
 
-- **Inbound configurations:** This configuration section is for you to define inbound connections, specifically for endpoints. It aligns seamlessly with the existing endpoint object schema.
+- **Inbound configurations:** This configuration section is for you to define inbound connections, Similar to `endpoints.yaml`, you can define how your service endpoints are exposed. It aligns seamlessly with the existing endpoint schema structure.
 
-- **Outbound configurations:** This configuration section is for you to specify outbound connection details, including service connections. The Choreo internal marketplace simplifies creating connections with existing services.  To learn more about Choreo Marketplace, see [Choreo Marketplace](https://wso2.com/choreo/docs/choreo-concepts/choreo-marketplace/#choreo-marketplace).
+- **Outbound configurations:** This configuration section is for you to specify outbound connection details, including service connections. The Choreo Internal Marketplace facilitates creating connections with existing services. To learn more about Choreo Marketplace, see [Choreo Marketplace](https://wso2.com/choreo/docs/choreo-concepts/choreo-marketplace/#choreo-marketplace).
 
 !!! note
     - If both `component-config.yaml` and `endpoints.yaml` are defined in the `.choreo` path, the `component-config.yaml` file takes priority.
@@ -137,11 +137,11 @@ The `component-config.yaml` file has a specific structure and contains the follo
 
 #### Inbound connection configurations (spec.inbound)
 
-The `spec.inbound` section simplifies the configuration of inbound connections, allowing for the inclusion of a list of endpoints. It fully supports the existing endpoints schema structure. Refer to the [endpoints schema in the documentation](#learn-the-endpointsyaml-file) for further details.
+In the `spec.inbound` configuration section, you can list endpoints to set up inbound connections. It follows the existing endpoints schema structure. For more information, see the [endpoints schema documentation](#learn-the-endpointsyaml-file).
 
 #### Outbound connection configurations (spec.outbound)
 
-Within the `spec.outbound` section, you can define `serviceReferences`, specifying the service references generated in the internal API marketplace when creating a service connection.
+In the `spec.outbound` section, you can define `serviceReferences` by specifying the service references generated in the internal API marketplace when creating a service connection. Refer to the `Developer Guide` provided when a connection is created to copy the [outbound connection configurations](https://wso2.com/choreo/docs/develop-components/sharing-and-reusing-services/#sharing-and-reusing-services).
 
 The `serviceReferences` schema has a specific structure and contains the following details:
 
@@ -151,7 +151,7 @@ The `serviceReferences` schema has a specific structure and contains the followi
 | **connectionConfig** | Required     | A unique name for the connection instance.                                       |
 | **env**              | Optional     | The list of environment variable mappings that get injected into the container.  |
 | **env.from**         | Required     | The key name of the connection configuration.                                    |
-| **env.to**           | Required     | Environment variables that get injected into the container.                      |
+| **env.to**           | Required     | Environment variable that get injected into the container.                       |
 
 !!! note
     Choreo automatically generates outbound connection configurations upon the creation of a connection within the internal marketplace. The properties such as **name**, **connectionConfig**, and **env.from** are automatically generated. However, you must manually set the **env.to** value.
@@ -195,20 +195,19 @@ spec:
       # This is only applicable to REST endpoint types.
       # The path should be relative to the docker context.
       schemaFilePath: greeting_openapi.yaml
-
   # +optional Outgoing connection details for the component.
   outbound:
     # +optional Defines the service references from the internal API marketplace.
     serviceReferences:
       # +required Name of the service reference.
       - name: choreo:///apifirst/mttm/mmvhxd/ad088/v1.0/PUBLIC
-        # +required Name of the connection instance. This is an identifier.
+        # +required Name of the connection instance.
         connectionConfig: 19d2648b-d29c-4452-afdd-1b9311e81412
-        # +optional Environment variables to be injected into the component from the connection configuration.
+        # +optional Environment variables injected to the component for connection configuration.
         env:
           # +required Key name of the connection configuration.
           - from: ServiceURL
-            # +required Environment variable name that gets injected into the container.
+            # +required Environment variable injected to the container.
             to: SERVICE_URL
 ```
 
