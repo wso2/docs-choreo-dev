@@ -40,10 +40,10 @@
       {% endif %}
     {% endblock %}
     {% block styles %}
-      <link rel="stylesheet" href="{{ 'assets/stylesheets/main.7bf56d0a.min.css' | url }}">
+      <link rel="stylesheet" href="{{ '/choreo/docs/assets/stylesheets/main.7bf56d0a.min.css' | url }}">
       {% if config.theme.palette %}
         {% set palette = config.theme.palette %}
-        <link rel="stylesheet" href="{{ 'assets/stylesheets/palette.a0c5b2b5.min.css' | url }}">
+        <link rel="stylesheet" href="{{ '/choreo/docs/assets/stylesheets/palette.a0c5b2b5.min.css' | url }}">
       {% endif %}
       {% include "partials/icons.html" %}
     {% endblock %}
@@ -75,8 +75,8 @@
     {% block extrahead %}{% endblock %}
     <link rel="stylesheet" href="https://unpkg.com/highlightjs/styles/vs.css" />
 <!-- scripts -->
-<script type="text/javascript" src="../../assets/lib/highlightjs/highlight.min.js"></script>
-<script type="text/javascript" src="../../assets/lib/highlightjs/ballerina.min.js"></script>
+<script type="text/javascript" src="/choreo/docs/assets/lib/highlightjs/highlight.min.js"></script>
+<script type="text/javascript" src="/choreo/docs/assets/lib/highlightjs/ballerina.min.js"></script>
 <script type="text/javascript">
 	hljs.highlightAll();
 </script>
@@ -252,7 +252,7 @@
         "base": base_url,
         "features": features,
         "translations": {},
-        "search": "assets/javascripts/workers/search.208ed371.min.js" | url
+        "search": "/choreo/docs/assets/javascripts/workers/search.208ed371.min.js" | url
       } -%}
       {%- if config.extra.version -%}
         {%- set _ = app.update({ "version": config.extra.version }) -%}
@@ -280,7 +280,7 @@
       </script>
     {% endblock %}
     {% block scripts %}
-      <script src="{{ 'assets/javascripts/bundle.fc8c2696.min.js' | url }}"></script>
+      <script src="{{ '/choreo/docs/assets/javascripts/bundle.fc8c2696.min.js' | url }}"></script>
       {% for path in config.extra_javascript %}
         <script src="{{ path | url }}"></script>
       {% endfor %}
