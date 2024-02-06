@@ -149,9 +149,9 @@ The `serviceReferences` schema has a specific structure and contains the followi
 |----------------------|--------------|----------------------------------------------------------------------------------|
 | **name**             | Required     | A unique name for the service reference.                                         |
 | **connectionConfig** | Required     | A unique name for the connection instance.                                       |
-| **env**              | Optional     | List of environment variable mappings that gets injected to the container.       |
-| **env.from**         | Required     | Key name of the connection configuration.                                        |
-| **env.to**           | Required     | Environment variables that get injected to the container.                        |
+| **env**              | Optional     | The list of environment variable mappings that get injected into the container.  |
+| **env.from**         | Required     | The key name of the connection configuration.                                    |
+| **env.to**           | Required     | Environment variables that get injected into the container.                      |
 
 !!! note
     Choreo automatically generates outbound connection configurations upon the creation of a connection within the internal marketplace. The properties such as **name**, **connectionConfig**, and **env.from** are automatically generated. However, you must manually set the **env.to** value.
@@ -165,10 +165,10 @@ The `serviceReferences` schema has a specific structure and contains the followi
 ```
 
 !!! note
-    - For components built with Ballerina buildpack `docker-build-context-path` should be replaced with `component-root`. 
-    For example: `<component-root>/.choreo/component-config.yaml`
-    - For components built with WSO2 MI buildpack `docker-build-context-path` should be replaced with `<Project Path>`. 
-    For example: `<Project Path>/.choreo/component-config.yaml`
+    - For components built using the **Ballerina** buildpack, you must replace `docker-build-context-path` with the `component-root`. 
+    For example, `<component-root>/.choreo/component-config.yaml`.
+    - For components built using the **WSO2 MI** buildpack, you must replace `docker-build-context-path` with the `<Project Path>`. 
+    For example, `<Project Path>/.choreo/component-config.yaml`.
 
 **File content**:
 
@@ -176,22 +176,22 @@ The `serviceReferences` schema has a specific structure and contains the followi
 apiVersion: core.choreo.dev/v1beta1
 kind: ComponentConfig
 spec:
-  # +optional Incoming connection details for the component (AKA Endpoints).
+  # +optional Incoming connection details for the component (AKA endpoints).
   inbound:
     # +required Unique name for the endpoint. (This name will be used when generating the managed API)
     - name: Greeting Service
-      # +required Numeric port value that gets exposed via this endpoint
+      # +required Numeric port value that gets exposed via the endpoint
       port: 9090
-      # +required Type of the traffic this endpoint is accepting. Example: REST, GraphQL, etc.
-      # Allowed values: REST, GraphQL, GRPC, TCP, UDP
+      # +required Type of traffic that the endpoint is accepting. For example: REST, GraphQL, etc.
+      # Allowed values: REST, GraphQL, GRPC, TCP, UDP.
       type: REST
-      # +optional Network level visibility of this endpoint. Defaults to Project
+      # +optional Network level visibility of the endpoint. Defaults to Project
       # Accepted values: Project|Organization|Public.
       visibility: Public
-      # +optional Context (base path) of the API that exposed via this endpoint.
+      # +optional Context (base path) of the API that gets exposed via the endpoint.
       # This is mandatory if the endpoint type is set to REST or GraphQL.
       context: /greeting
-      # +optional Path to the schema definition file. Defaults to wild card route if not provided
+      # +optional The path to the schema definition file. Defaults to wildcard route if not specified.
       # This is only applicable to REST endpoint types.
       # The path should be relative to the docker context.
       schemaFilePath: greeting_openapi.yaml
@@ -202,13 +202,13 @@ spec:
     serviceReferences:
       # +required Name of the service reference.
       - name: choreo:///apifirst/mttm/mmvhxd/ad088/v1.0/PUBLIC
-        # +required Name of the connection instance. This is an identifier
+        # +required Name of the connection instance. This is an identifier.
         connectionConfig: 19d2648b-d29c-4452-afdd-1b9311e81412
-        # +optional Environment variables to be injected to the component from the connection configuration.
+        # +optional Environment variables to be injected into the component from the connection configuration.
         env:
           # +required Key name of the connection configuration.
           - from: ServiceURL
-            # +required Environment variable name that get injected to the container.
+            # +required Environment variable name that gets injected into the container.
             to: SERVICE_URL
 ```
 
