@@ -107,13 +107,13 @@ endpoints:
 
 ### Apply advanced component connection configurations
 
-The `component-config.yaml` file extends the capabilities of `endpoints.yaml` by introducing enhancements that allow for detailed inbound and outbound connection configurations.
+The `component-config.yaml` file extends the capabilities of `endpoints.yaml` by introducing enhancements that allow you to apply advanced inbound and outbound connection configurations.
 
 !!! note "Beta release"
       - The current version of the `component-config.yaml` file is considered stable. However, it is important to note that the configuration schema may undergo changes and improvements based on user feedback. 
       - Support for the current schema will remain even when new versions are introduced.
 
-The `component-config.yaml` file complements and enhances the existing endpoint configuration process. It allows you to define both how your service's endpoints (inbound connections) are exposed and how your service connects to external services or components (outbound connections).
+The `component-config.yaml` file complements and enhances the existing endpoint configuration process. It allows you to define how your service's endpoints (inbound connections) are exposed and how your service connects to external services or components (outbound connections).
 
 - **Inbound configurations:** This configuration section is for you to define inbound connections, Similar to `endpoints.yaml`, you can define how your service endpoints are exposed. It aligns seamlessly with the existing endpoint schema structure.
 
@@ -135,13 +135,13 @@ The `component-config.yaml` file has a specific structure and contains the follo
 | **spec.outbound**    | Optional     | The list of outbound connection configurations.                                       |
 
 
-#### Inbound connection configurations (spec.inbound)
+#### Inbound connection configurations (`spec.inbound`)
 
-In the `spec.inbound` configuration section, you can list endpoints to set up inbound connections. It follows the existing endpoints schema structure. For more information, see the [endpoints schema documentation](#learn-the-endpointsyaml-file).
+In the `spec.inbound` configuration section, you can specify endpoints to set up inbound connections. To specify endpoits, you can follow the existing endpoints schema structure. For details on the endpoints schema structure, see the [endpoints schema documentation](#learn-the-endpointsyaml-file).
 
-#### Outbound connection configurations (spec.outbound)
+#### Outbound connection configurations (`spec.outbound`)
 
-In the `spec.outbound` section, you can define `serviceReferences` by specifying the service references generated in the internal API marketplace when creating a service connection. Refer to the `Developer Guide` provided when a connection is created to copy the [outbound connection configurations](https://wso2.com/choreo/docs/develop-components/sharing-and-reusing-services/#sharing-and-reusing-services).
+In the `spec.outbound` section, you can define `serviceReferences`. To define `serviceReferences`, you can use the service references generated in the Internal Marketplace when creating a service connection. To copy the [outbound connection configurations](https://wso2.com/choreo/docs/develop-components/sharing-and-reusing-services/#sharing-and-reusing-services), see the inline developer guide that is available when you create a connection.
 
 The `serviceReferences` schema has a specific structure and contains the following details:
 
@@ -151,7 +151,7 @@ The `serviceReferences` schema has a specific structure and contains the followi
 | **connectionConfig** | Required     | A unique name for the connection instance.                                       |
 | **env**              | Optional     | The list of environment variable mappings that get injected into the container.  |
 | **env.from**         | Required     | The key name of the connection configuration.                                    |
-| **env.to**           | Required     | Environment variable that get injected into the container.                       |
+| **env.to**           | Required     | The environment variable that gets injected into the container.                  |
 
 !!! note
     Choreo automatically generates outbound connection configurations upon the creation of a connection within the internal marketplace. The properties such as **name**, **connectionConfig**, and **env.from** are automatically generated. However, you must manually set the **env.to** value.
@@ -193,11 +193,11 @@ spec:
       context: /greeting
       # +optional The path to the schema definition file. Defaults to wildcard route if not specified.
       # This is only applicable to REST endpoint types.
-      # The path should be relative to the docker context.
+      # The path should be relative to the Docker context.
       schemaFilePath: greeting_openapi.yaml
   # +optional Outgoing connection details for the component.
   outbound:
-    # +optional Defines the service references from the internal API marketplace.
+    # +optional Defines the service references from the Internal Marketplace.
     serviceReferences:
       # +required Name of the service reference.
       - name: choreo:///apifirst/mttm/mmvhxd/ad088/v1.0/PUBLIC
