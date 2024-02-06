@@ -496,6 +496,7 @@ eval
 evalsha
 fcall
 GitFlow
+component-config-documentation
 yaml
 spec.inbound
 spec.outbound
@@ -503,6 +504,14 @@ connectionConfig
 env
 env.from
 env.to
+CIOs
+adaptor
+LetsEncrypt
+24x7
+uptime
+DDoS
+IaC
+add-ons
 
  - docs/references/upgrading-from-the-previous-version.md
 DefaultProject
