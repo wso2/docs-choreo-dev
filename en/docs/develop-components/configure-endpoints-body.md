@@ -187,7 +187,7 @@ spec:
       type: REST
       # +optional Network level visibility of the endpoint. Defaults to Project
       # Accepted values: Project|Organization|Public.
-      visibility: Public
+      networkVisibility: Public
       # +optional Context (base path) of the API that gets exposed via the endpoint.
       # This is mandatory if the endpoint type is set to REST or GraphQL.
       context: /greeting
