@@ -70,6 +70,6 @@ public class Buildpack extends TestNGCitrusSpringSupport {
                                 .message()
                                 .type(MessageType.JSON)
                                 .validate(jsonPath()
-                                .expression("$[*].language", contains("java","python","nodejs","go","php","ruby","ballerina","docker","microintegrator"))));
+                                .expression("$[*].language", contains("java","python","nodejs","go","php","ruby","ballerina","docker","microintegrator","dotnet"))));
         }
     }
