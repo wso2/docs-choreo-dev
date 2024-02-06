@@ -496,6 +496,14 @@ eval
 evalsha
 fcall
 GitFlow
+CIOs
+adaptor
+LetsEncrypt
+24x7
+uptime
+DDoS
+IaC
+add-ons
 
  - docs/references/upgrading-from-the-previous-version.md
 DefaultProject
