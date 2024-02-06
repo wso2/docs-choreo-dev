@@ -137,7 +137,7 @@ The `component-config.yaml` file has a specific structure and contains the follo
 
 #### Inbound connection configurations (`spec.inbound`)
 
-In the `spec.inbound` configuration section, you can specify endpoints to set up inbound connections. To specify endpoits, you can follow the existing endpoints schema structure. For details on the endpoints schema structure, see the [endpoints schema documentation](#learn-the-endpointsyaml-file).
+In the `spec.inbound` configuration section, you can specify endpoints to set up inbound connections. To specify endpoints, you can follow the existing endpoints schema structure. For details on the endpoints schema structure, see the [endpoints schema documentation](#learn-the-endpointsyaml-file).
 
 #### Outbound connection configurations (`spec.outbound`)
 
