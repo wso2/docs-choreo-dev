@@ -17,7 +17,6 @@ import {
   DEPLOYMENT_PENDING,
   DEPLOYMENT_PROGRESSING,
   DEPLOYMENT_SUCCESS,
-  
 } from "../../../commons/constants";
 import { cyGet } from "../../../commons/cy";
 import { LONG_TIME, MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
@@ -52,7 +51,10 @@ export interface DeployServiceFeature {
 
   _deployWebapp(component: WebApp, hasAuthSettings: boolean);
 
-  _deployWebhook(component: Webhook | Byoc, configStepsAvailable?: ConfigEntryStep[]);
+  _deployWebhook(
+    component: Webhook | Byoc,
+    configStepsAvailable?: ConfigEntryStep[]
+  );
 
   _promoteService(
     component: Service,
@@ -126,7 +128,6 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.verifyTaskDeploymentStatus();
     }
 
-
     _deployWebapp(component: WebApp, hasAuthSettings: boolean) {
       this.sideMenu.navigateToDeploy();
 
@@ -155,7 +156,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     //Promotion methods start here
 
     _promoteWebhook(
-      component: Webhook ,
+      component: Webhook,
       configStepsAvailable?: ConfigEntryStep[]
     ) {
       this.sideMenu.navigateToDeploy();
@@ -224,7 +225,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.storeProdWebAppUrl(component);
     }
 
-    _promoteBYOC(component: Byoc , configStepsAvailable?: ConfigEntryStep[]) {
+    _promoteBYOC(component: Byoc, configStepsAvailable?: ConfigEntryStep[]) {
       this.sideMenu.navigateToDeploy();
       this.startPromotion(component);
       this.stepThroughConfigSteps(component, configStepsAvailable);
@@ -314,7 +315,13 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     }
 
     private startDeployment(
-      component: Service | ManualTrigger | ScheduleTrigger | TestRunner | WebApp  | Byoc
+      component:
+        | Service
+        | ManualTrigger
+        | ScheduleTrigger
+        | TestRunner
+        | WebApp
+        | Byoc
     ) {
       this.deploymentTrack.validate(component);
 
@@ -336,7 +343,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     private webhookPromotion(component: Webhook | Byoc) {
       cy.wait(3000);
       cyGet(TestIds.promote, MEDIUM_TIME).should("be.enabled").click();
-      cy.get(TestIds.next).should("be.visible").click();
+      cy.get(TestIds.configSubmit).should("be.visible").click();
     }
 
     private stepThroughConfigSteps(
@@ -556,7 +563,13 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     }
 
     private startPromotion(
-      component: Service | ManualTrigger | ScheduleTrigger | TestRunner | WebApp | Byoc
+      component:
+        | Service
+        | ManualTrigger
+        | ScheduleTrigger
+        | TestRunner
+        | WebApp
+        | Byoc
     ) {
       this.deploymentTrack.validate(component);
 

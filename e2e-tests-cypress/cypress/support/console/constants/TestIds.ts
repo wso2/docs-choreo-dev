@@ -91,6 +91,9 @@ export namespace TestIds {
   export const apply = '[data-cyid="apply-button"]';
   export const projectInsights = '[data-cyid="project-usage-insights-button"]';
   export const datePicker = '[data-testid="date-picker"]';
+  export const noBuildsAvailable =
+    '[data-cyid="table-listing-no-data-message"]';
+  export const buildTime = '[data-cyid="build-time"]';
   export const build = '[data-cyid="build-button"]';
   export const tableTitle = '[data-cyid="table-title"]';
   export const createComponent = '[data-cyid="create-component-button"]';
@@ -235,12 +238,14 @@ export namespace TestIds {
   export const accessMode = '[data-testid="access-mode"]';
   export const warningBanner = '[data-testid="warning-banner"]';
   export const addConfig = '[data-cyid="add-new-button"]';
-  export const addConfigKey = '[data-cyid="key-value-card-add-new-new-input-name"]';
-  export const addConfigValue = '[data-cyid="key-value-card-add-new-new-input-value"]';
+  export const addConfigKey =
+    '[data-cyid="key-value-card-add-new-new-input-name"]';
+  export const addConfigValue =
+    '[data-cyid="key-value-card-add-new-new-input-value"]';
   export const configSave = '[data-cyid="key-value-save-button"]';
-  export const keyValueCheckBox= '[data-cyid="key-value-card-add-new-secret-checkbox-check-box"]';
+  export const keyValueCheckBox =
+    '[data-cyid="key-value-card-add-new-secret-checkbox-check-box"]';
   export const nextButton = '[data-testid="btn-next"]';
   export const fileMount = '[data-cyid="file-mount-upload-button"]';
   export const byocPromote = '[data-cyid="promote-selector-default-configs"]';
-  
 }

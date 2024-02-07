@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { BUILD_SUCCESS } from "../../../commons/constants";
+import { BUILD_IN_PROGRESS, BUILD_SUCCESS } from "../../../commons/constants";
 import { LONG_TIME } from "../../../commons/timeouts";
 import { TestIds } from "../../constants/TestIds";
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
@@ -74,7 +74,9 @@ export function mixinBuild<T extends Types.Constructor>(
       cy.get(TestIds.build).should("be.enabled").click();
       cy.get(TestIds.next).should("be.visible").should("be.enabled").click();
       cy.get(TestIds.tableTitle).within(() => {
-        cy.contains(BUILD_SUCCESS, LONG_TIME);
+        cy.contains(BUILD_IN_PROGRESS, LONG_TIME).should("be.visible");
+        cy.contains(BUILD_IN_PROGRESS, LONG_TIME).should("not.exist");
+        cy.contains(BUILD_SUCCESS).should("be.visible");
       });
     }
   };
