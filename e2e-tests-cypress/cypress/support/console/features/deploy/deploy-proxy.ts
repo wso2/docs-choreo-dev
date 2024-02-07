@@ -58,9 +58,9 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
 
       this.getNumberOfPriorBuilds().then((buildCount) => {
         cy.log("Number of prior builds: " + buildCount);
-        this.startDeployment();
+        this.startDeployment(component);
 
-        this.verifyDeploymentStatus(component, buildCount);
+        this.verifyDeploymentStatus(buildCount);
       });
     }
 
@@ -177,7 +177,7 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
       });
     }
 
-    private startDeployment() {
+    private startDeployment(component: Proxy) {
       cyGet(TestIds.deployProxySplitToggle, MEDIUM_TIME)
         .should("not.be.disabled")
         .click();
@@ -187,12 +187,15 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
       cyGet(TestIds.executeDeployProxySplitToggle, MEDIUM_TIME)
         .should("not.be.disabled")
         .click();
+
+      if (component.isPolicyAdded()) {
+        cy.get(TestIds.configSubmit, MEDIUM_TIME).should("be.visible").click();
+      } else {
+        cy.get(TestIds.next, VERY_SHORT_TIME).should("be.visible").click();
+      }
     }
 
-    private verifyDeploymentStatus(
-      component: Proxy,
-      numberOfPriorBuilds: number
-    ) {
+    private verifyDeploymentStatus(numberOfPriorBuilds: number) {
       cy.get(TestIds.backdropLoader).should("not.exist");
 
       cy.get(TestIds.buildCard)
@@ -200,21 +203,6 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
         .filter(":visible")
         .should("have.length", numberOfPriorBuilds + 1);
 
-      cy.get(TestIds.buildStatus, SHORT_TIME)
-        .eq(0)
-        .contains(BUILD_QUEUED)
-        .should("not.exist");
-
-      cy.get(TestIds.buildStatus)
-        .eq(0)
-        .contains(BUILD_IN_PROGRESS, LONG_TIME)
-        .should("not.exist");
-
-      if (component.isPolicyAdded()) {
-        cy.get(TestIds.configSubmit, SHORT_TIME).should("be.visible").click();
-      } else {
-        cy.get(TestIds.next, VERY_SHORT_TIME).should("be.visible").click();
-      }
       cy.get(TestIds.buildStatus, SHORT_TIME)
         .eq(0)
         .contains(BUILD_QUEUED)

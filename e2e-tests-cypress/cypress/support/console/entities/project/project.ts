@@ -389,9 +389,13 @@ export class Project {
   createWebhookComponent(
     accessibility: Enums.Accessibility,
     repoInfo: RepoInfo,
-    webhookInfo: WebhookInfo
+    webhookInfo: WebhookInfo,
+    componentName?: string
   ) {
-    const componentName = Utils.generateComponentName();
+    if (componentName === undefined) {
+      componentName = Utils.generateComponentName();
+    }
+
     let componentData: ComponentData = {
       componentName: componentName,
       displayType: Enums.DisplayType.webhook,
