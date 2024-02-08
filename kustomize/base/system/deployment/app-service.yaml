@@ -72,6 +72,11 @@ spec:
                 secretKeyRef:
                   name: secret-app-service
                   key: ASGARDEO_CLIENT_SECRET
+            - name: IDP_APP_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: IDP_APP_CLIENT_SECRET
             - name: IDP_BACKEND_API_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
