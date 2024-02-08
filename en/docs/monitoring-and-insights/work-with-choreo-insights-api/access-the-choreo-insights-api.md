@@ -6,11 +6,9 @@ Choreo provides a secure and user-friendly approach to accomplish this requireme
 
 ## Become a member of the Choreo System organization
 
-1. Access the Developer Portal of the `Choreo System` organization via [https://devportal.choreo.dev/choreosystem](https://devportal.choreo.dev/choreosystem) and sign in using your preferred method.
-
-2. In the top menu of the Developer Portal, click **Applications**.
+1. Access the Developer Portal of the `Choreo System` organization via [https://devportal.choreo.dev/choreosystem/applications](https://devportal.choreo.dev/choreosystem/applications) and sign in using your preferred method.
    
-3. To obtain access to the `Choreo System` organization, click **Request Access**.
+2. To obtain access to the `Choreo System` organization, click **Request Access**.
 
     ![Request access](../../assets/img/monitoring-and-insights/work-with-choreo-insights-api/request-access.png){.cInlineImage-full}
 
