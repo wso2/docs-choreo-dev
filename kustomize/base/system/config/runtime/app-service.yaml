@@ -45,6 +45,7 @@ upstream:
       key: ${CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY}
 urlManager:
   enable: ${ENABLE_URL_MANAGER}
+authz-service: ${AUTHZ_SERVICE_ENDPOINT}
 configYamlConfigurations:
   log-format: "json"
   observe-enabled: true
