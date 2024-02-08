@@ -76,7 +76,7 @@ export function mixinBuild<T extends Types.Constructor>(
       cy.get(TestIds.tableTitle).within(() => {
         cy.contains(BUILD_IN_PROGRESS, LONG_TIME).should("be.visible");
         cy.contains(BUILD_IN_PROGRESS, LONG_TIME).should("not.exist");
-        cy.contains(BUILD_SUCCESS);
+        cy.contains(BUILD_SUCCESS).should("be.visible");
       });
     }
   };
