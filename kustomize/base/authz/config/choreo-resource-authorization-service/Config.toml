@@ -29,7 +29,7 @@ roleDeletePermissionConf = "urn:choreosystem:usersmanagement:role_delete"
 # SpiceDB configs
 spiceDbGrpcPortConf = 50051
 spiceDbHttpSchemeConf = "http://"
-spiceDbHostConf = "spicedb-cluster"
+spiceDbHostConf = "spicedb-cluster.spicedb-operator.svc.cluster.local"
 spiceDbAuthTokenFilePath = "/mnt/csi/secret-authz-management/SPICEDB-PRESHARED-KEY"
 
 
