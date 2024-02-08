@@ -95,7 +95,7 @@ describe(`Verify BYOC functionality`, () => {
       });
   });
 
-  it("Verify test functionality using generated curl in Dev", () => {
+  it("Verify test functionality using generated curl in Prod", () => {
     byoc
       .testCurl(
         Enums.Environment.PRODUCTION,
