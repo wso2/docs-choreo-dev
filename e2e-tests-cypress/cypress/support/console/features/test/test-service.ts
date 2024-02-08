@@ -17,7 +17,6 @@ import { Service } from "../../entities/component/service-component";
 import { DeploymentTrack } from "../deployment-track/deployment-track";
 import { Types } from "../../../commons/types";
 import { Enums } from "../../../commons/enums";
-import { ByocComponent } from "../../../interfaces/choreo-components/byoc-component";
 import { Byoc } from "../../entities/component/byoc-component";
 
 export interface InvokeInfo {
@@ -30,8 +29,15 @@ export interface InvokeInfo {
   value?: string;
 }
 
+export interface GraphQLInvokeInfo {
+  env: Enums.Environment;
+  endpoint: string;
+  query: string;
+}
+
 export interface TestServiceFeature {
-  _testConsole(component: Service | Byoc , invokeInfo: InvokeInfo);
+  _testConsole(component: Service | Byoc, invokeInfo: InvokeInfo);
+  _testGQL(component: Service | Byoc, invokeInfo: GraphQLInvokeInfo);
 }
 
 export function mixinTestService<T extends Types.Constructor>(
@@ -55,6 +61,23 @@ export function mixinTestService<T extends Types.Constructor>(
         invokeInfo.key,
         invokeInfo.value
       );
+    }
+
+    _testGQL(component: Service | Byoc, invokeInfo: GraphQLInvokeInfo) {
+      // As a workaround to clear any previous queries/results in the GraphQL test console,
+      // we navigate to the Postman test console and then back to the GraphQL test console
+      this.sideMenu.navigateToPostman();
+      this.sideMenu.navigateToTest();
+
+      this.deploymentTrack.validate(component);
+
+      TestHelper.testGraphQL(
+        invokeInfo.env,
+        invokeInfo.query,
+        invokeInfo.endpoint
+      );
+
+      return TestHelper.getGraphQLResult();
     }
   };
 }

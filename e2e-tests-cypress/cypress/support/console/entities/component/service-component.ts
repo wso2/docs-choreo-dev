@@ -16,7 +16,11 @@ import { Component } from "./component";
 
 import { UsagePlan } from "../../../commons/enums";
 import { mixinBuild } from "../../features/component-build/build";
-import { InvokeInfo, mixinTestService } from "../../features/test/test-service";
+import {
+  GraphQLInvokeInfo,
+  InvokeInfo,
+  mixinTestService,
+} from "../../features/test/test-service";
 import { mixinServiceDeploy } from "../../features/deploy/deploy-service";
 import { mixinManage } from "../../features/manage/manage";
 import { ConfigEntryStep, createDefaultSteps } from "../../../commons/types";
@@ -60,6 +64,10 @@ export class Service extends mixinBuild(
 
   testConsole(invokeInfo: InvokeInfo) {
     return this._testConsole(this, invokeInfo);
+  }
+
+  testGQL(invokeInfo: GraphQLInvokeInfo) {
+    return this._testGQL(this, invokeInfo);
   }
 
   promoteProjectLevelAccessibility(shouldModifyEndpoint: boolean = true) {

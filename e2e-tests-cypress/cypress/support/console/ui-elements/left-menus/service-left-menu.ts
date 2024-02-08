@@ -42,6 +42,14 @@ export class ServiceLeftMenu extends LeftMenu {
     );
   }
 
+  navigateToPostman() {
+    this.scrollToTopOfMenu();
+    this.navigateToSubMenu(
+      "[data-cyid=link-test]",
+      new Array('[data-cyid="postman"]')
+    );
+  }
+
   navigateToManage() {
     this.scrollToTopOfMenu();
     this.navigateToSubMenu(
