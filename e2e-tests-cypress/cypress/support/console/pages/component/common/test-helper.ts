@@ -154,6 +154,20 @@ export class TestHelper {
     this.clearGQL();
   }
 
+  static getGraphQLResult() {
+    cy.wait(6000);
+    return cy.get('[class="result-window"]').within(() => {
+      return cy.get('[class="CodeMirror-sizer"]').within(() => {
+        return cy
+          .get('[class="CodeMirror-code"]')
+          .invoke("text")
+          .then((r) => {
+            return r;
+          });
+      });
+    });
+  }
+
   private static clearGQL() {
     ComponentOverviewPage.navigateToDeploy();
     cy.wait(6000);

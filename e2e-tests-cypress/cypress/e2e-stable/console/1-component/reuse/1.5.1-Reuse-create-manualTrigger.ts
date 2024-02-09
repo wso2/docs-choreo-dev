@@ -51,6 +51,10 @@ describe("Verify Reusable Manual Trigger creation functionality", () => {
     }
   });
 
+  it("Build the component", () => {
+    component.build();
+  });
+
   it("Deploying to Dev", () => {
     component.deployToDevWithoutSplitButton();
   });

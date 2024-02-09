@@ -46,7 +46,7 @@ export function mixinExecute<T extends Types.Constructor>(
 
     private executeManualTrigger(component: ManualTrigger) {
       let currentExecutionCount = 0;
-      cy.get(TestIds.runNow).should("be.enabled");
+      cy.get(TestIds.runNow).should("be.enabled", VERY_SHORT_TIME);
       cy.get(TestIds.executionCount, VERY_SHORT_TIME)
         .then(($count) => {
           currentExecutionCount = Number($count.text());

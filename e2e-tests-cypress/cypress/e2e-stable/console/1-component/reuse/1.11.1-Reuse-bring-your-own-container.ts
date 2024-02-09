@@ -12,118 +12,114 @@
  */
 
 import { Enums } from "../../../../support/commons/enums";
-import { Utils } from "../../../../support/commons/utils";
-import { TestHelper } from "../../../../support/console/pages/component/common/test-helper";
-import { ComponentDeployPage } from "../../../../support/console/pages/component/component-deploy";
-import { ComponentListingPage } from "../../../../support/console/pages/component/component-listing-page";
-import { ComponentOverviewPage } from "../../../../support/console/pages/component/component-overview-page";
-import { ChoreoHomePage } from "../../../../support/console/pages/home/home-page";
-import { LoginPage } from "../../../../support/console/pages/login-page";
-import { ProjectOverviewPage } from "../../../../support/console/pages/projects/project-overview";
-import { ProjectListingPage } from "../../../../support/console/pages/projects/projects-listing-page";
-import { ByocComponent } from "../../../../support/interfaces/byoc-component";
+import { Byoc } from "../../../../support/console/entities/component/byoc-component";
+import { console } from "../../../../support/console/console";
+import { Project } from "../../../../support/console/entities/project/project";
+import { OK } from "../../../../support/commons/http";
 
-const dp = Enums.Region.US;
-
-before(() => {
-  LoginPage.login();
-});
 
 after(() => {
-  ChoreoHomePage.logout();
+  console.logout();
 });
 
-describe(`Verify BYOC functionality in region ${dp}`, () => {
+
+describe(`Create Reusable BYOC`, () => {
+
+  let project: Project;
+  let byoc: Byoc;
+
   const BYOC_NAME = "create-ReuseBYOC";
   const RESOURCE_NAME = "movies";
   const PROJECT_NAME="Default Project"
 
-  it("Verify BYOC REST API component creation", () => {
-    let componentData: ByocComponent = {
-      name: BYOC_NAME,
-      displayName: BYOC_NAME,
-      componentName: BYOC_NAME,
-      accessibility: Enums.Accessibility.EXTERNAL,
-      componentType: Enums.DisplayType.byocRestApi,
-      description: "BYOC Component",
-      labels: "",
-      oasFilePath: "byoc-test/oas.yaml",
-      projectId: "",
-      port: 8080,
-      byocConfig: {
+  it("Login to Console", () => {
+    console.login();
+  });
+
+  it("Search reuse component project", () => {
+    project = console.searchProject(PROJECT_NAME);
+  });
+
+it("Navigate to existing BYOC component", () => {
+  if (!project.isComponentExists(BYOC_NAME)) {
+    project
+    .createByocComponent(
+      {
+        url: "https://github.com/choreo-test-apps/byor-greetings-app2",
+        branch: "main",
+      },
+      {
         dockerfilePath: "byoc-test/Dockerfile",
         dockerContext: "byoc-test",
-        srcGitRepoUrl:
-          "https://github.com/choreo-test-apps/byor-greetings-app2",
-        srcGitRepoBranch: "main",
       },
-    };
-    ProjectListingPage.selectProject();
-    ProjectOverviewPage.searchReuseComponent(
-      componentData,
-      PROJECT_NAME,
-      true
-    );
-  });
-
-  it("Navigate to deployment", () => {
-    ComponentListingPage.visitToAComponent(BYOC_NAME);
-    ComponentOverviewPage.navigateToDeploy();
-  });
-
-  it("Deploy component", () => {
-    ComponentDeployPage.reDeployToDev();
-  });
-
-  it("Verify test functionality using Swagger UI in Dev", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnSwagger(Enums.Environment.DEVELOPMENT, RESOURCE_NAME).then(
-      (res) => {
-        expect(res.statusCode).to.be.equal("200");
-      }
-    );
-  });
-
-  it("Verify test functionality using generated curl in dev", () => {
-    TestHelper.testOnCurl(
-      Enums.Environment.DEVELOPMENT,
-      Enums.HTTPMethod.GET,
-      RESOURCE_NAME
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(200);
-      });
+      "byoc-test/oas.yaml"
+    )
+    .then((comp: Byoc) => {
+      project.visitComponent(BYOC_NAME);
+      byoc = comp;
     });
-  });
-
-  it("Verify component promote to prod", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteToProd();
-  });
-
-  it("Verify test functionality using Swagger UI in Prod", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnSwagger(Enums.Environment.PRODUCTION, RESOURCE_NAME).then(
-      (res) => {
-        expect(res.statusCode).to.be.equal("200");
-      }
-    );
-  });
-
-  it("Verify test functionality using generated curl in Prod", () => {
-    TestHelper.testOnCurl(
-      Enums.Environment.PRODUCTION,
-      Enums.HTTPMethod.GET,
-      RESOURCE_NAME
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(200);
-      });
+    } else {
+    project.visitComponent(BYOC_NAME);
+    byoc = new Byoc (BYOC_NAME);
+    }
     });
+    
+it("Build the Component", () => {
+  byoc.build();
+});
+
+it("Redeploying to Dev", () => {
+  byoc.deployToDev();
+});
+
+it("Verify test functionality using Swagger UI in Dev", () => {
+    byoc
+      .testSwaggerConsole(Enums.Environment.DEVELOPMENT, RESOURCE_NAME)
+      .then((res) => {
+        expect(res.statusCode).to.be.equal(OK.toString());
+      });
   });
 
-  it("Verify suspending deployments", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
+it("Verify test functionality using generated curl in Dev", () => {
+    byoc
+      .testCurl(
+        Enums.Environment.DEVELOPMENT,
+        Enums.HTTPMethod.GET,
+        RESOURCE_NAME
+      )
+      .then((res) => {
+        expect(res.status).equal(OK);
+      });
+  });
+
+
+it("Verify component promotion to Prod", () => {
+    byoc.promoteProd();
+  });
+
+
+it("Verify test functionality using Swagger UI in Prod", () => {
+    byoc
+      .testSwaggerConsole(Enums.Environment.PRODUCTION, RESOURCE_NAME)
+      .then((res) => {
+        expect(res.statusCode).to.be.equal(OK.toString());
+      });
+  });
+
+it("Verify test functionality using generated curl in Prod", () => {
+    byoc
+      .testCurl(
+        Enums.Environment.PRODUCTION,
+        Enums.HTTPMethod.GET,
+        RESOURCE_NAME
+      )
+      .then((res) => {
+        expect(res.status).equal(OK);
+      });
+  });
+
+it("Stop component deployments", () => {
+    byoc.stopDeployment();
+    byoc.stopPromotion();
   });
 });
