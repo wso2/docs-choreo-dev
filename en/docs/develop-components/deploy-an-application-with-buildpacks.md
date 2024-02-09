@@ -20,7 +20,7 @@ Choreo uses [Google Buildpacks](https://cloud.google.com/docs/buildpacks/overvie
 
 ## Develop a component
 
-To develop a service component that exposes a REST API in Go. you can follow the [Develop a Go REST API ](develop-services/develop-a-go-rest-api.md) guide.
+To develop a service component that exposes a Service in Go, you can follow the [Develop a Service ](develop-services/develop-a-service.md) guide.
 
 Follow the guidelines below based on your language:
 
