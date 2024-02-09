@@ -19,7 +19,7 @@ In this guide, you will:
 
 ### Learn the repository file structure
 
-Let's familiarize ourselves with the key files in the sample greeter application. The below table gives a brief overview of the important files in the greeter service.
+Let's familiarize ourselves with the key files in this sample application. The below table gives a brief overview of the important files in the sample book list service.
 
 !!! note 
     The following file paths are relative to the path <choreo-sample-book-list-service>/
@@ -34,7 +34,7 @@ Let's get started!
 
 ### Configure the service port with endpoints
 
-We expect to run our book list service on port 8080. To securely expose the service through Choreo, we must provide the port and other required information to Choreo. In Choreo, we expose our services with endpoints. You can read more about endpoints in our [endpoint documentation](https://wso2.com/choreo/docs/choreo-concepts/endpoint/).
+You can run the book list service on port 8080. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. In Choreo, you can expose the services with endpoints. You can read more about endpoints in the [endpoint documentation](https://wso2.com/choreo/docs/choreo-concepts/endpoint/).
 
 Choreo looks for an endpoints.yaml file inside the `.choreo` directory to configure the endpoint details of the component. Place the `.choreo` directory at the root of the NodeJS project.
 
@@ -45,7 +45,7 @@ In this sample, the endpoints.yaml file is at choreo-sample-book-list-app/.chore
 Follow the steps given below to create a multi repository project:
 
 !!! info
-     A multi repository project allows you to maintain multiple repositories and dedicate each of them to specific components or modules in you project. 
+     A multi repository project allows you to maintain multiple repositories and dedicate each of them to specific components or modules in your project. 
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the organization home page.
 2. On the organization home page, click **+ Create Project**.
@@ -99,7 +99,7 @@ Let's create a service component by following these steps:
 You have successfully created a Service component with the NodeJS buildpack. Now let's build and deploy the service.
 
 ## Step 3: Build and deploy
-Now that we have connected the source repository, and configured the endpoint details, it's time to build the service. Choreo will create an image in the build process. We can then deploy the built image and test the book list service.
+Now that you have connected the source repository, and configured the endpoint details, it's time to build the service. Choreo will create an image in the build process. You can then deploy the built image and test the book list service.
 
 ### Step 3.1: Build
 
