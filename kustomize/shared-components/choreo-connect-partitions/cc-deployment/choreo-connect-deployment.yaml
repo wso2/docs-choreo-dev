@@ -43,15 +43,9 @@ spec:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
-                matchExpressions:
-                  - key: cc.component
-                    operator: In
-                    values:
-                      - choreo-connect-deployment
-                  - key: choreo.component
-                    operator: In
-                    values:
-                      - choreo-connect
+                matchLabels:
+                  - cc.component: choreo-connect-deployment
+                  - choreo.component: choreo-connect
               topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       securityContext:
