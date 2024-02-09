@@ -75,6 +75,7 @@ nav:
   - Introduction:
       - What is Choreo?: what-is-choreo.md
   - Quick Start Guide:
+      - Deploy Your First Service: quick-start-guides/deploy-your-first-service.md
       - Build Your First Cloud Native Application with Choreo: quick-start-guides/build-your-first-cloud-native-application-with-choreo.md
   - Tutorials:
       - Expose a Service as a Managed API: tutorials/expose-a-service-as-a-managed-api.md

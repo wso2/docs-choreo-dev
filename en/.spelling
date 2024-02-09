@@ -514,6 +514,7 @@ IaC
 add-ons
 service.bal
 proto
+Node.js
 
  - docs/references/upgrading-from-the-previous-version.md
 DefaultProject
@@ -903,3 +904,6 @@ tcp-service
 udp-service
  - docs/develop-components/develop-services/develop-a-service-with-docker.md
 choreo
+ - docs/quick-start-guides/deploy-your-first-service.md
+pre-implemented
+app.mjs
