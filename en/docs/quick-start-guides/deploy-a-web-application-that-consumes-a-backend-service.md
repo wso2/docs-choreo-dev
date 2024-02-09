@@ -1,4 +1,4 @@
-# Deploy a Web Application which Consumes a Backend Service
+# Deploy a Web Application that Consumes a Backend Service
 
 Choreo is an Internal Developer Platform (IDevP) that streamlines the entire process of building, deploying, monitoring, and managing your cloud-native applications easily.
 

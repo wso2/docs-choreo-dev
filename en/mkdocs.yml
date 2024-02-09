@@ -76,7 +76,7 @@ nav:
       - What is Choreo?: what-is-choreo.md
   - Quick Start Guide:
       - Deploy Your First Service: quick-start-guides/deploy-your-first-service.md
-      - Build Your First Cloud Native Full Stack Application: quick-start-guides/build-your-first-cloud-native-full-stack-application.md
+      - Deploy a Web Application that Consumes a Backend Service: quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service.md
   - Tutorials:
       - Expose a Service as a Managed API: tutorials/expose-a-service-as-a-managed-api.md
       - Secure an API with Role-Based Access Control: tutorials/secure-an-api-with-role-based-access-control.md
@@ -270,7 +270,7 @@ plugins:
           'develop/components/api-proxies/policies.md': 'https://wso2.com/choreo/docs/develop/api-policies/policies/'
           'get-started/what-is-choreo.md': 'https://wso2.com/choreo/docs/what-is-choreo/'
           'get-started/quick-start-guide.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo/'
-          'get-started/build-your-first-cloud-native-application-with-choreo.md': 'https://wso2.com/choreo/docs/quick-start-guides/deploy-a-web-application-which-consumes-a-backend-service/'
+          'get-started/build-your-first-cloud-native-application-with-choreo.md': 'https://wso2.com/choreo/docs/quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service/'
           'get-started/tutorials/create-your-first-rest-api.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo/'
           'get-started/tutorials/create-your-first-rest-api-proxy.md': 'https://wso2.com/choreo/docs/quick-start-guides/expose-a-service-as-a-managed-api-with-choreo-api-manager/'
           'get-started/tutorials/create-your-first-webhook.md': 'https://wso2.com/choreo/docs/develop-components/develop-a-webhook/'
