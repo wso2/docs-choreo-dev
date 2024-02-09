@@ -11,7 +11,7 @@ getProjectUuidRegexConf = '^.*/|\+.+'
 getGroupUuidRegexConf =  '^.*\+'
 objectUuidRegexConf = '^([a-zA-Z0-9_\-=]{20,36})$'
 permissionRegexConf = '^(([a-zA-Z0-9_\-]+:)+[a-zA-Z0-9_\-]+)$'
-isActionAuthorizationEnabled = "{{.ACTION_AUTHORIZATION_ENABLED}}"
+isActionAuthorizationEnabled = {{.ACTION_AUTHORIZATION_ENABLED}}
 
 # SpiceDB configs
 enableCheckPermissionConsistencyConf = true
