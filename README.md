@@ -1,6 +1,6 @@
 # Choreo Documentation
 
-This is the Choreo documentation repository. This repository is open and we welcome your contributions!
+This is the Choreo documentation repository. This repository is open and we welcome your contributions.
 
 To see the Choreo documentation site, go to [https://wso2.com/choreo/docs/](https://wso2.com/choreo/docs/)
 
