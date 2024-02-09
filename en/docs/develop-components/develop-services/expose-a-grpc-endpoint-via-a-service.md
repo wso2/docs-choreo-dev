@@ -1,4 +1,4 @@
-# Expose a gRPC endpoint via a Service
+# Expose a gRPC Endpoint via a Service
 
 Choreo allows you to create and deploy applications in your preferred programming language. One powerful option is gRPC, a high-performance and language-agnostic Remote Procedure Call (RPC) framework. It utilizes [Protocol Buffers](https://github.com/protocolbuffers/protobuf) to define services and generate client/server code.
 
