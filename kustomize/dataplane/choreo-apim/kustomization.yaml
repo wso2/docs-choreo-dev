@@ -1,12 +1,4 @@
 resources:
   - ../../base/apim/certificates
 
-patches:
-  - path: priority-class-deployment-patch.yaml
-    target:
-      kind: Deployment
-  - path: priority-class-daemonset-patch.yaml
-    target:
-      kind: DaemonSet
-
 namespace: choreo-apim

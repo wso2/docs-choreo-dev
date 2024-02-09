@@ -3,3 +3,8 @@ resources:
   - loggingapi.yaml
   - obsapi.yaml
   - sys-obsapi.yaml
+
+patches:
+  - path: priority-class-deployment-patch.yaml
+    target:
+      kind: Deployment

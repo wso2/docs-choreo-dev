@@ -1,3 +1,9 @@
 resources:
   - app-gateway-oauth-agent.yaml
   - dp-kv-resolver.yaml
+
+patches:
+  - path: priority-class-deployment-patch.yaml
+    target:
+      kind: Deployment
+
