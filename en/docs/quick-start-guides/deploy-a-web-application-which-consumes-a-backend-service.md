@@ -1,4 +1,4 @@
-# Deploy Your First Cloud Native Full Stack Application
+# Deploy a Web Application which Consumes a Backend Service
 
 Choreo is an Internal Developer Platform (IDevP) that streamlines the entire process of building, deploying, monitoring, and managing your cloud-native applications easily.
 
@@ -6,7 +6,7 @@ In this quick start guide, you will explore how to expose a service endpoint via
 
 This guide walks you through the following steps:
 
-- Develop, deploy, and test a service component.
+- Deploy and test a service component.
 - Create a web application to consume the exposed service.
 - Create a connection to the deployed service.
 - Enable managed authentication and deploy the web application.
