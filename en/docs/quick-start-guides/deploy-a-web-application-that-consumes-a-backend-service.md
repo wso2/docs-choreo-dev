@@ -1,4 +1,4 @@
-# Build Your First Cloud Native Application with Choreo
+# Deploy a Web Application that Consumes a Backend Service
 
 Choreo is an Internal Developer Platform (IDevP) that streamlines the entire process of building, deploying, monitoring, and managing your cloud-native applications easily.
 
@@ -6,7 +6,7 @@ In this quick start guide, you will explore how to expose a service endpoint via
 
 This guide walks you through the following steps:
 
-- Develop, deploy, and test a service component.
+- Deploy and test a service component.
 - Create a web application to consume the exposed service.
 - Create a connection to the deployed service.
 - Enable managed authentication and deploy the web application.
@@ -17,7 +17,7 @@ This guide walks you through the following steps:
 
 Before you try out this guide, complete the following:
 
-1. Create a GitHub repository to save the service implementation. For this guide, you can fork [https://github.com/wso2/choreo-samples](https://github.com/wso2/choreo-samples).
+1. Create a GitHub repository to save the service implementation. For this guide, you can fork [https://github.com/wso2/choreo-sample-book-list-app repository](https://github.com/wso2/choreo-sample-book-list-app).
 2. If you are signing in to the Choreo Console for the first time, create an organization as follows:
 
     1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
@@ -50,7 +50,7 @@ Follow the steps given below to create a mono repository project:
 4. Select **Mono Repository**.
 5. Click **Next**.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
-7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-samples](https://github.com/wso2/choreo-samples) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-sample-book-list-app](https://github.com/wso2/choreo-sample-book-list-app) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only needed to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
@@ -60,7 +60,7 @@ Follow the steps given below to create a mono repository project:
     | **Field**             | **Value**                                     |
     |-----------------------|-----------------------------------------------|
     | **GitHub Account**    | Your account                                  |
-    | **GitHub Repository** | **`choreo-samples`**                         |
+    | **GitHub Repository** | **`choreo-sample-book-list-app`**                         |
     | **Branch**            | **`main`**                                    |
 
 9. Click **Next**. This scans the repository branch you connected and displays the components that are already available in it.
@@ -73,8 +73,9 @@ Follow the steps given below to create a mono repository project:
     | **Field**             | **Value**                                     |
     |-----------------------|-----------------------------------------------|
     | **Component Name**    | Reading List Service                          |
-    | **Buildpack**         | **Ballerina**                                 |
+    | **Buildpack**         | **NodeJS**                                    |
     | **Component Type**    | **Service**                                   |
+    | **Language Version**  | **20.x.x**                                    |     
 
 3. Click **Save**. You will see that the status of the `Reading List Service` component has changed to **Configured** and the checkbox to select the component is enabled.
 4. Select the `Reading List Service` component and click **Create**. This creates a mono repository project, initializes the service with the implementation from your GitHub repository, and takes you to the project home page.
@@ -101,15 +102,10 @@ For the REST endpoint of the service to be invokable, you need to deploy it. To 
 
 1. In the left navigation menu, click **Deploy**.
 2. In the **Set Up** card, click **Configure & Deploy**.
-3. In the **Configurations** pane that opens, click **Next**.
-4. In the **Endpoint Details** pane that opens, you can see the **Readinglist** endpoint ready to be deployed. Click the edit icon next to the **Readinglist** endpoint.
-5. Change the **Network Visibility** to **Public**. This setting securely exposes the endpoint for consumption.
-6. Click **Update**.
-
-    !!! info
-         In this example, you deploy a Ballerina service as a REST endpoint. Therefore, Choreo generates the REST endpoint automatically. If you deploy a non-Ballerina service, you must manually add the REST endpoint and set the network visibility to **Public**.
-
-7. Click **Deploy**. This deploys the service to the development environment and lists the service in the Choreo Marketplace. 
+3. In the **Environment Configurations** pane that opens, click **Next**.
+4. In the **File Mount** pane that opens, click **Next**.
+5. In the **Endpoint Details** pane that opens,verify that the **Network Visibility** is set to **Public**. This setting securely exposes the endpoint for consumption.
+6. Click **Deploy**. This deploys the service to the development environment and lists the service in the Choreo Marketplace. 
 
 ## Step 4: Test the service
 
@@ -117,39 +113,12 @@ To test the **Readinglist** REST endpoint via the integrated OpenAPI Console in 
 
 1. In the Choreo Console left navigation menu, click **Test** and then click **Console**.
 2. In the OpenAPI Console that opens, select **Development** from the environment drop-down list.
-3. In the **Endpoint** list, select **Readinglist**.
+3. In the **Endpoint** list, select **Books REST Endpoint**.
 4. Expand the **GET** method and click **Try it out**.
 5. Click **Execute**.
-6. Check the **Server Response** section. You will see a response similar to the following:
-
-    ```json
-    {
-    "error": "Bad Request",
-    "error_description": "Error while getting the JWT token"
-    }
-    ```
-To fix the JWT error response, you must enable passing the security context to the backend service through API management.
-You can proceed to the next section to fix the JWT error and test the service once again.
-
-## Step 5: Fix the JWT error and retest the service
-
-To fix the JWT error and test the service once again, follow the steps given below:
-
-1. In the left navigation menu, click **Manage** and then click **Settings**.
-2. Under **API Settings**, click **Edit**.
-3. Click the **CORS Configuration** toggle to enable the setting.
-4. To allow cross-origin calls to send credentials, select the **Access Control Allow Credentials** checkbox.
-5. To allow passing the JWT to the backend service, enable the **Pass Security Context To Backend** toggle.
-6. Under **API Settings**, click **Save**.
-7. In the **Apply to Development** pane that opens, enter a meaningful message and click **Apply**.
-
-To retest the API and confirm that it works as expected, follow the steps given below:
-
-1. In the left navigation menu, click **Test** and then click **Console**.
-2. In the OpenAPI Console that opens, select **Development** from the environment drop-down list.
-3. In the **Endpoint** list, select **Readinglist**.
-4. Expand the **POST** method and click **Try it out**.
-5. Update the request body so that the parameters have the values given below:
+6. Check the **Server Response** section. You will see an empty response. You can add an entry using the POST method and re-test the service. 
+7. Expand the **POST** method and click **Try it out**.
+8. Update the request body so that the parameters have the values given below:
 
     | **Parameter** | **Value**       |
     |---------------|-----------------|
@@ -166,8 +135,7 @@ To retest the API and confirm that it works as expected, follow the steps given 
         "title": "Dracula"
       }
     ```
-
-6. Click **Execute**.
+9. Click **Execute**.
 
     Check the **Server Response** section. On successful invocation, you will receive the `201` HTTP code.
 
@@ -196,7 +164,7 @@ To create a web application component, follow the steps given below:
     | **Component Name**    | `Reading List Web App`  |
     | **Description**       | `Front-end application for the reading list service` |
     | **Buildpack**         | Select **React** because the sample front-end application is a React application built with Vite|
-    | **Project Directory** | **`reading-list-app/reading-list-front-end-with-managed-auth`** |
+    | **Project Directory** | **`/choreo-sample-book-list-app/reading-list-front-end-with-managed-auth`** |
     | **Build Command**     | **`npm install && npm run build`**            |
     | **Build Path**        | **`dist`**                                    |
     | **Node Version**      | **`18`**                                      |
@@ -205,11 +173,13 @@ To create a web application component, follow the steps given below:
 
 ### Step 6.2: Create a connection to the deployed service
 
+A connection allows you to integrate the service you intend to deploy on Choreo with other services on Choreo or external resources. For more information on Choreo Connections refer to the [Connection](../choreo-concepts/connections.md) documentation.
+
 To establish a connection between the web application you created and the deployed service, follow the steps given below:
 
 1. In the left navigation menu, click **Dependencies** and then click **Connections**.
 2. Click **+ Create**.
-3. In the **Create Connection** pane, click `Reading List Service-Readinglist`.`
+3. In the **Create Connection** pane, click `Reading List Service-Books REST Endpoint`.`
 4. Specify values as follows for each of the fields:
 
     | **Field**        | **Value**                       |
@@ -221,7 +191,7 @@ To establish a connection between the web application you created and the deploy
 each environment the service is deployed in. In this guide, you will see the service URL for the Development environment.
 6. Click **Finish**. This opens the detailed view of the connection you created. You can copy the Service URL displayed here to use when you configure the web application before deploying it.
 
-### Step 6.3: Build the component
+### Step 6.3: Build the web application component
 
 To build the web application, follow the steps given below:
 
@@ -273,7 +243,8 @@ To create a user to access the **readingListApp** application, follow the steps 
 2. To proceed with creating a user with the populated username and password, click **Create**. Make sure you copy the populated username and password to use when you test the front-end application.
 
     !!! tip
-         You can create multiple users to test your front-end application.
+         - You can create multiple users to test your front-end application.
+         - You cannot change the username and password of the demo user.
 
 Now, you can deploy the web application.
 
