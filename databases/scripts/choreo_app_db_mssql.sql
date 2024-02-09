@@ -1891,8 +1891,8 @@ CREATE TABLE [dbo].[enterprise_group_mapping]
     [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
-    CONSTRAINT unique_enterprise_group_mapping UNIQUE(user_idp_id, organization_uuid)
-    CONSTRAINT [enterprise_group_mapping$group_uuid_fk] FOREIGN KEY (choreo_group_uuid) REFERENCES [group](uuid) ON DELETE CASCADE
+    CONSTRAINT unique_enterprise_group_mapping UNIQUE(enterprise_group_name, choreo_group_uuid, organization_id),
+    CONSTRAINT enterprise_group_mapping$group_uuid_fk FOREIGN KEY (choreo_group_uuid) REFERENCES [group](uuid) ON DELETE CASCADE
 )
 
 /****** Object:  Trigger [dbo].[enterprise_group_mapping_UpdateTimeTrigger] ******/
