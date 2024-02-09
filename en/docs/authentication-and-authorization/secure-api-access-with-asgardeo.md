@@ -16,7 +16,7 @@ This guide walks you through the following steps:
 
 To follow this guide, you need to satisfy the following prerequisites:
 
--  [Configured Asgardeo as an external IdP](../administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md) 
+- [Configured Asgardeo as an external IdP](../administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md) 
 - If you don't already have a service in Choreo, [develop a service](../develop-components/develop-services/develop-a-service.md) or an [API Proxy](../develop-components/develop-an-api-proxy.md).
 - Deploy and publish your API. 
 
