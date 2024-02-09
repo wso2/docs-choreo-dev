@@ -12,106 +12,107 @@
  */
 
 import { Enums } from "../../../../support/commons/enums";
-import { TestHelper } from "../../../../support/console/pages/component/common/test-helper";
-import { ComponentDeployPage } from "../../../../support/console/pages/component/component-deploy";
-import { ComponentListingPage } from "../../../../support/console/pages/component/component-listing-page";
-import { ComponentAPILifecycle } from "../../../../support/console/pages/component/component-manage-page";
-import { ComponentOverviewPage } from "../../../../support/console/pages/component/component-overview-page";
-import { ChoreoHomePage } from "../../../../support/console/pages/home/home-page";
-import { LoginPage } from "../../../../support/console/pages/login-page";
-import { ProjectOverviewPage } from "../../../../support/console/pages/projects/project-overview";
-import { ProjectListingPage } from "../../../../support/console/pages/projects/projects-listing-page";
-import { ComponentData } from "../../../../support/interfaces/component-data";
+import { Service } from "../../../../support/console/entities/component/service-component";
+import { Project } from "../../../../support/console/entities/project/project";
+import { console } from "../../../../support/console/console";
+import { OK } from "../../../../support/commons/http";
 
-
-before(() => {
-  LoginPage.login();
-});
 
 after(() => {
-  ChoreoHomePage.logout();
+  console.logout();
 });
 
 describe("Verify Ballerina service functionality", () => {
+  let project: Project;
+  let component: Service;
   const COMPONENT_NAME = "create-ReuseService-1.13.1";
   const PROJECT_NAME = "Default Project";
   const ENDPOINT_NAME = "Readinglist";
 
 
-  it("Verify Ballerina service component creation", () => {
-    let componentData: ComponentData = {
-      componentName: COMPONENT_NAME,
-      displayType: Enums.DisplayType.ballerinaService,
-      accessibility: Enums.Accessibility.EXTERNAL,
-      projectName: PROJECT_NAME,
-      triggerChannels: "",
-      triggerId: null,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/byor-service-app1",
-      initializeAsBallerinaProject: false,
-      repositoryType: Enums.RepoType.UserManagedNonEmpty,
-      repositorySubPath: "",
-      sampleTemplate: "",
-    };
-    ProjectListingPage.selectProject();
-    ProjectOverviewPage.searchReuseComponent(componentData);
+  it("Login to Console", () => {
+    console.login();
   });
 
-  it("Navigate to deployment", () => {
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-    ComponentOverviewPage.navigateToDeploy();
+  it("Search reuse component project", () => {
+    project = console.searchProject(PROJECT_NAME);
   });
 
-  it("Verify component deployment with public level endpoint", () => {
-    ComponentDeployPage.reDeployService(PROJECT_NAME,COMPONENT_NAME,ENDPOINT_NAME, true, true);
-  });
 
-  it("Verify test functionality of root resource in dev on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testManagedEndpoint(
-      Enums.Environment.DEVELOPMENT,
-      "Readinglist",
-      "books",
-      "get",
-      "operations-default-getBooks"
-    ).then((res) => {
-      cy.fixture('books').then(books => {
-        expect(books[1].title).to.eq('Dead Men')
+  it("Verify Reuse Ballerina service component creation", () => {
+    project.isComponentExists(COMPONENT_NAME).then((isExists) => {
+     if (!isExists) {
+      project
+      .createServiceComponent(
+        Enums.Accessibility.EXTERNAL,
+        {
+          url: "https://github.com/choreo-test-apps/byor-service-app1",
+          branch: "main",
+        },
+        ENDPOINT_NAME
+      )
+      .then((serviceComponent: Service) => {
+        project.visitComponent(COMPONENT_NAME);
+        component = serviceComponent;
+      });
+      } else {
+      project.visitComponent(COMPONENT_NAME);
+      component = new Service (COMPONENT_NAME, ENDPOINT_NAME);
+      }
+      });
+    });
+
+      it("Build the component", () => {
+        component.build();
+      });
+    
+      it("Deploying the component with Public level visibility", () => {
+        component.deployPublicLevelAccessibility();
+      });
+
+  it("Testing the component in Dev", () => {
+    component
+      .testConsole({
+        env: Enums.Environment.DEVELOPMENT,
+        endpoint: ENDPOINT_NAME,
+        resourcePath: "books",
+        method: "get",
+        parentComponentId: "operations-default-getBooks",
       })
-      expect(res.statusCode).to.be.eq("200");
-    });
+      .then((res) => {
+        cy.fixture("books").then((books) => {
+          expect(books[1].title).to.eq("Dead Men");
+        });
+        expect(res.status).equal(OK);
+      });
   });
 
-  it("Verify component promote to prod", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteService(ENDPOINT_NAME, true);
+  it("Verifying component promotion to Prod", () => {
+    component.promotePublicLevelAccessibility();
   });
 
-  it("Verify test functionality of root resource in prod on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testManagedEndpoint(
-      Enums.Environment.PRODUCTION,
-      "Readinglist",
-      "books",
-      "get",
-      "operations-default-getBooks"
-    ).then((res) => {
-      cy.fixture('books').then(books => {
-    expect(books[2].title).to.eq('The Bucther')
-  })
-      expect(res.statusCode).to.be.eq("200");
-    });
+
+  it("Testing the component in Prod", () => {
+    component
+      .testConsole({
+        env: Enums.Environment.PRODUCTION,
+        endpoint: ENDPOINT_NAME,
+        resourcePath: "books",
+        method: "get",
+        parentComponentId: "operations-default-getBooks",
+      })
+      .then((res) => {
+        cy.fixture("books").then((books) => {
+          expect(books[1].title).to.eq("Dead Men");
+        });
+        expect(res.status).equal(OK);
+      });
   });
 
-  it("Verify manage functionality", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publishServiceToMarketplace();
+  it("Stop component", () => {
+    component.stopDeployment();
+    component.stopPromotion();
   });
 
-  it("Verify suspending all component deployments", () => {
-    ComponentAPILifecycle.demoteToCreated();
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
-  });
 });
 

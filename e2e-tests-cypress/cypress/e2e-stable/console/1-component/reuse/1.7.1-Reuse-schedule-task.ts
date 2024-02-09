@@ -36,7 +36,8 @@ describe("Create Reusable Schedule Trigger", () => {
     });
 
   it("Navigate to existing Schedule Trigger component", () => {
-    if (!project.isComponentExists(SCHEDULE_NAME)) {
+    project.isComponentExists(SCHEDULE_NAME).then((isExists) => {
+      if(!isExists) {
       project
         .createScheduleTriggerComponent(
           Enums.Accessibility.EXTERNAL,
@@ -54,7 +55,7 @@ describe("Create Reusable Schedule Trigger", () => {
       component = new ScheduleTrigger(SCHEDULE_NAME);
     }
   });
-
+});
 
   it("Build the component", () => {
     component.build();

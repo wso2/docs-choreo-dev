@@ -41,8 +41,9 @@ describe(`Create Reusable BYOC`, () => {
   });
 
 it("Navigate to existing BYOC component", () => {
-  if (!project.isComponentExists(BYOC_NAME)) {
-    project
+  project.isComponentExists(BYOC_NAME).then((isExists) => {
+    if (!isExists) {
+      project
     .createByocComponent(
       {
         url: "https://github.com/choreo-test-apps/byor-greetings-app2",
@@ -61,8 +62,9 @@ it("Navigate to existing BYOC component", () => {
     } else {
     project.visitComponent(BYOC_NAME);
     byoc = new Byoc (BYOC_NAME);
-    }
-    });
+  }
+});
+});
     
 it("Build the Component", () => {
   byoc.build();

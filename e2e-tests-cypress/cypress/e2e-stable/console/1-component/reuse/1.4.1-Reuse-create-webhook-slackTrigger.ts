@@ -49,25 +49,27 @@ describe("Create Reusable Webhook functionality", () => {
   });
 
   it("Navigate to existing Webhook component", () => {
-    if (!project.isComponentExists(WEBHOOK_NAME)) {
-      project
-        .createWebhookComponent(
-          Enums.Accessibility.EXTERNAL,
-          {
-            url: "https://github.com/choreo-test-apps/slack-web-hook",
-            branch: "main",
-          },
-          webhookInfo,
-          WEBHOOK_NAME
-        )
-        .then((app: Webhook) => {
-          project.visitComponent(WEBHOOK_NAME);
-          webhook = app;
-        });
-    } else {
-      project.visitComponent(WEBHOOK_NAME);
-      webhook = new Webhook(WEBHOOK_NAME);
-    }
+    project.isComponentExists(WEBHOOK_NAME).then((isExists) => {
+      if (!isExists) {
+        project
+          .createWebhookComponent(
+            Enums.Accessibility.EXTERNAL,
+            {
+              url: "https://github.com/choreo-test-apps/slack-web-hook",
+              branch: "main",
+            },
+            webhookInfo,
+            WEBHOOK_NAME
+          )
+          .then((app: Webhook) => {
+            project.visitComponent(WEBHOOK_NAME);
+            webhook = app;
+          });
+      } else {
+        project.visitComponent(WEBHOOK_NAME);
+        webhook = new Webhook(WEBHOOK_NAME);
+      }
+    });
   });
 
   it("Build Webhook", () => {
