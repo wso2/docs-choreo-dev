@@ -1,4 +1,4 @@
-# Develop a TCP Service
+# Expose a TCP server via a Service
 
 Choreo offers the flexibility to design and deploy applications in the programming language of your choice. One viable choice for specific network communication needs is TCP (Transmission Control Protocol). TCP provides a reliable, stream-oriented communication mechanism that ensures data integrity and orderliness during transmission. It's the go-to option for scenarios where guaranteed data delivery and error recovery are paramount.
 
