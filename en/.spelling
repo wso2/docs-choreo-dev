@@ -515,6 +515,7 @@ add-ons
 service.bal
 proto
 Node.js
+choreo-sample-todo-list-app
 
  - docs/references/upgrading-from-the-previous-version.md
 DefaultProject
