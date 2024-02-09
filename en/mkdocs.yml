@@ -94,14 +94,14 @@ nav:
       - Choreo Marketplace: choreo-concepts/choreo-marketplace.md
   - Develop Components:
       - Develop Services:
+          - Service Component Overview: develop-components/develop-services/service-component-overview.md
           - Develop a Service: develop-components/develop-services/develop-a-service.md
-          - Develop a REST API: develop-components/develop-services/develop-a-rest-api.md
-          - Develop a Go REST API: develop-components/develop-services/develop-a-go-rest-api.md
-          - Develop a gRPC Service: develop-components/develop-services/develop-a-grpc-service.md
-          - Develop a TCP Service: develop-components/develop-services/develop-a-tcp-service.md
-          - Develop a UDP Service: develop-components/develop-services/develop-a-udp-service.md
-          - Develop a Ballerina REST API:  develop-components/develop-services/develop-a-ballerina-rest-api.md
-          - Develop a Ballerina GraphQL API: develop-components/develop-services/develop-a-ballerina-graphql-api.md
+          - Develop a service with Docker: develop-components/develop-services/develop-a-service-with-docker.md
+          - Develop a Ballerina Service:  develop-components/develop-services/develop-a-ballerina-service.md
+          - Expose a gRPC Endpoint via a Service: develop-components/develop-services/expose-a-grpc-endpoint-via-a-service.md
+          - Expose a TCP Server via a Service: develop-components/develop-services/expose-a-tcp-server-via-a-service.md
+          - Expose a UDP Server via a Service: develop-components/develop-services/expose-a-udp-server-via-a-service.md
+          - Expose a Ballerina GraphQL Endpoint via a Service: develop-components/develop-services/expose-a-ballerina-graphql-endpoint-via-a-service.md
       - Develop an API Proxy: develop-components/develop-an-api-proxy.md
       - Develop a Web Application: develop-components/develop-a-web-application.md
       - Develop a Webhook: develop-components/develop-a-webhook.md 
@@ -342,6 +342,14 @@ plugins:
           'develop-components/develop-a-rest-api-proxy.md': 'https://wso2.com/choreo/docs/develop-components/develop-an-api-proxy/'
           'devops-and-ci-cd/builds-and-deployments.md' : 'https://wso2.com/choreo/docs/choreo-concepts/ci-cd/'
           'troubleshoot/faq.md': 'https://wso2.com/choreo/docs/references/faq/'
+          'develop-components/develop-services/develop-a-service.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/service-component-overview/'
+          'develop-components/develop-services/develop-a-rest-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-go-service/'
+          'develop-components/develop-services/develop-a-go-rest-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service-with-docker/'
+          'develop-components/develop-services/develop-a-grpc-service.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-grpc-endpoint-via-a-service/'
+          'develop-components/develop-services/develop-a-tcp-service.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-tcp-server-via-a-service/'
+          'develop-components/develop-services/develop-a-udp-service.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-udp-server-via-a-service/'
+          'develop-components/develop-services/develop-a-ballerina-rest-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-ballerina-service/'
+          'develop-components/develop-services/develop-a-ballerina-graphql-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-ballerina-graphql-endpoint-via-a-service/'
           
 extra_css:
   # - assets/lib/highlightjs/default.min.css

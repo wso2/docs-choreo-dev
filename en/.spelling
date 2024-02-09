@@ -512,6 +512,8 @@ uptime
 DDoS
 IaC
 add-ons
+service.bal
+proto
 
  - docs/references/upgrading-from-the-previous-version.md
 DefaultProject
@@ -699,6 +701,10 @@ ci-cd
 autoscale
 connections.md
 choreo-limitations
+expose-a-grpc-endpoint-via-a-service
+expose-a-tcp-server-via-a-service
+expose-a-udp-server-via-a-service
+expose-a-ballerina-graphql-endpoint-via-a-service
  - theme/material/templates/home-page.html
 doctype
 html
@@ -880,3 +886,20 @@ YOUR_ENVIRONMENT_VAR_HERE
 2-3x
  - docs/manage-databases-and-caches/choreo-managed-postgresql-databases.md
 Business-16
+ - docs/develop-components/develop-services/develop-a-ballerina-service.md
+service_test.bal
+choreo-sample-apps
+ - docs/develop-components/develop-services/develop-a-go-service.md
+choreo
+ - docs/develop-components/develop-services/expose-a-grpc-endpoint-via-a-service.md
+greeter_client
+Dockerfile.server
+Dockerfile.client
+greeter.proto
+grpc
+ - docs/develop-components/develop-services/expose-a-tcp-server-via-a-service.md
+tcp-service
+ - docs/develop-components/develop-services/expose-a-udp-server-via-a-service.md
+udp-service
+ - docs/develop-components/develop-services/develop-a-service-with-docker.md
+choreo

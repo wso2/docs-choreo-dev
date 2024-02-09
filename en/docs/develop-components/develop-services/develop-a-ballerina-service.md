@@ -1,4 +1,4 @@
-# Develop a Ballerina REST API
+# Develop a Ballerina Service
 
 Choreo offers the flexibility to develop and deploy applications in a language of your preference. This guide demonstrates how to leverage Choreo to deploy a service component that exposes a REST API using the [Ballerina language](https://ballerina.io/). No prior knowledge of the Ballerina language is required to follow this guide. 
 

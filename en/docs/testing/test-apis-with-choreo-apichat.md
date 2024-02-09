@@ -23,7 +23,7 @@ Before you try out this guide, be sure that you have the following:
     | Component type |Sample source                                       | Reference documentation      | 
     |----------------|----------------------------------------------------|------------------------------|
     | REST API Proxy| [https://raw.githubusercontent.com/wso2/choreo-sample-apps/main/rest-api-proxy/pet-store/openapi.yaml](https://raw.githubusercontent.com/wso2/choreo-sample-apps/main/rest-api-proxy/pet-store/openapi.yaml ) | [Develop an API Proxy](../develop-components/develop-an-api-proxy.md) | 
-    | Service (Exposing a REST API endpoint)| [https://github.com/wso2/choreo-sample-apps/tree/main/java/pet-store ](https://github.com/wso2/choreo-sample-apps/tree/main/java/pet-store ) |[Develop a REST API](../develop-components/develop-services/develop-a-rest-api.md) |
+    | Service (Exposing a REST API endpoint)| [https://github.com/wso2/choreo-sample-apps/tree/main/java/pet-store ](https://github.com/wso2/choreo-sample-apps/tree/main/java/pet-store ) |[Develop a Service](../develop-components/develop-services/develop-a-service.md) |
 
 ## Test your APIs
 
