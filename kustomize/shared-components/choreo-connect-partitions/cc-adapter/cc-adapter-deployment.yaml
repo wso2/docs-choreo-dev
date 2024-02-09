@@ -36,6 +36,7 @@ spec:
     metadata:
       labels:
         userapp-ingress-allowed: "true"
+        dummy: "true"
     spec:
       affinity:
         podAntiAffinity:
