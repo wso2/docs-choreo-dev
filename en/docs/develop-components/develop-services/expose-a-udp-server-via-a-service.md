@@ -1,4 +1,4 @@
-# Expose a UDP server via a Service
+# Expose a UDP Server via a Service
 
 Choreo offers the flexibility to design and deploy applications in the programming language of your choice. One compelling choice for certain network communication needs is UDP (User Datagram Protocol). UDP is a high-speed, connectionless protocol ideal for scenarios where lightweight, real-time data transmission is essential.
 
