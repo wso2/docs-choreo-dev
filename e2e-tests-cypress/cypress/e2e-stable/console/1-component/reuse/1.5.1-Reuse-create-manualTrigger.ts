@@ -31,8 +31,9 @@ describe("Verify Reusable Manual Trigger creation functionality", () => {
   });
 
   it("Navigate to existing Manual Trigger component", () => {
-    if (!project.isComponentExists(MANUAL_NAME)) {
-      project
+    project.isComponentExists(MANUAL_NAME).then((isExists) => {
+      if (!isExists) {
+        project
         .createManualTriggerComponent(
           Enums.Accessibility.EXTERNAL,
           {
@@ -45,10 +46,11 @@ describe("Verify Reusable Manual Trigger creation functionality", () => {
           project.visitComponent(MANUAL_NAME);
           component = comp;
         });
-    } else {
-      project.visitComponent(MANUAL_NAME);
-      component = new ManualTrigger(MANUAL_NAME);
-    }
+      } else {
+        project.visitComponent(MANUAL_NAME);
+        component = new ManualTrigger(MANUAL_NAME);
+      }
+    });
   });
 
   it("Build the component", () => {

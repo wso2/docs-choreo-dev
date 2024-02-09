@@ -176,6 +176,7 @@ export class Project {
 
   visitComponent(name: string): string {
     this.goToComponentListing();
+    this.searchComponent(name);
 
     cy.get(TestIds.componentTable).contains(name).should("be.visible").click();
 
@@ -524,6 +525,11 @@ verifyUsageInsights(env: Enums.Environment, options?: { expectedTraffic: number 
     cy.get(TestIds.listing).should("be.visible").click();
 
     cy.get(TestIds.componentFilter).should("be.visible");
+  }
+
+  private searchComponent(name: string) {
+    cy.get(TestIds.searchIcon).should("be.visible").click();
+    cy.get(TestIds.componentSearchBox).should("be.visible").type(name);
   }
 
   private createComponentIfEmptyProject() {
