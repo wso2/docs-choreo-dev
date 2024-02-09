@@ -24,4 +24,9 @@ resources:
   - pdb
   - service
 
+patches:
+  - path: priority-class-deployment-patch.yaml
+    target:
+      kind: Deployment
+
 namespace: choreo-ai

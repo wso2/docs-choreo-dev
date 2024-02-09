@@ -1,7 +1,2 @@
 resources:
   - testgpt.yaml
-
-patches:
-  - path: priority-class-deployment-patch.yaml
-    target:
-      kind: Deployment
