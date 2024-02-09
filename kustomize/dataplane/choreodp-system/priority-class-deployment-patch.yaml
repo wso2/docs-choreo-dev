@@ -16,6 +16,8 @@
 
 apiVersion: apps/v1
 kind: Deployment
+metadata:
+  name: priority-class-patch
 spec:
   template:
     spec:
