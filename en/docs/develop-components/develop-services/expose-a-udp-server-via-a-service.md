@@ -1,20 +1,21 @@
-# Develop a TCP Service
+# Expose a UDP Server via a Service
 
-Choreo offers the flexibility to design and deploy applications in the programming language of your choice. One viable choice for specific network communication needs is TCP (Transmission Control Protocol). TCP provides a reliable, stream-oriented communication mechanism that ensures data integrity and orderliness during transmission. It's the go-to option for scenarios where guaranteed data delivery and error recovery are paramount.
+Choreo offers the flexibility to design and deploy applications in the programming language of your choice. One compelling choice for certain network communication needs is UDP (User Datagram Protocol). UDP is a high-speed, connectionless protocol ideal for scenarios where lightweight, real-time data transmission is essential.
 
-In this guide, you will learn to use Choreo to create a service component that exposes a TCP server implemented in [Go](https://go.dev/), enabling efficient and scalable communication with any TCP client application. No prior knowledge of the Go language is necessary to follow this guide.
+In this guide, you will learn to use Choreo to create a Service component that exposes a UDP server implemented in [Go](https://go.dev/), enabling efficient and scalable communication with any UDP client application. No prior knowledge of the Go language is necessary to follow this guide.
 
 By following this guide, you will:
 
-- Setup a TCP Server
-    - Create a simple TCP server using a Service component.
-    - Link the containerized TCP service to the Choreo component using the Dockerfile. 
-    - Deploy the TCP server component in Choreo. 
-- Setup a TCP Client
-    - Create a TCP client using a Manual Trigger component. 
-    - Link the containerized TCP client to the Choreo component using the Dockerfile. 
-    - Deploy the TCP client component in Choreo.
-- Invoke the TCP server using a TCP client and check the response through the Choreo log view.
+- Setup a UDP Server
+    - Create a simple UDP server using a Service component.
+    - Link the containerized UDP service to the Choreo component using the Dockerfile. 
+    - Deploy the UDP server component in Choreo. 
+- Setup a UDP Client
+    - Create a UDP client using a Manual Trigger component. 
+    - Link the containerized UDP client to the Choreo component using the Dockerfile. 
+    - Deploy the UDP client component in Choreo.
+- Invoke the UDP server using a UDP client and check the response through the Choreo log view.
+
 
 ## Prerequisites
 
@@ -30,7 +31,7 @@ Let's get started!
 Let's familiarize ourselves with the key files in the sample greeter application. The below table gives a brief overview of the important files in the greeter service.
 
 !!! note 
-    The following file paths are relative to the path `<sample-repository-dir>/go/tcp-service`.
+    The following file paths are relative to the path `<sample-repository-dir>/go/udp-service`.
 
 |File Path                |Description                                                                                   |
 |------------------------|----------------------------------------------------------------------------------------------|
@@ -42,13 +43,13 @@ Let's familiarize ourselves with the key files in the sample greeter application
 
 ### Configure the service port with endpoints
 
-Let's run the TCP server Service component on port 5050. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. In Choreo, you can expose your services with endpoints. You can read more about endpoints in [Configure Endpoints](https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/#configure-endpoints).
+Let's run the UDP server Service component on port 5050. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. In Choreo, you can expose your services with endpoints. You can read more about endpoints in our [endpoint documentation](https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/#configure-endpoints).
 
 Choreo looks for an `endpoints.yaml` file inside the `.choreo` directory to configure the endpoint details of a containerized component. Place the `.choreo` directory at the root of the Docker build context path.
 
-In our TCP server sample, the `endpoints.yaml` file is at `go/tcp-service/.choreo/endpoints.yaml`. Our build context path is `go/tcp-service`.
+In our gRPC server sample, the `endpoints.yaml` file is at `go/udp-service/.choreo/endpoints.yaml`. Our build context path is `go/udp-service`.
 
-## Step 1: Create a service component with a TCP endpoint
+## Step 1: Create a service component with a UDP endpoint
 
 Let's create a containerized Service component by following these steps:
 
@@ -59,7 +60,7 @@ Let's create a containerized Service component by following these steps:
 
     | **Field**       | **Value**               |
     |-----------------|-------------------------|
-    | **Name**        | `Go TCP Server`        |
+    | **Name**        | `Go UDP Server`        |
     | **Description** | `Sends greetings`       |
 
 5. Select **GitHub** tab.
@@ -81,12 +82,12 @@ Let's create a containerized Service component by following these steps:
     | **GitHub Repository**   | **`choreo-sample-apps`**        |
     | **Branch**              | **`main`**                      |
     | **Buildpack**        | **Dockerfile**                  |
-    | **Dockerfile Path**     | **go/tcp-service/Dockerfile.server** |
-    | **Docker Context Path** | **go/tcp-service**                     |
+    | **Dockerfile Path**     | **go/udp-service/Dockerfile.server** |
+    | **Docker Context Path** | **go/udp-service**                     |
 
 
     !!! info
-        1.  To successfully build your container with Choreo, it is essential to explicitly define a User ID (UID) under the USER instruction in your Dockerfile. For reference, see [sample Dockerfile](https://github.com/wso2/choreo-sample-apps/blob/main/go/tcp-service/Dockerfile.server).
+        1.  To successfully build your container with Choreo, it is essential to explicitly define a User ID (UID) under the USER instruction in your Dockerfile. For reference, see [sample Dockerfile](https://github.com/wso2/choreo-sample-apps/blob/main/go/udp-service/Dockerfile.server).
         To ensure that the defined USER instruction is valid, it must conform to the following conditions:
             - A valid User ID is a numeric value between 10000-20000, such as `10001` or `10500`.
             - Usernames are considered invalid and should not be used. For example, `my-custom-user-12221` or `my-custom-user` are invalid User IDs.
@@ -134,26 +135,26 @@ Next, to deploy this service, follow these steps:
 !!! note
         Deploying the service component may take a while. You can track the progress by observing the logs. Once the deploying is complete, the build status changes to **Active** on the **Development** environment card.
 
-6. Once you have successfully deployed your service, navigate to the component overview page and copy the TCP service address. You need to provide that address when setting up the client application later in this guide.
+6. Once you have successfully deployed your service, navigate to the component overview page and copy the UDP service address. You need to provide that address when setting up the client application later in this guide.
 
-You have successfully deployed the TCP server. Currently, the TCP service is only accessible for the components deployed within the same project.
+You have successfully deployed the UDP server. Currently, the UDP service is only accessible for the components deployed within the same project.
 
-## Step 3: Invoke the TCP service
+## Step 3: Invoke the UDP service
 
-Let's invoke the TCP service that you created above, using a TCP client. To do this, you can make use of a Manual Trigger component. We recommend this approach because, in this example, it's more efficient to have a client that connects to the server, sends a request, and then stops. A continuously executing task isn't required. Furthermore, if you use a Manual Trigger component, you won't need to expose an endpoint in the client for invocation, unlike with an API.
+Let's invoke the UDP service that you created above, using a UDP client. To do this, you can make use of a Manual Trigger component. We recommend this approach because, in this example, it's more efficient to have a client that connects to the server, sends a request, and then stops. A continuously executing task isn't required. Furthermore, if you use a Manual Trigger component, you won't need to expose an endpoint in the client for invocation, unlike with an API.
 
-### Step 4.1: Create a manual trigger for the TCP client
+### Step 3.1: Create a manual trigger for the UDP client
 
 Let's create a containerized Manual Trigger component by following these steps:
 
-1. Click on the **Project** list and go to the **Components** page. Alternatively, you can expand the **Components** list and click **+ Create New**.
+1. Click on the **Project** list to go to the **Components** page. Alternatively, you can expand the **Components** list and click **+ Create New**.
 2. On the **Components** page, click **Create**.
 3. On the **Manual Trigger** card, click **Create**.
 4. Enter a unique name and a description for the client component. For this guide, let's enter the following values:
 
     | **Field**       | **Value**               |
     |-----------------|-------------------------|
-    | **Name**        | `Go TCP Client`        |
+    | **Name**        | `Go UDP Client`        |
     | **Description** | `Receive greetings`     |
 
 5. Click **Next**.
@@ -166,16 +167,16 @@ Let's create a containerized Manual Trigger component by following these steps:
     | **GitHub Repository** | **`choreo-sample-apps`**        |
     | **Branch**            | **`main`**                      |
     | **Buildpack**      | **Dockerfile**                  |
-    | **Dockerfile Path**   | **go/tcp-service/Dockerfile.client** |
-    | **Docker Context Path** | **go/tcp-service**                   |
+    | **Dockerfile Path**   | **go/udp-service/Dockerfile.client** |
+    | **Docker Context Path** | **go/udp-service**                   |
 
 8. Click **Create** . Once the component creation is complete, you will see the component overview page.
 
 ### Step 3.2: Setup environment variables
 
-The client application, in this case, the TCP client, needs the server address of the TCP server service. Choreo reads this from the client application as an environment variable. Follow the steps below to configure the environment variable for the client application:
+The client application, in this case, the UDP client, needs the server address of the UDP server service. Choreo reads this from the client application as an environment variable. Follow the steps below to configure the environment variable for the client application:
 
-1. Navigate to the **TCP Client** component's **DevOps** page from the left navigation and click on **Configs and Secrets**.
+1. Navigate to the **UDP Client** component's **DevOps** page from the left navigation and click on **Configs and Secrets**.
 3. Click **+ Create**.
 4. Select **Config Map** as the **Config Type** and **Environment Variables** as the **Mount Type**.
 5. Click **Next**.
@@ -185,11 +186,11 @@ The client application, in this case, the TCP client, needs the server address o
     |-----------------|-------------------------|
     | **Config Name** | `service-configuration`            |
     | **Name**        | `SERVER_ADDRESS`       |
-    | **Value**       | Paste the URL value copied from the TCP service in the previous step of the guide.  Make sure to **drop the `tcp://` part and the trailing `/` from the URL when copying**. For example, add only `go-tcp-greeter-3192360657:5050`.|
+    | **Value**       | Paste the URL value copied from the UDP service in the previous step of the guide.  Make sure to **drop the `udp://` part and the trailing `/` from the URL when copying**. For example, add only `go-udp-greeter-3192360657:5050`.|
 
 7. Click **Create**.
 
-### Step 3.3: Build and deploy the TCP client component
+### Step 3.3: Build and deploy the UDP client component
 
 Now that you have connected the source repository, and configured the environment variable details, let's build and run the greeter client.
 
@@ -198,7 +199,7 @@ To build and run the client, follow these steps:
 1. Go to the **Deploy** page and click **Configure & Deploy**.
 2. On the **Environment Variables** side pane, leave the fields empty, and click **Next**.
 3. On the **Config File**, leave the fields empty, and click **Deploy** .
-4. Once the Choreo deploys the component successfully, to trigger the TCP client and generate logs, go to the **Development** card and click **Run Once**. Perform multiple runs to generate logs.
+4. To trigger the UDP client and generate logs, go to the **Development** card and click **Run Once**. Perform multiple runs to generate multiple logs.
 5. Navigate to the **Observability** page from the left navigation menu and view **Logs**.
-If the logs are not present, try again after a few minutes to fetch the logs. You will see several log lines corresponding to each run of the client trigger in the log view.
-6. Navigate to TCP Server **Observability** page and view the TCP server service **Logs**.
+If the logs are not present give it a bit more time to fetch the logs. You will see several log lines corresponding to each run of the client trigger in the log view.
+6. Navigate to UDP Server **Observability** page and view the UDP server service **Logs**.
