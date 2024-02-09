@@ -58,7 +58,7 @@ In this guide, you will be using the following product and examples:
 
 -  WSO2 Asgardeo as the IdP
 - [choreo-samples/reading-list-app/reading-list-front-end](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-front-end) as the web application. This is a React SPA that invokes the service using Axios. This web application is configured to read the
-[choreo-samples/reading-list-app/reading-list-service](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-service) as the service. You can modify this web application to read your service, or [deploy the choreo-samples/reading-list-app/reading-list-service](https://wso2.com/choreo/docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo/#step-1-create-a-service-component-and-publish-it-as-a-rest-api) in Choreo and use it. 
+[choreo-samples/reading-list-app/reading-list-service](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-service) as the service. You can modify this web application to read your service, or [deploy the choreo-samples/reading-list-app/reading-list-service](../quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service.md#step-12-configure-the-sample-service-and-publish-it-as-a-rest-api) in Choreo and use it. 
 
 ### Step 1: Create a web application component
 
