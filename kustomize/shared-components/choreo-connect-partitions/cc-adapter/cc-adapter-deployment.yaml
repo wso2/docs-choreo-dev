@@ -43,8 +43,8 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchLabels:
-                  - cc.component: choreo-connect-adapter
-                  - choreo.component: choreo-connect
+                  cc.component: choreo-connect-adapter
+                  choreo.component: choreo-connect
               topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       securityContext:

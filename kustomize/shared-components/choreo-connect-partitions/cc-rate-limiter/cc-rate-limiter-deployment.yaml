@@ -44,8 +44,8 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchLabels:
-                  - cc.component: choreo-connect-rate-limiter
-                  - choreo.component: choreo-connect
+                  cc.component: choreo-connect-rate-limiter
+                  choreo.component: choreo-connect
               topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       securityContext:
