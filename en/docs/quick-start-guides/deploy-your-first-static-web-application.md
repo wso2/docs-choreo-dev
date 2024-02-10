@@ -26,7 +26,7 @@ Before you try out this guide, complete the following:
 
     This creates the organization and opens the organization home page.
 
-## Create a project
+## Step 1: Create a project
 
 Follow the steps given below to create a multi-repository project:
 
@@ -45,7 +45,7 @@ Follow the steps given below to create a multi-repository project:
 4. Select **Multi Repository**.
 5. Click **Create**.This creates the project and opens the project home page.
 
-## Create a Web Application component
+## Step 2: Create a Web Application component
 
 Follow the steps given below to create a Web Application component:
 
@@ -83,7 +83,7 @@ Follow the steps given below to create a Web Application component:
 
 Now let's build and deploy the web application.
 
-## Build your web application
+## Step 3: Build your web application
 
 To build the web application, follow the steps given below:
 
@@ -96,7 +96,7 @@ To build the web application, follow the steps given below:
 
    Here, you will see the build status as **Success**.
 
-## Deploy and access your web application
+## Step 4: Deploy and access your web application
 
 1. In the left navigation menu, click **Deploy**.
 2. In the **Set Up** card, click **Configure and Deploy**. This opens the **Configure & Deploy** pane, where you can add a file mount if necessary. In this guide you will not add a file mount.
