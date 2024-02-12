@@ -64,7 +64,7 @@ Follow the steps given below to create a Web Application component:
 
 5. Enter the following information:
 
-    | **Field**                    | **Description**             |
+    | **Field**                    | **Value**                   |
     |------------------------------|-----------------------------|
     | **GitHub Account**           | Your account                |
     | **GitHub Repository**        | choreo-sample-todo-list-app |
@@ -73,10 +73,10 @@ Follow the steps given below to create a Web Application component:
 6. Select **NodeJS** as the **Buildpack**
 7. Enter the following information:
    
-    | **Field**                    | **Description**             |
+    | **Field**                    | **Value**                   |
     |------------------------------|-----------------------------|
     | **NodeJS Project Directory** | /                           |
-    | **Language Version**         | npm run build               |
+    | **Language Version**         | 20.x.x                      |
     | **Port**                     | 8080                        |
 
 8. Click **Create**. Choreo initializes the component with the sample implementation and opens the **Overview** page of the component.
