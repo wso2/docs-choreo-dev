@@ -103,7 +103,7 @@ Let's create a service component by following these steps:
 You have successfully created a Service component with the NodeJS buildpack. Now let's build and deploy the service.
 
 ## Step 3: Build and deploy
-Now that you have connected the source repository, and configured the endpoint details, it's time to build the service. Choreo will create an image in the build process. You can then deploy the built image and test the book list service.
+Now that you have connected the source repository, and configured the endpoint details, it's time to build the service. Choreo will create a Docker image in the build process. You can then deploy the built Docker image and test the book list service.
 
 ### Step 3.1: Build
 
