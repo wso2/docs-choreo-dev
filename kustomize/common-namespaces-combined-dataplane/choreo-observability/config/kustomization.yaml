@@ -1,0 +1,47 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2023, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+configMapGenerator:
+  - name: loggingapi-cm-file
+    behavior: create
+    files:
+      - loggingapi/Config.toml
+    literals:
+      - K8S_API_SERVER_TOKEN_FILE_PATH="/var/run/secrets/kubernetes.io/serviceaccount/token"
+  - name: sys-obsapi-cm-file
+    behavior: create
+    files:
+      - sys-obsapi/Config.toml
+  - name: loggingapi-cm
+    behavior: create
+    literals:
+      - AZURE_LA_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+      - CLOUD_VENDOR=azure
+  - name: cm-hubble-exporter
+    behavior: create
+    literals:
+      - HUBBLE_ENDPOINT="hubble-relay.kube-system.svc.cluster.local:80"
+      - REQUEST_CLEANUP_INTERVAL="10m"
+      - REQUEST_STALE_TOLERATION_PERIOD="10m"
+      - REQUEST_LOG_INTERVAL="1m"
+      - DEBUG="true"
+      - HEALTH_SERVER_HOST=":8080"
+  - name: cm-obsapi
+    behavior: create
+    literals:
+      - AZURE_ADX_DB=observability
+      - AZURE_ADX_PIXIE_METRIC_TABLE=pixieMetrics
+      - AZURE_ADX_HUBBLE_METRIC_TABLE=hubbleMetrics
+      - AZURE_ADX_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+  - name: sys-obsapi-cm
+    behavior: create
+    literals:
+      - AZURE_LA_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9

@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: choreo-hubble-exporter
+  annotations:
+    checkov.io/skip1: CKV_K8S_AZURE_WSO2_2=Linkerd is not used in dataplanes
+  labels:
+    app.kubernetes.io/name: choreo-hubble-exporter
+    app.kubernetes.io/part-of: choreo-observability
+    choreo.component: choreo-hubble-exporter
+  namespace: choreo-observability
+spec:
+  replicas: 1 # this must be 1 for the exporter to work properly
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: choreo-hubble-exporter
+      app.kubernetes.io/part-of: choreo-observability
+      choreo.component: choreo-hubble-exporter
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: choreo-hubble-exporter
+        app.kubernetes.io/part-of: choreo-observability
+        choreo.component: choreo-hubble-exporter
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: "choreo-hubble-exporter"
+          securityContext:
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+              - ALL
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-hubble-exporter:latest
+          imagePullPolicy: Always
+          ports:
+            - name: health
+              containerPort: 8080
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 15
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /liveness
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          envFrom:
+            - configMapRef:
+                name: cm-hubble-exporter
+            - configMapRef:
+                name: env-hubble-exporter
+            - secretRef:
+                name: secret-hubble-exporter
+          volumeMounts:
+            - mountPath: /mnt/csi/secret-hubble-exporter
+              name: secret-hubble-exporter
+              readOnly: true
+      volumes:
+        - name: secret-hubble-exporter
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-hubble-exporter
+            nodePublishSecretRef:
+              name: csi-secret-store-azure

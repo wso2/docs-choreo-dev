@@ -1,0 +1,4 @@
+resources:
+  - fluent-bit.yaml
+  - choreo-system.yaml
+  - paid-userapps.yaml

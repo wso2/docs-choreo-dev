@@ -1,0 +1,5 @@
+resources:
+  - hubble-exporter.yaml
+  - loggingapi.yaml
+  - obsapi.yaml
+  - sys-obsapi.yaml
