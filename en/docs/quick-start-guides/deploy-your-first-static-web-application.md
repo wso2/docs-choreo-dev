@@ -1,4 +1,4 @@
-# Deploy your First Static Web Application
+# Deploy Your First Static Web Application
 
 Choreo is an internal developer platform as a service that takes care of the complexities of building platforms, allowing application developers to focus on innovation and implementation. Choreo streamlines the entire process of building, deploying, monitoring, and managing your cloud-native applications.
 
