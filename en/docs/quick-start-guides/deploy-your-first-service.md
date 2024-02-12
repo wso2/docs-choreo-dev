@@ -12,10 +12,16 @@ In this guide, you will:
 
 ## Prerequisites
 
-1. You will need a GitHub account with a repository that contains your service implementation. To follow this guide you can fork the [Choreo sample book list service repository](https://github.com/wso2/choreo-sample-book-list-service/), which contains the sample for this guide.
-2. The Choreo GitHub App requires the following permissions:
-    - Read access to issues and metadata
-    - Read and write access to code, pull requests, and repository hooks.
+1.  You will need a GitHub account with a repository that contains your service implementation. To follow this guide you can fork the [Choreo sample book list service repository](https://github.com/wso2/choreo-sample-book-list-service/), which contains the sample for this guide.
+
+2. If you are signing in to the Choreo Console for the first time, create an organization as follows:
+
+    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
+    2. Enter a unique organization name. For example, `Stark Industries`.
+    3. Read and accept the privacy policy and terms of use.
+    4. Click **Create**.
+
+    This creates the organization and opens the organization home page.
 
 ### Learn the repository file structure
 
@@ -32,14 +38,6 @@ Let's familiarize ourselves with the key files in this sample application. The b
 
 Let's get started!
 
-### Configure the service port with endpoints
-
-You can run the book list service on port 8080. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. In Choreo, you can expose the services with endpoints. You can read more about endpoints in the [endpoint documentation](https://wso2.com/choreo/docs/choreo-concepts/endpoint/).
-
-Choreo looks for an endpoints.yaml file inside the `.choreo` directory to configure the endpoint details of the component. Place the `.choreo` directory at the root of the NodeJS project.
-
-In this sample, the endpoints.yaml file is at choreo-sample-book-list-app/.choreo/endpoints.yaml. 
-
 ## Step 1: Create a multi repository project 
 
 Follow the steps given below to create a multi repository project:
@@ -53,8 +51,8 @@ Follow the steps given below to create a multi repository project:
 
     | **Field**       | **Value**               |
     |-----------------|-------------------------|
-    | **Name**        | `Book List project`        |
-    | **Description** | `My sample multi repository project` |
+    | **Name**        | Book List project       |
+    | **Description** | My sample multi repository project |
 
 4. Select **Multi Repository**.
 5. Click **Create**.
@@ -72,10 +70,16 @@ Let's create a service component by following these steps:
     |Description    | Gets the book list     |
 
 3. Select the **GitHub** tab.
-4. If you have not already connected your GitHub repository to Choreo, to allow Choreo to connect to your GitHub account, click **Authorize with GitHub** and enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+4. If you have not already connected your GitHub repository to Choreo, click **Authorize with GitHub**, enter your GitHub credentials, and select the repository you created by forking [Choreo sample book list service repository](https://github.com/wso2/choreo-sample-book-list-service/)s to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps). 
 
     !!! info
-         The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
+         The **Choreo GitHub App** requires the following permissions:
+         
+        - Read and write access to code and pull requests.
+        - Read access to issues and metadata.
+             
+        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
+
 
 
 5. Enter the following information:
@@ -84,7 +88,7 @@ Let's create a service component by following these steps:
     |-----------------------|-----------------------------------------------|
     | **GitHub Account**    | Your account                                  |
     | **GitHub Repository** | choreo-sample-book-list-service |
-    | **Branch**            | **`main`**                               |
+    | **Branch**            | main                             |
 
 6. Select the buildpack **NodeJS**.
 7. Enter the following information.
@@ -94,7 +98,7 @@ Let's create a service component by following these steps:
     | **NodeJS Project Directory**       | / |
     | **Language Version**              | 20.x.x |
 
-8. Click Create. Once the component creation is complete, you will see the component overview page.
+8. Click **Create**. Once the component creation is complete, you will see the component overview page.
 
 You have successfully created a Service component with the NodeJS buildpack. Now let's build and deploy the service.
 
@@ -110,18 +114,8 @@ To build the service, follow these steps:
 2. Select the latest commit and click **Build**.
 3. Check the deployment progress by observing the console logs on the right of the page.
 
-
     !!! note
         Building the service component may take a while. You can track the progress by observing the logs. Once the build process is complete, the build status changes to **Success**.
-
-You can access the following scans under **Build**. 
-
-- **The Dockerfile scan**: Choreo performs a scan to check if a non-root user ID is assigned to the Docker container to ensure security. If no non-root user is specified, the build will fail.
-- **Container (Trivy) vulnerability scan**: This detects vulnerabilities in the final docker image. 
--  **Container (Trivy) vulnerability scan**: The details of the vulnerabilities open in a separate pane. If this scan detects critical vulnerabilities, the build will fail.
-
-!!! info
-    If you have Choreo environments on a private data plane, you can ignore these vulnerabilities and proceed with the deployment.
 
 ### Step 3.2: Deploy
 
@@ -136,4 +130,4 @@ Next, to deploy this service, follow these steps:
     !!! note
         Deploying the service component may take a while. You can track the progress by observing the logs. Once the deploying is complete, the build status changes to **Active** on the **Development** environment card.
 
-Once you have successfully deployed your service, you can [test](../testing/test-rest-endpoints-via-the-openapi-console.md), [manage](../api-management/lifecycle-management.md), and [observe](../monitoring-and-insights/observability-overview.md) it like any other component type in Choreo.
+After you have successfully deployed your service, you can now try out various other Choreo features such as [testing](../testing/test-rest-endpoints-via-the-openapi-console.md), [managing](../api-management/lifecycle-management.md), [observing](../monitoring-and-insights/observability-overview.md), and [DevOps](../devops-and-ci-cd/view-runtime-details.md) it like any other component type in Choreo.

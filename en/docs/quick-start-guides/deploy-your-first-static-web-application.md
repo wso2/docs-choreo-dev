@@ -52,7 +52,8 @@ Follow the steps given below to create a Web Application component:
 1. On the project home page, click **+ Create** if you already have one or more components in your project. Otherwise, proceed to the next step.
 2. Click the **Web Application** card. This opens the **Create a Web Application** pane.
 3. Specify a name and description for the component.
-4. If you have not already connected your GitHub repository to Choreo, click **Authorize with GitHub**, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-samples](https://github.com/wso2/choreo-samples) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps). 
+4. If you have not already connected your GitHub repository to Choreo, click **Authorize with GitHub**, enter your GitHub credentials, and select the repository you created by forking [choreo-sample-todo-list-app
+ repository](https://github.com/wso2/choreo-sample-todo-list-app) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps). 
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:
@@ -64,7 +65,7 @@ Follow the steps given below to create a Web Application component:
 
 5. Enter the following information:
 
-    | **Field**                    | **Description**             |
+    | **Field**                    | **Value**                   |
     |------------------------------|-----------------------------|
     | **GitHub Account**           | Your account                |
     | **GitHub Repository**        | choreo-sample-todo-list-app |
@@ -73,11 +74,11 @@ Follow the steps given below to create a Web Application component:
 6. Select **NodeJS** as the **Buildpack**
 7. Enter the following information:
    
-    | **Field**                    | **Description**             |
+    | **Field**                    | **Value**                   |
     |------------------------------|-----------------------------|
     | **NodeJS Project Directory** | /                           |
-    | **Language Version**         | npm run build               |
-    | **Port**                     | 8080                        |
+    | **Language Version**         | **20.x.x**                  |
+    | **Port**                     | `8080`                      |
 
 8. Click **Create**. Choreo initializes the component with the sample implementation and opens the **Overview** page of the component.
 

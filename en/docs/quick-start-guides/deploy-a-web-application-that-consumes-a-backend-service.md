@@ -17,7 +17,8 @@ This guide walks you through the following steps:
 
 Before you try out this guide, complete the following:
 
-1. Create a GitHub repository to save the service implementation. For this guide, you can fork [https://github.com/wso2/choreo-sample-book-list-app repository](https://github.com/wso2/choreo-sample-book-list-app).
+1. Create a GitHub repository to save the service implementation. For this guide, you can fork [Choreo sample book list app repository](https://github.com/wso2/choreo-sample-book-list-app).
+
 2. If you are signing in to the Choreo Console for the first time, create an organization as follows:
 
     1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
@@ -27,11 +28,7 @@ Before you try out this guide, complete the following:
 
     This creates the organization and opens the organization home page.
 
-## Step 1: Create a project and configure the sample service 
-
-In this step, you are playing the role of an API developer. You will create a project, configure the sample service, and publish it as a REST API for your web application to consume.
-
-### Step 1.1: Create a mono repository project
+## Step 1: Create a mono repository project
 
 Follow the steps given below to create a mono repository project:
 
@@ -44,28 +41,34 @@ Follow the steps given below to create a mono repository project:
 
     | **Field**       | **Value**               |
     |-----------------|-------------------------|
-    | **Name**        | `Sample project`        |
-    | **Description** | `My sample mono repository project` |
+    | **Name**        | Sample project        |
+    | **Description** | My sample mono repository project |
 
 4. Select **Mono Repository**.
 5. Click **Next**.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
-7. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials, and select the repository you created by forking [https://github.com/wso2/choreo-sample-book-list-app](https://github.com/wso2/choreo-sample-book-list-app) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+7. If you have not already connected your GitHub repository to Choreo, click **Authorize with GitHub**, enter your GitHub credentials, and select the repository you created by forking [Choreo sample book list app repository](https://github.com/wso2/choreo-sample-book-list-app) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps). 
 
     !!! info
-         The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only needed to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
+         The **Choreo GitHub App** requires the following permissions:
+         
+        - Read and write access to code and pull requests.
+        - Read access to issues and metadata.
+             
+        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
+
 
 8. In the **Connect Repository** pane, enter the following information:
 
     | **Field**             | **Value**                                     |
     |-----------------------|-----------------------------------------------|
     | **GitHub Account**    | Your account                                  |
-    | **GitHub Repository** | **`choreo-sample-book-list-app`**                         |
-    | **Branch**            | **`main`**                                    |
+    | **GitHub Repository** | choreo-sample-book-list-app                   |
+    | **Branch**            | main                                 |
 
 9. Click **Next**. This scans the repository branch you connected and displays the components that are already available in it.
 
-### Step 1.2: Configure the sample service and publish it as a REST API
+## Step 2: Create a service component and publish it as a REST API
 
 1. In the **Import Component Code** pane, click **Configure** corresponding to the `Reading List Service` component.
 2. In the **Component Configuration** dialog, specify values as follows for each of the fields:
@@ -73,16 +76,16 @@ Follow the steps given below to create a mono repository project:
     | **Field**             | **Value**                                     |
     |-----------------------|-----------------------------------------------|
     | **Component Name**    | Reading List Service                          |
-    | **Buildpack**         | **NodeJS**                                    |
-    | **Component Type**    | **Service**                                   |
-    | **Language Version**  | **20.x.x**                                    |     
+    | **Buildpack**         | NodeJS                                   |
+    | **Component Type**    | Service                                 |
+    | **Language Version**  | 20.x.x                                  |     
 
 3. Click **Save**. You will see that the status of the `Reading List Service` component has changed to **Configured** and the checkbox to select the component is enabled.
 4. Select the `Reading List Service` component and click **Create**. This creates a mono repository project, initializes the service with the implementation from your GitHub repository, and takes you to the project home page.
 
     You can see the `Reading List Service` component listed under **Component Listing** on the project home page.
 
-## Step 2: Build the service
+## Step 3: Build the service
 
 To build the service, follow the steps given below:
 
@@ -96,7 +99,7 @@ To build the service, follow the steps given below:
 
    Here, you will see the build status as **Success**.   
 
-## Step 3: Deploy the service
+## Step 4: Deploy the service
 
 For the REST endpoint of the service to be invokable, you need to deploy it. To deploy the service, follow the steps given below:
 
@@ -107,7 +110,7 @@ For the REST endpoint of the service to be invokable, you need to deploy it. To 
 5. In the **Endpoint Details** pane that opens,verify that the **Network Visibility** is set to **Public**. This setting securely exposes the endpoint for consumption.
 6. Click **Deploy**. This deploys the service to the development environment and lists the service in the Choreo Marketplace. 
 
-## Step 4: Test the service
+## Step 5: Test the service
 
 To test the **Readinglist** REST endpoint via the integrated OpenAPI Console in Choreo, follow the steps given below:
 
@@ -122,9 +125,9 @@ To test the **Readinglist** REST endpoint via the integrated OpenAPI Console in 
 
     | **Parameter** | **Value**       |
     |---------------|-----------------|
-    | **author**    | `Bram Stoker`   |
-    | **status**    | `to_read`       |
-    | **title**     | `Dracula`       |
+    | **author**    | Bram Stoker    |
+    | **status**    | to_read       |
+    | **title**     | Dracula       |
 
     The request body should look as follows:
 
@@ -144,9 +147,8 @@ Similarly, you can expand and try out the **GET** and **DELETE** methods.
 ## Step 6: Consume the service
 
 Now that the `Reading List Service` is deployed and available in the Choreo Marketplace, application developers can discover the service via the Marketplace and consume it.  
-In the previous steps, you played the role of backend developer and developed a service. In this step, you will play the role of a web application developer who consumes the service.
 
-In this guide, you will deploy a sample front-end application to consume the service. This application will serve as the interface for users to interact with the reading list. The sample application used in this guide is designed to personalize the reading lists based on the user ID that it obtains from its identity provider. 
+In this section of the guide, you will deploy a sample front-end application to consume the service. This application will serve as the interface for users to interact with the reading list. The sample application used in this guide is designed to personalize the book  lists based on the user ID that it obtains from its identity provider. 
 
 To host the front-end application in Choreo, you will create a web application component, set up authentication for it, and deploy it. To establish a connection between your web application and the deployed service, you will create a Connection. 
 
@@ -154,20 +156,20 @@ To host the front-end application in Choreo, you will create a web application c
 
 To create a web application component, follow the steps given below:
 
-1. In the Choreo console header, go to the component list and close the `Reading List Service` component. This takes you to the home page of the mono repository project you created in [Step 1.1](#step-11-create-a-mono-repository-project).
+1. In the Choreo console header, go to the component list and close the `Reading List Service` component. This takes you to the home page of the mono repository project you created in [Step 1](#step-1-create-a-mono-repository-project).
 2. On the project home page, click **+ Create** under **Component Listing**.
 3. Click the **Web Application** card.
 4. To create the web application, specify the following values for each of the fields:
 
     | **Field**             | **Value**               |
     |-----------------------|-------------------------|
-    | **Component Name**    | `Reading List Web App`  |
-    | **Description**       | `Front-end application for the reading list service` |
+    | **Component Name**    | Reading List Web App  |
+    | **Description**       | Front-end application for the reading list service |
     | **Buildpack**         | Select **React** because the sample front-end application is a React application built with Vite|
-    | **Project Directory** | **`/choreo-sample-book-list-app/reading-list-front-end-with-managed-auth`** |
-    | **Build Command**     | **`npm install && npm run build`**            |
-    | **Build Path**        | **`dist`**                                    |
-    | **Node Version**      | **`18`**                                      |
+    | **Project Directory** | /choreo-sample-book-list-app/reading-list-front-end-with-managed-auth |
+    | **Build Command**     | npm install && npm run build            |
+    | **Build Path**        | dist                                 |
+    | **Node Version**      | 18                                   |
 
 5. Click **Create**. This initializes the component with the implementation from your GitHub repository and takes you to the **Overview** page of the component. 
 
@@ -184,8 +186,8 @@ To establish a connection between the web application you created and the deploy
 
     | **Field**        | **Value**                       |
     |------------------|---------------------------------|
-    | **Name**         | `Reading List Connection`       |
-    | **Description**  | `Connection to the reading list`|
+    | **Name**         | Reading List Connection     |
+    | **Description**  | Connection to the reading list|
     
 5. Click **Next**. This displays the service URL of the connection for
 each environment the service is deployed in. In this guide, you will see the service URL for the Development environment.
@@ -231,9 +233,9 @@ To configure managed authentication, follow the steps given below:
 
     | **Field**           | **Value**  |
     |---------------------|------------|
-    | **Post Login Path** | `/`        |
-    | **Post Logout Path**| `/`        |
-    | **Error Path**      | `/`        |
+    | **Post Login Path** | /          |
+    | **Post Logout Path**| /          |
+    | **Error Path**      | /          |
 
 Next, you can create a user to access the web application.
 
@@ -271,9 +273,9 @@ To test the front-end application and send requests to the **Reading List Servic
 
      | **Title**                 | **Author**        | **Status** |
      |---------------------------|-------------------|------------|
-     | `The Museum of Innocence` | `Orhan Pamuk`     | `reading`  |
-     | `The Remains of the Day`  | `Kazuo Ishiguro`  | `to_read`  |
-     | `David Copperfield`       | `Charles Dickens` | `read`     |
+     | The Museum of Innocence | Orhan Pamuk     | reading  |
+     | The Remains of the Day | Kazuo Ishiguro  | to_read  |
+     | David Copperfield       | Charles Dickens | read    |
 
     To add each record, follow the steps given below:
 
