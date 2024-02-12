@@ -95,7 +95,7 @@ Let's create a service component by following these steps:
 
     | **Field**             | **Description**                               |
     |-----------------------|-----------------------------------------------|    
-    | **NodeJS Project Directory**       | / |
+    | **NodeJS Project Directory**       | /reading-list-service |
     | **Language Version**              | 20.x.x |
 
 8. Click **Create**. Once the component creation is complete, you will see the component overview page.
@@ -130,4 +130,17 @@ Next, to deploy this service, follow these steps:
     !!! note
         Deploying the service component may take a while. You can track the progress by observing the logs. Once the deploying is complete, the build status changes to **Active** on the **Development** environment card.
 
-After you have successfully deployed your service, you can now try out various other Choreo features such as [testing](../testing/test-rest-endpoints-via-the-openapi-console.md), [managing](../api-management/lifecycle-management.md), [observing](../monitoring-and-insights/observability-overview.md), and [DevOps](../devops-and-ci-cd/view-runtime-details.md) it like any other component type in Choreo.
+## Step 4: Test the service
+
+To test the **Book List** service via the integrated OpenAPI Console in Choreo, follow the steps given below:
+
+1. In the Choreo Console left navigation menu, click **Test** and then click **Console**.
+2. In the OpenAPI Console that opens, select **Development** from the environment drop-down list.
+3. In the **Endpoint** list, select **Books REST Endpoint**.
+4. Expand the **GET /books** method and click **Try it out**.
+5. Click **Execute**.
+6. Check the **Server Response** section. 
+
+Similarly, you can expand and try out the other methods.
+
+After you have successfully tested your service, you can now try out various other Choreo features such as [managing](../api-management/lifecycle-management.md), [observing](../monitoring-and-insights/observability-overview.md), [DevOps](../devops-and-ci-cd/view-runtime-details.md), etc., similar to any other component type within Choreo.
