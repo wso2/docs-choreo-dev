@@ -77,8 +77,8 @@ Follow the steps given below to create a Web Application component:
     | **Field**                    | **Value**                   |
     |------------------------------|-----------------------------|
     | **NodeJS Project Directory** | /                           |
-    | **Language Version**         | 20.x.x                      |
-    | **Port**                     | 8080                        |
+    | **Language Version**         | **20.x.x**                  |
+    | **Port**                     | `8080`                      |
 
 8. Click **Create**. Choreo initializes the component with the sample implementation and opens the **Overview** page of the component.
 
