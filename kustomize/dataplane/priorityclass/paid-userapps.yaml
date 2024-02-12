@@ -15,4 +15,5 @@ metadata:
   name: paid-userapps
 value: 500
 globalDefault: false
+preemptionPolicy: Never
 description: "This priority class should be used for paid user apps only."
