@@ -2,6 +2,7 @@
 # Service configs
 grpcApiPortConf = 9090
 enableServiceReflectionConf = true
+maxHeaderSizeConf = 65536
 
 [choreo.resource_authz_service.authzSpiceDb]
 # Service configs
