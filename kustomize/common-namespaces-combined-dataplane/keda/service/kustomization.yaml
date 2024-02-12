@@ -1,0 +1,4 @@
+resources:
+  - keda-http-add-on-interceptor.yaml
+  - keda-http-add-on-operator.yaml
+  - keda-http-add-on-scaler.yaml

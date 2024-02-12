@@ -1,0 +1,30 @@
+[choreo.metered_usage_handler.clients]
+subscriptionServiceUrl = "http://subscriptions:9090"
+grpcServiceTimeout = 10.0
+grpcServiceRetryCount = 3
+grpcServiceInterval = 10.0
+grpcServiceMaxInterval = 20.0
+grpcServiceBackoffFactor = 3.0
+stripeConnectionUrl = "https://api.stripe.com"
+emailServiceUrl = "https://email-service"
+projectManagerUrl = "http://dp-project-manager:80/api/v1"
+kubecostApiUrl = "http://kubecost-cost-analyzer.kubecost.svc.cluster.local:9090/"
+kubecostApiMaxWaitInterval = 0.0
+kubecostApiRetryCount = 0
+kubecostApiInterval = 0.0
+kubecostApiBackoffFactor = 0.0
+
+[choreo.metered_usage_handler.db]
+dbUsername = "choreo_usage_db_user"
+dbLoginTimeout = 10000
+dbUseSsl = false
+dbConnPoolMaxOpen = 100
+dbConnPoolMinIdle = 5
+
+[choreo.metered_usage_handler.impl]
+subscriptionMappingsBatchSize = 1000
+startTime = "23:30:00"
+endTime = "23:30:00"
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"

@@ -1,0 +1,10 @@
+resources:
+  - ../../base/apim/certificates
+  - config
+  - deployment
+  - hpa
+  - netpol
+  - pdb
+  - service
+
+namespace: choreo-apim
