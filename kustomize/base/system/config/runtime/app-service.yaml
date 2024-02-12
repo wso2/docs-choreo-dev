@@ -31,6 +31,7 @@ upstream:
   dp-cicd: http://dp-cicd:80
   dp-project-manager: dp-project-manager:80
   url-manager: choreo-url-management:9090/url-mgt
+  authz-service: ${AUTHZ_SERVICE_ENDPOINT}
   api-manager:
     clientKey: ${API_MANAGER_CLIENT_KEY}
     clientSecret: ${API_MANAGER_CLIENT_SECRET}
@@ -45,7 +46,6 @@ upstream:
       key: ${CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY}
 urlManager:
   enable: ${ENABLE_URL_MANAGER}
-authz-service: ${AUTHZ_SERVICE_ENDPOINT}
 configYamlConfigurations:
   log-format: "json"
   observe-enabled: true
