@@ -229,6 +229,7 @@ plugins:
   - search
   - include-markdown
   - glightbox
+  - open-in-new-tab
   - markdownextradata: {}
   - redirects:
       redirect_maps:
