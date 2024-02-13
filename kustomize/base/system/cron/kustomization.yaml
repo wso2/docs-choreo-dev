@@ -10,4 +10,3 @@ resources:
   - choreo-offline-build-status-cleaner.yaml
   - connector-builder-restarter.yaml
   - choreo-platform-svc-cost-collector.yaml
-  - choreo-weekly-execution-cleaner.yaml
