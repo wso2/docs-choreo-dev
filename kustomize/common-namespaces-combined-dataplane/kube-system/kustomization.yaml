@@ -1,2 +1,2 @@
 resources:
-  - ../../../helm/cilium
+  - ../../../helm/cilium-14-6
