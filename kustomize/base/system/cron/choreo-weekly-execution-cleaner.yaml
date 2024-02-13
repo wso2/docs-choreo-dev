@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: choreo-weekly-execution-cleaner
+  labels:
+    choreo.component: choreo-weekly-execution-cleaner
+spec:
+  schedule: "0 0 * * 0"
+  successfulJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+          labels:
+            choreo.component: choreo-weekly-execution-cleaner
+        spec:
+          automountServiceAccountToken: false
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+          containers:
+            - name: choreo-weekly-execution-cleaner
+              image: choreocontrolplane.azurecr.io/curlimages/curl
+              args:
+                - /bin/sh
+                - -c
+                - curl -v ${RUDDER_BASE_URL}/${EXECUTION_CLEANUP_RESOURCE_PATH} -X POST
+              envFrom:
+                - configMapRef:
+                    name: cm-rudder-cleanup-tasks
+              securityContext:
+                runAsUser: 10500
+                runAsGroup: 10500
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - all
+              resources:
+                limits:
+                  cpu: 200m
+                  memory: 100Mi
+                requests:
+                  cpu: 100m
+                  memory: 50Mi

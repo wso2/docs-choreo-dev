@@ -604,3 +604,8 @@ configMapGenerator:
     behavior: create
     files:
       - choreo-url-management/Config.toml
+  - name: cm-rudder-cleanup-tasks
+    behavior: create
+    literals:
+      - RUDDER_BASE_URL="http://dp-rudder:80"
+      - EXECUTION_CLEANUP_RESOURCE_PATH="internal/admin/cleanup-executions"
