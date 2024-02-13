@@ -19,8 +19,8 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: testgpt
 spec:
-  maxReplicas: 3
-  minReplicas: 2
+  maxReplicas: 8
+  minReplicas: 3
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment

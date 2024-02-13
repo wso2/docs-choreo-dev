@@ -6,7 +6,7 @@ metadata:
   name: config-deployer-service
   namespace: choreo-apim
 spec:
-  maxReplicas: 3
+  maxReplicas: 8
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
