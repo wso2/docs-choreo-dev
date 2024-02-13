@@ -35,10 +35,10 @@ spec:
           resources:
             limits:
               cpu: 150m
-              memory: 150Mi
+              memory: 250Mi
             requests:
               cpu: 100m
-              memory: 100Mi
+              memory: 200Mi
           envFrom:
             - configMapRef:
                 name: env-dp-garbage-collector

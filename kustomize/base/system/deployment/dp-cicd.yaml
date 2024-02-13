@@ -33,10 +33,10 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/dp-cicd:latest
           resources:
             limits:
-              cpu: 500m
+              cpu: 1
               memory: 1.5G
             requests:
-              cpu: 300m
+              cpu: 500m
               memory: 500M
           envFrom:
             - configMapRef:
