@@ -124,7 +124,7 @@ spec:
                 fieldRef:
                   fieldPath: status.podIP
             - name: JVM_MEM_OPTS
-              value: "-XX:InitialRAMPercentage=56.47 -XX:MaxRAMPercentage=56.47"
+              value: "-XX:InitialRAMPercentage=59.0 -XX:MaxRAMPercentage=59.0"
             - name: PROFILE_NAME
               value: control-plane
             - name: DEPLOYMENT_TYPE_PROD_PREFIXES
