@@ -21,7 +21,7 @@ metadata:
     choreo.component: internal-nginx-v2
   name: choreo-internal-nginx-v2-hpa
 spec:
-  maxReplicas: 3
+  maxReplicas: 8
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1

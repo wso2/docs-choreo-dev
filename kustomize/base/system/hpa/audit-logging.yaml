@@ -6,7 +6,7 @@ metadata:
   name: audit-logging
   namespace: choreo-system
 spec:
-  maxReplicas: 3
+  maxReplicas: 8
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
