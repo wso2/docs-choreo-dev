@@ -6,7 +6,7 @@ metadata:
   name: dp-cloud-manager
 spec:
   maxReplicas: 8
-  minReplicas: 2
+  minReplicas: 4
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment

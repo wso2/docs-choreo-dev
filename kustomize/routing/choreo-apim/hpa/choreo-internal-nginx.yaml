@@ -22,7 +22,7 @@ metadata:
   name: choreo-internal-nginx-v2-hpa
 spec:
   maxReplicas: 8
-  minReplicas: 2
+  minReplicas: 3
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment

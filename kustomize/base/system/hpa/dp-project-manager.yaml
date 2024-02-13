@@ -5,7 +5,7 @@ metadata:
     choreo.component: dp-project-manager
   name: dp-project-manager
 spec:
-  maxReplicas: 8
+  maxReplicas: 10
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
