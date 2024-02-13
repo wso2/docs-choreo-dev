@@ -108,3 +108,4 @@ To build the web application, follow the steps given below:
 
      You can try creating one or more new tasks by specifying an appropriate task ID and task label.     
    
+After you have successfully tested your web application, you can now try out various other Choreo features such as [observing](../monitoring-and-insights/observability-overview.md), [DevOps](../devops-and-ci-cd/view-runtime-details.md), etc., similar to any other component type within Choreo.
