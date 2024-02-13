@@ -288,3 +288,5 @@ To test the front-end application and send requests to the **Reading List Servic
 To verify whether the reading list is personalized for each user, you can sign in as a different user. The reading list items you entered above will not appear for the other user.
 
 Congratulations! You have successfully exposed a service endpoint via Choreo and securely consumed it from a web application.
+
+After you have successfully tested your service and web application, you can now try out various other Choreo features such as [managing](../api-management/lifecycle-management.md), [observing](../monitoring-and-insights/observability-overview.md), [DevOps](../devops-and-ci-cd/view-runtime-details.md), etc., similar to any other component type within Choreo.
