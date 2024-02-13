@@ -21,6 +21,7 @@ resources:
   - choreo-apim
   - choreodp-system
   - clusterissuers
+  - priorityclass
 
 commonLabels:
   app: choreo-routing

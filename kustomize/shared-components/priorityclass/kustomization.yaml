@@ -1,0 +1,2 @@
+resources:
+  - secrets-store-csi-driver.yaml
