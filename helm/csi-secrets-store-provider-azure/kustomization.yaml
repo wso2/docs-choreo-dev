@@ -12,6 +12,7 @@ helmCharts:
             operator: Equal
             value: "true"
             effect: NoSchedule
+        priorityClassName: "secrets-store-csi-driver"
       secrets-store-csi-driver:
         syncSecret:
           enabled: true
@@ -34,6 +35,7 @@ helmCharts:
               operator: Equal
               value: "true"
               effect: NoSchedule
+          priorityClassName: "secrets-store-csi-driver"
     releaseName: csi-secrets-store-provider-azure
     namespace: csi-secret-store-driver
     version: 1.5.0
