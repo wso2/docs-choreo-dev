@@ -28,7 +28,7 @@ configMapGenerator:
   - name: cm-hubble-exporter
     behavior: create
     literals:
-      - HUBBLE_ENDPOINT="hubble-relay.kube-system.svc.cluster.local:80"
+      - HUBBLE_ENDPOINT="hubble-relay.cilium.svc.cluster.local:80"
       - REQUEST_CLEANUP_INTERVAL="10m"
       - REQUEST_STALE_TOLERATION_PERIOD="10m"
       - REQUEST_LOG_INTERVAL="1m"
