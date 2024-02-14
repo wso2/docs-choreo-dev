@@ -1,0 +1,2 @@
+resources:
+  - authz-service-sa.yaml

@@ -1,0 +1,7 @@
+resources:
+  - namespace
+  - crd
+  - service-account
+  - cr
+  - crb
+  - deployment
