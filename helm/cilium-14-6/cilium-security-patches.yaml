@@ -9,7 +9,6 @@ spec:
       annotations:
         container.apparmor.security.beta.kubernetes.io/config: runtime/default
         container.apparmor.security.beta.kubernetes.io/mount-bpf-fs: runtime/default
-        container.apparmor.security.beta.kubernetes.io/wait-for-node-init: runtime/default
     spec:
       securityContext:
         seccompProfile:
