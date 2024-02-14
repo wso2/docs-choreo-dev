@@ -3,5 +3,10 @@ kind: Kustomization
 
 resources:
   - config
+  - deployment
+  - hpa
+  - pdb
+  - service
+  - service-account
 
 namespace: choreo-authorization
