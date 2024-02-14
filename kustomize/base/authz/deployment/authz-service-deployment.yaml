@@ -88,9 +88,6 @@ spec:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
-                matchExpressions:
-                  - key: antiaffinity
-                    operator: In
-                    values:
-                      - choreo-resource-authorization-service
+                matchLabels:
+                  antiaffinity: choreo-resource-authorization-service
               topologyKey: kubernetes.io/hostname

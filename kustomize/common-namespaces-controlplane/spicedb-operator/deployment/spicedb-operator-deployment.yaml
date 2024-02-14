@@ -7,7 +7,6 @@ metadata:
     app: spicedb-operator
     app.kubernetes.io/instance: spicedb-operator
   name: spicedb-operator
-  namespace: spicedb-operator
 spec:
   replicas: 1
   selector:

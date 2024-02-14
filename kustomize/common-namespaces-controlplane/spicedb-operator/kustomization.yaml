@@ -6,3 +6,5 @@ resources:
   - crb
   - deployment
   - cluster
+
+namespace: spicedb-operator
