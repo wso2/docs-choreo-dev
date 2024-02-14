@@ -150,7 +150,7 @@ spec:
             exec:
               command: [ "sh", "check_health.sh" ]
             periodSeconds: 5
-            failureThreshold: 60
+            failureThreshold: 120
             timeoutSeconds: 5
       volumes:
         - name: adapter-config
