@@ -180,6 +180,21 @@ export namespace TestIds {
   export const apiCard = (apiName: string) =>
     `[data-testid="apiCard-${apiName}"`;
   export const apiOverviewDevPortal = '[data-testid="li-overview-item-link"]';
+  export const addCommentLink = '[data-testid="btn-add-comment-open-close"]';
+  export const addCommentBtn = '[data-testid="btn-add-comment"]';
+  export const commentTextArea = '[data-testid="input-comment-box"]';
+  export const commentsCount = '[data-testid="txt-comments-count"]';
+  export const noComments = '[data-testid="txt-no-comments"]';
+  export const commentsTable = '[data-testid="table-comments"]';
+  export const deleteComment = '[data-testid="btn-delete-comment"]';
+  export const deleteCommentPopup =
+    '[data-testid="popup-delete-comment-confirm"]';
+  export const ratingContainer = '[data-testid="rating-container"]';
+  export const ratingStars = '[data-testid="rating-stars"]';
+  export const ratingStar = (star: number) => `[for="hover-feedback-${star}"]`;
+  export const ratingPopupRoot = '[class="MuiPopover-root"]';
+  export const sdks = '[data-testid="sdks-item-link"]';
+  export const androidSdk = '[data-testid="sdk-android-button"]';
   export const applicationSelect = '[data-testid="application-selector"]';
   export const applicationSelectItem = (application: string) =>
     `[data-value="${application}"]`;

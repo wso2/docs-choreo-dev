@@ -182,8 +182,9 @@ export class Project {
 
     cy.get('[data-cyid="home"]').should("be.visible");
 
-    cy.get('[id="backdrop-loader"]').should("not.exist");
-    cy.get("[data-cyid=create-time]").should("be.visible");
+    cy.get(TestIds.backdropLoader, SHORT_TIME).should("not.exist");
+    cy.get(TestIds.createTime).should("be.visible");
+    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
     cy.log("Successfully visited to the component");
 
     cy.url().then((url) => {
@@ -483,43 +484,50 @@ export class Project {
     });
   }
 
-createByocServiceComponent(repoInfo: RepoInfo, byocInfo: ByocInfo, oasFilePath: string) {
-  const componentName = Utils.generateComponentName();
-  let componentData: ByocComponent = {
-    name: componentName,
-    displayName: componentName,
-    accessibility: Enums.Accessibility.EXTERNAL,
-    componentType: Enums.DisplayType.byocService,
-    description: "Containerized Service Component",
-    labels: "",
-    projectId: "",
-    oasFilePath: oasFilePath,
-    port: 80,
-    byocConfig: {
-      srcGitRepoUrl: repoInfo.url,
-      srcGitRepoBranch: repoInfo.branch,
-      dockerfilePath: byocInfo.dockerfilePath,
-      dockerContext: byocInfo.dockerContext,
-    },
-  };
+  createByocServiceComponent(
+    repoInfo: RepoInfo,
+    byocInfo: ByocInfo,
+    oasFilePath: string
+  ) {
+    const componentName = Utils.generateComponentName();
+    let componentData: ByocComponent = {
+      name: componentName,
+      displayName: componentName,
+      accessibility: Enums.Accessibility.EXTERNAL,
+      componentType: Enums.DisplayType.byocService,
+      description: "Containerized Service Component",
+      labels: "",
+      projectId: "",
+      oasFilePath: oasFilePath,
+      port: 80,
+      byocConfig: {
+        srcGitRepoUrl: repoInfo.url,
+        srcGitRepoBranch: repoInfo.branch,
+        dockerfilePath: byocInfo.dockerfilePath,
+        dockerContext: byocInfo.dockerContext,
+      },
+    };
 
-  return GraphQL.createComponentV2(
-    this.name,
-    "",
-    componentData,
-    GraphQLQueryBuilder.getBYOCComponentCreationQuery
-  ).then(() => {
-    return Promise.resolve(new Byoc(componentName));
-  });
-}
+    return GraphQL.createComponentV2(
+      this.name,
+      "",
+      componentData,
+      GraphQLQueryBuilder.getBYOCComponentCreationQuery
+    ).then(() => {
+      return Promise.resolve(new Byoc(componentName));
+    });
+  }
 
-verifyUsageInsights(env: Enums.Environment, options?: { expectedTraffic: number }) {
-  this.selectEnvironment(env);
-  this.selectTimePeriod();
-  this.getTotalTraffic().should((value) => {
-    expect(Number(value)).gte(options?.expectedTraffic || 2); 
-  });
-}
+  verifyUsageInsights(
+    env: Enums.Environment,
+    options?: { expectedTraffic: number }
+  ) {
+    this.selectEnvironment(env);
+    this.selectTimePeriod();
+    this.getTotalTraffic().should((value) => {
+      expect(Number(value)).gte(options?.expectedTraffic || 2);
+    });
+  }
 
   private goToComponentListing() {
     cy.get(TestIds.listing).should("be.visible").click();

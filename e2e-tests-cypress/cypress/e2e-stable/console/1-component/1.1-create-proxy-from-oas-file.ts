@@ -145,7 +145,10 @@ describe("Create Proxy from OAS file", () => {
   });
 
   it("Tryout application", () => {
-    proxy.testSwaggerConsole_DevPortal(RESOURCE, application.getName());
+    proxy.testSwaggerConsole_DevPortal({
+      resource: RESOURCE,
+      application: application.getName(),
+    });
   });
 
   it("Verify Proxy Consumer in Console", () => {
