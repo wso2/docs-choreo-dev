@@ -217,6 +217,6 @@ describe(`Verify internal API Proxy functionality`, () => {
   });
 
   it("Tryout converted External Proxy in Dev portal", () => {
-    internalProxy.testSwaggerConsole_DevPortal(OPERATION_USERS);
+    internalProxy.testSwaggerConsole_DevPortal({ resource: OPERATION_USERS });
   });
 });
