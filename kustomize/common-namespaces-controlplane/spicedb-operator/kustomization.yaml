@@ -5,3 +5,4 @@ resources:
   - cr
   - crb
   - deployment
+  - cluster
