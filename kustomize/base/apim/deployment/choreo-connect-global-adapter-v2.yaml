@@ -108,6 +108,9 @@ spec:
           envFrom:
             - configMapRef:
                 name: cm-feature-flags
+            - secretRef:
+                name: secret-redis
+
           env:
             - name: GLOBAL_ADAPTER_PRIVATE_KEY_PATH
               value: /home/wso2/security/keystore/global-adapter.key
@@ -129,11 +132,6 @@ spec:
                 secretKeyRef:
                   key: GLOBAL_ADAPTER_MSSQL_PASSWORD
                   name: secret-cc-ga-credentials
-            - name: redis_host_pwd
-              valueFrom:
-                secretKeyRef:
-                  key: REDIS_PASSWORD
-                  name: secret-redis
             - name: cp_admin_pwd
               valueFrom:
                 secretKeyRef:
