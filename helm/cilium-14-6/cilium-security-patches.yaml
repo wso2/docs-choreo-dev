@@ -9,7 +9,6 @@ spec:
       annotations:
         container.apparmor.security.beta.kubernetes.io/config: runtime/default
         container.apparmor.security.beta.kubernetes.io/mount-bpf-fs: runtime/default
-        container.apparmor.security.beta.kubernetes.io/wait-for-node-init: runtime/default
     spec:
       securityContext:
         seccompProfile:
@@ -66,22 +65,6 @@ spec:
               drop:
                 - ALL
             privileged: true
-          resources:
-            limits:
-              cpu: 150m
-              memory: 200Mi
-            requests:
-              cpu: 100m
-              memory: 100Mi
-        - name: wait-for-node-init
-          securityContext:
-            runAsNonRoot: true
-            runAsUser: 10001
-            readOnlyRootFilesystem: true
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
           resources:
             limits:
               cpu: 150m

@@ -1902,6 +1902,7 @@ CREATE TABLE [dbo].[wso2con_contest_registration]
     [user_email] [nvarchar](255) NOT NULL,
     [organization_uuid] [nvarchar](255) NOT NULL,
     [organization_handle] [nvarchar](255) NOT NULL,
+    [is_registered] [bit] NOT NULL DEFAULT 1,
     [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
