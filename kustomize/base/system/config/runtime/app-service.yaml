@@ -461,6 +461,7 @@ apim:
 asgardeo:
   orgManagementApiUrl: ${ASGARDEO_ORG_MANAGEMENT_API_URL}
   userManagementApiUrl: ${ASGARDEO_USER_MANAGEMENT_API_URL}
+  asgardeoClientTimeout: ${ASGARDEO_CLIENT_TIMEOUT}
   tokenUrl: ${ASGARDEO_TOKEN_URL}
   clientKey: ${ASGARDEO_CLIENT_KEY}
   clientSecret: ${ASGARDEO_CLIENT_SECRET}
