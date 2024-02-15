@@ -7,6 +7,10 @@ helmCharts:
       encryption:
         enabled: true
         type: wireguard
+      envoyConfig:
+        enabled: true
+      envoy:
+        enabled: true
       cluster:
         name: choreo-dev-wu2-dataplane-aks-cluster
       priorityClassName: system-node-critical
@@ -58,13 +62,12 @@ helmCharts:
       resources:
         limits:
           cpu: 4000m
-          memory: 4Gi
+          memory: 6Gi
         requests:
-          cpu: 100m
-          memory: 512Mi
-      livenessProbe:
-        failureThreshold: 10
-        periodSeconds: 30
+          cpu: 1000m
+          memory: 1Gi
+      startupProbe:
+        failureThreshold: 600
       image:
         repository: choreocontrolplane.azurecr.io/cilium/cilium
         useDigest: false
