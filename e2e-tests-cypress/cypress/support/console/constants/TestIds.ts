@@ -20,7 +20,7 @@ export namespace TestIds {
   export const componentLoader = '[id="circular-loader"]';
   export const projectName = '[data-cyid="project-name"]';
   export const projectDescription = '[data-cyid="project-description"]';
-  export const multiRepository = '[data-testid="Multi Repository-radio-card"]';
+  export const multiRepository = '[data-testid="Multi-Repo-radio-card"]';
   export const createProject =
     '[data-cyid="create-project-stepper-submit-button"]';
   export const backToProjectList =
@@ -263,5 +263,6 @@ export namespace TestIds {
   export const nextButton = '[data-testid="btn-next"]';
   export const fileMount = '[data-cyid="file-mount-upload-button"]';
   export const byocPromote = '[data-cyid="promote-selector-default-configs"]';
-  export const componentSearchBox = '[data-cyid="component-listing-auto-forcused-search-search-field"]';
+  export const componentSearchBox =
+    '[data-cyid="component-listing-auto-forcused-search-search-field"]';
 }
