@@ -144,7 +144,6 @@ nav:
       - Set Up Health Checks: devops-and-ci-cd/set-up-health-checks.md
       - Autoscale:
         - Autoscale Component Replicas: devops-and-ci-cd/autoscale/autoscale-component-replicas.md
-        - Autoscale Components with Scale to Zero: devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero.md
       - Configure Storage: devops-and-ci-cd/configure-storage.md
       - Manage Environments: devops-and-ci-cd/manage-environments.md
   - Testing: 
@@ -157,6 +156,7 @@ nav:
   - Consuming Services:
       - Consume a Service: consuming-services/consuming-a-sevice.md
       - Manage Application: consuming-services/manage-application.md
+      - Share Applications: consuming-services/share-applications.md
       - Manage Subscription: consuming-services/manage-subscription.md
       - Generate an Access Token: consuming-services/generate-an-access-token.md
   - API Management:
