@@ -144,6 +144,7 @@ nav:
       - Set Up Health Checks: devops-and-ci-cd/set-up-health-checks.md
       - Autoscale:
         - Autoscale Component Replicas: devops-and-ci-cd/autoscale/autoscale-component-replicas.md
+        - Autoscale Components with Scale to Zero: devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero.md
       - Configure Storage: devops-and-ci-cd/configure-storage.md
       - Manage Environments: devops-and-ci-cd/manage-environments.md
   - Testing: 
@@ -354,7 +355,7 @@ plugins:
           'develop-components/develop-services/develop-a-udp-service.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-udp-server-via-a-service/'
           'develop-components/develop-services/develop-a-ballerina-rest-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-ballerina-service/'
           'develop-components/develop-services/develop-a-ballerina-graphql-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-ballerina-graphql-endpoint-via-a-service/'
-          'quick-start-guides/build-your-first-cloud-native-application-with-choreo/': 'https://wso2.com/choreo/docs/quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service/'
+          'quick-start-guides/build-your-first-cloud-native-application-with-choreo.md': 'https://wso2.com/choreo/docs/quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service/'
           
 extra_css:
   # - assets/lib/highlightjs/default.min.css
