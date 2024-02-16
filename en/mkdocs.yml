@@ -156,6 +156,7 @@ nav:
   - Consuming Services:
       - Consume a Service: consuming-services/consuming-a-sevice.md
       - Manage Application: consuming-services/manage-application.md
+      - Share Applications: consuming-services/share-applications.md
       - Manage Subscription: consuming-services/manage-subscription.md
       - Generate an Access Token: consuming-services/generate-an-access-token.md
   - API Management:
