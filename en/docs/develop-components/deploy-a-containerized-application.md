@@ -109,7 +109,7 @@ Choreo lets you configure deployment settings such as scaling, resource limits, 
 
 For more information about these configurations, see Choreo's [DevOps capabilities](../devops-and-ci-cd/view-runtime-details.md).
 
-You can configure the **Endpoints** to expose your service using the **Service** Component in Choreo. See [Service Component](../develop-components/develop-services/develop-a-service.md) for more information. 
+You can configure the **Endpoints** to expose your service using the **Service** Component in Choreo. See [Service Component Overview](../develop-components/develop-services/service-component-overview.md) for more information. 
 
 ### Build, deploy, and promote
 

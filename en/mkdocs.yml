@@ -75,7 +75,9 @@ nav:
   - Introduction:
       - What is Choreo?: what-is-choreo.md
   - Quick Start Guide:
-      - Build Your First Cloud Native Application with Choreo: quick-start-guides/build-your-first-cloud-native-application-with-choreo.md
+      - Deploy Your First Service: quick-start-guides/deploy-your-first-service.md
+      - Deploy Your First Static Web Application: quick-start-guides/deploy-your-first-static-web-application.md
+      - Deploy a Web Application that Consumes a Backend Service: quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service.md
   - Tutorials:
       - Expose a Service as a Managed API: tutorials/expose-a-service-as-a-managed-api.md
       - Secure an API with Role-Based Access Control: tutorials/secure-an-api-with-role-based-access-control.md
@@ -94,14 +96,14 @@ nav:
       - Choreo Marketplace: choreo-concepts/choreo-marketplace.md
   - Develop Components:
       - Develop Services:
+          - Service Component Overview: develop-components/develop-services/service-component-overview.md
           - Develop a Service: develop-components/develop-services/develop-a-service.md
-          - Develop a REST API: develop-components/develop-services/develop-a-rest-api.md
-          - Develop a Go REST API: develop-components/develop-services/develop-a-go-rest-api.md
-          - Develop a gRPC Service: develop-components/develop-services/develop-a-grpc-service.md
-          - Develop a TCP Service: develop-components/develop-services/develop-a-tcp-service.md
-          - Develop a UDP Service: develop-components/develop-services/develop-a-udp-service.md
-          - Develop a Ballerina REST API:  develop-components/develop-services/develop-a-ballerina-rest-api.md
-          - Develop a Ballerina GraphQL API: develop-components/develop-services/develop-a-ballerina-graphql-api.md
+          - Develop a service with Docker: develop-components/develop-services/develop-a-service-with-docker.md
+          - Develop a Ballerina Service:  develop-components/develop-services/develop-a-ballerina-service.md
+          - Expose a gRPC Endpoint via a Service: develop-components/develop-services/expose-a-grpc-endpoint-via-a-service.md
+          - Expose a TCP Server via a Service: develop-components/develop-services/expose-a-tcp-server-via-a-service.md
+          - Expose a UDP Server via a Service: develop-components/develop-services/expose-a-udp-server-via-a-service.md
+          - Expose a Ballerina GraphQL Endpoint via a Service: develop-components/develop-services/expose-a-ballerina-graphql-endpoint-via-a-service.md
       - Develop an API Proxy: develop-components/develop-an-api-proxy.md
       - Develop a Web Application: develop-components/develop-a-web-application.md
       - Develop a Webhook: develop-components/develop-a-webhook.md 
@@ -154,6 +156,7 @@ nav:
   - Consuming Services:
       - Consume a Service: consuming-services/consuming-a-sevice.md
       - Manage Application: consuming-services/manage-application.md
+      - Share Applications: consuming-services/share-applications.md
       - Manage Subscription: consuming-services/manage-subscription.md
       - Generate an Access Token: consuming-services/generate-an-access-token.md
   - API Management:
@@ -227,6 +230,7 @@ plugins:
   - search
   - include-markdown
   - glightbox
+  - open-in-new-tab
   - markdownextradata: {}
   - redirects:
       redirect_maps:
@@ -269,6 +273,7 @@ plugins:
           'develop/components/api-proxies/policies.md': 'https://wso2.com/choreo/docs/develop/api-policies/policies/'
           'get-started/what-is-choreo.md': 'https://wso2.com/choreo/docs/what-is-choreo/'
           'get-started/quick-start-guide.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo/'
+          'get-started/build-your-first-cloud-native-application-with-choreo.md': 'https://wso2.com/choreo/docs/quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service/'
           'get-started/tutorials/create-your-first-rest-api.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo/'
           'get-started/tutorials/create-your-first-rest-api-proxy.md': 'https://wso2.com/choreo/docs/quick-start-guides/expose-a-service-as-a-managed-api-with-choreo-api-manager/'
           'get-started/tutorials/create-your-first-webhook.md': 'https://wso2.com/choreo/docs/develop-components/develop-a-webhook/'
@@ -342,6 +347,14 @@ plugins:
           'develop-components/develop-a-rest-api-proxy.md': 'https://wso2.com/choreo/docs/develop-components/develop-an-api-proxy/'
           'devops-and-ci-cd/builds-and-deployments.md' : 'https://wso2.com/choreo/docs/choreo-concepts/ci-cd/'
           'troubleshoot/faq.md': 'https://wso2.com/choreo/docs/references/faq/'
+          'develop-components/develop-services/develop-a-rest-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/'
+          'develop-components/develop-services/develop-a-go-rest-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service-with-docker/'
+          'develop-components/develop-services/develop-a-grpc-service.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-grpc-endpoint-via-a-service/'
+          'develop-components/develop-services/develop-a-tcp-service.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-tcp-server-via-a-service/'
+          'develop-components/develop-services/develop-a-udp-service.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-udp-server-via-a-service/'
+          'develop-components/develop-services/develop-a-ballerina-rest-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-ballerina-service/'
+          'develop-components/develop-services/develop-a-ballerina-graphql-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-ballerina-graphql-endpoint-via-a-service/'
+          'quick-start-guides/build-your-first-cloud-native-application-with-choreo.md': 'https://wso2.com/choreo/docs/quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service/'
           
 extra_css:
   # - assets/lib/highlightjs/default.min.css

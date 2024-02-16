@@ -1,4 +1,4 @@
-# Develop a Ballerina GraphQL API
+# Expose a Ballerina GraphQL Endpoint via a Service
 
 Choreo offers the flexibility to develop and deploy applications in a language of your preference. This guide shows you how to deploy a service component that exposes a GraphQL API using the Ballerina language in Choreo. No prior knowledge of the Ballerina language is required to follow this guide. 
 
