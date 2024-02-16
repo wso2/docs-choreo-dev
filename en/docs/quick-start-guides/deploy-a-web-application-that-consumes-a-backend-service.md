@@ -134,7 +134,7 @@ To test the **Readinglist** REST endpoint via the integrated OpenAPI Console in 
     ```json
       {
         "author": "Bram Stoker",
-        "status": "To Read",
+        "status": "to_read",
         "title": "Dracula"
       }
     ```
