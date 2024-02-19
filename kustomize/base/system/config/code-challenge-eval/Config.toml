@@ -22,5 +22,11 @@ user = 'choreo_apim_db_user'
 database = 'choreo_apim_db'
 port = 1433
 
+[code_challenge_eval.auth]
+choreoJwtIssuer = "{{.CHOREO_JWT_ISSUER}}"
+choreoJwtAudience = "{{.CHOREO_JWT_AUDIENCE}}"
+site24x7JwtAudience = "{{.SITE24x7_JWT_AUDIENCE}}"
+choreoJwtJwksUrl = "{{.CHOREO_JWT_JWKS_URL}}"
+
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
