@@ -32,22 +32,6 @@ export class LoginPage {
       });
     cy.get("[data-testid=home-appbar-btn]", VERY_SHORT_TIME).should("be.visible");
   }
-  
-  static loginToDevportalAsInvitedUser(devportalUrl = ''): void {
-    const loginURL = devportalUrl ? devportalUrl + "/" + handle + idpParam : devportalLoginURL;
-    cy.visit(loginURL);
-    cy.wait(3000)
-      .url(SHORT_TIME)
-      .then((url) => {
-        if (url.includes(Cypress.env("idpURL") + "/authenticationendpoint")) {
-          cy.get('button[type="submit"]', VERY_SHORT_TIME).should("be.visible");
-          cy.get("#usernameUserInput").type(Cypress.env("choreoIDPInvitedUsername"));
-          cy.get("#password").type(Cypress.env("choreoIDPInvitedPassword"), { log: false });
-          cy.get('button[type="submit"]').click();
-        }
-      });
-    cy.get("[data-testid=home-appbar-btn]", VERY_SHORT_TIME).should("be.visible");
-  }
 
   static visitToDevportalOrgPublicApis(): void {
     const loginURL = Cypress.env("devportalLoginURL") + "/" + handle;

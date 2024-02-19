@@ -16,9 +16,8 @@ import { Enums, UsagePlan } from "../../support/commons/enums";
 import { console } from "../../support/console/console";
 import { Project } from "../../support/console/entities/project/project";
 import { Proxy } from "../../support/console/entities/component/proxy-component";
-import { devPortal } from "../../support/console/devportal";
+import { DevPortal, devPortal } from "../../support/console/devportal";
 import { Application } from "../../support/console/entities/application/application";
-import { LoginPage as DevportalLoginPage } from "../../support/devportal/pages/login/login-page";
 import { DevPortalHomePage } from "../../support/devportal/pages/home/home-page";
 
 let application: Application;
@@ -140,7 +139,7 @@ describe("API overview comment and rating scenario", () => {
 describe("Check application with shared user", () => {
 
   before(() => {
-    DevportalLoginPage.loginToDevportalAsInvitedUser();
+    DevPortal.loginToDevportalAsInvitedUser();
   });
 
   after(() => {
@@ -148,11 +147,7 @@ describe("Check application with shared user", () => {
   });
 
   it("Check shared application", () => {
-      let appName = application.getName();
-      cy.get('[data-testid="applications-appbar-btn"]').click();
-      cy.get('[data-testid="search-btn"]').trigger("mouseover");
-      cy.get('[data-testid="search-app"] [placeholder="Search"]').type(appName);
-      cy.get('[data-testid="application-list-a"] > [value="a"]').should("exist");
+      DevPortal.searchApp(application.getName());
   });
 
 });
