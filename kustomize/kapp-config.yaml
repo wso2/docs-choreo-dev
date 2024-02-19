@@ -24,7 +24,7 @@ rebaseRules:
     resourceMatchers:
       - apiVersionKindMatcher:
           apiVersion: actions.summerwind.dev/v1alpha1
-          kind: horizontalrunnerautoscaler
+          kind: HorizontalRunnerAutoscaler
 
   - path: [ metadata, annotations, autoscaling.alpha.kubernetes.io/conditions ]
     type: copy
