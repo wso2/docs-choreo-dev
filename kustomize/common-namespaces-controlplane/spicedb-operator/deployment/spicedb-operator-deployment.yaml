@@ -22,6 +22,8 @@ spec:
       labels:
         app: spicedb-operator
         app.kubernetes.io/instance: spicedb-operator
+      annotations:
+        linkerd.io/inject: enabled
     spec:
       containers:
       - args:
