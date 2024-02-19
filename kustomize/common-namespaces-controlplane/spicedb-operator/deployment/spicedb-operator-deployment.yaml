@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     checkov.io/skip1: CKV_K8S_38=The SA token is required for the spicedb operator
+    checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=this is the CRD operator
   labels:
     app: spicedb-operator
     app.kubernetes.io/instance: spicedb-operator
@@ -22,8 +23,6 @@ spec:
       labels:
         app: spicedb-operator
         app.kubernetes.io/instance: spicedb-operator
-      annotations:
-        linkerd.io/inject: enabled
     spec:
       containers:
       - args:
