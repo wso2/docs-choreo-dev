@@ -94,7 +94,7 @@ export namespace TestIds {
   export const noBuildsAvailable =
     '[data-cyid="table-listing-no-data-message"]';
   export const buildTime = '[data-cyid="build-time"]';
-  export const build = '[data-cyid="build-button"]';
+  export const build = '[data-cyid="build-split-button-split-group-button-button"]';
   export const tableTitle = '[data-cyid="table-title"]';
   export const createComponent = '[data-cyid="create-component-button"]';
   export const proxyBuildPack =
