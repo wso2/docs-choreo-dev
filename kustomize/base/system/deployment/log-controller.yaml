@@ -49,8 +49,8 @@ spec:
                 - all
           name: log-controller
           volumeMounts:
-            - name: secret-telemetry
-              mountPath: "/mnt/csi/secret-telemetry"
+            - name: secret-log-controller
+              mountPath: "/mnt/csi/secret-log-controller"
               readOnly: true
             - name: secret-redis
               mountPath: "/mnt/csi/secret-redis"
@@ -85,12 +85,12 @@ spec:
               cpu: 500m
               memory: 200Mi
       volumes:
-        - name: secret-telemetry
+        - name: secret-log-controller
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: secret-telemetry
+              secretProviderClass: secret-log-controller
             nodePublishSecretRef:
               name: csi-secret-store-azure
         - name: secret-redis
