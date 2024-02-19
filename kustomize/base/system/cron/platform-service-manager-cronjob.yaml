@@ -2,7 +2,6 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: platform-service-manager-cronjob
-  namespace: choreo-system
 spec:
   schedule: "*/5 * * * *"
   concurrencyPolicy: Forbid
@@ -57,13 +56,3 @@ spec:
                   name: csi-secret-store-azure
           serviceAccountName: sa-choreo-default
           automountServiceAccountToken: false
-          affinity:
-            podAntiAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                - labelSelector:
-                    matchExpressions:
-                      - key: antiaffinity
-                        operator: In
-                        values:
-                          - platform-services-manager
-                  topologyKey: kubernetes.io/hostname
