@@ -613,3 +613,13 @@ configMapGenerator:
     literals:
       - RUDDER_BASE_URL="http://dp-rudder:80"
       - EXECUTION_CLEANUP_RESOURCE_PATH="internal/admin/cleanup-executions"
+  - name: cm-log-controller
+    behavior: create
+    literals:
+      - AZURE_LA_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+      - SUBSCRIPTION_GRPC_ADDRESS=subscriptions:9090
+      - EMAIL_SERVICE_URL="https://email-service:443"
+      - MIZZEN_URL="http://dp-mizzen"
+      - REDIS_PORT=6380
+      - REDIS_SSL=true
+      - REDIS_DATABASE=3
