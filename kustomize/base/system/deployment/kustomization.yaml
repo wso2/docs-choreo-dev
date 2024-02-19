@@ -55,5 +55,6 @@ resources:
   - app-dev-authorization-service.yaml
   - cp-gw-adapter.yaml
   - choreo-url-management.yaml
+  - log-controller.yaml
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587,25,1433,6380
