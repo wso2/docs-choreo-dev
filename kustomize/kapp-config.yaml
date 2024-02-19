@@ -18,6 +18,14 @@ rebaseRules:
           apiVersion: autoscaling/v2
           kind: HorizontalPodAutoscaler
 
+  - path: [ spec, capacityReservations ]
+    type: copy
+    sources: [ existing, new ]
+    resourceMatchers:
+      - apiVersionKindMatcher:
+          apiVersion: actions.summerwind.dev/v1alpha1
+          kind: horizontalrunnerautoscaler
+
   - path: [ metadata, annotations, autoscaling.alpha.kubernetes.io/conditions ]
     type: copy
     sources: [ existing, new ]
