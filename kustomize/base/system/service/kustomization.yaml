@@ -6,6 +6,7 @@ resources:
   - app-deployer.yaml
   - app-service.yaml
   - audit-logging.yaml
+  - code-challenge-eval.yaml
   - connector-builder.yaml
   - connectords.yaml
   - console-next.yaml
