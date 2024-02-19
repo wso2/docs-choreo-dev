@@ -538,6 +538,10 @@ configMapGenerator:
     behavior: create
     files:
       - cp-resilient-invoker/Config.toml
+  - name: cm-file-code-challenge-eval
+    behavior: create
+    files:
+      - code-challenge-eval/Config.toml
   - name: cm-file-cp-rrs
     behavior: create
     files:
