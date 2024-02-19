@@ -122,6 +122,49 @@ To execute the manual task, follow the steps given below:
 1. In the left navigation menu, click **Execute**.
 2. Click **Run Now**.
 
+!!! note
+    In Choreo, you can inject dynamic values into you application as command line arguments.
+
+    To use this feature, click the drop down icon next to **Run Now** and select **Run with Arguments**. In **Runtime Arguments** pane, enter the arguments you wish to pass to your application. Click **Execute** to run your application with the specified arguments.
+
+    This feature is available for following buildpacks. 
+
+    === "Dockerfile"
+        Refer [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/docker-hello-world-manual-task) example to try out. Follow the `readme.md` inside the example.
+
+    === "Go"
+
+        Refer [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-go-task) example to try out. Follow the `readme.md` inside the example.
+
+    === "Java"
+
+        Refer [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-java-task) example to try out. Follow the `readme.md` inside the example.
+
+        !!! info
+
+            When working on Java projects:
+
+            - **Run with Argument** does not support when `Procfile` is available in the project.
+            - The `Main` class should be defined in the manifest file.
+            - If Maven files such as `mvn.cmd` exist in the project without the `.mvn` directory, the build will fail. To ensure a successful build, you must either commit the `.mvn` directory along with any Maven files or not include any Maven files in the project if you choose not to commit the `.mvn` directory.
+
+    === "NodeJS"
+
+        Refer [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-nodejs-task) example to try out. Follow the `readme.md` inside the example.
+
+        !!! info
+
+            When working on Java projects:
+
+            - **Run with Argument** does not support when `Procfile` is available in the project.
+            - Project root must contains package.json file with `main` attribute defined.
+
+    === "WSO2 MI"
+
+        Refer [Weather to Logs Task](https://github.com/wso2/choreo-samples/tree/main/weather-to-logs-mi-manual-task) example to try out. Follow the `readme.md` inside the example.
+
+
+
 ## Step 5: Test the manual task
 
 Once the task is triggered, an email with the subject `[WSO2 Choreo Demo] Next 24H Weather Forecast` is sent from `choreo.demo@gmail.com` to the email address specified as the **email** configurable variable value in [Step 3](#step-3-deploy-the-manual-task). 
