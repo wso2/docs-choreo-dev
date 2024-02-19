@@ -107,9 +107,6 @@ spec:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
-                matchExpressions:
-                  - key: antiaffinity
-                    operator: In
-                    values:
-                      - log-controller
+                matchLabels:
+                  antiaffinity: log-controller
               topologyKey: kubernetes.io/hostname
