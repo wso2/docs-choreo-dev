@@ -132,6 +132,11 @@ To execute the manual task, follow the steps given below:
     === "Dockerfile"
         Refer [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/docker-hello-world-manual-task) example to try out. Follow the `readme.md` inside the example.
 
+        !!! info
+            When working on Dockerized projects:
+
+            - **Run with Argument** does not support when the Dockerfile contains `CMD`, use `ENTRYPOINT` to define your default commands. 
+
     === "Go"
 
         Refer [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-go-task) example to try out. Follow the `readme.md` inside the example.
