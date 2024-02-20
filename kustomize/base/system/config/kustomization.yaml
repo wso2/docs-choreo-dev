@@ -279,6 +279,7 @@ configMapGenerator:
       - RUDDER_URL=http://dp-rudder:80
       - SUBSCRIPTION_SERVICE_URL=subscriptions:9090
       - DELETION_PERIOD_IN_MONTHS=3
+      - NODE_OPTIONS="--max-http-header-size=65000"
   - name: cm-platform-services-manager
     behavior: create
     literals:
