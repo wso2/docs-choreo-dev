@@ -41,7 +41,7 @@ The `endpoints.yaml` file has a specific structure and contains the following de
 | **name**             | Required     | A unique name for the endpoint, which Choreo will use to generate the managed API.|
 | **port**             | Required     | The numeric port value that gets exposed via this endpoint.                      |
 | **type**             | Required     | The type of traffic this endpoint is accepting, such as `REST`, `GraphQL`, `gRPC`, `UDP`or `TCP`. Currently, the MI preset supports only the `REST` type.                                         |
-| **networkVisibility**| Required     | The network level visibility of this endpoint, which defaults to `Project` if not specified. Accepted values are `Project`, `Organization`, or `Public`.|
+| **networkVisibility**| Required     | The network level visibility of this endpoint, which defaults to `Public` if not specified. Accepted values are `Project`, `Organization`, or `Public`.|
 | **context**          | Required     | The context (base path) of the API that Choreo exposes via this endpoint.        |
 | **schemaFilePath**   | Required     | The swagger definition file path. Defaults to the wildcard route if not provided. This field should be a relative path to the project path when using the **Java**, **Python**, **NodeJS**, **Go**, **PHP**, **Ruby**, and **WSO2 MI** buildpacks. For REST endpoint types, when using the **Ballerina** or **Dockerfile** buildpack, this field should be a relative path to the component root or Docker context.|
 
@@ -75,13 +75,13 @@ endpoints:
   # +required Type of the traffic this endpoint is accepting. Example: REST, GraphQL, etc.
   # Allowed values: REST, GraphQL, GRPC, UDP, TCP
   type: REST
-  # +optional Network level visibility of this endpoint. Defaults to Project
+  # +optional Network level visibility of this endpoint. Defaults to Public.
   # Accepted values: Project|Organization|Public.
   networkVisibility: Project
   # +optional Context (base path) of the API that is exposed via this endpoint.
   # This is mandatory if the endpoint type is set to REST or GraphQL.
   context: /greeting
-  # +optional Path to the schema definition file. Defaults to wild card route if not provided
+  # +optional Path to the schema definition file. Defaults to wild card route if not provided.
   # This is only applicable to REST endpoint types.
   # The path should be relative to the docker context.
   schemaFilePath: greeting_openapi.yaml
@@ -167,7 +167,7 @@ spec:
       # +required Type of traffic that the endpoint is accepting. For example: REST, GraphQL, etc.
       # Allowed values: REST, GraphQL, GRPC, TCP, UDP.
       type: REST
-      # +optional Network level visibility of the endpoint. Defaults to Project
+      # +optional Network level visibility of the endpoint. Defaults to Public.
       # Accepted values: Project|Organization|Public.
       networkVisibility: Public
       # +optional Context (base path) of the API that gets exposed via the endpoint.
