@@ -251,10 +251,10 @@ If the Micro Integrator project has inbound endpoints, you can expose them via d
     See [Understanding the endpoints.yaml file](../develop-components/configure-endpoints-body.md#learn-the-endpointsyaml-file) to learn about the `endpoints.yaml` file.
 
 2. **Auto generating endpoints**
-If `endpoints.yaml` is not provided and if the source Micro Integrator project has APIs, Choreo scans the project and generates the API endpoints. If the project has few APIs, an endpoint will be generated for each API. The visibility of this auto-generated endpoint is set to `Project` by default. You can change the visibility in the deployment flow.
+If `endpoints.yaml` is not provided and if the source Micro Integrator project has APIs, Choreo scans the project and generates the API endpoints. If the project has few APIs, an endpoint will be generated for each API. The visibility of this auto-generated endpoint is set to `Public` by default. You can change the visibility in the deployment flow.
 
 3. **Provide default endpoints**
-If `endpoints.yaml` is not provided and if the source Micro Integrator project doesn't have APIs, Choreo generates a default endpoint which will expose the default micro integrator port (8290) with `Project` visibility and wildcard context.
+If `endpoints.yaml` is not provided and if the source Micro Integrator project doesn't have APIs, Choreo generates a default endpoint which will expose the default micro integrator port (8290) with `Public` visibility and wildcard context.
 
 ## Explore Choreo examples on GitHub
 
