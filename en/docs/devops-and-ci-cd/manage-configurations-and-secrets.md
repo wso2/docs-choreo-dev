@@ -1,6 +1,6 @@
 # Manage Configurations and Secrets
 
-Choreo provides a seamless mechanism to manage and version your component's configurations and secrets as **file mounts** or **environment variables**.
+Choreo allows you to easily manage and version your component's configurations and secrets as **file mounts** or **environment variables**.
 
 !!! info "Note"
     All configurations and secrets applied to a Choreo component are stored in an encrypted secret vault in the cloud data plane, which is managed by WSO2.
@@ -21,9 +21,11 @@ Choreo considers all configurations and secrets to be sensitive content when sto
 
 Follow these steps to apply a file mount to a component you have created:
 
-1. Go to the **Deploy** view of the component for which you want to define configurations and secrets.
-2. Click **Configs & Secrets** and then click **+ Create**.
-3. In the **Mount a Configuration pane**, do the following:
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. In the **Component Listing** pane, click on the component for which you want to define configurations and secrets.
+3. In the left navigation menu, click **DevOps** and then click **Configs & Secrets**.
+4. Click **+ Create**.
+5. In the **Mount a Configuration** pane, do the following:
     1. Select a **Config Type** depending on your requirement.
     2. Select **File Mount** as the **Mount Type**.
     3. Click **Next**.
@@ -41,25 +43,27 @@ Follow these steps to apply a file mount to a component you have created:
 
     6. Upload a configuration file or copy and paste the configuration content into the editor.
 
-4. Click **Create**.
+6. Click **Create**.
 
     ![Create file mount](../assets/img/devops-and-ci-cd/configs/create-file-mount.png){.cInlineImage-full}
   
     !!!info "Note"
            
-            Configurations and secrets are applied immediately to your environment on creation. The running replicas you have undergo a rolling restart to ensure the new content gets reflected in the container.
+            Configurations and secrets are applied immediately to your environment on creation. To ensure that the container reflects the new content, your existing running replicas undergo a rolling restart.
 
 ## Apply environment variables to your container
 
 Follow these steps to apply environment variables to a component you have created:
 
-1. Go to the **Deploy** view of the component for which you want to define configurations and secrets.
-2. Click **Configs & Secrets** and then click **+ Create**.
-3. In the **Mount a Configuration pane**, do the following:
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. In the **Component Listing** pane, click on the component for which you want to define configurations and secrets.
+3. In the left navigation menu, click **DevOps** and then click **Configs & Secrets**.
+4. Click **+ Create**.
+5. In the **Mount a Configuration** pane, do the following:
     1. Select a **Config Type** depending on your requirement.
-    2. Select **Environment Variables** as the  **Mount Type**.
+    2. Select **File Mount** as the **Mount Type**.
     3. Click **Next**.
-    4. In the **Config Name** field, specify a name.
+    4. In the **Config Name** field, specify a name for the file mount.
   
         !!!tip
 
@@ -67,7 +71,7 @@ Follow these steps to apply environment variables to a component you have create
 
     5. Add the necessary environment variables as key-value pairs. You can click **Add Item** to add any number of environment variables.
 
-4. Click **Create**.
+6. Click **Create**.
    
     ![Set environment variables](../assets/img/devops-and-ci-cd/configs/create-env-vars.png){.cInlineImage-full}
 
@@ -75,10 +79,11 @@ Follow these steps to apply environment variables to a component you have create
 
 Follow these steps to update a configuration or secret you have defined:
 
-1. Go to the **Deploy** view of the component for which you have defined the configuration or secret.
-2. Click **Configs & Secrets**.
-3. Click the edit icon corresponding to the configuration or secret you want to update and do the necessary changes.
-4. Click **Save**.
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. In the **Component Listing** pane, click on the component for which you want to update configurations and secrets.
+3. In the left navigation menu, click **DevOps** and then click **Configs & Secrets**.
+4. Click the edit icon corresponding to the configuration or secret you want to update.
+5. Apply the necessary changes and click **Save**.
 
     ![Modify existing configs](../assets/img/devops-and-ci-cd/configs/create-or-delete-config.png){.cInlineImage-half}
 
@@ -86,16 +91,18 @@ Follow these steps to update a configuration or secret you have defined:
 
 Follow these steps to delete a configuration or secret you have defined:
 
-1. Go to the **Deploy** view of the component for which you have defined the configuration or secret.
-2. Click **Configs & Secrets**.
-3. Click the delete icon corresponding to the configuration or secret you want to delete, and enter the name of the configuration or secret.
-4. Click **Confirm**.
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. In the **Component Listing** pane, click on the component for which you want to delete configurations and secrets.
+3. In the left navigation menu, click **DevOps** and then click **Configs & Secrets**.
+4. Click the delete icon corresponding to the configuration or secret you want to delete.
+5. Enter the name of the configuration or secret to confirm deletion.
+6. Click **Delete**.
 
 ## Manage Ballerina configurables
 
 Choreo manages the [Ballerina configurables](https://ballerina.io/learn/by-example/configurable-variables/) for the Ballerina components you create.
 
-When you deploy or promote a Ballerina application, you can modify the Ballerina configurables via the **Build and Deploy** page.
+When you deploy or promote a Ballerina application, you can modify the Ballerina configurables via the **Deploy** page.
   
 !!!tip
 
