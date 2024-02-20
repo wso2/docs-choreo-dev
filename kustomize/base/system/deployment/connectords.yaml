@@ -78,10 +78,10 @@ spec:
           resources:
             limits:
               cpu: 300m
-              memory: 300Mi
+              memory: 500Mi
             requests:
               cpu: 200m
-              memory: 200Mi
+              memory: 400Mi
           volumeMounts:
             - mountPath: /home/ballerina/Config.toml
               name: bal-config-volume
