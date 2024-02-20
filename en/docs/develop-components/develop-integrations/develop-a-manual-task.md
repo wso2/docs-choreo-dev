@@ -168,6 +168,13 @@ To execute the manual task, follow the steps given below:
 
         Refer [Weather to Logs Task](https://github.com/wso2/choreo-samples/tree/main/weather-to-logs-mi-manual-task) example to try out. Follow the `readme.md` inside the example.
 
+        !!! info
+
+            When working on WSO2 MI projects:
+            
+            - To deploy WSO2 MI integration as Manual Task in Choroeo, you need to use the automation mode in the WSO2 Micro Integrator. See [Running MI in Automation Mode](https://apim.docs.wso2.com/en/latest/install-and-setup/install/running-the-mi-in-automation-mode/).
+
+
 
 
 ## Step 5: Test the manual task
