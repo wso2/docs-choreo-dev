@@ -16,16 +16,18 @@ import { Enums, UsagePlan } from "../../support/commons/enums";
 import { console } from "../../support/console/console";
 import { Project } from "../../support/console/entities/project/project";
 import { Proxy } from "../../support/console/entities/component/proxy-component";
-import { devPortal } from "../../support/console/devportal";
+import { DevPortal, devPortal } from "../../support/console/devportal";
 import { Application } from "../../support/console/entities/application/application";
+import { DevPortalHomePage } from "../../support/devportal/pages/home/home-page";
+
+let application: Application;
+let proxy: Proxy;
 
 describe("API overview comment and rating scenario", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const OPERATION_USERS = "intensity";
 
   let project: Project;
-  let proxy: Proxy;
-  let application: Application;
 
   after(() => {
     console.logout();
@@ -113,6 +115,10 @@ describe("API overview comment and rating scenario", () => {
     application = proxy.createApplication_DevPortal();
   });
 
+  it("Share application with another user", () => {
+    application.shareApplication(application.getName);
+  });
+
   it("Generate subscription credentials", () => {
     application.generateCredentials(Enums.Environment.SANDBOX);
     application.generateCredentials(Enums.Environment.PRODUCTION);
@@ -122,13 +128,26 @@ describe("API overview comment and rating scenario", () => {
     application.addSubscription(proxy.getName());
   });
 
-  it("Delete a consumer application", () => {
-    proxy.deleteApplication_DevPortal(application);
-  });
-
   it("Verify suspending Dev deployed component", () => {
     proxy.navigateToComponentInConsole();
     proxy.stopDeployment();
     proxy.stopPromotion();
   });
+});
+
+
+describe("Check application with shared user", () => {
+
+  before(() => {
+    DevPortal.loginToDevportalAsInvitedUser();
+  });
+
+  after(() => {
+    DevPortalHomePage.logout();
+  });
+
+  it("Check shared application", () => {
+      DevPortal.searchApp(application.getName());
+  });
+
 });

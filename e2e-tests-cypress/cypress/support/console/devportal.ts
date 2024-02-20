@@ -12,9 +12,14 @@
  */
 
 import { TestIds } from "./constants/TestIds";
-import { VERY_SHORT_TIME } from "../commons/timeouts";
+import { SHORT_TIME, VERY_SHORT_TIME } from "../commons/timeouts";
+
+const handle = Cypress.env("choreoOrgHandle");
+const idpParam = "?fidp=choreoe2etest";
+const devportalLoginURL = Cypress.env("devportalLoginURL") + "/" + handle + idpParam;
 
 export class DevPortal {
+  
   searchApi(apiName: string, version?: string) {
     cy.get(TestIds.apiBar).click();
     cy.contains("All").should("be.visible");
@@ -38,6 +43,29 @@ export class DevPortal {
     // Ensure API Overview page is loaded
     cy.get(TestIds.apiOverviewDevPortal).should("be.visible");
     cy.get(TestIds.apiNameDevPortal).contains(apiName).should("be.visible");
+  }
+
+  static searchApp(applicationName: string) {
+    cy.get('[data-testid="applications-appbar-btn"]').click();
+    cy.get('[data-testid="search-btn"]').trigger("mouseover");
+    cy.get('[data-testid="search-app"] [placeholder="Search"]').type(applicationName);
+    cy.get('[data-testid="application-list-a"] > [value="a"]').should("exist");
+  }
+
+  static loginToDevportalAsInvitedUser(devportalUrl = ''): void {
+    const loginURL = devportalUrl ? devportalUrl + "/" + handle + idpParam : devportalLoginURL;
+    cy.visit(loginURL);
+    cy.wait(3000)
+      .url(SHORT_TIME)
+      .then((url) => {
+        if (url.includes(Cypress.env("idpURL") + "/authenticationendpoint")) {
+          cy.get('button[type="submit"]', VERY_SHORT_TIME).should("be.visible");
+          cy.get("#usernameUserInput").type(Cypress.env("choreoIDPInvitedUsername"));
+          cy.get("#password").type(Cypress.env("choreoIDPInvitedPassword"), { log: false });
+          cy.get('button[type="submit"]').click();
+        }
+      });
+    cy.get("[data-testid=home-appbar-btn]", VERY_SHORT_TIME).should("be.visible");
   }
 }
 
