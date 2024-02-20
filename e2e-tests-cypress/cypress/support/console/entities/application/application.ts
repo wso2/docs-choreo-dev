@@ -76,44 +76,4 @@ export class Application {
     cy.get(TestIds.addApiSubscription(apiName)).should("be.disabled");
     cy.get(TestIds.subscriptionClose).click();
   }
-
-  shareApplication(appName) {
-    cy.intercept('POST', '**/share*').as('shareApplication');
-    cy.get('[data-testid=appliation-share-btn]').click();
-    cy.get('[data-testid=share-cancel-button]').click();
-    cy.get('[data-cyid=app-share-dialog]').should('not.exist');
-    cy.get('[data-testid=appliation-share-btn]').click();
-    cy.get('[data-testid=share-button]').should('be.disabled', true);
-    cy.get('[data-testid=app-share-user-email]').type("invitation.user.choreo@gmail.com{enter}");
-
-    cy.log('Check the email address validation');
-    cy.get('[data-testid=app-share-user-email]').type("errorEmail{enter}");
-    cy.get('[data-testid=invalid-email]').should("exist");
-
-    cy.get('[data-testid=app-share-user-email]').type("errorEmail@example.com{enter}");
-    cy.get('[data-testid=invalid-email]').should("not.exist");
-    cy.get('[data-testid=app-share-email-address]').should("have.length", 2);
-
-    cy.log('Remove newly added email address');
-    cy.get('[data-testid="emails-wrapper"]') 
-      .find('[data-testid="app-share-email-address"]') 
-      .eq(1)
-      .find('.MuiChip-deleteIcon')
-      .click(); 
-    cy.get('[data-testid=app-share-email-address]').should("have.length", 1);
-
-    cy.get('[data-testid=share-button]').should('not.be.disabled');
-    cy.get('[data-testid=shared-app-name]').should('have.text', appName);
-    cy.get('[data-testid=share-button]').click();
-    cy.wait('@shareApplication').its('response.statusCode').should('eq', 200);
-    cy.get('[data-cyid=app-share-dialog]').should('not.exist');
-
-    cy.log("Check existing user's email for the shared application");
-    cy.get('[data-testid=appliation-share-btn]').click();
-    cy.get('[data-testid=app-share-email-address]').should("have.length", 1);
-    cy.get('[data-testid=share-cancel-button]').click();
-
-    cy.log("Check whether the shared emails are listed under app overview");
-    cy.get('[data-testid=app-share-email-addresses]').should("have.length", 1);
-  }
 }
