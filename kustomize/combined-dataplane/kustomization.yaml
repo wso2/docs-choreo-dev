@@ -3,7 +3,9 @@ kind: Kustomization
 
 resources:
   - choreodp-system
+  - ../base/clusterissuers
   - ../routing/choreo-apim
+  - ../dataplane/choreo-apim
   - ../dataplane/crd
   - ../dataplane/priorityclass
   - ../routing/clusterissuers
