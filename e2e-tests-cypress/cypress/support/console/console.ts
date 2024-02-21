@@ -18,10 +18,9 @@ import { Utils } from "../commons/utils";
 import { AUTH_HEADER2, OK } from "../commons/http";
 import { GraphQL } from "./apis/graphql";
 import { ApiDevPortalService } from "./apis/api-devportal-service";
-import { Test } from "mocha";
 import { TestIds } from "./constants/TestIds";
 import { OrganizationSettings } from "./features/org-settings/org-settings";
-import { Enums } from "../commons/enums";
+import { CustomDomainType, Enums } from "../commons/enums";
 
 /**
  * Represents the Choreo Console, the entry point for all tests.
@@ -51,6 +50,50 @@ class Console {
     this._orgSettings.addUserStore(userStoreFile, env);
   }
 
+  addOrReplaceCustomDomain(domainName: string, type: CustomDomainType) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToUrlSettings();
+
+    cy.get(TestIds.searchIcon).should("be.visible").click().wait(2000);
+    cy.get(TestIds.searchDomain)
+      .should("be.visible")
+      .within(() => {
+        cy.get("input").click().clear().type(domainName);
+      });
+
+    cy.get(TestIds.domainTable).within(() => {
+      cy.get("tbody").then((tbody) => {
+        if (tbody.find(TestIds.noDataAvailable).length == 0) {
+          cy.contains("td", domainName).should("be.visible");
+          this.deleteSelectedDomain(domainName);
+        }
+      });
+    });
+
+    cy.get(TestIds.addDomain).click();
+    cy.get(TestIds.domainName).should("be.visible").type(domainName);
+
+    if (type === CustomDomainType.DevPortal) {
+      cy.get(TestIds.devPortalDomainOption).click();
+    } else {
+      throw new Error("Unhandled domain type");
+    }
+
+    for (let i = 0; i < 2; i++) {
+      cy.get(TestIds.nextButtonV2).should("be.enabled").click();
+    }
+
+    cy.get(TestIds.letsEncrypt).should("be.visible").click();
+    cy.get(TestIds.nextButtonV2).should("be.enabled").click();
+
+    cy.get(TestIds.addDomain).should("be.visible");
+
+    cy.get(TestIds.domainTable).within(() => {
+      cy.contains("td", domainName).should("be.visible");
+    });
+  }
+
   searchProject(projectName: string): Project {
     this.navigateToHome();
     cy.get(TestIds.searchIcon).click();
@@ -75,9 +118,27 @@ class Console {
     cy.get(TestIds.projectCard).should("be.visible");
   }
 
-  navigateToSettings() {
-    this.navigateToHome();
+  private navigateToSettings() {
     cy.get('[data-cyid="settings"]').should("be.visible").click();
+  }
+
+  private navigateToUrlSettings() {
+    cy.get('[data-cyid="nav-link-urls-settings-link-tabs-link-tab"]')
+      .should("be.visible")
+      .click();
+    cy.get(TestIds.progressBar).should("not.exist");
+    cy.get(TestIds.addDomain).should("be.visible");
+  }
+
+  private deleteSelectedDomain(domainName: string) {
+    cy.contains(domainName)
+      .parent("tr")
+      .find(TestIds.deleteDomain)
+      .click()
+      .wait(2000);
+
+    cy.get(TestIds.confirmDelete).click();
+    cy.contains("td", domainName).should("not.exist");
   }
 
   createNewProject(description: string): Project {
