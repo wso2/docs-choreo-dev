@@ -1,4 +1,0 @@
-resources:
-  - loggingapi.yaml
-  - obsapi.yaml
-  - sys-obsapi.yaml
