@@ -164,3 +164,7 @@ spec:
     port: 9090
     protocol: TCP
     targetPort: proxy
+  - name: miSvcPort
+    port: 8290
+    protocol: TCP
+    targetPort: proxy
