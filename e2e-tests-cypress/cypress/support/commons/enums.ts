@@ -117,3 +117,9 @@ export enum EndpointAccessibility {
   Project = "Project",
   Organization = "Organization",
 }
+
+export enum CustomDomainType {
+  Api,
+  WebApp,
+  DevPortal,
+}

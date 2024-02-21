@@ -91,8 +91,7 @@ export namespace TestIds {
   export const apply = '[data-cyid="apply-button"]';
   export const projectInsights = '[data-cyid="project-usage-insights-button"]';
   export const datePicker = '[data-testid="date-picker"]';
-  export const noBuildsAvailable =
-    '[data-cyid="table-listing-no-data-message"]';
+  export const noDataAvailable = '[data-cyid="table-listing-no-data-message"]';
   export const buildTime = '[data-cyid="build-time"]';
   export const build = '[data-cyid="build-split-button-split-group-button-button"]';
   export const tableTitle = '[data-cyid="table-title"]';
@@ -265,4 +264,16 @@ export namespace TestIds {
   export const byocPromote = '[data-cyid="promote-selector-default-configs"]';
   export const componentSearchBox =
     '[data-cyid="component-listing-auto-forcused-search-search-field"]';
+  export const searchDomain =
+    '[data-cyid="search-expandable-right-auto-forcused-search-search-field"]';
+  export const domainTable = '[data-cyid="domains-list"]';
+  export const deleteDomain = '[data-cyid="domain-delete-icon-button"]';
+  export const addDomain = '[data-cyid="domains-add-button"]';
+  export const domainName = '[data-cyid="text-input-domain-name"]';
+  export const devPortalDomainOption = '[data-testid="other"]';
+  export const nextButtonV2 = '[data-cyid="next-button"]';
+  export const letsEncrypt = '[data-testid="tls-let_s-encrypt"]';
+  export const confirmDialog = '[data-cyid="confirmation-dialog"]';
+  export const confirmDelete =
+    '[data-cyid="confirmation-dialog-destructive-action-button"]';
 }

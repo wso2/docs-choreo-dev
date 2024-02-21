@@ -24,52 +24,60 @@ import { AppsList } from "../../support/devportal/pages/applications/apps-list";
 import { Subscriptions } from "../../support/devportal/pages/applications/subscriptions";
 import { generateAppName } from "../../support/devportal/utils";
 import { APISdk } from "../../support/devportal/pages/apis/api-sdk";
-import { ProjectOverviewPage } from "../../support/console/pages/projects/project-overview";
-import { RestAPIProxyTemplate } from "../../support/console/pages/templates/rest-api-proxy-temp";
-import { ComponentOverviewPage } from "../../support/console/pages/component/component-overview-page";
-import { APIDeployment } from "../../support/console/pages/apis/api-deployment";
-import { ProjectListingPage } from "../../support/console/pages/projects/projects-listing-page";
-import { ComponentAPILifecycle } from "../../support/console/pages/component/component-manage-page";
-import { Utils } from "../../support/commons/utils";
-import { Enums } from "../../support/commons/enums";
+import { CustomDomainType, Enums } from "../../support/commons/enums";
+import { console } from "../../support/console/console";
+import { Project } from "../../support/console/entities/project/project";
+import { Application } from "../../support/console/entities/application/application";
+import { Proxy } from "../../support/console/entities/component/proxy-component";
 
 const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
-const API_BASE_PATH = Utils.generateBasePath();
 const Filepath = "apis/generation_oas.yaml";
-const API_NAME = Utils.generateComponentName("oas");
-const PROJECT_DESCRIPTION = "sample oas flow scenario";
-const PROJECT_NAME = Utils.generateProjectName();
+const PROJECT_DESCRIPTION = "Devportal custom domain scenario";
 
 describe("Create and deploy a component to test developer portal with custom domain", () => {
-  before(() => {
-    ConsoleLoginPage.login();
+  let project: Project;
+  let proxy: Proxy;
+  let application: Application;
+
+  it("Login to Console", () => {
+    console.login();
   });
 
   it("Creating a project", () => {
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+    project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-  it("Create and deploy a component", () => {
-    ProjectOverviewPage.createHttpProxyAPI();
-    RestAPIProxyTemplate.createOpenApi(Filepath);
-    RestAPIProxyTemplate.enterAPIdetails(
-      API_NAME,
-      API_BASE_PATH,
-      "",
-      "",
-      "",
-      ""
-    );
-    cy.task("setAPIName", API_NAME);
-    ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.deployToDev();
-    APIDeployment.promoteToProd();
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
+  it("Create API Proxy", () => {
+    project
+      .createProxyComponent({
+        version: "1.0",
+        oasFilePath: Filepath,
+        endpointUrl: "",
+      })
+      .then((comp) => {
+        proxy = comp;
+      });
   });
+
+  it("Deploy API Proxy", () => {
+    proxy.deploy();
+  });
+
+  it("Promote API Proxy", () => {
+    proxy.promote();
+  });
+
+  it("Publish proxy", () => {
+    proxy.publish();
+  });
+
+  // Partially migrated spec upto this point. Need to wait till changes to custom domain definition are finalized across all envs,
+  // before the rest of the spec can be migrated.
 
   it("Add a developer portal custom domain", () => {
+    // TODO: Uncomment the below code after the changes to custom domain definition are finalized across all envs
+    // console.addOrReplaceCustomDomain(CUSTOM_DOMAIN, CustomDomainType.DevPortal);
+
     ChoreoHomePage.navigateToSettings();
     DomainsComponents.navigateToDomainsSettings();
     DomainsComponents.navigateToDevPortalCustomDomain();
@@ -78,7 +86,7 @@ describe("Create and deploy a component to test developer portal with custom dom
   });
 
   after(() => {
-    ChoreoHomePage.logout();
+    console.logout();
   });
 });
 
