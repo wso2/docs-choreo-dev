@@ -1,3 +1,0 @@
-resources:
-  - choreo-internal-nginx-lb.yaml
-  - choreo-nginx-lb.yaml
