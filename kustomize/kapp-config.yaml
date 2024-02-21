@@ -12,6 +12,15 @@ rebaseRules:
 
   - path: [ spec, replicas ]
     type: copy
+    sources: [ new, existing ]
+    resourceMatchers:
+      - kindNamespaceNameMatcher:
+          kind: Deployment
+          namespace: keda
+          name: keda-http-add-on-scaler
+
+  - path: [ spec, replicas ]
+    type: copy
     sources: [ existing, new ]
     resourceMatchers:
       - apiVersionKindMatcher:
