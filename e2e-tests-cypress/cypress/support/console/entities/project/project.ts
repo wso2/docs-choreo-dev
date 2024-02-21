@@ -194,6 +194,25 @@ export class Project {
     return "";
   }
 
+  deleteComponent(name: string) {
+    this.goToComponentListing();
+    this.searchComponent(name);
+
+    cy.get(TestIds.componentTable).within(() => {
+      cy.get("tbody > tr").should("be.visible").realHover();
+    });
+
+    cy.get(TestIds.componentDelete).should("be.visible").click();
+    cy.get(TestIds.componentDeleteConfirm).should("be.visible");
+    cy.get(TestIds.confirmName).within(() => {
+      cy.get("input").type(name).type("{enter}");
+    });
+
+    cy.get(TestIds.componentDeleteConfirm).should("not.exist");
+    cy.get(TestIds.backdropLoader, VERY_SHORT_TIME).should("not.exist");
+    cy.contains(name).should("not.exist");
+  }
+
   createServiceComponent(
     accessibility: Enums.Accessibility,
     repoInfo: RepoInfo,

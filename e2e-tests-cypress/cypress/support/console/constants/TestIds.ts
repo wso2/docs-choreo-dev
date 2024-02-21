@@ -37,6 +37,10 @@ export namespace TestIds {
   export const componentFilter =
     '[data-cyid="project-components-multi-select"]';
   export const componentTable = '[data-cyid="component-table"]';
+  export const componentDelete = '[data-cyid="btn-contained-button"]';
+  export const componentDeleteConfirm =
+    '[data-cyid="delete-confirmation-dialog-content"]';
+  export const confirmName = '[data-cyid="confirm-name"]';
   export const next = '[data-cyid="btn-next-button"]';
   export const buildCard = '[data-cyid="default-build-card"]';
   export const devEnvCard = '[data-cyid="env-baseDevelopment-env-card"]';
@@ -93,7 +97,8 @@ export namespace TestIds {
   export const datePicker = '[data-testid="date-picker"]';
   export const noDataAvailable = '[data-cyid="table-listing-no-data-message"]';
   export const buildTime = '[data-cyid="build-time"]';
-  export const build = '[data-cyid="build-split-button-split-group-button-button"]';
+  export const build =
+    '[data-cyid="build-split-button-split-group-button-button"]';
   export const tableTitle = '[data-cyid="table-title"]';
   export const createComponent = '[data-cyid="create-component-button"]';
   export const proxyBuildPack =

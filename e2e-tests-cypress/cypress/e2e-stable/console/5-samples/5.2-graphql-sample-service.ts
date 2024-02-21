@@ -11,97 +11,77 @@
  * associated services.
  */
 
+import { console } from "../../../support/console/console";
 import { Enums } from "../../../support/commons/enums";
-import { Utils } from "../../../support/commons/utils";
-import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
-import { GraphQL } from "../../../support/console/apis/graphql";
-import { ComponentBuild } from "../../../support/console/pages/component/Functionalities/Component-build";
-import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
-import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
-import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { LoginPage } from "../../../support/console/pages/login-page";
-import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { GitHub } from "../../../support/github/github";
-import { ComponentData } from "../../../support/interfaces/component-data";
+import { Project } from "../../../support/console/entities/project/project";
+import { Service } from "../../../support/console/entities/component/service-component";
 
 describe("Graphql GQL service test", () => {
   const PROJECT_DESCRIPTION = "sample gql service";
-  const PROJECT_NAME = Utils.generateProjectName();
   const TEST_QUERY = `query MyQuery {
                         greeting(name: "John")
                       }`;
   const TEST_QUERY_RESPONSE = 'greeting": "Hello, John';
-  const COMPONENT_NAME = Utils.generateComponentName();
   const REPO_NAME = "choreo-samples";
   const ENDPOINT_NAME = "Greeting GraphQL";
   const subPath = "graphql-service";
 
-  before(() => {
-    LoginPage.login();
-  });
+  let project: Project;
+  let component: Service;
+
   after(() => {
-    ChoreoHomePage.logout();
+    console.logout();
+  });
+
+  it("Login to Console", () => {
+    console.login();
+  });
+
+  it("Creating a project", () => {
+    project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
   it("Verify GraphQL sample creation", () => {
     GitHub.syncForkWithUpstream(REPO_NAME, "main");
 
-    let componentData: ComponentData = {
-      componentName: COMPONENT_NAME,
-      displayType: Enums.DisplayType.ballerinaService,
-      accessibility: Enums.Accessibility.EXTERNAL,
-      projectName: PROJECT_NAME,
-      triggerChannels: "",
-      triggerId: null,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/choreo-samples",
-      initializeAsBallerinaProject: false,
-      repositoryType: Enums.RepoType.UserManagedNonEmpty,
-      repositorySubPath: subPath,
-      sampleTemplate: "",
-    };
-
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.US
-    );
-    GraphQL.createComponent(
-      PROJECT_NAME,
-      "",
-      componentData,
-      GraphQLQueryBuilder.getRestComponentCreationQuery
-    );
+    project
+      .createServiceComponent(
+        Enums.Accessibility.EXTERNAL,
+        {
+          url: "https://github.com/choreo-test-apps/choreo-samples",
+          branch: "main",
+          subPath: subPath,
+        },
+        ENDPOINT_NAME
+      )
+      .then((serviceComponent: Service) => {
+        project.visitComponent(serviceComponent.getName());
+        component = serviceComponent;
+      });
   });
 
-  it("Navigate to deployment", () => {
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-    if (Utils.isBuildDeployEnabled()) {
-      ComponentOverviewPage.navigateToBuild();
-      ComponentBuild.buildComponent();
-    }
-    ComponentOverviewPage.navigateToDeploy();
+  it("Build the sample", () => {
+    component.build();
   });
 
-  it("Verify component deployment", () => {
-    ComponentDeployPage.deployService(
-      PROJECT_NAME,
-      COMPONENT_NAME,
-      ENDPOINT_NAME,
-      false,
-      true
-    );
+  it("Deploy sample", () => {
+    component.deployPublicLevelAccessibility(false);
   });
 
   it("Verify test functionality of GQL query in dev on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testGraphQL(Enums.Environment.DEVELOPMENT, TEST_QUERY);
-    TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
+    component
+      .testGQL({
+        env: Enums.Environment.DEVELOPMENT,
+        endpoint: ENDPOINT_NAME,
+        query: TEST_QUERY,
+      })
+      .then((res) => {
+        expect(res.text()).to.be.contains(TEST_QUERY_RESPONSE);
+      });
   });
 
   it("Verify suspending deployed component", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopSingleDevContainer();
+    component.stopDeployment();
   });
 });
