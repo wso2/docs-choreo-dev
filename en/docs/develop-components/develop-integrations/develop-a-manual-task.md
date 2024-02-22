@@ -120,7 +120,55 @@ To deploy the manual task, follow the steps given below:
 To execute the manual task, follow the steps given below:
 
 1. In the left navigation menu, click **Execute**.
-2. Click **Run Now**.
+2. Click **Run Now**. This triggers the task.
+
+    !!! info "Inject dynamic values into your application as command-line arguments"
+         If you want to inject dynamic values into your application as command-line arguments when you run a manual task, follow the steps given below:
+
+           1. Click the drop-down icon next to **Run Now** and then click **Run with Arguments**. 
+           2. In the **Runtime Arguments** pane that opens, enter the arguments you want to pass to your application. 
+           3. Click **Execute**. This triggers the task with the specified arguments.
+
+         The capability to run a manual task with arguments is supported for the following buildpacks:
+
+        === "Dockerfile"
+
+            To explore running a Dockerfile-based manual task with arguments, try out the [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/docker-hello-world-manual-task) sample. For instructions, see the `readme.md` file in the sample repository.
+
+            !!! info
+                 When you work on Docker projects, the **Run with Arguments** capability is not supported if the Dockerfile contains `CMD`. In such scenarios, you must use `ENTRYPOINT` to define your default commands. 
+
+        === "Go"
+
+            To explore running a Go-based manual task with arguments, try out the [Hello World Go Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-go-task) sample. For instructions, see the `readme.md` file in the sample repository.
+
+        === "Java"
+
+            To explore running a Java-based manual task with arguments, try out the [Hello World Java Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-java-task) sample. For instructions, see the `readme.md` file in the sample repository.
+
+            !!! info
+                 When you work on Java projects:
+
+                   - The **Run with Arguments** capability is not supported if `Procfile` is available in the project.
+                   - The `Main` class should be defined in the `manifest` file.
+                   - If Maven files such as `mvn.cmd` exist in the project without the `.mvn` directory, the build will fail. To ensure a successful build, you must either commit the `.mvn` directory along with any Maven files or not include any Maven files in the project if you choose not to commit the `.mvn` directory.
+
+        === "NodeJS"
+
+            To explore running a NodeJS-based manual task with arguments, try out the [Hello World NodeJS Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-nodejs-task) sample. For instructions, see the `readme.md` file in the sample repository.
+
+            !!! info
+                When you work on NodeJS projects:
+
+                  - The **Run with Arguments** capability is not supported if `Procfile` is available in the project.
+                  - The project root must contain the `package.json` file with the `main` attribute defined.
+
+        === "WSO2 MI"
+
+            To explore running a WSO2 MI-based manual task with arguments, try out the [Weather to Logs Task](https://github.com/wso2/choreo-samples/tree/main/weather-to-logs-mi-manual-task) sample. For instructions, see the `readme.md` file in the sample repository.
+
+            !!! info
+                When you work on WSO2 MI projects and you want to deploy a WSO2 MI integration as a manual task in Choroeo, you must use the WSO2 MI automation mode. For details, see [Running the Micro Integrator in Automation Mode](https://apim.docs.wso2.com/en/latest/install-and-setup/install/running-the-mi-in-automation-mode/).
 
 ## Step 5: Test the manual task
 
