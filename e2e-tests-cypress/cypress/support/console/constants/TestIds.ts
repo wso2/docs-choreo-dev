@@ -281,4 +281,7 @@ export namespace TestIds {
   export const confirmDialog = '[data-cyid="confirmation-dialog"]';
   export const confirmDelete =
     '[data-cyid="confirmation-dialog-destructive-action-button"]';
+  export const apiVisibility = '[data-cyid="visibility-select"]';
+  export const devPortalHome = '[data-testid="home-appbar-btn"]';
+  export const devPortalLoginLink = '[data-testid="login-button"]';
 }

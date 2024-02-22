@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Enums, UsagePlan } from "../../../commons/enums";
+import { ApiVisibility, Enums, UsagePlan } from "../../../commons/enums";
 import { Types } from "../../../commons/types";
 import { Component } from "./component";
 import { mixinProxyDeploy } from "../../features/deploy/deploy-proxy";
@@ -173,5 +173,9 @@ export class Proxy extends mixinDevelop(
 
   updateAccessMode(accessMode: Enums.Accessibility) {
     this._updateAccessMode(this, accessMode);
+  }
+
+  updateApiVisibility(visibility: ApiVisibility) {
+    this._updateApiVisibility(this, visibility);
   }
 }

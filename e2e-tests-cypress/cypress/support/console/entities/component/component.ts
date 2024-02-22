@@ -349,6 +349,14 @@ export class Component {
       });
   }
 
+  navigateToPublicDevPortal() {
+    const loginURL =
+      Cypress.env("devportalLoginURL") + "/" + Cypress.env("choreoOrgHandle");
+    cy.visit(loginURL);
+    cy.get(TestIds.devPortalHome).should("be.visible");
+    cy.get(TestIds.devPortalLoginLink).should("be.visible");
+  }
+
   private waitForOverviewToLoad() {
     cy.get(TestIds.createTime).should("be.visible");
     cy.get(TestIds.progressBar).should("not.exist");

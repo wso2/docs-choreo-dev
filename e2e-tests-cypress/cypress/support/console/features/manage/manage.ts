@@ -13,7 +13,7 @@
 
 import { TestIds } from "../../constants/TestIds";
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
-import { Enums } from "../../../commons/enums";
+import { ApiVisibility, Enums } from "../../../commons/enums";
 import { DeploymentTrack } from "../deployment-track/deployment-track";
 import { UsagePlan } from "../../../commons/enums";
 import { Types } from "../../../commons/types";
@@ -39,6 +39,7 @@ export interface ManageFeature {
   _applyPermissionToResources(component: Component, permission: string);
   _verifyConsumer(appName: string);
   _updateAccessMode(component: Component, accessMode: Enums.Accessibility);
+  _updateApiVisibility(component: Component, visibility: ApiVisibility);
 }
 
 export function mixinManage<T extends Types.Constructor>(
@@ -160,6 +161,33 @@ export function mixinManage<T extends Types.Constructor>(
       cy.contains(
         `Successfully converted to an ${accessMode.toLowerCase()} API.`
       ).should("be.visible");
+    }
+
+    _updateApiVisibility(component: Component, visibility: ApiVisibility) {
+      this.sideMenu.navigateToSettings();
+
+      this.deploymentTrack.validate(component);
+
+      cy.get(TestIds.apiVisibility)
+        .should("be.visible")
+        .find("input")
+        .invoke("val")
+        .then((val) => {
+          if (val !== visibility) {
+            cy.get(TestIds.apiVisibility).should("be.visible").click();
+            cy.contains(visibility, { matchCase: false })
+              .should("exist")
+              .click();
+            cy.get(TestIds.dialogPrimaryAction).should("be.visible").click();
+            cy.get(TestIds.dialogPrimaryAction).should("not.exist");
+
+            cy.get(TestIds.apiVisibility)
+              .should("be.visible")
+              .find("input")
+              .invoke("val")
+              .should("eq", visibility);
+          }
+        });
     }
 
     private saveAndDeployPermissions(componentName: string) {
