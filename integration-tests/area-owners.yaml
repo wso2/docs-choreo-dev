@@ -91,7 +91,7 @@ areaOwners:
   - testClass: com.wso2.choreo.integration.tests.jwtValidation.TestClientJWTValidation
     assignees:
       - viduranga@wso2.com
-      - omindu@wso2.com
+      - senthalan@wso2.com
   - testClass: com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationEventContainerComponent
     assignees:
       - chameerar@wso2.com
