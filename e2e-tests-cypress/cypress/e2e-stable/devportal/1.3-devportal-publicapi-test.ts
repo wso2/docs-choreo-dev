@@ -63,11 +63,11 @@ describe("Public access on devportal", () => {
     proxy.navigateToPublicDevPortal();
   });
 
-  it("Check for available public apis", () => {
+  it("Ensure Private API is not visible in Dev portal public view", () => {
     devPortal.verifyApiNotFound(proxy.getName());
   });
 
-  it("Update the API visibility to public", () => {
+  it("Update the API visibility to Public", () => {
     proxy.navigateToComponentInConsole();
     proxy.updateApiVisibility(ApiVisibility.Public);
   });
@@ -76,7 +76,7 @@ describe("Public access on devportal", () => {
     proxy.navigateToPublicDevPortal();
   });
 
-  it("Check for available public apis to confirm availability", () => {
+  it("Ensure Public API is visible in Dev portal public view", () => {
     devPortal.searchApi(proxy.getName());
   });
 });
