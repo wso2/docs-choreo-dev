@@ -22,6 +22,12 @@ user = 'choreo_apim_db_user'
 database = 'choreo_apim_db'
 port = 1433
 
+[code_challenge_eval.app_db]
+host = "{{.MSSQL_HOST}}"
+user = 'choreo_app_db_user'
+database = 'choreo_app_db'
+port = 1433
+
 [code_challenge_eval.auth]
 choreoJwtIssuer = "{{.CHOREO_JWT_ISSUER}}"
 choreoJwtAudience = "{{.CHOREO_JWT_AUDIENCE}}"
