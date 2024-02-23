@@ -14,12 +14,12 @@ Upon the next request to the deployed service, a replica will be created to serv
 **Note**: For the services which contain at least one endpoint with the network visibility as “Project”, Choreo will not automatically scale-to-zero your component when deploying or promoting.
 Also, HTTP services that operate on one port other than the below list of ports will not automatically scale-to-zero your component when deploying or promoting.
 
-For older service components, you can activate scale-to-zero in the “Devops” → “Scaling” section of the Choreo platform by following the below steps.
+To enable scale-to-zero for older service components, follow the steps given below:
 
-1. Login to Choreo. 
-2. Select your component in the “Component Listing”
-3. Make sure the component is deployed to an environment and ready to receive traffic
-4. Click “Devops” menu icon in the left menu and select “Scaling”
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. In the **Component Listing** pane, click on the component you want to scale-to-zero. 
+3. Make sure the component is deployed to an environment and is ready to receive traffic.
+4. In the left navigation menu, click **DevOps** and then click **Scaling**.
 
 If you are a free user, you will see a view similar to the one below. You can click the “scale-to-zero” card to enable scale-to-zero for your component.
 
