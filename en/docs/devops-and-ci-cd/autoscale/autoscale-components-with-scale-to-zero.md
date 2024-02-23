@@ -1,8 +1,8 @@
 # Autoscale Components with Scale to Zero
 
-Choreo offers a scale-to-zero feature for HTTP applications you deploy in the dataplane. This allows you to run your components in a serverless mode.
+Choreo offers a scale-to-zero feature for HTTP applications you deploy in the dataplane. This allows you to run components in a serverless mode.
 
-When this feature is active, your apps will automatically scale down to zero unless they're receiving HTTP traffic. If an HTTP request comes in, your workload quickly scales up from zero to handle the request.
+When this feature is active, your apps will automatically scale down to zero unless they are receiving HTTP traffic. If an HTTP request comes in, your workload quickly scales up from zero to handle the request.
 
 Scale to zero is very handy in lower environments, where you can significantly reduce infrastructure costs by scaling down idle workloads. In production environments, you can also use scale to zero if your application's behavior aligns with this feature. In the paid tier, if you want to run your application with more guaranteed high availability, it is recommended to choose HPA (Horizontal Pod Autoscaler) scaling method and configure a minimum replica count of 2 or higher.
 
