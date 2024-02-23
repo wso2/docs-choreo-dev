@@ -516,6 +516,8 @@ service.bal
 proto
 Node.js
 choreo-sample-todo-list-app
+autoscaler
+dataplane
 
  - docs/references/upgrading-from-the-previous-version.md
 DefaultProject
