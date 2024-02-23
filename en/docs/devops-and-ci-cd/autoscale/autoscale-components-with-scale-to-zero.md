@@ -13,6 +13,8 @@ Upon the next request to the deployed service, a replica will be created to serv
 
 !!! note  
     - For the services which contain at least one endpoint with the network visibility as **Project**, Choreo will not automatically scale-to-zero those components when you deploy or promote them.
+    - HTTP services that run on a port other than the below list of ports will not automatically scale-to-zero your component when deploying or promoting: 5000, 6000, 7000, 8000, 9000, 7070 to 7079, 8080 to 8089, and 9090 to 9099 or 8290.
+
 
 To enable scale-to-zero for service components created before February 23, 2024, follow the steps given below:
 
