@@ -21,6 +21,13 @@ export const PUBLISHER_API_KEYS_URL =
   PUBLISHER_URL + "/apis/*/environments/*/keys?organizationId=*";
 export const DEV_PORTAL_URL =
   Cypress.env("apimSvcURL") + "/api/am/devportal/v2";
+export const DEV_PORTAL_APIS_SEARCH_URL = (name?: string) => {
+  if (name !== undefined) {
+    return `${DEV_PORTAL_URL}/apis?query=name:${name}&*`;
+  } else {
+    return `${DEV_PORTAL_URL}/apis?organizationId=*`;
+  }
+};
 export const DEV_PORTAL_APP_TOKEN_GEN_URL =
   DEV_PORTAL_URL +
   "/applications/*/oauth-keys/*/generate-token?organizationId=*";

@@ -123,3 +123,9 @@ export enum CustomDomainType {
   WebApp,
   DevPortal,
 }
+
+export enum ApiVisibility {
+  Public = "Public",
+  Private = "Private",
+  Restricted = "Restricted",
+}
