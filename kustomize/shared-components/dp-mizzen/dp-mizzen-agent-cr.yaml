@@ -63,6 +63,13 @@ rules:
       - delete
       - deletecollection
   - apiGroups:
+      - apps
+    resources:
+      - daemonsets
+    verbs:
+      - get
+      - update
+  - apiGroups:
       - batch
     resources:
       - jobs
