@@ -68,7 +68,9 @@ rules:
       - daemonsets
     verbs:
       - get
+      - create
       - update
+      - patch
   - apiGroups:
       - batch
     resources:
