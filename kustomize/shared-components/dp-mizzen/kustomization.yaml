@@ -21,5 +21,3 @@ resources:
   - dp-mizzen-agent-hpa.yaml
   - dp-mizzen-agent-pdb.yaml
   - dp-mizzen-agent-sa.yaml
-  - dp-mizzen-agent-observability-role.yaml
-  - dp-mizzen-agent-observability-rb.yaml
