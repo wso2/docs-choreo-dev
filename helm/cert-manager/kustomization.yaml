@@ -17,19 +17,19 @@ helmCharts:
       cainjector:
         image:
           repository: choreocontrolplane.azurecr.io/jetstack/cert-manager-cainjector
-          tag: v1.12.2
+          tag: v1.14.3
         replicaCount: 2
         podDisruptionBudget:
           enabled: true
       image:
         repository: choreocontrolplane.azurecr.io/jetstack/cert-manager-controller
-        tag: v1.12.2
+        tag: v1.14.3
       installCRDs: true
       replicaCount: 2
       webhook:
         image:
           repository: choreocontrolplane.azurecr.io/jetstack/cert-manager-webhook
-          tag: v1.12.2
+          tag: v1.14.3
         replicaCount: 2
         podDisruptionBudget:
           enabled: true
@@ -38,7 +38,7 @@ helmCharts:
           registry: choreocontrolplane.azurecr.io
           repository: jetstack/cert-manager-acmesolver
     releaseName: cert-manager
-    version: v1.12.2
+    version: v1.14.3
     namespace: cert-manager
     repo: oci://choreocontrolplane.azurecr.io/helm
 
@@ -46,20 +46,4 @@ resources:
   - namespace.yaml
 
 commonAnnotations:
-  checkov.io/skip1: CKV_K8S_AZURE_WSO2_2=Managed by cert-manager
-  checkov.io/skip2: CKV_K8S_6=Managed by cert-manager
-  checkov.io/skip3: CKV_K8S_8=Managed by cert-manager
-  checkov.io/skip4: CKV_K8S_9=Managed by cert-manager
-  checkov.io/skip5: CKV_K8S_10=Managed by cert-manager
-  checkov.io/skip6: CKV_K8S_11=Managed by cert-manager
-  checkov.io/skip7: CKV_K8S_12=Managed by cert-manager
-  checkov.io/skip8: CKV_K8S_13=Managed by cert-manager
-  checkov.io/skip9: CKV_K8S_22=Managed by cert-manager
-  checkov.io/skip10: CKV_K8S_28=Managed by cert-manager
-  checkov.io/skip11: CKV_K8S_31=Managed by cert-manager
-  checkov.io/skip12: CKV_K8S_37=Managed by cert-manager
-  checkov.io/skip13: CKV_K8S_38=Managed by cert-manager
-  checkov.io/skip14: CKV_K8S_40=Managed by cert-manager
-  checkov.io/skip15: CKV_K8S_155=Managed by cert-manager
-  checkov.io/skip16: CKV2_K8S_6=Managed by cert-manager
   kapp.k14s.io/disable-default-label-scoping-rules: ""
