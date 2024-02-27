@@ -12,6 +12,8 @@ helmCharts:
           repository: choreocontrolplane.azurecr.io/kedacore/keda-metrics-apiserver
           # -- Image tag of KEDA Metrics API Server. Optional, given app version of Helm chart is used by default
           tag: "2.9.3"
+      operator:
+        replicaCount: 2
     includeCRDs: true
     releaseName: keda
     namespace: keda
