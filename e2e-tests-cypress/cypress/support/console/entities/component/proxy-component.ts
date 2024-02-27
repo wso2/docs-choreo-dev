@@ -139,8 +139,8 @@ export class Proxy extends mixinDevelop(
     this._navigateToDevPortal("choreoe2etest");
   }
 
-  enableCors() {
-    this._enableCors(this);
+  enableCors(environment: Enums.Environment) {
+    this._enableCors(this, environment);
   }
 
   addPermissions(permissions: string[]) {

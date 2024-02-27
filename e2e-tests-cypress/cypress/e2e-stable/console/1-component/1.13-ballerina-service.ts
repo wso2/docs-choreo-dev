@@ -156,7 +156,7 @@ describe("Verify Ballerina service functionality", () => {
   });
 
   it("Enabling CORS", () => {
-    component.enableCors();
+    component.enableCors(Enums.Environment.DEVELOPMENT);
   });
 
   it("Publishing the component", () => {

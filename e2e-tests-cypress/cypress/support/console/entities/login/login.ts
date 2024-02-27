@@ -20,13 +20,13 @@ class Login {
   static username = "#username";
   static password = "#password";
 
-  private displayName: string;
-  private userEmail: string;
-  private orgId: number;
-  private orgHandle: string;
-  private orgUuid: string;
-  private accessToken: string;
-  private signOutUrl: string;
+  private displayName: string = "";
+  private userEmail: string = "";
+  private orgId: number = 0;
+  private orgHandle: string = "";
+  private orgUuid: string = "";
+  private accessToken: string = "";
+  private signOutUrl: string = "";
 
   login() {
     this.setBrowserLocalStorage();
@@ -97,6 +97,10 @@ class Login {
 
   private persistOrgs() {
     cy.wait("@org", MEDIUM_TIME).then((res) => {
+      if (res.response === undefined) {
+        throw new Error("Failed to receive orgs response");
+      }
+
       let userOrg;
       const handle = Cypress.env("choreoOrgHandle");
       if (handle) {
@@ -136,11 +140,11 @@ class Login {
 
   private setBrowserLocalStorage() {
     window.localStorage.setItem("seen", Date.now().toString());
-    if (Utils.isKubeConFeaturesEnabled()) {
+    if (Utils.isApiConfigurationEnabled()) {
       window.localStorage.setItem(
         "features",
         JSON.stringify({
-          "API Configuration": false,
+          "API Configuration": true,
           "Mono Repository": true,
           "Buildpack - Component Creation": true,
           "Project Architecture Diagram": false,
@@ -153,6 +157,10 @@ class Login {
           "Innovation Performance": false,
           "Choreo built-in Identity Provider": false,
           "Connection Management": false,
+          "App Gateway Authentication": false,
+          "App Gateway Settings": false,
+          "Role Group Mapping": false,
+          "Async Component Creation": false,
         })
       );
     } else {
@@ -164,7 +172,12 @@ class Login {
     cy.window()
       .its("sessionStorage")
       .invoke("getItem", "sign_out_url")
-      .then((url) => (this.signOutUrl = url));
+      .then((url) => {
+        if (url === undefined || url === null) {
+          throw new Error("Failed to retrieve sign out URL");
+        }
+        this.signOutUrl = url;
+      });
   }
 
   private handleTermsOfUse() {

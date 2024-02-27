@@ -69,10 +69,7 @@ export class Utils {
     );
   }
 
-  static acceptEmailInviteToOrg(
-    timestamp: string,
-    retryCount = 0
-  ) {
+  static acceptEmailInviteToOrg(timestamp: string, retryCount = 0) {
     const headerString = btoa(
       `${Utils.MAIL_READER_CLIENT_ID}:${Utils.MAIL_READER_CLIENT_SECRET}`
     );
@@ -86,9 +83,15 @@ export class Utils {
       { grant_type: "client_credentials" }
     ).then((res) => {
       const accessToken = res.body.access_token;
-      this.sendGetRequest(Utils.MAIL_READER_SVC_URL + timestamp + "&senderEmail=" + Utils.ASGARDEO_MAIL_SENDER, {
-        Authorization: `Bearer ${accessToken}`,
-      }).then((res) => {
+      this.sendGetRequest(
+        Utils.MAIL_READER_SVC_URL +
+          timestamp +
+          "&senderEmail=" +
+          Utils.ASGARDEO_MAIL_SENDER,
+        {
+          Authorization: `Bearer ${accessToken}`,
+        }
+      ).then((res) => {
         if (res.status == 200 && res.body != "") {
           const rawMailContent = res.body;
           const decodedMail = window.atob(rawMailContent);
@@ -104,9 +107,12 @@ export class Utils {
           if (asgardeoAcceptUrl) {
             cy.window().then((win) => {
               win.open(asgardeoAcceptUrl, "_blank");
-              cy.wait(2000); 
+              cy.wait(2000);
               cy.window().then((newWin) => {
-                cy.wrap(newWin.document.body).should('not.contain', 'Registration failed');
+                cy.wrap(newWin.document.body).should(
+                  "not.contain",
+                  "Registration failed"
+                );
               });
             });
           } else {
@@ -331,6 +337,16 @@ export class Utils {
     }
   }
 
+  static isApiConfigurationEnabled() {
+    const enableApiConfiguration = Cypress.env("enableApiConfiguration");
+
+    if (enableApiConfiguration != null) {
+      return enableApiConfiguration == true || enableApiConfiguration == "true";
+    }
+
+    return false;
+  }
+
   static isKubeConFeaturesEnabled(enableSpecificFeature: boolean = true) {
     let isNewFeaturesActivated = false;
     const enableKubeConFeatures = Cypress.env("enableKubeConFeatures");
@@ -449,26 +465,24 @@ export class Utils {
   }
 
   static unCheckIfChecked(locator: string) {
-    cy.get(locator).within(() => {
-      cy.get("input")
-        .invoke("attr", "checked")
-        .then((checked) => {
-          if (checked !== "undefined" && checked) {
-            cy.get("input").click();
-          }
-        });
-    });
+    cy.get(locator)
+      .find("input")
+      .invoke("attr", "checked")
+      .then((checked) => {
+        if (checked !== "undefined" && checked) {
+          cy.get(locator).click();
+        }
+      });
   }
 
   static checkIfUnchecked(locator: string) {
-    cy.get(locator).within(() => {
-      cy.get("input")
-        .invoke("attr", "checked")
-        .then((checked) => {
-          if (checked === "undefined" || !checked) {
-            cy.get("input").click();
-          }
-        });
-    });
+    cy.get(locator)
+      .find("input")
+      .invoke("attr", "checked")
+      .then((checked) => {
+        if (checked === "undefined" || !checked) {
+          cy.get(locator).click();
+        }
+      });
   }
 }
