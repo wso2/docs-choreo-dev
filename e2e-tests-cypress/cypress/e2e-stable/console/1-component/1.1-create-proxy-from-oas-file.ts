@@ -96,7 +96,7 @@ describe("Create Proxy from OAS file", () => {
   });
 
   it("Enable CORS", () => {
-    proxy.enableCors();
+    proxy.enableCors(Enums.Environment.DEVELOPMENT);
   });
 
   it("Adding permissions", () => {
