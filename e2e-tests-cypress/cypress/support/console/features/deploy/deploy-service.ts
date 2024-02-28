@@ -343,7 +343,6 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     private webhookPromotion(component: Webhook | Byoc) {
       cy.wait(3000);
       cyGet(TestIds.promote, MEDIUM_TIME).should("be.enabled").click();
-      cy.get(TestIds.configSubmit).should("be.visible").click();
     }
 
     private stepThroughConfigSteps(

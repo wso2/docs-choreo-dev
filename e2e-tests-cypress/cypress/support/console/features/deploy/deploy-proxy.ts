@@ -13,6 +13,7 @@
 
 import {
   BUILD_IN_PROGRESS,
+  BUILD_PARTIAL,
   BUILD_QUEUED,
   DEPLOYMENT_STOPPED,
   DEPLOYMENT_SUCCESS,
@@ -189,10 +190,15 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
         .click();
 
       if (component.isPolicyAdded()) {
-        cy.get(TestIds.configSubmit, MEDIUM_TIME).should("be.visible").click();
+        if (Utils.isApiConfigurationEnabled()) {
+          cy.get(TestIds.deploy, VERY_SHORT_TIME).should("be.visible").click();
+        } else {
+          cy.get(TestIds.configSubmit, MEDIUM_TIME)
+            .should("be.visible")
+            .click();
+        }
       } else {
         if (Utils.isApiConfigurationEnabled()) {
-          component;
           cy.get(TestIds.deploy, VERY_SHORT_TIME).should("be.visible").click();
         } else {
           cy.get(TestIds.next, VERY_SHORT_TIME).should("be.visible").click();
@@ -214,6 +220,16 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
         .should("not.exist");
       this.RetryDevDeployment();
       cy.get(TestIds.componentLoader).should("not.exist");
+
+      cy.get(TestIds.buildStatus)
+        .eq(0)
+        .contains(BUILD_IN_PROGRESS, LONG_TIME)
+        .should("not.exist");
+
+      cy.get(TestIds.buildStatus)
+        .eq(0)
+        .contains(BUILD_PARTIAL, LONG_TIME)
+        .should("not.exist");
 
       cy.get(TestIds.buildStatus)
         .eq(0)
