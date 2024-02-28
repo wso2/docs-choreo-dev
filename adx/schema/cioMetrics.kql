@@ -12,7 +12,7 @@
     componentId: string,
     versionId: string,
     environmentId: string,
-    isProf: bool
+    isProd: bool,
     status: string,
     count: int
 );
