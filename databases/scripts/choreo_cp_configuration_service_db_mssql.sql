@@ -22,7 +22,7 @@ CREATE TABLE configuration_groups (
   [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
   [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
   [type] [varchar](25) NOT NULL DEFAULT 'user',
-  [properties] [nvarchar](1000),
+  [properties] [nvarchar](1000) DEFAULT NULL,
   PRIMARY KEY (id),
   CONSTRAINT [configuration_groups$group_uuid_unique] UNIQUE (group_uuid)
 );
