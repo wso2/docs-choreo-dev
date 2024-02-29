@@ -1,5 +1,5 @@
 -- Create User
-IF EXISTS (SELECT name FROM master.sys.databases WHERE name = N'choreo_program_db') AND NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_program_db_user')
+IF EXISTS (SELECT name FROM sys.databases WHERE name = N'choreo_program_db') AND NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_program_db_user')
 BEGIN
     CREATE USER [choreo_program_db_user] with password = N'xxxxxxxxxxxxx'
     GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_program_db TO choreo_program_db_user
