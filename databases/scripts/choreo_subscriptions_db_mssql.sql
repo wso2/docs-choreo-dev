@@ -97,6 +97,19 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='threshold' and xtype='U')
+BEGIN
+    CREATE TABLE threshold (
+        id VARCHAR(128) NOT NULL,
+        tier_id VARCHAR(128) NOT NULL,
+        threshold NVARCHAR(MAX),
+        billing_provider VARCHAR(128),
+        PRIMARY KEY (id),
+
+    );
+END
+GO
+
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='subscriptionV2' and xtype='U')
 BEGIN
     CREATE TABLE subscriptionV2 (
@@ -117,19 +130,6 @@ BEGIN
         UNIQUE (id),
         CONSTRAINT FK_TierSubscriptionV2 FOREIGN KEY (tier_id) REFERENCES tierV2(id),
         CONSTRAINT FK_ThresholdSubscriptionV2 FOREIGN KEY (threshold_id) REFERENCES threshold(id)
-    );
-END
-GO
-
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='threshold' and xtype='U')
-BEGIN
-    CREATE TABLE threshold (
-        id VARCHAR(128) NOT NULL,
-        tier_id VARCHAR(128) NOT NULL,
-        threshold NVARCHAR(MAX),
-        billing_provider VARCHAR(128),
-        PRIMARY KEY (id),
-
     );
 END
 GO
