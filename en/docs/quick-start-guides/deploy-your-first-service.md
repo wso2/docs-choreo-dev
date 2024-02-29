@@ -51,7 +51,7 @@ Follow the steps given below to create a project:
     | **Name**        | Book List project       |
     | **Description** | My sample multi repository project |
 
-4. Select **Multi Repository**.
+4. Select **Multi-Repo**.
 
     !!! info
         Since we are creating one component in the project, in this example we will use a multi repository project. A multi repository project allows you to create components using the code stored in different repositories. 
@@ -71,7 +71,7 @@ Let's create a service component by following these steps:
     |Description    | Gets the book list     |
 
 3. Select the **GitHub** tab.
-4. If you have not already connected your GitHub repository to Choreo, click **Authorize with GitHub**, enter your GitHub credentials, and select the repository you created by forking the [Choreo sample book list service repository](https://github.com/wso2/choreo-sample-book-list-service/). If your repository is not listed, then connect your respository by selecting the **+ Connect More Repositories** option from the **Respository list**.
+4. If you have not already connected your GitHub repository to Choreo, click **Authorize with GitHub**, enter your GitHub credentials, and select the repository you created by forking the [Choreo sample book list service repository](https://github.com/wso2/choreo-sample-book-list-service/). If your repository is not listed, then connect your repository by selecting the **+ Connect More Repositories** option from the **Repository list**.
 
     !!! info
          The **Choreo GitHub App** requires the following permissions:
@@ -103,7 +103,8 @@ Let's create a service component by following these steps:
 You have successfully created a Service component with the NodeJS buildpack. Now let's build and deploy the service.
 
 ## Step 3: Build and deploy
-Now that you have connected the source repository, and configured the endpoint details, it's time to build the service. Choreo will create a Docker image in the build process. You can then deploy the built Docker image and test the book list service.
+
+Now that the source repository is connected and Choreo has set up the endpoints based on the repository's configuration, it's time to proceed with building the service. Choreo will create a Docker image in the build process. You can then deploy the built Docker image and test the book list service.
 
 ### Step 3.1: Build
 
@@ -115,7 +116,7 @@ To build the service, follow these steps:
 3. Check the deployment progress by observing the console logs on the right of the page.
 
     !!! note
-        Building the service component may take a while. You can track the progress by observing the logs. Once the build process is complete, the build status changes to **Success**.
+        Building the service component may take a while. You can track the progress via the **Build Logs** panel. Once the build process is complete, the build status changes to **Success**.
 
 ### Step 3.2: Deploy
 
