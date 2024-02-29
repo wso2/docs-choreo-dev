@@ -8,8 +8,8 @@
 -- Create User
 IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_app_dev_user_mgt_db_user')
 BEGIN
-    CREATE USER [choreo_app_dev_user_mgt_db_user] with password = N'xxxxxxxxxxxxx'
-    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_app_dev_user_mgt_db TO choreo_app_dev_user_mgt_db_user
+    CREATE USER [choreo_app_dev_authz_svc_db_user] with password = N'xxxxxxxxxxxxx'
+    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_app_dev_authz_svc_db TO choreo_app_dev_authz_svc_db_user
 END;
 GO
 
