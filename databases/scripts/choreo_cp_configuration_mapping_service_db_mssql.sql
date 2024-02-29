@@ -13,7 +13,7 @@ BEGIN
 END;
 GO
 
--- Create configuration groups table
+-- Create configuration mappings table
 CREATE TABLE configuration_mappings (
   [id] [int] IDENTITY(1,1) NOT NULL,
   [mapping_uuid] [nvarchar](50) NOT NULL,
