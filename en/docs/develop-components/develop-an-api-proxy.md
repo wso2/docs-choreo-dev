@@ -122,10 +122,7 @@ To publish the API proxy to the Choreo Developer Portal, follow the steps given 
 
 1. In the left navigation menu, click **Lifecycle** under **Manage**. 
    This displays the different lifecycle stages that an API can be in. You can see that the current lifecycle stage is **Created**.
-2. Click **Publish**. 
-   A message appears where you can specify whether you want to publish a connector for this API proxy. Creating a connector for this API proxy makes it available in the Marketplace. In this guide, you will not publish a connector for the API.
-3. Click **No, Thanks**. 
-   This changes the API lifecycle state to **Published**. 
+2. Click **Publish**. This changes the API lifecycle state to **Published**. 
 
 ## Step 5: Invoke the API 
 

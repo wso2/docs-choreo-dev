@@ -99,9 +99,17 @@ To create a Ballerina project for the mediation policy using `mediation.template
 Depending on your requirement, you can modify the `Ballerina.toml` and the `Package.md` files of the generated project. For example, you can update the org, package, package version, API documentation content, keywords, etc.
 
 !!! note
-    Make sure you update the org value to your organization name to successfully publish to Ballerina central.
+    To successfully publish to Ballerina central, make sure you update the `org` value to your organization name.
 
-![Ballerina toml](../assets/img/api-management/api-policies/ballerina-toml.png){.cInlineImage-half}
+```
+     [package]
+        org = "starkindustries"
+        name = "validateHeader"
+        version = "1.0.0"
+        export = ["validateHeader"]
+        distribution = "2201.5.5"
+        keywords = ["choreo-apim-mediation-policy","choreo-apim-mediation-request-flow","choreo-apim-mediation-response-flow","choreo-apim-mediation-fault-flow"]
+```
 
 ### Step 2: Implement the policy
 
@@ -194,6 +202,7 @@ In this guide, you are not going to make any changes to the `Fault` flow. Theref
         keywords = ["choreo-apim-mediation-policy","choreo-apim-mediation-request-flow","choreo-apim-mediation-response-flow","choreo-apim-mediation-fault-flow"]
         visibility = "private"
      ```
+
  3. Package and publish your policy to Ballerina central.     
 
 #### Best practices 
