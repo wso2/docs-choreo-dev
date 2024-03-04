@@ -7,6 +7,9 @@ json
 recipientAddress
 apiKey
 DockerHub
+Quickstart
+Entra
+AzureAD
 buildpack
 buildpacks
 Temurin
@@ -88,6 +91,7 @@ Petstore
 build-your-first-cloud-native-application-with-choreo
 expose-a-service-as-a-managed-api
 build-your-first-integration
+configure-a-user-store-with-built-in-idp
 devops-and-ci-cd
 autoscale-component-replicas
 test-rest-endpoints-via-the-openapi-console
@@ -103,6 +107,7 @@ subpath
 codebase
 libs
 work-with-the-micro-integrator-runtime-in-choreo
+test-secure-api-access-with-choreo-built-in-security-token-service
 project.md
 component.md
 endpoint.md
@@ -480,7 +485,40 @@ connectionless
 Nginx
 schemas
 TestGPT
-
+onboarding
+onboards
+6.x
+7.x
+8.x
+redis-cli
+Lua
+eval
+evalsha
+fcall
+GitFlow
+component-config-documentation
+yaml
+spec.inbound
+spec.outbound
+connectionConfig
+env
+env.from
+env.to
+CIOs
+adaptor
+LetsEncrypt
+24x7
+uptime
+DDoS
+IaC
+add-ons
+service.bal
+proto
+Node.js
+choreo-sample-todo-list-app
+autoscaler
+dataplane
+Multi-Repo
 
  - docs/references/upgrading-from-the-previous-version.md
 DefaultProject
@@ -601,6 +639,7 @@ choreo-insights-api
 programmatic-access-choreo-insights-api
 pricing.md
 create-your-first-integration-as-an-api
+manage-deployment-tracks-for-choreo-components
 api-proxy
 configs-and-secrets
 runtime.md
@@ -665,6 +704,12 @@ configure-azure-ad-as-an-external-idp
 test-apis-with-choreo-apichat
 ci-cd
 autoscale
+connections.md
+choreo-limitations
+expose-a-grpc-endpoint-via-a-service
+expose-a-tcp-server-via-a-service
+expose-a-udp-server-via-a-service
+expose-a-ballerina-graphql-endpoint-via-a-service
  - theme/material/templates/home-page.html
 doctype
 html
@@ -744,6 +789,16 @@ usr
 nginx
 html
 choreoApiUrl
+ConnectionConnection
+serviceconfig.js
+InnocenceOrhan
+PamukreadingThe
+DayKazuo
+Ishiguroto_readDavid
+CopperfieldCharles
+Dickensread
+listconfig.jsconfig.js
+listconfig.js
  - docs/api-management/api-policies.md
 Ballerina.toml
  - docs/consuming-services/consuming-a-sevice.md
@@ -807,9 +862,6 @@ findByStatus
  - docs/authentication-and-authorization/secure-api-access-with-asgardeo.md
 x-www-form-urlencoded
  - docs/authentication-and-authorization/secure-api-access-with-azure-ad.md
-Quickstart
-Entra
-AzureAD
  - docs/administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md
 identity-as-a-soluton
  - docs/testing/test-apis-with-choreo-apichat.md
@@ -817,6 +869,9 @@ findByStatus
  - docs/manage-databases-and-caches/choreo-managed-databases-and-caches.md
 DigitalOcean
 Postgres
+ - docs/authentication-and-authorization/secure-web-applications-with-managed-authentication.md
+userinfo
+choreo-apis
  - docs/administer/configure-in-built-idp.md
 Uploader
  - docs/choreo-concepts/configuration-management.md
@@ -824,3 +879,62 @@ reusability
  - docs/devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero.md
 intra-project
 x-choreo-project-ns
+
+ - docs/administer/configure-a-user-store-with-built-in-idp.md
+Uploader
+built-in
+csv
+ - docs/develop-components/sharing-and-reusing-services.md
+ServiceURL
+YOUR_ENVIRONMENT_VAR_HERE
+ - docs/references/faq.md
+2-3x
+ - docs/manage-databases-and-caches/choreo-managed-postgresql-databases.md
+Business-16
+ - docs/develop-components/develop-services/develop-a-ballerina-service.md
+service_test.bal
+choreo-sample-apps
+ - docs/develop-components/develop-services/develop-a-go-service.md
+choreo
+ - docs/develop-components/develop-services/expose-a-grpc-endpoint-via-a-service.md
+greeter_client
+Dockerfile.server
+Dockerfile.client
+greeter.proto
+grpc
+ - docs/develop-components/develop-services/expose-a-tcp-server-via-a-service.md
+tcp-service
+ - docs/develop-components/develop-services/expose-a-udp-server-via-a-service.md
+udp-service
+ - docs/develop-components/develop-services/develop-a-service-with-docker.md
+choreo
+ - docs/quick-start-guides/deploy-your-first-service.md
+pre-implemented
+app.mjs
+ - docs/quick-start-guides/configure-front-end-application-qsg.md
+usr
+html
+ - docs/quick-start-guides/deploy-a-web-application-which-consumes-a-backend-service.md
+ConnectionConnection
+listconfig.js
+InnocenceOrhan
+PamukreadingThe
+DayKazuo
+Ishiguroto_readDavid
+CopperfieldCharles
+Dickensread
+ - docs/quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service.md
+ConnectionConnection
+listconfig.js
+InnocenceOrhan
+PamukreadingThe
+DayKazuo
+Ishiguroto_readDavid
+CopperfieldCharles
+Bram
+to_read
+Orhan
+Pamuk
+Kazuo
+Ishiguro
+Dickensread

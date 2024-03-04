@@ -12,7 +12,7 @@ This guide walks you through the following steps:
 
 ## Prerequisites
 
-Before you try out this guide, if you do not have a published API/ service that you would want to consume via the Developer Portal, follow [Develop a REST API ](../develop-components/develop-services/develop-a-rest-api.md) documentation to publish and deploy a sample REST API. 
+Before you try out this guide, if you do not have a published service that you would want to consume via the Developer Portal, follow [Develop a Service](../develop-components/develop-services/develop-a-service.md) documentation to publish and deploy a sample REST API. 
 
 ## Discover APIs
 
@@ -57,13 +57,13 @@ You can invoke the API/service using the credentials you created above. Since Ch
 In this guide, you will be using the following product and examples:
 
 -  WSO2 Asgardeo as the IdP
-- [choreo-samples/reading-list-app/frontend](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/frontend) as the web application. This is a React SPA that invokes the service using Axios. This web application is configured to read the
-[choreo-samples/reading-list-app/backend/](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/backend) as the service. You can modify this web application to read your service, or [deploy the choreo-samples/reading-list-app/backend/](https://wso2.com/choreo/docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo/#step-1-create-a-service-component-and-publish-it-as-a-rest-api) in Choreo and use it. 
+- [choreo-samples/reading-list-app/reading-list-front-end](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-front-end) as the web application. This is a React SPA that invokes the service using Axios. This web application is configured to read the
+[choreo-samples/reading-list-app/reading-list-service](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-service) as the service. You can modify this web application to read your service, or [deploy the choreo-samples/reading-list-app/reading-list-service](../quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service.md#step-12-configure-the-sample-service-and-publish-it-as-a-rest-api) in Choreo and use it. 
 
 ### Step 1: Create a web application component
 
 !!! info
-    You can use your own web application implementation in place of the sample web application. For this exercise, let's use the [choreo-samples/reading-list-app/frontend](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/frontend) as the web application.
+    You can use your own web application implementation in place of the sample web application. For this exercise, let's use the [choreo-samples/reading-list-app/reading-list-front-end](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-front-end) as the web application.
 
 {% include "../quick-start-guides/create-web-application-qsg.md" %}
 

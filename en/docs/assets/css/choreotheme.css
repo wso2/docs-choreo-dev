@@ -423,6 +423,20 @@ color: #a8a39f;
     }
   }
 
+  @-moz-document url-prefix() {
+    .md-search__inner {
+       margin-top: 29px;
+    }
+  }
+
+  @-moz-document url-prefix() {
+    .md-header__option {
+        margin-right: -415px;
+    }
+  }
+  
+
+
 .cInlineImage-xsmall {
     display: inline-block;
     text-align: center;

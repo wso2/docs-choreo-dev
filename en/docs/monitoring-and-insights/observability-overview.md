@@ -14,8 +14,6 @@ The following diagram shows the Observability dashboard:
 
 ![Dashboard overview](../assets/img/monitoring-and-insights/observability/overview-overall.png){.cInlineImage-full}
 
-!!! note
-    The observability dashboard for non-Ballerina components does not display the visual diagram. Therefore, the functionality within the visual diagram is available only to Ballerina components. 
 
 The Observability dashboard allows you to:
 
@@ -23,7 +21,6 @@ The Observability dashboard allows you to:
 - View the logs generated over a given period.
 - Compare metrics side-by-side for better diagnosis.
 - Observe the flame graph (Diagnostics view) generated over a given period (not available for non-Ballerina components).
-- View the visual diagram (not available for non-Ballerina components).
 - Trace requests (not available for non-Ballerina components).
 
 !!! note

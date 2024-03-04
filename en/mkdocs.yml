@@ -75,7 +75,9 @@ nav:
   - Introduction:
       - What is Choreo?: what-is-choreo.md
   - Quick Start Guide:
-      - Build Your First Cloud Native Application with Choreo: quick-start-guides/build-your-first-cloud-native-application-with-choreo.md
+      - Deploy Your First Service: quick-start-guides/deploy-your-first-service.md
+      - Deploy Your First Static Web Application: quick-start-guides/deploy-your-first-static-web-application.md
+      - Deploy a Web Application that Consumes a Backend Service: quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service.md
   - Tutorials:
       - Expose a Service as a Managed API: tutorials/expose-a-service-as-a-managed-api.md
       - Secure an API with Role-Based Access Control: tutorials/secure-an-api-with-role-based-access-control.md
@@ -88,19 +90,20 @@ nav:
       - CI/CD: choreo-concepts/ci-cd.md
       - Deployment Tracks: choreo-concepts/deployment-tracks.md
       - Configuration Management: choreo-concepts/configuration-management.md
+      - Connections: choreo-concepts/connections.md
       - Data Planes: choreo-concepts/data-planes.md
       - Environments: choreo-concepts/environments.md
       - Choreo Marketplace: choreo-concepts/choreo-marketplace.md
   - Develop Components:
       - Develop Services:
+          - Service Component Overview: develop-components/develop-services/service-component-overview.md
           - Develop a Service: develop-components/develop-services/develop-a-service.md
-          - Develop a REST API: develop-components/develop-services/develop-a-rest-api.md
-          - Develop a Go REST API: develop-components/develop-services/develop-a-go-rest-api.md
-          - Develop a gRPC Service: develop-components/develop-services/develop-a-grpc-service.md
-          - Develop a TCP Service: develop-components/develop-services/develop-a-tcp-service.md
-          - Develop a UDP Service: develop-components/develop-services/develop-a-udp-service.md
-          - Develop a Ballerina REST API:  develop-components/develop-services/develop-a-ballerina-rest-api.md
-          - Develop a Ballerina GraphQL API: develop-components/develop-services/develop-a-ballerina-graphql-api.md
+          - Develop a service with Docker: develop-components/develop-services/develop-a-service-with-docker.md
+          - Develop a Ballerina Service:  develop-components/develop-services/develop-a-ballerina-service.md
+          - Expose a gRPC Endpoint via a Service: develop-components/develop-services/expose-a-grpc-endpoint-via-a-service.md
+          - Expose a TCP Server via a Service: develop-components/develop-services/expose-a-tcp-server-via-a-service.md
+          - Expose a UDP Server via a Service: develop-components/develop-services/expose-a-udp-server-via-a-service.md
+          - Expose a Ballerina GraphQL Endpoint via a Service: develop-components/develop-services/expose-a-ballerina-graphql-endpoint-via-a-service.md
       - Develop an API Proxy: develop-components/develop-an-api-proxy.md
       - Develop a Web Application: develop-components/develop-a-web-application.md
       - Develop a Webhook: develop-components/develop-a-webhook.md 
@@ -117,7 +120,7 @@ nav:
       - Deploy an Application with Buildpacks: develop-components/deploy-an-application-with-buildpacks.md
       - Deploy a Containerized Application: develop-components/deploy-a-containerized-application.md  
       - Sharing and Reusing Services: develop-components/sharing-and-reusing-services.md
-      - Manage Configurations: develop-components/manage-configurations.md
+      - Manage Deployment Tracks for Choreo Components: develop-components/manage-deployment-tracks-for-choreo-components.md
       - Configure Mutual TLS Between Components: develop-components/configure-mutual-tls-between-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
@@ -128,11 +131,12 @@ nav:
           - Redis: manage-databases-and-caches/choreo-managed-redis-datastores.md
           - Billing: manage-databases-and-caches/billing-for-platform-services.md
   - Authentication and Authorization:
-      - Pass End-User Attributes to Upstream Services: authentication-and-authorization/pass-end-user-attributes-to-upstream-services.md
       - Secure API Access with Asgardeo: authentication-and-authorization/secure-api-access-with-asgardeo.md
       - Secure API Access with Azure: authentication-and-authorization/secure-api-access-with-azure-ad.md
+      - Secure Web Applications with Managed Authentication: authentication-and-authorization/secure-web-applications-with-managed-authentication.md
+      - Test Secure API Access with Choreo Built-In Security Token Service: authentication-and-authorization/test-secure-api-access-with-choreo-built-in-security-token-service.md
+      - Pass End-User Attributes to Upstream Services: authentication-and-authorization/pass-end-user-attributes-to-upstream-services.md
   - DevOps and CI/CD: 
-      - Builds and Deployments: devops-and-ci-cd/builds-and-deployments.md
       - Manage Configurations and Secrets: devops-and-ci-cd/manage-configurations-and-secrets.md
       - View Runtime Details: devops-and-ci-cd/view-runtime-details.md
       - Configure Container Resources, Commands, and Arguments: devops-and-ci-cd/configure-container-resources-commands-and-arguments.md
@@ -151,6 +155,7 @@ nav:
   - Consuming Services:
       - Consume a Service: consuming-services/consuming-a-sevice.md
       - Manage Application: consuming-services/manage-application.md
+      - Share Applications: consuming-services/share-applications.md
       - Manage Subscription: consuming-services/manage-subscription.md
       - Generate an Access Token: consuming-services/generate-an-access-token.md
   - API Management:
@@ -179,13 +184,17 @@ nav:
       - Configure an External IdP:
           - Configure Asgardeo as an External IdP: administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md
           - Configure Azure as an External IdP: administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp.md
+      - Configure a User Store with the Built-In Identity Provider: administer/configure-a-user-store-with-built-in-idp.md
       - Developer Portal:
           - Customize the Developer Portal: administer/customize-the-developer-portal.md
           - Configure Self-Sign-Up: administer/configure-self-sign-up.md
           - Customize the Developer Portal Domain: administer/customize-the-developer-portal-domain.md
-
-  - Troubleshoot:
-      - FAQ: troubleshoot/faq.md
+      - Manage Members of an Organization: administer/manage-members-of-an-organization.md
+  - References:
+      - FAQ: references/faq.md
+      - Choreo Limitations: references/choreo-limitations.md
+      - Private Data Plane Security Levels: references/private-data-plane-security-levels.md
+      - Private Data Plane Management Models: references/private-data-plane-management-models.md
 # Extensions
 # Extensions
 markdown_extensions:
@@ -220,6 +229,7 @@ plugins:
   - search
   - include-markdown
   - glightbox
+  - open-in-new-tab
   - markdownextradata: {}
   - redirects:
       redirect_maps:
@@ -262,6 +272,7 @@ plugins:
           'develop/components/api-proxies/policies.md': 'https://wso2.com/choreo/docs/develop/api-policies/policies/'
           'get-started/what-is-choreo.md': 'https://wso2.com/choreo/docs/what-is-choreo/'
           'get-started/quick-start-guide.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo/'
+          'get-started/build-your-first-cloud-native-application-with-choreo.md': 'https://wso2.com/choreo/docs/quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service/'
           'get-started/tutorials/create-your-first-rest-api.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-cloud-native-application-with-choreo/'
           'get-started/tutorials/create-your-first-rest-api-proxy.md': 'https://wso2.com/choreo/docs/quick-start-guides/expose-a-service-as-a-managed-api-with-choreo-api-manager/'
           'get-started/tutorials/create-your-first-webhook.md': 'https://wso2.com/choreo/docs/develop-components/develop-a-webhook/'
@@ -334,6 +345,15 @@ plugins:
           'develop-integrations/develop-a-scheduled-integration.md': 'https://wso2.com/choreo/docs/develop-components/develop-integrations/develop-a-scheduled-task/'
           'develop-components/develop-a-rest-api-proxy.md': 'https://wso2.com/choreo/docs/develop-components/develop-an-api-proxy/'
           'devops-and-ci-cd/builds-and-deployments.md' : 'https://wso2.com/choreo/docs/choreo-concepts/ci-cd/'
+          'troubleshoot/faq.md': 'https://wso2.com/choreo/docs/references/faq/'
+          'develop-components/develop-services/develop-a-rest-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/'
+          'develop-components/develop-services/develop-a-go-rest-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service-with-docker/'
+          'develop-components/develop-services/develop-a-grpc-service.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-grpc-endpoint-via-a-service/'
+          'develop-components/develop-services/develop-a-tcp-service.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-tcp-server-via-a-service/'
+          'develop-components/develop-services/develop-a-udp-service.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-udp-server-via-a-service/'
+          'develop-components/develop-services/develop-a-ballerina-rest-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-ballerina-service/'
+          'develop-components/develop-services/develop-a-ballerina-graphql-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-ballerina-graphql-endpoint-via-a-service/'
+          'quick-start-guides/build-your-first-cloud-native-application-with-choreo.md': 'https://wso2.com/choreo/docs/quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service/'
           
 extra_css:
   # - assets/lib/highlightjs/default.min.css

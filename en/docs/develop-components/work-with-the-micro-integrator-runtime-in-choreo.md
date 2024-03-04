@@ -240,6 +240,22 @@ For more information, see the following topics in the WSO2 API Manager documenta
 - [Connectors Overview](https://apim.docs.wso2.com/en/latest/reference/connectors/connectors-overview/)
 - [Adding Connectors](https://apim.docs.wso2.com/en/latest/integrate/develop/creating-artifacts/adding-connectors/)
 
+## Deploying integrations in Choreo 
+
+WSO2 MI buildpack is where you can deploy integrations developed with WSO2 Micro Integrator as an API. In this preset, you have three different ways to define endpoints. Choreo gives priory to the definition of endpoints in the below-mentioned order. 
+
+1. **Using endpoints.yaml file**
+This is the most flexible method to define endpoints. You can configure the endpoint details with the `endpoints.yaml` configuration file. Place this file in the .choreo directory in the project path of the component. 
+If the Micro Integrator project has inbound endpoints, you can expose them via different endpoints using the `endpoints.yaml`
+
+    See [Understanding the endpoints.yaml file](../develop-components/configure-endpoints-body.md#learn-the-endpointsyaml-file) to learn about the `endpoints.yaml` file.
+
+2. **Auto generating endpoints**
+If `endpoints.yaml` is not provided and if the source Micro Integrator project has APIs, Choreo scans the project and generates the API endpoints. If the project has few APIs, an endpoint will be generated for each API. The visibility of this auto-generated endpoint is set to `Public` by default. You can change the visibility in the deployment flow.
+
+3. **Provide default endpoints**
+If `endpoints.yaml` is not provided and if the source Micro Integrator project doesn't have APIs, Choreo generates a default endpoint which will expose the default micro integrator port (8290) with `Public` visibility and wildcard context.
+
 ## Explore Choreo examples on GitHub
 
 For a hands-on experience with MI-based integrations in Choreo, we recommend exploring our samples in Choreo Console. You can filter out the samples based on the buildpack `WSO2 MI`. This will point you to the samples in the [Choreo samples GitHub repository](https://github.com/wso2/choreo-samples)

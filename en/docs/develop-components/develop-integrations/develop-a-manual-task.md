@@ -71,12 +71,25 @@ Before you try out the steps in this guide, complete the following:
 
 8. Click **Create**. Choreo initializes the component with the sample implementation and opens the **Overview** page of the component.
 
-## Step 2: Deploy the manual task
+## Step 2: Build the manual task
+
+To build the manual task, follow the steps given below:
+
+1. In the left navigation menu, click **Build**.
+2. In the **Builds** pane, click **Build**. This opens the **Commits** pane where you can see all the commits related to the component.
+3. Select the latest commit and click **Build**. This triggers the build process and displays the build progress in the **Build Logs** pane.
+
+    !!! info
+         The build process can take a while to complete. When the build process is complete, the build will be listed in the **Builds** pane along with the build status. 
+
+   Here, you will see the build status as **Success**.
+
+## Step 3: Deploy the manual task
 
 To deploy the manual task, follow the steps given below:
 
 1. In the left navigation menu, click **Deploy**.
-2. In the **Build Area** card, click **Configure & Deploy**.
+2. In the **Set Up** card, click **Configure & Deploy**.
 3. In the **Configurations** pane, specify values as follows for the configurable variables:
 
     !!! tip
@@ -89,24 +102,83 @@ To deploy the manual task, follow the steps given below:
     | **longitude** | Longitude of the location to get the weather forecast                   |
     | **email**     | The email address to receive the formatted weather forecast information |
 
+    !!! note
+        If you use **Ballerina** as the buildpack and you want to set a configurable variable as a secret, click the lock icon corresponding to the configurable variable. This marks it as a secret and conceals the input value.
+
+        For example, if you consider the configurable variables in this guide and set the **apiKey** as a secret, its input value will be concealed as follows:
+
+          ![Configurable variable as a secret](../../assets/img/develop-components/develop-a-scheduled-integration/configurable-variable-as-a-secret.png)
+
+        If you want to update the input value at a later time, you can click **Update Secret Content** and specify a new value.
+
+          ![Update secret](../../assets/img/develop-components/develop-a-scheduled-integration/update-secret.png)
+
 4.  Click **Deploy**.
 
-## Step 3: Execute the manual task
+## Step 4: Execute the manual task
 
 To execute the manual task, follow the steps given below:
 
 1. In the left navigation menu, click **Execute**.
-2. Click **Run Now**.
+2. Click **Run Now**. This triggers the task.
 
-## Step 4: Test the manual task
+    !!! info "Inject dynamic values into your application as command-line arguments"
+         If you want to inject dynamic values into your application as command-line arguments when you run a manual task, follow the steps given below:
 
-Once the task is triggered, an email with the subject `[WSO2 Choreo Demo] Next 24H Weather Forecast` is sent from `choreo.demo@gmail.com` to the email address specified as the **email** configurable variable value in [Step 2](#step-2-deploy-the-manual-task). 
+           1. Click the drop-down icon next to **Run Now** and then click **Run with Arguments**. 
+           2. In the **Runtime Arguments** pane that opens, enter the arguments you want to pass to your application. 
+           3. Click **Execute**. This triggers the task with the specified arguments.
+
+         The capability to run a manual task with arguments is supported for the following buildpacks:
+
+        === "Dockerfile"
+
+            To explore running a Dockerfile-based manual task with arguments, try out the [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/docker-hello-world-manual-task) sample. For instructions, see the `readme.md` file in the sample repository.
+
+            !!! info
+                 When you work on Docker projects, the **Run with Arguments** capability is not supported if the Dockerfile contains `CMD`. In such scenarios, you must use `ENTRYPOINT` to define your default commands. 
+
+        === "Go"
+
+            To explore running a Go-based manual task with arguments, try out the [Hello World Go Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-go-task) sample. For instructions, see the `readme.md` file in the sample repository.
+
+        === "Java"
+
+            To explore running a Java-based manual task with arguments, try out the [Hello World Java Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-java-task) sample. For instructions, see the `readme.md` file in the sample repository.
+
+            !!! info
+                 When you work on Java projects:
+
+                   - The **Run with Arguments** capability is not supported if `Procfile` is available in the project.
+                   - The `Main` class should be defined in the `manifest` file.
+                   - If Maven files such as `mvn.cmd` exist in the project without the `.mvn` directory, the build will fail. To ensure a successful build, you must either commit the `.mvn` directory along with any Maven files or not include any Maven files in the project if you choose not to commit the `.mvn` directory.
+
+        === "NodeJS"
+
+            To explore running a NodeJS-based manual task with arguments, try out the [Hello World NodeJS Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-nodejs-task) sample. For instructions, see the `readme.md` file in the sample repository.
+
+            !!! info
+                When you work on NodeJS projects:
+
+                  - The **Run with Arguments** capability is not supported if `Procfile` is available in the project.
+                  - The project root must contain the `package.json` file with the `main` attribute defined.
+
+        === "WSO2 MI"
+
+            To explore running a WSO2 MI-based manual task with arguments, try out the [Weather to Logs Task](https://github.com/wso2/choreo-samples/tree/main/weather-to-logs-mi-manual-task) sample. For instructions, see the `readme.md` file in the sample repository.
+
+            !!! info
+                When you work on WSO2 MI projects and you want to deploy a WSO2 MI integration as a manual task in Choroeo, you must use the WSO2 MI automation mode. For details, see [Running the Micro Integrator in Automation Mode](https://apim.docs.wso2.com/en/latest/install-and-setup/install/running-the-mi-in-automation-mode/).
+
+## Step 5: Test the manual task
+
+Once the task is triggered, an email with the subject `[WSO2 Choreo Demo] Next 24H Weather Forecast` is sent from `choreo.demo@gmail.com` to the email address specified as the **email** configurable variable value in [Step 3](#step-3-deploy-the-manual-task). 
 
 If the manual task ran successfully, you should receive an email similar to the following to the email address you specified:
 
 ![Received email](../../assets/img/develop-components/develop-a-scheduled-integration/Received-email.png)
 
-## Step 5: Observe the manual task 
+## Step 6: Observe the manual task 
 
 The observability view in Choreo displays graphs that depict details such as throughput, latency, diagnostic data, and logs to identify and troubleshoot anomalies in components you deploy.
 
@@ -119,7 +191,7 @@ To visualize and monitor the performance of the manual task you deployed, click 
   
 To learn more about the observability details you can view via Choreo observability, see [Observability Overview](../../monitoring-and-insights/observability-overview.md).
 
-## Step 6: Monitor executions
+## Step 7: Monitor executions
 
 To track and monitor executions associated with the deployed scheduled task, go to the left navigation menu and click **Execute**. 
 
