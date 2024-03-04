@@ -18,6 +18,7 @@ import { mixinProxyDeploy } from "../../features/deploy/deploy-proxy";
 import { mixinDevelop } from "../../features/develop/develop";
 import { mixinTestProxy } from "../../features/test/test-proxy";
 import { mixinManage } from "../../features/manage/manage";
+import { Utils } from "../../../commons/utils";
 
 export class Proxy extends mixinDevelop(
   mixinManage(mixinProxyDeploy(mixinTestProxy(Component)))
@@ -163,16 +164,29 @@ export class Proxy extends mixinDevelop(
     this._verifyConsumer(appName);
   }
 
-  disableSecurityInDev(resource: string) {
-    this._disableSecurity(this, Enums.Environment.DEVELOPMENT, resource);
+  disableSecurity(method: Enums.HTTPMethod, resource: string) {
+    this._disableSecurity(this, Enums.Environment.PRODUCTION, method, resource);
   }
 
-  disableSecurityInProd(resource: string) {
-    this._disableSecurity(this, Enums.Environment.PRODUCTION, resource);
+  disableSecurityInDev(method: Enums.HTTPMethod, resource: string) {
+    this._disableSecurity(
+      this,
+      Enums.Environment.DEVELOPMENT,
+      method,
+      resource
+    );
+  }
+
+  disableSecurityInProd(method: Enums.HTTPMethod, resource: string) {
+    this._disableSecurity(this, Enums.Environment.PRODUCTION, method, resource);
   }
 
   updateAccessMode(accessMode: Enums.Accessibility) {
     this._updateAccessMode(this, accessMode);
+  }
+
+  updateAccessModeAndDeploy(accessMode: Enums.Accessibility) {
+    this._deploy(this, accessMode);
   }
 
   updateApiVisibility(visibility: ApiVisibility) {
