@@ -18,7 +18,7 @@ isActionAuthorizationEnabled = {{.ACTION_AUTHORIZATION_ENABLED}}
 enableCheckPermissionConsistencyConf = true
 
 # Permissions
-projectViewPermissionConf = "choreo:project_view"
+projectViewPermissionConf = "choreo:project_manage"
 projectUpdatePermissionConf = "choreo:project_manage"
 projectDeletePermissionConf = "choreo:project_manage"
 userManagementPermissionConf = "urn:choreosystem:usermanagement:user_manage"
