@@ -213,6 +213,14 @@ export class Project {
     cy.contains(name).should("not.exist");
   }
 
+  searchSampleService(searchString: string) {
+    this.createComponentIfEmptyProject();
+    cy.get(TestIds.viewAllSamples).scrollIntoView().click();
+    cy.get(TestIds.trySample).should("be.visible").click();
+    cy.get(TestIds.sampleSearch).should("be.visible").type(searchString);
+    cy.get(TestIds.sampleCard(searchString)).should("be.visible");
+  }
+
   createServiceComponent(
     accessibility: Enums.Accessibility,
     repoInfo: RepoInfo,
