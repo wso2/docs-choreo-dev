@@ -32,11 +32,12 @@ import { ProxyLeftMenu } from "../../ui-elements/left-menus/proxy-left-menu";
 import { Proxy } from "../../entities/component/proxy-component";
 import { Types } from "../../../commons/types";
 import { DeploymentTrack } from "../deployment-track/deployment-track";
+import { Enums } from "../../../commons/enums";
 
 export interface DeployProxyFeature {
   _addNewVersion(component: Proxy, version: string);
 
-  _deploy(component: Proxy);
+  _deploy(component: Proxy, visibility?: Enums.Accessibility);
 
   _promote(component: Proxy);
 }
@@ -48,7 +49,7 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
     private sideMenu = new ProxyLeftMenu();
     private deploymentTrack = new DeploymentTrack();
 
-    _deploy(component: Proxy) {
+    _deploy(component: Proxy, visibility?: Enums.Accessibility) {
       this.sideMenu.navigateToDeploy();
 
       this.deploymentTrack.validate(component);
@@ -59,7 +60,7 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
 
       this.getNumberOfPriorBuilds().then((buildCount) => {
         cy.log("Number of prior builds: " + buildCount);
-        this.startDeployment(component);
+        this.startDeployment(component, visibility);
 
         this.verifyDeploymentStatus(buildCount);
       });
@@ -178,7 +179,10 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
       });
     }
 
-    private startDeployment(component: Proxy) {
+    private startDeployment(
+      component: Proxy,
+      visibility?: Enums.Accessibility
+    ) {
       cyGet(TestIds.deployProxySplitToggle, MEDIUM_TIME)
         .should("not.be.disabled")
         .click();
@@ -188,6 +192,16 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
       cyGet(TestIds.executeDeployProxySplitToggle, MEDIUM_TIME)
         .should("not.be.disabled")
         .click();
+
+      if (visibility !== undefined) {
+        let accessModeRadioButton = TestIds.externalAccessMode;
+
+        if (visibility === Enums.Accessibility.INTERNAL) {
+          accessModeRadioButton = TestIds.internalAccessMode;
+        }
+
+        cy.get(accessModeRadioButton, SHORT_TIME).should("be.visible").click();
+      }
 
       if (component.isPolicyAdded()) {
         if (Utils.isApiConfigurationEnabled()) {
