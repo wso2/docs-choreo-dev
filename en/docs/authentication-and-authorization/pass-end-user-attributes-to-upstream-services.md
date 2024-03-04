@@ -114,7 +114,7 @@ Choreo provides an endpoint to specify the public keys for backend JWT validatio
 !!! note
     For private data planes (PDPs), use the following JWKS endpoint URL template:
     
-    `https://<PDP_GATEWAY_DOMAIN>/.wellknown/jwks`.
+    `https://<PDP_GATEWAY_DOMAIN>/.wellknown/jwks`
 
     Be sure to replace `<PDP-GATEWAY-DOMAIN>` with the default domain configured to access the PDP APIs.
 
