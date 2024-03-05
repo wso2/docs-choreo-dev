@@ -19,7 +19,7 @@ usage() {
     echo "  add <bot-name> <token> <environment> <skip_confirmation>  Add a single bot."
     echo "      - <bot-name>: Name of the bot to add."
     echo "      - <token>: Personal Access Token (PAT) of the bot."
-    echo "      - <environment>: The environment where the bot will be added (e.g., dev, prod)."
+    echo "      - <environment>: The environment where the bot will be added (e.g., dev, stage, prod)."
     echo "      - <skip_confirmation>: Set to 'true' to skip confirmation prompt or 'false' to require confirmation."
     echo
     echo "  list <environment>                                         List all bots in a specified environment."
@@ -32,10 +32,12 @@ usage() {
     echo "  bulk-add <csv_file_path> <environment>                     Add bots in bulk from a CSV file."
     echo "      - <csv_file_path>: Path to the CSV file containing bot information."
     echo "      - <environment>: The environment where bots will be added."
+    echo "      CSV Format: 'bot-name,token' without header."
     echo
     echo "  bulk-delete <csv_file_path> <environment>                  Delete bots in bulk from a CSV file based on IDs."
     echo "      - <csv_file_path>: Path to the CSV file containing IDs of bots to delete."
     echo "      - <environment>: The environment where bots will be deleted."
+    echo "      CSV Format: 'ID' without header."
     echo
 }
 
@@ -94,7 +96,7 @@ function add_bot() {
         echo "You are about to add the following bot:"
         echo "Bot: $bot, Environment: $environment"
 	echo
-        read -p "Are you sure you want to proceed? (y/N): " confirmation
+        read -r -p "Are you sure you want to proceed? (y/N): " confirmation
         if [[ "$confirmation" != "y" && "$confirmation" != "Y" ]]; then
             echo "Bot addition cancelled."
 	    echo
@@ -167,7 +169,7 @@ function delete_bot() {
         echo "You are about to delete the following bot:"
         echo "$bot_details" | jq '{id: .id, name: .name}'
 
-        read -p "Are you sure you want to delete this bot? (y/N): " confirmation
+        read -r -p "Are you sure you want to delete this bot? (y/N): " confirmation
         if [[ "$confirmation" != "y" && "$confirmation" != "Y" ]]; then
             echo "Deletion cancelled."
             return 1
@@ -237,7 +239,7 @@ function bulk_delete_bots() {
     fi
 
     # Ask for confirmation
-    read -p "Are you sure you want to delete the above bots? (y/N) " confirmation
+    read -r -p "Are you sure you want to delete the above bots? (y/N) " confirmation
     if [[ $confirmation =~ ^[Yy]$ ]]; then
         for id in "${ids_to_delete[@]}"; do
             echo
@@ -269,7 +271,7 @@ function bulk_add_bots() {
     done < "$csv_file"
 
     # Use read -p to prompt for confirmation
-    read -p "Are you sure you want to proceed with adding all bots listed above? (y/N): " confirmation
+    read -r -p "Are you sure you want to proceed with adding all bots listed above? (y/N): " confirmation
     if [[ $confirmation != [Yy] ]]; then
         echo "Bulk bot addition cancelled."
         return 1
@@ -298,7 +300,8 @@ case "$1" in
             # Proceed with adding the bot only if they don't exist
             add_bot "${@:2:3}" "$5"
         else
-            echo "Bot '${@:2:1}' already exists, skipping addition."
+            echo "Bot '$2' already exists, skipping addition."
+            echo
         fi
         ;;
     list)
