@@ -67,11 +67,11 @@ async function runTests(username, testMethods) {
 
 // Define test methods
 const testMethods = [
-  { name: 'Login with multiple users concurrently', spec: 'cypress/e2e-stable/console/1-component/perf/0.1-con-perf-test-copy.ts' },
-  { name: 'Creating a project', spec: 'cypress/e2e-stable/console/1-component/perf/0.1-con-perf-test-copy.ts' },
-  { name: 'Verify Ballerina service component creation', spec: 'cypress/e2e-stable/console/1-component/perf/0.1-con-perf-test-copy.ts' },
-  { name: 'Build the component', spec: 'cypress/e2e-stable/console/1-component/perf/0.1-con-perf-test-copy.ts' },
-  { name: 'Deploying the component with Public level visibility', spec: 'cypress/e2e-stable/console/1-component/perf/0.1-con-perf-test-copy.ts' },
+  { name: 'Login with multiple users concurrently', spec: 'cypress/e2e-stable/console/1-component/perf/0.1-con-perf-test.ts' },
+  { name: 'Creating a project', spec: 'cypress/e2e-stable/console/1-component/perf/0.1-con-perf-test.ts' },
+  { name: 'Verify Ballerina service component creation', spec: 'cypress/e2e-stable/console/1-component/perf/0.1-con-perf-test.ts' },
+  { name: 'Build the component', spec: 'cypress/e2e-stable/console/1-component/perf/0.1-con-perf-test.ts' },
+  { name: 'Deploying the component with Public level visibility', spec: 'cypress/e2e-stable/console/1-component/perf/0.1-con-perf.ts' },
   
 ];
 
