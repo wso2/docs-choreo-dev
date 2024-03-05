@@ -57,7 +57,8 @@ function port_forward() {
 function write_bot_to_csv() {
     local bot_id="$1"
     local name="$2"
-    local datetime=$(date "+%Y-%m-%d_%H-%M")
+    local datetime
+    datetime=$(date "+%Y-%m-%d_%H-%M")
     local output_file="added_bots_${datetime}.csv"
 
     # Append bot ID and name to the file
@@ -67,7 +68,8 @@ function write_bot_to_csv() {
 # Function to check if the bot already exists
 function bot_exists() {
     local name_to_check="$1"
-    local existing_names=$(list_bots | jq -r '.data[].name')
+    local existing_names
+    existing_names=$(list_bots | jq -r '.data[].name')
     if echo "$existing_names" | grep -q "$name_to_check"; then
         return 0 # Bot exists
     else
@@ -113,7 +115,8 @@ function add_bot() {
     fi
 
     # Constructing the payload and making the API call
-    local payload=$(cat <<EOF
+    local payload
+    payload=$(cat <<EOF
 {
     "credential": "{\"user\":\"$bot\",\"org\":\"$org\",\"token\":\"$token\",\"email\":\"$email\"}",
     "name": "$name",
@@ -122,16 +125,18 @@ function add_bot() {
 }
 EOF
 )
-
-    local response=$(curl --silent --location 'http://localhost:3200/api/v1/git/credentials' \
+    local response
+    response=$(curl --silent --location 'http://localhost:3200/api/v1/git/credentials' \
                     --header 'Content-Type: application/json' \
                     --header 'x-project-id: global' \
                     --header 'x-organization-id: 0' \
                     --data-raw "$payload" \
                     --write-out "\n%{http_code}")
 
-    local body=$(echo "$response" | head -n -1)
-    local status=$(echo "$response" | tail -n1)
+    local body
+    body=$(echo "$response" | head -n -1)
+    local status
+    status=$(echo "$response" | tail -n1)
 
     if [[ "$status" -ne 200 ]] && [[ "$status" -ne 201 ]]; then
         echo "Error adding bot: HTTP status $status"
@@ -139,7 +144,8 @@ EOF
         return 1
     else
         echo "Bot $name added successfully"
-        local bot_id=$(echo "$body" | jq -r '.data.id')
+        local bot_id
+        bot_id=$(echo "$body" | jq -r '.data.id')
         echo "Bot ID: $bot_id"
 	echo
         write_bot_to_csv "$bot_id" "$name"
@@ -153,9 +159,10 @@ function delete_bot() {
     local skip_confirmation="$2"
 
     # Fetch the current list of bots to get details of the bot with the given ID
-    local bot_details=$(curl -s --location 'http://localhost:3200/api/v1/git/credentials' \
+    local bot_details
+    bot_details=$(curl -s --location 'http://localhost:3200/api/v1/git/credentials' \
                          --header 'x-project-id: global' \
-                         --header 'x-organization-id: 0' | jq '.data[] | select(.id == "'$id'")')
+                         --header 'x-organization-id: 0' | jq '.data[] | select(.id == "'"$id"'")')
 
     # Check if the bot exists
     if [ -z "$bot_details" ]; then
@@ -172,6 +179,7 @@ function delete_bot() {
         read -r -p "Are you sure you want to delete this bot? (y/N): " confirmation
         if [[ "$confirmation" != "y" && "$confirmation" != "Y" ]]; then
             echo "Deletion cancelled."
+            echo
             return 1
         fi
     fi
@@ -187,12 +195,15 @@ function delete_bot() {
 
 # Function to list bots
 function list_bots() {
-    local response=$(curl --silent --location 'http://localhost:3200/api/v1/git/credentials' \
+    local response
+    response=$(curl --silent --location 'http://localhost:3200/api/v1/git/credentials' \
                     --header 'x-project-id: global' --header 'x-organization-id: 0' \
                     --write-out "\n%{http_code}")
+    local body
+    body=$(echo "$response" | head -n -1)
 
-    local body=$(echo "$response" | head -n -1)
-    local status=$(echo "$response" | tail -n1)
+    local status
+    status=$(echo "$response" | tail -n1)
 
     if [[ "$status" -ne 200 ]]; then
         echo "Error listing bots: HTTP status $status"
@@ -207,7 +218,8 @@ function bulk_delete_bots() {
     local csv_file="$1"
     echo "Fetching current bots..."
     echo
-    local bots=$(list_bots | jq '.data[] | {id, name}' | jq -s .) # Fetch and structure bot data
+    local bots
+    bots=$(list_bots | jq '.data[] | {id, name}' | jq -s .) # Fetch and structure bot data
 
     echo "Checking bots to be deleted against current bots..."
     local ids_to_delete=()
@@ -221,7 +233,9 @@ function bulk_delete_bots() {
             continue
         fi
         # Check if bot ID exists in current bots
-        local bot_exists=$(echo "$bots" | jq --arg id "$id" 'map(select(.id == $id)) | length')
+        local bot_exists
+        bot_exists=$(echo "$bots" | jq --arg id "$id" 'map(select(.id == $id)) | length')
+
         if [[ "$bot_exists" -eq 0 ]]; then
             echo "Bot with ID $id does not exist, skipping."
             echo
@@ -245,13 +259,15 @@ function bulk_delete_bots() {
             echo
             echo "Deleting bot with ID: $id"
             delete_bot "$id" true
-            if [ $? -ne 0 ]; then
+            delete_status=$?
+            if [ $delete_status -ne 0 ]; then
                 echo "Error deleting bot with ID $id."
                 echo
             fi
         done
     else
         echo "Bot deletion cancelled."
+        echo
     fi
 }
 
@@ -269,11 +285,13 @@ function bulk_add_bots() {
         fi
         echo "- $bot"
     done < "$csv_file"
+    echo
 
     # Use read -p to prompt for confirmation
     read -r -p "Are you sure you want to proceed with adding all bots listed above? (y/N): " confirmation
     if [[ $confirmation != [Yy] ]]; then
         echo "Bulk bot addition cancelled."
+        echo
         return 1
     fi
 
