@@ -120,6 +120,7 @@ export namespace TestIds {
   export const apiBasePath = '[data-cyid="api-basepath"]';
   export const apiEndpoint = '[data-cyid="api-endpoint"]';
   export const internalAccessMode = '[data-testid="internal-radio-card"]';
+  export const externalAccessMode = '[data-testid="external-radio-card"]';
   export const createButton = '[data-cyid="btn-create-button"]';
   export const createTime = '[data-cyid="create-time"]';
   export const skipSource = '[data-cyid="btn-skip-src-button"]';
@@ -164,7 +165,7 @@ export namespace TestIds {
   export const securitySettingsFirstResource = '[data-cyid="panel-0"]';
   export const scopeSaveAndDeploy =
     '[data-cyid="scope-save-and-deploy-button"]';
-  export const scopeSaveAndDeployV2 = '[data-cyid="story-button-container"]';
+  export const storyButton = '[data-cyid="story-button-container"]';
   export const deleteAllScopes = '[data-testid="scope-delete-all-btn"]';
   export const deleteAllScopesV2 = '[data-cyid="scope-delete-all-button"]';
   export const permissionTag = (permission: string) =>

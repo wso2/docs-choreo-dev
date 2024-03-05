@@ -10,7 +10,7 @@ spec:
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
-      backoffLimit: 10
+      backoffLimit: 3
       completions: 1
       parallelism: 1
       template:

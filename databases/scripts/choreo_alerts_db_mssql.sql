@@ -1,8 +1,8 @@
 -- Create User
-IF EXISTS (SELECT name FROM sys.databases WHERE name = N'choreo-alerts-db') AND NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_alerts_db_user')
+IF EXISTS (SELECT name FROM sys.databases WHERE name = N'choreo_alerts_db') AND NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_alerts_db_user')
 BEGIN
     CREATE USER [choreo_alerts_db_user] with password = N'xxxxxxxxxxxxx'
-    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo-alerts-db TO choreo_alerts_db_user
+    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_alerts_db TO choreo_alerts_db_user
 END;
 GO
 

@@ -76,7 +76,10 @@ describe("Verify webhook creation functionality", () => {
   });
 
   it("Verify component promotion to Prod", () => {
-    webhook.promoteProd([new ConfigEntryStep(addConfiguration)]);
+    webhook.promoteProd([
+      new ConfigEntryStep(),
+      new ConfigEntryStep(addConfiguration),
+    ]);
   });
 
   it("Stop deployments", () => {

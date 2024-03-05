@@ -1,34 +1,34 @@
-[code_challenge_eval.rudder_db]
+[choreo.code_challenge_eval.rudder_db]
 host = "{{.MSSQL_HOST}}"
 user = 'choreo_rudder_admin_db_user'
 database = 'choreo_rudder_db'
 port = 1433
 
-[code_challenge_eval.platform_services_db]
+[choreo.code_challenge_eval.platform_services_db]
 host = "{{.MSSQL_HOST}}"
 user = 'choreo_platform_service_manager_db_user'
 database = 'choreo_platform_service_manager_db'
 port = 1433
 
-[code_challenge_eval.configuration_db]
+[choreo.code_challenge_eval.configuration_db]
 host = "{{.MSSQL_HOST}}"
 user = 'choreo_configuration_service_db_user'
 database = 'choreo_configuration_service_db'
 port = 1433
 
-[code_challenge_eval.apim_db]
+[choreo.code_challenge_eval.apim_db]
 host = "{{.MSSQL_HOST}}"
 user = 'choreo_apim_db_user'
 database = 'choreo_apim_db'
 port = 1433
 
-[code_challenge_eval.app_db]
+[choreo.code_challenge_eval.app_db]
 host = "{{.MSSQL_HOST}}"
 user = 'choreo_app_db_user'
 database = 'choreo_app_db'
 port = 1433
 
-[code_challenge_eval.auth]
+[choreo.code_challenge_eval.auth]
 choreoJwtIssuer = "{{.CHOREO_JWT_ISSUER}}"
 choreoJwtAudience = "{{.CHOREO_JWT_AUDIENCE}}"
 site24x7JwtAudience = "{{.SITE24x7_JWT_AUDIENCE}}"
