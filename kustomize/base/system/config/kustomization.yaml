@@ -166,18 +166,6 @@ configMapGenerator:
       - PARDOT_EP=2021-11-01/9yzthx
       - PARDOT_SVC_URL=https://apis.wso2.com/gnvy/lead-form-submission/endpoint-9090-803/v1.0/lead-form
       - EMAIL_CONSENT_SVC_URL=https://apis.wso2.com/gnvy/gdpr-mailing-consent-check/endpoint-9090-803/v1.0
-  - name: cm-perf-analyzer
-    behavior: create
-    literals:
-      - CHOREO_DB_DRIVER=sqlserver
-      - CHOREO_PERF_DB_PORT=1433
-      - CHOREO_PERF_DB_USERNAME=choreo_perf_db_user
-      - CHOREO_APP_DB_PORT=1433
-      - CHOREO_APP_DB_USERNAME=choreo_app_db_user
-  - name: cm-perfanalyzer
-    behavior: create
-    files:
-      - perfanalyzer/application.properties
   - name: cm-dp-cicd
     behavior: create
     literals:
