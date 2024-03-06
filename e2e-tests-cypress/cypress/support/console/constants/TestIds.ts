@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { sample } from "cypress/types/lodash";
 import { EndpointAccessibility, Enums } from "../../commons/enums";
 
 export namespace TestIds {
@@ -31,6 +32,11 @@ export namespace TestIds {
   export const searchIcon = '[data-cyid="search-icon-icon-button"]';
   export const projectSearch =
     '[data-cyid="page-action-auto-forcused-search-search-field"]';
+  export const viewAllSamples = '[data-cyid="view-all-samples-btn-button"]';
+  export const trySample = '[data-cyid="component-select-tab-try-a-sample"]';
+  export const sampleSearch = '[data-cyid="samples-search-bar-input"]';
+  export const sampleCard = (sampleName: string) =>
+    `[data-cyid="${sampleName}-card"]`;
   export const componentSearch =
     '[data-cyid="tab-action-auto-forcused-search-search-field"]';
   export const listing = '[data-cyid="listing"]';
