@@ -9,7 +9,6 @@ resources:
   - telemetry-go.yaml
   - negotiator.yaml
   - connectords.yaml
-  - perfanalyzer-estimator.yaml
   - platform-services-manager.yaml
   - test-assistant.yaml
   - analytics-subscription.yaml
