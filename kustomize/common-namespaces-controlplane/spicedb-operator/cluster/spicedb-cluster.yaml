@@ -1,0 +1,12 @@
+apiVersion: authzed.com/v1alpha1
+kind: SpiceDBCluster
+metadata:
+  name: spicedb-cluster
+  namespace: spicedb-operator
+spec:
+  config:
+    datastoreEngine: postgres
+    replicas:  1
+    image: ghcr.io/authzed/spicedb:v1.25.0
+    skipMigrations: true
+  secretName: secret-spicedb-preshared-key

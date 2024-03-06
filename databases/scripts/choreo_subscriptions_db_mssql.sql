@@ -97,6 +97,19 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='threshold' and xtype='U')
+BEGIN
+    CREATE TABLE threshold (
+        id VARCHAR(128) NOT NULL,
+        tier_id VARCHAR(128) NOT NULL,
+        threshold NVARCHAR(MAX),
+        billing_provider VARCHAR(128),
+        PRIMARY KEY (id),
+
+    );
+END
+GO
+
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='subscriptionV2' and xtype='U')
 BEGIN
     CREATE TABLE subscriptionV2 (
@@ -113,23 +126,11 @@ BEGIN
         is_paid BIT NOT NULL DEFAULT 0,
         created_at BIGINT DEFAULT DATEDIFF_BIG(MILLISECOND,'1970-01-01 00:00:00.000', SYSUTCDATETIME()),
         threshold_id VARCHAR(128) DEFAULT '01ee409e-cdfd-13d6-86c6-1a523acc861b',
+        email_type VARCHAR(128) NOT NULL DEFAULT N'non-corporate',
         PRIMARY KEY (org_id, tier_id),
         UNIQUE (id),
         CONSTRAINT FK_TierSubscriptionV2 FOREIGN KEY (tier_id) REFERENCES tierV2(id),
         CONSTRAINT FK_ThresholdSubscriptionV2 FOREIGN KEY (threshold_id) REFERENCES threshold(id)
-    );
-END
-GO
-
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='threshold' and xtype='U')
-BEGIN
-    CREATE TABLE threshold (
-        id VARCHAR(128) NOT NULL,
-        tier_id VARCHAR(128) NOT NULL,
-        threshold NVARCHAR(MAX),
-        billing_provider VARCHAR(128),
-        PRIMARY KEY (id),
-
     );
 END
 GO

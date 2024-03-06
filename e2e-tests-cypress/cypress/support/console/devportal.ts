@@ -13,31 +13,74 @@
 
 import { TestIds } from "./constants/TestIds";
 import { VERY_SHORT_TIME } from "../commons/timeouts";
+import { DEV_PORTAL_APIS_SEARCH_URL } from "../commons/urls";
 
 export class DevPortal {
-  searchApi(apiName: string, version?: string) {
+  searchApi(name: string, version?: string) {
+    cy.intercept({
+      method: "GET",
+      url: DEV_PORTAL_APIS_SEARCH_URL(),
+      times: 1,
+    }).as("searchAllApis");
+
+    cy.intercept({
+      method: "GET",
+      url: DEV_PORTAL_APIS_SEARCH_URL(name),
+      times: 1,
+    }).as("searchApi");
+
     cy.get(TestIds.apiBar).click();
-    cy.contains("All").should("be.visible");
 
-    cy.get(TestIds.apiSearch)
-      .should("be.visible")
-      .focus()
-      .type(`${apiName}{enter}`);
-
-    if (version) {
-      cy.get(TestIds.apiCard(apiName), VERY_SHORT_TIME)
+    cy.wait("@searchAllApis", VERY_SHORT_TIME).then(() => {
+      cy.get(TestIds.apiSearch)
         .should("be.visible")
-        .contains(`Version : ${version}`)
-        .click();
-    } else {
-      cy.get(TestIds.apiCard(apiName), VERY_SHORT_TIME)
-        .should("be.visible")
-        .click();
-    }
+        .focus()
+        .type(`${name}{enter}`);
+    });
 
-    // Ensure API Overview page is loaded
-    cy.get(TestIds.apiOverviewDevPortal).should("be.visible");
-    cy.get(TestIds.apiNameDevPortal).contains(apiName).should("be.visible");
+    cy.wait("@searchApi", VERY_SHORT_TIME).then(() => {
+      if (version !== undefined) {
+        cy.get(TestIds.apiCard(name), VERY_SHORT_TIME)
+          .should("be.visible")
+          .contains(`Version : ${version}`)
+          .click();
+      } else {
+        cy.get(TestIds.apiCard(name), VERY_SHORT_TIME)
+          .should("be.visible")
+          .click();
+      }
+
+      // Ensure API Overview page is loaded
+      cy.get(TestIds.apiOverviewDevPortal).should("be.visible");
+      cy.get(TestIds.apiNameDevPortal).contains(name).should("be.visible");
+    });
+  }
+
+  verifyApiNotFound(name: string) {
+    cy.intercept({
+      method: "GET",
+      url: DEV_PORTAL_APIS_SEARCH_URL(),
+      times: 1,
+    }).as("searchAllApis");
+
+    cy.intercept({
+      method: "GET",
+      url: DEV_PORTAL_APIS_SEARCH_URL(name),
+      times: 1,
+    }).as("searchApi");
+
+    cy.get(TestIds.apiBar).click();
+
+    cy.wait("@searchAllApis", VERY_SHORT_TIME).then(() => {
+      cy.get(TestIds.apiSearch)
+        .should("be.visible")
+        .focus()
+        .type(`${name}{enter}`);
+    });
+
+    cy.wait("@searchApi", VERY_SHORT_TIME).then(() => {
+      cy.get(TestIds.apiCard(name)).should("not.exist");
+    });
   }
 }
 

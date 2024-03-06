@@ -1,6 +1,5 @@
 resources:
   - observability-data-generator.yaml
-  - perfanalyzer-updater.yaml
   - choreo-userapps-image-deleter.yaml
   - cio-internal-metric-collector.yaml
   - choreo-daily-usage-publisher.yaml
@@ -10,3 +9,5 @@ resources:
   - choreo-offline-build-status-cleaner.yaml
   - connector-builder-restarter.yaml
   - choreo-platform-svc-cost-collector.yaml
+  - choreo-weekly-execution-cleaner.yaml
+  - platform-service-manager-cronjob.yaml

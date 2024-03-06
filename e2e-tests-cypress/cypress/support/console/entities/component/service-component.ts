@@ -102,7 +102,7 @@ export class Service extends mixinBuild(
     this._updateUsagePlans(this, plans);
   }
 
-  enableCors() {
-    this._enableCors(this);
+  enableCors(environment: Enums.Environment) {
+    this._enableCors(this, environment);
   }
 }

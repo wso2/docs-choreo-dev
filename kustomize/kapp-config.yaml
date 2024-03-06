@@ -10,6 +10,57 @@ rebaseRules:
           apiVersion: apps/v1
           kind: Deployment
 
+  - path: [ spec, replicas ]
+    type: copy
+    sources: [ new, existing ]
+    resourceMatchers:
+      - kindNamespaceNameMatcher:
+          kind: Deployment
+          namespace: keda
+          name: keda-http-add-on-scaler
+
+  - path: [ spec, replicas ]
+    type: copy
+    sources: [ new, existing ]
+    resourceMatchers:
+      - kindNamespaceNameMatcher:
+          kind: Deployment
+          namespace: keda
+          name: keda-http-add-on-operator
+
+  - path: [ spec, replicas ]
+    type: copy
+    sources: [ new, existing ]
+    resourceMatchers:
+      - kindNamespaceNameMatcher:
+          kind: Deployment
+          namespace: keda
+          name: keda-operator
+
+  - path: [ spec, replicas ]
+    type: copy
+    sources: [ existing, new ]
+    resourceMatchers:
+      - apiVersionKindMatcher:
+          apiVersion: actions.summerwind.dev/v1alpha1
+          kind: RunnerDeployment
+
+  - path: [ spec, effectiveTime ]
+    type: copy
+    sources: [ existing, new ]
+    resourceMatchers:
+      - apiVersionKindMatcher:
+          apiVersion: actions.summerwind.dev/v1alpha1
+          kind: RunnerDeployment
+
+  - path: [ spec, selector ]
+    type: copy
+    sources: [ existing, new ]
+    resourceMatchers:
+      - apiVersionKindMatcher:
+          apiVersion: actions.summerwind.dev/v1alpha1
+          kind: RunnerDeployment
+
   - path: [ metadata, annotations, autoscaling.alpha.kubernetes.io/current-metrics ]
     type: copy
     sources: [ existing, new ]
@@ -17,6 +68,14 @@ rebaseRules:
       - apiVersionKindMatcher:
           apiVersion: autoscaling/v2
           kind: HorizontalPodAutoscaler
+
+  - path: [ spec, capacityReservations ]
+    type: copy
+    sources: [ existing, new ]
+    resourceMatchers:
+      - apiVersionKindMatcher:
+          apiVersion: actions.summerwind.dev/v1alpha1
+          kind: HorizontalRunnerAutoscaler
 
   - path: [ metadata, annotations, autoscaling.alpha.kubernetes.io/conditions ]
     type: copy

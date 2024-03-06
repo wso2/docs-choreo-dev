@@ -1,0 +1,10 @@
+resources:
+  - namespace
+  - crd
+  - service-account
+  - cr
+  - crb
+  - deployment
+  - cluster
+
+namespace: spicedb-operator

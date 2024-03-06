@@ -13,6 +13,7 @@
 
 import {
   BUILD_IN_PROGRESS,
+  BUILD_PARTIAL,
   BUILD_QUEUED,
   DEPLOYMENT_STOPPED,
   DEPLOYMENT_SUCCESS,
@@ -31,11 +32,12 @@ import { ProxyLeftMenu } from "../../ui-elements/left-menus/proxy-left-menu";
 import { Proxy } from "../../entities/component/proxy-component";
 import { Types } from "../../../commons/types";
 import { DeploymentTrack } from "../deployment-track/deployment-track";
+import { Enums } from "../../../commons/enums";
 
 export interface DeployProxyFeature {
   _addNewVersion(component: Proxy, version: string);
 
-  _deploy(component: Proxy);
+  _deploy(component: Proxy, visibility?: Enums.Accessibility);
 
   _promote(component: Proxy);
 }
@@ -47,7 +49,7 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
     private sideMenu = new ProxyLeftMenu();
     private deploymentTrack = new DeploymentTrack();
 
-    _deploy(component: Proxy) {
+    _deploy(component: Proxy, visibility?: Enums.Accessibility) {
       this.sideMenu.navigateToDeploy();
 
       this.deploymentTrack.validate(component);
@@ -58,7 +60,7 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
 
       this.getNumberOfPriorBuilds().then((buildCount) => {
         cy.log("Number of prior builds: " + buildCount);
-        this.startDeployment(component);
+        this.startDeployment(component, visibility);
 
         this.verifyDeploymentStatus(buildCount);
       });
@@ -177,7 +179,10 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
       });
     }
 
-    private startDeployment(component: Proxy) {
+    private startDeployment(
+      component: Proxy,
+      visibility?: Enums.Accessibility
+    ) {
       cyGet(TestIds.deployProxySplitToggle, MEDIUM_TIME)
         .should("not.be.disabled")
         .click();
@@ -188,10 +193,30 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
         .should("not.be.disabled")
         .click();
 
+      if (visibility !== undefined) {
+        let accessModeRadioButton = TestIds.externalAccessMode;
+
+        if (visibility === Enums.Accessibility.INTERNAL) {
+          accessModeRadioButton = TestIds.internalAccessMode;
+        }
+
+        cy.get(accessModeRadioButton, SHORT_TIME).should("be.visible").click();
+      }
+
       if (component.isPolicyAdded()) {
-        cy.get(TestIds.configSubmit, MEDIUM_TIME).should("be.visible").click();
+        if (Utils.isApiConfigurationEnabled()) {
+          cy.get(TestIds.deploy, VERY_SHORT_TIME).should("be.visible").click();
+        } else {
+          cy.get(TestIds.configSubmit, MEDIUM_TIME)
+            .should("be.visible")
+            .click();
+        }
       } else {
-        cy.get(TestIds.next, VERY_SHORT_TIME).should("be.visible").click();
+        if (Utils.isApiConfigurationEnabled()) {
+          cy.get(TestIds.deploy, VERY_SHORT_TIME).should("be.visible").click();
+        } else {
+          cy.get(TestIds.next, VERY_SHORT_TIME).should("be.visible").click();
+        }
       }
     }
 
@@ -209,6 +234,16 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
         .should("not.exist");
       this.RetryDevDeployment();
       cy.get(TestIds.componentLoader).should("not.exist");
+
+      cy.get(TestIds.buildStatus)
+        .eq(0)
+        .contains(BUILD_IN_PROGRESS, LONG_TIME)
+        .should("not.exist");
+
+      cy.get(TestIds.buildStatus)
+        .eq(0)
+        .contains(BUILD_PARTIAL, LONG_TIME)
+        .should("not.exist");
 
       cy.get(TestIds.buildStatus)
         .eq(0)

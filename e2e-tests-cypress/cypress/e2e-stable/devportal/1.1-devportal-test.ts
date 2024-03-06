@@ -12,134 +12,123 @@
  */
 /// <reference types="cypress-xpath" />
 
-import { DevPortalHomePage } from "../../support/devportal/pages/home/home-page";
-import { Apis } from "../../support/devportal/pages/apis/apis-home";
-import { ApiOverview } from "../../support/devportal/pages/apis/api-overview";
-import { ComponentAPILifecycle } from "../../support/console/pages/component/component-manage-page";
-import { ComponentOverviewPage } from "../../support/console/pages/component/component-overview-page";
-import { ApiCredentials } from "../../support/devportal/pages/apis/apis-credentials";
-import { TryOut } from "../../support/devportal/pages/apis/try-out";
-import { LoginPage } from "../../support/console/pages/login-page";
-import { ChoreoHomePage } from "../../support/console/pages/home/home-page";
-import { AppsList } from "../../support/devportal/pages/applications/apps-list";
-import { Subscriptions } from "../../support/devportal/pages/applications/subscriptions";
-import { generateAppName } from "../../support/devportal/utils";
-import { ComponentDeployPage } from "../../support/console/pages/component/component-deploy";
-import { APISdk } from "../../support/devportal/pages/apis/api-sdk";
-import { DevPortalHelper } from "../../support/devportal/helpers/devportal-helper";
-import { Utils } from "../../support/commons/utils";
-import { ComponentListingPage } from "../../support/console/pages/component/component-listing-page";
-import { ProjectListingPage } from "../../support/console/pages/projects/projects-listing-page";
-import { Enums } from "../../support/commons/enums";
+import { Enums, UsagePlan } from "../../support/commons/enums";
+import { console } from "../../support/console/console";
+import { Project } from "../../support/console/entities/project/project";
+import { Proxy } from "../../support/console/entities/component/proxy-component";
+import { devPortal } from "../../support/console/devportal";
+import { Application } from "../../support/console/entities/application/application";
 
 describe("API overview comment and rating scenario", () => {
-  const API_Name = Utils.generateComponentName("oas");
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
-  const PROJECT_NAME = Utils.generateProjectName();
-  const idpUser = "choreoe2etest";
   const OPERATION_USERS = "intensity";
-  const appName = generateAppName("-e2etest");
-  const sdkFile = API_Name + "_v1.0_android.zip";
 
-  before(() => {
-    LoginPage.login();
-  });
+  let project: Project;
+  let proxy: Proxy;
+  let application: Application;
 
   after(() => {
-    ChoreoHomePage.logout();
+    console.logout();
+  });
+
+  it("Login to Console", () => {
+    console.login();
   });
 
   it("Creating a project", () => {
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+    project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-  it("Test in devportal", () => {
-    DevPortalHelper.createDeployHttpProxyComponent(API_Name, PROJECT_NAME);
+  it("Create API Proxy", () => {
+    project
+      .createProxyComponent({
+        version: "1.0",
+        oasFilePath: "apis/generation_oas.yaml",
+        endpointUrl: "",
+      })
+      .then((comp) => {
+        proxy = comp;
+      });
   });
 
-  it("verify api in devportal", () => {
-    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(PROJECT_NAME,API_Name,idpUser);
-    Apis.verifyAPIname().should("eq", API_Name);
-    Apis.searchApiAndSelect(API_Name);
+  it("Deploy API Proxy", () => {
+    proxy.deploy();
+  });
+
+  it("Promote API Proxy", () => {
+    proxy.promote();
+  });
+
+  it("Update usage plans", () => {
+    proxy.updateUsagePlans([UsagePlan.Gold, UsagePlan.Bronze]);
+  });
+
+  it("Publish proxy", () => {
+    proxy.publish();
+  });
+
+  it("Navigate to Dev portal", () => {
+    proxy.navigateToDevPortal();
+  });
+
+  it("verify api search in devportal", () => {
+    devPortal.searchApi(proxy.getName());
   });
 
   it("Add a comment for the API", () => {
-    ApiOverview.addCommentToApi("Test comment from Cypress Test Runner");
+    proxy.addComment_DevPortal("Test comment from Cypress Test Runner");
   });
 
   it("Delete the comment for the API", () => {
-    ApiOverview.deleteComment();
+    proxy.deleteComment_DevPortal();
   });
 
   it("Add and modify ratings of the API", () => {
-    ApiOverview.openRatings();
-    ApiOverview.addRatings();
-    ApiOverview.validateRating();
+    proxy.addRating_DevPortal(4);
   });
 
   it("Generate credentials for SANDBOX env", () => {
-    ApiCredentials.navigateCredentialsTab();
-    ApiCredentials.generateCredentials(Enums.Environment.SANDBOX);
-  })
-
-  it("Tryout API in Sandbox env", () => {
-    TryOut.navigateToTryOutMenu();
-    TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT)
-    TryOut.GenerateAccessToken();
-    TryOut.SelectResource(OPERATION_USERS);
-    TryOut.TryoutAPI();
-    TryOut.ExecuteResourceFunction();
-    TryOut.GetResponse();
-  })
-
-  it("Generate access token for application", () => {
-    ApiCredentials.navigateCredentialsTab()
-    TryOut.navigateToTryOutMenu();
-    TryOut.GenerateAccessToken();
+    proxy.generateCredentials_DevPortal(Enums.Environment.SANDBOX);
   });
 
-  it("Tryout API in prod env", () => {
-    TryOut.selectEndpoint(Enums.Environment.PRODUCTION)
-    TryOut.SelectResource(OPERATION_USERS);
-    TryOut.TryoutAPI();
-    TryOut.ExecuteResourceFunction();
-    TryOut.GetResponse();
-  })
+  it("Tryout API in Development env", () => {
+    proxy.testSwaggerConsole_DevPortal({
+      resource: OPERATION_USERS,
+      env: Enums.Environment.DEVELOPMENT,
+    });
+  });
+
+  it("Tryout API in Production env", () => {
+    proxy.testSwaggerConsole_DevPortal({
+      resource: OPERATION_USERS,
+      env: Enums.Environment.PRODUCTION,
+    });
+  });
 
   it("Verify the downloaded SDK file", () => {
-    APISdk.downloadSDK(sdkFile);
+    proxy.downloadSdk_DevPortal(proxy.getName() + "_v1.0_android.zip");
   });
 
   it("Create a consumer application", () => {
-    DevPortalHomePage.navigateToAppsPage();
-    AppsList.createAnApplication(appName);
-
+    application = proxy.createApplication_DevPortal();
   });
 
-  it("Generate subscription credentials",()=>{
-    AppsList.generateCredentials(Enums.Environment.SANDBOX)
-    AppsList.generateCredentials(Enums.Environment.PRODUCTION)
-  })
+  it("Generate subscription credentials", () => {
+    application.generateCredentials(Enums.Environment.SANDBOX);
+    application.generateCredentials(Enums.Environment.PRODUCTION);
+  });
 
-  it("Add subscription",()=>{
-    Subscriptions.addSubscriptionToApplication(API_Name);
-    Subscriptions.validateResubscribingApi(API_Name);
-  })
+  it("Add subscription", () => {
+    application.addSubscription(proxy.getName());
+  });
 
   it("Delete a consumer application", () => {
-    TryOut.DeleteApplication(appName);
+    proxy.deleteApplication_DevPortal(application);
   });
 
   it("Verify suspending Dev deployed component", () => {
-    LoginPage.login();
-    ProjectListingPage.selectProject(PROJECT_NAME);
-    ChoreoHomePage.navigateToComponents();
-    ComponentListingPage.visitToAComponent(API_Name);
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopDevContainer();
-  });
-
-  it("Verify suspending Prod deployed component", () => {
-    ComponentDeployPage.stopProdContainer();
+    proxy.navigateToComponentInConsole();
+    proxy.stopDeployment();
+    proxy.stopPromotion();
   });
 });

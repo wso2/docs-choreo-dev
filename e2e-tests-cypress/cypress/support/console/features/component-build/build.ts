@@ -72,11 +72,10 @@ export function mixinBuild<T extends Types.Constructor>(
       this.deploymentTrack.validate(component);
 
       cy.get(TestIds.build).should("be.enabled").click();
-      cy.get(TestIds.next).should("be.visible").should("be.enabled").click();
       cy.get(TestIds.tableTitle).within(() => {
         cy.contains(BUILD_IN_PROGRESS, LONG_TIME).should("be.visible");
         cy.contains(BUILD_IN_PROGRESS, LONG_TIME).should("not.exist");
-        cy.contains(BUILD_SUCCESS).should("be.visible");
+        cy.contains(BUILD_SUCCESS, LONG_TIME).should("be.visible");
       });
     }
   };

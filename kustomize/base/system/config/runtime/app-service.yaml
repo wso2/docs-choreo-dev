@@ -31,6 +31,7 @@ upstream:
   dp-cicd: http://dp-cicd:80
   dp-project-manager: dp-project-manager:80
   url-manager: choreo-url-management:9090/url-mgt
+  authz-service: ${AUTHZ_SERVICE_ENDPOINT}
   api-manager:
     clientKey: ${API_MANAGER_CLIENT_KEY}
     clientSecret: ${API_MANAGER_CLIENT_SECRET}
@@ -45,7 +46,6 @@ upstream:
       key: ${CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY}
 urlManager:
   enable: ${ENABLE_URL_MANAGER}
-authz-service: ${AUTHZ_SERVICE_ENDPOINT}
 configYamlConfigurations:
   log-format: "json"
   observe-enabled: true
@@ -54,6 +54,8 @@ configYamlConfigurations:
   prometheus-metrics-reporter-config:
     enabled-cluster-ids: {{.PROMETHEUS_METRICS_REPORTER_ENABLED_CLUSTER_IDS}}
   observe-reporter-port: 443
+removeBallerinaObservability:
+  enabled: ${ENABLE_REMOVE_BAL_OBSERVABILITY}
 feedback:
   enabled: false
   github:
@@ -461,6 +463,7 @@ apim:
 asgardeo:
   orgManagementApiUrl: ${ASGARDEO_ORG_MANAGEMENT_API_URL}
   userManagementApiUrl: ${ASGARDEO_USER_MANAGEMENT_API_URL}
+  asgardeoClientTimeout: ${ASGARDEO_CLIENT_TIMEOUT}
   tokenUrl: ${ASGARDEO_TOKEN_URL}
   clientKey: ${ASGARDEO_CLIENT_KEY}
   clientSecret: ${ASGARDEO_CLIENT_SECRET}

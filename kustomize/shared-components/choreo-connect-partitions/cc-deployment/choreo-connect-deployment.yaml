@@ -23,6 +23,8 @@ metadata:
     checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
     checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
     secret.reloader.stakater.com/reload: "rate-limiter-cert"
+    kapp.k14s.io/change-group: "choreo-connect-deployment"
+    kapp.k14s.io/change-rule: "upsert after upserting choreo-connect-adapter"
   name: choreo-connect-deployment
 spec:
   replicas: 1
@@ -40,15 +42,9 @@ spec:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
-                matchExpressions:
-                  - key: cc.component
-                    operator: In
-                    values:
-                      - choreo-connect-deployment
-                  - key: choreo.component
-                    operator: In
-                    values:
-                      - choreo-connect
+                matchLabels:
+                  cc.component: choreo-connect-deployment
+                  choreo.component: choreo-connect
               topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       securityContext:

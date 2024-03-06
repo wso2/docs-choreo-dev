@@ -2,6 +2,7 @@
 # Service configs
 grpcApiPortConf = 9090
 enableServiceReflectionConf = true
+maxHeaderSizeConf = 65536
 
 [choreo.resource_authz_service.authzSpiceDb]
 # Service configs
@@ -11,19 +12,23 @@ getProjectUuidRegexConf = '^.*/|\+.+'
 getGroupUuidRegexConf =  '^.*\+'
 objectUuidRegexConf = '^([a-zA-Z0-9_\-=]{20,36})$'
 permissionRegexConf = '^(([a-zA-Z0-9_\-]+:)+[a-zA-Z0-9_\-]+)$'
+isActionAuthorizationEnabled = {{.ACTION_AUTHORIZATION_ENABLED}}
 
 # SpiceDB configs
 enableCheckPermissionConsistencyConf = true
 
 # Permissions
-projectViewPermissionConf = "choreo:project_view"
+projectViewPermissionConf = "choreo:project_manage"
 projectUpdatePermissionConf = "choreo:project_manage"
 projectDeletePermissionConf = "choreo:project_manage"
-userManagementPermissionConf = "urn:choreosystem:usersmanagement:user_manage"
-roleViewPermissionConf = "urn:choreosystem:usersmanagement:role_view"
-roleCreatePermissionConf = "urn:choreosystem:usersmanagement:role_create"
-roleUpdatePermissionConf = "urn:choreosystem:usersmanagement:role_update"
-roleDeletePermissionConf = "urn:choreosystem:usersmanagement:role_delete"
+userManagementPermissionConf = "urn:choreosystem:usermanagement:user_manage"
+roleViewPermissionConf = "urn:choreosystem:usermanagement:role_view"
+roleCreatePermissionConf = "urn:choreosystem:usermanagement:role_create"
+roleUpdatePermissionConf = "urn:choreosystem:usermanagement:role_update"
+roleDeletePermissionConf = "urn:choreosystem:usermanagement:role_delete"
+
+# Asgardeo token validation
+asgardeoTokenIssuerConf = "{{.ASGARDEO_TOKEN_ISSUER}}"
 
 [choreo.resource_authz_service.spicedbGrpcClient]
 # SpiceDB configs

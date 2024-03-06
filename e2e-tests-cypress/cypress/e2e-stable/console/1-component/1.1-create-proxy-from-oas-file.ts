@@ -96,7 +96,7 @@ describe("Create Proxy from OAS file", () => {
   });
 
   it("Enable CORS", () => {
-    proxy.enableCors();
+    proxy.enableCors(Enums.Environment.DEVELOPMENT);
   });
 
   it("Adding permissions", () => {
@@ -145,7 +145,10 @@ describe("Create Proxy from OAS file", () => {
   });
 
   it("Tryout application", () => {
-    proxy.testSwaggerConsole_DevPortal(RESOURCE, application.getName());
+    proxy.testSwaggerConsole_DevPortal({
+      resource: RESOURCE,
+      application: application.getName(),
+    });
   });
 
   it("Verify Proxy Consumer in Console", () => {

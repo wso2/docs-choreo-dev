@@ -182,8 +182,9 @@ export class Project {
 
     cy.get('[data-cyid="home"]').should("be.visible");
 
-    cy.get('[id="backdrop-loader"]').should("not.exist");
-    cy.get("[data-cyid=create-time]").should("be.visible");
+    cy.get(TestIds.backdropLoader, SHORT_TIME).should("not.exist");
+    cy.get(TestIds.createTime).should("be.visible");
+    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
     cy.log("Successfully visited to the component");
 
     cy.url().then((url) => {
@@ -191,6 +192,33 @@ export class Project {
     });
 
     return "";
+  }
+
+  deleteComponent(name: string) {
+    this.goToComponentListing();
+    this.searchComponent(name);
+
+    cy.get(TestIds.componentTable).within(() => {
+      cy.get("tbody > tr").should("be.visible").realHover();
+    });
+
+    cy.get(TestIds.componentDelete).should("be.visible").click();
+    cy.get(TestIds.componentDeleteConfirm).should("be.visible");
+    cy.get(TestIds.confirmName).within(() => {
+      cy.get("input").type(name).type("{enter}");
+    });
+
+    cy.get(TestIds.componentDeleteConfirm).should("not.exist");
+    cy.get(TestIds.backdropLoader, VERY_SHORT_TIME).should("not.exist");
+    cy.contains(name).should("not.exist");
+  }
+
+  searchSampleService(searchString: string) {
+    this.createComponentIfEmptyProject();
+    cy.get(TestIds.viewAllSamples).scrollIntoView().click();
+    cy.get(TestIds.trySample).should("be.visible").click();
+    cy.get(TestIds.sampleSearch).should("be.visible").type(searchString);
+    cy.get(TestIds.sampleCard(searchString)).should("be.visible");
   }
 
   createServiceComponent(
@@ -483,43 +511,50 @@ export class Project {
     });
   }
 
-createByocServiceComponent(repoInfo: RepoInfo, byocInfo: ByocInfo, oasFilePath: string) {
-  const componentName = Utils.generateComponentName();
-  let componentData: ByocComponent = {
-    name: componentName,
-    displayName: componentName,
-    accessibility: Enums.Accessibility.EXTERNAL,
-    componentType: Enums.DisplayType.byocService,
-    description: "Containerized Service Component",
-    labels: "",
-    projectId: "",
-    oasFilePath: oasFilePath,
-    port: 80,
-    byocConfig: {
-      srcGitRepoUrl: repoInfo.url,
-      srcGitRepoBranch: repoInfo.branch,
-      dockerfilePath: byocInfo.dockerfilePath,
-      dockerContext: byocInfo.dockerContext,
-    },
-  };
+  createByocServiceComponent(
+    repoInfo: RepoInfo,
+    byocInfo: ByocInfo,
+    oasFilePath: string
+  ) {
+    const componentName = Utils.generateComponentName();
+    let componentData: ByocComponent = {
+      name: componentName,
+      displayName: componentName,
+      accessibility: Enums.Accessibility.EXTERNAL,
+      componentType: Enums.DisplayType.byocService,
+      description: "Containerized Service Component",
+      labels: "",
+      projectId: "",
+      oasFilePath: oasFilePath,
+      port: 80,
+      byocConfig: {
+        srcGitRepoUrl: repoInfo.url,
+        srcGitRepoBranch: repoInfo.branch,
+        dockerfilePath: byocInfo.dockerfilePath,
+        dockerContext: byocInfo.dockerContext,
+      },
+    };
 
-  return GraphQL.createComponentV2(
-    this.name,
-    "",
-    componentData,
-    GraphQLQueryBuilder.getBYOCComponentCreationQuery
-  ).then(() => {
-    return Promise.resolve(new Byoc(componentName));
-  });
-}
+    return GraphQL.createComponentV2(
+      this.name,
+      "",
+      componentData,
+      GraphQLQueryBuilder.getBYOCComponentCreationQuery
+    ).then(() => {
+      return Promise.resolve(new Byoc(componentName));
+    });
+  }
 
-verifyUsageInsights(env: Enums.Environment, options?: { expectedTraffic: number }) {
-  this.selectEnvironment(env);
-  this.selectTimePeriod();
-  this.getTotalTraffic().should((value) => {
-    expect(Number(value)).gte(options?.expectedTraffic || 2); 
-  });
-}
+  verifyUsageInsights(
+    env: Enums.Environment,
+    options?: { expectedTraffic: number }
+  ) {
+    this.selectEnvironment(env);
+    this.selectTimePeriod();
+    this.getTotalTraffic().should((value) => {
+      expect(Number(value)).gte(options?.expectedTraffic || 2);
+    });
+  }
 
   private goToComponentListing() {
     cy.get(TestIds.listing).should("be.visible").click();

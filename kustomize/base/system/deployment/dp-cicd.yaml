@@ -33,10 +33,10 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/dp-cicd:latest
           resources:
             limits:
-              cpu: 500m
+              cpu: 1
               memory: 1.5G
             requests:
-              cpu: 300m
+              cpu: 500m
               memory: 500M
           envFrom:
             - configMapRef:
@@ -89,19 +89,19 @@ spec:
               name: http-port
               protocol: TCP
           readinessProbe:
-            initialDelaySeconds: 5
-            timeoutSeconds: 15
+            initialDelaySeconds: 40
+            timeoutSeconds: 120
             periodSeconds: 10
-            failureThreshold: 1
+            failureThreshold: 3
             successThreshold: 1
             httpGet:
               path: /healthz
               port: http-port
           livenessProbe:
-            initialDelaySeconds: 10
-            timeoutSeconds: 15
+            initialDelaySeconds: 40
+            timeoutSeconds: 120
             periodSeconds: 5
-            failureThreshold: 1
+            failureThreshold: 3
             successThreshold: 1
             httpGet:
               path: /healthz

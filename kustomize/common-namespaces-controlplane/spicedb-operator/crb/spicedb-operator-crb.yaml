@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: spicedb-operator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: spicedb-operator
+subjects:
+- kind: ServiceAccount
+  name: spicedb-operator
+  namespace: spicedb-operator

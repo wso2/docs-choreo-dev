@@ -11,104 +11,92 @@
  * associated services.
  */
 
-import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
-import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
-import { SwaggerUI } from "../../../support/console/pages/component/UI-components/swagger-UI-component";
-import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { LoginPage } from "../../../support/console/pages/login-page";
-import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { GraphQL } from "../../../support/console/apis/graphql";
-import { ComponentData } from "../../../support/interfaces/component-data";
+import { console } from "../../../support/console/console";
 import { GitHub } from "../../../support/github/github";
-import { GraphQLQueryBuilder } from "../../../support/console/apis/gql-query-builder";
 import { Enums } from "../../../support/commons/enums";
-import { Utils } from "../../../support/commons/utils";
-import { ComponentBuild } from "../../../support/console/pages/component/Functionalities/Component-build";
+import { Project } from "../../../support/console/entities/project/project";
+import { Service } from "../../../support/console/entities/component/service-component";
 
 describe("Create Greeting sample in Choreo", () => {
   const PROJECT_DESCRIPTION = "sample greeting service";
-  const PROJECT_NAME = Utils.generateProjectName();
-  const COMPONENT_NAME = Utils.generateComponentName();
+
   const REPO_NAME = "choreo-samples";
   const ENDPOINT_NAME = "Endpoint 8090";
   const subPath = "greeting-service";
+  const sampleName = "Greeting Service";
 
-  before(() => {
-    LoginPage.login();
-  });
+  let project: Project;
+  let component: Service;
+
   after(() => {
-    ChoreoHomePage.logout();
+    console.logout();
+  });
+
+  it("Login to Console", () => {
+    console.login();
+  });
+
+  it("Creating a project", () => {
+    project = console.createNewProject(PROJECT_DESCRIPTION);
+  });
+
+  it("Verify sample search", () => {
+    project.searchSampleService(sampleName);
   });
 
   it("Verify Hello World sample creation", () => {
     GitHub.syncForkWithUpstream(REPO_NAME, "main");
 
-    let componentData: ComponentData = {
-      componentName: COMPONENT_NAME,
-      displayType: Enums.DisplayType.ballerinaService,
-      accessibility: Enums.Accessibility.EXTERNAL,
-      projectName: PROJECT_NAME,
-      triggerChannels: "",
-      triggerId: null,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/choreo-samples",
-      initializeAsBallerinaProject: false,
-      repositoryType: Enums.RepoType.UserManagedNonEmpty,
-      repositorySubPath: subPath,
-      sampleTemplate: "",
-    };
-
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.US
-    );
-    GraphQL.createComponent(
-      PROJECT_NAME,
-      "",
-      componentData,
-      GraphQLQueryBuilder.getRestComponentCreationQuery
-    );
+    project
+      .createServiceComponent(
+        Enums.Accessibility.EXTERNAL,
+        {
+          url: "https://github.com/choreo-test-apps/choreo-samples",
+          branch: "main",
+          subPath: subPath,
+        },
+        ENDPOINT_NAME
+      )
+      .then((serviceComponent: Service) => {
+        project.visitComponent(serviceComponent.getName());
+        component = serviceComponent;
+      });
   });
 
-  it("Navigate to deployment", () => {
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-    if (Utils.isBuildDeployEnabled()) {
-      ComponentOverviewPage.navigateToBuild();
-      ComponentBuild.buildComponent();
-    }
-    ComponentOverviewPage.navigateToDeploy();
+  it("Build the sample", () => {
+    component.build();
   });
 
-  it("Verify component deployment", () => {
-    ComponentDeployPage.deployService(
-      PROJECT_NAME,
-      COMPONENT_NAME,
-      ENDPOINT_NAME,
-      true,
-      true
-    );
+  it("Deploy sample", () => {
+    component.deployPublicLevelAccessibility();
   });
 
   it("Verify test functionality of sample resource in dev on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    ComponentTestPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
-    ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource("");
-    SwaggerUI.TryoutAPI();
-    SwaggerUI.enterValue("name", "dasun");
-    SwaggerUI.ExecuteResourceFunction();
-    SwaggerUI.getResponseCode().should("eq", "200");
+    component
+      .testConsole({
+        env: Enums.Environment.DEVELOPMENT,
+        endpoint: ENDPOINT_NAME,
+        resourcePath: "",
+        method: "get",
+        key: "name",
+        value: "dasun",
+        parentComponentId: "operations-default-get",
+      })
+      .then((res) => {
+        expect(res.statusCode).to.be.eq("200");
+        expect(res.response).to.contain("dasun");
+      });
   });
 
   it("Verify suspending Dev deployed component", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopSingleDevContainer();
+    component.stopDeployment();
+  });
+
+  it("Return to Project", () => {
+    component.goBackToProject();
   });
 
   it("Verify component deletion", () => {
-    ComponentOverviewPage.goBackToProject();
-    ComponentListingPage.deleteComponent(COMPONENT_NAME);
+    project.deleteComponent(component.getName());
   });
 });

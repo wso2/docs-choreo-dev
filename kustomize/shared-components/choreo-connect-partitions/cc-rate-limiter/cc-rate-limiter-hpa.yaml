@@ -21,7 +21,7 @@ metadata:
     choreo.component: choreo-connect-rate-limiter
   name: choreo-connect-rate-limiter
 spec:
-  maxReplicas: 5
+  maxReplicas: 8
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1

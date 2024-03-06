@@ -5,7 +5,7 @@ metadata:
     choreo.component: cio-query-api-service
   name: cio-query-api-service
 spec:
-  maxReplicas: 5
+  maxReplicas: 8
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
@@ -23,4 +23,4 @@ spec:
         name: memory
         target:
           type: Utilization
-          averageUtilization: 75
+          averageUtilization: 110

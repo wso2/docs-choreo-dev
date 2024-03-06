@@ -13,7 +13,12 @@
 
 import { cyGet } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
-import { SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
+import path from "path";
+import {
+  MEDIUM_TIME,
+  SHORT_TIME,
+  VERY_SHORT_TIME,
+} from "../../../commons/timeouts";
 import { TryOut } from "../../../devportal/pages/apis/try-out";
 import { generateAppName } from "../../../devportal/utils";
 import { TestIds } from "../../constants/TestIds";
@@ -22,6 +27,12 @@ import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu"
 import { Application } from "../application/application";
 import { _Stats } from "../../features/stats/stats";
 import { _Observability } from "../../features/observability/observability";
+
+export interface DevPortalTryOut {
+  resource: string;
+  application?: string;
+  env?: Enums.Environment.PRODUCTION | Enums.Environment.DEVELOPMENT;
+}
 
 /**
  * This is the base class for all the components in the Console
@@ -131,14 +142,18 @@ export class Component {
     cyGet(TestIds.createApplication, SHORT_TIME).should("be.visible");
   }
 
-  testSwaggerConsole_DevPortal(resource: string, application?: string) {
+  testSwaggerConsole_DevPortal(devPortalTryOut: DevPortalTryOut) {
     this.devPortalMenu.navigateToTryOut();
 
-    if (application) {
+    if (devPortalTryOut.env !== undefined) {
+      TryOut.selectEndpoint(devPortalTryOut.env);
+    }
+
+    if (devPortalTryOut.application !== undefined) {
       cy.wait(3000);
       cy.get(TestIds.applicationSelect).scrollIntoView();
       cy.get(TestIds.applicationSelect).should("be.visible").click().wait(3000);
-      cy.get(TestIds.applicationSelectItem(application))
+      cy.get(TestIds.applicationSelectItem(devPortalTryOut.application))
         .should("be.visible")
         .click();
     }
@@ -155,10 +170,70 @@ export class Component {
     });
     cy.get(TestIds.accessToken).should("not.be.empty");
 
-    TryOut.SelectResource(resource);
+    TryOut.SelectResource(devPortalTryOut.resource);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.GetResponse();
+  }
+
+  addComment_DevPortal(apiComment: string) {
+    this.devPortalMenu.navigateToOverview();
+
+    cy.get(TestIds.addCommentLink).click();
+
+    cy.get(TestIds.addCommentBtn).should("be.visible");
+    cy.get(TestIds.commentTextArea).type(apiComment).wait(200);
+    cy.get(TestIds.addCommentBtn).click();
+    cy.get(TestIds.commentsCount).should(
+      "have.text",
+      "Comments (1)",
+      MEDIUM_TIME
+    );
+    cy.get(TestIds.noComments).should("not.exist");
+  }
+
+  deleteComment_DevPortal() {
+    cy.get(TestIds.commentsTable).should("be.visible");
+    cy.get(TestIds.commentsTable)
+      .get("tr")
+      .first()
+      .within(() => {
+        cy.get(TestIds.deleteComment).should("be.visible").click();
+      });
+    cy.get(TestIds.deleteCommentPopup)
+      .should("be.visible")
+      .within(() => {
+        cy.contains("Yes").click();
+      });
+
+    cy.get(TestIds.deleteCommentPopup).should("not.exist");
+    cy.get(TestIds.commentsCount).should("have.text", "Comments (0)");
+    cy.get(TestIds.noComments).should("exist");
+  }
+
+  addRating_DevPortal(numberOfStars: number) {
+    cy.get(TestIds.ratingContainer).should("be.visible");
+    cy.get(TestIds.ratingContainer)
+      .children()
+      .first()
+      .within(() => {
+        cy.get("button").click();
+      });
+
+    cy.get(TestIds.ratingStars).should("be.visible").click();
+    cy.get(TestIds.ratingStar(numberOfStars)).should("be.visible").click();
+    cy.get(TestIds.ratingPopupRoot).click();
+    cy.contains(`${numberOfStars}.0 (1)`).should("exist");
+  }
+
+  downloadSdk_DevPortal(sdkFile: string) {
+    cy.get(TestIds.sdks).click();
+    cy.get(TestIds.androidSdk, MEDIUM_TIME).should("be.visible").click();
+    const downloadsFolder = Cypress.config("downloadsFolder");
+    cy.readFile(path.join(downloadsFolder, sdkFile)).should(
+      "exist",
+      MEDIUM_TIME
+    );
   }
 
   navigateToComponentInConsole() {
@@ -272,6 +347,14 @@ export class Component {
             .contains(this.getName(), VERY_SHORT_TIME);
         });
       });
+  }
+
+  navigateToPublicDevPortal() {
+    const loginURL =
+      Cypress.env("devportalLoginURL") + "/" + Cypress.env("choreoOrgHandle");
+    cy.visit(loginURL);
+    cy.get(TestIds.devPortalHome).should("be.visible");
+    cy.get(TestIds.devPortalLoginLink).should("be.visible");
   }
 
   private waitForOverviewToLoad() {

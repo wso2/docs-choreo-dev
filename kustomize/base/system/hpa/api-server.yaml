@@ -5,8 +5,8 @@ metadata:
     choreo.component: api-server
   name: api-server
 spec:
-  maxReplicas: 5
-  minReplicas: 2
+  maxReplicas: 8
+  minReplicas: 4
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment

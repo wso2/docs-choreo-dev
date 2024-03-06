@@ -84,7 +84,7 @@ export class LeftMenu {
           .click();
       }
     });
-    cy.get(TestIds.backdropLoader).should("not.exist");
+    cy.get(TestIds.backdropLoader, SHORT_TIME).should("not.exist");
     this.moveMouseAwayFromLeftMenu();
   }
 

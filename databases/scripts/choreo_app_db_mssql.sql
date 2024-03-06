@@ -1,5 +1,5 @@
 -- Create User
-IF EXISTS (SELECT name FROM master.sys.databases WHERE name = N'choreo_app_db') AND NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_app_db_user')
+IF EXISTS (SELECT name FROM sys.databases WHERE name = N'choreo_app_db') AND NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_app_db_user')
 BEGIN
     CREATE USER [choreo_app_db_user] with password = N'xxxxxxxxxxxxx'
     GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_app_db TO choreo_app_db_user
@@ -1629,7 +1629,7 @@ CREATE TABLE [dbo].[permission]
     [id] [int] IDENTITY(1,1) NOT NULL ,
     [handle][varchar](255) NOT NULL,
     [display_name][varchar](255) NOT NULL,
-    [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BC','AI','BILLING','ACCOUNT-MANAGE','CONFIGURATIONS-MANAGEMENT','CUSTOM-DOMAINS','LOG-MANAGEMENT','ON-PREM-KEYS','USER-MANAGEMENT','ORGANIZATION-MANAGEMENT')),
+    [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BC','AI','BILLING','ACCOUNT-MANAGE','CONFIGURATIONS-MANAGEMENT','CUSTOM-DOMAINS','LOG-MANAGEMENT','ON-PREM-KEYS','USER-MANAGEMENT','ORGANIZATION-MANAGEMENT','OBSERVABILITY-MANAGEMENT')),
     [description] [varchar](255) NULL,
     [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1891,9 +1891,45 @@ CREATE TABLE [dbo].[enterprise_group_mapping]
     [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
-    CONSTRAINT unique_enterprise_group_mapping UNIQUE(user_idp_id, organization_uuid)
-    CONSTRAINT [enterprise_group_mapping$group_uuid_fk] FOREIGN KEY (choreo_group_uuid) REFERENCES [group](uuid) ON DELETE CASCADE
+    CONSTRAINT unique_enterprise_group_mapping UNIQUE(enterprise_group_name, choreo_group_uuid, organization_id),
+    CONSTRAINT enterprise_group_mapping$group_uuid_fk FOREIGN KEY (choreo_group_uuid) REFERENCES [group](uuid) ON DELETE CASCADE
 )
+
+CREATE TABLE [dbo].[wso2con_contest_registration]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [user_idp_id] [nvarchar](255) NOT NULL,
+    [user_email] [nvarchar](255) NOT NULL,
+    [organization_uuid] [nvarchar](255) NOT NULL,
+    [organization_handle] [nvarchar](255) NOT NULL,
+    [is_registered] [bit] NOT NULL DEFAULT 1,
+    [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [score_summary] [nvarchar](500) NULL,
+    [last_submitted_at] [datetime] NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT unique_wso2con_contest_registration UNIQUE(user_email, organization_handle)
+)
+
+/****** Object:  Trigger [dbo].[wso2con_contest_registration_UpdateTimeTrigger] ******/
+SET ANSI_NULLS ON
+    GO
+SET QUOTED_IDENTIFIER ON
+    GO
+
+CREATE TRIGGER [dbo].[wso2con_contest_registration_UpdateTimeTrigger] ON [dbo].[wso2con_contest_registration]
+    FOR INSERT, UPDATE AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE tble
+    SET updated_at = GETDATE()
+    FROM [wso2con_contest_registration] AS tble
+    INNER JOIN inserted AS i
+    ON tble.id = i.id;
+END
+GO
+ALTER TABLE [dbo].[wso2con_contest_registration] ENABLE TRIGGER [wso2con_contest_registration_UpdateTimeTrigger]
+    GO
 
 /****** Object:  Trigger [dbo].[enterprise_group_mapping_UpdateTimeTrigger] ******/
 SET ANSI_NULLS ON
@@ -2078,18 +2114,18 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Ma
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Payment Methods','billing:payment_method_manage','BILLING','Manage payment methods');
 
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Organization','choreo:organization_manage','ACCOUNT-MANAGE','Create, update and delete organization');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Groups','urn:choreocontrolplane:usermanagement:role_mapping_manage','USER-MANAGE','Create, Edit and Delete Group role mappings');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Groups','urn:choreocontrolplane:usermanagement:role_mapping_view','USER-MANAGE','View Group role mappings');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Groups','urn:choreocontrolplane:usermanagement:role_mapping_create','USER-MANAGE','Create Group role mappings');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Groups','urn:choreocontrolplane:usermanagement:role_mapping_update','USER-MANAGE','Update Group role mappings');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Groups','urn:choreocontrolplane:usermanagement:role_mapping_delete','USER-MANAGEMENT','Delete Group role mappings');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Groups','urn:choreosystem:usermanagement:role_mapping_manage','USER-MANAGEMENT','Create, Edit and Delete Group role mappings');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Groups','urn:choreosystem:usermanagement:role_mapping_view','USER-MANAGEMENT','View Group role mappings');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Groups','urn:choreosystem:usermanagement:role_mapping_create','USER-MANAGEMENT','Create Group role mappings');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Groups','urn:choreosystem:usermanagement:role_mapping_update','USER-MANAGEMENT','Update Group role mappings');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Groups','urn:choreosystem:usermanagement:role_mapping_delete','USER-MANAGEMENT','Delete Group role mappings');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Permissions','urn:choreosystem:usermanagement:permission_view', 'USER-MANAGEMENT','View Permissions');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Roles','urn:choreosystem:usermanagement:role_manage','USER-MANAGE','Create, update and delete roles');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Roles','urn:choreosystem:usermanagement:role_manage','USER-MANAGEMENT','Create, update and delete roles');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Roles','urn:choreosystem:usermanagement:role_view','USER-MANAGEMENT','View Roles');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Roles','urn:choreosystem:usermanagement:role_create','USER-MANAGEMENT','Create Roles');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Roles','urn:choreosystem:usermanagement:role_delete','USER-MANAGEMENT','Delete Roles');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Roles','urn:choreosystem:usermanagement:role_update','USER-MANAGEMENT','Update Roles');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Users','urn:choreosystem:usermanagement:user_manage','USER-MANAGE','Add and remove users');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Users','urn:choreosystem:usermanagement:user_manage','USER-MANAGEMENT','Add and remove users');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Users','urn:choreosystem:usermanagement:user_view', 'USER-MANAGEMENT','View Users');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Users','urn:choreosystem:usermanagement:user_delete ', 'USER-MANAGEMENT','Delete Users');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Users','urn:choreosystem:usermanagement:user_update', 'USER-MANAGEMENT','Update Users');
@@ -2101,38 +2137,38 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('De
 
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Non-Prod Logs','choreo:log_view_non_prod','OBSERVABILITY-MANAGEMENT','View non-production environment logs');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Prod Logs','choreo:log_view_prod','OBSERVABILITY-MANAGEMENT','View production environment logs');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Global Configs','urn:choreocontrolplane:configmanagement:global_config_manage','CONFIGURATIONS-MANAGEMENT','Create, Edit and Delete Global Configs');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Global Configs','urn:choreocontrolplane:configmanagement:global_config_view','CONFIGURATIONS-MANAGEMENT','View Global Configs');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Global Configs','urn:choreocontrolplane:configmanagement:global_config_create','CONFIGURATIONS-MANAGEMENT','Create Global Configs');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Global Configs','urn:choreocontrolplane:configmanagement:global_config_delete','CONFIGURATIONS-MANAGEMENT','Delete Global Configs');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Global Configs','urn:choreocontrolplane:configmanagement:global_config_update','CONFIGURATIONS-MANAGEMENT','Update Global Configs');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Configs','urn:choreocontrolplane:configmanagement:config_manage','CONFIGURATIONS-MANAGEMENT','Create, Edit and Delete Configs');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Configs','urn:choreocontrolplane:configmanagement:config_view','CONFIGURATIONS-MANAGEMENT','View Configs');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Configs','urn:choreocontrolplane:configmanagement:config_create','CONFIGURATIONS-MANAGEMENT','Create Configs');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Configs','urn:choreocontrolplane:configmanagement:config_delete','CONFIGURATIONS-MANAGEMENT','Delete Configs');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Custom Domains','urn:choreocontrolplane:customdomainapi:custom_domain_manage','CUSTOM-DOMAINS','Create, Edit and Delete Custom Domains');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Custom Domains','urn:choreocontrolplane:customdomainapi:custom_domain_view','CUSTOM-DOMAINS','View Custom Domains');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Custom Domains','urn:choreocontrolplane:customdomainapi:custom_domain_create','CUSTOM-DOMAINS','Create Custom Domains');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Custom Domains','urn:choreocontrolplane:customdomainapi:custom_domain_delete','CUSTOM-DOMAINS','Delete Custom Domains');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Custom Domains','urn:choreocontrolplane:customdomainapi:custom_domain_update','CUSTOM-DOMAINS','Update Custom Domains');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage OnPrem Keys','urn:choreocontrolplane:onpremkeymanagement:on_prem_key_manage','ON-PREM-KEYS','Create, Edit and Delete OnPrem Keys');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View OnPrem Keys','urn:choreocontrolplane:onpremkeymanagement:on_prem_key_view','ON-PREM-KEYS','View OnPrem Keys');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create OnPrem Keys','urn:choreocontrolplane:onpremkeymanagement:on_prem_key_create','ON-PREM-KEYS','Create OnPrem Keys');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete OnPrem Keys','urn:choreocontrolplane:onpremkeymanagement:on_prem_key_delete','ON-PREM-KEYS','Delete OnPrem Keys');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update OnPrem Keys','urn:choreocontrolplane:onpremkeymanagement:on_prem_key_update','ON-PREM-KEYS','Update OnPrem Keys');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Custom Theme','urn:choreocontrolplane:organizationmanagement:theme_manage','ORGANIZATION-MANAGEMENT','Create, Edit and Delete Custom Theme');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Custom Theme','urn:choreocontrolplane:organizationmanagement:theme_view','ORGANIZATION-MANAGEMENT','View Custom Theme');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Custom Theme','urn:choreocontrolplane:organizationmanagement:theme_create','ORGANIZATION-MANAGEMENT','Create Custom Theme');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Custom Theme','urn:choreocontrolplane:organizationmanagement:theme_delete','ORGANIZATION-MANAGEMENT','Delete Custom Theme');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Deploy Custom Theme','urn:choreocontrolplane:organizationmanagement:theme_deploy','ORGANIZATION-MANAGEMENT','Deploy Custom Theme');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Enterprise Login Configs','urn:choreocontrolplane:organizationmanagement:enterprise_login_config_manage','ORGANIZATION-MANAGEMENT','Create, Edit and Delete Enterprise Login Configs');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Enterprise Login Configs','urn:choreocontrolplane:organizationmanagement:enterprise_login_config_view','ORGANIZATION-MANAGEMENT','View Enterprise Login Configs');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Self Signup Configs and Approvals','urn:choreocontrolplane:organizationmanagement:self_signup_manage','ORGANIZATION-MANAGEMENT','Create, Update Self Signup Configs and Approval');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Self Signup Configs','urn:choreocontrolplane:organizationmanagement:self_signup_config_view','ORGANIZATION-MANAGEMENT','View Self Signup Configs');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Self Signup Approvals','urn:choreocontrolplane:organizationmanagement:self_signup_approval_view','ORGANIZATION-MANAGEMENT','View Self Signup Approvals');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Self Signup Approvals','urn:choreocontrolplane:organizationmanagement:self_signup_approval_update','ORGANIZATION-MANAGEMENT','Update Self Signup Approvals');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Self Signup Configs','urn:choreocontrolplane:organizationmanagement:self_signup_config_update','ORGANIZATION-MANAGEMENT','Update Self Signup Configs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Global Configs','urn:choreosystem:configmanagement:global_config_manage','CONFIGURATIONS-MANAGEMENT','Create, Edit and Delete Global Configs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Global Configs','urn:choreosystem:configmanagement:global_config_view','CONFIGURATIONS-MANAGEMENT','View Global Configs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Global Configs','urn:choreosystem:configmanagement:global_config_create','CONFIGURATIONS-MANAGEMENT','Create Global Configs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Global Configs','urn:choreosystem:configmanagement:global_config_delete','CONFIGURATIONS-MANAGEMENT','Delete Global Configs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Global Configs','urn:choreosystem:configmanagement:global_config_update','CONFIGURATIONS-MANAGEMENT','Update Global Configs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Configs','urn:choreosystem:configmanagement:config_manage','CONFIGURATIONS-MANAGEMENT','Create, Edit and Delete Configs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Configs','urn:choreosystem:configmanagement:config_view','CONFIGURATIONS-MANAGEMENT','View Configs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Configs','urn:choreosystem:configmanagement:config_create','CONFIGURATIONS-MANAGEMENT','Create Configs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Configs','urn:choreosystem:configmanagement:config_delete','CONFIGURATIONS-MANAGEMENT','Delete Configs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Custom Domains','urn:choreosystem:customdomainapi:custom_domain_manage','CUSTOM-DOMAINS','Create, Edit and Delete Custom Domains');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Custom Domains','urn:choreosystem:customdomainapi:custom_domain_view','CUSTOM-DOMAINS','View Custom Domains');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Custom Domains','urn:choreosystem:customdomainapi:custom_domain_create','CUSTOM-DOMAINS','Create Custom Domains');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Custom Domains','urn:choreosystem:customdomainapi:custom_domain_delete','CUSTOM-DOMAINS','Delete Custom Domains');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Custom Domains','urn:choreosystem:customdomainapi:custom_domain_update','CUSTOM-DOMAINS','Update Custom Domains');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage OnPrem Keys','urn:choreosystem:onpremkeymanagement:on_prem_key_manage','ON-PREM-KEYS','Create, Edit and Delete OnPrem Keys');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View OnPrem Keys','urn:choreosystem:onpremkeymanagement:on_prem_key_view','ON-PREM-KEYS','View OnPrem Keys');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create OnPrem Keys','urn:choreosystem:onpremkeymanagement:on_prem_key_create','ON-PREM-KEYS','Create OnPrem Keys');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete OnPrem Keys','urn:choreosystem:onpremkeymanagement:on_prem_key_delete','ON-PREM-KEYS','Delete OnPrem Keys');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update OnPrem Keys','urn:choreosystem:onpremkeymanagement:on_prem_key_update','ON-PREM-KEYS','Update OnPrem Keys');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Custom Theme','urn:choreosystem:organizationmanagement:theme_manage','ORGANIZATION-MANAGEMENT','Create, Edit and Delete Custom Theme');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Custom Theme','urn:choreosystem:organizationmanagement:theme_view','ORGANIZATION-MANAGEMENT','View Custom Theme');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Custom Theme','urn:choreosystem:organizationmanagement:theme_create','ORGANIZATION-MANAGEMENT','Create Custom Theme');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Custom Theme','urn:choreosystem:organizationmanagement:theme_delete','ORGANIZATION-MANAGEMENT','Delete Custom Theme');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Deploy Custom Theme','urn:choreosystem:organizationmanagement:theme_deploy','ORGANIZATION-MANAGEMENT','Deploy Custom Theme');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Enterprise Login Configs','urn:choreosystem:organizationmanagement:enterprise_login_config_manage','ORGANIZATION-MANAGEMENT','Create, Edit and Delete Enterprise Login Configs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Enterprise Login Configs','urn:choreosystem:organizationmanagement:enterprise_login_config_view','ORGANIZATION-MANAGEMENT','View Enterprise Login Configs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Self Signup Configs and Approvals','urn:choreosystem:organizationmanagement:self_signup_manage','ORGANIZATION-MANAGEMENT','Create, Update Self Signup Configs and Approval');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Self Signup Configs','urn:choreosystem:organizationmanagement:self_signup_config_view','ORGANIZATION-MANAGEMENT','View Self Signup Configs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Self Signup Approvals','urn:choreosystem:organizationmanagement:self_signup_approval_view','ORGANIZATION-MANAGEMENT','View Self Signup Approvals');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Self Signup Approvals','urn:choreosystem:organizationmanagement:self_signup_approval_update','ORGANIZATION-MANAGEMENT','Update Self Signup Approvals');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Self Signup Configs','urn:choreosystem:organizationmanagement:self_signup_config_update','ORGANIZATION-MANAGEMENT','Update Self Signup Configs');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Production Application Credentials','apim:prod_key_manage','APIM-SUBSCRIBER','View, generate and update production credentials of an application');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Sandbox Application Credentials','apim:sand_key_manage','APIM-SUBSCRIBER','View, generate and update sandbox credentials of an application');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Audit Logs','urn:choreocontrolplane:choreoauditloggingapi:audit_logs_view','LOG-MANAGEMENT','View audit logs');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Audit Logs','urn:choreocontrolplane:choreoauditloggingapi:audit_logs_manage', 'LOG-MANAGEMENT','Manage audit logs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Audit Logs','urn:choreosystem:choreoauditloggingapi:audit_logs_view','LOG-MANAGEMENT','View audit logs');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Audit Logs','urn:choreosystem:choreoauditloggingapi:audit_logs_manage', 'LOG-MANAGEMENT','Manage audit logs');

@@ -3,6 +3,7 @@ portOffset = 0
 cpGatewayJwtIssuer = "{{.CHOREO_CP_GATEWAY_ISSUER}}"
 choreoJwtAudience = "{{.CHOREO_JWT_AUDIENCE}}"
 cpGatewayJWKSUrl = "{{.CHOREO_CP_GATEWAY_JWKS_URL}}"
+authHeaderName = "{{.AUTH_HEADER_NAME}}"
 cloudManagerUrl = "http://dp-cloud-manager:80"
 apimUrl = "{{.CHOREO_APIM_URL}}"
 mizzenUrl = "http://dp-mizzen:80/api/v1"

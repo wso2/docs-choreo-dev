@@ -34,6 +34,11 @@ spec:
                 secretKeyRef:
                   name: secret-app-db
                   key: CHOREO_DB_PASSWORD
+            - name: CHOREO_SUBSCRIPTION_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-subscriptions
+                  key: MSSQL_PASSWORD
           envFrom:
             - configMapRef:
                 name: env-organization-management
@@ -99,6 +104,9 @@ spec:
               readOnly: true
             - name: keystore
               mountPath: /home/ballerina/keystore
+            - name: secret-subscriptions
+              mountPath: "/mnt/csi/secret-subscriptions"
+              readOnly: true
       restartPolicy: Always
       volumes:
         - name: config
@@ -118,6 +126,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-app-db
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-subscriptions
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-subscriptions
             nodePublishSecretRef:
               name: csi-secret-store-azure
         - name: tmp

@@ -193,7 +193,7 @@ describe("Create proxy using existing url", () => {
   });
 
   it("Tryout proxy in Dev portal", () => {
-    proxy.testSwaggerConsole_DevPortal(RESOURCE);
+    proxy.testSwaggerConsole_DevPortal({ resource: RESOURCE });
   });
 
   it("Stop proxy", () => {

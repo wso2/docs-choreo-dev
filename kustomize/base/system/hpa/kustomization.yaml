@@ -9,7 +9,6 @@ resources:
   - telemetry-go.yaml
   - negotiator.yaml
   - connectords.yaml
-  - perfanalyzer-estimator.yaml
   - platform-services-manager.yaml
   - test-assistant.yaml
   - analytics-subscription.yaml
@@ -21,6 +20,7 @@ resources:
   - dp-utility-api.yaml
   - dp-garbage-collector.yaml
   - dp-mizzen.yaml
+  - code-challenge-eval.yaml
   - cp-graphql.yaml
   - cp-resilient-invoker.yaml
   - cp-rrs.yaml

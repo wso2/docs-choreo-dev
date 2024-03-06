@@ -40,19 +40,19 @@ public class TestClientJWTValidation extends TestNGCitrusSpringSupport {
     Map<Endpoints, HttpClient> citrusClients;
 
     @BeforeClass
-    public void setup_TestClientJwTValidation() throws Exception {
+    public void setup_TestClientJWTValidation() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     }
 
     @Test
     @CitrusTest
-    public void createProject_TestClientJwTValidation() throws Exception {
+    public void createProject_TestClientJWTValidation() throws Exception {
         project = ComponentUtils.createProject(this, citrusClients, accessToken, Constant.region.US.toString());
     }
 
-    @Test(dependsOnMethods = {"createProject_TestClientJwTValidation"})
+    @Test(dependsOnMethods = {"createProject_TestClientJWTValidation"})
     @CitrusTest
-    public void createComponent_TestClientJwTValidation() throws Exception {
+    public void createComponent_TestClientJWTValidation() throws Exception {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/jwt-encoder").
                 branch("main").subPath("").build();
@@ -65,16 +65,16 @@ public class TestClientJWTValidation extends TestNGCitrusSpringSupport {
         Assert.assertNotNull(choreoComponent.getId());
     }
 
-    @Test(dependsOnMethods = {"createComponent_TestClientJwTValidation"})
+    @Test(dependsOnMethods = {"createComponent_TestClientJWTValidation"})
     @CitrusTest
-    public void deployComponent_TestClientJwTValidation() throws Exception {
+    public void deployComponent_TestClientJWTValidation() throws Exception {
         ComponentUtils.deployComponent(this, citrusClients, accessToken, choreoComponent,
                 environments, ComponentFlavour.STANDARD);
     }
 
-    @Test(dependsOnMethods = {"deployComponent_TestClientJwTValidation"})
+    @Test(dependsOnMethods = {"deployComponent_TestClientJWTValidation"})
     @CitrusTest
-    public void invokeAPIDev_TestClientJwTValidation() throws Exception {
+    public void invokeAPIDev_TestClientJWTValidation() throws Exception {
         Endpoint endpoint = ComponentUtils.getEndpoints(this, citrusClients, accessToken,
                 choreoComponent, Constant.DEV_ENVIRONMENT).get(0);
         String devApiKey = choreoComponent.getAPIKeyForInvoke(accessToken, endpoint.getApimId(),

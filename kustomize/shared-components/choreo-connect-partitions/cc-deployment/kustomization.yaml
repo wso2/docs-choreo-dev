@@ -54,6 +54,7 @@ configMapGenerator:
       - ADAPTER_HOST=adapter
       - ROUTER_LABEL=""
       - FILE_FLUSH_INTERVAL_MSEC="2000"
+      - TRAILING_ARGS="--component-log-level config:error"
 
 commonLabels:
   cc.component: choreo-connect-deployment

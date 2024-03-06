@@ -6,7 +6,7 @@ metadata:
   name: audit-logging
   namespace: choreo-system
 spec:
-  maxReplicas: 3
+  maxReplicas: 8
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
@@ -24,4 +24,4 @@ spec:
         name: memory
         target:
           type: Utilization
-          averageUtilization: 75
+          averageUtilization: 158

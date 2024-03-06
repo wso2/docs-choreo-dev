@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { sample } from "cypress/types/lodash";
 import { EndpointAccessibility, Enums } from "../../commons/enums";
 
 export namespace TestIds {
@@ -20,7 +21,7 @@ export namespace TestIds {
   export const componentLoader = '[id="circular-loader"]';
   export const projectName = '[data-cyid="project-name"]';
   export const projectDescription = '[data-cyid="project-description"]';
-  export const multiRepository = '[data-testid="Multi Repository-radio-card"]';
+  export const multiRepository = '[data-testid="Multi-Repo-radio-card"]';
   export const createProject =
     '[data-cyid="create-project-stepper-submit-button"]';
   export const backToProjectList =
@@ -31,21 +32,38 @@ export namespace TestIds {
   export const searchIcon = '[data-cyid="search-icon-icon-button"]';
   export const projectSearch =
     '[data-cyid="page-action-auto-forcused-search-search-field"]';
+  export const viewAllSamples = '[data-cyid="view-all-samples-btn-button"]';
+  export const trySample = '[data-cyid="component-select-tab-try-a-sample"]';
+  export const sampleSearch = '[data-cyid="samples-search-bar-input"]';
+  export const sampleCard = (sampleName: string) =>
+    `[data-cyid="${sampleName}-card"]`;
   export const componentSearch =
     '[data-cyid="tab-action-auto-forcused-search-search-field"]';
   export const listing = '[data-cyid="listing"]';
   export const componentFilter =
     '[data-cyid="project-components-multi-select"]';
   export const componentTable = '[data-cyid="component-table"]';
+  export const componentDelete = '[data-cyid="btn-contained-button"]';
+  export const componentDeleteConfirm =
+    '[data-cyid="delete-confirmation-dialog-content"]';
+  export const confirmName = '[data-cyid="confirm-name"]';
   export const next = '[data-cyid="btn-next-button"]';
+  export const deploy = '[data-cyid="deploy-button"]';
   export const buildCard = '[data-cyid="default-build-card"]';
   export const devEnvCard = '[data-cyid="env-baseDevelopment-env-card"]';
   export const prodEnvCard = '[data-cyid="env-baseProduction-env-card"]';
   export const deploymentStatus = '[data-cyid="deployment-status"]';
   export const deploymentStatusChip = '[data-cyid="deployment-status-chip"]';
   export const availableEndpoints = '[data-testid="Endpoints-env-artifact"]';
+  export const apiConfiguration =
+    '[data-testid="API Configuration-env-artifact"]';
   export const viewArtifact = '[data-cyid="btn-view-artifact-icon-button"]';
   export const endpointCard = '[data-cyid="endponint-selector-card-card"]';
+  export const manageSecurity = '[data-cyid="manage-security"]';
+  export const applyApiConfig = '[data-cyid="manage-save-btn-button"]';
+  export const cancelApiConfig = '[data-cyid="manage-cancel-btn-button"]';
+  export const endpointSettings =
+    '[data-cyid="endpoint-config-settings-icon-button"]';
   export const selectVersion = '[data-cyid="deployment-track-picker-chip"]';
   export const selectBranch = '[data-cyid="deployment-track-picker"]';
   export const deploySplitToggle =
@@ -87,14 +105,15 @@ export namespace TestIds {
     '[data-cyid="usage-plans-primary-button-button"]';
   export const editSettings = '[data-cyid="btn-edit-settings-button"]';
   export const corsConfig = '[data-testid="switch-cors-config"]';
+  export const corsCheckbox = '[data-cyid="chk-enable-cors-check-box"]';
   export const saveSettings = '[data-cyid="btn-save-settings-button"]';
   export const apply = '[data-cyid="apply-button"]';
   export const projectInsights = '[data-cyid="project-usage-insights-button"]';
   export const datePicker = '[data-testid="date-picker"]';
-  export const noBuildsAvailable =
-    '[data-cyid="table-listing-no-data-message"]';
+  export const noDataAvailable = '[data-cyid="table-listing-no-data-message"]';
   export const buildTime = '[data-cyid="build-time"]';
-  export const build = '[data-cyid="build-button"]';
+  export const build =
+    '[data-cyid="build-split-button-split-group-button-button"]';
   export const tableTitle = '[data-cyid="table-title"]';
   export const createComponent = '[data-cyid="create-component-button"]';
   export const proxyBuildPack =
@@ -107,6 +126,7 @@ export namespace TestIds {
   export const apiBasePath = '[data-cyid="api-basepath"]';
   export const apiEndpoint = '[data-cyid="api-endpoint"]';
   export const internalAccessMode = '[data-testid="internal-radio-card"]';
+  export const externalAccessMode = '[data-testid="external-radio-card"]';
   export const createButton = '[data-cyid="btn-create-button"]';
   export const createTime = '[data-cyid="create-time"]';
   export const skipSource = '[data-cyid="btn-skip-src-button"]';
@@ -138,20 +158,30 @@ export namespace TestIds {
   export const getTestKey = '[data-testid="get-test-key-btn"]';
   export const accessToken = '[data-testid="accessTokenInput"]';
   export const apiNameDevPortal = '[data-testid="txt-api-name"]';
+  export const addScopeBtnV2 = '[data-cyid="scope-add-icon-button"]';
   export const addScopeBtn = '[data-testid="scope-add-icon-button"]';
   export const addNewScope = '[data-testid="scope-add-new-btn"]';
+  export const addNewScopeV2 = '[data-cyid="scope-add-new-button"]';
   export const scopeTextInput = '[data-testid="scope-text-input"]';
+  export const scopeTextInputV2 = '[data-cyid="scope-text"]';
   export const selectAllScopes = '[data-testid="scope-select-all-btn"]';
+  export const selectAllScopesV2 = '[data-cyid="scope-select-all-button"]';
   export const applyScopesToAll = '[data-testid="scope-apply-to-all-btn"]';
+  export const applyScopesToAllV2 = '[data-cyid="scope-apply-to-all-button"]';
+  export const securitySettingsFirstResource = '[data-cyid="panel-0"]';
   export const scopeSaveAndDeploy =
     '[data-cyid="scope-save-and-deploy-button"]';
+  export const storyButton = '[data-cyid="story-button-container"]';
   export const deleteAllScopes = '[data-testid="scope-delete-all-btn"]';
+  export const deleteAllScopesV2 = '[data-cyid="scope-delete-all-button"]';
   export const permissionTag = (permission: string) =>
     `[data-cyid="${permission}-multiselect-tag"]`;
   export const scopeItem = (permission: string) =>
     `[data-testid="scope-item-${permission}"]`;
   export const scopeItemCheckBox = (permission: string) =>
     `[data-testid="scope-item-checkbox-${permission}"]`;
+  export const scopeItemCheckBoxV2 = (permission: string) =>
+    `[data-cyid="scope-item-${permission}-check-box"]`;
   export const applicationBar = '[data-testid="applications-appbar-btn"]';
   export const createApplication = '[data-testid="create-application-btn"]';
   export const applicationName = '[data-testid="app-name"]';
@@ -180,6 +210,21 @@ export namespace TestIds {
   export const apiCard = (apiName: string) =>
     `[data-testid="apiCard-${apiName}"`;
   export const apiOverviewDevPortal = '[data-testid="li-overview-item-link"]';
+  export const addCommentLink = '[data-testid="btn-add-comment-open-close"]';
+  export const addCommentBtn = '[data-testid="btn-add-comment"]';
+  export const commentTextArea = '[data-testid="input-comment-box"]';
+  export const commentsCount = '[data-testid="txt-comments-count"]';
+  export const noComments = '[data-testid="txt-no-comments"]';
+  export const commentsTable = '[data-testid="table-comments"]';
+  export const deleteComment = '[data-testid="btn-delete-comment"]';
+  export const deleteCommentPopup =
+    '[data-testid="popup-delete-comment-confirm"]';
+  export const ratingContainer = '[data-testid="rating-container"]';
+  export const ratingStars = '[data-testid="rating-stars"]';
+  export const ratingStar = (star: number) => `[for="hover-feedback-${star}"]`;
+  export const ratingPopupRoot = '[class="MuiPopover-root"]';
+  export const sdks = '[data-testid="sdks-item-link"]';
+  export const androidSdk = '[data-testid="sdk-android-button"]';
   export const applicationSelect = '[data-testid="application-selector"]';
   export const applicationSelectItem = (application: string) =>
     `[data-value="${application}"]`;
@@ -248,5 +293,21 @@ export namespace TestIds {
   export const nextButton = '[data-testid="btn-next"]';
   export const fileMount = '[data-cyid="file-mount-upload-button"]';
   export const byocPromote = '[data-cyid="promote-selector-default-configs"]';
-  export const componentSearchBox = '[data-cyid="component-listing-auto-forcused-search-search-field"]';
+  export const componentSearchBox =
+    '[data-cyid="component-listing-auto-forcused-search-search-field"]';
+  export const searchDomain =
+    '[data-cyid="search-expandable-right-auto-forcused-search-search-field"]';
+  export const domainTable = '[data-cyid="domains-list"]';
+  export const deleteDomain = '[data-cyid="domain-delete-icon-button"]';
+  export const addDomain = '[data-cyid="domains-add-button"]';
+  export const domainName = '[data-cyid="text-input-domain-name"]';
+  export const devPortalDomainOption = '[data-testid="other"]';
+  export const nextButtonV2 = '[data-cyid="next-button"]';
+  export const letsEncrypt = '[data-testid="tls-let_s-encrypt"]';
+  export const confirmDialog = '[data-cyid="confirmation-dialog"]';
+  export const confirmDelete =
+    '[data-cyid="confirmation-dialog-destructive-action-button"]';
+  export const apiVisibility = '[data-cyid="visibility-select"]';
+  export const devPortalHome = '[data-testid="home-appbar-btn"]';
+  export const devPortalLoginLink = '[data-testid="login-button"]';
 }

@@ -29,3 +29,14 @@ CREATE TABLE ga_org_quota_status (
 	org_id varchar(150) NULL,
 	is_exceeded BIT NOT NULL DEFAULT 0,
 );
+
+CREATE TABLE ga_api_partition (
+    api_uuid varchar(150) NOT NULL,
+    apim_environment_name VARCHAR(255) NOT NULL,
+    dataplane_id varchar(150) NOT NULL,
+    gateway_accessibility_type VARCHAR(100) NOT NULL,
+    slot_id int NOT NULL,
+    org_id varchar(150) NOT NULL,
+    UNIQUE(dataplane_id, gateway_accessibility_type, slot_id),
+    PRIMARY KEY (api_uuid, apim_environment_name, dataplane_id, gateway_accessibility_type, org_id)
+);

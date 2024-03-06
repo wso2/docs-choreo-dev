@@ -15,4 +15,5 @@ metadata:
   name: choreo-system
 value: 1500
 globalDefault: false
+preemptionPolicy: Never
 description: "This priority class should be used for Choreo System components only."

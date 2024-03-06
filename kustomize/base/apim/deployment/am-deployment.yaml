@@ -90,7 +90,7 @@ spec:
               memory: 3Gi
               cpu: "2"
             limits:
-              memory: 4.25Gi
+              memory: 5Gi
               cpu: "2.5"
           securityContext:
             allowPrivilegeEscalation: false
@@ -124,7 +124,7 @@ spec:
                 fieldRef:
                   fieldPath: status.podIP
             - name: JVM_MEM_OPTS
-              value: "-Xms2750m -Xmx2750m"
+              value: "-XX:InitialRAMPercentage=59.0 -XX:MaxRAMPercentage=59.0"
             - name: PROFILE_NAME
               value: control-plane
             - name: DEPLOYMENT_TYPE_PROD_PREFIXES
