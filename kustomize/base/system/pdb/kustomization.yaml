@@ -27,7 +27,6 @@ resources:
   - email-service.yaml
   - negotiator.yaml
   - orgremover.yaml
-  - perfanalyzer-estimator.yaml
   - platform-services-manager.yaml
   - quota-limiter.yaml
   - subscriptions.yaml
