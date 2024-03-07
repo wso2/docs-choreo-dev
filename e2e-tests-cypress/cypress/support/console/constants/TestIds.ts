@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { sample } from "cypress/types/lodash";
 import { EndpointAccessibility, Enums } from "../../commons/enums";
 
 export namespace TestIds {
@@ -31,6 +32,11 @@ export namespace TestIds {
   export const searchIcon = '[data-cyid="search-icon-icon-button"]';
   export const projectSearch =
     '[data-cyid="page-action-auto-forcused-search-search-field"]';
+  export const viewAllSamples = '[data-cyid="view-all-samples-btn-button"]';
+  export const trySample = '[data-cyid="component-select-tab-try-a-sample"]';
+  export const sampleSearch = '[data-cyid="samples-search-bar-input"]';
+  export const sampleCard = (sampleName: string) =>
+    `[data-cyid="${sampleName}-card"]`;
   export const componentSearch =
     '[data-cyid="tab-action-auto-forcused-search-search-field"]';
   export const listing = '[data-cyid="listing"]';
@@ -120,6 +126,7 @@ export namespace TestIds {
   export const apiBasePath = '[data-cyid="api-basepath"]';
   export const apiEndpoint = '[data-cyid="api-endpoint"]';
   export const internalAccessMode = '[data-testid="internal-radio-card"]';
+  export const externalAccessMode = '[data-testid="external-radio-card"]';
   export const createButton = '[data-cyid="btn-create-button"]';
   export const createTime = '[data-cyid="create-time"]';
   export const skipSource = '[data-cyid="btn-skip-src-button"]';
@@ -164,7 +171,7 @@ export namespace TestIds {
   export const securitySettingsFirstResource = '[data-cyid="panel-0"]';
   export const scopeSaveAndDeploy =
     '[data-cyid="scope-save-and-deploy-button"]';
-  export const scopeSaveAndDeployV2 = '[data-cyid="story-button-container"]';
+  export const storyButton = '[data-cyid="story-button-container"]';
   export const deleteAllScopes = '[data-testid="scope-delete-all-btn"]';
   export const deleteAllScopesV2 = '[data-cyid="scope-delete-all-button"]';
   export const permissionTag = (permission: string) =>

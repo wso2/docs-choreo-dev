@@ -5,12 +5,17 @@ metadata:
   labels:
     choreo.component: code-challenge-submission-data-collector
 spec:
-  schedule: 45 23 * * *
+  schedule: 0 7 * * *
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
         spec:
+          automountServiceAccountToken: false
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
+          restartPolicy: Never
           containers:
             - name: code-challenge-submission-data-collector
               image: choreocontrolplane.azurecr.io/choreoipaas/code-challenge-submission-data-collector:latest

@@ -28,18 +28,6 @@ configMapGenerator:
       - IDP_TOKEN_ENDPOINT=/oauth2/token
       - IDP_JWKS_ENDPOINT=/oauth2/jwks
       - IDP_SCIM_USERS_ENDPOINT=/wso2/scim/Users
-  - name: cm-obsapi
-    behavior: create
-    literals:
-      - AZURE_ADX_DB=observability
-      - AZURE_ADX_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
-      - AZURE_ADX_METRIC_TABLE=metrics
-      - AZURE_ADX_PIXIE_METRIC_TABLE=pixieMetrics
-      - AZURE_ADX_TRACE_TABLE=traceSpans
-      - NEGOTIATOR_GRPC_ADDRESS=negotiator:9092
-      - APPSERVICE_GRPC_ADDRESS=app-service:8080
-      - RUDDER_ADDRESS=http://dp-rudder:80
-      - PROJECT_MANAGER_ADDRESS=http://dp-project-manager:80
   - name: cm-email-service
     behavior: create
     literals:
@@ -50,12 +38,6 @@ configMapGenerator:
       - templates_contents_BCENTRAL_EMAIL_NEW_ORG="templates/bcentral/welcome-new-org.txt"
       - templates_contents_CHOREO_EMAIL_INVITATION="templates/choreo/org-invitation.txt"
       - templates_subjects_CHOREO_EMAIL_INVITATION_SUBJECT="You have been invited to join the '$organization' organization in Choreo"
-  - name: cm-sys-obsapi
-    behavior: create
-    literals:
-      - AZURE_ACTIVEDIRECTORY_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
-      - APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
-      - RUDDER_ADDRESS=http://dp-rudder:80
   - name: cm-telemetry
     behavior: create
     literals:
@@ -80,27 +62,9 @@ configMapGenerator:
       - CHOREO_DB_PORT=1433
       - CHOREO_DB_USERNAME=choreo_program_db_user
       - CHOREO_DB_DRIVER=sqlserver
-  - name: cm-datalake-ast
-    behavior: create
-    literals:
-      - AZURE_DL_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
-      - AZURE_DL_CONTAINER_NAME=ast
-      - LAST_ACTIVE_DURATION_IN_DAYS=45
-  - name: cm-linker
-    behavior: create
-    literals:
-      - APPSERVICE_GRPC_ADDRESS=http://app-service:8080
-      - JWKS_ENDPOINT_PROTOCOL=https
   - name: cm-obsmanager
     behavior: create
     literals:
-      - APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
-      - RUDDER_ADDRESS=http://dp-rudder:80
-      - PROJECT_MANAGER_ADDRESS=http://dp-project-manager:80
-  - name: cm-loggingapi
-    behavior: create
-    literals:
-      - AZURE_ACTIVEDIRECTORY_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
       - APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
       - RUDDER_ADDRESS=http://dp-rudder:80
       - PROJECT_MANAGER_ADDRESS=http://dp-project-manager:80
@@ -166,18 +130,6 @@ configMapGenerator:
       - PARDOT_EP=2021-11-01/9yzthx
       - PARDOT_SVC_URL=https://apis.wso2.com/gnvy/lead-form-submission/endpoint-9090-803/v1.0/lead-form
       - EMAIL_CONSENT_SVC_URL=https://apis.wso2.com/gnvy/gdpr-mailing-consent-check/endpoint-9090-803/v1.0
-  - name: cm-perf-analyzer
-    behavior: create
-    literals:
-      - CHOREO_DB_DRIVER=sqlserver
-      - CHOREO_PERF_DB_PORT=1433
-      - CHOREO_PERF_DB_USERNAME=choreo_perf_db_user
-      - CHOREO_APP_DB_PORT=1433
-      - CHOREO_APP_DB_USERNAME=choreo_app_db_user
-  - name: cm-perfanalyzer
-    behavior: create
-    files:
-      - perfanalyzer/application.properties
   - name: cm-dp-cicd
     behavior: create
     literals:
@@ -268,11 +220,7 @@ configMapGenerator:
       - APP_SERVICE_URL=app-service:8080
       - CRYPTO_KEY_SERVICE_URL=http://crypto-key-service:9091
       - CONFIG_MAPPING_SERVICE_URL=http://configuration-service:8084
-  - name: cm-logsarchiver
-    behavior: create
-    literals:
-      - TABLE_LIST=InsightsMetrics,KubePVInventory,Operation,Perf
-      - AZURE_DL_CONTAINER_NAME=loganalytics1
+      - URL_MANAGER_URL=http://choreo-url-management:9090
   - name: cm-dp-project-manager
     behavior: create
     literals:
@@ -391,10 +339,6 @@ configMapGenerator:
     behavior: create
     files:
       - moesif-service/Config.toml
-  - name: cm-file-sys-obsapi
-    behavior: create
-    files:
-      - obs/sysobsapi/Config.toml
   - name: cm-file-telemetry
     behavior: create
     files:
@@ -403,10 +347,6 @@ configMapGenerator:
     behavior: create
     files:
       - obs/obsmanager/Config.toml
-  - name: cm-file-loggingapi
-    behavior: create
-    files:
-      - obs/loggingapi/Config.toml
   - name: cm-file-organization-remover
     behavior: create
     files:

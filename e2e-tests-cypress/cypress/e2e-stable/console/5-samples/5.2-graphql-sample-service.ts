@@ -26,6 +26,7 @@ describe("Graphql GQL service test", () => {
   const REPO_NAME = "choreo-samples";
   const ENDPOINT_NAME = "Greeting GraphQL";
   const subPath = "graphql-service";
+  const sampleName = "GraphQL Service";
 
   let project: Project;
   let component: Service;
@@ -40,6 +41,10 @@ describe("Graphql GQL service test", () => {
 
   it("Creating a project", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
+  });
+
+  it("Verify sample search", () => {
+    project.searchSampleService(sampleName);
   });
 
   it("Verify GraphQL sample creation", () => {

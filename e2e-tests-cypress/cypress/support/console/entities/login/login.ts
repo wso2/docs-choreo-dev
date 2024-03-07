@@ -41,6 +41,49 @@ class Login {
     this.handleTermsOfUse();
   }
 
+  perfLogin () {
+    const userName = Cypress.env("perfUsername");
+    cy.log(`User: ${userName}`);
+    this.setBrowserLocalStorage();
+    this.setBrowserCookie();
+    this.registerNetworkCallsForInterception();
+    cy.visit(Cypress.env("baseUrl"));
+    cy.get('[data-cyid=email-sign-in-button]').should("be.visible", SHORT_TIME).click();
+    cy.get("#usernameUserInput").type(userName);
+    cy.contains("Continue").click();
+    cy.get("#password").type(Cypress.env("perfPassword"));
+    cy.get("#sign-in-button").click();
+    this.persistPerfOrgs();
+    this.persistAccessToken();
+    this.selectRegion();
+    this.handleTermsOfUse();
+    cy.wait(25000);
+  }
+   
+ selectRegion(retryCount: number = 0) {
+    retryCount++;
+    if (retryCount > 3) {
+      return;
+    }
+
+    cy.get("body").then((body) => {
+      if (
+        body.find("[data-cyid=consent-code-challenge-check-box]").length > 0
+      ) {
+        cy.get("[data-cyid=consent-code-challenge-check-box]")
+          .should("be.visible")
+          .click();
+        cy.get("[data-cyid=create-default-project-confirm-button]")
+          .should("be.visible")
+          .click();
+      } else {
+        cy.wait(5000);
+        cy.log("Retry count: " + retryCount);
+        this.selectRegion(retryCount);
+      }
+    });
+  }
+
   getDisplayName() {
     return this.displayName;
   }
@@ -124,6 +167,26 @@ class Login {
       this.orgUuid = userOrg.uuid;
     });
   }
+
+  private persistPerfOrgs() {
+    cy.wait("@org", MEDIUM_TIME).then((res) => {
+      if (!res.response) {
+        throw new Error("Failed to receive orgs response");
+      }
+  
+      const userOrg = res.response.body.organizations[0];
+  
+      cy.log(`First available org ${userOrg.handle} selected`);
+  
+      this.displayName = res.response.body.displayName;
+      this.userEmail = res.response.body.userEmail;
+      this.orgId = userOrg.id;
+      this.orgHandle = userOrg.handle;
+      this.orgUuid = userOrg.uuid;
+    });
+  }
+  
+
 
   private persistAccessToken() {
     cy.wait("@gql", MEDIUM_TIME).then((intercept) => {

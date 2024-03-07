@@ -1,6 +1,5 @@
 resources:
   - observability-data-generator.yaml
-  - perfanalyzer-updater.yaml
   - choreo-userapps-image-deleter.yaml
   - cio-internal-metric-collector.yaml
   - code-challenge-submission-data-collector.yaml

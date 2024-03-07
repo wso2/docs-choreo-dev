@@ -35,6 +35,7 @@ export interface ManageFeature {
   _disableSecurity(
     component: Component,
     env: Enums.Environment,
+    method: Enums.HTTPMethod,
     resource: string
   );
   _applyPermissionToResources(component: Component, permission: string);
@@ -243,18 +244,31 @@ export function mixinManage<T extends Types.Constructor>(
     _disableSecurity(
       component: Component,
       env: Enums.Environment,
+      method: Enums.HTTPMethod,
       resource: string
     ) {
-      this.sideMenu.navigateToSettings();
+      if (Utils.isApiConfigurationEnabled()) {
+        this.sideMenu.navigateToDeploy();
 
-      this.deploymentTrack.validate(component);
+        this.deploymentTrack.validate(component);
 
-      this.selectResources();
-      this.selectEnvironment(env);
-      this.selectRevision(env);
-      this.editResource();
-      this.selectResources();
-      this.toggleResourceSecurity(resource);
+        cy.get(TestIds.buildCard)
+          .should("be.visible")
+          .find(TestIds.viewArtifact)
+          .click();
+        this.toggleResourceSecurity(method, resource);
+      } else {
+        this.sideMenu.navigateToSettings();
+
+        this.deploymentTrack.validate(component);
+
+        this.selectResources();
+        this.selectEnvironment(env);
+        this.selectRevision(env);
+        this.editResource();
+        this.selectResources();
+        this.toggleResourceSecurity(method, resource);
+      }
     }
 
     _updateAccessMode(component: Component, accessMode: Enums.Accessibility) {
@@ -300,13 +314,9 @@ export function mixinManage<T extends Types.Constructor>(
 
     private saveAndDeployPermissions(componentName: string) {
       if (Utils.isApiConfigurationEnabled()) {
-        cy.get(TestIds.scopeSaveAndDeployV2)
-          .contains("Apply")
-          .should("be.visible")
-          .click();
-        cy.get(TestIds.backdropLoader).should("not.exist");
+        this.applySecuritySettings();
 
-        cy.get(TestIds.scopeSaveAndDeployV2).should("not.exist").wait(10000); // Extra wait because the application is not updated immediately
+        //cy.wait(10000); // Extra wait because the application is not updated immediately
       } else {
         cy.get(TestIds.scopeSaveAndDeploy).click();
         cy.get(TestIds.backdropLoader).should("not.exist");
@@ -409,11 +419,34 @@ export function mixinManage<T extends Types.Constructor>(
       cy.get(TestIds.editSettings).click();
     }
 
-    private toggleResourceSecurity(resource: string) {
-      cy.get(`[id="panel-/${resource}/get-header"]`).scrollIntoView().click();
+    private toggleResourceSecurity(method: Enums.HTTPMethod, resource: string) {
+      let methodString = method.toString().toLowerCase();
+
+      if (Utils.isApiConfigurationEnabled()) {
+        methodString = method.toString();
+      }
+
+      cy.get(`[id="panel-/${resource}/${methodString}-header"]`)
+        .scrollIntoView()
+        .click();
+
       cy.get(TestIds.security).scrollIntoView().click();
 
-      this.applySettingChanges();
+      if (Utils.isApiConfigurationEnabled()) {
+        this.applySecuritySettings();
+      } else {
+        this.applySettingChanges();
+      }
+    }
+
+    private applySecuritySettings() {
+      cy.get(TestIds.storyButton)
+        .contains("Apply")
+        .should("be.visible")
+        .click();
+      cy.get(TestIds.backdropLoader).should("not.exist");
+
+      cy.get(TestIds.storyButton).should("not.exist");
     }
   };
 }

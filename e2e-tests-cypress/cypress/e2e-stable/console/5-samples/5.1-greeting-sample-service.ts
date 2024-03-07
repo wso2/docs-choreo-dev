@@ -23,6 +23,7 @@ describe("Create Greeting sample in Choreo", () => {
   const REPO_NAME = "choreo-samples";
   const ENDPOINT_NAME = "Endpoint 8090";
   const subPath = "greeting-service";
+  const sampleName = "Greeting Service";
 
   let project: Project;
   let component: Service;
@@ -37,6 +38,10 @@ describe("Create Greeting sample in Choreo", () => {
 
   it("Creating a project", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
+  });
+
+  it("Verify sample search", () => {
+    project.searchSampleService(sampleName);
   });
 
   it("Verify Hello World sample creation", () => {
