@@ -1,0 +1,61 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: code-challenge-submission-data-collector
+  labels:
+    choreo.component: code-challenge-submission-data-collector
+spec:
+  schedule: 0 7 * * *
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          automountServiceAccountToken: false
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
+          restartPolicy: Never
+          containers:
+            - name: code-challenge-submission-data-collector
+              image: choreocontrolplane.azurecr.io/choreoipaas/code-challenge-submission-data-collector:latest
+              securityContext:
+                runAsUser: 10500
+                runAsGroup: 10500
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - all
+              envFrom:
+                - configMapRef:
+                    name: cm-file-code-challenge-submission-data-collector
+                - secretRef:
+                    name: secret-code-challenge-eval
+              resources:
+                limits:
+                  cpu: 750m
+                  memory: 500Mi
+                requests:
+                  cpu: 700m
+                  memory: 400Mi
+              volumeMounts:
+                - name: config
+                  mountPath: /home/ballerina/Config.toml
+                  subPath: Config.toml
+                - name: secret-code-challenge-eval
+                  mountPath: "/mnt/csi/secret-code-challenge-eval"
+                  readOnly: true
+          volumes:
+            - name: config
+              configMap:
+                name: cm-file-code-challenge-submission-data-collector
+            - name: secret-code-challenge-eval
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: secret-code-challenge-eval
+                nodePublishSecretRef:
+                  name: csi-secret-store-azure
+          serviceAccountName: sa-choreo-default

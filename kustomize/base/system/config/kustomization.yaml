@@ -483,6 +483,10 @@ configMapGenerator:
     behavior: create
     files:
       - code-challenge-eval/Config.toml
+  - name: cm-file-code-challenge-submission-data-collector
+    behavior: create
+    files:
+      - code-challenge-submission-data-collector/Config.toml
   - name: cm-file-cp-rrs
     behavior: create
     files:
