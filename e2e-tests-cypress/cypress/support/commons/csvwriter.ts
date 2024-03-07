@@ -8,7 +8,7 @@ export class CSVWriter {
     this.createUserCsv();
   }
   
-  public createUserCsv(): void {
+  private createUserCsv(): void {
     const csvFilePath = `./cypress/${this.username}_intercepted_results.csv`;
     cy.writeFile(csvFilePath, '');
   }
