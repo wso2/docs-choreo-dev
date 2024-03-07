@@ -6,6 +6,10 @@ import { Project } from "../../../../support/console/entities/project/project";
 import { console } from "../../../../support/console/console";
 import { CSVWriter } from "../../../../support/commons/csvwriter";
 
+after(() => {
+  console.logout();
+});
+
 describe("Multiple User Logins", () => {
   let project: Project;
   const PROJECT_DESCRIPTION = "Cypress Perf Test Project";
@@ -34,11 +38,13 @@ describe("Multiple User Logins", () => {
     });
   
     project = console.createNewProject(PROJECT_DESCRIPTION);
+    csv.writeInterceptionResultsToCsv("Creating a project");
   
     cy.wait("@createProjectRequest").then((interception) => {
       try {
         expect(interception).to.have.property("response");
         expect(interception.response?.statusCode).to.equal(200);
+        csv.writeInterceptionResultsToCsv("Creating a project");
   
         const responseBody = interception.response?.body;
         expect(responseBody).to.have.property("data");
@@ -140,6 +146,37 @@ it("Build the component", () => {
   });
 
 });
+
+it("Deploying the component with Public level visibility", () => {
+  cy.intercept({
+    method: "POST",
+    url: GRAPHQL_URL,
+    times: 1,
+  }, (req) => { 
+    if (req.body.includes("deployDeploymentTrack")) {
+      req.alias = "deployComponentRequest"; 
+    } 
+  });
+
+  component.deployPublicLevelAccessibility();
+
+  cy.wait("@deployComponentRequest").then((interception) => {
+    try {
+      expect(interception).to.have.property("response");
+      expect(interception.response?.statusCode).to.equal(200);
+
+      const responseBody = interception.response?.body;
+      expect(responseBody).to.have.property("data");
+
+      const deploymentResponse = responseBody?.data?.deployDeploymentTrack;
+      expect(deploymentResponse).to.equal("Sucessfully deployed");
+    } catch (error: any) {
+      cy.log(`Assertion error: ${error.message}`);
+      csv.writeInterceptionResultsToCsv(error.message);
+    }
+  });
+});
+
 
 });
 
