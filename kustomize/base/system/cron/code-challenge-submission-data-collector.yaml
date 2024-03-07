@@ -5,7 +5,7 @@ metadata:
   labels:
     choreo.component: code-challenge-submission-data-collector
 spec:
-  schedule: 0 7 * * *
+  schedule: 0 9 * * *
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
