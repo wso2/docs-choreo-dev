@@ -53,6 +53,57 @@ function port_forward() {
 
 }
 
+function check_bot_membership() {
+    local bot_username="$1"
+    local github_token="$2"
+
+    # Construct the organization name based on the environment
+    local org_name
+    if [[ "$environment" == "stage" ]]; then
+        org_name="choreo-userapps-gitops-staging"
+    else
+        org_name="choreo-userapps-gitops-$environment"
+    fi
+
+    # Fetch the membership type of the bot in the organization
+    local membership
+    membership=$(curl -s -H "Authorization: token ${github_token}" \
+        "https://api.github.com/orgs/${org_name}/memberships/${bot_username}" | jq -r '.role')
+
+    if [[ "$membership" != "admin" ]]; then
+        echo "The bot '$bot_username' is not an owner of the organization '$org_name'."
+        return 1
+    fi
+}
+
+function check_pat_permissions() {
+    local github_token="$1"
+    local required_permissions=("admin:org" "admin:org_hook" "notifications" "read:public_key" "read:repo_hook" "repo" "workflow")
+
+    # Fetch the permissions associated with the PAT
+    local pat_permissions
+    pat_permissions=$(curl -sS -f -I -H "Authorization: token ${github_token}" https://api.github.com 2>/dev/null | grep ^x-oauth-scopes: | cut -d' ' -f2- | tr -d "[:space:]" | tr ',' '\n')
+
+    # Convert fetched permissions and required permissions to arrays
+    readarray -t fetched_permissions <<<"$pat_permissions"
+    local missing_permissions=()
+
+    # Check each required permission against fetched permissions
+    for required_permission in "${required_permissions[@]}"; do
+        if [[ ! " ${fetched_permissions[*]} " =~ ${required_permission} ]]; then
+            # If a required permission is missing, add it to the missing permissions list
+            missing_permissions+=("$required_permission")
+        fi
+    done
+
+    # If any permissions are missing, return an error and the list of missing permissions
+    if [ ${#missing_permissions[@]} -ne 0 ]; then
+        echo "Error: Missing required permissions: ${missing_permissions[*]}"
+        return 1
+    fi
+}
+
+
 # Function to write IDs and names of bots that have been added at a given run/ time
 function write_bot_to_csv() {
     local bot_id="$1"
@@ -104,6 +155,21 @@ function add_bot() {
 	    echo
             return 1
         fi
+    fi
+
+    # Check PAT permissions before adding the bot
+    echo "Checking permissions for PAT associated with '$bot'..."
+    if ! check_pat_permissions "$token"; then
+        echo "The PAT for '$bot' lacks required permissions. Skipping this bot."
+        echo
+        return 1
+    fi
+
+    #Check if the bot is an owner of the organization
+    if ! check_bot_membership "$bot" "$token"; then
+        echo "Skipping the addition of '$bot' due to insufficient organization membership status."
+        echo
+        return 1
     fi
 
     # Check if bot exists in the backend
