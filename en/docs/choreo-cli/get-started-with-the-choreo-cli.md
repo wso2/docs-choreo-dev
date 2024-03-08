@@ -1,6 +1,7 @@
 # Get Started with the Choreo CLI 
 
 This guide walks you through a the following sample usecase:
+
 - Create a webapp
 - Build the webapp
 - Deploy the webapp in the Development environment
@@ -8,7 +9,7 @@ This guide walks you through a the following sample usecase:
 
 This guide utilized a simple to-do app built with Next.js and two basic environments: Development and Production.
 
-## Prerequisites - install the CLI
+## Prerequisites
 
 Follow the steps below to install the CLI:  
 
@@ -48,7 +49,7 @@ Create a multi-repository project names ‘default-project’ by running the fol
 choreo create project default-project --type=multi-repository
 ```
 
-## Step 3: Provide access to your repository
+### Step 2.1: Provide access to your repository
 
 Choreo requires access to your repository to read the source code for building and deploying. To provide this access, open the following link:
 https://github.com/apps/choreo-dev/installations/new
@@ -56,7 +57,7 @@ https://github.com/apps/choreo-dev/installations/new
 !!! note
     Currently, in the CLI, only public GitHub repositories are supported in the free developer tier. Support for additional version control platforms, like Bitbucket, will be included in the future.
 
-## Step 4: Create a Web Application component
+## Step 3: Create a Web Application component
 
 In Choreo, a component within your project represents a singular unit of work in a cloud-native application. It can be a microservice, API, web application, or job/task. Each component is associated with a directory path in a Git repository, containing the source code for the program.
 
@@ -78,7 +79,7 @@ Language Version: 20.x.x
 Port: 8080
 ```
 
-## Step 5: View component details
+## Step 4: View component details
 
 To view comprehensive information about the component, including basic details, and service endpoint URLs once the services are deployed, you can use the following command:
 
@@ -86,7 +87,7 @@ To view comprehensive information about the component, including basic details, 
 choreo describe component "my-web-app" --project="default-project"
 ```
 
-## Step 6: Build the component
+## Step 5: Build the component
 
 Components must be built before deployment to specific environments. Execute the following command to trigger the build:
 
@@ -94,7 +95,7 @@ Components must be built before deployment to specific environments. Execute the
 choreo create build "my-web-app" --project="default-project"
 ```
 
-### Step 6.1: View build status
+### Step 5.1: View build status
 
 To check the status of a specific build, run the following command, replacing <build-id> with the actual build ID obtained from the previous command:
 
@@ -105,7 +106,7 @@ To check the status of a specific build, run the following command, replacing <b
 choreo describe build <build-id> --project="default-project" --component="my-web-app"
 ```
 
-### Step 6.2: View build logs
+### Step 5.2: View build logs
 
 Once the build is complete, you can view the build logs for verification or debugging purposes. This will help you troubleshoot in the unlikely case the build encounters any issues.
 
@@ -113,7 +114,7 @@ Once the build is complete, you can view the build logs for verification or debu
 choreo logs --type=build --project="default-project" --component="my-web-app" --build-id=<build-id>
 ```
 
-## Step 7: Deploy to the Development environment
+## Step 6: Deploy to the Development environment
 
 Once the build status indicates `successful`, you can deploy the component in the Development environment by runing the following command:
 
@@ -121,7 +122,7 @@ Once the build status indicates `successful`, you can deploy the component in th
 choreo create deployment "my-web-app" --env=Development --project="default-project" --build-id=<build-id>
 ```
 
-### Step 7.1: Verify the deployment in the Development environment
+### Step 6.1: Verify the deployment in the Development environment
 
 After deploying the component,  you can retrieve the URL of the deployed web application and open the publicly available web page to verify its behavior. Use the following command to retrieve the URL:
 
@@ -129,7 +130,7 @@ After deploying the component,  you can retrieve the URL of the deployed web app
 choreo describe component "my-web-app" --project="default-project"
 ```
 
-## Step 8: View logs
+### Step 6.2: View logs
 
 To observe runtime application logs of the web application in the Development environment, execute the following command:
 
@@ -137,7 +138,7 @@ To observe runtime application logs of the web application in the Development en
 choreo logs --type component-application --component my-web-app --project default-project --env Development --follow
 ```
 
-## Step 9: Deploy to the Production environment
+## Step 7: Deploy to the Production environment
 
 Once you verify your application in the development environment, you can proceed to deploy it to the production environment with the following command: 
 
@@ -148,7 +149,7 @@ choreo create deployment "my-web-app" --env=Production --project="default-projec
 Verify the deployment to the Production environment
 ```
 
-## Step 9.1: Verify the deployment in the Production environment
+### Step 7.1: Verify the deployment in the Production environment
 
 To ensure a successful deployment to the production environment, retrieve the URL of the deployed web application using the following command:
 
