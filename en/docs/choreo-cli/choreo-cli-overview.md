@@ -8,7 +8,7 @@ Choreo serves as a comprehensive internal platform-as-a-service. The Choreo CLI 
 
 - **Versatile workflow across frameworks**: Regardless of your chosen framework, Choreo CLI offers a uniform end-to-end process. It seamlessly integrates with different web application types (SPA, SSR, SSG, or simple static files), services (REST, GraphQL, gRPC), scheduled jobs, manual triggers, API proxies, and more. This versatility enables you to orchestrate a wide range of cloud-native components seamlessly.
 
-## Key Features of the Choreo CLI
+## Key features of the Choreo CLI
 
 - **Create and Manage Resources**: Simplify project and component management. You can easily initiate and organize projects in Choreo through simple commands.
 
