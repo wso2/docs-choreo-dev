@@ -519,6 +519,7 @@ choreo-sample-todo-list-app
 autoscaler
 dataplane
 Multi-Repo
+Next.js
 
  - docs/references/upgrading-from-the-previous-version.md
 DefaultProject
@@ -710,6 +711,9 @@ expose-a-grpc-endpoint-via-a-service
 expose-a-tcp-server-via-a-service
 expose-a-udp-server-via-a-service
 expose-a-ballerina-graphql-endpoint-via-a-service
+choreo-cli
+choreo-cli-overview
+get-started-with-the-choreo-cli
  - theme/material/templates/home-page.html
 doctype
 html
