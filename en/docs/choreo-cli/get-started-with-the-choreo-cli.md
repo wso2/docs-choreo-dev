@@ -1,11 +1,11 @@
 # Get Started with the Choreo CLI 
 
-This guide walks you through a the following sample usecase:
+This guide walks you through a the following sample use case:
 
-- Create a webapp
-- Build the webapp
-- Deploy the webapp in the Development environment
-- Promote the webapp to the production environment
+- Create a web application
+- Build the web application
+- Deploy the web application in the Development environment
+- Promote the web application to the production environment
 
 This guide utilized a simple to-do app built with Next.js and two basic environments: Development and Production.
 
@@ -116,7 +116,7 @@ choreo logs --type=build --project="default-project" --component="my-web-app" --
 
 ## Step 6: Deploy to the Development environment
 
-Once the build status indicates `successful`, you can deploy the component in the Development environment by runing the following command:
+Once the build status indicates `successful`, you can deploy the component in the Development environment by running the following command:
 
 ```
 choreo create deployment "my-web-app" --env=Development --project="default-project" --build-id=<build-id>
