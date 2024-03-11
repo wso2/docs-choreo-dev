@@ -2,13 +2,13 @@
 
 Choreo’s  Managed Authentication capability exposes a set of backend for frontend (BFF) endpoints, facilitating authentication and authorization for web applications. These endpoints are readily available for single-page web applications deployed on Choreo.
 
-As a web application developer, there may be instances where it becomes necessary to run the application on your personal workstation. In such situations, the expectation is for authentication and authorization during local development to work in the same manner as it would when the application is deployed to Choreo, eliminating the need to modify the source code (If you have used OIDC/OAuth2.0 SDKs to integrate authentication and authorization into a web application, you are likely familiar with the common requirement to configure Client Secrets locally for enabling logins and API calls when running the application locally).
+As a web application developer, there may be instances where it becomes necessary to run the application on your personal workstation. In such situations, the expectation is for authentication and authorization during local development to work in the same manner as it would when the application is deployed to Choreo, eliminating the need to modify the source code.
 
 Local development in Choreo provides the same capabilities as developing the web application locally.
 
 ## How local development works in Choreo
 
-Local development uses a proxy that sits in front of the locally running web application. This proxy forwards requests to managed authentication BFF endpoints `(/choreo-apis/*, /auth/*)`. Subsequently, these requests are routed to Choreo, while all other incoming requests are forwarded to the locally running web application. The proxy runs on HTTPS using a self-signed certificate, crucial for secure, HTTP-only cookie-based managed authentication. Upon running the proxy, you can access the web application using the proxy's URL and start developing the application locally. You will observe that the behavior of the web application, in terms of the managed authentication functionality, is similar to how it would be after deploying to Choreo.
+Local development uses a proxy that sits in front of the locally running web application. This proxy intercepts all incoming requests. The requests to `/choreo-apis/*` and `/auth/*` are then forwarded to Choreo, while all other requests are forwarded to the locally running web application. The proxy runs on HTTPS using a self-signed certificate, crucial for secure, HTTP-only cookie-based managed authentication. Upon running the proxy, you can access the web application using the proxy's URL and start developing the application locally. You will observe that the behavior of the web application, in terms of the managed authentication functionality, is similar to how it would be after deploying to Choreo.
 
 ## Configure local development
 
