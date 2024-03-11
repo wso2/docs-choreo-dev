@@ -55,8 +55,8 @@ You can either use the Choreo built-in identity provider or external identity pr
     6. Paste the command in a terminal, ensure you replace [APP_PORT] with the port on which your application is running locally, and run the command.
     7. To access the application and proceed to develop it, go to the URL given under **Step 2** in the **Local Development** pane.
 
-    !!!note
-        The local development proxy runs on HTTPS using a self-signed certificate. Your browser may warn that the certificate is not valid. Accept the risk and proceed.  
+        !!!note
+            The local development proxy runs on HTTPS using a self-signed certificate. Your browser may warn that the certificate is not valid. Accept the risk and proceed.  
 
 
 === "Use an external identity provider"
@@ -71,6 +71,6 @@ You can either use the Choreo built-in identity provider or external identity pr
     8. Paste the command in a terminal, ensure you replace [APP_PORT] with the port on which your application is running locally, and run the command.
     10. To access the application and proceed to develop it, go to the URL given under **Step 3** in the **Local Development** pane.
 
-    !!!note
-        The local development proxy runs on HTTPS using a self-signed certificate. Your browser may warn that the certificate is not valid. Accept the risk and proceed.  
+        !!!note
+            The local development proxy runs on HTTPS using a self-signed certificate. Your browser may warn that the certificate is not valid. Accept the risk and proceed.  
 
