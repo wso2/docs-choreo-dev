@@ -514,6 +514,7 @@ configMapGenerator:
       - MIZZEN_URL=http://dp-mizzen
       - CP_GATEWAY_ADAPTER_URL=http://cp-gw-adapter:8080
       - DOCKER_HUB_URL=https://hub.docker.com
+      - KV_RESOLVER_INTERNAL_SVC_URL="http://dp-kv-resolver"
   - name: cm-file-resource-registry
     behavior: create
     files:
