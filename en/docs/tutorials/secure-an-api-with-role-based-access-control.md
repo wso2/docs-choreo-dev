@@ -114,9 +114,7 @@ Now you are ready to promote the API to production.
 7. Go to the **Development** card and click **Promote**. The **Configure & Deploy** pane opens with the **Use Development endpoint configuration** option selected by default.
 8. Click **Next** to promote the API to production. Now you can publish the API
 9. In the left navigation menu, click **Manage** and then click **Lifecycle**.
-10. In the **Lifecycle Management** pane, click **Publish**.
-    A message will appear giving you the option to publish a connector for this REST API proxy. By creating a connector, you can make the API available in the Marketplace. In this tutorial, you will not publish a connector for the API.
-11. Click **No, Thanks**. This changes the status of the API to **Published**.
+10. In the **Lifecycle Management** pane, click **Publish**. This changes the status of the API to **Published**.
 
 Now, an application developer can discover the API, subscribe to it and then invoke it.
 

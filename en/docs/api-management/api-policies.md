@@ -58,13 +58,13 @@ To deploy the API follow the steps below:
 Choreo allows you to implement an API policy as a Ballerina project and attach it to an API proxy component. 
 
 !!! info
-    Supported Ballerina version: 2201.5.1 
+    Supported Ballerina version: 2201.5.5 
 
 To implement a policy, follow the steps given below: 
 
 ### Prerequisites
 
-1. Set up [ Ballerina 2201.5.1](https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.5.1).
+1. Set up [ Ballerina 2201.5.5](https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.5.5).
 2. Open the `~/.ballerina/settings.toml` file and ensure you have configured an access token to Ballerina Central. If you have not configured an access token, follow the steps given below to configure one: 
     1. Generate a token via [https://central.ballerina.io/dashboard?tab=token](https://central.ballerina.io/dashboard?tab=token).
     2. Download the generated `Settings.toml` file and copy it to your local `~/.ballerina` directory.
@@ -99,9 +99,17 @@ To create a Ballerina project for the mediation policy using `mediation.template
 Depending on your requirement, you can modify the `Ballerina.toml` and the `Package.md` files of the generated project. For example, you can update the org, package, package version, API documentation content, keywords, etc.
 
 !!! note
-    Make sure you update the org value to your organization name to successfully publish to Ballerina central.
+    To successfully publish to Ballerina central, make sure you update the `org` value to your organization name.
 
-![Ballerina toml](../assets/img/api-management/api-policies/ballerina-toml.png){.cInlineImage-half}
+```
+     [package]
+        org = "starkindustries"
+        name = "validateHeader"
+        version = "1.0.0"
+        export = ["validateHeader"]
+        distribution = "2201.5.5"
+        keywords = ["choreo-apim-mediation-policy","choreo-apim-mediation-request-flow","choreo-apim-mediation-response-flow","choreo-apim-mediation-fault-flow"]
+```
 
 ### Step 2: Implement the policy
 
@@ -190,10 +198,11 @@ In this guide, you are not going to make any changes to the `Fault` flow. Theref
         name = "packageName"
         version = "1.0.2"
         export = ["packageName"]
-        distribution = "2201.5.1"
+        distribution = "2201.5.5"
         keywords = ["choreo-apim-mediation-policy","choreo-apim-mediation-request-flow","choreo-apim-mediation-response-flow","choreo-apim-mediation-fault-flow"]
         visibility = "private"
      ```
+
  3. Package and publish your policy to Ballerina central.     
 
 #### Best practices 

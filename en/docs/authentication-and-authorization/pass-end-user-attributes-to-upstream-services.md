@@ -111,6 +111,13 @@ Choreo provides an endpoint to specify the public keys for backend JWT validatio
 - [https://gateway.e1-us-east-azure.choreoapis.dev/.wellknown/jwks](https://gateway.e1-us-east-azure.choreoapis.dev/.wellknown/jwks)
 - [https://gateway.e1-eu-north-azure.choreoapis.dev/.wellknown/jwks](https://gateway.e1-eu-north-azure.choreoapis.dev/.wellknown/jwks)
 
+!!! note
+    For private data planes (PDPs), use the following JWKS endpoint URL template:
+    
+    `https://<PDP_GATEWAY_DOMAIN>/.wellknown/jwks`
+
+    Be sure to replace `<PDP-GATEWAY-DOMAIN>` with the default domain configured to access the PDP APIs.
+
 The endpoint provides one or more signing keys to validate the JWT.
 The JSON web keys have a kid identifier that can be matched with the same property on the JWT to decide which key to use when validating.
 

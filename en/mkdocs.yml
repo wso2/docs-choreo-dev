@@ -89,7 +89,6 @@ nav:
       - Endpoint: choreo-concepts/endpoint.md
       - CI/CD: choreo-concepts/ci-cd.md
       - Deployment Tracks: choreo-concepts/deployment-tracks.md
-      - Configuration Management: choreo-concepts/configuration-management.md
       - Connections: choreo-concepts/connections.md
       - Data Planes: choreo-concepts/data-planes.md
       - Environments: choreo-concepts/environments.md
@@ -179,6 +178,9 @@ nav:
           - Access the Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
           - Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md 
       - Integrate Choreo with Moesif: monitoring-and-insights/integrate-choreo-with-moesif.md     
+  - Choreo CLI:
+      - Choreo CLI Overview: choreo-cli/choreo-cli-overview.md
+      - Get Started with the Choreo CLI: choreo-cli/get-started-with-the-choreo-cli.md  
   - Administer:
       - Configure a Custom Domain for APIs: administer/configure-a-custom-domain-for-apis.md
       - Configure Enterprise Login: administer/configure-enterprise-login.md
@@ -355,6 +357,7 @@ plugins:
           'develop-components/develop-services/develop-a-ballerina-rest-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-ballerina-service/'
           'develop-components/develop-services/develop-a-ballerina-graphql-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-ballerina-graphql-endpoint-via-a-service/'
           'quick-start-guides/build-your-first-cloud-native-application-with-choreo.md': 'https://wso2.com/choreo/docs/quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service/'
+          'choreo-concepts/configuration-management.md': 'https://wso2.com/choreo/docs/devops-and-ci-cd/manage-configurations-and-secrets/'
           
 extra_css:
   # - assets/lib/highlightjs/default.min.css
