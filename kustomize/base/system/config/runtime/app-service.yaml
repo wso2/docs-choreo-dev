@@ -175,6 +175,9 @@ defaultRoles:
         - choreo:component_manage
         - choreo:non_prod_env_manage
         - choreo:log_view_non_prod
+        - choreo:domain_view
+        - choreo:url_mapping_manage
+        - choreo:url_mapping_view
         - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
         - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
         - {{.PERMISSION_GLOBAL_CONFIG_DELETE}}
