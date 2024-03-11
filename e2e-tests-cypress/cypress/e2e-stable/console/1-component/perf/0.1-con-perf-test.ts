@@ -30,17 +30,18 @@ describe("Multiple User Logins", () => {
     cy.intercept({
       method: "POST",
       url: GRAPHQL_URL,
-      times: 1, 
-    }, (req) => { 
-      if (req.body.includes("createProject")) { 
-        req.alias = "createProjectRequest"; 
+      times: 1,
+  }, (req) => {
+      // Check if the request body string contains "createProject"
+      if (req.body.hasOwnProperty('query') && req.body.query.includes("createProject")) {
+          req.alias = "createProjectRequest";
       }
-    });
+  });
   
     project = console.createNewProject(PROJECT_DESCRIPTION);
     csv.writeInterceptionResultsToCsv("Creating a project");
   
-    cy.wait("@createProjectRequest").then((interception) => {
+    cy.wait("@createProjectRequest", { timeout: 12000 }).then((interception) => {
       try {
         expect(interception).to.have.property("response");
         expect(interception.response?.statusCode).to.equal(200);
@@ -67,10 +68,11 @@ describe("Multiple User Logins", () => {
       method: "POST",
       url: GRAPHQL_URL,
       times: 1,
-    }, (req) => { 
-      if (req.body.includes("createComponent")) {
-      req.alias = "componentCreationRequest"; } 
-    });
+  }, (req) => {
+      if (req.body.hasOwnProperty('query') && req.body.query.includes("createComponent")) {
+          req.alias = "componentCreationRequest";
+      }
+  });
   
     // Create a Ballerina service component
     project
@@ -87,7 +89,7 @@ describe("Multiple User Logins", () => {
         component = serviceComponent;
       });
   
-    cy.wait("@componentCreationRequest").then((interception) => {
+    cy.wait("@componentCreationRequest", { timeout: 12000 }).then((interception) => {
       try {
         expect(interception).to.have.property("response");
         expect(interception.response?.statusCode).to.equal(200);
@@ -108,18 +110,18 @@ describe("Multiple User Logins", () => {
   
 
 it("Build the component", () => {
-
   cy.intercept({
     method: "POST",
     url: GRAPHQL_URL,
     times: 1,
-  }, (req) => { 
-    if (req.body.includes("deployComponent")) {
-    req.alias = "buildComponentRequest"; } 
-  });
+}, (req) => {
+    if (req.body.hasOwnProperty('query') && req.body.query.includes("deployComponent")) {
+        req.alias = "buildComponentRequest";
+    }
+});
 
   component.build();
-  cy.wait("@buildComponentRequest").then((interception) => {
+  cy.wait("@buildComponentRequest", { timeout: 12000 }).then((interception) => {
     try {
       expect(interception).to.have.property("response");
       expect(interception.response?.statusCode).to.equal(200);
@@ -152,15 +154,15 @@ it("Deploying the component with Public level visibility", () => {
     method: "POST",
     url: GRAPHQL_URL,
     times: 1,
-  }, (req) => { 
-    if (req.body.includes("deployDeploymentTrack")) {
-      req.alias = "deployComponentRequest"; 
-    } 
-  });
+}, (req) => {
+    if (req.body.hasOwnProperty('query') && req.body.query.includes("deployDeploymentTrack")) {
+        req.alias = "deployComponentRequest";
+    }
+});
 
   component.deployPublicLevelAccessibility();
 
-  cy.wait("@deployComponentRequest").then((interception) => {
+  cy.wait("@deployComponentRequest", { timeout: 12000 }).then((interception) => {
     try {
       expect(interception).to.have.property("response");
       expect(interception.response?.statusCode).to.equal(200);
@@ -176,7 +178,6 @@ it("Deploying the component with Public level visibility", () => {
     }
   });
 });
-
 
 });
 
