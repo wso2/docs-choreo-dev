@@ -50,8 +50,11 @@ describe("Create and deploy a component to test developer portal with custom dom
       .then((comp) => {
         proxy = comp;
         // Since we are switching domains when navigating to custom devportal domain url we will no longer have access to the proxy object
-        // So we need to save the proxy metadata in the global cypress state using below cy.task() to access it later
-        cy.task("setAPIName", proxy.getMetaData());
+        // So we need to save the proxy metadata in nodejs global state using below cy.task() to access it later
+        cy.task("setData", {
+          key: Cypress.spec.name, // Unique key to store the data, in this case spec name is sufficient
+          value: proxy.getMetaData(),
+        });
       });
   });
 
@@ -74,7 +77,7 @@ describe("Create and deploy a component to test developer portal with custom dom
   it("Login to devportal custom domain", () => {
     devPortal.loginToDevPortal(CUSTOM_DOMAIN);
     // Recreate Proxy object using previously saved metadata
-    cy.task("getAPIName").then((metaData) => {
+    cy.task("getData", Cypress.spec.name).then((metaData) => {
       proxy = Proxy.fromMetaData(metaData as ProxyMetaData);
     });
   });
