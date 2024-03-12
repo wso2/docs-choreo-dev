@@ -3,7 +3,6 @@ resources:
   - testbase.yaml
   - email-service.yaml
   - api-server.yaml
-  - app-deployer.yaml
   - app-service.yaml
   - audit-logging.yaml
   - telemetry-go.yaml
