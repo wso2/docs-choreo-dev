@@ -78,7 +78,7 @@ function check_bot_membership() {
 
 function check_pat_permissions() {
     local github_token="$1"
-    local required_permissions=("admin:org" "admin:org_hook" "notifications" "read:public_key" "read:repo_hook" "repo" "workflow")
+    local required_permissions=("repo" "workflow" "write:packages" "admin:org" "admin:repo_hook" "admin:org_hook" "notifications" "user" "delete_repo" "admin:enterprise")
 
     # Fetch the permissions associated with the PAT
     local pat_permissions
