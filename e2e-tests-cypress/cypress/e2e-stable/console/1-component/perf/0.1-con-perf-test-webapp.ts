@@ -1,10 +1,14 @@
 import { GRAPHQL_URL } from "../../../../support/commons/urls";
 import { Enums } from "../../../../support/commons/enums";
-import { Service } from "../../../../support/console/entities/component/service-component";
 import { login } from "../../../../support/console/entities/login/login";
-import { Project } from "../../../../support/console/entities/project/project";
+import {
+  Project,
+  RepoInfo,
+  WebAppInfo,
+} from "../../../../support/console/entities/project/project";
 import { console } from "../../../../support/console/console";
 import { CSVWriter } from "../../../../support/commons/csvwriter";
+import { WebApp } from "../../../../support/console/entities/component/webapp-component";
 import { PERF_INTERCEPT_WAIT_TIME } from "../../../../support/commons/timeouts";
 
 after(() => {
@@ -13,11 +17,24 @@ after(() => {
 
 describe("Multiple User Logins", () => {
   let project: Project;
-  const PROJECT_DESCRIPTION = "Cypress Service Perf Test Project";
-  const ENDPOINT_NAME = "Readinglist";
-  let component: Service;
+  let webApp: WebApp;
+  const PROJECT_DESCRIPTION = "Cypress WebApp Perf Test Project";
   const username = Cypress.env("perfUsername");
   let csv;
+
+  const repoInfo: RepoInfo = {
+    url: "https://github.com/choreo-test-apps/choreo-examples",
+    branch: "main",
+    dockerContext:
+      "cloud-native-app-developer/reading-list-front-end-with-managed-auth",
+  };
+
+  const webAppInfo: WebAppInfo = {
+    webAppType: "React",
+    webAppBuildCommand: "npm install && npm run build",
+    webAppPackageManagerVersion: "18",
+    webAppOutputDirectory: "dist",
+  };
 
   before(() => {
     csv = new CSVWriter(username);
@@ -74,7 +91,7 @@ describe("Multiple User Logins", () => {
     );
   });
 
-  it("Verify Ballerina service component creation", () => {
+  it("Verify WebApp component creation", () => {
     cy.intercept(
       {
         method: "POST",
@@ -82,25 +99,18 @@ describe("Multiple User Logins", () => {
       },
       (req) => {
         const requestBodyString = JSON.stringify(req.body);
-        if (requestBodyString.includes("createComponent")) {
+        if (requestBodyString.includes("createByocComponent")) {
           req.alias = "componentCreationRequest";
         }
       }
     );
 
-    // Create a Ballerina service component
+    // Create a webapp component
     project
-      .createServiceComponent(
-        Enums.Accessibility.EXTERNAL,
-        {
-          url: "https://github.com/choreo-test-apps/byor-service-app1",
-          branch: "main",
-        },
-        ENDPOINT_NAME
-      )
-      .then((serviceComponent: Service) => {
-        project.visitComponent(serviceComponent.getName());
-        component = serviceComponent;
+      .createWebAppComponent(Enums.Accessibility.EXTERNAL, repoInfo, webAppInfo)
+      .then((app: WebApp) => {
+        project.visitComponent(app.getName());
+        webApp = app;
       });
 
     cy.wait("@componentCreationRequest", PERF_INTERCEPT_WAIT_TIME).then(
@@ -112,15 +122,17 @@ describe("Multiple User Logins", () => {
           expect(responseBody).to.have.property("data");
 
           const createComponent = responseBody?.data?.createComponent;
-          expect(createComponent, "createComponent is missing in the response")
-            .to.exist;
+          expect(
+            createComponent,
+            "createWebappComponent is missing in the response"
+          ).to.exist;
           expect(createComponent).to.have.property("orgId");
           expect(createComponent).to.have.property("projectId");
           expect(createComponent).to.have.property("handler");
         } catch (error: any) {
           cy.log(`Assertion error: ${error.message}`);
           csv.writeInterceptionResultsToCsv(
-            "Verify Ballerina service component creation",
+            "Verify Webapp service component creation",
             error.message
           );
         }
@@ -142,7 +154,7 @@ describe("Multiple User Logins", () => {
       }
     );
 
-    component.build();
+    webApp.build();
     cy.wait("@buildComponentRequest", PERF_INTERCEPT_WAIT_TIME).then(
       (interception) => {
         try {
@@ -172,7 +184,7 @@ describe("Multiple User Logins", () => {
     );
   });
 
-  it("Deploying the component with Public level visibility", () => {
+  it("Deploying to dev", () => {
     cy.intercept(
       {
         method: "POST",
@@ -186,7 +198,7 @@ describe("Multiple User Logins", () => {
       }
     );
 
-    component.deployPublicLevelAccessibility();
+    webApp.deployToDevWithAuthConfiguration();
 
     cy.wait("@deployComponentRequest", PERF_INTERCEPT_WAIT_TIME).then(
       (interception) => {
