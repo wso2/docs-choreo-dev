@@ -714,6 +714,9 @@ expose-a-ballerina-graphql-endpoint-via-a-service
 choreo-cli
 choreo-cli-overview
 get-started-with-the-choreo-cli
+pymdownx.highlight
+anchor_linenums
+pygments_lang_class
  - theme/material/templates/home-page.html
 doctype
 html
