@@ -2,13 +2,14 @@
 const cypress = require('cypress');
 const { exec } = require('child_process');
 
-const usersCount = 2;
-const startingNumber = 901;
+const usersCount = 1;
+const startingNumber = 501;
 const usernamePrefix = 'wso2con1AdminTenant';
 
  // Define test spec
  const testMethods = [
-    {spec: 'cypress/e2e-stable/console/1-component/perf/0.1-con-perf-test.ts'}
+   // {spec: 'cypress/e2e-stable/console/1-component/perf/0.1-con-perf-test.ts'}
+    {spec: 'cypress/e2e-stable/console/1-component/perf/0.2-con-perf-test-webapp.ts'}
 ];
 
 
