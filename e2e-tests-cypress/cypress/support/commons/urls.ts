@@ -42,3 +42,6 @@ export const EP_USER_HOME_URL = `${Cypress.env(
 )}/organizations/${Cypress.env("epuser")}/home?profile=default`;
 
 export const PROXY_DEPLOYER_EP = Cypress.env("proxyDeployerEP");
+
+export const DOMAIN_URL_MGT =
+  Cypress.env("newAppSvcURL") + "/url-mgt/v1.0/domains";

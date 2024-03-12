@@ -11,12 +11,12 @@
  * associated services.
  */
 
-import { sample } from "cypress/types/lodash";
 import { EndpointAccessibility, Enums } from "../../commons/enums";
 
 export namespace TestIds {
   export const userProfile = '[data-testid="header-user-profile-menu"]';
   export const backdropLoader = '[data-testid="backdrop-loader"]';
+  export const devPortalBackdropLoader = '[id="backdrop-loader"]';
   export const progressBar = '[role="progressbar"]';
   export const componentLoader = '[id="circular-loader"]';
   export const projectName = '[data-cyid="project-name"]';
@@ -237,6 +237,8 @@ export namespace TestIds {
   export const deleteDialogOk = '[data-testid="delete-dialog-ok-button"]';
   export const applicationListEdit = (appName: string) =>
     `[data-testid="edit-btn-${appName}"]`;
+  export const apiSubscriptionSearch =
+    ".MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input";
   export const configSubmit = '[data-cyid="btn-submit-configform"]';
   export const runNow = '[data-cyid="run-now-split-group-button-button"]';
   export const runNowNotification = '[data-testid="snackbar-notification"]';
