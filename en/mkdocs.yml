@@ -104,7 +104,9 @@ nav:
           - Expose a UDP Server via a Service: develop-components/develop-services/expose-a-udp-server-via-a-service.md
           - Expose a Ballerina GraphQL Endpoint via a Service: develop-components/develop-services/expose-a-ballerina-graphql-endpoint-via-a-service.md
       - Develop an API Proxy: develop-components/develop-an-api-proxy.md
-      - Develop a Web Application: develop-components/develop-a-web-application.md
+      - Develop Web Applications: 
+          - Build and Deploy a Single-Page Web Application: develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application.md
+          - Develop Web Applications Locally with Choreo’s Managed Authentication: develop-components/develop-web-applications/develop-web-applications-locally-with-managed-authentication.md
       - Develop a Webhook: develop-components/develop-a-webhook.md 
       - Develop Integrations:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
@@ -133,7 +135,6 @@ nav:
       - Secure API Access with Asgardeo: authentication-and-authorization/secure-api-access-with-asgardeo.md
       - Secure API Access with Azure: authentication-and-authorization/secure-api-access-with-azure-ad.md
       - Secure Web Applications with Managed Authentication: authentication-and-authorization/secure-web-applications-with-managed-authentication.md
-      - Local Development with Managed Authentication: authentication-and-authorization/local-development-with-managed-authentication.md
       - Test Secure API Access with Choreo Built-In Security Token Service: authentication-and-authorization/test-secure-api-access-with-choreo-built-in-security-token-service.md
       - Pass End-User Attributes to Upstream Services: authentication-and-authorization/pass-end-user-attributes-to-upstream-services.md
   - DevOps and CI/CD: 
@@ -358,6 +359,7 @@ plugins:
           'develop-components/develop-services/develop-a-ballerina-graphql-api.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-ballerina-graphql-endpoint-via-a-service/'
           'quick-start-guides/build-your-first-cloud-native-application-with-choreo.md': 'https://wso2.com/choreo/docs/quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service/'
           'choreo-concepts/configuration-management.md': 'https://wso2.com/choreo/docs/devops-and-ci-cd/manage-configurations-and-secrets/'
+          'develop-components/develop-a-web-application.md': 'https://wso2.com/choreo/docs/develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application/'
           
 extra_css:
   # - assets/lib/highlightjs/default.min.css
