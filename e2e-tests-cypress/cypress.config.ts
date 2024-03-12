@@ -15,23 +15,15 @@ export default defineConfig({
   chromeWebSecurity: false,
   e2e: {
     setupNodeEvents(on, config) {
-      let apiName;
-      let projectName;
+      const data = new Map<string, any>();
       on("task", {
-        setAPIName(val) {
-          return (apiName = val);
+        setData({ key, value }) {
+          data.set(key as string, value);
+          return value;
         },
 
-        getAPIName() {
-          return apiName;
-        },
-
-        setChoreoProjectName(val) {
-          return (projectName = val);
-        },
-
-        getChoreoProjectName() {
-          return projectName;
+        getData(key) {
+          return data.get(key as string);
         },
       });
       require("cypress-fail-fast/plugin")(on, config);

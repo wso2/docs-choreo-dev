@@ -10,31 +10,24 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-/// <reference types="cypress-xpath" />
 
-import { DomainsComponents } from "../../support/console/pages/component/common/domains-components";
-import { DevPortalHomePage } from "../../support/devportal/pages/home/home-page";
-import { Apis } from "../../support/devportal/pages/apis/apis-home";
-import { ApiCredentials } from "../../support/devportal/pages/apis/apis-credentials";
-import { TryOut } from "../../support/devportal/pages/apis/try-out";
-import { LoginPage as ConsoleLoginPage } from "../../support/console/pages/login-page";
-import { LoginPage as DevportalLoginPage } from "../../support/devportal/pages/login/login-page";
-import { ChoreoHomePage } from "../../support/console/pages/home/home-page";
-import { AppsList } from "../../support/devportal/pages/applications/apps-list";
-import { Subscriptions } from "../../support/devportal/pages/applications/subscriptions";
-import { generateAppName } from "../../support/devportal/utils";
-import { APISdk } from "../../support/devportal/pages/apis/api-sdk";
 import { CustomDomainType, Enums } from "../../support/commons/enums";
 import { console } from "../../support/console/console";
 import { Project } from "../../support/console/entities/project/project";
 import { Application } from "../../support/console/entities/application/application";
-import { Proxy } from "../../support/console/entities/component/proxy-component";
+import {
+  Proxy,
+  ProxyMetaData,
+} from "../../support/console/entities/component/proxy-component";
+import { devPortal } from "../../support/console/devportal";
 
 const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
 const Filepath = "apis/generation_oas.yaml";
 const PROJECT_DESCRIPTION = "Devportal custom domain scenario";
 
 describe("Create and deploy a component to test developer portal with custom domain", () => {
+  const OPERATION_USERS = "intensity";
+
   let project: Project;
   let proxy: Proxy;
   let application: Application;
@@ -56,6 +49,12 @@ describe("Create and deploy a component to test developer portal with custom dom
       })
       .then((comp) => {
         proxy = comp;
+        // Since we are switching domains when navigating to custom devportal domain url we will no longer have access to the proxy object
+        // So we need to save the proxy metadata in nodejs global state using below cy.task() to access it later
+        cy.task("setData", {
+          key: Cypress.spec.name, // Unique key to store the data, in this case spec name is sufficient
+          value: proxy.getMetaData(),
+        });
       });
   });
 
@@ -71,112 +70,58 @@ describe("Create and deploy a component to test developer portal with custom dom
     proxy.publish();
   });
 
-  // Partially migrated spec upto this point. Need to wait till changes to custom domain definition are finalized across all envs,
-  // before the rest of the spec can be migrated.
-
   it("Add a developer portal custom domain", () => {
-    // TODO: Uncomment the below code after the changes to custom domain definition are finalized across all envs
-    // console.addOrReplaceCustomDomain(CUSTOM_DOMAIN, CustomDomainType.DevPortal);
-
-    ChoreoHomePage.navigateToSettings();
-    DomainsComponents.navigateToDomainsSettings();
-    DomainsComponents.navigateToDevPortalCustomDomain();
-    DomainsComponents.deleteDevportalDomainIfExists(CUSTOM_DOMAIN);
-    DomainsComponents.createDevportalDomain(CUSTOM_DOMAIN);
+    console.addOrReplaceCustomDomain(CUSTOM_DOMAIN, CustomDomainType.DevPortal);
   });
 
-  after(() => {
-    console.logout();
-  });
-});
-
-describe("Login and test developer portal with custom domain", () => {
-  const OPERATION_USERS = "intensity";
-  const appName = generateAppName("-e2etest");
-
-  before(() => {
-    DevportalLoginPage.loginToDevportal(CUSTOM_DOMAIN);
-  });
-
-  after(() => {
-    DevPortalHomePage.logout();
-  });
-
-  it("Test in devportal", () => {
-    cy.task("getAPIName").then((apiName) => {
-      let API_Name = apiName as string;
-      DevPortalHomePage.navigateToApisPage();
-      Apis.searchApiAndSelect(API_Name);
-      DevPortalHomePage.navigateToPerApiView(API_Name);
-      Apis.verifyAPIname().should("eq", API_Name);
+  it("Login to devportal custom domain", () => {
+    devPortal.loginToDevPortal(CUSTOM_DOMAIN);
+    // Recreate Proxy object using previously saved metadata
+    cy.task("getData", Cypress.spec.name).then((metaData) => {
+      proxy = Proxy.fromMetaData(metaData as ProxyMetaData);
     });
   });
 
-  it("Generate credentials for  Sandbox env", () => {
-    ApiCredentials.navigateCredentialsTab();
-    ApiCredentials.generateCredentials(Enums.Environment.SANDBOX);
+  it("Find API in devportal custom domain", () => {
+    devPortal.searchApi(proxy.getName());
   });
 
-  it("Tryout API in Sandbox env", () => {
-    TryOut.navigateToTryOutMenu(true);
-    TryOut.selectEndpoint(Enums.Environment.DEVELOPMENT);
-    TryOut.GenerateAccessToken();
-    TryOut.SelectResource(OPERATION_USERS);
-    TryOut.TryoutAPI();
-    TryOut.ExecuteResourceFunction();
-    TryOut.GetResponse();
+  it("Generate credentials for SANDBOX env", () => {
+    proxy.generateCredentials_DevPortal(Enums.Environment.SANDBOX);
   });
 
-  it("Generate credentials and tryout the API in Prod env", () => {
-    ApiCredentials.navigateCredentialsTab();
-    TryOut.navigateToTryOutMenu(true);
-    TryOut.GenerateAccessToken();
-    TryOut.SelectResource(OPERATION_USERS);
-    TryOut.TryoutAPI();
-    TryOut.ExecuteResourceFunction();
-    TryOut.GetResponse();
+  it("Tryout API in Development env", () => {
+    proxy.testSwaggerConsole_DevPortal({
+      resource: OPERATION_USERS,
+      env: Enums.Environment.DEVELOPMENT,
+    });
+  });
+
+  it("Tryout API in Production env", () => {
+    proxy.testSwaggerConsole_DevPortal({
+      resource: OPERATION_USERS,
+      env: Enums.Environment.PRODUCTION,
+    });
   });
 
   it("Verify the downloaded SDK file", () => {
-    cy.task("getAPIName").then((API_Name) => {
-      const sdkFile = API_Name + "_v1.0_android.zip";
-      APISdk.downloadSDK(sdkFile);
-    });
+    proxy.downloadSdk_DevPortal(proxy.getName() + "_v1.0_android.zip");
   });
 
   it("Create a consumer application", () => {
-    DevPortalHomePage.navigateToAppsPage();
-    AppsList.createAnApplication(appName);
+    application = proxy.createApplication_DevPortal();
   });
 
-  it("Generate keys and Subscribe", () => {
-    AppsList.generateCredentials(Enums.Environment.SANDBOX);
-    AppsList.generateCredentials(Enums.Environment.PRODUCTION);
+  it("Generate subscription credentials", () => {
+    application.generateCredentials(Enums.Environment.SANDBOX);
+    application.generateCredentials(Enums.Environment.PRODUCTION);
   });
 
-  it("Generate credentials and tryout the API in Sandbox env", () => {
-    cy.task("getAPIName").then((an) => {
-      let API_Name = an as string;
-      Subscriptions.addSubscriptionToApplication(API_Name);
-      Subscriptions.validateResubscribingApi(API_Name);
-    });
+  it("Add subscription", () => {
+    application.addSubscription(proxy.getName());
   });
 
   it("Delete a consumer application", () => {
-    TryOut.DeleteApplication(appName);
-  });
-});
-
-describe("Delete added custom domain", () => {
-  before(() => {
-    ConsoleLoginPage.login();
-    ChoreoHomePage.navigateToSettings();
-    DomainsComponents.navigateToDomainsSettings();
-    DomainsComponents.navigateToDevPortalCustomDomain();
-  });
-
-  it("Delete added custom domain", () => {
-    DomainsComponents.deleteCreatedCustomDomain(CUSTOM_DOMAIN);
-    cy.log("Deleted the custom domain");
+    proxy.deleteApplication_DevPortal(application);
   });
 });

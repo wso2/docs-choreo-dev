@@ -28,9 +28,7 @@ export class Application {
   addSubscription(apiName: string) {
     cy.get(TestIds.subscriptions).click();
     cy.get(TestIds.createSubscription).click().wait(2000);
-    cy.get(
-      ".MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input"
-    ).type(apiName);
+    cy.get(TestIds.apiSubscriptionSearch).type(`${apiName} {enter}`);
     cy.get(TestIds.addApiSubscription(apiName)).click();
     cy.get(TestIds.subscriptionClose).click();
 
@@ -67,12 +65,11 @@ export class Application {
         " ,that has already subscribed "
     );
     cy.get(TestIds.createSubscription).click();
-    cy.wait(2000);
+    cy.get(TestIds.apiSubscriptionSearch).should("be.visible");
+    cy.get(TestIds.devPortalBackdropLoader).should("not.exist");
     cy.log("Search API " + apiName + " to subscribe");
-    cy.get(
-      ".MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input"
-    ).type(apiName);
-    cy.wait(2000);
+    cy.get(TestIds.apiSubscriptionSearch).type(`${apiName} {enter}`);
+    cy.get(TestIds.devPortalBackdropLoader).should("not.exist");
     cy.get(TestIds.addApiSubscription(apiName)).should("be.disabled");
     cy.get(TestIds.subscriptionClose).click();
   }
