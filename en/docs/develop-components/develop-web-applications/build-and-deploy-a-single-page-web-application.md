@@ -1,4 +1,4 @@
-# Develop a Web Application
+# Build and Deploy a Single-Page Web Application
 
 A web application is an application program hosted on a server and serves ingress traffic through a browser. In Choreo, you can deploy a web application by creating a Web Application component and connecting it to a Git repository that contains the implementation of the web application. Web applications can fall into one of the following categories:
 
