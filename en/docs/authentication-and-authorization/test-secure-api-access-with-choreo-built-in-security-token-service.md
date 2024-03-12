@@ -19,7 +19,7 @@ Before you try out this guide, ensure you have set up the following:
 
 - Configure the Choreo built-in identity provider with users. For step-by-step instructions, see [Configure a User Store with the Built-In Identity Provider](../administer/configure-a-user-store-with-built-in-idp.md).
 - Deploy and publish an API via Choreo. If you don't have an existing service in Choreo, you can either [develop a service](../develop-components/develop-services/develop-a-service.md) or an [API Proxy](../develop-components/develop-an-api-proxy.md).
-- A web application for API subscription. If you don't have an application in Choreo, you must [create a web application](../develop-components/develop-a-web-application.md).
+- A web application for API subscription. If you don't have an application in Choreo, you must [create a web application](../develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application.md)
 - Administrator rights in your Choreo organization. You need this access to configure role-group and role-permission mappings.
 
 ## Step 1: Assign permissions to an API in Choreo
