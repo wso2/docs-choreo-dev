@@ -1,10 +1,10 @@
 # Get Started with the Choreo CLI 
 
-This guide walks you through a the following sample use case:
+This guide walks you through the following sample use case:
 
 - Create a web application
 - Build the web application
-- Deploy the web application in the Development environment
+- Deploy the web application in the development environment
 - Promote the web application to the production environment
 
 This guide utilized a simple to-do app built with Next.js and two basic environments: Development and Production.
@@ -39,20 +39,20 @@ Run the following command to login to Choreo:
 choreo login
 ```
 
-Follow the instructions on the console to open the link in the browser and login in Choreo.
+Follow the instructions on the console to open the link in the browser and login to Choreo.
 
 ## Step 2: Create a project 
 
 A project in Choreo is a logical group of related components that typically represent a single cloud-native application. A project consists of one or more components.
 
-Create a multi-repository project names ‘default-project’ by running the following command:
+Create a multi-repository project named ‘default-project’ by running the following command:
 
 ``` sh
 choreo create project default-project --type=multi-repository
 ```
 ## Step 3: Create a Web Application component
 
-In Choreo, a component within your project represents a singular unit of work in a cloud-native application. It can be a microservice, API, web application, or job/task. Each component is associated with a directory path in a Git repository, containing the source code for the program.
+In Choreo, a component within your project represents a singular unit of work in a cloud-native application. It can be a microservice, API, web application, or job/task. Each component is associated with a directory path in a Git repository containing the source code for the program.
 
 1. Fork the repository https://github.com/wso2/choreo-sample-todo-list-app. This contains a sample web application that you can use for this guide. 
 
@@ -82,7 +82,7 @@ choreo create component my-web-app --project=default-project --type=webApp
 
 ## Step 4: View component details
 
-To view comprehensive information about the component, including basic details, and service endpoint URLs once the services are deployed, you can use the following command:
+To view comprehensive information about the component, including basic details and service endpoint URLs once the services are deployed, you can use the following command:
 
 ``` sh
 choreo describe component "my-web-app" --project="default-project"
@@ -90,7 +90,7 @@ choreo describe component "my-web-app" --project="default-project"
 
 ## Step 5: Build the component
 
-Components must be built before deployment to specific environments. Execute the following command to trigger the build:
+You must build the components before deploying them to a specific environment. Execute the following command to trigger the build:
 
 ``` sh
 choreo create build "my-web-app" --project="default-project"
@@ -109,7 +109,7 @@ choreo describe build <build-id> --project="default-project" --component="my-web
 
 ### Step 5.2: View build logs
 
-Once the build is complete, you can view the build logs for verification or debugging purposes. This will help you troubleshoot in the unlikely case the build encounters any issues.
+Once the build is complete, you can view the build logs for verification or debugging purposes. In the unlikely case, the build encounters any issues, the logs will help you troubleshoot.
 
 ``` sh
 choreo logs --type=build --project="default-project" --component="my-web-app2" --deployment-track="main" --build-id=<build_id>
@@ -117,7 +117,7 @@ choreo logs --type=build --project="default-project" --component="my-web-app2" -
 
 ## Step 6: Deploy to the Development environment
 
-Once the build status indicates `successful`, you can deploy the component in the Development environment by running the following command:
+Once the build status indicates `successful` you can deploy the component in the Development environment by running the following command:
 
 ``` sh
 choreo create deployment "my-web-app" --env=Development --project="default-project" --build-id=<build-id>
@@ -157,7 +157,7 @@ To ensure a successful deployment to the production environment, retrieve the UR
 choreo describe component "my-web-app" --project="default-project"
 ``` 
 
-Congratulations! You've successfully deployed your web application in Choreo using the Choreo CLI. 
+Congratulations! You successfully deployed your web application in Choreo using the Choreo CLI. 
 
 ## View all CLI functions
 
