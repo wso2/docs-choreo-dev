@@ -19,9 +19,9 @@ import { mixinTestProxy } from "../../features/test/test-proxy";
 import { InvokeInfo, mixinTestService } from "../../features/test/test-service";
 import { Component } from "./component";
 
-export class Byoc extends mixinBuild(mixinTestProxy(mixinServiceDeploy(mixinTestService(Component)))) {
- 
-  
+export class Byoc extends mixinBuild(
+  mixinTestProxy(mixinServiceDeploy(mixinTestService(Component)))
+) {
   constructor(name: string) {
     super(name, "main");
   }
@@ -30,14 +30,13 @@ export class Byoc extends mixinBuild(mixinTestProxy(mixinServiceDeploy(mixinTest
     this._build(this);
   }
 
-  deployToDev() {
-    this._deployTask(this, createDefaultSteps(2));
+  deployToDev(numberOfSteps: number = 2) {
+    this._deployTask(this, createDefaultSteps(numberOfSteps));
   }
 
-deployToDevWithConfigs(configs: ConfigEntryStep[]) {
-this._deployWebhook(this, configs);
-}
-
+  deployToDevWithConfigs(configs: ConfigEntryStep[]) {
+    this._deployWebhook(this, configs);
+  }
 
   testSwaggerConsole(
     environment: Enums.Environment,
@@ -60,12 +59,11 @@ this._deployWebhook(this, configs);
     return this._testConsole(this, invokeInfo);
   }
 
-  promoteProd() {
-    this._promoteTask(this, createDefaultSteps(2));
+  promoteProd(numberOfSteps: number = 2) {
+    this._promoteTask(this, createDefaultSteps(numberOfSteps));
   }
 
   promoteWithConfigs(configs: ConfigEntryStep[]) {
     this._promoteBYOC(this, configs);
-    }
-
+  }
 }

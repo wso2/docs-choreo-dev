@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { SHORT_TIME } from "../../../commons/timeouts";
+import { MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
 import { TestIds } from "../../constants/TestIds";
 
 export class LeftMenu {
@@ -84,7 +84,7 @@ export class LeftMenu {
           .click();
       }
     });
-    cy.get(TestIds.backdropLoader, SHORT_TIME).should("not.exist");
+    cy.get(TestIds.backdropLoader, MEDIUM_TIME).should("not.exist");
     this.moveMouseAwayFromLeftMenu();
   }
 

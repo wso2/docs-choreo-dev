@@ -17,7 +17,6 @@ import { Project } from "../../../../support/console/entities/project/project";
 import { console } from "../../../../support/console/console";
 import { OK } from "../../../../support/commons/http";
 
-
 after(() => {
   console.logout();
 });
@@ -29,7 +28,6 @@ describe("Verify Ballerina service functionality", () => {
   const PROJECT_NAME = "Default Project";
   const ENDPOINT_NAME = "Readinglist";
 
-
   it("Login to Console", () => {
     console.login();
   });
@@ -38,37 +36,37 @@ describe("Verify Ballerina service functionality", () => {
     project = console.searchProject(PROJECT_NAME);
   });
 
-
   it("Verify Reuse Ballerina service component creation", () => {
     project.isComponentExists(COMPONENT_NAME).then((isExists) => {
-     if (!isExists) {
-      project
-      .createServiceComponent(
-        Enums.Accessibility.EXTERNAL,
-        {
-          url: "https://github.com/choreo-test-apps/byor-service-app1",
-          branch: "main",
-        },
-        ENDPOINT_NAME
-      )
-      .then((serviceComponent: Service) => {
-        project.visitComponent(COMPONENT_NAME);
-        component = serviceComponent;
-      });
+      if (!isExists) {
+        project
+          .createServiceComponent(
+            Enums.Accessibility.EXTERNAL,
+            {
+              url: "https://github.com/choreo-test-apps/byor-service-app1",
+              branch: "main",
+            },
+            ENDPOINT_NAME,
+            COMPONENT_NAME
+          )
+          .then((serviceComponent: Service) => {
+            project.visitComponent(COMPONENT_NAME);
+            component = serviceComponent;
+          });
       } else {
-      project.visitComponent(COMPONENT_NAME);
-      component = new Service (COMPONENT_NAME, ENDPOINT_NAME);
+        project.visitComponent(COMPONENT_NAME);
+        component = new Service(COMPONENT_NAME, ENDPOINT_NAME);
       }
-      });
     });
+  });
 
-      it("Build the component", () => {
-        component.build();
-      });
-    
-      it("Deploying the component with Public level visibility", () => {
-        component.deployPublicLevelAccessibility();
-      });
+  it("Build the component", () => {
+    component.build();
+  });
+
+  it("Deploying the component with Public level visibility", () => {
+    component.deployPublicLevelAccessibility();
+  });
 
   it("Testing the component in Dev", () => {
     component
@@ -81,16 +79,15 @@ describe("Verify Ballerina service functionality", () => {
       })
       .then((res) => {
         cy.fixture("books").then((books) => {
-          expect(books[1].title).to.eq("Dead Men");
+          expect(res.response.toString()).to.include(books[1].title);
         });
-        expect(res.status).equal(OK);
+        expect(res.statusCode).equal(OK.toString());
       });
   });
 
   it("Verifying component promotion to Prod", () => {
     component.promotePublicLevelAccessibility();
   });
-
 
   it("Testing the component in Prod", () => {
     component
@@ -103,9 +100,9 @@ describe("Verify Ballerina service functionality", () => {
       })
       .then((res) => {
         cy.fixture("books").then((books) => {
-          expect(books[1].title).to.eq("Dead Men");
+          expect(res.response.toString()).to.include(books[1].title);
         });
-        expect(res.status).equal(OK);
+        expect(res.statusCode).equal(OK.toString());
       });
   });
 
@@ -113,6 +110,4 @@ describe("Verify Ballerina service functionality", () => {
     component.stopDeployment();
     component.stopPromotion();
   });
-
 });
-

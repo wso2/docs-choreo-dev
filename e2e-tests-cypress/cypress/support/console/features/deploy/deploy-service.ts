@@ -370,7 +370,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
             configStep.configEntryFunction();
           }
         } else {
-          cy.get(TestIds.next).should("be.visible").click();
+          cy.get(TestIds.next).should("be.visible").click().wait(500);
         }
       }
     }
