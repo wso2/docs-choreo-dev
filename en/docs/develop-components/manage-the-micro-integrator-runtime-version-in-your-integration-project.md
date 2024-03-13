@@ -16,6 +16,10 @@ In Choreo, the MI runtime version is structured as a four-digit number, for exam
 
 If you are using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/) to build and deploy integration artifacts in WSO2 Micro Integrator, you can create multiple runtime environments and execute projects on any selected environment. WSO2 Integration Studio also allows you to configure multiple Micro Integrator runtime environments, offering flexibility and customization in the execution of integration processes.
 
+You can specify the Runtime version when you create an Integration project in WSO2 Integration Studio. In the project creation wizard, you can specify the runtime version in the **Runtime version** field, as shown below.
+![Specify Runtime version](../assets/img/develop-components/micro-integrator/specify_runtime_version.png)
+
+
 An integration project is structured as a Maven project with multiple sub-modules. The root `pom.xml` file holds crucial information about the target runtime. The runtime version you configure when you create a new project is saved within the root `pom.xml` file. The version information is stored in the <project.runtime.version> element under the <properties> in the `pom.xml` file. If there is a need to update the runtime version, you have the flexibility to modify the value to a valid runtime version and ensure that the project runs in the required runtime environment.
 
 ![project runtime version](../assets/img/develop-components/micro-integrator/project-runtime-version.png)
@@ -69,7 +73,10 @@ Choreo utilizes Alpine images for configuring and deploying the Micro Integrator
 
 Changing the runtime version in an integration project may become necessary during product version upgrades or when you want to apply updates. 
 
-To change the runtime version of an integration project, open the root `pom.xml` file and set the `<project.runtime.version>` element under `<properties>` to the required runtime version. 
+To change the runtime version of an integration project, right-click on the project and select **Change Runtime MI Version**. Specify the new runtime version as shown below:
+![Redeploy project](../assets/img/develop-components/micro-integrator/update_runtime_version.png)
+
+Alternatively, you can manually update the version by opening the root `pom.xml` file and setting the `<project.runtime.version>` element under `<properties>` to the required runtime version.
 
 To apply the change, you must download and set up the runtime environment locally. Then, you must configure the Integration Studio runtime environment by directing it to the locally installed MI runtime. Once the setup is complete, you can deploy your integrations on the MI runtime environment and proceed to the testing phase.
 
