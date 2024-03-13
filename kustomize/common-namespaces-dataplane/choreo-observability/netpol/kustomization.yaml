@@ -1,7 +1,5 @@
 resources:
   - deny-all.yaml
-  - fluentbit.yaml
   - loggingapi.yaml
   - obsapi.yaml
-  - opensearch.yaml
   - sys-obsapi.yaml
