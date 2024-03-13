@@ -14,12 +14,12 @@ Local development uses a proxy that sits in front of the locally running web app
 
 ### Prerequisites
 
-- Create a single-page application (SPA) with managed authentication enabled.
+- Create a single-page application (SPA) with managed authentication enabled. For details on how to set up managed authentication for your web application, see [Secure Web Applications with Managed Authentication](../../authentication-and-authorization/secure-web-applications-with-managed-authentication.md#step-1-set-up-managed-authentication-for-your-web-application).  
 - Promote and deploy the application to the environment where you want to enable local development.
 
-   !!! note
-       - The web application that you run locally will use the same managed authentication configuration as the environment where you are configuring local development.
-       - Local development is only allowed in non-critical environments.
+    !!! note
+         - The web application that you run locally will use the same managed authentication configuration as the environment where you are configuring local development.
+         - Local development is only allowed in non-critical environments.
 
 
 ### Apply configurations
