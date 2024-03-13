@@ -16,7 +16,7 @@ In Choreo, the MI runtime version is structured as a four-digit number, for exam
 
 If you are using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/) to build and deploy integration artifacts in WSO2 Micro Integrator, you can create multiple runtime environments and execute projects on any selected environment. WSO2 Integration Studio also allows you to configure multiple Micro Integrator runtime environments, offering flexibility and customization in the execution of integration processes.
 
-You can specify the Runtime version when you create an Integration project in WSO2 Integration Studio. In the project creation wizard, you can specify the runtime version in the **Runtime version** field, as shown below.
+You can specify the Runtime version when you create an integration project in WSO2 Integration Studio. In the project creation wizard, specify the runtime version in the **Runtime version** field, as shown below.
 ![Specify Runtime version](../assets/img/develop-components/micro-integrator/specify_runtime_version.png)
 
 
