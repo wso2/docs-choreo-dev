@@ -20,7 +20,10 @@ To configure the front-end application, follow the steps given below:
     | **Field**             | **Description**                               |
     |-----------------------|-----------------------------------------------|
     | **Config Name**       | **Web App Config**                            |
-    | **Mount Path**        | **/usr/share/nginx/html/config.js**. Every config that needs to be exposed through the web server should be placed inside `/usr/share/nginx/html/`                          |
+    | **Mount Path**        | **/app/public/config.js**. Every config that needs to be exposed through the web server should be placed inside `/app/public`  or   `/usr/share/nginx/html/`                      |
+
+!!! note
+        For static web applications, if a configuration file is placed inside the public folder of the source with the same name as the file that is being mounted, the file that is being mounted to /app/public mount path will override the file inside the public folder. 
 
 5. Copy the config details as a JSON file as shown below into the text area. Fill the placeholders with the values you copied from the previous steps as mentioned in the table below.
 
