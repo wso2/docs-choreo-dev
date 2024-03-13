@@ -108,6 +108,39 @@ class Console {
     });
   }
 
+  removeCustomDomain(domainName: string, type: CustomDomainType) {
+    this.navigateToHome();
+    this.navigateToSettings();
+
+    cy.intercept({ method: "GET", url: DOMAIN_URL_MGT, times: 1 }).as(
+      "getDomains"
+    );
+
+    this.navigateToUrlSettings();
+
+    cy.wait("@getDomains").then((interception) => {
+      cy.get(TestIds.searchIcon).should("be.visible").click().wait(2000);
+      cy.get(TestIds.searchDomain)
+        .should("be.visible")
+        .within(() => {
+          cy.get("input").click().clear().type(domainName);
+        });
+
+      cy.get(TestIds.domainTable).within(() => {
+        cy.contains("td", domainName).should("be.visible");
+        interception.response?.body.forEach((domain) => {
+          if (domain.name === domainName) {
+            this.deleteSelectedDomain(domain.id);
+          } else {
+            throw new Error("Domain not found");
+          }
+        });
+        // Refresh the page to get the updated domain list since we doing the deletion through an API call
+        cy.reload();
+      });
+    });
+  }
+
   searchProject(projectName: string): Project {
     this.navigateToHome();
     cy.get(TestIds.searchIcon).click();

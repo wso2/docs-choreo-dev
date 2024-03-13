@@ -224,9 +224,13 @@ export class Project {
   createServiceComponent(
     accessibility: Enums.Accessibility,
     repoInfo: RepoInfo,
-    endpointName: string
+    endpointName: string,
+    componentName?: string
   ) {
-    const componentName = Utils.generateComponentName();
+    if (componentName === undefined) {
+      componentName = Utils.generateComponentName();
+    }
+
     let componentData: ComponentData = {
       componentName: componentName,
       displayType: Enums.DisplayType.ballerinaService,
@@ -254,9 +258,12 @@ export class Project {
   createWebAppComponent(
     accessibility: Enums.Accessibility,
     repoInfo: RepoInfo,
-    webAppInfo: WebAppInfo
+    webAppInfo: WebAppInfo,
+    componentName?: string
   ) {
-    const componentName = Utils.generateComponentName();
+    if (componentName === undefined) {
+      componentName = Utils.generateComponentName();
+    }
 
     let componentData: WebappComponent = {
       name: componentName,
@@ -354,9 +361,13 @@ export class Project {
 
   createScheduleTriggerComponent(
     accessibility: Enums.Accessibility,
-    repoInfo: RepoInfo
+    repoInfo: RepoInfo,
+    componentName?: string
   ) {
-    const componentName = Utils.generateComponentName();
+    if (componentName === undefined) {
+      componentName = Utils.generateComponentName();
+    }
+
     let componentData: ComponentData = {
       componentName: componentName,
       displayType: Enums.DisplayType.scheduledTask,
@@ -381,8 +392,15 @@ export class Project {
     });
   }
 
-  createTestRunnerComponent(repoInfo: RepoInfo, buildPackInfo: BuildPackInfo) {
-    const componentName = Utils.generateComponentName();
+  createTestRunnerComponent(
+    repoInfo: RepoInfo,
+    buildPackInfo: BuildPackInfo,
+    componentName?: string
+  ) {
+    if (componentName === undefined) {
+      componentName = Utils.generateComponentName();
+    }
+
     let componentData: TestRunnerComponent = {
       name: componentName,
       displayName: componentName,
@@ -452,9 +470,12 @@ export class Project {
   createMIServiceComponent(
     accessibility: Enums.Accessibility,
     repoInfo: RepoInfo,
-    endpointName: string
+    endpointName: string,
+    componentName?: string
   ) {
-    const componentName = Utils.generateComponentName();
+    if (componentName === undefined) {
+      componentName = Utils.generateComponentName();
+    }
 
     let componentData: IntegrationComponentData = {
       componentName: componentName,
@@ -480,9 +501,13 @@ export class Project {
   createByocComponent(
     repoInfo: RepoInfo,
     byocInfo: ByocInfo,
-    oasFilePath: string
+    oasFilePath: string,
+    componentName?: string
   ) {
-    const componentName = Utils.generateComponentName();
+    if (componentName === undefined) {
+      componentName = Utils.generateComponentName();
+    }
+
     let componentData: ByocComponent = {
       name: componentName,
       displayName: componentName,
@@ -514,9 +539,13 @@ export class Project {
   createByocServiceComponent(
     repoInfo: RepoInfo,
     byocInfo: ByocInfo,
-    oasFilePath: string
+    oasFilePath: string,
+    componentName?: string
   ) {
-    const componentName = Utils.generateComponentName();
+    if (componentName === undefined) {
+      componentName = Utils.generateComponentName();
+    }
+
     let componentData: ByocComponent = {
       name: componentName,
       displayName: componentName,

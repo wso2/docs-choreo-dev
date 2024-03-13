@@ -58,7 +58,7 @@ export class DevPortal {
 
     cy.get(TestIds.apiBar).click();
 
-    cy.wait("@searchAllApis", VERY_SHORT_TIME).then(() => {
+    cy.wait("@searchAllApis", SHORT_TIME).then(() => {
       cy.get(TestIds.apiSearch)
         .should("be.visible")
         .focus()
@@ -98,7 +98,7 @@ export class DevPortal {
 
     cy.get(TestIds.apiBar).click();
 
-    cy.wait("@searchAllApis", VERY_SHORT_TIME).then(() => {
+    cy.wait("@searchAllApis", SHORT_TIME).then(() => {
       cy.get(TestIds.apiSearch)
         .should("be.visible")
         .focus()

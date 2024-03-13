@@ -17,20 +17,17 @@ import { console } from "../../../../support/console/console";
 import { Project } from "../../../../support/console/entities/project/project";
 import { OK } from "../../../../support/commons/http";
 
-
 after(() => {
   console.logout();
 });
 
-
 describe(`Create Reusable BYOC`, () => {
-
   let project: Project;
   let byoc: Byoc;
 
   const BYOC_NAME = "create-ReuseBYOC";
   const RESOURCE_NAME = "movies";
-  const PROJECT_NAME="Default Project"
+  const PROJECT_NAME = "Default Project";
 
   it("Login to Console", () => {
     console.login();
@@ -40,41 +37,42 @@ describe(`Create Reusable BYOC`, () => {
     project = console.searchProject(PROJECT_NAME);
   });
 
-it("Navigate to existing BYOC component", () => {
-  project.isComponentExists(BYOC_NAME).then((isExists) => {
-    if (!isExists) {
-      project
-    .createByocComponent(
-      {
-        url: "https://github.com/choreo-test-apps/byor-greetings-app2",
-        branch: "main",
-      },
-      {
-        dockerfilePath: "byoc-test/Dockerfile",
-        dockerContext: "byoc-test",
-      },
-      "byoc-test/oas.yaml"
-    )
-    .then((comp: Byoc) => {
-      project.visitComponent(BYOC_NAME);
-      byoc = comp;
+  it("Navigate to existing BYOC component", () => {
+    project.isComponentExists(BYOC_NAME).then((isExists) => {
+      if (!isExists) {
+        project
+          .createByocComponent(
+            {
+              url: "https://github.com/choreo-test-apps/byor-greetings-app2",
+              branch: "main",
+            },
+            {
+              dockerfilePath: "byoc-test/Dockerfile",
+              dockerContext: "byoc-test",
+            },
+            "byoc-test/oas.yaml",
+            BYOC_NAME
+          )
+          .then((comp: Byoc) => {
+            project.visitComponent(BYOC_NAME);
+            byoc = comp;
+          });
+      } else {
+        project.visitComponent(BYOC_NAME);
+        byoc = new Byoc(BYOC_NAME);
+      }
     });
-    } else {
-    project.visitComponent(BYOC_NAME);
-    byoc = new Byoc (BYOC_NAME);
-  }
-});
-});
-    
-it("Build the Component", () => {
-  byoc.build();
-});
+  });
 
-it("Redeploying to Dev", () => {
-  byoc.deployToDev();
-});
+  it("Build the Component", () => {
+    byoc.build();
+  });
 
-it("Verify test functionality using Swagger UI in Dev", () => {
+  it("Redeploying to Dev", () => {
+    byoc.deployToDev(1);
+  });
+
+  it("Verify test functionality using Swagger UI in Dev", () => {
     byoc
       .testSwaggerConsole(Enums.Environment.DEVELOPMENT, RESOURCE_NAME)
       .then((res) => {
@@ -82,7 +80,7 @@ it("Verify test functionality using Swagger UI in Dev", () => {
       });
   });
 
-it("Verify test functionality using generated curl in Dev", () => {
+  it("Verify test functionality using generated curl in Dev", () => {
     byoc
       .testCurl(
         Enums.Environment.DEVELOPMENT,
@@ -94,13 +92,11 @@ it("Verify test functionality using generated curl in Dev", () => {
       });
   });
 
-
-it("Verify component promotion to Prod", () => {
-    byoc.promoteProd();
+  it("Verify component promotion to Prod", () => {
+    byoc.promoteProd(1);
   });
 
-
-it("Verify test functionality using Swagger UI in Prod", () => {
+  it("Verify test functionality using Swagger UI in Prod", () => {
     byoc
       .testSwaggerConsole(Enums.Environment.PRODUCTION, RESOURCE_NAME)
       .then((res) => {
@@ -108,7 +104,7 @@ it("Verify test functionality using Swagger UI in Prod", () => {
       });
   });
 
-it("Verify test functionality using generated curl in Prod", () => {
+  it("Verify test functionality using generated curl in Prod", () => {
     byoc
       .testCurl(
         Enums.Environment.PRODUCTION,
@@ -120,7 +116,7 @@ it("Verify test functionality using generated curl in Prod", () => {
       });
   });
 
-it("Stop component deployments", () => {
+  it("Stop component deployments", () => {
     byoc.stopDeployment();
     byoc.stopPromotion();
   });

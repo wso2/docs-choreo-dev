@@ -11,7 +11,11 @@
  * associated services.
  */
 
-import { BUILD_IN_PROGRESS, BUILD_SUCCESS } from "../../../commons/constants";
+import {
+  BUILD_FAILED,
+  BUILD_IN_PROGRESS,
+  BUILD_SUCCESS,
+} from "../../../commons/constants";
 import { LONG_TIME } from "../../../commons/timeouts";
 import { TestIds } from "../../constants/TestIds";
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";

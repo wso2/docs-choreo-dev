@@ -124,4 +124,9 @@ describe("Create and deploy a component to test developer portal with custom dom
   it("Delete a consumer application", () => {
     proxy.deleteApplication_DevPortal(application);
   });
+
+  it("Remove custom domain", () => {
+    console.login();
+    console.removeCustomDomain(CUSTOM_DOMAIN, CustomDomainType.DevPortal);
+  });
 });
