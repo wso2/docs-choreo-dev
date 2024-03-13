@@ -38,6 +38,9 @@ Choreo allows a maximum request payload size of 10 MB.
 ### Q: What source control software does Choreo support?
 Choreo currently supports GitHub and Bitbucket. Support for GitLab is on our roadmap. 
 
+### Q: Why don't I see the undeployed images for my component in Choreo?
+You are allowed to build your component and generate any number of images for your component. However, Choreo executes a daily cleanup process to remove undeployed images. For users on the free-tier, Choreo will retain only one undeployed image. For those on any other tier, Choreo will retain the latest five undeployed images.
+
 ### Q: What is Ballerina?
 Ballerina is an open-source programming language designed for the cloud. It simplifies the process of using, combining, and creating network services. When you use Ballerina to write integrations in Choreo, you can save time and deliver 2-3x faster. To learn more, check out https://ballerina.io/.
 
