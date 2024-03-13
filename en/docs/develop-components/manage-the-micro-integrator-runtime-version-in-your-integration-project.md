@@ -74,7 +74,7 @@ Choreo utilizes Alpine images for configuring and deploying the Micro Integrator
 Changing the runtime version in an integration project may become necessary during product version upgrades or when you want to apply updates. 
 
 To change the runtime version of an integration project, right-click on the project and select **Change Runtime MI Version**. Specify the new runtime version as shown below:
-![Redeploy project](../assets/img/develop-components/micro-integrator/update_runtime_version.png)
+![Update Runtime version](../assets/img/develop-components/micro-integrator/update_runtime_version.png)
 
 Alternatively, you can manually update the version by opening the root `pom.xml` file and setting the `<project.runtime.version>` element under `<properties>` to the required runtime version.
 
