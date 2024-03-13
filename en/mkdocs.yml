@@ -177,6 +177,9 @@ nav:
           - Access the Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
           - Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md 
       - Integrate Choreo with Moesif: monitoring-and-insights/integrate-choreo-with-moesif.md     
+  - Choreo CLI:
+      - Choreo CLI Overview: choreo-cli/choreo-cli-overview.md
+      - Get Started with the Choreo CLI: choreo-cli/get-started-with-the-choreo-cli.md  
   - Administer:
       - Configure a Custom Domain for APIs: administer/configure-a-custom-domain-for-apis.md
       - Configure Enterprise Login: administer/configure-enterprise-login.md
@@ -211,7 +214,9 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.emoji:
       emoji_generator: !!python/name:pymdownx.emoji.to_svg
-  - pymdownx.inlinehilite
+  - pymdownx.highlight:
+      anchor_linenums: true
+      pygments_lang_class: true
   - pymdownx.keys
   - pymdownx.mark
   - pymdownx.smartsymbols
