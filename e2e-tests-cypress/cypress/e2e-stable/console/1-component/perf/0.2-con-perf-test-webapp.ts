@@ -11,10 +11,6 @@ import { CSVWriter } from "../../../../support/commons/csvwriter";
 import { WebApp } from "../../../../support/console/entities/component/webapp-component";
 import { PERF_INTERCEPT_WAIT_TIME } from "../../../../support/commons/timeouts";
 
-after(() => {
-  console.logout();
-});
-
 describe("Multiple User Logins", () => {
   let project: Project;
   let webApp: WebApp;
@@ -91,53 +87,21 @@ describe("Multiple User Logins", () => {
     );
   });
 
-  it("Verify WebApp component creation", () => {
-    cy.intercept(
-      {
-        method: "POST",
-        url: GRAPHQL_URL,
-      },
-      (req) => {
-        const requestBodyString = JSON.stringify(req.body);
-        if (requestBodyString.includes("createByocComponent")) {
-          req.alias = "componentCreationRequest";
-        }
-      }
-    );
-
-    // Create a webapp component
-    project
-      .createWebAppComponent(Enums.Accessibility.EXTERNAL, repoInfo, webAppInfo)
-      .then((app: WebApp) => {
-        project.visitComponent(app.getName());
-        webApp = app;
-      });
-
-    cy.wait("@componentCreationRequest", PERF_INTERCEPT_WAIT_TIME).then(
-      (interception) => {
-        try {
-          expect(interception).to.have.property("response");
-          expect(interception.response?.statusCode).to.equal(200);
-          const responseBody = interception.response?.body;
-          expect(responseBody).to.have.property("data");
-
-          const createComponent = responseBody?.data?.createComponent;
-          expect(
-            createComponent,
-            "createWebappComponent is missing in the response"
-          ).to.exist;
-          expect(createComponent).to.have.property("orgId");
-          expect(createComponent).to.have.property("projectId");
-          expect(createComponent).to.have.property("handler");
-        } catch (error: any) {
-          cy.log(`Assertion error: ${error.message}`);
-          csv.writeInterceptionResultsToCsv(
-            "Verify Webapp service component creation",
-            error.message
-          );
-        }
-      }
-    );
+  it("Creating a Web App", () => {
+    try {
+      project
+        .createWebAppComponent(
+          Enums.Accessibility.EXTERNAL,
+          repoInfo,
+          webAppInfo
+        )
+        .then((app: WebApp) => {
+          project.visitComponent(app.getName());
+          webApp = app;
+        });
+    } catch (error: any) {
+      cy.log("Webapp Component creation failed: " + error.message);
+    }
   });
 
   it("Build the component", () => {

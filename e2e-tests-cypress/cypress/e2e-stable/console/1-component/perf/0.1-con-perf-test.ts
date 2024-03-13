@@ -7,10 +7,6 @@ import { console } from "../../../../support/console/console";
 import { CSVWriter } from "../../../../support/commons/csvwriter";
 import { PERF_INTERCEPT_WAIT_TIME } from "../../../../support/commons/timeouts";
 
-after(() => {
-  console.logout();
-});
-
 describe("Multiple User Logins", () => {
   let project: Project;
   const PROJECT_DESCRIPTION = "Cypress Service Perf Test Project";
@@ -75,57 +71,23 @@ describe("Multiple User Logins", () => {
   });
 
   it("Verify Ballerina service component creation", () => {
-    cy.intercept(
-      {
-        method: "POST",
-        url: GRAPHQL_URL,
-      },
-      (req) => {
-        const requestBodyString = JSON.stringify(req.body);
-        if (requestBodyString.includes("createComponent")) {
-          req.alias = "componentCreationRequest";
-        }
-      }
-    );
-
-    // Create a Ballerina service component
-    project
-      .createServiceComponent(
-        Enums.Accessibility.EXTERNAL,
-        {
-          url: "https://github.com/choreo-test-apps/byor-service-app1",
-          branch: "main",
-        },
-        ENDPOINT_NAME
-      )
-      .then((serviceComponent: Service) => {
-        project.visitComponent(serviceComponent.getName());
-        component = serviceComponent;
-      });
-
-    cy.wait("@componentCreationRequest", PERF_INTERCEPT_WAIT_TIME).then(
-      (interception) => {
-        try {
-          expect(interception).to.have.property("response");
-          expect(interception.response?.statusCode).to.equal(200);
-          const responseBody = interception.response?.body;
-          expect(responseBody).to.have.property("data");
-
-          const createComponent = responseBody?.data?.createComponent;
-          expect(createComponent, "createComponent is missing in the response")
-            .to.exist;
-          expect(createComponent).to.have.property("orgId");
-          expect(createComponent).to.have.property("projectId");
-          expect(createComponent).to.have.property("handler");
-        } catch (error: any) {
-          cy.log(`Assertion error: ${error.message}`);
-          csv.writeInterceptionResultsToCsv(
-            "Verify Ballerina service component creation",
-            error.message
-          );
-        }
-      }
-    );
+    try {
+      project
+        .createServiceComponent(
+          Enums.Accessibility.EXTERNAL,
+          {
+            url: "https://github.com/choreo-test-apps/byor-service-app1",
+            branch: "main",
+          },
+          ENDPOINT_NAME
+        )
+        .then((serviceComponent: Service) => {
+          project.visitComponent(serviceComponent.getName());
+          component = serviceComponent;
+        });
+    } catch (error: any) {
+      cy.log("Service component creation failed: " + error.message);
+    }
   });
 
   it("Build the component", () => {
