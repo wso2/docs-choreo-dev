@@ -78,6 +78,9 @@ You have successfully created a Service component that exposes a REST API writte
 
 Now that we have connected the source repository, and configured the endpoint details, it's time to build and deploy the greeter service.
 
+    !!! note
+        Ensure that the version of the Ballerina distribution specified in the Ballerina.toml file matches the distribution-version specified in the Dependencies.toml file if you have made modifications to this source code.
+
 To build and deploy the service, follow the steps below:
 
 1. In the left navigation click **Deploy** and navigate to the **Deploy** page.
