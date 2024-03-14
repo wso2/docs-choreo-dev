@@ -60,7 +60,7 @@ describe(`Verify BYOC functionality`, () => {
   });
 
   it("Deploying to Dev", () => {
-    byoc.deployToDev();
+    byoc.deployToDev(1);
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
