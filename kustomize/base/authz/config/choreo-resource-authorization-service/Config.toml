@@ -21,11 +21,11 @@ enableCheckPermissionConsistencyConf = true
 projectViewPermissionConf = "choreo:project_manage"
 projectUpdatePermissionConf = "choreo:project_manage"
 projectDeletePermissionConf = "choreo:project_manage"
-userManagementPermissionConf = "urn:choreosystem:usermanagement:user_manage"
-roleViewPermissionConf = "urn:choreosystem:usermanagement:role_view"
-roleCreatePermissionConf = "urn:choreosystem:usermanagement:role_create"
-roleUpdatePermissionConf = "urn:choreosystem:usermanagement:role_update"
-roleDeletePermissionConf = "urn:choreosystem:usermanagement:role_delete"
+userManagementPermissionConf = "{{.USER_MANAGEMENT_PERMISSION}}"
+roleViewPermissionConf = "{{.ROLE_VIEW_PERMISSION}}"
+roleCreatePermissionConf = "{{.ROLE_CREATE_PERMISSION}}"
+roleUpdatePermissionConf = "{{.ROLE_UPDATE_PERMISSION}}"
+roleDeletePermissionConf = "{{.ROLE_DELETE_PERMISSION}}"
 
 # Asgardeo token validation
 asgardeoTokenIssuerConf = "{{.ASGARDEO_TOKEN_ISSUER}}"
