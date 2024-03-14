@@ -98,7 +98,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.startDeployment(component);
 
-      this.stepThroughConfigSteps(component, configStepsAvailable);
+      this.stepThroughConfigSteps(configStepsAvailable);
 
       this.reviewAndUpdateEndpoint(
         component,
@@ -124,7 +124,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.sideMenu.navigateToDeploy();
       this.waitTillReadyToDeploy();
       this.startDeployment(component);
-      this.stepThroughConfigSteps(component, configStepsAvailable);
+      this.stepThroughConfigSteps(configStepsAvailable);
       this.verifyTaskDeploymentStatus();
     }
 
@@ -149,7 +149,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.sideMenu.navigateToDeploy();
       this.waitTillReadyToDeploy();
       this.startWebhookDeployment(component);
-      this.stepThroughConfigSteps(component, configStepsAvailable);
+      this.stepThroughConfigSteps(configStepsAvailable);
       this.verifyDeploymentStatus();
     }
 
@@ -161,7 +161,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     ) {
       this.sideMenu.navigateToDeploy();
       this.webhookPromotion(component);
-      this.stepThroughConfigSteps(component, configStepsAvailable);
+      this.stepThroughConfigSteps(configStepsAvailable);
       this.verifyPromotionStatus();
     }
 
@@ -175,7 +175,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.startPromotion(component);
 
-      this.stepThroughConfigSteps(component, configStepsAvailable);
+      this.stepThroughConfigSteps(configStepsAvailable);
 
       this.reviewAndUpdateEndpoint(
         component,
@@ -202,7 +202,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.startPromotion(component);
 
-      this.stepThroughConfigSteps(component, configStepsAvailable);
+      this.stepThroughConfigSteps(configStepsAvailable);
 
       this.verifyTaskPromotionStatus();
     }
@@ -216,7 +216,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.startPromotion(component);
 
-      this.stepThroughConfigSteps(component, configStepsAvailable);
+      this.stepThroughConfigSteps(configStepsAvailable);
 
       this.configureWebApp(hasAuthSettings);
 
@@ -228,7 +228,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     _promoteBYOC(component: Byoc, configStepsAvailable?: ConfigEntryStep[]) {
       this.sideMenu.navigateToDeploy();
       this.startPromotion(component);
-      this.stepThroughConfigSteps(component, configStepsAvailable);
+      this.stepThroughConfigSteps(configStepsAvailable);
       this.verifyPromotionStatus();
     }
 
@@ -345,17 +345,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       cyGet(TestIds.promote, MEDIUM_TIME).should("be.enabled").click();
     }
 
-    private stepThroughConfigSteps(
-      component:
-        | Webhook
-        | Service
-        | TestRunner
-        | ManualTrigger
-        | ScheduleTrigger
-        | WebApp
-        | Byoc,
-      configStepsAvailable?: ConfigEntryStep[]
-    ) {
+    private stepThroughConfigSteps(configStepsAvailable?: ConfigEntryStep[]) {
       if (configStepsAvailable === undefined) {
         return;
       }
@@ -370,7 +360,8 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
             configStep.configEntryFunction();
           }
         } else {
-          cy.get(TestIds.next).should("be.visible").click().wait(500);
+          Utils.getRenderedElement(TestIds.next, 3000).click();
+          cy.get(TestIds.next).should("not.exist");
         }
       }
     }
