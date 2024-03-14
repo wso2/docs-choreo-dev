@@ -1,10 +1,10 @@
 # Develop Web Applications Locally with Choreo’s Managed Authentication
 
-Choreo’s  Managed Authentication capability exposes a set of backend for frontend (BFF) endpoints, facilitating authentication and authorization for web applications. These endpoints are readily available for single-page web applications deployed on Choreo.
+Choreo’s managed authentication capability exposes a set of backend for frontend (BFF) endpoints, facilitating authentication and authorization for web applications. These endpoints are readily available for single-page web applications deployed on Choreo.
 
 As a web application developer, there may be instances where it becomes necessary to run the application on your personal workstation. In such situations, the expectation is for authentication and authorization during local development to work in the same manner as it would when the application is deployed to Choreo, eliminating the need to modify the source code.
 
-Local development in Choreo provides the same capabilities as developing the web application locally.
+Choreo's local development capability ensures a seamless local application development experience where the authentication and authorization process aligns with Choreo’s deployment environment. This facilitates a smoother transition from development to deployment, improving workflow efficiency.
 
 ## How local development works in Choreo
 
