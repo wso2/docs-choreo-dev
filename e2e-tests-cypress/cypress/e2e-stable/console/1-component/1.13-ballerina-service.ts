@@ -112,11 +112,6 @@ describe("Verify Ballerina service functionality", () => {
   });
 
   it("Deploying the new version", () => {
-    // Begin workaround for https://github.com/wso2-enterprise/choreo/issues/27312
-    component.goBackToProject();
-    project.visitComponent(component.getName());
-    cy.wait(120000);
-    // End workaround for https://github.com/wso2-enterprise/choreo/issues/27312
     component.deployPublicLevelAccessibility();
   });
 
