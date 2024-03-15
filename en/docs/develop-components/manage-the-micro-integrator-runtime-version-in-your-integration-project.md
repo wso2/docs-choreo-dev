@@ -75,28 +75,31 @@ Changing the runtime version in an integration project may become necessary duri
 
 To change the runtime version of a MI Integration, follow the below steps.
 
-### Update the runtime version in the Integration project
+### Update the runtime version in the integration project
     
-- To change the runtime version open the project in integration studio
-- Right-click on the project and select **Change Runtime MI Version**.
-![Update Runtime version](../assets/img/develop-components/micro-integrator/click_change_runtime.png)
-- Specify the new runtime version as shown below:
-![Update Runtime version](../assets/img/develop-components/micro-integrator/update_runtime_version.png)
-- Alternatively, you can manually update the version by opening the root `pom.xml` file
-- Open pom.xml and change the required runtime version in `<project.runtime.version>` element under `<properties>` section.
+To change the runtime version in the integration project, follow the steps below:
+1. Open the project in Integration Studio.
+2. Right-click on the project and select **Change Runtime MI Version**.
+    ![Update Runtime version](../assets/img/develop-components/micro-integrator/click_change_runtime.png)
+3.  Specify the new runtime version as shown below:
+    ![Update Runtime version](../assets/img/develop-components/micro-integrator/update_runtime_version.png)
+4. Alternatively, you can manually update the version by opening the root `pom.xml` file.  Open pom.xml and change the required runtime version in `<project.runtime.version>` element under `<properties>` section.
 
 To test the changes locally, you must download and set up the runtime environment locally. Then, you must [configure the Integration Studio runtime environment](#configure-a-micro-integrator-runtime-environment-in-integration-studio) by directing it to the locally installed MI runtime. Once the setup is complete, you can deploy your integrations on the MI runtime environment and proceed to the testing phase.
 
-After completing the tests to ensure everything works as expected, you can follow below steps:
+After completing the tests to ensure everything works as expected, you can follow below steps to deploy the project in Choreo:
 
-- Commit the changes
-- Push changes to your version management system(GitHub, Bitbucket, etc.)
-- Login to the Choreo console and navigate to the project
-- Select MI Integration and go to the **Build** section
-- Build the MI Integration
-- Go to the **Deploy** section and deploy the MI Integration to the required environment.
-- Verify the Runtime version by checking the Logs. For that select the **Runtime Logs** under the **Observability** section.
-- You will see the runtime version in the logs as shown below:
+1. Commit and push the changes to your repository.
+2. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in.
+3. Select your project from the **Project** list in the header.
+4. Select your MI integration component from the **Component** list in the header.
+5. In the left navigation menu, click **Build**.
+6. Select the latest commit and click **Build**.
+7. In the left navigation menu, click **Deploy**.
+8. Click on the **Configure and Deploy** and deploy the component.
+9. Verify the Runtime version by checking the logs by selecting the **Runtime Logs** under the **Observability** section.
+
+  You will see the runtime version in the logs as shown below:
   ![Runtime version in logs](../assets/img/develop-components/micro-integrator/runtime_version_in_logs.png)
 
 Next, you must conduct additional testing in the development environment on Choreo before you promote the integration to production environments.
