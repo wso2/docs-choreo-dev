@@ -4,8 +4,8 @@ import { Service } from "../../../../support/console/entities/component/service-
 import { login } from "../../../../support/console/entities/login/login";
 import { Project } from "../../../../support/console/entities/project/project";
 import { console } from "../../../../support/console/console";
-import { CSVWriter } from "../../../../support/commons/csvwriter";
 import { PERF_INTERCEPT_WAIT_TIME } from "../../../../support/commons/timeouts";
+import { InterceptWriter } from "../../../../support/commons/interceptWriter";
 
 describe("Multiple User Logins", () => {
   let project: Project;
@@ -13,10 +13,12 @@ describe("Multiple User Logins", () => {
   const ENDPOINT_NAME = "Readinglist";
   let component: Service;
   const username = Cypress.env("perfUsername");
-  let csv;
+  let interceptWriter;
+  const fixtureFileName = `${username}-intercept.json`;
+  const filePath = `${fixtureFileName}`;
 
   before(() => {
-    csv = new CSVWriter(username);
+    interceptWriter = new InterceptWriter();
   });
 
   it("Login with multiple users concurrently", () => {
@@ -30,7 +32,6 @@ describe("Multiple User Logins", () => {
         url: GRAPHQL_URL,
       },
       (req) => {
-        // Convert req.body to a string
         const requestBodyString = JSON.stringify(req.body);
         if (requestBodyString.includes("createProject")) {
           req.alias = "createProjectRequest";
@@ -39,15 +40,12 @@ describe("Multiple User Logins", () => {
     );
 
     project = console.createNewProject(PROJECT_DESCRIPTION);
-    csv.writeInterceptionResultsToCsv("Creating a project");
 
     cy.wait("@createProjectRequest", PERF_INTERCEPT_WAIT_TIME).then(
       (interception) => {
         try {
           expect(interception).to.have.property("response");
           expect(interception.response?.statusCode).to.equal(200);
-          csv.writeInterceptionResultsToCsv("Creating a project");
-
           const responseBody = interception.response?.body;
           expect(responseBody).to.have.property("data");
 
@@ -61,9 +59,11 @@ describe("Multiple User Logins", () => {
         } catch (error: any) {
           // Log assertion errors and proceed
           cy.log(`Assertion error: ${error.message}`);
-          csv.writeInterceptionResultsToCsv(
-            "Creating a project",
-            error.message
+          interceptWriter.interceptAndWriteToFixture(
+            "createProjectRequest",
+            filePath,
+            interception.request,
+            interception.response
           );
         }
       }
@@ -128,7 +128,12 @@ describe("Multiple User Logins", () => {
           });
         } catch (error: any) {
           cy.log(`Assertion error: ${error.message}`);
-          csv.writeInterceptionResultsToCsv(error.message);
+          interceptWriter.interceptAndWriteToFixture(
+            "buildComponentRequest",
+            filePath,
+            interception.request,
+            interception.response
+          );
         }
       }
     );
@@ -155,7 +160,6 @@ describe("Multiple User Logins", () => {
         try {
           expect(interception).to.have.property("response");
           expect(interception.response?.statusCode).to.equal(200);
-
           const responseBody = interception.response?.body;
           expect(responseBody).to.have.property("data");
 
@@ -163,7 +167,12 @@ describe("Multiple User Logins", () => {
           expect(deploymentResponse).to.equal("Sucessfully deployed");
         } catch (error: any) {
           cy.log(`Assertion error: ${error.message}`);
-          csv.writeInterceptionResultsToCsv(error.message);
+          interceptWriter.interceptAndWriteToFixture(
+            "deployComponentRequest",
+            filePath,
+            interception.request,
+            interception.response
+          );
         }
       }
     );
