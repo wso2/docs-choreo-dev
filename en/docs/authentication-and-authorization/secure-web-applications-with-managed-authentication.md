@@ -32,7 +32,6 @@ When a user clicks sign in on your web application, Choreo will redirect the use
 
 !!! note
     Refer to [configure the identity provider section](#step-3-configure-the-identity-provider-for-the-web-application) for details on configuring an identity provider for the web application. 
-    The userbase for the web application will be coming from this configured identity provider.
 
 ### Step 1.2: Obtain user information claims
 
