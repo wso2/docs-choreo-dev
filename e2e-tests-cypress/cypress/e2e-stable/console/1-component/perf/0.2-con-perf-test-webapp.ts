@@ -7,16 +7,18 @@ import {
   WebAppInfo,
 } from "../../../../support/console/entities/project/project";
 import { console } from "../../../../support/console/console";
-import { CSVWriter } from "../../../../support/commons/csvwriter";
 import { WebApp } from "../../../../support/console/entities/component/webapp-component";
 import { PERF_INTERCEPT_WAIT_TIME } from "../../../../support/commons/timeouts";
+import { InterceptWriter } from "../../../../support/commons/interceptWriter";
 
 describe("Multiple User Logins", () => {
   let project: Project;
   let webApp: WebApp;
   const PROJECT_DESCRIPTION = "Cypress WebApp Perf Test Project";
   const username = Cypress.env("perfUsername");
-  let csv;
+  let interceptWriter;
+  const fixtureFileName = `${username}-intercept.json`;
+  const filePath = `${fixtureFileName}`;
 
   const repoInfo: RepoInfo = {
     url: "https://github.com/choreo-test-apps/choreo-examples",
@@ -31,9 +33,10 @@ describe("Multiple User Logins", () => {
     webAppPackageManagerVersion: "18",
     webAppOutputDirectory: "dist",
   };
+  
 
   before(() => {
-    csv = new CSVWriter(username);
+    interceptWriter = new InterceptWriter();
   });
 
   it("Login with multiple users concurrently", () => {
@@ -56,14 +59,12 @@ describe("Multiple User Logins", () => {
     );
 
     project = console.createNewProject(PROJECT_DESCRIPTION);
-    csv.writeInterceptionResultsToCsv("Creating a project");
 
     cy.wait("@createProjectRequest", PERF_INTERCEPT_WAIT_TIME).then(
       (interception) => {
         try {
           expect(interception).to.have.property("response");
           expect(interception.response?.statusCode).to.equal(200);
-          csv.writeInterceptionResultsToCsv("Creating a project");
 
           const responseBody = interception.response?.body;
           expect(responseBody).to.have.property("data");
@@ -78,9 +79,11 @@ describe("Multiple User Logins", () => {
         } catch (error: any) {
           // Log assertion errors and proceed
           cy.log(`Assertion error: ${error.message}`);
-          csv.writeInterceptionResultsToCsv(
-            "Creating a project",
-            error.message
+          interceptWriter.interceptAndWriteToFixture(
+            "createProjectRequest",
+            filePath,
+            interception.request,
+            interception.response
           );
         }
       }
@@ -142,7 +145,12 @@ describe("Multiple User Logins", () => {
           });
         } catch (error: any) {
           cy.log(`Assertion error: ${error.message}`);
-          csv.writeInterceptionResultsToCsv(error.message);
+          interceptWriter.interceptAndWriteToFixture(
+            "buildComponentRequest",
+            filePath,
+            interception.request,
+            interception.response
+          );
         }
       }
     );
@@ -177,7 +185,12 @@ describe("Multiple User Logins", () => {
           expect(deploymentResponse).to.equal("Sucessfully deployed");
         } catch (error: any) {
           cy.log(`Assertion error: ${error.message}`);
-          csv.writeInterceptionResultsToCsv(error.message);
+          interceptWriter.interceptAndWriteToFixture(
+            "deployComponentRequest",
+            filePath,
+            interception.request,
+            interception.response
+          );
         }
       }
     );
