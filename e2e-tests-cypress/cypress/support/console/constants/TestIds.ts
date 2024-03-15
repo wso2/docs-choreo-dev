@@ -309,6 +309,9 @@ export namespace TestIds {
   export const confirmDialog = '[data-cyid="confirmation-dialog"]';
   export const confirmDelete =
     '[data-cyid="confirmation-dialog-destructive-action-button"]';
+  export const apiInfo = '[data-cyid="manage-marketplace"]';
+  export const apiInfoDevPortal = '[data-cyid="api-info-tab-developer-portal"]';
+  export const apiInfoSave = '[data-cyid="tst-marketplace-save-button"]';
   export const apiVisibility = '[data-cyid="visibility-select"]';
   export const devPortalHome = '[data-testid="home-appbar-btn"]';
   export const devPortalLoginLink = '[data-testid="login-button"]';

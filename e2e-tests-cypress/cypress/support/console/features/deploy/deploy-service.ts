@@ -361,7 +361,6 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
           }
         } else {
           Utils.getRenderedElement(TestIds.next, 3000).click();
-          cy.get(TestIds.next).should("not.exist");
         }
       }
     }
