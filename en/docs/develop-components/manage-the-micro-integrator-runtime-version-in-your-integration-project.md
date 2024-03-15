@@ -73,14 +73,33 @@ Choreo utilizes Alpine images for configuring and deploying the Micro Integrator
 
 Changing the runtime version in an integration project may become necessary during product version upgrades or when you want to apply updates. 
 
-To change the runtime version of an integration project, right-click on the project and select **Change Runtime MI Version**. Specify the new runtime version as shown below:
+To change the runtime version of a MI Integration, follow the below steps.
+
+### Update the runtime version in the Integration project
+    
+- To change the runtime version open the project in integration studio
+- Right-click on the project and select **Change Runtime MI Version**.
+![Update Runtime version](../assets/img/develop-components/micro-integrator/click_change_runtime.png)
+- Specify the new runtime version as shown below:
 ![Update Runtime version](../assets/img/develop-components/micro-integrator/update_runtime_version.png)
+- Alternatively, you can manually update the version by opening the root `pom.xml` file
+- Open pom.xml and change the required runtime version in `<project.runtime.version>` element under `<properties>` section.
 
-Alternatively, you can manually update the version by opening the root `pom.xml` file and setting the `<project.runtime.version>` element under `<properties>` to the required runtime version.
+To test the changes locally, you must download and set up the runtime environment locally. Then, you must [configure the Integration Studio runtime environment](#configure-a-micro-integrator-runtime-environment-in-integration-studio) by directing it to the locally installed MI runtime. Once the setup is complete, you can deploy your integrations on the MI runtime environment and proceed to the testing phase.
 
-To apply the change, you must download and set up the runtime environment locally. Then, you must configure the Integration Studio runtime environment by directing it to the locally installed MI runtime. Once the setup is complete, you can deploy your integrations on the MI runtime environment and proceed to the testing phase.
+After completing the tests to ensure everything works as expected, you can follow below steps:
 
-When you update an integration and migrate to a different runtime version, you must test the integration locally using WSO2 Integration Studio. After completing the tests to ensure everything works as expected, you can commit the changes to GitHub. Next, you must conduct additional testing in the development environment on Choreo before you promote the integration to production environments.
+- Commit the changes
+- Push changes to your version management system(GitHub, Bitbucket, etc.)
+- Login to the Choreo console and navigate to the project
+- Select MI Integration and go to the **Build** section
+- Build the MI Integration
+- Go to the **Deploy** section and deploy the MI Integration to the required environment.
+- Verify the Runtime version by checking the Logs. For that select the **Runtime Logs** under the **Observability** section.
+- You will see the runtime version in the logs as shown below:
+  ![Runtime version in logs](../assets/img/develop-components/micro-integrator/runtime_version_in_logs.png)
+
+Next, you must conduct additional testing in the development environment on Choreo before you promote the integration to production environments.
 
 ## Troubleshoot errors
 
