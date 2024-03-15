@@ -240,6 +240,9 @@ Click the respective tab for details depending on which identity provider you ne
              If the **Regenerate Secret** button is shown instead of the **Generate Secret** button, it indicates that OAuth keys are already generated for the component for the selected environment.
 
     !!! tip
+        Refer to [Configure a User Store with the Built-In Identity Provider](../../administer/configure-a-user-store-with-built-in-idp/) for details on adding test users in Choreo built-in identity provider.
+
+    !!! tip
         If you need to invoke APIs secured with role-based access control, you can test this within Choreo by creating roles for the application and mapping those roles to relevant permissions (scope) and user groups. For more information, see [create roles and assign permissions](../test-secure-api-access-with-choreo-built-in-security-token-service/#step-2-create-roles-and-assign-permissions) and [assign roles to user groups](../test-secure-api-access-with-choreo-built-in-security-token-service/#step-3-assign-roles-to-user-groups) sections in [Test Secure API Access with Choreo Built-In Security Token Service](../test-secure-api-access-with-choreo-built-in-security-token-service).
 
 === "Configure Asgardeo"
