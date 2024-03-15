@@ -31,7 +31,7 @@ This code snippet works as follows:
 When a user clicks sign in on your web application, Choreo will redirect the user to the configured identity provider and handle the authentication process, conforming to the OICD/OAuth2.0 protocols. On successful sign-in, Choreo will set the relevant session cookies and redirect the user to the post-sign-in path (default is `/`). The user can then invoke any Choreo-deployed APIs depending on the permission granted.
 
 !!! note
-    Refer to [configure identity provider section](#step-3-configure-the-identity-provider-for-the-web-application) for details on how to configure an identity provider for the web application. 
+    Refer to [configure the identity provider section](#step-3-configure-the-identity-provider-for-the-web-application) for details on configuring an identity provider for the web application. 
     The userbase for the web application will be coming from this configured identity provider.
 
 ### Step 1.2: Obtain user information claims
