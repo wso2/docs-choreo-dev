@@ -3,7 +3,6 @@ resources:
   - alert-configuration-service.yaml
   - analytics-subscription.yaml
   - api-server.yaml
-  - app-deployer.yaml
   - app-service.yaml
   - audit-logging.yaml
   - code-challenge-eval.yaml

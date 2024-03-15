@@ -286,7 +286,13 @@ export function mixinManage<T extends Types.Constructor>(
     }
 
     _updateApiVisibility(component: Component, visibility: ApiVisibility) {
-      this.sideMenu.navigateToSettings();
+      if (Utils.isApiConfigurationEnabled()) {
+        this.sideMenu.navigateToManage();
+        cy.get(TestIds.apiInfo).should("be.visible").click();
+        cy.get(TestIds.apiInfoDevPortal).should("be.visible").click();
+      } else {
+        this.sideMenu.navigateToSettings();
+      }
 
       this.deploymentTrack.validate(component);
 
@@ -300,8 +306,15 @@ export function mixinManage<T extends Types.Constructor>(
             cy.contains(visibility, { matchCase: false })
               .should("exist")
               .click();
-            cy.get(TestIds.dialogPrimaryAction).should("be.visible").click();
-            cy.get(TestIds.dialogPrimaryAction).should("not.exist");
+
+            if (Utils.isApiConfigurationEnabled()) {
+              cy.get(TestIds.apiInfoSave).should("be.enabled").click();
+              cy.get(TestIds.backdropLoader).should("not.exist");
+              cy.get(TestIds.apiInfoSave).should("be.disabled");
+            } else {
+              cy.get(TestIds.dialogPrimaryAction).should("be.visible").click();
+              cy.get(TestIds.dialogPrimaryAction).should("not.exist");
+            }
 
             cy.get(TestIds.apiVisibility)
               .should("be.visible")

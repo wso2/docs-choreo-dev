@@ -33,6 +33,7 @@ describe("Multiple User Logins", () => {
     webAppPackageManagerVersion: "18",
     webAppOutputDirectory: "dist",
   };
+  
 
   before(() => {
     interceptWriter = new InterceptWriter();
