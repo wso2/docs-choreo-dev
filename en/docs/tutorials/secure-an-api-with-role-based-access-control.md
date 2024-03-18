@@ -79,19 +79,20 @@ Follow these steps to create an API proxy component, add resources, and deploy i
     ![API resources](../assets/img/tutorials/role-based-auth/api-resources.png)
 
 6. In the left navigation menu, click **Deploy**.
-7. Go to the **Build Area** card and click **Configure & Deploy**. The **Configure & Deploy** pane opens with the endpoint populated as `https://samples.choreoapps.dev/company/hr`.
-8. Click **Save & Deploy**.
-
+7. Go to the **Build Area** card and click **Configure & Deploy**. 
+8. In the **Configure API Access Mode** pane that opens, select either **External** or **Internal**, depending on how you want the API to be accessible. In this tutorial, select **External**.
+9. Click **Deploy**.
+    
 ### Step 2: Apply permission to resources and publish the API
 
 Follow these steps:
 
-1. In the left navigation menu, click **Manage**, and then click **Permissions**. 
-2. In the **Permissions** pane, click **+ Add Permission(Scope)**.
+1. On the **Deploy** page, go to the **Build Area** card and click **Security Settings**.
+2. In the **Security Settings** pane, go to the **Permissions List** section and click **+ Add Permission(Scope)**.
 3. To add necessary permission values to the permission list, follow the steps given below:
-    1. In the **Permission List** pane, enter `get_user_list` as the permission value and click **+Add New**.
+    1. In the **Permissions List** section, enter `get_user_list` as the permission value and click **+Add New**.
     2. Similarly, add `get_user`, `create_user`, and `delete_user` as permission values.
-4. In the **Permissions** pane, select the permission values as follows for each of the resources:
+4. In the **Permissions** section, expand each resource and select the permission values as follows for each:
 
     |  **Resource**             | **Permission** |
     |---------------------------|----------------|
@@ -100,13 +101,11 @@ Follow these steps:
     | **POST/users**            | `create_user`  |
     | **DELETE/users/{userID}** | `delete_user`  |
 
-5. Click **Save and Deploy**.
-  
-    !!!note
-
-            To verify whether the permission(scope) values have been applied to the resources, click **Settings**, then click the **Resources** tab, expand a resource, and check the attached permission value.
-
-            ![Resource permission](../assets/img/tutorials/role-based-auth/resource-permission.png){.cInlineImage-full}
+5. Click **Apply**.
+6. To apply the latest permissions to the deployed component, you must redeploy it. Follow the steps below to redeploy:
+    1. Go to the **Build Area** card and click **Configure & Deploy**.
+    2. In the **Configure API Access Mode** pane that opens, select either **External** or **Internal**, depending on how you want the API to be accessible. In this tutorial, select **External**.
+    3. Click **Deploy**.
 
 Now you are ready to promote the API to production.
 
