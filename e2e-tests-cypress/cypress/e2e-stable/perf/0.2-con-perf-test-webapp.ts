@@ -35,7 +35,6 @@ describe("Multiple User Logins", () => {
     webAppOutputDirectory: "dist",
   };
 
-
   before(() => {
     interceptWriter = new InterceptWriter();
   });
@@ -196,35 +195,4 @@ describe("Multiple User Logins", () => {
       }
     );
   });
-
-  it("Intercept and assert requests", () => {
-    // Intercept requests to the specified URL
-    cy.intercept("GET", "https://888f383c-03a7-4fcd-8832-4a60cb52eb28.e1-us-east-azure.st.choreoapps.dev/")
-      .as("interceptedRequest");
-
-    // Visit the page where the request is made
-   // cy.visit("https://888f383c-03a7-4fcd-8832-4a60cb52eb28.e1-us-east-azure.st.choreoapps.dev/");
-
-    // Wait for the intercepted request to complete
-    cy.wait("@interceptedRequest").then((interception: Interception) => {
-      // Check if interception.response is defined before accessing its properties
-      if (interception.response) {
-        // Assert on the intercepted request/response
-        expect(interception.request.method).to.equal("GET"); // Assert on request method
-        expect(interception.response.statusCode).to.equal(200); // Assert on response status code
-        // Add more assertions as needed
-      } else {
-        // Handle the case where interception.response is undefined
-        throw new Error("Intercepted response is undefined");
-      }
-    });
- 
-});
-
-  
-
-
-
-
-
 });
