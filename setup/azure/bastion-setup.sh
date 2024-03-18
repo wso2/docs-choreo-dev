@@ -26,3 +26,14 @@ echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 source ~/.bashrc
 sudo ln -s /opt/mssql-tools/bin/* /usr/local/bin/
 
+### Install jq
+
+echo "--- Installing jq..."
+sudo apt-get update
+sudo apt-get install jq
+
+### Install yq
+
+echo "--- Installing yq..."
+sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq &&\
+sudo chmod +x /usr/bin/yq
