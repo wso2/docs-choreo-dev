@@ -35,5 +35,12 @@ sudo apt-get install jq
 ### Install yq
 
 echo "--- Installing yq..."
-sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq &&\
-sudo chmod +x /usr/bin/yq
+sudo wget https://github.com/mikefarah/yq/releases/download/v4.40.5/yq_linux_amd64.tar.gz -O - | \
+tar xz && sudo mv yq_linux_amd64 /usr/bin/yq
+
+### Install kapp
+
+echo "--- Installing kapp..."
+wget https://github.com/vmware-tanzu/carvel-kapp/releases/download/v0.60.0/kapp-linux-amd64
+sudo mv kapp-linux-amd64 /usr/local/bin/kapp
+sudo chmod +x /usr/local/bin/kapp
