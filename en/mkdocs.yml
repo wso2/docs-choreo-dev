@@ -106,7 +106,6 @@ nav:
       - Develop an API Proxy: develop-components/develop-an-api-proxy.md
       - Develop Web Applications: 
           - Build and Deploy a Single-Page Web Application: develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application.md
-          - Develop Web Applications Locally with Choreo’s Managed Authentication: develop-components/develop-web-applications/develop-web-applications-locally-with-managed-authentication.md
       - Develop a Webhook: develop-components/develop-a-webhook.md 
       - Develop Integrations:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
