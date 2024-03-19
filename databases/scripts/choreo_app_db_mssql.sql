@@ -1908,6 +1908,7 @@ CREATE TABLE [dbo].[wso2con_contest_registration]
     [score_summary] [nvarchar](500) NULL,
     [last_submitted_at] [datetime] NULL,
     [browser_id] [nvarchar](36) NULL, 
+    [org_owner_email] [nvarchar](255) NULL, 
     PRIMARY KEY (id),
     CONSTRAINT unique_wso2con_contest_registration UNIQUE(user_email, organization_handle)
 )
