@@ -2,7 +2,7 @@
 
 A custom domain is essential for effective branding, discoverability, and credibility of a website. Choreo allows you to easily configure custom domains for your organization, enabling developers to utilize it to configure custom URLs for their components such as API proxies, services, web applications, and webhooks.
 
-This section provides an overview of Choreo’s custom domain configuration model and guides you through the process of configuring a custom domain for your organization. It also walks you through utilizing a custom domain to configure a custom URL for a component.
+This section provides an overview of Choreo’s custom domain configuration model and guides you through configuring a custom domain for your organization. It also walks you through utilizing a custom domain to configure a custom URL for a component.
 
 ## Choreo custom domain configuration model
 
@@ -22,7 +22,7 @@ Choreo allows organization administrators to add custom domains for their organi
 To add a custom domain for your organization, follow the steps given below:
 
 !!! info "Note"
-     To add a custom domain, you must be an administrator of the organization.
+     To add a custom domain, you must have organization administrator privileges..
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console header, click the **Organization** list.
@@ -31,10 +31,10 @@ To add a custom domain for your organization, follow the steps given below:
 5. Click **+ Add Domains**. 
 6. In the **Add a Custom Domain** pane, do the following:
     1. Enter your domain name.
-    2. Select the environment to which the domain name should be applied.
-    3. Select the entity type for which the domain name should be applied.
+    2. Select the environment to apply the domain name.
+    3. Select the entity type to apply the domain name.
        
- 7. Take a look at the generated CNAME target value that is displayed and click **Verify** to create a DNS record associating the CNAME target value.
+ 7. Take a look at the generated CNAME target value displayed and click **Verify** to create a DNS record associating the CNAME target value.
     
     ![CNAME target value](../assets/img/administer/configure-domain/cname-target-value.png)
 
@@ -53,16 +53,16 @@ To add a custom domain for your organization, follow the steps given below:
  
 Now, you have successfully added a custom domain for your organization.
 
-The added custom domain will be listed in the **Active Domains** tab under the URL **Settings** tab.
+You can see the added custom domain listed in the **Active Domains** tab under the URL **Settings** tab.
     
  ![Active domains](../assets/img/administer/configure-domain/active-domains.png)
 
-The custom domain you added will be available to the entity types in the specified environment, where component developers can request the custom domain along with the URL customization.
+The custom domain you added will be available to the entity types in the specified environment. You can request the custom domain when configuring a custom URL for a component.
 
 !!! info "Note"
-     If you add a custom domain for the **Developer Portal** type, the customization will be applied immediately and the organization’s Developer Portal can be accessed via the added domain.
+     If you add a custom domain for the **Developer Portal** type, the customization is applied immediately, and you can access the organization’s Developer Portal via the added domain.
 
-If you want to view the entity types that are using a particular custom domain, click the specific custom domain listed in the **Active Domains** tab under **URL Settings**.
+If you want to view the entity types that use a particular custom domain, click the specific custom domain listed in the **Active Domains** tab under **URL Settings**.
  
 ## Configure a custom URL for a component
 
@@ -78,7 +78,7 @@ To request a custom URL for your component, follow the steps given below:
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component for which you want to customize the URL.
 3. In the left navigation menu, click **Settings**. This opens the component-level settings page.
-4. Click the **URL Settings** tab. This lists the active deployments of the component in each environment and also indicates whether a custom URL is configured. If there is an active custom domain available to configure a custom URL for a component in a specific environment, the corresponding **Edit URL Mapping** icon under the **Action** column will be enabled.
+4. Click the **URL Settings** tab. This displays the active deployments of the component across different environments and indicates whether a custom URL is configured. If an active custom domain is available to configure a custom URL for a component in a specific environment, the **Edit URL Mapping** icon in the corresponding **Action** column becomes enabled.
     
     ![Active deployments](../assets/img/administer/configure-domain/active-deployments.png)
 
@@ -103,7 +103,7 @@ When a developer requests a custom URL, the request will be listed in the organi
 To approve a custom URL mapping, follow the steps given below:
 
 !!! info "Note"
-     To approve custom URL requests, you must be an administrator of the organization.
+     To approve custom URL requests, you must have organization administrator privileges.
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console header, click the **Organization** list.
