@@ -388,6 +388,11 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     }
 
     private verifyDeploymentStatus() {
+      // Begin Workaround for not being able to scroll up to see the deployment status in the prod env card
+      this.sideMenu.navigateToOverview();
+      this.sideMenu.navigateToDeploy();
+      // End Workaround for not being able to scroll up to see the deployment status in the prod env card
+
       this.retryEnvCardDataRetrieval();
 
       cy.get(TestIds.devEnvCard).within(() => {
@@ -431,6 +436,11 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     }
 
     private verifyPromotionStatus() {
+      // Begin Workaround for not being able to scroll up to see the deployment status in the prod env card
+      this.sideMenu.navigateToOverview();
+      this.sideMenu.navigateToDeploy();
+      // End Workaround for not being able to scroll up to see the deployment status in the prod env card
+
       this.retryEnvCardDataRetrieval();
 
       cy.get(TestIds.prodEnvCard).within(() => {
