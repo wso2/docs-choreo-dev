@@ -1629,7 +1629,7 @@ CREATE TABLE [dbo].[permission]
     [id] [int] IDENTITY(1,1) NOT NULL ,
     [handle][varchar](255) NOT NULL,
     [display_name][varchar](255) NOT NULL,
-    [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BILLING','CHOREO-DEVOPS','COMPONENT-MANAGEMENT','CONFIGURATIONS-MANAGEMENT','CUSTOM-DOMAINS', 'ENVIRONMENT-MANAGEMENT','LOG-MANAGEMENT','OBSERVABILITY-MANAGEMENT','ON-PREM-KEYS','ORGANIZATION-MANAGEMENT','PROJECT-MANAGEMENT','USER-MANAGEMENT')),
+    [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BILLING','CHOREO-DEVOPS','COMPONENT-MANAGEMENT','CONFIGURATIONS-MANAGEMENT','CUSTOM-DOMAINS', 'ENVIRONMENT-MANAGEMENT','LOG-MANAGEMENT','OBSERVABILITY-MANAGEMENT','ON-PREM-KEYS','ORGANIZATION-MANAGEMENT','PROJECT-MANAGEMENT','USER-MANAGEMENT','ACCOUNT-MANAGE','URL-MANAGEMENT')),
     [description] [varchar](255) NULL,
     [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -2164,6 +2164,13 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Cr
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Custom Domains','urn:choreosystem:customdomainapi:custom_domain_delete','CUSTOM-DOMAINS','Delete Custom Domains');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Custom Domains','urn:choreosystem:customdomainapi:custom_domain_update','CUSTOM-DOMAINS','Update Custom Domains');
 
+-- URL-MANAGEMENT
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Custom Domains','choreo:domain_manage','URL-MANAGEMENT','Manage Custom Domains');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Custom Domains','choreo:domain_view','URL-MANAGEMENT','View Custom Domains');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage URL Mappings','choreo:url_mapping_manage','URL-MANAGEMENT','Manage URL Mappings');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Approve URL Mappings','choreo:url_mapping_approve','URL-MANAGEMENT','Approve URL Mappings');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View URL Mappings','choreo:url_mapping_view','URL-MANAGEMENT','View URL Mappings');
+
 -- ENVIRONMENT-MANAGEMENT
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Non Production Environment Manage','choreo:non_prod_env_manage','ENVIRONMENT-MANAGEMENT','Manage operations on Choreo Non Production environment');
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Development Environment Manage','choreo:dev_env_manage','ENVIRONMENT-MANAGEMENT','Manage operations on Choreo Development environment'); -- deprecated
@@ -2203,6 +2210,7 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Ma
 -- PROJECT-MANAGEMENT
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Project Management','choreo:project_manage','PROJECT-MANAGEMENT','Retrieve and manage projects');
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Component manage','choreo:component_manage','PROJECT-MANAGEMENT','Manage operations on components');
+INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('View Projects','choreo:project_view','PROJECT-MANAGEMENT','View Projects');
 
 -- USER-MANAGEMENT
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Users','urn:choreosystem:usermanagement:user_view', 'USER-MANAGEMENT','View Users');
