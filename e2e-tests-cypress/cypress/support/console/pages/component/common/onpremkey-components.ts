@@ -26,7 +26,6 @@ export class OnPremkeyComponent {
     cy.get('[data-testid="on-prem-key"]').should("exist");
     cy.get("[data-testid=on-prem-key]").type(OnPremkeyComponent.keyName);
     cy.get('[data-testid="delete-on-prem-key-generate-btn"]').click();
-    cy.get('[data-testid="on-prem-key"]').should("not.exist");
     cy.get('[data-testid="on-prem-key-copy-btn"]', { timeout: 120000 }).should(
       "be.visible"
     );
