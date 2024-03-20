@@ -95,7 +95,7 @@ Let's create a service component by following these steps:
 
     | **Field**             | **Description**                               |
     |-----------------------|-----------------------------------------------|    
-    | **NodeJS Project Directory**       | /reading-list-service |
+    | **NodeJS Project Directory**       | / |
     | **Language Version**              | 20.x.x |
 
 8. Click **Create**. Once the component creation is complete, you will see the component overview page.
@@ -112,7 +112,7 @@ To build the service, follow these steps:
 
 1. Select the component you created from the **Components Listing**.
 1. From the left navigation, go to the **Build** page and click **Build**.
-2. Select the latest commit and click **Build**.
+2. Click **Build Latest**.
 3. Check the deployment progress by observing the console logs on the right of the page.
 
     !!! note
