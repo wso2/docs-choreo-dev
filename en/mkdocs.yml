@@ -360,8 +360,8 @@ plugins:
           'quick-start-guides/build-your-first-cloud-native-application-with-choreo.md': 'https://wso2.com/choreo/docs/quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service/'
           'choreo-concepts/configuration-management.md': 'https://wso2.com/choreo/docs/devops-and-ci-cd/manage-configurations-and-secrets/'
           'develop-components/develop-a-web-application.md': 'https://wso2.com/choreo/docs/develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application/'
-          'administration/configure-a-custom-domain-for-apis.md': 'https://wso2.com/choreo/docs/administer/configure-a-custom-domain-for-your-organization/'
-          'administration/customize-developer-portal-domain.md': 'https://wso2.com/choreo/docs/administer/configure-a-custom-domain-for-your-organization/'
+          'administer/configure-a-custom-domain-for-apis.md': 'https://wso2.com/choreo/docs/administer/configure-a-custom-domain-for-your-organization/'
+          'administer/customize-developer-portal-domain.md': 'https://wso2.com/choreo/docs/administer/configure-a-custom-domain-for-your-organization/'
           
 extra_css:
   # - assets/lib/highlightjs/default.min.css
