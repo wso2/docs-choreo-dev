@@ -31,7 +31,7 @@ The Observability dashboard allows you to:
 
 The throughput graph shows the throughput of requests per second for a selected timestamp.   
 
-![Throughput and latency graph](../assets/img/monitoring-and-insights/observability/throughput-and-latency.png){.cInlineImage-full}
+![Throughput and latency graph](../assets/img/monitoring-and-insights/observability/throughput-and-latency.png){.cInlineImage-threeQuarter}
 
 !!! note
     The visual diagram is not available for non-ballerina components. 
