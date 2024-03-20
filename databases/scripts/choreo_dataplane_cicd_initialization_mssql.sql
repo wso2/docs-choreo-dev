@@ -22,7 +22,7 @@ VALUES('f9e4820e-6284-11ee-8c99-0242ac120005', '', '1.x', 'Go', 1, '0', 'go', 'G
 
 INSERT INTO buildpack
 (id, buildpackImage, supportedVersions, displayName, isDefault, buidpackProviderOrgUuid, [language], versionEnvVariable, provider, iconUrl, builderId)
-VALUES('f9e4820e-6284-11ee-8c99-0242ac120006', '', '8.1.x,8.2.x', 'PHP', 1, '0', 'php', 'GOOGLE_COMPOSER_VERSION', 'Google', '/images/buildpacks/php.svg', 'D3525DF0-F149-42E1-95AE-3BCC8F597778');
+VALUES('f9e4820e-6284-11ee-8c99-0242ac120006', '', '8.1.x,8.2.x', 'PHP', 1, '0', 'php', 'GOOGLE_RUNTIME_VERSION', 'Google', '/images/buildpacks/php.svg', 'D3525DF0-F149-42E1-95AE-3BCC8F597778');
 
 INSERT INTO master.dbo.buildpack
 (id, buildpackImage, supportedVersions, displayName, isDefault, buidpackProviderOrgUuid, [language], versionEnvVariable, provider, iconUrl, builderId)
