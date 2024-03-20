@@ -22,7 +22,7 @@ Choreo allows organization administrators to add custom domains for their organi
 To add a custom domain for your organization, follow the steps given below:
 
 !!! info "Note"
-     To add a custom domain, you must have organization administrator privileges..
+     To add a custom domain, you must have organization administrator privileges.
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console header, click the **Organization** list.
