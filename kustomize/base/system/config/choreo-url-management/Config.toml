@@ -7,6 +7,7 @@ authHeaderName = "{{.AUTH_HEADER_NAME}}"
 cloudManagerUrl = "http://dp-cloud-manager:80"
 apimUrl = "{{.CHOREO_APIM_URL}}"
 mizzenUrl = "http://dp-mizzen:80/api/v1"
+rudderUrl = "http://dp-rudder:80/api/v1"
 secretManagerUrl = "http://dp-secret-manager:80/api/v1/secrets"
 hcCachedTimeDuration = 30000
 devportalCname = "{{.DEVPORTAL_CNAME}}"
