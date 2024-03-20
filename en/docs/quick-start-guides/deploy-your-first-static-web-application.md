@@ -90,7 +90,7 @@ To build the web application, follow the steps given below:
 
 1. In the left navigation menu, click **Build**.
 2. In the **Builds** pane, click **Build**. This opens the **Commits** pane, where you can see all the commits related to the component.
-3. Select the latest commit and click **Build**. This triggers the build process and displays the progress in the **Build Logs** pane.
+3. Click **Build Latest**. This triggers the build process and displays the progress in the **Build Logs** pane.
 
     !!! info
          The build process can take a while to complete. When the build process is complete, the build will be listed in the **Builds** pane along with its status. 
@@ -102,10 +102,6 @@ To build the web application, follow the steps given below:
 1. In the left navigation menu, click **Deploy**.
 2. In the **Set Up** card, click **Configure and Deploy**. This opens the **Configure & Deploy** pane, where you can add a file mount if necessary. In this guide you will not add a file mount.
 3. Click **Deploy**. The deployment to the Development environment may take a few minutes to complete. On successful deployment, you will see the **Deployment Status** as **Active** in the **Development** card. 
-4. To verify that you have successfully hosted the web application, click the **Web App URL** on the **Development** card. This takes you to the web application.
-
-    ![Web application](../assets/img/quick-start-guides/web-application.png)
-
-     You can try creating one or more new tasks by specifying an appropriate task ID and task label.     
+4. To verify that you have successfully hosted the web application, click the **Web App URL** on the **Development** card. This takes you to the web application. You can try creating one or more new tasks by specifying an appropriate task ID and task label.     
    
-After you have successfully tested your web application, you can now try out various other Choreo features such as [observing](../monitoring-and-insights/observability-overview.md), [DevOps](../devops-and-ci-cd/view-runtime-details.md), etc., similar to any other component type within Choreo.
+After you have successfully tested your web application, you can now try out various other Choreo features such as [observability](../monitoring-and-insights/observability-overview.md), [DevOps](../devops-and-ci-cd/view-runtime-details.md), etc., similar to any other component type within Choreo.

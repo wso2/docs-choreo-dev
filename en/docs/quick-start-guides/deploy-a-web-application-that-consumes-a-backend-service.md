@@ -76,9 +76,9 @@ Follow the steps given below to create a mono repository project:
     | **Field**             | **Value**                                     |
     |-----------------------|-----------------------------------------------|
     | **Component Name**    | Reading List Service                          |
-    | **Buildpack**         | NodeJS                                   |
-    | **Component Type**    | Service                                 |
-    | **Language Version**  | 20.x.x                                  |     
+    | **Component Type**    | Service                                       |
+    | **Buildpack**         | NodeJS                                        |
+    | **Language Version**  | 20.x.x                                        |     
 
 3. Click **Save**. You will see that the status of the `Reading List Service` component has changed to **Configured** and the checkbox to select the component is enabled.
 4. Select the `Reading List Service` component and click **Create**. This creates a mono repository project, initializes the service with the implementation from your GitHub repository, and takes you to the project home page.
@@ -92,7 +92,7 @@ To build the service, follow the steps given below:
 1. On the project home page, click the `Reading List Service` component listed under **Component Listing**. This takes you to the component overview page.
 2. In the left navigation menu, click **Build**.
 3. In the **Builds** pane, click **Build**. This opens the **Commits** pane where you can see all the commits related to the component.
-4. Select the latest commit and click **Build**. This triggers the build process and displays the build progress in the **Build Logs** pane.
+4. Click **Build Latest**. This triggers the build process and displays the build progress in the **Build Logs** pane.
 
     !!! info
          The build process can take a while to complete. When the build process is complete, the build will be listed in the **Builds** pane along with the build status. 
@@ -108,7 +108,7 @@ For the REST endpoint of the service to be invokable, you need to deploy it. To 
 3. In the **Environment Configurations** pane that opens, click **Next**.
 4. In the **File Mount** pane that opens, click **Next**.
 5. In the **Endpoint Details** pane that opens,verify that the **Network Visibility** is set to **Public**. This setting securely exposes the endpoint for consumption.
-6. Click **Deploy**. This deploys the service to the development environment and lists the service in the Choreo Marketplace. 
+6. Click **Deploy**. This deploys the service to the development environment and lists the service in the [Choreo Marketplace](../choreo-concepts/choreo-marketplace.md). 
 
 ## Step 5: Test the service
 
