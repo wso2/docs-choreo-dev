@@ -10,13 +10,22 @@ the rate-limiting options supported by Choreo.
 
 ## Enable rate limiting for an API
 
-To enable rate limiting for an API, follow the steps given below:
+To enable rate limiting for an API, follow the steps given below: 
+
+!!! note
+     You can apply rate-limiting settings separately for each environment.
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/). 
 2. In the **Component Listing** pane, click on the component for which you want to apply rate limiting.
-3. In the left navigation menu, click **Manage** and then click **Settings**.
-4. In the **Settings** pane, go to the **API Settings** section and click **Edit**.
-5. Click the **Resources** tab and select a **Rate Limiting Level** depending on your requirement.
+3. In the left navigation menu, click **Deploy**.
+4. Go to the required environment card and click the view icon corresponding to the endpoint for which you want to apply rate limiting. 
+
+    !!! info 
+         If you are applying rate limiting for an API Proxy component, go to the required environment card, click the setting icon corresponding to **API Configuration**, and proceed to step 6.
+
+5. In the **Endpoint Details** pane that opens, click the settings icon.
+6. In the **Manage** section, click **Rate Limiting** to expand it.
+7. Select a **Rate Limiting Level** depending on your requirement and click **Apply**.
 
 ## API-level rate limiting
 

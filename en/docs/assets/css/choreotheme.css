@@ -279,6 +279,11 @@ visibility: hidden;
     background-color: #CBCEDB;
 }
 
+.md-search__form:hover {
+    border-radius: 0.5rem;
+    background-color: #CBCEDB;
+}
+
 .md-header{
     color: #545cec;
     background-color: white;
