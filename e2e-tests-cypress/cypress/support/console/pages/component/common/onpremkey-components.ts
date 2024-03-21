@@ -29,7 +29,7 @@ export class OnPremkeyComponent {
     cy.get('[data-testid="on-prem-key-copy-btn"]', { timeout: 120000 }).should(
       "be.visible"
     );
-    cy.get('[aria-label="close"]').should("exist").click();
+    cy.get('[data-testid="dialog-close-icon"]').should("exist").click();
   }
 
   static editOnPremKey() {
