@@ -3,6 +3,5 @@ resources:
   - rbac
   - deployment
   - service
-  - scaled-object
 
 namespace: keda
