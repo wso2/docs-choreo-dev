@@ -1,4 +1,4 @@
-# Develop a Web Application
+# Build and Deploy a Single-Page Web Application
 
 A web application is an application program hosted on a server and serves ingress traffic through a browser. In Choreo, you can deploy a web application by creating a Web Application component and connecting it to a Git repository that contains the implementation of the web application. Web applications can fall into one of the following categories:
 
@@ -71,9 +71,9 @@ Follow the steps below to create a sample Web Application component and deploy i
     | **Node Version**          | `18`                   |
 
     !!! tip
-         Managed authentication is enabled by default when you create a web application using **React**, **Angular**, or **Vue.js** buildpacks. To learn how to set up authentication for your web application with Choreo's managed authentication, see [Secure Web Applications with Managed Authentication](../authentication-and-authorization/secure-web-applications-with-managed-authentication.md).
+         Managed authentication is enabled by default when you create a web application using **React**, **Angular**, or **Vue.js** buildpacks. To learn how to set up authentication for your web application with Choreo's managed authentication, see [Secure Web Applications with Managed Authentication](../../authentication-and-authorization/secure-web-applications-with-managed-authentication.md).
          
-9. Click **Create**. Once the component creation is complete, you will see the **Build and Deploy** page.
+9. Click **Create**. Choreo initializes the component with the sample implementation and opens the **Overview** page of the component.
 
 You have successfully created a Web Application component from the source code. Now let's build and deploy the web application.
 

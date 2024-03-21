@@ -518,6 +518,9 @@ Node.js
 choreo-sample-todo-list-app
 autoscaler
 dataplane
+SDKs
+config.js
+Javascript-based
 Multi-Repo
 Next.js
 undeployed

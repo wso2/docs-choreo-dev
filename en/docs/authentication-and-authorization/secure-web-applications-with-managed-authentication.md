@@ -16,7 +16,7 @@ Choreo's managed authentication follows the backend for frontend (BFF) architect
 
 To secure your web application, you must implement authentication and authorization for it. 
 
-To easily set up authentication for your web application with Choreo's managed authentication, follow the steps given below. You can also refer to a sample [React app with managed authentication](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-front-end-with-managed-auth).  
+To easily set up authentication for your web application with Choreo's managed authentication, follow the steps given below. Before you move on to the next section, see [Develop Web Applications Locally with Choreo’s Managed Authentication](../develop-components/develop-web-applications/develop-web-applications-locally-with-managed-authentication.md) to ensure a seamless authentication experience when developing your web application on your local machine. You can also refer to the [sample React app with managed authentication](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-front-end-with-managed-auth).
 
 ### Step 1.1: Implement the sign-in functionality
 
@@ -28,7 +28,10 @@ To allow Choreo to manage the sign-in functionality for your web application, yo
 
 This code snippet works as follows:
 
-When a user clicks sign in on your web application, Choreo will redirect the user to the preconfigured identity provider and handle the authentication process, conforming to the OICD/OAuth2.0 protocols. On successful sign-in, Choreo will set the relevant session cookies and redirect the user to the post-sign-in path (default is `/`). The user can then invoke any Choreo-deployed APIs depending on the permission granted.
+When a user clicks sign in on your web application, Choreo will redirect the user to the configured identity provider and handle the authentication process, conforming to the OICD/OAuth2.0 protocols. On successful sign-in, Choreo will set the relevant session cookies and redirect the user to the post-sign-in path (default is `/`). The user can then invoke any Choreo-deployed APIs depending on the permission granted.
+
+!!! note
+    Refer to [configure the identity provider section](#step-3-configure-the-identity-provider-for-the-web-application) for details on configuring an identity provider for the web application. 
 
 ### Step 1.2: Obtain user information claims
 
@@ -211,16 +214,21 @@ You can enable managed authentication for your web application component at the 
     !!! note
          If you need to change these configurations after you deploy the component, you can click **Authentication Settings** on the **Set Up** card, make the necessary changes, and deploy the component once again.
 
-## Step 3: Manage OAuth keys
+## Step 3: Configure the identity provider for the web application
 
-You can manage OAuth keys either with the Choreo built-in identity provider, Asgardeo, or an external identity provider. Click the respective tab for details depending on how you want to manage OAuth keys: 
+You can configure your web application to work with the Choreo built-in identity provider, Asgardeo, or any external identity provider which supports OIDC/OAuth2.0 . 
 
-=== "Manage OAuth keys with the Choreo built-in identity provider"
+!!! note
+    The identity provider configured in this step should contain the users for the web application.
 
-     Follow the steps given below to generate authentication keys:
+Click the respective tab for details depending on which identity provider you need to configure: 
+
+=== "Configure Choreo built-in identity provider"
+
+     Follow the steps given below to configure the built-in identity provider by generating authentication keys:
 
     !!! note
-         When you use the Choreo built-in identity provider, keys are auto-generated during component deployment. Therefore, this step is optional.
+         Choreo built-in identity provider is configured by default. Therefore, this step is optional.
 
      1. In the Choreo Console, go to the component for which you want to manage OAuth keys.
      2. In the left navigation menu, click **Settings**.
@@ -232,9 +240,12 @@ You can manage OAuth keys either with the Choreo built-in identity provider, Asg
              If the **Regenerate Secret** button is shown instead of the **Generate Secret** button, it indicates that OAuth keys are already generated for the component for the selected environment.
 
     !!! tip
+        Refer to [Configure a User Store with the Built-In Identity Provider](../../administer/configure-a-user-store-with-built-in-idp/) for details on adding test users in Choreo built-in identity provider.
+
+    !!! tip
         If you need to invoke APIs secured with role-based access control, you can test this within Choreo by creating roles for the application and mapping those roles to relevant permissions (scope) and user groups. For more information, see [create roles and assign permissions](../test-secure-api-access-with-choreo-built-in-security-token-service/#step-2-create-roles-and-assign-permissions) and [assign roles to user groups](../test-secure-api-access-with-choreo-built-in-security-token-service/#step-3-assign-roles-to-user-groups) sections in [Test Secure API Access with Choreo Built-In Security Token Service](../test-secure-api-access-with-choreo-built-in-security-token-service).
 
-=== "Manage OAuth keys with Asgardeo"
+=== "Configure Asgardeo"
 
      **Step 3.1: Create and configure an OIDC/OAuth2.0 application in Asgardeo**
 
@@ -260,7 +271,7 @@ You can manage OAuth keys either with the Choreo built-in identity provider, Asg
 
          6. Copy the **Client ID** and **Client Secret** of the application. You will need to use these values in the next step to link the OIDC/OAuth2.0 application to your Choreo component.
 
-     **Step 3.2: Link the OIDC/OAuth2.0 application to the Choreo component**
+     **Step 3.2: Link the OIDC/OAuth2.0 application to the Choreo web application component**
 
      1. In the Choreo Console, go to the component for which you want to manage OAuth keys.
      2. In the left navigation menu, click **Settings**.
@@ -269,7 +280,7 @@ You can manage OAuth keys either with the Choreo built-in identity provider, Asg
      5. Paste the **Client ID** and **Client Secret** of the OIDC/OAuth2.0 application you created in Asgardeo. 
      6. Click **Add Keys**.
 
-=== "Manage OAuth keys with an external identity provider"
+=== "Configure an external identity provider"
 
      **Step 3.1: Create and configure an OIDC/OAuth2.0 application in the external identity provider**
 
