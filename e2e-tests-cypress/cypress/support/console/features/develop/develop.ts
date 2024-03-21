@@ -142,7 +142,9 @@ export function mixinDevelop<T extends Types.Constructor>(
       cy.get(buttons).contains("Attach Policy").click();
       cy.get("button").contains(policy).click();
       cy.get('[name*="Name"]').should("be.visible").type(name);
-      cy.get('[name*="Value"]').clear().type(value);
+      cy.get('[name*="Value"]')
+        .clear()
+        .type(value, { parseSpecialCharSequences: false });
       cy.get("button").contains("Add").click();
       cy.get("button").contains("Save").click();
     }
