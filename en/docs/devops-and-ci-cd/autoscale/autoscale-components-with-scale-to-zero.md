@@ -31,9 +31,6 @@ To enable scale-to-zero for service components created before February 23, 2024,
 
 ![Paid User - Scale to Zero](../../assets/img/devops-and-ci-cd/scaling/paid-user-scaling-view.png){.cInlineImage-full}
 
-!!! info
-    Currently, **you will not be able to enable scale-to-zero for Web Application components created before February 23, 2024.** This capability will be supported in the future.
-
 You can independently scale Choreo components in both the **Development** and **Production** environments. The deployment card indicates the scaling status of each environment. To configure the scale-to-zero feature for a specific environment, click on the **scale-to-zero** link, which redirects to the **Devops** → **Scaling** page.
 
 ![Deploy View - Scale to Zero](../../assets/img/devops-and-ci-cd/scaling/scale-to-zero-in-deploy-view.png){.cInlineImage-full}
@@ -43,9 +40,9 @@ When you turn on the scale-to-zero for your application, the minimum replicas fo
 ## Limitations
 
 - The scale-to-zero feature currently exclusively supports web applications and HTTP services. TCP and HTTPS services are not supported to be scaled to zero.
-- Your HTTP service must run on one of the specified ports: 5000, 6000, 7000, 8000, 9000, 7070 to 7079, 8080 to 8089, and 9090 to 9099 or 8290. Enabling scale-to-zero for a service not operating on any of the specified ports allows the service deployment to scale down to zero. However, it will not scale up upon receiving a request.
+- To scale to zero, your HTTP service must run on one of the specified ports: 5000, 6000, 7000, 8000, 9000, 7070 to 7079, 8080 to 8089, and 9090 to 9099 or 8290. If you have an endpoint in your component running in any other port, your component will not automatically scale-to-zero when deploying or promoting. Also, if you try to switch to the “scale-to-zero” option in the “Devops” → “Scaling” view, it will fail.
 - Currently, HTTP services which have “Project” network visible endpoints are not supported with scale-to-zero.
-  If you have such an endpoint in your component, your component will not automatically scale-to-zero when deploying or promoting. Also, you will not be able to switch to the “scale-to-zero” option in the “Devops” → “Scaling” view.
+  If you have such an endpoint in your component, your component will not automatically scale-to-zero when deploying or promoting. Also, if you try to switch to the “scale-to-zero” option in the “Devops” → “Scaling” view, it will fail.
 
 ## Architecture 
 
@@ -58,4 +55,4 @@ If your application remains without HTTP traffic for an extended period (default
 
 ## Troubleshooting
 
-When Choreo enables scale-to-zero by default, it will configure the readiness probe with some default values. However, in some cases, you may observe that your first request might time out. To overcome these behaviors, fine-tune the readiness probe in the **DevOps** → **Health Checks** view to match your application's needs.
+When Choreo enables scale-to-zero by default, it will configure the readiness probe with some default values. However, in some cases, you may observe that your first request getting response with 503 status code. To overcome these behaviors, fine-tune the readiness probe in the **DevOps** → **Health Checks** view to match your application's needs.
