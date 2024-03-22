@@ -34,8 +34,11 @@ To add a custom domain for your organization, follow the steps given below:
     2. Select the environment to apply the domain name.
     3. Select the entity type to apply the domain name.
 
-    !!! info "Note"
-          Here the **API** entity type refers to the Choreo component types exposed via an endpoint. Currently, this includes Proxy, Service and Webhook. **Web App** refers to the Web application component.
+        !!! tip
+             In this context:
+
+              - The **API** entity type represents Choreo components exposed via an endpoint, including API Proxy, Service, and Webhook components.
+              - The **Web App** entity type represents the Web Application component.
        
  7. Take a look at the generated CNAME target value displayed and create a DNS record associating the domain name to the CNAME target value with your DNS provider.
     
