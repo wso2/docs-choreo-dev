@@ -25,19 +25,17 @@ export class _Observability {
     matchingText: string,
     delay: number = VERY_SHORT_TIME.timeout
   ) {
-    cy.log(`Wait ${delay / 1000}s for stats to be collected`);
-    cy.wait(delay, { log: false });
     this.sideMenu.navigateToMetrics();
 
-    this.loadLogs(env);
+    this.loadLogs(env, delay);
     this.verifyLogsAreFound(matchingText);
   }
 
-  private loadLogs(env: Enums.Environment) {
+  private loadLogs(env: Enums.Environment, delay: number) {
     cy.get(TestIds.diagramLoader).should("not.exist");
 
     cy.get(TestIds.environmentPickerObsMetrics)
-      .should("be.visible")
+      .should("exist")
       .click()
       .then(() => {
         cy.get(TestIds.envSelectorItemsObservability)
@@ -49,6 +47,8 @@ export class _Observability {
           });
       });
 
+    cy.log(`Wait ${delay / 1000}s for stats to be collected`);
+    cy.wait(delay, { log: false });
     cy.get(TestIds.diagramLoader).should("not.exist");
 
     for (let i = 0; i < 10; i++) {
