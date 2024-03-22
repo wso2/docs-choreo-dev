@@ -55,4 +55,4 @@ If your application remains without HTTP traffic for an extended period (default
 
 ## Troubleshooting
 
-When Choreo enables scale-to-zero by default, it will configure the readiness probe with some default values. However, in some cases, you may observe that your first request getting response with 503 status code. To overcome these behaviors, fine-tune the readiness probe in the **DevOps** → **Health Checks** view to match your application's needs.
+When Choreo enables scale-to-zero by default, it will configure the readiness probe with some default values. However, in some cases, you may observe that your first request responds with a 503 status code. To overcome these behaviors, fine-tune the readiness probe in the **DevOps** → **Health Checks** view to match your application's needs.
