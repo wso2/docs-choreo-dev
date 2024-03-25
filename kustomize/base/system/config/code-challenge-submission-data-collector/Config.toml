@@ -10,6 +10,7 @@ salesforceLeadsApiUrl = 'https://apis.wso2.com/zvdz/sales-leads-service/endpoint
 
 [submission_data_collector]
 choreoEnv = "{{.CHOREO_ENV}}"
+submissionsSheetId = "{{.SUMBISSION_SHEET_ID}}"
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
