@@ -1,0 +1,11 @@
+[registration_data_collector.app_db]
+host = "{{.MSSQL_HOST}}"
+user = 'choreo_app_db_user'
+database = 'choreo_app_db'
+port = 1433
+
+[submission_data_collector]
+choreoEnv = "{{.CHOREO_ENV}}"
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"
