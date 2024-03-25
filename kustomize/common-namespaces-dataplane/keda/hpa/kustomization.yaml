@@ -1,0 +1,3 @@
+resources:
+  - keda-http-add-on-interceptor.yaml
+

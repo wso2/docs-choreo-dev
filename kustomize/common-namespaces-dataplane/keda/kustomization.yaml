@@ -3,5 +3,6 @@ resources:
   - rbac
   - deployment
   - service
+  - hpa
 
 namespace: keda
