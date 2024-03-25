@@ -4,7 +4,7 @@ user = 'choreo_app_db_user'
 database = 'choreo_app_db'
 port = 1433
 
-[submission_data_collector]
+[registration_data_collector]
 choreoEnv = "{{.CHOREO_ENV}}"
 
 [ballerina.log]
