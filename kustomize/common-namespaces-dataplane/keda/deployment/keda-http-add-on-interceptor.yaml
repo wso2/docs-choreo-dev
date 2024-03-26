@@ -62,7 +62,7 @@ spec:
         - name: KEDA_HTTP_MAX_IDLE_CONNS
           value: "100"
         - name: KEDA_HTTP_IDLE_CONN_TIMEOUT
-          value: "90s"
+          value: "300s"
         - name: KEDA_HTTP_TLS_HANDSHAKE_TIMEOUT
           value: "10s"
         - name: KEDA_HTTP_EXPECT_CONTINUE_TIMEOUT
