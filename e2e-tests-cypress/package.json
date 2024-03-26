@@ -4,16 +4,13 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "csv-writer": "^1.6.0",
     "cypress": "^13.7.0",
     "cypress-real-events": "^1.10.3",
     "typescript": "^5.3.3",
     "webpack": "^5.68.0"
   },
   "devDependencies": {
-    "cypress-fail-fast": "^7.0.0",
-    "cypress-file-upload": "^5.0.8",
-    "cypress-xpath": "^1.6.2"
+    "cypress-fail-fast": "^7.0.0"
   },
   "scripts": {
     "pretest": "npm run clean:reports",
