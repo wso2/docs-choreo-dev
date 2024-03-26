@@ -22,7 +22,11 @@ export class _ProxyCreationWizard {
 
   createFromOASFile(filepath: string) {
     cy.get(TestIds.upload).click();
-    cy.get(TestIds.filepathEntry).attachFile(filepath);
+
+    cy.fixture(filepath).as("oasFile");
+    cy.get(TestIds.filepathEntry).selectFile("@oasFile", {
+      force: true,
+    });
     cy.get(TestIds.next).should("be.visible").click();
   }
 

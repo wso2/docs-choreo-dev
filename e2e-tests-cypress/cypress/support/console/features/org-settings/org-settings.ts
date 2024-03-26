@@ -34,15 +34,11 @@ export class OrganizationSettings {
 
     cy.get(TestIds.tableTitle).find("tbody tr").should("have.length", 1);
 
-    cy.fixture(userStoreFile).then((users) => {
-      cy.get(TestIds.uploadUserStoreCard).within(() => {
-        cy.get('input[type="file"]').attachFile({
-          fileContent: users,
-          fileName: userStoreFile,
-          mimeType: "text/csv",
-        });
-      });
-      cy.get(TestIds.uploadUserStoreFile).click();
+    cy.fixture(userStoreFile).as("users");
+    cy.get(TestIds.uploadUserStoreCard).within(() => {
+      cy.get('input[type="file"]').selectFile("@users", { force: true });
     });
+
+    cy.get(TestIds.uploadUserStoreFile).click();
   }
 }

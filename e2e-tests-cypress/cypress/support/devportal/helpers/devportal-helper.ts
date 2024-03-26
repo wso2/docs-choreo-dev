@@ -15,15 +15,11 @@ import { Enums } from "../../commons/enums";
 import { Utils } from "../../commons/utils";
 import { GraphQLQueryBuilder } from "../../console/apis/gql-query-builder";
 import { GraphQL } from "../../console/apis/graphql";
-import { APIDeployment } from "../../console/pages/apis/api-deployment";
 import { ComponentBuild } from "../../console/pages/component/Functionalities/Component-build";
 import { ComponentDeployPage } from "../../console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../console/pages/component/component-listing-page";
 import { ComponentAPILifecycle } from "../../console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../console/pages/component/component-overview-page";
-import { ProjectOverviewPage } from "../../console/pages/projects/project-overview";
-import { ProjectListingPage } from "../../console/pages/projects/projects-listing-page";
-import { RestAPIProxyTemplate } from "../../console/pages/templates/rest-api-proxy-temp";
 
 import { ComponentData } from "../../interfaces/component-data";
 
@@ -32,26 +28,6 @@ export class DevPortalHelper {
   static Filepath = "apis/generation_oas.yaml";
   static REPO_NAME = Utils.generateComponentName("repo");
   static ENDPOINT_NAME = "Readinglist";
-
-  static createDeployHttpProxyComponent(API_Name, projectName) {
-    ProjectOverviewPage.createHttpProxyAPI();
-    RestAPIProxyTemplate.createOpenApi(DevPortalHelper.Filepath);
-    RestAPIProxyTemplate.enterAPIdetails(
-      API_Name,
-      DevPortalHelper.API_BASE_PATH,
-      "",
-      "",
-      "",
-      ""
-    );
-    ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.deployToDev();
-    APIDeployment.promoteToProd();
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
-  }
 
   static createDeployBalServiceComponent(API_Name, projectName) {
     let componentData: ComponentData = {

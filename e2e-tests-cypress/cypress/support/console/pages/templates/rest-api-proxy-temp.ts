@@ -21,19 +21,6 @@ export class RestAPIProxyTemplate {
     cy.get('[data-cyid="btn-skip-src-button"]').should("be.visible").click();
   }
 
-  static createOpenApi(filepath: string = "", url: string = "") {
-    if (filepath) {
-      cy.get('[data-cyid="btn-upload-button"]').click();
-      cy.get('input[type="file"]').attachFile(filepath);
-    }
-
-    if (url) {
-      cy.get('[data-cyid="txt-oas-url"]').should("be.visible").type(url);
-    }
-
-    cy.get('[data-cyid="btn-next-button"]').should("be.visible").click();
-  }
-
   static createProxyApi(api: ProxyAPI) {
     cy.get('[data-cyid="api-name"]').within(() =>
       cy.get("input").clear().type(api.apiName)
