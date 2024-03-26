@@ -1908,9 +1908,26 @@ CREATE TABLE [dbo].[wso2con_contest_registration]
     [score_summary] [nvarchar](500) NULL,
     [last_submitted_at] [datetime] NULL,
     [browser_id] [nvarchar](36) NULL, 
-    [org_owner_email] [nvarchar](255) NULL, 
+    [org_owner_email] [nvarchar](255) NULL,
+    [first_name] [nvarchar](255) NULL,
+    [last_name] [nvarchar](255) NULL,
+    [country] [nvarchar](100) NULL,
+    [mobile_number] [nvarchar](20) NULL,
+    [isVerified] [bit] NOT NULL DEFAULT 0,
+    [isVerificationSkipped] [bit] NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
     CONSTRAINT unique_wso2con_contest_registration UNIQUE(user_email, organization_handle)
+)
+
+CREATE TABLE [dbo].[wso2con_contest_otp_verification]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [organization_uuid] [nvarchar](255) NOT NULL,
+    [otp] [int](6) NOT NULL,
+    [generated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT unique_wso2con_contest_otp_verification UNIQUE(organization_uuid),
+    CONSTRAINT organization_uuid_fk FOREIGN KEY (organization_uuid) REFERENCES wso2con_contest_registration(organization_uuid) ON DELETE CASCADE
 )
 
 /****** Object:  Trigger [dbo].[wso2con_contest_registration_UpdateTimeTrigger] ******/
