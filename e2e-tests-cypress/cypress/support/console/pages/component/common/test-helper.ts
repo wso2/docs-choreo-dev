@@ -11,10 +11,8 @@
  * associated services.
  */
 
-import { fromCallback } from "cypress/types/bluebird";
-import { cyGet, cyLog } from "../../../../commons/cy";
 import { Enums } from "../../../../commons/enums";
-import { SHORT_TIME, VERY_SHORT_TIME } from "../../../../commons/timeouts";
+import { VERY_SHORT_TIME } from "../../../../commons/timeouts";
 import { Utils } from "../../../../commons/utils";
 import { GraphQL } from "../../../apis/graphql";
 import { APITest } from "../../apis/api-test";
@@ -124,14 +122,12 @@ export class TestHelper {
     cy.wait(5000);
     Utils.getRenderedElement('[data-testid="graphiql-container"]').within(
       () => {
-        cy.get('[class="query-editor"]').within(() => {
-          cyGet("span[cm-text]")
-            .eq(1)
-            .then(($p) => {
-              Utils.paste($p, code, false);
-              cy.wait(2000);
-            });
-        });
+        cy.get('[class="query-editor"]')
+          .find("textarea")
+          .then(($p) => {
+            Utils.paste($p, code, false);
+            cy.wait(2000);
+          });
       }
     );
     cy.get('div[class="toolbar"]>button').eq(0).click();

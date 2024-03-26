@@ -17,7 +17,6 @@
     "types": [
       "cypress",
       "node",
-      "cypress-file-upload",
       "cypress-real-events"
     ],
   },
