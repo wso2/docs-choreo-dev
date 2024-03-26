@@ -524,6 +524,8 @@ Javascript-based
 Multi-Repo
 Next.js
 undeployed
+denylist
+cybertruck
 
  - docs/references/upgrading-from-the-previous-version.md
 DefaultProject
@@ -812,6 +814,7 @@ listconfig.jsconfig.js
 listconfig.js
  - docs/api-management/api-policies.md
 Ballerina.toml
+cInlineImage-small
  - docs/consuming-services/consuming-a-sevice.md
 choreo-examples
  - docs/develop-components/develop-a-webhook.md
@@ -949,3 +952,7 @@ Pamuk
 Kazuo
 Ishiguro
 Dickensread
+ - docs/administer/customize-the-developer-portal.md
+cInlineImage-threeQuarter
+ - docs/develop-components/manage-the-micro-integrator-runtime-version-in-your-integration-project.md
+pom.xml
