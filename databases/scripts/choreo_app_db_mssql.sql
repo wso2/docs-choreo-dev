@@ -1913,8 +1913,7 @@ CREATE TABLE [dbo].[wso2con_contest_registration]
     [last_name] [nvarchar](255) NULL,
     [country] [nvarchar](100) NULL,
     [mobile_number] [nvarchar](20) NULL,
-    [isVerified] [bit] NOT NULL DEFAULT 0,
-    [isVerificationSkipped] [bit] NOT NULL DEFAULT 0,
+    [verification_status] [nvarchar] (20) NOT NULL DEFAULT 'unverified',
     PRIMARY KEY (id),
     CONSTRAINT unique_wso2con_contest_registration UNIQUE(user_email, organization_handle)
 )
