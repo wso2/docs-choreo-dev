@@ -1,5 +1,6 @@
 emailSubject: Integration Test Failed
 releaseOwners:
+  - integration-choreo-group@wso2.com
   - amilam@wso2.com
   - uvindra@wso2.com
   - isurupi@wso2.com
