@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ * Copyright (c) 2024, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
  * This software is the property of WSO2 Inc. and its suppliers, if any.
  * Dissemination of any information or reproduction of any material contained
@@ -11,27 +11,22 @@
  * associated services.
  */
 
-import "cypress-real-events/support";
-import "cypress-fail-fast";
+/// <reference types="cypress" />
 
+/**
+ * Extends Cypress Chainable interface to include custom commands.
+ */
 
-Cypress.on("uncaught:exception", (err, runnable) => {
+interface RenderingOptions {
+  waitTime: number;
+  timeout: number;
+}
 
-  return false;
-});
-
-Cypress.on("window:confirm", (err, runnable) => {
-  return true;
-});
-
-Cypress.on("window:alert", (err, runnable) => {
-  return true;
-});
-
-Cypress.on("window:before:load", (win) => {
-  Object.defineProperty(win, "onbeforeunload", {
-    value: undefined,
-    writable: false,
-  });
-});
-
+declare namespace Cypress {
+  interface Chainable {
+    getUnstable(
+      selector: string,
+      options?: RenderingOptions
+    ): Chainable<Element>;
+  }
+}
