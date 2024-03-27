@@ -11,10 +11,8 @@
  * associated services.
  */
 
-import { cyGet } from "../../../commons/cy";
 import { Enums } from "../../../commons/enums";
-import { SHORT_TIME } from "../../../commons/timeouts";
-import { Utils } from "../../../commons/utils";
+import { TestIds } from "../../constants/TestIds";
 
 export class ComponentTestPage {
   static selectCurl() {
@@ -32,8 +30,11 @@ export class ComponentTestPage {
   }
 
   static selectEndpoint(endpoint: string) {
-    cy.get('[data-cyid="select-endpoint-select"]').scrollIntoView();
-    Utils.getRenderedElement('[data-cyid="select-endpoint-select"]').click();
-    Utils.getRenderedElement('ul>li[role="option"]').contains(endpoint).click();
+    cy.get(TestIds.endpointSelector).scrollIntoView();
+    cy.get(TestIds.endpointSelector).should("be.visible").click();
+    cy.get("#endpoint-label-popup")
+      .should("be.visible")
+      .contains(endpoint)
+      .click();
   }
 }

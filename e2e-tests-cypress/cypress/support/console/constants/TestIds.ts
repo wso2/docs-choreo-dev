@@ -151,6 +151,9 @@ export namespace TestIds {
   export const dialogPrimaryAction =
     '[data-cyid="confirmation-dialog-primary-action-button"]';
   export const publishBtn = '[data-cyid="publish-btn-button"]';
+  export const graphQLTestConsole = '[data-testid="graphiql-container"]';
+  export const graphQLQueryPrettify = '[data-cyid="prettify-button"]';
+  export const endpointSelector = '[data-cyid="select-endpoint-select"]';
   export const generateCredentials = '[data-testid="generate-creds-btn"]';
   export const removeCredentials = '[data-testid="remove-creds-btn"]';
   export const generateAccessToken =

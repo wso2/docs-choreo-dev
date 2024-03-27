@@ -82,7 +82,7 @@ describe("Graphql GQL service test", () => {
         query: TEST_QUERY,
       })
       .then((res) => {
-        expect(res.text()).to.be.contains(TEST_QUERY_RESPONSE);
+        expect(res.toString()).to.be.contains(TEST_QUERY_RESPONSE);
       });
   });
 
