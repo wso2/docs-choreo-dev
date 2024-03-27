@@ -4,7 +4,6 @@ releaseOwners:
   - amilam@wso2.com
   - uvindra@wso2.com
   - isurupi@wso2.com
-  - sachithka@wso2.com #to debug the email sending failures
 areaOwners:
   - testClass: com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationEventComponent
     assignees:
