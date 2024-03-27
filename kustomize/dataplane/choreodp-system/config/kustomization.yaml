@@ -26,8 +26,8 @@ configMapGenerator:
       - ENV={{.ENV}}
       - AZURE_KEYVAULT_NAME={{.AZURE_KEYVAULT_NAME}}
       - SYSTEM_KEYVAULT_NAME={{.SYSTEM_KEYVAULT_NAME}}
-      - MAX_CONCURRENT_RECONCILES="{{.MAX_CONCURRENT_RECONCILES}}"
-      - MAX_RETRY_COUNT="{{.MAX_RETRY_COUNT}}"
+      - MAX_CONCURRENT_RECONCILES={{.MAX_CONCURRENT_RECONCILES | quote}}
+      - MAX_RETRY_COUNT={{.MAX_RETRY_COUNT | quote}}
   - name: env-choreo-metered-usage-handler
     behavior: create
     literals:
@@ -40,8 +40,8 @@ configMapGenerator:
       - CHOREO_JWT_AUDIENCE="{{.CHOREO_JWT_AUDIENCE}}"
       - METERED_USAGE_SERVICE_URL="{{.METERED_USAGE_SERVICE_URL}}"
       - CLIENT_TRUSTSTORE_PATH="{{.CLIENT_TRUSTSTORE_PATH}}"
-      - GRPC_SERVICE_TIMEOUT="{{.GRPC_SERVICE_TIMEOUT}}"
-      - GRPC_SERVICE_RETRY_COUNT="{{.GRPC_SERVICE_RETRY_COUNT}}"
+      - GRPC_SERVICE_TIMEOUT="{{.GRPC_SERVICE_TIMEOUT | quote}}"
+      - GRPC_SERVICE_RETRY_COUNT="{{.GRPC_SERVICE_RETRY_COUNT | quote}}"
   - name: env-app-gateway-oauth-agent
     behavior: create
     literals:
