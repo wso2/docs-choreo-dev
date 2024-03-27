@@ -45,3 +45,45 @@ configMapGenerator:
     behavior: create
     literals:
       - AZURE_LA_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+  - name: loggingapi-env
+    behavior: create
+    literals:
+      - OBSMANAGER_ADDRESS={{.OBSMANAGER_ADDRESS}}
+      - AZURE_LA_CLIENT_ID={{.AZURE_LA_CLIENT_ID}}
+      - AZURE_LA_WORKSPACE_ID={{.AZURE_LA_WORKSPACE_ID}}
+      - FLUENT_BIT_ADDRESS=http://fluent-bit:2020
+      - OPENSEARCH_ADDRESS=https://opensearch-cluster-master:9200
+      - SAMPLE_APP_COMPONENT_ID="{{.SAMPLE_APP_COMPONENT_ID}}"
+      - SAMPLE_APP_ENVIRONMENT_ID="{{.SAMPLE_APP_ENVIRONMENT_ID}}"
+      - SAMPLE_APP_PROJECT_ID="{{.SAMPLE_APP_PROJECT_ID}}"
+      - SAMPLE_APP_NAMESPACE="{{.SAMPLE_APP_NAMESPACE}}"
+  - name: obsapi-env
+    behavior: create
+    literals:
+      - OBSMANAGER_ADDRESS={{.OBSMANAGER_ADDRESS}}
+      - AZURE_ADX_ENDPOINT={{.AZURE_ADX_ENDPOINT}}
+      - AZURE_ADX_CLIENT_ID={{.AZURE_ADX_CLIENT_ID}}
+      - SAMPLE_APP_RELEASE_ID={{.SAMPLE_APP_RELEASE_ID}}
+      - LOG_LEVEL={{.LOG_LEVEL}}
+  - name: opensearch
+    behavior: create
+    literals:
+      - OPENSEARCH_CHOREOLOGS_INDEX_RETENTION_TIME={{.OPENSEARCH_CHOREOLOGS_INDEX_RETENTION_TIME}}
+    options:
+      disableNameSuffixHash: true
+  - name: sys-obsapi-env
+    behavior: create
+    literals:
+      - OBSMANAGER_ADDRESS={{.OBSMANAGER_ADDRESS}}
+      - AZURE_LA_CLIENT_ID={{.AZURE_LA_CLIENT_ID}}
+      - AZURE_LA_WORKSPACE_ID={{.AZURE_LA_WORKSPACE_ID}}
+      - SAMPLE_APP_NAMESPACE={{.SAMPLE_APP_NAMESPACE}}
+      - SAMPLE_APP_RELEASE_ID={{.SAMPLE_APP_RELEASE_ID}}
+      - LOG_LEVEL={{.LOG_LEVEL}}
+  - name: env-hubble-exporter
+    behavior: create
+    literals:
+      - DATAPLANE_ID="{{.DATAPLANE_ID}}"
+      - CLOUD_VENDOR="azure"
+
+  
