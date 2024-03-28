@@ -10,7 +10,6 @@ import { console } from "../../support/console/console";
 import { WebApp } from "../../support/console/entities/component/webapp-component";
 import { PERF_INTERCEPT_WAIT_TIME } from "../../support/commons/timeouts";
 import { InterceptWriter } from "../../support/commons/interceptWriter";
-import { Interception } from "cypress/types/net-stubbing";
 
 describe("Multiple User Logins", () => {
   let project: Project;
@@ -39,11 +38,24 @@ describe("Multiple User Logins", () => {
     interceptWriter = new InterceptWriter();
   });
 
-  it("Login with multiple users concurrently", () => {
+  beforeEach(() => {
+    username;
+  });
+
+  afterEach(function () {
+    if (this.currentTest && this.currentTest.state === "failed") {
+      const testName = this.currentTest.title;
+      cy.screenshot(`failure_${testName}`);
+    }
+  });
+
+  it(`Login with multiple users concurrently - ${Cypress.env(
+    "perfUsername"
+  )}`, () => {
     login.perfLogin();
   });
 
-  it("Creating a project", () => {
+  it(`creating a project - ${Cypress.env("perfUsername")}`, () => {
     cy.intercept(
       {
         method: "POST",
@@ -90,7 +102,7 @@ describe("Multiple User Logins", () => {
     );
   });
 
-  it("Creating a Web App", () => {
+  it(`Creating a Web App - ${Cypress.env("perfUsername")}`, () => {
     try {
       project
         .createWebAppComponent(
@@ -107,7 +119,7 @@ describe("Multiple User Logins", () => {
     }
   });
 
-  it("Build the component", () => {
+  it(`Build the web app component - ${Cypress.env("perfUsername")}`, () => {
     cy.intercept(
       {
         method: "POST",
@@ -156,7 +168,7 @@ describe("Multiple User Logins", () => {
     );
   });
 
-  it("Deploying to dev", () => {
+  it(`Deploying webapp to dev - ${Cypress.env("perfUsername")}`, () => {
     cy.intercept(
       {
         method: "POST",

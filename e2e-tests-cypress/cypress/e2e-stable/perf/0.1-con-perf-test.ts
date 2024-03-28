@@ -21,11 +21,24 @@ describe("Multiple User Logins", () => {
     interceptWriter = new InterceptWriter();
   });
 
-  it("Login with multiple users concurrently", () => {
+  beforeEach(() => {
+    username;
+  });
+
+  afterEach(function () {
+    if (this.currentTest && this.currentTest.state === "failed") {
+      const testName = this.currentTest.title;
+      cy.screenshot(`failure_${testName}`);
+    }
+  });
+
+  it(`Login with multiple users concurrently - ${Cypress.env(
+    "perfUsername"
+  )}`, () => {
     login.perfLogin();
   });
 
-  it("Creating a project", () => {
+  it(`creating a project - ${Cypress.env("perfUsername")}`, () => {
     cy.intercept(
       {
         method: "POST",
@@ -70,7 +83,9 @@ describe("Multiple User Logins", () => {
     );
   });
 
-  it("Verify Ballerina service component creation", () => {
+  it(`Verify Ballerina service component creation - ${Cypress.env(
+    "perfUsername"
+  )}`, () => {
     try {
       project
         .createServiceComponent(
@@ -90,7 +105,7 @@ describe("Multiple User Logins", () => {
     }
   });
 
-  it("Build the component", () => {
+  it(`Build the component - ${Cypress.env("perfUsername")}`, () => {
     cy.intercept(
       {
         method: "POST",
@@ -139,7 +154,9 @@ describe("Multiple User Logins", () => {
     );
   });
 
-  it("Deploying the component with Public level visibility", () => {
+  it(`Deploying the component with Public level visibility - ${Cypress.env(
+    "perfUsername"
+  )}`, () => {
     cy.intercept(
       {
         method: "POST",
