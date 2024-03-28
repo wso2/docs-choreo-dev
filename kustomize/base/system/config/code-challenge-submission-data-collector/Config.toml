@@ -4,8 +4,13 @@ user = 'choreo_app_db_user'
 database = 'choreo_app_db'
 port = 1433
 
+[submission_data_collector.salesforce_leads]
+tokenUrl = "https://api.asgardeo.io/t/wso2/oauth2/token"
+salesforceLeadsApiUrl = 'https://apis.wso2.com/zvdz/sales-leads-service/endpoint-9090-803/v1'
+
 [submission_data_collector]
 choreoEnv = "{{.CHOREO_ENV}}"
+submissionsSheetId = "{{.SUMBISSION_SHEET_ID}}"
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"

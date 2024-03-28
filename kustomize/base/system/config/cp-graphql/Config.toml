@@ -51,6 +51,7 @@ apimSecretPath = "/mnt/csi/secret-cp-graphql/APIM_REST_API_CONSUMER_SECRET"
 enableDBBasedNotifications = {{.ENABLE_DB_BASED_NOTIFICATIONS}}
 invokeUrlOrgIdPrefixExcludedOrgs = "{{.INVOKE_URL_ORG_ID_PREFIX_EXCLUDED_ORGS}}"
 enableCustomURLMappings = {{.ENABLE_GRAPHQL_CUSTOM_URL_MAPPINGS}}
+passUserTokenForProjectManager = {{.PASS_USER_TOKEN_FOR_PROJECT_MANAGER}}
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"

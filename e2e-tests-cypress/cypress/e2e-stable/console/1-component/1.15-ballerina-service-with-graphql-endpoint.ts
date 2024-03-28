@@ -71,7 +71,7 @@ describe(`Graphql GQL service functionality`, () => {
         query: TEST_QUERY,
       })
       .then((res) => {
-        expect(res.text()).to.be.contains(TEST_QUERY_RESPONSE);
+        expect(res.toString()).to.be.contains(TEST_QUERY_RESPONSE);
       });
   });
 
@@ -83,7 +83,7 @@ describe(`Graphql GQL service functionality`, () => {
         query: TEST_MUTATION,
       })
       .then((res) => {
-        expect(res.text()).to.be.contains(TEST_MUTATION_RESPONSE);
+        expect(res.toString()).to.be.contains(TEST_MUTATION_RESPONSE);
       });
   });
 
@@ -99,7 +99,7 @@ describe(`Graphql GQL service functionality`, () => {
         query: TEST_QUERY,
       })
       .then((res) => {
-        expect(res.text()).to.be.contains(TEST_QUERY_RESPONSE);
+        expect(res.toString()).to.be.contains(TEST_QUERY_RESPONSE);
       });
   });
 
@@ -111,7 +111,7 @@ describe(`Graphql GQL service functionality`, () => {
         query: TEST_MUTATION,
       })
       .then((res) => {
-        expect(res.text()).to.be.contains(TEST_MUTATION_RESPONSE);
+        expect(res.toString()).to.be.contains(TEST_MUTATION_RESPONSE);
       });
   });
 

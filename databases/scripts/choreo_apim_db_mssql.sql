@@ -2650,3 +2650,9 @@ create index IDX_AGAA_AI on AM_GW_API_ARTIFACTS (API_ID);
 
 -- Performance indexes end--
 
+
+-- Create Choreo_In_Built_IDP --
+INSERT INTO IDP (TENANT_ID, NAME, IS_ENABLED, IS_PRIMARY, ALIAS, INBOUND_PROV_ENABLED, INBOUND_PROV_USER_STORE_ID, USER_CLAIM_URI, ROLE_CLAIM_URI, DESCRIPTION, DEFAULT_AUTHENTICATOR_NAME, DEFAULT_PRO_CONNECTOR_NAME, PROVISIONING_ROLE, IS_FEDERATION_HUB, IS_LOCAL_CLAIM_DIALECT, DISPLAY_NAME, IMAGE_URL, UUID) VALUES (-1234, 'Choreo_In_Built_IDP', '1', '0', 'http://app-dev-user-mgt-service', '0', NULL, NULL, 'http://wso2.org/claims/role', NULL, 'choreo_in_built_idp_authenticator', NULL, NULL, N'0', '1', 'IDP for Choreo Test User logins', NULL, 'e7aa82df-ef21-4d10-9c1d-78c57d8baa4d');
+
+INSERT INTO IDP_AUTHENTICATOR (TENANT_ID, IDP_ID, NAME, IS_ENABLED, DISPLAY_NAME) VALUES (-1234, (SELECT ID from IDP where TENANT_ID = -1234 AND NAME = 'Choreo_In_Built_IDP'), 'choreo_in_built_idp_authenticator', '1', 'Choreo In-Built IDP Authenticator');
+-- Create Choreo_In_Built_IDP end --

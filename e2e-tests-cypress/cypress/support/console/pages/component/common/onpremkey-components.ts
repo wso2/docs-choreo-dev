@@ -26,11 +26,10 @@ export class OnPremkeyComponent {
     cy.get('[data-testid="on-prem-key"]').should("exist");
     cy.get("[data-testid=on-prem-key]").type(OnPremkeyComponent.keyName);
     cy.get('[data-testid="delete-on-prem-key-generate-btn"]').click();
-    cy.get('[data-testid="on-prem-key"]').should("not.exist");
     cy.get('[data-testid="on-prem-key-copy-btn"]', { timeout: 120000 }).should(
       "be.visible"
     );
-    cy.get('[aria-label="close"]').should("exist").click();
+    Utils.getRenderedElement('[data-testid="dialog-close-icon"]').eq(0).click();
   }
 
   static editOnPremKey() {

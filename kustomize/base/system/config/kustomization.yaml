@@ -221,6 +221,7 @@ configMapGenerator:
       - RUDDER_URL=http://dp-rudder:80
       - SUBSCRIPTION_SERVICE_URL=subscriptions:9090
       - DELETION_PERIOD_IN_MONTHS=3
+      - AUTHZ_SERVICE_AUTHORIZATION_HEADER_NAME=x-jwt-assertion
       - NODE_OPTIONS="--max-http-header-size=65000"
   - name: cm-platform-services-manager
     behavior: create
@@ -477,6 +478,10 @@ configMapGenerator:
     behavior: create
     files:
       - code-challenge-submission-data-collector/Config.toml
+  - name: cm-file-code-challenge-registration-data-collector
+    behavior: create
+    files:
+      - code-challenge-registration-data-collector/Config.toml
   - name: cm-file-cp-rrs
     behavior: create
     files:

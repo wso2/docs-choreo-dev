@@ -13,6 +13,7 @@ choreoIdpId = "{{.CHOREO_IDP_ID}}"
 rudderClientEndpoint = "http://dp-rudder:80"
 apimClientId = "{{.APIM_REST_API_CONSUMER_KEY}}"
 choreoStsUrl = "{{.CHOREO_STS_URL}}"
+intRoutingEnabled = {{.INT_ROUTING_FEATURE_ENABLED | default false}}
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
