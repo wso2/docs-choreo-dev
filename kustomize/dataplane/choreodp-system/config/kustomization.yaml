@@ -40,8 +40,6 @@ configMapGenerator:
       - CHOREO_JWT_AUDIENCE="{{.CHOREO_JWT_AUDIENCE}}"
       - METERED_USAGE_SERVICE_URL="{{.METERED_USAGE_SERVICE_URL}}"
       - CLIENT_TRUSTSTORE_PATH="{{.CLIENT_TRUSTSTORE_PATH}}"
-      - GRPC_SERVICE_TIMEOUT="{{.GRPC_SERVICE_TIMEOUT}}"
-      - GRPC_SERVICE_RETRY_COUNT="{{.GRPC_SERVICE_RETRY_COUNT}}"
   - name: env-app-gateway-oauth-agent
     behavior: create
     literals:
