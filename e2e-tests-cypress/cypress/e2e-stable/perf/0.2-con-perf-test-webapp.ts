@@ -34,6 +34,15 @@ describe("Multiple User Logins", () => {
     webAppOutputDirectory: "dist",
   };
 
+  function createComponentCallback(
+    request: any,
+    response: any
+  ): void {
+    const interceptorName = "createComponentRequest";
+    interceptWriter.interceptAndWriteToFixture(interceptorName, request, response);
+  }
+
+
   before(() => {
     interceptWriter = new InterceptWriter();
   });

@@ -49,7 +49,7 @@ export class GraphQL {
     projectName: string,
     repoName: string,
     componentData: AbsComponent,
-    callback
+    callback: any
   ) {
     const { orgId, handle } = Cypress.env("userData");
     this.getProjects().then((p) => {
@@ -85,7 +85,8 @@ export class GraphQL {
     projectName: string,
     repoName: string,
     componentData: AbsComponent,
-    callback
+    callback,
+    createComponentCallback?: any
   ) {
     return this.getProjectsV2(login.getOrgId()).then((p) => {
       const projectId = p.projects.find((p) => p.name === projectName).id;
@@ -112,7 +113,7 @@ export class GraphQL {
         if (componentData.initializeAsBallerinaProject) {
           this.getPullRequests(id, repoName);
         }
-
+        createComponentCallback(res.body.request, res.body.response);
         return Promise.resolve({ id, projectId, handler });
       });
     });

@@ -17,6 +17,14 @@ describe("Multiple User Logins", () => {
   const fixtureFileName = `${username}-intercept.json`;
   const filePath = `${fixtureFileName}`;
 
+  function createComponentCallback(
+    request: any,
+    response: any
+  ): void {
+    const interceptorName = "createComponentRequest";
+    interceptWriter.interceptAndWriteToFixture(interceptorName, request, response);
+  }
+
   before(() => {
     interceptWriter = new InterceptWriter();
   });
