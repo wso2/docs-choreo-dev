@@ -40,4 +40,9 @@ configMapGenerator:
       - AZURE_EMBEDDING_DEPLOYMENT={{.AZURE_EMBEDDING_DEPLOYMENT}}
       - SOURCE_PLATFORM={{.SOURCE_PLATFORM}}
       - COLLECTION_NAME={{.COLLECTION_NAME}}
-
+  - name: env-ai-copilot-cm
+    behavior: create
+    literals:
+      - AZURE_OPENAI_ENDPOINT={{.AZURE_OPENAI_ENDPOINT}}
+      - CHOREO_JWT_AUDIENCE={{.CHOREO_JWT_AUDIENCE}}
+      - CHOREO_JWT_JWKS_URL={{.CHOREO_JWT_JWKS_URL}}    
