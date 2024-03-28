@@ -10,4 +10,10 @@ public class NameGenerator {
         String uuid = UUID.randomUUID().toString().replace("-", "");
         return baseName.concat("_").concat(timestamp).concat("_").concat(uuid);
     }
+
+    public static String generateProjectHandler() {
+        String timestamp = String.valueOf(new Date().getTime());
+        long id = Thread.currentThread().getId();
+        return String.valueOf(id).concat("autotest").concat(timestamp);
+    }
 }
