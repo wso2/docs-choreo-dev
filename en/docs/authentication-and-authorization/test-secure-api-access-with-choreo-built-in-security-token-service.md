@@ -32,7 +32,7 @@ You can provide fine-grained access control to your API resources with permissio
 4. In the left navigation menu, click **Deploy**.
 5. On the **Deploy** page, go to the **Set Up** card and click **Endpoint Configurations**. This opens the **Endpoint Configurations** pane.
 6. Go to the **Permissions List** section and click **+ Add Permission(Scope)**.
-7. In the **Permissions List** section, enter the permission value and click **+ Add New**.
+7. In the **Permissions List** section, enter a permission value and click **+ Add New**.
 8. Click the copy icon in front of the added permission to copy the fully qualified name of it. Save this value for future reference.
 9. To attach permissions to a resource, click the **Select Permissions** list under the respective resource and select the permissions you want to attach.
 10. Click **Apply**.
