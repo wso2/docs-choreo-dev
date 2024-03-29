@@ -24,6 +24,11 @@ By following this guide, you will:
     - Read access to issues and metadata.
     - Read and write access to code, pull requests, and repository hooks.
 
+    Alternatively, you can connect [Choreo sample apps repository](https://github.com/wso2/choreo-sample-apps/) without authorizing the GitHub app. Simply copy the repository URL into the **Provide Repository URL** section instead of step 6 in [Create a service component with a udp endpoint](#step-1-create-a-service-component-with-a-udp-endpoint)
+
+    !!! info
+        Authorizing the repository with the Choreo GitHub App is necessary to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
+
 Let's get started!
 
 ### Learn the repository file structure

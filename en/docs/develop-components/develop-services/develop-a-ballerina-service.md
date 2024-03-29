@@ -24,6 +24,13 @@ In this guide, you will:
 2. The Choreo GitHub App requires the following permissions:
     - Read access to issues and metadata.
     - Read and write access to code, pull requests, and repository hooks.
+    
+
+    Alternatively, you can connect [Choreo sample apps repository](https://github.com/wso2/choreo-sample-apps/) without authorizing the GitHub app. Simply copy the repository URL into the **Provide Repository URL** section instead of step 6 in [Create a service component](#step-1-create-a-service-component)
+
+    !!! info
+        Authorizing the repository with the Choreo GitHub App is necessary to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
+         
 
 ### Learn the repository file structure
 

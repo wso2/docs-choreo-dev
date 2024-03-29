@@ -23,6 +23,11 @@ Before you try out the steps in this guide, complete the following:
 
  - Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples), which contains the sample integration for this guide.
 
+    Alternatively, you can connect [Choreo sample apps repository](https://github.com/wso2/choreo-samples) without authorizing the GitHub app. Simply copy the repository URL into the **Provide Repository URL** section instead of step 6 in [Create a service component](#step-1-create-a-webhook-component)
+
+    !!! info
+        Authorizing the repository with the Choreo GitHub App is necessary to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
+
 ## Step 1: Create a Webhook component
 
 To create a project, add a Webhook component to it, design the webhook, test it, and then commit it to make it available in the Choreo Console, follow these sub-steps:

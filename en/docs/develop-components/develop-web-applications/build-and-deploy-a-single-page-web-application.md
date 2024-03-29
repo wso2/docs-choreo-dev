@@ -10,6 +10,11 @@ A web application is an application program hosted on a server and serves ingres
 
 - To deploy a Web Application component, you must have a GitHub account with a repository containing the web application's implementation. For this guide, fork the [https://github.com/wso2/choreo-samples](https://github.com/wso2/choreo-samples) repository, which contains the sample web application implementation.
 
+    Alternatively, you can connect [Choreo sample apps repository](https://github.com/wso2/choreo-samples) without authorizing the GitHub app. Simply copy the repository URL into the **Provide Repository URL** section instead of step 5 in [Create a web application](#create-a-web-application)
+
+    !!! info
+        Authorizing the repository with the Choreo GitHub App is necessary to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
+
 ## Create a web application  
 
 You can create a web application in Choreo as follows:

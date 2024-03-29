@@ -36,6 +36,11 @@ To connect your GitHub repository to Choreo, you should authorize the [Choreo Ap
 !!! note
     You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. Choreo needs write access only to send pull requests to a user repository. Choreo does not directly push any changes to a repository.
 
+Alternatively, you can connect public repositories without authorizing the GitHub app. Simply copy the repository URL into the **Provide Repository URL** section in the component creation wizard of respective component type.
+
+!!! info
+    Authorizing the repository with the Choreo GitHub App is necessary to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component. Later, you can authorize with GitHub app to enable Auto Deploy if the repository is owned by you.
+
 After granting access to the required repositories, you can choose a repository and an associated branch to connect to the Choreo component.
 For the containerized application deployments, you should select the **Dockerfile** as the **Buildpack** and provide **Dockerfile Path** and [**Docker Context Path**](https://docs.docker.com/build/building/context/#path-context) for the Docker build.
 
