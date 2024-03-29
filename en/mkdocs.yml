@@ -46,25 +46,25 @@ theme:
     - content.action.view
   language: 'en'
   palette:
-    # Palette toggle for automatic mode
+   # Palette toggle for automatic mode
     - media: "(prefers-color-scheme)"
       toggle:
         icon: material/brightness-auto
-        name: Switch to light mode
+        name: Switch to dark mode
 
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default 
       toggle:
         icon: material/brightness-7
-        name: Switch to dark mode
+        name: Switch to system preference
 
     # Palette toggle for dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       toggle:
         icon: material/brightness-4
-        name: Switch to system preference
+        name: Switch to light mode
   icon:
     logo: logo
 #Breaks build if there's a warning
@@ -182,7 +182,7 @@ nav:
       - Choreo CLI Overview: choreo-cli/choreo-cli-overview.md
       - Get Started with the Choreo CLI: choreo-cli/get-started-with-the-choreo-cli.md  
   - Administer:
-      - Configure a Custom Domain for APIs: administer/configure-a-custom-domain-for-apis.md
+      - Configure a Custom Domain for Your Organization: administer/configure-a-custom-domain-for-your-organization.md
       - Configure Enterprise Login: administer/configure-enterprise-login.md
       - Configure an External IdP:
           - Configure Asgardeo as an External IdP: administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md
@@ -191,7 +191,6 @@ nav:
       - Developer Portal:
           - Customize the Developer Portal: administer/customize-the-developer-portal.md
           - Configure Self-Sign-Up: administer/configure-self-sign-up.md
-          - Customize the Developer Portal Domain: administer/customize-the-developer-portal-domain.md
       - Manage Members of an Organization: administer/manage-members-of-an-organization.md
   - References:
       - FAQ: references/faq.md
@@ -361,6 +360,8 @@ plugins:
           'quick-start-guides/build-your-first-cloud-native-application-with-choreo.md': 'https://wso2.com/choreo/docs/quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service/'
           'choreo-concepts/configuration-management.md': 'https://wso2.com/choreo/docs/devops-and-ci-cd/manage-configurations-and-secrets/'
           'develop-components/develop-a-web-application.md': 'https://wso2.com/choreo/docs/develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application/'
+          'administer/configure-a-custom-domain-for-apis.md': 'https://wso2.com/choreo/docs/administer/configure-a-custom-domain-for-your-organization/'
+          'administer/customize-developer-portal-domain.md': 'https://wso2.com/choreo/docs/administer/configure-a-custom-domain-for-your-organization/'
           
 extra_css:
   # - assets/lib/highlightjs/default.min.css
