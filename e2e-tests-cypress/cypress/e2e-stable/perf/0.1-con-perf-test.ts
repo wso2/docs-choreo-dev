@@ -22,7 +22,7 @@ describe("Multiple User Logins", () => {
     response: any
   ): void {
     const interceptorName = "createComponentRequest";
-    interceptWriter.interceptAndWriteToFixture(interceptorName, request, response);
+    interceptWriter.interceptAndWriteToFixture(interceptorName, filePath, request, response);
   }
 
   before(() => {
@@ -102,7 +102,9 @@ describe("Multiple User Logins", () => {
             url: "https://github.com/choreo-test-apps/byor-service-app1",
             branch: "main",
           },
-          ENDPOINT_NAME
+          ENDPOINT_NAME,
+          undefined,
+          createComponentCallback
         )
         .then((serviceComponent: Service) => {
           project.visitComponent(serviceComponent.getName());

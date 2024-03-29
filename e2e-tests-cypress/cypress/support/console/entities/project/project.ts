@@ -225,7 +225,8 @@ export class Project {
     accessibility: Enums.Accessibility,
     repoInfo: RepoInfo,
     endpointName: string,
-    componentName?: string
+    componentName?: string,
+    loggingCallback?: any
   ) {
     if (componentName === undefined) {
       componentName = Utils.generateComponentName();
@@ -249,7 +250,8 @@ export class Project {
       this.name,
       "",
       componentData,
-      GraphQLQueryBuilder.getRestComponentCreationQuery
+      GraphQLQueryBuilder.getRestComponentCreationQuery,
+      loggingCallback
     ).then((componentDetails: ComponentDetails) => {
       return Promise.resolve(new Service(componentName, endpointName));
     });
@@ -259,7 +261,8 @@ export class Project {
     accessibility: Enums.Accessibility,
     repoInfo: RepoInfo,
     webAppInfo: WebAppInfo,
-    componentName?: string
+    componentName?: string,
+    loggingCallback?: any
   ) {
     if (componentName === undefined) {
       componentName = Utils.generateComponentName();
@@ -290,7 +293,8 @@ export class Project {
       this.name,
       "",
       componentData,
-      GraphQLQueryBuilder.getWebAppComponentCreationQuery
+      GraphQLQueryBuilder.getWebAppComponentCreationQuery,
+      loggingCallback
     ).then(() => {
       return Promise.resolve(new WebApp(componentName));
     });
