@@ -76,6 +76,9 @@ To ensure this, the requests coming from the Choreo data plane must be allowed b
 - If your component is deployed in the Choreo EU data plane, add the following IP range to your allowlist:
     - 20.166.183.112/28
 
+- If you are working on the [Cybertruck Challenge](https://wso2.com/cybertruck/), add the following IP range to your allowlist:
+    - 20.190.30.48/28
+
 ## Data planes
 
 ### Q: What is a Choreo control plane?
