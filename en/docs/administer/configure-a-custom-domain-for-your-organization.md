@@ -33,8 +33,14 @@ To add a custom domain for your organization, follow the steps given below:
     1. Enter your domain name.
     2. Select the environment to apply the domain name.
     3. Select the entity type to apply the domain name.
+
+        !!! tip
+             In this context:
+
+              - The **API** entity type represents Choreo components exposed via an endpoint, including API Proxy, Service, and Webhook components.
+              - The **Web App** entity type represents the Web Application component.
        
- 7. Take a look at the generated CNAME target value displayed and click **Verify** to create a DNS record associating the CNAME target value.
+ 7. Take a look at the generated CNAME target value displayed and create a DNS record associating the domain name to the CNAME target value with your DNS provider.
     
     ![CNAME target value](../assets/img/administer/configure-domain/cname-target-value.png)
 
@@ -48,7 +54,25 @@ To add a custom domain for your organization, follow the steps given below:
           If the CNAME mapping is correct, the verification completes successfully. It can take some time for the configured CNAME mapping to be globally available.
 
  9. On successful verification of the custom domain, click **Next**.
- 10. Select a TLS certificate provider depending on your preference. You can either add the TLS certificates you created for the custom domain or click **Let's Encrypt** to allow Choreo to generate and manage the certificates for you. To proceed with this step in this guide, click **Let's Encrypt**.
+ 10. Select a TLS certificate provider depending on your preference. You can either import the TLS certificates you created for the custom domain or click **Let's Encrypt** to allow Choreo to generate and manage the certificates for you.
+
+    !!! note "If you want to import your own certificate, it should adhere to specific guidelines"
+          - TLS certificate guidelines:
+             - It should be issued by a certificate authority (CA) and should contain the domain's public key along with additional information such as the domain name, the company that owns the domain, the certificate's expiration date, and the digital signature of the issuing CA.
+             - It should be an X509 certificate.
+             - It should be in the PEM format.
+             - It should be issued directly or through a wildcard entry for the provided custom URL. For example,
+                - For direct issuances, the SSL file must include the exact domain name. For example, if the domain is `apis.choreo.dev`, the SSL file must include `apis.choreo.com`.
+                - For wildcard entries, the SSL file should use a wildcard notation to cover all subdomains under the provided URL. For example, if the CNAME is `apis.choreo.dev`, the SSL file should use `*.choreo.dev`.
+          - TLS key file guidelines:
+             - It should be in the PEM format.
+             - It must be encrypted using RSA encryption.
+          - Certificate chain file guidelines:
+             - The chain file, which is essential for some clients to verify the authenticity of a server's SSL/TLS certificate, should contain your domain's SSL/TLS certificate (optional, as this can be provided via the certificate itself) and one or more intermediate certificates in the correct order, leading back to a root certificate. 
+             - All certificates in the chain should be X509 certificates in PEM format.
+ 
+     To proceed with this step in this guide, click **Let's Encrypt**.
+
  11. To save the custom domain, click **Add**.
  
 Now, you have successfully added a custom domain for your organization.

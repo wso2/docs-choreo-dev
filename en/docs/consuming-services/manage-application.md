@@ -44,7 +44,7 @@ Revoking JWT access tokens can be challenging due to their self-validating natur
 
 It is recommended to use an expiry time that is not more than 900 seconds.
 
-In traditional session-based authentication, the server can easily revoke a session by invalidating its associated session ID. However, in the case of JWTs, there is no central authority that maintains a list of valid or invalid tokens. As a result, revoking a JWT token requires the use of blacklisting or whitelisting techniques, which can add additional complexity to the authentication flow and may not always be foolproof.
+In traditional session-based authentication, the server can easily revoke a session by invalidating its associated session ID. However, in the case of JWTs, there is no central authority that maintains a list of valid or invalid tokens. As a result, revoking a JWT token requires the use of denylist or allowlist techniques, which can add additional complexity to the authentication flow and may not always be foolproof.
 
 To mitigate these challenges, it is recommended to use short-lived JWT access tokens and regularly refresh them. This reduces the risk of unauthorized access if a token is stolen or leaked, as the token will expire after a short period of time. Additionally, implementing other security measures such as strong encryption and secure token storage can further enhance the security of JWT-based authentication.
 
