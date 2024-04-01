@@ -26,11 +26,11 @@ spec:
               args: ["-cleanup-cron"]
               resources:
                 limits:
-                  cpu: 300m
-                  memory: 300Mi
+                  cpu: 100m
+                  memory: 150Mi
                 requests:
-                  cpu: 200m
-                  memory: 200Mi
+                  cpu: 50m
+                  memory: 100Mi
               envFrom:
                 - configMapRef:
                     name: env-dp-rudder
