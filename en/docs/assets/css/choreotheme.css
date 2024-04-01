@@ -230,6 +230,9 @@ visibility: hidden;
     background-color: white;
   }
 
+.md-search__output-home{
+    width: 40rem !important;
+  }
 .cIcon path{
   fill: #545ce5;
 }
@@ -723,5 +726,21 @@ color: #a8a39f;
         background: none;
         padding-left: 0%;
         text-align: center;
+    }
+    .md-search__output-home{
+        width: 100% !important;
+    }
+    .md-content__search_results{
+        min-width: none;
+        padding-left: 0%;
+        padding-right: 0%;
+        width: inherit;
+        position: unset !important;
+    }
+}
+
+@media screen and (max-width: 59.9375em) {
+    body[data-md-scrolllock] {
+        position:unset
     }
 }
