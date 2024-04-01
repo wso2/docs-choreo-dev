@@ -34,6 +34,14 @@ describe("Multiple User Logins", () => {
     webAppOutputDirectory: "dist",
   };
 
+  function createComponentCallback(
+    request: any,
+    response: any
+  ): void {
+    const interceptorName = "createComponentRequest";
+    interceptWriter.interceptAndWriteToFixture(interceptorName, filePath, request, response);
+  }
+
   before(() => {
     interceptWriter = new InterceptWriter();
   });
@@ -108,8 +116,9 @@ describe("Multiple User Logins", () => {
         .createWebAppComponent(
           Enums.Accessibility.EXTERNAL,
           repoInfo,
-          webAppInfo
+          webAppInfo,
         )
+        
         .then((app: WebApp) => {
           project.visitComponent(app.getName());
           webApp = app;

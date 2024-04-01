@@ -8,11 +8,11 @@ export class InterceptWriter {
   private fileData: FileData = {
     requests: {
       url: "",
-      method: ""
+      method: "",
     },
     responses: {
       statusCode: 0,
-      message: ""
+      message: "",
     },
     interceptorName: "",
   };
@@ -27,14 +27,15 @@ export class InterceptWriter {
       url: request?.url,
       method: request?.method,
     };
+
     const responseData = {
-      statusCode: response?.statusCode,
-      message: response?.statusMessage || "No message printed from test",
-      body: response?.body?.data,
+      statusCode: response?.statusCode || response?.status || 0,
+      headers: response?.headers,
+      body: response?.body,
     };
     this.fileData.interceptorName = interceptorName;
-    this.fileData.requests=requestData;
-    this.fileData.responses=responseData;
+    this.fileData.requests = requestData;
+    this.fileData.responses = responseData;
 
     cy.log(`Request: ${JSON.stringify(requestData)}`);
     cy.log(`Response: ${JSON.stringify(responseData)}`);

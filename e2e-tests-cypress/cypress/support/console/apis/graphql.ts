@@ -85,7 +85,8 @@ export class GraphQL {
     projectName: string,
     repoName: string,
     componentData: AbsComponent,
-    callback
+    callback,
+    createComponentCallback?: any
   ) {
     return this.getProjectsV2(login.getOrgId()).then((p) => {
       const projectId = p.projects.find((p) => p.name === projectName).id;
@@ -112,7 +113,9 @@ export class GraphQL {
         if (componentData.initializeAsBallerinaProject) {
           this.getPullRequests(id, repoName);
         }
-
+        if (createComponentCallback !== undefined) {
+          createComponentCallback(query, res);
+        }
         return Promise.resolve({ id, projectId, handler });
       });
     });
@@ -468,6 +471,7 @@ export class GraphQL {
         return Promise.resolve({
           body: resp.body.data,
           status: resp.status,
+          headers: resp.headers,
         });
       });
   }
