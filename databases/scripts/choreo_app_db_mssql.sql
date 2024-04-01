@@ -2151,9 +2151,9 @@ INSERT INTO permission (display_name, handle, domain_area, description) VALUES (
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Manage Devops Component','urn:choreosystem:choreodevopsportalapi:component_manage','CHOREO-DEVOPS','Manage devops component');
 
 -- COMPONENT-MANAGEMENT
-INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('View file','urn:choreosystem:componentutils:component_file_view','COMPONENT-MANAGEMENT','View file');
-INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Trigger component','urn:choreosystem:componentutils:component_trigger','COMPONENT-MANAGEMENT','Trigger component');
-INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Mange component','urn:choreosystem:componentutils:component_manage','COMPONENT-MANAGEMENT','Mange component');
+INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('View Component Utilities Files','urn:choreosystem:componentutils:component_file_view','COMPONENT-MANAGEMENT','View component utilities files');
+INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Trigger Component Utilities','urn:choreosystem:componentutils:component_trigger','COMPONENT-MANAGEMENT','Trigger component utilities');
+INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Manage Component Utilities','urn:choreosystem:componentutils:component_manage','COMPONENT-MANAGEMENT','Manage component utilities');
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Trigger Component','urn:choreosystem:componentsmanagement:component_trigger','COMPONENT-MANAGEMENT','Trigger component');
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Create Component','urn:choreosystem:componentsmanagement:component_create','COMPONENT-MANAGEMENT','Create component');
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('View Component Configuration','urn:choreosystem:componentsmanagement:component_config_view','COMPONENT-MANAGEMENT','View component configuration');
