@@ -16,3 +16,10 @@ resources:
   - opensearch.yaml
   - opensearch-http-password.yaml
   - sys-obsapi-spc.yaml
+
+patches:
+  - path: patch.json
+    target:
+      group: secrets-store.csi.x-k8s.io
+      version: v1
+      kind: SecretProviderClass
