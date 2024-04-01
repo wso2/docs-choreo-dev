@@ -28,9 +28,6 @@ export class InterceptWriter {
       method: request?.method,
     };
 
-    cy.log(`Response: ${JSON.stringify(response)}`);
-    cy.log(`Response Headers: ${JSON.stringify(response.headers)}`);
-
     const responseData = {
       statusCode: response?.statusCode || response?.status || 0,
       headers: response?.headers,
