@@ -114,7 +114,7 @@ export class GraphQL {
           this.getPullRequests(id, repoName);
         }
         if (createComponentCallback !== undefined) {
-          createComponentCallback(res.body.request, res.body.response);
+          createComponentCallback(query, res);
         }
         return Promise.resolve({ id, projectId, handler });
       });
@@ -471,6 +471,7 @@ export class GraphQL {
         return Promise.resolve({
           body: resp.body.data,
           status: resp.status,
+          headers: resp.headers,
         });
       });
   }
