@@ -13,3 +13,4 @@ resources:
   - choreo-platform-svc-cost-collector.yaml
   - choreo-weekly-execution-cleaner.yaml
   - platform-service-manager-cronjob.yaml
+  - dp-rudder-deploy-history-cleanup-task.yaml
