@@ -69,14 +69,16 @@ spec:
           livenessProbe:
             httpGet:
               path: /internal/data/v1/healthz
-              port: 9763
+              port: 9443
+              scheme: HTTPS
             initialDelaySeconds: 300
             periodSeconds: 20
             timeoutSeconds: 15
           readinessProbe:
             httpGet:
               path: /internal/data/v1/healthz
-              port: 9763
+              port: 9443
+              scheme: HTTPS
             initialDelaySeconds: 300
             periodSeconds: 10
             timeoutSeconds: 15
