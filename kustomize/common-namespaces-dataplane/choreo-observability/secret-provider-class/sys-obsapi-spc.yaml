@@ -9,22 +9,22 @@
 #
 # --------------------------------------------------------------------------------------
 
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
-resources:
-  - config
-  - deployment
-  - hpa
-  - netpol
-  - pdb
-  - rbac
-  - service
-  - secret-provider-class
-
-patches:
-  - path: priority-class-deployment-patch.yaml
-    target:
-      kind: Deployment
-
-namespace: choreo-observability
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: sys-obsapi-secret
+spec:
+  secretObjects:
+    - secretName: sys-obsapi-secret
+      type: Opaque
+      data:
+        - objectName: AZURE_LA_CLIENT_SECRET
+          key: AZURE_LA_CLIENT_SECRET
+  parameters:
+    objects:  |
+      array:
+        - |
+          objectName: choreo-dev-log-analytics-read-sysobs-api
+          objectType: secret
+          objectAlias: AZURE_LA_CLIENT_SECRET
+          objectVersion: {{.AZURE_LA_CLIENT_SECRET}}
