@@ -33,7 +33,7 @@ First, let's create a Webhook component as follows:
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Go to the **Webhook** card and click **Create**.
 4. This opens the **Create a Webhook** pane, where you can specify a name and description for the component. Enter a unique name and description. 
-5. Select **GitHub** tab.
+5. Go to the **GitHub** tab.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     Alternatively, you can connect the [Choreo samples repository](https://github.com/wso2/choreo-samples) without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
