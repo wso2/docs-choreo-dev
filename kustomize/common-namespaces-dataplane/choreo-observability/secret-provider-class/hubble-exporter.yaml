@@ -27,4 +27,4 @@ spec:
           objectName: hubble-exporter-EVENT-HUB-CONNECTION-STRING
           objectType: secret
           objectAlias: EVENT_HUB_CONNECTION_STRING
-          objectVersion: {{.EVENT_HUB_CONNECTION_STRING}}
+          objectVersion: "{{.EVENT_HUB_CONNECTION_STRING}}"
