@@ -35,16 +35,7 @@ By following this guide, you will:
 
 ## Prerequisites
 
-1. To deploy a containerized component, you will need a GitHub account with a repository that contains a Dockerfile. Fork the [Choreo sample apps repository](https://github.com/wso2/choreo-sample-apps/), which contains the sample for this guide.
-2. The Choreo GitHub App requires the following permissions:
-    - Read access to issues and metadata.
-    - Read and write access to code, pull requests, and repository hooks.
-
-
-    Alternatively, you can connect [Choreo sample apps repository](https://github.com/wso2/choreo-sample-apps/) without authorizing the GitHub app. Simply copy the repository URL into the **Provide Repository URL** section instead of step 6 in [Create a service component with a grpc endpoint](#step-1-create-a-service-component-with-a-grpc-endpoint)
-
-    !!! info
-        Authorizing the repository with the Choreo GitHub App is necessary to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
+- To deploy a containerized component, you will need a GitHub account with a repository that contains a Dockerfile. Fork the [Choreo sample apps repository](https://github.com/wso2/choreo-sample-apps/), which contains the sample for this guide.
 
 Let's get started!
 
@@ -85,17 +76,20 @@ Let's create a containerized Service component by following these steps:
     |-----------------|-------------------------|
     | **Name**        | `Go gRPC Server`        |
     | **Description** | `Sends greetings`       |
-5. If you have not already connected your GitHub repository to Choreo, to allow Choreo to connect to your GitHub account, click **Authorize with GitHub** and enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+5. Go to the **GitHub** tab.
+6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
-    !!! info
-         The **Choreo GitHub App** requires the following permissions:
+    Alternatively, you can paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
 
-         - Read and write access to code and pull requests.
-         - Read access to issues and metadata.
+    !!! note
+           The **Choreo GitHub App** requires the following permissions:
+
+           - Read and write access to code and pull requests.
+           - Read access to issues and metadata.
              
-          You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
+           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
-6. Enter the following information:
+7. Enter the following information:
 
     | **Field**               | **Description**                 |
     |-------------------------|---------------------------------|
@@ -115,7 +109,7 @@ Let's create a containerized Service component by following these steps:
 
         2. The Dockerfile utilized in this guide is a multi-stage Dockerfile, which is designed to keep the final image size small and provides the ability to build the application with a specific version of tools and libraries.
 
-7. Click **Create**. Once the component creation is complete, you will see the component's overview page.
+8. Click **Create**. Once the component creation is complete, you will see the component's overview page.
 
 You have successfully created a Service component from a Dockerfile. Now let's build and deploy the service.
 
