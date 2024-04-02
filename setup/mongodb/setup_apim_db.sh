@@ -71,7 +71,7 @@ done
 echo "Creating apim db's collections and search indexes ..."
 
 #Create the apis collections in apim db
-mongosh "$HOST/APIM_DB" -u $USERNAME -p $PASSWORD scripts/apim-db-apis-collection.js > /dev/null
+mongosh "$HOST/APIM_DB" -u "$USERNAME" -p "$PASSWORD" scripts/apim-db-apis-collection.js > /dev/null
 
 #Check the existency of search index
 is_search_index_exist=$(curl -s -X GET -u "$API_PUBLIC_KEY:$API_PRIVATE_KEY" --digest \

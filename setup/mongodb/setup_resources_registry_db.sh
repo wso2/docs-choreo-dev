@@ -46,4 +46,4 @@ done
 
 echo "Creating resources registry db's collections and indexes ..."
 
-mongosh "$HOST/RESOURCE_REGISTRY" -u $USERNAME -p $PASSWORD scripts/resource-registry-db-resource-collection-indexes.js > /dev/null
+mongosh "$HOST/RESOURCE_REGISTRY" -u "$USERNAME -p $PASSWORD scripts/resource-registry-db-resource-collection-indexes.js > /dev/null
