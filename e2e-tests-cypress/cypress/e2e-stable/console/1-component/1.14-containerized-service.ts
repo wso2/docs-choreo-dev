@@ -19,13 +19,11 @@ import { OK } from "../../../support/commons/http";
 import { ConfigEntryStep } from "../../../support/commons/types";
 import { TestIds } from "../../../support/console/constants/TestIds";
 
-
 after(() => {
   console.logout();
 });
 
 describe("Verify containerized service functionality", () => {
-
   const PROJECT_DESCRIPTION = "Containerized service scenario";
   const ENDPOINT_NAME = "Go Greeter";
   const CONFIG_KEY = "config";
@@ -42,8 +40,8 @@ describe("Verify containerized service functionality", () => {
     cy.get(TestIds.addConfig).click();
     cy.wait(1000);
     cy.log(`Typing CONFIG_KEY: ${CONFIG_KEY}`);
-    cy.get(TestIds.addConfigKey).should('be.visible').type(CONFIG_KEY);
-    cy.get(TestIds.addConfigValue).should('be.visible').type(CONFIG_VALUE);
+    cy.get(TestIds.addConfigKey).should("be.visible").type(CONFIG_KEY);
+    cy.get(TestIds.addConfigValue).should("be.visible").type(CONFIG_VALUE);
     cy.get(TestIds.configSave).click();
     cy.get(TestIds.addConfig).click();
     cy.get(TestIds.addConfigKey).type(SECRET_KEY);
@@ -59,11 +57,11 @@ describe("Verify containerized service functionality", () => {
   }
 
   function addConfigurationProd() {
-      cy.get(TestIds.byocPromote).click();
-      cy.get(TestIds.next).should("be.visible").click();
-      addConfiguration();
+    cy.get(TestIds.byocPromote).click();
+    cy.get(TestIds.next).should("be.visible").click();
+    addConfiguration();
   }
-  
+
   it("Login to Console", () => {
     console.login();
   });
@@ -97,7 +95,6 @@ describe("Verify containerized service functionality", () => {
 
   it("Deploying to Dev with public level endpoint", () => {
     byoc.deployToDevWithConfigs([new ConfigEntryStep(addConfiguration)]);
-
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
@@ -109,15 +106,15 @@ describe("Verify containerized service functionality", () => {
         method: "",
         parentComponentId: "operations-greeting-get_greeter_greet",
       })
-   .then((res) => {
-      expect(res.response).to.be.eq("Hello, Stranger!\n\n");
-      expect(res.statusCode).to.be.equal(OK.toString());
-    });
+      .then((res) => {
+        expect(res.response).to.be.eq("Hello, Stranger!\n\n");
+        expect(res.statusCode).to.be.equal(OK.toString());
+      });
   });
 
-it("Verify component promotion to Prod", () => {
-  byoc.promoteWithConfigs([new ConfigEntryStep(addConfigurationProd)]);
-});
+  it("Verify component promotion to Prod", () => {
+    byoc.promoteWithConfigs([new ConfigEntryStep(addConfigurationProd)]);
+  });
 
   it("Verify test functionality of root resource in prod on swagger", () => {
     byoc
@@ -128,15 +125,10 @@ it("Verify component promotion to Prod", () => {
         method: "",
         parentComponentId: "operations-greeting-get_greeter_greet",
       })
-   .then((res) => {
-      expect(res.response).to.be.eq("Hello, Stranger!\n\n");
-      expect(res.statusCode).to.be.equal(OK.toString());
-    });
-  });
-
-  it("Stop component deployments", () => {
-    byoc.stopDeployment();
-    byoc.stopPromotion();
+      .then((res) => {
+        expect(res.response).to.be.eq("Hello, Stranger!\n\n");
+        expect(res.statusCode).to.be.equal(OK.toString());
+      });
   });
 
   it("Verifying component insights", () => {
@@ -144,12 +136,14 @@ it("Verify component promotion to Prod", () => {
   });
 
   it("Verify API insights for dev env", () => {
-    project.verifyUsageInsights(Enums.Environment.DEVELOPMENT, { expectedTraffic: 1 });
+    project.verifyUsageInsights(Enums.Environment.DEVELOPMENT, {
+      expectedTraffic: 1,
+    });
   });
 
   it("Verify API insights for prod env", () => {
-    project.verifyUsageInsights(Enums.Environment.PRODUCTION, { expectedTraffic: 1 });
+    project.verifyUsageInsights(Enums.Environment.PRODUCTION, {
+      expectedTraffic: 1,
+    });
   });
-
 });
-
