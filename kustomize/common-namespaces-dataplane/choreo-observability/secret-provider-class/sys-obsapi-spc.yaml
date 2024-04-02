@@ -27,4 +27,4 @@ spec:
           objectName: choreo-dev-log-analytics-read-sysobs-api
           objectType: secret
           objectAlias: AZURE_LA_CLIENT_SECRET
-          objectVersion: {{.AZURE_LA_CLIENT_SECRET}}
+          objectVersion: "{{.AZURE_LA_CLIENT_SECRET}}"

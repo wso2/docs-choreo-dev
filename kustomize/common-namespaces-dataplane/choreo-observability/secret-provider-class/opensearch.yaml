@@ -41,9 +41,9 @@ spec:
           objectName: open-search-internal-users-us
           objectType: secret
           objectAlias: OPENSEARCH_INTERNAL_USERS
-          objectVersion: {{.OPENSEARCH_INTERNAL_USERS}}
+          objectVersion: "{{.OPENSEARCH_INTERNAL_USERS}}"
         - |
           objectName: open-search-password-us
           objectType: secret
           objectAlias: OPENSEARCH_PASSWORD
-          objectVersion: {{.OPENSEARCH_PASSWORD}}
+          objectVersion: "{{.OPENSEARCH_PASSWORD}}"
