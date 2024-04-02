@@ -25,6 +25,15 @@ configMapGenerator:
       - SYS_METRICS_API_URL={{.SYS_METRICS_API_URL}}
       - APP_METRICS_API_URL={{.APP_METRICS_API_URL}}
       - AZURE_OPENAI_ENDPOINT={{.AZURE_OPENAI_ENDPOINT}}
+  - name: env-insights-assistant-cm
+    behavior: create
+    literals:
+      - INSIGHT_API_URL={{.INSIGHT_API_URL}}
+      - CIO_API_URL={{.CIO_API_URL}}
+      - CP_GRAPHQL_API_URL={{.CP_GRAPHQL_API_URL}}
+      - CP_API_URL={{.CP_API_URL}}
+      - AZURE_OPENAI_ENDPOINT={{.AZURE_OPENAI_ENDPOINT}}
+      - REGION={{.REGION}}
   - name: env-docs-assistant
     behavior: create
     literals:
