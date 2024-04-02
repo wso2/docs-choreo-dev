@@ -92,9 +92,4 @@ describe("Verify MI service with endpoint.yaml functionality", () => {
         expect(res.statusCode).to.be.eq(OK.toString());
       });
   });
-
-  it("Stop component", () => {
-    service.stopDeployment();
-    service.stopPromotion();
-  });
 });

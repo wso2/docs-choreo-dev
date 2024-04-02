@@ -165,11 +165,6 @@ describe("Verify Ballerina service functionality", () => {
     component.publish();
   });
 
-  it("Stop component", () => {
-    component.stopDeployment();
-    component.stopPromotion();
-  });
-
   it("Verifying component insights", () => {
     component.verifyUsageInsights();
   });
