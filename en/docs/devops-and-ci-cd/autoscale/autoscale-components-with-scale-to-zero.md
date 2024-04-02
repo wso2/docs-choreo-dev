@@ -6,6 +6,13 @@ When this feature is active, your apps will automatically scale down to zero unl
 
 Scale to zero is very useful in lower environments, where you can significantly reduce infrastructure costs by scaling down idle workloads. In production environments, you can also use scale-to-zero capability if your application's behavior aligns with this feature behavior. In the paid tier, if you want to run your application with more guaranteed high availability, it is recommended to choose HPA (Horizontal Pod Autoscaler) scaling method and configure a minimum replica count of 2 or higher.
 
+
+When scale to zero is enabled for your user-app deployment will be scale to zero replicas upon deployment or promotion. When a new request is received by the deployment, the deployment will scale up to one replica and serve the request. Upon an idle time of not having requests the deployment will again scale to zero until a new request is received.
+
+When scale to zero is enabled, you can update the maximum number of replicas that a scaled to zero deployment can have. If the HTTP traffic is very high, Choreo will scale the deployment up to that number of replicas if needed. In such a situation, If the number of pending requests to be served is greater than the number specified in “Number of pending requests to spawn a new pod”, Choreo will add a new replica to the deployment.
+
+![Free User - Scale to Zero](../../assets/img/devops-and-ci-cd/scaling/scale-to-zero-view.png){.cInlineImage-full}
+
 ## Enable scale to zero
 
 For service components and web-apps you create after February 23, 2024, Choreo enables the scale-to-zero feature by default. When deploying or promoting the component, the deployment will automatically scale-to-zero.
