@@ -42,6 +42,8 @@ orgRemoverRequest:
   resultTopic: ${ASB_RESULT_TOPIC}
   resultSubscription: ${ASB_RESULT_SUB}
   componentNameRegex: "^choreo-([a-z])+$"
+  choreoSystemOrgHandle: {{.CHOREO_SYSTEM_ORG_HANDLE}}
+  choreoSystemOrgUuid: {{.CHOREO_SYSTEM_ORG_UUID}}
 
 emailService:
   host: email-service
