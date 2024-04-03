@@ -4,7 +4,7 @@ Choreo provides the scale-to-zero capability for HTTP applications you deploy in
 
 Scale to zero is very useful in lower environments, where you can significantly reduce infrastructure costs by scaling down idle workloads. In production environments, you can also use scale-to-zero capability if your application's behavior aligns with this feature behavior. In the paid tier, if you want to run your application with more guaranteed high availability, it is recommended to choose HPA (Horizontal Pod Autoscaler) scaling method and configure a minimum replica count of 2 or higher.
 
-# How Scale to Zero works in Choreo
+## How Scale to Zero works in Choreo
 
 !!! info
     For service components and web-apps you create after February 23, 2024, Choreo enables the scale-to-zero feature by default.
