@@ -17,6 +17,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/instance: interceptor
+        choreo.component: keda-http-add-on-interceptor
       annotations:
         seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
     spec:
