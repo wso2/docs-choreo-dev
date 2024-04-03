@@ -39,6 +39,7 @@ configMapGenerator:
     literals:
       - AZURE_OPENAI_ENDPOINT={{.AZURE_OPENAI_ENDPOINT}}
       - ZILLIZ_CLOUD_URI={{.ZILLIZ_CLOUD_URI}}
+      - REDIS_HOST={{.REDIS_HOST}}
   - name: env-marketplace-assistant-cm
     behavior: create
     literals:
@@ -54,4 +55,5 @@ configMapGenerator:
     literals:
       - AZURE_OPENAI_ENDPOINT={{.AZURE_OPENAI_ENDPOINT}}
       - CHOREO_JWT_AUDIENCE={{.CHOREO_JWT_AUDIENCE}}
-      - CHOREO_JWT_JWKS_URL={{.CHOREO_JWT_JWKS_URL}}    
+      - CHOREO_JWT_JWKS_URL={{.CHOREO_JWT_JWKS_URL}}  
+      - REDIS_HOST_URL={{.REDIS_HOST_URL}} 
