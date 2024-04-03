@@ -208,4 +208,9 @@ describe("Multiple User Logins", () => {
       }
     );
   });
+
+  it("Create connections", () => {
+    component.createConnections();
+  });
+
 });

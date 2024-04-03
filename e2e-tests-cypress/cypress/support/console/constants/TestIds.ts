@@ -318,4 +318,9 @@ export namespace TestIds {
   export const apiVisibility = '[data-cyid="visibility-select"]';
   export const devPortalHome = '[data-testid="home-appbar-btn"]';
   export const devPortalLoginLink = '[data-testid="login-button"]';
+  export const addConnectionButton = '[data-cyid="create-config-button"]';
+  export const ConnectionCard = '[data-cyid="api-card-card"]';
+  export const connectionNameInput = '[data-cyid="connection-name"]';
+  export const connectionCreateButton =
+    '[data-cyid="connection-create-button"]';
 }
