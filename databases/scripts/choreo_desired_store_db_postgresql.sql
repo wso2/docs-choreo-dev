@@ -6,12 +6,14 @@
 -- You may not alter or remove any copyright or other notice from copies of this content.
 
 -- Create user
-IF (SELECT name FROM sys.databases WHERE name = N'choreo_desired_store_db') AND NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_desired_store_db_user')
+DO $$
 BEGIN
-    CREATE USER [choreo_desired_store_db_user] with password = N'xxxxxxxxxxxxx'
-    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_desired_store_db TO choreo_desired_store_db_user
-END;
-GO
+    IF EXISTS (SELECT 1 FROM pg_database WHERE datname = 'desired_store') AND 
+       NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'choreo_desired_store_db_user') THEN
+        CREATE USER choreo_desired_store_db_user WITH ENCRYPTED PASSWORD '<STRONG_PASSWORD>';
+        GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO choreo_desired_store_db_user;
+    END IF;
+END $$;
 
 -- Create kind table
 CREATE TABLE kind (
