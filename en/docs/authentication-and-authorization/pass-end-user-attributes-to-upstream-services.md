@@ -12,7 +12,7 @@ For each API request, a digitally signed JWT is carried to the backend service i
 
 `{token header}.{claims list}.{signature}`
 
-When the request goes through Choreo, the backend JWT is appended as a transport header to the outgoing message. The backend service fetches the JWT and retrieves the required information about the user, application, or token.
+When a request goes through Choreo, the backend JWT is appended as the `X-JWT-Assertion` header in the outgoing message. The backend service fetches the JWT and retrieves the required information about the user, application, or token.
 
 ## Claims
 
@@ -164,3 +164,4 @@ To enable passing end-user attributes to the backend through API calls via Chore
 5. Select the **Pass Security Context To Backend** checkbox.
 6. Optionally, specify an appropriate audience claim value for the backend service.
 7. Click **Apply**.
+8. To redeploy the component with the applied setting, go to the **Set Up** card and click **Deploy**.
