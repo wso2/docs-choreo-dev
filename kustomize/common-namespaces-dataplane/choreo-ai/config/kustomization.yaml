@@ -39,7 +39,6 @@ configMapGenerator:
     literals:
       - AZURE_OPENAI_ENDPOINT={{.AZURE_OPENAI_ENDPOINT}}
       - ZILLIZ_CLOUD_URI={{.ZILLIZ_CLOUD_URI}}
-      - REDIS_HOST={{.REDIS_HOST}}
   - name: env-marketplace-assistant-cm
     behavior: create
     literals:
