@@ -18,7 +18,6 @@ spec:
       labels:
         app.kubernetes.io/instance: interceptor
       annotations:
-        policy.cilium.io/proxy-visibility: <Ingress/8080/TCP/HTTP>,<Egress/8080/UDP/DNS>,<Egress/80/TCP/HTTP>
         seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
     spec:
       affinity:
