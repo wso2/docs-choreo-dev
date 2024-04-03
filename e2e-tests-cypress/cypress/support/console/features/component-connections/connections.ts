@@ -1,9 +1,3 @@
-import { Types } from "../../../commons/types";
-import { TestIds } from "../../constants/TestIds";
-import { Service } from "../../entities/component/service-component";
-import { WebApp } from "../../entities/component/webapp-component";
-import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
-
 /*
  * Copyright (c) 2024, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
@@ -16,6 +10,13 @@ import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu"
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
+
+import { Types } from "../../../commons/types";
+import { TestIds } from "../../constants/TestIds";
+import { Service } from "../../entities/component/service-component";
+import { WebApp } from "../../entities/component/webapp-component";
+import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
+
 export interface ConnectionsFeature {
   _createConnections(component: Service | WebApp): void;
 }
@@ -30,7 +31,6 @@ export function mixinConnections<T extends Types.Constructor>(
       this.sideMenu.navigateToDependencies();
       this.addConnection("TestConnection");
     }
-
     private addConnection(connectionName: string) {
       cy.get(TestIds.addConnectionButton).should("be.visible").click();
       cy.get(TestIds.ConnectionCard).should("be.visible").click();
