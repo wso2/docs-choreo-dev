@@ -17,12 +17,14 @@ describe("Multiple User Logins", () => {
   const fixtureFileName = `${username}-intercept.json`;
   const filePath = `${fixtureFileName}`;
 
-  function createComponentCallback(
-    request: any,
-    response: any
-  ): void {
+  function createComponentCallback(request: any, response: any): void {
     const interceptorName = "createComponentRequest";
-    interceptWriter.interceptAndWriteToFixture(interceptorName, filePath, request, response);
+    interceptWriter.interceptAndWriteToFixture(
+      interceptorName,
+      filePath,
+      request,
+      response
+    );
   }
 
   before(() => {
@@ -209,8 +211,37 @@ describe("Multiple User Logins", () => {
     );
   });
 
-  it("Create connections", () => {
-    component.createConnections();
+  it(`Return to Project - ${Cypress.env("perfUsername")}`, () => {
+    component.goBackToProject();
   });
 
+  // Creating the second service component in the same project
+
+  it(`Verify second Ballerina service component creation - ${Cypress.env(
+    "perfUsername"
+  )}`, () => {
+    try {
+      project
+        .createServiceComponent(
+          Enums.Accessibility.EXTERNAL,
+          {
+            url: "https://github.com/choreo-test-apps/byor-service-app1",
+            branch: "main",
+          },
+          ENDPOINT_NAME,
+          undefined,
+          createComponentCallback
+        )
+        .then((serviceComponent: Service) => {
+          project.visitComponent(serviceComponent.getName());
+          component = serviceComponent;
+        });
+    } catch (error: any) {
+      cy.log("Service component creation failed: " + error.message);
+    }
+  });
+
+  it(`Create connections - ${Cypress.env("perfUsername")}`, () => {
+    component.createConnections();
+  });
 });

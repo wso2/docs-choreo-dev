@@ -111,5 +111,4 @@ export class Service extends mixinBuild(
   createConnections() {
     this._createConnections(this);
   }
-
 }
