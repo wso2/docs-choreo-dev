@@ -29,9 +29,10 @@ export function mixinConnections<T extends Types.Constructor>(
 
     _createConnections(component: Service | WebApp) {
       this.sideMenu.navigateToDependencies();
-      this.addConnection("TestConnection");
+      this.addConnection(component, "TestConnection");
     }
-    private addConnection(connectionName: string) {
+
+    private addConnection(component: Service | WebApp, connectionName: string) {
       cy.get(TestIds.addConnectionButton).should("be.visible").click();
       cy.get(TestIds.ConnectionCard).should("be.visible").click();
       cy.get(TestIds.connectionNameInput)
