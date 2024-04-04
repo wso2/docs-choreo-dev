@@ -213,4 +213,5 @@ public final class Constant {
 
     // Data plane Logs
     public static final String DP_LOGS_SUFFIX = "/choreologgingapi/0.2.0/logs";
+    public static final String SYSTEM_OBS_SUFFIX = "/choreosysobsapi/0.2.0/system-metrics/component/application";
 }
