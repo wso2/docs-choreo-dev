@@ -19,7 +19,6 @@ import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.DataPlaneSystemAPI;
 import com.wso2.choreo.integration.config.Constant;
@@ -28,6 +27,7 @@ import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.models.environments.Environment;
@@ -47,8 +47,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.container.RepeatUntilTrue.Builder.repeat;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
+import static org.hamcrest.Matchers.contains;
 
-public class DPLogsService extends DataPlaneSystemAPI {
+public class DPApiService extends DataPlaneSystemAPI {
 
     private static TimeRangeISO getTimeRangeISO() {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -143,6 +145,53 @@ public class DPLogsService extends DataPlaneSystemAPI {
         };
     }
 
+    public static void getSystemMetrics(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients, 
+        String accessToken, ChoreoProject choreoProject, ChoreoComponent choreoComponent, Environment environment, 
+        Boolean enableLive) throws IOException, NoLatestApiVersionFoundException {
+         HttpClient client = citrusClients.get(Endpoints.CHOREO_US_DP_URL);
+        if (Constant.region.EU.toString().equals(choreoProject.getRegion().toString())) {
+            client = citrusClients.get(Endpoints.CHOREO_EU_DP_URL);
+        }
+         String releaseId = choreoComponent.getReleaseIdForEnvironment(environment);
+            String namespace = environment.getNamespace();
+        
+
+            String requestPath = Constant.SYSTEM_OBS_SUFFIX;
+            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            runner.$(repeatOnError()
+                    .until("i = 4")
+                    .index("i")
+                    .autoSleep(30000)
+                    .actions(
+                            http()
+                                    .client(client)
+                                    .send()
+                                    .get(requestPath)
+                                    .message()
+                                    .queryParam("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC)
+                                            .truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)))
+                                    .queryParam("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC)
+                                            .truncatedTo(ChronoUnit.SECONDS).plusSeconds(10 * 60)))
+                                    .queryParam("interval", "14")
+                                    .queryParam("region", "US")
+                                    .queryParam("releaseId", releaseId)
+                                    .queryParam("namespace", namespace)
+                                    .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                    .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                            http()
+                                    .client(client)
+                                    .receive()
+                                    .response(HttpStatus.OK)
+                                    .message()
+                                    .type(MessageType.JSON)
+                                    .validate(jsonPath()
+                                    .expression("$.columns[*].name", 
+                                        contains("cpu", "memory", "cpuPercentage", "memoryPercentage", "TimeGenerated"))
+                                   )
+                    )
+            );
+    }
     public static void getComponentLogs(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients, 
         String accessToken,ChoreoProject choreoProject, ChoreoComponent choreoComponent, Environment environment, 
         Boolean enableLive) throws Exception {
@@ -156,7 +205,7 @@ public class DPLogsService extends DataPlaneSystemAPI {
         final String requestBody = ObjectMapperUtil.mapToString(requestBodyMap);
         AtomicInteger successiveFailureCount = new AtomicInteger(0);
         runner.variable("isComponentLogsRetrievalSuccess", false);
-        runner.$(repeat()
+        runner.$(repeatOnError()
             .until("(i = 5) or ( ${isComponentLogsRetrievalSuccess} = true )")
             .index("i")
             .actions(
