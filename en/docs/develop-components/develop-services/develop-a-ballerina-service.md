@@ -20,18 +20,8 @@ In this guide, you will:
 
 ## Prerequisites
 
-1. You will need a GitHub account with a repository that contains a Ballerina implementation. Fork the [Choreo sample apps repository](https://github.com/wso2/choreo-sample-apps/), which contains the sample for this guide.
-2. The Choreo GitHub App requires the following permissions:
-    - Read access to issues and metadata.
-    - Read and write access to code, pull requests, and repository hooks.
-    
-
-    Alternatively, you can connect [Choreo sample apps repository](https://github.com/wso2/choreo-sample-apps/) without authorizing the GitHub app. Simply copy the repository URL into the **Provide Repository URL** section instead of step 6 in [Create a service component](#step-1-create-a-service-component)
-
-    !!! info
-        Authorizing the repository with the Choreo GitHub App is necessary to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
+- You will need a GitHub account with a repository that contains a Ballerina implementation. Fork the [Choreo sample apps repository](https://github.com/wso2/choreo-sample-apps/), which contains the sample for this guide.
          
-
 ### Learn the repository file structure
 
 Let's familiarize ourselves with the key files in the sample greeter application. The below table gives a brief overview of the important files in the greeter service.
@@ -61,11 +51,18 @@ Let's create a Ballerina service component by following these steps:
     |Name           | `Ballerina Greeter`    |
     |Description    | `Sends greetings`      |
 
-5. Select **GitHub** tab.
-6. If you have not already connected your GitHub repository to Choreo, to allow Choreo to connect to your GitHub account, click **Authorize with GitHub** and enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+5. Go to the **GitHub** tab.
+6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
-    !!! info
-         The **Choreo GitHub App** requires the following permissions:<br/><br/>- Read and write access to code and pull requests.<br/><br/>- Read access to issues and metadata.<br/><br/>You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
+    Alternatively, you can paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
+
+    !!! note
+           The **Choreo GitHub App** requires the following permissions:
+
+           - Read and write access to code and pull requests.
+           - Read access to issues and metadata.
+             
+           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
 7. Enter the following information:
 
@@ -84,6 +81,9 @@ You have successfully created a Service component that exposes a REST API writte
 ## Step 2: Build and deploy
 
 Now that we have connected the source repository, and configured the endpoint details, it's time to build and deploy the greeter service.
+
+    !!! note
+        If you are rebuilding the Ballerina service component after changing the Ballerina version, ensure that before building the code, the version of the Ballerina distribution mentioned in the Ballerina.toml file matches the distribution-version specified in the Dependencies.toml file.
 
 To build and deploy the service, follow the steps below:
 
