@@ -20,7 +20,6 @@ resources:
   - pdb
   - rbac
   - service
-  - secret-provider-class
 
 patches:
   - path: priority-class-deployment-patch.yaml
