@@ -227,3 +227,26 @@ Follow the guidelines below based on your language:
     | Service |[Hello World Service](https://github.com/wso2/choreo-samples/tree/main/hello-world-mi)|
 
     For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
+
+=== "Spring Boot"
+    Supported Java Versions
+        - 8, 11, 17, 18 (OpenJDK Runtime Environment Temurin)
+
+    This buildpack is only available for Web Applications. For other component types, use the **Java** Buildpack. Additionally, if the generated artifact is a **WAR** file, it is necessary to include a **Procfile**.
+
+    #### Procfile 
+
+    A `Procfile` is a configuration file used to declare the commands that are run by your application's containers. 
+    If you want to customize the default entry point of the container, you can include a `Procfile` with the `web` process type in the project root directory. 
+    In **Java** projects, it is optional to include a `Procfile`.
+
+    Here's an example `Procfile` for an application:
+
+    ```
+    web: <command to start your application>
+    ```
+
+    Eg:-
+
+    `web: java -jar target/sample.war` <br>
+`
