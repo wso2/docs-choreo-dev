@@ -50,7 +50,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
 import static org.hamcrest.Matchers.contains;
 
-public class DPApiService extends DataPlaneSystemAPI {
+public class DPObsApiService extends DataPlaneSystemAPI {
 
     private static TimeRangeISO getTimeRangeISO() {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
