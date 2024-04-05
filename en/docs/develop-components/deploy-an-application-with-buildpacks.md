@@ -17,7 +17,6 @@ Buildpacks are a fundamental building block in modern application development. T
 
 Choreo uses [Google Buildpacks](https://cloud.google.com/docs/buildpacks/overview) as default buildpacks for Java, Go, NodeJS, Python, PHP, and Ruby. Choreo uses its own buildpacks for Ballerina and WSO2 MI.
 
-
 ## Develop a component
 
 To develop a service component that exposes a Service in Go, you can follow the [Develop a Service ](develop-services/develop-a-service.md) guide.
@@ -46,7 +45,7 @@ Follow the guidelines below based on your language:
     web: <command to start your application>
     ```
 
-    Eg:-
+    e.g.,
 
     `web: python main.py` <br>
     `web: gunicorn --bind :8080 --workers 1 --threads 8 --timeout 0 main:app` <br>
@@ -124,7 +123,7 @@ Follow the guidelines below based on your language:
     web: <command to start your application>
     ```
 
-    Eg:-
+    e.g.,
 
     `web: java -jar target/sample.jar` <br>
 
@@ -152,7 +151,7 @@ Follow the guidelines below based on your language:
     web: <command to start your application>
     ```
 
-    Eg:-
+    e.g.,
 
     `web: node app.js` <br>
 
@@ -181,7 +180,7 @@ Follow the guidelines below based on your language:
     web: <command to start your application>
     ```
 
-    Eg:-
+    e.g.,
 
     `web:php -S 0.0.0.0:8000 index.php` <br>
 
@@ -210,7 +209,7 @@ Follow the guidelines below based on your language:
     web: <command to start your application>
     ```
 
-    Eg:-
+    e.g.,
 
     `web: ruby app.rb` <br>
     `web:bundle exec ruby app.rb -p 8080` <br>
@@ -232,7 +231,8 @@ Follow the guidelines below based on your language:
     Supported Java Versions
         - 8, 11, 17, 18 (OpenJDK Runtime Environment Temurin)
 
-    This buildpack is only available for Web Applications. For other component types, use the **Java** Buildpack. Additionally, if the generated artifact is a **WAR** file, it is necessary to include a **Procfile**.
+    !!! info
+         You can use this buildpack only with web applications. For other component types, use the **Java** buildpack. Additionally, if the generated artifact is a `WAR` file, it is necessary to include a **Procfile**.
 
     #### Procfile 
 
@@ -246,7 +246,7 @@ Follow the guidelines below based on your language:
     web: <command to start your application>
     ```
 
-    Eg:-
+    e.g.,
 
     `web: java -jar target/sample.war` <br>
 `
