@@ -77,14 +77,6 @@ public class TestBuildpackDp extends TestBase {
 
     @Test(dependsOnMethods = {"deployComponent_TestBuildpackDp"}, dataProvider = "dps")
     @CitrusTest
-    public void promoteComponent_TestBuildpackDp(DataProviderWrapper dp) throws Exception {
-        List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
-                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.BYOC);
-        dp.setPromoteStatusDTO(statusDTO);
-    }
-
-    @Test(dependsOnMethods = {"promoteComponent_TestBuildpackDp"}, dataProvider = "dps")
-    @CitrusTest
     public void invokeAPIDev_TestBuildpackDp(DataProviderWrapper dp) throws Exception {
         Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
                 dp.getChoreoComponent(), dp.getDeploymentStatusDTO(), dp.getEnvironments());
@@ -94,6 +86,14 @@ public class TestBuildpackDp extends TestBase {
     }
 
     @Test(dependsOnMethods = {"invokeAPIDev_TestBuildpackDp"}, dataProvider = "dps")
+    @CitrusTest
+    public void promoteComponent_TestBuildpackDp(DataProviderWrapper dp) throws Exception {
+        List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
+                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.BYOC);
+        dp.setPromoteStatusDTO(statusDTO);
+    }
+
+    @Test(dependsOnMethods = {"promoteComponent_TestBuildpackDp"}, dataProvider = "dps")
     @CitrusTest
     public void invokeAPIProd_TestBuildpackDp(DataProviderWrapper dp) throws Exception {
         String expectedResponse = TestHelperContants.EXPECTED_API_RESPONSE;
