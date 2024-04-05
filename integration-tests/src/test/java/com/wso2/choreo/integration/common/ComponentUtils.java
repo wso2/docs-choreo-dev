@@ -107,7 +107,7 @@ public class ComponentUtils {
         ChoreoProject project;
         if (existingProject.isEmpty()) {
             HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-            String projectHandler = NameGenerator.generateProjectHandler();
+            String projectHandler = NameGenerator.generateThreadUniqueName();
             project = GraphQL.createProject(runner, appServiceClient, Constant.region.US.toString(), accessToken, 
                 projectName, projectHandler);
         } else {
@@ -283,7 +283,7 @@ public class ComponentUtils {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String projectName = NameGenerator.generateUniqueName(Constant.TEST_PROJECT_NAME_PREFIX);
-        String projectHandler = NameGenerator.generateProjectHandler();
+        String projectHandler = NameGenerator.generateThreadUniqueName();
         ChoreoProject project = GraphQL.createProject(runner, appServiceClient, region, accessToken, projectName, projectHandler);
         Assert.assertNotNull(project.getId(), "Project ID is not null.");
         return project;
