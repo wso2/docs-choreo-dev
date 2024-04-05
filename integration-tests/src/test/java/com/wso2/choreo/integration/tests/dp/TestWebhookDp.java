@@ -14,6 +14,7 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.BalConfig;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.code.Repository;
@@ -73,7 +74,7 @@ public class TestWebhookDp extends TestBase {
     @CitrusTest
     public void createUserManagedComponent_CreateDeployInvokeWebhook(DataProviderWrapper dp) throws Exception {
         // Creating component
-        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
         ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, dp.getRegion());
 
         Repository repo = Repository.builder().

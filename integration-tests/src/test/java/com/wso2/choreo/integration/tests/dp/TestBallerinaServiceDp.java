@@ -9,6 +9,7 @@ import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -60,7 +61,7 @@ public class TestBallerinaServiceDp extends TestBase {
     @CitrusTest
     public void createComponent_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
         ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, dp.getRegion());
-        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
         Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/byor-service-app1").
                 branch("main").subPath("").build();
 
