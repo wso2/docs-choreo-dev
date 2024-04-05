@@ -45,3 +45,7 @@ export const PROXY_DEPLOYER_EP = Cypress.env("proxyDeployerEP");
 
 export const DOMAIN_URL_MGT =
   Cypress.env("newAppSvcURL") + "/url-mgt/v1.0/domains";
+
+export const CONNECTIONS_URL_CONFIG =
+  Cypress.env("newAppSvcURL") +
+  "/connections/v1/configurations/service-configs/choreo-connections?generateCreds=true";

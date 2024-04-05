@@ -1,4 +1,7 @@
-import { GRAPHQL_URL } from "../../support/commons/urls";
+import {
+  CONNECTIONS_URL_CONFIG,
+  GRAPHQL_URL,
+} from "../../support/commons/urls";
 import { Enums } from "../../support/commons/enums";
 import { Service } from "../../support/console/entities/component/service-component";
 import { login } from "../../support/console/entities/login/login";
@@ -48,7 +51,7 @@ describe("Multiple User Logins", () => {
     login.perfLogin();
   });
 
-  it(`creating a project - ${Cypress.env("perfUsername")}`, () => {
+  it(`Creating a project - ${Cypress.env("perfUsername")}`, () => {
     cy.intercept(
       {
         method: "POST",
@@ -242,6 +245,41 @@ describe("Multiple User Logins", () => {
   });
 
   it(`Create connections - ${Cypress.env("perfUsername")}`, () => {
+    cy.intercept(
+      {
+        method: "POST",
+        url: CONNECTIONS_URL_CONFIG,
+      },
+      (req) => {
+        req.alias = "createConnectionsRequest";
+      }
+    );
+
     component.createConnections();
+    cy.wait("@createConnectionsRequest", PERF_INTERCEPT_WAIT_TIME).then(
+      (interception) => {
+        try {
+          expect(interception.response?.statusCode).to.equal(201);
+          const responseBody = interception.response?.body;
+          expect(responseBody).to.have.property("status");
+
+          const desiredResponseExists = responseBody?.status.some(
+            (status) =>
+              status.result ===
+                "Successfully generated oauth application keys" &&
+              status.success === true
+          );
+          expect(desiredResponseExists).to.be.true;
+        } catch (error: any) {
+          cy.log(`Assertion error: ${error.message}`);
+          interceptWriter.interceptAndWriteToFixture(
+            "createConnectionsRequest",
+            filePath,
+            interception.request,
+            interception.response
+          );
+        }
+      }
+    );
   });
 });
