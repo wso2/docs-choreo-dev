@@ -8,6 +8,7 @@ import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
@@ -73,6 +74,7 @@ public class TestBuildpackDp extends TestBase {
         ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
                 accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.BUILDPACK);
         dp.setDeploymentStatusDTO(statusDTO);
+        SleepUtil.sleep(30);
     }
 
     @Test(dependsOnMethods = {"deployComponent_TestBuildpackDp"}, dataProvider = "dps")
