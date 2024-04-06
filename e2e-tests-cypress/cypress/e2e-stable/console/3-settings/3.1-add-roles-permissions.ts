@@ -11,43 +11,43 @@
  * associated services.
  */
 
-import { OrganizationComponent } from "../../../support/console/pages/component/common/organization-components";
-import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { LoginPage } from "../../../support/console/pages/login-page";
-
-/// <reference types="cypress" />
+import { console } from "../../../support/console/console";
 
 describe("Add roles and permissions", () => {
+  const groupName = "E2EtestGroup";
   const roleName = "E2EtestRole";
+  const groupDescription = "This Group is created by E2E test run.";
   const roleDescription = "This Role is created by E2E test run.";
   const roleTag = "testRoleTag";
 
-  before(() => {
-    LoginPage.login();
-    ChoreoHomePage.navigateToSettings();
-    OrganizationComponent.navigateToRoles();
-    OrganizationComponent.deleteRoleIfExists(roleName);
-  });
-  after(() => {
-    ChoreoHomePage.logout();
+  it("Login to Console", () => {
+    console.login();
+    console.deleteGroupIfExists(groupName);
+    console.deleteRoleIfExists(roleName);
   });
 
   it("Create a role", () => {
-    OrganizationComponent.createRole(roleName, roleDescription, roleTag);
+    console.addRole(roleName, roleDescription, roleTag);
   });
 
-  it("Add a member to new role", () => {
-    OrganizationComponent.addMembertoRole(roleName);
+  it("Create a group", () => {
+    console.addGroup(groupName, groupDescription);
+  });
+
+  it("Add role to the group", () => {
+    console.addRoleToGroup(roleName, groupName);
+  });
+
+  it("Add a member to the group", () => {
+    console.addCurrentUserToGroup(roleName);
   });
 
   it("Check member has the new role", () => {
-    OrganizationComponent.navigateToMembers();
-    OrganizationComponent.checkMemberRole(roleName);
+    console.checkCurrentUserHasRole(roleName);
   });
 
-  it("Delete created role", () => {
-    OrganizationComponent.navigateToMembers();
-    OrganizationComponent.navigateToRoles();
-    OrganizationComponent.deleteCreatedRole(roleName);
+  it("Delete created group and role", () => {
+    console.deleteGroup(groupName);
+    console.deleteRole(roleName);
   });
 });

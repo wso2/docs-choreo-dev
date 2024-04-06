@@ -323,4 +323,35 @@ export namespace TestIds {
   export const connectionNameInput = '[data-cyid="connection-name"]';
   export const connectionCreateButton =
     '[data-cyid="connection-create-button"]';
+  export const searchField = '[data-testid="search-field"]';
+  export const userTable = '[data-cyid="user-list"]';
+  export const roleTable = '[data-cyid="roles"]';
+  export const deleteRole = '[data-cyid="delete-role-icon-button"]';
+  export const roleTags = '[data-cyid="skills-tag-input"]';
+  export const createRole = '[data-cyid="create-role-button"]';
+  export const roleName = '[data-cyid="text-field-role-name"]';
+  export const roleDescription = '[data-cyid="text-field-role-description"]';
+  export const publisherPermission =
+    '[data-cyid="role-permission-apim-publisher-check-box"]';
+  export const subscriberPermission =
+    '[data-cyid="role-permission-apim-subscriber-check-box"]';
+  export const createGroup = '[data-cyid="create-groups-button"]';
+  export const groupDetail = '[data-cyid="create-group"]';
+  export const dialogCreateBtn = '[data-cyid="dialog-create-group-button"]';
+  export const groupTable = '[data-cyid="org-groups"]';
+  export const deleteGroup = '[data-cyid="delete-user-group-icon-button"]';
+  export const deleteGroupConfirm =
+    '[data-cyid="dialog-groups-user-list-delete-button"]';
+  export const groupRolesTab = '[data-cyid="default-tab-card-roles"]';
+  export const groupUserTab = '[data-cyid="default-tab-card-users"]';
+  export const addRoleToGroup = '[data-cyid="add-role-to-group-button"]';
+  export const addUserToGroup = '[data-cyid="add-users-to-group-button"]';
+  export const roleToGroupSelect =
+    '[data-cyid="select-group-to-user-multi-select"]';
+  export const userToGroupSelect =
+    '[data-cyid="select-users-for-group-multi-select"]';
+  export const addRoleToGroupPopup =
+    '[data-cyid="add-roles-to-groupgroup-button"]';
+  export const addUserToGroupPopup = '[data-cyid="add-user-to-group-button"]';
+  export const userSelect = '[id="select-user-list-popup"]';
 }
