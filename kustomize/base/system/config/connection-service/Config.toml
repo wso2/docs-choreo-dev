@@ -18,7 +18,6 @@ connectionDatabaseEnabled = {{.CONNECTION_DB_ENABLED | default false}}
 connectionListingFromDBEnabled = {{.CONNECTION_LISTING_ENABLED | default false}}
 dbUrl = "{{.CONNECTION_DB_URL}}"
 dbUser = "{{.CONNECTION_DB_USER}}"
-dbPassword = "{{.CONNECTION_DB_PASSWORD}}"
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
