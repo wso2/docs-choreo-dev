@@ -30,3 +30,16 @@ spec:
   ingress:
     - fromEntities:
         - host
+---
+apiVersion: 'cilium.io/v2'
+kind: CiliumNetworkPolicy
+metadata:
+  name: default-allow-keda-components
+spec:
+  endpointSelector: {}
+  egress:
+    - toEntities:
+        - cluster
+  ingress:
+    - fromEntities:
+        - cluster
