@@ -24,7 +24,6 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
-import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -121,18 +120,9 @@ public class DPLogsAPITestCase extends TestNGCitrusSpringSupport {
     public void deployComponent_DPLogsAPITestCase() throws Exception {
         deploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, choreoComponent,
                 environments, ComponentFlavour.STANDARD);
-        SleepUtil.sleep(30);
     }
 
     @Test(dependsOnMethods = { "deployComponent_DPLogsAPITestCase" })
-    @CitrusTest
-    public void promoteComponent_DPLogsAPITestCase() throws Exception {
-        List<ComponentDeploymentStatusDTO> promoteComponentStatues = ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent,
-                environments, ComponentFlavour.STANDARD);
-        promotionStatusDTO = promoteComponentStatues.get(0);
-    }
-
-    @Test(dependsOnMethods = { "promoteComponent_DPLogsAPITestCase" })
     @CitrusTest
     public void invokeAPIDev_DPLogsAPITestCase() throws Exception {
         Endpoint endpoint = ComponentUtils.getEndpoints(this, citrusClients, accessToken,
@@ -145,6 +135,15 @@ public class DPLogsAPITestCase extends TestNGCitrusSpringSupport {
                     REST_API_EXPECTED_RESPONSE);
         }
     }
+
+    @Test(dependsOnMethods = { "invokeAPIDev_DPLogsAPITestCase" })
+    @CitrusTest
+    public void promoteComponent_DPLogsAPITestCase() throws Exception {
+        List<ComponentDeploymentStatusDTO> promoteComponentStatues = ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent,
+                environments, ComponentFlavour.STANDARD);
+        promotionStatusDTO = promoteComponentStatues.get(0);
+    }
+
 
     @Test(dependsOnMethods = { "promoteComponent_DPLogsAPITestCase" })
     @CitrusTest
