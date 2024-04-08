@@ -571,3 +571,7 @@ configMapGenerator:
     behavior: create
     literals:
       - B7A_LOG_LEVEL={{.B7A_LOG_LEVEL}}
+  - name: proxy-deployer-feature-flags
+    behavior: create
+    literals:
+      - PM_RUDDER_ID_SYNC=true
