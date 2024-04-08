@@ -24,6 +24,7 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
+import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -120,6 +121,7 @@ public class DPLogsAPITestCase extends TestNGCitrusSpringSupport {
     public void deployComponent_DPLogsAPITestCase() throws Exception {
         deploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, choreoComponent,
                 environments, ComponentFlavour.STANDARD);
+        SleepUtil.sleep(30);
     }
 
     @Test(dependsOnMethods = { "deployComponent_DPLogsAPITestCase" })

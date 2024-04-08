@@ -22,6 +22,7 @@ import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.config.ConfigDefinition;
@@ -97,6 +98,7 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     public void deployComponent_SysObservabilityAPITestCase() throws Exception {
         deploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, 
                 accessToken, choreoComponent, environments, ComponentFlavour.STANDARD);
+        SleepUtil.sleep(30);
     }
 
     @Test(dependsOnMethods = {"deployComponent_SysObservabilityAPITestCase"})
