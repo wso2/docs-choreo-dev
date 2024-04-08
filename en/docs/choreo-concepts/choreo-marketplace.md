@@ -56,6 +56,19 @@ Upon deployment to the initial environment, services get automatically added to 
 
 The service name follows the convention of `component name - endpoint name`, while all other details remain unchanged.
 
+## Service versioning in Choreo Marketplace
+
+The marketplace service versions are displayed in their major version form. A service in the Choreo marketplace will represent the respective semantic-version-based latest Choreo service version in the same major version as the service.
+
+e.g. If a Choreo service has versions: `v1.0`, `v1.1`, `v1.2` and `v2.0`, the Choreo marketplace will include services with versions `v1` and `v2` representing `v1.2` and `v2.0` respectively.
+
+When you deploy a new minor version in an already deployed Choreo service, respective marketplace service will be automatically updated to represent the latest available version within the major version.
+
+### Semantic versioning based intelligent routing in the Choreo Marketplace
+When using a marketplace service as a dependency, dependant service's traffic will be automatically routed to the latest version of the respective Choreo service in the same major version. This will ensure your dependencies are updated automatically, without having to manually update the dependencies within a major version.
+
+e.g. Consider you have created a connection to connect your Choreo component `Foo` to the Choreo service `Bar` with version `v1`. If `Bar` service's respective Choreo service has a latest version of `v1.2` in `v1` range, Foo will be connected to `Bar`'s `v1.2`. When `Bar` service releases its `v1.3`, traffic from `Foo` will be automatically routed to `Foo v1.3`
+
 ## Edit services in the Choreo Marketplace
 
 You can edit services in the Choreo Marketplace. During redeployment to any environment, Choreo automatically updates service definitions, visibility, and descriptions.
