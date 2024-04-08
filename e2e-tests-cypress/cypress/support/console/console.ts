@@ -51,6 +51,69 @@ class Console {
     this._orgSettings.addUserStore(userStoreFile, env);
   }
 
+  deleteRoleIfExists(roleName: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToRoles();
+    this._orgSettings.deleteRoleIfExists(roleName);
+  }
+
+  deleteRole(roleName: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToRoles();
+    this._orgSettings.deleteRole(roleName);
+  }
+
+  addRole(roleName: string, roleDescription: string, roleTag: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToRoles();
+    this._orgSettings.addRole(roleName, roleDescription, roleTag);
+  }
+
+  checkCurrentUserHasRole(roleName: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToUsers();
+    this._orgSettings.checkUserHasRole(login.getUserEmail(), roleName);
+  }
+
+  addGroup(groupName: string, groupDescription: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToGroups();
+    this._orgSettings.addGroup(groupName, groupDescription);
+  }
+
+  addRoleToGroup(roleName: string, groupName: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToGroups();
+    this._orgSettings.addRoleToGroup(roleName, groupName);
+  }
+
+  deleteGroupIfExists(groupName: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToGroups();
+    this._orgSettings.deleteGroupIfExists(groupName);
+  }
+
+  deleteGroup(groupName: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToGroups();
+    this._orgSettings.deleteGroup(groupName);
+  }
+
+  addCurrentUserToGroup(roleName: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToGroups();
+    this._orgSettings.addUserToGroup(login.getUserEmail(), roleName);
+  }
+
   addOrReplaceCustomDomain(domainName: string, type: CustomDomainType) {
     this.navigateToHome();
     this.navigateToSettings();
@@ -167,6 +230,18 @@ class Console {
 
   private navigateToSettings() {
     cy.get('[data-cyid="settings"]').should("be.visible").click();
+  }
+
+  private navigateToRoles() {
+    cy.get('[data-cyid="nav-link-system-roles-link-tabs-link-tab"]').click();
+  }
+
+  private navigateToUsers() {
+    cy.get('[data-cyid="nav-link-system-users-link-tabs-link-tab"]').click();
+  }
+
+  private navigateToGroups() {
+    cy.get('[data-cyid="nav-link-groups-link-tabs-link-tab"]').click();
   }
 
   private navigateToUrlSettings() {
