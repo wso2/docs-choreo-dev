@@ -49,7 +49,7 @@ export class OrganizationComponent {
 
   static inviteMembers(email: string, ...roles: string[]) {
     cy.wait(300);
-    cy.get('[data-cyid="invite-members-button"]').click();
+    cy.get('[data-cyid="invite-users-button"]').click();
     cy.wait(300);
     cy.get('[data-cyid="tag-email-addresses"]').within(() => {
       cy.get('input[type="text"]')
@@ -129,7 +129,7 @@ export class OrganizationComponent {
   }
 
   static selectPendingInvitation() {
-    cy.get('[data-testid="pending-invitation"]').click();
+    cy.get('[data-testid="user-mgt-invitations"]').click();
   }
 
   private static addRoles(roles: string[]) {
