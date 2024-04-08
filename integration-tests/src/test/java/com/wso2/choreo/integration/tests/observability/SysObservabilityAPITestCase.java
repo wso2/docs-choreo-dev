@@ -101,14 +101,6 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"deployComponent_SysObservabilityAPITestCase"})
     @CitrusTest
-    public void promoteComponent_SysObservabilityAPITestCase() throws Exception {
-        List<ComponentDeploymentStatusDTO> promotionStatuses = ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent,
-                environments, ComponentFlavour.STANDARD);
-        promotionStatusDTO = promotionStatuses.get(0);
-    }
-
-    @Test(dependsOnMethods = {"promoteComponent_SysObservabilityAPITestCase"})
-    @CitrusTest
     public void invokeAPIDev_SysObservabilityAPITestCase() throws Exception {
         Endpoint endpoint = ComponentUtils.getEndpoints(this, citrusClients, accessToken,
                 choreoComponent, Constant.DEV_ENVIRONMENT).get(0);
@@ -121,6 +113,16 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         }
     }
 
+
+    @Test(dependsOnMethods = {"invokeAPIDev_SysObservabilityAPITestCase"})
+    @CitrusTest
+    public void promoteComponent_SysObservabilityAPITestCase() throws Exception {
+        List<ComponentDeploymentStatusDTO> promotionStatuses = ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent,
+                environments, ComponentFlavour.STANDARD);
+        promotionStatusDTO = promotionStatuses.get(0);
+    }
+
+ 
     @Test(dependsOnMethods = {"promoteComponent_SysObservabilityAPITestCase"})
     @CitrusTest
     public void invokeAPIProd_SysObservabilityAPITestCase() throws Exception {
