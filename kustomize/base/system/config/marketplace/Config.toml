@@ -7,6 +7,7 @@ endpointResolverEndpoint="http://endpoint-resolver:9090/endpoint/resolver/v1"
 configurationServiceEndpoint="http://configuration-service:8080"
 projectManagerEndpoint="http://dp-project-manager:80/api/v1"
 secretManagerEndpoint="http://dp-secret-manager:80/api/v1"
+intRoutingEnabled = {{.INT_ROUTING_FEATURE_ENABLED | default false}}
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
