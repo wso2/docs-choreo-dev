@@ -77,6 +77,11 @@ spec:
                 secretKeyRef:
                   name: secret-connection-service
                   key: APIM_CLIENT_SECRET
+            - name: CONNECTION_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-connection-service
+                  key: CONNECTION_DB_PASSWORD
           volumeMounts:
             - name: config
               mountPath: /home/ballerina/Config.toml
