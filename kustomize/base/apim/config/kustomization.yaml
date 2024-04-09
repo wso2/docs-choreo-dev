@@ -1,5 +1,5 @@
 configMapGenerator:
-  - name: cm-file-mgw-adapter-enforcer
+  - name: mgw-adapter-enforcer-conf
     behavior: create
     files:
       - adapter/config.toml
