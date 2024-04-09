@@ -23,7 +23,7 @@ export namespace TestIds {
   export const projectDescription = '[data-cyid="project-description"]';
   export const multiRepository = '[data-testid="Multi-Repo-radio-card"]';
   export const createProject =
-    '[data-cyid="create-project-stepper-submit-button"]';
+    '[data-cyid="create-new-project-button"]';
   export const backToProjectList =
     '[data-cyid="sample-creation-dialog-closeBtn-button"]';
   export const projectPicker = '[data-testid="project-picker"]';

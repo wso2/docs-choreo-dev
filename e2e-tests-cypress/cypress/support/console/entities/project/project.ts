@@ -99,11 +99,8 @@ export class Project {
     this.checkProjectCardCreation();
     cy.get(TestIds.projectName).clear().type(this.name);
     cy.get(TestIds.projectDescription).clear().type(this.description);
-    cy.get(TestIds.multiRepository).click();
     Utils.getRenderedElement(TestIds.createProject).click();
     cy.get(TestIds.createProject).should("not.exist");
-    cy.get(TestIds.backToProjectList).should("exist");
-    cy.get(TestIds.backToProjectList).should("not.exist");
     cy.get(TestIds.backdropLoader).should("not.exist");
   }
 
