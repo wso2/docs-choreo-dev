@@ -124,14 +124,6 @@ public class DPLogsAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = { "deployComponent_DPLogsAPITestCase" })
     @CitrusTest
-    public void promoteComponent_DPLogsAPITestCase() throws Exception {
-        List<ComponentDeploymentStatusDTO> promoteComponentStatues = ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent,
-                environments, ComponentFlavour.STANDARD);
-        promotionStatusDTO = promoteComponentStatues.get(0);
-    }
-
-    @Test(dependsOnMethods = { "promoteComponent_DPLogsAPITestCase" })
-    @CitrusTest
     public void invokeAPIDev_DPLogsAPITestCase() throws Exception {
         Endpoint endpoint = ComponentUtils.getEndpoints(this, citrusClients, accessToken,
                 choreoComponent, Constant.DEV_ENVIRONMENT).get(0);
@@ -143,6 +135,15 @@ public class DPLogsAPITestCase extends TestNGCitrusSpringSupport {
                     REST_API_EXPECTED_RESPONSE);
         }
     }
+
+    @Test(dependsOnMethods = { "invokeAPIDev_DPLogsAPITestCase" })
+    @CitrusTest
+    public void promoteComponent_DPLogsAPITestCase() throws Exception {
+        List<ComponentDeploymentStatusDTO> promoteComponentStatues = ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent,
+                environments, ComponentFlavour.STANDARD);
+        promotionStatusDTO = promoteComponentStatues.get(0);
+    }
+
 
     @Test(dependsOnMethods = { "promoteComponent_DPLogsAPITestCase" })
     @CitrusTest

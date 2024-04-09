@@ -44,6 +44,7 @@ orgRemoverRequest:
   componentNameRegex: "^choreo-([a-z])+$"
   choreoSystemOrgHandle: {{.CHOREO_SYSTEM_ORG_HANDLE}}
   choreoSystemOrgUuid: {{.CHOREO_SYSTEM_ORG_UUID}}
+  excludeCentralOrgRegistry: {{.EXCLUDE_CENTRAL_ORG_REGISTRY}}
 
 emailService:
   host: email-service
