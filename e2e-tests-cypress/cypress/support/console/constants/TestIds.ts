@@ -115,7 +115,7 @@ export namespace TestIds {
   export const build =
     '[data-cyid="build-split-button-split-group-button-button"]';
   export const tableTitle = '[data-cyid="table-title"]';
-  export const createComponent = '[data-cyid="create-component-button"]';
+  export const createComponent = '[data-cyid="create-multiple-components-split-toggle-button-button"]';
   export const proxyBuildPack =
     '[data-cyid="component-template-httpProxyApi-card-action-area"]';
   export const oasUrlEntry = '[data-cyid="txt-oas-url"]';
