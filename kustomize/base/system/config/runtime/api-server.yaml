@@ -47,6 +47,8 @@ middleware:
       websubHubBaseUrl: ${MIDDLEWARE_EVENT_PUBLISH_WEBSUBHUB_URL}
       hubTopic: ${MIDDLEWARE_EVENT_PUBLISH_WEBSUBHUB_TOPIC}
     enable: ${MIDDLEWARE_EVENT_PUBLISH_ENABLE}
+  instanceBasedAuthz:
+    enabled: ${ENABLE_INSTANCE_BASED_AUTHZ}
 upstream:
   app-service: app-service:8080
   workspace-manager: workspace-manager:8080
@@ -56,6 +58,7 @@ upstream:
   dp-cicd: dp-cicd:80
   dp-rudder: dp-rudder:80
   organization-management: organization-management:8080
+  authz-service: ${AUTHZ_SERVICE_ENDPOINT}
 redis:
   host: ${REDIS_HOST}
   port: 6380
