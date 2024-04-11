@@ -356,6 +356,7 @@ configMapGenerator:
       - DEPLOY_HISTORY_CLEAN_UP_ENABLED={{.DEPLOY_HISTORY_CLEAN_UP_ENABLED | default "false"}}
       - JOB_CONFIG_ENABLED={{.JOB_CONFIG_ENABLED | default "false"}}
       - ENABLE_CONNECTION_USAGE_FOR_ALL_COMPONENT_TYPES={{.ENABLE_CONNECTION_USAGE_FOR_ALL_COMPONENT_TYPES | default "false"}}
+      - MARKETPLACE_INTELLIGENT_ROUTING_ENABLED={{.MARKETPLACE_INTELLIGENT_ROUTING_ENABLED | default false}}
   - name: env-dp-helmhub
     behavior: create
     literals:
