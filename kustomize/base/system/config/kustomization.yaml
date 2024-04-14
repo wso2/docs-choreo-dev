@@ -242,7 +242,6 @@ configMapGenerator:
       - SECRET_MANAGER_URL=http://dp-secret-manager
       - MIZZEN_URL="http://dp-mizzen"
       - CLOUD_CONNECTOR_URL=http://dp-cloud-manager
-      - HELPER_URL=http://dp-utility-api
       - AUTH_URL=http://dp-project-manager
       - CICD_URL=http://dp-cicd
       - APIM_PROXY_DEPLOYER_URL=http://choreo-apim-proxy-deployer:9095
