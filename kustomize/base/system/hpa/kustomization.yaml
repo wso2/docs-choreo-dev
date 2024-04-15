@@ -16,7 +16,6 @@ resources:
   - quota-limiter.yaml
   - subscriptions.yaml
   - dp-secret-manager.yaml
-  - dp-utility-api.yaml
   - dp-garbage-collector.yaml
   - dp-mizzen.yaml
   - code-challenge-eval.yaml

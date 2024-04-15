@@ -22,7 +22,6 @@ resources:
   - dp-project-manager.yaml
   - dp-rudder.yaml
   - dp-secret-manager.yaml
-  - dp-utility-api.yaml
   - email-service.yaml
   - moesif-service.yaml
   - negotiator.yaml
