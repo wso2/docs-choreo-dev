@@ -14,6 +14,10 @@ configMapGenerator:
     behavior: create
     files:
       - private-global-adapter/log_config.toml
+  - name: env-private-ga
+    behavior: create
+    literals:
+      - moesif_ms_url={{.MOESIF_MS_URL}}
   - name: internal-ga-feature-flags
     behavior: create
     literals:
