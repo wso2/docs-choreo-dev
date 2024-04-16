@@ -11,6 +11,8 @@ jwtTokenScopes = ["apim:api_manage", "apim:publisher_settings"]
 
 mizzenServerBasePath = "http://dp-mizzen:80"
 
+enableMarketplaceIntelligentRouting={{.ENABLE_MARKETPLACE_INTELLIGENT_ROUTING | default false}}
+
 [ballerina.http.accessLogConfig]
 console = true
 

@@ -65,13 +65,19 @@ areaOwners:
       - rasikam@wso2.com
   - testClass: com.wso2.choreo.integration.tests.insights.InsightsAPI
     assignees:
-      - raveen@wso2.com
+      - lakmal@wso2.com
+      - rashmin@wso2.com
+      - tharinduw@wso2.com
   - testClass: com.wso2.choreo.integration.tests.insights.InsightsAuthAPI
     assignees:
-      - raveen@wso2.com
+      - lakmal@wso2.com
+      - rashmin@wso2.com
+      - tharinduw@wso2.com
   - testClass: com.wso2.choreo.integration.tests.insights.InsightsAlertsAPI
     assignees:
-      - raveen@wso2.com
+      - lakmal@wso2.com
+      - rashmin@wso2.com
+      - tharinduw@wso2.com
   - testClass: com.wso2.choreo.integration.tests.logs.DPLogsAPITestCase
     assignees:
       - rasikam@wso2.com

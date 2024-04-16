@@ -23,6 +23,7 @@ logLevel = "INFO"
 
 [accessLogs]
 enable = true
+logType = "json" # "text" or "json"
 logfile = "/dev/stdout"
 
 # "secondaryLogFormat" is the log format that is append after "reservedLogFormat". This can be used by dev for debug purpose.
