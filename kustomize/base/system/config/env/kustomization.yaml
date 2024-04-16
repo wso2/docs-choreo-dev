@@ -788,6 +788,7 @@ configMapGenerator:
       - NEGOTIATOR_URL={{.NEGOTIATOR_URL}}
       - GCHAT_SPACE_ID={{.GCHAT_SPACE_ID}}
       - BALLERINA_CENTRAL_URL={{.BALLERINA_CENTRAL_URL}}
+      - ENABLE_INSTANCE_BASED_AUTHORIZATION={{.ENABLE_INSTANCE_BASED_AUTHORIZATION}}
   - name: env-organization-management
     behavior: create
     literals:
