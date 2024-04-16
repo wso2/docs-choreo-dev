@@ -32,8 +32,6 @@ spec:
                 name: secret-choreo-apim-proxy-deployer
             - configMapRef:
                 name: env-proxy-deployer
-            - configMapRef:
-                name: proxy-deployer-feature-flags
           ports:
             - containerPort: 9091      # To be used for readiness/liveness probes (internal)
               name: health
