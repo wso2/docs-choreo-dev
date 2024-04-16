@@ -5,11 +5,6 @@ configMapGenerator:
       - adapter/config.toml
       - adapter/log4j2.properties
       - adapter/log_config.toml
-  - name: cm-file-cc-internal-global-adapter
-    behavior: create
-    files:
-      - internal-global-adapter/ga_config.toml
-      - internal-global-adapter/log_config.toml
   - name: pvtga-log-config
     behavior: create
     files:
@@ -18,14 +13,6 @@ configMapGenerator:
     behavior: create
     literals:
       - moesif_ms_url={{.MOESIF_MS_URL}}
-  - name: internal-ga-feature-flags
-    behavior: create
-    literals:
-      - FEATURE_FLAG_DEFAULT=true
-      - FEATURE_STEP_QUOTA_LIMITING=true
-      - FEATURE_FLAG_MONGODB_DIRECT_SEARCH=true
-      - LOG4J_FORMAT_MSG_NO_LOOKUPS=true
-      - FEATURE_FLAG_MONGODB_SINGLE_COLLECTION=true
   - name: pvtga-feature-flags
     behavior: create
     literals:
