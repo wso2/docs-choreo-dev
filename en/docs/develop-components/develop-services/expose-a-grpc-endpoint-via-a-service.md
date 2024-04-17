@@ -76,6 +76,7 @@ Let's create a containerized Service component by following these steps:
     |-----------------|-------------------------|
     | **Name**        | `Go gRPC Server`        |
     | **Description** | `Sends greetings`       |
+    
 5. Go to the **GitHub** tab.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
