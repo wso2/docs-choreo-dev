@@ -62,7 +62,7 @@ To add a custom domain for your organization, follow the steps given below:
              - It should be an X509 certificate.
              - It should be in the PEM format.
              - It should be issued directly or through a wildcard entry for the provided custom URL. For example,
-                - For direct issuances, the SSL file must include the exact domain name. For example, if the domain is `apis.choreo.dev`, the SSL file must include `apis.choreo.com`.
+                - For direct issuance, the SSL file must include the exact domain name. For example, if the domain is `apis.choreo.dev`, the SSL file must include `apis.choreo.com`.
                 - For wildcard entries, the SSL file should use a wildcard notation to cover all subdomains under the provided URL. For example, if the CNAME is `apis.choreo.dev`, the SSL file should use `*.choreo.dev`.
           - TLS key file guidelines:
              - It should be in the PEM format.

@@ -723,6 +723,7 @@ get-started-with-the-choreo-cli
 pymdownx.highlight
 anchor_linenums
 pygments_lang_class
+control-access-in-the-choreo-console
  - theme/material/templates/home-page.html
 doctype
 html
@@ -956,3 +957,5 @@ Dickensread
 cInlineImage-threeQuarter
  - docs/develop-components/manage-the-micro-integrator-runtime-version-in-your-integration-project.md
 pom.xml
+ - docs/authentication-and-authorization/access-control/control-access-in-the-choreo-console.md
+cInlineImage-threeQuarter

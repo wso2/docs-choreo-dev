@@ -132,6 +132,9 @@ nav:
           - Redis: manage-databases-and-caches/choreo-managed-redis-datastores.md
           - Billing: manage-databases-and-caches/billing-for-platform-services.md
   - Authentication and Authorization:
+      - Access Control: 
+          - Groups and Roles: authentication-and-authorization/access-control/groups-and-roles.md
+          - Control Access in the Choreo Console: authentication-and-authorization/access-control/control-access-in-the-choreo-console.md
       - Secure API Access with Asgardeo: authentication-and-authorization/secure-api-access-with-asgardeo.md
       - Secure API Access with Azure: authentication-and-authorization/secure-api-access-with-azure-ad.md
       - Secure Web Applications with Managed Authentication: authentication-and-authorization/secure-web-applications-with-managed-authentication.md
@@ -336,7 +339,6 @@ plugins:
           'ipaas/micro-integrator/create-your-first-integration.md': 'https://wso2.com/choreo/docs/quick-start-guides/build-your-first-integration-with-choreo-ipaas/'
           'administer/connect-to-an-external-identity-provider.md': 'https://wso2.com/choreo/docs'
           'administer/configure-developer-portal-self-sign-up.md': 'https://wso2.com/choreo/docs/administer/configure-self-sign-up/'
-          'administer/customize-developer-portal-domain.md': 'https://wso2.com/choreo/docs/administer/customize-the-developer-portal-domain/'
           'administer/organization.md': 'https://wso2.com/choreo/docs/choreo-concepts/organization/'
           'reference/connect-with-protected-third-party-applications.md': 'https://wso2.com/choreo/docs/troubleshoot/faq/#q-how-can-i-connect-a-choreo-component-with-a-protected-third-party-application'
           'quick-start-guides/build-your-first-integration-with-choreo-ipaas.md': 'https://wso2.com/choreo/docs/tutorials/build-your-first-integration/'
