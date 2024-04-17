@@ -2,9 +2,18 @@
 
 Choreo provides the scale-to-zero capability for HTTP applications you deploy in the data plane. This lets you run your components in a serverless mode.
 
-When this feature is active, your apps will automatically scale down to zero unless they receive HTTP traffic. When the application receives an HTTP request, your workload quickly scales up from zero to handle the request.
-
 Scale to zero is very useful in lower environments, where you can significantly reduce infrastructure costs by scaling down idle workloads. In production environments, you can also use scale-to-zero capability if your application's behavior aligns with this feature behavior. In the paid tier, if you want to run your application with more guaranteed high availability, it is recommended to choose HPA (Horizontal Pod Autoscaler) scaling method and configure a minimum replica count of 2 or higher.
+
+## How Scale to Zero works in Choreo
+
+!!! info
+    For service components and web-apps you create after February 23, 2024, Choreo enables the scale-to-zero feature by default.
+
+When Scale to Zero is enabled, your apps will automatically scale down to zero unless they receive HTTP traffic. When the application receives an HTTP request, your workload quickly scales up from zero to handle the request. When a new request is received by the deployment, the deployment will scale up to one replica and serve the request. When the deployment remains idle for a set period (approximately 5 minutes), it will automatically scale back to zero until a new request is received.
+
+When Scale to Zero is enabled, you can set the maximum number of replicas for deployments with this capability. Choreo dynamically scales deployments up to meet high HTTP traffic demand, up to the specified number of replicas. If the pending requests surpass the defined threshold under **Number of pending requests to spawn a new pod**, Choreo automatically adds a new replica to handle the increased load.
+
+![Free User - Scale to Zero](../../assets/img/devops-and-ci-cd/scaling/scale-to-zero-view.png){.cInlineImage-full}
 
 ## Enable scale to zero
 

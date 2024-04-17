@@ -18,10 +18,7 @@ By following this guide, you will:
 
 ## Prerequisites
 
-1. To deploy a containerized component, you will need a GitHub account with a repository that contains a Dockerfile. Fork the [Choreo sample apps repository](https://github.com/wso2/choreo-sample-apps/), which contains the sample for this guide.
-2. The Choreo GitHub App requires the following permissions:
-    - Read access to issues and metadata.
-    - Read and write access to code, pull requests, and repository hooks.
+- To deploy a containerized component, you will need a GitHub account with a repository that contains a Dockerfile. Fork the [Choreo sample apps repository](https://github.com/wso2/choreo-sample-apps/), which contains the sample for this guide.
 
 Let's get started!
 
@@ -62,16 +59,18 @@ Let's create a containerized Service component by following these steps:
     | **Name**        | `Go TCP Server`        |
     | **Description** | `Sends greetings`       |
 
-5. Select **GitHub** tab.
-6. If you have not already connected your GitHub repository to Choreo, to allow Choreo to connect to your GitHub account, click **Authorize with GitHub** and enter your GitHub credentials, and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+5. Go to the **GitHub** tab.
+6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
-    !!! info
-         The **Choreo GitHub App** requires the following permissions:
+    Alternatively, you can paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
 
-         - Read and write access to code and pull requests.
-         - Read access to issues and metadata.
+    !!! note
+           The **Choreo GitHub App** requires the following permissions:
+
+           - Read and write access to code and pull requests.
+           - Read access to issues and metadata.
              
-          You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
+           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
 7. Enter the following information:
 
@@ -131,7 +130,7 @@ Next, to deploy this service, follow these steps:
 4. Skip adding a **File Mount**. Click **Deploy**.
 5. Review the **Endpoint Details** and click **Deploy**.
 
-!!! note
+    !!! note
         Deploying the service component may take a while. You can track the progress by observing the logs. Once the deploying is complete, the build status changes to **Active** on the **Development** environment card.
 
 6. Once you have successfully deployed your service, navigate to the component overview page and copy the TCP service address. You need to provide that address when setting up the client application later in this guide.
