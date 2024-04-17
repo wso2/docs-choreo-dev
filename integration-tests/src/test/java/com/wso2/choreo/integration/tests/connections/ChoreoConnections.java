@@ -30,7 +30,6 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
-import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -170,7 +169,6 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createServiceConsumerComponent_TestChoreoConnections", "deployServicePublisherComponent_TestChoreoConnections"})
     @CitrusTest
     public void createComponentLevelConnection_TestChoreoConnections() throws Exception {
-        SleepUtil.sleep(5);
         //Get created service from resource registry
         HttpClient marketplaceServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         List<ServiceInfo> services = MarketplaceService.searchForServices(this,
@@ -314,7 +312,6 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createAPIProxyComponent_TestChoreoConnections"})
     @CitrusTest
     public void createProjectLevelConnectionToProxy_TestChoreoConnections() throws Exception {
-        SleepUtil.sleep(5);
         //Get created service from resource registry
         HttpClient marketplaceServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         List<ServiceInfo> services = MarketplaceService.searchForServices(this,
