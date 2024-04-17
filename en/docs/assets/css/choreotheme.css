@@ -741,6 +741,5 @@ color: #a8a39f;
 
 @media screen and (max-width: 59.9375em) {
     body[data-md-scrolllock] {
-        position:unset
     }
 }
