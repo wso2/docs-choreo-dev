@@ -204,19 +204,11 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
       }
 
       if (component.isPolicyAdded()) {
-        if (Utils.isApiConfigurationEnabled()) {
-          cy.get(TestIds.deploy, VERY_SHORT_TIME).should("be.visible").click();
-        } else {
-          cy.get(TestIds.configSubmit, MEDIUM_TIME)
-            .should("be.visible")
-            .click();
-        }
+        cy.get(TestIds.deploy, VERY_SHORT_TIME).should("be.visible").click();
+
+        cy.get(TestIds.configSubmit, MEDIUM_TIME).should("be.visible").click();
       } else {
-        if (Utils.isApiConfigurationEnabled()) {
-          cy.get(TestIds.deploy, VERY_SHORT_TIME).should("be.visible").click();
-        } else {
-          cy.get(TestIds.next, VERY_SHORT_TIME).should("be.visible").click();
-        }
+        cy.get(TestIds.deploy, VERY_SHORT_TIME).should("be.visible").click();
       }
     }
 

@@ -99,11 +99,8 @@ export class Project {
     this.checkProjectCardCreation();
     cy.get(TestIds.projectName).clear().type(this.name);
     cy.get(TestIds.projectDescription).clear().type(this.description);
-    cy.get(TestIds.multiRepository).click();
     Utils.getRenderedElement(TestIds.createProject).click();
     cy.get(TestIds.createProject).should("not.exist");
-    cy.get(TestIds.backToProjectList).should("exist");
-    cy.get(TestIds.backToProjectList).should("not.exist");
     cy.get(TestIds.backdropLoader).should("not.exist");
   }
 
@@ -224,9 +221,14 @@ export class Project {
   createServiceComponent(
     accessibility: Enums.Accessibility,
     repoInfo: RepoInfo,
-    endpointName: string
+    endpointName: string,
+    componentName?: string,
+    loggingCallback?: any
   ) {
-    const componentName = Utils.generateComponentName();
+    if (componentName === undefined) {
+      componentName = Utils.generateComponentName();
+    }
+
     let componentData: ComponentData = {
       componentName: componentName,
       displayType: Enums.DisplayType.ballerinaService,
@@ -245,7 +247,8 @@ export class Project {
       this.name,
       "",
       componentData,
-      GraphQLQueryBuilder.getRestComponentCreationQuery
+      GraphQLQueryBuilder.getRestComponentCreationQuery,
+      loggingCallback
     ).then((componentDetails: ComponentDetails) => {
       return Promise.resolve(new Service(componentName, endpointName));
     });
@@ -254,9 +257,13 @@ export class Project {
   createWebAppComponent(
     accessibility: Enums.Accessibility,
     repoInfo: RepoInfo,
-    webAppInfo: WebAppInfo
+    webAppInfo: WebAppInfo,
+    componentName?: string,
+    loggingCallback?: any
   ) {
-    const componentName = Utils.generateComponentName();
+    if (componentName === undefined) {
+      componentName = Utils.generateComponentName();
+    }
 
     let componentData: WebappComponent = {
       name: componentName,
@@ -283,7 +290,8 @@ export class Project {
       this.name,
       "",
       componentData,
-      GraphQLQueryBuilder.getWebAppComponentCreationQuery
+      GraphQLQueryBuilder.getWebAppComponentCreationQuery,
+      loggingCallback
     ).then(() => {
       return Promise.resolve(new WebApp(componentName));
     });
@@ -354,9 +362,13 @@ export class Project {
 
   createScheduleTriggerComponent(
     accessibility: Enums.Accessibility,
-    repoInfo: RepoInfo
+    repoInfo: RepoInfo,
+    componentName?: string
   ) {
-    const componentName = Utils.generateComponentName();
+    if (componentName === undefined) {
+      componentName = Utils.generateComponentName();
+    }
+
     let componentData: ComponentData = {
       componentName: componentName,
       displayType: Enums.DisplayType.scheduledTask,
@@ -381,8 +393,15 @@ export class Project {
     });
   }
 
-  createTestRunnerComponent(repoInfo: RepoInfo, buildPackInfo: BuildPackInfo) {
-    const componentName = Utils.generateComponentName();
+  createTestRunnerComponent(
+    repoInfo: RepoInfo,
+    buildPackInfo: BuildPackInfo,
+    componentName?: string
+  ) {
+    if (componentName === undefined) {
+      componentName = Utils.generateComponentName();
+    }
+
     let componentData: TestRunnerComponent = {
       name: componentName,
       displayName: componentName,
@@ -452,9 +471,12 @@ export class Project {
   createMIServiceComponent(
     accessibility: Enums.Accessibility,
     repoInfo: RepoInfo,
-    endpointName: string
+    endpointName: string,
+    componentName?: string
   ) {
-    const componentName = Utils.generateComponentName();
+    if (componentName === undefined) {
+      componentName = Utils.generateComponentName();
+    }
 
     let componentData: IntegrationComponentData = {
       componentName: componentName,
@@ -480,9 +502,13 @@ export class Project {
   createByocComponent(
     repoInfo: RepoInfo,
     byocInfo: ByocInfo,
-    oasFilePath: string
+    oasFilePath: string,
+    componentName?: string
   ) {
-    const componentName = Utils.generateComponentName();
+    if (componentName === undefined) {
+      componentName = Utils.generateComponentName();
+    }
+
     let componentData: ByocComponent = {
       name: componentName,
       displayName: componentName,
@@ -514,9 +540,13 @@ export class Project {
   createByocServiceComponent(
     repoInfo: RepoInfo,
     byocInfo: ByocInfo,
-    oasFilePath: string
+    oasFilePath: string,
+    componentName?: string
   ) {
-    const componentName = Utils.generateComponentName();
+    if (componentName === undefined) {
+      componentName = Utils.generateComponentName();
+    }
+
     let componentData: ByocComponent = {
       name: componentName,
       displayName: componentName,

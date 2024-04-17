@@ -15,3 +15,33 @@ configMapGenerator:
       - REDIS_PORT="6380"
       - REDIS_PWD_FILE_PATH="/etc/secrets/OAUTH_AGENT_REDIS_PWD"
       - REDIS_DB="5"
+  - name: env-dp-mizzen-agent
+    behavior: create
+    literals:
+      - ENV={{.ENV}}
+      - SERVER_FQDN="{{.SERVER_FQDN}}"
+  - name: env-dp-kv-resolver
+    behavior: create
+    literals:
+      - ENV={{.ENV}}
+      - AZURE_KEYVAULT_NAME={{.AZURE_KEYVAULT_NAME}}
+      - SYSTEM_KEYVAULT_NAME={{.SYSTEM_KEYVAULT_NAME}}
+      - MAX_CONCURRENT_RECONCILES={{.MAX_CONCURRENT_RECONCILES}}
+      - MAX_RETRY_COUNT={{.MAX_RETRY_COUNT}}
+  - name: env-choreo-metered-usage-handler
+    behavior: create
+    literals:
+      - CHOREO_USAGE_DB_URL="{{.CHOREO_USAGE_DB_URL}}"
+      - CHOREO_USAGE_PUBLISHER_EMAILS="{{.CHOREO_USAGE_PUBLISHER_EMAILS}}"
+      - AZURE_AUTH_APP_CLIENT_ID="{{.AZURE_AUTH_APP_CLIENT_ID}}"
+      - CHOREO_TOKEN_ENDPOINT="{{.CHOREO_TOKEN_ENDPOINT}}"
+      - CHOREO_JWT_ISSUER="{{.CHOREO_JWT_ISSUER}}"
+      - CHOREO_JWT_JWKS_URL="{{.CHOREO_JWT_JWKS_URL}}"
+      - CHOREO_JWT_AUDIENCE="{{.CHOREO_JWT_AUDIENCE}}"
+      - METERED_USAGE_SERVICE_URL="{{.METERED_USAGE_SERVICE_URL}}"
+      - CLIENT_TRUSTSTORE_PATH="{{.CLIENT_TRUSTSTORE_PATH}}"
+  - name: env-app-gateway-oauth-agent
+    behavior: create
+    literals:
+      - REDIS_HOST="{{.REDIS_HOST}}"
+      - SECRET_RESOLVER_GET_ENDPOINT="{{.SECRET_RESOLVER_GET_ENDPOINT}}"

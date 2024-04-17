@@ -123,4 +123,12 @@ export class ServiceLeftMenu extends LeftMenu {
       new Array('[data-cyid="logs-runtime"]')
     );
   }
+
+  navigateToDependencies() {
+    this.scrollToTopOfMenu();
+    this.navigateToSubMenu(
+      "[data-cyid=dependencies]",
+      new Array('[data-cyid="connections"]')
+    );
+  }
 }

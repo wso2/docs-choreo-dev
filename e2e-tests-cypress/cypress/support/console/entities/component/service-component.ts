@@ -24,9 +24,11 @@ import {
 import { mixinServiceDeploy } from "../../features/deploy/deploy-service";
 import { mixinManage } from "../../features/manage/manage";
 import { ConfigEntryStep, createDefaultSteps } from "../../../commons/types";
+import { mixinConnections } from "../../features/component-connections/connections";
+import { ConnectionsFeature } from "../../features/component-connections/connections";
 
 export class Service extends mixinBuild(
-  mixinManage(mixinServiceDeploy(mixinTestService(Component)))
+  mixinManage(mixinServiceDeploy(mixinTestService(mixinConnections(Component))))
 ) {
   private endpointName: string;
 
@@ -104,5 +106,9 @@ export class Service extends mixinBuild(
 
   enableCors(environment: Enums.Environment) {
     this._enableCors(this, environment);
+  }
+
+  createConnections() {
+    this._createConnections(this);
   }
 }

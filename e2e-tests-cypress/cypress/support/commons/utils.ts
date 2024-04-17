@@ -402,16 +402,18 @@ export class Utils {
     if (waitTime < MIN_RENDERING_WAIT_TIME) {
       waitTime = MIN_RENDERING_WAIT_TIME;
     }
-    cy.wait(waitTime);
+
+    cy.log(`Waiting ${waitTime}ms for element ${locator} to render`);
+    cy.wait(waitTime, { log: false });
 
     return cy
       .get(locator)
       .should("be.visible")
-      .get(locator)
-      .should("be.visible")
-      .get(locator)
-      .should("be.visible")
-      .get(locator);
+      .get(locator, { log: false })
+      .should("be.visible", { log: false })
+      .get(locator, { log: false })
+      .should("be.visible", { log: false })
+      .get(locator, { log: false });
   }
 
   static clickOnOptionalElement(

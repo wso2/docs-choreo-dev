@@ -11,19 +11,18 @@
  * associated services.
  */
 
-import { sample } from "cypress/types/lodash";
 import { EndpointAccessibility, Enums } from "../../commons/enums";
 
 export namespace TestIds {
   export const userProfile = '[data-testid="header-user-profile-menu"]';
   export const backdropLoader = '[data-testid="backdrop-loader"]';
+  export const devPortalBackdropLoader = '[id="backdrop-loader"]';
   export const progressBar = '[role="progressbar"]';
   export const componentLoader = '[id="circular-loader"]';
   export const projectName = '[data-cyid="project-name"]';
   export const projectDescription = '[data-cyid="project-description"]';
   export const multiRepository = '[data-testid="Multi-Repo-radio-card"]';
-  export const createProject =
-    '[data-cyid="create-project-stepper-submit-button"]';
+  export const createProject = '[data-cyid="create-new-project-button"]';
   export const backToProjectList =
     '[data-cyid="sample-creation-dialog-closeBtn-button"]';
   export const projectPicker = '[data-testid="project-picker"]';
@@ -115,7 +114,8 @@ export namespace TestIds {
   export const build =
     '[data-cyid="build-split-button-split-group-button-button"]';
   export const tableTitle = '[data-cyid="table-title"]';
-  export const createComponent = '[data-cyid="create-component-button"]';
+  export const createComponent =
+    '[data-cyid="create-multiple-components-split-toggle-button-button"]';
   export const proxyBuildPack =
     '[data-cyid="component-template-httpProxyApi-card-action-area"]';
   export const oasUrlEntry = '[data-cyid="txt-oas-url"]';
@@ -151,6 +151,9 @@ export namespace TestIds {
   export const dialogPrimaryAction =
     '[data-cyid="confirmation-dialog-primary-action-button"]';
   export const publishBtn = '[data-cyid="publish-btn-button"]';
+  export const graphQLTestConsole = '[data-testid="graphiql-container"]';
+  export const graphQLQueryPrettify = '[data-cyid="prettify-button"]';
+  export const endpointSelector = '[data-cyid="select-endpoint-select"]';
   export const generateCredentials = '[data-testid="generate-creds-btn"]';
   export const removeCredentials = '[data-testid="remove-creds-btn"]';
   export const generateAccessToken =
@@ -237,6 +240,8 @@ export namespace TestIds {
   export const deleteDialogOk = '[data-testid="delete-dialog-ok-button"]';
   export const applicationListEdit = (appName: string) =>
     `[data-testid="edit-btn-${appName}"]`;
+  export const apiSubscriptionSearch =
+    ".MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input";
   export const configSubmit = '[data-cyid="btn-submit-configform"]';
   export const runNow = '[data-cyid="run-now-split-group-button-button"]';
   export const runNowNotification = '[data-testid="snackbar-notification"]';
@@ -307,7 +312,50 @@ export namespace TestIds {
   export const confirmDialog = '[data-cyid="confirmation-dialog"]';
   export const confirmDelete =
     '[data-cyid="confirmation-dialog-destructive-action-button"]';
+  export const apiInfo = '[data-cyid="manage-marketplace"]';
+  export const apiInfoDevPortal = '[data-cyid="api-info-tab-developer-portal"]';
+  export const apiInfoSave = '[data-cyid="tst-marketplace-save-button"]';
   export const apiVisibility = '[data-cyid="visibility-select"]';
   export const devPortalHome = '[data-testid="home-appbar-btn"]';
   export const devPortalLoginLink = '[data-testid="login-button"]';
+  export const addConnectionButton = '[data-cyid="create-config-button"]';
+  export const ConnectionCard = '[data-cyid="api-card-card"]';
+  export const connectionNameInput = '[data-cyid="connection-name"]';
+  export const connectionCreateButton =
+    '[data-cyid="connection-create-button"]';
+  export const searchField = '[data-testid="search-field"]';
+  export const userTable = '[data-cyid="user-list"]';
+  export const roleTable = '[data-cyid="roles"]';
+  export const deleteRole = '[data-cyid="delete-role-icon-button"]';
+  export const roleTags = '[data-cyid="skills-tag-input"]';
+  export const createRole = '[data-cyid="create-role-button"]';
+  export const roleName = '[data-cyid="text-field-role-name"]';
+  export const roleDescription = '[data-cyid="text-field-role-description"]';
+  export const publisherPermission =
+    '[data-cyid="role-permission-apim-publisher-check-box"]';
+  export const subscriberPermission =
+    '[data-cyid="role-permission-apim-subscriber-check-box"]';
+  export const createGroup = '[data-cyid="create-groups-button"]';
+  export const groupDetail = '[data-cyid="create-group"]';
+  export const dialogCreateBtn = '[data-cyid="dialog-create-group-button"]';
+  export const groupTable = '[data-cyid="org-groups"]';
+  export const deleteGroup = '[data-cyid="delete-user-group-icon-button"]';
+  export const deleteGroupConfirm =
+    '[data-cyid="dialog-groups-user-list-delete-button"]';
+  export const groupRolesTab = '[data-cyid="default-tab-card-roles"]';
+  export const groupUserTab = '[data-cyid="default-tab-card-users"]';
+  export const addRoleToGroup = '[data-cyid="add-role-to-group-button"]';
+  export const addUserToGroup = '[data-cyid="add-users-to-group-button"]';
+  export const roleToGroupSelect =
+    '[data-cyid="select-group-to-user-multi-select"]';
+  export const userToGroupSelect =
+    '[data-cyid="select-users-for-group-multi-select"]';
+  export const addRoleToGroupPopup =
+    '[data-cyid="add-roles-to-groupgroup-button"]';
+  export const removeRoleFromGroup =
+    '[data-cyid="delete-role-from-group-icon-button"]';
+  export const removeRoleFromGroupPopup =
+    '[data-cyid="dialog-groups-role-list-delete-button"]';
+  export const addUserToGroupPopup = '[data-cyid="add-user-to-group-button"]';
+  export const userSelect = '[id="select-user-list-popup"]';
 }

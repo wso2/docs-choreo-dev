@@ -34,15 +34,208 @@ export class OrganizationSettings {
 
     cy.get(TestIds.tableTitle).find("tbody tr").should("have.length", 1);
 
-    cy.fixture(userStoreFile).then((users) => {
-      cy.get(TestIds.uploadUserStoreCard).within(() => {
-        cy.get('input[type="file"]').attachFile({
-          fileContent: users,
-          fileName: userStoreFile,
-          mimeType: "text/csv",
-        });
-      });
-      cy.get(TestIds.uploadUserStoreFile).click();
+    cy.fixture(userStoreFile).as("users");
+    cy.get(TestIds.uploadUserStoreCard).within(() => {
+      cy.get('input[type="file"]').selectFile("@users", { force: true });
     });
+
+    cy.get(TestIds.uploadUserStoreFile).click();
+  }
+
+  addRole(roleName: string, roleDescription: string, roleTag: string) {
+    cy.get(TestIds.createRole).click();
+    cy.get(TestIds.roleName).should("be.visible").type(roleName);
+    cy.get(TestIds.roleDescription).type(roleDescription);
+    cy.get(TestIds.roleTags).type(roleTag + "{enter}");
+
+    cy.get(TestIds.publisherPermission).find("input").check();
+    cy.get(TestIds.subscriberPermission).find("input").check();
+
+    cy.get(TestIds.createRole).click();
+    cy.get(TestIds.roleName).should("not.exist");
+  }
+
+  addGroup(groupName: string, groupDescription: string) {
+    cy.get(TestIds.createGroup).should("be.visible").click();
+    cy.get(TestIds.groupDetail).eq(0).should("be.visible").type(groupName);
+    cy.get(TestIds.groupDetail).eq(1).type(groupDescription);
+    cy.get(TestIds.dialogCreateBtn).should("be.enabled").click();
+    cy.get(TestIds.dialogCreateBtn).should("not.exist");
+  }
+
+  checkUserIsInGroup(userEmail: string, group: string) {
+    this.search(userEmail);
+    cy.get(TestIds.userTable)
+      .should("be.visible")
+      .contains("td", userEmail)
+      .parent("tr")
+      .contains("td", new RegExp(`${group}`))
+      .should("be.visible");
+  }
+
+  deleteGroupIfExists(groupName: string) {
+    cy.get(TestIds.progressBar).should("not.exist");
+    this.search(groupName);
+    cy.get(TestIds.groupTable)
+      .should("be.visible")
+      .find("td")
+      .then(($role) => {
+        if (!$role.text().includes("No records to display")) {
+          cy.contains("td", groupName).should("be.visible");
+          this.deleteSelectedGroup(groupName);
+        }
+      });
+  }
+
+  deleteGroup(groupName: string) {
+    cy.get(TestIds.createGroup).should("be.visible");
+    this.search(groupName);
+    cy.get(TestIds.groupTable)
+      .should("be.visible")
+      .contains("td", groupName)
+      .should("be.visible");
+    this.deleteSelectedGroup(groupName);
+  }
+
+  addRolesToGroup(roles: string[], groupName: string) {
+    this.search(groupName);
+    cy.get(TestIds.groupTable)
+      .should("be.visible")
+      .contains("td", groupName)
+      .should("be.visible")
+      .click();
+    for (let i = 0; i < roles.length; i++) {
+      this.addRoleToGroup(roles[i]);
+    }
+  }
+
+  removeRolesFromGroup(roles: string[], groupName: string) {
+    this.search(groupName);
+    cy.get(TestIds.groupTable)
+      .should("be.visible")
+      .contains("td", groupName)
+      .should("be.visible")
+      .click();
+
+    for (let i = 0; i < roles.length; i++) {
+      this.removeRoleFromGroup(roles[i]);
+    }
+  }
+
+  checkRolesInGroup(roles: string[], groupName: string) {
+    this.search(groupName);
+    cy.get(TestIds.groupTable)
+      .should("be.visible")
+      .contains("td", groupName)
+      .should("be.visible")
+      .click();
+    cy.get(TestIds.groupRolesTab).click();
+
+    for (let i = 0; i < roles.length; i++) {
+      cy.get(TestIds.groupTable)
+        .should("be.visible")
+        .contains("td", roles[i])
+        .should("be.visible");
+    }
+  }
+
+  private addRoleToGroup(roleName: string) {
+    cy.get(TestIds.groupRolesTab).click();
+    cy.get(TestIds.addRoleToGroup).click();
+    cy.get(TestIds.roleToGroupSelect).should("be.visible").click();
+    cy.get(TestIds.roleToGroupSelect).find("input").type(roleName);
+    cy.contains("li", roleName).should("be.visible").click();
+    cy.get(TestIds.roleToGroupSelect).find("input").type("{esc}");
+    cy.get(TestIds.addRoleToGroupPopup).should("be.enabled").click();
+    cy.get(TestIds.roleToGroupSelect).should("not.exist");
+
+    cy.get(TestIds.groupTable)
+      .should("be.visible")
+      .contains("td", roleName)
+      .should("be.visible");
+  }
+
+  private removeRoleFromGroup(roleName: string) {
+    cy.get(TestIds.groupRolesTab).click();
+
+    cy.get(TestIds.groupTable)
+      .should("be.visible")
+      .contains("td", roleName)
+      .parent("tr")
+      .find(TestIds.removeRoleFromGroup)
+      .click();
+
+    cy.get(TestIds.removeRoleFromGroupPopup).should("be.visible").click();
+    cy.get(TestIds.removeRoleFromGroupPopup).should("not.exist");
+
+    this.search(roleName);
+    cy.get(TestIds.groupTable)
+      .should("be.visible")
+      .contains("td", roleName)
+      .should("not.exist");
+  }
+
+  addUserToGroup(userEmail: string, groupName: string) {
+    this.search(groupName);
+    cy.get(TestIds.groupTable)
+      .should("be.visible")
+      .contains("td", groupName)
+      .should("be.visible")
+      .click();
+    cy.get(TestIds.groupUserTab).click();
+    cy.get(TestIds.addUserToGroup).click();
+    cy.get(TestIds.userToGroupSelect).should("be.visible").click();
+    cy.get(TestIds.userToGroupSelect).find("input").type(userEmail);
+    cy.get(TestIds.userSelect).within(() => {
+      cy.contains(new RegExp(`${userEmail}`))
+        .should("be.visible")
+        .click();
+    });
+    cy.get(TestIds.userToGroupSelect).find("input").type("{esc}");
+    cy.get(TestIds.addUserToGroupPopup).should("be.enabled").click();
+    cy.get(TestIds.userToGroupSelect).should("not.exist");
+  }
+
+  deleteRoleIfExists(roleName: string) {
+    cy.get(TestIds.progressBar).should("not.exist");
+    this.search(roleName);
+    cy.get(TestIds.roleTable)
+      .should("be.visible")
+      .find("td")
+      .then(($role) => {
+        if (!$role.text().includes("No records to display")) {
+          cy.contains("td", roleName).should("be.visible");
+          this.deleteSelectedRole(roleName);
+        }
+      });
+  }
+
+  deleteRole(roleName: string) {
+    cy.get(TestIds.createRole).should("be.visible");
+    this.search(roleName);
+    cy.get(TestIds.roleTable)
+      .should("be.visible")
+      .contains("td", roleName)
+      .should("be.visible");
+    this.deleteSelectedRole(roleName);
+  }
+
+  private search(searchString: string) {
+    cy.get(TestIds.searchIcon).click();
+    cy.get(TestIds.searchField).type(searchString);
+  }
+
+  private deleteSelectedRole(roleName: string) {
+    cy.contains("td", roleName).trigger("mouseover");
+    cy.get(TestIds.deleteRole).click();
+    cy.get(TestIds.dialogPrimaryAction).click();
+    cy.contains("td", roleName).should("not.exist");
+  }
+
+  private deleteSelectedGroup(groupName: string) {
+    cy.contains("td", groupName).trigger("mouseover");
+    cy.get(TestIds.deleteGroup).click();
+    cy.get(TestIds.deleteGroupConfirm).click();
+    cy.contains("td", groupName).should("not.exist");
   }
 }

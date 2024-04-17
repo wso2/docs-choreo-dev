@@ -19,7 +19,7 @@ async function runTests(buildNumber, buildId) {
       parallel: true,
       tag: buildNumber,
       ciBuildId: buildId,
-      spec: ['cypress/e2e-stable/devportal/*.ts','cypress/e2e-stable/console/**/*','cypress/e2e-unstable/devportal/*.ts','cypress/e2e-unstable/console/**/*','!cypress/e2e-stable/console/1-component/perf/0.1-con-perf-test.ts'],
+      spec: ['cypress/e2e-stable/devportal/*.ts','cypress/e2e-stable/console/**/*'],
     })
     .then((results) => {
       console.log(results.totalPassed);

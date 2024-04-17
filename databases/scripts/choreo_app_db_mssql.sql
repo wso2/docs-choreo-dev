@@ -1629,7 +1629,7 @@ CREATE TABLE [dbo].[permission]
     [id] [int] IDENTITY(1,1) NOT NULL ,
     [handle][varchar](255) NOT NULL,
     [display_name][varchar](255) NOT NULL,
-    [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BILLING','CHOREO-DEVOPS','COMPONENT-MANAGEMENT','CONFIGURATIONS-MANAGEMENT','CUSTOM-DOMAINS', 'ENVIRONMENT-MANAGEMENT','LOG-MANAGEMENT','OBSERVABILITY-MANAGEMENT','ON-PREM-KEYS','ORGANIZATION-MANAGEMENT','PROJECT-MANAGEMENT','USER-MANAGEMENT')),
+    [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BILLING','CHOREO-DEVOPS','COMPONENT-MANAGEMENT','CONFIGURATIONS-MANAGEMENT','CUSTOM-DOMAINS', 'ENVIRONMENT-MANAGEMENT','LOG-MANAGEMENT','OBSERVABILITY-MANAGEMENT','ON-PREM-KEYS','ORGANIZATION-MANAGEMENT','PROJECT-MANAGEMENT','USER-MANAGEMENT','ACCOUNT-MANAGE','URL-MANAGEMENT')),
     [description] [varchar](255) NULL,
     [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1908,8 +1908,24 @@ CREATE TABLE [dbo].[wso2con_contest_registration]
     [score_summary] [nvarchar](500) NULL,
     [last_submitted_at] [datetime] NULL,
     [browser_id] [nvarchar](36) NULL, 
+    [org_owner_email] [nvarchar](255) NULL,
+    [first_name] [nvarchar](255) NULL,
+    [last_name] [nvarchar](255) NULL,
+    [country] [nvarchar](100) NULL,
+    [mobile_number] [nvarchar](20) NULL,
+    [verification_status] [nvarchar] (20) NOT NULL DEFAULT 'unverified',
     PRIMARY KEY (id),
     CONSTRAINT unique_wso2con_contest_registration UNIQUE(user_email, organization_handle)
+)
+
+CREATE TABLE [dbo].[wso2con_contest_otp_verification]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [organization_uuid] [nvarchar](255) NOT NULL,
+    [otp] [int] NOT NULL,
+    [generated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT unique_wso2con_contest_otp_verification UNIQUE(organization_uuid)
 )
 
 /****** Object:  Trigger [dbo].[wso2con_contest_registration_UpdateTimeTrigger] ******/
@@ -2135,9 +2151,9 @@ INSERT INTO permission (display_name, handle, domain_area, description) VALUES (
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Manage Devops Component','urn:choreosystem:choreodevopsportalapi:component_manage','CHOREO-DEVOPS','Manage devops component');
 
 -- COMPONENT-MANAGEMENT
-INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('View file','urn:choreosystem:componentutils:component_file_view','COMPONENT-MANAGEMENT','View file');
-INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Trigger component','urn:choreosystem:componentutils:component_trigger','COMPONENT-MANAGEMENT','Trigger component');
-INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Mange component','urn:choreosystem:componentutils:component_manage','COMPONENT-MANAGEMENT','Mange component');
+INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('View Component Utilities Files','urn:choreosystem:componentutils:component_file_view','COMPONENT-MANAGEMENT','View component utilities files');
+INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Trigger Component Utilities','urn:choreosystem:componentutils:component_trigger','COMPONENT-MANAGEMENT','Trigger component utilities');
+INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Manage Component Utilities','urn:choreosystem:componentutils:component_manage','COMPONENT-MANAGEMENT','Manage component utilities');
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Trigger Component','urn:choreosystem:componentsmanagement:component_trigger','COMPONENT-MANAGEMENT','Trigger component');
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Create Component','urn:choreosystem:componentsmanagement:component_create','COMPONENT-MANAGEMENT','Create component');
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('View Component Configuration','urn:choreosystem:componentsmanagement:component_config_view','COMPONENT-MANAGEMENT','View component configuration');
@@ -2162,6 +2178,13 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Vi
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Custom Domains','urn:choreosystem:customdomainapi:custom_domain_create','CUSTOM-DOMAINS','Create Custom Domains');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Custom Domains','urn:choreosystem:customdomainapi:custom_domain_delete','CUSTOM-DOMAINS','Delete Custom Domains');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Update Custom Domains','urn:choreosystem:customdomainapi:custom_domain_update','CUSTOM-DOMAINS','Update Custom Domains');
+
+-- URL-MANAGEMENT
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Custom Domains','choreo:domain_manage','URL-MANAGEMENT','Manage Custom Domains');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Custom Domains','choreo:domain_view','URL-MANAGEMENT','View Custom Domains');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage URL Mappings','choreo:url_mapping_manage','URL-MANAGEMENT','Manage URL Mappings');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Approve URL Mappings','choreo:url_mapping_approve','URL-MANAGEMENT','Approve URL Mappings');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View URL Mappings','choreo:url_mapping_view','URL-MANAGEMENT','View URL Mappings');
 
 -- ENVIRONMENT-MANAGEMENT
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Non Production Environment Manage','choreo:non_prod_env_manage','ENVIRONMENT-MANAGEMENT','Manage operations on Choreo Non Production environment');
@@ -2202,6 +2225,7 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Ma
 -- PROJECT-MANAGEMENT
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Project Management','choreo:project_manage','PROJECT-MANAGEMENT','Retrieve and manage projects');
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Component manage','choreo:component_manage','PROJECT-MANAGEMENT','Manage operations on components');
+INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('View Projects','choreo:project_view','PROJECT-MANAGEMENT','View Projects');
 
 -- USER-MANAGEMENT
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Users','urn:choreosystem:usermanagement:user_view', 'USER-MANAGEMENT','View Users');

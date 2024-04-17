@@ -68,16 +68,20 @@ spec:
           imagePullPolicy: Always
           livenessProbe:
             httpGet:
-              path: /services/Version
-              port: 9763
+              path: /internal/data/v1/healthz
+              port: 9443
+              scheme: HTTPS
             initialDelaySeconds: 300
-            periodSeconds: 10
+            periodSeconds: 20
+            timeoutSeconds: 15
           readinessProbe:
             httpGet:
-              path: /services/Version
-              port: 9763
+              path: /internal/data/v1/healthz
+              port: 9443
+              scheme: HTTPS
             initialDelaySeconds: 300
             periodSeconds: 10
+            timeoutSeconds: 15
           lifecycle:
             preStop:
               exec:

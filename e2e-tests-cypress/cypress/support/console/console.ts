@@ -21,6 +21,7 @@ import { ApiDevPortalService } from "./apis/api-devportal-service";
 import { TestIds } from "./constants/TestIds";
 import { OrganizationSettings } from "./features/org-settings/org-settings";
 import { CustomDomainType, Enums } from "../commons/enums";
+import { DOMAIN_URL_MGT } from "../commons/urls";
 
 /**
  * Represents the Choreo Console, the entry point for all tests.
@@ -50,39 +51,129 @@ class Console {
     this._orgSettings.addUserStore(userStoreFile, env);
   }
 
+  deleteRoleIfExists(roleName: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToRoles();
+    this._orgSettings.deleteRoleIfExists(roleName);
+  }
+
+  deleteRole(roleName: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToRoles();
+    this._orgSettings.deleteRole(roleName);
+  }
+
+  addRole(roleName: string, roleDescription: string, roleTag: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToRoles();
+    this._orgSettings.addRole(roleName, roleDescription, roleTag);
+  }
+
+  checkCurrentUserIsInGroup(group: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToUsers();
+    this._orgSettings.checkUserIsInGroup(login.getUserEmail(), group);
+  }
+
+  addGroup(group: string, description: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToGroups();
+    this._orgSettings.addGroup(group, description);
+  }
+
+  addRolesToGroup(roles: string[], group: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToGroups();
+    this._orgSettings.addRolesToGroup(roles, group);
+  }
+
+  removeRolesFromGroup(roles: string[], group: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToGroups();
+    this._orgSettings.removeRolesFromGroup(roles, group);
+  }
+
+  checkRolesInGroup(roles: string[], group: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToGroups();
+    this._orgSettings.checkRolesInGroup(roles, group);
+  }
+
+  deleteGroupIfExists(group: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToGroups();
+    this._orgSettings.deleteGroupIfExists(group);
+  }
+
+  deleteGroup(groupName: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToGroups();
+    this._orgSettings.deleteGroup(groupName);
+  }
+
+  addCurrentUserToGroup(roleName: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToGroups();
+    this._orgSettings.addUserToGroup(login.getUserEmail(), roleName);
+  }
+
   addOrReplaceCustomDomain(domainName: string, type: CustomDomainType) {
     this.navigateToHome();
     this.navigateToSettings();
+
+    cy.intercept({ method: "GET", url: DOMAIN_URL_MGT, times: 1 }).as(
+      "getDomains"
+    );
+
     this.navigateToUrlSettings();
 
-    cy.get(TestIds.searchIcon).should("be.visible").click().wait(2000);
-    cy.get(TestIds.searchDomain)
-      .should("be.visible")
-      .within(() => {
-        cy.get("input").click().clear().type(domainName);
-      });
+    cy.wait("@getDomains").then((interception) => {
+      cy.get(TestIds.searchIcon).should("be.visible").click().wait(2000);
+      cy.get(TestIds.searchDomain)
+        .should("be.visible")
+        .within(() => {
+          cy.get("input").click().clear().type(domainName);
+        });
 
-    cy.get(TestIds.domainTable).within(() => {
-      cy.get("tbody").then((tbody) => {
-        if (tbody.find(TestIds.noDataAvailable).length == 0) {
-          cy.contains("td", domainName).should("be.visible");
-          this.deleteSelectedDomain(domainName);
-        }
+      cy.get(TestIds.domainTable).within(() => {
+        cy.get("tbody").then((tbody) => {
+          if (tbody.find(TestIds.noDataAvailable).length == 0) {
+            cy.contains("td", domainName).should("be.visible");
+            interception.response?.body.forEach((domain) => {
+              if (domain.name === domainName) {
+                this.deleteSelectedDomain(domain.id);
+              }
+            });
+            // Refresh the page to get the updated domain list since we doing the deletion through an API call
+            cy.reload();
+          }
+        });
       });
     });
 
-    cy.get(TestIds.addDomain).click();
+    cy.get(TestIds.domainTable).should("be.visible");
+    cy.get(TestIds.addDomain).should("be.visible").click();
     cy.get(TestIds.domainName).should("be.visible").type(domainName);
 
     if (type === CustomDomainType.DevPortal) {
-      cy.get(TestIds.devPortalDomainOption).click();
+      cy.get(TestIds.devPortalDomainOption).click().wait(2000);
     } else {
       throw new Error("Unhandled domain type");
     }
 
-    for (let i = 0; i < 2; i++) {
-      cy.get(TestIds.nextButtonV2).should("be.enabled").click();
-    }
+    cy.get(TestIds.nextButtonV2).contains("Verify").click();
+    cy.get(TestIds.nextButtonV2).contains("Next").click();
 
     cy.get(TestIds.letsEncrypt).should("be.visible").click();
     cy.get(TestIds.nextButtonV2).should("be.enabled").click();
@@ -91,6 +182,39 @@ class Console {
 
     cy.get(TestIds.domainTable).within(() => {
       cy.contains("td", domainName).should("be.visible");
+    });
+  }
+
+  removeCustomDomain(domainName: string, type: CustomDomainType) {
+    this.navigateToHome();
+    this.navigateToSettings();
+
+    cy.intercept({ method: "GET", url: DOMAIN_URL_MGT, times: 1 }).as(
+      "getDomains"
+    );
+
+    this.navigateToUrlSettings();
+
+    cy.wait("@getDomains").then((interception) => {
+      cy.get(TestIds.searchIcon).should("be.visible").click().wait(2000);
+      cy.get(TestIds.searchDomain)
+        .should("be.visible")
+        .within(() => {
+          cy.get("input").click().clear().type(domainName);
+        });
+
+      cy.get(TestIds.domainTable).within(() => {
+        cy.contains("td", domainName).should("be.visible");
+        interception.response?.body.forEach((domain) => {
+          if (domain.name === domainName) {
+            this.deleteSelectedDomain(domain.id);
+          } else {
+            throw new Error("Domain not found");
+          }
+        });
+        // Refresh the page to get the updated domain list since we doing the deletion through an API call
+        cy.reload();
+      });
     });
   }
 
@@ -122,6 +246,18 @@ class Console {
     cy.get('[data-cyid="settings"]').should("be.visible").click();
   }
 
+  private navigateToRoles() {
+    cy.get('[data-cyid="nav-link-system-roles-link-tabs-link-tab"]').click();
+  }
+
+  private navigateToUsers() {
+    cy.get('[data-cyid="nav-link-system-users-link-tabs-link-tab"]').click();
+  }
+
+  private navigateToGroups() {
+    cy.get('[data-cyid="nav-link-groups-link-tabs-link-tab"]').click();
+  }
+
   private navigateToUrlSettings() {
     cy.get('[data-cyid="nav-link-urls-settings-link-tabs-link-tab"]')
       .should("be.visible")
@@ -130,15 +266,10 @@ class Console {
     cy.get(TestIds.addDomain).should("be.visible");
   }
 
-  private deleteSelectedDomain(domainName: string) {
-    cy.contains(domainName)
-      .parent("tr")
-      .find(TestIds.deleteDomain)
-      .click()
-      .wait(2000);
-
-    cy.get(TestIds.confirmDelete).click();
-    cy.contains("td", domainName).should("not.exist");
+  private deleteSelectedDomain(id: string) {
+    // Cypress is having a problem with locating the delete confirmation button in the popup
+    // So, we are using an API call to delete the domain as a workaround
+    Utils.sendDeleteRequest(`${DOMAIN_URL_MGT}/${id}`, AUTH_HEADER2());
   }
 
   createNewProject(description: string): Project {

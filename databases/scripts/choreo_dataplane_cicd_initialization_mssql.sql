@@ -22,7 +22,7 @@ VALUES('f9e4820e-6284-11ee-8c99-0242ac120005', '', '1.x', 'Go', 1, '0', 'go', 'G
 
 INSERT INTO buildpack
 (id, buildpackImage, supportedVersions, displayName, isDefault, buidpackProviderOrgUuid, [language], versionEnvVariable, provider, iconUrl, builderId)
-VALUES('f9e4820e-6284-11ee-8c99-0242ac120006', '', '8.1.x,8.2.x', 'PHP', 1, '0', 'php', 'GOOGLE_COMPOSER_VERSION', 'Google', '/images/buildpacks/php.svg', 'D3525DF0-F149-42E1-95AE-3BCC8F597778');
+VALUES('f9e4820e-6284-11ee-8c99-0242ac120006', '', '8.1.x,8.2.x', 'PHP', 1, '0', 'php', 'GOOGLE_RUNTIME_VERSION', 'Google', '/images/buildpacks/php.svg', 'D3525DF0-F149-42E1-95AE-3BCC8F597778');
 
 INSERT INTO master.dbo.buildpack
 (id, buildpackImage, supportedVersions, displayName, isDefault, buidpackProviderOrgUuid, [language], versionEnvVariable, provider, iconUrl, builderId)
@@ -67,6 +67,10 @@ VALUES('f9e4820e-6284-11ee-8c99-0242ac120015', '', '', 'Postman Collection', 1, 
 INSERT INTO buildpack 
 (id, buildpackImage, supportedVersions, displayName, isDefault, buidpackProviderOrgUuid, [language], versionEnvVariable, provider, iconUrl, builderId) 
 VALUES('f9e4820e-6284-11ee-8c99-0242ac120016', '', '6.x,7.x', '.NET', 1, '0', 'dotnet', 'GOOGLE_RUNTIME_VERSION', 'Google', '/images/buildpacks/dotnet.svg', 'D3525DF0-F149-42E1-95AE-3BCC8F597778');
+
+INSERT INTO buildpack
+(id, buildpackImage, supportedVersions, displayName, isDefault, buidpackProviderOrgUuid, [language], versionEnvVariable, provider, iconUrl, builderId)
+VALUES('f9e4820e-6284-11ee-8c99-0242ac120017', '', '8,11,17,18', 'Spring Boot', 1, '0', 'java', 'GOOGLE_RUNTIME_VERSION', 'Google', '/images/buildpacks/spring.svg', 'D3525DF0-F149-42E1-95AE-3BCC8F597778');
 
 -- Template Types
 
@@ -188,6 +192,10 @@ VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e2', 'f9e4820e-6284-11ee-8c99-0242ac12
 INSERT INTO buildpack_component_type_mapping
 (typeId, buildpackId)
 VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e2', 'f9e4820e-6284-11ee-8c99-0242ac120014');
+
+INSERT INTO buildpack_component_type_mapping
+(typeId, buildpackId)
+VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e2', 'f9e4820e-6284-11ee-8c99-0242ac120017');
 
 -- Schedule Task
 INSERT INTO buildpack_component_type_mapping

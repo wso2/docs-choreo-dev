@@ -29,6 +29,7 @@ public class GraphqlDTO {
     private String apiVersionId;
     private String branch;
     private String componentHandler;
+    private String projectHandler;
     private String componentId;
     private String componentType;
     private String description;

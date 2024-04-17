@@ -75,90 +75,67 @@ export function mixinManage<T extends Types.Constructor>(
     }
 
     _enableCors(component: Component, environment: Enums.Environment) {
-      if (Utils.isApiConfigurationEnabled()) {
-        this.sideMenu.navigateToDeploy();
+      this.sideMenu.navigateToDeploy();
 
-        let envCardSelector = TestIds.devEnvCard;
-        let componentSettings = TestIds.apiConfiguration;
+      let envCardSelector = TestIds.devEnvCard;
+      let componentSettings = TestIds.apiConfiguration;
 
-        if (environment === Enums.Environment.PRODUCTION) {
-          envCardSelector = TestIds.prodEnvCard;
-        }
-
-        if (component instanceof Service) {
-          componentSettings = TestIds.availableEndpoints;
-        }
-
-        cy.get(envCardSelector)
-          .should("be.visible")
-          .find(componentSettings)
-          .find(TestIds.viewArtifact)
-          .click();
-
-        if (component instanceof Service) {
-          cy.get(TestIds.endpointSettings).should("be.visible").click();
-        }
-
-        cy.get(TestIds.applyApiConfig, VERY_SHORT_TIME).should("be.enabled");
-        cy.get(TestIds.manageSecurity).should("be.visible").click();
-        cy.get(TestIds.corsCheckbox).should("be.visible").click();
-        cy.get(TestIds.applyApiConfig).scrollIntoView().click();
-        cy.get(TestIds.applyApiConfig, VERY_SHORT_TIME).should("be.enabled");
-        cy.get(TestIds.cancelApiConfig).click();
-        cy.get(TestIds.applyApiConfig).should("not.exist");
-      } else {
-        this.sideMenu.navigateToSettings();
-        this.toggleCors(component, true);
+      if (environment === Enums.Environment.PRODUCTION) {
+        envCardSelector = TestIds.prodEnvCard;
       }
+
+      if (component instanceof Service) {
+        componentSettings = TestIds.availableEndpoints;
+      }
+
+      cy.get(envCardSelector)
+        .should("be.visible")
+        .find(componentSettings)
+        .find(TestIds.viewArtifact)
+        .click();
+
+      if (component instanceof Service) {
+        cy.get(TestIds.endpointSettings).should("be.visible").click();
+      }
+
+      cy.get(TestIds.applyApiConfig, VERY_SHORT_TIME).should("be.enabled");
+      cy.get(TestIds.manageSecurity).should("be.visible").click();
+      cy.get(TestIds.corsCheckbox).should("be.visible").click();
+      cy.get(TestIds.applyApiConfig).scrollIntoView().click();
+      cy.get(TestIds.applyApiConfig, VERY_SHORT_TIME).should("be.enabled");
+      cy.get(TestIds.cancelApiConfig).click();
+      cy.get(TestIds.applyApiConfig).should("not.exist");
     }
 
     _addPermissions(component: Component, permissions: string[]) {
-      if (Utils.isApiConfigurationEnabled()) {
-        this.sideMenu.navigateToDeploy();
+      this.sideMenu.navigateToDeploy();
 
-        this.deploymentTrack.validate(component);
+      this.deploymentTrack.validate(component);
 
-        cy.get(TestIds.buildCard)
-          .should("be.visible")
-          .find(TestIds.viewArtifact)
-          .click();
+      cy.get(TestIds.buildCard)
+        .should("be.visible")
+        .find(TestIds.viewArtifact)
+        .click();
 
-        cy.get(TestIds.addScopeBtnV2).should("be.visible").click();
+      cy.get(TestIds.addScopeBtnV2).should("be.visible").click();
 
-        permissions.forEach((permission) => {
-          this.addPermissionV2(permission);
-        });
-      } else {
-        this.sideMenu.navigateToPermissions();
-
-        this.deploymentTrack.validate(component);
-
-        cy.get(TestIds.addScopeBtn).should("be.visible").click();
-
-        permissions.forEach((permission) => {
-          this.addPermission(permission);
-        });
-      }
+      permissions.forEach((permission) => {
+        this.addPermissionV2(permission);
+      });
     }
 
     _applyAllPermissionsToResources(
       component: Component,
       permissions: string[]
     ) {
-      if (Utils.isApiConfigurationEnabled()) {
-        cy.get(TestIds.applyScopesToAllV2).should("be.disabled");
-        cy.get(TestIds.selectAllScopesV2).should("be.enabled").click();
-        cy.get(TestIds.applyScopesToAllV2).should("be.enabled").click();
-        cy.get(TestIds.applyScopesToAllV2).should("be.disabled");
-        cy.get(TestIds.securitySettingsFirstResource)
-          .should("be.visible")
-          .click();
-      } else {
-        cy.get(TestIds.applyScopesToAll).should("be.disabled");
-        cy.get(TestIds.selectAllScopes).should("be.enabled").click();
-        cy.get(TestIds.applyScopesToAll).should("be.enabled").click();
-        cy.get(TestIds.applyScopesToAll).should("be.disabled");
-      }
+      cy.get(TestIds.applyScopesToAllV2).should("be.disabled");
+      cy.get(TestIds.selectAllScopesV2).should("be.enabled").click();
+      cy.get(TestIds.applyScopesToAllV2).should("be.enabled").click();
+      cy.get(TestIds.applyScopesToAllV2).should("be.disabled");
+      cy.get(TestIds.securitySettingsFirstResource)
+        .should("be.visible")
+        .click();
+
       permissions.forEach((permission) => {
         cy.get(TestIds.permissionTag(permission)).should("be.visible");
       });
@@ -170,65 +147,45 @@ export function mixinManage<T extends Types.Constructor>(
       component: Component,
       permissions: string[]
     ) {
-      if (Utils.isApiConfigurationEnabled()) {
-        this.sideMenu.navigateToDeploy();
+      this.sideMenu.navigateToDeploy();
 
-        this.deploymentTrack.validate(component);
+      this.deploymentTrack.validate(component);
 
-        cy.get(TestIds.buildCard)
-          .should("be.visible")
-          .find(TestIds.viewArtifact)
-          .click();
+      cy.get(TestIds.buildCard)
+        .should("be.visible")
+        .find(TestIds.viewArtifact)
+        .click();
 
-        cy.get(TestIds.deleteAllScopesV2).should("be.visible").click();
-        cy.get(TestIds.securitySettingsFirstResource)
-          .should("be.visible")
-          .click();
+      cy.get(TestIds.deleteAllScopesV2).should("be.visible").click();
+      cy.get(TestIds.securitySettingsFirstResource)
+        .should("be.visible")
+        .click();
 
-        permissions.forEach((permission) => {
-          cy.get(TestIds.permissionTag(permission)).should("not.exist");
-        });
+      permissions.forEach((permission) => {
+        cy.get(TestIds.permissionTag(permission)).should("not.exist");
+      });
 
-        this.saveAndDeployPermissions(component.getName());
-      } else {
-        this.sideMenu.navigateToPermissions();
-
-        this.deploymentTrack.validate(component);
-
-        cy.get(TestIds.deleteAllScopes).should("be.visible").click();
-
-        this.saveAndDeployPermissions(component.getName());
-
-        permissions.forEach((permission) => {
-          cy.get(TestIds.permissionTag(permission)).should("not.exist");
-        });
-      }
+      this.saveAndDeployPermissions(component.getName());
     }
 
     _applyPermissionToResources(component: Component, permission: string) {
-      if (Utils.isApiConfigurationEnabled()) {
-        this.sideMenu.navigateToDeploy();
+      this.sideMenu.navigateToDeploy();
 
-        this.deploymentTrack.validate(component);
+      this.deploymentTrack.validate(component);
 
-        cy.get(TestIds.buildCard)
-          .should("be.visible")
-          .find(TestIds.viewArtifact)
-          .click();
+      cy.get(TestIds.buildCard)
+        .should("be.visible")
+        .find(TestIds.viewArtifact)
+        .click();
 
-        cy.get(TestIds.scopeItemCheckBoxV2(permission))
-          .should("be.visible")
-          .click();
-        cy.get(TestIds.applyScopesToAllV2).should("be.enabled").click();
-        cy.get(TestIds.applyScopesToAllV2).should("be.disabled");
-        cy.get(TestIds.securitySettingsFirstResource)
-          .should("be.visible")
-          .click();
-      } else {
-        cy.get(TestIds.scopeItemCheckBox(permission)).click();
-        cy.get(TestIds.applyScopesToAll).should("be.enabled").click();
-        cy.get(TestIds.applyScopesToAll).should("be.disabled");
-      }
+      cy.get(TestIds.scopeItemCheckBoxV2(permission))
+        .should("be.visible")
+        .click();
+      cy.get(TestIds.applyScopesToAllV2).should("be.enabled").click();
+      cy.get(TestIds.applyScopesToAllV2).should("be.disabled");
+      cy.get(TestIds.securitySettingsFirstResource)
+        .should("be.visible")
+        .click();
 
       cy.get(TestIds.permissionTag(permission)).should("be.visible");
 
@@ -247,28 +204,15 @@ export function mixinManage<T extends Types.Constructor>(
       method: Enums.HTTPMethod,
       resource: string
     ) {
-      if (Utils.isApiConfigurationEnabled()) {
-        this.sideMenu.navigateToDeploy();
+      this.sideMenu.navigateToDeploy();
 
-        this.deploymentTrack.validate(component);
+      this.deploymentTrack.validate(component);
 
-        cy.get(TestIds.buildCard)
-          .should("be.visible")
-          .find(TestIds.viewArtifact)
-          .click();
-        this.toggleResourceSecurity(method, resource);
-      } else {
-        this.sideMenu.navigateToSettings();
-
-        this.deploymentTrack.validate(component);
-
-        this.selectResources();
-        this.selectEnvironment(env);
-        this.selectRevision(env);
-        this.editResource();
-        this.selectResources();
-        this.toggleResourceSecurity(method, resource);
-      }
+      cy.get(TestIds.buildCard)
+        .should("be.visible")
+        .find(TestIds.viewArtifact)
+        .click();
+      this.toggleResourceSecurity(method, resource);
     }
 
     _updateAccessMode(component: Component, accessMode: Enums.Accessibility) {
@@ -286,7 +230,9 @@ export function mixinManage<T extends Types.Constructor>(
     }
 
     _updateApiVisibility(component: Component, visibility: ApiVisibility) {
-      this.sideMenu.navigateToSettings();
+      this.sideMenu.navigateToManage();
+      cy.get(TestIds.apiInfo).should("be.visible").click();
+      cy.get(TestIds.apiInfoDevPortal).should("be.visible").click();
 
       this.deploymentTrack.validate(component);
 
@@ -300,8 +246,10 @@ export function mixinManage<T extends Types.Constructor>(
             cy.contains(visibility, { matchCase: false })
               .should("exist")
               .click();
-            cy.get(TestIds.dialogPrimaryAction).should("be.visible").click();
-            cy.get(TestIds.dialogPrimaryAction).should("not.exist");
+
+            cy.get(TestIds.apiInfoSave).should("be.enabled").click();
+            cy.get(TestIds.backdropLoader).should("not.exist");
+            cy.get(TestIds.apiInfoSave).should("be.disabled");
 
             cy.get(TestIds.apiVisibility)
               .should("be.visible")
@@ -313,25 +261,7 @@ export function mixinManage<T extends Types.Constructor>(
     }
 
     private saveAndDeployPermissions(componentName: string) {
-      if (Utils.isApiConfigurationEnabled()) {
-        this.applySecuritySettings();
-
-        //cy.wait(10000); // Extra wait because the application is not updated immediately
-      } else {
-        cy.get(TestIds.scopeSaveAndDeploy).click();
-        cy.get(TestIds.backdropLoader).should("not.exist");
-        cy.get(TestIds.scopeSaveAndDeploy).should("be.disabled");
-        cy.contains(`Deployed the component ${componentName}`).wait(10000); // Extra wait because the application is not updated immediately
-      }
-    }
-
-    private addPermission(permission: string) {
-      cy.get(TestIds.addNewScope).should("be.disabled");
-      cy.get(TestIds.scopeTextInput).type(permission);
-      cy.get(TestIds.addNewScope).should("be.enabled").click().wait(1000);
-      cy.contains("Permission(Scope) created successfully");
-      cy.get(TestIds.selectAllScopes).should("be.visible");
-      cy.get(TestIds.scopeItem(permission)).should("be.visible");
+      this.applySecuritySettings();
     }
 
     private addPermissionV2(permission: string) {
@@ -366,24 +296,6 @@ export function mixinManage<T extends Types.Constructor>(
       });
     }
 
-    private toggleCors(component: Component, isEnabled: boolean) {
-      this.deploymentTrack.validate(component);
-
-      this.editResource();
-      cy.get(TestIds.corsConfig).click({ force: true });
-
-      cy.get(TestIds.saveSettings).should("be.visible");
-      cy.get(TestIds.corsConfig).within(() => {
-        if (isEnabled) {
-          cy.get("input").should("be.checked");
-        } else {
-          cy.get("input").should("not.be.checked");
-        }
-      });
-
-      this.applySettingChanges();
-    }
-
     private applySettingChanges() {
       cy.get(TestIds.saveSettings).click();
       cy.get(TestIds.apply).should("be.visible").click();
@@ -395,36 +307,8 @@ export function mixinManage<T extends Types.Constructor>(
       cy.get(TestIds.editSettings).should("be.enabled").wait(3000);
     }
 
-    private selectResources() {
-      cy.get(TestIds.resourceTab).click({ force: true });
-    }
-
-    private selectEnvironment(env: Enums.Environment) {
-      cy.get(TestIds.envSelector).should("be.visible").scrollIntoView().click();
-      cy.get(`[data-value="${env}"]`).click();
-      cy.get(TestIds.envSelectorItems)
-        .invoke("text")
-        .then((text) => {
-          expect(text).equal(env);
-        });
-    }
-
-    private selectRevision(env: Enums.Environment) {
-      cy.get(TestIds.revision).click();
-      cy.get(TestIds.revisionHistory).should("be.visible");
-      cy.get(TestIds.revisionItem).contains(env).click({ force: true });
-    }
-
-    private editResource() {
-      cy.get(TestIds.editSettings).click();
-    }
-
     private toggleResourceSecurity(method: Enums.HTTPMethod, resource: string) {
-      let methodString = method.toString().toLowerCase();
-
-      if (Utils.isApiConfigurationEnabled()) {
-        methodString = method.toString();
-      }
+      let methodString = method.toString();
 
       cy.get(`[id="panel-/${resource}/${methodString}-header"]`)
         .scrollIntoView()
@@ -432,11 +316,7 @@ export function mixinManage<T extends Types.Constructor>(
 
       cy.get(TestIds.security).scrollIntoView().click();
 
-      if (Utils.isApiConfigurationEnabled()) {
-        this.applySecuritySettings();
-      } else {
-        this.applySettingChanges();
-      }
+      this.applySecuritySettings();
     }
 
     private applySecuritySettings() {

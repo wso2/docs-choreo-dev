@@ -16,6 +16,8 @@ import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
 import { Service } from "../../../support/console/entities/component/service-component";
 import { UsagePlan } from "../../../support/commons/enums";
+import { OK } from "../../../support/commons/http";
+import { SHORT_TIME } from "../../../support/commons/timeouts";
 
 after(() => {
   console.logout();
@@ -74,9 +76,9 @@ describe("Verify Ballerina service functionality", () => {
       })
       .then((res) => {
         cy.fixture("books").then((books) => {
-          expect(books[1].title).to.eq("Dead Men");
+          expect(res.response.toString()).to.include(books[1].title);
         });
-        expect(res.statusCode).to.be.eq("200");
+        expect(res.statusCode).to.be.eq(OK.toString());
       });
   });
 
@@ -95,9 +97,9 @@ describe("Verify Ballerina service functionality", () => {
       })
       .then((res) => {
         cy.fixture("books").then((books) => {
-          expect(books[1].title).to.eq("Dead Men");
+          expect(res.response.toString()).to.include(books[1].title);
         });
-        expect(res.statusCode).to.be.eq("200");
+        expect(res.statusCode).to.be.eq(OK.toString());
       });
   });
 
@@ -124,9 +126,9 @@ describe("Verify Ballerina service functionality", () => {
       })
       .then((res) => {
         cy.fixture("books").then((books) => {
-          expect(books[1].title).to.eq("Dead Men");
+          expect(res.response.toString()).to.include(books[1].title);
         });
-        expect(res.statusCode).to.be.eq("200");
+        expect(res.statusCode).to.be.eq(OK.toString());
       });
   });
 
@@ -145,9 +147,9 @@ describe("Verify Ballerina service functionality", () => {
       })
       .then((res) => {
         cy.fixture("books").then((books) => {
-          expect(books[1].title).to.eq("Dead Men");
+          expect(res.response.toString()).to.include(books[1].title);
         });
-        expect(res.statusCode).to.be.eq("200");
+        expect(res.statusCode).to.be.eq(OK.toString());
       });
   });
 
@@ -161,11 +163,6 @@ describe("Verify Ballerina service functionality", () => {
 
   it("Publishing the component", () => {
     component.publish();
-  });
-
-  it("Stop component", () => {
-    component.stopDeployment();
-    component.stopPromotion();
   });
 
   it("Verifying component insights", () => {

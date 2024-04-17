@@ -1,9 +1,3 @@
-configMapGenerator:
-  - name: cm-hubble-exporter
-    behavior: merge
-    literals:
-      - HUBBLE_ENDPOINT=hubble-relay.cilium.svc.cluster.local:80
-
 resources:
   - ../common-namespaces-dataplane/cert-manager
   - ../common-namespaces-dataplane/choreo-ai

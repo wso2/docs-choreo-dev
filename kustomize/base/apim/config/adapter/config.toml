@@ -1,7 +1,8 @@
 [adapter]
-# The configuration file for mgw
+IsIntelligentRoutingEnabled = true
+
 [adapter.server]
-enabled = {{.SERVER_ENABLED}}
+enabled = false
 host = "0.0.0.0"
 port = "9843"
 tokenTTL = "1h"
@@ -42,8 +43,11 @@ securedListenerPort = 9095
 clusterTimeoutInSeconds = 20
 listenerTLSEnabled = true
 enforcerResponseTimeoutInSeconds = 20
+maximumResourcePathLengthInKB = 2
 # system hostname for system API resources (eg: /testkey and /health)
 systemHost = "gw.wso2.com"
+# internal hostname for internal API resources (eg: /.wellknown/jwks)
+internalServiceHost = "{{.INTERNAL_SERVICE_HOST}}"
 
 [router.keystore]
 certPath = "/home/wso2/security/keystore/mg.pem"
@@ -56,7 +60,9 @@ allowMethods = ["GET","PUT","POST","DELETE","PATCH","OPTIONS"]
 allowHeaders = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey","testKey","Internal-Key","API-Key"]
 exposeHeaders = []
 allowCredentials = false
-mandatoryHeaders = ["x-choreo-test-session-id"]
+
+[router.upstream.timeouts]
+maxRouteTimeoutInSeconds = 300
 
 [router.upstream]
 [router.upstream.tls]
@@ -67,6 +73,17 @@ ciphers = "ECDHE-ECDSA-AES128-GCM-SHA256, ECDHE-RSA-AES128-GCM-SHA256, ECDHE-ECD
 trustedCertPath = "/etc/ssl/certs/ca-certificates.crt"
 verifyHostName = true
 disableSslVerification = false
+
+[router.ratelimit]
+  enabled = true
+  host = "$env{rate_limiter_host}"
+  port = 8091
+  requestTimeoutInMillis= 40
+  failureModeDeny = false
+  keyFilePath = "/home/wso2/security/keystore/mg.key"
+  certFilePath = "/home/wso2/security/keystore/mg.pem"
+  caCertFilePath = "/home/wso2/security/truststore/rate-limiter.pem"
+  sSLCertSANHostname = "rate-limiter"
 
 [enforcer]
 [enforcer.authService]
@@ -110,17 +127,17 @@ disableSslVerification = false
     password = "$env{enforcer_managemenet_password}"
 
 [enforcer.jwtGenerator]
-    enable = false
+    enable = true
     encoding = "base64" # base64,base64url
     claimDialect = "http://wso2.org/claims"
     convertDialect = false
     header = "X-JWT-Assertion"
     signingAlgorithm = "SHA256withRSA"
-    enableUserClaims = false
+    enableUserClaims = true
     gatewayGeneratorImpl = "org.wso2.carbon.apimgt.common.gateway.jwtgenerator.APIMgtGatewayJWTGeneratorImpl"
     claimsExtractorImpl = "org.wso2.carbon.apimgt.impl.token.ExtendedDefaultClaimsRetriever"
-    publicCertificatePath = "/home/wso2/security/truststore/mg.pem"
-    privateKeyPath = "/home/wso2/security/keystore/mg.key"
+    publicCertificatePath = "/home/wso2/security/jwt/cert.pem"
+    privateKeyPath = "/home/wso2/security/jwt/key.pem"
 
 [enforcer.jwtIssuer]
   enabled = false
@@ -148,11 +165,11 @@ disableSslVerification = false
     # The message broker context factory
     jmsConnectionInitialContextFactory = "org.wso2.andes.jndi.PropertiesFileInitialContextFactory"
     # The message broker connection URL
-    jmsConnectionProviderUrl = ""
+    # jmsConnectionProviderUrl = "amqp://choreo_prod_apim_admin:$env{tm_admin_pwd}@carbon/carbon?brokerlist='tcp://choreo-tm-1-service:5672;tcp://choreo-tm-2-service:5672'"
     # Throttling configurations related to event publishing using a binary connection
     [enforcer.throttling.publisher]
     # Credentials required to establish connection between Traffic Manager
-    username = ""
+    username = "{{.ENFORCER_THROTTLING_USERNAME}}"
     # password = "$env{tm_admin_pwd}"
     # Receiver URL and the authentication URL of the Traffic manager node/nodes
     [[enforcer.throttling.publisher.urlGroup]]
@@ -234,9 +251,10 @@ disableSslVerification = false
     consumerKeyClaim = ""
     # Certificate Filepath within enforcer
     certificateFilePath = "/home/wso2/security/truststore/mg.pem"
+# Issuer 3
 [[enforcer.security.tokenService]]
   name="APIM Publisher"
-  issuer = "{{.TOCKEN_SERVICE_ISSUER}}"
+  issuer = "{{.ENFORCER_SECURITY_TOKENSERVICE_ISSUER}}"
   certificateAlias = "gateway_certificate_alias"
   certificateFilePath = "/home/wso2/security/truststore/publisher-truststore.pem"
 
@@ -249,7 +267,7 @@ disableSslVerification = false
 
   [analytics.enforcer]
     [analytics.enforcer.configProperties]
-      authURL = "{{.CONFIG_PROPERTIES_AUTH_URL}}"
+      authURL = "{{.ANALYTICS_ENFORCER_CONFIGPROPERTIES_AUTHURL}}"
       authToken = "$env{analytics_authToken}"
       isChoreoDeployment = "true"
 
@@ -276,19 +294,26 @@ password="$env{cp_admin_pwd}"
 environmentLabels = ["$env{environmentLabel}"]
 retryInterval = 5
 skipSSLVerification=true
-
+[controlPlane.dynamicEnvironments]
+enabled = true
+dataPlaneID = "$env{data_plane_id}"
+gatewayAccessibilityType = "$env{gateway_accessibility_type}"
 # Message broker connection URL of the control plane
-
 [controlPlane.brokerConnectionParameters]
 eventListeningEndpoints = ["$env{ASB_CONNECTION_STRING}"]
 reconnectInterval = 5000
 reconnectRetryCount = 60
+[controlPlane.hTTPClient]
+requestTimeOut = 90
+[controlPlane.initialFetch]
+chunkSize = 500
 
 # Global Adapter related configurations
 [globalAdapter]
   # Enable Choreo Connect Global adapter client
   enabled = true
   # Global adapter Service URL (<Hostname>:<Port>)
-  serviceUrl = "global-adapter:18000"
+  serviceUrl = "global-adapter-v2:18000"
   # Local Adapter Label
   localLabel = "$env{localLabel}"
+  overrideHostName = "global-adapter"

@@ -28,6 +28,7 @@ import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
@@ -128,7 +129,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createProject_TestChoreoConnections"})
     @CitrusTest
     public void createServicePublisherComponent_TestChoreoConnections() throws Exception {
-        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
         Repository repo = Repository.builder().
                 repoUrl(SVC_COMPONENT_REPO_URL).
                 oasFilePath("openapi.yaml").
@@ -151,7 +152,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createProject_TestChoreoConnections"})
     @CitrusTest
     public void createServiceConsumerComponent_TestChoreoConnections() throws Exception {
-        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
         Repository repo = Repository.builder().
                 repoUrl(CLIENT_COMPONENT_REPO_URL).
                 oasFilePath("openapi.yaml").
@@ -285,7 +286,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         projectTwo = ComponentUtils.createProject(this, citrusClients, accessToken,
                 Constant.region.US.toString());
         //create a proxy component
-        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
         String apiName = Constant.DEFAULT_API_NAME.concat(String.valueOf(new Date().getTime()));
         Pair<ChoreoComponent, ProxyAPI> componentDetail = ComponentUtils.createProxyComponent(this, citrusClients,
                 accessToken, componentName, apiName, projectTwo);

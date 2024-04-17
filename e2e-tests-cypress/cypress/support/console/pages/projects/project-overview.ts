@@ -10,16 +10,11 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-
-import { version } from "chai";
-import { Enums } from "../../../commons/enums";
 import { Utils } from "../../../commons/utils";
 import { AbsComponent } from "../../../interfaces/abs-component";
 import { GraphQLQueryBuilder } from "../../apis/gql-query-builder";
 import { GraphQL } from "../../apis/graphql";
-import { APIDevelop } from "../apis/api-develop";
-import { RestAPIProxyTemplate } from "../templates/rest-api-proxy-temp";
-import { cyGet, cyLog } from "../../../commons/cy";
+
 
 export class ProjectOverviewPage {
   static searchReuseComponent(

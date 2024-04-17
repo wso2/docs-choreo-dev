@@ -44,17 +44,6 @@ spec:
                 name: cm-dp-rudder
             - secretRef:
                 name: secret-dp-rudder
-          env:
-            - name: JOB_TTL_SECONDS_AFTER_FINISHED
-              value: "86400"
-            - name: APIM_REVISION_LIMIT
-              value: "20"
-            - name: HPA_ENABLED
-              value: "true"
-            - name: PDB_ENABLED
-              value: "true"
-            - name: GORM_PREPARED_STATEMENTS_ENABLED
-              value: "false"
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:

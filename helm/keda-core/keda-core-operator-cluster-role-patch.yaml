@@ -19,6 +19,7 @@ rules:
   - external
   - pods
   - services
+  - secrets
   verbs:
   - get
   - list

@@ -10,7 +10,6 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-/// <reference types="cypress-xpath" />
 
 import { Enums, UsagePlan } from "../../support/commons/enums";
 import { console } from "../../support/console/console";

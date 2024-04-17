@@ -62,38 +62,17 @@ describe(`Verify internal API Proxy functionality`, () => {
     internalProxy.addResources([{ path: OPERATION_USERS, verbs: ["GET"] }]);
   });
 
-  if (Utils.isApiConfigurationEnabled()) {
-    it("Disable security of Internal Proxy", () => {
-      internalProxy.disableSecurity(Enums.HTTPMethod.GET, OPERATION_USERS);
-    });
+  it("Disable security of Internal Proxy", () => {
+    internalProxy.disableSecurity(Enums.HTTPMethod.GET, OPERATION_USERS);
+  });
 
-    it("Deploy Internal Proxy", () => {
-      internalProxy.deploy();
-    });
+  it("Deploy Internal Proxy", () => {
+    internalProxy.deploy();
+  });
 
-    it("Promote Internal Proxy", () => {
-      internalProxy.promote();
-    });
-  } else {
-    it("Deploy Internal Proxy", () => {
-      internalProxy.deploy();
-    });
-
-    it("Promote Internal Proxy", () => {
-      internalProxy.promote();
-    });
-
-    it("Disable security of Internal Proxy in Dev", () => {
-      internalProxy.disableSecurityInDev(Enums.HTTPMethod.GET, OPERATION_USERS);
-    });
-
-    it("Disable security of Internal Proxy in Prod", () => {
-      internalProxy.disableSecurityInProd(
-        Enums.HTTPMethod.GET,
-        OPERATION_USERS
-      );
-    });
-  }
+  it("Promote Internal Proxy", () => {
+    internalProxy.promote();
+  });
 
   it("Copy Internal Proxy endpoints and return to Project", () => {
     internalProxy.saveEndpointUrls(endpointMatcher).then(() => {
@@ -201,31 +180,25 @@ describe(`Verify internal API Proxy functionality`, () => {
     project.visitComponent(internalProxy.getName());
   });
 
-  if (Utils.isApiConfigurationEnabled()) {
-    it("Change Internal Proxy to External Proxy and deploy", () => {
-      internalProxy.updateAccessModeAndDeploy(Enums.Accessibility.EXTERNAL);
-    });
+  it("Change Internal Proxy to External Proxy and deploy", () => {
+    internalProxy.updateAccessModeAndDeploy(Enums.Accessibility.EXTERNAL);
+  });
 
-    it("Change Internal Proxy to External Proxy and promote", () => {
-      internalProxy.promote();
-    });
+  it("Change Internal Proxy to External Proxy and promote", () => {
+    internalProxy.promote();
+  });
 
-    // Reloading the proxy is required to ensure that the access mode change is reflected in other parts of the UI,
-    // such as the component test page.
-    // ----- Begin component reload
-    it("Return to Project", () => {
-      internalProxy.goBackToProject();
-    });
+  // Reloading the proxy is required to ensure that the access mode change is reflected in other parts of the UI,
+  // such as the component test page.
+  // ----- Begin component reload
+  it("Return to Project", () => {
+    internalProxy.goBackToProject();
+  });
 
-    it("Visit Internal Proxy", () => {
-      project.visitComponent(internalProxy.getName());
-    });
-    // ----- End component reload
-  } else {
-    it("Verify change Internal Proxy to External Proxy", () => {
-      internalProxy.updateAccessMode(Enums.Accessibility.EXTERNAL);
-    });
-  }
+  it("Visit Internal Proxy", () => {
+    project.visitComponent(internalProxy.getName());
+  });
+  // ----- End component reload
 
   it("Verify converted External Proxy test functionality using Swagger UI in Dev", () => {
     internalProxy

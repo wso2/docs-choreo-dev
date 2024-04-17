@@ -11,9 +11,6 @@ spec:
     spec:
       containers:
       - name: keda-operator
-        env:
-        - name: KEDA_RESTRICT_SECRET_ACCESS
-          value: "true"
         securityContext:
           runAsUser: 10001
       securityContext:

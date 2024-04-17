@@ -10,6 +10,7 @@ import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.models.GraphqlDTO;
@@ -53,7 +54,7 @@ public class TestClientJWTValidation extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createProject_TestClientJWTValidation"})
     @CitrusTest
     public void createComponent_TestClientJWTValidation() throws Exception {
-        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
         Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/jwt-encoder").
                 branch("main").subPath("").build();
         GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);

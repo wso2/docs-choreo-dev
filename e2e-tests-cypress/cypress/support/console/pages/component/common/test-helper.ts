@@ -11,16 +11,13 @@
  * associated services.
  */
 
-import { fromCallback } from "cypress/types/bluebird";
-import { cyGet, cyLog } from "../../../../commons/cy";
 import { Enums } from "../../../../commons/enums";
-import { SHORT_TIME, VERY_SHORT_TIME } from "../../../../commons/timeouts";
+import { VERY_SHORT_TIME } from "../../../../commons/timeouts";
 import { Utils } from "../../../../commons/utils";
 import { GraphQL } from "../../../apis/graphql";
 import { APITest } from "../../apis/api-test";
 import { Curl } from "../UI-components/curl-component";
 import { SwaggerUI } from "../UI-components/swagger-UI-component";
-import { ComponentOverviewPage } from "../component-overview-page";
 import { ComponentTestPage } from "../component-test-page";
 import { TestIds } from "../../../constants/TestIds";
 
@@ -116,62 +113,44 @@ export class TestHelper {
   }
 
   static testGraphQL(env: Enums.Environment, code: string, endpoint?: string) {
-    cy.get('div[class="execute-button-wrap"]>button').should("be.visible");
+    cy.get(TestIds.graphQLTestConsole)
+      .should("be.visible")
+      .find(".execute-button")
+      .should("be.visible");
+
     APITest.selectEnvironment(env);
     if (endpoint) {
       ComponentTestPage.selectEndpoint(endpoint);
     }
-    cy.wait(5000);
-    Utils.getRenderedElement('[data-testid="graphiql-container"]').within(
-      () => {
-        cy.get('[class="query-editor"]').within(() => {
-          cyGet("span[cm-text]")
-            .eq(1)
-            .then(($p) => {
-              Utils.paste($p, code, false);
-              cy.wait(2000);
-            });
-        });
-      }
-    );
-    cy.get('div[class="toolbar"]>button').eq(0).click();
-    cy.get('div[class="execute-button-wrap"]>button').click();
-  }
 
-  static getGqlResult(expectedResponse: string = "") {
-    cy.wait(6000);
-    cy.get('[class="result-window"]').within(() => {
-      cy.get('[class="CodeMirror-sizer"]').within(() => {
-        cy.get('[class="CodeMirror-code"]')
-          .invoke("text")
-          .then((r) => {
-            const response = r.replace("x", "").trim();
-            expect(response).to.be.contains(expectedResponse);
-          });
+    cy.getUnstable(TestIds.graphQLTestConsole)
+      .should("be.visible")
+      .find(".query-editor")
+      .find("textarea")
+      .then(($p) => {
+        Utils.paste($p, code, false);
       });
-    });
-    cy.wait(6000);
-    this.clearGQL();
+
+    cy.get(TestIds.graphQLQueryPrettify).click();
+    cy.get(TestIds.graphQLTestConsole).find(".execute-button").click();
   }
 
   static getGraphQLResult() {
-    cy.wait(6000);
-    return cy.get('[class="result-window"]').within(() => {
-      return cy.get('[class="CodeMirror-sizer"]').within(() => {
-        return cy
-          .get('[class="CodeMirror-code"]')
-          .invoke("text")
-          .then((r) => {
-            return r;
-          });
-      });
-    });
-  }
+    cy.getUnstable(TestIds.graphQLTestConsole)
+      .find(".spinner")
+      .should("not.exist");
 
-  private static clearGQL() {
-    ComponentOverviewPage.navigateToDeploy();
-    cy.wait(6000);
-    ComponentOverviewPage.navigateToTest();
+    return cy
+      .get('[class="result-window"]')
+      .should("be.visible")
+      .find('[class="CodeMirror-sizer"]')
+      .should("be.visible")
+      .find('[class="CodeMirror-code"]')
+      .should("be.visible")
+      .invoke("text")
+      .then((result) => {
+        return result;
+      });
   }
 
   static verifyProjectLevelEndpoint() {

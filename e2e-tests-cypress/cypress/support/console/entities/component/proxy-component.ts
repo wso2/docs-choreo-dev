@@ -18,7 +18,14 @@ import { mixinProxyDeploy } from "../../features/deploy/deploy-proxy";
 import { mixinDevelop } from "../../features/develop/develop";
 import { mixinTestProxy } from "../../features/test/test-proxy";
 import { mixinManage } from "../../features/manage/manage";
-import { Utils } from "../../../commons/utils";
+
+export interface ProxyMetaData {
+  name: string;
+  version: string;
+  basePath: string;
+  endpointUrl: string;
+  componentUrl: string;
+}
 
 export class Proxy extends mixinDevelop(
   mixinManage(mixinProxyDeploy(mixinTestProxy(Component)))
@@ -40,6 +47,26 @@ export class Proxy extends mixinDevelop(
 
     this.basePath = basePath;
     this.endpointUrl = endpointUrl;
+  }
+
+  static fromMetaData(metaData: ProxyMetaData) {
+    return new Proxy(
+      metaData.name,
+      metaData.version,
+      metaData.basePath,
+      metaData.endpointUrl,
+      metaData.componentUrl
+    );
+  }
+
+  getMetaData(): ProxyMetaData {
+    return {
+      name: this.getName(),
+      version: this.getLatestVersion(),
+      basePath: this.basePath,
+      endpointUrl: this.endpointUrl,
+      componentUrl: this.componentUrl,
+    };
   }
 
   getBasePath() {

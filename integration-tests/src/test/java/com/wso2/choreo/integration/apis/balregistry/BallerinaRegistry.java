@@ -56,12 +56,17 @@ public class BallerinaRegistry extends ControlPlaneAPI {
     }
 
     private static boolean shouldConnectorBeDeleted(String moduleName) {
+        if (moduleName.startsWith(Constant.TEST_OLD_COMPONENT_NAME)) {
+            return true;
+        }
+
         if (!moduleName.startsWith(Constant.TEST_COMPONENT_NAME)) {
             return false;
         }
 
         String timeComponent = moduleName.split(Constant.TEST_COMPONENT_NAME)[1];
 
+        timeComponent = timeComponent.replaceAll("\\d+T", "");
         timeComponent = timeComponent.replaceAll("\\D", "");
 
         long createdDateTime = Long.parseLong(timeComponent);

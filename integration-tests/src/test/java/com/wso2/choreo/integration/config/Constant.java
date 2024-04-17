@@ -27,7 +27,9 @@ public final class Constant {
     public static final String GRAPHQL_ENDPOINT_SUFFIX = "/projects/1.0.0/graphql";
     public static final String TEST_PROJECT_NAME_PREFIX = "automationtestproject";
     public static final String TEST_OLD_PROJECT_NAME_PREFIX = "testproject"; // Prefix used to create tests earlier before update the format to TEST_PROJECT_NAME_PREFIX
-    public static final String TEST_COMPONENT_NAME = "automationtestcomponent";
+
+    public static final String TEST_OLD_COMPONENT_NAME = "automationtestcomponent";
+    public static final String TEST_COMPONENT_NAME = "autotest";
     public static final String TEST_PROJECT_DESCRIPTION = "test project description";
     public static final String TEST_REPO_NAME_PREFIX = "test-repo-";
     public static final String GITHUB_AUTH_HEADER_PREFIX = "token ";
@@ -213,4 +215,5 @@ public final class Constant {
 
     // Data plane Logs
     public static final String DP_LOGS_SUFFIX = "/choreologgingapi/0.2.0/logs";
+    public static final String SYSTEM_OBS_SUFFIX = "/choreosysobsapi/0.2.0/system-metrics/component/application";
 }

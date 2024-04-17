@@ -12,10 +12,37 @@
  */
 
 import { TestIds } from "./constants/TestIds";
-import { VERY_SHORT_TIME } from "../commons/timeouts";
+import { SHORT_TIME, VERY_SHORT_TIME } from "../commons/timeouts";
 import { DEV_PORTAL_APIS_SEARCH_URL } from "../commons/urls";
 
 export class DevPortal {
+  loginToDevPortal(devPortalUrl?: string): void {
+    const resourcePath = `/${Cypress.env(
+      "choreoOrgHandle"
+    )}?fidp=choreoe2etest`;
+
+    let loginURL = Cypress.env("devportalLoginURL") + resourcePath;
+
+    if (devPortalUrl !== undefined) {
+      loginURL = devPortalUrl + resourcePath;
+    }
+
+    cy.visit(loginURL);
+    cy.wait(3000)
+      .url(SHORT_TIME)
+      .then((url) => {
+        if (url.includes(Cypress.env("idpURL") + "/authenticationendpoint")) {
+          cy.get('button[type="submit"]', VERY_SHORT_TIME).should("be.visible");
+          cy.get("#usernameUserInput").type(Cypress.env("choreoIDPUsername"));
+          cy.get("#password").type(Cypress.env("choreoIDPPassword"), {
+            log: false,
+          });
+          cy.get('button[type="submit"]').click();
+        }
+      });
+    cy.get(TestIds.devPortalHome, VERY_SHORT_TIME).should("be.visible");
+  }
+
   searchApi(name: string, version?: string) {
     cy.intercept({
       method: "GET",
@@ -31,7 +58,7 @@ export class DevPortal {
 
     cy.get(TestIds.apiBar).click();
 
-    cy.wait("@searchAllApis", VERY_SHORT_TIME).then(() => {
+    cy.wait("@searchAllApis", SHORT_TIME).then(() => {
       cy.get(TestIds.apiSearch)
         .should("be.visible")
         .focus()
@@ -71,7 +98,7 @@ export class DevPortal {
 
     cy.get(TestIds.apiBar).click();
 
-    cy.wait("@searchAllApis", VERY_SHORT_TIME).then(() => {
+    cy.wait("@searchAllApis", SHORT_TIME).then(() => {
       cy.get(TestIds.apiSearch)
         .should("be.visible")
         .focus()

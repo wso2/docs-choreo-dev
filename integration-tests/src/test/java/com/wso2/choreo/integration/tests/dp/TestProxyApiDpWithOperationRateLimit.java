@@ -23,6 +23,7 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
+import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
@@ -80,7 +81,7 @@ public class TestProxyApiDpWithOperationRateLimit extends TestBase {
     @Test(dependsOnMethods = {"verifyAPIName_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
     @CitrusTest
     public void testCreateComponentForProxyAPI_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) throws Exception {
-        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
         Pair<ChoreoComponent, ProxyAPI> componentDetail = ComponentUtils.createProxyComponent(this, citrusClients,
                 accessToken, componentName, dp.getFirstName(), dp.getChoreoProject());
         dp.setChoreoComponent(componentDetail.getLeft());

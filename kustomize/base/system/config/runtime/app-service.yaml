@@ -53,6 +53,8 @@ configYamlConfigurations:
   observe-reporter-host: ${CONFIG_YAML_OBSERVE_REPORTER_HOST}
   prometheus-metrics-reporter-config:
     enabled-cluster-ids: {{.PROMETHEUS_METRICS_REPORTER_ENABLED_CLUSTER_IDS}}
+  mediation-service-config:
+    access-logs-enabled: ${MEDIATION_SERVICE_ACCESS_LOGS_ENABLED}
   observe-reporter-port: 443
 removeBallerinaObservability:
   enabled: ${ENABLE_REMOVE_BAL_OBSERVABILITY}
