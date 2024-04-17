@@ -30,6 +30,7 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -75,7 +76,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     private static final String CLIENT_COMPONENT_NAME = "";
 
     private static final String NETWORK_VISIBILITY_FILTER = "org,public";
-    private static final String CLIENT_COMPONENT_REPO_URL = "https://github.com/choreo-test-apps/connection-test-reward-management-api";
+    private static final String CLIENT_COMPONENT_REPO_URL = "https://github.com/choreo-test-apps/connections-test";
     private static final String CLIENT_COMPONENT_DOCKER_FILE_PATH = "Dockerfile";
 
     private HttpClient appServiceClient;
@@ -95,7 +96,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     private ConnectionCreateRequest connectionCreationReq;
     private ComponentDeploymentStatusDTO serviceDeploymentStatusDTO, servicePromotionStatusDTO;
     private ComponentDeploymentStatusDTO clientDeploymentStatusDTO, clientPromotionStatusDTO;
-    private final String repoName = "connection-test-reward-management-api";
+    private final String repoName = "connections-test";
     private String API_INVOCATION_REQUEST_URI;
     private String API_INVOCATION_REQUEST_BODY;
     private String REST_API_EXPECTED_RESPONSE;
@@ -169,6 +170,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createServiceConsumerComponent_TestChoreoConnections", "deployServicePublisherComponent_TestChoreoConnections"})
     @CitrusTest
     public void createComponentLevelConnection_TestChoreoConnections() throws Exception {
+        SleepUtil.sleep(5);
         //Get created service from resource registry
         HttpClient marketplaceServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         List<ServiceInfo> services = MarketplaceService.searchForServices(this,
@@ -312,6 +314,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createAPIProxyComponent_TestChoreoConnections"})
     @CitrusTest
     public void createProjectLevelConnectionToProxy_TestChoreoConnections() throws Exception {
+        SleepUtil.sleep(5);
         //Get created service from resource registry
         HttpClient marketplaceServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         List<ServiceInfo> services = MarketplaceService.searchForServices(this,
