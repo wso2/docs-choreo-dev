@@ -45,15 +45,15 @@ Follow the steps given below to create a project:
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the organization home page.
 2. On the organization home page, click **+ Create Project**.
 3. Enter a display name, unique name, and description for the project. You can enter the values given below:
+    
+    !!! info
+         In the **Name** field, you must specify a name to uniquely identify your project in various contexts. The value is editable only at the time you create the project. You cannot change the name after you create the project.
 
     | **Field**                | **Value**                          |
     |--------------------------|------------------------------------|
     | **Project Display Name** | Book List Project                  |
     | **Name**                 | book-list-project                  |
     | **Project Description**  | My sample project                  |
-
-    !!! info
-         In the **Name** field, you must specify a name to uniquely identify your project in various contexts. The value is editable only at the time you create the project. You cannot change the name after you create the project.
 
 4. Click **Create**. This creates the project and takes you to the project home page.
 
@@ -67,7 +67,7 @@ Let's create a service component by following these steps:
     |Field          |     Value              |
     |---------------|------------------------|
     |Name           | Book List              |
-    |Description    | Gets the book list      |
+    |Description    | Gets the book list     |
 
 3. Go to the **GitHub** tab.
 4. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
