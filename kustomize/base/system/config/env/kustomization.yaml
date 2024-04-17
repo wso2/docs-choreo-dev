@@ -777,9 +777,9 @@ configMapGenerator:
       - APIM_URL={{.APIM_URL}}
       - APIM_CLIENT_ID={{.APIM_CLIENT_ID}}
       - MIZZEN_SERVER_FQDN={{.MIZZEN_SERVER_FQDN}}
-      - SYSTEM_ORG_UUID={{.SYSTEM_ORG_UUID | default ""}}
-      - UPTIME_CHECKS_PDP_APP_ID={{.UPTIME_CHECKS_PDP_APP_ID | default ""}}
-      - UPTIME_CHECKS_PDP_APP_CONSUMER_KEY={{.UPTIME_CHECKS_PDP_APP_CONSUMER_KEY | default ""}}
+      - SYSTEM_ORG_UUID={{.SYSTEM_ORG_UUID | default "dummySysOrgId"}}
+      - UPTIME_CHECKS_PDP_APP_ID={{.UPTIME_CHECKS_PDP_APP_ID | default "dummyPdpAppId"}}
+      - UPTIME_CHECKS_PDP_APP_CONSUMER_KEY={{.UPTIME_CHECKS_PDP_APP_CONSUMER_KEY | default "dummyPdpAppConsumerKey"}}
   - name: env-dp-delete-manager
     behavior: create
     literals:
