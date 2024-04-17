@@ -12,7 +12,7 @@ In this guide, you will:
 
 ## Prerequisites
 
-1.  You will need a GitHub account with a repository that contains your service implementation. To follow this guide you can fork the [Choreo sample book list service repository](https://github.com/wso2/choreo-sample-book-list-service/), which contains the sample for this guide.
+1. You must have a GitHub account with a repository that contains your service implementation. To proceed with the steps in this guide, you can fork the [Choreo sample book list service repository](https://github.com/wso2/choreo-sample-book-list-service/), which contains the sample for this guide.
 
 2. If you are signing in to the Choreo Console for the first time, create an organization as follows:
 
@@ -28,7 +28,7 @@ In this guide, you will:
 Let's familiarize ourselves with the key files in this sample application. The below table gives a brief overview of the important files in the sample book list service.
 
 !!! note 
-    The following file paths are relative to the path <choreo-sample-book-list-service>/
+    The following file paths are relative to the path `<choreo-sample-book-list-service>/`.
     
 |Filepath               |Description                                                                   |
 |-----------------------|------------------------------------------------------------------------------|
@@ -44,61 +44,61 @@ Follow the steps given below to create a project:
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the organization home page.
 2. On the organization home page, click **+ Create Project**.
-3. Enter a unique name and description for the project. You can enter the name and description given below:
+3. Enter a display name, unique name, and description for the project. You can enter the values given below:
 
-    | **Field**       | **Value**               |
-    |-----------------|-------------------------|
-    | **Name**        | Book List project       |
-    | **Description** | My sample multi repository project |
-
-4. Select **Multi-Repo**.
+    | **Field**                | **Value**                          |
+    |--------------------------|------------------------------------|
+    | **Project Display Name** | Book List Project                  |
+    | **Name**                 | book-list-project                  |
+    | **Project Description**  | My sample project                  |
 
     !!! info
-        Since we are creating one component in the project, in this example we will use a multi repository project. A multi repository project allows you to create components using the code stored in different repositories. 
+         In the **Name** field, you must specify a name to uniquely identify your project in various contexts. The value is editable only at the time you create the project. You cannot change the name after you create the project.
 
-5. Click **Create**.
+4. Click **Create**. This creates the project and takes you to the project home page.
 
 ## Step 2: Create a service component
 
 Let's create a service component by following these steps:
 
-1. In the landing page, under **Connect Your Code**, click on the **Service** card.
-2. Enter a unique name and a description of the service. For this guide, let's enter the following values:
+1. On the project home page, click **Service** under **Connect Your Code**.
+2. Enter a unique name and a description for the service. For this guide, let's enter the following values:
 
     |Field          |     Value              |
     |---------------|------------------------|
     |Name           | Book List              |
-    |Description    | Gets the book list     |
+    |Description    | Gets the book list      |
 
-3. Select the **GitHub** tab.
-4. If you have not already connected your GitHub repository to Choreo, click **Authorize with GitHub**, enter your GitHub credentials, and select the repository you created by forking the [Choreo sample book list service repository](https://github.com/wso2/choreo-sample-book-list-service/). If your repository is not listed, then connect your repository by selecting the **+ Connect More Repositories** option from the **Repository list**.
+3. Go to the **GitHub** tab.
+4. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
-    !!! info
-         The **Choreo GitHub App** requires the following permissions:
-         
-        - Read and write access. Write access is required  to set up a webhook for Choreo. This enables Choreo to receive notifications whenever new code is pushed, facilitating the automatic building of the most recent code.
-        - Read access to issues and metadata.
+    Alternatively, you can paste the [Choreo sample Book List Service repository](https://github.com/wso2/choreo-sample-book-list-service) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
+
+    !!! note
+           The **Choreo GitHub App** requires the following permissions:
+
+           - Read and write access to code and pull requests.
+           - Read access to issues and metadata.
              
-        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
-
+           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
 5. Enter the following information:
 
-    | **Field**             | **Description**                               |
-    |-----------------------|-----------------------------------------------|
-    | **GitHub Account**    | Your account                                  |
-    | **GitHub Repository** | choreo-sample-book-list-service |
+    | **Field**             | **Description**                  |
+    |-----------------------|----------------------------------|
+    | **Organization**      | Your GitHub account              |
+    | **Repository**        | choreo-sample-book-list-service  |
     | **Branch**            | main                             |
 
-6. Select the buildpack **NodeJS**.
+6. Select the **NodeJS** buildpack.
 7. Enter the following information.
 
-    | **Field**             | **Description**                               |
-    |-----------------------|-----------------------------------------------|    
-    | **NodeJS Project Directory**       | / |
-    | **Language Version**              | 20.x.x |
+    | **Field**                    | **Description**   |
+    |------------------------------|-------------------|    
+    | **NodeJS Project Directory** | /                 |
+    | **Language Version**         | 20.x.x            |
 
-8. Click **Create**. Once the component creation is complete, you will see the component overview page.
+8. Click **Create**.
 
 You have successfully created a Service component with the NodeJS buildpack. Now let's build and deploy the service.
 
@@ -110,26 +110,25 @@ Now that the source repository is connected and Choreo has set up the endpoints 
 
 To build the service, follow these steps:
 
-1. Select the component you created from the **Components Listing**.
-1. From the left navigation, go to the **Build** page and click **Build**.
-2. Click **Build Latest**.
-3. Check the deployment progress by observing the console logs on the right of the page.
+1. On the project home page, click the `Book List` component listed under **Component Listing**. This takes you to the component overview page.
+2. In the left navigation, click **Build**.
+3. Click **Build Latest**.
 
-    !!! note
-        Building the service component may take a while. You can track the progress via the **Build Logs** panel. Once the build process is complete, the build status changes to **Success**.
+   !!! note
+        Building the service component may take a while. You can track the progress via the logs in the **Build Details** pane. Once the build process is complete, the build status changes to **Success**.
 
 ### Step 3.2: Deploy
 
-Next, to deploy this service, follow these steps: 
+Now you are ready to deploy the service. Follow these steps: 
 
 1. In the left navigation menu, click **Deploy**.
 2. On the **Set Up** card, click **Configure &  Deploy**.
-3. Skip configuring the **Environment Configurations** and click **Next**.
-4. Skip adding a **File Mount**. Click **Next**.
+3. In the **Environment Configurations** pane, click **Next**.
+4. In the **File Mount** pane, click **Next**.
 5. Review the **Endpoint Details** and click **Deploy**.
 
     !!! note
-        Deploying the service component may take a while. You can track the progress by observing the logs. Once the deploying is complete, the build status changes to **Active** on the **Development** environment card.
+        Deploying the service component may take a while. You can track the progress by observing the logs. Once the deployment is complete, the build status changes to **Active** on the **Development** environment card.
 
 ## Step 4: Test the service
 
