@@ -34,7 +34,7 @@ configMapGenerator:
       - APIM_TOKEN_URL={{.APIM_TOKEN_URL}}
       - CHOREO_CLI_AUDIENCE={{.CHOREO_CLI_AUDIENCE}}
       - AUTHZ_SERVICE_ENDPOINT={{.AUTHZ_SERVICE_ENDPOINT}}
-      - ENABLE_INSTANCE_BASED_AUTHZ={{.ENABLE_INSTANCE_BASED_AUTHZ}}
+      - ENABLE_INSTANCE_BASED_AUTHZ={{.ENABLE_INSTANCE_BASED_AUTHZ | default false}}
   - name: env-app-service
     behavior: create
     literals:
@@ -791,6 +791,7 @@ configMapGenerator:
       - NEGOTIATOR_URL={{.NEGOTIATOR_URL}}
       - GCHAT_SPACE_ID={{.GCHAT_SPACE_ID}}
       - BALLERINA_CENTRAL_URL={{.BALLERINA_CENTRAL_URL}}
+      - ENABLE_INSTANCE_BASED_AUTHORIZATION={{.ENABLE_INSTANCE_BASED_AUTHORIZATION | default false}}
   - name: env-organization-management
     behavior: create
     literals:
