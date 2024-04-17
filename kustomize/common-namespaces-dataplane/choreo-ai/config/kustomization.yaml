@@ -38,6 +38,7 @@ configMapGenerator:
     behavior: create
     literals:
       - AZURE_OPENAI_ENDPOINT={{.AZURE_OPENAI_ENDPOINT}}
+      - CP_AZURE_OPENAI_ENDPOINT={{.CP_AZURE_OPENAI_ENDPOINT | default "https://eastus2.api.cognitive.microsoft.com/" }}
       - ZILLIZ_CLOUD_URI={{.ZILLIZ_CLOUD_URI}}
   - name: env-marketplace-assistant-cm
     behavior: create
