@@ -180,6 +180,7 @@ defaultRoles:
         - choreo:domain_view
         - choreo:url_mapping_manage
         - choreo:url_mapping_view
+        - choreo:project_view
         - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
         - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
         - {{.PERMISSION_GLOBAL_CONFIG_DELETE}}
@@ -249,6 +250,7 @@ defaultRoles:
         - environments:view_dev
         - environments:view_prod
         - choreo:log_view_non_prod
+        - choreo:project_view
         - {{.PERMISSION_DEVOPS_DEPLOYMENT_VIEW}}
     - name: Choreo DevOps
       handle: choreo-devops
@@ -268,6 +270,7 @@ defaultRoles:
         - apim:environment_manage
         - choreo:log_view_non_prod
         - choreo:log_view_prod
+        - choreo:project_view
         - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
         - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
         - {{.PERMISSION_GLOBAL_CONFIG_DELETE}}
@@ -296,6 +299,7 @@ defaultRoles:
         - choreo:log_view_non_prod
         - environments:view_dev
         - environments:view_prod
+        - choreo:project_view
         - {{.PERMISSION_DEVOPS_DEPLOYMENT_VIEW}}
         - {{.PERMISSION_COMPONENT_FILE_VIEW}}
         - {{.PERMISSION_COMPONENT_LOGS_VIEW}}
