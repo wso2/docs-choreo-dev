@@ -22,8 +22,7 @@ export namespace TestIds {
   export const projectName = '[data-cyid="project-name"]';
   export const projectDescription = '[data-cyid="project-description"]';
   export const multiRepository = '[data-testid="Multi-Repo-radio-card"]';
-  export const createProject =
-    '[data-cyid="create-new-project-button"]';
+  export const createProject = '[data-cyid="create-new-project-button"]';
   export const backToProjectList =
     '[data-cyid="sample-creation-dialog-closeBtn-button"]';
   export const projectPicker = '[data-testid="project-picker"]';
@@ -115,7 +114,8 @@ export namespace TestIds {
   export const build =
     '[data-cyid="build-split-button-split-group-button-button"]';
   export const tableTitle = '[data-cyid="table-title"]';
-  export const createComponent = '[data-cyid="create-multiple-components-split-toggle-button-button"]';
+  export const createComponent =
+    '[data-cyid="create-multiple-components-split-toggle-button-button"]';
   export const proxyBuildPack =
     '[data-cyid="component-template-httpProxyApi-card-action-area"]';
   export const oasUrlEntry = '[data-cyid="txt-oas-url"]';
@@ -352,6 +352,10 @@ export namespace TestIds {
     '[data-cyid="select-users-for-group-multi-select"]';
   export const addRoleToGroupPopup =
     '[data-cyid="add-roles-to-groupgroup-button"]';
+  export const removeRoleFromGroup =
+    '[data-cyid="delete-role-from-group-icon-button"]';
+  export const removeRoleFromGroupPopup =
+    '[data-cyid="dialog-groups-role-list-delete-button"]';
   export const addUserToGroupPopup = '[data-cyid="add-user-to-group-button"]';
   export const userSelect = '[id="select-user-list-popup"]';
 }

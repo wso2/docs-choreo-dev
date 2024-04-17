@@ -14,40 +14,47 @@
 import { console } from "../../../support/console/console";
 
 describe("Add roles and permissions", () => {
-  const groupName = "E2EtestGroup";
-  const roleName = "E2EtestRole";
+  const newGroup = "E2EtestGroup";
+  const newRole = "E2EtestRole";
+  const existingRole = "API Publisher";
+  const roleList = [newRole, existingRole];
   const groupDescription = "This Group is created by E2E test run.";
   const roleDescription = "This Role is created by E2E test run.";
   const roleTag = "testRoleTag";
 
   it("Login to Console", () => {
     console.login();
-    console.deleteGroupIfExists(groupName);
-    console.deleteRoleIfExists(roleName);
+    console.deleteGroupIfExists(newGroup);
+    console.deleteRoleIfExists(newRole);
   });
 
   it("Create a role", () => {
-    console.addRole(roleName, roleDescription, roleTag);
+    console.addRole(newRole, roleDescription, roleTag);
   });
 
   it("Create a group", () => {
-    console.addGroup(groupName, groupDescription);
+    console.addGroup(newGroup, groupDescription);
   });
 
   it("Add role to the group", () => {
-    console.addRoleToGroup(roleName, groupName);
+    console.addRolesToGroup(roleList, newGroup);
+  });
+
+  it("Remove role from the group", () => {
+    console.removeRolesFromGroup([existingRole], newGroup);
+    console.checkRolesInGroup([newRole], newGroup);
   });
 
   it("Add a member to the group", () => {
-    console.addCurrentUserToGroup(roleName);
+    console.addCurrentUserToGroup(newGroup);
   });
 
-  it("Check member has the new role", () => {
-    console.checkCurrentUserHasRole(roleName);
+  it("Check member is in group", () => {
+    console.checkCurrentUserIsInGroup(newGroup);
   });
 
   it("Delete created group and role", () => {
-    console.deleteGroup(groupName);
-    console.deleteRole(roleName);
+    console.deleteGroup(newGroup);
+    console.deleteRole(newRole);
   });
 });
