@@ -150,9 +150,9 @@ Before we begin, it's important to familiarize yourself with the key files in th
 
 |Filepath                 | Description                                                                              |
 |-------------------------|------------------------------------------------------------------------------------------|
-| service.bal             | Reading list service code written in the Ballerina language.                                 |
-| Ballerina.toml          | Ballerina configuration file.                                                             |
-| .choreo/endpoints.yaml  | Endpoint details configuration file.                                                    |
+| service.bal             | Reading list service code written in the Ballerina language.                             |
+| Ballerina.toml          | Ballerina configuration file.                                                            |
+| .choreo/endpoints.yaml  | Endpoint details configuration file.                                                     |
 
 ## Create a service component 
 
@@ -163,10 +163,10 @@ Let's create a Ballerina service component by following these steps:
 3. On the **Components** page, click on the **Service** card.
 4. Enter a unique name and a description of the service. For this guide, let's enter the following values:
 
-   | Field      | Value                      |
-   |------------|----------------------------|
-   | Name       | Ballerina Reading List     |
-   | Description| Manage a reading list      |
+    | Field      | Value                      |
+    |------------|----------------------------|
+    | Name       | Ballerina Reading List     |
+    | Description| Manage a reading list      |
 
 5. Go to the **GitHub** tab.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
