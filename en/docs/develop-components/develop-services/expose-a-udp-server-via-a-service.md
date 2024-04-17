@@ -131,8 +131,8 @@ Next, to deploy this service, follow these steps:
 4. Skip adding a **File Mount**. Click **Deploy**.
 5. Review the **Endpoint Details** and click **Deploy**.
 
-!!! note
-        Deploying the service component may take a while. You can track the progress by observing the logs. Once the deploying is complete, the build status changes to **Active** on the **Development** environment card.
+    !!! note
+         Deploying the service component may take a while. You can track the progress by observing the logs. Once the deploying is complete, the build status changes to **Active** on the **Development** environment card.
 
 6. Once you have successfully deployed your service, navigate to the component overview page and copy the UDP service address. You need to provide that address when setting up the client application later in this guide.
 
