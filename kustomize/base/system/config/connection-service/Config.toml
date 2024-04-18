@@ -9,6 +9,7 @@ keyManagerClientEndpoint = "{{.KEY_MANAGER_API_URL}}"
 apimHost = "{{.APIM_HOST_URL}}"
 projectManagerEndpoint = "http://dp-project-manager:80"
 endpointResolverEndpoint = "http://endpoint-resolver:9090"
+authzClientEndpoint = "{{.AUTHZ_CLIENT_ENDPOINT}}"
 choreoIdpId = "{{.CHOREO_IDP_ID}}"
 rudderClientEndpoint = "http://dp-rudder:80"
 apimClientId = "{{.APIM_REST_API_CONSUMER_KEY}}"
@@ -19,6 +20,7 @@ connectionListingFromDBEnabled = {{.CONNECTION_LISTING_ENABLED | default false}}
 connectionListingV2Enabled = {{.CONNECTION_LISTING_V2_ENABLED | default false}}
 dbUrl = "{{.CONNECTION_DB_URL}}"
 dbUser = "{{.CONNECTION_DB_USER}}"
+instanceBasedAuthzEnabled = {{.INSTANCE_BASED_AUTHZ_ENABLED | default false}}
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
