@@ -34,7 +34,7 @@ Follow the steps given below to create a project:
 2. On the organization home page, click **+ Create Project**.
 3. Enter a display name, unique name, and description for the project. You can enter the values given below:
     
-    !!! info
+    !!! tip
          In the **Name** field, you must specify a name to uniquely identify your project in various contexts. The value is editable only at the time you create the project. You cannot change the name after you create the project.
 
     | **Field**                | **Value**             |
@@ -92,7 +92,7 @@ To build the web application, follow the steps given below:
 1. In the left navigation menu, click **Build**.
 2. In the **Builds** pane, click **Build Latest**.
 
-   !!! note
+    !!! note
         Building the component may take a while. You can track the progress via the logs in the **Build Details** pane. Once the build process is complete, the build status changes to **Success**.
 
 Now you can proceed to deploy your web application.
