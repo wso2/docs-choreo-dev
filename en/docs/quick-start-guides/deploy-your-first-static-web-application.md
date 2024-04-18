@@ -28,47 +28,48 @@ Before you try out this guide, complete the following:
 
 ## Step 1: Create a project
 
-Follow the steps given below to create a multi-repository project:
-
-!!! info
-     A multi repository project allows you to maintain multiple repositories and assign one to each component or module within your project.
+Follow the steps given below to create a project:
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the organization home page.
 2. On the organization home page, click **+ Create Project**.
-3. Enter a unique name and description for the project. You can enter the name and description given below:
+3. Enter a display name, unique name, and description for the project. You can enter the values given below:
+    
+    !!! info
+         In the **Name** field, you must specify a name to uniquely identify your project in various contexts. The value is editable only at the time you create the project. You cannot change the name after you create the project.
 
-    | **Field**       | **Value**               |
-    |-----------------|-------------------------|
-    | **Name**        | `Sample project`        |
-    | **Description** | `My sample mmulti-repo project` |
+    | **Field**                | **Value**             |
+    |--------------------------|-----------------------|
+    | **Project Display Name** | `Sample project`      |
+    | **Name**                 | `sample-project`      |
+    | **Project Description**  | `My sample project`   |
 
-4. Select **Multi Repository**.
-5. Click **Create**.This creates the project and opens the project home page.
+4. Click **Create**. This creates the project and opens the project home page.
 
 ## Step 2: Create a Web Application component
 
-Follow the steps given below to create a Web Application component:
+To create a Web Application component, follow the steps given below:
 
-1. On the project home page, click **+ Create** if you already have one or more components in your project. Otherwise, proceed to the next step.
-2. Click the **Web Application** card. This opens the **Create a Web Application** pane.
-3. Specify a name and description for the component.
-4. If you have not already connected your GitHub repository to Choreo, click **Authorize with GitHub**, enter your GitHub credentials, and select the repository you created by forking [choreo-sample-todo-list-app
- repository](https://github.com/wso2/choreo-sample-todo-list-app) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps). 
+1. On the project home page, click **Web Application** under **Connect Your Code**.
+2. Enter a unique name and a description for the web application.
+3. Go to the **GitHub** tab.
+4. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
-    !!! info
-         The **Choreo GitHub App** requires the following permissions:
-         
-        - Read and write access to code and pull requests.
-        - Read access to issues and metadata.
+    Alternatively, you can paste the [choreo-sample-todo-list-app repository](https://github.com/wso2/choreo-sample-todo-list-app) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
+
+    !!! note
+           The **Choreo GitHub App** requires the following permissions:
+
+           - Read and write access to code and pull requests.
+           - Read access to issues and metadata.
              
-        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
+           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
 5. Enter the following information:
 
     | **Field**                    | **Value**                   |
     |------------------------------|-----------------------------|
-    | **GitHub Account**           | Your account                |
-    | **GitHub Repository**        | choreo-sample-todo-list-app |
+    | **Organization**             | Your GitHub account         |
+    | **Repository**               | choreo-sample-todo-list-app |
     | **Branch**                   | **`main`**                  |
 
 6. Select **NodeJS** as the **Buildpack**
@@ -89,13 +90,12 @@ Now let's build and deploy the web application.
 To build the web application, follow the steps given below:
 
 1. In the left navigation menu, click **Build**.
-2. In the **Builds** pane, click **Build**. This opens the **Commits** pane, where you can see all the commits related to the component.
-3. Click **Build Latest**. This triggers the build process and displays the progress in the **Build Logs** pane.
+2. In the **Builds** pane, click **Build Latest**.
 
-    !!! info
-         The build process can take a while to complete. When the build process is complete, the build will be listed in the **Builds** pane along with its status. 
+   !!! note
+        Building the component may take a while. You can track the progress via the logs in the **Build Details** pane. Once the build process is complete, the build status changes to **Success**.
 
-   Here, you will see the build status as **Success**.
+Now you can proceed to deploy your web application.
 
 ## Step 4: Deploy and access your web application
 
