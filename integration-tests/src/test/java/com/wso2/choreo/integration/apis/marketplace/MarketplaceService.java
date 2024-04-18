@@ -14,6 +14,7 @@
 package com.wso2.choreo.integration.apis.marketplace;
 
 import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
@@ -76,10 +77,12 @@ public class MarketplaceService {
                                         if (serviceArray.length > 0) {
                                             context.setVariable("isServiceFound", true);
                                             services.addAll(List.of(serviceArray));
+                                        }else{
+                                                throw new ValidationException("Too many successive calls with empty response");                                        
                                         }
+                                    }else{
+                                        throw new ValidationException("Too many successive calls with response code != 200");                                       
                                     }
-
-
                                 })
                 )
         );
