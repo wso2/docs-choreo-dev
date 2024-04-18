@@ -34,7 +34,7 @@ configMapGenerator:
       - APIM_TOKEN_URL={{.APIM_TOKEN_URL}}
       - CHOREO_CLI_AUDIENCE={{.CHOREO_CLI_AUDIENCE}}
       - AUTHZ_SERVICE_ENDPOINT={{.AUTHZ_SERVICE_ENDPOINT}}
-      - ENABLE_INSTANCE_BASED_AUTHZ={{.ENABLE_INSTANCE_BASED_AUTHZ}}
+      - ENABLE_INSTANCE_BASED_AUTHZ={{.ENABLE_INSTANCE_BASED_AUTHZ | default false}}
   - name: env-app-service
     behavior: create
     literals:
@@ -755,6 +755,9 @@ configMapGenerator:
       - APIM_CLIENT_ID={{.APIM_CLIENT_ID}}
       - MARKETPLACE_APIM_APP_CREATION_ENABLED={{.MARKETPLACE_APIM_APP_CREATION_ENABLED}}
       - NEW_PROJECT_HANDLER_FLOW_ENABLED={{.NEW_PROJECT_HANDLER_FLOW_ENABLED}}
+      - NEW_COMPONENT_HANDLER_FLOW_ENABLED={{.NEW_COMPONENT_HANDLER_FLOW_ENABLED | default "false"}}
+      - AUTHZ_SERVICE_GRPC_ENDPOINT={{.AUTHZ_SERVICE_GRPC_ENDPOINT}}
+      - AUTHZ_SERVICE_PROJECT_AUTHORIZATION_ENABLED={{.AUTHZ_SERVICE_PROJECT_AUTHORIZATION_ENABLED}}
   - name: env-alert-notification-service
     behavior: create
     literals:
@@ -775,6 +778,9 @@ configMapGenerator:
       - APIM_URL={{.APIM_URL}}
       - APIM_CLIENT_ID={{.APIM_CLIENT_ID}}
       - MIZZEN_SERVER_FQDN={{.MIZZEN_SERVER_FQDN}}
+      - SYSTEM_ORG_UUID={{.SYSTEM_ORG_UUID | default "dummySysOrgId"}}
+      - UPTIME_CHECKS_PDP_APP_ID={{.UPTIME_CHECKS_PDP_APP_ID | default "dummyPdpAppId"}}
+      - UPTIME_CHECKS_PDP_APP_CONSUMER_KEY={{.UPTIME_CHECKS_PDP_APP_CONSUMER_KEY | default "dummyPdpAppConsumerKey"}}
   - name: env-dp-delete-manager
     behavior: create
     literals:
@@ -786,6 +792,7 @@ configMapGenerator:
       - NEGOTIATOR_URL={{.NEGOTIATOR_URL}}
       - GCHAT_SPACE_ID={{.GCHAT_SPACE_ID}}
       - BALLERINA_CENTRAL_URL={{.BALLERINA_CENTRAL_URL}}
+      - ENABLE_INSTANCE_BASED_AUTHORIZATION={{.ENABLE_INSTANCE_BASED_AUTHORIZATION | default false}}
   - name: env-organization-management
     behavior: create
     literals:

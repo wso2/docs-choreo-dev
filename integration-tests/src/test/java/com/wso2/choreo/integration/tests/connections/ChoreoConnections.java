@@ -75,7 +75,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     private static final String CLIENT_COMPONENT_NAME = "";
 
     private static final String NETWORK_VISIBILITY_FILTER = "org,public";
-    private static final String CLIENT_COMPONENT_REPO_URL = "https://github.com/choreo-test-apps/connection-test-reward-management-api";
+    private static final String CLIENT_COMPONENT_REPO_URL = "https://github.com/choreo-test-apps/connections-test";
     private static final String CLIENT_COMPONENT_DOCKER_FILE_PATH = "Dockerfile";
 
     private HttpClient appServiceClient;
@@ -95,7 +95,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     private ConnectionCreateRequest connectionCreationReq;
     private ComponentDeploymentStatusDTO serviceDeploymentStatusDTO, servicePromotionStatusDTO;
     private ComponentDeploymentStatusDTO clientDeploymentStatusDTO, clientPromotionStatusDTO;
-    private final String repoName = "connection-test-reward-management-api";
+    private final String repoName = "connections-test";
     private String API_INVOCATION_REQUEST_URI;
     private String API_INVOCATION_REQUEST_BODY;
     private String REST_API_EXPECTED_RESPONSE;
