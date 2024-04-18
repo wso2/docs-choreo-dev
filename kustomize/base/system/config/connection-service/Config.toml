@@ -16,6 +16,7 @@ choreoStsUrl = "{{.CHOREO_STS_URL}}"
 intRoutingEnabled = {{.INT_ROUTING_FEATURE_ENABLED | default false}}
 connectionDatabaseEnabled = {{.CONNECTION_DB_ENABLED | default false}}
 connectionListingFromDBEnabled = {{.CONNECTION_LISTING_ENABLED | default false}}
+connectionListingV2Enabled = {{.CONNECTION_LISTING_V2_ENABLED | default false}}
 dbUrl = "{{.CONNECTION_DB_URL}}"
 dbUser = "{{.CONNECTION_DB_USER}}"
 
