@@ -358,6 +358,8 @@ public class GraphQL extends ControlPlaneAPI {
                                             context.setVariable("isCommitHistoryRetrieved",
                                                     true);
                                         }
+                                    }else{                               
+                                        throw new ValidationException("Too many successive calls with response code != 200");                                   
                                     }
                                 })
                 )
