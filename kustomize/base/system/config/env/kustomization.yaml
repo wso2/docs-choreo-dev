@@ -918,7 +918,6 @@ configMapGenerator:
     behavior: create
     literals:
       - DB_URL="{{.DB_URL}}"
-      - MANAGE_ROLES_GROUP_SCOPE={{.MANAGE_ROLES_GROUP_SCOPE}}
   - name: env-log-controller
     behavior: create
     literals:
