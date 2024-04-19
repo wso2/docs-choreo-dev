@@ -5,21 +5,21 @@ branch of the [choreo-control-plane](https://github.com/wso2-enterprise/choreo-c
 environment overlay changes are in the [choreo-cp-env-overlay](https://github.com/wso2-enterprise/choreo-cp-env-overlay)
 repo.
 
-# Workflows
+## Workflows
 
-## Releasing a component
+### Releasing a component
 
 Releasing a component is automated. Once a developer merges his changes to the relevant component repository, they will
 be available in the dev environment. After tests are passed in dev, it will be moved to stage and similarly to prod. The
 developer does not need to involve with this process.
 
-## Adding environments overlay configurations
+### Adding environments overlay configurations
 
 To update the environment overlays configuration for any component, clone the choreo-cp-env-overlay repository,
 update/add configurations in the relevant branch and send a PR. These changes will be reflected in the deployment as
 soon as the PR is merged.
 
-## Adding common configurations
+### Adding common configurations
 
 Common configurations should be added to the main branch of the *chore-control-plane* repository. However, if these
 configurations need to be patched for specific environments or require additional environment-specific configurations,

@@ -1,4 +1,4 @@
-### Choreo MongoDB Atlas Cluster Setup
+# Choreo MongoDB Atlas Cluster Setup
 
 #### Description
 
