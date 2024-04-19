@@ -439,6 +439,8 @@ CREATE TABLE [dbo].[group_member_mapping](
     [user_id] [int] NOT NULL,
     [created_at] [datetime] NOT NULL,
     [updated_at] [datetime] NOT NULL,
+    CONSTRAINT group_member_mapping_group_id_fk FOREIGN KEY (group_id) REFERENCES [group](id) ON DELETE CASCADE,
+    CONSTRAINT group_member_mapping_user_id_fk FOREIGN KEY (user_id) REFERENCES [user](id) ON DELETE CASCADE,
     CONSTRAINT [PK_group_member_mapping_id] PRIMARY KEY CLUSTERED
 (
 [id] ASC
