@@ -13,9 +13,9 @@ configMapGenerator:
   - name: env-spec-populator-cm
     behavior: create
     literals:
-      - AZURE_DEPLOYMENT={{.AZURE_DEPLOYMENT}}
-      - AZURE_ENDPOINT={{.AZURE_ENDPOINT}}
-      - COLLECTION_NAME={{.COLLECTION_NAME}}
-      - CREATE_COLLECTION={{.CREATE_COLLECTION}}
-      - MILVERSE_URL={{.MILVERSE_URL}}
-      - SOURCE_PLATFORM={{.SOURCE_PLATFORM}}
+      - AZURE_DEPLOYMENT={{.AZURE_DEPLOYMENT | default ""}}
+      - AZURE_ENDPOINT={{.AZURE_ENDPOINT | default ""}}
+      - COLLECTION_NAME={{.COLLECTION_NAME | default ""}}
+      - CREATE_COLLECTION={{.CREATE_COLLECTION | default ""}}
+      - MILVERSE_URL={{.MILVERSE_URL | default ""}}
+      - SOURCE_PLATFORM={{.SOURCE_PLATFORM | default ""}}

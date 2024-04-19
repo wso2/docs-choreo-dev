@@ -19,5 +19,6 @@ kind: Kustomization
 
 resources:
   - config
+  - namespace.yaml
 
 namespace: choreo-ai
