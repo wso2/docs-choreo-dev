@@ -56,6 +56,7 @@ export namespace TestIds {
   export const availableEndpoints = '[data-testid="Endpoints-env-artifact"]';
   export const apiConfiguration =
     '[data-testid="API Configuration-env-artifact"]';
+  export const attachPolicy = '[data-cyid="attach-policy-button-button"]';
   export const viewArtifact = '[data-cyid="btn-view-artifact-icon-button"]';
   export const endpointCard = '[data-cyid="endponint-selector-card-card"]';
   export const manageSecurity = '[data-cyid="manage-security"]';
@@ -125,8 +126,8 @@ export namespace TestIds {
   export const apiVersion = '[data-cyid="api-version"]';
   export const apiBasePath = '[data-cyid="api-basepath"]';
   export const apiEndpoint = '[data-cyid="api-endpoint"]';
-  export const internalAccessMode = '[data-testid="internal-radio-card"]';
-  export const externalAccessMode = '[data-testid="external-radio-card"]';
+  export const internalAccessMode = '[data-testid="internal"]';
+  export const externalAccessMode = '[data-testid="external"]';
   export const createButton = '[data-cyid="btn-create-button"]';
   export const createTime = '[data-cyid="create-time"]';
   export const skipSource = '[data-cyid="btn-skip-src-button"]';
