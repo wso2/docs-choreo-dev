@@ -25,4 +25,4 @@ spec:
     matchLabels:
       global.adapter: private
   ingress:
-    - { }
+    - {}

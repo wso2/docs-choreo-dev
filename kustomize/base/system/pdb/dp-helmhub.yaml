@@ -2,7 +2,6 @@ apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: dp-helmhub
-  namespace: choreo-system
 spec:
   minAvailable: "50%"
   selector:

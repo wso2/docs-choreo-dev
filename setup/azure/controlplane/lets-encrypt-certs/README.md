@@ -1,9 +1,11 @@
 ## Configuring Lets Encrypt certificates
 
 ### Description
+
 Create the secrets required for Lets Encrypt DNS-01 challenge in Choreo controlplane
 
 ### Usage
+
 1) Initially ssh into relevant bastion and set the cluster context to Controlplane cluster
 
 2) Export following environmental variables

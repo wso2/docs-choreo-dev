@@ -159,11 +159,11 @@ spec:
               mountPath: /redis
       volumes:
         - name: redis-subscribe-folder
-          emptyDir: { }
+          emptyDir: {}
         - name: openresty-logs-folder
-          emptyDir: { }
+          emptyDir: {}
         - name: openresty-run-path
-          emptyDir: { }
+          emptyDir: {}
         - name: nginx-ca-cert
           configMap:
             name: nginx-ca-cert

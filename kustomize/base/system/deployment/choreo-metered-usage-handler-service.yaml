@@ -13,7 +13,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: metered-usage-handler-service
-  strategy: { }
+  strategy: {}
   template:
     metadata:
       labels:

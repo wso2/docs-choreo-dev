@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: cp-rrs
-  strategy: { }
+  strategy: {}
   template:
     metadata:
       labels:

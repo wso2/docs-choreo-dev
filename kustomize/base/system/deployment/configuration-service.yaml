@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: configuration-service
-  strategy: { }
+  strategy: {}
   template:
     metadata:
       labels:
@@ -98,5 +98,5 @@ spec:
                   - key: antiaffinity
                     operator: In
                     values:
-                     - configuration-service
+                      - configuration-service
               topologyKey: kubernetes.io/hostname

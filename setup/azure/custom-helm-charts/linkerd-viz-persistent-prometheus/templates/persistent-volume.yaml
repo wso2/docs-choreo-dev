@@ -6,7 +6,7 @@ spec:
   capacity:
     storage: {{.Values.persistentVolume.storage}}
   accessModes:
-  - ReadWriteMany
+    - ReadWriteMany
   persistentVolumeReclaimPolicy: {{.Values.persistentVolume.persistentVolumeReclaimPolicy}}
   storageClassName: {{.Values.persistentVolume.storageClassName}}
   volumeMode: Filesystem
@@ -16,10 +16,9 @@ spec:
     shareName: {{.Values.persistentVolume.shareName}}
     readOnly: false
   mountOptions:
-  - dir_mode=0766
-  - file_mode=0766
-  - uid={{.Values.persistentVolume.groupID}}
-  - gid={{.Values.persistentVolume.userID}}
-  - mfsymlinks
-  - nobrl
-
+    - dir_mode=0766
+    - file_mode=0766
+    - uid={{.Values.persistentVolume.groupID}}
+    - gid={{.Values.persistentVolume.userID}}
+    - mfsymlinks
+    - nobrl

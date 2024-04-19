@@ -21,8 +21,8 @@ metadata:
   name: dp-kv-resolver
 spec:
   ports:
-  - port: 80
-    targetPort: api-port
-    protocol: TCP
+    - port: 80
+      targetPort: api-port
+      protocol: TCP
   selector:
     choreo.component: dp-kv-resolver

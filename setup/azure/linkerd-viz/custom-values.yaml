@@ -1,6 +1,4 @@
-
 # Custom Prometheus URL (Only Accessible Locally)
-prometheusUrl: "http://prometheus.linkerd-viz.svc.cluster.local:9090" 
+prometheusUrl: "http://prometheus.linkerd-viz.svc.cluster.local:9090"
 prometheus:
-  enabled: false 
-
+  enabled: false
