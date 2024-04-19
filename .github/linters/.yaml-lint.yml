@@ -2,7 +2,7 @@ extends: default
 
 ignore:
   # ignoring since the directory contains helm manifests
-  - databases/templates/
+  - /tmp/lint/databases/templates/
 
 rules:
   # 80 chars should be enough, but don't fail if a line is longer
