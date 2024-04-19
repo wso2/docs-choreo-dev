@@ -36,19 +36,10 @@ spec:
           ports:
             - containerPort: 9093
               name: health-port
-          readinessProbe:
-            initialDelaySeconds: 60
-            timeoutSeconds: 15
-            periodSeconds: 10
-            failureThreshold: 3
-            successThreshold: 1
-            httpGet:
-              port: health-port
-              path: /readiness
           livenessProbe:
-            initialDelaySeconds: 30
-            timeoutSeconds: 15
-            periodSeconds: 30
+            initialDelaySeconds: 5
+            timeoutSeconds: 30
+            periodSeconds: 60
             failureThreshold: 3
             successThreshold: 1
             httpGet:
