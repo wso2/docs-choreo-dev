@@ -5,3 +5,7 @@ rules:
   line-length:
     max: 80
     level: warning
+
+  braces:
+    ignore:
+      - databases/templates
