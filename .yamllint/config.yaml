@@ -1,11 +1,11 @@
 extends: default
 
+ignore:
+  # ignoring since the directory contains helm manifests
+  - databases/templates/
+
 rules:
   # 80 chars should be enough, but don't fail if a line is longer
   line-length:
     max: 80
     level: warning
-
-  braces:
-    ignore:
-      - databases/templates
