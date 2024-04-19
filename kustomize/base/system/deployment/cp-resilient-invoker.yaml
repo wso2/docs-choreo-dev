@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: cp-resilient-invoker
-  strategy: { }
+  strategy: {}
   template:
     metadata:
       labels:

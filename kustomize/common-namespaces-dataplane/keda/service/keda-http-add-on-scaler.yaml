@@ -8,11 +8,11 @@ spec:
   selector:
     app.kubernetes.io/instance: external-scaler
   ports:
-  - name: grpc
-    protocol: TCP
-    port: 9090
-    targetPort: grpc
-  - name: health
-    protocol: TCP
-    port: 9091
-    targetPort: health
+    - name: grpc
+      protocol: TCP
+      port: 9090
+      targetPort: grpc
+    - name: health
+      protocol: TCP
+      port: 9091
+      targetPort: health

@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: telemetry-go
-  strategy: { }
+  strategy: {}
   template:
     metadata:
       labels:

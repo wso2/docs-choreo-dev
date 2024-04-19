@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: choreo-apim-proxy-deployer
-  strategy: { }
+  strategy: {}
   template:
     metadata:
       labels:

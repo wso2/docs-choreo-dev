@@ -82,5 +82,5 @@ spec:
                   - key: antiaffinity
                     operator: In
                     values:
-                     - declarative-api
+                      - declarative-api
               topologyKey: kubernetes.io/hostname

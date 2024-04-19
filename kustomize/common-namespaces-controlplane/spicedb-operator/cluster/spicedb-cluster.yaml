@@ -6,7 +6,7 @@ metadata:
 spec:
   config:
     datastoreEngine: postgres
-    replicas:  1
+    replicas: 1
     image: ghcr.io/authzed/spicedb:v1.25.0
     skipMigrations: true
   secretName: secret-spicedb-preshared-key

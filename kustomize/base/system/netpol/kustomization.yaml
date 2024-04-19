@@ -1,5 +1,3 @@
 resources:
   - namespace.yaml
   - dp-mizzen-ws.yaml
-  # - telemetry.yaml
-  # - negotiator.yaml

@@ -95,7 +95,7 @@ spec:
             capabilities:
               drop:
                 - all
-              add: [ "NET_RAW" ]
+              add: ["NET_RAW"]
           envFrom:
             - configMapRef:
                 name: cm-feature-flags
@@ -136,19 +136,19 @@ spec:
             - containerPort: 18001
           livenessProbe:
             exec:
-              command: [ "sh", "check_health.sh" ]
+              command: ["sh", "check_health.sh"]
             initialDelaySeconds: 10
             periodSeconds: 30
             timeoutSeconds: 5
           readinessProbe:
             exec:
-              command: [ "sh", "check_health.sh" ]
+              command: ["sh", "check_health.sh"]
             initialDelaySeconds: 8
             periodSeconds: 5
             timeoutSeconds: 5
           startupProbe:
             exec:
-              command: [ "sh", "check_health.sh" ]
+              command: ["sh", "check_health.sh"]
             periodSeconds: 5
             failureThreshold: 120
             timeoutSeconds: 5

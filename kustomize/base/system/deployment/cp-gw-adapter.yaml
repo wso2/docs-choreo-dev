@@ -45,7 +45,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: INTROSPECTION_ADMIN_PASSWORD
-                  name: secret-choreo-apim-proxy-deployer   
+                  name: secret-choreo-apim-proxy-deployer
           envFrom:
             - secretRef:
                 name: secret-cp-gw-adapter
@@ -91,7 +91,7 @@ spec:
               readOnly: true
             - name: secret-choreo-apim-proxy-deployer
               mountPath: "/mnt/csi/secret-choreo-apim-proxy-deployer"
-              readOnly: true  
+              readOnly: true
       volumes:
         - name: config
           configMap:
@@ -111,7 +111,7 @@ spec:
             volumeAttributes:
               secretProviderClass: secret-choreo-apim-proxy-deployer
             nodePublishSecretRef:
-              name: csi-secret-store-azure      
+              name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
       affinity:

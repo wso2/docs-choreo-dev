@@ -35,58 +35,58 @@ spec:
       nodeSelector:
         beta.kubernetes.io/os: linux
       securityContext:
-        fsGroup:  {{.Values.persistentVolume.groupID}}
+        fsGroup: {{.Values.persistentVolume.groupID}}
       containers:
-      - args:
-        - --log.level=info
-        - --config.file=/etc/prometheus/prometheus.yml
-        - --storage.tsdb.path=/data
-        - --storage.tsdb.retention.time={{.Values.prometheus.retentionPeriod}}
-        image: prom/prometheus:v2.19.3
-        imagePullPolicy: {{.Values.prometheus.imagePullPolicy}}
-        livenessProbe:
-          httpGet:
-            path: /-/healthy
-            port: 9090
-          initialDelaySeconds: 30
-          timeoutSeconds: 30
-        name: prometheus
-        ports:
-        - containerPort: 9090
-          name: admin-http
-        readinessProbe:
-          httpGet:
-            path: /-/ready
-            port: 9090
-          initialDelaySeconds: 30
-          timeoutSeconds: 30
-        resources:
-          requests:
-            memory: "4Gi"
-            cpu: "500m"
-          limits:
-            memory: "4Gi"
-            cpu: "500m"
-        securityContext:
-          allowPrivilegeEscalation: false
-          runAsNonRoot: true
-          runAsUser: {{.Values.persistentVolume.userID}}
-          runAsGroup: {{.Values.persistentVolume.groupID}}
-          capabilities:
-            drop:
-              - ALL
-        volumeMounts:
-        - mountPath: /data
-          name: data
-        - mountPath: /etc/prometheus/prometheus.yml
-          name: prometheus-config
-          subPath: prometheus.yml
-          readOnly: true
+        - args:
+            - --log.level=info
+            - --config.file=/etc/prometheus/prometheus.yml
+            - --storage.tsdb.path=/data
+            - --storage.tsdb.retention.time={{.Values.prometheus.retentionPeriod}}
+          image: prom/prometheus:v2.19.3
+          imagePullPolicy: {{.Values.prometheus.imagePullPolicy}}
+          livenessProbe:
+            httpGet:
+              path: /-/healthy
+              port: 9090
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+          name: prometheus
+          ports:
+            - containerPort: 9090
+              name: admin-http
+          readinessProbe:
+            httpGet:
+              path: /-/ready
+              port: 9090
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+          resources:
+            requests:
+              memory: "4Gi"
+              cpu: "500m"
+            limits:
+              memory: "4Gi"
+              cpu: "500m"
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: {{.Values.persistentVolume.userID}}
+            runAsGroup: {{.Values.persistentVolume.groupID}}
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - mountPath: /data
+              name: data
+            - mountPath: /etc/prometheus/prometheus.yml
+              name: prometheus-config
+              subPath: prometheus.yml
+              readOnly: true
       serviceAccountName: prometheus
       volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: pvc-prometheus-storage
-      - configMap:
+        - name: data
+          persistentVolumeClaim:
+            claimName: pvc-prometheus-storage
+        - configMap:
+            name: prometheus-config
           name: prometheus-config
-        name: prometheus-config

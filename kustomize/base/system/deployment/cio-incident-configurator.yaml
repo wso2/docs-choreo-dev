@@ -43,7 +43,7 @@ spec:
             - configMapRef:
                 name: common-env-variables
             - secretRef:
-                 name: secret-cio-incident-configurator
+                name: secret-cio-incident-configurator
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true

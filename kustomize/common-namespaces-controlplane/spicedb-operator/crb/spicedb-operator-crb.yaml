@@ -7,6 +7,6 @@ roleRef:
   kind: ClusterRole
   name: spicedb-operator
 subjects:
-- kind: ServiceAccount
-  name: spicedb-operator
-  namespace: spicedb-operator
+  - kind: ServiceAccount
+    name: spicedb-operator
+    namespace: spicedb-operator

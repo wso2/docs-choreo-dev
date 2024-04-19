@@ -2,18 +2,18 @@ helmCharts:
   - name: actions-runner-controller
     includeCRDs: true
     valuesInline:
-#      additionalVolumes:
-#       - name: controller-manager-secret
-#         csi:
-#           driver: secrets-store.csi.k8s.io
-#           readOnly: true
-#           volumeAttributes:
-#             secretProviderClass: controller-manager-secret
-#           nodePublishSecretRef:
-#             name: csi-secret-store-azure
-#      additionalVolumeMounts:
-#       - name: controller-manager-secret
-#         mountPath: /mnt/csi/secrets/controller-manager-secret
+      #      additionalVolumes:
+      #       - name: controller-manager-secret
+      #         csi:
+      #           driver: secrets-store.csi.k8s.io
+      #           readOnly: true
+      #           volumeAttributes:
+      #             secretProviderClass: controller-manager-secret
+      #           nodePublishSecretRef:
+      #             name: csi-secret-store-azure
+      #      additionalVolumeMounts:
+      #       - name: controller-manager-secret
+      #         mountPath: /mnt/csi/secrets/controller-manager-secret
       authSecret:
         name: controller-manager
         create: false

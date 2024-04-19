@@ -5,8 +5,8 @@ metadata:
   namespace: dev-choreo-system-nginx-ingress
 spec:
   policyTypes:
-  - Ingress
-  - Egress
+    - Ingress
+    - Egress
   podSelector: {}
   ingress: []
   egress: []
@@ -23,17 +23,17 @@ spec:
       app.kubernetes.io/instance: dev-choreo-system
       app.kubernetes.io/name: ingress-nginx
   policyTypes:
-  - Ingress
-  - Egress
+    - Ingress
+    - Egress
   ingress:
-  - ports:
-    - port: 80
-      protocol: TCP
-    - port: 443
-      protocol: TCP
+    - ports:
+        - port: 80
+          protocol: TCP
+        - port: 443
+          protocol: TCP
   egress:
-  - to:
-    - ipBlock:
-        cidr: 0.0.0.0/0
-        except:
-        - 169.254.169.254/32
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 169.254.169.254/32
