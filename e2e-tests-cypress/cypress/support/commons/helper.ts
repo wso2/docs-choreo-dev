@@ -11,29 +11,11 @@
  * associated services.
  */
 
-/// <reference types="cypress" />
-
-/**
- * Extends Cypress Chainable interface to include custom commands.
- */
-
-interface RenderingOptions {
-  waitTime: number;
-  timeout: number;
-}
-
-declare namespace Cypress {
-  interface Chainable {
-    getUnstable(
-      selector: string,
-      options?: RenderingOptions
-    ): Chainable<Element>;
-
-    getTableData(
-      selector: string,
-      rowIndex: number,
-      dataIndex: number,
-      log?: boolean
-    ): Chainable<Element>;
+export module Helper {
+  export function isElementExists(
+    parentElement: JQuery<HTMLElement>,
+    childSelector: string
+  ): boolean {
+    return parentElement.find(childSelector).length > 0;
   }
 }
