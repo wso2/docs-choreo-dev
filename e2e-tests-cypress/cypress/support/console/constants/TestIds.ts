@@ -47,7 +47,7 @@ export namespace TestIds {
     '[data-cyid="delete-confirmation-dialog-content"]';
   export const confirmName = '[data-cyid="confirm-name"]';
   export const next = '[data-cyid="btn-next-button"]';
-  export const deploy = '[data-cyid="deploy-button"]';
+  export const deploy = '[data-cyid="access-mode-wizard-deploy-button"]';
   export const buildCard = '[data-cyid="default-build-card"]';
   export const devEnvCard = '[data-cyid="env-baseDevelopment-env-card"]';
   export const prodEnvCard = '[data-cyid="env-baseProduction-env-card"]';
