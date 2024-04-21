@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: docs-assistant
+  name: docs-assistant
+  namespace: choreo-ai
+spec:
+  ports:
+    - name: docsassist-port
+      port: 5000
+      protocol: TCP
+      targetPort: docsassist-port
+  selector:
+    choreo.component: docs-assistant
