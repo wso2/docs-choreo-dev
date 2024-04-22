@@ -24,8 +24,8 @@ describe("Add roles and permissions", () => {
 
   it("Login to Console", () => {
     console.login();
-    console.deleteGroupIfExists(newGroup);
     console.deleteRoleIfExists(newRole);
+    console.deleteGroupIfExists(newGroup);
   });
 
   it("Create a role", () => {
@@ -54,7 +54,7 @@ describe("Add roles and permissions", () => {
   });
 
   it("Delete created group and role", () => {
-    console.deleteGroup(newGroup);
     console.deleteRole(newRole);
+    console.deleteGroup(newGroup);
   });
 });

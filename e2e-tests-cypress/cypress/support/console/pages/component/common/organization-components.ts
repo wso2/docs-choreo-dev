@@ -57,11 +57,11 @@ export class OrganizationComponent {
         .type(email)
         .type("{enter}");
     });
-    cy.get('[data-cyid="select-roles"]').click();
+    cy.get('[data-cyid="select-groups-multi-select"]').click();
     this.addRoles(roles);
     cy.get("body").type("{esc}");
-    cy.get('[data-cyid="btn-invite-button"]').click({ force: true });
-    cy.get('[data-cyid="btn-invite-button"]').should("not.exist");
+    cy.get('[data-cyid="invite-user-dialog-button"]').click({ force: true });
+    cy.get('[data-cyid="invite-user-dialog-button"]').should("not.exist");
     cy.log("Invitation sent successfully");
   }
 
@@ -134,11 +134,12 @@ export class OrganizationComponent {
 
   private static addRoles(roles: string[]) {
     roles.forEach((v) => {
-      Utils.getRenderedElement("ul>li>div>span").each((e) => {
-        if (e.text() === v) {
-          cy.wrap(e).scrollIntoView().click();
-        }
-      });
+      Utils.getRenderedElement('[id="group-select-list-popup"]')
+        .contains(v)
+        .parents("li")
+        .find("input")
+        .scrollIntoView()
+        .click();
     });
   }
 
