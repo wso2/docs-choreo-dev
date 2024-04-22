@@ -4,7 +4,6 @@ metadata:
   labels:
     choreo.component: docs-assistant
   name: docs-assistant
-  namespace: choreo-ai
 spec:
   maxReplicas: 8
   minReplicas: 2
