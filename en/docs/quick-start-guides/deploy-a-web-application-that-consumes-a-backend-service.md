@@ -156,8 +156,8 @@ To host the front-end application in Choreo, you will create a web application c
 
 To create a web application component, follow the steps given below:
 
-1. In the Choreo console header, go to the component list and close the `Reading List Service` component. This takes you to the home page of the mono repository project you created in [Step 1](#step-1-create-a-mono-repository-project).
-2. On the project home page, click **+ Create** under **Component Listing**.
+1. In the Choreo Console header, click the **Project** list to open the project home page.
+2. On the project home page, click **+ Create** under **Component Listing**. 
 3. Click the **Web Application** card.
 4. To create the web application, specify the following values for each of the fields:
 
@@ -173,7 +173,7 @@ To create a web application component, follow the steps given below:
 
 5. Click **Create**. This initializes the component with the implementation from your GitHub repository and takes you to the **Overview** page of the component. 
 
-### Step 6.2: Create a connection to the deployed service
+### Step 6.2: Create a connection between the web application and the deployed service
 
 A connection allows you to integrate the service you intend to deploy on Choreo with other services on Choreo or external resources. For more information on Choreo Connections refer to the [Connection](../choreo-concepts/connections.md) documentation.
 
