@@ -1,2 +1,3 @@
 resources:
   - testgpt.yaml
+  - copilot.yaml
