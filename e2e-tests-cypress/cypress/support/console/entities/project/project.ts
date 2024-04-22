@@ -602,6 +602,7 @@ export class Project {
     cy.get("body").then((body) => {
       if (body.find(TestIds.createComponent).length > 0) {
         cy.get(TestIds.createComponent).click();
+        cy.contains("Create").should("be.visible").click();
         cy.get(TestIds.backdropLoader).should("not.exist");
       }
     });

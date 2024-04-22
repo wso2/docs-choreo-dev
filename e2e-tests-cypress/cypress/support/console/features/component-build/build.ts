@@ -76,7 +76,9 @@ export function mixinBuild<T extends Types.Constructor>(
     ) {
       this.deploymentTrack.validate(component);
 
-      cy.get(TestIds.tableTitle).find(TestIds.progressBar).should("not.exist");
+      cy.get(TestIds.tableTitle)
+        .find(TestIds.progressBar, SHORT_TIME)
+        .should("not.exist");
 
       cy.get(TestIds.tableTitle).then((buildTable) => {
         if (!Helper.isElementExists(buildTable, TestIds.noDataAvailable)) {
