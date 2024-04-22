@@ -24,7 +24,7 @@ spec:
       securityContext:
         seccompProfile:
           type: RuntimeDefault
-      containers: 
+      containers:
         - image: choreocontrolplane.azurecr.io/choreoipaas/docs-assistant:latest
           imagePullPolicy: Always
           securityContext:
@@ -80,7 +80,7 @@ spec:
               readOnly: true
       volumes:
         - name: tmp-volume
-          emptyDir: { }
+          emptyDir: {}
         - name: secret-docs-assistant
           csi:
             driver: secrets-store.csi.k8s.io
