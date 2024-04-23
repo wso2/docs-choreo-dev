@@ -25,7 +25,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - image: choreocontrolplane.azurecr.io/choreoipaas/ai-copilot:latest
+        - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-ai-copilot:latest
           imagePullPolicy: Always
           securityContext:
             allowPrivilegeEscalation: false
