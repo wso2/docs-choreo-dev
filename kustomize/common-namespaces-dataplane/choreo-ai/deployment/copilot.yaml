@@ -38,7 +38,7 @@ spec:
           name: ai-copilot
           envFrom:
             - configMapRef:
-                name: env-ai-copilot
+                name: env-ai-copilot-cm
             - secretRef:
                 name: secret-ai-copilot
           readinessProbe:
