@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    seccomp.security.alpha.kubernetes.io/pod: "docker/default"
+    checkov.io/skip1: "CKV_K8S_AZURE_WSO2_2=Linkerd is disable for dataplane"
+  labels:
+    choreo.component: ai-copilot
+  name: ai-copilot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: ai-copilot
+  template:
+    metadata:
+      labels:
+        choreo.component: ai-copilot
+        antiaffinity: ai-copilot
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - image: choreocontrolplane.azurecr.io/choreoipaas/ai-copilot:latest
+          imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsUser: 10500
+            runAsGroup: 10500
+            capabilities:
+              drop:
+                - all
+          name: ai-copilot
+          envFrom:
+            - configMapRef:
+                name: env-ai-copilot
+            - secretRef:
+                name: secret-ai-copilot
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: ai-copilot-port
+              path: /health
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 30
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: ai-copilot-port
+              path: /health
+          ports:
+            - containerPort: 5000
+              name: ai-copilot-port
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1000Mi
+            requests:
+              cpu: 250m
+              memory: 500Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - name: tmp-volume
+              mountPath: /tmp
+            - name: secret-ai-copilot
+              mountPath: /mnt/csi/secret-ai-copilot
+              readOnly: true
+      volumes:
+        - name: tmp-volume
+          emptyDir: {}
+        - name: secret-ai-copilot
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-ai-copilot
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      restartPolicy: Always
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  antiaffinity: ai-copilot
+              topologyKey: kubernetes.io/hostname
