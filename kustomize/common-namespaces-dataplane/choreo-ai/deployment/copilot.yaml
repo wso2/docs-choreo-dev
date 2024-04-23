@@ -60,7 +60,7 @@ spec:
               port: ai-copilot-port
               path: /health
           ports:
-            - containerPort: 5000
+            - containerPort: 9090
               name: ai-copilot-port
               protocol: TCP
           resources:
