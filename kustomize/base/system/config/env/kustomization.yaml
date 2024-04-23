@@ -837,8 +837,10 @@ configMapGenerator:
       - ENABLE_EVENT_PUBLISH={{.ENABLE_EVENT_PUBLISH}}
       - WEBSUB_HUB_URL={{.WEBSUB_HUB_URL}}
       - WEBSUB_HUB_TOPIC={{.WEBSUB_HUB_TOPIC}}
+      - APP_SERVICE_URL={{.APP_SERVICE_URL | default "http://app-service:8080"}}
       - ENABLE_FORCE_BUILD_FEATURE={{.ENABLE_FORCE_BUILD_FEATURE | default "false"}}
       - FORCE_BUILD_FEATURE_ENABLED_ORGS={{.FORCE_BUILD_FEATURE_ENABLED_ORGS | default "f34fc011-38a6-4663-9fa1-9a243006c538"}}
+      - ENABLE_SKIP_DEPLOY_FEATURE={{.ENABLE_SKIP_DEPLOY_FEATURE | default "false"}}
       - PM_RUDDER_ID_SYNC={{.PM_RUDDER_ID_SYNC | default "false"}}
   - name: env-admin-api
     behavior: create
