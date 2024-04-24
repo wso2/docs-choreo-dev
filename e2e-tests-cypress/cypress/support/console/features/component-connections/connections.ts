@@ -12,13 +12,19 @@
  */
 
 import { Types } from "../../../commons/types";
+import { VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { TestIds } from "../../constants/TestIds";
 import { Service } from "../../entities/component/service-component";
 import { WebApp } from "../../entities/component/webapp-component";
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
 
+
+const managedAuthBackendServiceName = Cypress.env("managedAuthBackendServiceName");
+const connectionSearchRequestRegex = new RegExp(`.*query=${managedAuthBackendServiceName}.*`);
+
 export interface ConnectionsFeature {
   _createConnections(component: Service | WebApp): void;
+  _copyConnectionUrl(): Cypress.Chainable<string>;
 }
 
 export function mixinConnections<T extends Types.Constructor>(
@@ -32,9 +38,25 @@ export function mixinConnections<T extends Types.Constructor>(
       this.addConnection(component, "TestConnection");
     }
 
+    _copyConnectionUrl(): Cypress.Chainable<string>{
+      this.sideMenu.navigateToDependencies();
+      cy.contains("TestConnection").should("be.visible").click();
+      return cy.get('[data-cyid="copy-url"]').should("be.visible").find("input").invoke("val").then((val) => {
+        cy.log("copied connecton url: " + val);
+        if (typeof val === "string") {
+          return cy.wrap(val)
+        }
+        return cy.then(() => { throw new Error("Connection URL is not a string"); });
+      });
+    }
+
     private addConnection(component: Service | WebApp, connectionName: string) {
-      cy.get(TestIds.addConnectionButton).should("be.visible").click();
-      cy.get(TestIds.ConnectionCard).should("be.visible").click();
+      cy.get(TestIds.addConnectionButton).should("be.visible")
+      cy.get(TestIds.addConnectionButton).click();
+      cy.intercept(connectionSearchRequestRegex).as('getReadingListSvc');
+      cy.get(TestIds.connectionSearchBar).type(managedAuthBackendServiceName);
+      cy.wait('@getReadingListSvc', VERY_SHORT_TIME);
+      cy.get(TestIds.ConnectionCard).contains(managedAuthBackendServiceName).should("be.visible").click();
       cy.get(TestIds.connectionNameInput)
         .should("be.visible")
         .type(connectionName);
@@ -42,6 +64,10 @@ export function mixinConnections<T extends Types.Constructor>(
       cy.get(TestIds.runNowNotification).contains(
         "Connection configuration added successfully"
       );
+      cy.get('[data-cyid="copy-url"]').should("be.visible").find("input").invoke("val").then((val) => {
+        cy.log("copied url: " + val);
+        return cy.wrap(val);
+      });
     }
   };
 }

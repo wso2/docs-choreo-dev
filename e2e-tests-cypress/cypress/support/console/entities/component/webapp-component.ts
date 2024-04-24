@@ -15,8 +15,10 @@ import { createDefaultSteps } from "../../../commons/types";
 import { mixinBuild } from "../../features/component-build/build";
 import { mixinServiceDeploy } from "../../features/deploy/deploy-service";
 import { Component } from "./component";
+import { mixinConnections } from "../../features/component-connections/connections";
 
-export class WebApp extends mixinBuild(mixinServiceDeploy(Component)) {
+
+export class WebApp extends mixinBuild(mixinServiceDeploy(mixinConnections(Component))) {
   private devWebAppUrl: string = "";
   private prodWebAppUrl: string = "";
 
@@ -44,12 +46,12 @@ export class WebApp extends mixinBuild(mixinServiceDeploy(Component)) {
     this._build(this);
   }
 
-  deployToDevWithAuthConfiguration() {
-    this._deployWebapp(this, true);
+  deployToDevWithAuthConfiguration(customConfig?: Map<string,string>) {
+    this._deployWebapp(this, true, customConfig);
   }
 
-  promoteToProdWithAuthConfiguration() {
-    this._promoteWebapp(this, true, createDefaultSteps(1));
+  promoteToProdWithAuthConfiguration(customConfig?: Map<string,string>) {
+    this._promoteWebapp(this, true, createDefaultSteps(1), customConfig);
   }
 
   verifyTestPageIsDisabled() {
@@ -58,5 +60,13 @@ export class WebApp extends mixinBuild(mixinServiceDeploy(Component)) {
 
   verifyManagePageIsDisabled() {
     cy.get('[data-cyid="link-manage"]').should("have.attr", "disabled");
+  }
+
+  createConnections() {
+    this._createConnections(this);
+  }
+
+  copyConnectionUrl(): Cypress.Chainable<string> {
+    return this._copyConnectionUrl();
   }
 }

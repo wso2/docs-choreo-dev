@@ -39,6 +39,7 @@ describe("Create Web App", () => {
 
   let project: Project;
   let webApp: WebApp;
+  let connectionUrl: string;
 
   /**
    *
@@ -48,8 +49,11 @@ describe("Create Web App", () => {
   function visitSampleWebsite(url: string) {
     cy.origin(url, () => {
       cy.visit("/");
-      cy.contains("button", "Login").click();
     });
+  }
+
+  function clickLoginButton() {
+    cy.contains("button", "Login").click();
   }
 
   function submitLoginCredentials() {
@@ -65,11 +69,36 @@ describe("Create Web App", () => {
     });
   }
 
-  function verifyLoginAndLogout(url: string) {
-    cy.origin(url, () => {
-      cy.get("[data-cyid=welcome-msg-box]").contains("john1@acme.org");
-      cy.contains("button", "Logout").click();
-    });
+  function verifyLogin() {
+    cy.get("[data-cyid=welcome-msg-box]").contains("john1@acme.org");
+  };
+
+  function logout() {
+    cy.contains("button", "Logout").click();
+  };
+
+  function verifyLogout() {
+    cy.contains("button", "Login").should("be.visible");
+  };
+
+  function registerApiIntercepts() {
+    const urlRegex = new RegExp(`.*${connectionUrl}.*`);
+    cy.intercept("GET", urlRegex).as("getReadingList");
+  };
+
+  function verifyApiCall() {
+    cy.wait("@getReadingList").its("response.statusCode").should("eq", 200);
+  };
+
+  function verifyWebAppFunctionality(url: string) {
+    registerApiIntercepts();
+    visitSampleWebsite(url);
+    clickLoginButton();
+    submitLoginCredentials();
+    verifyLogin();
+    verifyApiCall();
+    logout();
+    verifyLogout();
   }
 
   it("Login to Console", () => {
@@ -94,16 +123,27 @@ describe("Create Web App", () => {
       });
   });
 
+  it("Create connections", () => {
+    webApp.createConnections();
+    webApp.copyConnectionUrl().then((url: string) => {
+      connectionUrl = url;
+    });
+  });
+
   it("Build the Web App", () => {
     webApp.build();
   });
 
   it("Deploying to Dev", () => {
-    webApp.deployToDevWithAuthConfiguration();
+    const customConfig = new Map<string, string>();
+    customConfig.set("apiUrl", connectionUrl);
+    webApp.deployToDevWithAuthConfiguration(customConfig);
   });
 
   it("Promote to Prod", () => {
-    webApp.promoteToProdWithAuthConfiguration();
+    const customConfig = new Map<string, string>();
+    customConfig.set("apiUrl", connectionUrl);
+    webApp.promoteToProdWithAuthConfiguration(customConfig);
   });
 
   it("Verify test page is disabled", () => {
@@ -114,15 +154,11 @@ describe("Create Web App", () => {
     webApp.verifyManagePageIsDisabled();
   });
 
-  it("Access webapp in Dev and login", () => {
-    visitSampleWebsite(webApp.getDevWebAppUrl());
-    submitLoginCredentials();
-    verifyLoginAndLogout(webApp.getDevWebAppUrl());
+  it("Verify web app functionality in Dev", () => {
+    verifyWebAppFunctionality(webApp.getDevWebAppUrl());
   });
 
-  it("Access webapp in Prod and login", () => {
-    visitSampleWebsite(webApp.getProdWebAppUrl());
-    submitLoginCredentials();
-    verifyLoginAndLogout(webApp.getProdWebAppUrl());
+  it("Verify web app functionality in Prod", () => {
+    verifyWebAppFunctionality(webApp.getProdWebAppUrl());
   });
 });

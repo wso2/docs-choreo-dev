@@ -49,7 +49,7 @@ export interface DeployServiceFeature {
     configStepsAvailable?: ConfigEntryStep[]
   );
 
-  _deployWebapp(component: WebApp, hasAuthSettings: boolean);
+  _deployWebapp(component: WebApp, hasAuthSettings: boolean, customConfig?: Map<string,string>);
 
   _deployWebhook(
     component: Webhook | Byoc,
@@ -71,7 +71,8 @@ export interface DeployServiceFeature {
   _promoteWebapp(
     component: WebApp,
     hasAuthSettings: boolean,
-    configStepsAvailable?: ConfigEntryStep[]
+    configStepsAvailable?: ConfigEntryStep[],
+    customConfig?: Map<string,string>
   );
 
   _promoteBYOC(component: Byoc, configStepsAvailable?: ConfigEntryStep[]);
@@ -128,14 +129,14 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.verifyTaskDeploymentStatus();
     }
 
-    _deployWebapp(component: WebApp, hasAuthSettings: boolean) {
+    _deployWebapp(component: WebApp, hasAuthSettings: boolean, customConfig?: Map<string,string>) {
       this.sideMenu.navigateToDeploy();
 
       this.waitTillReadyToDeploy();
 
       this.startDeployment(component);
 
-      this.configureWebApp(hasAuthSettings);
+      this.configureWebApp(hasAuthSettings, customConfig);
 
       this.verifyDeploymentStatus();
 
@@ -210,7 +211,8 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     _promoteWebapp(
       component: WebApp,
       hasAuthSettings: boolean,
-      configStepsAvailable: ConfigEntryStep[]
+      configStepsAvailable: ConfigEntryStep[],
+      customConfig?: Map<string,string>
     ) {
       this.sideMenu.navigateToDeploy();
 
@@ -218,7 +220,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.stepThroughConfigSteps(configStepsAvailable);
 
-      this.configureWebApp(hasAuthSettings);
+      this.configureWebApp(hasAuthSettings, customConfig);
 
       this.verifyPromotionStatus();
 
@@ -581,8 +583,13 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       }
     }
 
-    private configureWebApp(hasAuthSettings: boolean) {
-      cy.get(TestIds.formConfigField).type("{backspace}").type(CONFIG_CONTENT);
+    private configureWebApp(hasAuthSettings: boolean, customConfig?: Map<string,string>) {
+      let configContent = CONFIG_CONTENT;
+      if (customConfig) {
+        configContent = this.buildConfigContentString(customConfig);
+      }
+
+      cy.get(TestIds.formConfigField).type("{backspace}").type(configContent);
       cy.get(TestIds.next).click();
 
       if (hasAuthSettings) {
@@ -617,6 +624,16 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
             }
           });
       });
+    }
+
+    private buildConfigContentString(customConfig: Map<string, string>): string {
+      let configContent = "";
+      // No need to add 'window.configs{\n' as it is pre-populated in UI
+      customConfig.forEach((value, key) => {
+        configContent += `\t${key}: '${value}',\n`;
+      })
+      configContent+='}'
+      return configContent;
     }
   };
 }
