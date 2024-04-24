@@ -14,7 +14,7 @@ VALUES('f9e4820e-6284-11ee-8c99-0242ac120003', '', '3.10.x,3.11.x', 'Python', 1,
 
 INSERT INTO buildpack
 (id, buildpackImage, supportedVersions, displayName, isDefault, buidpackProviderOrgUuid, [language], versionEnvVariable, provider, iconUrl, builderId)
-VALUES('f9e4820e-6284-11ee-8c99-0242ac120004', '', '12.x.x,14.x.x,16.x.x,18.x.x,20.x.x', 'NodeJs', 1, '0', 'nodejs', 'GOOGLE_NODEJS_VERSION', 'Google', '/images/buildpacks/nodejs.svg', 'D3525DF0-F149-42E1-95AE-3BCC8F597778');
+VALUES('f9e4820e-6284-11ee-8c99-0242ac120004', '', '12.x.x,14.x.x,16.x.x,18.x.x,20.x.x', 'NodeJS', 1, '0', 'nodejs', 'GOOGLE_NODEJS_VERSION', 'Google', '/images/buildpacks/node.svg', 'D3525DF0-F149-42E1-95AE-3BCC8F597778');
 
 INSERT INTO buildpack
 (id, buildpackImage, supportedVersions, displayName, isDefault, buidpackProviderOrgUuid, [language], versionEnvVariable, provider, iconUrl, builderId)
@@ -42,19 +42,19 @@ VALUES('f9e4820e-6284-11ee-8c99-0242ac120009', '', '', 'Docker', 1, '0', 'docker
 
 INSERT INTO buildpack
 (id, buildpackImage, supportedVersions, displayName, isDefault, buidpackProviderOrgUuid, [language], versionEnvVariable, provider, iconUrl, builderId)
-VALUES('f9e4820e-6284-11ee-8c99-0242ac120010', '', '', 'MI', 1, '0', 'microintegrator', '', 'Choreo', '/images/buildpacks/microintegrator.svg', 'f1c43149-3ba1-4956-920b-f20a83e26810');
+VALUES('f9e4820e-6284-11ee-8c99-0242ac120010', '', '', 'WSO2 MI', 1, '0', 'microintegrator', '', 'Choreo', '/images/buildpacks/microintegrator.svg', 'f1c43149-3ba1-4956-920b-f20a83e26810');
 
 INSERT INTO buildpack
 (id, buildpackImage, supportedVersions, displayName, isDefault, buidpackProviderOrgUuid, [language], versionEnvVariable, provider, iconUrl, builderId)
-VALUES('f9e4820e-6284-11ee-8c99-0242ac120011', '', '', 'React SPA', 1, '0', 'react', '', 'Choreo', '/images/buildpacks/react.svg', 'f1c43149-3ba1-4956-920b-f20a83e26810');
+VALUES('f9e4820e-6284-11ee-8c99-0242ac120011', '', '', 'React', 1, '0', 'react', '', 'Choreo', '/images/buildpacks/react.svg', 'f1c43149-3ba1-4956-920b-f20a83e26810');
 
 INSERT INTO buildpack
 (id, buildpackImage, supportedVersions, displayName, isDefault, buidpackProviderOrgUuid, [language], versionEnvVariable, provider, iconUrl, builderId)
-VALUES('f9e4820e-6284-11ee-8c99-0242ac120012', '', '', 'Angular SPA', 1, '0', 'angular', '', 'Choreo', '/images/buildpacks/angular.svg', 'f1c43149-3ba1-4956-920b-f20a83e26810');
+VALUES('f9e4820e-6284-11ee-8c99-0242ac120012', '', '', 'Angular', 1, '0', 'angular', '', 'Choreo', '/images/buildpacks/angular.svg', 'f1c43149-3ba1-4956-920b-f20a83e26810');
 
 INSERT INTO buildpack
 (id, buildpackImage, supportedVersions, displayName, isDefault, buidpackProviderOrgUuid, [language], versionEnvVariable, provider, iconUrl, builderId)
-VALUES('f9e4820e-6284-11ee-8c99-0242ac120013', '', '', 'Vue.js SPA', 1, '0', 'vuejs', '', 'Choreo', '/images/buildpacks/vuejs.svg', 'f1c43149-3ba1-4956-920b-f20a83e26810');
+VALUES('f9e4820e-6284-11ee-8c99-0242ac120013', '', '', 'Vue.js', 1, '0', 'vuejs', '', 'Choreo', '/images/buildpacks/vuejs.svg', 'f1c43149-3ba1-4956-920b-f20a83e26810');
 
 INSERT INTO buildpack
 (id, buildpackImage, supportedVersions, displayName, isDefault, buidpackProviderOrgUuid, [language], versionEnvVariable, provider, iconUrl, builderId)
@@ -144,11 +144,6 @@ INSERT INTO buildpack_component_type_mapping
 VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e1', 'f9e4820e-6284-11ee-8c99-0242ac120010');
 
 -- Web App
-
-INSERT INTO buildpack_component_type_mapping
-(typeId, buildpackId)
-VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e2', 'f9e4820e-6284-11ee-8c99-0242ac120002');
-
 INSERT INTO buildpack_component_type_mapping
 (typeId, buildpackId)
 VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e2', 'f9e4820e-6284-11ee-8c99-0242ac120003');
@@ -172,10 +167,6 @@ VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e2', 'f9e4820e-6284-11ee-8c99-0242ac12
 INSERT INTO buildpack_component_type_mapping
 (typeId, buildpackId)
 VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e2', 'f9e4820e-6284-11ee-8c99-0242ac120009');
-
-INSERT INTO buildpack_component_type_mapping
-(typeId, buildpackId)
-VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e2', 'f9e4820e-6284-11ee-8c99-0242ac120010');
 
 INSERT INTO buildpack_component_type_mapping
 (typeId, buildpackId)
@@ -377,6 +368,10 @@ VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e5', 'f9e4820e-6284-11ee-8c99-0242ac12
 INSERT INTO buildpack_component_type_mapping
 (typeId, buildpackId)
 VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e5', 'f9e4820e-6284-11ee-8c99-0242ac120009');
+
+INSERT INTO buildpack_component_type_mapping
+(typeId, buildpackId)
+VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e5', 'f9e4820e-6284-11ee-8c99-0242ac120010');
 
 INSERT INTO buildpack_component_type_mapping 
 (typeId, buildpackId) 
