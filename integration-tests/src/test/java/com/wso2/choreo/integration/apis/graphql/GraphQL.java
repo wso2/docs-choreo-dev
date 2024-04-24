@@ -793,15 +793,17 @@ public class GraphQL extends ControlPlaneAPI {
                                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                                 .body(requestBody)
-                                .accept(MediaType.APPLICATION_JSON_VALUE)));
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .body(new ClassPathResource("templates/graphql/responses/deployComponentSuccess.json"))
-                .validate(json()));
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                                .body(new ClassPathResource("templates/graphql/responses/deployComponentSuccess.json"))
+                                .validate(json())
+                )
+        );
     }
 
     public static JsonArray getImageList(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
