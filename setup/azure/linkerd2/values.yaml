@@ -199,7 +199,7 @@ identity:
       # -- Key for the issuer certificate (ECDSA). It must be provided during
       # install
       keyPEM: |
-# -|- CPU and Memory resources required by the identity controller (see `proxy.resources` for sub-fields)
+      # -|- CPU and Memory resources required by the identity controller (see `proxy.resources` for sub-fields)
 #identityResources:
 # -|- CPU and Memory resources required by proxy injected into identity pod (see `proxy.resources` for sub-fields)
 #identityProxyResources:
@@ -220,10 +220,10 @@ proxyInjector:
   # config.linkerd.io/admission-webhooks=disabled
   namespaceSelector:
     matchExpressions:
-    - key: config.linkerd.io/admission-webhooks
-      operator: NotIn
-      values:
-      - disabled
+      - key: config.linkerd.io/admission-webhooks
+        operator: NotIn
+        values:
+          - disabled
 
   # -- Certificate for the proxy injector. If not provided then Helm will generate one.
   crtPEM: |
@@ -231,7 +231,7 @@ proxyInjector:
   keyPEM: |
   # -- Bundle of CA certificates for proxy injector. If not provided then Helm will use the certificate generated  for `proxyInjector.crtPEM`. If `proxyInjector.externalSecret` is set to true, this value must be set, as no certificate will be generated.
   caBundle: |
-# -|- CPU and Memory resources required by the proxy injector (see
+  # -|- CPU and Memory resources required by the proxy injector (see
 #`proxy.resources` for sub-fields)
 #proxyInjectorResources:
 #-|- CPU and Memory resources required by proxy injected into the proxy injector
@@ -246,10 +246,10 @@ profileValidator:
   # -- Namespace selector used by admission webhook
   namespaceSelector:
     matchExpressions:
-    - key: config.linkerd.io/admission-webhooks
-      operator: NotIn
-      values:
-      - disabled
+      - key: config.linkerd.io/admission-webhooks
+        operator: NotIn
+        values:
+          - disabled
 
   # -- Certificate for the service profile validator. If not provided then Helm
   # will generate one.
@@ -262,7 +262,7 @@ profileValidator:
   # If `profileValidator.externalSecret` is set to true, this value must be set,
   # as no certificate will be generated.
   caBundle: |
-# -|- CPU and Memory resources required by the SP validator (see
+  # -|- CPU and Memory resources required by the SP validator (see
 #`proxy.resources` for sub-fields)
 #spValidatorResources:
 # -|- CPU and Memory resources required by proxy injected into the SP validator
@@ -297,4 +297,3 @@ nodeSelector:
 # [K8S documentation](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)
 # for more information
 #tolerations:
-

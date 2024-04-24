@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: loggingapi
-  strategy: { }
+  strategy: {}
   template:
     metadata:
       labels:
@@ -34,11 +34,11 @@ spec:
             - secretRef:
                 name: loggingapi-secret
           env:
-          - name: OPENSEARCH_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: opensearch-http-passwd
-                key: opensearch-http-passwd
+            - name: OPENSEARCH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: opensearch-http-passwd
+                  key: opensearch-http-passwd
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-logging-dp:latest
           securityContext:
             runAsUser: 10500

@@ -100,7 +100,7 @@ spec:
           configMap:
             name: choreo-apim-devportal-conf
         - name: devportal-var-cache-dir
-          emptyDir: { }
+          emptyDir: {}
         - name: devportal-var-run-dir
-          emptyDir: { }
+          emptyDir: {}
       serviceAccountName: sa-choreo-apim

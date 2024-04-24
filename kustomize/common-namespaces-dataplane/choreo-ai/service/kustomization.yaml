@@ -1,2 +1,4 @@
 resources:
   - testgpt.yaml
+  - copilot.yaml
+  - docs-assistant.yaml

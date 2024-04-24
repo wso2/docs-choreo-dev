@@ -55,7 +55,7 @@ spec:
           serviceAccountName: sa-choreo-default
           volumes:
             - name: output-volume
-              emptyDir: { }
+              emptyDir: {}
             - name: secret-observability-data-generator
               csi:
                 driver: secrets-store.csi.k8s.io

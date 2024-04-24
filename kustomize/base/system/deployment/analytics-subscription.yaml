@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: analytics-subs
-  strategy: { }
+  strategy: {}
   template:
     metadata:
       labels:

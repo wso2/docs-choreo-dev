@@ -21,7 +21,7 @@ spec:
         - objectName: AZURE_ADX_CLIENT_SECRET
           key: AZURE_ADX_CLIENT_SECRET
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: obsapi-ADX-CLIENT-SECRET

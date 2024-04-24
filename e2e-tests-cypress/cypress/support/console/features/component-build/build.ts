@@ -11,12 +11,12 @@
  * associated services.
  */
 
+import { BUILD_FAILED, BUILD_SUCCESS } from "../../../commons/constants";
 import {
-  BUILD_FAILED,
-  BUILD_IN_PROGRESS,
-  BUILD_SUCCESS,
-} from "../../../commons/constants";
-import { LONG_TIME } from "../../../commons/timeouts";
+  LONG_TIME,
+  SHORT_TIME,
+  VERY_SHORT_TIME,
+} from "../../../commons/timeouts";
 import { TestIds } from "../../constants/TestIds";
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
 import { Service } from "../../entities/component/service-component";
@@ -28,6 +28,7 @@ import { WebApp } from "../../entities/component/webapp-component";
 import { Webhook } from "../../entities/component/webhook-component";
 import { TestRunner } from "../../entities/component/test-runner-component";
 import { Byoc } from "../../entities/component/byoc-component";
+import { Helper } from "../../../commons/helper";
 
 export interface BuildFeature {
   _build(
@@ -75,11 +76,82 @@ export function mixinBuild<T extends Types.Constructor>(
     ) {
       this.deploymentTrack.validate(component);
 
-      cy.get(TestIds.build).should("be.enabled").click();
-      cy.get(TestIds.tableTitle).within(() => {
-        cy.contains(BUILD_IN_PROGRESS, LONG_TIME).should("be.visible");
-        cy.contains(BUILD_IN_PROGRESS, LONG_TIME).should("not.exist");
-        cy.contains(BUILD_SUCCESS, LONG_TIME).should("be.visible");
+      cy.get(TestIds.tableTitle)
+        .find(TestIds.progressBar, SHORT_TIME)
+        .should("not.exist");
+
+      cy.get(TestIds.tableTitle).then((buildTable) => {
+        if (!Helper.isElementExists(buildTable, TestIds.noDataAvailable)) {
+          this.waitTillNewBuildStarts();
+        } else {
+          cy.get(TestIds.build).should("be.enabled").click();
+        }
+      });
+
+      cy.log("Waiting for build to complete");
+      this.waitForBuildToComplete();
+    }
+
+    private waitTillNewBuildStarts() {
+      cy.getTableData(TestIds.tableTitle, 0, 0, false).then(
+        (existingBuildId) => {
+          const currentBuildId = String(existingBuildId);
+
+          cy.log(`Existing build id: ${currentBuildId}`);
+
+          cy.get(TestIds.build).should("be.enabled").click();
+
+          cy.log("Waiting for build to start");
+          this.checkIfNewBuildStarted(currentBuildId);
+        }
+      );
+    }
+
+    private checkIfNewBuildStarted(currentBuildId: string, retryCount = 0) {
+      const waitTime = 5000;
+      const timeout = SHORT_TIME.timeout;
+      const maxRetries = timeout / waitTime;
+
+      if (retryCount === maxRetries) {
+        return;
+      }
+
+      cy.getTableData(TestIds.tableTitle, 0, 0, false).then((newBuildId) => {
+        const refreshedCurrentBuildId = String(newBuildId);
+
+        if (!currentBuildId.includes(refreshedCurrentBuildId)) {
+          cy.log(`New Build Id  ${refreshedCurrentBuildId} found`);
+        } else {
+          cy.wait(waitTime, { log: false });
+          this.checkIfNewBuildStarted(currentBuildId, retryCount + 1);
+        }
+      });
+    }
+
+    private waitForBuildToComplete(retryCount = 0) {
+      const waitTime = 5000;
+      const timeout = LONG_TIME.timeout;
+      const maxRetries = timeout / waitTime;
+
+      if (retryCount === maxRetries) {
+        return;
+      }
+
+      cy.getTableData(TestIds.tableTitle, 0, 2, false).then((buildStatus) => {
+        const status = String(buildStatus);
+
+        if (status === BUILD_FAILED || status === BUILD_SUCCESS) {
+          cy.get(TestIds.tableTitle)
+            .should("be.visible")
+            .find("tbody")
+            .find("tr")
+            .eq(0)
+            .contains(BUILD_SUCCESS)
+            .should("be.visible");
+        } else {
+          cy.wait(waitTime, { log: false });
+          this.waitForBuildToComplete(retryCount + 1);
+        }
       });
     }
   };

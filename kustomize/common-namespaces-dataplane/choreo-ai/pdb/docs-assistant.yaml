@@ -1,0 +1,9 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: docs-assistant
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: docs-assistant

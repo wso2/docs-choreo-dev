@@ -22,9 +22,9 @@ metadata:
     linkerd.io/extension: viz
     component: prometheus
 rules:
-- apiGroups: [""]
-  resources: ["nodes", "nodes/proxy", "pods"]
-  verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["nodes", "nodes/proxy", "pods"]
+    verbs: ["get", "list", "watch"]
 ---
 # Source: linkerd-viz/templates/prometheus-rbac.yaml
 kind: ClusterRoleBinding
@@ -39,7 +39,6 @@ roleRef:
   kind: ClusterRole
   name: linkerd-{{.Values.namespace}}-prometheus
 subjects:
-- kind: ServiceAccount
-  name: prometheus
-  namespace: {{.Values.namespace}}
-  
+  - kind: ServiceAccount
+    name: prometheus
+    namespace: {{.Values.namespace}}
