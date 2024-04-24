@@ -49,7 +49,11 @@ export class OrganizationComponent {
 
   static inviteMembers(email: string, ...roles: string[]) {
     cy.wait(300);
-    cy.get('[data-cyid="invite-users-button"]').click();
+    if (Utils.isNewUserManagementEnabled()) {
+      cy.get('[data-cyid="invite-users-button"]').click();
+    } else {
+      cy.get('[data-cyid="invite-members-button"]').click();
+    }
     cy.wait(300);
     cy.get('[data-cyid="tag-email-addresses"]').within(() => {
       cy.get('input[type="text"]')
@@ -57,11 +61,22 @@ export class OrganizationComponent {
         .type(email)
         .type("{enter}");
     });
-    cy.get('[data-cyid="select-groups-multi-select"]').click();
+    if (Utils.isNewUserManagementEnabled()) {
+      cy.get('[data-cyid="select-groups-multi-select"]').click();
+    } else {
+      cy.get('[data-cyid="select-roles"]').click();
+    }
+
     this.addRoles(roles);
     cy.get("body").type("{esc}");
-    cy.get('[data-cyid="invite-user-dialog-button"]').click({ force: true });
-    cy.get('[data-cyid="invite-user-dialog-button"]').should("not.exist");
+    if (Utils.isNewUserManagementEnabled()) {
+      cy.get('[data-cyid="invite-user-dialog-button"]').click({ force: true });
+      cy.get('[data-cyid="invite-user-dialog-button"]').should("not.exist");
+    } else {
+      cy.get('[data-cyid="btn-invite-button"]').click({ force: true });
+      cy.get('[data-cyid="btn-invite-button"]').should("not.exist");
+    }
+
     cy.log("Invitation sent successfully");
   }
 
@@ -129,17 +144,29 @@ export class OrganizationComponent {
   }
 
   static selectPendingInvitation() {
-    cy.get('[data-testid="user-mgt-invitations"]').click();
+    if (Utils.isNewUserManagementEnabled()) {
+      cy.get('[data-testid="user-mgt-invitations"]').click();
+    } else {
+      cy.get('[data-testid="pending-invitation"]').click();
+    }
   }
 
   private static addRoles(roles: string[]) {
     roles.forEach((v) => {
-      Utils.getRenderedElement('[id="group-select-list-popup"]')
-        .contains(v)
-        .parents("li")
-        .find("input")
-        .scrollIntoView()
-        .click();
+      if (Utils.isNewUserManagementEnabled()) {
+        Utils.getRenderedElement('[id="group-select-list-popup"]')
+          .contains(v)
+          .parents("li")
+          .find("input")
+          .scrollIntoView()
+          .click();
+      } else {
+        Utils.getRenderedElement("ul>li>div>span").each((e) => {
+          if (e.text() === v) {
+            cy.wrap(e).scrollIntoView().click();
+          }
+        });
+      }
     });
   }
 

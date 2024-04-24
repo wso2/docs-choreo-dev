@@ -383,6 +383,18 @@ export class Utils {
     return false;
   }
 
+  static isNewUserManagementEnabled() {
+    const enableNewUserManagement = Cypress.env("enableNewUserManagement");
+
+    if (enableNewUserManagement != null) {
+      return (
+        enableNewUserManagement == true || enableNewUserManagement == "true"
+      );
+    }
+
+    return false;
+  }
+
   static moveMouseAwayFromLeftMenu() {
     cy.get("body").realMouseMove(250, 250);
   }
