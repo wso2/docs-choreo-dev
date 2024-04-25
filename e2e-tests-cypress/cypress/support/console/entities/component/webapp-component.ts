@@ -62,11 +62,11 @@ export class WebApp extends mixinBuild(mixinServiceDeploy(mixinConnections(Compo
     cy.get('[data-cyid="link-manage"]').should("have.attr", "disabled");
   }
 
-  createConnections() {
-    this._createConnections(this);
+  createConnection(toService: string, connectionName: string) {
+    this._createConnection(toService, connectionName);
   }
 
-  copyConnectionUrl(): Cypress.Chainable<string> {
-    return this._copyConnectionUrl();
+  copyConnectionUrl(connectionName: string): Cypress.Chainable<string> {
+    return this._copyConnectionUrl(connectionName);
   }
 }

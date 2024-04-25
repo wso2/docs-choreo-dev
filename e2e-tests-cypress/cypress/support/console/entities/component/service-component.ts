@@ -108,7 +108,7 @@ export class Service extends mixinBuild(
     this._enableCors(this, environment);
   }
 
-  createConnections() {
-    this._createConnections(this);
+  createConnection(toService: string, connectionName: string) {
+    this._createConnection(toService, connectionName);
   }
 }

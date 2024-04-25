@@ -255,7 +255,7 @@ describe("Multiple User Logins", () => {
       }
     );
 
-    component.createConnections();
+    component.createConnection(component.getName(), "Test Connection");
     cy.wait("@createConnectionsRequest", PERF_INTERCEPT_WAIT_TIME).then(
       (interception) => {
         try {

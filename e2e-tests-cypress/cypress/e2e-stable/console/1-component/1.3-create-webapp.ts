@@ -20,6 +20,10 @@ import {
 } from "../../../support/console/entities/project/project";
 import { console } from "../../../support/console/console";
 
+
+const managedAuthBackendServiceName = Cypress.env("managedAuthBackendServiceName");
+const connectionName = "Managed Auth BE Connection";
+
 describe("Create Web App", () => {
   const PROJECT_DESCRIPTION = "Web App";
 
@@ -124,8 +128,8 @@ describe("Create Web App", () => {
   });
 
   it("Create connections", () => {
-    webApp.createConnections();
-    webApp.copyConnectionUrl().then((url: string) => {
+    webApp.createConnection(managedAuthBackendServiceName, connectionName);
+    webApp.copyConnectionUrl(connectionName).then((url: string) => {
       connectionUrl = url;
     });
   });
