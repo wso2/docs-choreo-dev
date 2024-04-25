@@ -41,7 +41,7 @@ export function mixinConnections<T extends Types.Constructor>(
     _copyConnectionUrl(): Cypress.Chainable<string>{
       this.sideMenu.navigateToDependencies();
       cy.contains("TestConnection").should("be.visible").click();
-      return cy.get('[data-cyid="copy-url"]').should("be.visible").find("input").invoke("val").then((val) => {
+      return cy.get(TestIds.copyConnectionUrlBox).should("be.visible").find("input").invoke("val").then((val) => {
         cy.log("copied connecton url: " + val);
         if (typeof val === "string") {
           return cy.wrap(val)
@@ -64,10 +64,6 @@ export function mixinConnections<T extends Types.Constructor>(
       cy.get(TestIds.runNowNotification).contains(
         "Connection configuration added successfully"
       );
-      cy.get('[data-cyid="copy-url"]').should("be.visible").find("input").invoke("val").then((val) => {
-        cy.log("copied url: " + val);
-        return cy.wrap(val);
-      });
     }
   };
 }

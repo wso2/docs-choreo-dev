@@ -585,7 +585,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
     private configureWebApp(hasAuthSettings: boolean, customConfig?: Map<string,string>) {
       let configContent = CONFIG_CONTENT;
-      if (customConfig) {
+      if (customConfig !== undefined) {
         configContent = this.buildConfigContentString(customConfig);
       }
 

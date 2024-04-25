@@ -355,4 +355,5 @@ export namespace TestIds {
   export const addUserToGroupPopup = '[data-cyid="add-user-to-group-button"]';
   export const userSelect = '[id="select-user-list-popup"]';
   export const connectionSearchBar = '[data-cyid="internal-marketplace-services-search-bar-input"]';
+  export const copyConnectionUrlBox = '[data-cyid="copy-url"]';
 }
