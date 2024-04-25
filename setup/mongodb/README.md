@@ -1,4 +1,4 @@
-### Choreo MongoDB Atlas Cluster Setup
+# Choreo MongoDB Atlas Cluster Setup
 
 #### Description
 
@@ -6,7 +6,7 @@ Execute `run.sh` to perform the folowing.
 
 1. Setup APIM DB (`setup_apim_db.sh`)
 
-i.) Create `apis` collection 
+i.) Create `apis` collection
 
 ii.) Create search index named `default`
 

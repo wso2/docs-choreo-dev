@@ -7,44 +7,44 @@ metadata:
   labels:
     app.kubernetes.io/instance: operator
 rules:
-- apiGroups:
-  - http.keda.sh
-  resources:
-  - httpscaledobjects
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - http.keda.sh
-  resources:
-  - httpscaledobjects/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - http.keda.sh
-  resources:
-  - httpscaledobjects/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
-  - keda.sh
-  resources:
-  - scaledobjects
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+  - apiGroups:
+      - http.keda.sh
+    resources:
+      - httpscaledobjects
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - http.keda.sh
+    resources:
+      - httpscaledobjects/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - http.keda.sh
+    resources:
+      - httpscaledobjects/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - keda.sh
+    resources:
+      - scaledobjects
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -54,34 +54,34 @@ metadata:
   labels:
     app.kubernetes.io/instance: operator
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - configmaps
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - events
-  verbs:
-  - create
-  - patch
-- apiGroups:
-  - coordination.k8s.io
-  resources:
-  - leases
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+      - patch
+  - apiGroups:
+      - coordination.k8s.io
+    resources:
+      - leases
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch

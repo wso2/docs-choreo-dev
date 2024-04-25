@@ -439,6 +439,8 @@ CREATE TABLE [dbo].[group_member_mapping](
     [user_id] [int] NOT NULL,
     [created_at] [datetime] NOT NULL,
     [updated_at] [datetime] NOT NULL,
+    CONSTRAINT group_member_mapping_group_id_fk FOREIGN KEY (group_id) REFERENCES [group](id) ON DELETE CASCADE,
+    CONSTRAINT group_member_mapping_user_id_fk FOREIGN KEY (user_id) REFERENCES [user](id) ON DELETE CASCADE,
     CONSTRAINT [PK_group_member_mapping_id] PRIMARY KEY CLUSTERED
 (
 [id] ASC
@@ -2225,7 +2227,7 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Ma
 -- PROJECT-MANAGEMENT
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Project Management','choreo:project_manage','PROJECT-MANAGEMENT','Retrieve and manage projects');
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Component manage','choreo:component_manage','PROJECT-MANAGEMENT','Manage operations on components');
-INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('View Projects','choreo:project_view','PROJECT-MANAGEMENT','View Projects');
+INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('View Project','choreo:project_view','PROJECT-MANAGEMENT','View Project');
 
 -- USER-MANAGEMENT
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Users','urn:choreosystem:usermanagement:user_view', 'USER-MANAGEMENT','View Users');

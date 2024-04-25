@@ -973,6 +973,7 @@ public class ComponentUtils {
         argMap.put("componentId", component.getId());
         argMap.put("versionId", componentDeploymentStatusDTO.getVersionId());
         argMap.put("releaseId", componentDeploymentStatusDTO.getReleaseId());
+        GraphQL.validateEndpointDeployment(runner, appServiceClient, accessToken, argMap);
         return GraphQL.getEndpoints(runner, appServiceClient, accessToken, argMap);
     }
 

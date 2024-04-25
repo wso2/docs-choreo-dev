@@ -13,37 +13,37 @@ spec:
             seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
         spec:
           containers:
-          - name: platform-services-manager
-            image: choreocontrolplane.azurecr.io/choreoipaas/platform-services-manager:latest
-            args: ["-cron"]
-            envFrom:
-              - configMapRef:
-                  name: env-choreo-platform-services-manager
-              - secretRef:
-                  name: secret-choreo-platform-services-manager
-              - configMapRef:
-                  name: cm-platform-services-manager
-            resources:
-              limits:
-                cpu: 200m
-                memory: 250Mi
-              requests:
-                cpu: 100m
-                memory: 128Mi
-            securityContext:
-              allowPrivilegeEscalation: false
-              seccompProfile:
-                type: RuntimeDefault
-              runAsUser: 10001
-              runAsGroup: 10001
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - all
-            volumeMounts:
-              - name: secret-choreo-platform-services-manager
-                mountPath: "/mnt/csi/secret-choreo-platform-services-manager"
-                readOnly: true
+            - name: platform-services-manager
+              image: choreocontrolplane.azurecr.io/choreoipaas/platform-services-manager:latest
+              args: ["-cron"]
+              envFrom:
+                - configMapRef:
+                    name: env-choreo-platform-services-manager
+                - secretRef:
+                    name: secret-choreo-platform-services-manager
+                - configMapRef:
+                    name: cm-platform-services-manager
+              resources:
+                limits:
+                  cpu: 200m
+                  memory: 250Mi
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                seccompProfile:
+                  type: RuntimeDefault
+                runAsUser: 10001
+                runAsGroup: 10001
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - all
+              volumeMounts:
+                - name: secret-choreo-platform-services-manager
+                  mountPath: "/mnt/csi/secret-choreo-platform-services-manager"
+                  readOnly: true
           restartPolicy: OnFailure
           securityContext:
             runAsUser: 10001

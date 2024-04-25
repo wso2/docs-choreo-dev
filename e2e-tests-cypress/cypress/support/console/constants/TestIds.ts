@@ -22,8 +22,7 @@ export namespace TestIds {
   export const projectName = '[data-cyid="project-name"]';
   export const projectDescription = '[data-cyid="project-description"]';
   export const multiRepository = '[data-testid="Multi-Repo-radio-card"]';
-  export const createProject =
-    '[data-cyid="create-new-project-button"]';
+  export const createProject = '[data-cyid="create-new-project-button"]';
   export const backToProjectList =
     '[data-cyid="sample-creation-dialog-closeBtn-button"]';
   export const projectPicker = '[data-testid="project-picker"]';
@@ -48,7 +47,7 @@ export namespace TestIds {
     '[data-cyid="delete-confirmation-dialog-content"]';
   export const confirmName = '[data-cyid="confirm-name"]';
   export const next = '[data-cyid="btn-next-button"]';
-  export const deploy = '[data-cyid="deploy-button"]';
+  export const deploy = '[data-cyid="access-mode-wizard-deploy-button"]';
   export const buildCard = '[data-cyid="default-build-card"]';
   export const devEnvCard = '[data-cyid="env-baseDevelopment-env-card"]';
   export const prodEnvCard = '[data-cyid="env-baseProduction-env-card"]';
@@ -57,6 +56,7 @@ export namespace TestIds {
   export const availableEndpoints = '[data-testid="Endpoints-env-artifact"]';
   export const apiConfiguration =
     '[data-testid="API Configuration-env-artifact"]';
+  export const attachPolicy = '[data-cyid="attach-policy-button-button"]';
   export const viewArtifact = '[data-cyid="btn-view-artifact-icon-button"]';
   export const endpointCard = '[data-cyid="endponint-selector-card-card"]';
   export const manageSecurity = '[data-cyid="manage-security"]';
@@ -115,7 +115,8 @@ export namespace TestIds {
   export const build =
     '[data-cyid="build-split-button-split-group-button-button"]';
   export const tableTitle = '[data-cyid="table-title"]';
-  export const createComponent = '[data-cyid="create-multiple-components-split-toggle-button-button"]';
+  export const createComponent =
+    '[data-cyid="create-multiple-components-split-toggle-button-button"]';
   export const proxyBuildPack =
     '[data-cyid="component-template-httpProxyApi-card-action-area"]';
   export const oasUrlEntry = '[data-cyid="txt-oas-url"]';
@@ -125,8 +126,8 @@ export namespace TestIds {
   export const apiVersion = '[data-cyid="api-version"]';
   export const apiBasePath = '[data-cyid="api-basepath"]';
   export const apiEndpoint = '[data-cyid="api-endpoint"]';
-  export const internalAccessMode = '[data-testid="internal-radio-card"]';
-  export const externalAccessMode = '[data-testid="external-radio-card"]';
+  export const internalAccessMode = '[data-testid="internal"]';
+  export const externalAccessMode = '[data-testid="external"]';
   export const createButton = '[data-cyid="btn-create-button"]';
   export const createTime = '[data-cyid="create-time"]';
   export const skipSource = '[data-cyid="btn-skip-src-button"]';
@@ -352,6 +353,10 @@ export namespace TestIds {
     '[data-cyid="select-users-for-group-multi-select"]';
   export const addRoleToGroupPopup =
     '[data-cyid="add-roles-to-groupgroup-button"]';
+  export const removeRoleFromGroup =
+    '[data-cyid="delete-role-from-group-icon-button"]';
+  export const removeRoleFromGroupPopup =
+    '[data-cyid="dialog-groups-role-list-delete-button"]';
   export const addUserToGroupPopup = '[data-cyid="add-user-to-group-button"]';
   export const userSelect = '[id="select-user-list-popup"]';
 }

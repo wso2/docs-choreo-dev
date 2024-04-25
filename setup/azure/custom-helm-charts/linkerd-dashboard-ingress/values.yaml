@@ -5,4 +5,3 @@ namespace: linkerd-viz
 # Ingress details
 ingress:
   class: linkerd-viz-dasbhoard
-  

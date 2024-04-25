@@ -28,5 +28,12 @@ declare namespace Cypress {
       selector: string,
       options?: RenderingOptions
     ): Chainable<Element>;
+
+    getTableData(
+      selector: string,
+      rowIndex: number,
+      dataIndex: number,
+      log?: boolean
+    ): Chainable<Element>;
   }
 }

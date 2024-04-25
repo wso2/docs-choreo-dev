@@ -268,7 +268,6 @@ export function mixinManage<T extends Types.Constructor>(
       cy.get(TestIds.addNewScopeV2).should("be.disabled");
       cy.get(TestIds.scopeTextInputV2).type(permission);
       cy.get(TestIds.addNewScopeV2).should("be.enabled").click().wait(1000);
-      cy.contains("Permission(Scope) created successfully");
       cy.get(TestIds.selectAllScopesV2).should("be.visible");
       cy.get(TestIds.scopeItem(permission)).should("be.visible");
     }

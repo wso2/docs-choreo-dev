@@ -8,6 +8,6 @@ roleRef:
   kind: Role
   name: keda-operator
 subjects:
-- kind: ServiceAccount
-  name: keda-operator
-  namespace: keda
+  - kind: ServiceAccount
+    name: keda-operator
+    namespace: keda

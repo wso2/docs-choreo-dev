@@ -111,7 +111,7 @@ spec:
             capabilities:
               drop:
                 - ALL
-              add: [ "NET_RAW" ]
+              add: ["NET_RAW"]
           envFrom:
             - configMapRef:
                 name: cm-feature-flags
@@ -140,19 +140,19 @@ spec:
             - containerPort: 9001
           startupProbe:
             exec:
-              command: [ "sh", "check_health.sh" ]
+              command: ["sh", "check_health.sh"]
             periodSeconds: 5
             failureThreshold: 30
             timeoutSeconds: 5
           livenessProbe:
             exec:
-              command: [ "sh", "check_health.sh" ]
+              command: ["sh", "check_health.sh"]
             initialDelaySeconds: 10
             periodSeconds: 15
             timeoutSeconds: 5
           readinessProbe:
             exec:
-              command: [ "sh", "check_health.sh" ]
+              command: ["sh", "check_health.sh"]
             initialDelaySeconds: 8
             periodSeconds: 5
             timeoutSeconds: 5
@@ -181,7 +181,7 @@ spec:
             capabilities:
               drop:
                 - ALL
-              add: [ "NET_RAW" ]
+              add: ["NET_RAW"]
           envFrom:
             - configMapRef:
                 name: cm-feature-flags
@@ -235,7 +235,7 @@ spec:
           configMap:
             name: mgw-adapter-enforcer-conf
         - name: dropins-vol
-          emptyDir: { }
+          emptyDir: {}
         - name: enforcer-truststore
           configMap:
             name: mgw-enforcer-truststore

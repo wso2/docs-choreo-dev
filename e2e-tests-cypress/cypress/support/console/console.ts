@@ -72,32 +72,46 @@ class Console {
     this._orgSettings.addRole(roleName, roleDescription, roleTag);
   }
 
-  checkCurrentUserHasRole(roleName: string) {
+  checkCurrentUserIsInGroup(group: string) {
     this.navigateToHome();
     this.navigateToSettings();
     this.navigateToUsers();
-    this._orgSettings.checkUserHasRole(login.getUserEmail(), roleName);
+    this._orgSettings.checkUserIsInGroup(login.getUserEmail(), group);
   }
 
-  addGroup(groupName: string, groupDescription: string) {
+  addGroup(group: string, description: string) {
     this.navigateToHome();
     this.navigateToSettings();
     this.navigateToGroups();
-    this._orgSettings.addGroup(groupName, groupDescription);
+    this._orgSettings.addGroup(group, description);
   }
 
-  addRoleToGroup(roleName: string, groupName: string) {
+  addRolesToGroup(roles: string[], group: string) {
     this.navigateToHome();
     this.navigateToSettings();
     this.navigateToGroups();
-    this._orgSettings.addRoleToGroup(roleName, groupName);
+    this._orgSettings.addRolesToGroup(roles, group);
   }
 
-  deleteGroupIfExists(groupName: string) {
+  removeRolesFromGroup(roles: string[], group: string) {
     this.navigateToHome();
     this.navigateToSettings();
     this.navigateToGroups();
-    this._orgSettings.deleteGroupIfExists(groupName);
+    this._orgSettings.removeRolesFromGroup(roles, group);
+  }
+
+  checkRolesInGroup(roles: string[], group: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToGroups();
+    this._orgSettings.checkRolesInGroup(roles, group);
+  }
+
+  deleteGroupIfExists(group: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToGroups();
+    this._orgSettings.deleteGroupIfExists(group);
   }
 
   deleteGroup(groupName: string) {

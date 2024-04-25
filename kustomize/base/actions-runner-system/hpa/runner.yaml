@@ -10,8 +10,8 @@ spec:
   scaleUpTriggers:
     - githubEvent:
         workflowJob: {}
-      # The duration field sets the maximum amount of time to wait for a scale-down event in 
+      # The duration field sets the maximum amount of time to wait for a scale-down event in
       # case if a scale-up event is not received.
-      # This value should account for the time it takes to run the workflow job and 
+      # This value should account for the time it takes to run the workflow job and
       # the time it takes to start the runner including image pull time.
       duration: "30m"

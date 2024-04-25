@@ -8,22 +8,22 @@ idp:
     cacheRefreshInterval: ${JWKS_CACHE_REFRESH_INTERVAL}
     cacheTtl: ${JWKS_CACHE_TTL}
   jwtProviders:
-  - issuer: ${KM_ISSUER}
-    audiences: {{.JWT_PROVIDERS_AUDIENCES}}
-    jwks:
-      url: ${KM_JWKS_URL}
-      cacheRefreshInterval: ${JWKS_CACHE_REFRESH_INTERVAL}
-      cacheTtl: ${JWKS_CACHE_TTL}
-  - issuer: ${ASGARDEO_ISSUER}
-    audiences:
-    - ${ASGARDEO_AUDIENCE}
-    jwks:
-      url: ${ASGARDEO_JWKS_URL}
-      cacheRefreshInterval: ${JWKS_CACHE_REFRESH_INTERVAL}
-      cacheTtl: ${JWKS_CACHE_TTL}
-  - issuer: ${CP_ENFORCER_ISSUER}
-    skipClaimsValidation: true  # Skip claim validation until https://github.com/wso2-enterprise/choreo/issues/10549 is fixed
-    publicKey: ${CP_ENFORCER_JWT_CERT}
+    - issuer: ${KM_ISSUER}
+      audiences: {{.JWT_PROVIDERS_AUDIENCES}}
+      jwks:
+        url: ${KM_JWKS_URL}
+        cacheRefreshInterval: ${JWKS_CACHE_REFRESH_INTERVAL}
+        cacheTtl: ${JWKS_CACHE_TTL}
+    - issuer: ${ASGARDEO_ISSUER}
+      audiences:
+        - ${ASGARDEO_AUDIENCE}
+      jwks:
+        url: ${ASGARDEO_JWKS_URL}
+        cacheRefreshInterval: ${JWKS_CACHE_REFRESH_INTERVAL}
+        cacheTtl: ${JWKS_CACHE_TTL}
+    - issuer: ${CP_ENFORCER_ISSUER}
+      skipClaimsValidation: true  # Skip claim validation until https://github.com/wso2-enterprise/choreo/issues/10549 is fixed
+      publicKey: ${CP_ENFORCER_JWT_CERT}
   issuer: ${IDP_ISSUER}   # DEPRECATED. See 'issuers'.
   audience: {{.IDP_AUDIENCE}}
   jwtValidationLeeway: ${IDP_JWT_VALIDATION_LEEWAY}

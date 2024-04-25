@@ -49,6 +49,7 @@ configMapGenerator:
     behavior: create
     literals:
       - OBSMANAGER_ADDRESS={{.OBSMANAGER_ADDRESS}}
+      - FETCH_HISTORICAL_LOGS_FROM_OPENSEARCH={{.FETCH_HISTORICAL_LOGS_FROM_OPENSEARCH | default false}}
       - AZURE_LA_CLIENT_ID={{.AZURE_LA_CLIENT_ID}}
       - AZURE_LA_WORKSPACE_ID={{.AZURE_LA_WORKSPACE_ID}}
       - FLUENT_BIT_ADDRESS=http://fluent-bit:2020

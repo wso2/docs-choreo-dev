@@ -12,12 +12,12 @@ spec:
     kind: Issuer
   commonName: identity.linkerd.cluster.local
   dnsNames:
-  - identity.linkerd.cluster.local
+    - identity.linkerd.cluster.local
   isCA: true
   privateKey:
     algorithm: ECDSA
   usages:
-  - cert sign
-  - crl sign
-  - server auth
-  - client auth
+    - cert sign
+    - crl sign
+    - server auth
+    - client auth

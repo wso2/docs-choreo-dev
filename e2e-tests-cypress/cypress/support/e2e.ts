@@ -65,3 +65,27 @@ Cypress.Commands.add(
       });
   }
 );
+
+/**
+ * Get the data from a table cell
+ * @param {string} selector - The table selector
+ * @param {number} rowIndex - The row index
+ * @param {number} dataIndex - The data index
+ * @param {boolean} log - Whether to log the data
+ * @returns {Chainable<Element>} - The Cypress chainable object
+ *
+ * @example cy.getTableData('[data-cyid="table"]', 0, 0)
+ */
+
+Cypress.Commands.add("getTableData", (selector, rowIndex, dataIndex, log) => {
+  const isLogEnabled = log === undefined ? true : log;
+
+  return cy
+    .get(selector, { log: isLogEnabled })
+    .find("tbody", { log: isLogEnabled })
+    .find("tr", { log: isLogEnabled })
+    .eq(rowIndex, { log: isLogEnabled })
+    .find("td", { log: isLogEnabled })
+    .eq(dataIndex, { log: isLogEnabled })
+    .invoke({ log: isLogEnabled }, "text");
+});
