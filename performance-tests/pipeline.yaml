@@ -1,11 +1,1 @@
-trigger: none
 
-pr:
-  branches:
-    include:
-      - main
-
-steps:
-  - script: |
-      echo "hello world!"
-    displayName: Welcome
