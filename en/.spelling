@@ -959,3 +959,15 @@ cInlineImage-threeQuarter
 pom.xml
  - docs/authentication-and-authorization/access-control/control-access-in-the-choreo-console.md
 cInlineImage-threeQuarter
+ - docs/develop-components/sharing-and-reusing/create-a-connection.md
+ServiceURL
+ - docs/develop-components/sharing-and-reusing/sharing-and-reusing-services.md
+ConnectionConfig
+serviceReferences
+isOptional
+isSensitive
+ConsumerKey
+ConsumerSecret
+TokenURL
+ - docs/develop-components/sharing-and-reusing/sharing-and-reusing-web-applications.md
+index.html
