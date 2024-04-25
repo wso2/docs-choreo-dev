@@ -1,0 +1,4 @@
+linter:
+  javascript_es:
+    ignore:
+      - "kustomize/base/apim/config/devportal/devportal.config.js"
