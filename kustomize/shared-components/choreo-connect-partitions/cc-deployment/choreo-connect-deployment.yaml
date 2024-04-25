@@ -38,6 +38,10 @@ spec:
       labels:
         userapp-ingress-allowed: "true"
     spec:
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "4"
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
