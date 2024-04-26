@@ -50,6 +50,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -351,16 +352,16 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
         Assert.assertTrue(UUID_REGEX.matcher(connectionId).matches());
     }
-
-    @Test(dependsOnMethods = {"createProjectLevelConnectionToProxy_TestChoreoConnections"})
+    @AfterSuite
+    @Test()
     @CitrusTest
     public void deleteConnections_TestChoreoConnections() throws Exception {
         HttpClient connectionServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String projectLevelConnectionDeleteMsg = ConnectionService.deleteChoreoConnection(this, connectionServiceClient,
-                accessToken, projectLevelConnectionId);
+        String projectLevelConnectionDeleteMsg = projectLevelConnectionId != null ?ConnectionService.deleteChoreoConnection(this, connectionServiceClient,
+                accessToken, projectLevelConnectionId) : "projectLevelConnectionId is null";
         Assert.assertNotEquals(projectLevelConnectionDeleteMsg, "");
-        String componentLevelConnectionDeleteMsg = ConnectionService.deleteChoreoConnection(this, connectionServiceClient,
-                accessToken, componentLevelConnectionId);
+        String componentLevelConnectionDeleteMsg = componentLevelConnectionId != null ? ConnectionService.deleteChoreoConnection(this, connectionServiceClient,
+                accessToken, componentLevelConnectionId) : "componentLevelConnectionId is null";
         Assert.assertNotEquals(componentLevelConnectionDeleteMsg, "");
     }
 
