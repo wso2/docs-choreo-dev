@@ -25,8 +25,8 @@ steps:
 
   - script: |
       wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
-      tar -xzf apache-jmeter-5.5.tgz
-      sudo mv apache-jmeter-5.5 /opt/jmeter
+      tar -xzf apache-jmeter-5.6.3.tgz
+      sudo mv apache-jmeter-5.6.3 /opt/jmeter
     displayName: 'Install JMeter'
 
   - script: |
