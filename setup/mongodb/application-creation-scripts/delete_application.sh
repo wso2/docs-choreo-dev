@@ -17,7 +17,7 @@ Public_API_Key=""
 Private_API_Key=""
 CLIENT_APP_ID=""
 
-while getopts ":g:b:v:c" FLAG; do
+while getopts ":g:b:v:c:h" FLAG; do
     case $FLAG in
         g)
             GROUP_ID=$OPTARG

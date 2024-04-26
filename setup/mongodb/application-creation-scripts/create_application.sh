@@ -30,7 +30,7 @@ specPopulatorUrl=""
 # TODO - Get the secret value from key vault
 consumerSecret=""
 
-while getopts ":g:b:v:c:n:k:s:t:p" FLAG; do
+while getopts ":g:b:v:c:n:k:s:t:p:h" FLAG; do
     case $FLAG in
         g)
             GROUP_ID=$OPTARG
