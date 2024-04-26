@@ -148,7 +148,7 @@ add_configs $APP_ID "specPopulatorUrl" $specPopulatorUrl
 
 # Add secrets
 # TODO - Get the secret value from key vault
-consumerSecret=lx3vHzYh1BHyzDTjYBa6IGbO5KMa
+consumerSecret=""
 add_secrets $APP_ID "consumerSecret" $consumerSecret
 
 echo "Creating the function"
