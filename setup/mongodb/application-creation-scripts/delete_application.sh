@@ -1,12 +1,55 @@
 #!/bin/bash
 
-# This script deletes the application from the MongoDB Realm
+show_usage_and_exit() {
+   echo "Usage: $0 [-g REQUIRED_OPTION] [-b REQUIRED_OPTION] [-v REQUIRED_OPTION] [-c REQUIRED_OPTION]" >&2
+   echo "This script deletes the application from the MongoDB Realm."
+   echo "Mandatory arguments:"
+   echo "     -g    id of the mongodb atlas project"
+   echo "     -b    public key of the admin api"
+   echo "     -v    private key of the admin api"
+   echo "     -c    id of the client application"
+   exit 1
+}
 
 # Required parameters:
-GROUP_ID=$2
-Public_API_Key=$3
-Private_API_Key=$4
-CLIENT_APP_ID=$1
+GROUP_ID=""
+Public_API_Key=""
+Private_API_Key=""
+CLIENT_APP_ID=""
+
+while getopts ":g:b:v:c" FLAG; do
+    case $FLAG in
+        g)
+            # -s hostname of the mongodb atlas server
+            GROUP_ID=$OPTARG
+            ;;
+        b)
+            # -u username of the user
+            Public_API_Key=$OPTARG
+            ;;
+	      v)
+            # -p password of the user
+            Private_API_Key=$OPTARG
+            ;;
+	      c)
+            # -pubk public key of the admin api
+            CLIENT_APP_ID=$OPTARG
+            ;;
+	      h)
+            show_usage_and_exit
+            ;;
+	      \?)
+            # Invalid option
+            echo "Invalid option: -$OPTARG" >&2
+            exit 1
+            ;;
+        :)
+            # Missing argument for an option that requires one
+            echo "Option -$OPTARG requires an argument" >&2
+            exit 1
+            ;;
+    esac
+done
 
 # constants
 BASE_URL="https://services.cloud.mongodb.com/api/admin/v3.0"

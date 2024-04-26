@@ -1,18 +1,88 @@
 #!/bin/bash
 
+show_usage_and_exit() {
+   echo "Usage: $0 [-g REQUIRED_OPTION] [-b REQUIRED_OPTION] [-v REQUIRED_OPTION] [-c REQUIRED_OPTION] [-n REQUIRED_OPTION] [-k REQUIRED_OPTION] [-s REQUIRED_OPTION] [-t REQUIRED_OPTION] [-p REQUIRED_OPTION]" >&2
+   echo "This script creates the application from the MongoDB Realm"
+   echo "Mandatory arguments:"
+   echo "     -g    id of the mongodb atlas project"
+   echo "     -b    public key of the admin api"
+   echo "     -v    private key of the admin api"
+   echo "     -c    name of the mongodb atlas cluster"
+   echo "     -n    name of resource registry db"
+   echo "     -k    consumer key of devportal app"
+   echo "     -s    consumer secret of devportal app"
+   echo "     -t    token endpoint url"
+   echo "     -p    spec populator systemapi url"
+   exit 1
+}
+
 # Get the following from params
 # MongoDB configs and secrets
-GROUP_ID=$1
-Public_API_Key=$2
-Private_API_Key=$3
-CLUSTER_NAME=$4
-RESOURCE_REGISTRY_DB_NAME=$5
+GROUP_ID=""
+Public_API_Key=""
+Private_API_Key=""
+CLUSTER_NAME=""
+RESOURCE_REGISTRY_DB_NAME=""
 # spec populator service configs
-consumerKey=$6
-tokenEndpoint=$7
-specPopulatorUrl=$8
+consumerKey=""
+tokenEndpoint=""
+specPopulatorUrl=""
 # TODO - Get the secret value from key vault
-consumerSecret=$9
+consumerSecret=""
+
+while getopts ":g:b:v:c:n:k:s:t:p" FLAG; do
+    case $FLAG in
+        g)
+            # -s hostname of the mongodb atlas server
+            GROUP_ID=$OPTARG
+            ;;
+        b)
+            # -u username of the user
+            Public_API_Key=$OPTARG
+            ;;
+	      v)
+            # -p password of the user
+            Private_API_Key=$OPTARG
+            ;;
+	      c)
+            # -pubk public key of the admin api
+            CLUSTER_NAME=$OPTARG
+            ;;
+	      n)
+            # -pvtk private key of the admin api
+            RESOURCE_REGISTRY_DB_NAME=$OPTARG
+            ;;
+      	k)
+            # -g id of the mongodb atlas project
+            consumerKey=$OPTARG
+            ;;
+	      s)
+            # -c name of the mongodb atlas cluster
+            consumerSecret=$OPTARG
+            ;;
+        t)
+            # -c name of the mongodb atlas cluster
+            tokenEndpoint=$OPTARG
+            ;;
+        p)
+            # -c name of the mongodb atlas cluster
+            specPopulatorUrl=$OPTARG
+            ;;
+	      h)
+            show_usage_and_exit
+            ;;
+	      \?)
+            # Invalid option
+            echo "Invalid option: -$OPTARG" >&2
+            exit 1
+            ;;
+        :)
+            # Missing argument for an option that requires one
+            echo "Option -$OPTARG requires an argument" >&2
+            exit 1
+            ;;
+    esac
+done
 
 # Constants
 APP_NAME="MarketplaceApp"
