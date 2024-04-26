@@ -11,6 +11,8 @@ RESOURCE_REGISTRY_DB_NAME=$5
 consumerKey=$6
 tokenEndpoint=$7
 specPopulatorUrl=$8
+# TODO - Get the secret value from key vault
+consumerSecret=$9
 
 # Constants
 APP_NAME="MarketplaceApp"
@@ -147,8 +149,6 @@ add_configs $APP_ID "tokenEndpoint" $tokenEndpoint
 add_configs $APP_ID "specPopulatorUrl" $specPopulatorUrl
 
 # Add secrets
-# TODO - Get the secret value from key vault
-consumerSecret=""
 add_secrets $APP_ID "consumerSecret" $consumerSecret
 
 echo "Creating the function"
