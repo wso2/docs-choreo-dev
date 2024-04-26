@@ -38,19 +38,19 @@ while getopts ":g:b:v:c:n:k:s:t:p" FLAG; do
         b)
             Public_API_Key=$OPTARG
             ;;
-	      v)
+        v)
             Private_API_Key=$OPTARG
             ;;
-	      c)
+        c)
             CLUSTER_NAME=$OPTARG
             ;;
-	      n)
+        n)
             RESOURCE_REGISTRY_DB_NAME=$OPTARG
             ;;
-      	k)
+        k)
             consumerKey=$OPTARG
             ;;
-	      s)
+        s)
             consumerSecret=$OPTARG
             ;;
         t)
@@ -59,7 +59,7 @@ while getopts ":g:b:v:c:n:k:s:t:p" FLAG; do
         p)
             specPopulatorUrl=$OPTARG
             ;;
-	      h)
+        h)
             show_usage_and_exit
             ;;
 	      \?)

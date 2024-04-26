@@ -25,13 +25,13 @@ while getopts ":g:b:v:c" FLAG; do
         b)
             Public_API_Key=$OPTARG
             ;;
-	      v)
+        v)
             Private_API_Key=$OPTARG
             ;;
-	      c)
+        c)
             CLIENT_APP_ID=$OPTARG
             ;;
-	      h)
+        h)
             show_usage_and_exit
             ;;
 	      \?)
