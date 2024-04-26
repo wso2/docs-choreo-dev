@@ -20,19 +20,15 @@ CLIENT_APP_ID=""
 while getopts ":g:b:v:c" FLAG; do
     case $FLAG in
         g)
-            # -s hostname of the mongodb atlas server
             GROUP_ID=$OPTARG
             ;;
         b)
-            # -u username of the user
             Public_API_Key=$OPTARG
             ;;
 	      v)
-            # -p password of the user
             Private_API_Key=$OPTARG
             ;;
 	      c)
-            # -pubk public key of the admin api
             CLIENT_APP_ID=$OPTARG
             ;;
 	      h)

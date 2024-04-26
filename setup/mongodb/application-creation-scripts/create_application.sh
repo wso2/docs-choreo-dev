@@ -33,39 +33,30 @@ consumerSecret=""
 while getopts ":g:b:v:c:n:k:s:t:p" FLAG; do
     case $FLAG in
         g)
-            # -s hostname of the mongodb atlas server
             GROUP_ID=$OPTARG
             ;;
         b)
-            # -u username of the user
             Public_API_Key=$OPTARG
             ;;
 	      v)
-            # -p password of the user
             Private_API_Key=$OPTARG
             ;;
 	      c)
-            # -pubk public key of the admin api
             CLUSTER_NAME=$OPTARG
             ;;
 	      n)
-            # -pvtk private key of the admin api
             RESOURCE_REGISTRY_DB_NAME=$OPTARG
             ;;
       	k)
-            # -g id of the mongodb atlas project
             consumerKey=$OPTARG
             ;;
 	      s)
-            # -c name of the mongodb atlas cluster
             consumerSecret=$OPTARG
             ;;
         t)
-            # -c name of the mongodb atlas cluster
             tokenEndpoint=$OPTARG
             ;;
         p)
-            # -c name of the mongodb atlas cluster
             specPopulatorUrl=$OPTARG
             ;;
 	      h)
