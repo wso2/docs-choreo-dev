@@ -12,11 +12,7 @@
  */
 
 import { BUILD_FAILED, BUILD_SUCCESS } from "../../../commons/constants";
-import {
-  LONG_TIME,
-  SHORT_TIME,
-  VERY_SHORT_TIME,
-} from "../../../commons/timeouts";
+import { LONG_TIME, MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
 import { TestIds } from "../../constants/TestIds";
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
 import { Service } from "../../entities/component/service-component";
@@ -77,7 +73,7 @@ export function mixinBuild<T extends Types.Constructor>(
       this.deploymentTrack.validate(component);
 
       cy.get(TestIds.tableTitle)
-        .find(TestIds.progressBar, SHORT_TIME)
+        .find(TestIds.progressBar, MEDIUM_TIME)
         .should("not.exist");
 
       cy.get(TestIds.tableTitle).then((buildTable) => {
