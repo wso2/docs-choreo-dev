@@ -1,3 +1,5 @@
+#!/bin/bash
+
 PUBLIC_API_KEY="$1"
 PRIVATE_API_KEY="$2"
 APP_NAME="$3"
@@ -19,15 +21,17 @@ appservices pull
 echo "Installing dependencies"
 npm install axios@1.6.8
 tar -czf node_modules.tar.gz node_modules/
-mv node_modules.tar.gz ./$APP_NAME/functions
-cd $APP_NAME
+mv node_modules.tar.gz ./"$APP_NAME"/functions
+cd "$APP_NAME" || exit
 appservices push --include-node-modules
 
 
 # Add configs
 echo "Adding configs"
-cd ..
-cp $CONFIG_FILE $APP_NAME/values
-cd $APP_NAME
+(
+  cd ..
+  cp "$CONFIG_FILE" "$APP_NAME"/values
+)
+cd "$APP_NAME" || exit
 appservices push
 

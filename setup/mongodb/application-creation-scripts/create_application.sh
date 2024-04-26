@@ -33,7 +33,7 @@ echo "Starting the script"
 
 function get_function_code() {
     FUNCTION_CODE=$(awk 'BEGIN{ORS="\\n"} {gsub(/"/, "\\\\\"")} 1' "$SOURCE_CODE_FILE_PATH")
-    echo $FUNCTION_CODE
+    echo "$FUNCTION_CODE"
 }
 
 function get_access_token() {
@@ -49,7 +49,7 @@ function create_application() {
     data='{"name": "'"$1"'"}'
     response=$(curl --location "$url" --header 'Content-Type: application/json' --header "$AUTH_HEADER" --data "$data")
     APP_ID=$(jq -r '._id' <<< "$response")
-    echo $response
+    echo "$response"
 }
 
 function create_function() {
@@ -63,7 +63,7 @@ function create_function() {
 
     response=$(curl --location "$url" --header 'Content-Type: application/json' --header "$AUTH_HEADER" --data "$data")
     FUNCTION_ID=$(jq -r '._id' <<< "$response")
-    echo $response
+    echo "$response"
 }
 
 function add_configs() {
@@ -74,7 +74,7 @@ function add_configs() {
         "value": "'"$3"'"
         }'
     response=$(curl --location "$url" --header 'Content-Type: application/json' --header "$AUTH_HEADER" --data "$data")
-    echo $response
+    echo "$response"
 }
 
 function add_secrets() {
@@ -84,7 +84,7 @@ function add_secrets() {
         "value": "'"$3"'"
         }'
     response=$(curl --location "$url" --header 'Content-Type: application/json' --header "$AUTH_HEADER" --data "$data")
-    echo $response
+    echo "$response"
 }
 
 function link_data_source() {
@@ -101,7 +101,7 @@ function link_data_source() {
         }'
     response=$(curl --location "$url" --header 'Content-Type: application/json' --header "$AUTH_HEADER" --data "$data")
     SERVICE_ID=$(jq -r '._id' <<< "$response")
-    echo $response
+    echo "$response"
 }
 
 function create_trigger() {
@@ -130,7 +130,7 @@ function create_trigger() {
         }
         '
     response=$(curl --location "$url" --header 'Content-Type: application/json' --header "$AUTH_HEADER" --data "$data")
-    echo $response
+    echo "$response"
 }
 
 echo "Get script dependencies"
@@ -144,22 +144,22 @@ create_application $APP_NAME
 
 # Add configs
 echo "Adding configs and secrets"
-add_configs $APP_ID "consumerKey" $consumerKey
-add_configs $APP_ID "tokenEndpoint" $tokenEndpoint
-add_configs $APP_ID "specPopulatorUrl" $specPopulatorUrl
+add_configs "$APP_ID" "consumerKey" "$consumerKey"
+add_configs "$APP_ID" "tokenEndpoint" "$tokenEndpoint"
+add_configs "$APP_ID" "specPopulatorUrl" "$specPopulatorUrl"
 
 # Add secrets
-add_secrets $APP_ID "consumerSecret" $consumerSecret
+add_secrets "$APP_ID" "consumerSecret" "$consumerSecret"
 
 echo "Creating the function"
-create_function $APP_ID $FUNCTION_NAME $SOURCE_CODE_FILE_PATH
+create_function "$APP_ID" $FUNCTION_NAME $SOURCE_CODE_FILE_PATH
 
 echo "Linking the data source"
-link_data_source $APP_ID $CLUSTER_NAME
+link_data_source "$APP_ID" "$CLUSTER_NAME"
 
 echo "Creating the trigger"
-create_trigger $APP_ID $FUNCTION_ID $SERVICE_ID $RESOURCE_REGISTRY_DB_NAME $FUNCTION_NAME $CLUSTER_NAME
+create_trigger "$APP_ID" "$FUNCTION_ID" "$SERVICE_ID" "$RESOURCE_REGISTRY_DB_NAME" $FUNCTION_NAME "$CLUSTER_NAME"
 
 # Add function dependencies and configs referencing the secrets
-sh run_cli_commands.sh $Public_API_Key $Private_API_Key $APP_NAME $CONFIG_FILE_PATH
+sh run_cli_commands.sh "$Public_API_Key" "$Private_API_Key" $APP_NAME $CONFIG_FILE_PATH
 
