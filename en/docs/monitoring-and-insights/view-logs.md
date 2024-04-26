@@ -32,7 +32,7 @@ When you view component-level logs on the **Runtime Logs** page, you will see bo
 
 Each application log entry displays the following details:
 
-  - `timestamp`: The time when the request is received by the application component.
+  - `timestamp`: The time when the request is received by the component.
   - `level`: Indicates the severity of the log message. Possible values are **Debug**, **Info**, **Warn**, and **Error**.
   - `componentVersion`: The version of the invoked component.
   - `componentVersionId`: The identifier of the invoked component’s version.
