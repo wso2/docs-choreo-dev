@@ -29,7 +29,7 @@ function get_access_token() {
 function get_app_id() {
     url="$BASE_URL/groups/$GROUP_ID/apps"
     response=$(curl --location "$url" --header 'Content-Type: application/json' --header "$AUTH_HEADER")
-    APP_ID=$(echo $response | jq -r --arg client_app_id "$CLIENT_APP_ID" '.[] | select(.client_app_id==$client_app_id) | ._id')
+    APP_ID=$(echo "$response" | jq -r --arg client_app_id "$CLIENT_APP_ID" '.[] | select(.client_app_id==$client_app_id) | ._id')
     echo "$response"
     echo "$APP_ID"
 }
