@@ -317,8 +317,10 @@ export namespace TestIds {
   export const apiInfoDevPortal = '[data-cyid="api-info-tab-developer-portal"]';
   export const apiInfoSave = '[data-cyid="tst-marketplace-save-button"]';
   export const apiVisibility = '[data-cyid="visibility-select"]';
+  export const choreoHomeDevPortalLink = "[data-cyid='developer-portal-link']";
   export const devPortalHome = '[data-testid="home-appbar-btn"]';
   export const devPortalLoginLink = '[data-testid="login-button"]';
+  export const devPortalSignedInUser = '[data-testid="signedin-user-menu-btn"]';
   export const addConnectionButton = '[data-cyid="create-config-button"]';
   export const ConnectionCard = '[data-cyid="api-card-card"]';
   export const connectionNameInput = '[data-cyid="connection-name"]';
