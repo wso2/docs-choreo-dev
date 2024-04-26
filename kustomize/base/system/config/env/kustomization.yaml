@@ -359,6 +359,7 @@ configMapGenerator:
       - JOB_CONFIG_ENABLED={{.JOB_CONFIG_ENABLED | default "false"}}
       - ENABLE_CONNECTION_USAGE_FOR_ALL_COMPONENT_TYPES={{.ENABLE_CONNECTION_USAGE_FOR_ALL_COMPONENT_TYPES | default "false"}}
       - MARKETPLACE_INTELLIGENT_ROUTING_ENABLED={{.MARKETPLACE_INTELLIGENT_ROUTING_ENABLED | default false}}
+      - RESILIENCY_CONFIG_ENABLED={{.RESILIENCY_CONFIG_ENABLED | default false}}
   - name: env-dp-helmhub
     behavior: create
     literals:
