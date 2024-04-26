@@ -50,9 +50,6 @@ The **Diagnostics view** provides the capability to view errors, throughput, lat
 
 By default, the time range selected for the **Throughput & Latency** graphs is the same time range used for the **Diagnostics view**.
 
-![Diagnostic view](../assets/img/monitoring-and-insights/observability/diagnostic-view.png){.cInlineImage-full}
-
-
 A **bin** is a horizontal section of the graph for a particular period. A bin consists of the following items:
 
 - **Date/Time:** The timestamp for the log entries as they started to appear.
@@ -66,28 +63,3 @@ A **bin** is a horizontal section of the graph for a particular period. A bin co
 ## Logs
 
 The Choreo log pane offers a centralized view to access comprehensive runtime logs of the components you have deployed on Choreo, enhancing troubleshooting and analysis.
-
-## Application logs
-
-![Logs pane](../assets/img/monitoring-and-insights/observability/view-application-logs.png){.cInlineImage-full}
-
-The Service components generate application logs. On the **Observability Overview** page you can click the **View Logs** icon on the header bar to view the application logs for the component as shown in the image above.
-
-!!! note
-    For REST API Proxy components, application logs will only be available if the `Log Message` policy is attached to the respective flows. 
-
-## Gateway logs
-
-![Logs pane](../assets/img/monitoring-and-insights/observability/logs-panel.png){.cInlineImage-full}
-
-The **Logs** pane includes all gateway access logs that the proxy service generates. Logs are currently **only available for REST API Proxy components**.  To view the access logs, click the **Access Logs** icon on the header bar. This will be available for other components soon. 
-
-You can filter the logs based on time or text.
-
-To download the log entries, click the **Download** icon on the header bar. As a result, the log entries are saved as a .zip file in the location you specify.
-
-### Trace requests
-
-You can trace requests your service receives at a given timestamp by clicking a point in the time axis of either the throughput or the latency graphs.  The visual diagram shows the received requests.
-For each request in the visual diagram view, it displays the request time, the latency, and the status. Furthermore, when you click on a specific request, you can view the status code, request latency, the path (control flow) followed to execute the request, and the execution time per `if`, `while`, and `foreach` body.
-The visual diagram also displays the average request latency and the success rate for each client request that corresponds to the selected time interval.
