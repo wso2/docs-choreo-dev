@@ -17,6 +17,9 @@ appservices login --api-key="$PUBLIC_API_KEY" --private-api-key="$PRIVATE_API_KE
 echo "Pulling the latest version of $APP_NAME"
 appservices pull
 
+echo "Copy configs to the values directory"
+cp "$CONFIG_FILE" "$APP_NAME"/values
+
 # Get dependencies
 echo "Installing dependencies"
 npm install axios@1.6.8
@@ -26,12 +29,8 @@ cd "$APP_NAME" || exit
 appservices push --include-node-modules
 
 
+
 # Add configs
 echo "Adding configs"
-(
-  cd ..
-  cp "$CONFIG_FILE" "$APP_NAME"/values
-)
-cd "$APP_NAME" || exit
 appservices push
 
