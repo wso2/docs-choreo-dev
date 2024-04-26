@@ -55,7 +55,7 @@ while getopts ":s:u:p:b:v:g:c:h" FLAG; do
         h)
             show_usage_and_exit
             ;;
-	      \?)
+        \?)
             # Invalid option
             echo "Invalid option: -$OPTARG" >&2
             exit 1
