@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: marketplace-assistant
+  name: marketplace-assistant
+  namespace: choreo-ai
+spec:
+  ports:
+    - name: mrkt-asst-port
+      port: 8000
+      targetPort: mrkt-asst-port
+  selector:
+    choreo.component: marketplace-assistant

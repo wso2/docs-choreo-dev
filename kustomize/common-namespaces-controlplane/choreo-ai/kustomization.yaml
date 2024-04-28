@@ -20,5 +20,9 @@ kind: Kustomization
 resources:
   - config
   - namespace.yaml
+  - deployment
+  - hpa
+  - pdb
+  - service
 
 namespace: choreo-ai
