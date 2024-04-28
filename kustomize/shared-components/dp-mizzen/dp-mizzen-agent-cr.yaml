@@ -211,7 +211,7 @@ rules:
   - apiGroups:
       - cilium.io
     resources:
-      - ciliumenvoyconfig
+      - ciliumenvoyconfigs
     verbs:
       - get
       - list
