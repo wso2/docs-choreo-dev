@@ -35,6 +35,7 @@ configMapGenerator:
       - AZURE_OPENAI_ENDPOINT={{.AZURE_OPENAI_ENDPOINT}}
       - REGION={{.REGION}}
       - ORG_API_URL={{.ORG_API_URL}}
+      - LOG_LEVEL={{.LOG_LEVEL}}
   - name: env-docs-assistant
     behavior: create
     literals:
