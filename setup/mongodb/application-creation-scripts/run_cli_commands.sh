@@ -7,7 +7,7 @@ CONFIG_FILE="$4"
 
 # Install the Atlas App Services CLI
 echo "Installing the Atlas App Services CLI"
-npm install -g atlas-app-services-cli
+sudo npm install -g atlas-app-services-cli
 
 # Login to the Atlas App Services CLI
 echo "Logging in to the Atlas App Services CLI"
