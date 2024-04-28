@@ -22,7 +22,6 @@ metadata:
   labels:
     choreo.component: spec-populator-service
   name: spec-populator-service
-  namespace: choreo-ai
 spec:
   selector:
     matchLabels:

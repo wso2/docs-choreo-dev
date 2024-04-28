@@ -7,7 +7,6 @@ metadata:
   labels:
     choreo.component: marketplace-assistant
   name: marketplace-assistant
-  namespace: choreo-ai
 spec:
   selector:
     matchLabels:
