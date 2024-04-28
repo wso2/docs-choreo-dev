@@ -2,7 +2,6 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: spec-populator
-  namespace: choreo-ai
 spec:
   maxReplicas: 8
   minReplicas: 2
