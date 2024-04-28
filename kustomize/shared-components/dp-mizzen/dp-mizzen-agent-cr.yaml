@@ -208,3 +208,16 @@ rules:
       - patch
       - delete
       - deletecollection
+  - apiGroups:
+      - cilium.io
+    resources:
+      - ciliumenvoyconfig
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+      - deletecollection
