@@ -195,7 +195,7 @@ function create_trigger() {
 }
 
 echo "Get script dependencies"
-brew install jq
+sudo apt install jq
 
 echo "Getting the access token"
 get_access_token
