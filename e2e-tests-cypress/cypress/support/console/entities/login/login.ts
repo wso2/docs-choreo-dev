@@ -20,6 +20,10 @@ class Login {
   static username = "#username";
   static password = "#password";
 
+  static enterpriseLogoutUrl = Cypress.env("auth0LogoutUrl");
+  static enterpriseClientId = Cypress.env("auth0ClientID");
+  static enterpriseLoginUrl = Cypress.env("enterpriseLoginUrl");
+
   private displayName: string = "";
   private userEmail: string = "";
   private orgId: number = 0;
@@ -41,14 +45,27 @@ class Login {
     this.handleTermsOfUse();
   }
 
-  perfLogin () {
+  enterpriseLogin() {
+    this.setBrowserLocalStorage();
+    this.setBrowserCookie();
+    this.logoutOfPreviousEnterpriseSession();
+    this.enterEnterpriseUserCredentials();
+    cy.get(TestIds.backdropLoader).should("not.exist");
+    cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible");
+    this.persistLogoutURL();
+    this.handleTermsOfUse();
+  }
+
+  perfLogin() {
     const userName = Cypress.env("perfUsername");
     cy.log(`User: ${userName}`);
     this.setBrowserLocalStorage();
     this.setBrowserCookie();
     this.registerNetworkCallsForInterception();
     cy.visit(Cypress.env("baseUrl"));
-    cy.get('[data-cyid=email-sign-in-button]').should("be.visible", SHORT_TIME).click();
+    cy.get("[data-cyid=email-sign-in-button]")
+      .should("be.visible", SHORT_TIME)
+      .click();
     cy.get("#usernameUserInput").type(userName);
     cy.contains("Continue").click();
     cy.get("#password").type(Cypress.env("perfPassword"));
@@ -59,8 +76,8 @@ class Login {
     this.handleTermsOfUse();
     cy.wait(25000);
   }
-   
- selectRegion(retryCount: number = 0) {
+
+  private selectRegion(retryCount: number = 0) {
     retryCount++;
     if (retryCount > 3) {
       return;
@@ -129,6 +146,31 @@ class Login {
       });
   }
 
+  private logoutOfPreviousEnterpriseSession() {
+    cy.request(Login.enterpriseLogoutUrl, {
+      client_id: Login.enterpriseClientId,
+      returnTo: Login.enterpriseLoginUrl,
+    });
+  }
+
+  private enterEnterpriseUserCredentials() {
+    const signInButton = 'button[id="enterprise-sign-in"]';
+    cy.visit(Login.enterpriseLoginUrl);
+    cy.get(signInButton).should("be.visible", MEDIUM_TIME);
+    cy.get(signInButton).click();
+    cy.get("[data-cyid=sign-in-with-enterprise]").type(
+      Cypress.env("enterpriseIDPUsername")
+    );
+    cy.contains("Continue").click();
+
+    cy.get('input[id="username"]').should("be.visible", MEDIUM_TIME);
+    cy.get(Login.username).type(Cypress.env("enterpriseIDPUsername"));
+    cy.get(Login.password).type(Cypress.env("enterpriseIDPPassword"), {
+      log: false,
+    });
+    cy.contains("Continue").click({ force: true });
+  }
+
   private registerNetworkCallsForInterception() {
     cy.intercept("GET", VALIDATE_USER_URL).as("org");
     cy.intercept({
@@ -173,11 +215,11 @@ class Login {
       if (!res.response) {
         throw new Error("Failed to receive orgs response");
       }
-  
+
       const userOrg = res.response.body.organizations[0];
-  
+
       cy.log(`First available org ${userOrg.handle} selected`);
-  
+
       this.displayName = res.response.body.displayName;
       this.userEmail = res.response.body.userEmail;
       this.orgId = userOrg.id;
@@ -185,8 +227,6 @@ class Login {
       this.orgUuid = userOrg.uuid;
     });
   }
-  
-
 
   private persistAccessToken() {
     cy.wait("@gql", MEDIUM_TIME).then((intercept) => {
