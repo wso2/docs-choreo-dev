@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    seccomp.security.alpha.kubernetes.io/pod: "docker/default"
+    checkov.io/skip1: "CKV_K8S_AZURE_WSO2_2=Linkerd is disable for dataplane"
+  labels:
+    choreo.component: insights-assistant
+  name: insights-assistant
+  namespace: choreo-ai
+spec:
+  selector:
+    matchLabels:
+      choreo.component: insights-assistant
+  template:
+    metadata:
+      labels:
+        choreo.component: insights-assistant
+        antiaffinity: insights-assistant
+      annotations:
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+        seccomp.security.alpha.kubernetes.io/pod: "docker/default"
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: insights-assistant
+          envFrom:
+            - configMapRef:
+                name: env-insights-assistant-cm
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-ai-insights-assistant:latest
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 250m
+              memory: 250Mi
+          ports:
+            - containerPort: 8080 
+              name: ins-asst-port
+              protocol: TCP
+          securityContext:
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+              - all
+          volumeMounts:
+            - mountPath: /mnt/csi/secret-insights-assistant
+              name: insights-assistant-secret
+              readOnly: true
+            - mountPath: /tmp
+              name: temp-volume
+      volumes:
+        - name: insights-assistant-secret
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: insights-assistant-secret
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: temp-volume
+          emptyDir: {}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  antiaffinity: insights-assistant
+              topologyKey: kubernetes.io/hostname
