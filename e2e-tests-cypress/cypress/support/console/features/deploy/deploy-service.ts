@@ -78,6 +78,8 @@ export interface DeployServiceFeature {
   _promoteBYOC(component: Byoc, configStepsAvailable?: ConfigEntryStep[]);
 
   _promoteWebhook(component: Webhook, configStepsAvailable?: ConfigEntryStep[]);
+
+  _isDevDeploymentExists(): Cypress.Chainable<boolean>;
 }
 
 export function mixinServiceDeploy<T extends Types.Constructor>(
@@ -250,6 +252,20 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
         cy.get(TestIds.createDeploymentTrack).click();
         cy.get(TestIds.createDeploymentTrack).should("not.exist");
       });
+    }
+
+    _isDevDeploymentExists(): Cypress.Chainable<boolean> {
+      let isExists: boolean;
+
+      this.sideMenu.navigateToDeploy();
+      return cy
+        .get(TestIds.devEnvCard, MEDIUM_TIME).should("be.visible")
+        .then((card) => {
+          isExists = card.find(":contains('Deployment Status')").length > 0;
+        })
+        .then(() => {
+          return cy.wrap(isExists);
+        });
     }
 
     private saveEndpointUrls(

@@ -13,6 +13,7 @@
 
 import { Enums } from "../../../support/commons/enums";
 import { WebApp } from "../../../support/console/entities/component/webapp-component";
+import { Service } from "../../../support/console/entities/component/service-component";
 import {
   Project,
   RepoInfo,
@@ -21,13 +22,10 @@ import {
 import { console } from "../../../support/console/console";
 
 
-const managedAuthBackendServiceName = Cypress.env("managedAuthBackendServiceName");
-const connectionName = "Managed Auth BE Connection";
-
 describe("Create Web App", () => {
-  const PROJECT_DESCRIPTION = "Web App";
+  const WEB_APP_PROJECT_DESCRIPTION = "Web App";
 
-  const repoInfo: RepoInfo = {
+  const webAppRepoInfo: RepoInfo = {
     url: "https://github.com/choreo-test-apps/choreo-examples",
     branch: "main",
     dockerContext:
@@ -41,8 +39,20 @@ describe("Create Web App", () => {
     webAppOutputDirectory: "dist",
   };
 
+  const BACKEND_SERVICE_PROJECT_NAME = "Default Project";
+  const BACKEND_SERVICE_ENDPOINT_NAME = "Readinglist";
+  const BACKEND_SERVICE_COMPONENT_NAME = "test10";
+  const BACKEND_CONNECTION_NAME = "Managed Auth BE Connection";
+
+  const backendServiceRepoInfo: RepoInfo = {
+    url: "https://github.com/choreo-test-apps/choreo-examples",
+    branch: "main",
+    subPath: "cloud-native-app-developer/reading-list-service",
+  };
+
   let project: Project;
   let webApp: WebApp;
+  let service: Service;
   let connectionUrl: string;
 
   /**
@@ -109,27 +119,77 @@ describe("Create Web App", () => {
     console.login();
   });
 
-  it("Adding users for E2E tests", () => {
+  it("Search backend service project", () => {
+    project = console.searchProject(BACKEND_SERVICE_PROJECT_NAME);
+  });
+
+  it("Create backend service if not exists", () => {
+    project.isComponentExists(BACKEND_SERVICE_COMPONENT_NAME).then((isExists) => {
+      if (!isExists) {
+        project
+          .createServiceComponent(
+            Enums.Accessibility.EXTERNAL,
+            backendServiceRepoInfo,
+            BACKEND_SERVICE_ENDPOINT_NAME,
+            BACKEND_SERVICE_COMPONENT_NAME
+          )
+          .then((serviceComponent: Service) => {
+            project.visitComponent(BACKEND_SERVICE_COMPONENT_NAME);
+            service = serviceComponent;
+          });
+      } else {
+        project.visitComponent(BACKEND_SERVICE_COMPONENT_NAME);
+        service = new Service(BACKEND_SERVICE_COMPONENT_NAME, BACKEND_SERVICE_ENDPOINT_NAME);
+      }
+    });
+  });
+
+  it("Build backend service if not built previously", () => {
+    service.isSuccessfulBuildExists().then((isExists) => {
+      if (!isExists) {
+        service.build();
+      }
+    });
+  });
+
+  it("Enable Pass User Context To Backend if not deployed previously", () => {
+    service._isDevDeploymentExists().then((isExists) => {
+      if (!isExists) {
+        service.deployPublicLevelAccessibility(); // we have to deploy once to access endpoint configurations
+        service.enablePassUserContextToBackend();
+      }
+    });
+  });
+
+  it("Deploy backend service to Dev", () => {
+    service.deployPublicLevelAccessibility();
+  });
+
+  it("Promote backend service to Prod", () => {
+    service.promotePublicLevelAccessibility();
+  });
+
+  it("Add users for E2E tests", () => {
     console.addUserStore("users.csv", Enums.Environment.DEVELOPMENT);
     console.addUserStore("users.csv", Enums.Environment.PRODUCTION);
   });
 
   it("Creating a project", () => {
-    project = console.createNewProject(PROJECT_DESCRIPTION);
+    project = console.createNewProject(WEB_APP_PROJECT_DESCRIPTION);
   });
 
   it("Creating a Web App", () => {
     project
-      .createWebAppComponent(Enums.Accessibility.EXTERNAL, repoInfo, webAppInfo)
+      .createWebAppComponent(Enums.Accessibility.EXTERNAL, webAppRepoInfo, webAppInfo)
       .then((app: WebApp) => {
         project.visitComponent(app.getName());
         webApp = app;
       });
   });
 
-  it("Create connections", () => {
-    webApp.createConnection(managedAuthBackendServiceName, connectionName);
-    webApp.copyConnectionUrl(connectionName).then((url: string) => {
+  it("Create a connection to backend service", () => {
+    webApp.createConnection(BACKEND_SERVICE_COMPONENT_NAME, BACKEND_CONNECTION_NAME);
+    webApp.copyConnectionUrl(BACKEND_CONNECTION_NAME).then((url: string) => {
       connectionUrl = url;
     });
   });
