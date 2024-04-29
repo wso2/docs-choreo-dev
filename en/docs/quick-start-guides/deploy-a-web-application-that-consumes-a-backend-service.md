@@ -17,7 +17,7 @@ This guide walks you through the following steps:
 
 Before you try out this guide, complete the following:
 
-1. Create a GitHub repository to save the service implementation. For this guide, you can fork [Choreo sample book list app repository](https://github.com/wso2/choreo-sample-book-list-app).
+1. Create a GitHub repository to save the service implementation. For this guide, you can fork the [Choreo sample book list app repository](https://github.com/wso2/choreo-sample-book-list-app).
 
 2. If you are signing in to the Choreo Console for the first time, create an organization as follows:
 
@@ -28,50 +28,53 @@ Before you try out this guide, complete the following:
 
     This creates the organization and opens the organization home page.
 
-## Step 1: Create a mono repository project
+## Step 1: Create a project
 
-Follow the steps given below to create a mono repository project:
-
-!!! info
-     A mono repository project allows you to link a specific Git-based repository and branch to the project during project creation. This streamlines deployment by establishing a dedicated deployment track tied to a selected branch within the project. Creating a mono repository project also eliminates the need for repetitive selection of Git accounts, repositories, and branches during component creation.
+Follow the steps given below to create a project:
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the organization home page.
 2. On the organization home page, click **+ Create Project**.
-3. Enter a unique name and description for the project. You can enter the name and description given below:
+3. Enter a display name, unique name, and description for the project. You can enter the values given below:
+    
+    !!! tip
+         In the **Name** field, you must specify a name to uniquely identify your project in various contexts. The value is editable only at the time you create the project. You cannot change the name after you create the project.
 
-    | **Field**       | **Value**               |
-    |-----------------|-------------------------|
-    | **Name**        | Sample project        |
-    | **Description** | My sample mono repository project |
+    | **Field**                | **Value**             |
+    |--------------------------|-----------------------|
+    | **Project Display Name** | `Sample project`      |
+    | **Name**                 | `sample-project`      |
+    | **Project Description**  | `My sample multiple-component project`|
 
-4. Select **Mono Repository**.
-5. Click **Next**.
-6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
-7. If you have not already connected your GitHub repository to Choreo, click **Authorize with GitHub**, enter your GitHub credentials, and select the repository you created by forking [Choreo sample book list app repository](https://github.com/wso2/choreo-sample-book-list-app) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps). 
+4. Click **Create**. This creates the project and opens the project home page.
 
-    !!! info
-         The **Choreo GitHub App** requires the following permissions:
-         
-        - Read and write access to code and pull requests.
-        - Read access to issues and metadata.
+## Step 2: Connect your sample repository and configure the sample service
+
+To connect to the repository you forked in the prerequisites and configure the sample service, follow the steps given below: 
+
+1. On the project home page, click **Create** under **Create Multiple Components**.
+2. Go to the **GitHub** tab.
+3. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+
+    Alternatively, you can paste the [Choreo sample book list app repository](https://github.com/wso2/choreo-sample-book-list-app) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
+
+    !!! note
+           The **Choreo GitHub App** requires the following permissions:
+
+           - Read and write access to code and pull requests.
+           - Read access to issues and metadata.
              
-        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
+           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
+4. Enter the following information:
 
-8. In the **Connect Repository** pane, enter the following information:
+    | **Field**                    | **Value**                   |
+    |------------------------------|-----------------------------|
+    | **Organization**             | Your GitHub account         |
+    | **Repository**               | choreo-sample-book-list-app |
+    | **Branch**                   | **`main`**                  |
 
-    | **Field**             | **Value**                                     |
-    |-----------------------|-----------------------------------------------|
-    | **GitHub Account**    | Your account                                  |
-    | **GitHub Repository** | choreo-sample-book-list-app                   |
-    | **Branch**            | main                                 |
-
-9. Click **Next**. This scans the repository branch you connected and displays the components that are already available in it.
-
-## Step 2: Create a service component and publish it as a REST API
-
-1. In the **Import Component Code** pane, click **Configure** corresponding to the `Reading List Service` component.
-2. In the **Component Configuration** dialog, specify values as follows for each of the fields:
+5. In the **Add Directories** pane under **Configure Components**, click the **+** icon corresponding to `reading-list-service`.
+6. In the **Component Configuration** dialog that opens, specify values as follows for each of the fields:
 
     | **Field**             | **Value**                                     |
     |-----------------------|-----------------------------------------------|
@@ -80,8 +83,8 @@ Follow the steps given below to create a mono repository project:
     | **Buildpack**         | NodeJS                                        |
     | **Language Version**  | 20.x.x                                        |     
 
-3. Click **Save**. You will see that the status of the `Reading List Service` component has changed to **Configured** and the checkbox to select the component is enabled.
-4. Select the `Reading List Service` component and click **Create**. This creates a mono repository project, initializes the service with the implementation from your GitHub repository, and takes you to the project home page.
+7. Click **Save**. This adds the `Reading List Service` component to the **Configured Components** pane.
+8. Click **Create**. This initializes the service with the implementation from your GitHub repository and takes you to the project home page.
 
     You can see the `Reading List Service` component listed under **Component Listing** on the project home page.
 
@@ -91,13 +94,10 @@ To build the service, follow the steps given below:
 
 1. On the project home page, click the `Reading List Service` component listed under **Component Listing**. This takes you to the component overview page.
 2. In the left navigation menu, click **Build**.
-3. In the **Builds** pane, click **Build**. This opens the **Commits** pane where you can see all the commits related to the component.
-4. Click **Build Latest**. This triggers the build process and displays the build progress in the **Build Logs** pane.
+3. In the **Builds** pane, click **Build Latest**.
 
-    !!! info
-         The build process can take a while to complete. When the build process is complete, the build will be listed in the **Builds** pane along with the build status. 
-
-   Here, you will see the build status as **Success**.   
+   !!! note
+        Building the service component may take a while. You can track the progress via the logs in the **Build Details** pane. Once the build process is complete, the build status changes to **Success**.
 
 ## Step 4: Deploy the service
 
@@ -107,12 +107,12 @@ For the REST endpoint of the service to be invokable, you need to deploy it. To 
 2. In the **Set Up** card, click **Configure & Deploy**.
 3. In the **Environment Configurations** pane that opens, click **Next**.
 4. In the **File Mount** pane that opens, click **Next**.
-5. In the **Endpoint Details** pane that opens,verify that the **Network Visibility** is set to **Public**. This setting securely exposes the endpoint for consumption.
+5. In the **Endpoint Details** pane that opens, verify that the **Network Visibility** is set to **Public**. This setting securely exposes the endpoint for consumption.
 6. Click **Deploy**. This deploys the service to the development environment and lists the service in the [Choreo Marketplace](../choreo-concepts/choreo-marketplace.md). 
 
 ## Step 5: Test the service
 
-To test the **Readinglist** REST endpoint via the integrated OpenAPI Console in Choreo, follow the steps given below:
+To test the endpoint via the integrated OpenAPI Console in Choreo, follow the steps given below:
 
 1. In the Choreo Console left navigation menu, click **Test** and then click **Console**.
 2. In the OpenAPI Console that opens, select **Development** from the environment drop-down list.
@@ -163,15 +163,41 @@ To create a web application component, follow the steps given below:
 
     | **Field**             | **Value**               |
     |-----------------------|-------------------------|
-    | **Component Name**    | Reading List Web App  |
+    | **Component Name**    | Reading List Web App    |
     | **Description**       | Front-end application for the reading list service |
-    | **Buildpack**         | Select **React** because the sample front-end application is a React application built with Vite|
+
+5. Go to the **GitHub** tab.
+6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+
+    Alternatively, you can paste the [Choreo sample Book List Service repository](https://github.com/wso2/choreo-sample-book-list-service) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
+
+    !!! note
+           The **Choreo GitHub App** requires the following permissions:
+
+           - Read and write access to code and pull requests.
+           - Read access to issues and metadata.
+             
+           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
+
+7. Enter the following information:
+
+    | **Field**             | **Description**                  |
+    |-----------------------|----------------------------------|
+    | **Organization**      | Your GitHub account              |
+    | **Repository**        | choreo-sample-book-list-app      |
+    | **Branch**            | main                             |
+
+6. Select **React** as the buildpack because the sample front-end application is a React application built with Vite.
+7. Enter the following information:
+
+    | **Field**             | **Value**               |
+    |-----------------------|-------------------------|
     | **Project Directory** | /choreo-sample-book-list-app/reading-list-front-end-with-managed-auth |
     | **Build Command**     | npm install && npm run build            |
     | **Build Path**        | dist                                 |
     | **Node Version**      | 18                                   |
 
-5. Click **Create**. This initializes the component with the implementation from your GitHub repository and takes you to the **Overview** page of the component. 
+8. Click **Create**. This initializes the component with the implementation from your GitHub repository and takes you to the **Overview** page of the component. 
 
 ### Step 6.2: Create a connection between the web application and the deployed service
 
