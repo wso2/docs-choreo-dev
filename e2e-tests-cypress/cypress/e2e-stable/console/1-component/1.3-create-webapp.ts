@@ -41,7 +41,7 @@ describe("Create Web App", () => {
 
   const BACKEND_SERVICE_PROJECT_NAME = "Default Project";
   const BACKEND_SERVICE_ENDPOINT_NAME = "Readinglist";
-  const BACKEND_SERVICE_COMPONENT_NAME = "test10";
+  const BACKEND_SERVICE_COMPONENT_NAME = "managedauthbackend";
   const BACKEND_CONNECTION_NAME = "Managed Auth BE Connection";
 
   const backendServiceRepoInfo: RepoInfo = {
