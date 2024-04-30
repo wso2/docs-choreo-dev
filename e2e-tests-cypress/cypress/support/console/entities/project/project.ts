@@ -580,7 +580,6 @@ export class Project {
     options?: { expectedTraffic: number }
   ) {
     this.selectEnvironment(env);
-    this.selectTimePeriod();
     this.getTotalTraffic().should((value) => {
       expect(Number(value)).gte(options?.expectedTraffic || 2);
     });

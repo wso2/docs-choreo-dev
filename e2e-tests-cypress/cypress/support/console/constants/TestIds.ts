@@ -65,7 +65,7 @@ export namespace TestIds {
   export const endpointSettings =
     '[data-cyid="endpoint-config-settings-icon-button"]';
   export const selectVersion = '[data-cyid="deployment-track-picker-chip"]';
-  export const selectBranch = '[data-cyid="deployment-track-picker"]';
+  export const selectBranch = '[data-cyid^="deployment-track-picker"]';
   export const deploySplitToggle =
     '[data-cyid="direct-deploy-option-split-toggle-button-button"]';
   export const configureDeploy = '[data-cyid="configure-&-deploy-option"]';
