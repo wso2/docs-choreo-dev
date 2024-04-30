@@ -4,7 +4,7 @@ To establish secure communication between the Choreo Gateway and your backend, y
 
 Mutual SSL authentication involves both the client and server validating each other’s certificates before establishing a connection. The following diagram depicts this scenario:
 
-![Choreo high-level view](../assets/img/authentication-and-authorization/mutual-ssl-authentication.png)
+![Mutual SSL authentication](../assets/img/authentication-and-authorization/mutual-ssl-authentication.png)
 
 ## Configure mutual SSL to establish secure connectivity
 
