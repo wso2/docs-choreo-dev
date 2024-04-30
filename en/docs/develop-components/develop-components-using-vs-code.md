@@ -1,4 +1,4 @@
-# Choreo VS Code Extension User Guide
+# Develop Components Using VS Code
 
 The [Choreo VS Code extension](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo) offers comprehensive component management capabilities to streamline local development within Choreo.
 
