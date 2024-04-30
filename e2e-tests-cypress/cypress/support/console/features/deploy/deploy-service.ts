@@ -315,6 +315,8 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
             service.setProdEndpointUrl(url);
           }
         });
+
+      cy.contains("span", "Endpoint Details").parent().siblings().first().click();
     }
 
     private waitTillReadyToDeploy() {
