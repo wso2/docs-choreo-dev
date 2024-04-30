@@ -43,7 +43,7 @@ Follow the steps given below to create a project:
     |--------------------------|-----------------------|
     | **Project Display Name** | `Sample project`      |
     | **Name**                 | `sample-project`      |
-    | **Project Description**  | `My sample multiple-component project`|
+    | **Project Description**  | `My sample project`   |
 
 4. Click **Create**. This creates the project and opens the project home page.
 
