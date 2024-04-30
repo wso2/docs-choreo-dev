@@ -7,7 +7,6 @@ metadata:
   labels:
     choreo.component: insights-assistant
   name: insights-assistant
-  namespace: choreo-ai
 spec:
   selector:
     matchLabels:
@@ -39,7 +38,7 @@ spec:
               cpu: 250m
               memory: 250Mi
           ports:
-            - containerPort: 8080 
+            - containerPort: 8080
               name: ins-asst-port
               protocol: TCP
           securityContext:
@@ -49,7 +48,7 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop:
-              - all
+                - all
           volumeMounts:
             - mountPath: /mnt/csi/secret-insights-assistant
               name: insights-assistant-secret
