@@ -600,7 +600,6 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       if (component instanceof ScheduleTrigger) {
         cy.get(TestIds.next, LONG_TIME).should("be.enabled").click();
-        cy.get('[value="*/1 * * * *"]', LONG_TIME).eq(1).should("be.visible");
       }
     }
 

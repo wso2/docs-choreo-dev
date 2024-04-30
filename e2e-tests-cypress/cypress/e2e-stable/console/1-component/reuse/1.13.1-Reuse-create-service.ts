@@ -105,9 +105,4 @@ describe("Verify Ballerina service functionality", () => {
         expect(res.statusCode).equal(OK.toString());
       });
   });
-
-  it("Stop component", () => {
-    component.stopDeployment();
-    component.stopPromotion();
-  });
 });

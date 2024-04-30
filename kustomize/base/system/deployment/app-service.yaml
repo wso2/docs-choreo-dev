@@ -147,7 +147,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: secret-api-manager
-                  key: API_MANAGER_CLIENT_SECRET                
+                  key: API_MANAGER_CLIENT_SECRET
             - name: SALESFORCE_LEAD_VIA_PARDOT_APP_KEY
               valueFrom:
                 secretKeyRef:
@@ -167,7 +167,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: secret-app-service
-                  key: MAX_MIND_GEO_LOC_COUNTRY_PASSWORD              
+                  key: MAX_MIND_GEO_LOC_COUNTRY_PASSWORD
           envFrom:
             - configMapRef:
                 name: env-app-service
@@ -240,7 +240,7 @@ spec:
               readOnly: true
             - name: secret-api-manager
               mountPath: "/mnt/csi/secret-api-manager"
-              readOnly: true              
+              readOnly: true
       volumes:
         - name: config
           configMap:

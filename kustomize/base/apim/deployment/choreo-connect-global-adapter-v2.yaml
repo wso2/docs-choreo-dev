@@ -104,13 +104,13 @@ spec:
             capabilities:
               drop:
                 - all
-              add: [ "NET_RAW" ]
+              add:
+                - "NET_RAW"
           envFrom:
             - configMapRef:
                 name: cm-feature-flags
             - secretRef:
                 name: secret-redis
-
           env:
             - name: GLOBAL_ADAPTER_PRIVATE_KEY_PATH
               value: /home/wso2/security/keystore/global-adapter.key
@@ -154,17 +154,17 @@ spec:
             - containerPort: 9843
           livenessProbe:
             exec:
-              command: [ "sh", "check_health.sh", "liveness" ]
+              command: ["sh", "check_health.sh", "liveness"]
             initialDelaySeconds: 5
             periodSeconds: 30
           readinessProbe:
             exec:
-              command: [ "sh", "check_health.sh", "readiness" ]
+              command: ["sh", "check_health.sh", "readiness"]
             initialDelaySeconds: 5
             periodSeconds: 5
           startupProbe:
             exec:
-              command: [ "sh", "check_health.sh", "readiness" ]
+              command: ["sh", "check_health.sh", "readiness"]
             failureThreshold: 30
             periodSeconds: 30
       volumes:

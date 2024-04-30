@@ -10,11 +10,11 @@ spec:
       app.kubernetes.io/instance: prod-choreo-webapps-nginx-ingress
       app.kubernetes.io/name: ingress-nginx
   policyTypes:
-  - Ingress
-  - Egress
+    - Ingress
+    - Egress
   ingress:
-  - ports:
-    - port: 80
-    - port: 443
+    - ports:
+        - port: 80
+        - port: 443
   egress:
-  - {}
+    - {}

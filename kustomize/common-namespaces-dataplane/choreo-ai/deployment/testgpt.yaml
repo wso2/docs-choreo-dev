@@ -54,7 +54,7 @@ spec:
               cpu: 250m
               memory: 250Mi
           ports:
-            - containerPort: 9090 
+            - containerPort: 9090
               name: testgpt-port
               protocol: TCP
           readinessProbe:
@@ -82,7 +82,7 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop:
-              - all
+                - all
           volumeMounts:
             - name: config
               mountPath: /home/ballerina/Config.toml
@@ -108,8 +108,8 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                - key: antiaffinity
-                  operator: In
-                  values:
-                  - testgpt
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - testgpt
               topologyKey: kubernetes.io/hostname

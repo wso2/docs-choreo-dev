@@ -56,7 +56,7 @@ spec:
               configMap:
                 name: cm-file-scheduled-mssql-tasks-config
             - name: script-volume
-              emptyDir: { }
+              emptyDir: {}
             - name: secret-volume
               csi:
                 driver: secrets-store.csi.k8s.io

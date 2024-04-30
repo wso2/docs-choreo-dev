@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: quota-limiter
-  strategy: { }
+  strategy: {}
   template:
     metadata:
       labels:

@@ -21,7 +21,7 @@ spec:
         - objectName: AZURE_LA_CLIENT_SECRET
           key: AZURE_LA_CLIENT_SECRET
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: choreo-dev-log-analytics-read-sysobs-api

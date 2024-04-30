@@ -22,6 +22,7 @@ import { TestIds } from "./constants/TestIds";
 import { OrganizationSettings } from "./features/org-settings/org-settings";
 import { CustomDomainType, Enums } from "../commons/enums";
 import { DOMAIN_URL_MGT } from "../commons/urls";
+import { VERY_SHORT_TIME } from "../commons/timeouts";
 
 /**
  * Represents the Choreo Console, the entry point for all tests.
@@ -34,6 +35,32 @@ class Console {
   login() {
     login.login();
     return cy.wrap({});
+  }
+
+  enterpriseLogin() {
+    login.enterpriseLogin();
+    return cy.wrap({});
+  }
+
+  getDevPortalUrl(): Cypress.Chainable<string> {
+    return cy
+      .get(TestIds.choreoHomeDevPortalLink)
+      .should("be.visible")
+      .invoke("attr", "href")
+      .then((href) => {
+        if (href) {
+          return href;
+        } else {
+          throw new Error("Devportal link not found");
+        }
+      });
+  }
+
+  navigateToEnterpriseDevPortal(url: string) {
+    cy.visit(url).then(() => {
+      cy.get(TestIds.devPortalHome, VERY_SHORT_TIME).should("be.visible");
+      cy.get(TestIds.devPortalSignedInUser).should("be.visible");
+    });
   }
 
   logout() {
@@ -72,32 +99,46 @@ class Console {
     this._orgSettings.addRole(roleName, roleDescription, roleTag);
   }
 
-  checkCurrentUserHasRole(roleName: string) {
+  checkCurrentUserIsInGroup(group: string) {
     this.navigateToHome();
     this.navigateToSettings();
     this.navigateToUsers();
-    this._orgSettings.checkUserHasRole(login.getUserEmail(), roleName);
+    this._orgSettings.checkUserIsInGroup(login.getUserEmail(), group);
   }
 
-  addGroup(groupName: string, groupDescription: string) {
+  addGroup(group: string, description: string) {
     this.navigateToHome();
     this.navigateToSettings();
     this.navigateToGroups();
-    this._orgSettings.addGroup(groupName, groupDescription);
+    this._orgSettings.addGroup(group, description);
   }
 
-  addRoleToGroup(roleName: string, groupName: string) {
+  addRolesToGroup(roles: string[], group: string) {
     this.navigateToHome();
     this.navigateToSettings();
     this.navigateToGroups();
-    this._orgSettings.addRoleToGroup(roleName, groupName);
+    this._orgSettings.addRolesToGroup(roles, group);
   }
 
-  deleteGroupIfExists(groupName: string) {
+  removeRolesFromGroup(roles: string[], group: string) {
     this.navigateToHome();
     this.navigateToSettings();
     this.navigateToGroups();
-    this._orgSettings.deleteGroupIfExists(groupName);
+    this._orgSettings.removeRolesFromGroup(roles, group);
+  }
+
+  checkRolesInGroup(roles: string[], group: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToGroups();
+    this._orgSettings.checkRolesInGroup(roles, group);
+  }
+
+  deleteGroupIfExists(group: string) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToGroups();
+    this._orgSettings.deleteGroupIfExists(group);
   }
 
   deleteGroup(groupName: string) {

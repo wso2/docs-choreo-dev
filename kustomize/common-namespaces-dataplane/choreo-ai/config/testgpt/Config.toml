@@ -15,3 +15,9 @@ azureOpenAIToken = "/mnt/csi/secret-testgpt/OPENAI-ACCESS-KEY"
 
 redisHost = "{{.REDIS_HOST_TESTGPT}}"
 redisPassword = "/mnt/csi/secret-testgpt/REDIS-AUTH-KEY"
+
+appServiceUrl = "{{.APP_SERVICE_URL}}"
+graphqlUrl = "{{.GRAPHQL_URL}}"
+apimUrl = "{{.APIM_URL}}"
+region = "{{.REGION}}"
+

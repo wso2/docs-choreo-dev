@@ -5,8 +5,8 @@ metadata:
   namespace: cert-manager
 spec:
   dnsNames:
-  - choreo.dev
-  - '*.choreo.dev'
+    - choreo.dev
+    - '*.choreo.dev'
   issuerRef:
     kind: Issuer
     name: choreo-letsencrypt-prod

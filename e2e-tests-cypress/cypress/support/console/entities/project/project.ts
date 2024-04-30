@@ -584,7 +584,6 @@ export class Project {
     options?: { expectedTraffic: number }
   ) {
     this.selectEnvironment(env);
-    this.selectTimePeriod();
     this.getTotalTraffic().should((value) => {
       expect(Number(value)).gte(options?.expectedTraffic || 2);
     });
@@ -606,6 +605,7 @@ export class Project {
     cy.get("body").then((body) => {
       if (body.find(TestIds.createComponent).length > 0) {
         cy.get(TestIds.createComponent).click();
+        cy.contains("Create").should("be.visible").click();
         cy.get(TestIds.backdropLoader).should("not.exist");
       }
     });

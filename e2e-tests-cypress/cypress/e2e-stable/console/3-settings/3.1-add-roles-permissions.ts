@@ -11,43 +11,82 @@
  * associated services.
  */
 
+import { Utils } from "../../../support/commons/utils";
 import { console } from "../../../support/console/console";
+import { OrganizationComponent } from "../../../support/console/pages/component/common/organization-components";
+import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
+import { LoginPage } from "../../../support/console/pages/login-page";
 
 describe("Add roles and permissions", () => {
-  const groupName = "E2EtestGroup";
-  const roleName = "E2EtestRole";
+  const newGroup = "E2EtestGroup";
+  const newRole = "E2EtestRole";
+  const existingRole = "API Publisher";
+  const roleList = [newRole, existingRole];
   const groupDescription = "This Group is created by E2E test run.";
   const roleDescription = "This Role is created by E2E test run.";
   const roleTag = "testRoleTag";
 
   it("Login to Console", () => {
-    console.login();
-    console.deleteGroupIfExists(groupName);
-    console.deleteRoleIfExists(roleName);
+    if (Utils.isNewUserManagementEnabled()) {
+      console.login();
+      console.deleteRoleIfExists(newRole);
+      console.deleteGroupIfExists(newGroup);
+    } else {
+      LoginPage.login();
+      ChoreoHomePage.navigateToSettings();
+      OrganizationComponent.navigateToRoles();
+      OrganizationComponent.deleteRoleIfExists(newRole);
+    }
   });
 
   it("Create a role", () => {
-    console.addRole(roleName, roleDescription, roleTag);
+    if (Utils.isNewUserManagementEnabled()) {
+      console.addRole(newRole, roleDescription, roleTag);
+    } else {
+      OrganizationComponent.createRole(newRole, roleDescription, roleTag);
+    }
   });
 
-  it("Create a group", () => {
-    console.addGroup(groupName, groupDescription);
-  });
+  if (Utils.isNewUserManagementEnabled()) {
+    it("Create a group", () => {
+      console.addGroup(newGroup, groupDescription);
+    });
 
-  it("Add role to the group", () => {
-    console.addRoleToGroup(roleName, groupName);
-  });
+    it("Add role to the group", () => {
+      console.addRolesToGroup(roleList, newGroup);
+    });
+
+    it("Remove role from the group", () => {
+      console.removeRolesFromGroup([existingRole], newGroup);
+      console.checkRolesInGroup([newRole], newGroup);
+    });
+  }
 
   it("Add a member to the group", () => {
-    console.addCurrentUserToGroup(roleName);
+    if (Utils.isNewUserManagementEnabled()) {
+      console.addCurrentUserToGroup(newGroup);
+    } else {
+      OrganizationComponent.addMembertoRole(newRole);
+    }
   });
 
-  it("Check member has the new role", () => {
-    console.checkCurrentUserHasRole(roleName);
+  it("Check member is in group", () => {
+    if (Utils.isNewUserManagementEnabled()) {
+      console.checkCurrentUserIsInGroup(newGroup);
+    } else {
+      OrganizationComponent.navigateToMembers();
+      OrganizationComponent.checkMemberRole(newRole);
+    }
   });
 
   it("Delete created group and role", () => {
-    console.deleteGroup(groupName);
-    console.deleteRole(roleName);
+    if (Utils.isNewUserManagementEnabled()) {
+      console.deleteRole(newRole);
+      console.deleteGroup(newGroup);
+    } else {
+      OrganizationComponent.navigateToMembers();
+      OrganizationComponent.navigateToRoles();
+      OrganizationComponent.deleteCreatedRole(newRole);
+    }
   });
 });

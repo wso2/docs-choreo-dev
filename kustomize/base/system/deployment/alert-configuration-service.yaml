@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: alert-configuration-service
-  strategy: { }
+  strategy: {}
   template:
     metadata:
       labels:

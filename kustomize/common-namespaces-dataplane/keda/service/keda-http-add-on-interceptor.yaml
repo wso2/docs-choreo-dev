@@ -8,10 +8,10 @@ spec:
   selector:
     app.kubernetes.io/instance: interceptor
   ports:
-  - name: admin
-    protocol: TCP
-    port: 9090
-    targetPort: admin
+    - name: admin
+      protocol: TCP
+      port: 9090
+      targetPort: admin
 ---
 apiVersion: v1
 kind: Service
@@ -24,147 +24,147 @@ spec:
   selector:
     app.kubernetes.io/instance: interceptor
   ports:
-  - name: proxy
-    port: 8080
-    protocol: TCP
-    targetPort: proxy
-  - name: port1
-    port: 8081
-    protocol: TCP
-    targetPort: proxy
-  - name: port2
-    port: 8082
-    protocol: TCP
-    targetPort: proxy
-  - name: port3
-    port: 8083
-    protocol: TCP
-    targetPort: proxy
-  - name: port4
-    port: 8084
-    protocol: TCP
-    targetPort: proxy
-  - name: port5
-    port: 8085
-    protocol: TCP
-    targetPort: proxy
-  - name: port6
-    port: 8086
-    protocol: TCP
-    targetPort: proxy
-  - name: port7
-    port: 8087
-    protocol: TCP
-    targetPort: proxy
-  - name: port8
-    port: 8088
-    protocol: TCP
-    targetPort: proxy
-  - name: port9
-    port: 8089
-    protocol: TCP
-    targetPort: proxy
-  - name: port10
-    port: 7070
-    protocol: TCP
-    targetPort: proxy
-  - name: port11
-    port: 7071
-    protocol: TCP
-    targetPort: proxy
-  - name: port12
-    port: 7072
-    protocol: TCP
-    targetPort: proxy
-  - name: port13
-    port: 7073
-    protocol: TCP
-    targetPort: proxy
-  - name: port14
-    port: 7074
-    protocol: TCP
-    targetPort: proxy
-  - name: port15
-    port: 7075
-    protocol: TCP
-    targetPort: proxy
-  - name: port16
-    port: 7076
-    protocol: TCP
-    targetPort: proxy
-  - name: port17
-    port: 7077
-    protocol: TCP
-    targetPort: proxy
-  - name: port18
-    port: 7078
-    protocol: TCP
-    targetPort: proxy
-  - name: port19
-    port: 7079
-    protocol: TCP
-    targetPort: proxy
-  - name: port20
-    port: 5000
-    protocol: TCP
-    targetPort: proxy
-  - name: port21
-    port: 6000
-    protocol: TCP
-    targetPort: proxy
-  - name: port22
-    port: 7000
-    protocol: TCP
-    targetPort: proxy
-  - name: port23
-    port: 8000
-    protocol: TCP
-    targetPort: proxy
-  - name: port24
-    port: 9000
-    protocol: TCP
-    targetPort: proxy
-  - name: port25
-    port: 9091
-    protocol: TCP
-    targetPort: proxy
-  - name: port26
-    port: 9092
-    protocol: TCP
-    targetPort: proxy
-  - name: port27
-    port: 9093
-    protocol: TCP
-    targetPort: proxy
-  - name: port28
-    port: 9094
-    protocol: TCP
-    targetPort: proxy
-  - name: port29
-    port: 9095
-    protocol: TCP
-    targetPort: proxy
-  - name: port30
-    port: 9096
-    protocol: TCP
-    targetPort: proxy
-  - name: port31
-    port: 9097
-    protocol: TCP
-    targetPort: proxy
-  - name: port32
-    port: 9098
-    protocol: TCP
-    targetPort: proxy
-  - name: port33
-    port: 9099
-    protocol: TCP
-    targetPort: proxy
-  - name: part34
-    port: 9090
-    protocol: TCP
-    targetPort: proxy
-  - name: mi-svc-port
-    port: 8290
-    protocol: TCP
-    targetPort: proxy
+    - name: proxy
+      port: 8080
+      protocol: TCP
+      targetPort: proxy
+    - name: port1
+      port: 8081
+      protocol: TCP
+      targetPort: proxy
+    - name: port2
+      port: 8082
+      protocol: TCP
+      targetPort: proxy
+    - name: port3
+      port: 8083
+      protocol: TCP
+      targetPort: proxy
+    - name: port4
+      port: 8084
+      protocol: TCP
+      targetPort: proxy
+    - name: port5
+      port: 8085
+      protocol: TCP
+      targetPort: proxy
+    - name: port6
+      port: 8086
+      protocol: TCP
+      targetPort: proxy
+    - name: port7
+      port: 8087
+      protocol: TCP
+      targetPort: proxy
+    - name: port8
+      port: 8088
+      protocol: TCP
+      targetPort: proxy
+    - name: port9
+      port: 8089
+      protocol: TCP
+      targetPort: proxy
+    - name: port10
+      port: 7070
+      protocol: TCP
+      targetPort: proxy
+    - name: port11
+      port: 7071
+      protocol: TCP
+      targetPort: proxy
+    - name: port12
+      port: 7072
+      protocol: TCP
+      targetPort: proxy
+    - name: port13
+      port: 7073
+      protocol: TCP
+      targetPort: proxy
+    - name: port14
+      port: 7074
+      protocol: TCP
+      targetPort: proxy
+    - name: port15
+      port: 7075
+      protocol: TCP
+      targetPort: proxy
+    - name: port16
+      port: 7076
+      protocol: TCP
+      targetPort: proxy
+    - name: port17
+      port: 7077
+      protocol: TCP
+      targetPort: proxy
+    - name: port18
+      port: 7078
+      protocol: TCP
+      targetPort: proxy
+    - name: port19
+      port: 7079
+      protocol: TCP
+      targetPort: proxy
+    - name: port20
+      port: 5000
+      protocol: TCP
+      targetPort: proxy
+    - name: port21
+      port: 6000
+      protocol: TCP
+      targetPort: proxy
+    - name: port22
+      port: 7000
+      protocol: TCP
+      targetPort: proxy
+    - name: port23
+      port: 8000
+      protocol: TCP
+      targetPort: proxy
+    - name: port24
+      port: 9000
+      protocol: TCP
+      targetPort: proxy
+    - name: port25
+      port: 9091
+      protocol: TCP
+      targetPort: proxy
+    - name: port26
+      port: 9092
+      protocol: TCP
+      targetPort: proxy
+    - name: port27
+      port: 9093
+      protocol: TCP
+      targetPort: proxy
+    - name: port28
+      port: 9094
+      protocol: TCP
+      targetPort: proxy
+    - name: port29
+      port: 9095
+      protocol: TCP
+      targetPort: proxy
+    - name: port30
+      port: 9096
+      protocol: TCP
+      targetPort: proxy
+    - name: port31
+      port: 9097
+      protocol: TCP
+      targetPort: proxy
+    - name: port32
+      port: 9098
+      protocol: TCP
+      targetPort: proxy
+    - name: port33
+      port: 9099
+      protocol: TCP
+      targetPort: proxy
+    - name: part34
+      port: 9090
+      protocol: TCP
+      targetPort: proxy
+    - name: mi-svc-port
+      port: 8290
+      protocol: TCP
+      targetPort: proxy

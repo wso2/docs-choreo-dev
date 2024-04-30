@@ -9,14 +9,14 @@ spec:
     privateKeySecretRef:
       name: "choreo-letsencrypt-prod"
     solvers:
-    - dns01:
-        azureDNS:
-          clientID: <Azure AD App client ID>
-          clientSecretSecretRef:
-            name: choreo-secret-azuredns-config
-            key: client-secret
-          subscriptionID: <Azure subscription ID>
-          tenantID: <Azure tenant ID>
-          resourceGroupName: <Azure resource group in which DNS zone is>
-          hostedZoneName: <hosted domain name>
-          environment: AzurePublicCloud
+      - dns01:
+          azureDNS:
+            clientID: <Azure AD App client ID>
+            clientSecretSecretRef:
+              name: choreo-secret-azuredns-config
+              key: client-secret
+            subscriptionID: <Azure subscription ID>
+            tenantID: <Azure tenant ID>
+            resourceGroupName: <Azure resource group in which DNS zone is>
+            hostedZoneName: <hosted domain name>
+            environment: AzurePublicCloud

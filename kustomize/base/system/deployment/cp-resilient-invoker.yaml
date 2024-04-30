@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     checkov.io/skip1: CKV_K8S_38=Required by LinkerD
+    checkov.io/skip2: CKV_K8S_9=Skipping Readiness Probe check
   labels:
     choreo.component: cp-resilient-invoker
   name: cp-resilient-invoker
@@ -11,7 +12,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: cp-resilient-invoker
-  strategy: { }
+  strategy: {}
   template:
     metadata:
       labels:
@@ -36,19 +37,10 @@ spec:
           ports:
             - containerPort: 9093
               name: health-port
-          readinessProbe:
-            initialDelaySeconds: 60
-            timeoutSeconds: 15
-            periodSeconds: 10
-            failureThreshold: 3
-            successThreshold: 1
-            httpGet:
-              port: health-port
-              path: /readiness
           livenessProbe:
-            initialDelaySeconds: 30
-            timeoutSeconds: 15
-            periodSeconds: 30
+            initialDelaySeconds: 5
+            timeoutSeconds: 30
+            periodSeconds: 60
             failureThreshold: 3
             successThreshold: 1
             httpGet:

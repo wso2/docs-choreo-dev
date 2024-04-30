@@ -16,5 +16,3 @@ metadata:
   namespace: keda
 data:
   routing-table: "{}"
-
-
