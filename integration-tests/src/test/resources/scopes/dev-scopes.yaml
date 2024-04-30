@@ -22,6 +22,7 @@ scopes:
   - choreo:non_prod_env_manage
   - choreo:prod_env_manage
   - choreo:project_manage
+  - choreo:project_view
   - environments:view_dev
   - environments:view_prod
   - urn:choreocontrolplane:choreoauditloggingapi:audit_logs_manage
@@ -71,6 +72,7 @@ scopes:
   - urn:choreocontrolplane:organizationmanagement:theme_deploy
   - urn:choreocontrolplane:organizationmanagement:theme_manage
   - urn:choreocontrolplane:organizationmanagement:theme_view
+  - urn:choreocontrolplane:organizationapi:org_manage
   - urn:choreocontrolplane:usermanagement:invitation_delete
   - urn:choreocontrolplane:usermanagement:invitation_manage
   - urn:choreocontrolplane:usermanagement:invitation_send
