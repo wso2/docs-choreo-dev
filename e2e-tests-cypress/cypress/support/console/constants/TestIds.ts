@@ -361,4 +361,10 @@ export namespace TestIds {
     '[data-cyid="dialog-groups-role-list-delete-button"]';
   export const addUserToGroupPopup = '[data-cyid="add-user-to-group-button"]';
   export const userSelect = '[id="select-user-list-popup"]';
+  export const connectionSearchBar = '[data-cyid="internal-marketplace-services-search-bar-input"]';
+  export const copyConnectionUrlBox = '[data-cyid="copy-url"]';
+  export const buildDetailsCard = '[data-cyid="build-details-card"]';
+  export const endpointConfigurationsButton = '[data-testid="security-settings-env-artifact"]';
+  export const rightDrawer = '[data-cyid="Overlay-right-drawer"]';
+  export const refreshComponentListIconButton = '[data-cyid="refresh-components-icon-button"]';
 }

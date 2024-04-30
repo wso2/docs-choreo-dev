@@ -173,6 +173,10 @@ export class Project {
 
   visitComponent(name: string): string {
     this.goToComponentListing();
+
+    cy.get(TestIds.refreshComponentListIconButton).should("be.visible").click();
+    cy.contains("Refetching Components...", SHORT_TIME).should("not.exist");
+
     this.searchComponent(name);
 
     cy.get(TestIds.componentTable).contains(name).should("be.visible").click();

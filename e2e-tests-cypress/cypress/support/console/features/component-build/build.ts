@@ -37,6 +37,7 @@ export interface BuildFeature {
       | Webhook
       | Byoc
   ): void;
+  _isSuccessfulBuildExists(): Cypress.Chainable<boolean>;
 }
 
 export function mixinBuild<T extends Types.Constructor>(
@@ -58,6 +59,28 @@ export function mixinBuild<T extends Types.Constructor>(
     ) {
       this.sideMenu.navigateToBuild();
       this.triggerBuild(component);
+    }
+
+    _isSuccessfulBuildExists(): Cypress.Chainable<boolean> {
+      let isExists: boolean = false;
+
+      this.sideMenu.navigateToBuild();
+      return cy
+        .get(TestIds.buildDetailsCard)
+        .find("table")
+        .find("tbody")
+        .find("tr")
+        .each((row) => {
+          isExists = row.find("div").filter(function() {
+            return Cypress.$(this).text().trim() === BUILD_SUCCESS;
+          }).length > 0;
+          if (isExists) {
+            return false; // break the loop. https://docs.cypress.io/api/commands/each#Return-early
+          }
+        })
+        .then(() => {
+          return cy.wrap(isExists);
+        });
     }
 
     private triggerBuild(
