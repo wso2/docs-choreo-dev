@@ -192,24 +192,7 @@ export class Proxy extends mixinDevelop(
   }
 
   disableSecurity(method: Enums.HTTPMethod, resource: string) {
-    this._disableSecurity(this, Enums.Environment.PRODUCTION, method, resource);
-  }
-
-  disableSecurityInDev(method: Enums.HTTPMethod, resource: string) {
-    this._disableSecurity(
-      this,
-      Enums.Environment.DEVELOPMENT,
-      method,
-      resource
-    );
-  }
-
-  disableSecurityInProd(method: Enums.HTTPMethod, resource: string) {
-    this._disableSecurity(this, Enums.Environment.PRODUCTION, method, resource);
-  }
-
-  updateAccessMode(accessMode: Enums.Accessibility) {
-    this._updateAccessMode(this, accessMode);
+    this._disableSecurity(this, method, resource);
   }
 
   updateAccessModeAndDeploy(accessMode: Enums.Accessibility) {

@@ -80,7 +80,7 @@ export function mixinBuild<T extends Types.Constructor>(
         if (!Helper.isElementExists(buildTable, TestIds.noDataAvailable)) {
           this.waitTillNewBuildStarts();
         } else {
-          cy.get(TestIds.build).should("be.enabled").click();
+          cy.getUnstable(TestIds.build).should("be.enabled").click();
         }
       });
 
@@ -95,7 +95,7 @@ export function mixinBuild<T extends Types.Constructor>(
 
           cy.log(`Existing build id: ${currentBuildId}`);
 
-          cy.get(TestIds.build).should("be.enabled").click();
+          cy.getUnstable(TestIds.build).should("be.enabled").click();
 
           cy.log("Waiting for build to start");
           this.checkIfNewBuildStarted(currentBuildId);
