@@ -127,7 +127,9 @@ export class Service extends mixinBuild(
     cy.get(TestIds.endpointConfigurationsButton).should("be.visible").click();
     cy.get(TestIds.rightDrawer)
       .contains('div', "Pass User Context to Backend").should("be.visible")
-      .siblings('div').eq(0).click();
+      .siblings('div').eq(0).within(() => {
+        cy.get('input').check();
+      })
     cy.get(TestIds.storyButton).contains("Apply").should("be.visible").click();
     cy.get(TestIds.runNowNotification).contains(
       "API updated successfully"
