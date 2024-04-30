@@ -14,7 +14,7 @@ To establish secure connectivity between the Choreo Gateway and your backend usi
 
 There are two approaches you can take to get a certificate from Choreo.
 
- - Generate a key pair with a self-signed certificate from Choreo, download the certificate, and install it in the backend.
+ - Generate a key pair with a self-signed certificate from Choreo, download the public certificate, and install it in the backend.
  - Generate a key pair to be installed on the Choreo Gateway and upload it. The certificate of this key pair will have to be installed in your backend.
 
 Follow the step-by-step instructions below depending on how you want to obtain a certificate from Choreo:
