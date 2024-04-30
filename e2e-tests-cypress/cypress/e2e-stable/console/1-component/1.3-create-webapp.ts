@@ -152,13 +152,17 @@ describe("Create Web App", () => {
     });
   });
 
-  it("Enable Pass User Context To Backend if not deployed previously", () => {
-    service._isDevDeploymentExists().then((isExists) => {
+  it("Deploy backend service once to access endpoint configurations", () => {
+    // we have to deploy once to access endpoint configurations
+    service.isDevDeploymentExists().then((isExists) => {
       if (!isExists) {
-        service.deployPublicLevelAccessibility(); // we have to deploy once to access endpoint configurations
-        service.enablePassUserContextToBackend();
+        service.deployPublicLevelAccessibility(); 
       }
     });
+  })
+
+  it("Enable Pass User Context To Backend", () => {
+      service.enablePassUserContextToBackend();
   });
 
   it("Deploy backend service to Dev", () => {
