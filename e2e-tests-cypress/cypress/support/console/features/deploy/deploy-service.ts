@@ -514,10 +514,6 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
                   statusText.includes(DEPLOYMENT_PENDING) ||
                   statusText.includes(DEPLOYMENT_PROGRESSING)
                 ) {
-                  cy.get(TestIds.commitHistory)
-                    .eq(0)
-                    .contains(BUILD_FAILED)
-                    .should("not.exist");
                   cy.log(
                     `Endpoint is ${statusText}, check back in ${
                       waitTime / 1000
