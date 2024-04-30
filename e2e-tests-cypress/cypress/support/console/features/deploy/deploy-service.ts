@@ -255,16 +255,23 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     }
 
     _isDevDeploymentExists(): Cypress.Chainable<boolean> {
-      let isExists: boolean;
+      let isDeploymentExists: boolean = false;
 
       this.sideMenu.navigateToDeploy();
       return cy
-        .get(TestIds.devEnvCard, MEDIUM_TIME).should("be.visible")
-        .then((card) => {
-          isExists = card.find(":contains('Deployment Status')").length > 0;
+        .get(TestIds.devEnvCard).within((envCard) => {
+          if (envCard.find(TestIds.deploymentStatus).length > 0) {
+            cy.get(TestIds.deploymentStatus).should("be.visible").then((deploymentStatusBar) => {
+              if (deploymentStatusBar.text().includes(DEPLOYMENT_SUCCESS)) {
+                cy.get(TestIds.endpointStatus).then((endpointStatusChip) => {
+                  isDeploymentExists = endpointStatusChip.text().includes(DEPLOYMENT_SUCCESS);
+                });
+              }
+            })
+          }
         })
         .then(() => {
-          return cy.wrap(isExists);
+          return cy.wrap(isDeploymentExists);
         });
     }
 
