@@ -3,7 +3,8 @@ kind: CronJob
 metadata:
   name: platform-service-manager-stats-reporter
 spec:
-  schedule: "0 * * * *"
+  schedule: "0 * * * *" # run every hour till feature is stable
+  startingDeadlineSeconds: 600
   concurrencyPolicy: Replace
   jobTemplate:
     spec:
