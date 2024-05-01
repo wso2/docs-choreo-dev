@@ -15,7 +15,9 @@ package com.wso2.choreo.integration.common;
 
 
 import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
+import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.github.mustachejava.DefaultMustacheFactory;
@@ -93,6 +95,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 public class ComponentUtils {
 
     private static final String timestampRegexMatch = "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}Z|\\d{2}.\\d{2}Z|\\d{2}.\\d{3}Z|\\d{2}.\\d{4}Z|\\d{2}.\\d{5}Z|\\d{2}.\\d{6}Z|\\d{2}.\\d{7}Z)";
+    private static final String APIS_ENDPOINT =  Constant.APIS_ENDPOINT;
 
     private static final int MAX_DEPLOY_RETRY_COUNT = 5;
 
@@ -690,6 +693,7 @@ public class ComponentUtils {
                     argMap.put("versionId", component.getLatestApiVersion().getId());
                     argMap.put("sourceReleaseId", component.getReleaseIdByEnvironmentId(srcEnv.getId()));
                     argMap.put("targetEnvironmentId", destEnv.getId());
+                    validateEndpointExistence(runner,citrusClients,accessToken,component,srcEnv);
                     GraphQL.promoteEndpoints(runner, appServiceClient, accessToken, argMap);
                 }
 
@@ -1329,4 +1333,43 @@ public class ComponentUtils {
         return "Development";
     }
 
+    public static void validateEndpointExistence(TestNGCitrusSpringSupport runner,Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component, Environment environment) throws Exception {
+        List<Endpoint> endpoints = getEndpointList(runner, citrusClients, accessToken, component,environment );
+        String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+        HttpClient appServiceClient = citrusClients.get(Endpoints.STS_ENDPOINT);
+
+        for (Endpoint endpoint :endpoints){
+            String resourceURL = APIS_ENDPOINT.concat("/").concat(endpoint.getApimId()).concat("?").concat(Constant.ORGANIZATION_ID).concat("=").concat(orgUuid);
+            isEndpointExists(runner,appServiceClient,resourceURL,accessToken);
+        }
+    }
+
+
+    public static void isEndpointExists(TestNGCitrusSpringSupport runner,HttpClient client, String path,String accessToken){
+        runner.variable("isEndpointContextExists", false);
+        runner.$(repeatOnError()
+                .until("(i = 5) or ( ${isEndpointContextExists} = true )")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .get(path)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Too many successive calls with response code != 200");
+                                    }
+                                })
+                )
+        );
+    }
 }
