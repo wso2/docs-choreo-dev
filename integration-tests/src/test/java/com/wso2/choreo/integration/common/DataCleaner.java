@@ -14,9 +14,11 @@
 package com.wso2.choreo.integration.common;
 
 import com.wso2.choreo.integration.apis.balregistry.BallerinaRegistry;
+import com.wso2.choreo.integration.apis.marketplace.ConnectionService;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.marketplace.ConnectionInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,8 +37,6 @@ public class DataCleaner  {
     public static void removeOldTestData(ChoreoOrganization org) throws Exception {
         TokenHandler tokenHandler = TestContext.getTestUserTokenHandler();
 
-        BallerinaRegistry.deleteOldConnectors(tokenHandler.getTestTokenForCPAPIs());
-
         List<ChoreoProject> projects = org.getProjects(tokenHandler.getTestTokenForCPAPIs());
 
         log.info("Total number of projects: " + projects.size());
@@ -51,6 +51,11 @@ public class DataCleaner  {
 
                 ++numberOfTestProjects;
                 if (shouldProjectBeDeleted(project.getName())) {
+                    //get all connections visible to that project
+                    ConnectionInfo[] connectionInfo= ConnectionService.getChoreoConnections(tokenHandler.getTestTokenForCPAPIs(),project.getId());
+                    for (ConnectionInfo connection: connectionInfo){
+                       ConnectionService.deleteChoreoConnection(tokenHandler.getTestTokenForCPAPIs(),connection.getGroupUuid());
+                    }
                     List<ChoreoComponent> components = project.getComponents(tokenHandler.getTestTokenForCPAPIs());
 
                     for (ChoreoComponent component : components) {

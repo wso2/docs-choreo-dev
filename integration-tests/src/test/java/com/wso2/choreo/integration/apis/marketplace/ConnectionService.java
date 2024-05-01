@@ -23,8 +23,16 @@ import com.consol.citrus.validation.json.JsonTextMessageValidator;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
+import com.wso2.choreo.integration.common.Endpoints;
+import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.models.marketplace.ConnectionCreateRequest;
+import com.wso2.choreo.integration.models.marketplace.ConnectionInfo;
+import com.wso2.choreo.integration.models.response.Response;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -42,6 +50,7 @@ import static org.hamcrest.Matchers.comparesEqualTo;
 public class ConnectionService extends ControlPlaneAPI {
 
     private static final String CONTEXT = "connections/v1";
+    private static final Logger log = LogManager.getLogger();
 
     public static String createChoreoConnection(TestActionRunner runner, HttpClient client, String accessToken,
                                                 ConnectionCreateRequest connectionReq) throws IOException {
@@ -103,32 +112,22 @@ public class ConnectionService extends ControlPlaneAPI {
                                 ));
     }
 
-    public static String deleteChoreoConnection(TestActionRunner runner, HttpClient client, String accessToken,
+    public static void deleteChoreoConnection(String accessToken,
                                                 String  connectionId) throws IOException {
-        String deleteChoreoConnectionURI = CONTEXT.concat("/configurations/service-configs/choreo-connections/").concat(connectionId);
-        AtomicReference<String> responseMessage = new AtomicReference<>();
-        runner.$(repeatOnError()
-                .until("i = 5")
-                .index("i")
-                .autoSleep(30000)
-                .actions(
-                        http()
-                                .client(client)
-                                .send()
-                                .delete(deleteChoreoConnectionURI)
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
-                        http()
-                                .client(client)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .validate((message, context) -> {
-                                            String payload = message.getPayload(String.class);
-                                            responseMessage.set(payload);
-                                        }
-                                )));
-        return responseMessage.get();
+        log.info("Deleting connection with connection Id: " + connectionId );
+        String deleteChoreoConnectionURI =CHOREO_APP_SERVICE_URL.concat("/")+ CONTEXT.concat("/configurations/service-configs/choreo-connections/").concat(connectionId);
+        Response response = HttpClientUtil.httpDELETE(deleteChoreoConnectionURI, accessToken, "");
+        if(response.getStatusCode() != HttpStatus.OK.value()){
+                log.warn("Error while deleting the connection "+connectionId + "error is: "+response.getRes());
+        }
+    }
+
+
+    public static ConnectionInfo[] getChoreoConnections(String accessToken, String projectId){
+        String getChoreoConnectionsURI=CHOREO_APP_SERVICE_URL.concat("/")+CONTEXT.concat("/configurations/service-configs/connections").concat("?projectId=").concat(projectId);
+        Response response = HttpClientUtil.httpGET(getChoreoConnectionsURI, accessToken, "");
+        ConnectionInfo[] connectionListing = ObjectMapperUtil.mapStringToObject(ConnectionInfo[].class, response.getRes(), "");
+        return connectionListing;
+
     }
 }
