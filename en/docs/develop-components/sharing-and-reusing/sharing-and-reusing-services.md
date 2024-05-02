@@ -1,20 +1,20 @@
-# Sharing and Reusing Services
+# Share and Reuse Services
 
 Choreo allows you to share and reuse your services, promoting faster development and increased efficiency in building integrated applications, through Connections.
 
 Connections in Choreo allows you to integrate Choreo components, or to integrate Choreo components to external services or resources. Connections provide a simple and uniform way to integrate with services and resources.
 
-To create a service follow the [Create a Connection](create-a-connection.md) guide.
+To create a service, follow the [Create a Connection](create-a-connection.md) guide.
 
-To learn more about Choreo Connections refer to the [documentation](../../choreo-concepts/connections.md).
+To learn more about Choreo Connections, see the documentation on [Connections](../../choreo-concepts/connections.md).
 
-## Consuming a service through a connection
+## Consume a service through a connection
 
 You can consume a Choreo-deployed service within another service. Consuming connections from within Choreo services is seamless and straightforward. Follow the steps below to consume a Choreo service:
 
 ### Step 1: Add connection configurations
 
-To integrate another service to your application follow the steps below:
+To integrate another service into your application, follow the steps below:
 
 1. Copy and paste the snippet shown in the developer guide into the `component-config` file under the `spec` section.
 
@@ -40,8 +40,8 @@ outbound:
 
 | Field            | Description                                                 |
 |------------------|-------------------------------------------------------------|
-| Name             | The name of the service you are connecting to.               |
-| ConnectionConfig | The unique connection id of this connection.                |
+| Name             | The name of the service you are connecting to.              |
+| ConnectionConfig | The unique connection identifier of this connection.        |
 | env              | This section encapsulates the environment variable mapping. |
 | from             | From value represents the key of the configuration entry.   |
 | to               | From value represents the key of the configuration entry.   |
@@ -49,7 +49,7 @@ outbound:
 
 2. Replace `<YOUR_ENV_VARIABLE_NAME_HERE>` with the appropriate environment variable name of your choice. If you've previously added an outbound service reference, append this as another item under serviceReferences. 
 
-Upon deploying the component, Choreo will automatically create a subscription (if applicable) and populate the specified environment variables with actual values.
+Upon deploying the component, Choreo automatically creates a subscription (if applicable) and populates the specified environment variables with actual values.
 
 
 The below table details the configuration keys associated with this connection:
@@ -64,7 +64,7 @@ The below table details the configuration keys associated with this connection:
 
 ### Step 2: Read configurations within the application
 
-Once you have added the connection configuration snippet, the next step is to read those configurations within your application. The exact steps of that will depend on the language you are using.
+Once you add the connection configuration snippet, the next step is to read those configurations within your application. The exact steps depend on the language you are using.
 
 The following is a sample code snippet in NodeJS:
 
@@ -72,7 +72,7 @@ The following is a sample code snippet in NodeJS:
 const serviceURL = process.env.SVC_URL;
 ```
 
-### Step 3: Acquire OAuth 2.0 access token
+### Step 3: Acquire an OAuth 2.0 access token
 
 To consume a Choreo service with the visibility level set to organization or public and secured by the OAuth 2.0 security scheme, you must initially obtain an OAuth 2.0 token from the token endpoint. Subsequently, you can use this token to invoke the service.
 
@@ -112,8 +112,8 @@ You can utilize the URL resolved in the above step as the service URL. For sampl
 
 #### Languages without OAuth 2.0 - aware HTTP clients
 
-In the case of languages lacking built-in support for OAuth 2.0 in their HTTP clients, utilize the token obtained in the [step 3](./sharing-and-reusing-services.md#step-3-acquire-oauth2-access-token) to make calls to the dependent service. Add the obtained token to the HTTP Authorization header with the Bearer prefix.
-As the service URL you can use the URL that you resolved in the [step 2](./sharing-and-reusing-services.md#step-2-read-configurations-within-the-application). For sample requests and responses, refer to the API definition of the service provided through the Choreo marketplace.
+In the case of languages lacking built-in support for OAuth 2.0 in their HTTP clients, utilize the token obtained in [step 3](./sharing-and-reusing-services.md#step-3-acquire-oauth2-access-token) to make calls to the dependent service. Add the obtained token to the HTTP Authorization header with the Bearer prefix.
+As the service URL you can use the URL that you resolved in [step 2](./sharing-and-reusing-services.md#step-2-read-configurations-within-the-application). For sample requests and responses, see the API definition of the service provided through the Choreo marketplace.
 
 The following is a sample code snippet in NodeJS:
 
@@ -126,4 +126,5 @@ const response = await axios.get(serviceURL/{RESOURCE_PATH}, {
 ```
 
 !!! note
-    To consume a Choreo service at the project visibility level, you don't need to obtain a token, you can directly invoke the service using the resolved URL.
+    To consume a Choreo service at the project visibility level, you don't need to obtain a token. You can directly invoke the service using the resolved URL.
+    
