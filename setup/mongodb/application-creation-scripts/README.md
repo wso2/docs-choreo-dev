@@ -1,5 +1,4 @@
-## Choreo MongoDB Atlas Cluster Spec Populator App Setup
-
+## Spec Populator MongoDB Application Creation
 #### Description
 
 This script creates a MongoDB application service which will update the vector db with changes to the `RESOURCE_REGISTRY_DB` database in MongoDB.
