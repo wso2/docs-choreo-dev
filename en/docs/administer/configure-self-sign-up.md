@@ -114,9 +114,9 @@ To manage users who want to access your Developer Portal via self-sign-up, you h
 
 To automatically approve each new user account registered on your Developer Portal, follow the steps given below:
 
-1. In the [Choreo Console](https://console.choreo.dev/) left pane, click the settings icon in the bottom corner.
-2. This opens the **Settings** pane, where you can make necessary changes to organization settings.
-3. In the **API Management** pane, click **Self Signups**.
+1. In the [Choreo Console](https://console.choreo.dev/), click your username in the top right corner.
+2. In the drop-down menu, click **Settings**. This opens the **Organization** pane, where you can make necessary changes to organization settings.
+3. In the **Organization** pane, click **Self Signups**.
 4. To enable auto-approval, turn on the toggle.
 
 Once you enable auto-approval, users can sign in to your Developer Portal and view your APIs and applications immediately after creating an account.
@@ -125,9 +125,9 @@ Once you enable auto-approval, users can sign in to your Developer Portal and vi
 
 If you have not enabled auto-approval, you can manually approve or reject new user registrations. Once a user creates an account, Choreo sends an email to ask the user to confirm the account. To manually approve or reject user accounts, follow the steps given below:
 
-1. In the [Choreo Console](https://console.choreo.dev/) left pane, click the settings icon in the bottom corner.
-2. This opens the **Settings** pane, where you can make necessary changes to organization settings.
-3. In the **API Management** pane, click **Self Signups**. You will see the user accounts listed for approval.
+1. In the [Choreo Console](https://console.choreo.dev/), click your username in the top right corner.
+2. In the drop-down menu, click **Settings**. This opens the **Organization** pane, where you can make necessary changes to organization settings.
+3. In the **Organization** pane, click **Self Signups**. You will see the user accounts listed for approval.
 4. To approve a user account, click **Approve**. To reject an account, click **Reject**.
 
     - If you approve an account, the user will receive an email confirming the approval.
