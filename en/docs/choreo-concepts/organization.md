@@ -6,8 +6,9 @@ An organization in Choreo is a logical grouping of users and user resources. A f
 
 If you are a member of more than one organization, you can switch from one organization to another when necessary. To do this, select the required organization from the **Organization** list in the Choreo Console header.
 
-
 {% include "../administer/inviting-members.md" %}
+
+{% include "../authentication-and-authorization/access-control/groups-and-roles-content.md" %}
 
 ## Organization ID
 
