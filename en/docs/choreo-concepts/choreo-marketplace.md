@@ -56,18 +56,19 @@ Upon deployment to the initial environment, services get automatically added to 
 
 The service name follows the convention of `component name - endpoint name`, while all other details remain unchanged.
 
-## Service versioning in Choreo Marketplace
+## Service versioning in the Choreo Marketplace
 
-The marketplace service versions are displayed in their major version form. A service in the Choreo marketplace will represent the respective semantic-version-based latest Choreo service version in the same major version as the service.
+In the Choreo Marketplace, service versions are displayed in their major version format. Each service in the Choreo Marketplace represents the latest version of the service within its major version, following semantic versioning principles.
 
-e.g. If a Choreo service has versions: `v1.0`, `v1.1`, `v1.2` and `v2.0`, the Choreo marketplace will include services with versions `v1` and `v2` representing `v1.2` and `v2.0` respectively.
+For example, if a Choreo service has versions `v1.0`, `v1.1`, `v1.2`, and `v2.0`, the Choreo Marketplace displays services with versions `v1` and `v2` representing the latest versions `v1.2` and `v2.0` respectively.
 
-When you deploy a new minor version in an already deployed Choreo service, respective marketplace service will be automatically updated to represent the latest available version within the major version.
+When you deploy a new minor version of a service already deployed in Choreo, the corresponding service in the marketplace automatically updates to reflect the latest version within the same major version.
 
-### Semantic versioning based intelligent routing in the Choreo Marketplace
-When using a marketplace service as a dependency, dependant service's traffic will be automatically routed to the latest version of the respective Choreo service in the same major version. This will ensure your dependencies are updated automatically, without having to manually update the dependencies within a major version.
+### Semantic-version-based intelligent routing in the Choreo Marketplace
 
-e.g. Consider you have created a connection to connect your Choreo component `Foo` to the Choreo service `Bar` with version `v1`. If `Bar` service's respective Choreo service has a latest version of `v1.2` in `v1` range, Foo will be connected to `Bar`'s `v1.2`. When `Bar` service releases its `v1.3`, traffic from `Foo` will be automatically routed to `Foo v1.3`
+When you use a service from the Choreo marketplace as a dependency, the dependent service's traffic automatically routes to the latest version of the corresponding service within the same major version. This ensures that your dependencies remain up-to-date without requiring manual updates within a major version.
+
+For example, if you create a connection to connect your Choreo component named `Foo` to a Choreo service named `Bar`, which is currently available in the Choreo Marketplace as version v1, and if the latest version of the service `Bar` within the v1 range is v1.2, the component `Foo` will automatically connect to `Bar` v1.2.  Subsequently, when `Bar` releases version v1.3, traffic from `Foo` will automatically route to `Bar` v1.3.
 
 ## Edit services in the Choreo Marketplace
 
