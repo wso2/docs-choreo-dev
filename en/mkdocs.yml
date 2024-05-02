@@ -199,6 +199,7 @@ nav:
   - References:
       - FAQ: references/faq.md
       - Choreo Limitations: references/choreo-limitations.md
+      - Troubleshoot Choreo: references/troubleshoot-choreo.md
       - Private Data Plane Security Levels: references/private-data-plane-security-levels.md
       - Private Data Plane Management Models: references/private-data-plane-management-models.md
 # Extensions
