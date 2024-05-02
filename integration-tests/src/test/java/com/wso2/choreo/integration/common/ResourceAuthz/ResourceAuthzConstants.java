@@ -1,0 +1,67 @@
+package com.wso2.choreo.integration.common.ResourceAuthz;
+
+import com.wso2.choreo.integration.models.resourceAuthorization.Permission;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ResourceAuthzConstants {
+
+    public static String TEST_USER_ID = "ab003ea2-da73-47af-a574-0e4369fe665f";
+
+    public static String DEVELOPER_ROLE_HANDLE = "developer";
+    
+    public static String ADMIN_ROLE_HANDLE = "admin";
+
+    public enum RoleGroupMappingLevels {
+        ORG, PROJECT
+    }
+
+    public static class TestProjectData {
+        public static final String PROJECT_NAME = "authztestproject";
+        public static final String PROJECT_DESCRIPTION = "Test Project Description";
+        public static final String REGION = "US";
+    }
+
+    public static class TestGroupData {
+        public static final String GROUP_NAME = "AuthzTestGroup";
+        public static final String GROUP_DESCRIPTION = "Test Group Description";
+    }
+
+    public static class TestRoleData {
+        public static final String ROLE_DESCRIPTION = "Test Role Description";
+        public static final String ROLE_DISPLAY_NAME = "AuthzTestRole";
+        public static final List<Permission> PERMISSIONS = new ArrayList<>() {
+            // For this test, ORGANIZATION-MANAGEMENT permissions are used
+            {
+                add(new Permission("ORGANIZATION-MANAGEMENT",
+                        "urn:choreocontrolplane:organizationmanagement:theme_manage", "102"));
+                add(new Permission("ORGANIZATION-MANAGEMENT",
+                        "urn:choreocontrolplane:organizationmanagement:theme_view", "103"));
+                add(new Permission("ORGANIZATION-MANAGEMENT",
+                        "urn:choreocontrolplane:organizationmanagement:theme_create", "104"));
+                add(new Permission("ORGANIZATION-MANAGEMENT",
+                        "urn:choreocontrolplane:organizationmanagement:theme_delete", "105"));
+                add(new Permission("ORGANIZATION-MANAGEMENT",
+                        "urn:choreocontrolplane:organizationmanagement:theme_deploy", "106"));
+                add(new Permission("ORGANIZATION-MANAGEMENT",
+                        "urn:choreocontrolplane:organizationmanagement:self_signup_manage", "107"));
+                add(new Permission("ORGANIZATION-MANAGEMENT",
+                        "urn:choreocontrolplane:organizationmanagement:self_signup_config_view", "108"));
+                add(new Permission("ORGANIZATION-MANAGEMENT",
+                        "urn:choreocontrolplane:organizationmanagement:self_signup_approval_view", "109"));
+                add(new Permission("ORGANIZATION-MANAGEMENT",
+                        "urn:choreocontrolplane:organizationmanagement:self_signup_approval_update", "110"));
+                add(new Permission("ORGANIZATION-MANAGEMENT",
+                        "urn:choreocontrolplane:organizationmanagement:self_signup_config_update", "111"));
+                add(new Permission("ORGANIZATION-MANAGEMENT",
+                        "urn:choreocontrolplane:organizationmanagement:enterprise_login_config_manage", "112"));
+                add(new Permission("ORGANIZATION-MANAGEMENT",
+                        "urn:choreocontrolplane:organizationmanagement:enterprise_login_config_view", "113"));
+                add(new Permission("ORGANIZATION-MANAGEMENT", "urn:choreocontrolplane:organizationapi:org_manage",
+                        "60"));
+            }
+        };
+    }
+
+}

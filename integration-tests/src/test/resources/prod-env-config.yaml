@@ -41,3 +41,8 @@ logs:
   CHOREO_SYSTEM_API_PREFIX: https://5659b6b7-1063-41ed-8e39-d91857699255-systemapis.
   CHOREO_US_DP_URL: e1-us-east-azure.choreoapis.dev
   CHOREO_EU_DP_URL: e1-eu-north-azure.choreoapis.dev
+resourceAuthorization:
+  # RESOURCE_AUTHZ_USER_EMAIL: 
+  # RESOURCE_AUTHZ_USER_PASSWORD: 
+  # RESOURCE_AUTHZ_ASGARDEO_CLIENT_ID: 
+  # RESOURCE_AUTHZ_ASGARDEO_CLIENT_SECRET: 
