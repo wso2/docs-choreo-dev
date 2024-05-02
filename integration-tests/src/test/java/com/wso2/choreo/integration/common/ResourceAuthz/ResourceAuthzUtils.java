@@ -26,8 +26,22 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Utility class for resource authorization related tests.
+ */
 public class ResourceAuthzUtils {
 
+    /**
+     * Create a test group
+     *
+     * @param runner Citrus test runner
+     * @param client Citrus http client
+     * @return CreateGroupResponseDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if the URI is invalid
+     */
     public static CreateGroupResponseDTO createTestGroup(TestActionRunner runner, HttpClient client)
             throws TokenRetrievalException, IOException, URISyntaxException {
         HashMap<String, Object> groupData = new HashMap<>() {
@@ -39,6 +53,20 @@ public class ResourceAuthzUtils {
         return ResourceAuthorizationService.createGroup(runner, client, groupData);
     }
 
+    /**
+     * Create a role
+     *
+     * @param runner          Citrus test runner
+     * @param client          Citrus http client
+     * @param roleName        role name
+     * @param roleDescription role description
+     * @param permissions     list of permissions
+     * @return CreateRoleResponseDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if the URI is invalid
+     */
     public static CreateRoleResponseDTO createRole(TestActionRunner runner, HttpClient client, String roleName,
             String roleDescription, List<Permission> permissions)
             throws TokenRetrievalException, IOException, URISyntaxException {
@@ -52,6 +80,21 @@ public class ResourceAuthzUtils {
         return ResourceAuthorizationService.createRole(runner, client, roleData);
     }
 
+    /**
+     * Assign roles to a group
+     *
+     * @param runner             Citrus test runner
+     * @param client             Citrus http client
+     * @param groupHandle        group handle
+     * @param mappedResourceUUID mapped resource UUID
+     * @param mappingLevel       mapping level
+     * @param roleUUIDs          list of role UUIDs
+     * @return RoleGroupMappingResponseDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if the URI is invalid
+     */
     public static RoleGroupMappingResponseDTO assignRolesToGroup(TestActionRunner runner, HttpClient client,
             String groupHandle, String mappedResourceUUID, RoleGroupMappingLevels mappingLevel, List<String> roleUUIDs)
             throws TokenRetrievalException, IOException, URISyntaxException {
@@ -66,11 +109,35 @@ public class ResourceAuthzUtils {
         return ResourceAuthorizationService.assignRoleToGroup(runner, client, groupHandle, roleGroupMappingData);
     }
 
+    /**
+     * Get a role by handle
+     *
+     * @param runner     Citrus test runner
+     * @param client     Citrus http client
+     * @param roleHandle role handle
+     * @return GetRoleResponseDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if the URI is invalid
+     */
     public static GetRoleResponseDTO getRoleByHandle(TestActionRunner runner, HttpClient client, String roleHandle)
             throws TokenRetrievalException, IOException, URISyntaxException {
         return ResourceAuthorizationService.getRoleByHandle(runner, client, roleHandle);
     }
 
+    /**
+     * Assign users to a group
+     *
+     * @param runner     Citrus test runner
+     * @param client     Citrus http client
+     * @param roleHandle role handle
+     * @param userIds    list of user IDs
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if the URI is invalid
+     */
     public static void assignUserToGroup(TestActionRunner runner, HttpClient client, String roleHandle,
             List<String> userIds) throws TokenRetrievalException, IOException, URISyntaxException {
 
@@ -82,6 +149,21 @@ public class ResourceAuthzUtils {
         ResourceAuthorizationService.assignUserToGroup(runner, client, roleHandle, userIdList);
     }
 
+    /**
+     * Assign groups to a role
+     *
+     * @param runner             Citrus test runner
+     * @param client             Citrus http client
+     * @param mappedResourceUUID mapped resource UUID
+     * @param roleHandle         role handle
+     * @param mappingLevel       mapping level
+     * @param groupUUIDs         list of group UUIDs
+     * @return GroupRoleMappingResponseDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if the URI is invalid
+     */
     public static GroupRoleMappingResponseDTO assignGroupToRole(TestActionRunner runner, HttpClient client,
             String mappedResourceUUID, String roleHandle, RoleGroupMappingLevels mappingLevel, List<String> groupUUIDs)
             throws TokenRetrievalException, IOException, URISyntaxException {
@@ -96,6 +178,19 @@ public class ResourceAuthzUtils {
         return ResourceAuthorizationService.assignGroupsToRole(runner, client, roleHandle, groupData);
     }
 
+    /**
+     * Remove a group from a role
+     *
+     * @param runner           Citrus test runner
+     * @param client           Citrus http client
+     * @param roleHandle       role handle
+     * @param groupAssociation group association
+     * @return GroupRoleMappingResponseDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if the URI is invalid
+     */
     public static GroupRoleMappingResponseDTO removeGroupFromRole(TestActionRunner runner, HttpClient client,
             String roleHandle, GroupAssociation groupAssociation)
             throws TokenRetrievalException, IOException, URISyntaxException {
@@ -108,6 +203,12 @@ public class ResourceAuthzUtils {
         return ResourceAuthorizationService.removeGroupFromRole(runner, client, roleHandle, groupData);
     }
 
+    /**
+     * Get the decoded token
+     *
+     * @param encodedToken encoded token
+     * @return JsonNode
+     */
     public static JsonNode getDecodedToken(String encodedToken) {
 
         String[] splitToken = encodedToken.split("\\.");
@@ -123,10 +224,24 @@ public class ResourceAuthzUtils {
         return null;
     }
 
-    public static List<ChoreoComponent> getComponentsInProject(TestActionRunner runner, HttpClient client,
+    /**
+     * Get project components from an unauthorized project
+     *
+     * @param runner      Citrus test runner
+     * @param client      Citrus http client
+     * @param projectId   project ID
+     * @param accessToken access token
+     * @return List of ChoreoComponent
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if the URI is invalid
+     */
+    public static List<ChoreoComponent> getProjectComponentsFromUnauthorizedProject(TestActionRunner runner,
+            HttpClient client,
             String projectId, String accessToken) throws TokenRetrievalException, IOException, URISyntaxException {
 
-        return GraphQL.getProjectComponents(runner, client, projectId, accessToken);
+        return GraphQL.getProjectComponentsFromUnauthorizedProject(runner, client, projectId, accessToken);
     }
 
     private static String getCurrentDate() {

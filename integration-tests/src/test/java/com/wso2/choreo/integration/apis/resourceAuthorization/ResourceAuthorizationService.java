@@ -28,10 +28,24 @@ import java.util.concurrent.atomic.AtomicReference;
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
+/**
+ * Service class for resource authorization related operations.
+ */
 public class ResourceAuthorizationService extends ControlPlaneAPI {
 
     private static String USER_MGT_BASE_PATH = "user-mgt/1.0.0/orgs/";
 
+    /**
+     * Create a group in the Choreo organization
+     *
+     * @param runner        Citrus test runner
+     * @param client        Citrus HTTP client
+     * @param groupRequest  Group request
+     * @return CreateGroupResponseDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or receiving request
+     * @throws URISyntaxException       if URI syntax is invalid
+     */
     public static CreateGroupResponseDTO createGroup(TestActionRunner runner, HttpClient client,
             HashMap<String, Object> groupRequest) throws TokenRetrievalException, IOException, URISyntaxException {
 
@@ -74,6 +88,17 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
         return new ObjectMapper().readValue(responseDTO.get(), CreateGroupResponseDTO.class);
     }
 
+    /**
+     * Create a role in the Choreo organization
+     *
+     * @param runner        Citrus test runner
+     * @param client        Citrus HTTP client
+     * @param roleRequest   Role request
+     * @return CreateRoleResponseDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or receiving request
+     * @throws URISyntaxException       if URI syntax is invalid
+     */
     public static CreateRoleResponseDTO createRole(TestActionRunner runner, HttpClient client,
             HashMap<String, Object> roleRequest)
             throws TokenRetrievalException, IOException, URISyntaxException {
@@ -118,6 +143,18 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
         return new ObjectMapper().readValue(responseDTO.get(), CreateRoleResponseDTO.class);
     }
 
+    /**
+     * Assign a role to a group in the Choreo organization
+     *
+     * @param runner                    Citrus test runner
+     * @param client                    Citrus HTTP client
+     * @param groupHandle                Group handle
+     * @param roleGroupMappingRequest    Role group mapping request
+     * @return RoleGroupMappingResponseDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or receiving request
+     * @throws URISyntaxException       if URI syntax is invalid
+     */
     public static RoleGroupMappingResponseDTO assignRoleToGroup(TestActionRunner runner, HttpClient client,
             String groupHandle, HashMap<String, Object> roleGroupMappingRequest)
             throws TokenRetrievalException, IOException, URISyntaxException {
@@ -163,6 +200,17 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
         return new ObjectMapper().readValue(responseDTO.get(), RoleGroupMappingResponseDTO.class);
     }
 
+    /**
+     * Assign a user to a group in the Choreo organization
+     *
+     * @param runner        Citrus test runner
+     * @param client        Citrus HTTP client
+     * @param roleHandle    Role handle
+     * @param userIds       User IDs
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or receiving request
+     * @throws URISyntaxException       if URI syntax is invalid
+     */
     public static void assignUserToGroup(TestActionRunner runner, HttpClient client, String roleHandle,
             HashMap<String, Object> userIds)
             throws TokenRetrievalException, IOException, URISyntaxException {
@@ -190,6 +238,17 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
 
     }
 
+    /**
+     * Get a role by handle in the Choreo organization
+     *
+     * @param runner        Citrus test runner
+     * @param client        Citrus HTTP client
+     * @param roleHandle    Role handle
+     * @return GetRoleResponseDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or receiving request
+     * @throws URISyntaxException       if URI syntax is invalid
+     */
     public static GetRoleResponseDTO getRoleByHandle(TestActionRunner runner, HttpClient client, String roleHandle)
             throws TokenRetrievalException, IOException, URISyntaxException {
         AtomicReference<String> responseDTO = new AtomicReference<>();
@@ -230,6 +289,18 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
 
     }
 
+    /**
+     * Remove a group from a role in the Choreo organization
+     *
+     * @param runner                    Citrus test runner
+     * @param client                    Citrus HTTP client
+     * @param roleHandle                Role handle
+     * @param groupAssociationRequest   Group association request
+     * @return GroupRoleMappingResponseDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or receiving request
+     * @throws URISyntaxException       if URI syntax is invalid
+     */
     public static GroupRoleMappingResponseDTO removeGroupFromRole(TestActionRunner runner, HttpClient client,
             String roleHandle, HashMap<String, Object> groupAssociationRequest)
             throws TokenRetrievalException, IOException, URISyntaxException {
@@ -275,6 +346,18 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
 
     }
 
+    /**
+     * Assign groups to a role in the Choreo organization
+     *
+     * @param runner                    Citrus test runner
+     * @param client                    Citrus HTTP client
+     * @param roleHandle                Role handle
+     * @param groupRoleMappingRequest   Group role mapping request
+     * @return GroupRoleMappingResponseDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or receiving request
+     * @throws URISyntaxException       if URI syntax is invalid
+     */
     public static GroupRoleMappingResponseDTO assignGroupsToRole(TestActionRunner runner, HttpClient client,
             String roleHandle,
             HashMap<String, Object> groupRoleMappingRequest)

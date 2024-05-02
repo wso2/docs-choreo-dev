@@ -10,29 +10,45 @@ public class ResourceAuthzConstants {
     public static String TEST_USER_ID = "ab003ea2-da73-47af-a574-0e4369fe665f";
 
     public static String DEVELOPER_ROLE_HANDLE = "developer";
-    
+
     public static String ADMIN_ROLE_HANDLE = "admin";
 
     public enum RoleGroupMappingLevels {
+
         ORG, PROJECT
     }
 
     public static class TestProjectData {
+
         public static final String PROJECT_NAME = "authztestproject";
         public static final String PROJECT_DESCRIPTION = "Test Project Description";
         public static final String REGION = "US";
     }
 
     public static class TestGroupData {
+
         public static final String GROUP_NAME = "AuthzTestGroup";
         public static final String GROUP_DESCRIPTION = "Test Group Description";
     }
 
     public static class TestRoleData {
+
         public static final String ROLE_DESCRIPTION = "Test Role Description";
         public static final String ROLE_DISPLAY_NAME = "AuthzTestRole";
-        public static final List<Permission> PERMISSIONS = new ArrayList<>() {
-            // For this test, ORGANIZATION-MANAGEMENT permissions are used
+        public static final List<Permission> PERMISSIONS = getOrgManagePermissions();
+    }
+
+    public static class ProjectViewAndOrgManageRoleData {
+
+        public static final String ROLE_DESCRIPTION 
+            = "This role allows project view permission and org manage permission";
+        public static final String ROLE_DISPLAY_NAME = "AuthzPVOM";
+        public static final List<Permission> PERMISSIONS = getProjectViewOrgManagePermission();
+    }
+
+    private static List<Permission> getOrgManagePermissions() {
+        
+        return new ArrayList<>() {
             {
                 add(new Permission("ORGANIZATION-MANAGEMENT",
                         "urn:choreocontrolplane:organizationmanagement:theme_manage", "102"));
@@ -45,23 +61,39 @@ public class ResourceAuthzConstants {
                 add(new Permission("ORGANIZATION-MANAGEMENT",
                         "urn:choreocontrolplane:organizationmanagement:theme_deploy", "106"));
                 add(new Permission("ORGANIZATION-MANAGEMENT",
-                        "urn:choreocontrolplane:organizationmanagement:self_signup_manage", "107"));
+                        "urn:choreocontrolplane:organizationmanagement:self_signup_manage",
+                        "107"));
                 add(new Permission("ORGANIZATION-MANAGEMENT",
-                        "urn:choreocontrolplane:organizationmanagement:self_signup_config_view", "108"));
+                        "urn:choreocontrolplane:organizationmanagement:self_signup_config_view",
+                        "108"));
                 add(new Permission("ORGANIZATION-MANAGEMENT",
-                        "urn:choreocontrolplane:organizationmanagement:self_signup_approval_view", "109"));
+                        "urn:choreocontrolplane:organizationmanagement:self_signup_approval_view",
+                        "109"));
                 add(new Permission("ORGANIZATION-MANAGEMENT",
-                        "urn:choreocontrolplane:organizationmanagement:self_signup_approval_update", "110"));
+                        "urn:choreocontrolplane:organizationmanagement:self_signup_approval_update",
+                        "110"));
                 add(new Permission("ORGANIZATION-MANAGEMENT",
-                        "urn:choreocontrolplane:organizationmanagement:self_signup_config_update", "111"));
+                        "urn:choreocontrolplane:organizationmanagement:self_signup_config_update",
+                        "111"));
                 add(new Permission("ORGANIZATION-MANAGEMENT",
-                        "urn:choreocontrolplane:organizationmanagement:enterprise_login_config_manage", "112"));
+                        "urn:choreocontrolplane:organizationmanagement:enterprise_login_config_manage",
+                        "112"));
                 add(new Permission("ORGANIZATION-MANAGEMENT",
-                        "urn:choreocontrolplane:organizationmanagement:enterprise_login_config_view", "113"));
-                add(new Permission("ORGANIZATION-MANAGEMENT", "urn:choreocontrolplane:organizationapi:org_manage",
+                        "urn:choreocontrolplane:organizationmanagement:enterprise_login_config_view",
+                        "113"));
+                add(new Permission("ORGANIZATION-MANAGEMENT",
+                        "urn:choreocontrolplane:organizationapi:org_manage",
                         "60"));
             }
         };
+    }
+
+    private static List<Permission> getProjectViewOrgManagePermission() {
+
+        List<Permission> permissionList = getOrgManagePermissions();
+        permissionList.add(new Permission("PROJECT-MANAGEMENT",
+                "choreo:project_view", "187"));
+        return permissionList;
     }
 
 }
