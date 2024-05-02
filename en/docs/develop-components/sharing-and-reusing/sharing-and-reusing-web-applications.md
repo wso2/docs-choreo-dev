@@ -1,23 +1,23 @@
-# Sharing and Reusing Web Applications
+# Share and Reuse Web Applications
 
-Connecting to a service from a web application can be achieved through various methods, depending on the type of web application. The following sections will outline the steps required to connect to the chosen service based on the authentication mechanism used in your web application.
+To connect to a service from your web application, the approach you need to take can vary depending on your web application. The following sections outline the steps to connect to a selected service based on the authentication mechanism used in your web application.
 
 ## Managed authentication
 
-Choreo managed authentication allows you to seamlessly handle your web application authentication. You can configure your web application to work with the Choreo built-in identity provider or any external identity provider that supports OIDC/OAuth2.0
+Choreo managed authentication allows you to seamlessly handle authentication for your web application. You can configure your web application to work with the Choreo built-in identity provider or any external identity provider that supports OIDC/OAuth2.0
 
 !!! note 
-    Choreo's managed authentication is currently available only for web applications created with React, Angular, or Vue.js build packs.
+    Choreo's managed authentication is currently available only for web applications created with **React**, **Angular**, or **Vue.js** buildpacks.
 
-Follow the steps below to use the created connection within your web application: 
+Follow the steps below to use an existing connection within your web application: 
 
-## Step 1: Add connection configuration
+## Step 1: Add the connection configuration
 
-To integrate another service to your application first you need to add the connection configurations as follows: 
+To integrate a service into your application, you must add the connection configurations as follows: 
 
-1. For SPAs, configurations should be added as a file mount. You can mount a file via the deploy page in the configure and deploy pane. Mount a file(config.js) and add the content displayed in the developer guide. 
+1. For SPAs, you must add the connection configuration as a file mount. You can mount a file via the **Configurations** pane on the **Deploy** page. You must mount a file (config.js) and add the configuration provided in the in-line developer documentation. 
 
-A sample content is as below.
+The following is a sample configuration:
 
     ``` yaml
     window.configs = {
@@ -26,7 +26,7 @@ A sample content is as below.
 
     ```
 
-2.  In your index.html file inside the public directory, add a script tag as follows to include the config.js file inside the tag. The config.js file will be accessible via JavaScript at runtime.
+2.  To make the `config.js` file accessible via JavaScript at runtime, you must add a script tag as follows to reference the `config.js` file from the `index.html` file in your repository:
 
     ``` html
     <!DOCTYPE html>
@@ -43,14 +43,14 @@ A sample content is as below.
     ``` 
 
 !!! note
-    If you are using an external IDP, then you will also need the configurations related to your IDP to be injected depending on the IDP and authentication mechanism(consumer key, consumer secret, token URL). You can add those details to the same file as well.
+    If you are using an external IdP, you must use the configuration related to your IdP depending on the IdP's authentication mechanism (consumer key, consumer secret, token URL). You can add the configuration to the same file.
     
-    For more information on working with IDPs, refer to [this](https://wso2.com/choreo/docs/administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp/) documentation.
+    For more information on working with IdPs, see [Configure Asgardeo as an External Identity Provider ](https://wso2.com/choreo/docs/administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp/).
 
 
-## Step 2: Read configurations
+## Step 2: Read the configuration
 
-Once you have added the connection configuration snippet, the next step is to read those configurations within your application. The exact steps of that will depend on the language you are using.
+Once you add the connection configuration snippet, you can proceed to read the configuration from your application. The steps to read the configuration depend on the language you use.
 
 The following is a sample code snippet in NodeJS:
 
@@ -58,9 +58,9 @@ The following is a sample code snippet in NodeJS:
     const serviceURL = window?.configs?.serviceURL ? window.configs.serviceURL : "/";
     ```
 
-## Step 3: Invoke the service (Choreo managed authentication)
+## Step 3: Invoke the service (Choreo-managed authentication)
 
-If you are using Choreo managed authentication, once deployed Choreo will handle all the security handshaking on behalf of the application as you have enabled Choreo authentication. Connected service will be made available under the same domain as per your application. Hence you can directly call the above configured path using your favorite HTTP client.
+If you use Choreo-managed authentication, Choreo handles all the security handshaking on behalf of the application during deployment. The connected service will be made available under the same domain as per your application. Therefore, you can directly call the configured path using your preferred HTTP client.
 
 The following is a sample code snippet in NodeJS:
 
@@ -69,29 +69,29 @@ The following is a sample code snippet in NodeJS:
     ```
 
 !!! note
-    If you are using an external IDP provider without using choreo managed authentication, obtain an access token from your external IDP and add the obtained token to the HTTP Authorization header with the Bearer prefix.
+    If you are using an external IdP provider without using Choreo-managed authentication, you must obtain an access token from your external IdP and add the obtained token to the HTTP authorization header with the bearer prefix.
 
 ## Custom authentication or no authentication
 
-If you are not using choreo managed authentication, or if your web application lacks any form of authentication, follow the below steps to use the created connection within your web application:
+If you are not using Choreo-managed authentication, or if your web application lacks any form of authentication, follow the steps below to use an existing connection within your web application:
 
-### Step 1: Add connection configuration
+### Step 1: Add the connection configuration
 
 For SPAs, configurations should be added as a file mount. This functionality is available on the deploy page in the configure and deploy pane. Mount a file there(config.js) and add the below content. 
 
-For other types of web applications, to integrate the mentioned configurations into your application, copy and paste the below snippet into the component-config file under the spec section.
+For other types of web applications, to integrate the mentioned configurations into your application, copy and paste the below snippet into the `component-config` file under the spec section.
 
-### Step 2: Read configuration
+### Step 2: Read the configuration
 
 Once you have added the connection configuration snippet, the next step is to read those configurations within your application. The exact steps of that will depend on the language you are using.
 
-The following is a sample code snippet in NodeJS
+The following is a sample code snippet in NodeJS:
 
 ``` java
 const serviceURL = window?.configs?.serviceURL 
 ```
 
-### Step 3: Acquire OAuth 2.0 access token
+### Step 3: Acquire an OAuth 2.0 access token
 
 #### Languages with OAuth 2.0 - aware HTTP clients
 For languages equipped with HTTP clients that support OAuth 2.0, simply pass the OAuth 2.0-related configurations (client id, client secret, etc), obtained in the previous step to your HTTP client configuration. The HTTP client will autonomously manage token retrieval and refreshing.
