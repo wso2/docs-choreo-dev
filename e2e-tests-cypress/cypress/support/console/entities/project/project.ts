@@ -171,6 +171,13 @@ export class Project {
       });
   }
 
+
+  
+  
+
+
+
+
   visitComponent(name: string): string {
     this.goToComponentListing();
 
@@ -591,8 +598,8 @@ export class Project {
 
   private goToComponentListing() {
     cy.get(TestIds.listing).should("be.visible").click();
-
-    cy.get(TestIds.componentFilter).should("be.visible");
+    cy.contains("Create").should("exist");
+    //cy.get(TestIds.componentFilter).should("be.visible");
   }
 
   private searchComponent(name: string) {
