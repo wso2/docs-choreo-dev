@@ -11,6 +11,7 @@ CREATE TABLE [Domain] (
 	[organization_uuid] VARCHAR(191) NOT NULL,
 	[name] VARCHAR(191) NOT NULL,
 	[type] VARCHAR(9) CHECK ([type] IN ('api', 'webapp', 'devportal')) NOT NULL,
+	[visibility] VARCHAR(191) CHECK ([visibility] IN ('Public', 'Organization', 'Project')) NOT NULL,
 	[environment_id] VARCHAR(191) NOT NULL,
 	[tls_provider] VARCHAR(12) CHECK ([tls_provider] IN ('lets_encrypt', 'custom')) NOT NULL,
 	[secret_name] VARCHAR(511) NOT NULL,
