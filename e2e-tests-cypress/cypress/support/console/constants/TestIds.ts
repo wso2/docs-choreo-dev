@@ -56,6 +56,7 @@ export namespace TestIds {
   export const availableEndpoints = '[data-testid="Endpoints-env-artifact"]';
   export const apiConfiguration =
     '[data-testid="API Configuration-env-artifact"]';
+  export const attachPolicy = '[data-cyid="attach-policy-button-button"]';
   export const viewArtifact = '[data-cyid="btn-view-artifact-icon-button"]';
   export const endpointCard = '[data-cyid="endponint-selector-card-card"]';
   export const manageSecurity = '[data-cyid="manage-security"]';
@@ -64,7 +65,7 @@ export namespace TestIds {
   export const endpointSettings =
     '[data-cyid="endpoint-config-settings-icon-button"]';
   export const selectVersion = '[data-cyid="deployment-track-picker-chip"]';
-  export const selectBranch = '[data-cyid="deployment-track-picker"]';
+  export const selectBranch = '[data-cyid^="deployment-track-picker"]';
   export const deploySplitToggle =
     '[data-cyid="direct-deploy-option-split-toggle-button-button"]';
   export const configureDeploy = '[data-cyid="configure-&-deploy-option"]';
@@ -125,8 +126,8 @@ export namespace TestIds {
   export const apiVersion = '[data-cyid="api-version"]';
   export const apiBasePath = '[data-cyid="api-basepath"]';
   export const apiEndpoint = '[data-cyid="api-endpoint"]';
-  export const internalAccessMode = '[data-testid="internal-radio-card"]';
-  export const externalAccessMode = '[data-testid="external-radio-card"]';
+  export const internalAccessMode = '[data-testid="internal"]';
+  export const externalAccessMode = '[data-testid="external"]';
   export const createButton = '[data-cyid="btn-create-button"]';
   export const createTime = '[data-cyid="create-time"]';
   export const skipSource = '[data-cyid="btn-skip-src-button"]';
@@ -316,8 +317,10 @@ export namespace TestIds {
   export const apiInfoDevPortal = '[data-cyid="api-info-tab-developer-portal"]';
   export const apiInfoSave = '[data-cyid="tst-marketplace-save-button"]';
   export const apiVisibility = '[data-cyid="visibility-select"]';
+  export const choreoHomeDevPortalLink = "[data-cyid='developer-portal-link']";
   export const devPortalHome = '[data-testid="home-appbar-btn"]';
   export const devPortalLoginLink = '[data-testid="login-button"]';
+  export const devPortalSignedInUser = '[data-testid="signedin-user-menu-btn"]';
   export const addConnectionButton = '[data-cyid="create-config-button"]';
   export const ConnectionCard = '[data-cyid="api-card-card"]';
   export const connectionNameInput = '[data-cyid="connection-name"]';
@@ -358,4 +361,10 @@ export namespace TestIds {
     '[data-cyid="dialog-groups-role-list-delete-button"]';
   export const addUserToGroupPopup = '[data-cyid="add-user-to-group-button"]';
   export const userSelect = '[id="select-user-list-popup"]';
+  export const connectionSearchBar = '[data-cyid="internal-marketplace-services-search-bar-input"]';
+  export const copyConnectionUrlBox = '[data-cyid="copy-url"]';
+  export const buildDetailsCard = '[data-cyid="build-details-card"]';
+  export const endpointConfigurationsButton = '[data-testid="security-settings-env-artifact"]';
+  export const rightDrawer = '[data-cyid="Overlay-right-drawer"]';
+  export const refreshComponentListIconButton = '[data-cyid="refresh-components-icon-button"]';
 }

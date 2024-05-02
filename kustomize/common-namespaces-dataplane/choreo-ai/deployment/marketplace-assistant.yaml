@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    seccomp.security.alpha.kubernetes.io/pod: "docker/default"
+    checkov.io/skip1: "CKV_K8S_AZURE_WSO2_2=Linkerd is disable for dataplane"
+  labels:
+    choreo.component: marketplace-assistant
+  name: marketplace-assistant
+spec:
+  selector:
+    matchLabels:
+      choreo.component: marketplace-assistant
+  template:
+    metadata:
+      labels:
+        choreo.component: marketplace-assistant
+        antiaffinity: marketplace-assistant
+      annotations:
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+        seccomp.security.alpha.kubernetes.io/pod: "docker/default"
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: marketplace-assistant
+          envFrom:
+            - configMapRef:
+                name: env-marketplace-assistant-cm
+            - secretRef:
+                name: marketplace-assistant-secret
+          image: choreocontrolplane.azurecr.io/choreoipaas/marketplace-assistant:latest
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 250m
+              memory: 250Mi
+          ports:
+            - containerPort: 8000
+              name: mrkt-asst-port
+              protocol: TCP
+          securityContext:
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          volumeMounts:
+            - mountPath: /mnt/csi/secret-marketplace-assistant
+              name: marketplace-assistant-secret
+              readOnly: true
+            - mountPath: /tmp
+              name: temp-volume
+      volumes:
+        - name: marketplace-assistant-secret
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: marketplace-assistant-secret
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: temp-volume
+          emptyDir: {}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - marketplace-assistant
+              topologyKey: kubernetes.io/hostname

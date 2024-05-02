@@ -240,7 +240,7 @@ spec:
           configMap:
             name: identity-server-conf
         - name: identity-server-anon-userstore
-          emptyDir: { }
+          emptyDir: {}
         - name: identity-server-anon-userstore-config
           configMap:
             name: identity-server-anon-userstore

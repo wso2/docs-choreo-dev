@@ -147,7 +147,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 serviceChoreoComponent);
         serviceDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
                 serviceChoreoComponent, servicePublisherComponentEnvironments, ComponentFlavour.BYOC);
-        SVC_COMPONENT_SERVICE_NAME = serviceChoreoComponent.getName().concat("-").concat(SVC_COMPONENT_ENDPOINT_NAME);
+        SVC_COMPONENT_SERVICE_NAME = serviceChoreoComponent.getName();
     }
     @Test(dependsOnMethods = {"createProject_TestChoreoConnections"})
     @CitrusTest

@@ -54,7 +54,7 @@ spec:
             capabilities:
               drop:
                 - all
-              add: [ "NET_RAW" ]
+              add: ["NET_RAW"]
           ports:
             - containerPort: 8000
               name: http-port

@@ -3,87 +3,87 @@ kind: ClusterRole
 metadata:
   name: keda-operator
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - configmaps
-  - configmaps/status
-  - events
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - external
-  - pods
-  - services
-  - secrets
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - serviceaccounts
-  verbs:
-  - list
-  - watch
-- apiGroups: # patched: https://github.com/wso2-enterprise/choreo/issues/20999#issuecomment-1696731088
-  - apps
-  resources:
-  - deployments
-  verbs:
-  - get
-- apiGroups:
-  - '*'
-  resources:
-  - '*/scale'
-  verbs:
-  - '*'
-- apiGroups:
-  - apps
-  resources:
-  - deployments
-  - statefulsets
-  verbs:
-  - list
-  - watch
-- apiGroups:
-  - autoscaling
-  resources:
-  - horizontalpodautoscalers
-  verbs:
-  - '*'
-- apiGroups:
-  - keda.sh
-  resources:
-  - clustertriggerauthentications
-  - clustertriggerauthentications/status
-  verbs:
-  - '*'
-- apiGroups:
-  - keda.sh
-  resources:
-  - scaledjobs
-  - scaledjobs/finalizers
-  - scaledjobs/status
-  verbs:
-  - '*'
-- apiGroups:
-  - keda.sh
-  resources:
-  - scaledobjects
-  - scaledobjects/finalizers
-  - scaledobjects/status
-  verbs:
-  - '*'
-- apiGroups:
-  - keda.sh
-  resources:
-  - triggerauthentications
-  - triggerauthentications/status
-  verbs:
-  - '*'
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+      - configmaps/status
+      - events
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - external
+      - pods
+      - services
+      - secrets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - serviceaccounts
+    verbs:
+      - list
+      - watch
+  - apiGroups: # patched: https://github.com/wso2-enterprise/choreo/issues/20999#issuecomment-1696731088
+      - apps
+    resources:
+      - deployments
+    verbs:
+      - get
+  - apiGroups:
+      - '*'
+    resources:
+      - '*/scale'
+    verbs:
+      - '*'
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+      - statefulsets
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - autoscaling
+    resources:
+      - horizontalpodautoscalers
+    verbs:
+      - '*'
+  - apiGroups:
+      - keda.sh
+    resources:
+      - clustertriggerauthentications
+      - clustertriggerauthentications/status
+    verbs:
+      - '*'
+  - apiGroups:
+      - keda.sh
+    resources:
+      - scaledjobs
+      - scaledjobs/finalizers
+      - scaledjobs/status
+    verbs:
+      - '*'
+  - apiGroups:
+      - keda.sh
+    resources:
+      - scaledobjects
+      - scaledobjects/finalizers
+      - scaledobjects/status
+    verbs:
+      - '*'
+  - apiGroups:
+      - keda.sh
+    resources:
+      - triggerauthentications
+      - triggerauthentications/status
+    verbs:
+      - '*'

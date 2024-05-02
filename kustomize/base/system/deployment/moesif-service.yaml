@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: moesif-service
-  strategy: { }
+  strategy: {}
   template:
     metadata:
       labels:

@@ -12,7 +12,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: connectords
-  strategy: { }
+  strategy: {}
   template:
     metadata:
       labels:

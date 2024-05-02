@@ -228,7 +228,7 @@ export class OrganizationSettings {
   private deleteSelectedRole(roleName: string) {
     cy.contains("td", roleName).trigger("mouseover");
     cy.get(TestIds.deleteRole).click();
-    cy.get(TestIds.dialogPrimaryAction).click();
+    cy.get(TestIds.confirmDelete).click();
     cy.contains("td", roleName).should("not.exist");
   }
 

@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    seccomp.security.alpha.kubernetes.io/pod: "docker/default"
+    checkov.io/skip1: "CKV_K8S_AZURE_WSO2_2=Linkerd is disable for dataplane"
+  labels:
+    choreo.component: docs-assistant
+  name: docs-assistant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: docs-assistant
+  template:
+    metadata:
+      labels:
+        choreo.component: docs-assistant
+        antiaffinity: docs-assistant
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - image: choreocontrolplane.azurecr.io/choreoipaas/docs-assistant:latest
+          imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsUser: 10500
+            runAsGroup: 10500
+            capabilities:
+              drop:
+                - all
+          name: docs-assistant
+          envFrom:
+            - configMapRef:
+                name: env-docs-assistant
+            - secretRef:
+                name: secret-docs-assistant
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: docsassist-port
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 30
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: docsassist-port
+              path: /liveness
+          ports:
+            - containerPort: 5000
+              name: docsassist-port
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 400m
+              memory: 1000Mi
+            requests:
+              cpu: 200m
+              memory: 750Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - name: tmp-volume
+              mountPath: /tmp
+            - name: secret-docs-assistant
+              mountPath: /mnt/csi/secret-docs-assistant
+              readOnly: true
+      volumes:
+        - name: tmp-volume
+          emptyDir: {}
+        - name: secret-docs-assistant
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-docs-assistant
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      restartPolicy: Always
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  antiaffinity: docs-assistant
+              topologyKey: kubernetes.io/hostname

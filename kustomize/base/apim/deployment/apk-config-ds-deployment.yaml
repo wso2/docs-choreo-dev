@@ -86,7 +86,7 @@ spec:
             - mountPath: /tmp
               name: tmp
             - mountPath: /home/wso2apk/config-deployer/tmp
-              name: config-deployer-temp   
+              name: config-deployer-temp
       volumes:
         - configMap:
             defaultMode: 420

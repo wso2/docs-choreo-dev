@@ -18,19 +18,19 @@ spec:
     matchLabels:
       choreo.component: loggingapi
   policyTypes:
-  - Egress
-  - Ingress
+    - Egress
+    - Ingress
   egress:
-  - to:
-    - ipBlock:
-        cidr: 0.0.0.0/0  # Allow all egress traffic
-        except:
-        - 169.254.169.254/32  # Except egress to Azure VM metadata endpoint
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0  # Allow all egress traffic
+            except:
+              - 169.254.169.254/32  # Except egress to Azure VM metadata endpoint
   ingress:
-  - from:
-    - namespaceSelector:
-        matchLabels:
-          kubernetes.io/metadata.name: choreo-apim
-      podSelector:
-        matchLabels:
-          cc.component: choreo-connect-deployment
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: choreo-apim
+          podSelector:
+            matchLabels:
+              cc.component: choreo-connect-deployment

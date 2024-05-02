@@ -4,7 +4,7 @@ metadata:
   name: allow-devportal-ingress-network-policy
 spec:
   ingress:
-    - { }
+    - {}
   podSelector:
     matchLabels:
       choreo.component: apim-devportal
