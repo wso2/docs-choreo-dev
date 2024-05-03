@@ -968,7 +968,7 @@ public class ComponentUtils {
         return GraphQL.getEnvironments(runner, cpProjectsClient, accessToken, graphqlDTO);
     }
 
-    private static List<Endpoint> getEndpoints(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+    public static List<Endpoint> getEndpoints(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
                                                String accessToken, ChoreoComponent component,
                                                ComponentDeploymentStatusDTO componentDeploymentStatusDTO) throws Exception {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);

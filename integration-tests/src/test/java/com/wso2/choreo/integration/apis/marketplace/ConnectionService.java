@@ -15,37 +15,37 @@ package com.wso2.choreo.integration.apis.marketplace;
 
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.http.client.HttpClient;
-import com.consol.citrus.http.message.HttpMessageHeaders;
-import com.consol.citrus.message.DefaultMessage;
-import com.consol.citrus.message.Message;
-import com.consol.citrus.validation.json.JsonMessageValidationContext;
-import com.consol.citrus.validation.json.JsonTextMessageValidator;
+import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
+import com.wso2.choreo.integration.apis.apimanager.ApiManager;
+import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
-import com.wso2.choreo.integration.models.marketplace.ConnectionCreateRequest;
-import com.wso2.choreo.integration.models.marketplace.ConnectionInfo;
+import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.marketplace.*;
 import com.wso2.choreo.integration.models.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.testng.Assert;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.regex.Pattern;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
-import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
-import static org.hamcrest.Matchers.comparesEqualTo;
 
 public class ConnectionService extends ControlPlaneAPI {
 
@@ -129,5 +129,67 @@ public class ConnectionService extends ControlPlaneAPI {
         ConnectionInfo[] connectionListing = ObjectMapperUtil.mapStringToObject(ConnectionInfo[].class, response.getRes(), "");
         return connectionListing;
 
+    }
+
+    public static void createProjectLevelConnection(Map<Endpoints, HttpClient> citrusClients, TestNGCitrusSpringSupport runner,
+                                                      String accessToken, String serviceName, String networkVisibilityFilter, String projectId , String connectionName,
+                                                      String connectionDescription, String requestingServiceVisibility) throws IOException {
+        String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+        HttpClient marketplaceServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        String networkVisibilityprojectId =networkVisibilityFilter.equals("project") ? projectId : "";
+        List<ServiceInfo> services = MarketplaceService.searchForServices(runner,
+                marketplaceServiceClient, accessToken, serviceName, networkVisibilityFilter,networkVisibilityprojectId);
+        ServiceInfo serviceFound = services.get(0);  //we will only get one as we search by exact name
+        String serviceId = serviceFound.getServiceId();
+        String schemaReference = serviceFound.getConnectionSchemas()[0].getId();  //this will only have one schema
+        //create connection under project two with project level visibility
+        HttpClient connectionServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        ArrayList<Environment> environmentsToQuery =
+                new ArrayList<>();
+
+        HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder()
+                .orgUuid(orgUuid)
+                .projectId(projectId).build();
+
+        List<com.wso2.choreo.integration.models.environments.Environment> environments = GraphQL.getEnvironments(runner, cpProjectsClient, accessToken, graphqlDTO);
+
+        for (com.wso2.choreo.integration.models.environments.Environment env : environments) {
+            environmentsToQuery.add(
+                    com.wso2.choreo.integration.models.marketplace.Environment.builder()
+                            .id(env.getTemplateId())
+                            .isCritical(env.isCritical()).build()
+            );
+        }
+        ArrayList<Visibility> visibilities = new ArrayList<>();
+        Visibility projectVisibility = Visibility.builder().
+                organizationUuid(orgUuid).projectUuid(projectId).build();
+        visibilities.add(projectVisibility);
+
+        ConnectionCreateRequest connectionReq = ConnectionCreateRequest.builder().name(connectionName)
+                .description(connectionDescription)
+                .serviceId(serviceId)
+                .schemaReference(schemaReference)
+                .environments(environmentsToQuery.toArray(new com.wso2.choreo.integration.models.marketplace.Environment[0]))
+                .visibilities(visibilities.toArray(new Visibility[0]))
+                .requestingServiceVisibility(requestingServiceVisibility)
+                .orgIdInteger(orgId).build();
+        String connectionId = ConnectionService.createChoreoConnection(runner, connectionServiceClient,
+                accessToken, connectionReq);
+        Pattern UUID_REGEX =
+                Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
+        Assert.assertTrue(UUID_REGEX.matcher(connectionId).matches());
+    }
+
+
+    public static  void disableEndpointSecurity(TestActionRunner runner,Map<Endpoints, HttpClient> citrusClients,String apiId, String accessToken){
+        HttpClient httpClient = citrusClients.get(Endpoints.STS_ENDPOINT);
+        JsonObject apiInfo = ApiManager.getApi(runner,httpClient,accessToken,apiId);
+        if (apiInfo.has("securityScheme")) {
+            apiInfo.remove("securityScheme");
+        }
+        apiInfo.add("securityScheme",(new JsonArray()));
+        ApiManager.updateApi(runner,httpClient,accessToken,apiId,apiInfo);
     }
 }
