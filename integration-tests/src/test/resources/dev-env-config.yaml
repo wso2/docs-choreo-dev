@@ -44,4 +44,4 @@ logs:
 resourceAuthorization:
   RESOURCE_AUTHZ_USER_EMAIL: choreo-authz-test-user@wso2.com@carbon.super
   RESOURCE_AUTHZ_USER_UUID: ab003ea2-da73-47af-a574-0e4369fe665f
-  RESOURCE_AUTHZ_USER_PASSWORD: Fh2luUDMBB0Js2IvKRSk
+  #RESOURCE_AUTHZ_USER_PASSWORD:
