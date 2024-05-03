@@ -135,7 +135,9 @@ describe("Multiple User Logins", () => {
     login.perfLogin();
   });
 
-  it("Create default project if not exists", () => {
+  it(`Create default project if not exists - ${Cypress.env(
+    "perfUsername"
+  )}`, () => {
     GraphQL.isProjectExists(BACKEND_SERVICE_PROJECT_NAME).then((isExists) => {
       if (!isExists) {
         console.createNewProject(BACKEND_SERVICE_PROJECT_NAME);
@@ -145,7 +147,9 @@ describe("Multiple User Logins", () => {
     });
   });
 
-  it("Create backend service if not exists", () => {
+  it(`Create backend service if not exists - ${Cypress.env(
+    "perfUsername"
+  )}`, () => {
     project
       .isComponentExists(BACKEND_SERVICE_COMPONENT_NAME)
       .then((isExists) => {
@@ -171,7 +175,9 @@ describe("Multiple User Logins", () => {
       });
   });
 
-  it("Build backend service if not built previously", () => {
+  it(`Build backend service if not built previously - ${Cypress.env(
+    "perfUsername"
+  )}`, () => {
     service.isSuccessfulBuildExists().then((isExists) => {
       if (!isExists) {
         service.build();
@@ -179,7 +185,9 @@ describe("Multiple User Logins", () => {
     });
   });
 
-  it("Deploy backend service once to access endpoint configurations", () => {
+  it(`Deploy backend service once to access endpoint configurations - ${Cypress.env(
+    "perfUsername"
+  )}`, () => {
     service.isDevDeploymentExists().then((isExists) => {
       if (!isExists) {
         service.deployPublicLevelAccessibility();
@@ -187,7 +195,9 @@ describe("Multiple User Logins", () => {
     });
   });
 
-  it("Enable Pass User Context To Backend", () => {
+  it(`Enable Pass User Context To Backend - ${Cypress.env(
+    "perfUsername"
+  )}`, () => {
     service.enablePassUserContextToBackend();
   });
 
@@ -236,7 +246,7 @@ describe("Multiple User Logins", () => {
     );
   });
 
-  it("Add users for E2E tests", () => {
+  it(`Add users for E2E tests - ${Cypress.env("perfUsername")}`, () => {
     console.addUserStore("users.csv", Enums.Environment.DEVELOPMENT);
   });
 
@@ -305,7 +315,9 @@ describe("Multiple User Logins", () => {
     }
   });
 
-  it("Create a connection to backend service", () => {
+  it(`Create a connection to backend service - ${Cypress.env(
+    "perfUsername"
+  )}`, () => {
     webApp.createConnection(
       BACKEND_SERVICE_COMPONENT_NAME,
       BACKEND_CONNECTION_NAME
@@ -406,7 +418,9 @@ describe("Multiple User Logins", () => {
     );
   });
 
-  it("Verify web app functionality in Dev", () => {
+  it(`Verify web app functionality in Dev - ${Cypress.env(
+    "perfUsername"
+  )}`, () => {
     verifyWebAppFunctionality(webApp.getDevWebAppUrl());
   });
 });
