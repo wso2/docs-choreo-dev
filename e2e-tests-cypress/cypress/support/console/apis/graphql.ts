@@ -288,22 +288,6 @@ export class GraphQL {
     });
   }
 
-  // static isProjectExists(
-  //   projectName: string,
-  //   orgId: number
-  // ): Cypress.Chainable<boolean> {
-  //   return this.getProjectsV2(orgId).then((response) => {
-  //     let isFound = false;
-  //     if (response.status === OK) {
-  //       isFound = response.projects.find((p) => p.name === projectName)
-  //         ? true
-  //         : false;
-  //     }
-
-  //     return isFound;
-  //   });
-  // }
-
   static isProjectExists(projectName: string): Cypress.Chainable<boolean> {
     return this.getProjectsV2().then((response) => {
       let isFound = false;
