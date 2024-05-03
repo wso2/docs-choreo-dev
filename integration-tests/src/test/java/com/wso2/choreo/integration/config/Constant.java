@@ -30,6 +30,8 @@ public final class Constant {
 
     public static final String TEST_OLD_COMPONENT_NAME = "automationtestcomponent";
     public static final String TEST_COMPONENT_NAME = "autotest";
+    public static final String TEST_CONNECTION_NAME = "autotestconnection";
+
     public static final String TEST_PROJECT_DESCRIPTION = "test project description";
     public static final String TEST_REPO_NAME_PREFIX = "test-repo-";
     public static final String GITHUB_AUTH_HEADER_PREFIX = "token ";
