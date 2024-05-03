@@ -18,6 +18,7 @@ import com.wso2.choreo.integration.common.ResourceAuthz.ResourceAuthzConstants.T
 import com.wso2.choreo.integration.common.exceptions.ProjectRetrievalException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
+import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.resourceAuthorization.CreateGroupResponseDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.CreateRoleResponseDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.GroupRoleMappingResponseDTO;
@@ -53,8 +54,9 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String userAccessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         String projectHandler = NameGenerator.generateThreadUniqueName();
+        String projectName = NameGenerator.generateUniqueName(Constant.TEST_PROJECT_NAME_PREFIX);
         projectA = GraphQL.createProject(this, appServiceClient, TestProjectData.REGION, userAccessToken,
-                ResourceAuthzConstants.TestProjectData.PROJECT_NAME, projectHandler);
+                projectName, projectHandler);
         Assert.assertNotNull(projectA.getId());
     }
 
@@ -79,7 +81,7 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         createdTestRole = ResourceAuthzUtils.createRole(this, appServiceClient,
-                ResourceAuthzConstants.TestRoleData.ROLE_DISPLAY_NAME,
+                ResourceAuthzConstants.TestRoleData.ROLE_DISPLAY_NAME_BASE,
                 ResourceAuthzConstants.TestRoleData.ROLE_DESCRIPTION,
                 ResourceAuthzConstants.TestRoleData.PERMISSIONS);
         Assert.assertNotNull(createdTestRole.getUuid());
@@ -351,7 +353,7 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         createdProjectViewOrgManageRole = ResourceAuthzUtils.createRole(this, appServiceClient,
-                ResourceAuthzConstants.ProjectViewAndOrgManageRoleData.ROLE_DISPLAY_NAME,
+                ResourceAuthzConstants.ProjectViewAndOrgManageRoleData.ROLE_DISPLAY_NAME_BASE,
                 ResourceAuthzConstants.ProjectViewAndOrgManageRoleData.ROLE_DESCRIPTION,
                 ResourceAuthzConstants.ProjectViewAndOrgManageRoleData.PERMISSIONS);
         Assert.assertNotNull(createdProjectViewOrgManageRole.getUuid());

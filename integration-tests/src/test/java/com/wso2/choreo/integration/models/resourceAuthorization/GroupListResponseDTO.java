@@ -11,8 +11,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoleGroupMappingResponseDTO {
-    private String orgUUID;
-    private String groupUUID;
-    private List<RoleAssociation> roleAssociations;
+public class GroupListResponseDTO {
+    List<Group> list;
 }

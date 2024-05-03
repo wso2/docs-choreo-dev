@@ -5,6 +5,7 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
@@ -15,7 +16,21 @@ import com.wso2.choreo.integration.models.resourceAuthorization.CreateGroupRespo
 import com.wso2.choreo.integration.models.resourceAuthorization.CreateRoleResponseDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.GetRoleResponseDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.GroupRoleMappingResponseDTO;
+import com.wso2.choreo.integration.models.resourceAuthorization.GroupWithUsersDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.RoleGroupMappingResponseDTO;
+import com.wso2.choreo.integration.models.resourceAuthorization.RoleList;
+import com.wso2.choreo.integration.models.resourceAuthorization.GroupListResponseDTO;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+import org.eclipse.jetty.io.RuntimeIOException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -38,13 +53,14 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
     /**
      * Create a group in the Choreo organization
      *
-     * @param runner        Citrus test runner
-     * @param client        Citrus HTTP client
-     * @param groupRequest  Group request
+     * @param runner       Citrus test runner
+     * @param client       Citrus HTTP client
+     * @param groupRequest Group request
      * @return CreateGroupResponseDTO
      * @throws TokenRetrievalException if token retrieval fails
-     * @throws IOException             if an IO error occurs when sending or receiving request
-     * @throws URISyntaxException       if URI syntax is invalid
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if URI syntax is invalid
      */
     public static CreateGroupResponseDTO createGroup(TestActionRunner runner, HttpClient client,
             HashMap<String, Object> groupRequest) throws TokenRetrievalException, IOException, URISyntaxException {
@@ -91,13 +107,14 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
     /**
      * Create a role in the Choreo organization
      *
-     * @param runner        Citrus test runner
-     * @param client        Citrus HTTP client
-     * @param roleRequest   Role request
+     * @param runner      Citrus test runner
+     * @param client      Citrus HTTP client
+     * @param roleRequest Role request
      * @return CreateRoleResponseDTO
      * @throws TokenRetrievalException if token retrieval fails
-     * @throws IOException             if an IO error occurs when sending or receiving request
-     * @throws URISyntaxException       if URI syntax is invalid
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if URI syntax is invalid
      */
     public static CreateRoleResponseDTO createRole(TestActionRunner runner, HttpClient client,
             HashMap<String, Object> roleRequest)
@@ -146,14 +163,15 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
     /**
      * Assign a role to a group in the Choreo organization
      *
-     * @param runner                    Citrus test runner
-     * @param client                    Citrus HTTP client
-     * @param groupHandle                Group handle
-     * @param roleGroupMappingRequest    Role group mapping request
+     * @param runner                  Citrus test runner
+     * @param client                  Citrus HTTP client
+     * @param groupHandle             Group handle
+     * @param roleGroupMappingRequest Role group mapping request
      * @return RoleGroupMappingResponseDTO
      * @throws TokenRetrievalException if token retrieval fails
-     * @throws IOException             if an IO error occurs when sending or receiving request
-     * @throws URISyntaxException       if URI syntax is invalid
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if URI syntax is invalid
      */
     public static RoleGroupMappingResponseDTO assignRoleToGroup(TestActionRunner runner, HttpClient client,
             String groupHandle, HashMap<String, Object> roleGroupMappingRequest)
@@ -203,13 +221,14 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
     /**
      * Assign a user to a group in the Choreo organization
      *
-     * @param runner        Citrus test runner
-     * @param client        Citrus HTTP client
-     * @param roleHandle    Role handle
-     * @param userIds       User IDs
+     * @param runner     Citrus test runner
+     * @param client     Citrus HTTP client
+     * @param roleHandle Role handle
+     * @param userIds    User IDs
      * @throws TokenRetrievalException if token retrieval fails
-     * @throws IOException             if an IO error occurs when sending or receiving request
-     * @throws URISyntaxException       if URI syntax is invalid
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if URI syntax is invalid
      */
     public static void assignUserToGroup(TestActionRunner runner, HttpClient client, String roleHandle,
             HashMap<String, Object> userIds)
@@ -241,13 +260,14 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
     /**
      * Get a role by handle in the Choreo organization
      *
-     * @param runner        Citrus test runner
-     * @param client        Citrus HTTP client
-     * @param roleHandle    Role handle
+     * @param runner     Citrus test runner
+     * @param client     Citrus HTTP client
+     * @param roleHandle Role handle
      * @return GetRoleResponseDTO
      * @throws TokenRetrievalException if token retrieval fails
-     * @throws IOException             if an IO error occurs when sending or receiving request
-     * @throws URISyntaxException       if URI syntax is invalid
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if URI syntax is invalid
      */
     public static GetRoleResponseDTO getRoleByHandle(TestActionRunner runner, HttpClient client, String roleHandle)
             throws TokenRetrievalException, IOException, URISyntaxException {
@@ -292,14 +312,15 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
     /**
      * Remove a group from a role in the Choreo organization
      *
-     * @param runner                    Citrus test runner
-     * @param client                    Citrus HTTP client
-     * @param roleHandle                Role handle
-     * @param groupAssociationRequest   Group association request
+     * @param runner                  Citrus test runner
+     * @param client                  Citrus HTTP client
+     * @param roleHandle              Role handle
+     * @param groupAssociationRequest Group association request
      * @return GroupRoleMappingResponseDTO
      * @throws TokenRetrievalException if token retrieval fails
-     * @throws IOException             if an IO error occurs when sending or receiving request
-     * @throws URISyntaxException       if URI syntax is invalid
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if URI syntax is invalid
      */
     public static GroupRoleMappingResponseDTO removeGroupFromRole(TestActionRunner runner, HttpClient client,
             String roleHandle, HashMap<String, Object> groupAssociationRequest)
@@ -349,14 +370,15 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
     /**
      * Assign groups to a role in the Choreo organization
      *
-     * @param runner                    Citrus test runner
-     * @param client                    Citrus HTTP client
-     * @param roleHandle                Role handle
-     * @param groupRoleMappingRequest   Group role mapping request
+     * @param runner                  Citrus test runner
+     * @param client                  Citrus HTTP client
+     * @param roleHandle              Role handle
+     * @param groupRoleMappingRequest Group role mapping request
      * @return GroupRoleMappingResponseDTO
      * @throws TokenRetrievalException if token retrieval fails
-     * @throws IOException             if an IO error occurs when sending or receiving request
-     * @throws URISyntaxException       if URI syntax is invalid
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if URI syntax is invalid
      */
     public static GroupRoleMappingResponseDTO assignGroupsToRole(TestActionRunner runner, HttpClient client,
             String roleHandle,
@@ -404,6 +426,254 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
 
     }
 
+    /**
+     * These non Citrus based implementation is to be used in cases where the Citrus
+     * framework is yet to be initialized, such as in the BeforeSuite
+     */
+
+    /**
+     * Get a list of groups in the Choreo organization
+     *
+     * @return GroupListResponseDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if URI syntax is invalid
+     */
+    public static GroupListResponseDTO getGroupsList() throws TokenRetrievalException, IOException, URISyntaxException {
+
+        HttpGet request = new HttpGet(getAppServiceEndpoint().concat(getGroupsEndpoint()));
+        request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, getAccessToken());
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+
+            if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                throw new RuntimeException(responseBody);
+            }
+
+            return new ObjectMapper().readValue(responseBody, GroupListResponseDTO.class);
+        }
+    }
+
+    /**
+     * Get a list of roles in the Choreo organization
+     *
+     * @return GroupListResponseDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if URI syntax is invalid
+     */
+    public static RoleGroupMappingResponseDTO getRolesInAGroup(String groupHandle)
+            throws TokenRetrievalException, IOException, URISyntaxException {
+
+        HttpGet request = new HttpGet(
+                getAppServiceEndpoint().concat(getGroupsEndpoint() + "/" + groupHandle + "/roles"));
+        request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, getAccessToken());
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+
+            if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                throw new RuntimeException(responseBody);
+            }
+
+            return new ObjectMapper().readValue(responseBody, RoleGroupMappingResponseDTO.class);
+        }
+
+    }
+
+    /**
+     * Get a list of users in a group in the Choreo organization
+     *
+     * @return RoleGroupMappingResponseDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if URI syntax is invalid
+     */
+    public static RoleGroupMappingResponseDTO removeRoleFromGroup(String groupHandle,
+            HashMap<String, Object> roleAssociationRequest)
+            throws TokenRetrievalException, IOException, URISyntaxException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String requestBody = objectMapper.writeValueAsString(roleAssociationRequest);
+
+        HttpPost request = new HttpPost(
+                getAppServiceEndpoint().concat(getGroupsEndpoint() + "/" + groupHandle + "/remove-roles"));
+        request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, getAccessToken());
+        StringEntity requestEntity = new StringEntity(requestBody, ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+
+            if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                throw new RuntimeIOException(responseBody);
+            }
+
+            return objectMapper.readValue(responseBody, RoleGroupMappingResponseDTO.class);
+        }
+    }
+
+    /**
+     * Get a list of users in a group in the Choreo organization
+     *
+     * @return GroupWithUsersDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if URI syntax is invalid
+     */
+    public static GroupWithUsersDTO getGroupMembers(String groupHandle)
+            throws URISyntaxException, TokenRetrievalException, IOException {
+
+        HttpGet request = new HttpGet(getAppServiceEndpoint().concat(getGroupsEndpoint() + "/" + groupHandle));
+        URIBuilder uriBuilder = new URIBuilder(request.getURI());
+        uriBuilder.addParameter("include", "members");
+        request.setURI(uriBuilder.build());
+
+        request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, getAccessToken());
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+
+            if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                throw new RuntimeException(responseBody);
+            }
+
+            return new ObjectMapper().readValue(responseBody, GroupWithUsersDTO.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Remove a member from a group in the Choreo organization
+     *
+     * @param groupHandle Group handle
+     * @param memberUuid  Member UUID
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if URI syntax is invalid
+     */
+    public static void removeMemberFromGroup(String groupHandle, String memberUuid)
+            throws TokenRetrievalException, IOException, URISyntaxException {
+
+        HttpDelete request = new HttpDelete(
+                getAppServiceEndpoint()
+                        .concat(getGroupsEndpoint() + "/" + groupHandle + "/members/" + memberUuid));
+
+        request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, getAccessToken());
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+
+            if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                throw new RuntimeIOException(responseBody);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Delete a group in the Choreo organization
+     *
+     * @param groupHandle Group handle
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if URI syntax is invalid
+     */
+    public static void deleteGroup(String groupHandle) throws TokenRetrievalException, IOException, URISyntaxException {
+
+        HttpDelete request = new HttpDelete(getAppServiceEndpoint().concat(getGroupsEndpoint() + "/" + groupHandle));
+        request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, getAccessToken());
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+
+            if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                throw new RuntimeIOException(responseBody);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Get a list of roles in the Choreo organization
+     *
+     * @return RoleList
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if URI syntax is invalid
+     */
+    public static RoleList getRoleList() throws TokenRetrievalException, IOException, URISyntaxException {
+        
+        HttpGet request = new HttpGet(getAppServiceEndpoint().concat(getRoleEndpoint()));
+        URIBuilder uriBuilder = new URIBuilder(request.getURI());
+        uriBuilder.addParameter("limit", "100");
+        request.setURI(uriBuilder.build());
+        request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, getAccessToken());
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+
+            if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                throw new RuntimeException(responseBody);
+            }
+
+            return new ObjectMapper().readValue(responseBody, RoleList.class);
+        }
+    }
+
+    /**
+     * Delete a role in the Choreo organization
+     *
+     * @param roleHandle Role handle
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if URI syntax is invalid
+     */
+    public static void deleteRole(String roleHandle) throws TokenRetrievalException, IOException, URISyntaxException {
+
+        HttpDelete request = new HttpDelete(getAppServiceEndpoint().concat(getRoleEndpoint() + "/" + roleHandle));
+        request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, getAccessToken());
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+
+            if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                throw new RuntimeIOException(responseBody);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private static String getAccessToken() throws TokenRetrievalException, IOException, URISyntaxException {
 
         return TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
@@ -430,5 +700,10 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
         return USER_MGT_BASE_PATH + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE)
                 + "/groups/" + groupHandle + "/assign-roles";
     }
+
+    private static String getAppServiceEndpoint() {
+
+        return Configuration.getConfig(ConfigDefinition.CHOREO_NEW_APP_SERVICE_ENDPOINT) + "/";
+    } 
 
 }

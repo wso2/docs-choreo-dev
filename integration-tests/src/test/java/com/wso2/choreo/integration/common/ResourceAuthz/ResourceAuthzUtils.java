@@ -13,10 +13,14 @@ import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.models.resourceAuthorization.CreateGroupResponseDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.CreateRoleResponseDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.GetRoleResponseDTO;
+import com.wso2.choreo.integration.models.resourceAuthorization.GroupListResponseDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.GroupRoleMappingResponseDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.RoleGroupMappingResponseDTO;
+import com.wso2.choreo.integration.models.resourceAuthorization.RoleList;
 import com.wso2.choreo.integration.models.resourceAuthorization.GroupRoleMappingResponseDTO.GroupAssociation;
+import com.wso2.choreo.integration.models.resourceAuthorization.GroupWithUsersDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.Permission;
+import com.wso2.choreo.integration.models.resourceAuthorization.RoleAssociation;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -46,7 +50,7 @@ public class ResourceAuthzUtils {
             throws TokenRetrievalException, IOException, URISyntaxException {
         HashMap<String, Object> groupData = new HashMap<>() {
             {
-                put("displayName", ResourceAuthzConstants.TestGroupData.GROUP_NAME + getCurrentDate());
+                put("displayName", ResourceAuthzConstants.TestGroupData.GROUP_NAME_BASE + getCurrentDate());
                 put("description", ResourceAuthzConstants.TestGroupData.GROUP_DESCRIPTION);
             }
         };
@@ -242,6 +246,127 @@ public class ResourceAuthzUtils {
             String projectId, String accessToken) throws TokenRetrievalException, IOException, URISyntaxException {
 
         return GraphQL.getProjectComponentsFromUnauthorizedProject(runner, client, projectId, accessToken);
+    }
+
+    /**
+     * Get the list of groups
+     *
+     * @return GroupListResponseDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if the URI is invalid
+     */
+    public static GroupListResponseDTO getGroups()
+            throws TokenRetrievalException, IOException, URISyntaxException {
+
+        return ResourceAuthorizationService.getGroupsList();
+    }
+
+    /**
+     * Get the list of roles in a group
+     *
+     * @param groupHandle group handle
+     * @return RoleGroupMappingResponseDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if the URI is invalid
+     */
+    public static RoleGroupMappingResponseDTO getRolesInGroup(String groupHandle)
+            throws TokenRetrievalException, IOException, URISyntaxException {
+
+        return ResourceAuthorizationService.getRolesInAGroup(groupHandle);
+    }
+
+    /**
+     * Remove a role from a group for cleaning up
+     *
+     * @param roleHandle              role handle
+     * @param roleAssociationRequest  role association request
+     * @return RoleGroupMappingResponseDTO
+     * @throws TokenRetrievalException if token retrieval fails
+     * @throws IOException             if an IO error occurs when sending or
+     *                                 receiving request
+     * @throws URISyntaxException      if the URI is invalid
+     */
+    public static RoleGroupMappingResponseDTO removeRoleFromGroupForCleanup(String roleHandle,
+            List<RoleAssociation> roleAssociationRequest)
+            throws TokenRetrievalException, IOException, URISyntaxException {
+
+        HashMap<String, Object> roleData = new HashMap<>() {
+            {
+                put("roleAssociations", roleAssociationRequest);
+            }
+        };
+
+        return ResourceAuthorizationService.removeRoleFromGroup(roleHandle, roleData);
+    }
+
+    /**
+     * Get the list of users in a group
+     *
+     * @param groupHandle group handle
+     * @return GroupWithUsersDTO
+     * @throws IOException 
+     * @throws TokenRetrievalException 
+     * @throws URISyntaxException 
+     */
+    public static GroupWithUsersDTO getGroupMembers(String groupHandle)
+            throws URISyntaxException, TokenRetrievalException, IOException {
+
+        return ResourceAuthorizationService.getGroupMembers(groupHandle);
+    }
+
+    /**
+     * Remove a member from a group
+     *
+     * @param groupHandle group handle
+     * @param memberUuid  member UUID
+     * @throws URISyntaxException 
+     * @throws TokenRetrievalException 
+     * @throws IOException 
+     */
+    public static void removeMemberFromGroup(String groupHandle, String memberUuid)
+            throws URISyntaxException, TokenRetrievalException, IOException {
+
+        ResourceAuthorizationService.removeMemberFromGroup(groupHandle, memberUuid);
+    }
+
+    /**
+     * Delete a group
+     *
+     * @param groupHandle group handle
+     * @throws URISyntaxException 
+     * @throws TokenRetrievalException 
+     * @throws IOException 
+     */
+    public static void deleteGroup(String groupHandle) throws URISyntaxException, TokenRetrievalException, IOException {
+        ResourceAuthorizationService.deleteGroup(groupHandle);
+    }
+
+    /**
+     * Get the list of roles
+     *
+     * @return RoleList
+     * @throws URISyntaxException 
+     * @throws TokenRetrievalException 
+     * @throws IOException 
+     */
+    public static RoleList getRoleList() throws URISyntaxException, TokenRetrievalException, IOException {
+        return ResourceAuthorizationService.getRoleList();
+    }
+
+    /**
+     * Delete a role
+     *
+     * @param roleHandle role handle
+     * @throws URISyntaxException 
+     * @throws TokenRetrievalException 
+     * @throws IOException 
+     */
+    public static void deleteRole(String roleHandle) throws URISyntaxException, TokenRetrievalException, IOException {
+        ResourceAuthorizationService.deleteRole(roleHandle);
     }
 
     private static String getCurrentDate() {

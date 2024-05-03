@@ -20,21 +20,21 @@ public class ResourceAuthzConstants {
 
     public static class TestProjectData {
 
-        public static final String PROJECT_NAME = "authztestproject";
+        public static final String PROJECT_NAME_BASE = "authztestproject_";
         public static final String PROJECT_DESCRIPTION = "Test Project Description";
         public static final String REGION = "US";
     }
 
     public static class TestGroupData {
 
-        public static final String GROUP_NAME = "AuthzTestGroup";
+        public static final String GROUP_NAME_BASE = "AuthzTestGroup_";
         public static final String GROUP_DESCRIPTION = "Test Group Description";
     }
 
     public static class TestRoleData {
 
         public static final String ROLE_DESCRIPTION = "Test Role Description";
-        public static final String ROLE_DISPLAY_NAME = "AuthzTestRole";
+        public static final String ROLE_DISPLAY_NAME_BASE = "AuthzTestRole_";
         public static final List<Permission> PERMISSIONS = getOrgManagePermissions();
     }
 
@@ -42,7 +42,7 @@ public class ResourceAuthzConstants {
 
         public static final String ROLE_DESCRIPTION 
             = "This role allows project view permission and org manage permission";
-        public static final String ROLE_DISPLAY_NAME = "AuthzPVOM";
+        public static final String ROLE_DISPLAY_NAME_BASE = "AuthzPVOM_";
         public static final List<Permission> PERMISSIONS = getProjectViewOrgManagePermission();
     }
 
