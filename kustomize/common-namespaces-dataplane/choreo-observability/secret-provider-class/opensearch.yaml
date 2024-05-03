@@ -38,12 +38,12 @@ spec:
     objects: |
       array:
         - |
-          objectName: obs-opensearch-internal-users
+          objectName: {{.OPENSEARCH_INTERNAL_USERS_OBJ_NAME}}
           objectType: secret
           objectAlias: OPENSEARCH_INTERNAL_USERS
           objectVersion: "{{.OPENSEARCH_INTERNAL_USERS}}"
         - |
-          objectName: obs-opensearch-password
+          objectName: {{.OPENSEARCH_PASSWORD_OBJ_NAME}}
           objectType: secret
           objectAlias: OPENSEARCH_PASSWORD
           objectVersion: "{{.OPENSEARCH_PASSWORD}}"
