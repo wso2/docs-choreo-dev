@@ -42,7 +42,6 @@ logs:
   CHOREO_US_DP_URL: e1-us-east-azure.st.choreoapis.dev
   CHOREO_EU_DP_URL: e1-eu-north-azure.st.choreoapis.dev
 resourceAuthorization:
-  # RESOURCE_AUTHZ_USER_EMAIL: 
+  # RESOURCE_AUTHZ_USER_EMAIL:
   # RESOURCE_AUTHZ_USER_UUID:
-  # RESOURCE_AUTHZ_USER_PASSWORD: 
-  
+  # RESOURCE_AUTHZ_USER_PASSWORD:
