@@ -52,13 +52,14 @@ public class ConnectionService extends ControlPlaneAPI {
     private static final String CONTEXT = "connections/v1";
     private static final Logger log = LogManager.getLogger();
 
-    public static String createChoreoConnection(TestActionRunner runner, HttpClient client, String accessToken,
-                                                ConnectionCreateRequest connectionReq) throws IOException {
+    public static String createChoreoConnection(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+                                                ConnectionCreateRequest connectionReq, Boolean isPublisherSecured, List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs ) throws IOException {
         String createChoreoConnectionURI = CONTEXT.concat("/configurations/service-configs/choreo-connections");
         String requestPayload = ObjectMapperUtil.mapObjectToString(connectionReq);
         AtomicReference<String> connectionId = new AtomicReference<>();
+        runner.variable("isConnectionCreationSuccess",false);
         runner.$(repeatOnError()
-                .until("i = 5")
+                .until("(i = 5) or ( ${isConnectionCreationSuccess} = true )")
                 .index("i")
                 .autoSleep(30000)
                 .actions(
@@ -78,10 +79,39 @@ public class ConnectionService extends ControlPlaneAPI {
                                 .validate((message, context) -> {
                                             String payload = message.getPayload(String.class);
                                             JsonObject connectionJsonObject = new JsonParser().parse(payload).getAsJsonObject();
-                                            connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
+                                            JsonObject connectionStatus = connectionJsonObject.getAsJsonObject("status");
+                                            for (int i = 0; i < publisherDeployedEnvs.size(); i++) {
+                                                com.wso2.choreo.integration.models.environments.Environment environment = publisherDeployedEnvs.get(i);
+                                                String envId = environment.getTemplateId();
+                                                if (connectionStatus.has(envId)) {
+                                                    JsonArray envStatus = connectionStatus.getAsJsonArray(envId);
+                                                    if(isPublisherSecured){
+                                                        if (isStageSuccess(envStatus, "Service Url resolved") && isStageSuccess(envStatus, "OAuth keys generated")) {
+                                                            context.setVariable("isConnectionCreationSuccess", true);
+                                                            connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
+                                                        }
+                                                    }else{
+                                                        if (isStageSuccess(envStatus, "Service Url resolved")) {
+                                                            context.setVariable("isConnectionCreationSuccess", true);
+                                                            connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                 )));
         return connectionId.get();
+    }
+    private static boolean  isStageSuccess(JsonArray envStatus, String stage) {
+        for (int i = 0; i < envStatus.size(); i++) {
+            JsonObject stageObj = envStatus.get(i).getAsJsonObject();
+            String stageName  = stageObj.get("stage").getAsString();
+            boolean success = stageObj.get("success").getAsBoolean();
+            if (stage.equals(stageName) && success) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void refreshChoreoConnection(TestActionRunner runner, HttpClient client, String accessToken,
@@ -132,8 +162,9 @@ public class ConnectionService extends ControlPlaneAPI {
     }
 
     public static void createProjectLevelConnection(Map<Endpoints, HttpClient> citrusClients, TestNGCitrusSpringSupport runner,
-                                                      String accessToken, String serviceName, String networkVisibilityFilter, String projectId , String connectionName,
-                                                      String connectionDescription, String requestingServiceVisibility) throws IOException {
+                                                    String accessToken, String serviceName, String networkVisibilityFilter, String projectId , String connectionName,
+                                                    String connectionDescription, String requestingServiceVisibility,
+                                                    Boolean isPublisherSecured, List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs) throws IOException {
         String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
         HttpClient marketplaceServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
@@ -176,7 +207,7 @@ public class ConnectionService extends ControlPlaneAPI {
                 .requestingServiceVisibility(requestingServiceVisibility)
                 .orgIdInteger(orgId).build();
         String connectionId = ConnectionService.createChoreoConnection(runner, connectionServiceClient,
-                accessToken, connectionReq);
+                accessToken, connectionReq,isPublisherSecured,publisherDeployedEnvs);
         Pattern UUID_REGEX =
                 Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
         Assert.assertTrue(UUID_REGEX.matcher(connectionId).matches());
