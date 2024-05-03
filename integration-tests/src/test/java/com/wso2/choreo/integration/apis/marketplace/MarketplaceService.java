@@ -52,7 +52,7 @@ public class MarketplaceService {
                 .concat("query=").concat(encodedServiceName);
 
         if (!projectId.isEmpty()){
-            searchServicesURL=searchServicesURL.concat("&networkVisibilityprojectId=").concat(projectId);
+            searchServicesURL = searchServicesURL.concat("&networkVisibilityprojectId=").concat(projectId);
         }
         List<ServiceInfo> services = new ArrayList<ServiceInfo>();
 

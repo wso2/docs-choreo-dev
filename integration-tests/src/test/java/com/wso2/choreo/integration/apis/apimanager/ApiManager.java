@@ -146,8 +146,7 @@ public class ApiManager extends ControlPlaneAPI {
     }
 
     public static JsonObject getApi(TestActionRunner runner, HttpClient client, String accessToken, String apiId) {
-        String path = Constant.APIS_ENDPOINT + "/" + apiId + "?organizationId=" + ORG_UUID;
-
+        String path = String.format( "%s/%s?organizationId=%s", Constant.APIS_ENDPOINT, apiId, ORG_UUID);
         AtomicReference<JsonObject> apiInfo = new AtomicReference<>();
         runner.$(http()
                 .client(client)
@@ -174,7 +173,7 @@ public class ApiManager extends ControlPlaneAPI {
 
     public static void updateApi(TestActionRunner runner, HttpClient client, String accessToken, String apiId, JsonObject reqBody) {
         String body = reqBody.toString();
-        String path = Constant.APIS_ENDPOINT + "/" + apiId + "?organizationId=" + ORG_UUID;
+        String path = String.format( "%s/%s?organizationId=%s", Constant.APIS_ENDPOINT, apiId, ORG_UUID);
 
         runner.$(http()
                 .client(client)

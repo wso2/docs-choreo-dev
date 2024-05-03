@@ -305,6 +305,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 .componentType("byocRestApi").releaseId(clientDeploymentStatusDTO.getReleaseId()).build();
         GraphQL.stopDeployment(this, appServiceClient, accessToken, graphqlDTO);
     }
+
     @Test(dependsOnMethods = {"undeployClientComponent_TestChoreoConnections"})
     @CitrusTest
     public void undeployServiceComponent_TestChoreoConnections() throws Exception {
@@ -312,7 +313,6 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 .componentType("byocRestApi").releaseId(publicEndpointServiceDeploymentStatusDTO.getReleaseId()).build();
         GraphQL.stopDeployment(this, appServiceClient, accessToken, graphqlDTO);
     }
-
 
     @Test(dependsOnMethods = {"createProject_TestChoreoConnections"})
     @CitrusTest

@@ -53,7 +53,8 @@ public class ConnectionService extends ControlPlaneAPI {
     private static final Logger log = LogManager.getLogger();
 
     public static String createChoreoConnection(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
-                                                ConnectionCreateRequest connectionReq, Boolean isPublisherSecured, List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs ) throws IOException {
+                                                ConnectionCreateRequest connectionReq, Boolean isPublisherSecured,
+                                                List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs ) throws IOException {
         String createChoreoConnectionURI = CONTEXT.concat("/configurations/service-configs/choreo-connections");
         String requestPayload = ObjectMapperUtil.mapObjectToString(connectionReq);
         AtomicReference<String> connectionId = new AtomicReference<>();
@@ -103,6 +104,7 @@ public class ConnectionService extends ControlPlaneAPI {
         return connectionId.get();
     }
     private static boolean  isStageSuccess(JsonArray envStatus, String stage) {
+
         for (int i = 0; i < envStatus.size(); i++) {
             JsonObject stageObj = envStatus.get(i).getAsJsonObject();
             String stageName  = stageObj.get("stage").getAsString();
@@ -162,9 +164,10 @@ public class ConnectionService extends ControlPlaneAPI {
     }
 
     public static void createProjectLevelConnection(Map<Endpoints, HttpClient> citrusClients, TestNGCitrusSpringSupport runner,
-                                                    String accessToken, String serviceName, String networkVisibilityFilter, String projectId , String connectionName,
-                                                    String connectionDescription, String requestingServiceVisibility,
-                                                    Boolean isPublisherSecured, List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs) throws IOException {
+                                                    String accessToken, String serviceName, String networkVisibilityFilter,
+                                                    String projectId , String connectionName, String connectionDescription,
+                                                    String requestingServiceVisibility, Boolean isPublisherSecured,
+                                                    List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs) throws IOException {
         String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
         HttpClient marketplaceServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
@@ -176,8 +179,7 @@ public class ConnectionService extends ControlPlaneAPI {
         String schemaReference = serviceFound.getConnectionSchemas()[0].getId();  //this will only have one schema
         //create connection under project two with project level visibility
         HttpClient connectionServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        ArrayList<Environment> environmentsToQuery =
-                new ArrayList<>();
+        ArrayList<Environment> environmentsToQuery = new ArrayList<>();
 
         HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         GraphqlDTO graphqlDTO = GraphqlDTO.builder()
@@ -212,7 +214,6 @@ public class ConnectionService extends ControlPlaneAPI {
                 Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
         Assert.assertTrue(UUID_REGEX.matcher(connectionId).matches());
     }
-
 
     public static  void disableEndpointSecurity(TestActionRunner runner,Map<Endpoints, HttpClient> citrusClients,String apiId, String accessToken){
         HttpClient httpClient = citrusClients.get(Endpoints.STS_ENDPOINT);
