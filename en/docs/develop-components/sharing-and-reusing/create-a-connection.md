@@ -20,6 +20,6 @@ To create a connection, follow the steps given below:
 5. Enter a name and a description for the connection and click **Next**. This displays the ServiceURL for the development and production environments. 
 6. Click **Finish**.
 
-For step-by-step instructions on how to consume a service through a connection, see [Share and Reuse Services](./sharing-and-reusing-services.md).
+For step-by-step instructions on how to consume a service through a connection, see [Share and Reuse Services](./share-and-reuse-services.md).
 
-For step-by-step instructions on how to connect to a service from your web application, see [Share and Reuse Web Applications](./sharing-and-reusing-web-applications.md).
+For step-by-step instructions on how to connect to a service from your web application, see [Share and Reuse Web Applications](./share-and-reuse-web-applications.md).
