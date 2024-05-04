@@ -120,7 +120,10 @@ nav:
       - Bring Your Own Image: develop-components/bring-your-own-image.md
       - Deploy an Application with Buildpacks: develop-components/deploy-an-application-with-buildpacks.md
       - Deploy a Containerized Application: develop-components/deploy-a-containerized-application.md  
-      - Sharing and Reusing Services: develop-components/sharing-and-reusing-services.md
+      - Share and Reuse Components:
+          - Create a Connection: develop-components/sharing-and-reusing/create-a-connection.md
+          - Share and Reuse Services: develop-components/sharing-and-reusing/share-and-reuse-services.md
+          - Share and Reuse Web Applications: develop-components/sharing-and-reusing/share-and-reuse-web-applications.md
       - Manage Deployment Tracks for Choreo Components: develop-components/manage-deployment-tracks-for-choreo-components.md
       - Configure Mutual TLS Between Components: develop-components/configure-mutual-tls-between-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
