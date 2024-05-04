@@ -96,7 +96,7 @@ When a user clicks the sign-out button, Choreo will clear the session cookies an
 To invoke Choreo APIs within the same organization as your web application, you can use the relative path `/choreo-apis/<api-suffix>`, regardless of whether managed authentication is enabled for the web application or not.
 
 !!! note
-    To invoke a Choreo API from a web application, you need to [create a Connection](../develop-components/sharing-and-reusing-services.md#create-a-connection-to-a-service) from the web application to the Choreo API. 
+    To invoke a Choreo API from a web application, you need to [create a Connection](../develop-components/sharing-and-reusing/create-a-connection.md) from the web application to the Choreo API. 
 
 For example, if the API URL is `https://2d9ec1f6-2f04-4127-974f-0a3b20e97af5-dev.e1-us-east-azure.choreoapis.dev/rbln/item-service/api-e04/1.0.0`, the `<api-suffix>` would be `/rbln/item-service/api-e04/1.0.0`. You can invoke the API using the `/choreo-apis/rbln/item-service/api-e04/1.0.0` relative path from your single-page application.
 
