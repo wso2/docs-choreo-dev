@@ -1,24 +1,25 @@
 # Create a Connection
 
-You can use a connection to consume a component within another component. For example, for service integrations. 
+Connections in Choreo allow you to integrate Choreo components, or to integrate Choreo components to external services or resources. Connections provide a simple and uniform way to integrate with services and resources.
+
+To consume a service deployed on Choreo within your service, you must create a connection to the service you want to consume. 
 
 !!! info
-    From November 8, 2023, at 10:20 AM UTC, you can create Connections for new components, excluding Ballerina and MI.
+    From November 8, 2023, at 10:20 AM UTC, you can create connections for new components, excluding Ballerina and MI.
 
-To consume a service deployed on Choreo within your service, you need to create a connection to the service you wish to consume. Follow the steps below.
+To create a connection, follow the steps given below:
 
-1. In the Choreo Console, go to the top navigation menu, and set the visibility level as [project](../../choreo-concepts/connections.md#project-connections), or [component](../../choreo-concepts/connections.md#component-connections) as follows: 
+1. In the Choreo Console, go to the top navigation menu and set the visibility level as [project](../../choreo-concepts/connections.md#project-connections) or [component](../../choreo-concepts/connections.md#component-connections) as follows: 
 
     - **Project Connection**: Select an organization and a project in that organization. 
     - **Component Connection**: Select an organization, a project in that organization, and a component in the selected project. 
 
 2. From the left navigation menu, click **Dependencies**  and then **Connections**. This page will list the currently available connections.
-3. Click **+Create**. The **Create Connection** page will display the marketplace view for you to browse the available services. You can search and apply filters to find services efficiently.
-4. Click on the service to wish to connect to. 
-5. Enter a name and a description for the connection and click **Next**.
-6. You will receive the ServiceURL for the development and production environments. Click **Finish**.
+3. Click **+Create**. The **Create Connection** page opens with the marketplace view for you to browse the available services. You can search and apply filters to efficiently find a service.
+4. Click on the service you want to connect to. 
+5. Enter a name and a description for the connection and click **Next**. This displays the ServiceURL for the development and production environments. 
+6. Click **Finish**.
 
-You can consume a connection depending on the component type. Follow the documentation below to use the connection in your application: 
+For step-by-step instructions on how to consume a service through a connection, see [Share and Reuse Services](./sharing-and-reusing-services.md).
 
-- [Sharing and Reusing Services](./sharing-and-reusing-services.md)
-- [Sharing and Reusing Web Applications](./sharing-and-reusing-web-applications.md)
+For step-by-step instructions on how to connect to a service from your web application, see [Share and Reuse Web Applications](./sharing-and-reusing-web-applications.md).
