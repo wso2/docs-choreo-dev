@@ -1,137 +1,151 @@
 # Share and Reuse Web Applications
 
-To connect to a service from your web application, the approach you need to take can vary depending on your web application. The following sections outline the steps to connect to a selected service based on the authentication mechanism used in your web application.
+Choreo simplifies the process of integrating services into your web application. The approach to connect to a service can vary based on your web application. 
 
-## Managed authentication
+To connect to a selected service, follow the step-by-step instructions given below depending on the authentication mechanism used in your web application.
 
-Choreo managed authentication allows you to seamlessly handle authentication for your web application. You can configure your web application to work with the Choreo built-in identity provider or any external identity provider that supports OIDC/OAuth2.0
+=== "Managed authentication"
+    
+    Choreo-managed authentication allows you to seamlessly handle authentication for your web application. You can configure your web application to work with the built-in identity provider of Choreo or any external identity provider that supports OIDC/OAuth2.0
 
-!!! note 
-    Choreo's managed authentication is currently available only for web applications created with **React**, **Angular**, or **Vue.js** buildpacks.
+    !!! note 
+         Choreo's managed authentication is currently available only for web applications created with **React**, **Angular**, or **Vue.js** buildpacks.
 
-Follow the steps below to use an existing connection within your web application: 
+    Follow the steps below to use an existing connection within your web application: 
 
-## Step 1: Add the connection configuration
+    <h2> Step 1: Add the connection configuration</h2>
 
-To integrate a service into your application, you must add the connection configurations as follows: 
+    To integrate a service into your application, you must first add the connection configuration as follows: 
 
-1. For SPAs, you must add the connection configuration as a file mount. You can mount a file via the **Configurations** pane on the **Deploy** page. You must mount a file (config.js) and add the configuration provided in the in-line developer documentation. 
+    1. For single page applications (SPAs), you must add the connection configuration as a file mount. You can mount a file via the **Configurations** pane on the **Deploy** page. You must mount a file (for example, `config.js`) and add the configuration provided in the in-line developer documentation into it. 
 
-The following is a sample configuration:
+        The following is a sample configuration:
+
+        ``` yaml
+             window.configs = {
+                 serviceURL: '<SERVICE_URL>',        
+             };
+
+        ```
+
+    2.  To ensure accessibility of the `config.js` file via JavaScript at runtime, add a script tag as follows in the `index.html` file to reference the `config.js` file:
+
+        ``` html
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <title>My React App</title>
+        </head>
+        <body>
+            <div id="root"></div>
+            <script src="%PUBLIC_URL%/config.js"></script>
+        </body>
+        </html>
+        ``` 
+
+        !!! note
+             If you use an external IdP, you must add the IdP's configuration to the same file.
+    
+             For more information on working with IdPs, see [Configure Asgardeo as an External Identity Provider](https://wso2.com/choreo/docs/administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp/).
+
+
+    <h2> Step 2: Read the configuration</h2>
+
+    Once you add the connection configuration, you can proceed to read the configuration from your application. The steps to read depend on the programming language you use.
+
+    The following is a sample code snippet in NodeJS:
+
+    ``` java
+         const serviceURL = window?.configs?.serviceURL ? window.configs.serviceURL : "/";
+    ```
+
+    <h2> Step 3: Invoke the service</h2>
+
+    If you use Choreo-managed authentication, Choreo handles the security handshaking for the application during deployment. The connected service will be accessible under the same domain as your application. Therefore, you can call the configured path directly using your preferred HTTP client.
+
+    The following is a sample code snippet in NodeJS:
+
+    ``` java
+         const response = await axios.get(serviceURL/{RESOURCE_PATH});
+    ```
+
+    !!! note
+         If you are using an external IdP provider instead of Choreo-managed authentication, you must obtain an access token from your IdP and add it to the HTTP authorization header with the bearer prefix.
+
+
+=== "Custom authentication or no authentication"
+
+    If you are not using Choreo-managed authentication or your web application lacks authentication, follow the steps below to connect to a service from your web application:
+
+    <h2> Step 1: Add the connection configuration</h2>
+
+    For single-page applications (SPAs), you must add the connection configuration as a file mount. You can mount a file via the **Configurations** pane on the **Deploy** page. You must mount a file (for example, `config.js`) and add the following configuration into it. 
+ 
+
+    The following is a sample configuration:
 
     ``` yaml
-    window.configs = {
-        serviceURL: '<SERVICE_URL>',        
-    };
-
+         window.configs = {
+             apiUrl: '/choreo-apis/uuzz/default/v1',
+             consumerKey: 'ZdvMwrQXe75XXmFM5J2RF0IqZYUa',
+             consumerSecret: '*****************',
+             tokenUrl: 'https://sts.st.choreo.dev/oauth2/token',
+         };
     ```
 
-2.  To make the `config.js` file accessible via JavaScript at runtime, you must add a script tag as follows to reference the `config.js` file from the `index.html` file in your repository:
+    For other types of web applications, you must add the respective configuration into your application.
 
-    ``` html
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>My React App</title>
-    </head>
-    <body>
-        <div id="root"></div>
-        <script src="%PUBLIC_URL%/config.js"></script>
-    </body>
-    </html>
-    ``` 
+    <h2> Step 2: Read the configuration</h2>
 
-!!! note
-    If you are using an external IdP, you must use the configuration related to your IdP depending on the IdP's authentication mechanism (consumer key, consumer secret, token URL). You can add the configuration to the same file.
-    
-    For more information on working with IdPs, see [Configure Asgardeo as an External Identity Provider ](https://wso2.com/choreo/docs/administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp/).
+    Once you have added the connection configuration, you can proceed to read the configuration from your application. The steps to read depend on the programming language you use.
 
-
-## Step 2: Read the configuration
-
-Once you add the connection configuration snippet, you can proceed to read the configuration from your application. The steps to read the configuration depend on the language you use.
-
-The following is a sample code snippet in NodeJS:
+    The following is a sample code snippet in NodeJS:
 
     ``` java
-    const serviceURL = window?.configs?.serviceURL ? window.configs.serviceURL : "/";
+         const serviceURL = window?.configs?.serviceURL 
     ```
 
-## Step 3: Invoke the service (Choreo-managed authentication)
+    <h2> Step 3: Acquire an OAuth 2.0 access token</h2>
 
-If you use Choreo-managed authentication, Choreo handles all the security handshaking on behalf of the application during deployment. The connected service will be made available under the same domain as per your application. Therefore, you can directly call the configured path using your preferred HTTP client.
+    - For languages with OAuth 2.0-aware HTTP clients, you must pass the OAuth 2.0-related configurations such as client id, client secret and so on, obtained when creating the connection to your HTTP client configuration. The HTTP client autonomously manages token retrieval and refreshing.
+  
+    - For languages without OAuth 2.0-aware HTTP clients, you must manually initiate a call to the token endpoint. This includes fetching the token and managing token expiration and refresh directly within your application code. The following is a sample curl command to obtain a token:
 
-The following is a sample code snippet in NodeJS:
 
-    ``` java
-    const response = await axios.get(serviceURL/{RESOURCE_PATH});
-    ```
+        ```bash
+        CONSUMER_KEY="your_consumer_key"
+        CONSUMER_SECRET="your_consumer_secret"
+        TOKEN_URL="your_token_url"
 
-!!! note
-    If you are using an external IdP provider without using Choreo-managed authentication, you must obtain an access token from your external IdP and add the obtained token to the HTTP authorization header with the bearer prefix.
+        # Encode client credentials as Base64
+        CLIENT_CREDENTIALS=$(echo -n "$CLIENT_ID:$CLIENT_SECRET" | base64)
 
-## Custom authentication or no authentication
+        curl -X POST $TOKEN_URL \
+        -H "Content-Type: application/x-www-form-urlencoded" \
+        -H "Authorization: Basic $CLIENT_CREDENTIALS" \
+        --data-urlencode "grant_type=client_credentials"
 
-If you are not using Choreo-managed authentication, or if your web application lacks any form of authentication, follow the steps below to use an existing connection within your web application:
+        ```
 
-### Step 1: Add the connection configuration
+    <h2> Step 4: Invoke the service</h2>
 
-For SPAs, configurations should be added as a file mount. This functionality is available on the deploy page in the configure and deploy pane. Mount a file there(config.js) and add the below content. 
+    You can invoke the service as follows:
 
-For other types of web applications, to integrate the mentioned configurations into your application, copy and paste the below snippet into the `component-config` file under the spec section.
+    - For languages with OAuth 2.0-aware HTTP clients, you can invoke the service in a straightforward manner. The HTTP client seamlessly manages OAuth 2.0 authentication without requiring additional intervention.
 
-### Step 2: Read the configuration
+        As the service URL you can use the URL that you resolved in step 2 above. For sample requests and responses, see the API definition provided via the Choreo marketplace for the service.
 
-Once you have added the connection configuration snippet, the next step is to read those configurations within your application. The exact steps of that will depend on the language you are using.
+    - For languages without OAuth 2.0-aware HTTP clients, you can use the token obtained in step 3 above to make calls to the dependent service. Subsequently, add the obtained token to the HTTP authorization header with the bearer prefix.
 
-The following is a sample code snippet in NodeJS:
+        As the service URL you can use the URL that you resolved in step 2 above. For sample requests and responses, see the API definition of the service provided via the Choreo marketplace.
 
-``` java
-const serviceURL = window?.configs?.serviceURL 
-```
+        The following is a sample code snippet in NodeJS:
 
-### Step 3: Acquire an OAuth 2.0 access token
-
-#### Languages with OAuth 2.0 - aware HTTP clients
-For languages equipped with HTTP clients that support OAuth 2.0, simply pass the OAuth 2.0-related configurations (client id, client secret, etc), obtained in the previous step to your HTTP client configuration. The HTTP client will autonomously manage token retrieval and refreshing.
-
-#### Languages without OAuth 2.0 - aware HTTP clients
-When dealing with programming languages that do not have inherent support for OAuth 2.0 in their HTTP clients, you are required to manually initiate a call to the token endpoint. This involves fetching the token and managing token expiration and refresh directly within your application code. The following is an example curl command illustrating how to obtain a token:
-
-``` bash
-CONSUMER_KEY="your_consumer_key"
-CONSUMER_SECRET="your_consumer_secret"
-TOKEN_URL="your_token_url"
-
-# Encode client credentials as Base64
-CLIENT_CREDENTIALS=$(echo -n "$CLIENT_ID:$CLIENT_SECRET" | base64)
-
-curl -X POST $TOKEN_URL \
-  -H "Content-Type: application/x-www-form-urlencoded" \
-  -H "Authorization: Basic $CLIENT_CREDENTIALS" \
-  --data-urlencode "grant_type=client_credentials"
-
-```
-
-### Step 4: Invoke the service (custom authentication or no authentication)
-
-#### Languages without OAuth 2.0 - aware HTTP clients
-
-For languages equipped with OAuth 2.0 - aware HTTP clients, invoking the service is straightforward. The HTTP client seamlessly manages OAuth 2.0 authentication without requiring additional intervention.
-As the service URL you can use the URL that you resolved in the earlier step. For sample requests and responses, you can refer to the API definition of the service provided through the marketplace.
-
-#### Languages without OAuth 2.0 - aware HTTP clients
-
-In the case of languages lacking built-in support for OAuth 2.0 in their HTTP clients, utilize the token obtained in the previous step to make calls to the dependent service. Add the obtained token to the HTTP Authorization header with the Bearer prefix.
-As the service URL you can use the URL that you resolved in the earlier step. For sample requests and responses, refer to the API definition of the service provided through the marketplace.
-
-The following is a sample code snippet in NodeJS:
-
-```java 
-const response = await axios.get(serviceURL/{RESOURCE_PATH}, {
-    headers: {
-      'Authorization': `Bearer ${accessToken}`
-    }
-})
-```
+        ```java 
+            const response = await axios.get(serviceURL/{RESOURCE_PATH}, {
+                headers: {
+                'Authorization': `Bearer ${accessToken}`
+                }
+            })
+        ```
