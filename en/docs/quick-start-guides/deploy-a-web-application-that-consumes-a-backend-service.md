@@ -249,6 +249,9 @@ To configure managed authentication, follow the steps given below:
         };
         ```
 
+    !!! tip
+         You can refer to the configuration file mounted at /app/public as `./public/config.js` within your web application. 
+
 4. Click **Next**. This opens the **Authentication** pane.
 5. Under **Authentication Settings**, make sure that you have the **Managed authentication with Choreo** toggle enabled.
 
