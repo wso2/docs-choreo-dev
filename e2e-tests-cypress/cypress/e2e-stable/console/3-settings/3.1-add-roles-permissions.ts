@@ -29,8 +29,8 @@ describe("Add roles and permissions", () => {
   it("Login to Console", () => {
     if (Utils.isNewUserManagementEnabled()) {
       console.login();
-      console.deleteRoleIfExists(newRole);
       console.deleteGroupIfExists(newGroup);
+      console.deleteRoleIfExists(newRole);
     } else {
       LoginPage.login();
       ChoreoHomePage.navigateToSettings();
@@ -81,8 +81,8 @@ describe("Add roles and permissions", () => {
 
   it("Delete created group and role", () => {
     if (Utils.isNewUserManagementEnabled()) {
-      console.deleteRole(newRole);
       console.deleteGroup(newGroup);
+      console.deleteRole(newRole);
     } else {
       OrganizationComponent.navigateToMembers();
       OrganizationComponent.navigateToRoles();
