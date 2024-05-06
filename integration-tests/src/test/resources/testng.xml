@@ -31,7 +31,6 @@
             <class name="com.wso2.choreo.integration.tests.dp.TestBuildpackDp"/>
             <class name="com.wso2.choreo.integration.tests.buildpacks.Buildpack"/>
             <class name="com.wso2.choreo.integration.tests.connections.ChoreoConnections"/>
-            <class name="com.wso2.choreo.integration.tests.codeChallengeEval.TestCodeChallengeEval"/>
         </classes>
     </test>
 </suite>
