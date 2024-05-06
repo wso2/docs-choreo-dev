@@ -13,7 +13,10 @@
 
 import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
-import { Proxy } from "../../../support/console/entities/component/proxy-component";
+import {
+  Proxy,
+  ProxyMetaData,
+} from "../../../support/console/entities/component/proxy-component";
 import { Utils } from "../../../support/commons/utils";
 import { Enums } from "../../../support/commons/enums";
 import { OK } from "../../../support/commons/http";
@@ -221,7 +224,10 @@ describe(`Verify internal API Proxy functionality`, () => {
   });
 
   it("Navigate to Dev portal", () => {
-    internalProxy.navigateToDevPortal();
+    internalProxy.navigateToDevPortal(Cypress.spec.name);
+    cy.task("getData", Cypress.spec.name).then((metaData) => {
+      internalProxy = Proxy.fromMetaData(metaData as ProxyMetaData);
+    });
   });
 
   it("Generate Production credentials for converted External Proxy in Dev portal", () => {

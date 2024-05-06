@@ -14,7 +14,10 @@
 import { Enums, UsagePlan } from "../../support/commons/enums";
 import { console } from "../../support/console/console";
 import { Project } from "../../support/console/entities/project/project";
-import { Proxy } from "../../support/console/entities/component/proxy-component";
+import {
+  Proxy,
+  ProxyMetaData,
+} from "../../support/console/entities/component/proxy-component";
 import { devPortal } from "../../support/console/devportal";
 import { Application } from "../../support/console/entities/application/application";
 
@@ -67,7 +70,11 @@ describe("API overview comment and rating scenario", () => {
   });
 
   it("Navigate to Dev portal", () => {
-    proxy.navigateToDevPortal();
+    proxy.navigateToDevPortal(Cypress.spec.name);
+
+    cy.task("getData", Cypress.spec.name).then((metaData) => {
+      proxy = Proxy.fromMetaData(metaData as ProxyMetaData);
+    });
   });
 
   it("verify api search in devportal", () => {
