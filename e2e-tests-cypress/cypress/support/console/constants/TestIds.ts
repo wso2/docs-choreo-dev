@@ -96,6 +96,7 @@ export namespace TestIds {
   export const createDeploymentTrack =
     '[data-testid="create-deployment-track-create"]';
   export const publishLifecycle = '[data-testid="Publish-lc-btn"]';
+  export const confirmPublish = '[data-cyid="publish-api-confirm-button"]';
   export const blockLifecycle = '[data-testid="Block-lc-btn"]';
   export const prereleaseLifecycle =
     '[data-testid="Deploy as a Prototype-lc-btn"]';
