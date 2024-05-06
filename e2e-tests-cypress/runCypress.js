@@ -10,7 +10,7 @@ const usernamePrefix = 'perfAdmin';
  // Define test spec
  const testMethods = [
     {spec: 'cypress/e2e-stable/perf/0.1-con-perf-test.ts'}
-   // {spec: 'cypress/e2e-stable/console/1-component/perf/0.2-con-perf-test-webapp.ts'}
+   //  {spec: 'cypress/e2e-stable/perf/0.2-con-perf-test-webapp.ts'}
 ];
 
 

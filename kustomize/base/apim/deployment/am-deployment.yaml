@@ -48,15 +48,9 @@ spec:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
-                matchExpressions:
-                  - key: antiaffinity
-                    operator: In
-                    values:
-                      - choreo-apim-am-deployment
+                matchLabels:
+                  antiaffinity: choreo-apim-am-deployment
               topologyKey: kubernetes.io/hostname
-      # Remove fsGroup due to issue in init container. TODO: Remove init container.
-      # securityContext:
-      #   fsGroup: 802
       automountServiceAccountToken: true
       securityContext:
         allowPrivilegeEscalation: false
@@ -132,7 +126,7 @@ spec:
             - name: PROFILE_NAME
               value: control-plane
             - name: DEPLOYMENT_TYPE_PROD_PREFIXES
-              value: "prod, systemapis" 
+              value: "prod, systemapis"
           volumeMounts:
             - name: apim-vol
               mountPath: /home/wso2carbon/wso2am-4.0.0-SNAPSHOT
@@ -173,7 +167,7 @@ spec:
       serviceAccountName: sa-choreo-apim
       volumes:
         - name: apim-vol
-          emptyDir: { }
+          emptyDir: {}
         - name: wso2am-conf
           configMap:
             name: choreo-apim-am-conf
@@ -182,7 +176,7 @@ spec:
             name: choreo-apim-docker-entrypoint
             defaultMode: 0407
         - name: mysql-connector-jar
-          emptyDir: { }
+          emptyDir: {}
         - name: secret-apim-keystores
           csi:
             driver: secrets-store.csi.k8s.io

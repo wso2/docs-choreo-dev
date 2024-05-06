@@ -2227,7 +2227,7 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Ma
 -- PROJECT-MANAGEMENT
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Project Management','choreo:project_manage','PROJECT-MANAGEMENT','Retrieve and manage projects');
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Component manage','choreo:component_manage','PROJECT-MANAGEMENT','Manage operations on components');
-INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('View Projects','choreo:project_view','PROJECT-MANAGEMENT','View Projects');
+INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('View Project','choreo:project_view','PROJECT-MANAGEMENT','View Project');
 
 -- USER-MANAGEMENT
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Users','urn:choreosystem:usermanagement:user_view', 'USER-MANAGEMENT','View Users');

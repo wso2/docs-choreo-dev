@@ -2,8 +2,6 @@ resources:
   - observability-data-generator.yaml
   - choreo-userapps-image-deleter.yaml
   - cio-internal-metric-collector.yaml
-  - code-challenge-registration-data-collector.yaml
-  - code-challenge-submission-data-collector.yaml
   - choreo-daily-usage-publisher.yaml
   - choreo-monthly-usage-publisher.yaml
   - choreo-daily-usage-publisher-dynamic-billing-cycle.yaml
@@ -13,4 +11,5 @@ resources:
   - choreo-platform-svc-cost-collector.yaml
   - choreo-weekly-execution-cleaner.yaml
   - platform-service-manager-cronjob.yaml
+  - platform-service-manager-stats-reporter.yaml
   - dp-rudder-deploy-history-cleanup-task.yaml

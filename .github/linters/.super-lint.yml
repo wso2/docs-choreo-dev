@@ -1,0 +1,6 @@
+lint:
+  languages:
+    javascript_es:
+      enabled: true
+      ignore:
+        - "kustomize/base/apim/config/devportal/devportal.config.js"

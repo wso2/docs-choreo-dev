@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: organization-management
-  strategy: { }
+  strategy: {}
   template:
     metadata:
       labels:

@@ -4,47 +4,50 @@ metadata:
   name: platform-service-manager-cronjob
 spec:
   schedule: "*/5 * * * *"
-  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 60 # to avoid blocking the next run due to a job in pending state
+  concurrencyPolicy: Replace
   jobTemplate:
     spec:
+      backoffLimit: 1 # runs every 5 minutes, no need to retry
+      ttlSecondsAfterFinished: 300
       template:
         metadata:
           annotations:
             seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
         spec:
           containers:
-          - name: platform-services-manager
-            image: choreocontrolplane.azurecr.io/choreoipaas/platform-services-manager:latest
-            args: ["-cron"]
-            envFrom:
-              - configMapRef:
-                  name: env-choreo-platform-services-manager
-              - secretRef:
-                  name: secret-choreo-platform-services-manager
-              - configMapRef:
-                  name: cm-platform-services-manager
-            resources:
-              limits:
-                cpu: 200m
-                memory: 250Mi
-              requests:
-                cpu: 100m
-                memory: 128Mi
-            securityContext:
-              allowPrivilegeEscalation: false
-              seccompProfile:
-                type: RuntimeDefault
-              runAsUser: 10001
-              runAsGroup: 10001
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - all
-            volumeMounts:
-              - name: secret-choreo-platform-services-manager
-                mountPath: "/mnt/csi/secret-choreo-platform-services-manager"
-                readOnly: true
-          restartPolicy: OnFailure
+            - name: platform-services-manager
+              image: choreocontrolplane.azurecr.io/choreoipaas/platform-services-manager:latest
+              args: ["-cron"]
+              envFrom:
+                - configMapRef:
+                    name: env-choreo-platform-services-manager
+                - secretRef:
+                    name: secret-choreo-platform-services-manager
+                - configMapRef:
+                    name: cm-platform-services-manager
+              resources:
+                limits:
+                  cpu: 200m
+                  memory: 250Mi
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                seccompProfile:
+                  type: RuntimeDefault
+                runAsUser: 10001
+                runAsGroup: 10001
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - all
+              volumeMounts:
+                - name: secret-choreo-platform-services-manager
+                  mountPath: "/mnt/csi/secret-choreo-platform-services-manager"
+                  readOnly: true
+          restartPolicy: Never
           securityContext:
             runAsUser: 10001
             runAsGroup: 10001

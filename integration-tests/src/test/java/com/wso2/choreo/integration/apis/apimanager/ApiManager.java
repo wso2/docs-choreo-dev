@@ -3,6 +3,8 @@ package com.wso2.choreo.integration.apis.apimanager;
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
@@ -141,7 +143,53 @@ public class ApiManager extends ControlPlaneAPI {
         RevisionWrapper data = revisionWrapper.get();
         return data;
 
+    }
 
+    public static JsonObject getApi(TestActionRunner runner, HttpClient client, String accessToken, String apiId) {
+        String path = String.format( "%s/%s?organizationId=%s", Constant.APIS_ENDPOINT, apiId, ORG_UUID);
+        AtomicReference<JsonObject> apiInfo = new AtomicReference<>();
+        runner.$(http()
+                .client(client)
+                .send()
+                .get(path)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .body(new ClassPathResource("templates/apimanager/responses/getApiSuccess.mustache"))
+                .validate((message, context) -> {
+                    String payload = message.getPayload(String.class);
+                    JsonObject dataJsonObject = new JsonParser().parse(payload).getAsJsonObject();
+                    apiInfo.set(dataJsonObject);
+                }));
+
+        return  apiInfo.get();
+    }
+
+    public static void updateApi(TestActionRunner runner, HttpClient client, String accessToken, String apiId, JsonObject reqBody) {
+        String body = reqBody.toString();
+        String path = String.format( "%s/%s?organizationId=%s", Constant.APIS_ENDPOINT, apiId, ORG_UUID);
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .put(path)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(body)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON));
 
     }
 }

@@ -13,6 +13,7 @@
 
 import { Enums } from "../../../support/commons/enums";
 import { WebApp } from "../../../support/console/entities/component/webapp-component";
+import { Service } from "../../../support/console/entities/component/service-component";
 import {
   Project,
   RepoInfo,
@@ -20,10 +21,11 @@ import {
 } from "../../../support/console/entities/project/project";
 import { console } from "../../../support/console/console";
 
-describe("Create Web App", () => {
-  const PROJECT_DESCRIPTION = "Web App";
 
-  const repoInfo: RepoInfo = {
+describe("Create Web App", () => {
+  const WEB_APP_PROJECT_DESCRIPTION = "Web App";
+
+  const webAppRepoInfo: RepoInfo = {
     url: "https://github.com/choreo-test-apps/choreo-examples",
     branch: "main",
     dockerContext:
@@ -37,8 +39,21 @@ describe("Create Web App", () => {
     webAppOutputDirectory: "dist",
   };
 
+  const BACKEND_SERVICE_PROJECT_NAME = "Default Project";
+  const BACKEND_SERVICE_ENDPOINT_NAME = "Readinglist";
+  const BACKEND_SERVICE_COMPONENT_NAME = "managedauthbackend";
+  const BACKEND_CONNECTION_NAME = "Managed Auth BE Connection";
+
+  const backendServiceRepoInfo: RepoInfo = {
+    url: "https://github.com/choreo-test-apps/choreo-examples",
+    branch: "main",
+    subPath: "cloud-native-app-developer/reading-list-service",
+  };
+
   let project: Project;
   let webApp: WebApp;
+  let service: Service;
+  let connectionUrl: string;
 
   /**
    *
@@ -48,8 +63,11 @@ describe("Create Web App", () => {
   function visitSampleWebsite(url: string) {
     cy.origin(url, () => {
       cy.visit("/");
-      cy.contains("button", "Login").click();
     });
+  }
+
+  function clickLoginButton() {
+    cy.contains("button", "Login").click();
   }
 
   function submitLoginCredentials() {
@@ -65,33 +83,119 @@ describe("Create Web App", () => {
     });
   }
 
-  function verifyLoginAndLogout(url: string) {
-    cy.origin(url, () => {
-      cy.get("[data-cyid=welcome-msg-box]").contains("john1@acme.org");
-      cy.contains("button", "Logout").click();
-    });
+  function verifyLogin() {
+    cy.get("[data-cyid=welcome-msg-box]").contains("john1@acme.org");
+  };
+
+  function logout() {
+    cy.contains("button", "Logout").click();
+  };
+
+  function verifyLogout() {
+    cy.contains("button", "Login").should("be.visible");
+  };
+
+  function registerApiIntercepts() {
+    const urlRegex = new RegExp(`.*${connectionUrl}.*`);
+    cy.intercept("GET", urlRegex).as("getReadingList");
+  };
+
+  function verifyApiCall() {
+    cy.wait("@getReadingList").its("response.statusCode").should("eq", 200);
+  };
+
+  function verifyWebAppFunctionality(url: string) {
+    registerApiIntercepts();
+    visitSampleWebsite(url);
+    clickLoginButton();
+    submitLoginCredentials();
+    verifyLogin();
+    verifyApiCall();
+    logout();
+    verifyLogout();
   }
 
   it("Login to Console", () => {
     console.login();
   });
 
-  it("Adding users for E2E tests", () => {
+  it("Search backend service project", () => {
+    project = console.searchProject(BACKEND_SERVICE_PROJECT_NAME);
+  });
+
+  it("Create backend service if not exists", () => {
+    project.isComponentExists(BACKEND_SERVICE_COMPONENT_NAME).then((isExists) => {
+      if (!isExists) {
+        project
+          .createServiceComponent(
+            Enums.Accessibility.EXTERNAL,
+            backendServiceRepoInfo,
+            BACKEND_SERVICE_ENDPOINT_NAME,
+            BACKEND_SERVICE_COMPONENT_NAME
+          )
+          .then((serviceComponent: Service) => {
+            project.visitComponent(BACKEND_SERVICE_COMPONENT_NAME);
+            service = serviceComponent;
+          });
+      } else {
+        project.visitComponent(BACKEND_SERVICE_COMPONENT_NAME);
+        service = new Service(BACKEND_SERVICE_COMPONENT_NAME, BACKEND_SERVICE_ENDPOINT_NAME);
+      }
+    });
+  });
+
+  it("Build backend service if not built previously", () => {
+    service.isSuccessfulBuildExists().then((isExists) => {
+      if (!isExists) {
+        service.build();
+      }
+    });
+  });
+
+  it("Deploy backend service once to access endpoint configurations", () => {
+    // we have to deploy once to access endpoint configurations
+    service.isDevDeploymentExists().then((isExists) => {
+      if (!isExists) {
+        service.deployPublicLevelAccessibility(); 
+      }
+    });
+  })
+
+  it("Enable Pass User Context To Backend", () => {
+      service.enablePassUserContextToBackend();
+  });
+
+  it("Deploy backend service to Dev", () => {
+    service.deployPublicLevelAccessibility();
+  });
+
+  it("Promote backend service to Prod", () => {
+    service.promotePublicLevelAccessibility();
+  });
+
+  it("Add users for E2E tests", () => {
     console.addUserStore("users.csv", Enums.Environment.DEVELOPMENT);
     console.addUserStore("users.csv", Enums.Environment.PRODUCTION);
   });
 
   it("Creating a project", () => {
-    project = console.createNewProject(PROJECT_DESCRIPTION);
+    project = console.createNewProject(WEB_APP_PROJECT_DESCRIPTION);
   });
 
   it("Creating a Web App", () => {
     project
-      .createWebAppComponent(Enums.Accessibility.EXTERNAL, repoInfo, webAppInfo)
+      .createWebAppComponent(Enums.Accessibility.EXTERNAL, webAppRepoInfo, webAppInfo)
       .then((app: WebApp) => {
         project.visitComponent(app.getName());
         webApp = app;
       });
+  });
+
+  it("Create a connection to backend service", () => {
+    webApp.createConnection(BACKEND_SERVICE_COMPONENT_NAME, BACKEND_CONNECTION_NAME);
+    webApp.copyConnectionUrl(BACKEND_CONNECTION_NAME).then((url: string) => {
+      connectionUrl = url;
+    });
   });
 
   it("Build the Web App", () => {
@@ -99,11 +203,15 @@ describe("Create Web App", () => {
   });
 
   it("Deploying to Dev", () => {
-    webApp.deployToDevWithAuthConfiguration();
+    const customConfig = new Map<string, string>();
+    customConfig.set("apiUrl", connectionUrl);
+    webApp.deployToDevWithAuthConfiguration(customConfig);
   });
 
   it("Promote to Prod", () => {
-    webApp.promoteToProdWithAuthConfiguration();
+    const customConfig = new Map<string, string>();
+    customConfig.set("apiUrl", connectionUrl);
+    webApp.promoteToProdWithAuthConfiguration(customConfig);
   });
 
   it("Verify test page is disabled", () => {
@@ -114,15 +222,11 @@ describe("Create Web App", () => {
     webApp.verifyManagePageIsDisabled();
   });
 
-  it("Access webapp in Dev and login", () => {
-    visitSampleWebsite(webApp.getDevWebAppUrl());
-    submitLoginCredentials();
-    verifyLoginAndLogout(webApp.getDevWebAppUrl());
+  it("Verify web app functionality in Dev", () => {
+    verifyWebAppFunctionality(webApp.getDevWebAppUrl());
   });
 
-  it("Access webapp in Prod and login", () => {
-    visitSampleWebsite(webApp.getProdWebAppUrl());
-    submitLoginCredentials();
-    verifyLoginAndLogout(webApp.getProdWebAppUrl());
+  it("Verify web app functionality in Prod", () => {
+    verifyWebAppFunctionality(webApp.getProdWebAppUrl());
   });
 });

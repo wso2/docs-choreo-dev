@@ -14,7 +14,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: connector-builder
-  strategy: { }
+  strategy: {}
   template:
     metadata:
       labels:
@@ -78,7 +78,7 @@ spec:
               cpu: 200m
               memory: 800Mi
       volumes:
-        - emptyDir: { }
+        - emptyDir: {}
           name: tmp
       restartPolicy: Always
       serviceAccountName: sa-choreo-default

@@ -280,7 +280,7 @@ configMapGenerator:
       - REACT_APP_FEATURE_TOS_SERVICE_NAME=choreo
       - REACT_APP_GA_TRACKING_CODE=UA-206124793-2
       - REACT_APP_APIM_PUBLISHER_ENDPOINT_PREFIX=/api/am/publisher/v2/
-      - REACT_APP_ASGARDEO_SDK_STORAGE_TYPE=webWorker
+      - REACT_APP_ASGARDEO_SDK_STORAGE_TYPE=sessionStorage
       - REACT_APP_AUTHENTICATOR_GOOGLE=GoogleOIDCAuthenticator
       - REACT_APP_AUTHENTICATOR_GITHUB=GithubAuthenticator
       - REACT_APP_AUTHENTICATOR_ANONYMOUS=OpenIDConnectAuthenticator
@@ -473,18 +473,6 @@ configMapGenerator:
     behavior: create
     files:
       - cp-resilient-invoker/Config.toml
-  - name: cm-file-code-challenge-eval
-    behavior: create
-    files:
-      - code-challenge-eval/Config.toml
-  - name: cm-file-code-challenge-submission-data-collector
-    behavior: create
-    files:
-      - code-challenge-submission-data-collector/Config.toml
-  - name: cm-file-code-challenge-registration-data-collector
-    behavior: create
-    files:
-      - code-challenge-registration-data-collector/Config.toml
   - name: cm-file-cp-rrs
     behavior: create
     files:

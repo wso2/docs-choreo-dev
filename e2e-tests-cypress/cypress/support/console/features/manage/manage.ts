@@ -34,13 +34,11 @@ export interface ManageFeature {
   );
   _disableSecurity(
     component: Component,
-    env: Enums.Environment,
     method: Enums.HTTPMethod,
     resource: string
   );
   _applyPermissionToResources(component: Component, permission: string);
   _verifyConsumer(appName: string);
-  _updateAccessMode(component: Component, accessMode: Enums.Accessibility);
   _updateApiVisibility(component: Component, visibility: ApiVisibility);
 }
 
@@ -59,6 +57,7 @@ export function mixinManage<T extends Types.Constructor>(
       switch (state) {
         case Enums.LifeCycleState.Publish:
           cy.get(TestIds.publishLifecycle).click();
+          cy.get(TestIds.confirmPublish).should("be.visible").click();
           cy.get(TestIds.blockLifecycle).should("be.visible");
           cy.get(TestIds.prereleaseLifecycle).should("be.visible");
           cy.get(TestIds.demoteLifecycle).should("be.visible");
@@ -99,7 +98,7 @@ export function mixinManage<T extends Types.Constructor>(
       }
 
       cy.get(TestIds.applyApiConfig, VERY_SHORT_TIME).should("be.enabled");
-      cy.get(TestIds.manageSecurity).should("be.visible").click();
+      cy.getUnstable(TestIds.manageSecurity).should("be.visible").click();
       cy.get(TestIds.corsCheckbox).should("be.visible").click();
       cy.get(TestIds.applyApiConfig).scrollIntoView().click();
       cy.get(TestIds.applyApiConfig, VERY_SHORT_TIME).should("be.enabled");
@@ -200,7 +199,6 @@ export function mixinManage<T extends Types.Constructor>(
 
     _disableSecurity(
       component: Component,
-      env: Enums.Environment,
       method: Enums.HTTPMethod,
       resource: string
     ) {
@@ -215,26 +213,10 @@ export function mixinManage<T extends Types.Constructor>(
       this.toggleResourceSecurity(method, resource);
     }
 
-    _updateAccessMode(component: Component, accessMode: Enums.Accessibility) {
-      this.sideMenu.navigateToSettings();
-
-      this.deploymentTrack.validate(component);
-
-      cy.get(TestIds.accessMode, LONG_TIME).should("be.visible").click();
-      cy.contains(accessMode, { matchCase: false }).should("exist").realClick();
-      cy.get(TestIds.warningBanner).should("be.visible");
-      cy.get(TestIds.dialogPrimaryAction).should("exist").click();
-      cy.contains(
-        `Successfully converted to an ${accessMode.toLowerCase()} API.`
-      ).should("be.visible");
-    }
-
     _updateApiVisibility(component: Component, visibility: ApiVisibility) {
       this.sideMenu.navigateToManage();
       cy.get(TestIds.apiInfo).should("be.visible").click();
       cy.get(TestIds.apiInfoDevPortal).should("be.visible").click();
-
-      this.deploymentTrack.validate(component);
 
       cy.get(TestIds.apiVisibility)
         .should("be.visible")
@@ -268,14 +250,11 @@ export function mixinManage<T extends Types.Constructor>(
       cy.get(TestIds.addNewScopeV2).should("be.disabled");
       cy.get(TestIds.scopeTextInputV2).type(permission);
       cy.get(TestIds.addNewScopeV2).should("be.enabled").click().wait(1000);
-      cy.contains("Permission(Scope) created successfully");
       cy.get(TestIds.selectAllScopesV2).should("be.visible");
       cy.get(TestIds.scopeItem(permission)).should("be.visible");
     }
 
     private saveUsagePlans(component: Component, plans: UsagePlan[]) {
-      this.deploymentTrack.validate(component);
-
       const unlimitedPlan = `[data-testid="checkbox-${UsagePlan.Unlimited}"]`;
 
       Utils.unCheckIfChecked(unlimitedPlan);

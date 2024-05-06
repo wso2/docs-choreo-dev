@@ -15,7 +15,9 @@ package com.wso2.choreo.integration.common;
 
 
 import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
+import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.github.mustachejava.DefaultMustacheFactory;
@@ -93,6 +95,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 public class ComponentUtils {
 
     private static final String timestampRegexMatch = "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}Z|\\d{2}.\\d{2}Z|\\d{2}.\\d{3}Z|\\d{2}.\\d{4}Z|\\d{2}.\\d{5}Z|\\d{2}.\\d{6}Z|\\d{2}.\\d{7}Z)";
+    private static final String APIS_ENDPOINT =  Constant.APIS_ENDPOINT;
 
     private static final int MAX_DEPLOY_RETRY_COUNT = 5;
 
@@ -320,8 +323,6 @@ public class ComponentUtils {
             Component.waitForComponentCreationSuccess(runner, appServiceClient, accessToken, responseDTO.get().getProjectId(),
                     responseDTO.get().getId());
 
-            GraphQL.handleConfigInit(runner, appServiceClient, accessToken, responseDTO.get().getId());
-
             graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
                     .componentHandler(responseDTO.get().getHandler()).build();
         }
@@ -377,40 +378,7 @@ public class ComponentUtils {
             BalConfig... balconfigs) throws Exception {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
-        if (component.getDisplayType().equals(Constant.displayType.ballerinaService.name())) {
-            Map<String,String> argMap = new HashMap<>();
-            argMap.put("componentId", component.getId());
-            argMap.put("versionId", component.getLatestApiVersion().getId());
-            argMap.put("releaseId", component.getReleaseIdByEnvironmentId(environments.get(0).getId()));
-            argMap.put("commitHash", component.getLatestCommitHash(component.getCommitHistory(accessToken)));
-            GraphQL.generateEndpoints(runner, appServiceClient, accessToken, argMap);
-
-            argMap = new HashMap<>();
-            argMap.put("componentId", component.getId());
-            argMap.put("versionId", component.getLatestApiVersion().getId());
-            argMap.put("releaseId", component.getReleaseIdByEnvironmentId(environments.get(0).getId()));
-            List<Endpoint> endpoints = GraphQL.getEndpoints(runner, appServiceClient, accessToken, argMap);
-            Endpoint endpoint = endpoints.get(0);
-            Assert.assertEquals(endpoints.size(), 1);
-
-            argMap = new HashMap<>();
-            argMap.put("componentId", component.getId());
-            argMap.put("versionId", component.getLatestApiVersion().getId());
-            argMap.put("releaseId", component.getReleaseIdByEnvironmentId(environments.get(0).getId()));
-            argMap.put("endpointId", endpoint.getId());
-            argMap.put("displayName", endpoint.getDisplayName());
-            argMap.put("apiContext", endpoint.getApiContext());
-            argMap.put("apiDefinitionPath", endpoint.getApiDefinitionPath());
-            argMap.put("visibility", Constant.EndpointVisibility.PUBLIC.value);
-            Endpoint updatedEndpoint = GraphQL.updateEndpoint(runner, appServiceClient, accessToken, argMap);
-            endpoints.set(0, updatedEndpoint);
-        }
-
         List<Commit> commitHistory = GraphQL.getCommitHistory(runner, appServiceClient, component.getId(), accessToken);
-
-        if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
-            ConfigManagement.addConfiguration(runner, appServiceClient, component, commitHistory, environments.get(0), balconfigs);
-        }
 
         Commit latestCommit = Commit.getLatestCommit(commitHistory);
         String shaDate = latestCommit.getAuthor().getDate();
@@ -441,7 +409,41 @@ public class ComponentUtils {
                 }
             }
         }
-       
+
+        if (component.getDisplayType().equals(Constant.displayType.ballerinaService.name())) {
+            Map<String,String> argMap = new HashMap<>();
+            argMap.put("componentId", component.getId());
+            argMap.put("versionId", component.getLatestApiVersion().getId());
+            argMap.put("releaseId", component.getReleaseIdByEnvironmentId(environments.get(0).getId()));
+            argMap.put("commitHash", component.getLatestCommitHash(component.getCommitHistory(accessToken)));
+            GraphQL.generateEndpoints(runner, appServiceClient, accessToken, argMap);
+
+            argMap = new HashMap<>();
+            argMap.put("componentId", component.getId());
+            argMap.put("versionId", component.getLatestApiVersion().getId());
+            argMap.put("releaseId", component.getReleaseIdByEnvironmentId(environments.get(0).getId()));
+            List<Endpoint> endpoints = GraphQL.getEndpoints(runner, appServiceClient, accessToken, argMap);
+            Endpoint endpoint = endpoints.get(0);
+            Assert.assertEquals(endpoints.size(), 1);
+
+            argMap = new HashMap<>();
+            argMap.put("componentId", component.getId());
+            argMap.put("versionId", component.getLatestApiVersion().getId());
+            argMap.put("releaseId", component.getReleaseIdByEnvironmentId(environments.get(0).getId()));
+            argMap.put("endpointId", endpoint.getId());
+            argMap.put("displayName", endpoint.getDisplayName());
+            argMap.put("apiContext", endpoint.getApiContext());
+            argMap.put("apiDefinitionPath", endpoint.getApiDefinitionPath());
+            argMap.put("visibility", Constant.EndpointVisibility.PUBLIC.value);
+            Endpoint updatedEndpoint = GraphQL.updateEndpoint(runner, appServiceClient, accessToken, argMap);
+            endpoints.set(0, updatedEndpoint);
+        }
+
+
+        if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
+            ConfigManagement.addConfiguration(runner, appServiceClient, component, commitHistory, environments.get(0), balconfigs);
+        }
+
         for (int i = 0; i < MAX_DEPLOY_RETRY_COUNT; ++i) {
             // Build component
             deploymentStatusDTO = deployBuiltComponent(runner, citrusClients, accessToken, component, latestCommit, environments);
@@ -690,6 +692,7 @@ public class ComponentUtils {
                     argMap.put("versionId", component.getLatestApiVersion().getId());
                     argMap.put("sourceReleaseId", component.getReleaseIdByEnvironmentId(srcEnv.getId()));
                     argMap.put("targetEnvironmentId", destEnv.getId());
+                    validateEndpointExistence(runner,citrusClients,accessToken,component,srcEnv);
                     GraphQL.promoteEndpoints(runner, appServiceClient, accessToken, argMap);
                 }
 
@@ -964,7 +967,7 @@ public class ComponentUtils {
         return GraphQL.getEnvironments(runner, cpProjectsClient, accessToken, graphqlDTO);
     }
 
-    private static List<Endpoint> getEndpoints(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+    public static List<Endpoint> getEndpoints(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
                                                String accessToken, ChoreoComponent component,
                                                ComponentDeploymentStatusDTO componentDeploymentStatusDTO) throws Exception {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
@@ -1329,4 +1332,43 @@ public class ComponentUtils {
         return "Development";
     }
 
+    public static void validateEndpointExistence(TestNGCitrusSpringSupport runner,Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component, Environment environment) throws Exception {
+        List<Endpoint> endpoints = getEndpointList(runner, citrusClients, accessToken, component,environment );
+        String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+        HttpClient appServiceClient = citrusClients.get(Endpoints.STS_ENDPOINT);
+
+        for (Endpoint endpoint :endpoints){
+            String resourceURL = APIS_ENDPOINT.concat("/").concat(endpoint.getApimId()).concat("?").concat(Constant.ORGANIZATION_ID).concat("=").concat(orgUuid);
+            isEndpointExists(runner,appServiceClient,resourceURL,accessToken);
+        }
+    }
+
+
+    public static void isEndpointExists(TestNGCitrusSpringSupport runner,HttpClient client, String path,String accessToken){
+        runner.variable("isEndpointContextExists", false);
+        runner.$(repeatOnError()
+                .until("(i = 5) or ( ${isEndpointContextExists} = true )")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .get(path)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Too many successive calls with response code != 200");
+                                    }
+                                })
+                )
+        );
+    }
 }

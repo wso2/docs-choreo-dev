@@ -4,7 +4,7 @@ metadata:
   labels:
     choreo.component: configuration-service
   name: configuration-service
-spec: 
+spec:
   maxReplicas: 10
   minReplicas: 2
   scaleTargetRef:

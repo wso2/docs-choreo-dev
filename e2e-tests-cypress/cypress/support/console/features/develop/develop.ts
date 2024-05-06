@@ -136,10 +136,25 @@ export function mixinDevelop<T extends Types.Constructor>(
 
       const header = this.getHeader(resourcePath, verb.toUpperCase());
 
-      const buttons = `[id="/${resourcePath}/${verb.toUpperCase()}${flow.valueOf()}"] div[data-key] button`;
+      let policyButtonIndex = 0;
+
+      switch (flow) {
+        case Enums.Flow.REQUEST:
+          policyButtonIndex = 0;
+          break;
+        case Enums.Flow.RESPONSE:
+          policyButtonIndex = 1;
+          break;
+        default: // Error flow case
+          policyButtonIndex = 2;
+          break;
+      }
 
       cy.get(header).eq(0).click();
-      cy.get(buttons).contains("Attach Policy").click();
+      cy.get(TestIds.attachPolicy)
+        .eq(policyButtonIndex)
+        .should("be.visible")
+        .click();
       cy.get("button").contains(policy).click();
       cy.get('[name*="Name"]').should("be.visible").type(name);
       cy.get('[name*="Value"]')

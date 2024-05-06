@@ -103,7 +103,7 @@ spec:
             capabilities:
               drop:
                 - ALL
-              add: [ "NET_RAW" ]
+              add: ["NET_RAW"]
           env:
             - name: REDIS_AUTH
               valueFrom:

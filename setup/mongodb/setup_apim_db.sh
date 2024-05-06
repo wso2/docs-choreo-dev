@@ -32,30 +32,30 @@ while getopts ":s:u:p:b:v:g:c:h" FLAG; do
             # -u username of the user
             USERNAME=$OPTARG
             ;;
-	p)
+        p)
             # -p password of the user
             PASSWORD=$OPTARG
             ;;
-	b)
+        b)
             # -pubk public key of the admin api
             API_PUBLIC_KEY=$OPTARG
             ;;
-	v)
+        v)
             # -pvtk private key of the admin api
             API_PRIVATE_KEY=$OPTARG
             ;;
-	g)
+        g)
             # -g id of the mongodb atlas project
             PROJECT_ID=$OPTARG
             ;;
-	c)
+        c)
             # -c name of the mongodb atlas cluster
             CLUSTER=$OPTARG
             ;;
-	h)
+        h)
             show_usage_and_exit
             ;;
-	\?)
+        \?)
             # Invalid option
             echo "Invalid option: -$OPTARG" >&2
             exit 1

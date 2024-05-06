@@ -99,7 +99,7 @@ spec:
             capabilities:
               drop:
                 - all
-              add: [ "NET_RAW" ]
+              add: ["NET_RAW"]
           env:
             - name: GLOBAL_ADAPTER_PRIVATE_KEY_PATH
               value: /home/wso2/security/keystore/global-adapter.key

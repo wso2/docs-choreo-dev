@@ -12,9 +12,9 @@ spec:
   template:
     spec:
       containers:
-      - name: keda-operator-metrics-apiserver
-        securityContext:
-          runAsUser: 10001
+        - name: keda-operator-metrics-apiserver
+          securityContext:
+            runAsUser: 10001
       securityContext:
         seccompProfile:
           type: RuntimeDefault
