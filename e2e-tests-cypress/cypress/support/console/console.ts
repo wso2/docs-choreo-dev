@@ -260,7 +260,7 @@ class Console {
       });
 
     cy.contains(projectName).click();
-    cy.get(TestIds.createComponent).should("be.visible");
+    cy.get(TestIds.backdropLoader).should("not.exist");
     return new Project(projectName, projectDescription, true);
   }
 
@@ -300,7 +300,11 @@ class Console {
   }
 
   createNewProject(description: string): Project {
-    return new Project(this.generateProjectName(), description);
+    const projectName =
+      description === "Default Project"
+        ? description
+        : this.generateProjectName();
+    return new Project(projectName, description);
   }
 
   cleanUpData() {

@@ -57,6 +57,7 @@ export function mixinManage<T extends Types.Constructor>(
       switch (state) {
         case Enums.LifeCycleState.Publish:
           cy.get(TestIds.publishLifecycle).click();
+          cy.get(TestIds.confirmPublish).should("be.visible").click();
           cy.get(TestIds.blockLifecycle).should("be.visible");
           cy.get(TestIds.prereleaseLifecycle).should("be.visible");
           cy.get(TestIds.demoteLifecycle).should("be.visible");
