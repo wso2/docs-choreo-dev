@@ -108,7 +108,7 @@ public class TestWebhookDp extends TestBase {
     @CitrusTest
     public void promote_CreateDeployInvokeWebhook(DataProviderWrapper dp) throws Exception {
         List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
-                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD);
+                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD, dp.getChoreoProject());
         dp.setPromoteStatusDTO(statusDTO);
     }
 
