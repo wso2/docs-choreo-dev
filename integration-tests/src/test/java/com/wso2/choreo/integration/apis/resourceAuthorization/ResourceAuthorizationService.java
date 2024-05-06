@@ -5,7 +5,6 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
@@ -221,16 +220,16 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
     /**
      * Assign a user to a group in the Choreo organization
      *
-     * @param runner     Citrus test runner
-     * @param client     Citrus HTTP client
-     * @param roleHandle Role handle
-     * @param userIds    User IDs
+     * @param runner      Citrus test runner
+     * @param client      Citrus HTTP client
+     * @param groupHandle Group handle
+     * @param userIds     User IDs
      * @throws TokenRetrievalException if token retrieval fails
      * @throws IOException             if an IO error occurs when sending or
      *                                 receiving request
      * @throws URISyntaxException      if URI syntax is invalid
      */
-    public static void assignUserToGroup(TestActionRunner runner, HttpClient client, String roleHandle,
+    public static void assignUserToGroup(TestActionRunner runner, HttpClient client, String groupHandle,
             HashMap<String, Object> userIds)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
@@ -244,7 +243,7 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
                         http()
                                 .client(client)
                                 .send()
-                                .post(getUserGroupMappingEndpoint(roleHandle))
+                                .post(getUserGroupMappingEndpoint(groupHandle))
                                 .message()
                                 .header(HttpHeaders.AUTHORIZATION, getAccessToken())
                                 .contentType(String.valueOf(MediaType.APPLICATION_JSON))
@@ -691,14 +690,12 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
 
     private static String getUserGroupMappingEndpoint(String roleHandle) {
 
-        return USER_MGT_BASE_PATH + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE)
-                + "/groups/" + roleHandle + "/members";
+        return getGroupsEndpoint() + "/" + roleHandle + "/members";
     }
 
     private static String getRoleGroupMappingEndpoint(String groupHandle) {
 
-        return USER_MGT_BASE_PATH + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE)
-                + "/groups/" + groupHandle + "/assign-roles";
+        return getGroupsEndpoint() + "/" + groupHandle + "/assign-roles";
     }
 
     private static String getAppServiceEndpoint() {

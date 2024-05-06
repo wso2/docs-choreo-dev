@@ -133,16 +133,16 @@ public class ResourceAuthzUtils {
     /**
      * Assign users to a group
      *
-     * @param runner     Citrus test runner
-     * @param client     Citrus http client
-     * @param roleHandle role handle
-     * @param userIds    list of user IDs
+     * @param runner      Citrus test runner
+     * @param client      Citrus http client
+     * @param groupHandle Group handle
+     * @param userIds     List of user IDs
      * @throws TokenRetrievalException if token retrieval fails
      * @throws IOException             if an IO error occurs when sending or
      *                                 receiving request
      * @throws URISyntaxException      if the URI is invalid
      */
-    public static void assignUserToGroup(TestActionRunner runner, HttpClient client, String roleHandle,
+    public static void assignUserToGroup(TestActionRunner runner, HttpClient client, String groupHandle,
             List<String> userIds) throws TokenRetrievalException, IOException, URISyntaxException {
 
         HashMap<String, Object> userIdList = new HashMap<>() {
@@ -150,7 +150,7 @@ public class ResourceAuthzUtils {
                 put("userIds", userIds);
             }
         };
-        ResourceAuthorizationService.assignUserToGroup(runner, client, roleHandle, userIdList);
+        ResourceAuthorizationService.assignUserToGroup(runner, client, groupHandle, userIdList);
     }
 
     /**
