@@ -34,18 +34,18 @@ steps:
     displayName: 'Check JMeter Version'
 
   - script: |
-      sudo apt-get install -y tree
-      tree -L 3
-    displayName: 'Directory Structure'
-
-  - script: |
       cd performance-tests/jmeter-scripts
       /opt/jmeter/bin/jmeter -n -t signin.jmx -l "jmeter_run_result.jtl" -Jrampup=10 -Jusers="100" -Jduration="120"
     displayName: 'Run JMeter Test'
 
+  - script: |
+      sudo apt-get install -y tree
+      tree -L 3
+    displayName: 'Directory Structure'
+
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: 'choreo-control-plane/performance-tests/jmeter_run_result.jtl'
+      PathtoPublish: 'jmeter_run_result.jtl'
       ArtifactName: 'jmeter_results'
       publishLocation: 'Container'
     displayName: 'Publish JMeter Results as Build Artifact'
