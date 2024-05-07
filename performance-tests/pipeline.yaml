@@ -39,7 +39,7 @@ steps:
     displayName: 'Directory Structure'
 
   - script: |
-      cd choreo-control-plane/performance-tests
+      cd performance-tests/jmeter-scripts
       /opt/jmeter/bin/jmeter -n -t signin.jmx -l "jmeter_run_result.jtl" -Jrampup=10 -Jusers="100" -Jduration="120"
     displayName: 'Run JMeter Test'
 
