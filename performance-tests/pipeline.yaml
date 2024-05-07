@@ -45,7 +45,7 @@ steps:
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: 'jmeter_run_result.jtl'
+      PathtoPublish: 'performance-tests/jmeter-scripts'
       ArtifactName: 'jmeter_results'
       publishLocation: 'Container'
     displayName: 'Publish JMeter Results as Build Artifact'
