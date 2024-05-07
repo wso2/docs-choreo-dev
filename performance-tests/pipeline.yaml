@@ -34,8 +34,9 @@ steps:
     displayName: 'Check JMeter Version'
 
   - script: |
-      ls
-    displayName: 'Folder output'
+      sudo apt-get install -y tree
+      tree -L 3
+    displayName: 'Directory Structure'
 
   - script: |
       cd choreo-control-plane/performance-tests
