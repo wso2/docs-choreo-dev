@@ -31,13 +31,9 @@ To enable rate limiting for an API, follow the steps given below:
 
 API-level rate limiting applies the allocated request count for the specified time unit to all operations in the API.
 
-![API-level rate limiting](../assets/img/api-management/api-rate-limiting/api-level-rate-limit.png){.cInlineImage-full}
-
 ## Operation-level rate limiting
 
 Operation-level rate limiting allows you to configure different rate-limiting values for each operation. You can use this option to define specific rate-limiting values for critical API operations that require an extra layer of protection.
-
-![Operation-level rate limiting](../assets/img/api-management/api-rate-limiting/operation-level-rate-limit.png){.cInlineImage-full}
 
 ## Rate-limiting response headers
 
