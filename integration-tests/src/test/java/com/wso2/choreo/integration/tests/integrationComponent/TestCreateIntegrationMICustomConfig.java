@@ -124,6 +124,7 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
         argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
         argMap.put("commitHash", testComponent.getLatestCommitHash(testComponent.getCommitHistory(accessToken)));
+        GraphQL.validateEndpointDeployment(this, choreoProjectsTestClient, accessToken, argMap);
         GraphQL.generateEndpoints(this, choreoProjectsTestClient, accessToken, argMap);
     }
 
@@ -171,6 +172,7 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
         argMap.put("componentId", testComponent.getId());
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
         argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+        GraphQL.validateEndpointDeployment(this, choreoProjectsTestClient, accessToken, argMap);
         endpoints = GraphQL.getEndpoints(this, choreoProjectsTestClient, accessToken, argMap);
         Assert.assertEquals(endpoints.size(), 1);
     }
