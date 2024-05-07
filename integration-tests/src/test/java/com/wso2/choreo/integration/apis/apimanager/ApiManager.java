@@ -199,9 +199,9 @@ public class ApiManager extends ControlPlaneAPI {
         String resource = Constant.APIS_ENDPOINT.concat("?").concat(Constant.ORGANIZATION_ID).concat("=") + ORG_UUID + "&query=" + query;
         AtomicReference<ProxyAPIWrapper> proxyWrapper = new AtomicReference<>();
         runner.$(repeatOnError()
-                .until("i = 5")
+                .until("i = 10")
                 .index("i")
-                .autoSleep(10000)
+                .autoSleep(25000)
                 .actions(
                     http()
                             .client(client)
