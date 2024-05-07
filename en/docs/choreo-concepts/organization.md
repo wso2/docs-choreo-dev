@@ -8,8 +8,6 @@ If you are a member of more than one organization, you can switch from one organ
 
 {% include "../administer/inviting-members.md" %}
 
-{% include "../authentication-and-authorization/access-control/groups-and-roles-content.md" %}
-
 ## Organization ID
 
 The Organization ID serves as a unique identifier for each organization. To get the organization ID, follow the steps below:
