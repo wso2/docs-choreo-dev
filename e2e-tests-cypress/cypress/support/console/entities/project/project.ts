@@ -328,7 +328,10 @@ export class Project {
         proxyInfo.version,
         basePath,
         proxyEndpointUrl,
-        url
+        url,
+        "",
+        "",
+        ""
       );
     });
   }

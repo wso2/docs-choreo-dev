@@ -118,7 +118,7 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void promoteComponent_SysObservabilityAPITestCase() throws Exception {
         List<ComponentDeploymentStatusDTO> promotionStatuses = ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent,
-                environments, ComponentFlavour.STANDARD);
+                environments, ComponentFlavour.STANDARD, project);
         promotionStatusDTO = promotionStatuses.get(0);
     }
 
