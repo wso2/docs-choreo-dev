@@ -13,7 +13,10 @@
 
 import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
-import { Proxy } from "../../../support/console/entities/component/proxy-component";
+import {
+  Proxy,
+  ProxyMetaData,
+} from "../../../support/console/entities/component/proxy-component";
 import { Enums, UsagePlan } from "../../../support/commons/enums";
 import { OK } from "../../../support/commons/http";
 import { Application } from "../../../support/console/entities/application/application";
@@ -120,7 +123,11 @@ describe("Create Proxy from OAS file", () => {
   });
 
   it("Navigate to Dev portal", () => {
-    proxy.navigateToDevPortal();
+    proxy.navigateToDevPortal(Cypress.spec.name);
+
+    cy.task("getData", Cypress.spec.name).then((metaData) => {
+      proxy = Proxy.fromMetaData(metaData as ProxyMetaData);
+    });
   });
 
   it("Create application in Dev portal", () => {
