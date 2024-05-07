@@ -79,7 +79,7 @@ public class TestGraphQLServiceDp extends TestBase {
     @CitrusTest
     public void promote_GraphQLServiceDpIT(DataProviderWrapper dp) throws Exception {
         List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
-                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD);
+                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD, dp.getChoreoProject());
         dp.setPromoteStatusDTO(statusDTO);
     }
 

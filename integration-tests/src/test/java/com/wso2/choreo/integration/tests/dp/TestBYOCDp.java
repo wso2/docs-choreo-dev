@@ -94,7 +94,7 @@ public class TestBYOCDp extends TestBase {
     @CitrusTest
     public void promoteComponent_TestBYOCDp(DataProviderWrapper dp) throws Exception {
         List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
-                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.BYOC);
+                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.BYOC, dp.getChoreoProject());
         dp.setPromoteStatusDTO(statusDTO);
     }
 

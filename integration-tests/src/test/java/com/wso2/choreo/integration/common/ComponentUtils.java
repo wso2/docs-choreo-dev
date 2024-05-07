@@ -658,7 +658,21 @@ public class ComponentUtils {
             List<Environment> environments, ComponentFlavour componentFlavour,
             BalConfig... balconfigs) throws Exception {
         List<ComponentDeploymentStatusDTO> promotionStatus = null;
-        String displayType = component.getDisplayType();
+        promotionStatus = promote(runner, citrusClients, accessToken, component, environments, componentFlavour,
+            balconfigs);
+        return promotionStatus;
+    }
+
+    public static List<ComponentDeploymentStatusDTO> promoteComponent(TestNGCitrusSpringSupport runner,
+        Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component,
+        List<Environment> environments, ComponentFlavour componentFlavour, ChoreoProject project,
+        BalConfig... balconfigs) throws Exception {
+        
+        HttpClient apimClient = citrusClients.get(Endpoints.STS_ENDPOINT);
+        String query = "context:/"+Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID)+"/"+project.getHandler()+"/"+component.getHandler()+"/v1.0";
+        ApiManager.searchAPIByQuery(runner, apimClient, accessToken, query);
+
+        List<ComponentDeploymentStatusDTO> promotionStatus = null;
         promotionStatus = promote(runner, citrusClients, accessToken, component, environments, componentFlavour,
             balconfigs);
         return promotionStatus;
@@ -668,6 +682,7 @@ public class ComponentUtils {
             Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component,
             List<Environment> environments, ComponentFlavour componentFlavour, BalConfig... balconfigs)
             throws Exception {
+
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         List<Commit> commitHistory = GraphQL.getCommitHistory(runner, appServiceClient, component.getId(),
                 accessToken);
