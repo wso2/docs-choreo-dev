@@ -32,3 +32,19 @@ steps:
   - script: |
       /opt/jmeter/bin/jmeter --version
     displayName: 'Check JMeter Version'
+
+  - script: |
+      ls
+    displayName: 'Folder output'
+
+  - script: |
+      cd choreo-control-plane/performance-tests
+      /opt/jmeter/bin/jmeter -n -t signin.jmx -l "jmeter_run_result.jtl" -Jrampup=10 -Jusers="100" -Jduration="120"
+    displayName: 'Run JMeter Test'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: 'choreo-control-plane/performance-tests/jmeter_run_result.jtl'
+      ArtifactName: 'jmeter_results'
+      publishLocation: 'Container'
+    displayName: 'Publish JMeter Results as Build Artifact'
