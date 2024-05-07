@@ -135,9 +135,6 @@ nav:
           - Redis: manage-databases-and-caches/choreo-managed-redis-datastores.md
           - Billing: manage-databases-and-caches/billing-for-platform-services.md
   - Authentication and Authorization:
-      - Access Control: 
-          - Groups and Roles: authentication-and-authorization/access-control/groups-and-roles.md
-          - Control Access in the Choreo Console: authentication-and-authorization/access-control/control-access-in-the-choreo-console.md
       - Secure API Access with Asgardeo: authentication-and-authorization/secure-api-access-with-asgardeo.md
       - Secure API Access with Azure: authentication-and-authorization/secure-api-access-with-azure-ad.md
       - Secure Web Applications with Managed Authentication: authentication-and-authorization/secure-web-applications-with-managed-authentication.md
