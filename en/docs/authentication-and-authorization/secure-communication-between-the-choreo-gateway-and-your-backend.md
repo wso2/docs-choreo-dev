@@ -10,12 +10,35 @@ Mutual SSL authentication involves both the client and server validating each ot
 
 To establish secure connectivity between the Choreo Gateway and your backend using mutual SSL, you must add the certificate of the backend (server certificate) to Choreo and add the certificate of Choreo (client certificate) as a trusted certificate in the backend.
 
-### Step 1: Obtain a certificate from Choreo
+### Step 1: Configure TLS for a self-signed certificate
+
+!!! info "Note"
+     This step is applicable only under the following conditions:
+
+       - Your backend uses a self-signed certificate.
+       - Your backend employs a certificate signed by an organization-wide certificate authority, which is not recognized as a well-known certificate authority, for enabling TLS.
+
+     If your backend uses valid CA-signed certificates, you can skip this step. 
+
+#### Prerequisites
+
+- The endpoint must be protected with TLS. 
+- The public certificate of the backend server should be extracted in PEM format and saved on the disk with the `.pem` extension.
+
+To configure TLS for a self-signed certificate, follow the steps given below:
+
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. In the **Component Listing** pane, click on the API proxy for which you want to configure TLS. For instructions on how to create an API proxy component, see [Develop an API Proxy: Step 1](../develop-components/develop-an-api-proxy.md#step-1-create-an-api-proxy).
+3. In the left navigation menu, click **Develop** and then click **Endpoints**.
+4. On the **Endpoints** page, click **Configure** corresponding to the endpoint.
+5. Click **Upload Endpoint Certificate**, and select the certificate file that you extracted in the prerequisites section to add it. This adds the certificate to all the environments as the default certificate for the endpoint. You can override this certificate if necessary when you deploy or promote the API.
+
+### Step 2: Obtain a certificate from Choreo
 
 There are two approaches you can take to get a certificate from Choreo.
 
- - Generate a key pair with a self-signed certificate from Choreo, download the public certificate, and install it in the backend.
- - Use your own key pair to be installed on the Choreo Gateway and upload it. The public certificate of this key pair will have to be installed in your backend.
+ - Generate a key pair with a self-signed certificate from Choreo, download the public certificate, and subsequently add and configure it in the backend.
+ - Use your own key pair to obtain a certificate from the Choreo Gateway and upload it. Subsequently, add and configure the public certificate of this key pair in your backend.
 
 Follow the step-by-step instructions below depending on how you want to obtain a certificate from Choreo:
 
@@ -75,7 +98,7 @@ Follow the step-by-step instructions below depending on how you want to obtain a
    
     Now you can associate the certificate with the API and deploy the API.
 
-### Step 2: Associate the certificate with the API
+### Step 3: Associate the certificate with the API
 
 To associate a certificate with the API, follow the steps given below:
 
@@ -85,27 +108,6 @@ To associate a certificate with the API, follow the steps given below:
     ![Associate certificate](../assets/img/authentication-and-authorization/associate-certificate.png)
 
 3. Click **Save**.
-
-### Step 3: Configure TLS for a self-signed certificate
-
-!!! info "Note"
-     This step is applicable only under the following conditions:
-       - Your backend uses a self-signed certificate.
-       - Your backend employs a certificate signed by an organization-wide certificate authority, which is not recognized as a well-known certificate authority, for enabling TLS.
-     If your backend uses valid CA-signed certificates, you can skip this step. 
-
-#### Prerequisites
-
-- The endpoint must be protected with TLS. 
-- The public certificate of the backend server should be extracted in PEM format and saved on the disk with the `.pem` extension.
-
-To configure TLS for a self-signed certificate, follow the steps given below:
-
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the **Component Listing** pane, click on the API proxy for which you want to configure TLS. For instructions on how to create an API proxy component, see [Develop an API Proxy: Step 1](../develop-components/develop-an-api-proxy.md#step-1-create-an-api-proxy).
-3. In the left navigation menu, click **Develop** and then click **Endpoints**.
-4. On the **Endpoints** page, click **Configure** corresponding to the endpoint.
-5. Click **Upload Endpoint Certificate**, and select the certificate file that you extracted in the prerequisites section to add it. This adds the certificate to all the environments as the default certificate for the endpoint. You can override this certificate if necessary when you deploy or promote the API.
    
 ### Step 4: Deploy the API 
 
