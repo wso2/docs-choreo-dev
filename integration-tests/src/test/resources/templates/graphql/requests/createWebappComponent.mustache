@@ -9,14 +9,16 @@ mutation {
       projectId: "{{projectId}}"
       labels: ""
       componentType: "{{componentType}}"
-      port: 8080
-      oasFilePath: "{{oasFilePath}}"
       accessibility: "external"
-      byocConfig: {
-        dockerfilePath: "{{dockerfilePath}}"
-        dockerContext: "{{dockerContext}}"
-        srcGitRepoUrl: "{{srcGitRepoUrl}}"
-        srcGitRepoBranch: "{{srcGitRepoBranch}}"
+      byocWebAppsConfig: {
+        dockerContext: "{{byocWebAppsConfig.dockerContext}}"
+        srcGitRepoUrl: "{{byocWebAppsConfig.srcGitRepoUrl}}"
+        srcGitRepoBranch: "main"
+        webAppType: "{{byocWebAppsConfig.webAppType}}"
+        webAppBuildCommand: "{{byocWebAppsConfig.webAppBuildCommand}}"
+        webAppPackageManagerVersion: "{{byocWebAppsConfig.webAppPackageManagerVersion}}"
+        webAppOutputDirectory: "{{byocWebAppsConfig.webAppOutputDirectory}}"
+        isAppGatewayEnabled: true
       }
     }
   ) {
