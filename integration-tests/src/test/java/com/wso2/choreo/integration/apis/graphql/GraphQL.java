@@ -216,9 +216,10 @@ public class GraphQL extends ControlPlaneAPI {
 
     public static Optional<CreateByocComponentResponseDTO> createBYOCComponent(TestNGCitrusSpringSupport runner, HttpClient client,
                                                                                GraphqlDTO graphqlDTO,
-                                                                               String accessToken) throws Exception {
+                                                                          String accessToken, String... branchName) throws Exception {
         graphqlDTO.setOrgId(ORG_ID);
         graphqlDTO.setOrgHandler(ORG_HANDLE);
+        graphqlDTO.setSrcGitRepoBranch(branchName.length > 0  ?  branchName[0] : "main");
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/createBYOCcomponent.mustache", graphqlDTO);
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
@@ -320,6 +321,55 @@ public class GraphQL extends ControlPlaneAPI {
         }
     }
 
+
+    public static Optional<CreateByocComponentResponseDTO> createWebappComponent(TestNGCitrusSpringSupport runner, HttpClient client,
+                                                                                    GraphqlDTO graphqlDTO,
+                                                                                    String accessToken) throws Exception {
+        graphqlDTO.setOrgId(ORG_ID);
+        graphqlDTO.setOrgHandler(ORG_HANDLE);
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/createWebappComponent.mustache", graphqlDTO);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+        AtomicReference<CreateByocComponentResponseDTO> responseDTO = new AtomicReference<>();
+        runner.variable("isComponentCreationSuccess", false);
+        runner.$(repeat()
+                .until("(i = 5) or ( ${isComponentCreationSuccess} = true )")
+                .index("i")
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(requestBody)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .type(MessageType.JSON)
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code == HttpStatus.OK.value()) {
+                                        context.setVariable("isComponentCreationSuccess", true);
+                                        responseDTO.set(ObjectMapperUtil.mapStringToObject(
+                                                CreateByocComponentResponseDTO.class, (String) message.getPayload(),
+                                                "createByocComponent"));
+                                    } else {
+                                        SleepUtil.sleep(5);
+                                    }
+                                })
+                )
+        );
+
+        if (responseDTO.get() == null) {
+            throw new ComponentCreationException("Webapp component creation response retrieval failure.");
+        } else {
+            return Optional.of(responseDTO.get());
+        }
+    }
 
     public static List<Commit> getCommitHistory(TestNGCitrusSpringSupport runner, HttpClient client, String componentId,
                                                 String accessToken) throws Exception {
@@ -1104,6 +1154,41 @@ public class GraphQL extends ControlPlaneAPI {
 
         return returnStatus.get();
     }
+
+    public static ComponentDeploymentStatusDTO getDeploymentStatus(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+                                                                            GraphqlDTO graphqlDTO,Map<String, String> responseParams)
+            throws IOException {
+        String queryString = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/componentDeployment.mustache",
+                graphqlDTO);
+        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+        AtomicReference<ComponentDeploymentStatusDTO> returnStatus = new AtomicReference<>();
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .body(requestBody)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .validate((message, context) -> {
+                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                    if (code == HttpStatus.OK.value()) {
+                        ComponentDeploymentStatusDTO deploymentStatus = ObjectMapperUtil.
+                                mapStringToObject(ComponentDeploymentStatusDTO.class,
+                                        message.getPayload(String.class), "componentDeployment");
+                        returnStatus.set(deploymentStatus);
+                    }
+                }));
+
+        return returnStatus.get();
+    }
+
 
     public static ProxyDeployment getProxyComponentDeployment(TestActionRunner runner, HttpClient client, String accessToken,
                                                               GraphqlDTO graphqlDTO) throws IOException {
