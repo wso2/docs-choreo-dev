@@ -1,8 +1,0 @@
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:mgt="http://mgt.idp.carbon.wso2.org">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <mgt:deleteIdP>
-         <mgt:idPName>choreoidp</mgt:idPName>
-      </mgt:deleteIdP>
-   </soapenv:Body>
-</soapenv:Envelope>

@@ -1,0 +1,9 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://org.apache.axis2/xsd">
+    <soap:Header/>
+    <soap:Body>
+        <xsd:getApplication>
+            <!--Optional:-->
+            <xsd:applicationName>{PDP_MANAGER_SP_NAME}</xsd:applicationName>
+        </xsd:getApplication>
+    </soap:Body>
+</soap:Envelope>
