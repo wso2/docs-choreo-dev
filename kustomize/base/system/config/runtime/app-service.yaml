@@ -460,6 +460,7 @@ asgardeo:
   tokenUrl: ${ASGARDEO_TOKEN_URL}
   clientKey: ${ASGARDEO_CLIENT_KEY}
   clientSecret: ${ASGARDEO_CLIENT_SECRET}
+  tokenType: {{.ASGARDEO_TOKEN_TYPE}}
 asgardeoOrgManagement:
   enable: ${IS_ASGARDEO_ORG_MANAGEMENT_ENABLED}
   perOrgKeyManagerEnabled: ${IS_ASGARDEO_PER_ORG_KEY_MANAGER_ENABLED}

@@ -1766,6 +1766,19 @@ CREATE TABLE [dbo].[org_enterprise_login_config]
     CONSTRAINT unique_org_enterprise_login_config UNIQUE(organization_uuid)
 )
 
+CREATE TABLE [dbo].[org_activity]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [org_id] [int] NOT NULL,
+    [last_login] [datetime],
+    [last_job_run] [datetime],
+    [last_api_invocation] [datetime],
+    [last_ballerina_pkg_update] [datetime],
+    PRIMARY KEY (id),
+    CONSTRAINT unique_org_activity UNIQUE(org_id),
+    CONSTRAINT org_activity_org_id_fk FOREIGN KEY (org_id) REFERENCES organization(id) ON DELETE CASCADE
+)
+
 /****** Object:  Trigger [dbo].[org_enterprise_login_config_UpdateTimeTrigger] ******/
 SET ANSI_NULLS ON
     GO

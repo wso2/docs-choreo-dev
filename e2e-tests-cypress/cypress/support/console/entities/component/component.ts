@@ -27,6 +27,7 @@ import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu"
 import { Application } from "../application/application";
 import { _Stats } from "../../features/stats/stats";
 import { _Observability } from "../../features/observability/observability";
+import { ProxyMetaData, Proxy } from "./proxy-component";
 
 export interface DevPortalTryOut {
   resource: string;
@@ -41,7 +42,7 @@ export class Component {
   private name: string;
   private versions: string[] = [];
   protected componentUrl: string = "";
-  private devPortalUrl: string = "";
+  protected devPortalUrl: string = "";
 
   private devEndpointUrl: string = "";
 
@@ -52,9 +53,20 @@ export class Component {
   protected sideMenu = new ServiceLeftMenu();
   protected observability = new _Observability();
 
-  constructor(name: string, version: string) {
+  constructor(
+    name: string,
+    version: string,
+    componentUrl = "",
+    devPortalUrl = "",
+    devEndpointUrl = "",
+    prodEndpointUrl = ""
+  ) {
     this.name = name;
     this.versions.push(version);
+    this.componentUrl = componentUrl;
+    this.devPortalUrl = devPortalUrl;
+    this.devEndpointUrl = devEndpointUrl;
+    this.prodEndpointUrl = prodEndpointUrl;
   }
 
   getName() {
@@ -310,7 +322,7 @@ export class Component {
     cy.get(TestIds.project).should("be.visible").click();
   }
 
-  _navigateToDevPortal(idp: string) {
+  _navigateToDevPortal(idp: string, componentKey: string) {
     this.sideMenu.navigateToOverview();
 
     this.waitForOverviewToLoad();
@@ -338,9 +350,18 @@ export class Component {
           }
         }
 
-        this.setDevPortalUrl(`${url}?${updatedQueryParams}`);
+        const devPortalUrl = `${url}?${updatedQueryParams}`;
 
-        cy.visit(this.getDevPortalUrl()).then(() => {
+        this.setDevPortalUrl(devPortalUrl);
+
+        // Since we are switching domains when navigating to devportal url we will no longer have access to the proxy object
+        // So we need to save the proxy metadata in nodejs global state using below cy.task() to access it later
+        cy.task("setData", {
+          key: componentKey, // Unique key to store the data
+          value: this,
+        });
+
+        cy.visit(devPortalUrl).then(() => {
           cy.get(TestIds.backdropLoader).should("not.exist");
           cy.get(TestIds.apiNameDevPortal)
             .should("be.visible")

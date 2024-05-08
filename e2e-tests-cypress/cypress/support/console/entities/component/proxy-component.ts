@@ -25,6 +25,9 @@ export interface ProxyMetaData {
   basePath: string;
   endpointUrl: string;
   componentUrl: string;
+  devPortalUrl: string;
+  devEndpointUrl: string;
+  prodEndpointUrl: string;
 }
 
 export class Proxy extends mixinDevelop(
@@ -39,11 +42,19 @@ export class Proxy extends mixinDevelop(
     version: string,
     basePath: string,
     endpointUrl: string,
-    componentUrl: string
+    componentUrl: string,
+    devPortalUrl: string,
+    devEndpointUrl: string,
+    prodEndpointUrl: string
   ) {
-    super(name, version);
-
-    this.componentUrl = componentUrl;
+    super(
+      name,
+      version,
+      componentUrl,
+      devPortalUrl,
+      devEndpointUrl,
+      prodEndpointUrl
+    );
 
     this.basePath = basePath;
     this.endpointUrl = endpointUrl;
@@ -55,17 +66,37 @@ export class Proxy extends mixinDevelop(
       metaData.version,
       metaData.basePath,
       metaData.endpointUrl,
-      metaData.componentUrl
+      metaData.componentUrl,
+      metaData.devPortalUrl,
+      metaData.devEndpointUrl,
+      metaData.prodEndpointUrl
     );
   }
 
   getMetaData(): ProxyMetaData {
+    cy.log(
+      "Getting metadata of the proxy component" +
+        JSON.stringify({
+          name: this.getName(),
+          version: this.getLatestVersion(),
+          basePath: this.basePath,
+          endpointUrl: this.endpointUrl,
+          componentUrl: this.getComponentUrl(),
+          devPortalUrl: this.getDevPortalUrl(),
+          devEndpointUrl: this.getDevEndpointUrl(),
+          prodEndpointUrl: this.getProdEndpointUrl(),
+        })
+    );
+
     return {
       name: this.getName(),
       version: this.getLatestVersion(),
       basePath: this.basePath,
       endpointUrl: this.endpointUrl,
       componentUrl: this.componentUrl,
+      devPortalUrl: this.getDevPortalUrl(),
+      devEndpointUrl: this.getDevEndpointUrl(),
+      prodEndpointUrl: this.getProdEndpointUrl(),
     };
   }
 
@@ -163,8 +194,8 @@ export class Proxy extends mixinDevelop(
     this._changeLifeCycleState(this, Enums.LifeCycleState.Publish);
   }
 
-  navigateToDevPortal() {
-    this._navigateToDevPortal("choreoe2etest");
+  navigateToDevPortal(componentKey: string) {
+    this._navigateToDevPortal("choreoe2etest", componentKey);
   }
 
   enableCors(environment: Enums.Environment) {
@@ -192,24 +223,7 @@ export class Proxy extends mixinDevelop(
   }
 
   disableSecurity(method: Enums.HTTPMethod, resource: string) {
-    this._disableSecurity(this, Enums.Environment.PRODUCTION, method, resource);
-  }
-
-  disableSecurityInDev(method: Enums.HTTPMethod, resource: string) {
-    this._disableSecurity(
-      this,
-      Enums.Environment.DEVELOPMENT,
-      method,
-      resource
-    );
-  }
-
-  disableSecurityInProd(method: Enums.HTTPMethod, resource: string) {
-    this._disableSecurity(this, Enums.Environment.PRODUCTION, method, resource);
-  }
-
-  updateAccessMode(accessMode: Enums.Accessibility) {
-    this._updateAccessMode(this, accessMode);
+    this._disableSecurity(this, method, resource);
   }
 
   updateAccessModeAndDeploy(accessMode: Enums.Accessibility) {

@@ -11,35 +11,33 @@ entered into with WSO2 governing the purchase of this software and any
 associated services.
 */
 
-
-import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { LoginPage } from "../../../support/console/pages/login-page";
-
+import { console } from "../../../support/console/console";
 
 describe("Enterprise Login using auth0Idp", () => {
+  it("Enterprise login to console", () => {
+    console.enterpriseLogin();
 
-
-  before(() => {
-    cy.request(Cypress.env("auth0LogoutUrl"), {
-      client_id: Cypress.env("auth0ClientID"),
-      returnTo: Cypress.env("enterpriseLoginUrl"),
+    console.getDevPortalUrl().then((url) => {
+      if (url) {
+        // Since we are switching domains when navigating to enterprise DevPortal domain url we will no longer have access to the data
+        // generated in the Console, so we store the DevPortal link from the Console in nodejs global state using below cy.task() to access it later
+        cy.task("setData", {
+          key: Cypress.spec.name, // Unique key to store the data, in this case spec name is sufficient
+          value: url,
+        });
+      } else {
+        throw new Error("Devportal link not found");
+      }
     });
   });
 
-  after(() => {
-    ChoreoHomePage.logout();
-  });
-
-  it("Enterprise login to console", () => {
-    LoginPage.enterpriseLogin();
-  });
-
-
   it("Verify devportal sso login", () => {
-    ComponentOverviewPage.navigateToDevPortal().should(
-      "eq",
-      "API Developer Portal"
-    );
+    cy.task("getData", Cypress.spec.name).then((url) => {
+      if (url) {
+        console.navigateToEnterpriseDevPortal(url as string);
+      } else {
+        throw new Error("Data not found");
+      }
+    });
   });
-})
+});

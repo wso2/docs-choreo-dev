@@ -65,7 +65,7 @@ export namespace TestIds {
   export const endpointSettings =
     '[data-cyid="endpoint-config-settings-icon-button"]';
   export const selectVersion = '[data-cyid="deployment-track-picker-chip"]';
-  export const selectBranch = '[data-cyid="deployment-track-picker"]';
+  export const selectBranch = '[data-cyid^="deployment-track-picker"]';
   export const deploySplitToggle =
     '[data-cyid="direct-deploy-option-split-toggle-button-button"]';
   export const configureDeploy = '[data-cyid="configure-&-deploy-option"]';
@@ -96,6 +96,7 @@ export namespace TestIds {
   export const createDeploymentTrack =
     '[data-testid="create-deployment-track-create"]';
   export const publishLifecycle = '[data-testid="Publish-lc-btn"]';
+  export const confirmPublish = '[data-cyid="publish-api-confirm-button"]';
   export const blockLifecycle = '[data-testid="Block-lc-btn"]';
   export const prereleaseLifecycle =
     '[data-testid="Deploy as a Prototype-lc-btn"]';
@@ -317,8 +318,10 @@ export namespace TestIds {
   export const apiInfoDevPortal = '[data-cyid="api-info-tab-developer-portal"]';
   export const apiInfoSave = '[data-cyid="tst-marketplace-save-button"]';
   export const apiVisibility = '[data-cyid="visibility-select"]';
+  export const choreoHomeDevPortalLink = "[data-cyid='developer-portal-link']";
   export const devPortalHome = '[data-testid="home-appbar-btn"]';
   export const devPortalLoginLink = '[data-testid="login-button"]';
+  export const devPortalSignedInUser = '[data-testid="signedin-user-menu-btn"]';
   export const addConnectionButton = '[data-cyid="create-config-button"]';
   export const ConnectionCard = '[data-cyid="api-card-card"]';
   export const connectionNameInput = '[data-cyid="connection-name"]';
@@ -340,6 +343,8 @@ export namespace TestIds {
   export const groupDetail = '[data-cyid="create-group"]';
   export const dialogCreateBtn = '[data-cyid="dialog-create-group-button"]';
   export const groupTable = '[data-cyid="org-groups"]';
+  export const groupDetailsBack = '[data-cyid="group-details-back-button"]';
+  export const editGroup = '[data-cyid="edit-user-group-icon-button"]';
   export const deleteGroup = '[data-cyid="delete-user-group-icon-button"]';
   export const deleteGroupConfirm =
     '[data-cyid="dialog-groups-user-list-delete-button"]';
@@ -359,4 +364,13 @@ export namespace TestIds {
     '[data-cyid="dialog-groups-role-list-delete-button"]';
   export const addUserToGroupPopup = '[data-cyid="add-user-to-group-button"]';
   export const userSelect = '[id="select-user-list-popup"]';
+  export const connectionSearchBar =
+    '[data-cyid="internal-marketplace-services-search-bar-input"]';
+  export const copyConnectionUrlBox = '[data-cyid="copy-url"]';
+  export const buildDetailsCard = '[data-cyid="build-details-card"]';
+  export const endpointConfigurationsButton =
+    '[data-testid="security-settings-env-artifact"]';
+  export const rightDrawer = '[data-cyid="Overlay-right-drawer"]';
+  export const refreshComponentListIconButton =
+    '[data-cyid="refresh-components-icon-button"]';
 }
