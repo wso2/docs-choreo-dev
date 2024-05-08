@@ -46,7 +46,7 @@ import java.util.Map;
 public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSupport {
 
     public static final String MI_API_SERVICE = Constant.AppType.MI_API_SERVICE.value;
-    public static final String API_INVOCATION_REQUEST_URI = "/serverinfo";
+    public static final String API_INVOCATION_REQUEST_URI = "/";
     private static String accessToken;
     private String orgHandle;
     private String orgId;
