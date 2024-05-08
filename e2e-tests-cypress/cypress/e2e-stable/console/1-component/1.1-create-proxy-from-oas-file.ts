@@ -51,6 +51,12 @@ describe("Create Proxy from OAS file", () => {
       })
       .then((comp) => {
         proxy = comp;
+        // Since we are switching domains when navigating to devportal url we will no longer have access to the proxy object
+        // So we need to save the proxy metadata in nodejs global state using below cy.task() to access it later
+        cy.task("setData", {
+          key: Cypress.spec.name, // Unique key to store the data, in this case spec name is sufficient
+          value: proxy.getMetaData(),
+        });
       });
   });
 
@@ -123,11 +129,15 @@ describe("Create Proxy from OAS file", () => {
   });
 
   it("Navigate to Dev portal", () => {
-    proxy.navigateToDevPortal(Cypress.spec.name);
-
+    devPortal.loginToDevPortal();
+    // Recreate Proxy object using previously saved metadata
     cy.task("getData", Cypress.spec.name).then((metaData) => {
       proxy = Proxy.fromMetaData(metaData as ProxyMetaData);
     });
+  });
+
+  it("Find API in devportal custom domain", () => {
+    devPortal.searchApi(proxy.getName());
   });
 
   it("Create application in Dev portal", () => {

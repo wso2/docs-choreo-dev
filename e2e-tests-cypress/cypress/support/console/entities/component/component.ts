@@ -322,72 +322,11 @@ export class Component {
     cy.get(TestIds.project).should("be.visible").click();
   }
 
-  _navigateToDevPortal(idp: string, componentKey: string) {
-    this.sideMenu.navigateToOverview();
-
-    this.waitForOverviewToLoad();
-
-    cy.get(TestIds.devPortalLink)
-      .invoke("attr", "href")
-      .then((href) => {
-        if (href === undefined) {
-          throw new Error("Dev Portal URL is not defined");
-        }
-
-        const linkParts = href.split("?");
-        const url = linkParts[0];
-        const queryParams = linkParts[1].split("&amp;");
-
-        let updatedQueryParams = "";
-
-        for (let i = 0; i < queryParams.length; i++) {
-          const keyValues = queryParams[i].split("=");
-
-          if (keyValues[0] === "idp") {
-            updatedQueryParams += `${keyValues[0]}=${idp}`;
-          } else {
-            updatedQueryParams += queryParams[i];
-          }
-        }
-
-        const devPortalUrl = `${url}?${updatedQueryParams}`;
-
-        this.setDevPortalUrl(devPortalUrl);
-
-        // Since we are switching domains when navigating to devportal url we will no longer have access to the proxy object
-        // So we need to save the proxy metadata in nodejs global state using below cy.task() to access it later
-        cy.task("setData", {
-          key: componentKey, // Unique key to store the data
-          value: this,
-        });
-
-        cy.visit(devPortalUrl).then(() => {
-          cy.get(TestIds.backdropLoader).should("not.exist");
-          cy.get(TestIds.apiNameDevPortal)
-            .should("be.visible")
-            .contains(this.getName(), VERY_SHORT_TIME);
-        });
-      });
-  }
-
   navigateToPublicDevPortal() {
     const loginURL =
       Cypress.env("devportalLoginURL") + "/" + Cypress.env("choreoOrgHandle");
     cy.visit(loginURL);
     cy.get(TestIds.devPortalHome).should("be.visible");
     cy.get(TestIds.devPortalLoginLink).should("be.visible");
-  }
-
-  private waitForOverviewToLoad() {
-    cy.get(TestIds.createTime).should("be.visible");
-    cy.get(TestIds.progressBar).should("not.exist");
-    cy.get(TestIds.deploymentStatusChip).should("be.visible");
-
-    cy.contains("Requests", SHORT_TIME).should("be.visible");
-    cy.contains("Errors", SHORT_TIME).should("be.visible");
-    cy.contains("Average TPS", SHORT_TIME).should("be.visible");
-    cy.contains("Latency", SHORT_TIME)
-      .should("be.visible")
-      .wait(VERY_SHORT_TIME.timeout); // Wait for the latency stats to load
   }
 }
