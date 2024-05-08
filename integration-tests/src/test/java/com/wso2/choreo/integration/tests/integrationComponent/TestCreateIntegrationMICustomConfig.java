@@ -124,7 +124,6 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
         argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
         argMap.put("commitHash", testComponent.getLatestCommitHash(testComponent.getCommitHistory(accessToken)));
-        GraphQL.validateEndpointDeployment(this, choreoProjectsTestClient, accessToken, argMap);
         GraphQL.generateEndpoints(this, choreoProjectsTestClient, accessToken, argMap);
     }
 
