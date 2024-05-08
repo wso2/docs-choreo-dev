@@ -86,46 +86,43 @@ public class ConnectionService extends ControlPlaneAPI {
                                 .receive()
                                 .response(HttpStatus.CREATED)
                                 .validate((message, context) -> {
-                                            int code = (int) message.getHeader(HTTP_STATUS_CODE);
-                                            if (code == HttpStatus.CREATED.value()) {
-                                                String payload = message.getPayload(String.class);
-                                                JsonObject connectionJsonObject = new JsonParser().parse(payload).getAsJsonObject();
-                                                JsonObject connectionStatus = connectionJsonObject.getAsJsonObject("status");
-                                                for (int i = 0; i < publisherDeployedEnvs.size(); i++) {
-                                                    com.wso2.choreo.integration.models.environments.Environment environment = publisherDeployedEnvs.get(i);
-                                                    String envId = environment.getTemplateId();
-                                                    if (connectionStatus.has(envId)) {
-                                                        JsonArray envStatus = connectionStatus.getAsJsonArray(envId);
-                                                        if (isWebApp) {
-                                                            if (isStageSuccess(envStatus, "Service Url resolved")) {
-                                                                context.setVariable("isConnectionCreationSuccess", true);
-                                                                connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
-                                                            } else {
-                                                                throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
-                                                            }
-                                                        } else if (isPublisherSecured) {
-                                                            if (isStageSuccess(envStatus, "Service Url resolved") && isStageSuccess(envStatus, "OAuth keys generated")) {
-                                                                context.setVariable("isConnectionCreationSuccess", true);
-                                                                connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
-                                                            } else {
-                                                                throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
-                                                            }
-                                                        } else {
-                                                            if (isStageSuccess(envStatus, "Service Url resolved")) {
-                                                                context.setVariable("isConnectionCreationSuccess", true);
-                                                                connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
-                                                            } else {
-                                                                throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
-                                                            }
-                                                        }
-                                                    } else {
-                                                        throw new ValidationException("Connection creation failed for environment: " + envId);
-                                                    }
-                                                }
-                                            } else {
-                                                throw new ValidationException("Connection creation failed with status code: " + code);
-                                            }
+                                    int code = (int) message.getHeader(HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.CREATED.value()) {
+                                        throw new ValidationException("Connection creation failed with status code: " + code);
+                                    }
+                                    String payload = message.getPayload(String.class);
+                                    JsonObject connectionJsonObject = new JsonParser().parse(payload).getAsJsonObject();
+                                    JsonObject connectionStatus = connectionJsonObject.getAsJsonObject("status");
+
+                                    for (com.wso2.choreo.integration.models.environments.Environment environment : publisherDeployedEnvs) {
+                                        String envId = environment.getTemplateId();
+                                        if (!connectionStatus.has(envId)) {
+                                            throw new ValidationException("Connection creation failed for environment: " + envId);
                                         }
+                                        JsonArray envStatus = connectionStatus.getAsJsonArray(envId);
+                                        if (isWebApp) {
+                                            if (!isStageSuccess(envStatus, "Service Url resolved")) {
+                                                throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
+                                            }
+                                            context.setVariable("isConnectionCreationSuccess", true);
+                                            connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
+                                        } else if (isPublisherSecured) {
+                                            if (!isStageSuccess(envStatus, "Service Url resolved") || !isStageSuccess(envStatus, "OAuth keys generated")) {
+                                                throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
+                                            }
+                                            context.setVariable("isConnectionCreationSuccess", true);
+                                            connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
+                                        } else {
+                                            if (!isStageSuccess(envStatus, "Service Url resolved")) {
+                                                throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
+
+                                            }
+                                            context.setVariable("isConnectionCreationSuccess", true);
+                                            connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
+                                        }
+
+                                    }
+                                }
                                 )));
         return connectionId.get();
     }
@@ -195,8 +192,10 @@ public class ConnectionService extends ControlPlaneAPI {
                 marketplaceServiceClient, accessToken, serviceName, networkVisibilityFilter,projectId);
         return services.get(0);  //we will only get one as we search by exact name
     }
-    public static ConnectionCreateRequest createComponentLevelConnectionCreationReq(List<com.wso2.choreo.integration.models.environments.Environment> clientComponentEnvironments,
-                                                                                    String projectId, String clientComponentId, String requestingServiceVisibility, ServiceInfo serviceFound ) throws IOException {
+    public static ConnectionCreateRequest createComponentLevelConnectionCreationReq(
+            List<com.wso2.choreo.integration.models.environments.Environment> clientComponentEnvironments,
+            String projectId, String clientComponentId, String requestingServiceVisibility,
+            ServiceInfo serviceFound ) throws IOException {
 
         String serviceId = serviceFound.getServiceId();
         String schemaReference = serviceFound.getConnectionSchemas()[0].getId();  //this will only have one schema

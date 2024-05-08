@@ -69,7 +69,7 @@ public class GitHub extends ControlPlaneAPI {
     public static Response mergeNewCode(String repoName, String path, String commitMessage, String content, String... branchName) throws IOException {
 
         String requestUrl = GH_URL + "/repos/" + GH_ORG + "/" + repoName + "/contents/" + path;
-        requestUrl = branchName.length > 0 ?requestUrl.concat("?ref=" + branchName[0]) :  requestUrl;
+        requestUrl = branchName.length > 0 ? requestUrl.concat("?ref=" + branchName[0]) :  requestUrl;
         Response response = HttpClientUtil.httpGET(requestUrl, AUTH_HEADER, "");
         JsonObject jsonObject = new JsonParser().parse(response.getRes()).getAsJsonObject();
         String serviceBalSha = jsonObject.get("sha").getAsString();
