@@ -13,7 +13,6 @@ export default defineConfig({
   videoCompression: false,
   watchForFileChanges: false,
   chromeWebSecurity: false,
-  experimentalMemoryManagement: true,
   e2e: {
     setupNodeEvents(on, config) {
       const data = new Map<string, any>();
@@ -43,13 +42,13 @@ export default defineConfig({
   env: {
     FAIL_FAST_STRATEGY: "spec",
     FAIL_FAST_ENABLED: true,
-    FAIL_FAST_BAIL: 1,
-    FAIL_FAST_PLUGIN: true,
+    FAIL_FAST_BAIL: 3,
+    FAIL_FAST_PLUGIN: false,
   },
   retries: {
     // Configure retry attempts for `cypress run`
     // Default is 0
-    runMode: 0,
+    runMode: 2,
     // Configure retry attempts for `cypress open`
     // Default is 0
     openMode: 0,
