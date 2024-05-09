@@ -373,4 +373,5 @@ export namespace TestIds {
   export const rightDrawer = '[data-cyid="Overlay-right-drawer"]';
   export const refreshComponentListIconButton =
     '[data-cyid="refresh-components-icon-button"]';
+  export const clearComponentSearchButton = '[data-cyid="component-listing-auto-forcused-search-icon-button"]';
 }
