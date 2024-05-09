@@ -364,6 +364,7 @@ configMapGenerator:
       - MARKETPLACE_INTELLIGENT_ROUTING_ENABLED={{.MARKETPLACE_INTELLIGENT_ROUTING_ENABLED | default false}}
       - RESILIENCY_CONFIG_ENABLED={{.RESILIENCY_CONFIG_ENABLED | default false}}
       - COPY_CONTAINER_PORTS_ON_PROMOTE={{.COPY_CONTAINER_PORTS_ON_PROMOTE | default true}}
+      - NEW_AUTO_DEPLOY_FEATURE_ENABLED={{.NEW_AUTO_DEPLOY_FEATURE_ENABLED | default false}}
   - name: env-dp-helmhub
     behavior: create
     literals:
