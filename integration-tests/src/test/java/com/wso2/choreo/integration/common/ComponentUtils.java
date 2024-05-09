@@ -769,7 +769,7 @@ public class ComponentUtils {
                 GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).apiVersionId(latestVersionId)
                         .sourceReleaseId(sourceReleaseId).targetEnvironmentId(latestAppEnvId).build();
                 GraphQL.promoteComponent(runner, appServiceClient, accessToken, graphqlDTO);
-                SleepUtil.sleep(30000);
+                SleepUtil.sleep(5000);
                 ComponentDeploymentStatusDTO statusDTO = getComponentPromotionStatus(runner, componentId, latestVersionId,
                         latestAppEnvId, commitHistory, appServiceClient, accessToken, component);
                 deploymentStatus.add(statusDTO);
