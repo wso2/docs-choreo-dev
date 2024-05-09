@@ -73,6 +73,7 @@ public class TestBallerinaServiceDp extends TestBase {
 
         dp.setChoreoComponent(choreoComponent);
         dp.setEnvironments(environments);
+        dp.setChoreoProject(project);
 
         String componentId = choreoComponent.getId();
         Assert.assertNotNull(componentId);

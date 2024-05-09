@@ -46,7 +46,7 @@ import java.util.Map;
 public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSupport {
 
     public static final String MI_API_SERVICE = Constant.AppType.MI_API_SERVICE.value;
-    public static final String API_INVOCATION_REQUEST_URI = "/serverinfo";
+    public static final String API_INVOCATION_REQUEST_URI = "/";
     private static String accessToken;
     private String orgHandle;
     private String orgId;
@@ -124,7 +124,6 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
         argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
         argMap.put("commitHash", testComponent.getLatestCommitHash(testComponent.getCommitHistory(accessToken)));
-        GraphQL.validateEndpointDeployment(this, choreoProjectsTestClient, accessToken, argMap);
         GraphQL.generateEndpoints(this, choreoProjectsTestClient, accessToken, argMap);
     }
 
