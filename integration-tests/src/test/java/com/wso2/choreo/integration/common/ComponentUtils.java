@@ -44,6 +44,7 @@ import com.wso2.choreo.integration.common.exceptions.ProjectRetrievalException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -67,12 +68,14 @@ import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.revision.RevisionWrapper;
 import com.wso2.choreo.integration.models.webhook.Trigger;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.apache.tools.ant.taskdefs.Sleep;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -725,6 +728,7 @@ public class ComponentUtils {
                 GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).apiVersionId(latestVersionId)
                         .sourceReleaseId(sourceReleaseId).targetEnvironmentId(latestAppEnvId).build();
                 GraphQL.promoteComponent(runner, appServiceClient, accessToken, graphqlDTO);
+                SleepUtil.sleep(30000);
                 ComponentDeploymentStatusDTO statusDTO = getComponentPromotionStatus(runner, componentId, latestVersionId,
                         latestAppEnvId, commitHistory, appServiceClient, accessToken, component);
                 deploymentStatus.add(statusDTO);
