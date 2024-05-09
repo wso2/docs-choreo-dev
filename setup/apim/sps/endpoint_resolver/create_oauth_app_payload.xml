@@ -19,7 +19,7 @@
                 <xsd1:pkceSupportPlain>true</xsd1:pkceSupportPlain>
                 <xsd1:refreshTokenExpiryTime>84600</xsd1:refreshTokenExpiryTime>
                 <xsd1:requestObjectSignatureValidationEnabled>false</xsd1:requestObjectSignatureValidationEnabled>
-                <xsd1:tokenType>JWT</xsd1:tokenType>
+                <xsd1:tokenType>Default</xsd1:tokenType>
                 <xsd1:userAccessTokenExpiryTime>3600</xsd1:userAccessTokenExpiryTime>
             </xsd:application>
         </xsd:registerOAuthApplicationData>
