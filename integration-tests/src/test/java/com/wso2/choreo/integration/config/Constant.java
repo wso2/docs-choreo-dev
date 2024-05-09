@@ -53,6 +53,7 @@ public final class Constant {
     public static final String DEFAULT_API_NAME = "DefaultAPI";
     public static final String DEFAULT_VERSION = "1.0.0";
     public static final String DEFAULT_ENDPOINT = "http://run.mocky.io/v2/5185415ba171ea3a00704eed";
+    public static final String DEFAULT_ENDPOINT_FOR_CONNECTIONS = "https://run.mocky.io/v3/3ce22976-a2db-4e84-b4c4-e39415d2effc";
     public static final String APPLICATION_JSON = "application/json";
     public static final String MULTIPART_FORM_DATA = "multipart/form-data";
 

@@ -292,7 +292,7 @@ public class ConnectionService extends ControlPlaneAPI {
         ApiManager.updateApi(runner,httpClient,accessToken,apiId,apiInfo);
     }
 
-    public static void createAndUseConnection(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients, String accessToken,
+    public static String createAndUseConnection(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients, String accessToken,
                                      String requestedServiceName, String requestedServiceVisibility, String projectId,
                                      String clientChoreoComponentId, List<com.wso2.choreo.integration.models.environments.Environment> clientComponentEnvironments,
                                      List<com.wso2.choreo.integration.models.environments.Environment> servicePublisherComponentEnvironments,
@@ -316,6 +316,10 @@ public class ConnectionService extends ControlPlaneAPI {
                 "templates/marketplace/component-config.mustache", params);
         String encodedFileContent = Base64.getEncoder().
                 encodeToString(updatedComponentConfigFileContent.getBytes(StandardCharsets.UTF_8));
-        GitHub.mergeNewCode(repoName, ".choreo/component-config.yaml", "Update component-config file", encodedFileContent,branchName);
+        Response mergeCodeResp = GitHub.mergeNewCode(repoName, ".choreo/component-config.yaml", "Update component-config file", encodedFileContent,branchName);
+        if (mergeCodeResp.getStatusCode() != HttpStatus.OK.value()) {
+            throw new ValidationException("Error while update component-config.yaml file" + mergeCodeResp.getRes());
+        }
+        return connectionId;
     }
 }
