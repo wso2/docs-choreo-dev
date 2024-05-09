@@ -147,34 +147,38 @@ export class Project {
 
     let isExists = false;
 
-    cy.get("body").then((body) => {
+    return cy.get("body").then((body) => {
       if (body.find(TestIds.componentTable).length > 0) {
-        return cy
+        this.searchComponent(name);
+        cy
           .get(TestIds.componentTable)
           .find("tbody")
-          .find("tr")
-          .each((row) => {
-            cy.wrap(row).within(() => {
-              cy.get("td")
-                .eq(0)
-                .then((td) => {
-                  cy.wrap(td.find("div").first())
-                    .invoke("attr", "title")
-                    .then((title) => {
-                      if (title === name) {
-                        isExists = true;
-                      }
-                    });
-                });
-            });
+          .within((tbody) => {
+            if (tbody.find("tr").length > 0) {
+              cy
+                .get("tr")
+                .each((row) => {
+                  cy.wrap(row).within(() => {
+                    cy.get("td")
+                      .eq(0)
+                      .then((td) => {
+                        cy.wrap(td.find("div").first())
+                          .invoke("attr", "title")
+                          .then((title) => {
+                            if (title === name) {
+                              isExists = true;
+                            }
+                          });
+                      });
+                  });
+                })
+            }
           })
-          .then(() => {
-            return cy.wrap(isExists);
-          });
       }
+    }).then(() => {
+      this.clearComponentSearch(name);
+      return cy.wrap(isExists);
     });
-
-    return cy.wrap(isExists);
   }
 
   visitComponent(name: string): string {
@@ -614,6 +618,11 @@ export class Project {
   private searchComponent(name: string) {
     cy.get(TestIds.searchIcon).should("be.visible").click();
     cy.get(TestIds.componentSearchBox).should("be.visible").type(name);
+  }
+
+  private clearComponentSearch(name: string) {
+    cy.get(TestIds.componentSearchBox).should("be.visible").clear();
+    cy.get(TestIds.clearComponentSearchButton).should("be.visible").click();
   }
 
   private createComponentIfEmptyProject() {

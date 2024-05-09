@@ -14,6 +14,7 @@
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { OrganizationComponent } from "../../../support/console/pages/component/common/organization-components";
+import { TestIds } from "../../../support/console/constants/TestIds";
 
 /// <reference types="cypress" />
 let timestamp = Math.floor((+new Date() - 100000) / 1000).toString();
@@ -22,21 +23,21 @@ const INVITATION_EMAIL = Cypress.env("invitationUserEmail");
 describe("Invite members", () => {
   before(() => {
     LoginPage.login();
-
   });
   after(() => {
     ChoreoHomePage.logout();
   });
 
   it("Delete existing invitation", () => {
-    OrganizationComponent.deleteInvitation(INVITATION_EMAIL)
+    OrganizationComponent.deleteInvitation(INVITATION_EMAIL);
   });
 
   it("Invite a member to users org", () => {
     ChoreoHomePage.navigateToSettings();
     OrganizationComponent.inviteMembers(INVITATION_EMAIL, "API Publisher");
     OrganizationComponent.selectPendingInvitation();
-    cy.get('[data-cyid="search-app"]').clear().type(INVITATION_EMAIL);
+    cy.get(TestIds.searchIcon).click();
+    cy.get(TestIds.searchField).type(INVITATION_EMAIL);
     OrganizationComponent.verifyEmailIsDisplayed(INVITATION_EMAIL);
   });
 

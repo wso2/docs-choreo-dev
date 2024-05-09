@@ -373,6 +373,4 @@ export namespace TestIds {
   export const rightDrawer = '[data-cyid="Overlay-right-drawer"]';
   export const refreshComponentListIconButton =
     '[data-cyid="refresh-components-icon-button"]';
-    export const ComponentUsageInsightsLink =
-    '[data-cyid="usage-insights"]';
 }
