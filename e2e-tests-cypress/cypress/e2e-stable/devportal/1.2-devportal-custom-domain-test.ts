@@ -70,7 +70,7 @@ describe("Create and deploy a component to test developer portal with custom dom
     proxy.publish();
   });
 
-  it("Add a developer portal custom domain", () => {
+  it("Add or replace a developer portal custom domain", () => {
     console.addOrReplaceCustomDomain(CUSTOM_DOMAIN, CustomDomainType.DevPortal);
   });
 
@@ -123,10 +123,5 @@ describe("Create and deploy a component to test developer portal with custom dom
 
   it("Delete a consumer application", () => {
     proxy.deleteApplication_DevPortal(application);
-  });
-
-  it("Remove custom domain", () => {
-    console.login();
-    console.removeCustomDomain(CUSTOM_DOMAIN, CustomDomainType.DevPortal);
   });
 });
