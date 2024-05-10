@@ -367,7 +367,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
 
     }
 
-    @Test(dependsOnMethods = {"useProjectLevelConnectionCreatedToProxyInAComponent_TestChoreoConnections"})
+    @Test(dependsOnMethods = {"invokeAPIStageForProxyBasedConnection_TestChoreoConnections"})
     @CitrusTest
     public void createProjectLevelConnectionToUnSecuredPublicService_TestChoreoConnections() throws Exception {
         ConnectionService.disableEndpointSecurity(this,citrusClients,proxyApiId,accessToken);

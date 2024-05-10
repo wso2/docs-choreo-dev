@@ -1013,7 +1013,13 @@ public class ComponentUtils {
                                 .response(expectedHttpStatus)
                                 .message()
                                 .type(MessageType.JSON)
-                                .body(expectedResponse)));
+                                .body(expectedResponse)
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != expectedHttpStatus.value()) {
+                                        throw new ValidationException("Too many successive calls with response code !=" + expectedResponse);
+                                    }
+                                })));
     }
 
     public static List<Environment> getEnvironments(TestActionRunner runner, Map<Endpoints,
