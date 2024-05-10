@@ -42,7 +42,7 @@ To attach a policy to the `Request`, `Response`, or `Error` flow of a REST API p
  
 8. To attach the policy, click **Add**.
 
-After attaching an API Policy, it is necessary to deploy the API in order for the policy to become active within its corresponding flow. 
+After attaching an API Policy, it is necessary to deploy the API for the policy to become active within its corresponding flow. 
 To deploy the API follow the steps below: 
 
 9. In the left navigation menu, click **Deploy** and then click **Configure & Deploy**. Choreo performs the mediation application generation step and opens the **Configure & Deploy** pane.
@@ -66,7 +66,7 @@ If none of the above changes occur during deployment, Choreo skips the code gene
 
 !!! info
     - If you want to enforce the code generation and build process of the mediation application in instances where the specified changes do not take place, you must turn on the **Refresh Mediation Policies** toggle when you configure and deploy the component. 
-    - It is useful to enable **Refresh Mediation Policies** when you want to incorporate latest Ballerina patches for your generated mediation application. However, this can result in longer deployment times.
+    - It is useful to enable **Refresh Mediation Policies** when you want to incorporate the latest Ballerina patches for your generated mediation application. However, this can result in longer deployment times.
 
 
 
