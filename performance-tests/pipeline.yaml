@@ -1,0 +1,51 @@
+trigger: none
+
+pr:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - script: |
+      echo "hello world!"
+    displayName: 'Welcome'
+
+  - script: |
+      sudo apt-get update
+      sudo apt-get install -y openjdk-11-jdk
+      echo "JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64" | sudo tee -a /etc/environment
+      echo "PATH=\$PATH:\$JAVA_HOME/bin" | sudo tee -a /etc/environment
+      source /etc/environment
+      echo $JAVA_HOME
+      echo $PATH
+    displayName: 'Install Java and Set Environment Variables'
+
+  - script: |
+      wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
+      tar -xzf apache-jmeter-5.6.3.tgz
+      sudo mv apache-jmeter-5.6.3 /opt/jmeter
+    displayName: 'Install JMeter'
+
+  - script: |
+      /opt/jmeter/bin/jmeter --version
+    displayName: 'Check JMeter Version'
+
+  - script: |
+      cd performance-tests/jmeter-scripts
+      /opt/jmeter/bin/jmeter -n -t signin.jmx -l "jmeter_run_result.jtl" -Jrampup=10 -Jusers="100" -Jduration="120"
+    displayName: 'Run JMeter Test'
+
+  - script: |
+      sudo apt-get install -y tree
+      tree -L 3
+    displayName: 'Directory Structure'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: 'performance-tests/jmeter-scripts'
+      ArtifactName: 'jmeter_results'
+      publishLocation: 'Container'
+    displayName: 'Publish JMeter Results as Build Artifact'
