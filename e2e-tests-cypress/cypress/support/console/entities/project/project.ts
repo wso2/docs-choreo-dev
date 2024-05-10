@@ -147,17 +147,16 @@ export class Project {
 
     let isExists = false;
 
-    return cy.get("body").then((body) => {
-      if (body.find(TestIds.componentTable).length > 0) {
-        this.searchComponent(name);
-        cy
-          .get(TestIds.componentTable)
-          .find("tbody")
-          .within((tbody) => {
-            if (tbody.find("tr").length > 0) {
-              cy
-                .get("tr")
-                .each((row) => {
+    return cy
+      .get("body")
+      .then((body) => {
+        if (body.find(TestIds.componentTable).length > 0) {
+          this.searchComponent(name);
+          cy.get(TestIds.componentTable)
+            .find("tbody")
+            .within((tbody) => {
+              if (tbody.find("tr").length > 0) {
+                cy.get("tr").each((row) => {
                   cy.wrap(row).within(() => {
                     cy.get("td")
                       .eq(0)
@@ -171,14 +170,15 @@ export class Project {
                           });
                       });
                   });
-                })
-            }
-          })
-      }
-    }).then(() => {
-      this.clearComponentSearch(name);
-      return cy.wrap(isExists);
-    });
+                });
+              }
+            });
+          this.clearComponentSearch();
+        }
+      })
+      .then(() => {
+        return cy.wrap(isExists);
+      });
   }
 
   visitComponent(name: string): string {
@@ -620,7 +620,7 @@ export class Project {
     cy.get(TestIds.componentSearchBox).should("be.visible").type(name);
   }
 
-  private clearComponentSearch(name: string) {
+  private clearComponentSearch() {
     cy.get(TestIds.componentSearchBox).should("be.visible").clear();
     cy.get(TestIds.clearComponentSearchButton).should("be.visible").click();
   }
