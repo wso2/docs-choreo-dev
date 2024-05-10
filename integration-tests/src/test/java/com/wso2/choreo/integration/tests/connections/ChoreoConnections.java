@@ -422,8 +422,9 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         ConnectionService.disableEndpointSecurity(this,citrusClients,endpoints.get(0).getApimId(),accessToken);
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 orgEndpointServiceComponent);
-        ComponentUtils.deployComponent(this, citrusClients, accessToken,
-                orgEndpointServiceComponent, environments, ComponentFlavour.BYOC);
+        Commit latestCommit = ComponentUtils.getLatestCommit(this, citrusClients, accessToken, orgEndpointServiceComponent);
+        ComponentUtils.deployBuiltComponent(this, citrusClients, accessToken,
+                orgEndpointServiceComponent, latestCommit, environments);
         String connectionName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_CONNECTION_NAME);
         ConnectionService.createProjectLevelConnection(citrusClients, this, accessToken,
                 orgEndpointServiceComponent.getName(), ORG_LVL_NETWORK_VISIBILITY_FILTER, projectOne.getId(),
@@ -474,8 +475,9 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         ConnectionService.disableEndpointSecurity(this,citrusClients,endpoints.get(0).getApimId(),accessToken);
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 publicEndpointServiceComponent);
-        ComponentUtils.deployComponent(this, citrusClients, accessToken,
-                publicEndpointServiceComponent, environments, ComponentFlavour.BYOC);
+        Commit latestCommit = ComponentUtils.getLatestCommit(this, citrusClients, accessToken, publicEndpointServiceComponent);
+        ComponentUtils.deployBuiltComponent(this, citrusClients, accessToken,
+                publicEndpointServiceComponent, latestCommit, environments);
 
         ServiceInfo serviceFound = ConnectionService.FindService(citrusClients,this,accessToken,SVC_COMPONENT_SERVICE_NAME,NETWORK_VISIBILITY_FILTER,"");
         connectionCreationReq= ConnectionService.createComponentLevelConnectionCreationReq(clientComponentEnvironments,projectOne.getId(),

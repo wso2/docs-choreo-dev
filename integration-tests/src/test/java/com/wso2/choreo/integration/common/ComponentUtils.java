@@ -1017,7 +1017,7 @@ public class ComponentUtils {
                                 .validate((message, context) -> {
                                     int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
                                     if (code != expectedHttpStatus.value()) {
-                                        throw new ValidationException("Too many successive calls with response code !=" + expectedResponse);
+                                        throw new ValidationException("Too many successive calls with response code !=" + expectedHttpStatus.value());
                                     }
                                 })));
     }
