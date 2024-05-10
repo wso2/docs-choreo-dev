@@ -925,6 +925,7 @@ configMapGenerator:
     behavior: create
     literals:
       - REPO_OWNER={{.REPO_OWNER}}
+      - MANAGE_ROLES_GROUP_SCOPE={{.MANAGE_ROLES_GROUP_SCOPE}}
   - name: env-appdev-user-mgt
     behavior: create
     literals:
