@@ -298,7 +298,8 @@ public class ConnectionService extends ControlPlaneAPI {
     }
 
     public static String getEndpointForProxy(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients, String accessToken,
-                                             ChoreoComponent proxySourceComponent, List<com.wso2.choreo.integration.models.environments.Environment> environments) throws Exception {
+                                             ChoreoComponent proxySourceComponent,
+                                             List<com.wso2.choreo.integration.models.environments.Environment> environments) throws Exception {
         ComponentDeploymentStatusDTO deployedProxySourceComponentStatus = ComponentUtils.deployComponent(runner, citrusClients, accessToken, proxySourceComponent,
                 environments, ComponentFlavour.BYOC);
         List<Endpoint> endpoints = ComponentUtils.getEndpoints(runner,citrusClients,accessToken,proxySourceComponent,
