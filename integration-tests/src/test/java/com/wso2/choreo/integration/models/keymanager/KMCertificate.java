@@ -11,26 +11,18 @@
  * associated services.
  */
 
-package com.wso2.choreo.integration.models.configservice;
+package com.wso2.choreo.integration.models.keymanager;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class ConfigGroup {
-    private String groupUuid;
-    private String groupName;
-    private List<Scope> scopes;
+public class KMCertificate {
     private String type;
-    private List<Configuration> configurations;
-    private String description;
+    private String value;
 }

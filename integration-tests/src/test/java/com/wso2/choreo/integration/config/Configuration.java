@@ -57,6 +57,7 @@ public class Configuration {
             add(configYaml.insights);
             add(configYaml.themeManagement);
             add(configYaml.logs);
+            add(configYaml.keyManagers);
         }};
 
         validateYamlConfigs(yamlConfigCollection);

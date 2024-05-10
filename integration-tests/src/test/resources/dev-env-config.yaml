@@ -41,3 +41,5 @@ logs:
   CHOREO_SYSTEM_API_PREFIX: https://783c6c4d-8b9b-4190-b70a-e717ab1ee739-systemapis.
   CHOREO_US_DP_URL: e1-us-east-azure.preview-dv.choreoapis.dev
   CHOREO_EU_DP_URL: e1-eu-north-azure.preview-dv.choreoapis.dev
+keyManagers:
+  #TEST_IDP_WELLKNOWN_ENDPOINT:

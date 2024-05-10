@@ -16,6 +16,7 @@ package com.wso2.choreo.integration.apis.configservice;
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.http.client.HttpClient;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
@@ -35,7 +36,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 public class ConfigService {
 
-    private static final String CONFIG_SVC_BASE_PATH = "config-svc/v1.0/configs/";
+    private static final String CONFIG_SVC_BASE_PATH = "config-svc/v1.0/configs";
     private static final String DEFAULT_CONFIG_SVC_USER_GROUP = "internal_user";
 
     public static List<ConfigGroup> getConfigGroupsInComponent(TestActionRunner runner, HttpClient client,
@@ -69,10 +70,11 @@ public class ConfigService {
                                 .message()
                                 .validate((message, context) -> {
                                     try {
-                                        ConfigGroup[] response = new ObjectMapper()
+                                        List<ConfigGroup> response = new ObjectMapper()
                                                 .readValue(message.getPayload().toString(),
-                                                        ConfigGroup[].class);
-                                        if (response.length == 0) {
+                                                new TypeReference<List<ConfigGroup>>(){}
+                                                );
+                                        if (response.size() == 0) {
                                             throw new RuntimeException("No config groups available for the component");
                                         }
                                         responseDTO.set(message.getPayload(String.class));
@@ -80,10 +82,9 @@ public class ConfigService {
                                         throw new RuntimeException(e);
                                     }
                                 })));
-        ConfigGroup[] response = new ObjectMapper()
-                .readValue(responseDTO.get(), ConfigGroup[].class);
+                                return new ObjectMapper()
+                .readValue(responseDTO.get(), new TypeReference<List<ConfigGroup>>(){});
 
-        return List.of(response);
     }
 
     public static ConfigGroup getConfigGroupsWithValues(TestActionRunner runner, HttpClient client,

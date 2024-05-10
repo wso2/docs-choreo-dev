@@ -18,13 +18,27 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class KeyManagerListResponseDTO {
-    private int count;
-    private List<KeyManager> list;
+public class IdpAddRequestDTO {
+    private String name;
+    private String wellKnownEndpoint;
+    private String type;
+    private String description;
+    private String issuer;
+    private String tokenEndpoint;
+    private boolean enabled;
+    private String tokenType;
+    private String alias;
+    private KMCertificate certificates;
+    private Map<String, Object> additionalProperties;
+    private String scopesClaim;
+    private String consumerKeyClaim;
+    private String authorizeEndpoint;
+    private String revokeEndpoint;
+    private String logoutEndpoint;
 }

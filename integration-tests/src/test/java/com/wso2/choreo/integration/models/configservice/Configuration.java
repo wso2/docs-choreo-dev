@@ -13,6 +13,7 @@
 
 package com.wso2.choreo.integration.models.configservice;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +28,9 @@ import java.util.List;
 public class Configuration {
     private String keyUuid;
     private String key;
-    private boolean isSensitive;
-    private boolean isFile;
+    @JsonProperty("isSensitive")
+    private boolean sensitive;
+    @JsonProperty("isFile")
+    private boolean file;
     private List<ConfigValue> values;
 }

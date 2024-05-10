@@ -18,8 +18,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -27,14 +25,8 @@ import java.util.List;
 public class KeyManager {
     private String id;
     private String name;
-    private String displayName;
-    private String type;
     private String description;
+    private String tokenType;
+    private String type;
     private boolean enabled;
-    private List<Object> additionalProperties;
-    private String tokenEndpoint;
-    private String authorizeEndpoint;
-    private String issuer;
-    private String logoutEndpoint;
-    private String wellKnownEndpoint;
 }
