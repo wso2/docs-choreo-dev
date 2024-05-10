@@ -45,6 +45,7 @@ import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -735,8 +736,8 @@ public class ComponentUtils {
                 GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).apiVersionId(latestVersionId)
                         .sourceReleaseId(sourceReleaseId).targetEnvironmentId(latestAppEnvId).build();
                 GraphQL.promoteComponent(runner, appServiceClient, accessToken, graphqlDTO);
-                ComponentDeploymentStatusDTO statusDTO = getComponentPromotionStatus(runner, componentId,
-                        latestVersionId,
+                SleepUtil.sleep(5);
+                ComponentDeploymentStatusDTO statusDTO = getComponentPromotionStatus(runner, componentId, latestVersionId,
                         latestAppEnvId, commitHistory, appServiceClient, accessToken, component);
                 deploymentStatus.add(statusDTO);
 
@@ -979,7 +980,13 @@ public class ComponentUtils {
                                 .response(expectedHttpStatus)
                                 .message()
                                 .type(MessageType.JSON)
-                                .body(expectedResponse)));
+                                .body(expectedResponse)
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != expectedHttpStatus.value()) {
+                                        throw new ValidationException("Too many successive calls with response code !=" + expectedHttpStatus.value());
+                                    }
+                                })));
     }
 
     public static List<Environment> getEnvironments(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,

@@ -147,47 +147,64 @@ export class Project {
 
     let isExists = false;
 
-    cy.get("body").then((body) => {
-      if (body.find(TestIds.componentTable).length > 0) {
-        return cy
-          .get(TestIds.componentTable)
-          .find("tbody")
-          .find("tr")
-          .each((row) => {
-            cy.wrap(row).within(() => {
-              cy.get("td")
-                .eq(0)
-                .then((td) => {
-                  cy.wrap(td.find("div").first())
-                    .invoke("attr", "title")
-                    .then((title) => {
-                      if (title === name) {
-                        isExists = true;
-                      }
-                    });
+    return cy
+      .get("body")
+      .then((body) => {
+        if (body.find(TestIds.componentTable).length > 0) {
+          this.searchComponent(name);
+          cy.get(TestIds.componentTable)
+            .find("tbody")
+            .within((tbody) => {
+              if (tbody.find("tr").length > 0) {
+                cy.get("tr").each((row) => {
+                  cy.wrap(row).within(() => {
+                    cy.get("td")
+                      .eq(0)
+                      .then((td) => {
+                        cy.wrap(td.find("div").first())
+                          .invoke("attr", "title")
+                          .then((title) => {
+                            if (title === name) {
+                              isExists = true;
+                            }
+                          });
+                      });
+                  });
                 });
+              }
             });
-          })
-          .then(() => {
-            return cy.wrap(isExists);
-          });
-      }
-    });
-
-    return cy.wrap(isExists);
+          this.clearComponentSearch();
+        }
+      })
+      .then(() => {
+        return cy.wrap(isExists);
+      });
   }
 
   visitComponent(name: string): string {
     this.goToComponentListing();
-    cy.get(TestIds.refreshComponentListIconButton).should("be.visible").click();
-    cy.contains("Refetching Components...", SHORT_TIME).should("not.exist");
-    this.searchComponent(name);
-    cy.get(TestIds.componentTable).contains(name).should("be.visible").click();
-    cy.get('[data-cyid="home"]').should("be.visible");
-    cy.get(TestIds.backdropLoader, SHORT_TIME).should("not.exist");
-    cy.get(TestIds.createTime).should("be.visible");
-    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
-    cy.log("Successfully visited to the component");
+    cy.get("body").then((body) => {
+      if (body.find(TestIds.refreshComponentListIconButton).length > 0) {
+        cy.get(TestIds.refreshComponentListIconButton)
+          .should("be.visible")
+          .click();
+      } else {
+        cy.get(TestIds.ComponentUsageInsightsLink).should("be.visible").click();
+        this.goToComponentListing();
+      }
+
+      cy.contains("Refetching Components...", SHORT_TIME).should("not.exist");
+      this.searchComponent(name);
+      cy.get(TestIds.componentTable)
+        .contains(name)
+        .should("be.visible")
+        .click();
+      cy.get('[data-cyid="home"]').should("be.visible");
+      cy.get(TestIds.backdropLoader, SHORT_TIME).should("not.exist");
+      cy.get(TestIds.createTime).should("be.visible");
+      cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
+      cy.log("Successfully visited to the component");
+    });
 
     cy.url().then((url) => {
       return url;
@@ -601,6 +618,11 @@ export class Project {
   private searchComponent(name: string) {
     cy.get(TestIds.searchIcon).should("be.visible").click();
     cy.get(TestIds.componentSearchBox).should("be.visible").type(name);
+  }
+
+  private clearComponentSearch() {
+    cy.get(TestIds.componentSearchBox).should("be.visible").clear();
+    cy.get(TestIds.clearComponentSearchButton).should("be.visible").click();
   }
 
   private createComponentIfEmptyProject() {
