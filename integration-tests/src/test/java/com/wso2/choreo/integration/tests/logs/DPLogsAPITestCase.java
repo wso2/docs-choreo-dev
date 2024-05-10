@@ -140,7 +140,7 @@ public class DPLogsAPITestCase extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void promoteComponent_DPLogsAPITestCase() throws Exception {
         List<ComponentDeploymentStatusDTO> promoteComponentStatues = ComponentUtils.promoteComponent(this, citrusClients, accessToken, choreoComponent,
-                environments, ComponentFlavour.STANDARD);
+                environments, ComponentFlavour.STANDARD, project);
         promotionStatusDTO = promoteComponentStatues.get(0);
     }
 

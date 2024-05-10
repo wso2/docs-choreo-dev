@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "cypress": "^13.8.0",
     "cypress-real-events": "^1.10.3",
     "typescript": "^5.3.3",
     "webpack": "^5.68.0"
   },
   "devDependencies": {
+    "cypress": "^13.8.0",
     "cypress-fail-fast": "^7.0.0"
   },
   "scripts": {

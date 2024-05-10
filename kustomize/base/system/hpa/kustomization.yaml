@@ -18,7 +18,6 @@ resources:
   - dp-secret-manager.yaml
   - dp-garbage-collector.yaml
   - dp-mizzen.yaml
-  - code-challenge-eval.yaml
   - cp-graphql.yaml
   - cp-resilient-invoker.yaml
   - cp-rrs.yaml

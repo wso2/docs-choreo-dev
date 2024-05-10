@@ -43,7 +43,7 @@ window.Settings = {
         endSessionEndpoint: '{{.OVERRIDE_END_SESSION_ENDPOINT}}',
     },
     tokenExchangeConfig: {
-        clientId: 'choreodevportal',
+        clientId: '{{.TOKEN_EXCHANGE_CLIENT_ID}}',
         grantType: 'urn:ietf:params:oauth:grant-type:token-exchange',
         subjectTokenType: 'urn:ietf:params:oauth:token-type:jwt',
         requestedTokenType: 'urn:ietf:params:oauth:token-type:jwt',

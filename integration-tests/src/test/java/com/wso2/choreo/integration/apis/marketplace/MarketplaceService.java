@@ -43,13 +43,17 @@ public class MarketplaceService {
     private static final String CONTEXT = "marketplace/0.1.0";
 
     public static List<ServiceInfo> searchForServices(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
-                                                      String serviceName, String networkVisibilityFilter) throws IOException {
+                                                      String serviceName, String networkVisibilityFilter, String projectId) throws IOException {
         String encodedServiceName = URLEncoder.encode(serviceName, StandardCharsets.UTF_8);
         String encodedNetworkVisibilityFilter = URLEncoder.encode(networkVisibilityFilter, StandardCharsets.UTF_8);
         String searchServicesURL = CONTEXT.concat("/services").concat("?")
                 .concat("limit=20&offset=0").concat("&")
                 .concat("networkVisibilityFilter=").concat(encodedNetworkVisibilityFilter).concat("&")
                 .concat("query=").concat(encodedServiceName);
+
+        if (!projectId.isEmpty()){
+            searchServicesURL = searchServicesURL.concat("&networkVisibilityprojectId=").concat(projectId);
+        }
         List<ServiceInfo> services = new ArrayList<ServiceInfo>();
 
         runner.variable("isServiceFound", false);

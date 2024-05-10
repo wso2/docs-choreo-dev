@@ -12,11 +12,7 @@
  */
 
 import { BUILD_FAILED, BUILD_SUCCESS } from "../../../commons/constants";
-import {
-  LONG_TIME,
-  SHORT_TIME,
-  VERY_SHORT_TIME,
-} from "../../../commons/timeouts";
+import { LONG_TIME, MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
 import { TestIds } from "../../constants/TestIds";
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
 import { Service } from "../../entities/component/service-component";
@@ -41,6 +37,7 @@ export interface BuildFeature {
       | Webhook
       | Byoc
   ): void;
+  _isSuccessfulBuildExists(): Cypress.Chainable<boolean>;
 }
 
 export function mixinBuild<T extends Types.Constructor>(
@@ -64,6 +61,28 @@ export function mixinBuild<T extends Types.Constructor>(
       this.triggerBuild(component);
     }
 
+    _isSuccessfulBuildExists(): Cypress.Chainable<boolean> {
+      let isExists: boolean = false;
+
+      this.sideMenu.navigateToBuild();
+      return cy
+        .get(TestIds.buildDetailsCard)
+        .find("table")
+        .find("tbody")
+        .find("tr")
+        .each((row) => {
+          isExists = row.find("div").filter(function() {
+            return Cypress.$(this).text().trim() === BUILD_SUCCESS;
+          }).length > 0;
+          if (isExists) {
+            return false; // break the loop. https://docs.cypress.io/api/commands/each#Return-early
+          }
+        })
+        .then(() => {
+          return cy.wrap(isExists);
+        });
+    }
+
     private triggerBuild(
       component:
         | Service
@@ -77,14 +96,14 @@ export function mixinBuild<T extends Types.Constructor>(
       this.deploymentTrack.validate(component);
 
       cy.get(TestIds.tableTitle)
-        .find(TestIds.progressBar, SHORT_TIME)
+        .find(TestIds.progressBar, MEDIUM_TIME)
         .should("not.exist");
 
       cy.get(TestIds.tableTitle).then((buildTable) => {
         if (!Helper.isElementExists(buildTable, TestIds.noDataAvailable)) {
           this.waitTillNewBuildStarts();
         } else {
-          cy.get(TestIds.build).should("be.enabled").click();
+          cy.getUnstable(TestIds.build).should("be.enabled").click();
         }
       });
 
@@ -99,7 +118,7 @@ export function mixinBuild<T extends Types.Constructor>(
 
           cy.log(`Existing build id: ${currentBuildId}`);
 
-          cy.get(TestIds.build).should("be.enabled").click();
+          cy.getUnstable(TestIds.build).should("be.enabled").click();
 
           cy.log("Waiting for build to start");
           this.checkIfNewBuildStarted(currentBuildId);
