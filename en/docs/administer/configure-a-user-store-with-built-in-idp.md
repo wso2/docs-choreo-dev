@@ -26,8 +26,8 @@ Follow the steps given below to configure a Choreo built-in IdP user store for a
    "demouser","password1","[manager, engineering]","John","Doe","john@acme.org"
    ```
 
-   !!! note
-       The provided template file contains a sample user with associated attributes. To include new users, insert extra rows in the .csv file. Also, expand the user attributes by adding more columns to the .csv file as needed.
+!!! note
+     The provided template file includes a sample user with associated attributes. To add new users, insert additional rows in the `.csv` file. To include more user attributes, add columns as required in the `.csv` file.
    
 8. Specify appropriate user details in the template file and save it.
 9. Select the template file that you saved and click **Upload**. A successful upload creates the user store and displays the configured users in the **Users** section.
