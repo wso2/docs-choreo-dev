@@ -1,5 +1,6 @@
 {
     "name": "{{apiName}}",
+    "displayName": "{{apiName}}",
     "description": "This is a simple API for Pizza Shack online pizza delivery store.",
     "context": "{{basePath}}",
     "version": "1.0.0",
@@ -107,6 +108,28 @@
         {
             "id": "",
             "target": "/users",
+            "verb": "GET",
+            "authType": "Application & Application User",
+            "throttlingPolicy": "Unlimited",
+            "throttlingLimit": {
+                "requestCount": -1,
+                "unit": "MINUTE"
+            },
+            "scopes": [],
+            "usedProductIds": [],
+            "amznResourceName": null,
+            "amznResourceTimeout": null,
+            "payloadSchema": null,
+            "uriMapping": null,
+            "operationPolicies": {
+                "request": [],
+                "response": [],
+                "fault": []
+            }
+        },
+        {
+            "id": "",
+            "target": "/user/{userId}",
             "verb": "GET",
             "authType": "Application & Application User",
             "throttlingPolicy": "Unlimited",

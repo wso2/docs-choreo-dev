@@ -24,8 +24,11 @@ import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.common.ComponentFlavour;
+import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.MessageUtils;
+import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
@@ -33,6 +36,8 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.endpoints.Endpoint;
+import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.marketplace.*;
 import com.wso2.choreo.integration.models.response.Response;
 import org.apache.logging.log4j.LogManager;
@@ -292,7 +297,28 @@ public class ConnectionService extends ControlPlaneAPI {
         ApiManager.updateApi(runner,httpClient,accessToken,apiId,apiInfo);
     }
 
-    public static void createAndUseConnection(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients, String accessToken,
+    public static String getEndpointForProxy(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients, String accessToken,
+                                             ChoreoComponent proxySourceComponent,
+                                             List<com.wso2.choreo.integration.models.environments.Environment> environments) throws Exception {
+        ComponentDeploymentStatusDTO deployedProxySourceComponentStatus = ComponentUtils.deployComponent(runner, citrusClients, accessToken, proxySourceComponent,
+                environments, ComponentFlavour.BYOC);
+        List<Endpoint> endpoints = ComponentUtils.getEndpoints(runner,citrusClients,accessToken,proxySourceComponent,
+                deployedProxySourceComponentStatus);
+        ConnectionService.disableEndpointSecurity(runner,citrusClients,endpoints.get(0).getApimId(),accessToken);
+        ComponentUtils.deployComponent(runner, citrusClients, accessToken, proxySourceComponent, environments,
+                ComponentFlavour.BYOC);
+        List<ComponentDeploymentStatusDTO> promotionStatus = ComponentUtils.promoteComponent(runner, citrusClients,
+                accessToken, proxySourceComponent,
+                environments, ComponentFlavour.BYOC);
+        int promotionStatusListSize =  promotionStatus.size();
+        deployedProxySourceComponentStatus = promotionStatus.get(promotionStatusListSize-1);
+
+        endpoints = ComponentUtils.getEndpoints(runner,citrusClients,accessToken,proxySourceComponent,
+                deployedProxySourceComponentStatus);
+        return endpoints.get(0).getPublicUrl();
+    }
+
+    public static String createAndUseConnection(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients, String accessToken,
                                      String requestedServiceName, String requestedServiceVisibility, String projectId,
                                      String clientChoreoComponentId, List<com.wso2.choreo.integration.models.environments.Environment> clientComponentEnvironments,
                                      List<com.wso2.choreo.integration.models.environments.Environment> servicePublisherComponentEnvironments,
@@ -316,6 +342,10 @@ public class ConnectionService extends ControlPlaneAPI {
                 "templates/marketplace/component-config.mustache", params);
         String encodedFileContent = Base64.getEncoder().
                 encodeToString(updatedComponentConfigFileContent.getBytes(StandardCharsets.UTF_8));
-        GitHub.mergeNewCode(repoName, ".choreo/component-config.yaml", "Update component-config file", encodedFileContent,branchName);
+        Response mergeCodeResp = GitHub.mergeNewCode(repoName, ".choreo/component-config.yaml", "Update component-config file", encodedFileContent,branchName);
+        if (mergeCodeResp.getStatusCode() != HttpStatus.OK.value()) {
+            throw new ValidationException("Error while update component-config.yaml file" + mergeCodeResp.getRes());
+        }
+        return connectionId;
     }
 }
