@@ -6,4 +6,4 @@ An organization in Choreo is a logical grouping of users and user resources. A f
 
 ## Manage user permission
 
-For details on how Choreo manages user permissions, see [Manage user permission](../choreo-concepts/organization.md#manage-user-permission).
+For details on how Choreo manages user permission, see [Manage user permission](../choreo-concepts/organization.md#manage-user-permission).
