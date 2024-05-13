@@ -997,7 +997,7 @@ public class ComponentUtils {
         runner.$(repeatOnError()
                 .until("i = 5")
                 .index("i")
-                .autoSleep(5000)
+                .autoSleep(10000)
                 .actions((http()
                         .client(invokeUrl)
                         .send()
