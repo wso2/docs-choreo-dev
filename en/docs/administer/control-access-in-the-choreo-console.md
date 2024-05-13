@@ -25,4 +25,4 @@ To elaborate further, refer to the following diagram.
 
 The following diagram depicts a role-group assignment at a specific resource level. In the diagram, an admin user has assigned the Developer role to all members of the Engineering group within the Engineering Project. This grants users in the Engineering group the ability to perform all actions allowed by the Developer role within the Engineering Project.
 
-![Console access control](../../assets/img/authentication-and-authorization/access-control-to-console.png){.cInlineImage-threeQuarter}
+![Console access control](../../assets/img/administer/access-control-to-console.png)
