@@ -4,8 +4,8 @@ In the Choreo Console, you have the ability to manage access to projects and the
 
 Choreo uses **Roles**, **Groups**, and a **Mapping level** to control access to the Choreo Console as follows: 
 
-- **Role** : Role is a collection of permissions. Choreo has a [predefined set of roles](groups-and-roles.md#roles) with permissions assigned to them. [Learn more](groups-and-roles.md#roles)
-- **Group** : Group is a collection of users. A user group requires a role or multiple roles to be assigned to it so that the users in those groups get the relevant permissions via the assigned roles. [Learn more](groups-and-roles.md#groups)
+- **Role** : Role is a collection of permissions. Choreo has a [predefined set of roles](groups-and-roles.md#roles) with permissions assigned to them. [Learn more](../authentication-and-authorization/access-control/groups-and-roles.md#roles)
+- **Group** : Group is a collection of users. A user group requires a role or multiple roles to be assigned to it so that the users in those groups get the relevant permissions via the assigned roles. [Learn more](../authentication-and-authorization/access-control/groups-and-roles.md#groups)
 
 - **Mapping level** : A mapping level defines the extent at which a role-group mapping can be done. Choreo has two defined resource levels.
     - **Organization** : You can assign a role to a group or associate a group with a role within the organization. This ensures that    
