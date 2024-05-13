@@ -22,7 +22,7 @@ import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
-import com.wso2.choreo.integration.models.keymanager.ConfigUpdateResponseDTO;
+import com.wso2.choreo.integration.models.keymanager.OAuthAppUpdateResponseDTO;
 import com.wso2.choreo.integration.models.keymanager.IdpAddRequestDTO;
 import com.wso2.choreo.integration.models.keymanager.IdpAddResponseDTO;
 import com.wso2.choreo.integration.models.keymanager.IdpDiscoveryResponseDTO;
@@ -49,13 +49,28 @@ import java.util.concurrent.atomic.AtomicReference;
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
+/**
+ * Service class for Key Manager service.
+ */
 public class KeyManagerService {
 
     private static String APIM_APPDEV_BASE_PATH = "apim-appdev/v1.0/sts";
     private static String KEY_MANAGER_PUBLISHER_BASE_PATH = "api/am/publisher/v3/key-managers";
     private static String KEY_MANAGER_ADMIN_BASE_PATH = "api/am/admin/v2/key-managers";
 
-    public static ConfigUpdateResponseDTO updateKeysetConfigurations(TestActionRunner runner, HttpClient client,
+    /**
+     * Update keyset configurations of an OAuth application.
+     *
+     * @param runner              Citrus test runner
+     * @param client              Citrus http client
+     * @param oAuthAppId          OAuth application ID
+     * @param configUpdateRequest Configuration update request
+     * @return OAuthAppUpdateResponseDTO
+     * @throws TokenRetrievalException If an error occurs while retrieving the token
+     * @throws IOException             If an error occurs while reading the response
+     * @throws URISyntaxException      If an error occurs while building the URI
+     */
+    public static OAuthAppUpdateResponseDTO updateKeysetConfigurations(TestActionRunner runner, HttpClient client,
             String oAuthAppId, HashMap<String, Object> configUpdateRequest)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
@@ -87,9 +102,9 @@ public class KeyManagerService {
                                 .message()
                                 .validate((message, context) -> {
                                     try {
-                                        ConfigUpdateResponseDTO response = new ObjectMapper()
+                                        OAuthAppUpdateResponseDTO response = new ObjectMapper()
                                                 .readValue(message.getPayload().toString(),
-                                                        ConfigUpdateResponseDTO.class);
+                                                        OAuthAppUpdateResponseDTO.class);
                                         if (response.getClientId() == null) {
                                             throw new RuntimeException("Response fields are empty");
                                         }
@@ -99,9 +114,20 @@ public class KeyManagerService {
                                     }
                                 })));
 
-        return new ObjectMapper().readValue(responseDTO.get(), ConfigUpdateResponseDTO.class);
+        return new ObjectMapper().readValue(responseDTO.get(), OAuthAppUpdateResponseDTO.class);
     }
 
+    /**
+     * Get key managers as an admin.
+     *
+     * @param runner        Citrus test runner
+     * @param client        Citrus http client
+     * @param environmentId Environment ID
+     * @return List of KeyManagers
+     * @throws TokenRetrievalException If an error occurs while retrieving the token
+     * @throws IOException             If an error occurs while reading the response
+     * @throws URISyntaxException      If an error occurs while building the URI
+     */
     public static KeyManagerListAdminResponseDTO getKeyManagersAsAdmin(TestActionRunner runner, HttpClient client,
             String environmentId)
             throws TokenRetrievalException, IOException, URISyntaxException {
@@ -146,6 +172,17 @@ public class KeyManagerService {
         return new ObjectMapper().readValue(responseDTO.get(), KeyManagerListAdminResponseDTO.class);
     }
 
+    /**
+     * Get key managers as a publisher.
+     *
+     * @param runner        Citrus test runner
+     * @param client        Citrus http client
+     * @param environmentId Environment ID
+     * @return List of DetailedKeyManagers
+     * @throws TokenRetrievalException If an error occurs while retrieving the token
+     * @throws IOException             If an error occurs while reading the response
+     * @throws URISyntaxException      If an error occurs while building the URI
+     */
     public static KeyManagerListPublisherResponseDTO getKeyManagersAsPublisher(TestActionRunner runner,
             HttpClient client, String environmentId)
             throws TokenRetrievalException, IOException, URISyntaxException {
@@ -195,6 +232,16 @@ public class KeyManagerService {
      * framework is yet to be initialized, such as in the BeforeSuite
      */
 
+    /**
+     * Get IdP information using a discovery endpoint.
+     * 
+     * @param wellKnownURL wellknown URL of the IdP
+     * @param type         Type of the IdP
+     * @return Detailed IdP information
+     * @throws TokenRetrievalException If an error occurs while retrieving the token
+     * @throws IOException             If an error occurs while reading the response
+     * @throws URISyntaxException      If an error occurs while building the URI
+     */
     public static IdpDiscoveryResponseDTO getDiscoveryInfo(String wellKnownURL, String type)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
@@ -232,6 +279,15 @@ public class KeyManagerService {
         }
     }
 
+    /**
+     * Add an external IdP.
+     * 
+     * @param requestPayload Request payload
+     * @return IdpAddResponseDTO
+     * @throws URISyntaxException      If an error occurs while building the URI
+     * @throws TokenRetrievalException If an error occurs while retrieving the token
+     * @throws IOException             If an error occurs while reading the response
+     */
     public static IdpAddResponseDTO addExternalIdp(IdpAddRequestDTO requestPayload)
             throws URISyntaxException, TokenRetrievalException, IOException {
 
@@ -262,6 +318,14 @@ public class KeyManagerService {
         }
     }
 
+    /**
+     * Get key managers list as an admin.
+     * 
+     * @return KeyManagerListAdminResponseDTO
+     * @throws URISyntaxException      If an error occurs while building the URI
+     * @throws IOException             If an error occurs while reading the response
+     * @throws TokenRetrievalException If an error occurs while retrieving the token
+     */
     public static KeyManagerListAdminResponseDTO getKeyManagersListAsAdmin()
             throws URISyntaxException, IOException, TokenRetrievalException {
 

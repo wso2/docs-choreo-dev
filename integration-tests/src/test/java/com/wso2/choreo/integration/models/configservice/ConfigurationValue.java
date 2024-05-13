@@ -13,24 +13,17 @@
 
 package com.wso2.choreo.integration.models.configservice;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class ConfigGroup {
-    private String groupUuid;
-    private String groupName;
-    private List<Scope> scopes;
-    private String type;
-    private List<Configuration> configurations;
-    private String description;
+public class ConfigurationValue {
+    private String environmentUuid;
+    private String value;
+    private String valueRef;
 }

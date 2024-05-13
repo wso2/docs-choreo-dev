@@ -26,7 +26,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ConfigUpdateResponseDTO {
+public class OAuthAppUpdateResponseDTO {
     private String clientId;
     private List<String> grantTypes;
     private List<String> callbackUrls;

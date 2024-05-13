@@ -11,7 +11,7 @@
  * associated services.
  */
 
-package com.wso2.choreo.integration.apis.configservice;
+package com.wso2.choreo.integration.apis.configurationservice;
 
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.http.client.HttpClient;
@@ -20,7 +20,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
-import com.wso2.choreo.integration.models.configservice.ConfigGroup;
+import com.wso2.choreo.integration.models.configservice.ConfigurationGroup;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -34,12 +34,27 @@ import java.util.concurrent.atomic.AtomicReference;
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
-public class ConfigService {
+/**
+ * Service class for Choreo configuration service.
+ */
+public class ConfigurationService {
 
     private static final String CONFIG_SVC_BASE_PATH = "config-svc/v1.0/configs";
     private static final String DEFAULT_CONFIG_SVC_USER_GROUP = "internal_user";
 
-    public static List<ConfigGroup> getConfigGroupsInComponent(TestActionRunner runner, HttpClient client,
+    /**
+     * Get configuration groups in a component.
+     *
+     * @param runner     Citrus test runner
+     * @param client     Citrus http client
+     * @param projectId  Project ID
+     * @param componentId Component ID
+     * @return List of configuration groups
+     * @throws TokenRetrievalException If an error occurs while retrieving the token
+     * @throws IOException              If an error occurs while reading the response
+     * @throws URISyntaxException       If an error occurs while building the URI
+     */
+    public static List<ConfigurationGroup> getConfigGroupsInComponent(TestActionRunner runner, HttpClient client,
             String projectId, String componentId)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
@@ -70,9 +85,9 @@ public class ConfigService {
                                 .message()
                                 .validate((message, context) -> {
                                     try {
-                                        List<ConfigGroup> response = new ObjectMapper()
+                                        List<ConfigurationGroup> response = new ObjectMapper()
                                                 .readValue(message.getPayload().toString(),
-                                                new TypeReference<List<ConfigGroup>>(){}
+                                                new TypeReference<List<ConfigurationGroup>>(){}
                                                 );
                                         if (response.size() == 0) {
                                             throw new RuntimeException("No config groups available for the component");
@@ -83,11 +98,22 @@ public class ConfigService {
                                     }
                                 })));
                                 return new ObjectMapper()
-                .readValue(responseDTO.get(), new TypeReference<List<ConfigGroup>>(){});
+                .readValue(responseDTO.get(), new TypeReference<List<ConfigurationGroup>>(){});
 
     }
 
-    public static ConfigGroup getConfigGroupsWithValues(TestActionRunner runner, HttpClient client,
+    /**
+     * Get configuration group with values.
+     *
+     * @param runner   Citrus test runner
+     * @param client   Citrus http client
+     * @param groupUuid Group UUID
+     * @return Configuration group with values
+     * @throws TokenRetrievalException If an error occurs while retrieving the token
+     * @throws IOException              If an error occurs while reading the response
+     * @throws URISyntaxException       If an error occurs while building the URI
+     */
+    public static ConfigurationGroup getConfigGroupsWithValues(TestActionRunner runner, HttpClient client,
             String groupUuid) throws TokenRetrievalException, IOException, URISyntaxException {
 
         AtomicReference<String> responseDTO = new AtomicReference<>();
@@ -112,9 +138,9 @@ public class ConfigService {
                                 .message()
                                 .validate((message, context) -> {
                                     try {
-                                        ConfigGroup response = new ObjectMapper()
+                                        ConfigurationGroup response = new ObjectMapper()
                                                 .readValue(message.getPayload().toString(),
-                                                        ConfigGroup.class);
+                                                        ConfigurationGroup.class);
                                         if (response.getGroupUuid() == null) {
                                             throw new RuntimeException("Response fields are empty");
                                         }
@@ -124,7 +150,7 @@ public class ConfigService {
                                     }
                                 })));
 
-        return new ObjectMapper().readValue(responseDTO.get(), ConfigGroup.class);
+        return new ObjectMapper().readValue(responseDTO.get(), ConfigurationGroup.class);
     }
 
     private static String getAccessToken() throws TokenRetrievalException, IOException, URISyntaxException {

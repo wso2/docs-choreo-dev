@@ -32,5 +32,5 @@ public class Configuration {
     private boolean sensitive;
     @JsonProperty("isFile")
     private boolean file;
-    private List<ConfigValue> values;
+    private List<ConfigurationValue> values;
 }

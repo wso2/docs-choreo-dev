@@ -35,6 +35,4 @@ public class ConfigYaml {
     Map<String, String> themeManagement;
     @JsonProperty("logs")
     Map<String, String> logs;
-    @JsonProperty("keyManagers")
-    Map<String, String> keyManagers;
 }

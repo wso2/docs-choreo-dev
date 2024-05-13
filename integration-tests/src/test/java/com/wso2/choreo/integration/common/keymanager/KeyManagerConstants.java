@@ -2,6 +2,9 @@ package com.wso2.choreo.integration.common.keymanager;
 
 import java.util.List;
 
+/**
+ * Constants related to Key Manager operations.
+ */
 public class KeyManagerConstants {
 
     public static String ASGARDEO_KM_TYPE = "Asgardeo";
