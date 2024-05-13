@@ -30,6 +30,8 @@ import com.wso2.choreo.integration.common.ResourceAuthz.ResourceAuthzConstants.T
 import com.wso2.choreo.integration.common.exceptions.ProjectRetrievalException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.resourceAuthorization.CreateGroupResponseDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.CreateRoleResponseDTO;
@@ -125,7 +127,7 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
         ResourceAuthzUtils.assignUserToGroup(this, appServiceClient, createdTestGroup.getHandle(),
-                List.of(ResourceAuthzConstants.TEST_USER_ID));
+                List.of(Configuration.getConfig(ConfigDefinition.RESOURCE_AUTHZ_USER_UUID)));
     }
 
     // Step 5: Get the user token and check if the user is in the test group
