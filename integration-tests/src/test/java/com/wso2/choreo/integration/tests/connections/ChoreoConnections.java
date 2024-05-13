@@ -248,7 +248,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void promoteServicePublisherComponent_TestChoreoConnections() throws Exception {
         List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients, accessToken, publicEndpointServiceComponent,
-                servicePublisherComponentEnvironments, ComponentFlavour.BYOC);
+                servicePublisherComponentEnvironments, ComponentFlavour.BYOC, projectOne);
         ComponentDeploymentStatusDTO servicePromotionStatusDTO = statusDTO.get(0);  // we'll consider only the first promotion
 
     }
@@ -264,7 +264,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void promoteClientComponent_TestChoreoConnections() throws Exception {
         List<ComponentDeploymentStatusDTO> statusDTO =  ComponentUtils.promoteComponent(this, citrusClients, accessToken, clientChoreoComponent,
-                clientComponentEnvironments, ComponentFlavour.BYOC);
+                clientComponentEnvironments, ComponentFlavour.BYOC , projectOne);
         clientPromotionStatusDTO = statusDTO.get(0);  //we'll consider only the first promotion
     }
 
@@ -687,7 +687,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     public void PromoteClientComponent_TestChoreoConnections() throws Exception {
         List<ComponentDeploymentStatusDTO> newClientStatusDTO = ComponentUtils.promoteComponent(this,
                 citrusClients, accessToken, newClientChoreoComponent,
-                newClientComponentEnvironments, ComponentFlavour.BYOC);
+                newClientComponentEnvironments, ComponentFlavour.BYOC, projectOne);
         newClientPromotionStatusDTO = newClientStatusDTO.get(0);
     }
     
