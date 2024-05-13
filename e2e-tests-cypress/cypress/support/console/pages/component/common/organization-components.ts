@@ -145,7 +145,7 @@ export class OrganizationComponent {
 
   static selectPendingInvitation() {
     if (Utils.isNewUserManagementEnabled()) {
-      cy.get('[data-testid="user-mgt-invitations"]').click();
+      cy.get('[data-cyid="user-mgt-invitations"]').click();
     } else {
       cy.get('[data-testid="pending-invitation"]').click();
     }

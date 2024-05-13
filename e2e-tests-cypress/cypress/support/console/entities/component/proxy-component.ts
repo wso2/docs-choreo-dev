@@ -18,6 +18,7 @@ import { mixinProxyDeploy } from "../../features/deploy/deploy-proxy";
 import { mixinDevelop } from "../../features/develop/develop";
 import { mixinTestProxy } from "../../features/test/test-proxy";
 import { mixinManage } from "../../features/manage/manage";
+import { console } from "../../../../support/console/console";
 
 export interface ProxyMetaData {
   name: string;
@@ -192,10 +193,6 @@ export class Proxy extends mixinDevelop(
 
   publish() {
     this._changeLifeCycleState(this, Enums.LifeCycleState.Publish);
-  }
-
-  navigateToDevPortal(componentKey: string) {
-    this._navigateToDevPortal("choreoe2etest", componentKey);
   }
 
   enableCors(environment: Enums.Environment) {
