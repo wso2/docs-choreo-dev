@@ -163,3 +163,8 @@ areaOwners:
   - testClass: com.wso2.choreo.integration.tests.security.apim.ProxyDeployer.ApimProxyDeployerElevatedAccessCheck
     assignees:
       - renuka@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.keymanager.KeyManagerTests
+    assignees:
+      - suvin@wso2.com
+      - thumula@wso2.com
+      - senthalan@wso2.com
