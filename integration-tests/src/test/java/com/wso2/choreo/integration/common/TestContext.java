@@ -32,18 +32,22 @@ public class TestContext {
     @Getter
     private static TokenHandler testUserTokenHandler;
 
+    @Getter
+    private static TokenHandler resourceAuthzTestUserTokenHandler;
+
     @BeforeSuite
     public void setup() throws Exception {
         Configuration.loadConfigs();
         setTestOrg();
         setTestUserTokenHandler();
+        setResourceAuthzTestUserTokenHandler();
         DataCleaner.removeOldTestData(testOrg);
     }
 
     public static synchronized void setTestOrg() {
         if (testOrg == null) {
             testOrg = new ChoreoOrganization(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE),
-                    Integer.parseInt( Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID)),
+                    Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID)),
                     Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
         }
     }
@@ -61,6 +65,26 @@ public class TestContext {
                         Configuration.getConfig(ConfigDefinition.TEST_USER_PASSWORD))
                         .asgardeoClientId(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_ID))
                         .asgardeoClientSecret(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_SECRET))
+                        .cpAppClientId(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_ID))
+                        .cpAppClientSecret(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_SECRET)).build();
+            }
+        }
+    }
+
+    public static synchronized void setResourceAuthzTestUserTokenHandler() {
+        if (resourceAuthzTestUserTokenHandler == null) {
+            String token = System.getProperty("ResourceAuthzUserToken");
+
+            if (!StringUtils.isEmpty(token)) {
+                resourceAuthzTestUserTokenHandler = new TokenHandler(token);
+            } else {
+                resourceAuthzTestUserTokenHandler = new TokenHandler.Builder(
+                        Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE),
+                        Configuration.getConfig(ConfigDefinition.RESOURCE_AUTHZ_USER_EMAIL),
+                        Configuration.getConfig(ConfigDefinition.RESOURCE_AUTHZ_USER_PASSWORD))
+                        .asgardeoClientId(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_ID))
+                        .asgardeoClientSecret(
+                                Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_SECRET))
                         .cpAppClientId(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_ID))
                         .cpAppClientSecret(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_SECRET)).build();
             }

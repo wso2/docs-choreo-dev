@@ -13,7 +13,6 @@
 
 package com.wso2.choreo.integration.config;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.apache.commons.lang.StringUtils;
@@ -46,18 +45,22 @@ public class Configuration {
 
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         mapper.findAndRegisterModules();
-        ConfigYaml configYaml = mapper.readValue(new File(Objects.requireNonNull(Configuration.class.getClassLoader().
-                getResource(testConfig)).toURI()), ConfigYaml.class);
+        ConfigYaml configYaml = mapper.readValue(
+                new File(Objects.requireNonNull(Configuration.class.getClassLoader().getResource(testConfig)).toURI()),
+                ConfigYaml.class);
 
-        List<Map<String, String>> yamlConfigCollection = new ArrayList<>() {{
-            add(configYaml.accountInfo);
-            add(configYaml.authInfo);
-            add(configYaml.common);
-            add(configYaml.alerts);
-            add(configYaml.insights);
-            add(configYaml.themeManagement);
-            add(configYaml.logs);
-        }};
+        List<Map<String, String>> yamlConfigCollection = new ArrayList<>() {
+            {
+                add(configYaml.accountInfo);
+                add(configYaml.authInfo);
+                add(configYaml.common);
+                add(configYaml.alerts);
+                add(configYaml.insights);
+                add(configYaml.themeManagement);
+                add(configYaml.logs);
+                add(configYaml.resourceAuthorization);
+            }
+        };
 
         validateYamlConfigs(yamlConfigCollection);
         readTestConfigs(yamlConfigCollection);
@@ -76,22 +79,25 @@ public class Configuration {
 
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         mapper.findAndRegisterModules();
-        SecurityConfigYaml securityConfigYaml = mapper.readValue(new File(Objects.requireNonNull(Configuration.class.getClassLoader().
-                getResource(securityTestConfig)).toURI()), SecurityConfigYaml.class);
+        SecurityConfigYaml securityConfigYaml = mapper.readValue(new File(
+                Objects.requireNonNull(Configuration.class.getClassLoader().getResource(securityTestConfig)).toURI()),
+                SecurityConfigYaml.class);
 
-        List<Map<String, String>> yamlConfigCollection = new ArrayList<>() {{
-            add(securityConfigYaml.accountInfo);
-            add(securityConfigYaml.observability);
-            add(securityConfigYaml.devOps);
-            add(securityConfigYaml.devportal);
-            add(securityConfigYaml.deliveryInsights);
-            add(securityConfigYaml.componentManagement);
-            add(securityConfigYaml.orgManagemnt);
-            add(securityConfigYaml.configManagement);
-            add(securityConfigYaml.billing);
-            add(securityConfigYaml.integrationComponent);
-            add(securityConfigYaml.apim);
-        }};
+        List<Map<String, String>> yamlConfigCollection = new ArrayList<>() {
+            {
+                add(securityConfigYaml.accountInfo);
+                add(securityConfigYaml.observability);
+                add(securityConfigYaml.devOps);
+                add(securityConfigYaml.devportal);
+                add(securityConfigYaml.deliveryInsights);
+                add(securityConfigYaml.componentManagement);
+                add(securityConfigYaml.orgManagemnt);
+                add(securityConfigYaml.configManagement);
+                add(securityConfigYaml.billing);
+                add(securityConfigYaml.integrationComponent);
+                add(securityConfigYaml.apim);
+            }
+        };
 
         validateSecurityYamlConfigs(yamlConfigCollection);
         readSecurityTestConfigs(yamlConfigCollection);
@@ -154,7 +160,6 @@ public class Configuration {
             }
         }
 
-
     }
 
     private static void readTestConfigs(List<Map<String, String>> yamlConfigCollection) {
@@ -193,7 +198,6 @@ public class Configuration {
                 }
             }
         }
-
 
     }
 
