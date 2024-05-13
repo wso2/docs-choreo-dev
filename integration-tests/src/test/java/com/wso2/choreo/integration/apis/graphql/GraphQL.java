@@ -577,6 +577,34 @@ public class GraphQL extends ControlPlaneAPI {
         return componentsList;
     }
 
+    public static List<ChoreoComponent> getProjectComponentsFromUnauthorizedProject(TestActionRunner runner, HttpClient client,
+                                                             String projectId, String accessToken) throws IOException {
+        GraphqlDTO dto = GraphqlDTO.builder().orgHandler(ORG_HANDLE).projectId(projectId).build();
+        String queryString = ObjectMapperUtil.
+                mapObjectToString("templates/graphql/requests/getProjectComponents.mustache", dto);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        List<ChoreoComponent> componentsList = new ArrayList<>();
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.FORBIDDEN)
+                .message()
+                .type(MessageType.JSON));
+
+        return componentsList;
+    }
+
     public static ChoreoComponent getComponentDetails(TestActionRunner runner, HttpClient client, String projectId,
                                                       String componentHandler, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();

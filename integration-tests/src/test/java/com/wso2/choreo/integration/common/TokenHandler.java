@@ -46,6 +46,8 @@ import java.util.Objects;
  */
 public class TokenHandler {
 
+
+
     static class Scopes {
         @JsonProperty("scopes")
         List<String> scopes;
@@ -137,6 +139,26 @@ public class TokenHandler {
                         readTokenExpiryTime();
                     }
                 }
+            }
+        }
+
+        return Constant.BEARER_PREFIX.concat(stsAccessToken);
+    }
+
+    /**
+     * Re-retrieve oauth token to be used when invoking Control Plane exposed choreo APIs
+     *
+     * @return oauth token
+     * @throws IOException             if an IO error occurs when sending or receiving request
+     * @throws TokenRetrievalException if token retrieval fails
+     */
+    public String refetchTestTokenForCPAPIs() throws TokenRetrievalException, IOException, URISyntaxException {
+        
+        if (!isManualMode) {
+            synchronized (TokenHandler.class) {
+                String userToken = getTestUserToken(asgardeoClientId, asgardeoClientSecret);
+                stsAccessToken = getStsToken(cpAppClientId, cpAppClientSecret, userToken);
+                readTokenExpiryTime();
             }
         }
 
