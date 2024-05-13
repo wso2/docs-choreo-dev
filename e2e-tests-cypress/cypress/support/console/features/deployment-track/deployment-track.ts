@@ -22,10 +22,12 @@ export class DeploymentTrack {
 
     const version = component.getLatestVersion();
 
+    const regex = new RegExp(`(API v${version}|^v${version})`, "gm");
+
     if (component instanceof Proxy) {
       cy.get(TestIds.versionPicker).contains(`v${version}`);
     } else if (component instanceof Service) {
-      cy.get(TestIds.selectVersion).contains(`API v${version}`);
+      cy.get(TestIds.selectBranch).contains(regex);
     } else {
       cy.get(TestIds.selectBranch).contains(version);
     }

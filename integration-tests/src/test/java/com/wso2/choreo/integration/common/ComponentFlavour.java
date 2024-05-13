@@ -22,5 +22,6 @@ public enum ComponentFlavour {
     BYOC,
     PROXY,
     CONTAINERIZED_EVENT_HANDLER,
-    BUILDPACK
+    BUILDPACK,
+    WEBAPP
 }

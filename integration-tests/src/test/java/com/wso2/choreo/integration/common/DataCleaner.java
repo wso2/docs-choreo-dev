@@ -13,15 +13,26 @@
 
 package com.wso2.choreo.integration.common;
 
-import com.wso2.choreo.integration.apis.balregistry.BallerinaRegistry;
+import com.wso2.choreo.integration.apis.marketplace.ConnectionService;
+import com.wso2.choreo.integration.common.ResourceAuthz.ResourceAuthzConstants;
+import com.wso2.choreo.integration.common.ResourceAuthz.ResourceAuthzUtils;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.marketplace.ConnectionInfo;
+import com.wso2.choreo.integration.models.resourceAuthorization.Group;
+import com.wso2.choreo.integration.models.resourceAuthorization.GroupWithUsersDTO;
+import com.wso2.choreo.integration.models.resourceAuthorization.Role;
+import com.wso2.choreo.integration.models.resourceAuthorization.RoleAssociation;
+import com.wso2.choreo.integration.models.resourceAuthorization.RoleGroupMappingResponseDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -34,8 +45,6 @@ public class DataCleaner  {
 
     public static void removeOldTestData(ChoreoOrganization org) throws Exception {
         TokenHandler tokenHandler = TestContext.getTestUserTokenHandler();
-
-        BallerinaRegistry.deleteOldConnectors(tokenHandler.getTestTokenForCPAPIs());
 
         List<ChoreoProject> projects = org.getProjects(tokenHandler.getTestTokenForCPAPIs());
 
@@ -51,6 +60,11 @@ public class DataCleaner  {
 
                 ++numberOfTestProjects;
                 if (shouldProjectBeDeleted(project.getName())) {
+                    //get all connections visible to that project
+                    ConnectionInfo[] connectionInfo= ConnectionService.getChoreoConnections(tokenHandler.getTestTokenForCPAPIs(),project.getId());
+                    for (ConnectionInfo connection: connectionInfo){
+                       ConnectionService.deleteChoreoConnection(tokenHandler.getTestTokenForCPAPIs(),connection.getGroupUuid());
+                    }
                     List<ChoreoComponent> components = project.getComponents(tokenHandler.getTestTokenForCPAPIs());
 
                     for (ChoreoComponent component : components) {
@@ -65,7 +79,10 @@ public class DataCleaner  {
         }
         log.info("Total number of test projects: " + numberOfTestProjects);
         log.info("Total number of test projects deleted: " + numberOfTestProjectsDeleted);
+
+        removeOldTestDataInOrgLevel(org);
     }
+
     private static boolean shouldProjectBeDeleted(String projectName) throws ParseException {
         // Projects that can be deleted that were created with the Old project name prefix have already been removed.
         // What remains are those that cannot be deleted due to connectors being published.
@@ -93,4 +110,96 @@ public class DataCleaner  {
         return createdDateTime > twenty23BeginDateTime && currentDateTime - createdDateTime > hourInMilliseconds;
     }
 
+    public static void removeOldTestDataInOrgLevel(ChoreoOrganization org) throws Exception {
+
+        // Delete stale groups
+        List<Group> groups = ResourceAuthzUtils.getGroups().getList();
+
+        for (Group group : groups) {
+
+            if (!shouldGroupBeDeleted(group.getDisplayName())) {
+                continue;
+            }
+
+            List<RoleAssociation> roleAssociations = ResourceAuthzUtils.getRolesInGroup(group.getHandle())
+                    .getRoleAssociations();
+            log.info("Total number of roles to be removed from group: " + roleAssociations.size());
+
+            RoleGroupMappingResponseDTO roleRemovalResponse = null;
+
+            // Remove all the roles in the group so the group can be deleted.
+            // Using a single API call to remove all roles in the group
+            // because all roles are from the same level (PROJECT).
+            if (!roleAssociations.isEmpty()) {
+                roleRemovalResponse = ResourceAuthzUtils
+                        .removeRoleFromGroupForCleanup(group.getHandle(), roleAssociations);
+                if (roleRemovalResponse != null) {
+                    log.info("Number of roles removed: " + roleRemovalResponse.getRoleAssociations().size());
+                }
+            }
+
+            if (roleRemovalResponse != null) {
+                GroupWithUsersDTO groupWithUsers = ResourceAuthzUtils.getGroupMembers(group.getHandle());
+                // In resource authz test cases, we only have one user in the group
+                if (groupWithUsers.getUsers().size() == 1) {
+                    log.info("User to be deleted: " + groupWithUsers.getUsers().get(0).getEmail());
+                    ResourceAuthzUtils.removeMemberFromGroup(group.getHandle(),
+                            groupWithUsers.getUsers().get(0).getIdpId());
+                }
+            }
+
+            ResourceAuthzUtils.deleteGroup(group.getHandle());
+        }
+
+        // Delete stale roles
+
+        List<Role> roles = ResourceAuthzUtils.getRoleList().getList();
+        log.info("Total number of roles to be deleted: " + roles.size());
+
+        for (Role role : roles) {
+
+            if (!shouldRoleBeDeleted(role.getDisplayName())) {
+                continue;
+            }
+
+            ResourceAuthzUtils.deleteRole(role.getHandle());
+        }
+    }
+
+    private static boolean shouldGroupBeDeleted(String groupName) throws ParseException {
+
+        if (!groupName.startsWith(ResourceAuthzConstants.TestGroupData.GROUP_NAME_BASE)) {
+            return false;
+        }
+
+        String timestamp = groupName.split("_")[1];
+
+        return !isValidTimestamp(timestamp);
+    }
+
+    private static boolean shouldRoleBeDeleted(String roleName) throws ParseException {
+
+        if (!(roleName.startsWith(ResourceAuthzConstants.TestRoleData.ROLE_DISPLAY_NAME_BASE) || roleName
+                .startsWith(ResourceAuthzConstants.ProjectViewAndOrgManageRoleData.ROLE_DISPLAY_NAME_BASE))) {
+            return false;
+        }
+
+        String timestamp = roleName.split("_")[1];
+
+        return !isValidTimestamp(timestamp);
+    }
+
+    private static boolean isValidTimestamp(String timestampString) throws ParseException {
+
+        try {
+            long timestamp = Long.parseLong(timestampString);
+            LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), ZoneId.systemDefault());
+            LocalDateTime currentTime = LocalDateTime.now();
+            LocalDateTime oneHourLater = dateTime.plusHours(1);
+
+            return currentTime.isBefore(oneHourLater);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }

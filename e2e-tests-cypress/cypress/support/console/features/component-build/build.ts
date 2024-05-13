@@ -37,6 +37,7 @@ export interface BuildFeature {
       | Webhook
       | Byoc
   ): void;
+  _isSuccessfulBuildExists(): Cypress.Chainable<boolean>;
 }
 
 export function mixinBuild<T extends Types.Constructor>(
@@ -60,6 +61,28 @@ export function mixinBuild<T extends Types.Constructor>(
       this.triggerBuild(component);
     }
 
+    _isSuccessfulBuildExists(): Cypress.Chainable<boolean> {
+      let isExists: boolean = false;
+
+      this.sideMenu.navigateToBuild();
+      return cy
+        .get(TestIds.buildDetailsCard)
+        .find("table")
+        .find("tbody")
+        .find("tr")
+        .each((row) => {
+          isExists = row.find("div").filter(function() {
+            return Cypress.$(this).text().trim() === BUILD_SUCCESS;
+          }).length > 0;
+          if (isExists) {
+            return false; // break the loop. https://docs.cypress.io/api/commands/each#Return-early
+          }
+        })
+        .then(() => {
+          return cy.wrap(isExists);
+        });
+    }
+
     private triggerBuild(
       component:
         | Service
@@ -80,7 +103,7 @@ export function mixinBuild<T extends Types.Constructor>(
         if (!Helper.isElementExists(buildTable, TestIds.noDataAvailable)) {
           this.waitTillNewBuildStarts();
         } else {
-          cy.get(TestIds.build).should("be.enabled").click();
+          cy.getUnstable(TestIds.build).should("be.enabled").click();
         }
       });
 
@@ -95,7 +118,7 @@ export function mixinBuild<T extends Types.Constructor>(
 
           cy.log(`Existing build id: ${currentBuildId}`);
 
-          cy.get(TestIds.build).should("be.enabled").click();
+          cy.getUnstable(TestIds.build).should("be.enabled").click();
 
           cy.log("Waiting for build to start");
           this.checkIfNewBuildStarted(currentBuildId);

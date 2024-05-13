@@ -57,6 +57,7 @@ public class TestCreateMiMultiRestEndpointServiceFromSubPath extends TestNGCitru
     private List<Environment> environments;
     private List<Endpoint> endpoints;
     private static ChoreoComponent testComponent;
+    private static ChoreoProject testProject;
 
     @Autowired
     private HttpClient choreoProjectsTestClient;
@@ -82,6 +83,7 @@ public class TestCreateMiMultiRestEndpointServiceFromSubPath extends TestNGCitru
         ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, 
             Constant.region.US.toString());
         projectId = project.getId();
+        testProject = project;
     }
 
     @Test(dependsOnMethods = {"createProject_TestCreateMiMultiRestEndpointServiceFromSubPath"})
@@ -166,6 +168,7 @@ public class TestCreateMiMultiRestEndpointServiceFromSubPath extends TestNGCitru
         argMap.put("componentId", testComponent.getId());
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
         argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+        GraphQL.validateEndpointDeployment(this, choreoProjectsTestClient, accessToken, argMap);
         endpoints = GraphQL.getEndpoints(this, choreoProjectsTestClient, accessToken, argMap);
         Assert.assertEquals(endpoints.size(), 2);
     }
@@ -202,7 +205,7 @@ public class TestCreateMiMultiRestEndpointServiceFromSubPath extends TestNGCitru
         testComponent = GraphQL.getComponentDetails(this, appServiceClient, projectId, componentHandler, accessToken);
         List<ComponentDeploymentStatusDTO> promotionStatuses = ComponentUtils.promoteComponent(this, citrusClients, 
             accessToken, testComponent, environments, 
-            ComponentFlavour.MI);
+            ComponentFlavour.MI, testProject);
         promotionStatusDTO = promotionStatuses.get(0);
     }
 

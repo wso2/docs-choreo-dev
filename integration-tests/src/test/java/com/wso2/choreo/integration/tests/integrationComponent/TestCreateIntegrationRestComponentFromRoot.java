@@ -30,7 +30,6 @@ import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.endpoints.Endpoint;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -57,6 +56,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
     private List<Environment> environments;
     private List<Endpoint> endpoints;
     private static ChoreoComponent testComponent;
+    private static ChoreoProject testProject;
 
     @Autowired
     private HttpClient choreoProjectsTestClient;
@@ -82,6 +82,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, 
             Constant.region.US.toString());
         projectId = project.getId();
+        testProject = project;
     }
 
     @Test(dependsOnMethods = {"createProject_TestCreateIntegrationRestComponentFromRoot"})
@@ -166,6 +167,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         argMap.put("componentId", testComponent.getId());
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
         argMap.put("releaseId", testComponent.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT));
+        GraphQL.validateEndpointDeployment(this, choreoProjectsTestClient, accessToken, argMap);
         endpoints = GraphQL.getEndpoints(this, choreoProjectsTestClient, accessToken, argMap);
         Assert.assertEquals(endpoints.size(), 1);
     }
@@ -174,7 +176,6 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
     @Test(dependsOnMethods = {"getEndpointsDevAfterDeploy_TestCreateIntegrationRestComponentFromRoot"})
     @CitrusTest
     public void invokeAPIDev_TestCreateIntegrationRestComponentFromRoot() throws Exception {
-
         Endpoint endpoint = endpoints.get(0);
         environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, testComponent);
         final String devApiKey = testComponent.getAPIKeyForInvoke(accessToken, endpoint.getApimId(),
@@ -201,7 +202,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         testComponent = GraphQL.getComponentDetails(this, appServiceClient, projectId, componentHandler, accessToken);
         List<ComponentDeploymentStatusDTO> promotionStatuses = ComponentUtils.promoteComponent(this, citrusClients, 
-            accessToken, testComponent, environments, ComponentFlavour.MI);
+            accessToken, testComponent, environments, ComponentFlavour.MI, testProject);
         promotionStatusDTO = promotionStatuses.get(0);
     }
 

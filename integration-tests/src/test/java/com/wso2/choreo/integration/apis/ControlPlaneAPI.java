@@ -8,6 +8,7 @@ import com.wso2.choreo.integration.config.Constant;
 public abstract class ControlPlaneAPI {
 
     protected static final String CHOREO_PROJECT_URL = Configuration.getConfig(ConfigDefinition.CHOREO_NEW_APP_SERVICE_ENDPOINT) + Constant.GRAPHQL_ENDPOINT_SUFFIX;
+    protected static final String CHOREO_APP_SERVICE_URL = Configuration.getConfig(ConfigDefinition.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
     protected static final String STS_ENDPOINT = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT);
     protected static final String CHOREO_EP = Configuration.getConfig(ConfigDefinition.CHOREO_ENDPOINT);

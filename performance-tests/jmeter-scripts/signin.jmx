@@ -78,8 +78,8 @@
           </elementProp>
           <elementProp name="failedUsers" elementType="Argument">
             <stringProp name="Argument.name">failedUsers</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.value">${__P(orgstoskip,./skiporgs.txt)} </stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
       </Arguments>
@@ -140,12 +140,19 @@ vars.put(&quot;username&quot;, prefix + counter);
           <stringProp name="filename"></stringProp>
           <stringProp name="cacheKey">true</stringProp>
           <stringProp name="script">String filepath = vars.get(&quot;failedUsers&quot;);
+
+if(filepath != null &amp;&amp; !filepath.isEmpty()) {
+	filepath = filepath.strip();
+}
+
 if (vars.getObject(&quot;SKIP_USERNAMES&quot;) == null) {
   File file = new File(filepath);
   if (file.exists()) {
       List&lt;String&gt; usernames = file.readLines();
       vars.putObject(&quot;SKIP_USERNAMES&quot;, usernames);
-  }
+  } else {
+		log.info(&quot;*****File doesn&apos;t exist &quot;);
+  	}
 }
 List&lt;String&gt; skipUsernames = vars.getObject(&quot;SKIP_USERNAMES&quot;);
 

@@ -1,9 +1,9 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: code-challenge-eval
+  name: insights-assistant
 spec:
   minAvailable: "50%"
   selector:
     matchLabels:
-      choreo.component: code-challenge-eval
+      choreo.component: insights-assistant

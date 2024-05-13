@@ -13,3 +13,5 @@ mappingDbHost = "{{.MAPPING_DB_HOST}}"
 mappingDbUsername = "{{.MAPPING_DB_USERNAME}}"
 mappingDbName = "{{.MAPPING_DB_NAME}}"
 mappingDbPasswordPath = "/mnt/csi/secret-configuration-service/CONFIGURATION_MAPPING_SERVICE_DB_PASSWORD"
+authzClientEndpoint = "{{.AUTHZ_CLIENT_ENDPOINT | default ""}}"
+isInstanceBasedAuthzEnabled = {{.IS_INSTANCE_BASED_AUTHZ_ENABLED | default false}}

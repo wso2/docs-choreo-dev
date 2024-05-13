@@ -35,4 +35,6 @@ public class ConfigYaml {
     Map<String, String> themeManagement;
     @JsonProperty("logs")
     Map<String, String> logs;
+    @JsonProperty("resourceAuthorization")
+    Map<String, String> resourceAuthorization;
 }

@@ -2,6 +2,7 @@ package com.wso2.choreo.integration.tests.dp;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
+import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
@@ -51,7 +52,6 @@ public class TestBuildpackDp extends TestBase {
     public void createComponent_TestBuildpackDp(DataProviderWrapper dp) throws Exception {
         String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
         ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, dp.getRegion());
-
         Repository repo = Repository.builder().
                 repoUrl("https://github.com/choreo-test-apps/byoc-service-app").
                 buildContext(".").build();
@@ -92,7 +92,7 @@ public class TestBuildpackDp extends TestBase {
     @CitrusTest
     public void promoteComponent_TestBuildpackDp(DataProviderWrapper dp) throws Exception {
         List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients,
-                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.BYOC);
+                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.BYOC, dp.getChoreoProject());
         dp.setPromoteStatusDTO(statusDTO);
     }
 
