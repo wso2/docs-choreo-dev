@@ -168,3 +168,9 @@ areaOwners:
       - suvin@wso2.com
       - thumula@wso2.com
       - senthalan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.resourceAuthorization.ResourceAuthorizationTests
+    assignees:
+      - suvin@wso2.com
+      - mevan@wso2.com
+      - viduranga@wso2.com
+      - senthalan@wso2.com
