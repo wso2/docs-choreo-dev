@@ -81,7 +81,10 @@ describe("Create Reusable Webhook functionality", () => {
   });
 
   it("Component promotion to prod", () => {
-    webhook.promoteProd([new ConfigEntryStep(addConfiguration)]);
+    webhook.promoteProd([
+      new ConfigEntryStep(),
+      new ConfigEntryStep(addConfiguration),
+    ]);
   });
 
   it("Verify suspending Dev deployed component", () => {
