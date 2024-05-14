@@ -40,6 +40,8 @@ import com.wso2.choreo.integration.models.resourceAuthorization.RoleGroupMapping
 import com.wso2.choreo.integration.models.resourceAuthorization.GroupRoleMappingResponseDTO.GroupAssociation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
+import org.testng.SkipException;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -59,6 +61,14 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
     private ChoreoProject projectX;
     private ChoreoProject projectY;
     private ChoreoProject projectZ;
+
+    @BeforeClass
+    public void setup_ResourceAuthorizationTests() throws TokenRetrievalException, IOException, URISyntaxException {
+        if (TestContext.getResourceAuthzTestUserTokenHandler().getTestTokenForCPAPIs().equals(Constant.BEARER_PREFIX)) {
+                throw new SkipException("Skipping Resource Authorization tests as the tests are run " 
+                        + "with a user provided token.");
+        }
+    }
 
     // Setup a project for testing
     @Test
@@ -136,7 +146,7 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
     public void getUserToken_ResourceAuthorizationTests()
             throws TokenRetrievalException, IOException, URISyntaxException {
 
-        String testUserToken = TestContext.getResourceAuthzTestUserTokenHandler().getTestTokenForCPAPIs();
+        String testUserToken = TestContext.getResourceAuthzTestUserTokenHandler().refetchTestTokenForCPAPIs();
         Assert.assertNotNull(testUserToken);
 
         String accessToken = testUserToken.split(" ")[1];
