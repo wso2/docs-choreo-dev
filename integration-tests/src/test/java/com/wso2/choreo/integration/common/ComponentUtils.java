@@ -997,7 +997,7 @@ public class ComponentUtils {
         runner.$(repeatOnError()
                 .until("i = 5")
                 .index("i")
-                .autoSleep(5000)
+                .autoSleep(10000)
                 .actions((http()
                         .client(invokeUrl)
                         .send()
@@ -1017,7 +1017,8 @@ public class ComponentUtils {
                                 .validate((message, context) -> {
                                     int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
                                     if (code != expectedHttpStatus.value()) {
-                                        throw new ValidationException("Too many successive calls with response code !=" + expectedHttpStatus.value());
+                                        throw new ValidationException(String.format("Too many successive calls with response code %s," +
+                                                " expected response code %s", code, expectedHttpStatus.value()));
                                     }
                                 })));
     }
@@ -1044,6 +1045,18 @@ public class ComponentUtils {
         argMap.put("releaseId", componentDeploymentStatusDTO.getReleaseId());
         GraphQL.validateEndpointDeployment(runner, appServiceClient, accessToken, argMap);
         return GraphQL.getEndpoints(runner, appServiceClient, accessToken, argMap);
+    }
+    
+    public static void validateEndpoints(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+                                              String accessToken, ChoreoComponent component,
+                                              ComponentDeploymentStatusDTO componentDeploymentStatusDTO) throws Exception {
+        HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+
+        Map<String,String> argMap = new HashMap<>();
+        argMap.put("componentId", component.getId());
+        argMap.put("versionId", componentDeploymentStatusDTO.getVersionId());
+        argMap.put("releaseId", componentDeploymentStatusDTO.getReleaseId());
+        GraphQL.validateEndpointDeployment(runner, appServiceClient, accessToken, argMap);
     }
 
     public static List<Endpoint> getEndpoints(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
