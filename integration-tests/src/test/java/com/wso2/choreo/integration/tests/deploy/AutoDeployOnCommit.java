@@ -92,6 +92,14 @@ public class AutoDeployOnCommit extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"enableAutoBuild_AutoDeployOnCommit"})
     @CitrusTest
+    public void enableAutoDeploy_AutoDeployOnCommit() throws Exception {
+        GraphqlDTO dto = GraphqlDTO.builder().componentId(choreoComponent.getId()).versionId(choreoComponent.getLatestApiVersion().getId()).build();
+        GraphQL.enableAutoDeploy(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken,
+                dto);
+    }
+
+    @Test(dependsOnMethods = {"enableAutoDeploy_AutoDeployOnCommit"})
+    @CitrusTest
     public void mergeNewCode_AutoDeployOnCommit() throws IOException {
         String timeStamp = String.valueOf(new Date().getTime());
         Map<String, String> params = new HashMap<>();

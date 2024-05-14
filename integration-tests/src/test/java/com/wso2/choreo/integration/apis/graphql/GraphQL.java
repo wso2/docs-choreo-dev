@@ -1635,4 +1635,37 @@ public class GraphQL extends ControlPlaneAPI {
                 ))
                 );
     }
+
+    public static void enableAutoDeploy(TestActionRunner runner, HttpClient client, String accessToken,
+                                       GraphqlDTO graphqlDTO) throws IOException {
+
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/autodeployTriggerEnable.mustache", graphqlDTO);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(10000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(requestBody)
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
+                        http().client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .body(new ClassPathResource("templates/graphql/responses/autoDeployEnabledSuccess.json"))
+                                .validate(jsonPath()
+                                .expression("$.data.updateDeploymentTrack.autoDeployEnabled", true)
+                ))
+        );
+    }
 }
