@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ * Copyright (c) 2024, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
  * This software is the property of WSO2 Inc. and its suppliers, if any.
  * Dissemination of any information or reproduction of any material contained
@@ -11,25 +11,27 @@
  * associated services.
  */
 
-package com.wso2.choreo.integration.models;
+package com.wso2.choreo.integration.models.resourceAuthorization;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
+import java.util.Date;
+
 @Data
 @Builder
-public class ApiDTO {
-    private String apiName;
-    private String version;
-    private String context;
-    private String productionEndpoint;
-    private String sandboxEndpoint;
-    private String scopePrefix;
-    private  String basePath;
-    private String description;
-    private String displayName;
+@AllArgsConstructor
+@NoArgsConstructor
+public class CreateRoleResponseDTO {
+    public String id;
+    public String description;
+    public String displayName;
+    public String handle;
+    public String createdBy;
+    public String updatedBy;
+    public Date createdAt;
+    public Date updatedAt;
+    public String uuid;
 }

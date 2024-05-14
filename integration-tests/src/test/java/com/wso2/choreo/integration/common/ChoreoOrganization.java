@@ -61,11 +61,11 @@ public class ChoreoOrganization {
      *
      * @param accessToken OAuth token to invoke the Chorea backend
      * @return a ChoreoProject instance
-     * @throws IOException              if an IO error occurs when sending or receiving request
+     * @throws IOException              if an IO error occurs when sending or
+     *                                  receiving request
      * @throws InterruptedException     if sending request is interrupted
      * @throws ProjectCreationException if project creation fails
      */
-
 
     Optional<ChoreoProject> getProjectByName(String accessToken, String name) throws ProjectRetrievalException {
         loadProjects(accessToken);
@@ -133,6 +133,10 @@ public class ChoreoOrganization {
         return false;
     }
 
+    void clearProjectMap() {
+        projectMap.clear();
+    }
+
     private String getDeleteProjectMutation(String projectId) {
         return "mutation{ deleteProject(" +
                 "        orgId: " + orgId + "," +
@@ -179,11 +183,28 @@ public class ChoreoOrganization {
         return projectMap.get(id);
     }
 
+    public List<ChoreoProject> getProjectsList(String accessToken) throws ProjectRetrievalException {
+        return getProjects(accessToken);
+    }
+
     public String getOrgUUID() {
         return orgUUID;
     }
 
     public void setOrgUUID(String orgUUID) {
         this.orgUUID = orgUUID;
+    }
+
+    public void clearProjects() {
+        clearProjectMap();
+    }
+
+    public ChoreoProject createProjectInOrganization(String accessToken, String name, String description)
+            throws ProjectCreationException {
+        return createProject(accessToken, name, description);
+    }
+
+    public boolean deleteProjectInOrganization(String accessToken, String projectId) {
+        return deleteProject(accessToken, projectId);
     }
 }
