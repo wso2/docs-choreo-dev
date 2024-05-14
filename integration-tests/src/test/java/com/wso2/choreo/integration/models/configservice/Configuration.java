@@ -20,6 +20,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @Builder
@@ -29,8 +30,25 @@ public class Configuration {
     private String keyUuid;
     private String key;
     @JsonProperty("isSensitive")
-    private boolean sensitive;
+    private boolean isSensitive;
     @JsonProperty("isFile")
-    private boolean file;
+    private boolean isFile;
     private List<ConfigurationValue> values;
+
+    public Optional<String> getValueForEnvironemnt(String environmentUuid) {
+        return values.stream()
+                .filter(v -> v.getEnvironmentUuid().equals(environmentUuid))
+                .findFirst()
+                .map(ConfigurationValue::getValue);
+    }
+
+    public void setValueForEnvironment(String environmentUuid, String value) {
+        values.stream()
+                .filter(v -> v.getEnvironmentUuid().equals(environmentUuid))
+                .findFirst()
+                .ifPresentOrElse(
+                    v -> v.setValue(value), 
+                    () -> values.add(ConfigurationValue.builder().environmentUuid(environmentUuid).value(value).build())
+                );
+    }
 }
