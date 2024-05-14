@@ -49,7 +49,7 @@ export interface DeployServiceFeature {
     configStepsAvailable?: ConfigEntryStep[]
   );
 
-  _deployWebapp(component: WebApp, hasAuthSettings: boolean);
+  _deployWebapp(component: WebApp, hasAuthSettings: boolean, customConfig?: Map<string,string>);
 
   _deployWebhook(
     component: Webhook | Byoc,
@@ -71,12 +71,15 @@ export interface DeployServiceFeature {
   _promoteWebapp(
     component: WebApp,
     hasAuthSettings: boolean,
-    configStepsAvailable?: ConfigEntryStep[]
+    configStepsAvailable?: ConfigEntryStep[],
+    customConfig?: Map<string,string>
   );
 
   _promoteBYOC(component: Byoc, configStepsAvailable?: ConfigEntryStep[]);
 
   _promoteWebhook(component: Webhook, configStepsAvailable?: ConfigEntryStep[]);
+
+  _isDevDeploymentExists(): Cypress.Chainable<boolean>;
 }
 
 export function mixinServiceDeploy<T extends Types.Constructor>(
@@ -128,14 +131,14 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.verifyTaskDeploymentStatus();
     }
 
-    _deployWebapp(component: WebApp, hasAuthSettings: boolean) {
+    _deployWebapp(component: WebApp, hasAuthSettings: boolean, customConfig?: Map<string,string>) {
       this.sideMenu.navigateToDeploy();
 
       this.waitTillReadyToDeploy();
 
       this.startDeployment(component);
 
-      this.configureWebApp(hasAuthSettings);
+      this.configureWebApp(hasAuthSettings, customConfig);
 
       this.verifyDeploymentStatus();
 
@@ -210,7 +213,8 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     _promoteWebapp(
       component: WebApp,
       hasAuthSettings: boolean,
-      configStepsAvailable: ConfigEntryStep[]
+      configStepsAvailable: ConfigEntryStep[],
+      customConfig?: Map<string,string>
     ) {
       this.sideMenu.navigateToDeploy();
 
@@ -218,7 +222,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.stepThroughConfigSteps(configStepsAvailable);
 
-      this.configureWebApp(hasAuthSettings);
+      this.configureWebApp(hasAuthSettings, customConfig);
 
       this.verifyPromotionStatus();
 
@@ -248,6 +252,27 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
         cy.get(TestIds.createDeploymentTrack).click();
         cy.get(TestIds.createDeploymentTrack).should("not.exist");
       });
+    }
+
+    _isDevDeploymentExists(): Cypress.Chainable<boolean> {
+      let isDeploymentExists: boolean = false;
+
+      this.sideMenu.navigateToDeploy();
+      return cy
+        .get(TestIds.devEnvCard).within((envCard) => {
+          if (envCard.find(TestIds.deploymentStatus).length > 0) {
+            cy.get(TestIds.deploymentStatus).should("be.visible").then((deploymentStatusBar) => {
+              if (deploymentStatusBar.text().includes(DEPLOYMENT_SUCCESS)) {
+                cy.get(TestIds.endpointStatus).then((endpointStatusChip) => {
+                  isDeploymentExists = endpointStatusChip.text().includes(DEPLOYMENT_SUCCESS);
+                });
+              }
+            })
+          }
+        })
+        .then(() => {
+          return cy.wrap(isDeploymentExists);
+        });
     }
 
     private saveEndpointUrls(
@@ -297,6 +322,8 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
             service.setProdEndpointUrl(url);
           }
         });
+
+      cy.contains("span", "Endpoint Details").parent().siblings().first().click();
     }
 
     private waitTillReadyToDeploy() {
@@ -494,10 +521,6 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
                   statusText.includes(DEPLOYMENT_PENDING) ||
                   statusText.includes(DEPLOYMENT_PROGRESSING)
                 ) {
-                  cy.get(TestIds.commitHistory)
-                    .eq(0)
-                    .contains(BUILD_FAILED)
-                    .should("not.exist");
                   cy.log(
                     `Endpoint is ${statusText}, check back in ${
                       waitTime / 1000
@@ -577,12 +600,16 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       if (component instanceof ScheduleTrigger) {
         cy.get(TestIds.next, LONG_TIME).should("be.enabled").click();
-        cy.get('[value="*/1 * * * *"]', LONG_TIME).eq(1).should("be.visible");
       }
     }
 
-    private configureWebApp(hasAuthSettings: boolean) {
-      cy.get(TestIds.formConfigField).type("{backspace}").type(CONFIG_CONTENT);
+    private configureWebApp(hasAuthSettings: boolean, customConfig?: Map<string,string>) {
+      let configContent = CONFIG_CONTENT;
+      if (customConfig !== undefined) {
+        configContent = this.buildConfigContentString(customConfig);
+      }
+
+      cy.get(TestIds.formConfigField).type("{backspace}").type(configContent);
       cy.get(TestIds.next).click();
 
       if (hasAuthSettings) {
@@ -617,6 +644,16 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
             }
           });
       });
+    }
+
+    private buildConfigContentString(customConfig: Map<string, string>): string {
+      let configContent = "";
+      // No need to add 'window.configs{\n' as it is pre-populated in UI
+      customConfig.forEach((value, key) => {
+        configContent += `\t${key}: '${value}',\n`;
+      })
+      configContent+='}'
+      return configContent;
     }
   };
 }

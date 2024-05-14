@@ -175,6 +175,33 @@ export class OrganizationSettings {
       .should("not.exist");
   }
 
+  private removeAllRolesFromGroup() {
+    cy.get(TestIds.groupRolesTab).click();
+
+    cy.get(TestIds.groupTable)
+      .should("be.visible")
+      .find("tbody")
+      .find("tr")
+      .eq(0)
+      .find("td")
+      .eq(0)
+      .then(($role) => {
+        if (!$role.text().includes("No records to display")) {
+          cy.get(TestIds.groupTable)
+            .find("tbody")
+            .find("tr")
+            .eq(0)
+            .find(TestIds.removeRoleFromGroup)
+            .click();
+          cy.get(TestIds.removeRoleFromGroupPopup).should("be.visible").click();
+          cy.get(TestIds.removeRoleFromGroupPopup).should("not.exist");
+          this.removeAllRolesFromGroup();
+        } else {
+          cy.get(TestIds.groupDetailsBack).click();
+        }
+      });
+  }
+
   addUserToGroup(userEmail: string, groupName: string) {
     this.search(groupName);
     cy.get(TestIds.groupTable)
@@ -234,6 +261,8 @@ export class OrganizationSettings {
 
   private deleteSelectedGroup(groupName: string) {
     cy.contains("td", groupName).trigger("mouseover");
+    cy.get(TestIds.editGroup).click();
+    this.removeAllRolesFromGroup();
     cy.get(TestIds.deleteGroup).click();
     cy.get(TestIds.deleteGroupConfirm).click();
     cy.contains("td", groupName).should("not.exist");

@@ -19,3 +19,7 @@ configMapGenerator:
       - CREATE_COLLECTION={{.CREATE_COLLECTION | default ""}}
       - MILVERSE_URL={{.MILVERSE_URL | default ""}}
       - SOURCE_PLATFORM={{.SOURCE_PLATFORM | default ""}}
+  - name: env-milvus-proxy-cm
+    behavior: create
+    literals:
+      - MILVERSE_URL={{.MILVERSE_URL | default ""}}

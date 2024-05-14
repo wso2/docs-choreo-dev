@@ -31,4 +31,5 @@ public class ApiDTO {
     private String scopePrefix;
     private  String basePath;
     private String description;
+    private String displayName;
 }

@@ -29,3 +29,12 @@ configMapGenerator:
     behavior: create
     files:
       - config-deployer-service/config.toml
+  - name: choreo-apim-devportal-conf
+    behavior: create
+    files:
+      - devportal/devportal.config.js
+  - name: cc-global-adapter-conf-v2
+    behavior: create
+    files:
+      - global-adapter-v2/ga_config.toml
+      - global-adapter-v2/log_config.toml

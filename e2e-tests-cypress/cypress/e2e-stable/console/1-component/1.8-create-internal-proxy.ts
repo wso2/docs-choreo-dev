@@ -13,10 +13,14 @@
 
 import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
-import { Proxy } from "../../../support/console/entities/component/proxy-component";
+import {
+  Proxy,
+  ProxyMetaData,
+} from "../../../support/console/entities/component/proxy-component";
 import { Utils } from "../../../support/commons/utils";
 import { Enums } from "../../../support/commons/enums";
 import { OK } from "../../../support/commons/http";
+import { devPortal } from "../../../support/console/devportal";
 
 describe(`Verify internal API Proxy functionality`, () => {
   const PROJECT_DESCRIPTION = "Internal API Proxy for REST Endpoint";
@@ -54,6 +58,12 @@ describe(`Verify internal API Proxy functionality`, () => {
       })
       .then((comp) => {
         internalProxy = comp;
+        // Since we are switching domains when navigating to devportal url we will no longer have access to the proxy object
+        // So we need to save the proxy metadata in nodejs global state using below cy.task() to access it later
+        cy.task("setData", {
+          key: Cypress.spec.name, // Unique key to store the data, in this case spec name is sufficient
+          value: internalProxy.getMetaData(),
+        });
       });
   });
 
@@ -221,7 +231,15 @@ describe(`Verify internal API Proxy functionality`, () => {
   });
 
   it("Navigate to Dev portal", () => {
-    internalProxy.navigateToDevPortal();
+    devPortal.loginToDevPortal();
+    // Recreate Proxy object using previously saved metadata
+    cy.task("getData", Cypress.spec.name).then((metaData) => {
+      internalProxy = Proxy.fromMetaData(metaData as ProxyMetaData);
+    });
+  });
+
+  it("Find API in devportal custom domain", () => {
+    devPortal.searchApi(internalProxy.getName());
   });
 
   it("Generate Production credentials for converted External Proxy in Dev portal", () => {
