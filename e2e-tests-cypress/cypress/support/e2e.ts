@@ -16,6 +16,7 @@
 import "cypress-real-events/support";
 import "cypress-fail-fast";
 import { MIN_RENDERING_WAIT_TIME } from "./commons/constants";
+require('@neuralegion/cypress-har-generator/commands');
 
 /**
  * Prevent Cypress from failing the test when an uncaught exception is thrown by Choreo.
