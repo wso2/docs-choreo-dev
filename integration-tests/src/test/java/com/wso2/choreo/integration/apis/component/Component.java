@@ -268,37 +268,11 @@ public class Component extends ControlPlaneAPI {
     }
 
     public static void addExternalIdpKeys(TestActionRunner runner, HttpClient client,
-            String projectId, String componentId, String environmentId, HashMap<String, Object> keyMappingRequest)
-            throws TokenRetrievalException, IOException, URISyntaxException {
+                    String projectId, String componentId, String environmentId,
+                    HashMap<String, Object> keyMappingRequest, HttpStatus expectedStatus)
+                    throws TokenRetrievalException, IOException, URISyntaxException {
 
-        String requestBody = ObjectMapperUtil.mapToString(keyMappingRequest);
-
-        runner.$(repeatOnError()
-                .until("i = 5")
-                .index("i")
-                .autoSleep(30000)
-                .actions(
-                        http()
-                                .client(client)
-                                .send()
-                                .post(getKeyMappingEndpointURL(projectId, componentId, environmentId))
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, getAccessToken())
-                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
-                                .body(requestBody),
-                        http()
-                                .client(client)
-                                .receive()
-                                .response(HttpStatus.CREATED)
-                                .message()));
-    }
-
-    public static String addConflictingExternalIdpKeys(TestActionRunner runner, HttpClient client,
-            String projectId, String componentId, String environmentId, HashMap<String, Object> keyMappingRequest)
-            throws TokenRetrievalException, IOException, URISyntaxException {
-
-        String requestBody = ObjectMapperUtil.mapToString(keyMappingRequest);
+            String requestBody = ObjectMapperUtil.mapToString(keyMappingRequest);
 
         runner.$(repeatOnError()
                 .until("i = 5")
@@ -317,10 +291,8 @@ public class Component extends ControlPlaneAPI {
                         http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.CONFLICT)
+                                .response(expectedStatus)
                                 .message()));
-
-        return HttpStatus.CONFLICT.getReasonPhrase();
     }
 
     private static String getKeyGenURL(String projectId, String componentId, String environmentId) {

@@ -20,7 +20,6 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.wso2.choreo.integration.apis.devops.DevopsPortalApi;
-import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
@@ -34,8 +33,11 @@ import com.wso2.choreo.integration.common.oauth.OAuthConstants;
 import com.wso2.choreo.integration.common.oauth.OAuthUtils;
 import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants;
 import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.AppGwKeysetConfigNames;
+import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.ClientCredentialsAuthFlowParams;
 import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.DefaultChoreoEnvironments;
 import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.DefaultConfigGroups;
+import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.ExternalIdpMappingParams;
+import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.KeyGenerationRequestParams;
 import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.ModifiedOAuthAppConfig;
 import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.TestIdpDefaults;
 import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.TestKeyGenRequestData;
@@ -71,6 +73,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -101,11 +104,11 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
 
         List<KeyManager> keyManagers = KeyManagerUtils.getKeyManagersListAsAdmin();
 
-        KeyManager testKeyManager = keyManagers.stream()
+        Optional<KeyManager> testKeyManager = keyManagers.stream()
                 .filter(keyManager -> keyManager.getName().equals(KeyManagerConstants.TestIdpDefaults.NAME))
-                .findFirst().orElse(null);
+                .findFirst();
 
-        if (testKeyManager == null) {
+        if (testKeyManager.isEmpty()) {
             IdpAddResponseDTO response = KeyManagerUtils.addExternalIdp(getExternalIdpPayload());
             if (response != null) {
                 log.info("External IdP added successfully");
@@ -118,12 +121,8 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void createTestProject_KeyManagerTests() throws Exception {
 
-        HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String userAccessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        String projectHandler = NameGenerator.generateThreadUniqueName();
-        String projectName = NameGenerator.generateUniqueName(Constant.TEST_PROJECT_NAME_PREFIX);
-        testProject = GraphQL.createProject(this, appServiceClient, TestProjectData.REGION, userAccessToken,
-                projectName, projectHandler);
+        testProject = ComponentUtils.createProject(this, citrusClients, userAccessToken, TestProjectData.REGION);
 
         Assert.assertNotNull(testProject.getId());
     }
@@ -146,7 +145,7 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
         Assert.assertNotNull(webappComponent.getId());
         testComponent = webappComponent;
 
-        getEnvironmentData();
+        setEnvironmentData();
     }
 
     // Test 1 - Generate Keys with Choreo Built-In Identity Provider
@@ -162,8 +161,11 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
                 testComponent.getProjectId(), testComponent.getId(), devEnvironment.getId(),
                 getTestKeygenRequest());
 
-        Assert.assertNotNull(keyGenResponse.getClientId());
-        Assert.assertNotNull(keyGenResponse.getClientSecret());
+        String clientId = getConfigValueFromGroup(this, appServiceClient,
+                DefaultConfigGroups.APP_GW_KEYSETS,
+                AppGwKeysetConfigNames.CLIENT_ID, devEnvironment.getTemplateId());
+
+        Assert.assertNotNull(clientId);
 
         generatedKeys = keyGenResponse;
     }
@@ -199,8 +201,11 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
                 testComponent.getProjectId(), testComponent.getId(), devEnvironment.getId(),
                 generatedKeys.getClientId());
 
-        Assert.assertNotNull(regeneratedKeys.getClientId());
-        Assert.assertNotNull(regeneratedKeys.getClientSecret());
+        String clientId = getConfigValueFromGroup(this, appServiceClient,
+                DefaultConfigGroups.APP_GW_KEYSETS,
+                AppGwKeysetConfigNames.CLIENT_ID, devEnvironment.getTemplateId());
+
+        Assert.assertNotNull(clientId);
 
         generatedKeys = regeneratedKeys;
     }
@@ -215,8 +220,8 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
 
         HashMap<String, Object> oAuthClientCredentialsRequest = new HashMap<>() {
             {
-                put("grant_type", OAuthConstants.CLIENT_CREDENTIALS_GRANT_TYPE);
-                put("scope", OAuthConstants.DEFAULT_CLIENT_CREDENTIALS_SCOPES);
+                put(ClientCredentialsAuthFlowParams.GRANT_TYPE, OAuthConstants.CLIENT_CREDENTIALS_GRANT_TYPE);
+                put(ClientCredentialsAuthFlowParams.SCOPE, OAuthConstants.DEFAULT_CLIENT_CREDENTIALS_SCOPES);
             }
         };
 
@@ -255,14 +260,14 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
 
         HashMap<String, Object> externalIdpMapping = new HashMap<>() {
             {
-                put("clientId", externalIdpClientId);
-                put("idpId", externalKeyManager.getId());
+                put(ExternalIdpMappingParams.CLIENT_ID, externalIdpClientId);
+                put(ExternalIdpMappingParams.IDP_ID, externalKeyManager.getId());
             }
         };
 
         ComponentUtils.addExternalIdpKeys(this, appServiceClient,
                 testComponent.getProjectId(),
-                testComponent.getId(), devEnvironment.getId(), externalIdpMapping);
+                testComponent.getId(), devEnvironment.getId(), externalIdpMapping, HttpStatus.CREATED);
 
         String clientId = getConfigValueFromGroup(this, appServiceClient,
                 DefaultConfigGroups.APP_GW_KEYSETS,
@@ -283,15 +288,15 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
 
         HashMap<String, Object> externalIdpMapping = new HashMap<>() {
             {
-                put("clientId", externalIdpClientId);
-                put("clientSecret", externalIdpClientSecret);
-                put("idpId", externalKeyManager.getId());
+                put(ExternalIdpMappingParams.CLIENT_ID, externalIdpClientId);
+                put(ExternalIdpMappingParams.CLIENT_SECRET, externalIdpClientSecret);
+                put(ExternalIdpMappingParams.IDP_ID, externalKeyManager.getId());
             }
         };
 
         ComponentUtils.addExternalIdpKeys(this, appServiceClient,
                 testComponent.getProjectId(),
-                testComponent.getId(), devEnvironment.getId(), externalIdpMapping);
+                testComponent.getId(), devEnvironment.getId(), externalIdpMapping, HttpStatus.CREATED);
 
         String clientId = getConfigValueFromGroup(this, appServiceClient,
                 DefaultConfigGroups.APP_GW_KEYSETS,
@@ -313,17 +318,16 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
 
         HashMap<String, Object> externalIdpMapping = new HashMap<>() {
             {
-                put("clientId", devEnvClientId);
-                put("idpId", externalKeyManager.getId());
+                put(ExternalIdpMappingParams.CLIENT_ID, devEnvClientId);
+                put(ExternalIdpMappingParams.IDP_ID, externalKeyManager.getId());
             }
         };
 
-        String status = ComponentUtils.addConflictingExternalIdpKeys(this,
+        ComponentUtils.addExternalIdpKeys(this,
                 appServiceClient,
                 testComponent.getProjectId(),
-                testComponent.getId(), prodEnvironment.getId(), externalIdpMapping);
+                testComponent.getId(), prodEnvironment.getId(), externalIdpMapping, HttpStatus.CONFLICT);
 
-        Assert.assertEquals(status, HttpStatus.CONFLICT.getReasonPhrase());
     }
 
     private String getConfigValueFromGroup(TestActionRunner runner, HttpClient client, String configGroup,
@@ -342,7 +346,7 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
         return readConfigValue(keysetGroupWithValues, keyName, environmentUuid);
     }
 
-    private void getEnvironmentData() throws Exception {
+    private void setEnvironmentData() throws Exception {
 
         if (testComponent == null) {
             throw new Exception("Component is not created yet");
@@ -415,13 +419,13 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
     private static HashMap<String, Object> getTestKeygenRequest() {
         return new HashMap<>() {
             {
-                put("appTokenExpiry", TestKeyGenRequestData.APP_TOKEN_EXPIRY);
-                put("callbackUrls", TestKeyGenRequestData.CALLBACK_URLS);
-                put("grantTypes", TestKeyGenRequestData.GRANT_TYPES);
-                put("pkceMandatory", TestKeyGenRequestData.PKCE_MANDATORY);
-                put("publicClient", TestKeyGenRequestData.IS_PUBLIC_CLIENT);
-                put("refreshTokenExpiry", TestKeyGenRequestData.REFRESH_TOKEN_EXPIRY);
-                put("userTokenExpiry", TestKeyGenRequestData.USER_TOKEN_EXPIRY);
+                put(KeyGenerationRequestParams.APP_TOKEN_EXPIRY, TestKeyGenRequestData.APP_TOKEN_EXPIRY);
+                put(KeyGenerationRequestParams.CALLBACK_URLS, TestKeyGenRequestData.CALLBACK_URLS);
+                put(KeyGenerationRequestParams.GRANT_TYPES, TestKeyGenRequestData.GRANT_TYPES);
+                put(KeyGenerationRequestParams.PKCE_MANDATORY, TestKeyGenRequestData.PKCE_MANDATORY);
+                put(KeyGenerationRequestParams.PUBLIC_CLIENT, TestKeyGenRequestData.IS_PUBLIC_CLIENT);
+                put(KeyGenerationRequestParams.REFRESH_TOKEN_EXPIRY, TestKeyGenRequestData.REFRESH_TOKEN_EXPIRY);
+                put(KeyGenerationRequestParams.USER_TOKEN_EXPIRY, TestKeyGenRequestData.USER_TOKEN_EXPIRY);
             }
         };
     }
@@ -429,13 +433,13 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
     private static HashMap<String, Object> getKeyManagerUpdateTestRequest() {
         return new HashMap<>() {
             {
-                put("callbackUrls", ModifiedOAuthAppConfig.CALLBACK_URLS);
-                put("grantTypes", ModifiedOAuthAppConfig.GRANT_TYPES);
-                put("pkceMandatory", true);
-                put("appTokenExpiry", ModifiedOAuthAppConfig.APP_TOKEN_EXPIRY);
-                put("publicClient", ModifiedOAuthAppConfig.IS_PUBLIC_CLIENT);
-                put("refreshTokenExpiry", ModifiedOAuthAppConfig.REFRESH_TOKEN_EXPIRY);
-                put("userTokenExpiry", ModifiedOAuthAppConfig.USER_TOKEN_EXPIRY);
+                put(KeyGenerationRequestParams.CALLBACK_URLS, ModifiedOAuthAppConfig.CALLBACK_URLS);
+                put(KeyGenerationRequestParams.GRANT_TYPES, ModifiedOAuthAppConfig.GRANT_TYPES);
+                put(KeyGenerationRequestParams.PKCE_MANDATORY, true);
+                put(KeyGenerationRequestParams.APP_TOKEN_EXPIRY, ModifiedOAuthAppConfig.APP_TOKEN_EXPIRY);
+                put(KeyGenerationRequestParams.PUBLIC_CLIENT, ModifiedOAuthAppConfig.IS_PUBLIC_CLIENT);
+                put(KeyGenerationRequestParams.REFRESH_TOKEN_EXPIRY, ModifiedOAuthAppConfig.REFRESH_TOKEN_EXPIRY);
+                put(KeyGenerationRequestParams.USER_TOKEN_EXPIRY, ModifiedOAuthAppConfig.USER_TOKEN_EXPIRY);
             }
         };
     }

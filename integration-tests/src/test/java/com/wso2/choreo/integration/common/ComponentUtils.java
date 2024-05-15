@@ -1430,17 +1430,11 @@ public class ComponentUtils {
     }
 
     public static void addExternalIdpKeys(TestActionRunner runner, HttpClient client, String projectId,
-            String componentId, String environmentId, HashMap<String, Object> keyMappingRequest)
+            String componentId, String environmentId, HashMap<String, Object> keyMappingRequest,
+            HttpStatus expectedStatus)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
-        Component.addExternalIdpKeys(runner, client, projectId, componentId, environmentId, keyMappingRequest);
-    }
-
-    public static String addConflictingExternalIdpKeys(TestActionRunner runner, HttpClient client,
-            String projectId, String componentId, String environmentId, HashMap<String, Object> keyMappingRequest)
-            throws TokenRetrievalException, IOException, URISyntaxException {
-
-        return Component.addConflictingExternalIdpKeys(runner, client, projectId, componentId, environmentId,
-                keyMappingRequest);
+        Component.addExternalIdpKeys(runner, client, projectId, componentId, environmentId, keyMappingRequest,
+                expectedStatus);
     }
 }
