@@ -64,10 +64,13 @@ public class ConnectionService extends ControlPlaneAPI {
 
     public static String createChoreoConnection(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
                                                 ConnectionCreateRequest connectionReq, Boolean isPublisherSecured,
-                                                List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs,Boolean isWebApp) throws IOException {
+                                                List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs, 
+                                                boolean isWebApp ) throws IOException {
         String createChoreoConnectionURI = CONTEXT.concat("/configurations/service-configs/choreo-connections");
         if (isWebApp) {
             createChoreoConnectionURI = createChoreoConnectionURI.concat("?generateCreds=false");
+        }else{
+            createChoreoConnectionURI = createChoreoConnectionURI.concat("?generateCreds=true");
         }
         String requestPayload = ObjectMapperUtil.mapObjectToString(connectionReq);
         AtomicReference<String> connectionId = new AtomicReference<>();
@@ -97,8 +100,8 @@ public class ConnectionService extends ControlPlaneAPI {
                                     }
                                     String payload = message.getPayload(String.class);
                                     JsonObject connectionJsonObject = new JsonParser().parse(payload).getAsJsonObject();
-                                    validateConnectionCreation (context,connectionJsonObject,connectionId,isWebApp,
-                                            isPublisherSecured,"isConnectionCreationSuccess",publisherDeployedEnvs);
+                                    validateConnectionCreation (context, connectionJsonObject, connectionId,
+                                            isPublisherSecured, "isConnectionCreationSuccess", publisherDeployedEnvs);
                                 }
                                 )));
         return connectionId.get();
@@ -119,11 +122,15 @@ public class ConnectionService extends ControlPlaneAPI {
     public static void refreshChoreoConnection(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
                                                  String connectionId, ConnectionCreateRequest connectionReq,
                                                List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs,
-                                               Boolean isPublisherSecured,Boolean isWebApp) throws Exception {
+                                               boolean isPublisherSecured, boolean isWebApp) throws Exception {
         String refreshChoreoConnectionURI = CONTEXT.
                 concat("/configurations/service-configs/choreo-connections/refresh/")
-                .concat(connectionId)
-                .concat("?generateCreds=true");
+                .concat(connectionId);   
+        if (isWebApp) {
+            refreshChoreoConnectionURI = refreshChoreoConnectionURI.concat("?generateCreds=false");
+        }else{
+            refreshChoreoConnectionURI = refreshChoreoConnectionURI.concat("?generateCreds=true");
+        }
         String requestPayload = ObjectMapperUtil.mapObjectToString(connectionReq);
         runner.variable("isConnectionRefreshSuccess",false);
         runner.$(repeatOnError()
@@ -152,8 +159,8 @@ public class ConnectionService extends ControlPlaneAPI {
                                             }
                                             String payload = message.getPayload(String.class);
                                             JsonObject connectionJsonObject = new JsonParser().parse(payload).getAsJsonObject();
-                                            validateConnectionCreation (context,connectionJsonObject,null,isWebApp,
-                                            isPublisherSecured,"isConnectionRefreshSuccess",publisherDeployedEnvs);
+                                            validateConnectionCreation (context, connectionJsonObject, null,
+                                            isPublisherSecured, "isConnectionRefreshSuccess", publisherDeployedEnvs);
                                         }
                                 )));
     }
@@ -335,36 +342,52 @@ public class ConnectionService extends ControlPlaneAPI {
         return connectionId;
     }
 
+    private static boolean isPublisherDeployedEnvironment(List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs, String envId) {
+        for (com.wso2.choreo.integration.models.environments.Environment environment : publisherDeployedEnvs) {
+            if (environment.getTemplateId().equals(envId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void validateConnectionCreation(com.consol.citrus.context.TestContext context,
                                                   JsonObject connectionJsonObject, AtomicReference<String> connectionId,
-                                                  boolean isWebApp, boolean isPublisherSecured, String contextVariableName,
+                                                  boolean isPublisherSecured, String contextVariableName,
                                                   List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs){
 
         JsonObject connectionStatus = connectionJsonObject.getAsJsonObject("status");
-        for (com.wso2.choreo.integration.models.environments.Environment environment : publisherDeployedEnvs) {
-            String envId = environment.getTemplateId();
-            if (!connectionStatus.has(envId)) {
-                throw new ValidationException("Connection creation failed for environment: " + envId);
-            }
+        for (String envId : connectionStatus.keySet()) {
             JsonArray envStatus = connectionStatus.getAsJsonArray(envId);
-            if (isWebApp) {
+            if (isPublisherDeployedEnvironment(publisherDeployedEnvs, envId)) {
                 if (!isStageSuccess(envStatus, "Service Url resolved")) {
                     throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
                 }
-            } else if (isPublisherSecured) {
-                if (!isStageSuccess(envStatus, "Service Url resolved") || !isStageSuccess(envStatus, "OAuth keys generated")) {
-                    throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
+               if (isPublisherSecured) {
+                    if (!isStageSuccess(envStatus, "OAuth keys generated")) {
+                        throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
+                    }
                 }
             } else {
-                if (!isStageSuccess(envStatus, "Service Url resolved")) {
-                    throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
+                boolean isPartiallyCreated = connectionJsonObject.get("isPartiallyCreated").getAsBoolean();
+                if (!isPartiallyCreated) {
+                    throw new ValidationException("Connection configurations are not properly partially created for " +
+                            "environment: " + envId);
+                }
+                if (isStageSuccess(envStatus, "Service Url resolved")) {
+                    throw new ValidationException("Connection configurations are not properly partially created for " +
+                            "environment: " + envId);
+                }
+                if (isPublisherSecured) {
+                    if (!isStageSuccess(envStatus, "OAuth keys generated")) {
+                        throw new ValidationException("Connection configurations are not properly partially created for " +
+                                "environment: " + envId);                    }
                 }
             }
-            context.setVariable(contextVariableName, true);
-            if(connectionId != null) {
-                connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
-            }
-
+        }
+        context.setVariable(contextVariableName, true);
+        if(connectionId != null) {
+            connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
         }
     }
 }
