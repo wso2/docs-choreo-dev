@@ -279,24 +279,6 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         ComponentUtils.invokeApiPOST(this, invokeData.getRight().getApikey(), invokeData.getLeft(), API_INVOCATION_REQUEST_URI,
                 API_INVOCATION_REQUEST_BODY, REST_API_EXPECTED_RESPONSE, HttpStatus.ACCEPTED);
     }
-
-
-    @Test(dependsOnMethods = {"createComponentLevelConnectionToUnsecuredPublicService_TestChoreoConnections"})
-    @CitrusTest
-    public void undeployClientComponent_TestChoreoConnections() throws Exception {
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(clientChoreoComponent.getId()).orgHandler(orgHandle)
-                .componentType("byocRestApi").releaseId(clientDeploymentStatusDTO.getReleaseId()).build();
-        GraphQL.stopDeployment(this, appServiceClient, accessToken, graphqlDTO);
-    }
-
-    @Test(dependsOnMethods = {"undeployClientComponent_TestChoreoConnections"})
-    @CitrusTest
-    public void undeployServiceComponent_TestChoreoConnections() throws Exception {
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(publicEndpointServiceComponent.getId()).orgHandler(orgHandle)
-                .componentType("byocRestApi").releaseId(publicEndpointServiceDeploymentStatusDTO.getReleaseId()).build();
-        GraphQL.stopDeployment(this, appServiceClient, accessToken, graphqlDTO);
-    }
-
     @Test()
     @CitrusTest
     public void setUpEndpointForProxy_TestChoreoConnections() throws Exception {
@@ -692,7 +674,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 newClientComponentEnvironments, ComponentFlavour.BYOC, projectOne);
         newClientPromotionStatusDTO = newClientStatusDTO.get(0);
     }
-    
+
     @Test(dependsOnMethods = {"PromoteClientComponent_TestChoreoConnections"})
     @CitrusTest
     public void invokeAPIStageForProxyBasedConnection_TestChoreoConnections() throws Exception {
