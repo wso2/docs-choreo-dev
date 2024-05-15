@@ -97,36 +97,8 @@ public class ConnectionService extends ControlPlaneAPI {
                                     }
                                     String payload = message.getPayload(String.class);
                                     JsonObject connectionJsonObject = new JsonParser().parse(payload).getAsJsonObject();
-                                    JsonObject connectionStatus = connectionJsonObject.getAsJsonObject("status");
-
-                                    for (com.wso2.choreo.integration.models.environments.Environment environment : publisherDeployedEnvs) {
-                                        String envId = environment.getTemplateId();
-                                        if (!connectionStatus.has(envId)) {
-                                            throw new ValidationException("Connection creation failed for environment: " + envId);
-                                        }
-                                        JsonArray envStatus = connectionStatus.getAsJsonArray(envId);
-                                        if (isWebApp) {
-                                            if (!isStageSuccess(envStatus, "Service Url resolved")) {
-                                                throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
-                                            }
-                                            context.setVariable("isConnectionCreationSuccess", true);
-                                            connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
-                                        } else if (isPublisherSecured) {
-                                            if (!isStageSuccess(envStatus, "Service Url resolved") || !isStageSuccess(envStatus, "OAuth keys generated")) {
-                                                throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
-                                            }
-                                            context.setVariable("isConnectionCreationSuccess", true);
-                                            connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
-                                        } else {
-                                            if (!isStageSuccess(envStatus, "Service Url resolved")) {
-                                                throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
-
-                                            }
-                                            context.setVariable("isConnectionCreationSuccess", true);
-                                            connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
-                                        }
-
-                                    }
+                                    validateConnectionCreation (context,connectionJsonObject,connectionId,isWebApp,
+                                            isPublisherSecured,"isConnectionCreationSuccess",publisherDeployedEnvs);
                                 }
                                 )));
         return connectionId.get();
@@ -144,17 +116,20 @@ public class ConnectionService extends ControlPlaneAPI {
         return false;
     }
 
-    public static void refreshChoreoConnection(TestActionRunner runner, HttpClient client, String accessToken,
-                                                 String connectionId, ConnectionCreateRequest connectionReq) throws Exception {
+    public static void refreshChoreoConnection(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+                                                 String connectionId, ConnectionCreateRequest connectionReq,
+                                               List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs,
+                                               Boolean isPublisherSecured,Boolean isWebApp) throws Exception {
         String refreshChoreoConnectionURI = CONTEXT.
                 concat("/configurations/service-configs/choreo-connections/refresh/")
                 .concat(connectionId)
                 .concat("?generateCreds=true");
         String requestPayload = ObjectMapperUtil.mapObjectToString(connectionReq);
+        runner.variable("isConnectionRefreshSuccess",false);
         runner.$(repeatOnError()
-                .until("i = 5")
+                .until("(i = 5) or ( ${isConnectionRefreshSuccess} = true )")
                 .index("i")
-                .autoSleep(30000)
+                .autoSleep(5000)
                 .actions(
                         http()
                                 .client(client)
@@ -169,7 +144,18 @@ public class ConnectionService extends ControlPlaneAPI {
                                 .client(client)
                                 .receive()
                                 .response(HttpStatus.CREATED)
-                                ));
+                                .validate((message, context) -> {
+                                            int code = (int) message.getHeader(HTTP_STATUS_CODE);
+                                            if (code != HttpStatus.CREATED.value()) {
+                                                throw new ValidationException("Connection refreshing failed with " +
+                                                        "status code: " + code);
+                                            }
+                                            String payload = message.getPayload(String.class);
+                                            JsonObject connectionJsonObject = new JsonParser().parse(payload).getAsJsonObject();
+                                            validateConnectionCreation (context,connectionJsonObject,null,isWebApp,
+                                            isPublisherSecured,"isConnectionRefreshSuccess",publisherDeployedEnvs);
+                                        }
+                                )));
     }
 
     public static void deleteChoreoConnection(String accessToken,
@@ -347,5 +333,38 @@ public class ConnectionService extends ControlPlaneAPI {
             throw new ValidationException("Error while update component-config.yaml file" + mergeCodeResp.getRes());
         }
         return connectionId;
+    }
+
+    public static void validateConnectionCreation(com.consol.citrus.context.TestContext context,
+                                                  JsonObject connectionJsonObject, AtomicReference<String> connectionId,
+                                                  boolean isWebApp, boolean isPublisherSecured, String contextVariableName,
+                                                  List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs){
+
+        JsonObject connectionStatus = connectionJsonObject.getAsJsonObject("status");
+        for (com.wso2.choreo.integration.models.environments.Environment environment : publisherDeployedEnvs) {
+            String envId = environment.getTemplateId();
+            if (!connectionStatus.has(envId)) {
+                throw new ValidationException("Connection creation failed for environment: " + envId);
+            }
+            JsonArray envStatus = connectionStatus.getAsJsonArray(envId);
+            if (isWebApp) {
+                if (!isStageSuccess(envStatus, "Service Url resolved")) {
+                    throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
+                }
+            } else if (isPublisherSecured) {
+                if (!isStageSuccess(envStatus, "Service Url resolved") || !isStageSuccess(envStatus, "OAuth keys generated")) {
+                    throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
+                }
+            } else {
+                if (!isStageSuccess(envStatus, "Service Url resolved")) {
+                    throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
+                }
+            }
+            context.setVariable(contextVariableName, true);
+            if(connectionId != null) {
+                connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
+            }
+
+        }
     }
 }

@@ -257,7 +257,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     public void refreshComponentLevelConnection_TestChoreoConnections() throws Exception {
         HttpClient connectionServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         ConnectionService.refreshChoreoConnection(this, connectionServiceClient,
-                accessToken, componentLevelConnectionId, connectionCreationReq);
+                accessToken, componentLevelConnectionId, connectionCreationReq,
+                servicePublisherComponentEnvironments.subList(0,2),true,false);
     }
 
     @Test(dependsOnMethods = {"refreshComponentLevelConnection_TestChoreoConnections"})
@@ -558,7 +559,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 ComponentUtils.validateComponentDeployment(this,citrusClients,accessToken,deployedPublisherComponent,latestCommit,environments,true);
 
         if(deployedPublisherComponentStatus != null && !deployedPublisherComponentStatus.getDeploymentStatusV2().equals("ACTIVE")){
-            throw new ValidationException("loyalty-service-component is not in active state");
+            throw new ValidationException("connections-publisher-component is not in active state");
         }
 
         if(deployedPublisherComponentStatus == null){
@@ -604,7 +605,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
 
         ComponentDeploymentStatusDTO deployedPublisherComponentStatus = ComponentUtils.validateComponentDeployment(this,citrusClients,accessToken,deployedPublisherComponent,publisherLatestCommit,environments,true);
         if(deployedPublisherComponentStatus != null && !deployedPublisherComponentStatus.getDeploymentStatusV2().equals("ACTIVE")){
-            throw new ValidationException("Publisher component:loyalty-service-component is not in active state");
+            throw new ValidationException("connections-publisher-component is not in active state");
         }
         if(deployedPublisherComponentStatus == null){
             ComponentUtils.deployComponent(this, citrusClients, accessToken, deployedPublisherComponent,
@@ -679,7 +680,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 projectOne.getId(),
                 newClientChoreoComponent.getId(), PUBLIC_SERVICE, serviceFound);
         ConnectionService.refreshChoreoConnection(this, connectionServiceClient,
-                accessToken, componentLevelNewConnectionId, connectionReq);
+                accessToken, componentLevelNewConnectionId, connectionReq,
+                proxyPublisherComponentEnvironments.subList(0,1), true, false);
     }
     
     @Test(dependsOnMethods = {"refreshConnectionConfigurationsForProxyBasedConnection_TestChoreoConnections"})
