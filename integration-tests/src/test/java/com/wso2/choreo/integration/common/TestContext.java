@@ -76,23 +76,24 @@ public class TestContext {
     }
 
     public static synchronized void setResourceAuthzTestUserTokenHandler() {
+
         try {
             if (resourceAuthzTestUserTokenHandler == null) {
-                String token = System.getProperty("ResourceAuthzUserToken");
-
-                if (!StringUtils.isEmpty(token)) {
-                    resourceAuthzTestUserTokenHandler = new TokenHandler(token);
-                } else {
-                    resourceAuthzTestUserTokenHandler = new TokenHandler.Builder(
-                            Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE),
-                            Configuration.getConfig(ConfigDefinition.RESOURCE_AUTHZ_USER_EMAIL),
-                            Configuration.getConfig(ConfigDefinition.RESOURCE_AUTHZ_USER_PASSWORD))
-                            .asgardeoClientId(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_ID))
-                            .asgardeoClientSecret(
-                                    Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_SECRET))
-                            .cpAppClientId(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_ID))
-                            .cpAppClientSecret(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_SECRET)).build();
+                if (!StringUtils.isEmpty(System.getProperty("Token"))) {
+                    log.warn("Test user token is provided. Resource authz tests will be skipped.");
+                    resourceAuthzTestUserTokenHandler = new TokenHandler("");
+                    return;
                 }
+
+                resourceAuthzTestUserTokenHandler = new TokenHandler.Builder(
+                        Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE),
+                        Configuration.getConfig(ConfigDefinition.RESOURCE_AUTHZ_USER_EMAIL),
+                        Configuration.getConfig(ConfigDefinition.RESOURCE_AUTHZ_USER_PASSWORD))
+                        .asgardeoClientId(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_ID))
+                        .asgardeoClientSecret(
+                                Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_SECRET))
+                        .cpAppClientId(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_ID))
+                        .cpAppClientSecret(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_SECRET)).build();
             }
         } catch (Exception e) {
             log.warn("Failed to set resource authz test user token handler", e);
