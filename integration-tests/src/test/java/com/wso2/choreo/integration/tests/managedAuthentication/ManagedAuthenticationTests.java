@@ -91,4 +91,26 @@ public class ManagedAuthenticationTests extends TestNGCitrusSpringSupport {
         ManagedAuthenticationUtils.validateDefaultManagedAuthConfig(this, appServiceClient, defaultComponent, 
             defaultComponentProdEnv);
     }
+
+    @Test(dependsOnMethods = {"promoteComponentWithDefaultConfigurations_ManagedAuthenticationTests"})
+    @CitrusTest
+    public void deployComponentWithManagedAuthDisabled_ManagedAuthenticationTests() throws Exception {
+        ManagedAuthenticationUtils.setManagedAuthDisabledConfig(this, appServiceClient, defaultComponent, 
+            defaultComponentDevEnv);
+        ManagedAuthenticationUtils.deployBuiltWebAppComponent(this, citrusClients, accessToken, defaultComponent, 
+            defaultComponentEnvironments);
+
+        ManagedAuthenticationUtils.validateManagedAuthDisabledConfig(this, appServiceClient, defaultComponent, 
+            defaultComponentDevEnv);
+    }
+
+    @Test(dependsOnMethods = {"deployComponentWithManagedAuthDisabled_ManagedAuthenticationTests"})
+    @CitrusTest
+    public void promoteComponentWithManagedAuthDisabled_ManagedAuthenticationTests() throws Exception {
+        ComponentUtils.promoteComponent(this, citrusClients, accessToken, defaultComponent, 
+            defaultComponentEnvironments, ComponentFlavour.WEBAPP);
+
+        ManagedAuthenticationUtils.validateManagedAuthDisabledConfig(this, appServiceClient, defaultComponent, 
+            defaultComponentProdEnv);
+    }
 }

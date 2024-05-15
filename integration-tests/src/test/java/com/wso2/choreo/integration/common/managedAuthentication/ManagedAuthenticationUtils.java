@@ -34,6 +34,7 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.configservice.ConfigurationGroup;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.keymanager.KeyGenResponseDTO;
@@ -90,12 +91,32 @@ public class ManagedAuthenticationUtils {
     }
 
     /**
+     * Deploy already Built Webapp Component.
+     *
+     * @param runner Citrus test runner
+     * @param citrusClients Map of Endpoints and Citrus http clients
+     * @param accessToken Access token for authentication
+     * @param component ChoreoComponent instance
+     * @param componentEnvironments List of Environment instances
+     * @return ComponentDeploymentStatusDTO instance
+     * @throws Exception if an error occurs during deployment
+     */
+    public static ComponentDeploymentStatusDTO deployBuiltWebAppComponent(TestNGCitrusSpringSupport runner, 
+            Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component, 
+            List<Environment> componentEnvironments) throws Exception {
+    
+            Commit latestCommit = ComponentUtils.getLatestCommit(runner, citrusClients, accessToken, component);
+            return ComponentUtils.deployBuiltComponent(runner, citrusClients, accessToken, component, latestCommit, 
+                componentEnvironments);
+    }
+
+    /**
      * Generate Keyset.
      *
      * @param runner Citrus test runner
      * @param appServiceClient Citrus http client
      * @param component ChoreoComponent instance
-     * @param devEnvironment Environment instance
+     * @param environment Environment instance
      * @return KeyGenResponseDTO instance
      * @throws ReleaseIdNotFoundException if release ID is not found
      * @throws TokenRetrievalException if an error occurs while retrieving the token
@@ -103,13 +124,13 @@ public class ManagedAuthenticationUtils {
      * @throws URISyntaxException if an error occurs while creating the URI
      */
     public static KeyGenResponseDTO GenerateKeyset(TestNGCitrusSpringSupport runner, HttpClient appServiceClient, 
-            ChoreoComponent component, Environment devEnvironment) throws ReleaseIdNotFoundException, 
+            ChoreoComponent component, Environment environment) throws ReleaseIdNotFoundException, 
             TokenRetrievalException, IOException, URISyntaxException {
     
         String releaseId = component.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT);
 
         return ComponentUtils.generateKeys(runner, appServiceClient, component.getProjectId(), component.getId(), 
-            devEnvironment.getId(), getTestKeygenRequest(releaseId));
+            environment.getId(), getTestKeygenRequest(releaseId));
     }
 
     /**
@@ -135,19 +156,19 @@ public class ManagedAuthenticationUtils {
      * @param runner Citrus test runner
      * @param appServiceClient Citrus http client
      * @param componentA ChoreoComponent instance
-     * @param devEnvironment Environment instance
+     * @param environment Environment instance
      * @throws TokenRetrievalException if an error occurs while retrieving the token
      * @throws IOException if an error occurs while reading the response
      * @throws URISyntaxException if an error occurs while creating the URI
      */
     public static void validateKeySetConfig(TestNGCitrusSpringSupport runner, HttpClient appServiceClient, 
-            ChoreoComponent componentA, Environment devEnvironment) throws TokenRetrievalException, IOException, 
+            ChoreoComponent componentA, Environment environment) throws TokenRetrievalException, IOException, 
             URISyntaxException {
 
         ConfigurationGroup keySetConfigs = getKeySetConfig(runner, appServiceClient, componentA);
 
         Assert.assertFalse(keySetConfigs.getConfigurationValue(KeySetConfigKeys.CLIENT_ID, 
-            devEnvironment.getTemplateId()).orElse("").isBlank());
+            environment.getTemplateId()).orElse("").isBlank());
     }
 
     /**
@@ -174,25 +195,25 @@ public class ManagedAuthenticationUtils {
      * @param runner Citrus test runner
      * @param appServiceClient Citrus http client
      * @param componentA ChoreoComponent instance
-     * @param devEnvironment Environment instance
+     * @param environment Environment instance
      * @throws TokenRetrievalException if an error occurs while retrieving the token
      * @throws IOException if an error occurs while reading the response
      * @throws URISyntaxException if an error occurs while creating the URI
      */
     public static void setDefaultManagedAuthConfig(TestNGCitrusSpringSupport runner, HttpClient appServiceClient, 
-            ChoreoComponent componentA, Environment devEnvironment) throws TokenRetrievalException, IOException, 
+            ChoreoComponent componentA, Environment environment) throws TokenRetrievalException, IOException, 
             URISyntaxException {
 
         ConfigurationGroup managedAuthConfigs = getManagedAuthConfig(runner, appServiceClient, componentA);
 
         managedAuthConfigs.setConfigurationValue(ManagedAuthConfigKeys.POST_LOGIN_PATH, 
-            DefaultManagedAuthConfigValues.POST_LOGIN_PATH, devEnvironment.getTemplateId());
+            DefaultManagedAuthConfigValues.POST_LOGIN_PATH, environment.getTemplateId());
         managedAuthConfigs.setConfigurationValue(ManagedAuthConfigKeys.POST_LOGOUT_PATH, 
-            DefaultManagedAuthConfigValues.POST_LOGOUT_PATH, devEnvironment.getTemplateId());
+            DefaultManagedAuthConfigValues.POST_LOGOUT_PATH, environment.getTemplateId());
         managedAuthConfigs.setConfigurationValue(ManagedAuthConfigKeys.SCOPES, 
-            DefaultManagedAuthConfigValues.SCOPES, devEnvironment.getTemplateId());
+            DefaultManagedAuthConfigValues.SCOPES, environment.getTemplateId());
         managedAuthConfigs.setConfigurationValue(ManagedAuthConfigKeys.SESSION_EXPIRY_TIME, 
-            DefaultManagedAuthConfigValues.SESSION_EXPIRY_TIME, devEnvironment.getTemplateId());
+            DefaultManagedAuthConfigValues.SESSION_EXPIRY_TIME, environment.getTemplateId());
 
         ConfigServiceUtils.updateConfigGroup(runner, appServiceClient, managedAuthConfigs);
     }
@@ -203,25 +224,69 @@ public class ManagedAuthenticationUtils {
      * @param runner Citrus test runner
      * @param appServiceClient Citrus http client
      * @param componentA ChoreoComponent instance
-     * @param devEnvironment Environment instance
+     * @param environment Environment instance
      * @throws TokenRetrievalException if an error occurs while retrieving the token
      * @throws IOException if an error occurs while reading the response
      * @throws URISyntaxException if an error occurs while creating the URI
      */
     public static void validateDefaultManagedAuthConfig(TestNGCitrusSpringSupport runner, HttpClient appServiceClient, 
-            ChoreoComponent componentA, Environment devEnvironment) throws TokenRetrievalException, IOException, 
+            ChoreoComponent componentA, Environment environment) throws TokenRetrievalException, IOException, 
             URISyntaxException {
 
         ConfigurationGroup managedAuthConfigs = getManagedAuthConfig(runner, appServiceClient, componentA);
 
         Assert.assertEquals(managedAuthConfigs.getConfigurationValue(ManagedAuthConfigKeys.POST_LOGIN_PATH, 
-            devEnvironment.getTemplateId()).get(), DefaultManagedAuthConfigValues.POST_LOGIN_PATH);
+            environment.getTemplateId()).get(), DefaultManagedAuthConfigValues.POST_LOGIN_PATH);
         Assert.assertEquals(managedAuthConfigs.getConfigurationValue(ManagedAuthConfigKeys.POST_LOGOUT_PATH, 
-            devEnvironment.getTemplateId()).get(), DefaultManagedAuthConfigValues.POST_LOGOUT_PATH);
+            environment.getTemplateId()).get(), DefaultManagedAuthConfigValues.POST_LOGOUT_PATH);
         Assert.assertEquals(managedAuthConfigs.getConfigurationValue(ManagedAuthConfigKeys.SCOPES, 
-            devEnvironment.getTemplateId()).get(), DefaultManagedAuthConfigValues.SCOPES);
+            environment.getTemplateId()).get(), DefaultManagedAuthConfigValues.SCOPES);
         Assert.assertEquals(managedAuthConfigs.getConfigurationValue(ManagedAuthConfigKeys.SESSION_EXPIRY_TIME, 
-            devEnvironment.getTemplateId()).get(), DefaultManagedAuthConfigValues.SESSION_EXPIRY_TIME);
+            environment.getTemplateId()).get(), DefaultManagedAuthConfigValues.SESSION_EXPIRY_TIME);
+    }
+
+    /**
+     * Set Managed Authentication disabled configuration.
+     *
+     * @param runner Citrus test runner
+     * @param appServiceClient Citrus http client
+     * @param componentA ChoreoComponent instance
+     * @param environment Environment instance
+     * @throws TokenRetrievalException if an error occurs while retrieving the token
+     * @throws IOException if an error occurs while reading the response
+     * @throws URISyntaxException if an error occurs while creating the URI
+     */
+    public static void setManagedAuthDisabledConfig(TestNGCitrusSpringSupport runner, HttpClient appServiceClient, 
+            ChoreoComponent componentA, Environment environment) throws TokenRetrievalException, IOException, 
+            URISyntaxException {
+
+        ConfigurationGroup managedAuthConfigs = getManagedAuthConfig(runner, appServiceClient, componentA);
+
+        managedAuthConfigs.setConfigurationValue(ManagedAuthConfigKeys.IS_APP_GATEWAY_CONFIGURED, 
+            "false", environment.getTemplateId());
+
+        ConfigServiceUtils.updateConfigGroup(runner, appServiceClient, managedAuthConfigs);
+    }
+
+    /**
+     * Validate Managed Authentication is disabled in the configuration.
+     *
+     * @param runner Citrus test runner
+     * @param appServiceClient Citrus http client
+     * @param componentA ChoreoComponent instance
+     * @param environment Environment instance
+     * @throws TokenRetrievalException if an error occurs while retrieving the token
+     * @throws IOException if an error occurs while reading the response
+     * @throws URISyntaxException if an error occurs while creating the URI
+     */
+    public static void validateManagedAuthDisabledConfig(TestNGCitrusSpringSupport runner, HttpClient appServiceClient, 
+            ChoreoComponent componentA, Environment environment) throws TokenRetrievalException, IOException, 
+            URISyntaxException {
+
+        ConfigurationGroup managedAuthConfigs = getManagedAuthConfig(runner, appServiceClient, componentA);
+
+        Assert.assertEquals(managedAuthConfigs.getConfigurationValue(ManagedAuthConfigKeys.IS_APP_GATEWAY_CONFIGURED, 
+            environment.getTemplateId()).get(), "false");
     }
 
     private static ConfigurationGroup getConfigGroupByName(TestNGCitrusSpringSupport runner, 
