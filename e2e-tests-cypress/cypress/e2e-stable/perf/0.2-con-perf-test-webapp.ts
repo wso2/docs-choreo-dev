@@ -115,14 +115,17 @@ describe("Multiple User Logins", () => {
   }
 
   before(() => {
+    cy.recordHar();
     interceptWriter = new InterceptWriter();
   });
 
   beforeEach(() => {
+    cy.recordHar();
     username;
   });
 
   afterEach(function () {
+    cy.saveHar();
     if (this.currentTest && this.currentTest.state === "failed") {
       const testName = this.currentTest.title;
       cy.screenshot(`failure_${testName}`);
