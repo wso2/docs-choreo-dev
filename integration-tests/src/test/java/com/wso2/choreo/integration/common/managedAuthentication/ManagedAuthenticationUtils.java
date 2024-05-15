@@ -147,7 +147,7 @@ public class ManagedAuthenticationUtils {
         ConfigurationGroup keySetConfigs = getKeySetConfig(runner, appServiceClient, componentA);
 
         Assert.assertFalse(keySetConfigs.getConfigurationValue(KeySetConfigKeys.CLIENT_ID, 
-            devEnvironment.getTemplateId()).get().isBlank());
+            devEnvironment.getTemplateId()).orElse("").isBlank());
     }
 
     /**

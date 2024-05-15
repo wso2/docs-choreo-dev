@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
@@ -29,7 +30,9 @@ public class ManagedAuthenticationTests extends TestNGCitrusSpringSupport {
     private HttpClient appServiceClient;
     private ChoreoProject project;
     private ChoreoComponent defaultComponent;
-    private List<Environment> componentAEnvironments;
+    private List<Environment> defaultComponentEnvironments;
+    private Environment defaultComponentDevEnv;
+    private Environment defaultComponentProdEnv;
     private String accessToken;
 
     @BeforeClass
@@ -46,24 +49,46 @@ public class ManagedAuthenticationTests extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"createProject_ManagedAuthenticationTests"})
     @CitrusTest
-    public void deployComponentWithDefaultConfigurations_ManagedAuthenticationTests() throws Exception {
+    public void setupDefaultComponent_ManagedAuthenticationTests() throws Exception {
         defaultComponent = ManagedAuthenticationUtils.createWebAppComponent(this, citrusClients, accessToken, project);
 
-        componentAEnvironments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, 
+        defaultComponentEnvironments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, 
             defaultComponent);
-        Environment devEnvironment = componentAEnvironments.stream()
+        defaultComponentDevEnv = defaultComponentEnvironments.stream()
             .filter(env -> env.getChoreoEnv().equals(Constant.DEV_ENVIRONMENT))
             .findFirst()
             .get();
+        defaultComponentProdEnv = defaultComponentEnvironments.stream()
+            .filter(env -> env.getChoreoEnv().equals(Constant.PROD_ENVIRONMENT))
+            .findFirst()
+            .get();
+    }
 
-        ManagedAuthenticationUtils.GenerateKeyset(this, appServiceClient, defaultComponent, devEnvironment);
+    @Test(dependsOnMethods = {"setupDefaultComponent_ManagedAuthenticationTests"})
+    @CitrusTest
+    public void deployComponentWithDefaultConfigurations_ManagedAuthenticationTests() throws Exception {
+        ManagedAuthenticationUtils.GenerateKeyset(this, appServiceClient, defaultComponent, defaultComponentDevEnv);
         ManagedAuthenticationUtils.setDefaultManagedAuthConfig(this, appServiceClient, defaultComponent, 
-            devEnvironment);
+            defaultComponentDevEnv);
         ManagedAuthenticationUtils.buildAndDeployWebAppComponent(this, citrusClients, accessToken, defaultComponent, 
-            componentAEnvironments);
+            defaultComponentEnvironments);
 
-        ManagedAuthenticationUtils.validateKeySetConfig(this, appServiceClient, defaultComponent, devEnvironment);
+        ManagedAuthenticationUtils.validateKeySetConfig(this, appServiceClient, defaultComponent, 
+            defaultComponentDevEnv);
         ManagedAuthenticationUtils.validateDefaultManagedAuthConfig(this, appServiceClient, defaultComponent, 
-            devEnvironment);
+            defaultComponentDevEnv);
+    }
+
+    @Test(dependsOnMethods = {"deployComponentWithDefaultConfigurations_ManagedAuthenticationTests"})
+    @CitrusTest
+    public void promoteComponentWithDefaultConfigurations_ManagedAuthenticationTests() throws Exception {
+        ManagedAuthenticationUtils.GenerateKeyset(this, appServiceClient, defaultComponent, defaultComponentProdEnv);
+        ComponentUtils.promoteComponent(this, citrusClients, accessToken, defaultComponent, 
+            defaultComponentEnvironments, ComponentFlavour.WEBAPP);
+
+        ManagedAuthenticationUtils.validateKeySetConfig(this, appServiceClient, defaultComponent, 
+            defaultComponentProdEnv);
+        ManagedAuthenticationUtils.validateDefaultManagedAuthConfig(this, appServiceClient, defaultComponent, 
+            defaultComponentProdEnv);
     }
 }
