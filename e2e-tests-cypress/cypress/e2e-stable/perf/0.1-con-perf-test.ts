@@ -9,7 +9,8 @@ import { Project } from "../../support/console/entities/project/project";
 import { console } from "../../support/console/console";
 import { PERF_INTERCEPT_WAIT_TIME } from "../../support/commons/timeouts";
 import { InterceptWriter } from "../../support/commons/interceptWriter";
-import { recordHar, saveHar } from "../../support/commons/harGenerator";
+import '@neuralegion/cypress-har-generator';
+
 
 describe("Multiple User Logins", () => {
   let project: Project;
@@ -32,17 +33,17 @@ describe("Multiple User Logins", () => {
   }
 
   before(() => {
-    recordHar();
+    cy.recordHar();
     interceptWriter = new InterceptWriter();
   });
 
   beforeEach(() => {
-    recordHar();
+    cy.recordHar();
     username;
   });
 
   afterEach(function () {
-    saveHar();
+    cy.saveHar();
     if (this.currentTest && this.currentTest.state === "failed") {
       const testName = this.currentTest.title;
       cy.screenshot(`failure_${testName}`);
