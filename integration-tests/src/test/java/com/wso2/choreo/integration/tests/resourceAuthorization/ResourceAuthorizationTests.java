@@ -38,6 +38,8 @@ import com.wso2.choreo.integration.models.resourceAuthorization.CreateRoleRespon
 import com.wso2.choreo.integration.models.resourceAuthorization.GroupRoleMappingResponseDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.RoleGroupMappingResponseDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.GroupRoleMappingResponseDTO.GroupAssociation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.SkipException;
@@ -50,6 +52,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
+
+        private static final Logger log = LogManager.getLogger(ResourceAuthorizationTests.class);
 
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
@@ -82,6 +86,8 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
         projectA = GraphQL.createProject(this, appServiceClient, TestProjectData.REGION, userAccessToken,
                 projectName, projectHandler);
         Assert.assertNotNull(projectA.getId());
+
+        log.info("[Test] Project A: " + projectA.getId());
     }
 
     // Test 1
@@ -257,6 +263,10 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
         Assert.assertNotNull(projectX);
         Assert.assertNotNull(projectY);
         Assert.assertNotNull(projectZ);
+
+        log.info("[Test] Project X: " + projectX.getId());
+        log.info("[Test] Project Y: " + projectY.getId());
+        log.info("[Test] Project Z: " + projectZ.getId());
     }
 
     // Step 3: Assign developer role to the test group at project X level
@@ -289,10 +299,10 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
                 .refetchTestTokenForCPAPIs();
         List<ChoreoProject> projectsList = testOrganization.getProjectsList(testUserAccessToken);
 
-        Assert.assertTrue(projectsList.size() > 0);
+        Assert.assertTrue(projectsList.size() > 0, "No projects found");
         // User should only see project X
         Assert.assertTrue(projectsList.stream()
-                .anyMatch(project -> project.getId().equals(projectX.getId())));
+                .anyMatch(project -> project.getId().equals(projectX.getId())), "Project X not found");
     }
 
     // Test 4
