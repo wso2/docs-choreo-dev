@@ -9,6 +9,7 @@ import { Project } from "../../support/console/entities/project/project";
 import { console } from "../../support/console/console";
 import { PERF_INTERCEPT_WAIT_TIME } from "../../support/commons/timeouts";
 import { InterceptWriter } from "../../support/commons/interceptWriter";
+import { recordHar, saveHar } from "../../support/commons/harGenerator";
 
 describe("Multiple User Logins", () => {
   let project: Project;
@@ -31,14 +32,17 @@ describe("Multiple User Logins", () => {
   }
 
   before(() => {
+    recordHar();
     interceptWriter = new InterceptWriter();
   });
 
   beforeEach(() => {
+    recordHar();
     username;
   });
 
   afterEach(function () {
+    saveHar();
     if (this.currentTest && this.currentTest.state === "failed") {
       const testName = this.currentTest.title;
       cy.screenshot(`failure_${testName}`);
