@@ -76,6 +76,7 @@ public class KeyManagerConstants {
         public static final List<String> CALLBACK_URLS = List.of(
                 "https://modified-sample-app-cb1.choreo-integration-tests.dev",
                 "https://modified-sample-app-cb2.choreo-integration-tests.dev");
-        public static final List<String> GRANT_TYPES = List.of("authorization_code", "refresh_token");
+        public static final List<String> GRANT_TYPES = List.of("authorization_code", "refresh_token",
+                "client_credentials");
     }
 }

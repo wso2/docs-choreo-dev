@@ -17,6 +17,9 @@ import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.wso2.choreo.integration.apis.devops.DevopsPortalApi;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
@@ -27,6 +30,8 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.configurationservice.ConfigServiceUtils;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.keymanager.KeyManagerUtils;
+import com.wso2.choreo.integration.common.oauth.OAuthConstants;
+import com.wso2.choreo.integration.common.oauth.OAuthUtils;
 import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants;
 import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.AppGwKeysetConfigNames;
 import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.DefaultChoreoEnvironments;
@@ -40,9 +45,12 @@ import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.configservice.ConfigurationGroup;
+import com.wso2.choreo.integration.models.devops.Dataplane;
+import com.wso2.choreo.integration.models.devops.EnvironmentWithClusters;
 import com.wso2.choreo.integration.models.configservice.Configuration;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.keymanager.OAuthAppUpdateResponseDTO;
+import com.wso2.choreo.integration.models.oauth.ClientCredentialsResponseDTO;
 import com.wso2.choreo.integration.models.keymanager.DetailedKeyManager;
 import com.wso2.choreo.integration.models.keymanager.IdpAddRequestDTO;
 import com.wso2.choreo.integration.models.keymanager.IdpAddResponseDTO;
@@ -59,6 +67,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -140,7 +149,7 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
         getEnvironmentData();
     }
 
-    // Test 1 - Generate Keys with Choreo Built-In Identity Provider                                                        							
+    // Test 1 - Generate Keys with Choreo Built-In Identity Provider
 
     // Test 1.1 - Generate Keysets in the component
     @Test(dependsOnMethods = { "createTestComponent_KeyManagerTests" })
@@ -196,10 +205,32 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
         generatedKeys = regeneratedKeys;
     }
 
-    // Test 2 - Map keys from third party IDP							
+    // Test 1.4 - Invoke Client Credentials Auth Flow and get an access token
+    @Test(dependsOnMethods = { "regenerateKeysetsInComponent_KeyManagerTests" })
+    @CitrusTest
+    public void invokeClientCredentialsAuthFlowAndGetAccessToken_KeyManagerTests() throws Exception {
+
+        String tokenEndpointURL = getTokenEndpointURL(devEnvironment.getChoreoEnv(),
+                getClusterDomain(this, devEnvironment));
+
+        HashMap<String, Object> oAuthClientCredentialsRequest = new HashMap<>() {
+            {
+                put("grant_type", OAuthConstants.CLIENT_CREDENTIALS_GRANT_TYPE);
+                put("scope", OAuthConstants.DEFAULT_CLIENT_CREDENTIALS_SCOPES);
+            }
+        };
+
+        ClientCredentialsResponseDTO clientCredentialsResponse = OAuthUtils.invokeClientCredentialsAuthFlow(this,
+                tokenEndpointURL, generatedKeys.getClientId(), generatedKeys.getClientSecret(),
+                oAuthClientCredentialsRequest);
+
+        Assert.assertNotNull(clientCredentialsResponse.getAccess_token());
+    }
+
+    // Test 2 - Map keys from third party IDP
 
     // Test 2.1 - List IDPs in the development environment
-    @Test(dependsOnMethods = { "regenerateKeysetsInComponent_KeyManagerTests" })
+    @Test(dependsOnMethods = { "invokeClientCredentialsAuthFlowAndGetAccessToken_KeyManagerTests" })
     @CitrusTest
     public void listIdpsInDevEnvironment_KeyManagerTests() throws Exception {
         HttpClient appServiceClient = citrusClients.get(Endpoints.STS_ENDPOINT);
@@ -407,5 +438,44 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
                 put("userTokenExpiry", ModifiedOAuthAppConfig.USER_TOKEN_EXPIRY);
             }
         };
+    }
+
+    private static String getTokenEndpointURL(String choreoEnvironment, String region) {
+        return "https://" + TestContext.getTestOrg().getOrgUUID() + "-" + choreoEnvironment + "." + region + "."
+                + OAuthConstants.DEFAULT_CHOREO_STS_DOMAIN + "/" + OAuthConstants.DEFAULT_TOKEN_ENDPOINT;
+    }
+
+    private String getClusterDomain(TestActionRunner runner, Environment environment)
+            throws JsonMappingException, JsonProcessingException, TokenRetrievalException, IOException,
+            URISyntaxException {
+
+        List<EnvironmentWithClusters> environmentListWithClusters = DevopsPortalApi.getEnvironmentsWithClusters(runner,
+                TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(),
+                TestContext.getTestOrg().getOrgUUID(), testProject.getId()).getData();
+
+        EnvironmentWithClusters environmentWithClusters = environmentListWithClusters.stream()
+                .filter(env -> env.getChoreo_env().equals(environment.getChoreoEnv()))
+                .findFirst().orElse(null);
+
+        String clusterId = environmentWithClusters.getEnvironment_clusters().stream()
+                .filter(cluster -> cluster.getEnvironment_id().equals(environment.getId()))
+                .findFirst().orElse(null).getCluster_id();
+
+        List<Dataplane> dataplaneList = DevopsPortalApi.getDataplaneList(runner,
+                TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(),
+                TestContext.getTestOrg().getOrgUUID());
+
+        Dataplane dataplane = dataplaneList.stream()
+                .filter(dp -> dp.getId().equals(clusterId.toUpperCase()))
+                .findFirst().orElse(null);
+
+        String vhostName = dataplane.getExternalGatewayVirtualHost();
+
+        String[] domainFrags = vhostName.split("\\.");
+        if (domainFrags.length >= 2) {
+            domainFrags = Arrays.copyOf(domainFrags, domainFrags.length - 2);
+        }
+
+        return String.join(".", domainFrags);
     }
 }
