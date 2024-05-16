@@ -515,8 +515,6 @@ salesforceLeadPardotConfig:
     url: {{.GEO_LOCATION_SERVICE_URL}}
     username: ${MAX_MIND_GEO_LOC_COUNTRY_USERNAME}
     password: ${MAX_MIND_GEO_LOC_COUNTRY_PASSWORD}
-groupRoleUuidImprovements:
-  enabled: ${ENABLE_GROUP_ROLE_UUID_IMPROVEMENTS}
 authzService:
   enabled: ${CHOREO_AUTHZ_SERVICE_ENABLED}
   isPostMigration: ${IS_CHOREO_AUTHZ_POST_MIGRATION}
