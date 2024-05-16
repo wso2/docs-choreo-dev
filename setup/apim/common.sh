@@ -96,6 +96,7 @@ export QUOTA_LIMITER_CALL_BACK_URL="https://localhost"
 
 #common functions
 split_results(){
+  # shellcheck disable=SC2001
   BODY=$(echo "$HTTP_RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
   STATUS=$(echo "$HTTP_RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 
@@ -126,7 +127,7 @@ echo_results () {
 check_required_common_variables(){
   if [ -z ${ENVIRONMENT_PREFIX+x} ]; then
     while [ -z "$environment" ]; do
-        read -p "Enter Environment (dev, stage, perf, prod): " environment
+        read -r -p "Enter Environment (dev, stage, perf, prod): " environment
     done
     #export environment. If prod export "" to avoid the variable being set to 'prod'
     if [ "$environment" == "prod" ]; then
@@ -137,17 +138,17 @@ check_required_common_variables(){
   fi
 
   if [ -z ${APIM_ADMIN_USERNAME+x} ]; then
-      read -p "Enter APIM Admin Username: " APIM_ADMIN_USERNAME
+      read -r -p "Enter APIM Admin Username: " APIM_ADMIN_USERNAME
   fi
   export APIM_ADMIN_USERNAME
 
   if [ -z ${APIM_ADMIN_PASSWORD+x} ]; then
-      read -s -p "Enter APIM Admin Password: " APIM_ADMIN_PASSWORD
+      read -r -s -p "Enter APIM Admin Password: " APIM_ADMIN_PASSWORD
   fi
   export APIM_ADMIN_PASSWORD
 
   if [ -z ${APIM_URL+x} ]; then
-      read -p "Enter APIM URL (eg: https://sts.perf.choreo.dev): " APIM_URL
+      read -r -p "Enter APIM URL (eg: https://sts.perf.choreo.dev): " APIM_URL
   fi
   export APIM_URL
 }
@@ -181,5 +182,6 @@ check_unset_env_vars() {
 replace_placeholders() {
     local content="$1"  # The content with placeholders
     # Use Perl to replace all placeholders with the value of the corresponding environment variable
+    # shellcheck disable=SC2005
     echo "$(perl -pe 's/\{(.*?)\}/defined $ENV{$1} ? $ENV{$1} : "{$1}"/ge' <<< "$content")"
 }
