@@ -38,6 +38,7 @@ import com.wso2.choreo.integration.models.resourceAuthorization.CreateRoleRespon
 import com.wso2.choreo.integration.models.resourceAuthorization.GroupRoleMappingResponseDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.RoleGroupMappingResponseDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.GroupRoleMappingResponseDTO.GroupAssociation;
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +52,10 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
+@Log4j2
 public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
 
-    private static final Logger log = LogManager.getLogger(ResourceAuthorizationTests.class);
+    private static final Logger apacheLogger = LogManager.getLogger(ResourceAuthorizationTests.class);
 
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
@@ -88,7 +90,8 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
                 projectName, projectHandler);
         Assert.assertNotNull(projectA.getId());
 
-        log.info("[Test] Project A: " + projectA.getId());
+        log.info("[Lombok][Test] Project A: " + projectA.getId());
+        apacheLogger.info("[Apache][Test] Project A: " + projectA.getId());
     }
 
     // Test 1
@@ -265,9 +268,13 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
         Assert.assertNotNull(projectY);
         Assert.assertNotNull(projectZ);
 
-        log.info("[Test] Project X: " + projectX.getId());
-        log.info("[Test] Project Y: " + projectY.getId());
-        log.info("[Test] Project Z: " + projectZ.getId());
+        log.info("[Lombok][Test] Project X: " + projectX.getId());
+        log.info("[Lombok][Test] Project Y: " + projectY.getId());
+        log.info("[Lombok][Test] Project Z: " + projectZ.getId());
+
+        apacheLogger.info("[Apache][Test] Project X: " + projectX.getId());
+        apacheLogger.info("[Apache][Test] Project Y: " + projectY.getId());
+        apacheLogger.info("[Apache][Test] Project Z: " + projectZ.getId());
     }
 
     // Step 3: Assign developer role to the test group at project X level
