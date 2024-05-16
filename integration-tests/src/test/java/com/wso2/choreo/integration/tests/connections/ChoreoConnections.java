@@ -504,8 +504,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         ComponentUtils.validateEndpoints(this, citrusClients, accessToken, publicEndpointServiceComponent,
                 publicEndpointServiceDeploymentStatusDTO);
         ServiceInfo serviceFound = ConnectionService.FindService(citrusClients,this,accessToken,SVC_COMPONENT_SERVICE_NAME,NETWORK_VISIBILITY_FILTER,"");
-        ConnectionCreateRequest connectionCreationReq = ConnectionService.createComponentLevelConnectionCreationReq(webAppComponentEnvironments.subList(0,1),projectOne.getId(),
-                webAppComponent.getId(),PUBLIC_SERVICE,serviceFound);
+        ConnectionCreateRequest connectionCreationReq = ConnectionService.createComponentLevelConnectionCreationReq(webAppComponentEnvironments, 
+                projectOne.getId(), webAppComponent.getId(), PUBLIC_SERVICE, serviceFound);
         HttpClient httpClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         ConnectionService.createChoreoConnection(this, httpClient,
                 accessToken, connectionCreationReq, true, servicePublisherComponentEnvironments.subList(0,1), true);
@@ -598,8 +598,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         if(deployedClientComponentStatus == null){
             ChoreoProject project = ComponentUtils.getProjectByName(DEPLOYED_COMPONENTS_PROJECT_NAME,accessToken);
             ConnectionService.createAndUseConnection(this,citrusClients,accessToken,deployedPublisherComponent.getName(),PUBLIC_SERVICE,project.getId(),createdClientComponent.getId(),environments,environments,repoName,"dev");
-            ComponentUtils.deployComponent(this, citrusClients, accessToken, createdClientComponent,
-                    environments, ComponentFlavour.BYOC);
+            deployedClientComponentStatus = ComponentUtils.deployComponent(this, citrusClients, accessToken,
+                    createdClientComponent, environments, ComponentFlavour.BYOC);
         }
         Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
                 createdClientComponent, deployedClientComponentStatus, environments);

@@ -101,7 +101,8 @@ public class ConnectionService extends ControlPlaneAPI {
                                     String payload = message.getPayload(String.class);
                                     JsonObject connectionJsonObject = new JsonParser().parse(payload).getAsJsonObject();
                                     validateConnectionCreation (context, connectionJsonObject, connectionId,
-                                            isPublisherSecured, "isConnectionCreationSuccess", publisherDeployedEnvs);
+                                            isPublisherSecured, "isConnectionCreationSuccess",
+                                            publisherDeployedEnvs, isWebApp);
                                 }
                                 )));
         return connectionId.get();
@@ -160,7 +161,8 @@ public class ConnectionService extends ControlPlaneAPI {
                                             String payload = message.getPayload(String.class);
                                             JsonObject connectionJsonObject = new JsonParser().parse(payload).getAsJsonObject();
                                             validateConnectionCreation (context, connectionJsonObject, null,
-                                            isPublisherSecured, "isConnectionRefreshSuccess", publisherDeployedEnvs);
+                                            isPublisherSecured, "isConnectionRefreshSuccess",
+                                                    publisherDeployedEnvs, isWebApp);
                                         }
                                 )));
     }
@@ -354,7 +356,8 @@ public class ConnectionService extends ControlPlaneAPI {
     public static void validateConnectionCreation(com.consol.citrus.context.TestContext context,
                                                   JsonObject connectionJsonObject, AtomicReference<String> connectionId,
                                                   boolean isPublisherSecured, String contextVariableName,
-                                                  List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs){
+                                                  List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs,
+                                                  boolean isWebApp){
 
         JsonObject connectionStatus = connectionJsonObject.getAsJsonObject("status");
         for (String envId : connectionStatus.keySet()) {
@@ -363,7 +366,7 @@ public class ConnectionService extends ControlPlaneAPI {
                 if (!isStageSuccess(envStatus, "Service Url resolved")) {
                     throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
                 }
-               if (isPublisherSecured) {
+               if (isPublisherSecured && !isWebApp) {
                     if (!isStageSuccess(envStatus, "OAuth keys generated")) {
                         throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
                     }
@@ -378,7 +381,7 @@ public class ConnectionService extends ControlPlaneAPI {
                     throw new ValidationException("Connection configurations are not properly partially created for " +
                             "environment: " + envId);
                 }
-                if (isPublisherSecured) {
+                if (isPublisherSecured && !isWebApp) {
                     if (!isStageSuccess(envStatus, "OAuth keys generated")) {
                         throw new ValidationException("Connection configurations are not properly partially created for " +
                                 "environment: " + envId);                    }
