@@ -1,0 +1,31 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-app-gateway-oauth-agent
+spec:
+  secretObjects:
+    - secretName: secret-app-gateway-oauth-agent
+      type: Opaque
+      data:
+        - objectName: OAUTH_AGENT_ENC_KEY
+          key: OAUTH_AGENT_ENC_KEY
+        - objectName: OAUTH_AGENT_REDIS_PWD
+          key: OAUTH_AGENT_REDIS_PWD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: dp-app-gw-auth-agent-enc-key
+          objectType: secret
+          objectAlias: OAUTH_AGENT_ENC_KEY
+          objectVersion: "{{.OAUTH_AGENT_ENC_KEY}}"
+        - |
+          objectName: dp-app-gw-auth-agent-cache-enc-key
+          objectType: secret
+          objectAlias: OAUTH_AGENT_CACHE_ENC_KEY
+          objectVersion: "{{.OAUTH_AGENT_CACHE_ENC_KEY}}"
+        - |
+          objectName: apim-global-adapter-redis-primary-access-key
+          objectType: secret
+          objectAlias: OAUTH_AGENT_REDIS_PWD
+          objectVersion: "{{.OAUTH_AGENT_REDIS_PWD}}"
