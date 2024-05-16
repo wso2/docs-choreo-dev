@@ -77,7 +77,13 @@ HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" \
 echo_results "$SP_NAME service provider created" "Error while creating $SP_NAME service provider"
 
 # Get the Id of created app
-HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" --header "Content-Type: application/soap+xml;charset=UTF-8" --header "SOAPAction:urn:getApplication" -u ${APIM_ADMIN_USERNAME}:${APIM_ADMIN_PASSWORD} --data "$get_sp_payload" ${APIM_URL}/services/IdentityApplicationManagementService.IdentityApplicationManagementServiceHttpsSoap12Endpoint/ -k)
+HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" \
+                     --header "Content-Type: application/soap+xml;charset=UTF-8" \
+                     --header "SOAPAction:urn:getApplication" \
+                     -u "${APIM_ADMIN_USERNAME}:${APIM_ADMIN_PASSWORD}" \
+                     --data "$get_sp_payload" \
+                     "${APIM_URL}/services/IdentityApplicationManagementService.IdentityApplicationManagementServiceHttpsSoap12Endpoint/" -k)
+
 echo_results "$SP_NAME SP id retrieved" "Error while getting $SP_NAME app Id"
 
 HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" \
