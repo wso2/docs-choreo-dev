@@ -3,11 +3,14 @@ package com.wso2.choreo.integration.tests.graphqlservice;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.models.response.Response;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-@Slf4j
+
 public class GqlServiceTestHelper {
+
+    private static final Logger log = LogManager.getLogger(GqlServiceTestHelper.class);
 
     public static Response sendRequest(String invokeURL, String payload, String apiKey) throws IOException {
         log.info(invokeURL);

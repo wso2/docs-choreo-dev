@@ -29,7 +29,6 @@ import com.wso2.choreo.integration.models.response.ProxyResponse;
 import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -40,7 +39,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@Slf4j
 public class APICreator extends ControlPlaneAPI {
 
     private static final String APIM_ENDPOINT = STS_ENDPOINT + Constant.API_VALIDATE_ENDPOINT;

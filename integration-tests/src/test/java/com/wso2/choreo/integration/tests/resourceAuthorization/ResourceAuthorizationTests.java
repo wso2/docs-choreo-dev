@@ -38,6 +38,8 @@ import com.wso2.choreo.integration.models.resourceAuthorization.CreateRoleRespon
 import com.wso2.choreo.integration.models.resourceAuthorization.GroupRoleMappingResponseDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.RoleGroupMappingResponseDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.GroupRoleMappingResponseDTO.GroupAssociation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.SkipException;
@@ -50,6 +52,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
+
+    private static final Logger log = LogManager.getLogger(ResourceAuthorizationTests.class);
 
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
@@ -64,9 +68,10 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
 
     @BeforeClass
     public void setup_ResourceAuthorizationTests() throws TokenRetrievalException, IOException, URISyntaxException {
-        if (TestContext.getResourceAuthzTestUserTokenHandler().getTestTokenForCPAPIs().equals(Constant.BEARER_PREFIX)) {
-                throw new SkipException("Skipping Resource Authorization tests as the tests are run " 
-                        + "with a user provided token.");
+        if (TestContext.getResourceAuthzTestUserTokenHandler().getTestTokenForCPAPIs()
+                .equals(Constant.BEARER_PREFIX)) {
+            throw new SkipException("Skipping Resource Authorization tests as the tests are run "
+                    + "with a user provided token.");
         }
     }
 
@@ -82,6 +87,8 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
         projectA = GraphQL.createProject(this, appServiceClient, TestProjectData.REGION, userAccessToken,
                 projectName, projectHandler);
         Assert.assertNotNull(projectA.getId());
+
+        log.info("[Test] Project A: " + projectA.getId());
     }
 
     // Test 1
@@ -257,6 +264,10 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
         Assert.assertNotNull(projectX);
         Assert.assertNotNull(projectY);
         Assert.assertNotNull(projectZ);
+
+        log.info("[Test] Project X: " + projectX.getId());
+        log.info("[Test] Project Y: " + projectY.getId());
+        log.info("[Test] Project Z: " + projectZ.getId());
     }
 
     // Step 3: Assign developer role to the test group at project X level
@@ -270,7 +281,8 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
         String developerRoleId = ResourceAuthzUtils.getRoleByHandle(this, appServiceClient,
                 ResourceAuthzConstants.DEVELOPER_ROLE_HANDLE).getUuid();
 
-        RoleGroupMappingResponseDTO mappingResponse = ResourceAuthzUtils.assignRolesToGroup(this, appServiceClient,
+        RoleGroupMappingResponseDTO mappingResponse = ResourceAuthzUtils.assignRolesToGroup(this,
+                appServiceClient,
                 createdTestGroup.getHandle(), projectX.getId(), RoleGroupMappingLevels.PROJECT,
                 List.of(developerRoleId));
 
@@ -289,10 +301,10 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
                 .refetchTestTokenForCPAPIs();
         List<ChoreoProject> projectsList = testOrganization.getProjectsList(testUserAccessToken);
 
-        Assert.assertTrue(projectsList.size() > 0);
+        Assert.assertTrue(projectsList.size() > 0, "No projects found");
         // User should only see project X
         Assert.assertTrue(projectsList.stream()
-                .anyMatch(project -> project.getId().equals(projectX.getId())));
+                .anyMatch(project -> project.getId().equals(projectX.getId())), "Project X not found");
     }
 
     // Test 4
@@ -323,8 +335,9 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
 
         HttpClient cpProjectsClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String accessToken = TestContext.getResourceAuthzTestUserTokenHandler().refetchTestTokenForCPAPIs();
-        List<ChoreoComponent> projectYComponents = ResourceAuthzUtils.getProjectComponentsFromUnauthorizedProject(this,
-                cpProjectsClient, projectY.getId(), accessToken);
+        List<ChoreoComponent> projectYComponents = ResourceAuthzUtils
+                .getProjectComponentsFromUnauthorizedProject(this,
+                        cpProjectsClient, projectY.getId(), accessToken);
         // User should not see any components in project Y
         Assert.assertTrue(projectYComponents.isEmpty());
     }
@@ -342,7 +355,8 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
         String developerRoleId = ResourceAuthzUtils.getRoleByHandle(this, appServiceClient,
                 ResourceAuthzConstants.DEVELOPER_ROLE_HANDLE).getUuid();
 
-        RoleGroupMappingResponseDTO mappingResponse = ResourceAuthzUtils.assignRolesToGroup(this, appServiceClient,
+        RoleGroupMappingResponseDTO mappingResponse = ResourceAuthzUtils.assignRolesToGroup(this,
+                appServiceClient,
                 createdTestGroup.getHandle(), projectZ.getId(), RoleGroupMappingLevels.PROJECT,
                 List.of(developerRoleId));
 
@@ -393,14 +407,16 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
         RoleGroupMappingResponseDTO response = ResourceAuthzUtils.assignRolesToGroup(this, appServiceClient,
-                createdTestGroup.getHandle(), projectA.getId(), RoleGroupMappingLevels.PROJECT, roleUUIDs);
+                createdTestGroup.getHandle(), projectA.getId(), RoleGroupMappingLevels.PROJECT,
+                roleUUIDs);
 
         Assert.assertNotNull(response);
         Assert.assertEquals(response.getRoleAssociations().size(), 1);
     }
 
     // Step 3: Fetch projects with project view and org manage role in project A
-    @Test(dependsOnMethods = { "assignProjectViewAndOrgPermissionRoleToGroupInProjectA_ResourceAuthorizationTests" })
+    @Test(dependsOnMethods = {
+            "assignProjectViewAndOrgPermissionRoleToGroupInProjectA_ResourceAuthorizationTests" })
     @CitrusTest
     public void fetchProjectsWithAdminRoleInProjectsAXZ_ResourceAuthorizationTests()
             throws TokenRetrievalException, IOException, URISyntaxException, ProjectRetrievalException {
@@ -426,7 +442,8 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
 
         ChoreoOrganization testOrganization = TestContext.getTestOrg();
         String userAccessToken = TestContext.getResourceAuthzTestUserTokenHandler().refetchTestTokenForCPAPIs();
-        boolean isProjectDeleted = testOrganization.deleteProjectInOrganization(userAccessToken, projectA.getId());
+        boolean isProjectDeleted = testOrganization.deleteProjectInOrganization(userAccessToken,
+                projectA.getId());
 
         // User should not be able to delete Project A
         Assert.assertFalse(isProjectDeleted);
