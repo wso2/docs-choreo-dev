@@ -34,6 +34,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 COMMON_SH_PATH="$SCRIPT_DIR/../common.sh"
 
 if [ -z "${split_results+x}" ]; then
+    # shellcheck disable=SC1090
     source "${COMMON_SH_PATH}"
 fi
 
@@ -59,21 +60,47 @@ update_sp_payload=$(replace_placeholders "$update_sp_payload")
 create_oauth_app_payload=$(replace_placeholders "$create_oauth_app_payload")
 
 # Create oauth app
-HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" --header "Content-Type: application/soap+xml;charset=UTF-8" --header "SOAPAction:urn:registerOAuthApplicationData" -u ${APIM_ADMIN_USERNAME}:${APIM_ADMIN_PASSWORD} --data "$create_oauth_app_payload" ${APIM_URL}/services/OAuthAdminService.OAuthAdminServiceHttpsSoap12Endpoint/ -k)
-echo_results "$SP_NAME OAuth application added successfully" "Error while adding $SP_NAME OAuth application"
+HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" \
+                     --header "Content-Type: application/soap+xml;charset=UTF-8" \
+                     --header "SOAPAction:urn:registerOAuthApplicationData" \
+                     -u "${APIM_ADMIN_USERNAME}:${APIM_ADMIN_PASSWORD}" \
+                     --data "$create_oauth_app_payload" \
+                     "${APIM_URL}/services/OAuthAdminService.OAuthAdminServiceHttpsSoap12Endpoint/" -k)
 
-HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" --header "Content-Type: application/soap+xml;charset=UTF-8" --header "SOAPAction:urn:createApplication" -u ${APIM_ADMIN_USERNAME}:${APIM_ADMIN_PASSWORD} --data "$create_sp_payload" ${APIM_URL}/services/IdentityApplicationManagementService.IdentityApplicationManagementServiceHttpsSoap12Endpoint/ -k)
+HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" \
+                     --header "Content-Type: application/soap+xml;charset=UTF-8" \
+                     --header "SOAPAction:urn:createApplication" \
+                     -u "${APIM_ADMIN_USERNAME}:${APIM_ADMIN_PASSWORD}" \
+                     --data "$create_sp_payload" \
+                     "${APIM_URL}/services/IdentityApplicationManagementService.IdentityApplicationManagementServiceHttpsSoap12Endpoint/" -k)
+
 echo_results "$SP_NAME service provider created" "Error while creating $SP_NAME service provider"
 
 # Get the Id of created app
 HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" --header "Content-Type: application/soap+xml;charset=UTF-8" --header "SOAPAction:urn:getApplication" -u ${APIM_ADMIN_USERNAME}:${APIM_ADMIN_PASSWORD} --data "$get_sp_payload" ${APIM_URL}/services/IdentityApplicationManagementService.IdentityApplicationManagementServiceHttpsSoap12Endpoint/ -k)
 echo_results "$SP_NAME SP id retrieved" "Error while getting $SP_NAME app Id"
 
+HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" \
+                     --header "Content-Type: application/soap+xml;charset=UTF-8" \
+                     --header "SOAPAction:urn:getApplication" \
+                     -u "${APIM_ADMIN_USERNAME}:${APIM_ADMIN_PASSWORD}" \
+                     --data "$get_sp_payload" \
+                     "${APIM_URL}/services/IdentityApplicationManagementService.IdentityApplicationManagementServiceHttpsSoap12Endpoint/" -k)
+
+echo_results "$SP_NAME SP id retrieved" "Error while getting $SP_NAME app Id"
+
 appId=$(echo "$BODY" | xmllint --format - | perl -ne 'if (/applicationID/){ s/.*?>//; s/<.*//;print;}')
 
-update_sp_payload=$(echo $update_sp_payload | sed "s#\[\APP_ID\]#$appId#g")
+# shellcheck disable=SC2001
+update_sp_payload=$(echo "$update_sp_payload" | sed "s#\[\APP_ID\]#$appId#g")
 
-HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" --header "Content-Type: application/soap+xml;charset=UTF-8" --header "SOAPAction:urn:updateApplication" -u ${APIM_ADMIN_USERNAME}:${APIM_ADMIN_PASSWORD} --data "$update_sp_payload" ${APIM_URL}/services/IdentityApplicationManagementService.IdentityApplicationManagementServiceHttpsSoap12Endpoint/ -k)
+HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" \
+                     --header "Content-Type: application/soap+xml;charset=UTF-8" \
+                     --header "SOAPAction:urn:updateApplication" \
+                     -u "${APIM_ADMIN_USERNAME}:${APIM_ADMIN_PASSWORD}" \
+                     --data "$update_sp_payload" \
+                     "${APIM_URL}/services/IdentityApplicationManagementService.IdentityApplicationManagementServiceHttpsSoap12Endpoint/" -k)
+
 echo_results "$SP_NAME service provider updated with OAuth2 app" "Error while updating $SP_NAME service provider with OAuth2 app"
 
 echo -e "\033[0;32m$SP_NAME SP created successfully.\033[0m"
@@ -87,7 +114,9 @@ API_KEY="${!API_KEY_VAR_NAME}"
 API_SECRET="${!API_SECRET_VAR_NAME}"
 
 # Output to log file in the script's execution location
-echo "SP_NAME: $SP_NAME" >> "$SCRIPT_DIR/sp_out.log"
-echo "API_KEY: $API_KEY" >> "$SCRIPT_DIR/sp_out.log"
-echo "API_SECRET: $API_SECRET" >> "$SCRIPT_DIR/sp_out.log"
+{
+  echo "SP_NAME: $SP_NAME"
+  echo "API_KEY: $API_KEY"
+  echo "API_SECRET: $API_SECRET"
+} >> "$SCRIPT_DIR/sp_out.log"
 echo "-----------------------------------------------------------------------------------" >> "$SCRIPT_DIR/sp_out.log"
