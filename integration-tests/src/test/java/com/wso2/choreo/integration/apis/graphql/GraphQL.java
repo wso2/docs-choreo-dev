@@ -1206,6 +1206,9 @@ public class GraphQL extends ControlPlaneAPI {
                 .message()
                 .validate((message, context) -> {
                     int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                    if (code != HttpStatus.OK.value() && code != HttpStatus.NOT_FOUND.value()) {
+                        throw new ValidationException("Deployment status retrieval is not success");
+                    }
                     if (code == HttpStatus.OK.value()) {
                         ComponentDeploymentStatusDTO deploymentStatus = ObjectMapperUtil.
                                 mapStringToObject(ComponentDeploymentStatusDTO.class,
