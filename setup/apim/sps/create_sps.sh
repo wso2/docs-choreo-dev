@@ -58,7 +58,7 @@ while true; do
     list_sps
     echo "------------------------------------------------"
 
-    read -p "Please enter your choice: " USER_CHOICE
+    read -r -p "Please enter your choice: " USER_CHOICE
 
     case $USER_CHOICE in
         list)
