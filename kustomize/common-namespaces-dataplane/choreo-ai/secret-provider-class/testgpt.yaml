@@ -15,12 +15,12 @@ spec:
     objects: |
       array:
         - |
-          objectName: ai-api-test-redis-primary-access-key
+          objectName: {{.REDIS_AUTH_KEY_OBJ_NAME | default "ai-api-test-redis-primary-access-key"}}
           objectType: secret
           objectAlias: REDIS-AUTH-KEY
-          objectVersion: "{{.REDIS-AUTH-KEY}}"
+          objectVersion: "{{.REDIS_AUTH_KEY}}"
         - |
           objectName: ai-api-test-cogsvc-openai-access-key
           objectType: secret
           objectAlias: OPENAI-ACCESS-KEY
-          objectVersion: "{{.OPENAI-ACCESS-KEY}}"
+          objectVersion: "{{.OPENAI_ACCESS_KEY}}"

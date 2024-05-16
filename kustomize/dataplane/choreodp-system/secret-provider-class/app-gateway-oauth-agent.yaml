@@ -25,7 +25,7 @@ spec:
           objectAlias: OAUTH_AGENT_CACHE_ENC_KEY
           objectVersion: "{{.OAUTH_AGENT_CACHE_ENC_KEY}}"
         - |
-          objectName: apim-global-adapter-redis-primary-access-key
+          objectName: {{.OAUTH_AGENT_REDIS_PWD_OBJ_NAME | default "apim-global-adapter-redis-primary-access-key"}}
           objectType: secret
           objectAlias: OAUTH_AGENT_REDIS_PWD
           objectVersion: "{{.OAUTH_AGENT_REDIS_PWD}}"

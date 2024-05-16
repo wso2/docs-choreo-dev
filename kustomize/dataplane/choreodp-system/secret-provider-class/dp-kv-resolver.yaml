@@ -17,17 +17,17 @@ spec:
     objects:  |
       array:
         - |
-          objectName: dp-secret-manager-kv-client-id
+          objectName: {{.AZURE_KEYVAULT_CLIENT_ID_OBJ_NAME | default "dp-secret-manager-kv-client-id"}}
           objectType: secret
           objectAlias: AZURE_KEYVAULT_CLIENT_ID
           objectVersion: "{{.AZURE_KEYVAULT_CLIENT_ID}}"
         - |
-          objectName: dp-secret-manager-keyvault-client-secret
+          objectName: {{.AZURE_KEYVAULT_CLIENT_SECRET_OBJ_NAME | default "dp-secret-manager-keyvault-client-secret"}}
           objectType: secret
           objectAlias: AZURE_KEYVAULT_CLIENT_SECRET
           objectVersion: "{{.AZURE_KEYVAULT_CLIENT_SECRET}}"
         - |
-          objectName: tenant-id
+          objectName: {{.AZURE_KEYVAULT_TENANT_ID_OBJ_NAME | default "tenant-id"}}
           objectType: secret
           objectAlias: AZURE_KEYVAULT_TENANT_ID
           objectVersion: "{{.AZURE_KEYVAULT_TENANT_ID}}"

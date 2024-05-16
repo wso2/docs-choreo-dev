@@ -13,7 +13,7 @@ spec:
     objects: |
       array:
         - |
-          objectName: dp-mizzen-useast2-token
+          objectName: {{.TOKEN_OBJ_NAME | default "dp-mizzen-useast2-token"}}
           objectType: secret
           objectAlias: TOKEN
           objectVersion: "{{.TOKEN}}"
