@@ -16,10 +16,6 @@ import { Enums } from "../../../support/commons/enums";
 import { Project } from "../../../support/console/entities/project/project";
 import { Service } from "../../../support/console/entities/component/service-component";
 
-after(() => {
-  console.logout();
-});
-
 describe(`Graphql GQL service functionality`, () => {
   const PROJECT_DESCRIPTION = "ballerina service with graphql endpoint";
   const TEST_QUERY = '{greeting(name:"John")}';
