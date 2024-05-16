@@ -94,6 +94,7 @@ appId=$(echo "$BODY" | xmllint --format - | perl -ne 'if (/applicationID/){ s/.*
 # shellcheck disable=SC2001
 update_sp_payload=$(echo "$update_sp_payload" | sed "s#\[\APP_ID\]#$appId#g")
 
+# shellcheck disable=SC2034
 HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" \
                      --header "Content-Type: application/soap+xml;charset=UTF-8" \
                      --header "SOAPAction:urn:updateApplication" \
