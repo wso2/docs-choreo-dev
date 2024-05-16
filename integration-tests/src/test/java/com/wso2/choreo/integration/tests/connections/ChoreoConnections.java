@@ -322,7 +322,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 description(proxyApi.getDescription()).
                 productionEndpoint(PROXY_COMPONENT_ENDPOINT).
                 sandboxEndpoint(PROXY_COMPONENT_ENDPOINT).
-                basePath(proxyApi.getContext() + "/1.0.0").build();
+                basePath(proxyApi.getContext() + "/v1.0").build();
         String apiPayload = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/proxyAPIUpdateRequestWithAPIRateLimit.mustache", apiDTO);  //This api is exposed in public
         Response response = APICreator.updateAPIWithRestAPIContent(proxyApi, apiPayload, accessToken);

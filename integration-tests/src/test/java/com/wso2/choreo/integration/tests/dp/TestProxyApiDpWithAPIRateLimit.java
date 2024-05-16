@@ -118,7 +118,7 @@ public class TestProxyApiDpWithAPIRateLimit extends TestBase {
                             description(dp.getProxyAPI().getDescription()).
                             productionEndpoint(Constant.DEFAULT_ENDPOINT).
                             sandboxEndpoint(Constant.DEFAULT_ENDPOINT).
-                            basePath(dp.getProxyAPI().getContext() + "/1.0.0").build();
+                            basePath(dp.getProxyAPI().getContext() + "/v1.0").build();
 
         String apiPayload = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/proxyAPIUpdateRequestWithAPIRateLimit.mustache", apiDTO);
