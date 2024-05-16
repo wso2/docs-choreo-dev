@@ -364,6 +364,12 @@ export namespace TestIds {
     '[data-cyid="dialog-groups-role-list-delete-button"]';
   export const addUserToGroupPopup = '[data-cyid="add-user-to-group-button"]';
   export const userSelect = '[id="select-user-list-popup"]';
+  export const inviteUser = '[data-cyid="invite-users-button"]';
+  export const tagEmails = '[data-cyid="tag-email-addresses"]';
+  export const selectGroups = '[data-cyid="select-groups-multi-select"]';
+  export const groupSelectPopup = '[id="group-select-list-popup"]';
+  export const inviteUserDialog = '[data-cyid="invite-user-dialog-button"]';
+  export const pendingInvites = '[data-cyid="user-mgt-invitations"]';
   export const connectionSearchBar =
     '[data-cyid="internal-marketplace-services-search-bar-input"]';
   export const copyConnectionUrlBox = '[data-cyid="copy-url"]';
@@ -373,4 +379,7 @@ export namespace TestIds {
   export const rightDrawer = '[data-cyid="Overlay-right-drawer"]';
   export const refreshComponentListIconButton =
     '[data-cyid="refresh-components-icon-button"]';
+  export const ComponentUsageInsightsLink = '[data-cyid="usage-insights"]';
+  export const clearComponentSearchButton =
+    '[data-cyid="component-listing-auto-forcused-search-icon-button"]';
 }

@@ -24,7 +24,7 @@ spec:
     objects: |
       array:
         - |
-          objectName: hubble-exporter-EVENT-HUB-CONNECTION-STRING
+          objectName: obs-eh-primary-conn-string
           objectType: secret
           objectAlias: EVENT_HUB_CONNECTION_STRING
           objectVersion: "{{.EVENT_HUB_CONNECTION_STRING}}"

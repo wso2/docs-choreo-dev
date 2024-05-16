@@ -14,6 +14,7 @@
 package com.wso2.choreo.integration.apis.marketplace;
 
 import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.google.gson.JsonArray;
@@ -21,13 +22,22 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
+import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.common.ComponentFlavour;
+import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
+import com.wso2.choreo.integration.common.MessageUtils;
+import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
+import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
+import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.endpoints.Endpoint;
+import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.marketplace.*;
 import com.wso2.choreo.integration.models.response.Response;
 import org.apache.logging.log4j.LogManager;
@@ -38,14 +48,14 @@ import org.springframework.http.MediaType;
 import org.testng.Assert;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static com.consol.citrus.http.message.HttpMessageHeaders.HTTP_STATUS_CODE;
 
 public class ConnectionService extends ControlPlaneAPI {
 
@@ -54,15 +64,21 @@ public class ConnectionService extends ControlPlaneAPI {
 
     public static String createChoreoConnection(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
                                                 ConnectionCreateRequest connectionReq, Boolean isPublisherSecured,
-                                                List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs ) throws IOException {
+                                                List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs, 
+                                                boolean isWebApp ) throws IOException {
         String createChoreoConnectionURI = CONTEXT.concat("/configurations/service-configs/choreo-connections");
+        if (isWebApp) {
+            createChoreoConnectionURI = createChoreoConnectionURI.concat("?generateCreds=false");
+        }else{
+            createChoreoConnectionURI = createChoreoConnectionURI.concat("?generateCreds=true");
+        }
         String requestPayload = ObjectMapperUtil.mapObjectToString(connectionReq);
         AtomicReference<String> connectionId = new AtomicReference<>();
         runner.variable("isConnectionCreationSuccess",false);
         runner.$(repeatOnError()
                 .until("(i = 5) or ( ${isConnectionCreationSuccess} = true )")
                 .index("i")
-                .autoSleep(30000)
+                .autoSleep(10000)
                 .actions(
                         http()
                                 .client(client)
@@ -78,28 +94,16 @@ public class ConnectionService extends ControlPlaneAPI {
                                 .receive()
                                 .response(HttpStatus.CREATED)
                                 .validate((message, context) -> {
-                                            String payload = message.getPayload(String.class);
-                                            JsonObject connectionJsonObject = new JsonParser().parse(payload).getAsJsonObject();
-                                            JsonObject connectionStatus = connectionJsonObject.getAsJsonObject("status");
-                                            for (int i = 0; i < publisherDeployedEnvs.size(); i++) {
-                                                com.wso2.choreo.integration.models.environments.Environment environment = publisherDeployedEnvs.get(i);
-                                                String envId = environment.getTemplateId();
-                                                if (connectionStatus.has(envId)) {
-                                                    JsonArray envStatus = connectionStatus.getAsJsonArray(envId);
-                                                    if(isPublisherSecured){
-                                                        if (isStageSuccess(envStatus, "Service Url resolved") && isStageSuccess(envStatus, "OAuth keys generated")) {
-                                                            context.setVariable("isConnectionCreationSuccess", true);
-                                                            connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
-                                                        }
-                                                    }else{
-                                                        if (isStageSuccess(envStatus, "Service Url resolved")) {
-                                                            context.setVariable("isConnectionCreationSuccess", true);
-                                                            connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
+                                    int code = (int) message.getHeader(HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.CREATED.value()) {
+                                        throw new ValidationException("Connection creation failed with status code: " + code);
+                                    }
+                                    String payload = message.getPayload(String.class);
+                                    JsonObject connectionJsonObject = new JsonParser().parse(payload).getAsJsonObject();
+                                    validateConnectionCreation (context, connectionJsonObject, connectionId,
+                                            isPublisherSecured, "isConnectionCreationSuccess",
+                                            publisherDeployedEnvs, isWebApp);
+                                }
                                 )));
         return connectionId.get();
     }
@@ -116,17 +120,24 @@ public class ConnectionService extends ControlPlaneAPI {
         return false;
     }
 
-    public static void refreshChoreoConnection(TestActionRunner runner, HttpClient client, String accessToken,
-                                                 String connectionId, ConnectionCreateRequest connectionReq) throws Exception {
+    public static void refreshChoreoConnection(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+                                                 String connectionId, ConnectionCreateRequest connectionReq,
+                                               List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs,
+                                               boolean isPublisherSecured, boolean isWebApp) throws Exception {
         String refreshChoreoConnectionURI = CONTEXT.
                 concat("/configurations/service-configs/choreo-connections/refresh/")
-                .concat(connectionId)
-                .concat("?generateCreds=true");
+                .concat(connectionId);   
+        if (isWebApp) {
+            refreshChoreoConnectionURI = refreshChoreoConnectionURI.concat("?generateCreds=false");
+        }else{
+            refreshChoreoConnectionURI = refreshChoreoConnectionURI.concat("?generateCreds=true");
+        }
         String requestPayload = ObjectMapperUtil.mapObjectToString(connectionReq);
+        runner.variable("isConnectionRefreshSuccess",false);
         runner.$(repeatOnError()
-                .until("i = 5")
+                .until("(i = 5) or ( ${isConnectionRefreshSuccess} = true )")
                 .index("i")
-                .autoSleep(30000)
+                .autoSleep(5000)
                 .actions(
                         http()
                                 .client(client)
@@ -141,7 +152,19 @@ public class ConnectionService extends ControlPlaneAPI {
                                 .client(client)
                                 .receive()
                                 .response(HttpStatus.CREATED)
-                                ));
+                                .validate((message, context) -> {
+                                            int code = (int) message.getHeader(HTTP_STATUS_CODE);
+                                            if (code != HttpStatus.CREATED.value()) {
+                                                throw new ValidationException("Connection refreshing failed with " +
+                                                        "status code: " + code);
+                                            }
+                                            String payload = message.getPayload(String.class);
+                                            JsonObject connectionJsonObject = new JsonParser().parse(payload).getAsJsonObject();
+                                            validateConnectionCreation (context, connectionJsonObject, null,
+                                            isPublisherSecured, "isConnectionRefreshSuccess",
+                                                    publisherDeployedEnvs, isWebApp);
+                                        }
+                                )));
     }
 
     public static void deleteChoreoConnection(String accessToken,
@@ -160,6 +183,50 @@ public class ConnectionService extends ControlPlaneAPI {
         Response response = HttpClientUtil.httpGET(getChoreoConnectionsURI, accessToken, "");
         ConnectionInfo[] connectionListing = ObjectMapperUtil.mapStringToObject(ConnectionInfo[].class, response.getRes(), "");
         return connectionListing;
+
+    }
+    public static ServiceInfo FindService(Map<Endpoints, HttpClient> citrusClients, TestNGCitrusSpringSupport runner, String accessToken, String serviceName,
+                                                String networkVisibilityFilter, String projectId) throws IOException {
+        HttpClient marketplaceServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        List<ServiceInfo> services = MarketplaceService.searchForServices(runner,
+                marketplaceServiceClient, accessToken, serviceName, networkVisibilityFilter,projectId);
+        return services.get(0);  //we will only get one as we search by exact name
+    }
+    public static ConnectionCreateRequest createComponentLevelConnectionCreationReq(
+            List<com.wso2.choreo.integration.models.environments.Environment> clientComponentEnvironments,
+            String projectId, String clientComponentId, String requestingServiceVisibility,
+            ServiceInfo serviceFound ) throws IOException {
+
+        String serviceId = serviceFound.getServiceId();
+        String schemaReference = serviceFound.getConnectionSchemas()[0].getId();  //this will only have one schema
+
+        //create connection under client component
+        ArrayList<com.wso2.choreo.integration.models.marketplace.Environment> environmentsToQuery = new ArrayList<>();
+        for (com.wso2.choreo.integration.models.environments.Environment env : clientComponentEnvironments) {
+            environmentsToQuery.add(
+                    com.wso2.choreo.integration.models.marketplace.Environment.builder()
+                            .id(env.getTemplateId())
+                            .isCritical(env.isCritical()).build()
+            );
+        }
+        ArrayList<Visibility> visibilities = new ArrayList<>();
+        String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+        Visibility componentVisibility = Visibility.builder().
+                organizationUuid(orgUuid).projectUuid(projectId).componentUuid(clientComponentId).build();
+        visibilities.add(componentVisibility);
+        String connectionName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_CONNECTION_NAME);
+
+        ConnectionCreateRequest connectionCreationReq = ConnectionCreateRequest.builder().name(connectionName)
+                .description("Component Level connection")
+                .serviceId(serviceId)
+                .schemaReference(schemaReference)
+                .environments(environmentsToQuery.toArray(new com.wso2.choreo.integration.models.marketplace.Environment[0]))
+                .visibilities(visibilities.toArray(new Visibility[0]))
+                .requestingServiceVisibility(requestingServiceVisibility)
+                .orgIdInteger(orgId).build();
+
+        return connectionCreationReq;
 
     }
 
@@ -209,7 +276,7 @@ public class ConnectionService extends ControlPlaneAPI {
                 .requestingServiceVisibility(requestingServiceVisibility)
                 .orgIdInteger(orgId).build();
         String connectionId = ConnectionService.createChoreoConnection(runner, connectionServiceClient,
-                accessToken, connectionReq,isPublisherSecured,publisherDeployedEnvs);
+                accessToken, connectionReq,isPublisherSecured,publisherDeployedEnvs,false);
         Pattern UUID_REGEX =
                 Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
         Assert.assertTrue(UUID_REGEX.matcher(connectionId).matches());
@@ -223,5 +290,107 @@ public class ConnectionService extends ControlPlaneAPI {
         }
         apiInfo.add("securityScheme",(new JsonArray()));
         ApiManager.updateApi(runner,httpClient,accessToken,apiId,apiInfo);
+    }
+
+    public static String getEndpointForProxy(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients, String accessToken,
+                                             ChoreoComponent proxySourceComponent,
+                                             List<com.wso2.choreo.integration.models.environments.Environment> environments) throws Exception {
+        ComponentDeploymentStatusDTO deployedProxySourceComponentStatus = ComponentUtils.deployComponent(runner, citrusClients, accessToken, proxySourceComponent,
+                environments, ComponentFlavour.BYOC);
+        List<Endpoint> endpoints = ComponentUtils.getEndpoints(runner,citrusClients,accessToken,proxySourceComponent,
+                deployedProxySourceComponentStatus);
+        ConnectionService.disableEndpointSecurity(runner,citrusClients,endpoints.get(0).getApimId(),accessToken);
+        ComponentUtils.deployComponent(runner, citrusClients, accessToken, proxySourceComponent, environments,
+                ComponentFlavour.BYOC);
+        List<ComponentDeploymentStatusDTO> promotionStatus = ComponentUtils.promoteComponent(runner, citrusClients,
+                accessToken, proxySourceComponent,
+                environments, ComponentFlavour.BYOC);
+        int promotionStatusListSize =  promotionStatus.size();
+        deployedProxySourceComponentStatus = promotionStatus.get(promotionStatusListSize-1);
+
+        endpoints = ComponentUtils.getEndpoints(runner,citrusClients,accessToken,proxySourceComponent,
+                deployedProxySourceComponentStatus);
+        return endpoints.get(0).getPublicUrl();
+    }
+
+    public static String createAndUseConnection(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients, String accessToken,
+                                     String requestedServiceName, String requestedServiceVisibility, String projectId,
+                                     String clientChoreoComponentId, List<com.wso2.choreo.integration.models.environments.Environment> clientComponentEnvironments,
+                                     List<com.wso2.choreo.integration.models.environments.Environment> servicePublisherComponentEnvironments,
+                                              String repoName, String... branchName) throws IOException {
+
+        ServiceInfo serviceFound = ConnectionService.FindService(citrusClients,runner,accessToken,requestedServiceName,requestedServiceVisibility.toLowerCase(),"");
+        ConnectionCreateRequest connectionCreationReq= ConnectionService.createComponentLevelConnectionCreationReq(clientComponentEnvironments,projectId,clientChoreoComponentId,requestedServiceVisibility,serviceFound);
+        HttpClient httpClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        String serviceId = serviceFound.getServiceId();
+        String connectionId = ConnectionService.createChoreoConnection(runner, httpClient,
+                accessToken, connectionCreationReq,true,servicePublisherComponentEnvironments.subList(0,1),false);
+
+        //update component-config.yaml file
+        //Let's consume service using public visibility
+        String serviceIdentifier = MarketplaceService.getChoreoServiceIdentifier(runner,
+                httpClient, accessToken, serviceId, ServiceVisibility.PUBLIC);
+        Map<String, String> params = new HashMap<>();
+        params.put("serviceIdentifier", serviceIdentifier);
+        params.put("connectionId", connectionId);
+        String updatedComponentConfigFileContent = MessageUtils.generateStringFromTemplate(
+                "templates/marketplace/component-config.mustache", params);
+        String encodedFileContent = Base64.getEncoder().
+                encodeToString(updatedComponentConfigFileContent.getBytes(StandardCharsets.UTF_8));
+        Response mergeCodeResp = GitHub.mergeNewCode(repoName, ".choreo/component-config.yaml", "Update component-config file", encodedFileContent,branchName);
+        if (mergeCodeResp.getStatusCode() != HttpStatus.OK.value()) {
+            throw new ValidationException("Error while update component-config.yaml file" + mergeCodeResp.getRes());
+        }
+        return connectionId;
+    }
+
+    private static boolean isPublisherDeployedEnvironment(List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs, String envId) {
+        for (com.wso2.choreo.integration.models.environments.Environment environment : publisherDeployedEnvs) {
+            if (environment.getTemplateId().equals(envId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void validateConnectionCreation(com.consol.citrus.context.TestContext context,
+                                                  JsonObject connectionJsonObject, AtomicReference<String> connectionId,
+                                                  boolean isPublisherSecured, String contextVariableName,
+                                                  List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs,
+                                                  boolean isWebApp){
+
+        JsonObject connectionStatus = connectionJsonObject.getAsJsonObject("status");
+        for (String envId : connectionStatus.keySet()) {
+            JsonArray envStatus = connectionStatus.getAsJsonArray(envId);
+            if (isPublisherDeployedEnvironment(publisherDeployedEnvs, envId)) {
+                if (!isStageSuccess(envStatus, "Service Url resolved")) {
+                    throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
+                }
+               if (isPublisherSecured && !isWebApp) {
+                    if (!isStageSuccess(envStatus, "OAuth keys generated")) {
+                        throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
+                    }
+                }
+            } else {
+                boolean isPartiallyCreated = connectionJsonObject.get("isPartiallyCreated").getAsBoolean();
+                if (!isPartiallyCreated) {
+                    throw new ValidationException("Connection configurations are not properly partially created for " +
+                            "environment: " + envId);
+                }
+                if (isStageSuccess(envStatus, "Service Url resolved")) {
+                    throw new ValidationException("Connection configurations are not properly partially created for " +
+                            "environment: " + envId);
+                }
+                if (isPublisherSecured && !isWebApp) {
+                    if (!isStageSuccess(envStatus, "OAuth keys generated")) {
+                        throw new ValidationException("Connection configurations are not properly partially created for " +
+                                "environment: " + envId);                    }
+                }
+            }
+        }
+        context.setVariable(contextVariableName, true);
+        if(connectionId != null) {
+            connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
+        }
     }
 }

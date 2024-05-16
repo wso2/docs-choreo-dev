@@ -1,0 +1,46 @@
+mutation {
+  createByocComponent(
+    component: {
+      name: "{{name}}"
+      displayName: "{{name}}"
+      description: ""
+      orgId: {{orgId}}
+      orgHandler: "{{orgHandler}}"
+      projectId: "{{projectId}}"
+      labels: ""
+      componentType: "{{componentType}}"
+      accessibility: "external"
+      byocWebAppsConfig: {
+        dockerContext: "{{byocWebAppsConfig.dockerContext}}"
+        srcGitRepoUrl: "{{byocWebAppsConfig.srcGitRepoUrl}}"
+        srcGitRepoBranch: "main"
+        webAppType: "{{byocWebAppsConfig.webAppType}}"
+        webAppBuildCommand: "{{byocWebAppsConfig.webAppBuildCommand}}"
+        webAppPackageManagerVersion: "{{byocWebAppsConfig.webAppPackageManagerVersion}}"
+        webAppOutputDirectory: "{{byocWebAppsConfig.webAppOutputDirectory}}"
+        isAppGatewayEnabled: true
+      }
+    }
+  ) {
+    id
+    createdAt
+    updatedAt
+    name
+    handle
+    organizationId
+    projectId
+    orgHandle
+    type
+    description
+    imageRegistryId
+    imageRegistry {
+      id
+      createdAt
+      updatedAt
+      cloudConnectorId
+      imageRepositoryName
+    }
+    componentType
+    httpBased
+  }
+}
