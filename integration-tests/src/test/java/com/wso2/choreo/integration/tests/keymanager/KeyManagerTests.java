@@ -135,10 +135,16 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
         String userAccessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
 
         String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
-        Repository repo = Repository.builder().repoUrl(WEBAPP_COMPONENT_REPO_URL)
-                .dockerContext(WEBAPP_COMPONENT_DOCKER_CONTEXT).build();
+        GraphqlDTO.ByocWebAppsConfig webAppsConfig = GraphqlDTO.ByocWebAppsConfig.builder()
+                .dockerContext(WEBAPP_COMPONENT_DOCKER_CONTEXT)
+                .srcGitRepoUrl(WEBAPP_COMPONENT_REPO_URL)
+                .webAppType("React")
+                .webAppBuildCommand("npm run build")
+                .webAppPackageManagerVersion("18")
+                .webAppOutputDirectory("/build")
+                .build();
         GraphqlDTO componentCreationRequestDTO = ComponentUtils.createWebappComponentRequest(componentName, testProject,
-                repo);
+                webAppsConfig);
         ChoreoComponent webappComponent = ComponentUtils.createComponent(this, citrusClients, userAccessToken,
                 componentCreationRequestDTO, ComponentFlavour.WEBAPP);
 

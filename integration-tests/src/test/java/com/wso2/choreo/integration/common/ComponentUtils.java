@@ -227,19 +227,10 @@ public class ComponentUtils {
                 .dockerfilePath(repo.getDockerfilePath()).build();
     }
 
-    public static GraphqlDTO createWebappComponentRequest(String name, ChoreoProject project, Repository repo) {
+    public static GraphqlDTO createWebappComponentRequest(String name, ChoreoProject project, 
+            GraphqlDTO.ByocWebAppsConfig webAppsConfig) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
-
-        GraphqlDTO.ByocWebAppsConfig webAppsConfig = GraphqlDTO.ByocWebAppsConfig.builder()
-                .dockerContext(repo.getDockerContext())
-                .srcGitRepoUrl(repo.getRepoUrl())
-                .webAppType("React")
-                .webAppBuildCommand("npm run build")
-                .webAppPackageManagerVersion("18")
-                .webAppOutputDirectory("/build")
-                .build();
-
         return GraphqlDTO.builder().name(name).orgId(orgId).orgHandler(orgHandle).projectId(project.getId())
                 .byocWebAppsConfig(webAppsConfig).build();
     }

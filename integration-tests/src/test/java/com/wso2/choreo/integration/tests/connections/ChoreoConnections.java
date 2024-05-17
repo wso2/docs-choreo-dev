@@ -490,11 +490,16 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void createWebAppLevelConnectionToSecuredPublicService_TestChoreoConnections () throws Exception {
         String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
-        Repository repo = Repository.builder().
-                repoUrl(WEBAPP_COMPONENT_REPO_URL).
-                dockerContext(WEBAPP_COMPONENT_DOCKER_CONTEXT).build();
 
-        GraphqlDTO dto = ComponentUtils.createWebappComponentRequest(componentName, projectOne, repo);
+        GraphqlDTO.ByocWebAppsConfig webAppsConfig = GraphqlDTO.ByocWebAppsConfig.builder()
+                .dockerContext(WEBAPP_COMPONENT_DOCKER_CONTEXT)
+                .srcGitRepoUrl(WEBAPP_COMPONENT_REPO_URL)
+                .webAppType("React")
+                .webAppBuildCommand("npm run build")
+                .webAppPackageManagerVersion("18")
+                .webAppOutputDirectory("/build")
+                .build();
+        GraphqlDTO dto = ComponentUtils.createWebappComponentRequest(componentName, projectOne, webAppsConfig);
         ChoreoComponent webAppComponent = ComponentUtils.createComponent(this, citrusClients, accessToken,
                 dto, ComponentFlavour.WEBAPP);
 

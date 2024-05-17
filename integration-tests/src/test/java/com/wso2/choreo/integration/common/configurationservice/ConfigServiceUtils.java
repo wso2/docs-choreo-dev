@@ -64,4 +64,22 @@ public class ConfigServiceUtils {
 
         return ConfigurationService.getConfigGroupsWithValues(runner, client, groupUuid);
     }
+
+    /**
+     * Update a configuration group.
+     *
+     * @param runner              Citrus test runner
+     * @param client              Citrus http client
+     * @param groupUuid           Group UUID
+     * @param updatedConfigGroup  Updated configurationGroup object
+     * @return Updated ConfigurationGroup object
+     * @throws TokenRetrievalException If an error occurs while retrieving the token
+     * @throws IOException             If an error occurs while reading the response
+     * @throws URISyntaxException      If an error occurs while creating the URI
+     */
+    public static ConfigurationGroup updateConfigGroup(TestActionRunner runner, HttpClient client, 
+            ConfigurationGroup updatedConfigGroup) throws TokenRetrievalException, IOException, URISyntaxException {
+
+        return ConfigurationService.updateConfigGroup(runner, client, updatedConfigGroup);
+    }    
 }

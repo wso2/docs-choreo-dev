@@ -20,6 +20,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @Builder
@@ -33,4 +34,30 @@ public class ConfigurationGroup {
     private String type;
     private List<Configuration> configurations;
     private String description;
+
+    public Optional<String> getConfigurationValue(String key, String environmentUuid) {
+        return configurations.stream()
+                .filter(c -> c.getKey().equals(key))
+                .findFirst()
+                .flatMap(c -> c.getValueForEnvironemnt(environmentUuid));
+    }
+
+    public void setConfigurationValue(String key, String value, String environmentUuid) {
+        configurations.stream()
+                .filter(c -> c.getKey().equals(key))
+                .findFirst()
+                .ifPresentOrElse(
+                    c -> c.setValueForEnvironment(environmentUuid, value), 
+                    () -> configurations.add(
+                        Configuration.builder()
+                            .key(key)
+                            .values(
+                                List.of(ConfigurationValue.builder()
+                                    .environmentUuid(environmentUuid)
+                                    .value(value)
+                                    .build())
+                            )
+                            .build())
+                );
+    }
 }

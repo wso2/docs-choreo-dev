@@ -20,6 +20,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.models.configservice.ConfigurationGroup;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.http.HttpHeaders;
@@ -131,6 +132,48 @@ public class ConfigurationService {
                                 .header(HttpHeaders.AUTHORIZATION, getAccessToken())
                                 .contentType(String.valueOf(MediaType.APPLICATION_JSON))
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .validate((message, context) -> {
+                                    try {
+                                        ConfigurationGroup response = new ObjectMapper()
+                                                .readValue(message.getPayload().toString(),
+                                                        ConfigurationGroup.class);
+                                        if (response.getGroupUuid() == null) {
+                                            throw new RuntimeException("Response fields are empty");
+                                        }
+                                        responseDTO.set(message.getPayload(String.class));
+                                    } catch (JsonProcessingException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                })));
+
+        return new ObjectMapper().readValue(responseDTO.get(), ConfigurationGroup.class);
+    }
+
+    public static ConfigurationGroup updateConfigGroup(TestActionRunner runner, HttpClient client, 
+            ConfigurationGroup updatedConfigGroup) throws TokenRetrievalException, IOException, URISyntaxException {
+        AtomicReference<String> responseDTO = new AtomicReference<>();
+
+        String requestBody = ObjectMapperUtil.mapObjectToString(updatedConfigGroup);
+        
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .put(getConfigGroupsEndpoint() + "/" + updatedConfigGroup.getGroupUuid())
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, getAccessToken())
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                .body(requestBody),
                         http()
                                 .client(client)
                                 .receive()
