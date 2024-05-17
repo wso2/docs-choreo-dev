@@ -1,0 +1,26 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: testgpt-secret
+spec:
+  secretObjects:
+    - secretName: testgpt-secret
+      type: Opaque
+      data:
+        - objectName: REDIS-AUTH-KEY
+          key: REDIS-AUTH-KEY
+        - objectName: OPENAI-ACCESS-KEY
+          key: OPENAI-ACCESS-KEY
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: {{.REDIS_AUTH_KEY_OBJ_NAME | default "ai-api-test-redis-primary-access-key"}}
+          objectType: secret
+          objectAlias: REDIS-AUTH-KEY
+          objectVersion: "{{.REDIS_AUTH_KEY}}"
+        - |
+          objectName: ai-api-test-cogsvc-openai-access-key
+          objectType: secret
+          objectAlias: OPENAI-ACCESS-KEY
+          objectVersion: "{{.OPENAI_ACCESS_KEY}}"
