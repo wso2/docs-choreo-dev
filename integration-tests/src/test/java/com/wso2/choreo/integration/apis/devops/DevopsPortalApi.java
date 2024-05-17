@@ -14,12 +14,18 @@ package com.wso2.choreo.integration.apis.devops;
 
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.message.MessageType;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.models.devops.Dataplane;
+import com.wso2.choreo.integration.models.devops.EnvironmentWithClustersListDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +33,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
@@ -199,4 +207,112 @@ public class DevopsPortalApi extends ControlPlaneAPI {
                 }));
         return secrets;
     }
+
+    /**
+     * Retrieves dataplanes in an organization
+     * @param runner Test action runner
+     * @param accessToken Access token
+     * @param orgUuid Organization UUID
+     * @return List of dataplanes
+     */
+    public static List<Dataplane> getDataplaneList(TestActionRunner runner, String accessToken, String orgUuid)
+                    throws JsonMappingException, JsonProcessingException {
+        
+        String url = "/organizations/" + orgUuid + "/dataplanes";
+
+        AtomicReference<String> responseDTO = new AtomicReference<>();
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(30000)
+                .actions((http().client(DEVOPS_ENDPOINT)
+                        .send()
+                        .get(url)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)))));
+
+        runner.$(http()
+                .client(DEVOPS_ENDPOINT)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate((message, context) -> {
+                    try {
+                                List<Dataplane> response = new ObjectMapper()
+                                        .readValue(message.getPayload().toString(),
+                                        new TypeReference<List<Dataplane>>(){}
+                                        );
+                                if (response.size() == 0) {
+                                throw new RuntimeException("No dataplanes available");
+                                }
+                                responseDTO.set(message.getPayload(String.class));
+                        } catch (JsonProcessingException e) {
+                                throw new RuntimeException(e);
+                        }
+                }));
+
+        return new ObjectMapper()
+                .readValue(responseDTO.get(), new TypeReference<List<Dataplane>>(){});
+    }
+
+    /**
+     * Retrieves environments with clusters in an organization
+     * @param runner Test action runner
+     * @param accessToken Access token
+     * @param orgUuid Organization UUID
+     * @param projectUuid Project UUID
+     * @return List of environments with clusters
+     */
+    public static EnvironmentWithClustersListDTO getEnvironmentsWithClusters(TestActionRunner runner, String accessToken,
+                    String orgUuid, String projectUuid) throws JsonMappingException, JsonProcessingException {
+        
+        String url = "/organizations/" + orgUuid + "/environments";
+
+        AtomicReference<String> responseDTO = new AtomicReference<>();
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(30000)
+                .actions((http().client(DEVOPS_ENDPOINT)
+                        .send()
+                        .get(url)
+                        .queryParam("organization_id", orgUuid)
+                        .queryParam("project_id", projectUuid)
+                        .queryParam("include", "environment_clusters")
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)))));
+
+        runner.$(http()
+                .client(DEVOPS_ENDPOINT)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate((message, context) -> {
+                    try {
+                        EnvironmentWithClustersListDTO response = new ObjectMapper()
+                                        .readValue(message.getPayload().toString(),
+                                        EnvironmentWithClustersListDTO.class
+                                        );
+                                if (response.getData().size() == 0) {
+                                throw new RuntimeException("No environments available");
+                                }
+                                responseDTO.set(message.getPayload(String.class));
+                        } catch (JsonProcessingException e) {
+                                throw new RuntimeException(e);
+                        }
+                }));
+
+        return new ObjectMapper()
+                .readValue(responseDTO.get(), EnvironmentWithClustersListDTO.class);
+    }
+
+    
 }
