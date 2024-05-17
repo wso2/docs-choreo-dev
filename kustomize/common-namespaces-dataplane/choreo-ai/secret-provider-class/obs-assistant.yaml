@@ -17,5 +17,3 @@ spec:
           objectType: secret
           objectAlias: AZURE_OPENAI_API_KEY
           objectVersion: "{{.AZURE_OPENAI_API_KEY}}"
-      
-      
