@@ -19,7 +19,12 @@ import {
   DEPLOYMENT_SUCCESS,
 } from "../../../commons/constants";
 import { cyGet } from "../../../commons/cy";
-import { LONG_TIME, MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
+import {
+  LONG_TIME,
+  MEDIUM_TIME,
+  SHORT_TIME,
+  VERY_SHORT_TIME,
+} from "../../../commons/timeouts";
 import { ConfigEntryStep, Types } from "../../../commons/types";
 import { Utils } from "../../../commons/utils";
 import { TestIds } from "../../constants/TestIds";
@@ -482,6 +487,10 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     }
 
     private verifyPromotionStatus() {
+      cy.get(TestIds.prodEnvCard)
+        .find(TestIds.notDeployed, VERY_SHORT_TIME)
+        .should("not.exist");
+
       // Begin Workaround for not being able to scroll up to see the deployment status in the prod env card
       this.sideMenu.navigateToOverview();
       this.sideMenu.navigateToDeploy();
