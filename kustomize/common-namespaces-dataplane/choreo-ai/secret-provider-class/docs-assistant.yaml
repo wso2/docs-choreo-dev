@@ -34,7 +34,7 @@ spec:
           objectAlias: CP_AZURE_OPENAI_API_KEY
           objectVersion: "{{.CP_AZURE_OPENAI_API_KEY}}"
         - |
-          objectName: cohere-api-trial-key
+          objectName: {{.COHERE_API_KEY_OBJ_NAME | default "cohere-api-key"}}
           objectType: secret
           objectAlias: COHERE_API_KEY
           objectVersion: "{{.COHERE_API_KEY}}"
