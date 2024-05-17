@@ -1,0 +1,1682 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.2">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="token" elementType="Argument">
+            <stringProp name="Argument.name">token</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="componentId" elementType="Argument">
+            <stringProp name="Argument.name">componentId</stringProp>
+            <stringProp name="Argument.value">7bd5bc20-ed65-4af6-90c5-9aea7b17b8b3</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="percentage1" elementType="Argument">
+            <stringProp name="Argument.name">percentage1</stringProp>
+            <stringProp name="Argument.value">0</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="projectId" elementType="Argument">
+            <stringProp name="Argument.name">projectId</stringProp>
+            <stringProp name="Argument.value">99dfb6bd-b504-4ab6-84f1-b3abec59d372</stringProp>
+            <stringProp name="Argument.desc">28cb71e4-1129-4971-b3e9-4cadc3029afc</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="orgHandle" elementType="Argument">
+            <stringProp name="Argument.name">orgHandle</stringProp>
+            <stringProp name="Argument.value">dummy800perftenant2</stringProp>
+            <stringProp name="Argument.desc">orgprotonjd4choreo</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="choreoHost" elementType="Argument">
+            <stringProp name="Argument.name">choreoHost</stringProp>
+            <stringProp name="Argument.value">apis.perf.choreo.dev</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="commonDelay" elementType="Argument">
+            <stringProp name="Argument.name">commonDelay</stringProp>
+            <stringProp name="Argument.value">1000</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="choreoSts" elementType="Argument">
+            <stringProp name="Argument.name">choreoSts</stringProp>
+            <stringProp name="Argument.value">sts.perf.choreo.dev</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="username" elementType="Argument">
+            <stringProp name="Argument.name">username</stringProp>
+            <stringProp name="Argument.value">${__P(username,perfAdmin1)}</stringProp>
+            <stringProp name="Argument.desc">dummy800AdminTenant2</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="usernamePrefix" elementType="Argument">
+            <stringProp name="Argument.name">usernamePrefix</stringProp>
+            <stringProp name="Argument.value">${__P(userPrefix,perfAdmin)}</stringProp>
+            <stringProp name="Argument.desc">dummy800AdminTenant2</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="password" elementType="Argument">
+            <stringProp name="Argument.name">password</stringProp>
+            <stringProp name="Argument.value">${__P(password,j55lIvck7w*R)}</stringProp>
+            <stringProp name="Argument.desc">ut6Ky6G6MFmb4vP</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="userAgent" elementType="Argument">
+            <stringProp name="Argument.name">userAgent</stringProp>
+            <stringProp name="Argument.value">JMeter-User-Login</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="asgardeo" elementType="Argument">
+            <stringProp name="Argument.name">asgardeo</stringProp>
+            <stringProp name="Argument.value">perf.api.asgardeo.io</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="branch" elementType="Argument">
+            <stringProp name="Argument.name">branch</stringProp>
+            <stringProp name="Argument.value">main</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="buildStateTime" elementType="Argument">
+            <stringProp name="Argument.name">buildStateTime</stringProp>
+            <stringProp name="Argument.value">${__P(buildWaitTime,10000)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="failedUsers" elementType="Argument">
+            <stringProp name="Argument.name">failedUsers</stringProp>
+            <stringProp name="Argument.value">${__P(orgstoskip,./skiporgs.txt)} </stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Trigger Build" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <stringProp name="LoopController.loops">${__P(iterations,4)}</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">${__P(users,5)}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${__P(rampup,10)}</stringProp>
+        <boolProp name="ThreadGroup.delayedStart">false</boolProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration">3610</stringProp>
+        <stringProp name="ThreadGroup.delay">0</stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Tenant Counter" enabled="true">
+          <stringProp name="CounterConfig.start">${__P(userCountStart,4000)}</stringProp>
+          <stringProp name="CounterConfig.end">${__P(userCountEnd,4020)}</stringProp>
+          <stringProp name="CounterConfig.incr">1</stringProp>
+          <stringProp name="CounterConfig.name">tenantCounter</stringProp>
+          <stringProp name="CounterConfig.format"></stringProp>
+          <boolProp name="CounterConfig.per_user">false</boolProp>
+        </CounterConfig>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Set Username" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">def prefix = vars.get(&quot;usernamePrefix&quot;);
+def counter = vars.get(&quot;tenantCounter&quot;);
+
+vars.put(&quot;username&quot;, prefix + counter);
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Skip Test For" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">String filepath = vars.get(&quot;failedUsers&quot;);
+
+if(filepath != null &amp;&amp; !filepath.isEmpty()) {
+	filepath = filepath.strip();
+}
+
+if (vars.getObject(&quot;SKIP_USERNAMES&quot;) == null) {
+  File file = new File(filepath);
+  if (file.exists()) {
+      List&lt;String&gt; usernames = file.readLines();
+      vars.putObject(&quot;SKIP_USERNAMES&quot;, usernames);
+  } else {
+		log.info(&quot;*****File doesn&apos;t exist &quot;);
+  	}
+}
+List&lt;String&gt; skipUsernames = vars.getObject(&quot;SKIP_USERNAMES&quot;);
+
+// Get the current username from a JMeter variable
+if (skipUsernames != null) {
+  String currentUser = vars.get(&quot;username&quot;);
+
+  // Check if the current username is in the skip list
+  if (skipUsernames.contains(currentUser)) {
+      // Log info and go to next iteration
+      log.info(&quot;Skipping execution for user: &quot; + currentUser);
+      vars.put(&quot;SKIP_THIS_ITERATION&quot;, &quot;true&quot;);
+  } else {
+      vars.put(&quot;SKIP_THIS_ITERATION&quot;, &quot;false&quot;);
+  }
+}</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="false">
+          <stringProp name="filename">/home/amilad/asgardeo-tenants-b2.csv</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="variableNames">username</stringProp>
+          <boolProp name="ignoreFirstLine">true</boolProp>
+          <stringProp name="delimiter">,</stringProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="shareMode">shareMode.group</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Reset Variables" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">vars.put(&quot;percentage&quot;, &quot;0&quot;);
+vars.put(&quot;buildStatus&quot;, &quot;&quot;);
+vars.put(&quot;buildConclusion&quot;, &quot;&quot;);
+vars.put(&quot;publicUrl&quot;, &quot;&quot;);
+vars.put(&quot;endpointState&quot;, &quot;&quot;);
+vars.put(&quot;deployState&quot;, &quot;&quot;);
+
+vars.put(&quot;webAppPercentage&quot;, &quot;0&quot;);
+vars.put(&quot;webAppBuildConclusion&quot;, &quot;&quot;);
+vars.put(&quot;webAppId&quot;, &quot;&quot;);
+vars.put(&quot;webAppHandle&quot;, &quot;&quot;);
+vars.put(&quot;webAppVersionId&quot;, &quot;&quot;);
+vars.put(&quot;webAppReleaseId&quot;, &quot;&quot;);
+vars.put(&quot;webAppBuildStatus&quot;, &quot;&quot;);
+
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Run Test If" enabled="true">
+          <boolProp name="IfController.evaluateAll">false</boolProp>
+          <boolProp name="IfController.useExpression">true</boolProp>
+          <stringProp name="IfController.condition">${__jexl3(&quot;${SKIP_THIS_ITERATION}&quot; != &quot;true&quot;)}</stringProp>
+        </IfController>
+        <hashTree>
+          <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Authentication" enabled="true"/>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Asgardeo Token Call" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="grant_type" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">grant_type</stringProp>
+                    <stringProp name="Argument.value">password</stringProp>
+                  </elementProp>
+                  <elementProp name="username" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">username</stringProp>
+                    <stringProp name="Argument.value">${username}@wso2.com@carbon.super</stringProp>
+                  </elementProp>
+                  <elementProp name="password" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">password</stringProp>
+                    <stringProp name="Argument.value">${password}</stringProp>
+                  </elementProp>
+                  <elementProp name="scope" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">scope</stringProp>
+                    <stringProp name="Argument.value">email groups openid profile</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">perf.api.asgardeo.io</stringProp>
+              <stringProp name="HTTPSampler.port">443</stringProp>
+              <stringProp name="HTTPSampler.protocol">https</stringProp>
+              <stringProp name="HTTPSampler.path">/oauth2/token</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+              <boolProp name="HTTPSampler.image_parser">false</boolProp>
+              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+              <boolProp name="HTTPSampler.md5">false</boolProp>
+              <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Authorization</stringProp>
+                    <stringProp name="Header.value">Basic cmFuZG9tU3BDbGllbnRJZDpyYW5kb21TcENsaWVudFNlY3JldA==</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Token Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">asgardeo_token</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.access_token</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="Scope.variable">componentid</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Validate Org" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+                <collectionProp name="Arguments.arguments"/>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+              <stringProp name="HTTPSampler.port">443</stringProp>
+              <stringProp name="HTTPSampler.protocol">https</stringProp>
+              <stringProp name="HTTPSampler.path">/user-mgt/1.0.0/validate/user</stringProp>
+              <stringProp name="HTTPSampler.method">GET</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+              <boolProp name="HTTPSampler.image_parser">false</boolProp>
+              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+              <boolProp name="HTTPSampler.md5">false</boolProp>
+              <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Authorization</stringProp>
+                    <stringProp name="Header.value">Bearer ${asgardeo_token}</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="OrgID Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">orgId</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.organizations[0].id</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="Scope.variable">componentid</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="OrgHandle Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">orgHandle</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.organizations[0].handle</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="Scope.variable">componentid</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="OrgUuid Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">orgUuid</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.organizations[0].uuid</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="Scope.variable">componentid</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+              </ConstantTimer>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Exchange the Token" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="grant_type" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">grant_type</stringProp>
+                    <stringProp name="Argument.value">urn:ietf:params:oauth:grant-type:token-exchange</stringProp>
+                  </elementProp>
+                  <elementProp name="subject_token" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">subject_token</stringProp>
+                    <stringProp name="Argument.value">${asgardeo_token}</stringProp>
+                  </elementProp>
+                  <elementProp name="subject_token_type" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">subject_token_type</stringProp>
+                    <stringProp name="Argument.value">urn:ietf:params:oauth:token-type:jwt</stringProp>
+                  </elementProp>
+                  <elementProp name="requested_token_type" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">requested_token_type</stringProp>
+                    <stringProp name="Argument.value">urn:ietf:params:oauth:token-type:jwt</stringProp>
+                  </elementProp>
+                  <elementProp name="scope" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">scope</stringProp>
+                    <stringProp name="Argument.value">apim:admin apim:api_generate_key apim:api_manage apim:api_publish apim:api_settings apim:api_view apim:dcr:app_manage apim:document_manage apim:environment_manage apim:publisher_settings apim:subscribe apim:subscription_manage apim:subscription_view apim:tier_manage apim:tier_view choreo:component_manage choreo:deployment_manage choreo:dev_env_manage choreo:log_view_non_prod choreo:log_view_prod choreo:non_prod_env_manage choreo:prod_env_manage choreo:project_manage environments:view_dev environments:view_prod urn:choreosystem:choreoauditloggingapi:audit_logs_manage urn:choreosystem:choreoauditloggingapi:audit_logs_view urn:choreosystem:choreodevopsportalapi:component_manage urn:choreosystem:choreodevopsportalapi:deployment_manage urn:choreosystem:choreodevopsportalapi:deployment_view urn:choreosystem:componentsmanagement:component_config_view urn:choreosystem:componentsmanagement:component_create urn:choreosystem:componentsmanagement:component_file_view urn:choreosystem:componentsmanagement:component_init_view urn:choreosystem:componentsmanagement:component_logs_view urn:choreosystem:componentsmanagement:component_manage urn:choreosystem:componentsmanagement:component_trigger urn:choreosystem:componentutils:component_file_view urn:choreosystem:componentutils:component_manage urn:choreosystem:componentutils:component_trigger urn:choreosystem:configmanagement:config_create urn:choreosystem:configmanagement:config_delete urn:choreosystem:configmanagement:config_manage urn:choreosystem:configmanagement:config_view urn:choreosystem:configmanagement:global_config_create urn:choreosystem:configmanagement:global_config_delete urn:choreosystem:configmanagement:global_config_manage urn:choreosystem:configmanagement:global_config_update urn:choreosystem:configmanagement:global_config_view urn:choreosystem:customdomainapi:custom_domain_create urn:choreosystem:customdomainapi:custom_domain_delete urn:choreosystem:customdomainapi:custom_domain_manage urn:choreosystem:customdomainapi:custom_domain_update urn:choreosystem:customdomainapi:custom_domain_view urn:choreosystem:onpremkeymanagement:on_prem_key_create urn:choreosystem:onpremkeymanagement:on_prem_key_delete urn:choreosystem:onpremkeymanagement:on_prem_key_manage urn:choreosystem:onpremkeymanagement:on_prem_key_update urn:choreosystem:onpremkeymanagement:on_prem_key_view urn:choreosystem:organizationapi:org_manage urn:choreosystem:organizationmanagement:enterprise_login_config_manage urn:choreosystem:organizationmanagement:enterprise_login_config_view urn:choreosystem:organizationmanagement:self_signup_approval_update urn:choreosystem:organizationmanagement:self_signup_approval_view urn:choreosystem:organizationmanagement:self_signup_config_update urn:choreosystem:organizationmanagement:self_signup_config_view urn:choreosystem:organizationmanagement:self_signup_manage urn:choreosystem:organizationmanagement:theme_create urn:choreosystem:organizationmanagement:theme_delete urn:choreosystem:organizationmanagement:theme_deploy urn:choreosystem:organizationmanagement:theme_manage urn:choreosystem:organizationmanagement:theme_view urn:choreosystem:usermanagement:invitation_delete urn:choreosystem:usermanagement:invitation_manage urn:choreosystem:usermanagement:invitation_send urn:choreosystem:usermanagement:invitation_view urn:choreosystem:usermanagement:permission_view urn:choreosystem:usermanagement:role_create urn:choreosystem:usermanagement:role_delete urn:choreosystem:usermanagement:role_manage urn:choreosystem:usermanagement:role_mapping_create urn:choreosystem:usermanagement:role_mapping_delete urn:choreosystem:usermanagement:role_mapping_manage urn:choreosystem:usermanagement:role_mapping_update urn:choreosystem:usermanagement:role_mapping_view urn:choreosystem:usermanagement:role_update urn:choreosystem:usermanagement:role_view urn:choreosystem:usermanagement:user_manage urn:choreosystem:usermanagement:user_update urn:choreosystem:usermanagement:user_view</stringProp>
+                  </elementProp>
+                  <elementProp name="orgHandle" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">orgHandle</stringProp>
+                    <stringProp name="Argument.value">${orgHandle}</stringProp>
+                  </elementProp>
+                  <elementProp name="client_id" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">client_id</stringProp>
+                    <stringProp name="Argument.value">s6Ze0qneFtLXqc16fR6J2pNbe98a</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">${choreoSts}</stringProp>
+              <stringProp name="HTTPSampler.port">443</stringProp>
+              <stringProp name="HTTPSampler.protocol">https</stringProp>
+              <stringProp name="HTTPSampler.path">/oauth2/token</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+              <boolProp name="HTTPSampler.image_parser">false</boolProp>
+              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+              <boolProp name="HTTPSampler.md5">false</boolProp>
+              <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="false">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Authorization</stringProp>
+                    <stringProp name="Header.value">Basic M2VxM2pMc1c1V3F0RUJfN3hKXzlkRjY2RUtjYTo5eVpZWFREQzZld2JiZld0el94R05ucUFFRXNh</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Token Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">token</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.access_token</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="Scope.variable">componentid</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="false">
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="script">import org.apache.commons.io.FileUtils
+import java.text.SimpleDateFormat;
+// Get total number of matches. (Returns string)
+def compId = vars.get(&quot;componentId&quot;)
+def orgUUID = vars.get(&quot;orgUuid&quot;)
+def prjId = vars.get(&quot;projectId&quot;)
+log.warn &apos;Output to jmeter console&apos; +  compId
+// Create file Object
+f = new File(&quot;orgs.csv&quot;)
+FileUtils.writeStringToFile(f, orgUUID+ &quot;,&quot; + prjId + &quot;,&quot; + compId + System.getProperty(&quot;line.separator&quot;),true)</stringProp>
+                <stringProp name="scriptLanguage">groovy</stringProp>
+              </JSR223PostProcessor>
+              <hashTree/>
+              <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+              </ConstantTimer>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer ${token}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fetch env-templates" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/devops/1.0.0/api/v1/organizations/${orgId}/environment-templates</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+            <boolProp name="HTTPSampler.image_parser">false</boolProp>
+            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+            <boolProp name="HTTPSampler.md5">false</boolProp>
+            <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            <stringProp name="TestPlan.comments">https://apis.st.choreo.dev/
+</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="EnvTemplate Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">devEnvTemplate</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.data[?(@.env_name==&apos;Development&apos;)].id</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="Scope.variable">componentid</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Project List" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;query&quot;:&quot;query{projects(orgId: ${orgId}){\n      id, orgId, name, version, createdDate, handler, region, description,\n      deploymentPipelineId, type, gitProvider, gitOrganization, repository, branch,secretRef\n    }}&quot;}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/projects/1.0.0/graphql</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+            <boolProp name="HTTPSampler.image_parser">false</boolProp>
+            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+            <boolProp name="HTTPSampler.md5">false</boolProp>
+            <intProp name="HTTPSampler.ipSourceType">0</intProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Default ProjectId Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">defaultProjectId</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.projects[?(@.name == &apos;Default Project&apos;)].id</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="Scope.variable">componentid</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Backend ProjectId Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">backendProjectId</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.projects[?(@.name == &apos;backend&apos;)].id</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="Scope.variable">componentid</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="ProjectId Setter" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">def backendProjectId = vars.get(&quot;backendProjectId&quot;);
+vars.put(&quot;projectId&quot;, backendProjectId);</stringProp>
+            </JSR223PostProcessor>
+            <hashTree/>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Invoke If" enabled="true">
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+            <stringProp name="IfController.condition">${__jexl3(&quot;${devEnvTemplate}&quot; == &quot;&quot;)}</stringProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Init Org" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;region&quot;:&quot;US&quot; , &quot;enrolledToCodeChallenge&quot;: true}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+              <stringProp name="HTTPSampler.protocol">https</stringProp>
+              <stringProp name="HTTPSampler.path">/devops/1.0.0/api/v1/organizations/${orgUuid}/projects/init</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+              <boolProp name="HTTPSampler.image_parser">false</boolProp>
+              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+              <boolProp name="HTTPSampler.md5">false</boolProp>
+              <intProp name="HTTPSampler.ipSourceType">0</intProp>
+              <stringProp name="TestPlan.comments">https://apis.preview-dv.choreo.dev/</stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+              </ConstantTimer>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Create Project If" enabled="true">
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+            <stringProp name="IfController.condition">${__jexl3(&quot;${projectId}&quot; == &quot;&quot;)}</stringProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Backend Project Creation" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;query&quot;:&quot;mutation{ createProject(project: {\n      name: \&quot;backend\&quot;, description: \&quot;Back-end Project\&quot;,\n      orgId: ${orgId}, orgHandler: \&quot;${orgHandle}\&quot;,\n      version: \&quot;1.0.0\&quot;, region: \&quot;US\&quot;,\n    }){ \n      id, orgId, name, version, createdDate, handler, region, description, deploymentPipelineId, type\n    } }&quot;}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+              <stringProp name="HTTPSampler.protocol">https</stringProp>
+              <stringProp name="HTTPSampler.path">/projects/1.0.0/graphql</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+              <boolProp name="HTTPSampler.image_parser">false</boolProp>
+              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+              <boolProp name="HTTPSampler.md5">false</boolProp>
+              <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="ID Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">projectId</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.createProject.id</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="Scope.variable">componentid</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+              </ConstantTimer>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Fetch APIs If" enabled="true">
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+            <stringProp name="IfController.condition">${__jexl3(&quot;${projectId}&quot; != &quot;&quot;)}</stringProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fetch APIs" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;query&quot;:&quot;query{ components(orgHandler: \&quot;${orgHandle}\&quot;, projectId: \&quot;${projectId}\&quot;){\n          projectId, \n          id, \n          description,\n          status,\n          name, \n          handler, \n          displayName, \n          displayType, \n          version, \n          createdAt, \n          lastBuildDate,\n          orgHandler,\n          repository {\n              buildpackConfig {\n                  versionId,\n                  buildContext,\n                  languageVersion,\n                  buildpack {\n                      id,\n                      language\n                  }\n              }\n          },\n          apiVersions { \n            apiVersion,\n            proxyName,\n            proxyUrl,\n            proxyId,\n            id,\n            state,\n            latest,\n            branch,\n            accessibility\n          }\n          deploymentTracks{\n            id,\n            createdAt,\n            updatedAt,\n            apiVersion,\n            branch,\n            description,\n            componentId,\n            latest,\n            versionStrategy\n          }\n        } \n      }&quot;}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+              <stringProp name="HTTPSampler.protocol">https</stringProp>
+              <stringProp name="HTTPSampler.path">/projects/1.0.0/graphql</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+              <boolProp name="HTTPSampler.image_parser">false</boolProp>
+              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+              <boolProp name="HTTPSampler.md5">false</boolProp>
+              <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="ID Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">componentId</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.components[?(@.name==&apos;api-test-go&apos;)].id</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="Scope.variable">componentid</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Handle Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">componentHandle</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.components[?(@.name==&apos;api-test-go&apos;)].handler</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="Scope.variable">componentid</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+              </ConstantTimer>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Create Go API If" enabled="true">
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+            <stringProp name="IfController.condition">${__jexl3((&quot;${componentId}&quot; == &quot;&quot;) &amp;&amp; (&quot;${projectId}&quot; != &quot;&quot;))}</stringProp>
+          </IfController>
+          <hashTree>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Create Go API If" enabled="true">
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+              <boolProp name="IfController.useExpression">true</boolProp>
+              <stringProp name="IfController.condition">${__jexl3((&quot;${componentId}&quot; == &quot;&quot;) &amp;&amp; (&quot;${projectId}&quot; != &quot;&quot;))}</stringProp>
+            </IfController>
+            <hashTree>
+              <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Go-API Creation" enabled="true"/>
+              <hashTree>
+                <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Go API Creation" enabled="true">
+                  <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+                  <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                    <collectionProp name="Arguments.arguments">
+                      <elementProp name="" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                        <stringProp name="Argument.value">{&quot;query&quot;:&quot;mutation { createBuildpackComponent(      component: {\n          name: \&quot;api-test-go\&quot;,\n          displayName: \&quot;api-test-go\&quot;,\n          description: \&quot;\&quot;,\n          orgId: ${orgId},\n          orgHandler: \&quot;${orgHandle}\&quot;,\n          projectId: \&quot;${projectId}\&quot;,\n          labels:\&quot;\&quot;,\n          componentType: \&quot;buildpackService\&quot;,\n          port: null,\n          oasFilePath: \&quot;\&quot;,\n          accessibility: \&quot;external\&quot;,\n          isAsyncCreationEnabled: true,\n          buildpackConfig: {\n            buildContext:\&quot;go-reading-list-rest-api\&quot;,\n            srcGitRepoUrl:\&quot;https://github.com/johndoeforchoreo/choreo-samples\&quot;,\n            srcGitRepoBranch: \&quot;${branch}\&quot;,\n            languageVersion: \&quot;1.x\&quot;,\n            buildpackId:\&quot;F9E4820E-6284-11EE-8C99-0242AC120005\&quot;\n            }\n          secretRef: \&quot;\&quot;,\n\n        }\n      ) \n      {\n        id,\n        createdAt,\n        updatedAt,\n        name,\n        handle,\n        organizationId,\n        projectId,\n        orgHandle,\n        type,\n        description,\n        imageRegistryId,\n        imageRegistry {\n            id,\n            createdAt,\n            updatedAt,\n            cloudConnectorId,\n            imageRepositoryName\n        },\n        componentType,\n        httpBased\n      }\n    }&quot;}</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                      </elementProp>
+                    </collectionProp>
+                  </elementProp>
+                  <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+                  <stringProp name="HTTPSampler.protocol">https</stringProp>
+                  <stringProp name="HTTPSampler.path">/projects/1.0.0/graphql</stringProp>
+                  <stringProp name="HTTPSampler.method">POST</stringProp>
+                  <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                  <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                  <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                  <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                  <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+                  <boolProp name="HTTPSampler.image_parser">false</boolProp>
+                  <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+                  <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+                  <boolProp name="HTTPSampler.md5">false</boolProp>
+                  <intProp name="HTTPSampler.ipSourceType">0</intProp>
+                </HTTPSamplerProxy>
+                <hashTree>
+                  <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="ID Extractor" enabled="true">
+                    <stringProp name="JSONPostProcessor.referenceNames">componentId</stringProp>
+                    <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.createBuildpackComponent.id</stringProp>
+                    <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                    <stringProp name="Scope.variable">componentid</stringProp>
+                  </JSONPostProcessor>
+                  <hashTree/>
+                  <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Handle Extractor" enabled="true">
+                    <stringProp name="JSONPostProcessor.referenceNames">componentHandle</stringProp>
+                    <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.createBuildpackComponent.handle</stringProp>
+                    <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                    <stringProp name="Scope.variable">componentid</stringProp>
+                  </JSONPostProcessor>
+                  <hashTree/>
+                  <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                    <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+                  </ConstantTimer>
+                  <hashTree/>
+                </hashTree>
+                <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="While Controller" enabled="true">
+                  <stringProp name="WhileController.condition">${__jexl3(&quot;${percentage}&quot; != &quot;100&quot; &amp;&amp; &quot;${__jm__While Controller__idx}&quot; &lt; 10)}</stringProp>
+                </WhileController>
+                <hashTree>
+                  <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Go API - Operation Status - ${__jm__While Controller__idx}" enabled="true">
+                    <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+                    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+                      <collectionProp name="Arguments.arguments">
+                        <elementProp name="ids" elementType="HTTPArgument">
+                          <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                          <stringProp name="Argument.metadata">=</stringProp>
+                          <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                          <stringProp name="Argument.name">ids</stringProp>
+                          <stringProp name="Argument.value">${componentId}</stringProp>
+                        </elementProp>
+                      </collectionProp>
+                    </elementProp>
+                    <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+                    <stringProp name="HTTPSampler.protocol">https</stringProp>
+                    <stringProp name="HTTPSampler.path">/component-creation/v1/operation-status</stringProp>
+                    <stringProp name="HTTPSampler.method">GET</stringProp>
+                    <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                    <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                    <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                    <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                    <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+                    <boolProp name="HTTPSampler.image_parser">false</boolProp>
+                    <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+                    <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+                    <boolProp name="HTTPSampler.md5">false</boolProp>
+                    <intProp name="HTTPSampler.ipSourceType">0</intProp>
+                  </HTTPSamplerProxy>
+                  <hashTree>
+                    <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Percentage" enabled="true">
+                      <stringProp name="JSONPostProcessor.referenceNames">percentage</stringProp>
+                      <stringProp name="JSONPostProcessor.jsonPathExprs">$.[0].percentage</stringProp>
+                      <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                    </JSONPostProcessor>
+                    <hashTree/>
+                    <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                      <stringProp name="ConstantTimer.delay">10000</stringProp>
+                    </ConstantTimer>
+                    <hashTree/>
+                  </hashTree>
+                </hashTree>
+                <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Reset componentId if" enabled="true">
+                  <boolProp name="IfController.evaluateAll">false</boolProp>
+                  <boolProp name="IfController.useExpression">true</boolProp>
+                  <stringProp name="IfController.condition">${__jexl3(&quot;${percentage}&quot; != &quot;100&quot;)}</stringProp>
+                </IfController>
+                <hashTree>
+                  <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler" enabled="true">
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="script">vars.put(&quot;componentId&quot;, &quot;&quot;);</stringProp>
+                  </JSR223Sampler>
+                  <hashTree/>
+                </hashTree>
+                <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Invoke If" enabled="false">
+                  <boolProp name="IfController.evaluateAll">false</boolProp>
+                  <boolProp name="IfController.useExpression">true</boolProp>
+                  <stringProp name="IfController.condition">${__jexl3(&quot;${publicUrl}&quot; != &quot;&quot;)}</stringProp>
+                </IfController>
+                <hashTree>
+                  <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Public Url Check" enabled="false">
+                    <boolProp name="displayJMeterProperties">true</boolProp>
+                    <boolProp name="displayJMeterVariables">true</boolProp>
+                    <boolProp name="displaySystemProperties">false</boolProp>
+                  </DebugSampler>
+                  <hashTree/>
+                  <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Go API - Generate Key" enabled="true">
+                    <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+                    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+                      <collectionProp name="Arguments.arguments"/>
+                    </elementProp>
+                    <stringProp name="HTTPSampler.domain">${choreoSts}</stringProp>
+                    <stringProp name="HTTPSampler.protocol">https</stringProp>
+                    <stringProp name="HTTPSampler.path">/api/am/publisher/v2/apis/${apiProxyId}/generate-key/?organizationId=${orgUuid}&amp;keyType=Development</stringProp>
+                    <stringProp name="HTTPSampler.method">POST</stringProp>
+                    <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                    <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                    <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                    <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                    <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+                    <boolProp name="HTTPSampler.image_parser">false</boolProp>
+                    <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+                    <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+                    <boolProp name="HTTPSampler.md5">false</boolProp>
+                    <intProp name="HTTPSampler.ipSourceType">0</intProp>
+                  </HTTPSamplerProxy>
+                  <hashTree>
+                    <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                      <collectionProp name="HeaderManager.headers">
+                        <elementProp name="Accept" elementType="Header">
+                          <stringProp name="Header.name">Content-Type</stringProp>
+                          <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                        </elementProp>
+                      </collectionProp>
+                    </HeaderManager>
+                    <hashTree/>
+                    <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="API Key Extractor" enabled="true">
+                      <stringProp name="JSONPostProcessor.referenceNames">apiKey</stringProp>
+                      <stringProp name="JSONPostProcessor.jsonPathExprs">$.apikey</stringProp>
+                      <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                      <stringProp name="Scope.variable">componentid</stringProp>
+                    </JSONPostProcessor>
+                    <hashTree/>
+                    <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                      <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+                    </ConstantTimer>
+                    <hashTree/>
+                  </hashTree>
+                  <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Url Host Extractor" enabled="true">
+                    <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                    <boolProp name="RegexExtractor.default_empty_value">false</boolProp>
+                    <stringProp name="Sample.scope">variable</stringProp>
+                    <stringProp name="Scope.variable">publicUrl</stringProp>
+                    <stringProp name="RegexExtractor.refname">urlHost</stringProp>
+                    <stringProp name="RegexExtractor.regex">^https://([^/]+)</stringProp>
+                    <stringProp name="RegexExtractor.template">$1$</stringProp>
+                    <stringProp name="RegexExtractor.match_number">1</stringProp>
+                  </RegexExtractor>
+                  <hashTree/>
+                  <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Url Extract Check" enabled="false">
+                    <boolProp name="displayJMeterProperties">true</boolProp>
+                    <boolProp name="displayJMeterVariables">true</boolProp>
+                    <boolProp name="displaySystemProperties">false</boolProp>
+                  </DebugSampler>
+                  <hashTree/>
+                  <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Url Path Extractor" enabled="true">
+                    <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                    <boolProp name="RegexExtractor.default_empty_value">false</boolProp>
+                    <stringProp name="Sample.scope">variable</stringProp>
+                    <stringProp name="Scope.variable">publicUrl</stringProp>
+                    <stringProp name="RegexExtractor.refname">urlPath</stringProp>
+                    <stringProp name="RegexExtractor.regex">^https://[^/]+(/[^?#]+)</stringProp>
+                    <stringProp name="RegexExtractor.template">$1$</stringProp>
+                    <stringProp name="RegexExtractor.match_number">1</stringProp>
+                  </RegexExtractor>
+                  <hashTree/>
+                  <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Go API - Invoke" enabled="true">
+                    <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+                    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+                      <collectionProp name="Arguments.arguments"/>
+                    </elementProp>
+                    <stringProp name="HTTPSampler.domain">${urlHost}</stringProp>
+                    <stringProp name="HTTPSampler.protocol">https</stringProp>
+                    <stringProp name="HTTPSampler.path">${urlPath}/greeter/greet?name=Name</stringProp>
+                    <stringProp name="HTTPSampler.method">GET</stringProp>
+                    <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                    <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                    <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                    <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                    <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+                    <boolProp name="HTTPSampler.image_parser">false</boolProp>
+                    <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+                    <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+                    <boolProp name="HTTPSampler.md5">false</boolProp>
+                    <intProp name="HTTPSampler.ipSourceType">0</intProp>
+                  </HTTPSamplerProxy>
+                  <hashTree>
+                    <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                      <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+                    </ConstantTimer>
+                    <hashTree/>
+                    <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                      <collectionProp name="HeaderManager.headers">
+                        <elementProp name="" elementType="Header">
+                          <stringProp name="Header.name">api-key</stringProp>
+                          <stringProp name="Header.value">${apiKey}</stringProp>
+                        </elementProp>
+                      </collectionProp>
+                    </HeaderManager>
+                    <hashTree/>
+                  </hashTree>
+                </hashTree>
+              </hashTree>
+            </hashTree>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Go API - Load" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;query&quot;:&quot;query{\n      component(\n        projectId: \&quot;${projectId}\&quot;\n        componentHandler: \&quot;${componentHandle}\&quot;\n      ){\n        id,\n        name,\n        handler,\n        description,\n        displayType,\n        displayName,\n        ownerName,\n        orgId,\n        orgHandler,\n        version,\n        labels,\n        createdAt,\n        projectId,\n        apiId,\n        httpBased,\n        isMigrationCompleted,\n        skipDeploy,\n        isUnifiedConfigMapping,\n        apiVersions{\n          apiVersion,\n          proxyName,\n          proxyUrl,\n          proxyId,\n          id,\n          state,\n          latest,\n          branch,\n          accessibility,\n          appEnvVersions{\n            environmentId,\n            releaseId,\n            release{\n              id,\n              metadata{\n                choreoEnv\n              },\n              environmentId,\n              environment,\n              gitHash,\n              gitOpsHash,\n            }\n          }\n        },\n        deploymentTracks{\n          id,\n          createdAt,\n          updatedAt,\n          apiVersion,\n          branch,\n          description,\n          componentId,\n          latest,\n          versionStrategy\n        }\n      }\n    }&quot;}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/projects/1.0.0/graphql</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+            <boolProp name="HTTPSampler.image_parser">false</boolProp>
+            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+            <boolProp name="HTTPSampler.md5">false</boolProp>
+            <intProp name="HTTPSampler.ipSourceType">0</intProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="VersionId Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">compVersionId</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.component.apiVersions[?(@.apiVersion == &apos;v1.0&apos;)].id</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="Scope.variable">componentid</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="ReleaseId Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">releaseId</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.component.apiVersions[0].appEnvVersions[?(@.release.metadata.choreoEnv == &apos;dev&apos;)].releaseId</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="Scope.variable">componentid</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="TrackId Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">trackId</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.component.deploymentTracks[0].id</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="Scope.variable">componentid</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+              <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Load environments" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;query&quot;:&quot;query {\n          environments(orgUuid:\&quot;${orgUuid}\&quot;, type: \&quot;external\&quot;,\n      projectId:\&quot;${projectId}\&quot;\n      ){\n            name,\n            id,\n            choreoEnv,\n            vhost,\n            apiEnvName,\n            isMigrating,\n            apimEnvId,\n            namespace,\n            sandboxVhost,\n            critical,\n            isPdp,\n            promoteFrom,\n            dpId,\n            templateId,\n            scaleToZeroEnabled\n          }\n        }&quot;}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/projects/1.0.0/graphql</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+            <boolProp name="HTTPSampler.image_parser">false</boolProp>
+            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+            <boolProp name="HTTPSampler.md5">false</boolProp>
+            <intProp name="HTTPSampler.ipSourceType">0</intProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Dev-EnvId Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">devEnvId</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.environments[?(@.name == &apos;Development&apos;)].id</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="Scope.variable">componentid</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+              <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Build If" enabled="true">
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+            <stringProp name="IfController.condition">${__jexl3(&quot;${componentId}&quot; != &quot;&quot;)}</stringProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Go API - Fetch Commits" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;query&quot;:&quot;query {\n      commitHistory(\n        componentId: \&quot;${componentId}\&quot;\n        branch: \&quot;${branch}\&quot;\n      ) {\n          author {\n            name,\n            date,\n            email,\n            avatarUrl\n          },\n        message\n        sha\n        isLatest\n      }\n    }&quot;}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+              <stringProp name="HTTPSampler.protocol">https</stringProp>
+              <stringProp name="HTTPSampler.path">/projects/1.0.0/graphql</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+              <boolProp name="HTTPSampler.image_parser">false</boolProp>
+              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+              <boolProp name="HTTPSampler.md5">false</boolProp>
+              <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Commit Sha Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">commitSha</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.commitHistory[0].sha</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="Scope.variable">componentid</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+              </ConstantTimer>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Go API - Build" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;query&quot;:&quot;mutation {\n      deployComponent(\n        deployment: {\n          componentId: \&quot;${componentId}\&quot;,\n          versionId: \&quot;${compVersionId}\&quot;,\n           envId: \&quot;${devEnvId}\&quot;,\n          branch: \&quot;${branch}\&quot;,\n          sha: \&quot;${commitSha}\&quot;,\n          cron: \&quot;\&quot;,\n          cronTimezone: \&quot;\&quot;,\n          shaDate: \&quot;\&quot;,\n        }\n      ) {\n          message\n          success\n      }\n    }&quot;}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+              <stringProp name="HTTPSampler.protocol">https</stringProp>
+              <stringProp name="HTTPSampler.path">/projects/1.0.0/graphql</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+              <boolProp name="HTTPSampler.image_parser">false</boolProp>
+              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+              <boolProp name="HTTPSampler.md5">false</boolProp>
+              <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+              </ConstantTimer>
+              <hashTree/>
+            </hashTree>
+            <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Build Status While Controller" enabled="true">
+              <stringProp name="WhileController.condition">${__jexl3(&quot;${buildStatus}&quot; != &quot;completed&quot; &amp;&amp; &quot;${__jm__Build Status While Controller__idx}&quot; &lt; 30)}</stringProp>
+            </WhileController>
+            <hashTree>
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Go API - Build Status - ${__jm__Build Status While Controller__idx}" enabled="true">
+                <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+                <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                  <collectionProp name="Arguments.arguments">
+                    <elementProp name="" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.value">{&quot;query&quot;:&quot;query {\n      deploymentStatusByVersion(\n        versionId: \&quot;${compVersionId}\&quot;,\n        componentId: \&quot;${componentId}\&quot;)\n      {\n        id\n        sha\n        completed_at\n        started_at\n        name\n        status\n        conclusion\n        isAutoDeploy\n        failureReason\n        sourceCommitId\n      }\n    }&quot;}</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                    </elementProp>
+                  </collectionProp>
+                </elementProp>
+                <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+                <stringProp name="HTTPSampler.protocol">https</stringProp>
+                <stringProp name="HTTPSampler.path">/projects/1.0.0/graphql</stringProp>
+                <stringProp name="HTTPSampler.method">POST</stringProp>
+                <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+                <boolProp name="HTTPSampler.image_parser">false</boolProp>
+                <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+                <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+                <boolProp name="HTTPSampler.md5">false</boolProp>
+                <intProp name="HTTPSampler.ipSourceType">0</intProp>
+              </HTTPSamplerProxy>
+              <hashTree>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="BuildStatus Extractor" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">buildStatus</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.deploymentStatusByVersion[0].status</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="BuildConclusion Extractor" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">buildConclusion</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.deploymentStatusByVersion[0].conclusion</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                  <stringProp name="ConstantTimer.delay">${buildStateTime}</stringProp>
+                </ConstantTimer>
+                <hashTree/>
+              </hashTree>
+              <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug - While Controller" enabled="false">
+                <boolProp name="displayJMeterProperties">true</boolProp>
+                <boolProp name="displayJMeterVariables">true</boolProp>
+                <boolProp name="displaySystemProperties">false</boolProp>
+              </DebugSampler>
+              <hashTree/>
+            </hashTree>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Deploy If" enabled="true">
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+              <boolProp name="IfController.useExpression">true</boolProp>
+              <stringProp name="IfController.condition">${__jexl3(&quot;${buildConclusion}&quot; == &quot;success&quot;)}</stringProp>
+            </IfController>
+            <hashTree>
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Go API - Generate Endpoints" enabled="true">
+                <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+                <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                  <collectionProp name="Arguments.arguments">
+                    <elementProp name="" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.value">{&quot;query&quot;:&quot;mutation GenerateEndpoints {\n      generateComponentEndpoints(\n        input: {\n          componentId: \&quot;${componentId}\&quot;\n          versionId: \&quot;${compVersionId}\&quot;\n          releaseId: \&quot;${releaseId}\&quot;\n          commitHash: \&quot;${commitSha}\&quot;\n          dryRun: false\n        }\n      ) {\n        id\n        createdAt\n        updatedAt\n        releaseId\n        port\n        environmentId\n        displayName\n        invokeUrl\n        hostName\n        isAutoGenerated\n        protocol\n        apiContext\n        apiDefinitionPath\n        visibility\n        type\n        apimId\n        apimRevisionId\n        apimName\n        projectUrl\n        organizationUrl\n        publicUrl\n        state\n        stateReason {\n          code\n          message\n          details\n          workerId\n        }\n        isDeleted\n        deletedAt\n        configurationGroupName\n        signature\n      }\n    }&quot;}&#xd;
+&#xd;
+</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                    </elementProp>
+                  </collectionProp>
+                </elementProp>
+                <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+                <stringProp name="HTTPSampler.protocol">https</stringProp>
+                <stringProp name="HTTPSampler.path">/projects/1.0.0/graphql</stringProp>
+                <stringProp name="HTTPSampler.method">POST</stringProp>
+                <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+                <boolProp name="HTTPSampler.image_parser">false</boolProp>
+                <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+                <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+                <boolProp name="HTTPSampler.md5">false</boolProp>
+                <intProp name="HTTPSampler.ipSourceType">0</intProp>
+              </HTTPSamplerProxy>
+              <hashTree>
+                <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                  <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+                </ConstantTimer>
+                <hashTree/>
+              </hashTree>
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Go API - Get Images" enabled="true">
+                <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+                <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+                  <collectionProp name="Arguments.arguments">
+                    <elementProp name="organization_id" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      <stringProp name="Argument.name">organization_id</stringProp>
+                      <stringProp name="Argument.value">${orgUuid}</stringProp>
+                    </elementProp>
+                    <elementProp name="project_id" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      <stringProp name="Argument.name">project_id</stringProp>
+                      <stringProp name="Argument.value">${projectId}</stringProp>
+                    </elementProp>
+                  </collectionProp>
+                </elementProp>
+                <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+                <stringProp name="HTTPSampler.protocol">https</stringProp>
+                <stringProp name="HTTPSampler.path">/devops/1.0.0/api/v1/byoi/components/${componentId}/versions/${compVersionId}/images</stringProp>
+                <stringProp name="HTTPSampler.method">GET</stringProp>
+                <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+                <boolProp name="HTTPSampler.image_parser">false</boolProp>
+                <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+                <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+                <boolProp name="HTTPSampler.md5">false</boolProp>
+                <intProp name="HTTPSampler.ipSourceType">0</intProp>
+              </HTTPSamplerProxy>
+              <hashTree>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Image Id Extractor" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">imageId</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.data[0].ID</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                  <stringProp name="Scope.variable">componentid</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                  <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+                </ConstantTimer>
+                <hashTree/>
+              </hashTree>
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Go API - Deploy To Dev" enabled="true">
+                <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+                <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                  <collectionProp name="Arguments.arguments">
+                    <elementProp name="" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.value">{&quot;query&quot;:&quot;mutation {\n      deployDeploymentTrack(\n        input: {\n          componentId: \&quot;${componentId}\&quot;,\n          id: \&quot;${trackId}\&quot;,\n          imageId: \&quot;${imageId}\&quot;,\n          environmentId: \&quot;${devEnvId}\&quot;,\n          cron: \&quot;\&quot;,\n          cronTimezone: \&quot;\&quot;,\n        }\n      )\n    }&quot;}</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                    </elementProp>
+                  </collectionProp>
+                </elementProp>
+                <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+                <stringProp name="HTTPSampler.protocol">https</stringProp>
+                <stringProp name="HTTPSampler.path">/projects/1.0.0/graphql</stringProp>
+                <stringProp name="HTTPSampler.method">POST</stringProp>
+                <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+                <boolProp name="HTTPSampler.image_parser">false</boolProp>
+                <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+                <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+                <boolProp name="HTTPSampler.md5">false</boolProp>
+                <intProp name="HTTPSampler.ipSourceType">0</intProp>
+              </HTTPSamplerProxy>
+              <hashTree>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Commit Sha Extractor" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">commitSha</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.commitHistory[0].sha</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                  <stringProp name="Scope.variable">componentid</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                  <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+                </ConstantTimer>
+                <hashTree/>
+              </hashTree>
+              <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="EndpointCheck Loop" enabled="true">
+                <stringProp name="WhileController.condition">${__jexl3(&quot;${endpointState}&quot; != &quot;Active&quot; &amp;&amp; &quot;${__jm__EndpointCheck Loop__idx}&quot; &lt; 20)}</stringProp>
+              </WhileController>
+              <hashTree>
+                <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Check Endpoint - ${__jm__EndpointCheck Loop__idx}" enabled="true">
+                  <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+                  <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                    <collectionProp name="Arguments.arguments">
+                      <elementProp name="" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                        <stringProp name="Argument.value">{&quot;query&quot;:&quot;query List {\n      componentEndpoints(\n        input: {\n          componentId: \&quot;${componentId}\&quot;\n          versionId: \&quot;${compVersionId}\&quot;\n          options:{\n            filter: {\n              releaseIds: [\n                \&quot;${releaseId}\&quot;\n              ]\n            }\n          }\n        }\n      ) {\n        id\n        createdAt\n        updatedAt\n        releaseId\n        environmentId\n        displayName\n        port\n        type\n        apiContext\n        apiDefinitionPath\n        invokeUrl\n        visibility\n        hostName\n        isAutoGenerated\n        apimId\n        apimRevisionId\n        apimName\n        projectUrl\n        organizationUrl\n        publicUrl\n        state\n        stateReason {\n          code\n          message\n          details\n          workerId\n        }\n        isDeleted\n        deletedAt\n      }\n    }&quot;}</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                      </elementProp>
+                    </collectionProp>
+                  </elementProp>
+                  <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+                  <stringProp name="HTTPSampler.protocol">https</stringProp>
+                  <stringProp name="HTTPSampler.path">/projects/1.0.0/graphql</stringProp>
+                  <stringProp name="HTTPSampler.method">POST</stringProp>
+                  <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                  <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                  <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+                  <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                  <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+                  <boolProp name="HTTPSampler.image_parser">false</boolProp>
+                  <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+                  <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+                  <boolProp name="HTTPSampler.md5">false</boolProp>
+                  <intProp name="HTTPSampler.ipSourceType">0</intProp>
+                </HTTPSamplerProxy>
+                <hashTree>
+                  <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Endpoint State Extractor" enabled="true">
+                    <stringProp name="JSONPostProcessor.referenceNames">endpointState</stringProp>
+                    <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.componentEndpoints[0].state</stringProp>
+                    <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                  </JSONPostProcessor>
+                  <hashTree/>
+                  <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Public Url Extractor" enabled="true">
+                    <stringProp name="JSONPostProcessor.referenceNames">publicUrl</stringProp>
+                    <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.componentEndpoints[0].publicUrl</stringProp>
+                    <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                  </JSONPostProcessor>
+                  <hashTree/>
+                  <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="API Proxy ID  Extractor" enabled="true">
+                    <stringProp name="JSONPostProcessor.referenceNames">apiProxyId</stringProp>
+                    <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.componentEndpoints[0].apimId</stringProp>
+                    <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                  </JSONPostProcessor>
+                  <hashTree/>
+                  <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                    <stringProp name="ConstantTimer.delay">2000</stringProp>
+                  </ConstantTimer>
+                  <hashTree/>
+                </hashTree>
+                <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug - While Controller" enabled="false">
+                  <boolProp name="displayJMeterProperties">true</boolProp>
+                  <boolProp name="displayJMeterVariables">true</boolProp>
+                  <boolProp name="displaySystemProperties">false</boolProp>
+                </DebugSampler>
+                <hashTree/>
+              </hashTree>
+              <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Deploy Check Loop" enabled="true">
+                <stringProp name="WhileController.condition">${__jexl3(&quot;${deployState}&quot; != &quot;ACTIVE&quot; &amp;&amp; &quot;${__jm__Deploy Check Loop__idx}&quot; &lt; 10)}</stringProp>
+              </WhileController>
+              <hashTree>
+                <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Deploy Check  - ${__jm__Deploy Check Loop__idx}" enabled="true">
+                  <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+                  <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                    <collectionProp name="Arguments.arguments">
+                      <elementProp name="" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                        <stringProp name="Argument.value">{&quot;query&quot;:&quot;query {\n      componentDeployment(\n        orgHandler: \&quot;${orgHandle}\&quot;\n        orgUuid:\&quot;${orgUuid}\&quot;\n        componentId: \&quot;${componentId}\&quot;\n        versionId: \&quot;${compVersionId}\&quot;\n        environmentId: \&quot;${devEnvId}\&quot;\n      ) {\n        environmentId\n        apiId\n        releaseId\n        build{\n          buildId\n          deployedAt\n          commit {\n            author {\n              name\n              date\n              email\n              avatarUrl\n            }\n            sha\n            message\n            isLatest\n          }\n        }\n        invokeUrl\n        versionId\n        deploymentStatus\n        deploymentStatusV2\n        version\n        cron\n        cronTimezone\n      }\n    }&quot;}</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                      </elementProp>
+                    </collectionProp>
+                  </elementProp>
+                  <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+                  <stringProp name="HTTPSampler.protocol">https</stringProp>
+                  <stringProp name="HTTPSampler.path">/projects/1.0.0/graphql</stringProp>
+                  <stringProp name="HTTPSampler.method">POST</stringProp>
+                  <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                  <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                  <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                  <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                  <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+                  <boolProp name="HTTPSampler.image_parser">false</boolProp>
+                  <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+                  <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+                  <boolProp name="HTTPSampler.md5">false</boolProp>
+                  <intProp name="HTTPSampler.ipSourceType">0</intProp>
+                </HTTPSamplerProxy>
+                <hashTree>
+                  <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Deploy State Extractor" enabled="true">
+                    <stringProp name="JSONPostProcessor.referenceNames">deployState</stringProp>
+                    <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.componentDeployment.deploymentStatusV2</stringProp>
+                    <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                  </JSONPostProcessor>
+                  <hashTree/>
+                  <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                    <stringProp name="ConstantTimer.delay">2000</stringProp>
+                  </ConstantTimer>
+                  <hashTree/>
+                </hashTree>
+                <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug - While Controller" enabled="false">
+                  <boolProp name="displayJMeterProperties">true</boolProp>
+                  <boolProp name="displayJMeterVariables">true</boolProp>
+                  <boolProp name="displaySystemProperties">false</boolProp>
+                </DebugSampler>
+                <hashTree/>
+              </hashTree>
+              <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
+                <boolProp name="displayJMeterProperties">true</boolProp>
+                <boolProp name="displayJMeterVariables">true</boolProp>
+                <boolProp name="displaySystemProperties">false</boolProp>
+              </DebugSampler>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Invoke If" enabled="false">
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+            <stringProp name="IfController.condition">${__jexl3(&quot;${deployState}&quot; == &quot;ACTIVE&quot; &amp;&amp; &quot;${endpointState}&quot; == &quot;Active&quot;  )}</stringProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Check Endpoint" enabled="false">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;query&quot;:&quot;query List {\n      componentEndpoints(\n        input: {\n          componentId: \&quot;${componentId}\&quot;\n          versionId: \&quot;${compVersionId}\&quot;\n          options:{\n            filter: {\n              releaseIds: [\n                \&quot;${releaseId}\&quot;\n              ]\n            }\n          }\n        }\n      ) {\n        id\n        createdAt\n        updatedAt\n        releaseId\n        environmentId\n        displayName\n        port\n        type\n        apiContext\n        apiDefinitionPath\n        invokeUrl\n        visibility\n        hostName\n        isAutoGenerated\n        apimId\n        apimRevisionId\n        apimName\n        projectUrl\n        organizationUrl\n        publicUrl\n        state\n        stateReason {\n          code\n          message\n          details\n          workerId\n        }\n        isDeleted\n        deletedAt\n      }\n    }&quot;}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+              <stringProp name="HTTPSampler.protocol">https</stringProp>
+              <stringProp name="HTTPSampler.path">/projects/1.0.0/graphql</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+              <boolProp name="HTTPSampler.image_parser">false</boolProp>
+              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+              <boolProp name="HTTPSampler.md5">false</boolProp>
+              <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Authorization</stringProp>
+                    <stringProp name="Header.value">Bearer ${token}</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Endpoint State Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">endpointState</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.componentEndpoints[0].state</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Public Url Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">publicUrl</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.componentEndpoints[0].publicUrl</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="API Proxy ID  Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">apiProxyId</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.componentEndpoints[0].apimId</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                <stringProp name="ConstantTimer.delay">10000</stringProp>
+              </ConstantTimer>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Go API - Generate Key" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+                <collectionProp name="Arguments.arguments"/>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">${choreoSts}</stringProp>
+              <stringProp name="HTTPSampler.protocol">https</stringProp>
+              <stringProp name="HTTPSampler.path">/api/am/publisher/v2/apis/${apiProxyId}/generate-key/?organizationId=${orgUuid}&amp;keyType=Development</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+              <boolProp name="HTTPSampler.image_parser">false</boolProp>
+              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+              <boolProp name="HTTPSampler.md5">false</boolProp>
+              <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                  </elementProp>
+                  <elementProp name="Authorization" elementType="Header">
+                    <stringProp name="Header.name">Authorization</stringProp>
+                    <stringProp name="Header.value">Bearer ${token}</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="API Key Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">apiKey</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.apikey</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="Scope.variable">componentid</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+              </ConstantTimer>
+              <hashTree/>
+            </hashTree>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Url Host Extractor" enabled="true">
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <boolProp name="RegexExtractor.default_empty_value">false</boolProp>
+              <stringProp name="Sample.scope">variable</stringProp>
+              <stringProp name="Scope.variable">publicUrl</stringProp>
+              <stringProp name="RegexExtractor.refname">urlHost</stringProp>
+              <stringProp name="RegexExtractor.regex">^https://([^/]+)</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
+              <stringProp name="RegexExtractor.match_number">1</stringProp>
+            </RegexExtractor>
+            <hashTree/>
+            <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Url Extract Check" enabled="false">
+              <boolProp name="displayJMeterProperties">true</boolProp>
+              <boolProp name="displayJMeterVariables">true</boolProp>
+              <boolProp name="displaySystemProperties">false</boolProp>
+            </DebugSampler>
+            <hashTree/>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Url Path Extractor" enabled="true">
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <boolProp name="RegexExtractor.default_empty_value">false</boolProp>
+              <stringProp name="Sample.scope">variable</stringProp>
+              <stringProp name="Scope.variable">publicUrl</stringProp>
+              <stringProp name="RegexExtractor.refname">urlPath</stringProp>
+              <stringProp name="RegexExtractor.regex">^https://[^/]+(/[^?#]+)</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
+              <stringProp name="RegexExtractor.match_number">1</stringProp>
+            </RegexExtractor>
+            <hashTree/>
+            <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
+              <boolProp name="displayJMeterProperties">true</boolProp>
+              <boolProp name="displayJMeterVariables">true</boolProp>
+              <boolProp name="displaySystemProperties">false</boolProp>
+            </DebugSampler>
+            <hashTree/>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Go API - Invoke" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+                <collectionProp name="Arguments.arguments"/>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">${urlHost}</stringProp>
+              <stringProp name="HTTPSampler.protocol">https</stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/books</stringProp>
+              <stringProp name="HTTPSampler.method">GET</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+              <boolProp name="HTTPSampler.image_parser">false</boolProp>
+              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+              <boolProp name="HTTPSampler.md5">false</boolProp>
+              <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+              </ConstantTimer>
+              <hashTree/>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">api-key</stringProp>
+                    <stringProp name="Header.value">${apiKey}</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">true</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>true</responseData>
+              <samplerData>true</samplerData>
+              <xml>true</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>true</responseHeaders>
+              <requestHeaders>true</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <url>true</url>
+              <hostname>true</hostname>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename">${__P(result-tree,./result-tree.jtl)}</stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename">${__P(run-output,./jmeter_run_result.jtl)}</stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

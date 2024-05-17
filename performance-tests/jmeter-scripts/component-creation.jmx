@@ -71,16 +71,6 @@
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.value">${__P(password,j55lIvck7w*R)}</stringProp>
           </elementProp>
-          <elementProp name="branch" elementType="Argument">
-            <stringProp name="Argument.name">branch</stringProp>
-            <stringProp name="Argument.value">main</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="buildStateTime" elementType="Argument">
-            <stringProp name="Argument.name">buildStateTime</stringProp>
-            <stringProp name="Argument.value">5000</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
           <elementProp name="asgardeo" elementType="Argument">
             <stringProp name="Argument.name">asgardeo</stringProp>
             <stringProp name="Argument.value">perf.api.asgardeo.io</stringProp>
@@ -101,11 +91,11 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">${__P(users,20)}</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">${__P(rampup,5)}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${__P(rampup,10)}</stringProp>
         <boolProp name="ThreadGroup.delayedStart">false</boolProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration">610</stringProp>
-        <stringProp name="ThreadGroup.delay">10</stringProp>
+        <stringProp name="ThreadGroup.duration">605</stringProp>
+        <stringProp name="ThreadGroup.delay">5</stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
@@ -129,6 +119,18 @@ def counter = vars.get(&quot;tenantCounter&quot;);
 vars.put(&quot;username&quot;, prefix + counter);
 </stringProp>
         </JSR223Sampler>
+        <hashTree/>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="false">
+          <stringProp name="filename">/home/amilad/asgardeo-tenants-b2.csv</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="variableNames">username</stringProp>
+          <boolProp name="ignoreFirstLine">true</boolProp>
+          <stringProp name="delimiter">,</stringProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="shareMode">shareMode.group</stringProp>
+        </CSVDataSet>
         <hashTree/>
         <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Skip Test For" enabled="true">
           <stringProp name="scriptLanguage">groovy</stringProp>
@@ -167,18 +169,6 @@ if (skipUsernames != null) {
 }</stringProp>
         </JSR223Sampler>
         <hashTree/>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="false">
-          <stringProp name="filename">/home/amilad/asgardeo-tenants-b2.csv</stringProp>
-          <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="variableNames">username</stringProp>
-          <boolProp name="ignoreFirstLine">true</boolProp>
-          <stringProp name="delimiter">,</stringProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="shareMode">shareMode.group</stringProp>
-        </CSVDataSet>
-        <hashTree/>
         <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Reset Variables" enabled="true">
           <stringProp name="scriptLanguage">groovy</stringProp>
           <stringProp name="parameters"></stringProp>
@@ -190,6 +180,8 @@ vars.put(&quot;buildConclusion&quot;, &quot;&quot;);
 vars.put(&quot;publicUrl&quot;, &quot;&quot;);
 vars.put(&quot;endpointState&quot;, &quot;&quot;);
 vars.put(&quot;deployState&quot;, &quot;&quot;);
+vars.put(&quot;status&quot;, &quot;&quot;);
+
 </stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -471,37 +463,6 @@ FileUtils.writeStringToFile(f, orgUUID+ &quot;,&quot; + prjId + &quot;,&quot; + 
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fetch env-templates" enabled="true">
-            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
-            <stringProp name="HTTPSampler.protocol">https</stringProp>
-            <stringProp name="HTTPSampler.path">/devops/1.0.0/api/v1/organizations/${orgId}/environment-templates</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
-            <boolProp name="HTTPSampler.image_parser">false</boolProp>
-            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
-            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
-            <boolProp name="HTTPSampler.md5">false</boolProp>
-            <intProp name="HTTPSampler.ipSourceType">0</intProp>
-            <stringProp name="TestPlan.comments">https://apis.st.choreo.dev/
-</stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="EnvTemplate Extractor" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">devEnvTemplate</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$.data[?(@.env_name==&apos;Development&apos;)].id</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="Scope.variable">componentid</stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Project List" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -553,6 +514,37 @@ vars.put(&quot;projectId&quot;, backendProjectId);</stringProp>
             </JSR223PostProcessor>
             <hashTree/>
           </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fetch env-templates" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/devops/1.0.0/api/v1/organizations/${orgId}/environment-templates</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+            <boolProp name="HTTPSampler.image_parser">false</boolProp>
+            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+            <boolProp name="HTTPSampler.md5">false</boolProp>
+            <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            <stringProp name="TestPlan.comments">https://apis.st.choreo.dev/
+</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="EnvTemplate Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">devEnvTemplate</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.data[?(@.env_name==&apos;Development&apos;)].id</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="Scope.variable">componentid</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
           <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Invoke If" enabled="true">
             <boolProp name="IfController.evaluateAll">false</boolProp>
             <boolProp name="IfController.useExpression">true</boolProp>
@@ -565,7 +557,7 @@ vars.put(&quot;projectId&quot;, backendProjectId);</stringProp>
                 <collectionProp name="Arguments.arguments">
                   <elementProp name="" elementType="HTTPArgument">
                     <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                    <stringProp name="Argument.value">{&quot;region&quot;:&quot;US&quot; , &quot;enrolledToCodeChallenge&quot;: true}</stringProp>
+                    <stringProp name="Argument.value">{&quot;region&quot;:&quot;US&quot;}</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
                 </collectionProp>
@@ -593,12 +585,6 @@ vars.put(&quot;projectId&quot;, backendProjectId);</stringProp>
               <hashTree/>
             </hashTree>
           </hashTree>
-          <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
-            <boolProp name="displayJMeterProperties">true</boolProp>
-            <boolProp name="displayJMeterVariables">true</boolProp>
-            <boolProp name="displaySystemProperties">false</boolProp>
-          </DebugSampler>
-          <hashTree/>
           <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Create Project If" enabled="true">
             <boolProp name="IfController.evaluateAll">false</boolProp>
             <boolProp name="IfController.useExpression">true</boolProp>
@@ -658,6 +644,149 @@ FileUtils.writeStringToFile(f,orgId + &quot;,&quot; + prjId + System.getProperty
                 <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
               </ConstantTimer>
               <hashTree/>
+            </hashTree>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Fetch If" enabled="true">
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+            <stringProp name="IfController.condition">${__jexl3(&quot;${projectId}&quot; != &quot;&quot;)}</stringProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fetch APIs" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;query&quot;:&quot;query{ components(orgHandler: \&quot;${orgHandle}\&quot;, projectId: \&quot;${projectId}\&quot;){\n          projectId, \n          id, \n          description,\n          status,\n          name, \n          handler, \n          displayName, \n          displayType, \n          version, \n          createdAt, \n          lastBuildDate,\n          orgHandler,\n          repository {\n              buildpackConfig {\n                  versionId,\n                  buildContext,\n                  languageVersion,\n                  buildpack {\n                      id,\n                      language\n                  }\n              }\n          },\n          apiVersions { \n            apiVersion,\n            proxyName,\n            proxyUrl,\n            proxyId,\n            id,\n            state,\n            latest,\n            branch,\n            accessibility\n          }\n          deploymentTracks{\n            id,\n            createdAt,\n            updatedAt,\n            apiVersion,\n            branch,\n            description,\n            componentId,\n            latest,\n            versionStrategy\n          }\n        } \n      }&quot;}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+              <stringProp name="HTTPSampler.protocol">https</stringProp>
+              <stringProp name="HTTPSampler.path">/projects/1.0.0/graphql</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+              <boolProp name="HTTPSampler.image_parser">false</boolProp>
+              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+              <boolProp name="HTTPSampler.md5">false</boolProp>
+              <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="ID Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">componentId</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.components[?(@.name==&apos;api-test-go&apos;)].id</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="Scope.variable">componentid</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Handle Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">componentHandle</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.components[?(@.name==&apos;api-test-go&apos;)].handler</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="Scope.variable">componentid</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="false">
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="script">import org.apache.commons.io.FileUtils
+import java.text.SimpleDateFormat;
+// Get total number of matches. (Returns string)
+def compId = vars.get(&quot;componentId&quot;)
+def orgUUID = vars.get(&quot;orgUuid&quot;)
+def prjId = vars.get(&quot;projectId&quot;)
+log.warn &apos;Output to jmeter console&apos; +  compId
+// Create file Object
+f = new File(&quot;results.csv&quot;)
+FileUtils.writeStringToFile(f, orgUUID+ &quot;,&quot; + prjId + &quot;,&quot; + compId + System.getProperty(&quot;line.separator&quot;),true)</stringProp>
+                <stringProp name="scriptLanguage">groovy</stringProp>
+              </JSR223PostProcessor>
+              <hashTree/>
+              <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+              </ConstantTimer>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Create Go API If" enabled="true">
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+            <stringProp name="IfController.condition">${__jexl3(&quot;${componentId}&quot; == &quot;&quot; &amp;&amp; &quot;${projectId}&quot; != &quot;&quot; )}</stringProp>
+          </IfController>
+          <hashTree>
+            <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Go-API Creation" enabled="true"/>
+            <hashTree>
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Go API Creation" enabled="true">
+                <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+                <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                  <collectionProp name="Arguments.arguments">
+                    <elementProp name="" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.value">{&quot;query&quot;:&quot;mutation { createBuildpackComponent(      component: {\n          name: \&quot;api-test-go\&quot;,\n          displayName: \&quot;api-test-go\&quot;,\n          description: \&quot;\&quot;,\n          orgId: ${orgId},\n          orgHandler: \&quot;${orgHandle}\&quot;,\n          projectId: \&quot;${projectId}\&quot;,\n          labels:\&quot;\&quot;,\n          componentType: \&quot;buildpackService\&quot;,\n          port: null,\n          oasFilePath: \&quot;\&quot;,\n          accessibility: \&quot;external\&quot;,\n          isAsyncCreationEnabled: true,\n          buildpackConfig: {\n            buildContext:\&quot;go-reading-list-rest-api\&quot;,\n            srcGitRepoUrl:\&quot;https://github.com/johndoeforchoreo/choreo-samples\&quot;,\n            srcGitRepoBranch: \&quot;perf\&quot;,\n            languageVersion: \&quot;1.x\&quot;,\n            buildpackId:\&quot;F9E4820E-6284-11EE-8C99-0242AC120005\&quot;\n            }\n          secretRef: \&quot;\&quot;,\n\n        }\n      ) \n      {\n        id,\n        createdAt,\n        updatedAt,\n        name,\n        handle,\n        organizationId,\n        projectId,\n        orgHandle,\n        type,\n        description,\n        imageRegistryId,\n        imageRegistry {\n            id,\n            createdAt,\n            updatedAt,\n            cloudConnectorId,\n            imageRepositoryName\n        },\n        componentType,\n        httpBased\n      }\n    }&quot;}</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                    </elementProp>
+                  </collectionProp>
+                </elementProp>
+                <stringProp name="HTTPSampler.domain">${choreoHost}</stringProp>
+                <stringProp name="HTTPSampler.protocol">https</stringProp>
+                <stringProp name="HTTPSampler.path">/projects/1.0.0/graphql</stringProp>
+                <stringProp name="HTTPSampler.method">POST</stringProp>
+                <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+                <boolProp name="HTTPSampler.image_parser">false</boolProp>
+                <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+                <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+                <boolProp name="HTTPSampler.md5">false</boolProp>
+                <intProp name="HTTPSampler.ipSourceType">0</intProp>
+              </HTTPSamplerProxy>
+              <hashTree>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="ID Extractor" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">componentId</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.createBuildpackComponent.id</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                  <stringProp name="Scope.variable">componentid</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Handle Extractor" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">componentHandle</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.createBuildpackComponent.handle</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                  <stringProp name="Scope.variable">componentid</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="false">
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="script">import org.apache.commons.io.FileUtils
+import java.text.SimpleDateFormat;
+// Get total number of matches. (Returns string)
+def compId = vars.get(&quot;componentId&quot;)
+def orgUUID = vars.get(&quot;orgUuid&quot;)
+def prjId = vars.get(&quot;projectId&quot;)
+log.warn &apos;Output to jmeter console&apos; +  compId
+// Create file Object
+f = new File(&quot;results.csv&quot;)
+FileUtils.writeStringToFile(f, orgUUID+ &quot;,&quot; + prjId + &quot;,&quot; + compId + System.getProperty(&quot;line.separator&quot;),true)</stringProp>
+                  <stringProp name="scriptLanguage">groovy</stringProp>
+                </JSR223PostProcessor>
+                <hashTree/>
+                <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                  <stringProp name="ConstantTimer.delay">${commonDelay}</stringProp>
+                </ConstantTimer>
+                <hashTree/>
+              </hashTree>
             </hashTree>
           </hashTree>
         </hashTree>
