@@ -20,7 +20,7 @@ spec:
           objectAlias: REDIS-AUTH-KEY
           objectVersion: "{{.REDIS_AUTH_KEY}}"
         - |
-          objectName: ai-api-test-cogsvc-openai-access-key
+          objectName: {{.OPENAI_ACCESS_KEY_OBJ_NAME | default "ai-api-test-cogsvc-openai-access-key"}}
           objectType: secret
           objectAlias: OPENAI-ACCESS-KEY
           objectVersion: "{{.OPENAI_ACCESS_KEY}}"
