@@ -74,6 +74,10 @@ describe("Create Proxy from REST endpoint", () => {
     proxy.deploy();
   });
 
+  it("Promote proxy", () => {
+    proxy.promote();
+  });
+
   it("Verify test functionality using Swagger UI in Dev", () => {
     proxy
       .testSwaggerConsole(Enums.Environment.DEVELOPMENT, OPERATION_USERS)
@@ -93,10 +97,6 @@ describe("Create Proxy from REST endpoint", () => {
         expect(res.status).equal(OK);
         expect(res.headers[HEADER_NAME]).to.be.equal(HEADER_VALUE);
       });
-  });
-
-  it("Promote proxy", () => {
-    proxy.promote();
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
@@ -190,6 +190,10 @@ describe("Create Proxy from REST endpoint", () => {
     proxy.deploy();
   });
 
+  it("Promote proxy with updated mediation policy", () => {
+    proxy.promote();
+  });
+
   it("Verify test functionality using Swagger UI in Dev with updated policy", () => {
     proxy
       .testSwaggerConsole(Enums.Environment.DEVELOPMENT, OPERATION_USERS)
@@ -210,10 +214,6 @@ describe("Create Proxy from REST endpoint", () => {
         expect(res.headers[HEADER_NAME]).to.be.equal(HEADER_VALUE_3);
         expect(res.headers[HEADER_NAME_2]).to.be.equal(HEADER_VALUE_2);
       });
-  });
-
-  it("Promote proxy with updated mediation policy", () => {
-    proxy.promote();
   });
 
   it("Verify test functionality using Swagger UI in Prod with updated policy", () => {
