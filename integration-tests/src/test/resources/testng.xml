@@ -32,7 +32,7 @@
             <class name="com.wso2.choreo.integration.tests.buildpacks.Buildpack"/>
             <class name="com.wso2.choreo.integration.tests.connections.ChoreoConnections"/>
             <class name="com.wso2.choreo.integration.tests.resourceAuthorization.ResourceAuthorizationTests"/>
-            <class name="com.wso2.choreo.integration.tests.keymanager.KeyManagerTests"/>
+            <class name="com.wso2.choreo.integration.tests.keysetmanagement.KeysetManagementTests"/>
         </classes>
     </test>
 </suite>

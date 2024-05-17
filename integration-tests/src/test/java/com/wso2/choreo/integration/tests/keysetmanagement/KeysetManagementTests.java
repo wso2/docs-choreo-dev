@@ -11,7 +11,7 @@
  * associated services.
  */
 
-package com.wso2.choreo.integration.tests.keymanager;
+package com.wso2.choreo.integration.tests.keysetmanagement;
 
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.annotations.CitrusTest;
@@ -28,24 +28,23 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.configurationservice.ConfigServiceUtils;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
-import com.wso2.choreo.integration.common.keymanager.KeyManagerUtils;
+import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants;
+import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementUtils;
+import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.AppGwKeysetConfigNames;
+import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.ClientCredentialsAuthFlowParams;
+import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.DefaultChoreoEnvironments;
+import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.DefaultConfigGroups;
+import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.ExternalIdpMappingParams;
+import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.KeyGenerationRequestParams;
+import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.ModifiedOAuthAppConfig;
+import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.TestIdpDefaults;
+import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.TestKeyGenRequestData;
+import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.TestProjectData;
 import com.wso2.choreo.integration.common.oauth.OAuthConstants;
 import com.wso2.choreo.integration.common.oauth.OAuthUtils;
-import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants;
-import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.AppGwKeysetConfigNames;
-import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.ClientCredentialsAuthFlowParams;
-import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.DefaultChoreoEnvironments;
-import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.DefaultConfigGroups;
-import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.ExternalIdpMappingParams;
-import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.KeyGenerationRequestParams;
-import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.ModifiedOAuthAppConfig;
-import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.TestIdpDefaults;
-import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.TestKeyGenRequestData;
-import com.wso2.choreo.integration.common.keymanager.KeyManagerConstants.TestProjectData;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
-import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.configservice.ConfigurationGroup;
 import com.wso2.choreo.integration.models.devops.Dataplane;
 import com.wso2.choreo.integration.models.devops.EnvironmentWithClusters;
@@ -79,9 +78,9 @@ import java.util.UUID;
 /**
  * Tests for Key Manager related operations.
  */
-public class KeyManagerTests extends TestNGCitrusSpringSupport {
+public class KeysetManagementTests extends TestNGCitrusSpringSupport {
 
-    private static final Logger log = LogManager.getLogger(KeyManagerTests.class);
+    private static final Logger log = LogManager.getLogger(KeysetManagementTests.class);
 
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
@@ -102,14 +101,14 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
 
         // Setup - Add an external IdP if not already added
 
-        List<KeyManager> keyManagers = KeyManagerUtils.getKeyManagersListAsAdmin();
+        List<KeyManager> keyManagers = KeysetManagementUtils.getKeyManagersListAsAdmin();
 
         Optional<KeyManager> testKeyManager = keyManagers.stream()
-                .filter(keyManager -> keyManager.getName().equals(KeyManagerConstants.TestIdpDefaults.NAME))
+                .filter(keyManager -> keyManager.getName().equals(KeysetManagementConstants.TestIdpDefaults.NAME))
                 .findFirst();
 
         if (testKeyManager.isEmpty()) {
-            IdpAddResponseDTO response = KeyManagerUtils.addExternalIdp(getExternalIdpPayload());
+            IdpAddResponseDTO response = KeysetManagementUtils.addExternalIdp(getExternalIdpPayload());
             if (response != null) {
                 log.info("External IdP added successfully");
             }
@@ -119,7 +118,7 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
     // Setup a project for testing Key Manager related operations
     @Test
     @CitrusTest
-    public void createTestProject_KeyManagerTests() throws Exception {
+    public void createTestProject__KeyManagerTests() throws Exception {
 
         String userAccessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         testProject = ComponentUtils.createProject(this, citrusClients, userAccessToken, TestProjectData.REGION);
@@ -128,9 +127,9 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
     }
 
     // Create a webapp component in the test project
-    @Test(dependsOnMethods = { "createTestProject_KeyManagerTests" })
+    @Test(dependsOnMethods = { "createTestProject__KeyManagerTests" })
     @CitrusTest
-    public void createTestComponent_KeyManagerTests() throws Exception {
+    public void createTestComponent__KeyManagerTests() throws Exception {
 
         String userAccessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
 
@@ -157,9 +156,9 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
     // Test 1 - Generate Keys with Choreo Built-In Identity Provider
 
     // Test 1.1 - Generate Keysets in the component
-    @Test(dependsOnMethods = { "createTestComponent_KeyManagerTests" })
+    @Test(dependsOnMethods = { "createTestComponent__KeyManagerTests" })
     @CitrusTest
-    public void generateKeysetsInComponent_KeyManagerTests() throws Exception {
+    public void generateKeysetsInComponent__KeyManagerTests() throws Exception {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
@@ -177,13 +176,13 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
     }
 
     // Test 1.2 - Update OAuth App configuration
-    @Test(dependsOnMethods = { "generateKeysetsInComponent_KeyManagerTests" })
+    @Test(dependsOnMethods = { "generateKeysetsInComponent__KeyManagerTests" })
     @CitrusTest
-    public void updateOAuthAppConfiguration_KeyManagerTests() throws Exception {
+    public void updateOAuthAppConfiguration__KeyManagerTests() throws Exception {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
-        OAuthAppUpdateResponseDTO updatedApp = KeyManagerUtils.updateOAuthAppConfiguration(this, appServiceClient,
+        OAuthAppUpdateResponseDTO updatedApp = KeysetManagementUtils.updateOAuthAppConfiguration(this, appServiceClient,
                 generatedKeys.getClientId(), getKeyManagerUpdateTestRequest());
 
         Assert.assertNotNull(updatedApp);
@@ -196,9 +195,9 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
     }
 
     // Test 1.3 - Regenerate keysets in the component
-    @Test(dependsOnMethods = { "updateOAuthAppConfiguration_KeyManagerTests" })
+    @Test(dependsOnMethods = { "updateOAuthAppConfiguration__KeyManagerTests" })
     @CitrusTest
-    public void regenerateKeysetsInComponent_KeyManagerTests() throws Exception {
+    public void regenerateKeysetsInComponent__KeyManagerTests() throws Exception {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
@@ -217,9 +216,9 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
     }
 
     // Test 1.4 - Invoke Client Credentials Auth Flow and get an access token
-    @Test(dependsOnMethods = { "regenerateKeysetsInComponent_KeyManagerTests" })
+    @Test(dependsOnMethods = { "regenerateKeysetsInComponent__KeyManagerTests" })
     @CitrusTest
-    public void invokeClientCredentialsAuthFlowAndGetAccessToken_KeyManagerTests() throws Exception {
+    public void invokeClientCredentialsAuthFlowAndGetAccessToken__KeyManagerTests() throws Exception {
 
         String tokenEndpointURL = getTokenEndpointURL(devEnvironment.getChoreoEnv(),
                 getClusterDomain(this, devEnvironment));
@@ -241,12 +240,12 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
     // Test 2 - Map keys from third party IDP
 
     // Test 2.1 - List IDPs in the development environment
-    @Test(dependsOnMethods = { "invokeClientCredentialsAuthFlowAndGetAccessToken_KeyManagerTests" })
+    @Test(dependsOnMethods = { "invokeClientCredentialsAuthFlowAndGetAccessToken__KeyManagerTests" })
     @CitrusTest
-    public void listIdpsInDevEnvironment_KeyManagerTests() throws Exception {
+    public void listIdpsInDevEnvironment__KeyManagerTests() throws Exception {
         HttpClient appServiceClient = citrusClients.get(Endpoints.STS_ENDPOINT);
 
-        List<DetailedKeyManager> keyManagers = KeyManagerUtils.getKeyManagersAsPublisher(this,
+        List<DetailedKeyManager> keyManagers = KeysetManagementUtils.getKeyManagersAsPublisher(this,
                 appServiceClient,
                 devEnvironment.getId());
 
@@ -257,9 +256,9 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
     }
 
     // Test 2.2 - Map only client ID to external IDP
-    @Test(dependsOnMethods = { "listIdpsInDevEnvironment_KeyManagerTests" })
+    @Test(dependsOnMethods = { "listIdpsInDevEnvironment__KeyManagerTests" })
     @CitrusTest
-    public void mapOnlyClientIdToExternalIdp_KeyManagerTests() throws Exception {
+    public void mapOnlyClientIdToExternalIdp__KeyManagerTests() throws Exception {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
         String externalIdpClientId = UUID.randomUUID().toString();
@@ -283,9 +282,9 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
     }
 
     // Test 2.3 - Map client ID and client secret to external IDP
-    @Test(dependsOnMethods = { "mapOnlyClientIdToExternalIdp_KeyManagerTests" })
+    @Test(dependsOnMethods = { "mapOnlyClientIdToExternalIdp__KeyManagerTests" })
     @CitrusTest
-    public void mapClientIdAndClientSecretToExternalIdp_KeyManagerTests() throws Exception {
+    public void mapClientIdAndClientSecretToExternalIdp__KeyManagerTests() throws Exception {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
@@ -316,9 +315,9 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
     }
 
     // Test 2.4 - Map existing client ID to another environment
-    @Test(dependsOnMethods = { "mapClientIdAndClientSecretToExternalIdp_KeyManagerTests" })
+    @Test(dependsOnMethods = { "mapClientIdAndClientSecretToExternalIdp__KeyManagerTests" })
     @CitrusTest
-    public void mapExistingClientIdToAnotherEnvironment_KeyManagerTests() throws Exception {
+    public void mapExistingClientIdToAnotherEnvironment__KeyManagerTests() throws Exception {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 

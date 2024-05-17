@@ -27,7 +27,7 @@ import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.component.Component;
 import com.wso2.choreo.integration.apis.configmgt.ConfigManagement;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
-import com.wso2.choreo.integration.apis.keymanager.KeyManagerService;
+import com.wso2.choreo.integration.apis.keysetmanagement.KeysetManagementService;
 import com.wso2.choreo.integration.apis.observability.AuditLogsService;
 import com.wso2.choreo.integration.apis.observability.DPObsApiService;
 import com.wso2.choreo.integration.apis.proxydeployer.ProxyDeployer;
