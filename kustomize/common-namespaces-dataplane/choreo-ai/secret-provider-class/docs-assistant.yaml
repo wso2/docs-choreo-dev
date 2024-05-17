@@ -16,7 +16,7 @@ spec:
         - objectName: COHERE_API_KEY
           key: COHERE_API_KEY
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: ai-cogsvc-dp-eastus2-primary-access-key
