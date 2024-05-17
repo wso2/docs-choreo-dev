@@ -359,7 +359,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         ConnectionService.createProjectLevelConnection(citrusClients, this, accessToken,
                 proxyComponent.getName(), NETWORK_VISIBILITY_FILTER, projectOne.getId(),
                 connectionName, "Project level Connection for an unsecured service with public visibility",PUBLIC_SERVICE,
-                false,proxyPublisherComponentEnvironments.subList(0,1));
+                false,proxyPublisherComponentEnvironments);
 
     }
 
@@ -468,7 +468,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 clientChoreoComponent.getId(),PUBLIC_SERVICE,serviceFound);
         HttpClient httpClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         ConnectionService.createChoreoConnection(this, httpClient,
-                accessToken, connectionCreationReq,false, servicePublisherComponentEnvironments.subList(0,1), false);
+                accessToken, connectionCreationReq,false, servicePublisherComponentEnvironments, false);
     }
 
     // Create a component level service connection to an internal service with project visibility
