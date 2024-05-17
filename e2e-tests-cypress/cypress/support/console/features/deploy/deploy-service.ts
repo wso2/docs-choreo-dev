@@ -49,7 +49,11 @@ export interface DeployServiceFeature {
     configStepsAvailable?: ConfigEntryStep[]
   );
 
-  _deployWebapp(component: WebApp, hasAuthSettings: boolean, customConfig?: Map<string,string>);
+  _deployWebapp(
+    component: WebApp,
+    hasAuthSettings: boolean,
+    customConfig?: Map<string, string>
+  );
 
   _deployWebhook(
     component: Webhook | Byoc,
@@ -72,7 +76,7 @@ export interface DeployServiceFeature {
     component: WebApp,
     hasAuthSettings: boolean,
     configStepsAvailable?: ConfigEntryStep[],
-    customConfig?: Map<string,string>
+    customConfig?: Map<string, string>
   );
 
   _promoteBYOC(component: Byoc, configStepsAvailable?: ConfigEntryStep[]);
@@ -131,7 +135,11 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       this.verifyTaskDeploymentStatus();
     }
 
-    _deployWebapp(component: WebApp, hasAuthSettings: boolean, customConfig?: Map<string,string>) {
+    _deployWebapp(
+      component: WebApp,
+      hasAuthSettings: boolean,
+      customConfig?: Map<string, string>
+    ) {
       this.sideMenu.navigateToDeploy();
 
       this.waitTillReadyToDeploy();
@@ -214,7 +222,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       component: WebApp,
       hasAuthSettings: boolean,
       configStepsAvailable: ConfigEntryStep[],
-      customConfig?: Map<string,string>
+      customConfig?: Map<string, string>
     ) {
       this.sideMenu.navigateToDeploy();
 
@@ -259,15 +267,20 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       this.sideMenu.navigateToDeploy();
       return cy
-        .get(TestIds.devEnvCard).within((envCard) => {
+        .get(TestIds.devEnvCard)
+        .within((envCard) => {
           if (envCard.find(TestIds.deploymentStatus).length > 0) {
-            cy.get(TestIds.deploymentStatus).should("be.visible").then((deploymentStatusBar) => {
-              if (deploymentStatusBar.text().includes(DEPLOYMENT_SUCCESS)) {
-                cy.get(TestIds.endpointStatus).then((endpointStatusChip) => {
-                  isDeploymentExists = endpointStatusChip.text().includes(DEPLOYMENT_SUCCESS);
-                });
-              }
-            })
+            cy.get(TestIds.deploymentStatus)
+              .should("be.visible")
+              .then((deploymentStatusBar) => {
+                if (deploymentStatusBar.text().includes(DEPLOYMENT_SUCCESS)) {
+                  cy.get(TestIds.endpointStatus).then((endpointStatusChip) => {
+                    isDeploymentExists = endpointStatusChip
+                      .text()
+                      .includes(DEPLOYMENT_SUCCESS);
+                  });
+                }
+              });
           }
         })
         .then(() => {
@@ -323,7 +336,11 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
           }
         });
 
-      cy.contains("span", "Endpoint Details").parent().siblings().first().click();
+      cy.contains("span", "Endpoint Details")
+        .parent()
+        .siblings()
+        .first()
+        .click();
     }
 
     private waitTillReadyToDeploy() {
@@ -390,6 +407,8 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
           Utils.getRenderedElement(TestIds.next, 3000).click();
         }
       }
+
+      cy.get(TestIds.componentLoader).should("not.exist");
     }
 
     private reviewAndUpdateEndpoint(
@@ -603,7 +622,10 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       }
     }
 
-    private configureWebApp(hasAuthSettings: boolean, customConfig?: Map<string,string>) {
+    private configureWebApp(
+      hasAuthSettings: boolean,
+      customConfig?: Map<string, string>
+    ) {
       let configContent = CONFIG_CONTENT;
       if (customConfig !== undefined) {
         configContent = this.buildConfigContentString(customConfig);
@@ -646,13 +668,15 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       });
     }
 
-    private buildConfigContentString(customConfig: Map<string, string>): string {
+    private buildConfigContentString(
+      customConfig: Map<string, string>
+    ): string {
       let configContent = "";
       // No need to add 'window.configs{\n' as it is pre-populated in UI
       customConfig.forEach((value, key) => {
         configContent += `\t${key}: '${value}',\n`;
-      })
-      configContent+='}'
+      });
+      configContent += "}";
       return configContent;
     }
   };

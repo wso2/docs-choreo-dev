@@ -30,6 +30,8 @@ import com.wso2.choreo.integration.models.resourceAuthorization.GroupListRespons
 import com.wso2.choreo.integration.models.resourceAuthorization.GroupRoleMappingResponseDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.RoleGroupMappingResponseDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.RoleList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import com.wso2.choreo.integration.models.resourceAuthorization.GroupRoleMappingResponseDTO.GroupAssociation;
 import com.wso2.choreo.integration.models.resourceAuthorization.GroupWithUsersDTO;
 import com.wso2.choreo.integration.models.resourceAuthorization.Permission;
@@ -47,6 +49,8 @@ import java.util.List;
  * Utility class for resource authorization related tests.
  */
 public class ResourceAuthzUtils {
+
+    private static final Logger log = LogManager.getLogger(ResourceAuthzUtils.class);
 
     /**
      * Create a test group
@@ -163,6 +167,7 @@ public class ResourceAuthzUtils {
                 put("userIds", userIds);
             }
         };
+        log.debug("[Util] Assigning users to group: " + userIds);
         ResourceAuthorizationService.assignUserToGroup(runner, client, groupHandle, userIdList);
     }
 

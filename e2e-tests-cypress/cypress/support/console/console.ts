@@ -78,6 +78,12 @@ class Console {
     this._orgSettings.addUserStore(userStoreFile, env);
   }
 
+  inviteMember(email: string, roles: string[]) {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this._orgSettings.inviteMember(email, roles);
+  }
+
   deleteRoleIfExists(roleName: string) {
     this.navigateToHome();
     this.navigateToSettings();
