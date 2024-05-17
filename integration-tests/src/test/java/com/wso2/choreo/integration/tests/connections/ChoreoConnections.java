@@ -90,6 +90,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     private static final String PROJECT_SERVICE = "PROJECT";
     private static final String CLIENT_COMPONENT_REPO_URL = "https://github.com/choreo-test-apps/connections-test";
     private static final String CLIENT_COMPONENT_DOCKER_FILE_PATH = "Dockerfile";
+    private static final String SERVICE_PUBLISHER_COMPONENT_REPO_NEW_BRANCH_NAME = "next";
     private HttpClient appServiceClient;
     private String accessToken;
     private String orgHandle;
@@ -97,6 +98,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     private String orgUUID;
     ChoreoProject projectOne;
     private ChoreoComponent publicEndpointServiceComponent;
+    private ChoreoComponent publicEndpointServiceComponentNewVersion;
     private ChoreoComponent orgEndpointServiceComponent;
     private ChoreoComponent projectEndpointServiceComponent;
 
@@ -124,6 +126,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     private final String repoName = "connections-test";
     private String API_INVOCATION_REQUEST_URI;
     private String API_INVOCATION_REQUEST_BODY;
+    private String API_NEW_VERSION_INVOCATION_REQUEST_BODY;
     private String REST_API_EXPECTED_RESPONSE;
 
     @Autowired
@@ -141,6 +144,11 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 "  \"acceptedTnC\": true,\n" +
                 "  \"selectedRewardDealId\": \"RWD34589\",\n" +
                 "  \"userId\": \"U451298\"\n" +
+                "}";
+        API_NEW_VERSION_INVOCATION_REQUEST_BODY = "{\n" +
+                "  \"acceptedTnC\": true,\n" +
+                "  \"selectedRewardDealId\": \"RWD34589\",\n" +
+                "  \"userId\": \"U451301\"\n" + // This user is added in the new version
                 "}";
         REST_API_EXPECTED_RESPONSE = new String(new ClassPathResource(
                 "templates/connectionManagement/loyaltyServiceResponse.json").getInputStream().readAllBytes());
@@ -273,6 +281,37 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         ComponentUtils.invokeApiPOST(this, invokeData.getRight().getApikey(), invokeData.getLeft(), API_INVOCATION_REQUEST_URI,
                 API_INVOCATION_REQUEST_BODY, REST_API_EXPECTED_RESPONSE, HttpStatus.ACCEPTED);
     }
+
+    @Test(dependsOnMethods = {"invokeAPIDev_TestChoreoConnections"})
+    @CitrusTest
+    public void createNewVersionOfServicePublisherComponent_TestChoreoConnections() throws Exception {
+        String branchName = SERVICE_PUBLISHER_COMPONENT_REPO_NEW_BRANCH_NAME;
+        publicEndpointServiceComponentNewVersion = ComponentUtils.createComponentVersion(this, citrusClients,
+                accessToken, publicEndpointServiceComponent, "v1.1", branchName);
+        publicEndpointServiceComponentNewVersion.setBranch(branchName);
+    }
+
+    @Test(dependsOnMethods = {"createNewVersionOfServicePublisherComponent_TestChoreoConnections"})
+    @CitrusTest
+    public void deployServiceConsumerComponentNewVersion_TestChoreoConnections() throws Exception {
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients,
+                accessToken, publicEndpointServiceComponentNewVersion);
+        clientDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
+                publicEndpointServiceComponentNewVersion, environments, ComponentFlavour.BYOC);
+    }
+
+    @Test(dependsOnMethods = {"createNewVersionOfServicePublisherComponent_TestChoreoConnections"})
+    @CitrusTest
+    public void invokeAPIDevWithNewPublisherServiceVersion_TestChoreoConnections() throws Exception {
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
+                clientChoreoComponent);
+        Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
+                clientChoreoComponent, clientDeploymentStatusDTO, environments);
+        ComponentUtils.invokeApiPOST(this, invokeData.getRight().getApikey(), invokeData.getLeft(),
+                API_INVOCATION_REQUEST_URI, API_NEW_VERSION_INVOCATION_REQUEST_BODY, REST_API_EXPECTED_RESPONSE,
+                HttpStatus.ACCEPTED);
+    }
+
     @Test()
     @CitrusTest
     public void setUpEndpointForProxy_TestChoreoConnections() throws Exception {
