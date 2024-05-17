@@ -19,7 +19,7 @@ spec:
     objects:  |
       array:
         - |
-          objectName: ai-cogsvc-eastus2-primary-access-key
+          objectName: ai-cogsvc-dp-eastus2-primary-access-key
           objectType: secret
           objectAlias: AZURE_OPENAI_API_KEY
           objectVersion: "{{.AZURE_OPENAI_API_KEY}}"
@@ -29,7 +29,7 @@ spec:
           objectAlias: ZILLIZ_CLOUD_API_KEY
           objectVersion: "{{.ZILLIZ_CLOUD_API_KEY}}"
         - |
-          objectName: ai-cogsvc-cp-primary-access-key
+          objectName: ai-cogsvc-cp-eastus2-primary-access-key
           objectType: secret
           objectAlias: CP_AZURE_OPENAI_API_KEY
           objectVersion: "{{.CP_AZURE_OPENAI_API_KEY}}"

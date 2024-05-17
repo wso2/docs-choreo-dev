@@ -15,12 +15,12 @@ spec:
     objects: |
       array:
         - |
-          objectName: ai-cogsvc-eastus2-primary-access-key
+          objectName: ai-cogsvc-dp-eastus2-primary-access-key
           objectType: secret
           objectAlias: AZURE_OPENAI_API_KEY
           objectVersion: "{{.AZURE_OPENAI_API_KEY}}"
         - |
-          objectName: ai-api-test-redis-primary-access-key
+          objectName: {{.REDIS_PASSWORD_OBJ_NAME | default "ai-api-test-redis-primary-access-key"}}
           objectType: secret
           objectAlias: REDIS_PASSWORD
           objectVersion: "{{.REDIS_PASSWORD}}"
