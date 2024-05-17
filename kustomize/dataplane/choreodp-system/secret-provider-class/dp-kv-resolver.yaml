@@ -14,7 +14,7 @@ spec:
         - objectName: AZURE_KEYVAULT_TENANT_ID
           key: AZURE_KEYVAULT_TENANT_ID
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: {{.AZURE_KEYVAULT_CLIENT_ID_OBJ_NAME | default "dp-secret-manager-kv-client-id"}}
