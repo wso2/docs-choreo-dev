@@ -59,6 +59,10 @@ describe("Verify MI service with endpoint.yaml functionality", () => {
     service.deployPublicLevelAccessibility(false);
   });
 
+  it("Verifying component promotion to Prod", () => {
+    service.promotePublicLevelAccessibility(createDefaultSteps(1), false);
+  });
+
   it("Testing the component in Dev", () => {
     service
       .testConsole({
@@ -72,10 +76,6 @@ describe("Verify MI service with endpoint.yaml functionality", () => {
         expect(res.response).to.include(MATCHING_STRING);
         expect(res.statusCode).to.be.eq(OK.toString());
       });
-  });
-
-  it("Verifying component promotion to Prod", () => {
-    service.promotePublicLevelAccessibility(createDefaultSteps(1), false);
   });
 
   it("Testing the component in Prod", () => {

@@ -100,10 +100,6 @@ describe("Verify Component visibility functionality", () => {
     ]);
   });
 
-  it("Execute trigger in Dev", () => {
-    trigger.executeComponent(Enums.Environment.DEVELOPMENT);
-  });
-
   it("Promote the trigger", () => {
     const prodUrlOfService: string[] = [];
     prodUrlOfService.push(service.getProdEndpointUrl());
@@ -112,6 +108,10 @@ describe("Verify Component visibility functionality", () => {
       new ConfigEntryStep(),
       new ConfigEntryStep(addConfiguration, prodUrlOfService),
     ]);
+  });
+
+  it("Execute trigger in Dev", () => {
+    trigger.executeComponent(Enums.Environment.DEVELOPMENT);
   });
 
   it("Execute trigger in Prod", () => {
