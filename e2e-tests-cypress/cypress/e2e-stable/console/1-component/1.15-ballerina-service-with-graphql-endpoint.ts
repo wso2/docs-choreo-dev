@@ -59,6 +59,10 @@ describe(`Graphql GQL service functionality`, () => {
     component.deployPublicLevelAccessibility(false);
   });
 
+  it("Verify component promote to prod", () => {
+    component.promotePublicLevelAccessibility(undefined, false);
+  });
+
   it("Verify test functionality of GQL query in dev on swagger", () => {
     component
       .testGQL({
@@ -81,10 +85,6 @@ describe(`Graphql GQL service functionality`, () => {
       .then((res) => {
         expect(res.toString()).to.be.contains(TEST_MUTATION_RESPONSE);
       });
-  });
-
-  it("Verify component promote to prod", () => {
-    component.promotePublicLevelAccessibility(undefined, false);
   });
 
   it("Verify test functionality of GQL query in Prod on swagger", () => {

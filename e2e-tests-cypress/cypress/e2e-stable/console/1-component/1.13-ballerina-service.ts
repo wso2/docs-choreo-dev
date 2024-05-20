@@ -65,6 +65,10 @@ describe("Verify Ballerina service functionality", () => {
     component.deployPublicLevelAccessibility();
   });
 
+  it("Verifying component promotion to Prod", () => {
+    component.promotePublicLevelAccessibility();
+  });
+
   it("Testing the component in Dev", () => {
     component
       .testConsole({
@@ -80,10 +84,6 @@ describe("Verify Ballerina service functionality", () => {
         });
         expect(res.statusCode).to.be.eq(OK.toString());
       });
-  });
-
-  it("Verifying component promotion to Prod", () => {
-    component.promotePublicLevelAccessibility();
   });
 
   it("Testing the component in Prod", () => {
@@ -115,6 +115,10 @@ describe("Verify Ballerina service functionality", () => {
     component.deployPublicLevelAccessibility();
   });
 
+  it("Promote new version to Prod", () => {
+    component.promotePublicLevelAccessibility();
+  });
+
   it("Testing new version in Dev", () => {
     component
       .testConsole({
@@ -130,10 +134,6 @@ describe("Verify Ballerina service functionality", () => {
         });
         expect(res.statusCode).to.be.eq(OK.toString());
       });
-  });
-
-  it("Promote new version to Prod", () => {
-    component.promotePublicLevelAccessibility();
   });
 
   it("Testing new version in Prod", () => {
