@@ -1,4 +1,4 @@
-# Share and Reuse Web Applications
+# Use a Connection in Your Web Application
 
 Choreo simplifies the process of integrating services into your web application. The approach to connect to a service can vary based on your web application. 
 
