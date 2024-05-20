@@ -296,14 +296,14 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"createNewVersionOfServicePublisherComponent_TestChoreoConnections"})
     @CitrusTest
-    public void deployServiceConsumerComponentNewVersion_TestChoreoConnections() throws Exception {
+    public void deployServicePublisherComponentNewVersion_TestChoreoConnections() throws Exception {
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients,
                 accessToken, publicEndpointServiceComponentNewVersion);
-        clientDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
+        ComponentUtils.deployComponent(this, citrusClients, accessToken,
                 publicEndpointServiceComponentNewVersion, environments, ComponentFlavour.BYOC);
     }
 
-    @Test(dependsOnMethods = {"createNewVersionOfServicePublisherComponent_TestChoreoConnections"})
+    @Test(dependsOnMethods = {"deployServicePublisherComponentNewVersion_TestChoreoConnections"})
     @CitrusTest
     public void invokeAPIDevWithNewPublisherServiceVersion_TestChoreoConnections() throws Exception {
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
