@@ -283,7 +283,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 API_INVOCATION_REQUEST_BODY, REST_API_EXPECTED_RESPONSE, HttpStatus.ACCEPTED);
     }
 
-    @Test(dependsOnMethods = {"invokeAPIDev_TestChoreoConnections"})
+    @Test(dependsOnMethods = {"invokeAPIStage_TestChoreoConnections"})
     @CitrusTest
     public void createNewVersionOfServicePublisherComponent_TestChoreoConnections() throws Exception {
         String branchName = SERVICE_PUBLISHER_COMPONENT_REPO_NEW_BRANCH_NAME;
