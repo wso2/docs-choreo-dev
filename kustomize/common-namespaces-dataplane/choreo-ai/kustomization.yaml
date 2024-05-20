@@ -23,6 +23,7 @@ resources:
   - hpa
   - pdb
   - service
+  - secret-provider-class
 
 patches:
   - path: priority-class-deployment-patch.yaml

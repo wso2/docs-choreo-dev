@@ -398,7 +398,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         ConnectionService.createProjectLevelConnection(citrusClients, this, accessToken,
                 proxyComponent.getName(), NETWORK_VISIBILITY_FILTER, projectOne.getId(),
                 connectionName, "Project level Connection for an unsecured service with public visibility",PUBLIC_SERVICE,
-                false,proxyPublisherComponentEnvironments.subList(0,1));
+                false,proxyPublisherComponentEnvironments);
 
     }
 
@@ -507,7 +507,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 clientChoreoComponent.getId(),PUBLIC_SERVICE,serviceFound);
         HttpClient httpClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         ConnectionService.createChoreoConnection(this, httpClient,
-                accessToken, connectionCreationReq,false, servicePublisherComponentEnvironments.subList(0,1), false);
+                accessToken, connectionCreationReq,false, servicePublisherComponentEnvironments, false);
     }
 
     // Create a component level service connection to an internal service with project visibility
@@ -529,11 +529,16 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void createWebAppLevelConnectionToSecuredPublicService_TestChoreoConnections () throws Exception {
         String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
-        Repository repo = Repository.builder().
-                repoUrl(WEBAPP_COMPONENT_REPO_URL).
-                dockerContext(WEBAPP_COMPONENT_DOCKER_CONTEXT).build();
 
-        GraphqlDTO dto = ComponentUtils.createWebappComponentRequest(componentName, projectOne, repo);
+        GraphqlDTO.ByocWebAppsConfig webAppsConfig = GraphqlDTO.ByocWebAppsConfig.builder()
+                .dockerContext(WEBAPP_COMPONENT_DOCKER_CONTEXT)
+                .srcGitRepoUrl(WEBAPP_COMPONENT_REPO_URL)
+                .webAppType("React")
+                .webAppBuildCommand("npm run build")
+                .webAppPackageManagerVersion("18")
+                .webAppOutputDirectory("/build")
+                .build();
+        GraphqlDTO dto = ComponentUtils.createWebappComponentRequest(componentName, projectOne, webAppsConfig);
         ChoreoComponent webAppComponent = ComponentUtils.createComponent(this, citrusClients, accessToken,
                 dto, ComponentFlavour.WEBAPP);
 

@@ -21,6 +21,8 @@ import com.consol.citrus.message.Message;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.consol.citrus.validation.json.JsonMessageValidationContext;
 import com.consol.citrus.validation.json.JsonTextMessageValidator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -29,13 +31,20 @@ import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
+import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.models.commithistory.Commit;
+import com.wso2.choreo.integration.models.keymanager.KeyGenResponseDTO;
 import lombok.extern.log4j.Log4j2;
+import org.apache.http.client.utils.URIBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,8 +58,7 @@ public class Component extends ControlPlaneAPI {
     private static final String CONTEXT = "/component-mgt/1.0.0";
 
     public static void triggerConfigurableGeneration(TestActionRunner runner, HttpClient client,
-                                                     ChoreoComponent component, List<Commit> commitHistory, String branchName) throws Exception {
-        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+            ChoreoComponent component, List<Commit> commitHistory, String branchName) throws Exception {
         String componentId = component.getId();
         String latestVersionId = component.getLatestApiVersion().getId();
         String latestCommitSha = component.getLatestCommitHash(commitHistory.toArray(Commit[]::new));
@@ -80,7 +88,7 @@ public class Component extends ControlPlaneAPI {
                                 .send()
                                 .post(configGenerationTriggerURI)
                                 .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.AUTHORIZATION, getAccessToken())
                                 .contentType(String.valueOf(MediaType.APPLICATION_JSON))
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON))
                                 .body(configurationsRequestBody),
@@ -90,10 +98,10 @@ public class Component extends ControlPlaneAPI {
                                 .response(HttpStatus.OK)));
     }
 
-
-    public static void waitForComponentCreationSuccess(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
-                                                       String projectId,
-                                                       String componentId) throws IOException {
+    public static void waitForComponentCreationSuccess(TestNGCitrusSpringSupport runner, HttpClient client,
+            String accessToken,
+            String projectId,
+            String componentId) throws IOException {
         String expectedResponse = ComponentUtils.generateStringFromTemplate(
                 "templates/createComponent/get_create_status_success.json", null);
         runner.variable("isComponentCreationSuccess", false);
@@ -120,21 +128,20 @@ public class Component extends ControlPlaneAPI {
                                 .response()
                                 .message()
                                 .validate((message, context) -> {
-                                        int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
-                                        if (code == HttpStatus.OK.value()) {
-                                            JsonTextMessageValidator validator = new JsonTextMessageValidator();
-                                            Message expected = new DefaultMessage( expectedResponse);
-                                            validator.validateMessage(message, expected, context, 
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code == HttpStatus.OK.value()) {
+                                        JsonTextMessageValidator validator = new JsonTextMessageValidator();
+                                        Message expected = new DefaultMessage(expectedResponse);
+                                        validator.validateMessage(message, expected, context,
                                                 new JsonMessageValidationContext());
-                                            context.setVariable("isComponentCreationSuccess", true); 
-                                        }
-                                })       
-                        )
-                );
+                                        context.setVariable("isComponentCreationSuccess", true);
+                                    }
+                                })));
     }
 
-    public static JsonArray getDeploymentBuildSteps(TestActionRunner runner, HttpClient client, String accessToken, String projectId,
-                                                    String componentId, String runId) {
+    public static JsonArray getDeploymentBuildSteps(TestActionRunner runner, HttpClient client, String accessToken,
+            String projectId,
+            String componentId, String runId) {
         AtomicReference<JsonArray> steps = new AtomicReference<>(new JsonArray());
         runner.$(repeatOnError()
                 .until("i = 10")
@@ -162,11 +169,157 @@ public class Component extends ControlPlaneAPI {
                                 .message()
                                 .validate((message, context) -> {
                                     String payload = message.getPayload(String.class);
-                                    JsonObject dataJsonObject = new JsonParser().parse(payload).getAsJsonObject().getAsJsonObject("data");
+                                    JsonObject dataJsonObject = new JsonParser().parse(payload).getAsJsonObject()
+                                            .getAsJsonObject("data");
                                     steps.set(dataJsonObject.getAsJsonObject("build").getAsJsonArray("steps"));
                                 })));
 
         return steps.get();
 
+    }
+
+    public static KeyGenResponseDTO generateKeys(TestActionRunner runner, HttpClient client,
+            String projectId, String componentId, String environmentId, HashMap<String, Object> keyGenRequest)
+            throws TokenRetrievalException, IOException, URISyntaxException {
+
+        AtomicReference<String> responseDTO = new AtomicReference<>();
+        String requestBody = ObjectMapperUtil.mapToString(keyGenRequest);
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(getKeyGenURL(projectId, componentId, environmentId))
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, getAccessToken())
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                .body(requestBody),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .validate((message, context) -> {
+                                    try {
+                                        KeyGenResponseDTO response = new ObjectMapper()
+                                                .readValue(message.getPayload().toString(),
+                                                        KeyGenResponseDTO.class);
+                                        if (response.getClientId() == null || response.getClientSecret() == null) {
+                                            throw new RuntimeException("Response fields are empty");
+                                        }
+                                        responseDTO.set(message.getPayload(String.class));
+                                    } catch (JsonProcessingException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                })));
+
+        return new ObjectMapper().readValue(responseDTO.get(), KeyGenResponseDTO.class);
+    }
+
+    public static KeyGenResponseDTO regenerateKeysets(TestActionRunner runner, HttpClient client,
+            String projectId, String componentId, String environmentId, String oAuthAppId)
+            throws TokenRetrievalException, IOException, URISyntaxException {
+
+        AtomicReference<String> responseDTO = new AtomicReference<>();
+
+        String url = getKeyRegenerateURL(projectId, componentId, environmentId, oAuthAppId);
+        URIBuilder uriBuilder = new URIBuilder(url);
+        uriBuilder.addParameter("organizationId", Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
+        uriBuilder.addParameter("project_id", projectId);
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .put(uriBuilder.build().toString())
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, getAccessToken())
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .validate((message, context) -> {
+                                    try {
+                                        KeyGenResponseDTO response = new ObjectMapper()
+                                                .readValue(message.getPayload().toString(),
+                                                        KeyGenResponseDTO.class);
+                                        if (response.getClientId() == null) {
+                                            throw new RuntimeException("Response fields are empty");
+                                        }
+                                        responseDTO.set(message.getPayload(String.class));
+                                    } catch (JsonProcessingException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                })));
+
+        return new ObjectMapper().readValue(responseDTO.get(), KeyGenResponseDTO.class);
+    }
+
+    public static void addExternalIdpKeys(TestActionRunner runner, HttpClient client,
+                    String projectId, String componentId, String environmentId,
+                    HashMap<String, Object> keyMappingRequest, HttpStatus expectedStatus)
+                    throws TokenRetrievalException, IOException, URISyntaxException {
+
+            String requestBody = ObjectMapperUtil.mapToString(keyMappingRequest);
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(getKeyMappingEndpointURL(projectId, componentId, environmentId))
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, getAccessToken())
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                .body(requestBody),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(expectedStatus)
+                                .message()));
+    }
+
+    private static String getKeyGenURL(String projectId, String componentId, String environmentId) {
+
+        return getKeyManagerCommonURL(projectId, componentId, environmentId) + "/generate";
+    }
+
+    private static String getKeyRegenerateURL(String projectId, String componentId, String environmentId,
+            String oAuthAppId) {
+
+        return getKeyManagerCommonURL(projectId, componentId, environmentId) + "/" + oAuthAppId;
+    }
+
+    private static String getKeyMappingEndpointURL(String projectId, String componentId, String environmentId) {
+
+        return getKeyManagerCommonURL(projectId, componentId, environmentId) + "/map";
+    }
+
+    private static String getKeyManagerCommonURL(String projectId, String componentId, String environmentId) {
+
+        return CONTEXT + "/orgs/" + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE)
+                + "/projects/" + projectId + "/components/" + componentId + "/environments/" + environmentId
+                + "/key-sets";
+    }
+
+    private static String getAccessToken() throws TokenRetrievalException, IOException, URISyntaxException {
+
+        return TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     }
 }

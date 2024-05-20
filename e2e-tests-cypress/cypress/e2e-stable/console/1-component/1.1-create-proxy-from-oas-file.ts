@@ -64,6 +64,10 @@ describe("Create Proxy from OAS file", () => {
     proxy.deploy();
   });
 
+  it("Promote proxy", () => {
+    proxy.promote();
+  });
+
   it("Verify test functionality using Swagger UI in Dev", () => {
     proxy
       .testSwaggerConsole(Enums.Environment.DEVELOPMENT, RESOURCE)
@@ -78,10 +82,6 @@ describe("Create Proxy from OAS file", () => {
       .then((res) => {
         expect(res.status).equal(OK);
       });
-  });
-
-  it("Promote proxy", () => {
-    proxy.promote();
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
