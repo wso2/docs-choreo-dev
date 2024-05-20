@@ -4,9 +4,6 @@ Connections in Choreo allow you to integrate Choreo components, or to integrate 
 
 To consume a service deployed on Choreo within your service, you must create a connection to the service you want to consume. 
 
-!!! info
-    From November 8, 2023, at 10:20 AM UTC, you can create connections for new components, excluding Ballerina and MI.
-
 To create a connection, follow the steps given below:
 
 1. In the Choreo Console, go to the top navigation menu and set the visibility level as [project](../../choreo-concepts/connections.md#project-connections) or [component](../../choreo-concepts/connections.md#component-connections) as follows: 
