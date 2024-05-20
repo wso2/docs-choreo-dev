@@ -29,6 +29,7 @@ import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.choreoproject.ComponentRepository;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
@@ -288,7 +289,9 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         String branchName = SERVICE_PUBLISHER_COMPONENT_REPO_NEW_BRANCH_NAME;
         publicEndpointServiceComponentNewVersion = ComponentUtils.createComponentVersion(this, citrusClients,
                 accessToken, publicEndpointServiceComponent, "v1.1", branchName);
-        publicEndpointServiceComponentNewVersion.setBranch(branchName);
+        ComponentRepository repository = publicEndpointServiceComponentNewVersion.getRepository();
+        repository.setBranchApp(branchName);
+        publicEndpointServiceComponentNewVersion.setRepository(repository);
     }
 
     @Test(dependsOnMethods = {"createNewVersionOfServicePublisherComponent_TestChoreoConnections"})
