@@ -79,8 +79,8 @@ done
 APP_NAME="MarketplaceApp"
 FUNCTION_NAME="marketplace_assist_trigger_function"
 BASE_URL="https://services.cloud.mongodb.com/api/admin/v3.0"
-SOURCE_CODE_FILE_PATH="function_code.js"
-CONFIG_FILE_PATH="consumerSecretValue.json"
+SOURCE_CODE_FILE_PATH="scripts/function_code.js"
+CONFIG_FILE_PATH="scripts/consumerSecretValue.json"
 
 # Following are the variables that will be set by the script
 ACCESS_TOKEN=""

@@ -10,8 +10,8 @@ Get the values for following variables.
 
 ```shell
 PROJECT_ID      - id of the mongodb atlas project
-API_PUBLIC_KEY  - public key of the admin api key (can be taken from `apim-mongo-db-atlas-public-key` secret in key vault)
-API_PRIVATE_KEY - private key of the admin api key (can be taken from `apim-mongo-db-atlas-private-key` secret in key vault)
+API_PUBLIC_KEY  - public key of the admin api key (can be taken from `admin-mongo-db-atlas-public-key` secret in key vault)
+API_PRIVATE_KEY - private key of the admin api key (can be taken from `admin-mongo-db-atlas-private-key` secret in key vault)
 CLUSTER_NAME    - name of the mongodb atlas cluster
 DATABASE_NAME   - database name of `resource_registry` mongoDB
 CONSUMER_KEY    - consumer key of devportal app created for spec populator
