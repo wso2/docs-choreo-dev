@@ -1,4 +1,4 @@
-# Share and Reuse Web Applications
+# Use a Connection in Your Web Application
 
 Choreo simplifies the process of integrating services into your web application. The approach to connect to a service can vary based on your web application. 
 
@@ -23,7 +23,7 @@ To connect to a selected service, follow the step-by-step instructions given bel
 
         ``` yaml
              window.configs = {
-                 serviceURL: '<SERVICE_URL>',        
+                 apiUrl: '<SERVICE_URL>',        
              };
 
         ```
@@ -57,7 +57,7 @@ To connect to a selected service, follow the step-by-step instructions given bel
     The following is a sample code snippet in NodeJS:
 
     ``` java
-         const serviceURL = window?.configs?.serviceURL ? window.configs.serviceURL : "/";
+         const serviceURL = window?.configs?.apiUrl ? window.configs.apiUrl : "/";
     ```
 
     <h2> Step 3: Invoke the service</h2>
@@ -87,10 +87,10 @@ To connect to a selected service, follow the step-by-step instructions given bel
 
     ``` yaml
          window.configs = {
-             apiUrl: '/choreo-apis/uuzz/default/v1',
-             consumerKey: 'ZdvMwrQXe75XXmFM5J2RF0IqZYUa',
-             consumerSecret: '*****************',
-             tokenUrl: 'https://sts.st.choreo.dev/oauth2/token',
+             apiUrl: '<SERVICE_URL>',
+             consumerKey: '<CONSUMER_KEY>',
+             consumerSecret: '<CONSUMER_SECRET>',
+             tokenUrl: '<TOKEN_URL>',
          };
     ```
 
@@ -103,7 +103,7 @@ To connect to a selected service, follow the step-by-step instructions given bel
     The following is a sample code snippet in NodeJS:
 
     ``` java
-         const serviceURL = window?.configs?.serviceURL 
+         const serviceURL = window?.configs?.apiUrl ? window.configs.apiUrl : "/";
     ```
 
     <h2> Step 3: Acquire an OAuth 2.0 access token</h2>
