@@ -29,11 +29,11 @@ Let's get started!
 
 ### Configure the service port with endpoints
 
-We expect to run our greeter service on port 9090. To securely expose the service through Choreo, we must provide the port and other required information to Choreo. In Choreo, we expose our services with endpoints. You can read more about endpoints in our [endpoint documentation](https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/#what-are-endpoints-in-service-components).
+You are going to run the greeter service on port 9090. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. In Choreo, you expose services via endpoints. For detailed information on each attribute of an endpoint, see [Configure Endpoints](../configure-endpoints.md).
 
-Choreo looks for an endpoints.yaml file inside the `.choreo` directory to configure the endpoint details of a containerized component. Place the `.choreo` directory at the root of the Docker build context path.
+To configure the endpoint details of a containerized component, Choreo looks for an `endpoints.yaml` file inside the `.choreo` directory. Be sure to place the `.choreo` directory at the root of the Docker build context path.
 
-In our greeter sample, the endpoints.yaml file is at go/greeter/.choreo/endpoints.yaml. 
+In the greeter sample, the `endpoints.yaml` file is in the `go/greeter/.choreo/` directory. 
 
 ## Step 1: Create a service component
 

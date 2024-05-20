@@ -187,6 +187,7 @@ nav:
       - Choreo CLI Overview: choreo-cli/choreo-cli-overview.md
       - Get Started with the Choreo CLI: choreo-cli/get-started-with-the-choreo-cli.md  
   - Administer:
+      - Control Access in the Choreo Console: administer/control-access-in-the-choreo-console.md
       - Configure a Custom Domain for Your Organization: administer/configure-a-custom-domain-for-your-organization.md
       - Configure Enterprise Login: administer/configure-enterprise-login.md
       - Configure an External IdP:
@@ -367,6 +368,7 @@ plugins:
           'develop-components/develop-a-web-application.md': 'https://wso2.com/choreo/docs/develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application/'
           'administer/configure-a-custom-domain-for-apis.md': 'https://wso2.com/choreo/docs/administer/configure-a-custom-domain-for-your-organization/'
           'administer/customize-developer-portal-domain.md': 'https://wso2.com/choreo/docs/administer/configure-a-custom-domain-for-your-organization/'
+          'authentication-and-authorization/access-control/control-access-in-the-choreo-console.md': 'https://wso2.com/choreo/docs/administer/control-access-in-the-choreo-console/'
           
 extra_css:
   # - assets/lib/highlightjs/default.min.css
