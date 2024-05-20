@@ -14,7 +14,7 @@
 package com.wso2.choreo.integration.common.managedAuthentication;
 
 import java.util.List;
-
+import java.util.Map;
 
 public class ManagedAuthenticationConstants {
 
@@ -68,18 +68,10 @@ public class ManagedAuthenticationConstants {
 
         public static final String POST_LOGIN_PATH = "postLoginPath";
         public static final String POST_LOGOUT_PATH = "postLogoutPath";
+        public static final String ERROR_PATH = "errorPath";
         public static final String SCOPES = "scopes";
         public static final String SESSION_EXPIRY_TIME = "sessionExpiryTime";
         public static final String IS_APP_GATEWAY_CONFIGURED = "isAppGatewayConfigured";
-    }
-
-    public static class DefaultManagedAuthConfigValues {
-
-        public static final String POST_LOGIN_PATH = "/";
-        public static final String POST_LOGOUT_PATH = "/";
-        public static final String SCOPES = "[]";
-        public static final String SESSION_EXPIRY_TIME = "10800";
-        public static final String IS_APP_GATEWAY_CONFIGURED = "true";
     }
 
     public static class KeySetConfigKeys {
@@ -97,5 +89,26 @@ public class ManagedAuthenticationConstants {
 
         public static final String CHOREO_APPS = "choreoapps";
         public static final String CHOREO_APIS = "choreoapis";
+    }
+
+    public static Map<String, String> getDefaultManagedAuthConfig() {
+        return Map.of(
+                ManagedAuthConfigKeys.POST_LOGIN_PATH, "/",
+                ManagedAuthConfigKeys.POST_LOGOUT_PATH, "/",
+                ManagedAuthConfigKeys.SCOPES, "[]",
+                ManagedAuthConfigKeys.SESSION_EXPIRY_TIME, "10800",
+                ManagedAuthConfigKeys.IS_APP_GATEWAY_CONFIGURED, "true"
+        );
+    }
+
+    public static Map<String, String> getCustomManagedAuthConfig() {
+        return Map.of(
+                ManagedAuthConfigKeys.POST_LOGIN_PATH, "/login",
+                ManagedAuthConfigKeys.POST_LOGOUT_PATH, "/logout",
+                ManagedAuthConfigKeys.ERROR_PATH, "/error",
+                ManagedAuthConfigKeys.SCOPES, "[]",
+                ManagedAuthConfigKeys.SESSION_EXPIRY_TIME, "60",
+                ManagedAuthConfigKeys.IS_APP_GATEWAY_CONFIGURED, "true"
+        );
     }
 }
