@@ -210,7 +210,7 @@ If you want to expose an endpoint as a managed API in Choreo, you need to set th
 
 Once you deploy the service component, Choreo will expose the endpoint as a managed API through the Choreo API Gateway. You can then use the full lifecycle API management features provided by Choreo to test, deploy, maintain, monitor, and manage your API using the API management features.
 
-## Default component URL corresponding to the default endpoint
+## Understand the default component URL
 
 The default URL of a component corresponds to the default endpoint of the component and is structured as follows:
 
