@@ -193,8 +193,6 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
         Assert.assertEquals(updatedApp.getUserTokenExpiry(),
                 ModifiedOAuthAppConfig.USER_TOKEN_EXPIRY);
         Assert.assertEquals(updatedApp.isPublicClient(), ModifiedOAuthAppConfig.IS_PUBLIC_CLIENT);
-
-        Thread.sleep(2 * 60 * 1000);  // wait for cache invalidation
     }
 
     // Test 1.3 - Regenerate keysets in the component
@@ -208,8 +206,6 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
                 appServiceClient,
                 testComponent.getProjectId(), testComponent.getId(), devEnvironment.getId(),
                 generatedKeys.getClientId());
-
-        Thread.sleep(2 * 60 * 1000);  // wait for cache invalidation
 
         String clientId = getConfigValueFromGroup(this, appServiceClient,
                 DefaultConfigGroups.APP_GW_KEYSETS,
@@ -234,6 +230,8 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
                 put(ClientCredentialsAuthFlowParams.SCOPE, OAuthConstants.DEFAULT_CLIENT_CREDENTIALS_SCOPES);
             }
         };
+
+        Thread.sleep(2 * 60 * 1000);  // wait for cache invalidation
 
         ClientCredentialsResponseDTO clientCredentialsResponse = OAuthUtils.invokeClientCredentialsAuthFlow(this,
                 tokenEndpointURL, generatedKeys.getClientId(), generatedKeys.getClientSecret(),
