@@ -67,17 +67,17 @@ areaOwners:
     assignees:
       - lakmal@wso2.com
       - rashmin@wso2.com
-      - tharinduw@wso2.com
+      - rukshan@wso2.com
   - testClass: com.wso2.choreo.integration.tests.insights.InsightsAuthAPI
     assignees:
       - lakmal@wso2.com
       - rashmin@wso2.com
-      - tharinduw@wso2.com
+      - rukshan@wso2.com
   - testClass: com.wso2.choreo.integration.tests.insights.InsightsAlertsAPI
     assignees:
       - lakmal@wso2.com
       - rashmin@wso2.com
-      - tharinduw@wso2.com
+      - rukshan@wso2.com
   - testClass: com.wso2.choreo.integration.tests.logs.DPLogsAPITestCase
     assignees:
       - rasikam@wso2.com
