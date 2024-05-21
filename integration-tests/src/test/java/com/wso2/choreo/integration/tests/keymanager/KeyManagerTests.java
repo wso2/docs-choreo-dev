@@ -207,6 +207,8 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
                 testComponent.getProjectId(), testComponent.getId(), devEnvironment.getId(),
                 generatedKeys.getClientId());
 
+        Thread.sleep(2 * 60 * 1000);  // wait for cache invalidation
+
         String clientId = getConfigValueFromGroup(this, appServiceClient,
                 DefaultConfigGroups.APP_GW_KEYSETS,
                 AppGwKeysetConfigNames.CLIENT_ID, devEnvironment.getTemplateId());
