@@ -231,6 +231,8 @@ public class KeyManagerTests extends TestNGCitrusSpringSupport {
             }
         };
 
+        Thread.sleep(2 * 60 * 1000);  // wait for cache invalidation
+
         ClientCredentialsResponseDTO clientCredentialsResponse = OAuthUtils.invokeClientCredentialsAuthFlow(this,
                 tokenEndpointURL, generatedKeys.getClientId(), generatedKeys.getClientSecret(),
                 oAuthClientCredentialsRequest);
