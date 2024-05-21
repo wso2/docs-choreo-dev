@@ -28,7 +28,6 @@ import { mixinConnections } from "../../features/component-connections/connectio
 import { ConnectionsFeature } from "../../features/component-connections/connections";
 import { TestIds } from "../../constants/TestIds";
 
-
 export class Service extends mixinBuild(
   mixinManage(mixinServiceDeploy(mixinTestService(mixinConnections(Component))))
 ) {
@@ -67,6 +66,18 @@ export class Service extends mixinBuild(
       shouldModifyEndpoint,
       EndpointAccessibility.Public,
       createDefaultSteps(1)
+    );
+  }
+
+  deployPublicLevelAccessibilityWithConfigs(
+    configs: ConfigEntryStep[],
+    shouldModifyEndpoint: boolean = true
+  ) {
+    this._deployService(
+      this,
+      shouldModifyEndpoint,
+      EndpointAccessibility.Public,
+      configs
     );
   }
 
@@ -126,13 +137,14 @@ export class Service extends mixinBuild(
     this.sideMenu.navigateToDeploy();
     cy.get(TestIds.endpointConfigurationsButton).should("be.visible").click();
     cy.get(TestIds.rightDrawer)
-      .contains('div', "Pass User Context to Backend").should("be.visible")
-      .siblings('div').eq(0).within(() => {
-        cy.get('input').check();
-      })
+      .contains("div", "Pass User Context to Backend")
+      .should("be.visible")
+      .siblings("div")
+      .eq(0)
+      .within(() => {
+        cy.get("input").check();
+      });
     cy.get(TestIds.storyButton).contains("Apply").should("be.visible").click();
-    cy.get(TestIds.runNowNotification).contains(
-      "API updated successfully"
-    );
+    cy.get(TestIds.runNowNotification).contains("API updated successfully");
   }
 }
