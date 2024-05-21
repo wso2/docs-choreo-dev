@@ -15,23 +15,24 @@ import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
 import { Service } from "../../../support/console/entities/component/service-component";
 import { Enums } from "../../../support/commons/enums";
-import { ManualTrigger } from "../../../support/console/entities/component/manual-trigger-component";
 import { ConfigEntryStep } from "../../../support/commons/types";
+import { OK } from "../../../support/commons/http";
 
 describe("Verify Component visibility functionality", () => {
   const PROJECT_DESCRIPTION = "Component Visibility Test";
   const ENDPOINT_NAME = "Readinglist";
-  const LOG_MESSAGE = "MATCHING RESPONSE";
+  const RESOURCE = "/books";
 
   let project: Project;
   let service: Service;
-  let trigger: ManualTrigger;
+  let trigger: Service;
 
   function addConfiguration(args: string[] | undefined) {
     if (args === undefined || args.length === 0) {
       throw new Error("args is undefined or empty");
     }
-    cy.get('[data-cyid="invke_url"]>input').type(args[0]);
+    cy.get('[data-cyid="invoke_url"]>input').type(args[0]);
+    cy.get('[data-cyid="invoke_resource"]>input').type(args[1]);
     cy.get('[data-cyid="btn-submit-configform"]').click();
   }
 
@@ -75,13 +76,17 @@ describe("Verify Component visibility functionality", () => {
     service.goBackToProject();
   });
 
-  it("Verify Manual Trigger component creation", () => {
+  it("Verify Service Trigger component creation", () => {
     project
-      .createManualTriggerComponent(Enums.Accessibility.EXTERNAL, {
-        url: "https://github.com/choreo-test-apps/book-service-manual-trigger",
-        branch: "main",
-      })
-      .then((comp: ManualTrigger) => {
+      .createServiceComponent(
+        Enums.Accessibility.EXTERNAL,
+        {
+          url: "https://github.com/choreo-test-apps/service-to-service",
+          branch: "main",
+        },
+        ENDPOINT_NAME
+      )
+      .then((comp: Service) => {
         project.visitComponent(comp.getName());
         trigger = comp;
       });
@@ -92,43 +97,57 @@ describe("Verify Component visibility functionality", () => {
   });
 
   it("Deploying the trigger", () => {
-    const devUrlOfService: string[] = [];
-    devUrlOfService.push(service.getDevEndpointUrl());
+    const devServiceConfigs: string[] = [];
+    devServiceConfigs.push(service.getDevEndpointUrl());
+    devServiceConfigs.push(RESOURCE);
 
-    trigger.deployToDevWithConfigs([
-      new ConfigEntryStep(addConfiguration, devUrlOfService),
+    trigger.deployPublicLevelAccessibilityWithConfigs([
+      new ConfigEntryStep(addConfiguration, devServiceConfigs),
     ]);
   });
 
   it("Promote the trigger", () => {
-    const prodUrlOfService: string[] = [];
-    prodUrlOfService.push(service.getProdEndpointUrl());
+    const prodServiceConfigs: string[] = [];
+    prodServiceConfigs.push(service.getProdEndpointUrl());
+    prodServiceConfigs.push(RESOURCE);
 
-    trigger.promoteToProdWithConfigs([
+    trigger.promotePublicLevelAccessibility([
       new ConfigEntryStep(),
-      new ConfigEntryStep(addConfiguration, prodUrlOfService),
+      new ConfigEntryStep(addConfiguration, prodServiceConfigs),
     ]);
   });
 
-  it("Execute trigger in Dev", () => {
-    trigger.executeComponent(Enums.Environment.DEVELOPMENT);
+  it("Invoke trigger in Dev", () => {
+    trigger
+      .testConsole({
+        env: Enums.Environment.DEVELOPMENT,
+        endpoint: ENDPOINT_NAME,
+        resourcePath: "invoke",
+        method: "get",
+        parentComponentId: "operations-default-getInvoke",
+      })
+      .then((res) => {
+        cy.fixture("books").then((books) => {
+          expect(res.response.toString()).to.include(books[1].title);
+        });
+        expect(res.statusCode).to.be.eq(OK.toString());
+      });
   });
 
-  it("Execute trigger in Prod", () => {
-    trigger.executeComponent(Enums.Environment.PRODUCTION);
-  });
-
-  it("Verify dev env logs", () => {
-    trigger.verifyObservabilityMetricsLogs(
-      Enums.Environment.DEVELOPMENT,
-      LOG_MESSAGE
-    );
-  });
-
-  it("Verify prod env logs", () => {
-    trigger.verifyObservabilityMetricsLogs(
-      Enums.Environment.PRODUCTION,
-      LOG_MESSAGE
-    );
+  it("Invoke trigger in Prod", () => {
+    trigger
+      .testConsole({
+        env: Enums.Environment.PRODUCTION,
+        endpoint: ENDPOINT_NAME,
+        resourcePath: "invoke",
+        method: "get",
+        parentComponentId: "operations-default-getInvoke",
+      })
+      .then((res) => {
+        cy.fixture("books").then((books) => {
+          expect(res.response.toString()).to.include(books[1].title);
+        });
+        expect(res.statusCode).to.be.eq(OK.toString());
+      });
   });
 });
