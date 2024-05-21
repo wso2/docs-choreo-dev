@@ -227,9 +227,9 @@ If a component has multiple endpoints, Choreo allows you to change the endpoint 
 To change the default endpoint of a component, follow the steps given below:
 
 !!! note
-     Choreo does not allow you to change the default endpoint if there are associated published APIs. You must go to the **Lifecycle** page and unpublish the relevant APIs before updating the default endpoint. For instructions on unpublishing an API, see [Lifecycle Management](../api-management/lifecycle-management.md).
+     Choreo does not allow you to change the default endpoint if there are associated published APIs. You must go to the **Lifecycle** page and unpublish the relevant APIs before updating the default endpoint. For instructions on unpublishing an API, see [Lifecycle Management](https://wso2.com/choreo/docs/api-management/lifecycle-management/).
 
-1. Sign in to the Choreo Console.
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component for which you want to change the default endpoint.
 3. In the left navigation menu, click **Deploy**.
 4. On the **Deploy** page, go to the **Set Up** card and click **Configure & Deploy**.
