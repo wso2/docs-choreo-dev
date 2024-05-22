@@ -11,6 +11,7 @@
 
 resources:
   - spec-populator.yaml
+  - milvus-proxy.yaml
 
 patches:
   - path: patch.json
