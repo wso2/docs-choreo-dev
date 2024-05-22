@@ -34,6 +34,6 @@ Follow the steps below to test a GraphQL endpoint via the GraphQL Console:
         If you want to generate a required query or mutation for testing via the GraphQL Explorer, click **Explorer** to open the GraphQL Explorer.
     
     !!! note
-        GraphQL Explorer has a known issue where the list inputs are not constructed properly. You can update the generated query before executing when list inputs are present.
+         GraphQL Explorer has a known issue causing improper construction of list inputs. To work around this, you must manually update the list input in the generated query before executing it.
 
     ![GraphQL Console](../assets/img/testing/graphql-console.png){.cInlineImage-full}
