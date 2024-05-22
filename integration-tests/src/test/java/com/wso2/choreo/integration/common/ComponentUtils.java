@@ -26,6 +26,7 @@ import com.google.gson.JsonArray;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.component.Component;
 import com.wso2.choreo.integration.apis.configmgt.ConfigManagement;
+import com.wso2.choreo.integration.apis.devops.DevopsPortalApi;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.apis.keymanager.KeyManagerService;
 import com.wso2.choreo.integration.apis.observability.AuditLogsService;
@@ -70,6 +71,8 @@ import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.revision.RevisionWrapper;
 import com.wso2.choreo.integration.models.webhook.Trigger;
 import lombok.extern.log4j.Log4j2;
+
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -1433,5 +1436,21 @@ public class ComponentUtils {
 
         return Component.addConflictingExternalIdpKeys(runner, client, projectId, componentId, environmentId,
                 keyMappingRequest);
+    }
+
+    public static void configureWebappShortUrl(TestNGCitrusSpringSupport runner, String accessToken, 
+            ChoreoComponent component, List<Environment> environments, String shortUrl) throws Exception {
+
+        String componentId = component.getId();
+        Environment prodEnv = component.getEnvironment(environments.stream().toArray(Environment[] ::new), 
+            Constant.Environment.Production);
+        String prodReleaseId = component.getReleaseIdForEnvironment(prodEnv);
+
+        String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+
+        String projectId = component.getProjectId();
+
+        DevopsPortalApi.configureWebappShortUrl(runner, accessToken, componentId, prodReleaseId, orgUuid, projectId, 
+            shortUrl);
     }
 }

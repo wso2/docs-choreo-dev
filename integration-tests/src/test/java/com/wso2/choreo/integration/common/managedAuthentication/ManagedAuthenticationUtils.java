@@ -15,14 +15,19 @@ package com.wso2.choreo.integration.common.managedAuthentication;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.testng.Assert;
 
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.wso2.choreo.integration.apis.external.ManagedAuth;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.configurationservice.ConfigServiceUtils;
@@ -287,6 +292,21 @@ public class ManagedAuthenticationUtils {
 
         validateManagedAuthConfig(runner, appServiceClient, componentA, environment, 
             Map.of(ManagedAuthConfigKeys.IS_APP_GATEWAY_CONFIGURED, expectedStatus.toString()));
+    }
+
+    /**
+     * Validate Managed Authentication Configuration propagation to the Dataplane.
+     *
+     * @param webAppBaseUrl Base URL of the webapp
+     * @throws ClientProtocolException if an error occurs while executing the HTTP request
+     * @throws IOException if an error occurs while reading the response
+     */
+    public static void validateConfigPropagation(String webAppBaseUrl) throws ClientProtocolException, IOException {
+        String location = ManagedAuth.initiateManagedAuthLoginFlow(webAppBaseUrl);
+        List<NameValuePair> params = URLEncodedUtils.parse(location, Charset.forName("UTF-8"));
+        String redirectUrl = params.stream().filter(param -> param.getName().equals("redirect_uri")).findFirst().get().getValue();
+
+        Assert.assertEquals(webAppBaseUrl + "/auth/login/callback", redirectUrl);
     }
 
     private static ConfigurationGroup getConfigGroupByName(TestNGCitrusSpringSupport runner, 
