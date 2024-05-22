@@ -1,4 +1,4 @@
-# Autoscale Components with Scale to Zero
+# Autoscale Components with Scale-to-Zero
 
 Choreo provides the scale-to-zero capability for HTTP applications you deploy in the data plane. This lets you run your components in a serverless mode.
 
