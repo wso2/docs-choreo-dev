@@ -26,6 +26,7 @@ import com.google.gson.JsonArray;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.component.Component;
 import com.wso2.choreo.integration.apis.configmgt.ConfigManagement;
+import com.wso2.choreo.integration.models.graphql.CreateNewDeploymentTrackResponseDTO;
 import com.wso2.choreo.integration.apis.devops.DevopsPortalApi;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.apis.keymanager.KeyManagerService;
@@ -674,7 +675,7 @@ public class ComponentUtils {
 
         HttpClient apimClient = citrusClients.get(Endpoints.STS_ENDPOINT);
         String query = "context:/" + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID) + "/"
-                + project.getHandler() + "/" + component.getHandler() + "/v1.0";
+                + project.getHandler() + "/" + component.getName() + "/v1.0";
         ApiManager.searchAPIByQuery(runner, apimClient, accessToken, query);
 
         List<ComponentDeploymentStatusDTO> promotionStatus = null;
@@ -958,7 +959,7 @@ public class ComponentUtils {
         runner.$(repeatOnError()
                 .until("i = 5")
                 .index("i")
-                .autoSleep(5000)
+                .autoSleep(10000)
                 .actions((http()
                         .client(invokeUrl)
                         .send()
@@ -978,7 +979,8 @@ public class ComponentUtils {
                                 .validate((message, context) -> {
                                     int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
                                     if (code != expectedHttpStatus.value()) {
-                                        throw new ValidationException("Too many successive calls with response code !=" + expectedHttpStatus.value());
+                                        throw new ValidationException(String.format("Too many successive calls with response code %s," +
+                                                " expected response code %s", code, expectedHttpStatus.value()));
                                     }
                                 })));
     }
@@ -1005,6 +1007,18 @@ public class ComponentUtils {
         argMap.put("releaseId", componentDeploymentStatusDTO.getReleaseId());
         GraphQL.validateEndpointDeployment(runner, appServiceClient, accessToken, argMap);
         return GraphQL.getEndpoints(runner, appServiceClient, accessToken, argMap);
+    }
+    
+    public static void validateEndpoints(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+                                              String accessToken, ChoreoComponent component,
+                                              ComponentDeploymentStatusDTO componentDeploymentStatusDTO) throws Exception {
+        HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+
+        Map<String,String> argMap = new HashMap<>();
+        argMap.put("componentId", component.getId());
+        argMap.put("versionId", componentDeploymentStatusDTO.getVersionId());
+        argMap.put("releaseId", componentDeploymentStatusDTO.getReleaseId());
+        GraphQL.validateEndpointDeployment(runner, appServiceClient, accessToken, argMap);
     }
 
     public static List<Endpoint> getEndpoints(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
@@ -1424,18 +1438,39 @@ public class ComponentUtils {
     }
 
     public static void addExternalIdpKeys(TestActionRunner runner, HttpClient client, String projectId,
-            String componentId, String environmentId, HashMap<String, Object> keyMappingRequest)
+            String componentId, String environmentId, HashMap<String, Object> keyMappingRequest,
+            HttpStatus expectedStatus)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
-        Component.addExternalIdpKeys(runner, client, projectId, componentId, environmentId, keyMappingRequest);
+        Component.addExternalIdpKeys(runner, client, projectId, componentId, environmentId, keyMappingRequest,
+                expectedStatus);
     }
 
-    public static String addConflictingExternalIdpKeys(TestActionRunner runner, HttpClient client,
-            String projectId, String componentId, String environmentId, HashMap<String, Object> keyMappingRequest)
-            throws TokenRetrievalException, IOException, URISyntaxException {
+    public static ChoreoComponent createComponentVersion(
+            TestNGCitrusSpringSupport runner, Map<Endpoints,HttpClient> citrusClients, String accessToken,
+            ChoreoComponent choreoComponent, String version, String branchName) throws Exception {
+        HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder()
+                .orgUuid(choreoComponent.getOrgId())
+                .componentId(choreoComponent.getId())
+                .apiVersion(version)
+                .branch(branchName)
+                .description(choreoComponent.getDescription())
+                .build();
+        CreateNewDeploymentTrackResponseDTO newDeploymentTrack = GraphQL.createNewDeploymentTrack(runner, appServiceClient, accessToken, graphqlDTO);
+        List<ApiVersion> apiVersions = new ArrayList<>();
+        for (ApiVersion existingVersion: choreoComponent.getApiVersions()) {
+            existingVersion.setLatest(false);
+            apiVersions.add(existingVersion);
+        }
+        ApiVersion latestApiVersion = new ApiVersion();
+        latestApiVersion.setLatest(true);
+        latestApiVersion.setId(newDeploymentTrack.getId());
+        latestApiVersion.setAppEnvVersions(apiVersions.get(0).getAppEnvVersions());
+        apiVersions.add(latestApiVersion);
 
-        return Component.addConflictingExternalIdpKeys(runner, client, projectId, componentId, environmentId,
-                keyMappingRequest);
+        choreoComponent.setApiVersions(apiVersions);
+        return choreoComponent;
     }
 
     public static void configureWebappShortUrl(TestNGCitrusSpringSupport runner, String accessToken, 

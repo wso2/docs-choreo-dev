@@ -76,6 +76,31 @@ public class KeyManagerConstants {
         public static final List<String> CALLBACK_URLS = List.of(
                 "https://modified-sample-app-cb1.choreo-integration-tests.dev",
                 "https://modified-sample-app-cb2.choreo-integration-tests.dev");
-        public static final List<String> GRANT_TYPES = List.of("authorization_code", "refresh_token");
+        public static final List<String> GRANT_TYPES = List.of("authorization_code", "refresh_token",
+                "client_credentials");
+    }
+
+    public static class KeyGenerationRequestParams {
+
+        public static final String CALLBACK_URLS = "callbackUrls";
+        public static final String GRANT_TYPES = "grantTypes";
+        public static final String PKCE_MANDATORY = "pkceMandatory";
+        public static final String APP_TOKEN_EXPIRY = "appTokenExpiry";
+        public static final String PUBLIC_CLIENT = "publicClient";
+        public static final String REFRESH_TOKEN_EXPIRY = "refreshTokenExpiry";
+        public static final String USER_TOKEN_EXPIRY = "userTokenExpiry";
+    }
+
+    public static class ExternalIdpMappingParams {
+            
+            public static final String IDP_ID = "idpId";
+            public static final String CLIENT_ID = "clientId";
+            public static final String CLIENT_SECRET = "clientSecret";
+    }
+
+    public static class ClientCredentialsAuthFlowParams {
+        
+        public static final String GRANT_TYPE = "grant_type";
+        public static final String SCOPE = "scope";
     }
 }

@@ -1,0 +1,27 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://org.apache.axis2/xsd" xmlns:xsd1="http://dto.oauth.identity.carbon.wso2.org/xsd">
+    <soap:Header/>
+    <soap:Body>
+        <xsd:registerOAuthApplicationData>
+            <!--Optional:-->
+            <xsd:application>
+                <xsd1:OAuthVersion>OAuth-2.0</xsd1:OAuthVersion>
+                <xsd1:applicationAccessTokenExpiryTime>3600</xsd1:applicationAccessTokenExpiryTime>
+                <xsd1:applicationName>{GRAPHQL_SP_NAME}</xsd1:applicationName>
+                <xsd1:backChannelLogoutUrl/>
+                <xsd1:bypassClientCredentials>false</xsd1:bypassClientCredentials>
+                <xsd1:callbackUrl>{GRAPHQL_CALL_BACK_URL}</xsd1:callbackUrl>
+                <xsd1:grantTypes>client_credentials</xsd1:grantTypes>
+                <xsd1:idTokenEncryptionEnabled>false</xsd1:idTokenEncryptionEnabled>
+                <xsd1:idTokenExpiryTime>3600</xsd1:idTokenExpiryTime>
+                <xsd1:oauthConsumerKey>{GRAPHQL_API_KEY}</xsd1:oauthConsumerKey>
+                <xsd1:oauthConsumerSecret>{GRAPHQL_API_SECRET}</xsd1:oauthConsumerSecret>
+                <xsd1:pkceMandatory>false</xsd1:pkceMandatory>
+                <xsd1:pkceSupportPlain>true</xsd1:pkceSupportPlain>
+                <xsd1:refreshTokenExpiryTime>84600</xsd1:refreshTokenExpiryTime>
+                <xsd1:requestObjectSignatureValidationEnabled>false</xsd1:requestObjectSignatureValidationEnabled>
+                <xsd1:tokenType>JWT</xsd1:tokenType>
+                <xsd1:userAccessTokenExpiryTime>3600</xsd1:userAccessTokenExpiryTime>
+            </xsd:application>
+        </xsd:registerOAuthApplicationData>
+    </soap:Body>
+</soap:Envelope>

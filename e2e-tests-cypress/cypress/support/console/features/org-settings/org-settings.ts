@@ -42,6 +42,40 @@ export class OrganizationSettings {
     cy.get(TestIds.uploadUserStoreFile).click();
   }
 
+  inviteMember(email: string, roles: string[]) {
+    cy.get(TestIds.inviteUser).should("be.visible").click();
+
+    cy.get(TestIds.tagEmails)
+      .should("be.visible")
+      .within(() => {
+        cy.get('input[type="text"]')
+          .should("be.visible")
+          .type(email)
+          .type("{enter}");
+      });
+
+    cy.get(TestIds.selectGroups).click();
+
+    roles.forEach((v) => {
+      cy.getUnstable(TestIds.groupSelectPopup)
+        .contains(v)
+        .parents("li")
+        .find("input")
+        .scrollIntoView()
+        .click();
+    });
+
+    cy.get("body").type("{esc}");
+
+    cy.get(TestIds.inviteUserDialog).click({ force: true });
+    cy.get(TestIds.inviteUserDialog).should("not.exist");
+
+    cy.get(TestIds.pendingInvites).should("be.visible").click();
+    cy.get(TestIds.searchIcon).click();
+    cy.get(TestIds.searchField).type(email);
+    cy.contains(email).should("be.visible");
+  }
+
   addRole(roleName: string, roleDescription: string, roleTag: string) {
     cy.get(TestIds.createRole).click();
     cy.get(TestIds.roleName).should("be.visible").type(roleName);

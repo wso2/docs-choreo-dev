@@ -31,6 +31,8 @@
             <class name="com.wso2.choreo.integration.tests.dp.TestBuildpackDp"/>
             <class name="com.wso2.choreo.integration.tests.buildpacks.Buildpack"/>
             <class name="com.wso2.choreo.integration.tests.connections.ChoreoConnections"/>
+            <class name="com.wso2.choreo.integration.tests.resourceAuthorization.ResourceAuthorizationTests"/>
+            <class name="com.wso2.choreo.integration.tests.keymanager.KeyManagerTests"/>
         </classes>
     </test>
 </suite>

@@ -365,6 +365,9 @@ configMapGenerator:
       - RESILIENCY_CONFIG_ENABLED={{.RESILIENCY_CONFIG_ENABLED | default false}}
       - COPY_CONTAINER_PORTS_ON_PROMOTE={{.COPY_CONTAINER_PORTS_ON_PROMOTE | default true}}
       - NEW_AUTO_DEPLOY_FEATURE_ENABLED={{.NEW_AUTO_DEPLOY_FEATURE_ENABLED | default false}}
+      - PDP_OAUTH_AGENT_SVC={{.PDP_OAUTH_AGENT_SVC | default "choreo-app-gateway-oauth-agent.choreodp-system.svc.cluster.local"}}
+      - PDP_GATEWAY_SVC={{.PDP_GATEWAY_SVC | default "choreo-app-gateway.choreodp-system.svc.cluster.local"}}
+      - APP_GATEWAY_FOR_PDPS_ENABLED={{.APP_GATEWAY_FOR_PDPS_ENABLED | default false}}
   - name: env-dp-helmhub
     behavior: create
     literals:

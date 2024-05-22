@@ -1,10 +1,10 @@
-# integration-tests
+# Integration-tests
 
 ## 1. Setup
 
 You can execute integration tests against your own Choreo account in Dev using the following method,
 
-1. Login to Choreo Console and check the response of the `/validate-user` call in the browser network tab and setup the
+1. Login to Choreo Console and check the response of the `/validate-user` call in the browser network tab and set up the
    following environment variables,
 
     - TEST_CHOREO_ORG_ID=<Your Org ID>
@@ -17,6 +17,7 @@ You can execute integration tests against your own Choreo account in Dev using t
     - GITHUB_PAT
     - GMAIL_API_CS
     - GMAIL_API_REFRESH_TOKEN
+    - RESOURCE_AUTHZ_USER_PASSWORD
 
 ## 2. Run all tests
 
@@ -46,21 +47,34 @@ You can execute integration tests against your own Choreo account in Dev using t
 integration-tests/src/test
 |
 |───java/com/wso2/choreo/integration
+|	|───apis
 |	|───common
 |	|───config
+|	|───models
 |	└───tests
 |           └───connectorbuilder
 |           └─── ...
 |           EndpointConfig.java
 └───resources
-	└───templates
+    |───scopes
+    |   |───dev-scopes.yaml
+    |   |───gen-scopes-yaml.py
+    |   |───prod-scopes.yaml
+    |   └───staging-scopes.yaml
+    └───templates
             └───connectorbuilder
             |      get_connector_success.json
             |      publish_status_completed.json
             |      publish_success_ok.json
             └─── ...
        citrus-application.properties
+       dev-env-config.yaml
+       dev-security-env-config.yaml
+       dp.xml      
        log4j.properties
+       prod-env-config.yaml
+       security.xml
+       staging-env-config.yaml
        testng.xml
 ```
 

@@ -16,10 +16,6 @@ import { Enums } from "../../../support/commons/enums";
 import { Project } from "../../../support/console/entities/project/project";
 import { Service } from "../../../support/console/entities/component/service-component";
 
-after(() => {
-  console.logout();
-});
-
 describe(`Graphql GQL service functionality`, () => {
   const PROJECT_DESCRIPTION = "ballerina service with graphql endpoint";
   const TEST_QUERY = '{greeting(name:"John")}';
@@ -63,6 +59,10 @@ describe(`Graphql GQL service functionality`, () => {
     component.deployPublicLevelAccessibility(false);
   });
 
+  it("Verify component promote to prod", () => {
+    component.promotePublicLevelAccessibility(undefined, false);
+  });
+
   it("Verify test functionality of GQL query in dev on swagger", () => {
     component
       .testGQL({
@@ -85,10 +85,6 @@ describe(`Graphql GQL service functionality`, () => {
       .then((res) => {
         expect(res.toString()).to.be.contains(TEST_MUTATION_RESPONSE);
       });
-  });
-
-  it("Verify component promote to prod", () => {
-    component.promotePublicLevelAccessibility(undefined, false);
   });
 
   it("Verify test functionality of GQL query in Prod on swagger", () => {
