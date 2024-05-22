@@ -17,6 +17,7 @@ import { Service } from "../../../support/console/entities/component/service-com
 import { Enums } from "../../../support/commons/enums";
 import { ConfigEntryStep } from "../../../support/commons/types";
 import { OK } from "../../../support/commons/http";
+import { TestIds } from "../../../support/console/constants/TestIds";
 
 describe("Verify Component visibility functionality", () => {
   const PROJECT_DESCRIPTION = "Component Visibility Test";
@@ -26,6 +27,18 @@ describe("Verify Component visibility functionality", () => {
   let project: Project;
   let service: Service;
   let trigger: Service;
+
+  // This step is only encountered the first time a service component with a config is promoted.
+  // However if due to an error the step is retried by Cypress this step will not be encountered.
+  // Therefore this is handled as an optional step.
+  function useDeployConfigsIfPrompted() {
+    cy.contains(/^Step/).should("be.visible");
+    cy.get("body").then((body) => {
+      if (body.find(TestIds.nextButton).length > 0) {
+        cy.get(TestIds.nextButton).click();
+      }
+    });
+  }
 
   function addConfiguration(args: string[] | undefined) {
     if (args === undefined || args.length === 0) {
@@ -112,7 +125,7 @@ describe("Verify Component visibility functionality", () => {
     prodServiceConfigs.push(RESOURCE);
 
     trigger.promotePublicLevelAccessibility([
-      new ConfigEntryStep(),
+      new ConfigEntryStep(useDeployConfigsIfPrompted),
       new ConfigEntryStep(addConfiguration, prodServiceConfigs),
     ]);
   });
