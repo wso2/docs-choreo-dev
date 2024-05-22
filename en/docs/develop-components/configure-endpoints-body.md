@@ -209,3 +209,32 @@ If you want to expose an endpoint as a managed API in Choreo, you need to set th
 * API analytics and monitoring
 
 Once you deploy the service component, Choreo will expose the endpoint as a managed API through the Choreo API Gateway. You can then use the full lifecycle API management features provided by Choreo to test, deploy, maintain, monitor, and manage your API using the API management features.
+
+## Understand the default component URL
+
+The default URL of a component corresponds to the default endpoint of the component and is structured as follows:
+
+`<domain>/<project-name>/<component-name>`
+
+This URL does not include the default endpoint name. For all other endpoints, the URL structure includes the endpoint name, as follows:
+
+`<domain>/<project-name>/<component-name>/<endpoint-name>`
+
+If a component has multiple endpoints, Choreo allows you to change the endpoint corresponding to the default component URL. For a component with a single endpoint, the default URL automatically corresponds to that endpoint.
+
+### Change the default endpoint of a component
+
+To change the default endpoint of a component, follow the steps given below:
+
+!!! note
+     - You cannot change the default endpoint if it has associated published APIs. You must go to the **Lifecycle** page and unpublish the relevant APIs before updating the default endpoint. For instructions on unpublishing an API, see [Lifecycle Management](https://wso2.com/choreo/docs/api-management/lifecycle-management/).
+     - Choreo does not allow you to change the default endpoint of a component if you create multiple deployment tracks within its current major version, or promote the component beyond its initial environment.
+
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. In the **Component Listing** pane, click on the component for which you want to change the default endpoint.
+3. In the left navigation menu, click **Deploy**.
+4. On the **Deploy** page, go to the **Set Up** card and click **Configure & Deploy**.
+5. In the **Environment Configurations** pane that opens, click **Next**.
+6. In the **File Mount** pane that opens, click **Next**.
+7. In the **Endpoint Details** pane that opens, click the **Default Endpoint** list, select the endpoint you want to set as the default endpoint, and then click **Update**.
+8. Click **Deploy**. This deploys the component with the selected endpoint as the default, and the default URL will now correspond to this endpoint.  

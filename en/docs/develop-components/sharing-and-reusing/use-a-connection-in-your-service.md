@@ -1,8 +1,8 @@
-# Share and Reuse Services
+# Use a Connection in Your Service
 
 Choreo allows you to share and reuse your services, accelerating development and enhancing efficiency in building integrated applications through connections.
 
-To create a service, see the [Create a Connection](create-a-connection.md) guide.
+For step-by-step on instruction on creating a connection, see [Create a Connection](create-a-connection.md).
 
 To learn more about Choreo Connections, see the documentation on [Connections](../../choreo-concepts/connections.md).
 

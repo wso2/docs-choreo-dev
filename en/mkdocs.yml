@@ -122,8 +122,8 @@ nav:
       - Deploy a Containerized Application: develop-components/deploy-a-containerized-application.md  
       - Share and Reuse Components:
           - Create a Connection: develop-components/sharing-and-reusing/create-a-connection.md
-          - Share and Reuse Services: develop-components/sharing-and-reusing/share-and-reuse-services.md
-          - Share and Reuse Web Applications: develop-components/sharing-and-reusing/share-and-reuse-web-applications.md
+          - Use a Connection in Your Service: develop-components/sharing-and-reusing/use-a-connection-in-your-service.md
+          - Use a Connection in Your Web Application: develop-components/sharing-and-reusing/use-a-connection-in-your-web-application.md
       - Manage Deployment Tracks for Choreo Components: develop-components/manage-deployment-tracks-for-choreo-components.md
       - Configure Mutual TLS Between Components: develop-components/configure-mutual-tls-between-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
@@ -369,7 +369,9 @@ plugins:
           'administer/configure-a-custom-domain-for-apis.md': 'https://wso2.com/choreo/docs/administer/configure-a-custom-domain-for-your-organization/'
           'administer/customize-developer-portal-domain.md': 'https://wso2.com/choreo/docs/administer/configure-a-custom-domain-for-your-organization/'
           'authentication-and-authorization/access-control/control-access-in-the-choreo-console.md': 'https://wso2.com/choreo/docs/administer/control-access-in-the-choreo-console/'
-          
+          'develop-components/sharing-and-reusing/share-and-reuse-services.md': 'https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-service/'
+          'develop-components/sharing-and-reusing/share-and-reuse-web-applications.md': 'https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-web-application/'
+
 extra_css:
   # - assets/lib/highlightjs/default.min.css
   # - assets/css/theme.css
