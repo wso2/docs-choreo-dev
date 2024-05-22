@@ -61,7 +61,7 @@ Follow the steps given below to create a project:
 
 Let's create a service component by following these steps:
 
-1. On the project home page, click **Service** under **Connect Your Code**.
+1. On the project home page, click **Service** under **Create a Single Component**.
 2. Enter a unique name and a description for the service. For this guide, let's enter the following values:
 
     |Field          |     Value              |
