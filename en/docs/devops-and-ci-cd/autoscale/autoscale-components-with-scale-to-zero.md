@@ -53,7 +53,11 @@ When you turn on the scale-to-zero for your application, the minimum replicas fo
 
 - The scale-to-zero feature currently exclusively supports web applications and HTTP services. TCP and HTTPS services are not supported to be scaled to zero.
 - To scale to zero, your HTTP service must run on one of the specified ports: 5000, 6000, 7000, 8000, 9000, 7070 to 7079, 8080 to 8089, and 9090 to 9099 or 8290. If you have an endpoint in your component running in any other port, your component will not automatically scale-to-zero when deploying or promoting. Also, if you try to switch to the “scale-to-zero” option in the “Devops” → “Scaling” view, it will fail.
-- Currently, scheduled tasks and manually triggered components cannot connect to project-scoped endpoints of a service. To work around this limitation, you can use either an organization-level endpoint or a public endpoint when connecting from a scheduled task or manually triggered component.
+- Scheduled tasks and manually triggered components cannot connect to a service on a project scope if scale-to-zero is enabled. Attempting to do so results in the following error:
+
+    `Host not found, not forwarding request`
+
+    To allow a task-type component to invoke a project-level service, set it to HPA mode if you are on a paid plan, or to no scaling if you are on the Developer plan.
 
 ## Architecture 
 
