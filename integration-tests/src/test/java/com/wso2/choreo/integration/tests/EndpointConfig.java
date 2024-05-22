@@ -38,7 +38,7 @@ public class EndpointConfig {
         com.wso2.choreo.integration.config.Configuration.loadSecurityConfigs();
         TestContext.setTestOrg();
         TestContext.setTestUserTokenHandler();
-        // TestContext.setResourceAuthzTestUserTokenHandler();
+        TestContext.setResourceAuthzTestUserTokenHandler();
         SecurityTestContext.setTestUserTokenHandlerForSecurityTests();
     }
 
