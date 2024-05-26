@@ -1,27 +1,29 @@
 #!/bin/bash
 
 show_usage_and_exit() {
-   echo "Usage: $0 [-K REQUIRED_OPTION] [-S REQUIRED_OPTION] [-U REQUIRED_OPTION] [-P REQUIRED_OPTION]" >&2
+   echo "Usage: $0 [-S REQUIRED_OPTION] [-K REQUIRED_OPTION] [-H REQUIRED_OPTION] [-U REQUIRED_OPTION] [-P REQUIRED_OPTION]" >&2
    echo "This script iterate through and execute database init schemas"
    echo "Mandatory arguments:"
+   echo "     -S    Path to the directory/file contains schema(s)"
    echo "     -K    Name of the Azure Key Vault where database user passwords exist"
-   echo "     -S    Host name of the database server"
+   echo "     -H    Host name of the database server"
    echo "     -U    Username of the DDL user / admin user"
-   echo "     -P    Password of the DDL user / addmin user"
+   echo "     -P    Password of the DDL user / admin user"
    exit 1
 }
 
+SCRIPTS_PATH=""
 KEY_VAULT_NAME=""
 DATABASE_SERVER_NAME=""
 DATABASE_SERVER_DDL_USER_NAME=""
 DATABASE_SERVER_DDL_USER_PASSWORD=""
 
-while getopts ":K:S:U:P:h" FLAG; do
+while getopts ":K:H:U:P:h" FLAG; do
     case $FLAG in
         K)
             KEY_VAULT_NAME=$OPTARG
             ;;
-        S)
+        H)
             DATABASE_SERVER_NAME=$OPTARG
             ;;
         U)
@@ -68,7 +70,7 @@ get_database_user_password() {
   fi
 
   # Return the secret value
-  eval $__resultvar="'$secret_value'"
+  eval "$__resultvar"="'$secret_value'"
   return 0
 
 }
@@ -98,8 +100,16 @@ execute_database_schema() {
 
 }
 
+mkdir "intermediate_dir"
+
+if [ -d "$SCRIPTS_PATH" ]; then
+  cp -r "$SCRIPTS_PATH"/* "intermediate_dir/"
+else
+  cp $SCRIPTS_PATH "intermediate_dir/"
+fi
+
 # Directory to iterate over
-DIRECTORY="mssql"
+DIRECTORY="intermediate_dir"
 
 total_file_count=0
 valid_file_count=0
@@ -131,21 +141,18 @@ for FILE_PATH in "$DIRECTORY"/*; do
             SECRET_NAME="${MODIFIED_STRING}-mssql-password"
 
             if get_database_user_password "$KEY_VAULT_NAME" "$SECRET_NAME" DATABASE_USER_PASSWORD; then
-                MODIFILED_SCHEMA_FILE="mssql/modified_$FILE_NAME"
 
                 # Replace the placeholder for db user password with the actual password
-                sed "s/\${$SECRET_NAME}/${DATABASE_USER_PASSWORD}/g" "$FILE_PATH" > "$MODIFILED_SCHEMA_FILE"
+                sed -i "s/\${$SECRET_NAME}/${DATABASE_USER_PASSWORD}/g" "$FILE_PATH"
 
-                execute_database_schema $DATABASE_SERVER_NAME $DATABASE_SERVER_DDL_USER_NAME $DATABASE_SERVER_DDL_USER_PASSWORD $DATABASE_NAME $MODIFILED_SCHEMA_FILE
-
-                if [ $? -ne 0 ]; then
-                    ((failed_execution_count++))
-                    echo "Error: Failed to execute the database schema file."
-                else
+                if execute_database_schema "$DATABASE_SERVER_NAME" "$DATABASE_SERVER_DDL_USER_NAME" "$DATABASE_SERVER_DDL_USER_PASSWORD" "$DATABASE_NAME" "$FILE_PATH"; then
                     ((successful_execution_count++))
                     echo "Executed the database schema successfully."
+                else
+                    ((failed_execution_count++))
+                    echo "Error: Failed to execute the database schema file."
                 fi
-                rm $MODIFILED_SCHEMA_FILE
+
             else
                 ((failed_execution_count++))
                 echo "Error: Failed to retrieve the database user password from the Key Vault."
@@ -156,6 +163,8 @@ for FILE_PATH in "$DIRECTORY"/*; do
         echo
     fi
 done
+
+rm -rf "intermediate_dir"
 
 echo "Total file count: $total_file_count"
 echo "Valid file count: $valid_file_count"
