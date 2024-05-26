@@ -65,7 +65,7 @@ get_database_user_password() {
   secret_value=$(az keyvault secret show --vault-name "$key_vault_name" --name "$secret_name" --query "value" -o tsv 2>/dev/null)
 
   # Check if the command was successful
-  if [ $? -ne 0 ] || [ -z "$secret_value" ]; then
+  if [ -z "$secret_value" ]; then
     return 1
   fi
 
@@ -89,10 +89,8 @@ execute_database_schema() {
     return 1
   fi
 
-  sqlcmd -S $db_server_name -U $db_server_ddl_user_name -P $db_server_ddl_user_password -d $db_name -i $db_schema_file 2>/dev/null
-
   # Check if the command was successful
-  if [ $? -ne 0 ]; then
+  if sqlcmd -S "$db_server_name" -U "$db_server_ddl_user_name" -P "$db_server_ddl_user_password" -d "$db_name" -i "$db_schema_file"; then
     return 1
   fi
 
@@ -105,7 +103,7 @@ mkdir "intermediate_dir"
 if [ -d "$SCRIPTS_PATH" ]; then
   cp -r "$SCRIPTS_PATH"/* "intermediate_dir/"
 else
-  cp $SCRIPTS_PATH "intermediate_dir/"
+  cp "$SCRIPTS_PATH" "intermediate_dir/"
 fi
 
 # Directory to iterate over
