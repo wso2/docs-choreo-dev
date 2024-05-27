@@ -83,7 +83,7 @@ componentManagement:
   CM_PROJECT_NAME: testProject
   CM_PROJECT_ID: 1adfea12-e574-4631-9b39-5663e2102856
   CM_COMPONENT_NAME: testComponent
-  CM_COMPONENT_ID: af74c89f-e422-40e3-9e24-0e3721d7ef2f
+  CM_COMPONENT_ID: fdd23671-cda1-4eaa-ba6a-8adecf73a886
   CM_BALLERINA_VERSION: swan-lake-alpha5
   CM_SRC_GIT_REPO_URL: https://github.com/choreo-test-apps /byor-service-app1 /tree/main
   CM_REPOSITORY_SUB_PATH: Ballerina/Test1
@@ -92,14 +92,14 @@ componentManagement:
   CM_DOCKER_FILE_PATH: Dockerfile
   CM_DOCKER_CONTEXT: ""
   CM_COMPONENT_HANDLER: igewoj
-  CM_VERSION_ID: A517A7C3-5E48-4F5B-B67A-C2B96AB88DEA
+  CM_VERSION_ID: cd139972-137a-4561-9886-800982bea7df
   CM_ENV_ID: 031975c8-5bff-4013-b03a-1fbbd70e9a54
   CM_BRANCH: main
   CM_SHA: ""
   CM_SHA_DATE: ""
   CM_RELEASE_ID: 60aa2c3f-7618-4004-9d81-78d3f4a0b14d
   CM_REPO_NAME: byor-service-app1
-  CM_COMMIT_HASH: dbce0a35ba2de8be07c2e86bbdbf110de9c8b8b8
+  CM_COMMIT_HASH: d9824351503fe429237a1b181618ae2cab673846
   CM_API_ID: ef389e67-8fd4-4ff1-aed4-b3c45b2b6232
   CM_GIT_ORG_HANDLE: choreo-test-apps
   CM_TEST_USER_ID: acc9b7f4-884d-4efc-8754-b00fdde1f8ba
@@ -115,7 +115,7 @@ componentManagement:
   CM_DISPLAY_NAME: "Hello"
   CM_API_CONTEXT: "hello"
   CM_VISIBILITY: "Project"
-  CM_BUILD_ID: 86d942b31-dbd8-4a85-bb34-9ecafe3eb9bf
+  CM_BUILD_ID: 9254813660
 orgManagemnt:
   ORG_MGT_APPROVAL_REQ_ID: 1
   ORG_MGT_IDP_ID: 8616ebca-3376-4cfa-bf76-91abc00982a8
