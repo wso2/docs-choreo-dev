@@ -148,6 +148,7 @@ nav:
       - Set Up Health Checks: devops-and-ci-cd/set-up-health-checks.md
       - Autoscale:
         - Autoscale Component Replicas: devops-and-ci-cd/autoscale/autoscale-component-replicas.md
+        - Autoscale Components with Scale-to-Zero: devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero.md
       - Configure Storage: devops-and-ci-cd/configure-storage.md
       - Manage Environments: devops-and-ci-cd/manage-environments.md
   - Testing: 
