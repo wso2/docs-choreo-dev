@@ -122,7 +122,7 @@ spec:
                 secretKeyRef:
                   name: secret-asb
                   key: ASB_CONNECTION_STRING
-          resources:
+          resources: # check on the HPA configuration when configuring the following values
             requests:
               memory: 400Mi
               cpu: 400m
