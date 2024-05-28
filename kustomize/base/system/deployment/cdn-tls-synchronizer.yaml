@@ -16,6 +16,7 @@ spec:
       labels:
         app: cdn-tlscert-synchronizer
     spec:
+      serviceAccountName: cdn-tls-synchronizer
       automountServiceAccountToken: false
       securityContext:
         seccompProfile:
@@ -62,6 +63,9 @@ spec:
               mountPath: /mnt/sp.password
               readOnly: true
               subPath: SERVICE_PROVIDER_PASSWORD
+            - name: service-account-token-volume
+              mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+              readOnly: true
             - name: mount
               mountPath: /mnt
             - name: tmp
@@ -77,6 +81,9 @@ spec:
               secretProviderClass: secret-cdn-tls-cert-synchronizer
             nodePublishSecretRef:
               name: csi-secret-store-azure
+        - name: service-account-token-volume
+          secret:
+            secretName: cdn-tls-synchronizer-token
         # Volume mounts for system functionalities
         - name: mount
           emptyDir: {}
