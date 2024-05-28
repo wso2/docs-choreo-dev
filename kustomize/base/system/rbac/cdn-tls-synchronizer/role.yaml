@@ -28,3 +28,28 @@ rules:
     verbs:
       - get
       - list
+  - apiGroups:
+      - ""
+    resources:
+      - roles
+    resourceNames:
+      - cdn-tls-synchronizer
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - create
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    resourceNames:
+      - cdn-tls-synchronizer-config
+    verbs:
+      - get
+      - list
+      - patch
