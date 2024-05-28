@@ -1,14 +1,14 @@
-# Secure Communication Between the Choreo Gateway and Your Backend
+# Secure Communication Between the Choreo Gateway and Your Backend with Mutual TLS
 
-To establish secure communication between the Choreo Gateway and your backend, you can configure mutual SSL.
+To establish secure communication between the Choreo Gateway and your backend, you can configure mutual TLS.
 
-Mutual SSL authentication involves both the client and server validating each other’s certificates before establishing a connection. The following diagram depicts this scenario:
+Mutual TLS authentication involves both the client and server validating each other’s certificates before establishing a connection. The following diagram depicts this scenario:
 
-![Mutual SSL authentication](../assets/img/authentication-and-authorization/mutual-ssl-authentication.png)
+![Mutual TLS authentication](../assets/img/authentication-and-authorization/mutual-ssl-authentication.png)
 
-## Configure mutual SSL to establish secure connectivity
+## Configure mutual TLS to establish secure connectivity
 
-To establish secure connectivity between the Choreo Gateway and your backend using mutual SSL, you must add the certificate of the backend (server certificate) to Choreo and add the certificate of Choreo (client certificate) as a trusted certificate in the backend.
+To establish secure connectivity between the Choreo Gateway and your backend using mutual TLS, you must add the certificate of the backend (server certificate) to Choreo and add the certificate of Choreo (client certificate) as a trusted certificate in the backend.
 
 ### Step 1: Configure the backend certificate 
 
@@ -25,14 +25,14 @@ To configure the backend certificate, follow the steps given below:
 4. On the **Endpoints** page, click **Configure** corresponding to the endpoint.
 5. Click **Upload Endpoint Certificate**, and select the certificate file that you extracted in the prerequisites section to add it. This adds the certificate to all the environments as the default certificate for the endpoint. You can override this certificate if necessary when you deploy or promote the API.
 
-### Step 2: Configure mTLS with the backend service
+### Step 2: Configure mutual TLS with the backend service
 
-There are two approaches you can take to configure mTLS.
+There are two approaches you can take to configure mutual TLS.
 
  - Generate a key pair with a self-signed certificate from Choreo, download the public certificate, and subsequently add and configure it in the backend.
  - Upload your own public or private certificate pair to Choreo. Subsequently, add and configure the public certificate of this key pair in your backend.
 
-Follow the step-by-step instructions below depending on how you want to establish mTLS with the backend service:
+Follow the step-by-step instructions below depending on how you want to establish mutual TLS with the backend service:
 
 === "Generate a key pair through Choreo"
     When you follow these steps, Choreo generates a key pair with a self-signed certificate. You can attach this key pair to any API proxy created within the same project.
