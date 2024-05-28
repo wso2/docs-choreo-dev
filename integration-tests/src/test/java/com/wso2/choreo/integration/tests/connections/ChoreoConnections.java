@@ -711,7 +711,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 proxyPublisherComponentEnvironments, proxyAPIBuild);
     }
 
-    @Test(dependsOnMethods = {"invokeAPIInDevForProxyBasedConnection_TestChoreoConnections"})
+    @Test(dependsOnMethods = {"PromoteProxyPublisherComponent_TestChoreoConnections"})
     @CitrusTest
     public void VerifyServiceStatusForProxyPromotion_TestChoreoConnections() throws Exception {
         ServiceInfo serviceFound = ConnectionService.FindService(citrusClients, this, accessToken,
