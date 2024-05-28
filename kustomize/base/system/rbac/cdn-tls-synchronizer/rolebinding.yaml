@@ -18,6 +18,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: cdn-tls-synchronizer
+  annotations:
+    checkov.io/skip1: CKV2_K8S_5=false positive; this only has access to only one secret
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
