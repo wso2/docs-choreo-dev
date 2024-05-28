@@ -49,6 +49,11 @@ spec:
             capabilities:
               drop:
                 - ALL
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
           envFrom:
             - configMapRef:
                 name: cm-cdn-tlscert-synchronizer
