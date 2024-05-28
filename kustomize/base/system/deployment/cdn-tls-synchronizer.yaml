@@ -6,6 +6,7 @@ metadata:
   name: cdn-tlscert-synchronizer
   annotations:
     checkov.io/skip1: CKV_K8S_AZURE_WSO2_2=LinkerD is not required since this is a non-choreo service
+    checkov.io/skip2: CKV_K8S_8=Liveness probe is not required since this does not serve traffic
 spec:
   replicas: 1
   selector:
@@ -23,24 +24,12 @@ spec:
       containers:
         - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-cdn-tlscert-synchronizer:latest
           name: choreo-cdn-tlscert-synchronizer
-          livenessProbe:
-            exec:
-              command:
-                - nc
-                - -z
-                - localhost
-                - "8000"
-            initialDelaySeconds: 5
-            periodSeconds: 60
           readinessProbe:
             exec:
               command:
-                - nc
-                - -z
-                - localhost
-                - "8000"
+                - /app/readiness-probe.sh
             initialDelaySeconds: 5
-            periodSeconds: 5
+            periodSeconds: 10
           resources:
             requests:
               memory: 64Mi
