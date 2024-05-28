@@ -174,3 +174,7 @@ areaOwners:
       - mevan@wso2.com
       - viduranga@wso2.com
       - senthalan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.managedAuthentication.ManagedAuthenticationTests
+    assignees:
+      - thumula@wso2.com
+      - senthalan@wso2.com

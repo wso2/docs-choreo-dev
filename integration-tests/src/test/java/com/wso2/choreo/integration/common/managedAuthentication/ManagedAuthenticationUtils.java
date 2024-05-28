@@ -15,14 +15,19 @@ package com.wso2.choreo.integration.common.managedAuthentication;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.testng.Assert;
 
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.wso2.choreo.integration.apis.external.ManagedAuth;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.configurationservice.ConfigServiceUtils;
@@ -34,7 +39,6 @@ import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.managedAuthentication.ManagedAuthenticationConstants.CallbackUrlFormats;
 import com.wso2.choreo.integration.common.managedAuthentication.ManagedAuthenticationConstants.ConfigGroupNames;
 import com.wso2.choreo.integration.common.managedAuthentication.ManagedAuthenticationConstants.ManagedAuthConfigKeys;
-import com.wso2.choreo.integration.common.managedAuthentication.ManagedAuthenticationConstants.DefaultManagedAuthConfigValues;
 import com.wso2.choreo.integration.common.managedAuthentication.ManagedAuthenticationConstants.DefaultKeyGenRequest;
 import com.wso2.choreo.integration.common.managedAuthentication.ManagedAuthenticationConstants.KeyGenRequestKeys;
 import com.wso2.choreo.integration.common.managedAuthentication.ManagedAuthenticationConstants.KeySetConfigKeys;
@@ -203,103 +207,106 @@ public class ManagedAuthenticationUtils {
     }
 
     /**
-     * Set default Managed Authentication Configuration values.
+     * Set Managed Authentication Configuration values.
      *
      * @param runner Citrus test runner
      * @param appServiceClient Citrus http client
      * @param componentA ChoreoComponent instance
      * @param environment Environment instance
+     * @param configs Map of config values to be set
      * @throws TokenRetrievalException if an error occurs while retrieving the token
      * @throws IOException if an error occurs while reading the response
      * @throws URISyntaxException if an error occurs while creating the URI
      */
-    public static void setDefaultManagedAuthConfig(TestNGCitrusSpringSupport runner, HttpClient appServiceClient, 
-            ChoreoComponent componentA, Environment environment) throws TokenRetrievalException, IOException, 
-            URISyntaxException {
+    public static void setManagedAuthConfig(TestNGCitrusSpringSupport runner, HttpClient appServiceClient, 
+            ChoreoComponent componentA, Environment environment, Map<String, String> configs) 
+            throws TokenRetrievalException, IOException, URISyntaxException {
 
-        ConfigurationGroup managedAuthConfigs = getManagedAuthConfig(runner, appServiceClient, componentA);
+        ConfigurationGroup managedAuthConfigGroup = getManagedAuthConfig(runner, appServiceClient, componentA);
 
-        managedAuthConfigs.setConfigurationValue(ManagedAuthConfigKeys.POST_LOGIN_PATH, 
-            DefaultManagedAuthConfigValues.POST_LOGIN_PATH, environment.getTemplateId());
-        managedAuthConfigs.setConfigurationValue(ManagedAuthConfigKeys.POST_LOGOUT_PATH, 
-            DefaultManagedAuthConfigValues.POST_LOGOUT_PATH, environment.getTemplateId());
-        managedAuthConfigs.setConfigurationValue(ManagedAuthConfigKeys.SCOPES, 
-            DefaultManagedAuthConfigValues.SCOPES, environment.getTemplateId());
-        managedAuthConfigs.setConfigurationValue(ManagedAuthConfigKeys.SESSION_EXPIRY_TIME, 
-            DefaultManagedAuthConfigValues.SESSION_EXPIRY_TIME, environment.getTemplateId());
+        configs.forEach((key, value) -> {
+            managedAuthConfigGroup.setConfigurationValue(key, value, environment.getTemplateId());
+        });
 
-        ConfigServiceUtils.updateConfigGroup(runner, appServiceClient, managedAuthConfigs);
+        ConfigServiceUtils.updateConfigGroup(runner, appServiceClient, managedAuthConfigGroup);
     }
 
     /**
-     * Validate Managed Authentication Configuration contaiins the default values.
+     * Validate Managed Authentication Configuration contaiins the expected values.
      *
      * @param runner Citrus test runner
      * @param appServiceClient Citrus http client
      * @param componentA ChoreoComponent instance
      * @param environment Environment instance
+     * @param expectedConfigs Map of expected config values
      * @throws TokenRetrievalException if an error occurs while retrieving the token
      * @throws IOException if an error occurs while reading the response
      * @throws URISyntaxException if an error occurs while creating the URI
      */
-    public static void validateDefaultManagedAuthConfig(TestNGCitrusSpringSupport runner, HttpClient appServiceClient, 
-            ChoreoComponent componentA, Environment environment) throws TokenRetrievalException, IOException, 
-            URISyntaxException {
+    public static void validateManagedAuthConfig(TestNGCitrusSpringSupport runner, HttpClient appServiceClient, 
+            ChoreoComponent componentA, Environment environment, Map<String, String> expectedConfigs) 
+            throws TokenRetrievalException, IOException, URISyntaxException {
 
         ConfigurationGroup managedAuthConfigs = getManagedAuthConfig(runner, appServiceClient, componentA);
 
-        Assert.assertEquals(managedAuthConfigs.getConfigurationValue(ManagedAuthConfigKeys.POST_LOGIN_PATH, 
-            environment.getTemplateId()).get(), DefaultManagedAuthConfigValues.POST_LOGIN_PATH);
-        Assert.assertEquals(managedAuthConfigs.getConfigurationValue(ManagedAuthConfigKeys.POST_LOGOUT_PATH, 
-            environment.getTemplateId()).get(), DefaultManagedAuthConfigValues.POST_LOGOUT_PATH);
-        Assert.assertEquals(managedAuthConfigs.getConfigurationValue(ManagedAuthConfigKeys.SCOPES, 
-            environment.getTemplateId()).get(), DefaultManagedAuthConfigValues.SCOPES);
-        Assert.assertEquals(managedAuthConfigs.getConfigurationValue(ManagedAuthConfigKeys.SESSION_EXPIRY_TIME, 
-            environment.getTemplateId()).get(), DefaultManagedAuthConfigValues.SESSION_EXPIRY_TIME);
+        expectedConfigs.forEach((key, value) -> {
+            Assert.assertEquals(managedAuthConfigs.getConfigurationValue(key, environment.getTemplateId()).get(), value);
+        });
     }
 
     /**
-     * Set Managed Authentication disabled configuration.
+     * Set Managed Authentication status.
      *
      * @param runner Citrus test runner
      * @param appServiceClient Citrus http client
      * @param componentA ChoreoComponent instance
      * @param environment Environment instance
+     * @param status Boolean value to set the status
      * @throws TokenRetrievalException if an error occurs while retrieving the token
      * @throws IOException if an error occurs while reading the response
      * @throws URISyntaxException if an error occurs while creating the URI
      */
-    public static void setManagedAuthDisabledConfig(TestNGCitrusSpringSupport runner, HttpClient appServiceClient, 
-            ChoreoComponent componentA, Environment environment) throws TokenRetrievalException, IOException, 
-            URISyntaxException {
+    public static void setManagedAuthStatus(TestNGCitrusSpringSupport runner, HttpClient appServiceClient, 
+            ChoreoComponent componentA, Environment environment, Boolean managedAuthStatus) 
+            throws TokenRetrievalException, IOException, URISyntaxException {
 
-        ConfigurationGroup managedAuthConfigs = getManagedAuthConfig(runner, appServiceClient, componentA);
-
-        managedAuthConfigs.setConfigurationValue(ManagedAuthConfigKeys.IS_APP_GATEWAY_CONFIGURED, 
-            "false", environment.getTemplateId());
-
-        ConfigServiceUtils.updateConfigGroup(runner, appServiceClient, managedAuthConfigs);
+        setManagedAuthConfig(runner, appServiceClient, componentA, environment, 
+            Map.of(ManagedAuthConfigKeys.IS_APP_GATEWAY_CONFIGURED, managedAuthStatus.toString()));
     }
 
     /**
-     * Validate Managed Authentication is disabled in the configuration.
+     * Validate Managed Authentication status.
      *
      * @param runner Citrus test runner
      * @param appServiceClient Citrus http client
      * @param componentA ChoreoComponent instance
      * @param environment Environment instance
+     * @param expectedStatus Expected status
      * @throws TokenRetrievalException if an error occurs while retrieving the token
      * @throws IOException if an error occurs while reading the response
      * @throws URISyntaxException if an error occurs while creating the URI
      */
-    public static void validateManagedAuthDisabledConfig(TestNGCitrusSpringSupport runner, HttpClient appServiceClient, 
-            ChoreoComponent componentA, Environment environment) throws TokenRetrievalException, IOException, 
-            URISyntaxException {
+    public static void validateManagedAuthStatus(TestNGCitrusSpringSupport runner, HttpClient appServiceClient, 
+            ChoreoComponent componentA, Environment environment, Boolean expectedStatus) throws 
+            TokenRetrievalException, IOException, URISyntaxException {
 
-        ConfigurationGroup managedAuthConfigs = getManagedAuthConfig(runner, appServiceClient, componentA);
+        validateManagedAuthConfig(runner, appServiceClient, componentA, environment, 
+            Map.of(ManagedAuthConfigKeys.IS_APP_GATEWAY_CONFIGURED, expectedStatus.toString()));
+    }
 
-        Assert.assertEquals(managedAuthConfigs.getConfigurationValue(ManagedAuthConfigKeys.IS_APP_GATEWAY_CONFIGURED, 
-            environment.getTemplateId()).get(), "false");
+    /**
+     * Validate Managed Authentication Configuration propagation to the Dataplane.
+     *
+     * @param webAppBaseUrl Base URL of the webapp
+     * @throws ClientProtocolException if an error occurs while executing the HTTP request
+     * @throws IOException if an error occurs while reading the response
+     */
+    public static void validateConfigPropagation(String webAppBaseUrl) throws ClientProtocolException, IOException {
+        String location = ManagedAuth.initiateManagedAuthLoginFlow(webAppBaseUrl);
+        List<NameValuePair> params = URLEncodedUtils.parse(location, Charset.forName("UTF-8"));
+        String redirectUrl = params.stream().filter(param -> param.getName().equals("redirect_uri")).findFirst().get().getValue();
+
+        Assert.assertEquals(webAppBaseUrl + "/auth/login/callback", redirectUrl);
     }
 
     private static ConfigurationGroup getConfigGroupByName(TestNGCitrusSpringSupport runner, 

@@ -16,6 +16,7 @@ package com.wso2.choreo.integration.tests.managedAuthentication;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -29,10 +30,12 @@ import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.managedAuthentication.ManagedAuthenticationConstants;
 import com.wso2.choreo.integration.common.managedAuthentication.ManagedAuthenticationConstants.Project;
 import com.wso2.choreo.integration.common.managedAuthentication.ManagedAuthenticationUtils;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 
 
 public class ManagedAuthenticationTests extends TestNGCitrusSpringSupport {
@@ -42,10 +45,10 @@ public class ManagedAuthenticationTests extends TestNGCitrusSpringSupport {
 
     private HttpClient appServiceClient;
     private ChoreoProject project;
-    private ChoreoComponent defaultComponent;
-    private List<Environment> defaultComponentEnvironments;
-    private Environment defaultComponentDevEnv;
-    private Environment defaultComponentProdEnv;
+    private ChoreoComponent defaultComponent, configPropagationComponent;
+    private List<Environment> defaultComponentEnvironments, configPropagationComponentEnvironments;
+    private Environment defaultComponentDevEnv, defaultComponentProdEnv, configPropagationComponentDevEnv, 
+        configPropagationComponentProdEnv;
     private String accessToken;
 
     @BeforeClass
@@ -79,17 +82,24 @@ public class ManagedAuthenticationTests extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"setupDefaultComponent_ManagedAuthenticationTests"})
     @CitrusTest
+    public void verifyManagedAuthEnabledByDefault_ManagedAuthenticationTests() throws Exception {
+        ManagedAuthenticationUtils.validateManagedAuthStatus(this, appServiceClient, defaultComponent, 
+            defaultComponentDevEnv, true);
+    }
+
+    @Test(dependsOnMethods = {"verifyManagedAuthEnabledByDefault_ManagedAuthenticationTests"})
+    @CitrusTest
     public void deployComponentWithDefaultConfigurations_ManagedAuthenticationTests() throws Exception {
         ManagedAuthenticationUtils.GenerateKeyset(this, appServiceClient, defaultComponent, defaultComponentDevEnv);
-        ManagedAuthenticationUtils.setDefaultManagedAuthConfig(this, appServiceClient, defaultComponent, 
-            defaultComponentDevEnv);
+        ManagedAuthenticationUtils.setManagedAuthConfig(this, appServiceClient, defaultComponent, 
+            defaultComponentDevEnv, ManagedAuthenticationConstants.getDefaultManagedAuthConfig());
         ManagedAuthenticationUtils.buildAndDeployWebAppComponent(this, citrusClients, accessToken, defaultComponent, 
             defaultComponentEnvironments);
 
         ManagedAuthenticationUtils.validateKeySetConfig(this, appServiceClient, defaultComponent, 
             defaultComponentDevEnv);
-        ManagedAuthenticationUtils.validateDefaultManagedAuthConfig(this, appServiceClient, defaultComponent, 
-            defaultComponentDevEnv);
+        ManagedAuthenticationUtils.validateManagedAuthConfig(this, appServiceClient, defaultComponent, 
+            defaultComponentDevEnv, ManagedAuthenticationConstants.getDefaultManagedAuthConfig());
     }
 
     @Test(dependsOnMethods = {"deployComponentWithDefaultConfigurations_ManagedAuthenticationTests"})
@@ -101,20 +111,20 @@ public class ManagedAuthenticationTests extends TestNGCitrusSpringSupport {
 
         ManagedAuthenticationUtils.validateKeySetConfig(this, appServiceClient, defaultComponent, 
             defaultComponentProdEnv);
-        ManagedAuthenticationUtils.validateDefaultManagedAuthConfig(this, appServiceClient, defaultComponent, 
-            defaultComponentProdEnv);
+        ManagedAuthenticationUtils.validateManagedAuthConfig(this, appServiceClient, defaultComponent, 
+            defaultComponentProdEnv, ManagedAuthenticationConstants.getDefaultManagedAuthConfig());
     }
 
     @Test(dependsOnMethods = {"promoteComponentWithDefaultConfigurations_ManagedAuthenticationTests"})
     @CitrusTest
     public void deployComponentWithManagedAuthDisabled_ManagedAuthenticationTests() throws Exception {
-        ManagedAuthenticationUtils.setManagedAuthDisabledConfig(this, appServiceClient, defaultComponent, 
-            defaultComponentDevEnv);
+        ManagedAuthenticationUtils.setManagedAuthStatus(this, appServiceClient, defaultComponent, 
+            defaultComponentDevEnv, false);
         ManagedAuthenticationUtils.deployBuiltWebAppComponent(this, citrusClients, accessToken, defaultComponent, 
             defaultComponentEnvironments);
 
-        ManagedAuthenticationUtils.validateManagedAuthDisabledConfig(this, appServiceClient, defaultComponent, 
-            defaultComponentDevEnv);
+        ManagedAuthenticationUtils.validateManagedAuthStatus(this, appServiceClient, defaultComponent, 
+            defaultComponentDevEnv, false);
     }
 
     @Test(dependsOnMethods = {"deployComponentWithManagedAuthDisabled_ManagedAuthenticationTests"})
@@ -123,7 +133,89 @@ public class ManagedAuthenticationTests extends TestNGCitrusSpringSupport {
         ComponentUtils.promoteComponent(this, citrusClients, accessToken, defaultComponent, 
             defaultComponentEnvironments, ComponentFlavour.WEBAPP);
 
-        ManagedAuthenticationUtils.validateManagedAuthDisabledConfig(this, appServiceClient, defaultComponent, 
-            defaultComponentProdEnv);
+        ManagedAuthenticationUtils.validateManagedAuthStatus(this, appServiceClient, defaultComponent, 
+            defaultComponentProdEnv, false);
+    }
+
+    @Test(dependsOnMethods = {"createProject_ManagedAuthenticationTests"})
+    @CitrusTest
+    public void deployComponentWithCustomConfigurations_ManagedAuthenticationTests() throws Exception {
+        ChoreoComponent component = ManagedAuthenticationUtils.createWebAppComponent(this, citrusClients, accessToken, 
+            project);
+
+        List<Environment> compEnvironments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, 
+            component);
+        Environment componentDevEnv = compEnvironments.stream()
+            .filter(env -> env.getChoreoEnv().equals(Constant.DEV_ENVIRONMENT))
+            .findFirst()
+            .get();
+        
+        ManagedAuthenticationUtils.GenerateKeyset(this, appServiceClient, component, componentDevEnv);
+        ManagedAuthenticationUtils.setManagedAuthConfig(this, appServiceClient, component, 
+            componentDevEnv, ManagedAuthenticationConstants.getCustomManagedAuthConfig());
+        ManagedAuthenticationUtils.buildAndDeployWebAppComponent(this, citrusClients, accessToken, component, 
+            compEnvironments);
+
+        ManagedAuthenticationUtils.validateKeySetConfig(this, appServiceClient, component, 
+            componentDevEnv);
+        ManagedAuthenticationUtils.validateManagedAuthConfig(this, appServiceClient, component, 
+            componentDevEnv, ManagedAuthenticationConstants.getCustomManagedAuthConfig());
+    }
+
+    @Test(dependsOnMethods = {"createProject_ManagedAuthenticationTests"})
+    @CitrusTest
+    public void setupComponentForConfigPropagation_ManagedAuthenticationTests() throws Exception {
+        configPropagationComponent = ManagedAuthenticationUtils.createWebAppComponent(this, citrusClients, accessToken, 
+            project);
+
+        configPropagationComponentEnvironments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, 
+            configPropagationComponent);
+        configPropagationComponentDevEnv = configPropagationComponentEnvironments.stream()
+            .filter(env -> env.getChoreoEnv().equals(Constant.DEV_ENVIRONMENT))
+            .findFirst()
+            .get();
+        configPropagationComponentProdEnv = configPropagationComponentEnvironments.stream()
+            .filter(env -> env.getChoreoEnv().equals(Constant.PROD_ENVIRONMENT))
+            .findFirst()
+            .get();
+
+        ManagedAuthenticationUtils.GenerateKeyset(this, appServiceClient, configPropagationComponent, 
+            configPropagationComponentDevEnv);
+        ManagedAuthenticationUtils.setManagedAuthConfig(this, appServiceClient, configPropagationComponent, 
+            configPropagationComponentDevEnv, ManagedAuthenticationConstants.getCustomManagedAuthConfig());
+
+        ManagedAuthenticationUtils.buildAndDeployWebAppComponent(this, citrusClients, accessToken, 
+            configPropagationComponent, configPropagationComponentEnvironments);
+        
+        ManagedAuthenticationUtils.GenerateKeyset(this, appServiceClient, configPropagationComponent, 
+            configPropagationComponentProdEnv);
+    }
+
+    @Test(dependsOnMethods = {"setupComponentForConfigPropagation_ManagedAuthenticationTests"})
+    @CitrusTest
+    public void validateConfigPropagationWithDefaultUrl_ManagedAuthenticationTests() throws Exception {
+        List<ComponentDeploymentStatusDTO> deploymentStatus = ComponentUtils.promoteComponent(this, citrusClients, accessToken, configPropagationComponent, 
+            configPropagationComponentEnvironments, ComponentFlavour.WEBAPP);
+        String invokeUrl = deploymentStatus.stream()
+            .filter(status -> status.getEnvironmentId().equals(configPropagationComponentProdEnv.getId()))
+            .findFirst()
+            .get()
+            .getInvokeUrl();
+
+        ManagedAuthenticationUtils.validateConfigPropagation(invokeUrl);
+    }
+
+    @Test(enabled = false, dependsOnMethods = {"validateConfigPropagationWithDefaultUrl_ManagedAuthenticationTests"})
+    @CitrusTest
+    public void validateConfigPropagationWithShortUrl_ManagedAuthenticationTests() throws Exception {
+        String shortUrl = RandomStringUtils.randomAlphabetic(15).toLowerCase();
+
+        ComponentUtils.configureWebappShortUrl(this, accessToken, configPropagationComponent, 
+            configPropagationComponentEnvironments, shortUrl);
+
+        String invokeUrl = ComponentUtils.getComponentDeploymentStatus(this, citrusClients, accessToken, 
+            configPropagationComponent, Constant.PROD_ENVIRONMENT).getInvokeUrl();
+
+        ManagedAuthenticationUtils.validateConfigPropagation(invokeUrl);
     }
 }
