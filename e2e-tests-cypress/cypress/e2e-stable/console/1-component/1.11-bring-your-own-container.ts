@@ -63,6 +63,10 @@ describe(`Verify BYOC functionality`, () => {
     byoc.deployToDev(1);
   });
 
+  it("Verify component promotion to Prod", () => {
+    byoc.promoteProd();
+  });
+
   it("Verify test functionality using Swagger UI in Dev", () => {
     byoc
       .testSwaggerConsole(Enums.Environment.DEVELOPMENT, RESOURCE_NAME)
@@ -81,10 +85,6 @@ describe(`Verify BYOC functionality`, () => {
       .then((res) => {
         expect(res.status).equal(OK);
       });
-  });
-
-  it("Verify component promotion to Prod", () => {
-    byoc.promoteProd();
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {

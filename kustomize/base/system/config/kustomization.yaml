@@ -511,6 +511,7 @@ configMapGenerator:
       - UM_DATABASE_USERNAME="choreo_app_dev_user_mgt_db_user"
       - UM_DATABASE_PASSWORD_FILE=UM_DB_PASSWORD
       - UM_AUTHORIZATION_HEADER_NAME="x-jwt-assertion"
+      - UM_USER_STORE_MANAGEMENT_PERMISSIONS="urn:choreocontrolplane:organizationapi:org_manage"
   - name: cm-files-appdev-user-mgt
     behavior: create
     files:

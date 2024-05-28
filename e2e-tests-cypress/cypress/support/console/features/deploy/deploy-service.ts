@@ -305,6 +305,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       }
 
       cy.get(envCardSelector).within(() => {
+        cy.get(TestIds.progressBar, VERY_SHORT_TIME).should("not.exist");
         cy.get(TestIds.availableEndpoints).within(() => {
           cy.get(TestIds.viewArtifact).click();
         });

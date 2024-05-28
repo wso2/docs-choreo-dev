@@ -26,6 +26,7 @@ import com.google.gson.JsonArray;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.component.Component;
 import com.wso2.choreo.integration.apis.configmgt.ConfigManagement;
+import com.wso2.choreo.integration.models.graphql.CreateNewDeploymentTrackResponseDTO;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.apis.keysetmanagement.KeysetManagementService;
 import com.wso2.choreo.integration.apis.observability.AuditLogsService;
@@ -671,7 +672,7 @@ public class ComponentUtils {
 
         HttpClient apimClient = citrusClients.get(Endpoints.STS_ENDPOINT);
         String query = "context:/" + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID) + "/"
-                + project.getHandler() + "/" + component.getHandler() + "/v1.0";
+                + project.getHandler() + "/" + component.getName() + "/v1.0";
         ApiManager.searchAPIByQuery(runner, apimClient, accessToken, query);
 
         List<ComponentDeploymentStatusDTO> promotionStatus = null;
@@ -1440,5 +1441,32 @@ public class ComponentUtils {
 
         Component.addExternalIdpKeys(runner, client, projectId, componentId, environmentId, keyMappingRequest,
                 expectedStatus);
+    }
+
+    public static ChoreoComponent createComponentVersion(
+            TestNGCitrusSpringSupport runner, Map<Endpoints,HttpClient> citrusClients, String accessToken,
+            ChoreoComponent choreoComponent, String version, String branchName) throws Exception {
+        HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder()
+                .orgUuid(choreoComponent.getOrgId())
+                .componentId(choreoComponent.getId())
+                .apiVersion(version)
+                .branch(branchName)
+                .description(choreoComponent.getDescription())
+                .build();
+        CreateNewDeploymentTrackResponseDTO newDeploymentTrack = GraphQL.createNewDeploymentTrack(runner, appServiceClient, accessToken, graphqlDTO);
+        List<ApiVersion> apiVersions = new ArrayList<>();
+        for (ApiVersion existingVersion: choreoComponent.getApiVersions()) {
+            existingVersion.setLatest(false);
+            apiVersions.add(existingVersion);
+        }
+        ApiVersion latestApiVersion = new ApiVersion();
+        latestApiVersion.setLatest(true);
+        latestApiVersion.setId(newDeploymentTrack.getId());
+        latestApiVersion.setAppEnvVersions(apiVersions.get(0).getAppEnvVersions());
+        apiVersions.add(latestApiVersion);
+
+        choreoComponent.setApiVersions(apiVersions);
+        return choreoComponent;
     }
 }

@@ -61,6 +61,10 @@ describe("Verify MI service component functionality", () => {
     service.deployPublicLevelAccessibility();
   });
 
+  it("Verifying component promotion to Prod", () => {
+    service.promotePublicLevelAccessibility(createDefaultSteps(1));
+  });
+
   it("Testing the component in Dev", () => {
     service
       .testConsole({
@@ -76,10 +80,6 @@ describe("Verify MI service component functionality", () => {
       });
   });
 
-  it("Verifying component promotion to Prod", () => {
-    service.promotePublicLevelAccessibility(createDefaultSteps(1));
-  });
-
   it("Testing the component in Prod", () => {
     service
       .testConsole({
@@ -93,10 +93,5 @@ describe("Verify MI service component functionality", () => {
         expect(res.response).to.include(MATCHING_STRING);
         expect(res.statusCode).to.be.eq("200");
       });
-  });
-
-  it("Stop component", () => {
-    service.stopDeployment();
-    service.stopPromotion();
   });
 });

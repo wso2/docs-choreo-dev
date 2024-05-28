@@ -38,20 +38,14 @@ public class SecurityTestContext {
 
     public static synchronized void setTestUserTokenHandlerForSecurityTests() {
         if (testUserTokenHandlerForSecurityTests == null) {
-            String token = System.getProperty("Token");
-
-            if (!StringUtils.isEmpty(token)) {
-                testUserTokenHandlerForSecurityTests = new TokenHandler(token);
-            } else {
-                testUserTokenHandlerForSecurityTests = new TokenHandler.Builder(
-                        Configuration.getSecurityConfig(SecurityConfigDefinition.SECURITY_TEST_CHOREO_ORG_HANDLE),
-                        Configuration.getSecurityConfig(SecurityConfigDefinition.LOW_PRIVILEGED_USER_EMAIL),
-                        Configuration.getSecurityConfig(SecurityConfigDefinition.LOW_PRIVILEGED_USER_PASSWORD))
-                        .asgardeoClientId(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_ID))
-                        .asgardeoClientSecret(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_SECRET))
-                        .cpAppClientId(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_ID))
-                        .cpAppClientSecret(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_SECRET)).build();
-            }
+            testUserTokenHandlerForSecurityTests = new TokenHandler.Builder(
+                    Configuration.getSecurityConfig(SecurityConfigDefinition.SECURITY_TEST_CHOREO_ORG_HANDLE),
+                    Configuration.getSecurityConfig(SecurityConfigDefinition.LOW_PRIVILEGED_USER_EMAIL),
+                    Configuration.getSecurityConfig(SecurityConfigDefinition.LOW_PRIVILEGED_USER_PASSWORD))
+                    .asgardeoClientId(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_ID))
+                    .asgardeoClientSecret(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_SECRET))
+                    .cpAppClientId(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_ID))
+                    .cpAppClientSecret(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_SECRET)).build();
         }
     }
 

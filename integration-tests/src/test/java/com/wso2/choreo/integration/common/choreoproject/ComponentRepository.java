@@ -41,6 +41,9 @@ public class ComponentRepository {
     public String getBranchApp() {
         return branchApp;
     }
+    public void setBranchApp(String branchApp) {
+        this.branchApp = branchApp;
+    }
 
     public void setBranch(String branch) {
         this.branch = branch;

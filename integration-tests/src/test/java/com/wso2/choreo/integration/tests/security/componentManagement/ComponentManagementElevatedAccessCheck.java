@@ -869,7 +869,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
     @CitrusTest
     public void getActionRunLogs_ComponentManagementElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForGetActionRunLogs = "/component-mgt/1.0.0/orgs/" + gitOrgHandle + "/projects/" +
+        String requestUrlForGetActionRunLogs = "/component-mgt/1.0.0/orgs/" + orgHandler + "/projects/" +
                 projectId + "/components/" + componentId + "/runs/" + runID + "/logs";
         SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient, requestUrlForGetActionRunLogs,
                 accessToken);
@@ -879,7 +879,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
     @CitrusTest
     public void getComponentInitStatus_ComponentManagementElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForGetComponentInitStatus = "/component-mgt/1.0.0/orgs/" + gitOrgHandle + "/projects/" +
+        String requestUrlForGetComponentInitStatus = "/component-mgt/1.0.0/orgs/" + orgHandler + "/projects/" +
                 projectId + "/components/" + componentId + "/init/status";
         SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient,
                 requestUrlForGetComponentInitStatus, accessToken);
