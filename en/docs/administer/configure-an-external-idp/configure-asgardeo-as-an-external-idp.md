@@ -26,7 +26,7 @@ Follow the steps below to add Asgardeo as an external IdP in Choreo:
 6. Click **Asgardeo**. 
 7. In the Asgardeo dialog that opens, specify a name and a description for the IdP. 
 8. In the **Well-Known URL** field, paste the well-known URL that you copied from your Asgardeo instance by following the prerequisites. 
-9. Leave the **Apply to all environments** checkbox selected. This allows you to use the tokens generated via this IdP to invoke APIs across environments.
+9. Leave the **Apply to all environments** checkbox selected. This allows you to use the tokens generated via this IdP to invoke APIs across all environments.
 
     !!! note
          If you want to restrict the use of tokens generated via this IdP to invoke APIs in specific environments, clear the **Apply to all environments** checkbox and select the necessary environments from the **Environments** list.
