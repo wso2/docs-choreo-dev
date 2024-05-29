@@ -167,7 +167,7 @@ for FILE_PATH in "$DIRECTORY"/*; do
             if get_database_user_password "$KEY_VAULT_NAME" "$SECRET_NAME" DATABASE_USER_PASSWORD; then
 
                 # Escape literal & if it exists in the password since it a special char in sed
-                DATABASE_USER_PASSWORD_PROCESSED=$(echo "$DATABASE_USER_PASSWORD" | sed -e "s/&/\\\\&/g")
+                DATABASE_USER_PASSWORD_PROCESSED=$(echo "${DATABASE_USER_PASSWORD//&/\\\\&/g}")
                 # Replace the placeholder for db user password with the actual password
                 sed -i "s/\${$SECRET_NAME}/${DATABASE_USER_PASSWORD_PROCESSED}/g" "$FILE_PATH"
 
