@@ -1,18 +1,18 @@
 # Configure Asgardeo as an External Identity Provider (IdP)
 
-Asgardeo is an identity-as-a-service (IDaaS) that is designed to create seamless login experiences for your apps. Asgardeo seamlessly integrates with Choreo, offering powerful API access control. This control hinges on the use of API scopes. That is, it enables the restriction of access to a designated group of users. Choreo allows you to bring your user stores in Asgardeo as an external IdP and provide API access control. This document guides you step-by-step to configure Asgardeo AD as your external IdP.
+Asgardeo is an identity-as-a-service (IDaaS) solution designed to create seamless login experiences for your applications. Asgardeo seamlessly integrates with Choreo, providing powerful API access control through the use of API scopes. This enables restricting API access to designated user groups. By configuring Asgardeo as an external IdP in Choreo, you can leverage your Asgardeo user stores to manage API access control effectively. This guide walks you through the steps to set up Asgardeo as your external IdP.
 
 ## Prerequisites
 
-Before you try out this guide, be sure you have the following:
+Before you proceed, be sure to complete the following:
 
-- Create an Asgardeo application by following the Asgardeo guide: [Register a Standard-based Application](https://wso2.com/asgardeo/docs/guides/applications/register-standard-based-app/#register-an-application)
+- Create an Asgardeo application. You can follow the Asgardeo guide to [register a standard-based application](https://wso2.com/asgardeo/docs/guides/applications/register-standard-based-app/#register-an-application).
 
-- Find the well-known URL
-  Click on the **info** tab of your application to view the endpoints and copy the **Discovery** endpoint.
+- Find the well-known URL:
+  Go to the **info** tab of the Asgardeo application to view the endpoints and copy the **Discovery** endpoint.
 
 - Find the Client ID:
-  Click on the **info** tab of your application to view the endpoints and copy the **Client ID**.
+  Go to the **info** tab of the Asgardeo application to view the endpoints and copy the **Client ID**.
 
 ## Add Asgardeo as an external IdP in Choreo
 
@@ -20,10 +20,18 @@ Follow the steps below to add Asgardeo as an external IdP in Choreo:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev).
 2. In the left navigation menu, click **Settings**.
-3. In the header, click the **Organization** list. This will open the organization level settings page. 
-4. On the **Application Security** tab, click **Identity Providers** and then click **+ Identity Provider**.
-5. Select  **Asgardeo** as the Identity Provider. 
-6. Provide a name and a description for the IdP. 
-7. Enter the `Well-Known URL` of your Asgardeo instance. You copied this in the prerequisites. 
-8. Leave the **Apply to all environments** checkbox selected. However, if you want to restrict the use of the external IdP to a certain environment, you can select them from the **Environments** list.
-9. Click **Next**.
+3. In the header, click the **Organization** list. This opens the organization-level settings page. 
+4. Click the **Application Security** tab and then click the **Identity Providers** tab.
+5. To add an identity provider, click **+ Identity Provider**.
+6. Click **Asgardeo**. 
+7. In the Asgardeo dialog that opens, specify a name and a description for the IdP. 
+8. In the **Well-Known URL** field, paste the well-known URL that you copied from your Asgardeo instance by following the prerequisites. 
+9. Leave the **Apply to all environments** checkbox selected. This allows you to use the tokens generated via this IdP in all environments.
+
+    !!! note
+         If you want to restrict the use of tokens generated via this IdP to specific environments, clear the **Apply to all environments** checkbox and select the necessary environments from the **Environments** list.
+
+10. Click **Next**. This displays the server endpoints that are useful to implement and configure authentication for your application.
+11. Click **Add**. 
+
+Now you have configured Asgardeo as an external IdP in Choreo.
