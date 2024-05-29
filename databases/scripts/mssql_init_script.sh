@@ -18,8 +18,11 @@ DATABASE_SERVER_NAME=""
 DATABASE_SERVER_DDL_USER_NAME=""
 DATABASE_SERVER_DDL_USER_PASSWORD=""
 
-while getopts ":K:H:U:P:h" FLAG; do
+while getopts ":S:K:H:U:P:h" FLAG; do
     case $FLAG in
+        S)
+            SCRIPTS_PATH=$OPTARG
+            ;;
         K)
             KEY_VAULT_NAME=$OPTARG
             ;;
@@ -91,11 +94,32 @@ execute_database_schema() {
 
   # Check if the command was successful
   if sqlcmd -S "$db_server_name" -U "$db_server_ddl_user_name" -P "$db_server_ddl_user_password" -d "$db_name" -i "$db_schema_file"; then
+    return 0
+  else
     return 1
   fi
 
-  return 0
+}
 
+# Verify the db login with given user credentials
+verify_login() {
+  local db_server_name=$1
+  local db_user_name=$2
+  local db_user_password=$3
+  local db_name=$4
+
+  # Check if all arguments are provided
+  if [ -z "$db_server_name" ] || [ -z "$db_user_name" ] || [ -z "$db_user_password" ] || [ -z "$db_name" ] ; then
+    echo "Usage: verify_login <db_server_name> <db_user_name> <db_user_password> <db_name>"
+    return 1
+  fi
+
+  # Check if the command was successful
+  if sqlcmd -S "$db_server_name" -U "$db_user_name" -P "$db_user_password" -d "$db_name" -Q ""; then
+    return 0
+  else
+    return 1
+  fi
 }
 
 mkdir "intermediate_dir"
@@ -138,14 +162,26 @@ for FILE_PATH in "$DIRECTORY"/*; do
             # Append "-mssql-password" to the modified string
             SECRET_NAME="${MODIFIED_STRING}-mssql-password"
 
+            DATABASE_USER_NAME="${DATABASE_NAME}_user"
+
             if get_database_user_password "$KEY_VAULT_NAME" "$SECRET_NAME" DATABASE_USER_PASSWORD; then
 
+                # Escape literal & if it exists in the password since it a special char in sed
+                DATABASE_USER_PASSWORD_PROCESSED="${DATABASE_USER_PASSWORD//&/\\\\&/g}"
                 # Replace the placeholder for db user password with the actual password
-                sed -i "s/\${$SECRET_NAME}/${DATABASE_USER_PASSWORD}/g" "$FILE_PATH"
+                sed -i "s/\${$SECRET_NAME}/${DATABASE_USER_PASSWORD_PROCESSED}/g" "$FILE_PATH"
 
                 if execute_database_schema "$DATABASE_SERVER_NAME" "$DATABASE_SERVER_DDL_USER_NAME" "$DATABASE_SERVER_DDL_USER_PASSWORD" "$DATABASE_NAME" "$FILE_PATH"; then
                     ((successful_execution_count++))
                     echo "Executed the database schema successfully."
+
+                    # Verify the db login with newly created user
+                    if verify_login "$DATABASE_SERVER_NAME" "$DATABASE_USER_NAME" "$DATABASE_USER_PASSWORD" "$DATABASE_NAME"; then
+                       echo "DB login verified with newly created user."
+                    else
+                       echo "DB login verification failed for newly created user. You may need to check and recreate the user."
+                    fi
+
                 else
                     ((failed_execution_count++))
                     echo "Error: Failed to execute the database schema file."
