@@ -1,0 +1,19 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+ name: secret-ai-eventhub-metrics
+spec:
+ secretObjects:
+  - secretName: secret-ai-eventhub-metrics
+    type: Opaque
+    data:
+     - objectName: EVENT_HUBS_NAMESPACE_CONNECTION_STRING
+       key: EVENT_HUBS_NAMESPACE_CONNECTION_STRING
+ parameters:
+  objects: |
+   array:
+     - |
+       objectName: ai-EVENTHUB-METRICS-NAMESPACE-CONNECTION-STRING
+       objectType: secret
+       objectAlias: EVENT_HUBS_NAMESPACE_CONNECTION_STRING
+       objectVersion: "{{.EVENT_HUBS_NAMESPACE_CONNECTION_STRING}}"

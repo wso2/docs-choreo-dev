@@ -1,0 +1,61 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-cio-event-collector-service
+spec:
+  secretObjects:
+    - secretName: secret-cio-event-collector-service
+      type: Opaque
+      data:
+        - objectName: DEPLOYMENT_EVENTHUB_CONNECTION_STRING
+          key: DEPLOYMENT_EVENTHUB_CONNECTION_STRING
+        - objectName: CIO_DB_JDBC_PASSWORD
+          key: CIO_DB_JDBC_PASSWORD
+        - objectName: LEADTIME_EVENTHUB_CONNECTION_STRING
+          key: LEADTIME_EVENTHUB_CONNECTION_STRING
+        - objectName: INCIDENT_EVENTHUB_CONNECTION_STRING
+          key: INCIDENT_EVENTHUB_CONNECTION_STRING
+        - objectName: PR_EVENTHUB_CONNECTION_STRING
+          key: PR_EVENTHUB_CONNECTION_STRING
+        - objectName: COMMIT_EVENTHUB_CONNECTION_STRING
+          key: COMMIT_EVENTHUB_CONNECTION_STRING
+        - objectName: ORG_STAT_EVENTHUB_CONNECTION_STRING
+          key: ORG_STAT_EVENTHUB_CONNECTION_STRING
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: cio-metrics-EVENTHUB-CONNECTION-STRING
+          objectType: secret
+          objectAlias: DEPLOYMENT_EVENTHUB_CONNECTION_STRING
+          objectVersion: "{{.DEPLOYMENT_EVENTHUB_CONNECTION_STRING}}"
+        - |
+          objectName: choreo-cio-metric-management-db-mssql-password
+          objectType: secret
+          objectAlias: CIO_DB_JDBC_PASSWORD
+          objectVersion: "{{.CIO_DB_JDBC_PASSWORD}}"
+        - |
+          objectName: cio-lead-time-metrics-EVENTHUB-CONNECTION-STRING
+          objectType: secret
+          objectAlias: LEADTIME_EVENTHUB_CONNECTION_STRING
+          objectVersion: "{{.LEADTIME_EVENTHUB_CONNECTION_STRING}}"
+        - |
+          objectName: cio-incident-metrics-EVENTHUB-CONNECTION-STRING
+          objectType: secret
+          objectAlias: INCIDENT_EVENTHUB_CONNECTION_STRING
+          objectVersion: "{{.INCIDENT_EVENTHUB_CONNECTION_STRING}}"
+        - |
+          objectName: cio-pr-metrics-EVENTHUB-CONNECTION-STRING
+          objectType: secret
+          objectAlias: PR_EVENTHUB_CONNECTION_STRING
+          objectVersion: "{{.PR_EVENTHUB_CONNECTION_STRING}}"
+        - |
+          objectName: cio-commit-metrics-EVENTHUB-CONNECTION-STRING
+          objectType: secret
+          objectAlias: COMMIT_EVENTHUB_CONNECTION_STRING
+          objectVersion: "{{.COMMIT_EVENTHUB_CONNECTION_STRING}}"
+        - |
+          objectName: cio-org-stat-metrics-EVENTHUB-CONNECTION-STRING
+          objectType: secret
+          objectAlias: ORG_STAT_EVENTHUB_CONNECTION_STRING
+          objectVersion: "{{.ORG_STAT_EVENTHUB_CONNECTION_STRING}}"

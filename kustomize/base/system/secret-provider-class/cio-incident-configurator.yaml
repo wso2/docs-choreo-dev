@@ -1,0 +1,26 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-cio-incident-configurator
+spec:
+  secretObjects:
+    - secretName: secret-cio-incident-configurator
+      type: Opaque
+      data:
+        - objectName: CIO_DB_JDBC_PASSWORD
+          key: CIO_DB_JDBC_PASSWORD
+        - objectName: CONFIGURATOR_APP_CLIENT_SECRET
+          key: CONFIGURATOR_APP_CLIENT_SECRET
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: choreo-cio-metric-management-db-mssql-password
+          objectType: secret
+          objectAlias: CIO_DB_JDBC_PASSWORD
+          objectVersion: "{{.CIO_DB_JDBC_PASSWORD}}"
+        - |
+          objectName: cio-incident-configurator-consumer-secret
+          objectType: secret
+          objectAlias: CONFIGURATOR_APP_CLIENT_SECRET
+          objectVersion: "{{.CONFIGURATOR_APP_CLIENT_SECRET}}"

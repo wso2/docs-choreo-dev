@@ -1,0 +1,19 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-appdev-authorization
+spec:
+  secretObjects:
+    - secretName: secret-appdev-authorization
+      type: Opaque
+      data:
+        - objectName: APPDEV_AUTHZ_DB_PASSWORD
+          key: APPDEV_AUTHZ_DB_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: choreo-app-dev-authz-svc-db-mssql-password
+          objectType: secret
+          objectAlias: APPDEV_AUTHZ_DB_PASSWORD
+          objectVersion: "{{.APPDEV_AUTHZ_DB_PASSWORD}}"

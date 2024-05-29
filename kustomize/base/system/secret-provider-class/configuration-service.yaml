@@ -1,0 +1,26 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-configuration-service
+spec:
+  secretObjects:
+    - secretName: secret-configuration-service
+      type: Opaque
+      data:
+        - objectName: CONFIGURATION_SERVICE_DB_PASSWORD
+          key: CONFIGURATION_SERVICE_DB_PASSWORD
+        - objectName: CONFIGURATION_MAPPING_SERVICE_DB_PASSWORD
+          key: CONFIGURATION_MAPPING_SERVICE_DB_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: choreo-config-service-db-mssql-password
+          objectType: secret
+          objectAlias: CONFIGURATION_SERVICE_DB_PASSWORD
+          objectVersion: "{{.CONFIGURATION_SERVICE_DB_PASSWORD}}"
+        - |
+          objectName: choreo-configuration-mapping-service-db-mssql-password
+          objectType: secret
+          objectAlias: CONFIGURATION_MAPPING_SERVICE_DB_PASSWORD
+          objectVersion: "{{.CONFIGURATION_MAPPING_SERVICE_DB_PASSWORD}}"
