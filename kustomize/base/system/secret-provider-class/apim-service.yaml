@@ -4,17 +4,17 @@ metadata:
   name: secret-apim-service
 spec:
   secretObjects:
-  - secretName: secret-apim-service
-    type: Opaque
-    data:
-      - objectName: ADMIN_PASSWORD
-        key: ADMIN_PASSWORD
-      - objectName: APIM_REST_API_CONSUMER_SECRET
-        key: APIM_REST_API_CONSUMER_SECRET
-      - objectName: IDP_ADMIN_PASSWORD
-        key: IDP_ADMIN_PASSWORD
+    - secretName: secret-apim-service
+      type: Opaque
+      data:
+        - objectName: ADMIN_PASSWORD
+          key: ADMIN_PASSWORD
+        - objectName: APIM_REST_API_CONSUMER_SECRET
+          key: APIM_REST_API_CONSUMER_SECRET
+        - objectName: IDP_ADMIN_PASSWORD
+          key: IDP_ADMIN_PASSWORD
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: apim-ADMIN-PASSWORD

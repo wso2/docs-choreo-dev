@@ -16,7 +16,7 @@ spec:
         - objectName: APIM_CLIENT_SECRET
           key: APIM_CLIENT_SECRET
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: app-deployer-DOCKER-REGISTRY-PASSWORD

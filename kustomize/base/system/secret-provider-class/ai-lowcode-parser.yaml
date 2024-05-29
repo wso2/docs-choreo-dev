@@ -10,7 +10,7 @@ spec:
         - objectName: CHOREO_TABLESTORAGE_CONNECTIONSTRING
           key: CHOREO_TABLESTORAGE_CONNECTIONSTRING
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: lowcode-parser-CHOREO-TABLESTORAGE-CONNECTIONSTRING

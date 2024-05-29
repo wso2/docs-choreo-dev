@@ -10,7 +10,7 @@ spec:
         - objectName: CHOREO_DB_PASSWORD
           key: CHOREO_DB_PASSWORD
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: choreo-app-db-mssql-password

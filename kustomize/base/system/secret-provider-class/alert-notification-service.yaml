@@ -12,7 +12,7 @@ spec:
         - objectName: ALERT_CHOREO_DB_PASSWORD
           key: ALERT_CHOREO_DB_PASSWORD
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: alert-notification-service-incoming-eventhub-shared-access-key

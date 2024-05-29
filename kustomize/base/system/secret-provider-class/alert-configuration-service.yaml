@@ -10,7 +10,7 @@ spec:
         - objectName: ALERT_CHOREO_DB_PASSWORD
           key: ALERT_CHOREO_DB_PASSWORD
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: choreo-alerts-db-mssql-password

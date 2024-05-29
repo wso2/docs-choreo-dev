@@ -4,16 +4,16 @@ metadata:
  name: secret-ai-eventhub-checkpoint
 spec:
  secretObjects:
-   - secretName: secret-ai-eventhub-checkpoint
-     type: Opaque
-     data:
-       - objectName: AZURE_CHECKPOINT_STORAGE_CONNECTION_STRING
-         key: AZURE_CHECKPOINT_STORAGE_CONNECTION_STRING
+  - secretName: secret-ai-eventhub-checkpoint
+    type: Opaque
+    data:
+      - objectName: AZURE_CHECKPOINT_STORAGE_CONNECTION_STRING
+        key: AZURE_CHECKPOINT_STORAGE_CONNECTION_STRING
  parameters:
-   objects:  |
-     array:
-       - |
-         objectName: ai-EVENTHUB-CHECKPOINT-STORAGE-CONNECTION-STRING
-         objectType: secret
-         objectAlias: AZURE_CHECKPOINT_STORAGE_CONNECTION_STRING
-         objectVersion: "{{.AZURE_CHECKPOINT_STORAGE_CONNECTION_STRING}}"
+  objects:  |
+   array:
+     - |
+       objectName: ai-EVENTHUB-CHECKPOINT-STORAGE-CONNECTION-STRING
+       objectType: secret
+       objectAlias: AZURE_CHECKPOINT_STORAGE_CONNECTION_STRING
+       objectVersion: "{{.AZURE_CHECKPOINT_STORAGE_CONNECTION_STRING}}"

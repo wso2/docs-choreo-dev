@@ -10,7 +10,7 @@ spec:
         - objectName: API_MANAGER_CLIENT_SECRET
           key: API_MANAGER_CLIENT_SECRET
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: app-service-key-manager-registration-apim-client-secret
