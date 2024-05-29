@@ -934,6 +934,7 @@ configMapGenerator:
       - UM_DATABASE_URL="{{.UM_DATABASE_URL}}"
       - UM_ENVIRONMENT_TEMPLATES_ENDPOINT={{.UM_ENVIRONMENT_TEMPLATES_ENDPOINT}}
       - UM_BASE_URL={{.UM_BASE_URL}}
+      - UM_USER_STORE_MANAGEMENT_PERMISSIONS={{.UM_USER_STORE_MANAGEMENT_PERMISSIONS}}
   - name: env-appdev-authorization
     behavior: create
     literals:
