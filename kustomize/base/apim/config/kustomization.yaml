@@ -38,7 +38,7 @@ configMapGenerator:
     files:
       - global-adapter-v2/ga_config.toml
       - global-adapter-v2/log_config.toml
-  - name: choreo-apim-am-conf-v2
+  - name: choreo-apim-am-conf
     behavior: create
     files:
       - am/deployment.toml
