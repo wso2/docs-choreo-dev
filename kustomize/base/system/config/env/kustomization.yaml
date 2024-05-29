@@ -364,7 +364,9 @@ configMapGenerator:
       - MARKETPLACE_INTELLIGENT_ROUTING_ENABLED={{.MARKETPLACE_INTELLIGENT_ROUTING_ENABLED | default false}}
       - RESILIENCY_CONFIG_ENABLED={{.RESILIENCY_CONFIG_ENABLED | default false}}
       - COPY_CONTAINER_PORTS_ON_PROMOTE={{.COPY_CONTAINER_PORTS_ON_PROMOTE | default true}}
-      - NEW_AUTO_DEPLOY_FEATURE_ENABLED={{.NEW_AUTO_DEPLOY_FEATURE_ENABLED | default false}}
+      - PDP_OAUTH_AGENT_SVC={{.PDP_OAUTH_AGENT_SVC | default "choreo-app-gateway-oauth-agent.choreodp-system.svc.cluster.local"}}
+      - PDP_GATEWAY_SVC={{.PDP_GATEWAY_SVC | default "choreo-app-gateway.choreodp-system.svc.cluster.local"}}
+      - APP_GATEWAY_FOR_PDPS_ENABLED={{.APP_GATEWAY_FOR_PDPS_ENABLED | default false}}
   - name: env-dp-helmhub
     behavior: create
     literals:
@@ -756,6 +758,11 @@ configMapGenerator:
       - MSSQL_HOST={{.MSSQL_HOST}}
       - REDIS_HOST={{.REDIS_HOST}}
       - HOST_DNS={{.HOST_DNS}}
+      - RB_HEALTH_CHECK_ENABLED={{.RB_HEALTH_CHECK_ENABLED  | default "true"}}
+      - RB_HEALTH_CHECK_INITIAL_DELAY_SECONDS={{.RB_HEALTH_CHECK_INITIAL_DELAY_SECONDS | default "5"}}
+      - RB_HEALTH_CHECK_INTERVAL_MS={{.RB_HEALTH_CHECK_INTERVAL_MS | default "5000"}}
+      - RB_HEALTH_CHECK_HISTORY_LIMIT_SECONDS={{.RB_HEALTH_CHECK_HISTORY_LIMIT_SECONDS | default "60"}}
+      - RB_HEALTH_CHECK_SUCCESS_THRESHOLD={{.RB_HEALTH_CHECK_SUCCESS_THRESHOLD | default "0.5"}}
   - name: env-dp-project-manager
     behavior: create
     literals:
@@ -931,6 +938,7 @@ configMapGenerator:
       - UM_DATABASE_URL="{{.UM_DATABASE_URL}}"
       - UM_ENVIRONMENT_TEMPLATES_ENDPOINT={{.UM_ENVIRONMENT_TEMPLATES_ENDPOINT}}
       - UM_BASE_URL={{.UM_BASE_URL}}
+      - UM_USER_STORE_MANAGEMENT_PERMISSIONS={{.UM_USER_STORE_MANAGEMENT_PERMISSIONS}}
   - name: env-appdev-authorization
     behavior: create
     literals:

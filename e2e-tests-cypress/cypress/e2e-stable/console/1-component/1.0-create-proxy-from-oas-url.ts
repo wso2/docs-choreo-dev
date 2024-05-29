@@ -92,6 +92,10 @@ describe("Create proxy using existing url", () => {
     proxy.deploy();
   });
 
+  it("Promote proxy", () => {
+    proxy.promote();
+  });
+
   it("Verify test functionality using Swagger UI in Dev", () => {
     proxy
       .testSwaggerConsole(Enums.Environment.DEVELOPMENT, RESOURCE)
@@ -108,10 +112,6 @@ describe("Create proxy using existing url", () => {
         expect(res.status).equal(OK);
         expect(res.body).to.have.property(EXPECTED_VALUE);
       });
-  });
-
-  it("Promote proxy", () => {
-    proxy.promote();
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
@@ -144,6 +144,10 @@ describe("Create proxy using existing url", () => {
     proxy.deploy();
   });
 
+  it("Promote new version of proxy", () => {
+    proxy.promote();
+  });
+
   it("Verify test functionality of new version in Dev", () => {
     proxy
       .testSwaggerConsole(Enums.Environment.DEVELOPMENT, RESOURCE)
@@ -163,10 +167,6 @@ describe("Create proxy using existing url", () => {
         expect(res.statusCode).to.be.equal(OK.toString());
         expect(res.response).to.contain(NEW_RESOURCE_EXPECTED_VALUE);
       });
-  });
-
-  it("Promote new version of proxy", () => {
-    proxy.promote();
   });
 
   it("Verify test functionality of new version in Prod", () => {

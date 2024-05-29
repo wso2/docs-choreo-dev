@@ -34,6 +34,7 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.exceptions.ComponentCreationException;
 import com.wso2.choreo.integration.common.exceptions.DeploymentStatusByVersionFailureException;
+import com.wso2.choreo.integration.common.exceptions.DeploymentTrackCreationException;
 import com.wso2.choreo.integration.common.exceptions.GraphQLException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
@@ -56,6 +57,7 @@ import com.wso2.choreo.integration.models.environments.ProxyEnvironment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.graphql.CreateByocComponentResponseDTO;
 import com.wso2.choreo.integration.models.graphql.CreateComponentResponseDTO;
+import com.wso2.choreo.integration.models.graphql.CreateNewDeploymentTrackResponseDTO;
 import com.wso2.choreo.integration.models.graphql.CreateNewVersionResponseDTO;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.models.proxyapi.ProxyDeployment;
@@ -1206,6 +1208,9 @@ public class GraphQL extends ControlPlaneAPI {
                 .message()
                 .validate((message, context) -> {
                     int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                    if (code != HttpStatus.OK.value() && code != HttpStatus.NOT_FOUND.value()) {
+                        throw new ValidationException("Deployment status retrieval is not success");
+                    }
                     if (code == HttpStatus.OK.value()) {
                         ComponentDeploymentStatusDTO deploymentStatus = ObjectMapperUtil.
                                 mapStringToObject(ComponentDeploymentStatusDTO.class,
@@ -1748,4 +1753,76 @@ public class GraphQL extends ControlPlaneAPI {
                 ))
                 );
     }
+
+    public static void enableAutoDeploy(TestActionRunner runner, HttpClient client, String accessToken,
+                                       GraphqlDTO graphqlDTO) throws IOException {
+
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/autodeployTriggerEnable.mustache", graphqlDTO);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(10000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(requestBody)
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
+                        http().client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .body(new ClassPathResource("templates/graphql/responses/autoDeployEnabledSuccess.json"))
+                                .validate(jsonPath()
+                                .expression("$.data.updateDeploymentTrack.autoDeployEnabled", true)
+                ))
+        );
+    }
+
+    public static CreateNewDeploymentTrackResponseDTO createNewDeploymentTrack(TestActionRunner runner, HttpClient choreoProjectsTestClient,
+                                                                               String accessToken, GraphqlDTO graphqlDTO) throws IOException, DeploymentTrackCreationException {
+
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/createNewDeploymentTrack.mustache", graphqlDTO);
+        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+        AtomicReference<CreateNewDeploymentTrackResponseDTO> responseDTO = new AtomicReference<>();
+        runner.$(http()
+                .client(choreoProjectsTestClient)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        runner.$(http()
+                .client(choreoProjectsTestClient)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate((message, context) -> {
+                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                    if (code == HttpStatus.OK.value()) {
+                        responseDTO.set(ObjectMapperUtil.mapStringToObject(
+                                CreateNewDeploymentTrackResponseDTO.class, (String) message.getPayload(),
+                                "createDeploymentTrack"));
+                    }
+                }));
+
+        if (responseDTO.get() == null) {
+            throw new DeploymentTrackCreationException("BYOC component creation response retrieval failure.");
+        } else {
+            return responseDTO.get();
+        }
+    }
+
 }

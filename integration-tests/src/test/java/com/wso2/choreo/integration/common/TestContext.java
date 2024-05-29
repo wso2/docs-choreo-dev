@@ -17,6 +17,8 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import lombok.Getter;
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeSuite;
 
 /**
@@ -25,6 +27,8 @@ import org.testng.annotations.BeforeSuite;
  * for running the tests.
  */
 public class TestContext {
+
+    private static final Logger log = LogManager.getLogger(TestContext.class);
 
     @Getter
     private static ChoreoOrganization testOrg;
@@ -72,12 +76,15 @@ public class TestContext {
     }
 
     public static synchronized void setResourceAuthzTestUserTokenHandler() {
-        if (resourceAuthzTestUserTokenHandler == null) {
-            String token = System.getProperty("ResourceAuthzUserToken");
 
-            if (!StringUtils.isEmpty(token)) {
-                resourceAuthzTestUserTokenHandler = new TokenHandler(token);
-            } else {
+        try {
+            if (resourceAuthzTestUserTokenHandler == null) {
+                if (!StringUtils.isEmpty(System.getProperty("Token"))) {
+                    log.warn("Test user token is provided. Resource authz tests will be skipped.");
+                    resourceAuthzTestUserTokenHandler = new TokenHandler("");
+                    return;
+                }
+
                 resourceAuthzTestUserTokenHandler = new TokenHandler.Builder(
                         Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE),
                         Configuration.getConfig(ConfigDefinition.RESOURCE_AUTHZ_USER_EMAIL),
@@ -88,6 +95,8 @@ public class TestContext {
                         .cpAppClientId(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_ID))
                         .cpAppClientSecret(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_SECRET)).build();
             }
+        } catch (Exception e) {
+            log.warn("Failed to set resource authz test user token handler", e);
         }
     }
 

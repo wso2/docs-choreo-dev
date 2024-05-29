@@ -1,31 +1,38 @@
-## APIM Service provider and IdP setup script
+# How to Add a New Super Tenant IDP
 
-### Description
+## Setup Directory and Metadata Files
+1. **Create a New Directory**: Navigate to the `sts-configs/idps` directory and create a new directory with the name of the IDP.
+2. **Create Metadata XMLs**: Place the IDP metadata XML files (`create_idp.xml`, `delete_idp.xml`) into the newly created directory (`sts-configs/idps/<your-idp>`), following the format of existing IDPs.
 
-Execute `run.sh` to perform the following.
+## Update Configuration
+3. **Update Common Configuration**: Add new IDP related configurations to the `common.sh` file.
 
-1. Create a service provider for choreo-apim-service
-2. Register idp representing choreo idp on the APIM
-3. Create a service provider for the application choreo console
-4. Create a service provider for the application choreo apim devportal
-5. Create a service provider for the application choreo quota limiter
-6. Create a service provider for the application choreo step aggregator
+# How to Create an IDP in the STS
 
-### Usage
+## Execution
+1. **Run the Script**: Execute the `create_idps.sh` script located in the `sts-configs` directory.
 
-Export following environmental variables.
+# How to Add a New Super Tenant SP
+
+## Setup Directory and Metadata Files
+1. **Create a New Directory**: Navigate to the `sts-configs/sps` directory and create a new directory with the name of the SP.
+2. **Create Metadata XMLs**: Place the SP metadata XML files (`create_sp_payload.xml`, `get_sp_payload.xml`, `update_sp_payload.xml`, `create_oauth_app_payload.xml`) into the newly created directory (`sts-configs/sps/<your-sp>`), following the format of existing SPs.
+3. **Add Payload Files**: Add payload files to the `sts-configs/sps` directory and update them with the correct SP-related unique values.
+
+## Update Configuration
+4. **Update Common Configuration**: Add new SP related configurations to the `common.sh` file.
+# How to Create an SP in the STS
+
+## Prerequisites
+
+Before adding a new IDP or SP, ensure that the following environment variables are set up with suitable values in the `sts-configs/common.sh` file.
 
 ```bash
-export APIM_URL="https://localhost:9443"
-export APIM_ADMIN_USERNAME="admin"
-export APIM_ADMIN_PASSWORD="admin"
-```
+ENVIRONMENT_PREFIX="perf"  # Modify as necessary for environment (e.g., dev, stage, prod)
+APIM_ADMIN_USERNAME="admin"  # Replace with APIM admin username
+APIM_ADMIN_PASSWORD="admin"  # Replace with APIM admin password
+APIM_URL="https://localhost:9443"  # Modify with the URL to APIM
+````
 
-Execute `run.sh`  script.
-
-```bash
-sh run.sh -e environment
-```
-
-Where `environment` is one of the following.
-`dev`, `stage`, `prod`
+## Execution
+1. **Run the Script**: Execute the `create_sps.sh` script located in the `sts-configs` directory.

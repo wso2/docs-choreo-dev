@@ -29,6 +29,7 @@ import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.choreoproject.ComponentRepository;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
@@ -44,6 +45,7 @@ import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.marketplace.ConnectionCreateRequest;
 import com.wso2.choreo.integration.models.marketplace.ServiceInfo;
+import com.wso2.choreo.integration.models.marketplace.ServiceStatus;
 import com.wso2.choreo.integration.models.marketplace.ServiceVisibility;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
@@ -90,6 +92,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     private static final String PROJECT_SERVICE = "PROJECT";
     private static final String CLIENT_COMPONENT_REPO_URL = "https://github.com/choreo-test-apps/connections-test";
     private static final String CLIENT_COMPONENT_DOCKER_FILE_PATH = "Dockerfile";
+    private static final String SERVICE_PUBLISHER_COMPONENT_REPO_NEW_BRANCH_NAME = "next";
     private HttpClient appServiceClient;
     private String accessToken;
     private String orgHandle;
@@ -97,6 +100,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     private String orgUUID;
     ChoreoProject projectOne;
     private ChoreoComponent publicEndpointServiceComponent;
+    private ChoreoComponent publicEndpointServiceComponentNewVersion;
     private ChoreoComponent orgEndpointServiceComponent;
     private ChoreoComponent projectEndpointServiceComponent;
 
@@ -117,12 +121,14 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     private List<Environment> newClientComponentEnvironments;
     private ConnectionCreateRequest connectionCreationReq;
     private ComponentDeploymentStatusDTO publicEndpointServiceDeploymentStatusDTO;
+    private ComponentDeploymentStatusDTO projectEndpointServiceDeploymentStatusDTO;
 
     private ComponentDeploymentStatusDTO orgEndpointServiceDeploymentStatusDTO;
     private ComponentDeploymentStatusDTO clientDeploymentStatusDTO, clientPromotionStatusDTO, newClientDeploymentStatusDTO, newClientPromotionStatusDTO;
     private final String repoName = "connections-test";
     private String API_INVOCATION_REQUEST_URI;
     private String API_INVOCATION_REQUEST_BODY;
+    private String API_NEW_VERSION_INVOCATION_REQUEST_BODY;
     private String REST_API_EXPECTED_RESPONSE;
 
     @Autowired
@@ -140,6 +146,11 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 "  \"acceptedTnC\": true,\n" +
                 "  \"selectedRewardDealId\": \"RWD34589\",\n" +
                 "  \"userId\": \"U451298\"\n" +
+                "}";
+        API_NEW_VERSION_INVOCATION_REQUEST_BODY = "{\n" +
+                "  \"acceptedTnC\": true,\n" +
+                "  \"selectedRewardDealId\": \"RWD34589\",\n" +
+                "  \"userId\": \"U451301\"\n" + // This user is added in the new version
                 "}";
         REST_API_EXPECTED_RESPONSE = new String(new ClassPathResource(
                 "templates/connectionManagement/loyaltyServiceResponse.json").getInputStream().readAllBytes());
@@ -194,6 +205,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createServiceConsumerComponent_TestChoreoConnections", "deployServicePublisherComponent_TestChoreoConnections"})
     @CitrusTest
     public void createComponentLevelConnection_TestChoreoConnections() throws Exception {
+        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, publicEndpointServiceComponent,
+                publicEndpointServiceDeploymentStatusDTO);
         ServiceInfo serviceFound = ConnectionService.FindService(citrusClients,this,accessToken,SVC_COMPONENT_SERVICE_NAME,NETWORK_VISIBILITY_FILTER,"");
         connectionCreationReq= ConnectionService.createComponentLevelConnectionCreationReq(clientComponentEnvironments,projectOne.getId(),
                 clientChoreoComponent.getId(),PUBLIC_SERVICE,serviceFound);
@@ -224,12 +237,6 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 environments, ComponentFlavour.BYOC);
     }
 
-    //TODO: verify connection is partial
-    public void verifyPartialConnection_TestChoreoConnections() throws Exception {
-
-    }
-
-
     @Test(dependsOnMethods = {"deployServiceConsumerComponent_TestChoreoConnections"})
     @CitrusTest
     public void invokeAPIDev_TestChoreoConnections() throws Exception {
@@ -245,23 +252,38 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void promoteServicePublisherComponent_TestChoreoConnections() throws Exception {
         List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients, accessToken, publicEndpointServiceComponent,
-                servicePublisherComponentEnvironments, ComponentFlavour.BYOC);
+                servicePublisherComponentEnvironments, ComponentFlavour.BYOC, projectOne);
         ComponentDeploymentStatusDTO servicePromotionStatusDTO = statusDTO.get(0);  // we'll consider only the first promotion
 
     }
+
+    @Test(dependsOnMethods = {"promoteServicePublisherComponent_TestChoreoConnections"})
+    @CitrusTest
+    public void verifyServiceStatus_TestChoreoConnections() throws Exception {
+        ServiceInfo serviceFound = ConnectionService.FindService(citrusClients,
+                this, accessToken, SVC_COMPONENT_SERVICE_NAME, NETWORK_VISIBILITY_FILTER,"");
+        if (serviceFound == null) {
+            throw new ValidationException("Service not found");
+        }
+        if (serviceFound.getStatus() != ServiceStatus.PUBLISHED) {
+            throw new ValidationException("Service is not in active state");
+        }
+    }
+
     @Test(dependsOnMethods = {"promoteServicePublisherComponent_TestChoreoConnections"})
     @CitrusTest
     public void refreshComponentLevelConnection_TestChoreoConnections() throws Exception {
         HttpClient connectionServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         ConnectionService.refreshChoreoConnection(this, connectionServiceClient,
-                accessToken, componentLevelConnectionId, connectionCreationReq);
+                accessToken, componentLevelConnectionId, connectionCreationReq,
+                servicePublisherComponentEnvironments, true, false);
     }
 
     @Test(dependsOnMethods = {"refreshComponentLevelConnection_TestChoreoConnections"})
     @CitrusTest
     public void promoteClientComponent_TestChoreoConnections() throws Exception {
         List<ComponentDeploymentStatusDTO> statusDTO =  ComponentUtils.promoteComponent(this, citrusClients, accessToken, clientChoreoComponent,
-                clientComponentEnvironments, ComponentFlavour.BYOC);
+                clientComponentEnvironments, ComponentFlavour.BYOC , projectOne);
         clientPromotionStatusDTO = statusDTO.get(0);  //we'll consider only the first promotion
     }
 
@@ -276,21 +298,36 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 API_INVOCATION_REQUEST_BODY, REST_API_EXPECTED_RESPONSE, HttpStatus.ACCEPTED);
     }
 
-
-    @Test(dependsOnMethods = {"createComponentLevelConnectionToUnsecuredPublicService_TestChoreoConnections"})
+    @Test(dependsOnMethods = {"invokeAPIStage_TestChoreoConnections"})
     @CitrusTest
-    public void undeployClientComponent_TestChoreoConnections() throws Exception {
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(clientChoreoComponent.getId()).orgHandler(orgHandle)
-                .componentType("byocRestApi").releaseId(clientDeploymentStatusDTO.getReleaseId()).build();
-        GraphQL.stopDeployment(this, appServiceClient, accessToken, graphqlDTO);
+    public void createNewVersionOfServicePublisherComponent_TestChoreoConnections() throws Exception {
+        String branchName = SERVICE_PUBLISHER_COMPONENT_REPO_NEW_BRANCH_NAME;
+        publicEndpointServiceComponentNewVersion = ComponentUtils.createComponentVersion(this, citrusClients,
+                accessToken, publicEndpointServiceComponent, "v1.1", branchName);
+        ComponentRepository repository = publicEndpointServiceComponentNewVersion.getRepository();
+        repository.setBranchApp(branchName);
+        publicEndpointServiceComponentNewVersion.setRepository(repository);
     }
 
-    @Test(dependsOnMethods = {"undeployClientComponent_TestChoreoConnections"})
+    @Test(dependsOnMethods = {"createNewVersionOfServicePublisherComponent_TestChoreoConnections"})
     @CitrusTest
-    public void undeployServiceComponent_TestChoreoConnections() throws Exception {
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(publicEndpointServiceComponent.getId()).orgHandler(orgHandle)
-                .componentType("byocRestApi").releaseId(publicEndpointServiceDeploymentStatusDTO.getReleaseId()).build();
-        GraphQL.stopDeployment(this, appServiceClient, accessToken, graphqlDTO);
+    public void deployServicePublisherComponentNewVersion_TestChoreoConnections() throws Exception {
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients,
+                accessToken, publicEndpointServiceComponentNewVersion);
+        ComponentUtils.deployComponent(this, citrusClients, accessToken,
+                publicEndpointServiceComponentNewVersion, environments, ComponentFlavour.BYOC);
+    }
+
+    @Test(dependsOnMethods = {"deployServicePublisherComponentNewVersion_TestChoreoConnections"})
+    @CitrusTest
+    public void invokeAPIDevWithNewPublisherServiceVersion_TestChoreoConnections() throws Exception {
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
+                clientChoreoComponent);
+        Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
+                clientChoreoComponent, clientDeploymentStatusDTO, environments);
+        ComponentUtils.invokeApiPOST(this, invokeData.getRight().getApikey(), invokeData.getLeft(),
+                API_INVOCATION_REQUEST_URI, API_NEW_VERSION_INVOCATION_REQUEST_BODY, REST_API_EXPECTED_RESPONSE,
+                HttpStatus.ACCEPTED);
     }
 
     @Test()
@@ -342,7 +379,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 description(proxyApi.getDescription()).
                 productionEndpoint(PROXY_COMPONENT_ENDPOINT).
                 sandboxEndpoint(PROXY_COMPONENT_ENDPOINT).
-                basePath(proxyApi.getContext() + "/1.0.0").build();
+                basePath(proxyApi.getContext() + "/v1.0").build();
         String apiPayload = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/proxyAPIUpdateRequestWithAPIRateLimit.mustache", apiDTO);  //This api is exposed in public
         Response response = APICreator.updateAPIWithRestAPIContent(proxyApi, apiPayload, accessToken);
@@ -379,7 +416,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         ConnectionService.createProjectLevelConnection(citrusClients, this, accessToken,
                 proxyComponent.getName(), NETWORK_VISIBILITY_FILTER, projectOne.getId(),
                 connectionName, "Project level Connection for an unsecured service with public visibility",PUBLIC_SERVICE,
-                false,proxyPublisherComponentEnvironments.subList(0,1));
+                false,proxyPublisherComponentEnvironments);
 
     }
 
@@ -409,6 +446,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void createProjectLevelConnectionToSecuredOrgService_TestChoreoConnections() throws Exception {
         String connectionName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_CONNECTION_NAME);
+        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, orgEndpointServiceComponent, orgEndpointServiceDeploymentStatusDTO);
         ConnectionService.createProjectLevelConnection(citrusClients, this, accessToken,
                 orgEndpointServiceComponent.getName(), ORG_LVL_NETWORK_VISIBILITY_FILTER, projectOne.getId(),
                 connectionName, "Project level Connection for a secured service with org visibility",ORGANIZATION_SERVICE,
@@ -423,9 +461,10 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 orgEndpointServiceComponent);
         Commit latestCommit = ComponentUtils.getLatestCommit(this, citrusClients, accessToken, orgEndpointServiceComponent);
-        ComponentUtils.deployBuiltComponent(this, citrusClients, accessToken,
+        orgEndpointServiceDeploymentStatusDTO = ComponentUtils.deployBuiltComponent(this, citrusClients, accessToken,
                 orgEndpointServiceComponent, latestCommit, environments);
         String connectionName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_CONNECTION_NAME);
+        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, orgEndpointServiceComponent, orgEndpointServiceDeploymentStatusDTO);
         ConnectionService.createProjectLevelConnection(citrusClients, this, accessToken,
                 orgEndpointServiceComponent.getName(), ORG_LVL_NETWORK_VISIBILITY_FILTER, projectOne.getId(),
                 connectionName, "Project level Connection for an unsecured service with org visibility",ORGANIZATION_SERVICE,
@@ -449,7 +488,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 dto, ComponentFlavour.BYOC);
         projectEndpointComponentDeployedEnvs = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 projectEndpointServiceComponent);
-        ComponentUtils.deployComponent(this, citrusClients, accessToken,
+        projectEndpointServiceDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
                 projectEndpointServiceComponent, projectEndpointComponentDeployedEnvs, ComponentFlavour.BYOC);
         PROJECT_VISIBILITY_SVC_COMPONENT_SERVICE_NAME = projectEndpointServiceComponent.getName();
 
@@ -459,6 +498,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void createProjectLevelConnectionToProjectService_TestChoreoConnections() throws Exception {
         String connectionName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_CONNECTION_NAME);
+        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, projectEndpointServiceComponent, projectEndpointServiceDeploymentStatusDTO);
         ConnectionService.createProjectLevelConnection(citrusClients, this, accessToken,
                 projectEndpointServiceComponent.getName(), PROJECT_LVL_NETWORK_VISIBILITY_FILTER, projectOne.getId(),
                 connectionName, "Project level Connection for a service with project visibility",PROJECT_SERVICE,
@@ -478,26 +518,28 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         Commit latestCommit = ComponentUtils.getLatestCommit(this, citrusClients, accessToken, publicEndpointServiceComponent);
         ComponentUtils.deployBuiltComponent(this, citrusClients, accessToken,
                 publicEndpointServiceComponent, latestCommit, environments);
-
+        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, publicEndpointServiceComponent,
+                publicEndpointServiceDeploymentStatusDTO);
         ServiceInfo serviceFound = ConnectionService.FindService(citrusClients,this,accessToken,SVC_COMPONENT_SERVICE_NAME,NETWORK_VISIBILITY_FILTER,"");
         connectionCreationReq= ConnectionService.createComponentLevelConnectionCreationReq(clientComponentEnvironments,projectOne.getId(),
                 clientChoreoComponent.getId(),PUBLIC_SERVICE,serviceFound);
         HttpClient httpClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         ConnectionService.createChoreoConnection(this, httpClient,
-                accessToken, connectionCreationReq,false,servicePublisherComponentEnvironments.subList(0,1),false);
+                accessToken, connectionCreationReq,false, servicePublisherComponentEnvironments, false);
     }
 
     // Create a component level service connection to an internal service with project visibility
     @Test(dependsOnMethods = {"createProjectEndpointPublisherComponent_TestChoreoConnections","createServiceConsumerComponent_TestChoreoConnections"})
     @CitrusTest
     public void createComponentLevelConnectionToProjectVisibilityService_TestChoreoConnections() throws Exception {
-
+        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, projectEndpointServiceComponent,
+                projectEndpointServiceDeploymentStatusDTO);
         ServiceInfo serviceFound = ConnectionService.FindService(citrusClients,this,accessToken,PROJECT_VISIBILITY_SVC_COMPONENT_SERVICE_NAME,PROJECT_LVL_NETWORK_VISIBILITY_FILTER,projectOne.getId());
         connectionCreationReq= ConnectionService.createComponentLevelConnectionCreationReq(clientComponentEnvironments,projectOne.getId(),
                 clientChoreoComponent.getId(),PROJECT_SERVICE,serviceFound);
         HttpClient httpClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         ConnectionService.createChoreoConnection(this, httpClient,
-                accessToken, connectionCreationReq,false,projectEndpointComponentDeployedEnvs.subList(0,1),false);
+                accessToken, connectionCreationReq, false, projectEndpointComponentDeployedEnvs.subList(0,1), false);
     }
 
     // Create a component level webapp connection to an oauth2 protected internal service with public visibility
@@ -505,24 +547,30 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void createWebAppLevelConnectionToSecuredPublicService_TestChoreoConnections () throws Exception {
         String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
-        Repository repo = Repository.builder().
-                repoUrl(WEBAPP_COMPONENT_REPO_URL).
-                dockerContext(WEBAPP_COMPONENT_DOCKER_CONTEXT).build();
 
-        GraphqlDTO dto = ComponentUtils.createWebappComponentRequest(componentName, projectOne, repo);
+        GraphqlDTO.ByocWebAppsConfig webAppsConfig = GraphqlDTO.ByocWebAppsConfig.builder()
+                .dockerContext(WEBAPP_COMPONENT_DOCKER_CONTEXT)
+                .srcGitRepoUrl(WEBAPP_COMPONENT_REPO_URL)
+                .webAppType("React")
+                .webAppBuildCommand("npm run build")
+                .webAppPackageManagerVersion("18")
+                .webAppOutputDirectory("/build")
+                .build();
+        GraphqlDTO dto = ComponentUtils.createWebappComponentRequest(componentName, projectOne, webAppsConfig);
         ChoreoComponent webAppComponent = ComponentUtils.createComponent(this, citrusClients, accessToken,
                 dto, ComponentFlavour.WEBAPP);
 
         List<Environment> webAppComponentEnvironments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 webAppComponent);
 
-
+        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, publicEndpointServiceComponent,
+                publicEndpointServiceDeploymentStatusDTO);
         ServiceInfo serviceFound = ConnectionService.FindService(citrusClients,this,accessToken,SVC_COMPONENT_SERVICE_NAME,NETWORK_VISIBILITY_FILTER,"");
-        ConnectionCreateRequest connectionCreationReq = ConnectionService.createComponentLevelConnectionCreationReq(webAppComponentEnvironments.subList(0,1),projectOne.getId(),
-                webAppComponent.getId(),PUBLIC_SERVICE,serviceFound);
+        ConnectionCreateRequest connectionCreationReq = ConnectionService.createComponentLevelConnectionCreationReq(webAppComponentEnvironments, 
+                projectOne.getId(), webAppComponent.getId(), PUBLIC_SERVICE, serviceFound);
         HttpClient httpClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         ConnectionService.createChoreoConnection(this, httpClient,
-                accessToken, connectionCreationReq,true,servicePublisherComponentEnvironments.subList(0,1),true);
+                accessToken, connectionCreationReq, true, servicePublisherComponentEnvironments.subList(0,1), true);
     }
 
     //create a connection to service component which was previously deployed
@@ -552,15 +600,17 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 ComponentUtils.validateComponentDeployment(this,citrusClients,accessToken,deployedPublisherComponent,latestCommit,environments,true);
 
         if(deployedPublisherComponentStatus != null && !deployedPublisherComponentStatus.getDeploymentStatusV2().equals("ACTIVE")){
-            throw new ValidationException("loyalty-service-component is not in active state");
+            throw new ValidationException("connections-publisher-component is not in active state");
         }
 
         if(deployedPublisherComponentStatus == null){
-            ComponentUtils.deployComponent(this, citrusClients, accessToken, deployedPublisherComponent,
-                    environments, ComponentFlavour.BYOC);
+            deployedPublisherComponentStatus = ComponentUtils.deployComponent(this, citrusClients, accessToken,
+                    deployedPublisherComponent,environments, ComponentFlavour.BYOC);
         }
 
         ChoreoProject project = ComponentUtils.getProjectByName(DEPLOYED_COMPONENTS_PROJECT_NAME,accessToken);
+        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, deployedPublisherComponent,
+                deployedPublisherComponentStatus);
         ServiceInfo serviceFound = ConnectionService.FindService(citrusClients,this,accessToken,DEPLOYED_SVC_COMPONENT_SERVICE_NAME,NETWORK_VISIBILITY_FILTER,"");
 
         List<Environment> deployedClientComponentEnvironments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,createdClientComponent );
@@ -568,7 +618,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 createdClientComponent.getId(),PUBLIC_SERVICE,serviceFound);
         HttpClient httpClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         ConnectionService.createChoreoConnection(this, httpClient,
-                accessToken, connectionCreationReq,true,deployedClientComponentEnvironments.subList(0,1),false);
+                accessToken, connectionCreationReq, true, deployedClientComponentEnvironments.subList(0,1), false);
     }
 
     //invoke a previously created connection
@@ -596,7 +646,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
 
         ComponentDeploymentStatusDTO deployedPublisherComponentStatus = ComponentUtils.validateComponentDeployment(this,citrusClients,accessToken,deployedPublisherComponent,publisherLatestCommit,environments,true);
         if(deployedPublisherComponentStatus != null && !deployedPublisherComponentStatus.getDeploymentStatusV2().equals("ACTIVE")){
-            throw new ValidationException("Publisher component:loyalty-service-component is not in active state");
+            throw new ValidationException("connections-publisher-component is not in active state");
         }
         if(deployedPublisherComponentStatus == null){
             ComponentUtils.deployComponent(this, citrusClients, accessToken, deployedPublisherComponent,
@@ -610,8 +660,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         if(deployedClientComponentStatus == null){
             ChoreoProject project = ComponentUtils.getProjectByName(DEPLOYED_COMPONENTS_PROJECT_NAME,accessToken);
             ConnectionService.createAndUseConnection(this,citrusClients,accessToken,deployedPublisherComponent.getName(),PUBLIC_SERVICE,project.getId(),createdClientComponent.getId(),environments,environments,repoName,"dev");
-            ComponentUtils.deployComponent(this, citrusClients, accessToken, createdClientComponent,
-                    environments, ComponentFlavour.BYOC);
+            deployedClientComponentStatus = ComponentUtils.deployComponent(this, citrusClients, accessToken,
+                    createdClientComponent, environments, ComponentFlavour.BYOC);
         }
         Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
                 createdClientComponent, deployedClientComponentStatus, environments);
@@ -660,6 +710,20 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         ComponentUtils.promoteProxyComponent(this, citrusClients, accessToken, proxyComponent,
                 proxyPublisherComponentEnvironments, proxyAPIBuild);
     }
+
+    @Test(dependsOnMethods = {"PromoteProxyPublisherComponent_TestChoreoConnections"})
+    @CitrusTest
+    public void VerifyServiceStatusForProxyPromotion_TestChoreoConnections() throws Exception {
+        ServiceInfo serviceFound = ConnectionService.FindService(citrusClients, this, accessToken,
+                proxyComponent.getName(), PUBLIC_SERVICE.toLowerCase(), "");
+
+        if (serviceFound == null) {
+            throw new ValidationException("Service not found");
+        }
+        if (serviceFound.getStatus() != ServiceStatus.PUBLISHED) {
+            throw new ValidationException("Service is not in published state");
+        }
+    }
     
     @Test(dependsOnMethods = {"PromoteProxyPublisherComponent_TestChoreoConnections"})
     @CitrusTest
@@ -671,18 +735,19 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 projectOne.getId(),
                 newClientChoreoComponent.getId(), PUBLIC_SERVICE, serviceFound);
         ConnectionService.refreshChoreoConnection(this, connectionServiceClient,
-                accessToken, componentLevelNewConnectionId, connectionReq);
+                accessToken, componentLevelNewConnectionId, connectionReq,
+                proxyPublisherComponentEnvironments, true, false);
     }
-    
+
     @Test(dependsOnMethods = {"refreshConnectionConfigurationsForProxyBasedConnection_TestChoreoConnections"})
     @CitrusTest
     public void PromoteClientComponent_TestChoreoConnections() throws Exception {
         List<ComponentDeploymentStatusDTO> newClientStatusDTO = ComponentUtils.promoteComponent(this,
                 citrusClients, accessToken, newClientChoreoComponent,
-                newClientComponentEnvironments, ComponentFlavour.BYOC);
+                newClientComponentEnvironments, ComponentFlavour.BYOC, projectOne);
         newClientPromotionStatusDTO = newClientStatusDTO.get(0);
     }
-    
+
     @Test(dependsOnMethods = {"PromoteClientComponent_TestChoreoConnections"})
     @CitrusTest
     public void invokeAPIStageForProxyBasedConnection_TestChoreoConnections() throws Exception {

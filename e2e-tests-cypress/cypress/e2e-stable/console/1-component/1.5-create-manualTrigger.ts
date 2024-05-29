@@ -22,6 +22,7 @@ after(() => {
 
 describe("Verify manual trigger creation functionality", () => {
   const PROJECT_DESCRIPTION = "Manual Trigger";
+  const LOG_MESSAGE = "Hello, how are you";
   let project: Project;
   let component: ManualTrigger;
 
@@ -63,5 +64,19 @@ describe("Verify manual trigger creation functionality", () => {
 
   it("Verify execution in prod", () => {
     component.executeComponent(Enums.Environment.PRODUCTION);
+  });
+
+  it("Verify dev env logs", () => {
+    component.verifyObservabilityMetricsLogs(
+      Enums.Environment.DEVELOPMENT,
+      LOG_MESSAGE
+    );
+  });
+
+  it("Verify prod env logs", () => {
+    component.verifyObservabilityMetricsLogs(
+      Enums.Environment.PRODUCTION,
+      LOG_MESSAGE
+    );
   });
 });

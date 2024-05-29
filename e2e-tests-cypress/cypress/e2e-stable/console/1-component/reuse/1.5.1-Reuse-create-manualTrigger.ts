@@ -19,6 +19,7 @@ import { Project } from "../../../../support/console/entities/project/project";
 describe("Verify Reusable Manual Trigger creation functionality", () => {
   const MANUAL_NAME = "create-manualTrigger-1.5.1";
   const PROJECT_NAME = "Default Project";
+  const LOG_MESSAGE = "Hello, how are you";
   let project: Project;
   let component: ManualTrigger;
 
@@ -34,18 +35,18 @@ describe("Verify Reusable Manual Trigger creation functionality", () => {
     project.isComponentExists(MANUAL_NAME).then((isExists) => {
       if (!isExists) {
         project
-        .createManualTriggerComponent(
-          Enums.Accessibility.EXTERNAL,
-          {
-            url: "https://github.com/choreo-test-apps/manual-trigger",
-            branch: "main",
-          },
-          MANUAL_NAME
-        )
-        .then((comp: ManualTrigger) => {
-          project.visitComponent(MANUAL_NAME);
-          component = comp;
-        });
+          .createManualTriggerComponent(
+            Enums.Accessibility.EXTERNAL,
+            {
+              url: "https://github.com/choreo-test-apps/manual-trigger",
+              branch: "main",
+            },
+            MANUAL_NAME
+          )
+          .then((comp: ManualTrigger) => {
+            project.visitComponent(MANUAL_NAME);
+            component = comp;
+          });
       } else {
         project.visitComponent(MANUAL_NAME);
         component = new ManualTrigger(MANUAL_NAME);
@@ -71,5 +72,19 @@ describe("Verify Reusable Manual Trigger creation functionality", () => {
 
   it("Verify execution in prod", () => {
     component.executeComponent(Enums.Environment.PRODUCTION);
+  });
+
+  it("Verify dev env logs", () => {
+    component.verifyObservabilityMetricsLogs(
+      Enums.Environment.DEVELOPMENT,
+      LOG_MESSAGE
+    );
+  });
+
+  it("Verify prod env logs", () => {
+    component.verifyObservabilityMetricsLogs(
+      Enums.Environment.PRODUCTION,
+      LOG_MESSAGE
+    );
   });
 });

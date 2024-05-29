@@ -19,7 +19,6 @@ kind: SecretProviderClass
 metadata:
   name: opensearch
 spec:
-  provider: azure
   secretObjects:
     - secretName: opensearch-internal-users
       type: Opaque
@@ -32,18 +31,15 @@ spec:
         - key: password
           objectName: OPENSEARCH_PASSWORD
   parameters:
-    usePodIdentity: "false"
-    keyvaultName: dev-csi-64
-    tenantId: da76d684-740f-4d94-8717-9d5fb21dd1f9
     objects: |
       array:
         - |
-          objectName: {{.OPENSEARCH_INTERNAL_USERS_OBJ_NAME}}
+          objectName: {{.OPENSEARCH_INTERNAL_USERS_OBJ_NAME | default "obs-opensearch-internal-users"}}
           objectType: secret
           objectAlias: OPENSEARCH_INTERNAL_USERS
           objectVersion: "{{.OPENSEARCH_INTERNAL_USERS}}"
         - |
-          objectName: {{.OPENSEARCH_PASSWORD_OBJ_NAME}}
+          objectName: {{.OPENSEARCH_PASSWORD_OBJ_NAME | default "obs-opensearch-password"}}
           objectType: secret
           objectAlias: OPENSEARCH_PASSWORD
           objectVersion: "{{.OPENSEARCH_PASSWORD}}"

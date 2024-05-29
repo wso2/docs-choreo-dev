@@ -1,6 +1,7 @@
 package com.wso2.choreo.integration.common.utils;
 
-import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,13 +11,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 
-@Slf4j
 public class FileUtil {
+
+    private static final Logger log = LogManager.getLogger(FileUtil.class);
+
     private static String readFile(String filePath) {
         Path file = Paths.get(filePath);
         StringBuilder stringBuilder = new StringBuilder();

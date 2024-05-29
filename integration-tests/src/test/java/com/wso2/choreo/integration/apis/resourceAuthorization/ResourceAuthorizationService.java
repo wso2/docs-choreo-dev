@@ -42,6 +42,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.io.RuntimeIOException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -59,6 +61,8 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
  * Service class for resource authorization related operations.
  */
 public class ResourceAuthorizationService extends ControlPlaneAPI {
+
+    private static final Logger log = LogManager.getLogger(ResourceAuthorizationService.class);
 
     private static String USER_MGT_BASE_PATH = "user-mgt/1.0.0/orgs/";
 
@@ -247,6 +251,7 @@ public class ResourceAuthorizationService extends ControlPlaneAPI {
             throws TokenRetrievalException, IOException, URISyntaxException {
 
         String requestBody = ObjectMapperUtil.mapToString(userIds);
+        log.debug("[Service] add user to group payload", requestBody);
 
         runner.$(repeatOnError()
                 .until("i = 5")

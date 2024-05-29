@@ -17,12 +17,17 @@ scopes:
   - choreo:component_manage
   - choreo:deployment_manage
   - choreo:dev_env_manage
+  - choreo:domain_manage
+  - choreo:domain_view
   - choreo:log_view_non_prod
   - choreo:log_view_prod
   - choreo:non_prod_env_manage
   - choreo:prod_env_manage
   - choreo:project_manage
   - choreo:project_view
+  - choreo:url_mapping_approve
+  - choreo:url_mapping_manage
+  - choreo:url_mapping_view
   - environments:view_dev
   - environments:view_prod
   - urn:choreocontrolplane:choreoauditloggingapi:audit_logs_manage
@@ -38,7 +43,6 @@ scopes:
   - urn:choreocontrolplane:componentsmanagement:component_manage
   - urn:choreocontrolplane:componentsmanagement:component_trigger
   - urn:choreocontrolplane:componentutils:component_file_view
-  - urn:choreocontrolplane:componentutils:component_logs_view
   - urn:choreocontrolplane:componentutils:component_manage
   - urn:choreocontrolplane:componentutils:component_trigger
   - urn:choreocontrolplane:configmanagement:config_create
@@ -60,6 +64,7 @@ scopes:
   - urn:choreocontrolplane:onpremkeymanagement:on_prem_key_manage
   - urn:choreocontrolplane:onpremkeymanagement:on_prem_key_update
   - urn:choreocontrolplane:onpremkeymanagement:on_prem_key_view
+  - urn:choreocontrolplane:organizationapi:org_manage
   - urn:choreocontrolplane:organizationmanagement:enterprise_login_config_manage
   - urn:choreocontrolplane:organizationmanagement:enterprise_login_config_view
   - urn:choreocontrolplane:organizationmanagement:self_signup_approval_update
@@ -72,7 +77,6 @@ scopes:
   - urn:choreocontrolplane:organizationmanagement:theme_deploy
   - urn:choreocontrolplane:organizationmanagement:theme_manage
   - urn:choreocontrolplane:organizationmanagement:theme_view
-  - urn:choreocontrolplane:organizationapi:org_manage
   - urn:choreocontrolplane:usermanagement:invitation_delete
   - urn:choreocontrolplane:usermanagement:invitation_manage
   - urn:choreocontrolplane:usermanagement:invitation_send

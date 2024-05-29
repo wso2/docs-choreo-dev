@@ -1,10 +1,10 @@
-# integration-tests
+# Integration-tests
 
 ## 1. Setup
 
 You can execute integration tests against your own Choreo account in Dev using the following method,
 
-1. Login to Choreo Console and check the response of the `/validate-user` call in the browser network tab and setup the
+1. Login to Choreo Console and check the response of the `/validate-user` call in the browser network tab and set up the
    following environment variables,
 
     - TEST_CHOREO_ORG_ID=<Your Org ID>
@@ -17,6 +17,7 @@ You can execute integration tests against your own Choreo account in Dev using t
     - GITHUB_PAT
     - GMAIL_API_CS
     - GMAIL_API_REFRESH_TOKEN
+    - RESOURCE_AUTHZ_USER_PASSWORD
 
 ## 2. Run all tests
 
@@ -46,33 +47,52 @@ You can execute integration tests against your own Choreo account in Dev using t
 integration-tests/src/test
 |
 |───java/com/wso2/choreo/integration
+|	|───apis
 |	|───common
 |	|───config
+|	|───models
 |	└───tests
 |           └───connectorbuilder
 |           └─── ...
 |           EndpointConfig.java
 └───resources
-	└───templates
+    |───scopes
+    |   |───dev-scopes.yaml
+    |   |───gen-scopes-yaml.py
+    |   |───prod-scopes.yaml
+    |   └───staging-scopes.yaml
+    └───templates
             └───connectorbuilder
             |      get_connector_success.json
             |      publish_status_completed.json
             |      publish_success_ok.json
             └─── ...
        citrus-application.properties
-       log4j.properties
+       dev-env-config.yaml
+       dev-security-env-config.yaml
+       dp.xml      
+       log4j2.properties
+       prod-env-config.yaml
+       security.xml
+       staging-env-config.yaml
        testng.xml
 ```
 
 **java/com/wso2/choreo/integration**
 
-1. **/common**
+1. **/apis**
+    - Java classes that represent the Choreo APIs that will be called by the tests.
+
+2. **/common**
     - Common Java implementations to run Choreo use-cases
 
-2. **/config**
+3. **/config**
     - Configurations needed to run common use-cases and Citrus integration tests
 
-3. **/tests**
+4. **/models**
+    - Java classes that represent the Choreo data models
+
+5. **/tests**
     - Citrus integration tests written for Choreo use-cases
         - **/connectorbuilder** - connector publishing related integration tests
         - ...
@@ -81,10 +101,44 @@ integration-tests/src/test
 
 **resources**
 
-1. **/templates**
-    - Sample Json payload templates
-        - **/connectorbuilder** - connector publishing related Json payload templates
-        - ...
+1. **/scopes**
+    - Scopes needed to be provided when requesting an access token from Choreo.
+      These are Choreo environment specific and hence are maintained in separate yaml files.
+      A Python script is provided to extract the env specific scopes from an existing access token to make it easier to maintain. For more details refer to the provided README in the directory.
+        - **dev-scopes.yaml** - Scopes needed for Dev environment
+        - **prod-scopes.yaml** - Scopes needed for Prod environment
+        - **staging-scopes.yaml** - Scopes needed for Staging environment
+        - **gen-scopes-yaml.py** - Python script to generate scopes yaml file
+
+2. **/templates**
+    - Sample Json payload templates used in Citrus tests
+
+3. **citrus-application.properties**
+    - SpringBoot entry point used by the Citrus framework to run the tests.
+
+4. **dev-env-config.yaml**
+    - Environment specific configurations for Dev environment.
+
+5. **dev-security-env-config.yaml**
+    - Lower privilege user configuration used by the security tests in the Dev environment.
+
+6. **dp.xml**
+    - testng xml file to run the Data Plane specific tests. This is mainly used for testing the Private Data Plane setup.
+
+7. **log4j2.properties**
+    - Log4j2 configuration file to configure the logging levels during test runs. Debug and Wire logging is enabled by default.
+
+8. **prod-env-config.yaml**
+    - Environment specific configurations for Prod environment.
+
+9. **security.xml**
+    - testng xml file to run the security tests.
+
+10. **staging-env-config.yaml**
+    - Environment specific configurations for Staging environment.
+
+11. **testng.xml**
+    - testng xml file to run Choreo integration tests.
 
 ## 6. Adding a new test configuration
 
@@ -112,245 +166,7 @@ Env variables should only be considered values such as credentials that need to 
 - Configs that are only set as env variables do not need to be added to the yaml and must be configured
   at Azure pipeline level.
 
-## 5. Scenarios
+## 7. Adding a new test
 
-<table>
-    <thead>
-        <tr>
-            <th>test source</th>
-            <th>Scenario</th>
-            <th>Work flow</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>connectorbuilder</td>
-            <td>Publish a connector</td>
-            <td>
-                1) Publish a connector <br/>
-                2) Continuously check the status of publishing action <br/>
-                3) Retrieved the details of the published connector <br/>
-            </td>
-        </tr>
-        <tr>
-            <td>createAPIProxyFromScratch</td>
-            <td>Check valid and invalid APInames for proxy</td>
-            <td>
-                1) Check APIName Validation for APIProxy Creation <br>
-                2) Check APIBasePath Validation forA PIProxyCreation <br>
-            </td>
-        </tr>
-        <tr>
-            <td>createProjectIT</td>
-            <td>Project creation</td>
-            <td>
-                1) Check project creation <br>
-            </td>
-        </tr>
-        <tr>
-            <td>getCommitListIT</td>
-            <td>Check CommitList</td>
-            <td>
-                1) Get commit list <br>
-            </td>
-        </tr>
-        <tr>
-            <td>createComponentIT</td>
-            <td>Create a component, check status and delete</td>
-            <td>
-                1) Create RESTAPI component <br/>
-                2) Check created component status <br/>
-                3) Delete the component <br/>
-            </td>
-        </tr>
-        <tr>
-            <td>oomAlertIT</td>
-            <td>Check OOM alert</td>
-            <td>
-                1) Verify OOM alert using IMAP <br/>
-            </td>
-        </tr>
-        <tr>
-            <td>deployIT</td>
-            <td>Deploy RestAPI component</td>
-            <td>
-                1) Verify RestAPI component deployment <br/>
-            </td>
-        </tr>
-        <tr>
-            <td>addConfigurationsIT</td>
-            <td>Add Configurations</td>
-            <td>
-                1) Verify adding configurations to a component <br/>
-            </td>
-        </tr>
-        <tr>
-            <td>createTriggerIT</td>
-            <td>Create webhook component and deploy</td>
-            <td>
-                1) Verify adding webhook component <br/>
-                2) Verify retrieving the created component <br/>
-                3) Verify deploying the component <br/>
-            </td>
-        </tr>
-        <tr>
-            <td>insightsAPIIT</td>
-            <td>Get test environments and check insights metrics</td>
-            <td>
-                1) Verify test environments <br/>
-                2) Verify invoke utility Operations <br/>
-                3) Verify insights overview results <br/>
-            </td>
-        </tr>
-        <tr>
-            <td>insightsAuthAPIIT</td>
-            <td>Get insights auth token</td>
-            <td>
-                1) Verify auth token <br/>
-            </td>
-        </tr>
-        <tr>
-            <td>insightsAlertAPIIT</td>
-            <td>Verify the insights metrics in env list</td>
-            <td>
-                1) Verify get traffic <br/>
-                2) Verify post traffic <br/>
-                3) Verify put traffic <br/>
-                4) Verify delete traffic <br/>
-                5) Verify get latency <br/>
-                6) Verify post latency <br/>
-                7) Verify put latency <br/>
-                8) Verify delete latency <br/>
-            </td>
-        <tr>
-            <td>createUserManagedComponent</td>
-            <td>Create BYOR component using GH,deploy,test and delete</td>
-            <td>
-                1) Verify creating user managed component <br/>
-                2) Verify created component status <br/>
-                3) Verify initial PR Generation <br/>
-                4) Verify PR merge <br/>
-                5) Verify component retrieval <br/>
-                6) Verify component deployment <br/>
-                7) Verify component deployment status <br/>
-                8) Verify API invocation <br/>
-                9) Verify component retrieval for deleted repo <br/>
-               10) Verify component deletion  <br/>
-            </td>
-        </tr>
-        <tr>
-            <td>createUserManagedComponentNonEmptyRoot</td>
-            <td>Create BYOR component with existing code in root directory using GH,deploy,test and delete</td>
-            <td>
-                1) Verify creating user managed component <br/>
-                2) Verify created component status <br/>
-                3) Verify initial PR Generation <br/>
-                4) Verify PR merge <br/>
-                5) Verify component retrieval <br/>
-                6) Verify component deployment <br/>
-                7) Verify component deployment status <br/>
-                8) Verify API invocation <br/>
-                9) Verify component deletion  <br/>
-            </td>
-        </tr>
-        <tr>
-            <td>createUserManagedComponentNonEmptySub</td>
-            <td>Create BYOR component with existing code in sub directory using GH,deploy,test and delete</td>
-            <td>
-                1) Verify creating user managed component <br/>
-                2) Verify created component status <br/>
-                3) Verify initial PR Generation <br/>
-                4) Verify PR merge <br/>
-                5) Verify component retrieval <br/>
-                6) Verify component deployment <br/>
-                7) Verify component deployment status <br/>
-                8) Verify API invocation <br/>
-               9) Verify component deletion <br/>
-            </td>
-        </tr>
-        <tr>
-            <td>createDeployInvokeWebhookIT</td>
-            <td>Create webhook component,deploy,test,observability logs and delete</td>
-            <td>
-                1) Verify creating user managed component <br/>
-                2) Verify created component status <br/>
-                3) Verify initial PR Generation <br/>
-                4) Verify PR merge <br/>
-                5) Verify getting sha of webhookBal <br/>
-                6) Verify commit <br/>
-                7) Verify component retrieval <br/>
-                8) Verify component deployment <br/>
-                9) Verify component deployment status <br/>
-                10) Verify API invocation <br/>
-                11) Verify fetch observabilityId <br/>
-                12) Verify observabilityLogs <br/> 
-                13) Verify component deletion <br/>
-                14) Verify github repo deletion <br/>
-            </td>
-        </tr>
-        <tr>
-            <td>observabilityAPITestCase</td>
-            <td>Verify observability metrics from a RESTAPI component</td>
-            <td>
-                1) Verify observability AST <br/>
-                2) Verify observability metrics density <br/>
-                3) Verify observability metric density histogram <br/>
-                4) Verify observability stats <br/>
-                5) Verify observability trace list <br/>
-                6) Verify observability trace information <br/>
-            </td>
-        </tr>
-        <tr>
-            <td>loggingAPITestCase</td>
-            <td>Verify observability metrics from a RESTAPI component</td>
-            <td>
-                1) Verify observability grouped logs <br/>
-                2) Verify observability live logs <br/>
-                2) Verify observability logs download <br/>
-            </td>
-        </tr>
-        <tr>
-            <td>sysObsAPITestCase</td>
-            <td>Verify observability metrics from a RESTAPI component</td>
-            <td>
-                1) Verify observability system metrics <br/>
-            </td>
-        </tr>
-        <tr>
-            <td>themeManagementTestCase</td>
-            <td>Update custom theme assets, palette and typography</td>
-            <td>
-                1) Verify updating assets <br/>
-                2) Verify updating typography <br/>
-                3) Verify updating color palette <br/>
-            </td>
-        </tr>
-        <tr>
-            <td>createMaxAPIRevisionsUsingDeployments</td>
-            <td>Create revision to exceed API revision limit reached with deployments</td>
-            <td>
-                1) Verify creating revision using a deployment to exceed API revision limit <br/>
-                2) Verify creating revision using Settings page to exceed API revision limit <br/>
-                3) Verify revision count after exceeding API revision limit <br/>
-            </td>
-        </tr>
-        <tr>
-            <td>createMaxAPIRevisionsUsingSettingsPage</td>
-            <td>Create revision to exceed API revision limit reached with revision creation in Settings page</td>
-            <td>
-                1) Verify creating revision with a deployment to reach API revision limit <br/>
-                2) Verify getting revision to delete <br/>
-                3) Verify deleting oldest undeployed revision <br/>
-                4) Verify creating backup revision for existing state <br/>
-                5) Verify restoring revision for existing state <br/>
-                6) Verify creating revision for new state <br/>
-                7) Verify deploying revision with new state <br/>
-                8) Verify querying build by version <br/>
-                9) Verify creating revision in project manager <br/>
-                10) Verify restoring backup revision <br/>
-                11) Verify deleting backup revision <br/>
-                12) Verify revision count after exceeding API revision limit <br/>
-            </td>
-        </tr>
-    </tbody>
-</table>
+- Create a new test class under the `tests` package and remember to add the test class to the `testng.xml` file. If you
+  do not add the test class to the `testng.xml` file, the test will not be executed in the pipeline.

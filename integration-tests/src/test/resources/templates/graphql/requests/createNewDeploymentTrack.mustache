@@ -1,0 +1,21 @@
+mutation {
+  createDeploymentTrack(
+    input:{
+      orgUuid: "{{orgUuid}}",
+      componentId: "{{componentId}}",
+      apiVersion: "{{apiVersion}}",
+      branch: "{{branch}}"
+      description: "{{description}}"
+    }
+  ) {
+    id,
+    createdAt,
+    updatedAt,
+    apiVersion,
+    branch,
+    description,
+    componentId,
+    latest,
+    versionStrategy,
+  }
+}
