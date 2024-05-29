@@ -1,11 +1,11 @@
-package com.wso2.choreo.integration.common.keymanager;
+package com.wso2.choreo.integration.common.keysetmanagement;
 
 import java.util.List;
 
 /**
  * Constants related to Key Manager operations.
  */
-public class KeyManagerConstants {
+public class KeysetManagementConstants {
 
     public static String ASGARDEO_KM_TYPE = "Asgardeo";
     public static String DEFAULT_KM_NAME_PREFIX = "_internal_key_manager_";
