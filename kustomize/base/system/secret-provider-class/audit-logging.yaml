@@ -1,0 +1,26 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-audit-logging # please do not reuse this as there are throttling limits per AD app
+spec:
+  secretObjects:
+  - secretName: secret-audit-logging
+    type: Opaque
+    data:
+      - objectName: CHOREO_STS_CLIENT_SECRET
+        key: CHOREO_STS_CLIENT_SECRET
+      - objectName: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
+        key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
+  parameters:
+    objects:  |
+      array:
+        - |
+          objectName: audit-logging-CHOREO-STS-CLIENT-SECRET
+          objectType: secret
+          objectAlias: CHOREO_STS_CLIENT_SECRET
+          objectVersion: "{{.CHOREO_STS_CLIENT_SECRET}}"
+        - |
+          objectName: audit-logging-AZURE-ACTIVEDIRECTORY-CLIENT-SECRET
+          objectType: secret
+          objectAlias: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
+          objectVersion: "{{.AZURE_ACTIVEDIRECTORY_CLIENT_SECRET}}"

@@ -7,10 +7,10 @@ spec:
   - secretName: secret-ai-eventhub-checkpoint
     type: Opaque
     data:
-      - objectName: AZURE_CHECKPOINT_STORAGE_CONNECTION_STRING
-        key: AZURE_CHECKPOINT_STORAGE_CONNECTION_STRING
+     - objectName: AZURE_CHECKPOINT_STORAGE_CONNECTION_STRING
+       key: AZURE_CHECKPOINT_STORAGE_CONNECTION_STRING
  parameters:
-  objects:  |
+  objects: |
    array:
      - |
        objectName: ai-EVENTHUB-CHECKPOINT-STORAGE-CONNECTION-STRING

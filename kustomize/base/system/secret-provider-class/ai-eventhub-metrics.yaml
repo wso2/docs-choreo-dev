@@ -7,8 +7,8 @@ spec:
   - secretName: secret-ai-eventhub-metrics
     type: Opaque
     data:
-      - objectName: EVENT_HUBS_NAMESPACE_CONNECTION_STRING
-        key: EVENT_HUBS_NAMESPACE_CONNECTION_STRING
+     - objectName: EVENT_HUBS_NAMESPACE_CONNECTION_STRING
+       key: EVENT_HUBS_NAMESPACE_CONNECTION_STRING
  parameters:
   objects: |
    array:

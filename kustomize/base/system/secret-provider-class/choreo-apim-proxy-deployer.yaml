@@ -1,0 +1,33 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-choreo-apim-proxy-deployer
+spec:
+  secretObjects:
+  - secretName: secret-choreo-apim-proxy-deployer
+    type: Opaque
+    data:
+      - objectName: SQL_DB_PASSWORD
+        key: SQL_DB_PASSWORD
+      - objectName: APIM_CLIENT_SECRET
+        key: APIM_CLIENT_SECRET
+      - objectName: INTROSPECTION_ADMIN_PASSWORD
+        key: INTROSPECTION_ADMIN_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: choreo-proxy-deployer-db-mssql-password
+          objectType: secret
+          objectAlias: SQL_DB_PASSWORD
+          objectVersion: "{{.SQL_DB_PASSWORD}}"
+        - |
+          objectName: proxy-deployer-apim-secret
+          objectType: secret
+          objectAlias: APIM_CLIENT_SECRET
+          objectVersion: "{{.APIM_CLIENT_SECRET}}"
+        - |
+          objectName: apim-super-admin-password
+          objectType: secret
+          objectAlias: INTROSPECTION_ADMIN_PASSWORD
+          objectVersion: "{{.INTROSPECTION_ADMIN_PASSWORD}}"

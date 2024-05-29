@@ -7,8 +7,8 @@ spec:
   - secretName: secret-ai-storage-table
     type: Opaque
     data:
-      - objectName: TABLE_CONNECTION_STRING
-        key: TABLE_CONNECTION_STRING
+     - objectName: TABLE_CONNECTION_STRING
+       key: TABLE_CONNECTION_STRING
  parameters:
   objects: |
    array:
