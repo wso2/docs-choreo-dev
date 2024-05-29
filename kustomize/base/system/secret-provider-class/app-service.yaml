@@ -92,7 +92,7 @@ spec:
           objectName: app-service-PARDOT-SF-NEW-LEAD-CREATION-APP-KEY
           objectType: secret
           objectAlias: SALESFORCE_LEAD_VIA_PARDOT_APP_KEY
-          objectVersion: "{{.USALESFORCE_LEAD_VIA_PARDOT_APP_KEY}}"
+          objectVersion: "{{.SALESFORCE_LEAD_VIA_PARDOT_APP_KEY}}"
         - |
           objectName: app-service-PARDOT-SF-NEW-LEAD-CREATION-APP-SECRET
           objectType: secret
