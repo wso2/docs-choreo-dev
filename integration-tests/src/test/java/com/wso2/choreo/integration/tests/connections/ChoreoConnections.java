@@ -45,6 +45,7 @@ import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.marketplace.ConnectionCreateRequest;
 import com.wso2.choreo.integration.models.marketplace.ServiceInfo;
+import com.wso2.choreo.integration.models.marketplace.ServiceStatus;
 import com.wso2.choreo.integration.models.marketplace.ServiceVisibility;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
@@ -255,6 +256,20 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         ComponentDeploymentStatusDTO servicePromotionStatusDTO = statusDTO.get(0);  // we'll consider only the first promotion
 
     }
+
+    @Test(dependsOnMethods = {"promoteServicePublisherComponent_TestChoreoConnections"})
+    @CitrusTest
+    public void verifyServiceStatus_TestChoreoConnections() throws Exception {
+        ServiceInfo serviceFound = ConnectionService.FindService(citrusClients,
+                this, accessToken, SVC_COMPONENT_SERVICE_NAME, NETWORK_VISIBILITY_FILTER,"");
+        if (serviceFound == null) {
+            throw new ValidationException("Service not found");
+        }
+        if (serviceFound.getStatus() != ServiceStatus.PUBLISHED) {
+            throw new ValidationException("Service is not in active state");
+        }
+    }
+
     @Test(dependsOnMethods = {"promoteServicePublisherComponent_TestChoreoConnections"})
     @CitrusTest
     public void refreshComponentLevelConnection_TestChoreoConnections() throws Exception {
@@ -694,6 +709,20 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     public void PromoteProxyPublisherComponent_TestChoreoConnections() throws Exception {
         ComponentUtils.promoteProxyComponent(this, citrusClients, accessToken, proxyComponent,
                 proxyPublisherComponentEnvironments, proxyAPIBuild);
+    }
+
+    @Test(dependsOnMethods = {"PromoteProxyPublisherComponent_TestChoreoConnections"})
+    @CitrusTest
+    public void VerifyServiceStatusForProxyPromotion_TestChoreoConnections() throws Exception {
+        ServiceInfo serviceFound = ConnectionService.FindService(citrusClients, this, accessToken,
+                proxyComponent.getName(), PUBLIC_SERVICE.toLowerCase(), "");
+
+        if (serviceFound == null) {
+            throw new ValidationException("Service not found");
+        }
+        if (serviceFound.getStatus() != ServiceStatus.PUBLISHED) {
+            throw new ValidationException("Service is not in published state");
+        }
     }
     
     @Test(dependsOnMethods = {"PromoteProxyPublisherComponent_TestChoreoConnections"})

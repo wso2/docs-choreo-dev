@@ -315,4 +315,33 @@ public class DevopsPortalApi extends ControlPlaneAPI {
     }
 
     
+
+    public static void configureWebappShortUrl(TestActionRunner runner, String accessToken, String componentId,
+                                              String releaseId, String orgUuid, String projectId, String shortUrl) {
+
+        final String url = "/components/" + componentId + "/release/" + releaseId + "/cdp-webapp-short-url";
+        Map<String, String> payloadMap = new HashMap<>();
+        payloadMap.put("short_url_name", shortUrl);
+        String payload = ObjectMapperUtil.mapObjectToString(payloadMap);
+
+        runner.$(repeatOnError()
+                .until("i = 3")
+                .index("i")
+                .autoSleep(5000)
+                .actions((http().client(DEVOPS_ENDPOINT)
+                        .send()
+                        .put(url)
+                        .queryParam("organization_id", orgUuid)
+                        .queryParam("project_id", projectId)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(payload)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)))));
+
+        runner.$(http()
+                .client(DEVOPS_ENDPOINT)
+                .receive()
+                .response(HttpStatus.OK));
+    }
 }
