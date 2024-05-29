@@ -4,13 +4,13 @@ metadata:
   name: secret-azure-storage-account
 spec:
   secretObjects:
-  - secretName: secret-azure-storage-account
-    type: Opaque
-    data:
-      - objectName: azurestorageaccountkey
-        key: azurestorageaccountkey
-      - objectName: azurestorageaccountname
-        key: azurestorageaccountname
+    - secretName: secret-azure-storage-account
+      type: Opaque
+      data:
+        - objectName: azurestorageaccountkey
+          key: azurestorageaccountkey
+        - objectName: azurestorageaccountname
+          key: azurestorageaccountname
   parameters:
     objects: |
       array:

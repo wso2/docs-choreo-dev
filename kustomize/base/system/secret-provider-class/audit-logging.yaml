@@ -4,15 +4,15 @@ metadata:
   name: secret-audit-logging # please do not reuse this as there are throttling limits per AD app
 spec:
   secretObjects:
-  - secretName: secret-audit-logging
-    type: Opaque
-    data:
-      - objectName: CHOREO_STS_CLIENT_SECRET
-        key: CHOREO_STS_CLIENT_SECRET
-      - objectName: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
-        key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
+    - secretName: secret-audit-logging
+      type: Opaque
+      data:
+        - objectName: CHOREO_STS_CLIENT_SECRET
+          key: CHOREO_STS_CLIENT_SECRET
+        - objectName: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
+          key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: audit-logging-CHOREO-STS-CLIENT-SECRET

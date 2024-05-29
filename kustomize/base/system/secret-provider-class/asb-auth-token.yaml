@@ -10,7 +10,7 @@ spec:
         - objectName: ASB_AUTH_TOKEN
           key: ASB_AUTH_TOKEN
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: subscriptions-asb-auth-token

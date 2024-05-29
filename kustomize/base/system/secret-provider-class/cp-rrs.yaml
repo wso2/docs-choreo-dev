@@ -17,4 +17,3 @@ spec:
           objectType: secret
           objectAlias: CP_RRS_ASB_CONNECTION_STRING
           objectVersion: "{{.CP_RRS_ASB_CONNECTION_STRING}}"
-

@@ -4,15 +4,15 @@ metadata:
   name: secret-choreo-apim-proxy-deployer
 spec:
   secretObjects:
-  - secretName: secret-choreo-apim-proxy-deployer
-    type: Opaque
-    data:
-      - objectName: SQL_DB_PASSWORD
-        key: SQL_DB_PASSWORD
-      - objectName: APIM_CLIENT_SECRET
-        key: APIM_CLIENT_SECRET
-      - objectName: INTROSPECTION_ADMIN_PASSWORD
-        key: INTROSPECTION_ADMIN_PASSWORD
+    - secretName: secret-choreo-apim-proxy-deployer
+      type: Opaque
+      data:
+        - objectName: SQL_DB_PASSWORD
+          key: SQL_DB_PASSWORD
+        - objectName: APIM_CLIENT_SECRET
+          key: APIM_CLIENT_SECRET
+        - objectName: INTROSPECTION_ADMIN_PASSWORD
+          key: INTROSPECTION_ADMIN_PASSWORD
   parameters:
     objects: |
       array:

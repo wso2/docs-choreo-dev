@@ -21,4 +21,3 @@ spec:
           objectType: secret
           objectAlias: CRYPTO_SERVICE_INGRESS_TLS_CERTIFICATE_KEYSTORE
           objectVersion: "{{.CRYPTO_SERVICE_INGRESS_TLS_CERTIFICATE_KEYSTORE}}"
-          

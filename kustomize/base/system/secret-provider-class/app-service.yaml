@@ -18,7 +18,7 @@ spec:
         - objectName: MARKETING_CONSENT_APP_CLIENT_SECRET
           key: MARKETING_CONSENT_APP_CLIENT_SECRET
         - objectName: ASGARDEO_CLIENT_SECRET
-          key: ASGARDEO_CLIENT_SECRET 
+          key: ASGARDEO_CLIENT_SECRET
         - objectName: IDP_APP_CLIENT_SECRET
           key: IDP_APP_CLIENT_SECRET
         - objectName: AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY
@@ -108,4 +108,3 @@ spec:
           objectType: secret
           objectAlias: MAX_MIND_GEO_LOC_COUNTRY_PASSWORD
           objectVersion: "{{.MAX_MIND_GEO_LOC_COUNTRY_PASSWORD}}"
-

@@ -4,11 +4,11 @@ metadata:
   name: secret-choreo-url-management
 spec:
   secretObjects:
-  - secretName: secret-choreo-url-management
-    type: Opaque
-    data:
-      - objectName: DATABASE_PASSWORD
-        key: DATABASE_PASSWORD
+    - secretName: secret-choreo-url-management
+      type: Opaque
+      data:
+        - objectName: DATABASE_PASSWORD
+          key: DATABASE_PASSWORD
   parameters:
     objects: |
       array:

@@ -4,11 +4,11 @@ metadata:
   name: secret-cp-gw-adapter
 spec:
   secretObjects:
-  - secretName: secret-cp-gw-adapter
-    type: Opaque
-    data:
-      - objectName: SQL_DB_PASSWORD
-        key: SQL_DB_PASSWORD
+    - secretName: secret-cp-gw-adapter
+      type: Opaque
+      data:
+        - objectName: SQL_DB_PASSWORD
+          key: SQL_DB_PASSWORD
   parameters:
     objects: |
       array:
