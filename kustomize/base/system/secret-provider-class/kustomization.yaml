@@ -43,7 +43,6 @@ resources:
   - cp-gw-adapter.yaml
   - cp-rrs.yaml
   - crypto-key-service.yaml
-  - crypto-key-service-ingress-tls.yaml
 
 patches:
   - path: patch.json
