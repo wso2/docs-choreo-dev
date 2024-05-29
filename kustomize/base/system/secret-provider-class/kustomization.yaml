@@ -10,8 +10,16 @@
 # --------------------------------------------------------------------------------------
 
 resources:
-  - identity-server.yaml
-  - idp-carbon-keystore.yaml
+  - ai-eventhub-checkpoint.yaml
+  - ai-eventhub-metrics.yaml
+  - ai-lowcode-parser.yaml
+  - ai-storage-table.yaml
+  - alert-configuration-service.yaml
+  - alert-notification-service.yaml
+  - api-manager.yaml
+  - apim-service.yaml
+  - app-db.yaml
+  - app-deployer.yaml
 
 patches:
   - path: patch.json
