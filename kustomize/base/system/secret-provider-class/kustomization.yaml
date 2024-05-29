@@ -32,7 +32,6 @@ resources:
   - choreo-admin-api.yaml
   - choreo-apim-proxy-deployer.yaml
   - choreo-marketplace.yaml
-  - choreo-platform-services-manager.yaml
   - choreo-url-management.yaml
   - cio-event-collector-service.yaml
   - cio-incident-configurator.yaml
