@@ -18,9 +18,9 @@ spec:
           objectName: fileshare-STORAGE-ACCOUNT-KEY
           objectType: secret
           objectAlias: azurestorageaccountkey
-          objectVersion:  "{{.azurestorageaccountkey}}"
+          objectVersion: "{{.azurestorageaccountkey}}"
         - |
           objectName: fileshare-STORAGE-ACCOUNT-NAME
           objectType: secret
           objectAlias: azurestorageaccountname
-          objectVersion:  "{{.azurestorageaccountname}}"
+          objectVersion: "{{.azurestorageaccountname}}"

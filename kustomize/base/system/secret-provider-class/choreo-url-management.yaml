@@ -15,5 +15,5 @@ spec:
         - |
           objectName: choreo-url-mgt-db-mssql-password
           objectType: secret
-          objectAlias:
+          objectAlias: DATABASE_PASSWORD
           objectVersion: "{{.DATABASE_PASSWORD}}"
