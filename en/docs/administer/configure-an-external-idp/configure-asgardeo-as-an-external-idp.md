@@ -12,7 +12,7 @@ Before you proceed, be sure to complete the following:
   Go to the **info** tab of the Asgardeo application to view the endpoints and copy the **Discovery** endpoint.
 
 - Find the Client ID:
-  Go to the **info** tab of the Asgardeo application to view the endpoints and copy the **Client ID**.
+  Go to the **Protcol** tab of the Asgardeo application and copy the **Client ID**.
 
 ## Add Asgardeo as an external IdP in Choreo
 
