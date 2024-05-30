@@ -74,7 +74,7 @@ defaultAutoCommit = "true"
 removeAbandoned = "true"
 removeAbandonedTimeout = "180"
 logAbandoned = "true"
-jdbcInterceptors="SlowQueryReport(threshold=200)"
+jdbcInterceptors="{{.SHARED_DB_JDBS_INTERCEPTORS}}"
 
 [database.user]
 url = "{{.DB_URL}}"

@@ -1,8 +1,8 @@
-package com.wso2.choreo.integration.common.keymanager;
+package com.wso2.choreo.integration.common.keysetmanagement;
 
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.http.client.HttpClient;
-import com.wso2.choreo.integration.apis.keymanager.KeyManagerService;
+import com.wso2.choreo.integration.apis.keysetmanagement.KeysetManagementService;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.models.keymanager.OAuthAppUpdateResponseDTO;
 import com.wso2.choreo.integration.models.keymanager.IdpAddRequestDTO;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Utility class for Key Manager related tests.
  */
-public class KeyManagerUtils {
+public class KeysetManagementUtils {
 
     /**
      * Update OAuth App configuration.
@@ -37,7 +37,7 @@ public class KeyManagerUtils {
             String oAuthAppId, HashMap<String, Object> configUpdateRequest)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
-        return KeyManagerService.updateKeysetConfigurations(runner, client, oAuthAppId, configUpdateRequest);
+        return KeysetManagementService.updateKeysetConfigurations(runner, client, oAuthAppId, configUpdateRequest);
     }
 
     /**
@@ -55,7 +55,7 @@ public class KeyManagerUtils {
             String environmentId)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
-        return KeyManagerService.getKeyManagersAsAdmin(runner, client, environmentId).getList();
+        return KeysetManagementService.getKeyManagersAsAdmin(runner, client, environmentId).getList();
     }
 
     /**
@@ -73,7 +73,7 @@ public class KeyManagerUtils {
             String environmentId)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
-        return KeyManagerService.getKeyManagersAsPublisher(runner, client, environmentId).getList();
+        return KeysetManagementService.getKeyManagersAsPublisher(runner, client, environmentId).getList();
     }
 
     /**
@@ -94,7 +94,7 @@ public class KeyManagerUtils {
     public static IdpDiscoveryResponseDTO getDiscoveryInfo(String wellKnownURL, String type)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
-        return KeyManagerService.getDiscoveryInfo(wellKnownURL, type);
+        return KeysetManagementService.getDiscoveryInfo(wellKnownURL, type);
     }
 
     /**
@@ -109,7 +109,7 @@ public class KeyManagerUtils {
     public static IdpAddResponseDTO addExternalIdp(IdpAddRequestDTO requestPayload)
             throws URISyntaxException, TokenRetrievalException, IOException {
 
-        return KeyManagerService.addExternalIdp(requestPayload);
+        return KeysetManagementService.addExternalIdp(requestPayload);
     }
 
     /**
@@ -123,6 +123,6 @@ public class KeyManagerUtils {
     public static List<KeyManager> getKeyManagersListAsAdmin()
             throws URISyntaxException, IOException, TokenRetrievalException {
 
-        return KeyManagerService.getKeyManagersListAsAdmin().getList();
+        return KeysetManagementService.getKeyManagersListAsAdmin().getList();
     }
 }

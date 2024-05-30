@@ -1,0 +1,19 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-asb-token
+spec:
+  secretObjects:
+    - secretName: secret-asb-token
+      type: Opaque
+      data:
+        - objectName: ASB_AUTH_TOKEN
+          key: ASB_AUTH_TOKEN
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: subscriptions-asb-auth-token
+          objectType: secret
+          objectAlias: ASB_AUTH_TOKEN
+          objectVersion: "{{.ASB_AUTH_TOKEN}}"

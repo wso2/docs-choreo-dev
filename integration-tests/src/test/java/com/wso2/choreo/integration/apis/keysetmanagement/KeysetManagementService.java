@@ -11,7 +11,7 @@
  * associated services.
  */
 
-package com.wso2.choreo.integration.apis.keymanager;
+package com.wso2.choreo.integration.apis.keysetmanagement;
 
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.http.client.HttpClient;
@@ -52,7 +52,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 /**
  * Service class for Key Manager service.
  */
-public class KeyManagerService {
+public class KeysetManagementService {
 
     private static String APIM_APPDEV_BASE_PATH = "apim-appdev/v1.0/sts";
     private static String KEY_MANAGER_PUBLISHER_BASE_PATH = "api/am/publisher/v3/key-managers";

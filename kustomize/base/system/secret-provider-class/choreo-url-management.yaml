@@ -1,0 +1,19 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-choreo-url-management
+spec:
+  secretObjects:
+    - secretName: secret-choreo-url-management
+      type: Opaque
+      data:
+        - objectName: DATABASE_PASSWORD
+          key: DATABASE_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: choreo-url-mgt-db-mssql-password
+          objectType: secret
+          objectAlias: DATABASE_PASSWORD
+          objectVersion: "{{.DATABASE_PASSWORD}}"
