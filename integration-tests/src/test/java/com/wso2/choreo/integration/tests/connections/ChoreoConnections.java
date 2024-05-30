@@ -649,8 +649,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
             throw new ValidationException("connections-publisher-component is not in active state");
         }
         if(deployedPublisherComponentStatus == null){
-            ComponentUtils.deployComponent(this, citrusClients, accessToken, deployedPublisherComponent,
-                    environments, ComponentFlavour.BYOC);
+            deployedPublisherComponentStatus = ComponentUtils.deployComponent(this, citrusClients, accessToken,
+                    deployedPublisherComponent, environments, ComponentFlavour.BYOC);
         }
         Commit clientLatestCommit = ComponentUtils.getLatestCommit(this, citrusClients, accessToken, deployedPublisherComponent);
         ComponentDeploymentStatusDTO deployedClientComponentStatus = ComponentUtils.validateComponentDeployment(this,citrusClients,accessToken,createdClientComponent,clientLatestCommit,environments,true);
@@ -659,6 +659,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         }
         if(deployedClientComponentStatus == null){
             ChoreoProject project = ComponentUtils.getProjectByName(DEPLOYED_COMPONENTS_PROJECT_NAME,accessToken);
+            ComponentUtils.validateEndpoints(this, citrusClients, accessToken, deployedPublisherComponent,
+                    deployedPublisherComponentStatus);
             ConnectionService.createAndUseConnection(this,citrusClients,accessToken,deployedPublisherComponent.getName(),PUBLIC_SERVICE,project.getId(),createdClientComponent.getId(),environments,environments,repoName,"dev");
             deployedClientComponentStatus = ComponentUtils.deployComponent(this, citrusClients, accessToken,
                     createdClientComponent, environments, ComponentFlavour.BYOC);
@@ -741,14 +743,14 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"refreshConnectionConfigurationsForProxyBasedConnection_TestChoreoConnections"})
     @CitrusTest
-    public void PromoteClientComponent_TestChoreoConnections() throws Exception {
+    public void promoteClientComponentForProxy_TestChoreoConnections() throws Exception {
         List<ComponentDeploymentStatusDTO> newClientStatusDTO = ComponentUtils.promoteComponent(this,
                 citrusClients, accessToken, newClientChoreoComponent,
                 newClientComponentEnvironments, ComponentFlavour.BYOC, projectOne);
         newClientPromotionStatusDTO = newClientStatusDTO.get(0);
     }
 
-    @Test(dependsOnMethods = {"PromoteClientComponent_TestChoreoConnections"})
+    @Test(dependsOnMethods = {"promoteClientComponentForProxy_TestChoreoConnections"})
     @CitrusTest
     public void invokeAPIStageForProxyBasedConnection_TestChoreoConnections() throws Exception {
         Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
