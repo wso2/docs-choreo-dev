@@ -14,7 +14,9 @@
 package com.wso2.choreo.integration.apis.proxydeployer;
 
 import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
+import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.consol.citrus.message.MessageType;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
@@ -219,6 +221,11 @@ public class ProxyDeployer extends ControlPlaneAPI {
                                 .message()
                                 .type(MessageType.JSON)
                                 .validate((message, context) -> {
+                                    int responseCode = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (responseCode != HttpStatus.OK.value()) {
+                                        throw new ValidationException(String.format("Too many successive calls with response code %s," +
+                                                " expected response code %s", responseCode, HttpStatus.OK.value()));
+                                    }
                                     build.set(ObjectMapperUtil.mapStringToObject(TestSessionResponse.class,
                                             message.getPayload(String.class), ""));
                                 })));
@@ -268,6 +275,13 @@ public class ProxyDeployer extends ControlPlaneAPI {
                                 .receive()
                                 .response(HttpStatus.CREATED)
                                 .message()
-                                .type(MessageType.JSON)));
+                                .type(MessageType.JSON)
+                                .validate((message, context) -> {
+                                    int responseCode = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (responseCode != HttpStatus.CREATED.value()) {
+                                        throw new ValidationException(String.format("Too many successive calls with response code %s," +
+                                                " expected response code %s", responseCode, HttpStatus.CREATED.value()));
+                                    }
+                                })));
     }
 }
