@@ -29,7 +29,6 @@ import com.wso2.choreo.integration.apis.configmgt.ConfigManagement;
 import com.wso2.choreo.integration.models.graphql.CreateNewDeploymentTrackResponseDTO;
 import com.wso2.choreo.integration.apis.devops.DevopsPortalApi;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
-import com.wso2.choreo.integration.apis.keymanager.KeyManagerService;
 import com.wso2.choreo.integration.apis.observability.AuditLogsService;
 import com.wso2.choreo.integration.apis.observability.DPObsApiService;
 import com.wso2.choreo.integration.apis.proxydeployer.ProxyDeployer;
@@ -68,6 +67,7 @@ import com.wso2.choreo.integration.models.proxyapi.Build;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
 import com.wso2.choreo.integration.models.proxyapi.ProxyDeployment;
+import com.wso2.choreo.integration.models.proxyapi.TestSessionResponse;
 import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.revision.RevisionWrapper;
 import com.wso2.choreo.integration.models.webhook.Trigger;
@@ -942,6 +942,42 @@ public class ComponentUtils {
     }
 
     /**
+     * Invoke API GET with validation for internal endpoint testing.
+     *
+     * @param runner           Test action runner
+     * @param apiKey           API Key
+     * @param invokeUrl        Invoke URL
+     * @param testSessionId    Test session ID
+     * @param resource         API Resource
+     * @param expectedResponse Expected response
+     */
+    public static void invokeApiGET(TestActionRunner runner, String apiKey, String invokeUrl, String testSessionId ,String resource,
+                                    String expectedResponse) throws Exception {
+        // Test API Invocation
+        runner.$(repeatOnError()
+                .until("i = 12")
+                .index("i")
+                .autoSleep(5000)
+                .actions((http()
+                                .client(invokeUrl)
+                                .send()
+                                .get(resource)
+                                .message()
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .header("API-Key", apiKey))
+                                .header("x-choreo-test-session-id", testSessionId),
+                        http()
+                                .client(invokeUrl)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                                .body(expectedResponse)));
+
+        TimeUnit.SECONDS.sleep(2);
+    }
+
+    /**
      * Invoke API POST with validation
      *
      * @param runner           Test action runner
@@ -1055,6 +1091,41 @@ public class ComponentUtils {
         Endpoint endpoint = endpoints.get(0);
         String apimId = endpoint.getApimId();
         String invokeUrl = endpoint.getPublicUrl();
+
+        Optional<Environment> matchingAPIMEnv = environments.stream()
+                .filter(env -> env.getId().equals(statusDTO.getEnvironmentId())).findFirst();
+
+        if (matchingAPIMEnv.isPresent()) {
+            Environment apimEnv = matchingAPIMEnv.get();
+            KeyData apiKey = ApiManager.getApiKey(runner, citrusClients.get(Endpoints.STS_ENDPOINT),
+                    accessToken, apimId, ComponentUtils.getKeyType(apimEnv));
+            return Pair.of(invokeUrl, apiKey);
+        } else {
+            throw new RuntimeException("Env id " + statusDTO.getEnvironmentId() +
+                    " does not exist in the list of envs " + environments);
+        }
+    }
+
+    /**
+     * getInvokeInfoInternalEndpoint returns the API invocation data for internal endpoint testing.
+     *
+     * @param runner - TestNGCitrusSpringSupport runner
+     * @param citrusClients - Map<Endpoints, HttpClient> citrusClients
+     * @param accessToken - Access Token
+     * @param component - Choreo component
+     * @param statusDTO - Choreo component deployment status
+     * @param environments - Choreo component environments
+     * @return Pair<String, KeyData>
+     * @throws Exception
+     */
+    public static Pair<String, KeyData> getInvokeInfoInternalEndpoint(TestNGCitrusSpringSupport runner,
+                                                      Map<Endpoints, HttpClient> citrusClients,
+                                                      String accessToken, ChoreoComponent component, ComponentDeploymentStatusDTO statusDTO,
+                                                      List<Environment> environments) throws Exception {
+        List<Endpoint> endpoints = getEndpoints(runner, citrusClients, accessToken, component, statusDTO);
+        Endpoint endpoint = endpoints.get(0);
+        String apimId = endpoint.getApimId();
+        String invokeUrl = endpoint.getOrganizationUrl();
 
         Optional<Environment> matchingAPIMEnv = environments.stream()
                 .filter(env -> env.getId().equals(statusDTO.getEnvironmentId())).findFirst();
@@ -1487,5 +1558,56 @@ public class ComponentUtils {
 
         DevopsPortalApi.configureWebappShortUrl(runner, accessToken, componentId, prodReleaseId, orgUuid, projectId, 
             shortUrl);
+    }
+
+    /**
+     * generateTestSession generates a test session for a given internal endpoint for a given user.
+     *
+     * @param runner - TestNGCitrusSpringSupport runner
+     * @param citrusClients - Map<Endpoints,HttpClient> citrusClients
+     * @param accessToken - Access Token
+     * @param choreoComponent - Choreo component
+     * @param environments - Choreo component environment
+     * @param endpoints - Choreo component endpoints
+     * @param userIdpId - User IDP ID
+     * @return TestSessionResponse
+     * @throws Exception
+     */
+    public static TestSessionResponse generateTestSession(TestNGCitrusSpringSupport runner, Map<Endpoints,HttpClient> citrusClients,
+                                                          String accessToken, ChoreoComponent choreoComponent,
+                                                          List<Environment> environments, List<Endpoint> endpoints,
+                                                          String userIdpId) throws Exception {
+        HttpClient proxyDeployerClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
+        String componentId = choreoComponent.getId();
+        String environmentId = environments.get(0).getId();
+        String endpointId = endpoints.get(0).getId();
+
+        return ProxyDeployer.generateTestSession(runner, proxyDeployerClient, accessToken, componentId, environmentId,
+                userIdpId, endpointId, "Organization");
+    }
+
+    /**
+     * deleteTestSession deletes the test session for a given session id.
+     *
+     * @param runner - TestNGCitrusSpringSupport runner
+     * @param citrusClients - Map<Endpoints,HttpClient> citrusClients
+     * @param accessToken - Access Token
+     * @param choreoComponent - Choreo component
+     * @param environments - Choreo component environment
+     * @param endpoints - Choreo component endpoints
+     * @param userIdpId - User IDP ID
+     * @param sessionId - Test session ID
+     */
+    public static void deleteTestSession(TestNGCitrusSpringSupport runner, Map<Endpoints,HttpClient> citrusClients,
+                                         String accessToken, ChoreoComponent choreoComponent,
+                                         List<Environment> environments, List<Endpoint> endpoints,
+                                         String userIdpId, String sessionId) {
+        HttpClient proxyDeployerClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
+        String componentId = choreoComponent.getId();
+        String environmentId = environments.get(0).getId();
+        String endpointId = endpoints.get(0).getId();
+
+        ProxyDeployer.deleteTestSession(runner, proxyDeployerClient, accessToken, componentId, environmentId,
+                userIdpId, endpointId, sessionId);
     }
 }
