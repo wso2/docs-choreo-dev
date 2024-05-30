@@ -10,5 +10,6 @@ resources:
   - cron
   - config
   - netpol
+  - secret-provider-class
 
 namespace: choreo-system

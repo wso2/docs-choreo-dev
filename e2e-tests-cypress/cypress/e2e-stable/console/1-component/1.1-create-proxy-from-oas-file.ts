@@ -13,7 +13,10 @@
 
 import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
-import { Proxy } from "../../../support/console/entities/component/proxy-component";
+import {
+  Proxy,
+  ProxyMetaData,
+} from "../../../support/console/entities/component/proxy-component";
 import { Enums, UsagePlan } from "../../../support/commons/enums";
 import { OK } from "../../../support/commons/http";
 import { Application } from "../../../support/console/entities/application/application";
@@ -48,11 +51,21 @@ describe("Create Proxy from OAS file", () => {
       })
       .then((comp) => {
         proxy = comp;
+        // Since we are switching domains when navigating to devportal url we will no longer have access to the proxy object
+        // So we need to save the proxy metadata in nodejs global state using below cy.task() to access it later
+        cy.task("setData", {
+          key: Cypress.spec.name, // Unique key to store the data, in this case spec name is sufficient
+          value: proxy.getMetaData(),
+        });
       });
   });
 
   it("Deploy proxy", () => {
     proxy.deploy();
+  });
+
+  it("Promote proxy", () => {
+    proxy.promote();
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -69,10 +82,6 @@ describe("Create Proxy from OAS file", () => {
       .then((res) => {
         expect(res.status).equal(OK);
       });
-  });
-
-  it("Promote proxy", () => {
-    proxy.promote();
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
@@ -120,7 +129,15 @@ describe("Create Proxy from OAS file", () => {
   });
 
   it("Navigate to Dev portal", () => {
-    proxy.navigateToDevPortal();
+    devPortal.loginToDevPortal();
+    // Recreate Proxy object using previously saved metadata
+    cy.task("getData", Cypress.spec.name).then((metaData) => {
+      proxy = Proxy.fromMetaData(metaData as ProxyMetaData);
+    });
+  });
+
+  it("Find API in devportal custom domain", () => {
+    devPortal.searchApi(proxy.getName());
   });
 
   it("Create application in Dev portal", () => {

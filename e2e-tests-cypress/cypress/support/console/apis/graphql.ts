@@ -288,6 +288,18 @@ export class GraphQL {
     });
   }
 
+  static isProjectExists(projectName: string): Cypress.Chainable<boolean> {
+    return this.getProjectsV2().then((response) => {
+      let isFound = false;
+      if (response.status === OK) {
+        isFound = response.projects.find((p) => p.name === projectName)
+          ? true
+          : false;
+      }
+      return isFound;
+    });
+  }
+
   private static deleteComponentsInProject(
     projectId: string,
     orgHandle: string,
@@ -420,9 +432,9 @@ export class GraphQL {
     });
   }
 
-  static getProjectsV2(orgId: number) {
+  static getProjectsV2() {
     const query = {
-      query: `query{projects(orgId: ${orgId}){ id, orgId, name, version, createdDate,handler }}`,
+      query: `query{projects(orgId: ${login.getOrgId()}){ id, orgId, name, version, createdDate,handler }}`,
     };
     return this.callGraphQLV2(query).then((res) => {
       const projects = res.body.projects as Project[];

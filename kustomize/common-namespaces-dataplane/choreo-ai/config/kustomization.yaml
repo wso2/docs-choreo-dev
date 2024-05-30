@@ -34,12 +34,15 @@ configMapGenerator:
       - CP_API_URL={{.CP_API_URL}}
       - AZURE_OPENAI_ENDPOINT={{.AZURE_OPENAI_ENDPOINT}}
       - REGION={{.REGION}}
+      - ORG_API_URL={{.ORG_API_URL}}
+      - LOG_LEVEL={{.LOG_LEVEL}}
   - name: env-docs-assistant
     behavior: create
     literals:
       - AZURE_OPENAI_ENDPOINT={{.AZURE_OPENAI_ENDPOINT}}
       - CP_AZURE_OPENAI_ENDPOINT={{.CP_AZURE_OPENAI_ENDPOINT | default "https://eastus2.api.cognitive.microsoft.com/" }}
       - ZILLIZ_CLOUD_URI={{.ZILLIZ_CLOUD_URI}}
+      - ENABLED_RERANKER={{.ENABLED_RERANKER}}
   - name: env-marketplace-assistant-cm
     behavior: create
     literals:

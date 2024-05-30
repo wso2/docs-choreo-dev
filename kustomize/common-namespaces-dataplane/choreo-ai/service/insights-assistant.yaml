@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: insights-assistant
+  name: insights-assistant
+spec:
+  ports:
+    - name: ins-asst-port
+      port: 8080
+      targetPort: ins-asst-port
+  selector:
+    choreo.component: insights-assistant

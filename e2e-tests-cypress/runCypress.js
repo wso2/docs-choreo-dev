@@ -1,16 +1,17 @@
 
 const cypress = require('cypress');
 const { exec } = require('child_process');
+process.env['ELECTRON_EXTRA_LAUNCH_ARGS'] = '--remote-debugging-port=9222';
 
-const usersCount = 1;
-const startingNumber = 256;
+const usersCount = 25;
+const startingNumber = 5510;
 //const usernamePrefix = 'wso2con1AdminTenant';
 const usernamePrefix = 'perfAdmin';
 
  // Define test spec
  const testMethods = [
     {spec: 'cypress/e2e-stable/perf/0.1-con-perf-test.ts'}
-   // {spec: 'cypress/e2e-stable/console/1-component/perf/0.2-con-perf-test-webapp.ts'}
+   //  {spec: 'cypress/e2e-stable/perf/0.2-con-perf-test-webapp.ts'}
 ];
 
 

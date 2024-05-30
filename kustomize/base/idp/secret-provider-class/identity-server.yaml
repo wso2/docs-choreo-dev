@@ -1,0 +1,117 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-identity-server
+spec:
+  secretObjects:
+    - secretName: secret-identity-server
+      type: Opaque
+      data:
+        - objectName: ANONYMOUS_USERSTORE_PASSWORD
+          key: ANONYMOUS_USERSTORE_PASSWORD
+        - objectName: SUPER_ADMIN_USERNAME
+          key: SUPER_ADMIN_USERNAME
+        - objectName: SUPER_ADMIN_PASSWORD
+          key: SUPER_ADMIN_PASSWORD
+        - objectName: DB_USERNAME
+          key: DB_USERNAME
+        - objectName: DB_PASSWORD
+          key: DB_PASSWORD
+        - objectName: SHARED_DB_USERNAME
+          key: SHARED_DB_USERNAME
+        - objectName: SHARED_DB_PASSWORD
+          key: SHARED_DB_PASSWORD
+        - objectName: BPS_DB_USERNAME
+          key: BPS_DB_USERNAME
+        - objectName: BPS_DB_PASSWORD
+          key: BPS_DB_PASSWORD
+        - objectName: USERSTORE_DB_USERNAME
+          key: USERSTORE_DB_USERNAME
+        - objectName: USERSTORE_DB_PASSWORD
+          key: USERSTORE_DB_PASSWORD
+        - objectName: CONFIG_DB_USERNAME
+          key: CONFIG_DB_USERNAME
+        - objectName: CONFIG_DB_PASSWORD
+          key: CONFIG_DB_PASSWORD
+        - objectName: KEYSTORE_PRIMARY_PASSWORD
+          key: KEYSTORE_PRIMARY_PASSWORD
+        - objectName: KEYSTORE_INTERNAL_PASSWORD
+          key: KEYSTORE_INTERNAL_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: idp-ANONYMOUS-USERSTORE-PASSWORD
+          objectType: secret
+          objectAlias: ANONYMOUS_USERSTORE_PASSWORD
+          objectVersion: "{{.ANONYMOUS_USERSTORE_PASSWORD}}"
+        - |
+          objectName: idp-SUPER-ADMIN-USERNAME
+          objectType: secret
+          objectAlias: SUPER_ADMIN_USERNAME
+          objectVersion: "{{.SUPER_ADMIN_USERNAME}}"
+        - |
+          objectName: idp-SUPER-ADMIN-PASSWORD
+          objectType: secret
+          objectAlias: SUPER_ADMIN_PASSWORD
+          objectVersion: "{{.SUPER_ADMIN_PASSWORD}}"
+        - |
+          objectName: idp-DB-USERNAME
+          objectType: secret
+          objectAlias: DB_USERNAME
+          objectVersion: "{{.DB_USERNAME}}"
+        - |
+          objectName: idp-DB-PASSWORD
+          objectType: secret
+          objectAlias: DB_PASSWORD
+          objectVersion: "{{.DB_PASSWORD}}"
+        - |
+          objectName: idp-SHARED-DB-USERNAME
+          objectType: secret
+          objectAlias: SHARED_DB_USERNAME
+          objectVersion: "{{.SHARED_DB_USERNAME}}"
+        - |
+          objectName: idp-SHARED-DB-PASSWORD
+          objectType: secret
+          objectAlias: SHARED_DB_PASSWORD
+          objectVersion: "{{.SHARED_DB_PASSWORD}}"
+        - |
+          objectName: idp-BPS-DB-USERNAME
+          objectType: secret
+          objectAlias: BPS_DB_USERNAME
+          objectVersion: "{{.BPS_DB_USERNAME}}"
+        - |
+          objectName: idp-BPS-DB-PASSWORD
+          objectType: secret
+          objectAlias: BPS_DB_PASSWORD
+          objectVersion: "{{.BPS_DB_PASSWORD}}"
+        - |
+          objectName: idp-USERSTORE-DB-USERNAME
+          objectType: secret
+          objectAlias: USERSTORE_DB_USERNAME
+          objectVersion: "{{.USERSTORE_DB_USERNAME}}"
+        - |
+          objectName: idp-USERSTORE-DB-PASSWORD
+          objectType: secret
+          objectAlias: USERSTORE_DB_PASSWORD
+          objectVersion: "{{.USERSTORE_DB_PASSWORD}}"
+        - |
+          objectName: idp-CONFIG-DB-USERNAME
+          objectType: secret
+          objectAlias: CONFIG_DB_USERNAME
+          objectVersion: "{{.CONFIG_DB_USERNAME}}"
+        - |
+          objectName: idp-CONFIG-DB-PASSWORD
+          objectType: secret
+          objectAlias: CONFIG_DB_PASSWORD
+          objectVersion: "{{.CONFIG_DB_PASSWORD}}"
+        - |
+          objectName: idp-KEYSTORE-PRIMARY-PASSWORD
+          objectType: secret
+          objectAlias: KEYSTORE_PRIMARY_PASSWORD
+          objectVersion: "{{.KEYSTORE_PRIMARY_PASSWORD}}"
+        - |
+          objectName: idp-KEYSTORE-INTERNAL-PASSWORD
+          objectType: secret
+          objectAlias: KEYSTORE_INTERNAL_PASSWORD
+          objectVersion: "{{.KEYSTORE_INTERNAL_PASSWORD}}"

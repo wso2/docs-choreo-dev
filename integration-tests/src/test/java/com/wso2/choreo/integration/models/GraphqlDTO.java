@@ -27,6 +27,7 @@ public class GraphqlDTO {
     private String apiId;
     private String apiName;
     private String apiVersionId;
+    private String apiVersion;
     private String branch;
     private String componentHandler;
     private String projectHandler;
@@ -68,4 +69,22 @@ public class GraphqlDTO {
     private String buildContext;
     private String buildpackId;
     private String languageVersion;
+    private ByocWebAppsConfig byocWebAppsConfig;
+    private String srcGitRepoBranch;
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    @Data
+    public static class ByocWebAppsConfig {
+        private String dockerContext;
+        private String srcGitRepoUrl;
+        private String srcGitRepoBranch;
+        private String webAppType;
+        private String webAppBuildCommand;
+        private String webAppPackageManagerVersion;
+        private String webAppOutputDirectory;
+        private boolean isAppGatewayEnabled;
+    }
 }
+

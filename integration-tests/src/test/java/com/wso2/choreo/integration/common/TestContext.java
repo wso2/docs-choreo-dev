@@ -17,6 +17,8 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import lombok.Getter;
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeSuite;
 
 /**
@@ -26,24 +28,30 @@ import org.testng.annotations.BeforeSuite;
  */
 public class TestContext {
 
+    private static final Logger log = LogManager.getLogger(TestContext.class);
+
     @Getter
     private static ChoreoOrganization testOrg;
 
     @Getter
     private static TokenHandler testUserTokenHandler;
 
+    @Getter
+    private static TokenHandler resourceAuthzTestUserTokenHandler;
+
     @BeforeSuite
     public void setup() throws Exception {
         Configuration.loadConfigs();
         setTestOrg();
         setTestUserTokenHandler();
+        setResourceAuthzTestUserTokenHandler();
         DataCleaner.removeOldTestData(testOrg);
     }
 
     public static synchronized void setTestOrg() {
         if (testOrg == null) {
             testOrg = new ChoreoOrganization(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE),
-                    Integer.parseInt( Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID)),
+                    Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID)),
                     Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
         }
     }
@@ -64,6 +72,31 @@ public class TestContext {
                         .cpAppClientId(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_ID))
                         .cpAppClientSecret(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_SECRET)).build();
             }
+        }
+    }
+
+    public static synchronized void setResourceAuthzTestUserTokenHandler() {
+
+        try {
+            if (resourceAuthzTestUserTokenHandler == null) {
+                if (!StringUtils.isEmpty(System.getProperty("Token"))) {
+                    log.warn("Test user token is provided. Resource authz tests will be skipped.");
+                    resourceAuthzTestUserTokenHandler = new TokenHandler("");
+                    return;
+                }
+
+                resourceAuthzTestUserTokenHandler = new TokenHandler.Builder(
+                        Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE),
+                        Configuration.getConfig(ConfigDefinition.RESOURCE_AUTHZ_USER_EMAIL),
+                        Configuration.getConfig(ConfigDefinition.RESOURCE_AUTHZ_USER_PASSWORD))
+                        .asgardeoClientId(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_ID))
+                        .asgardeoClientSecret(
+                                Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_SECRET))
+                        .cpAppClientId(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_ID))
+                        .cpAppClientSecret(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_SECRET)).build();
+            }
+        } catch (Exception e) {
+            log.warn("Failed to set resource authz test user token handler", e);
         }
     }
 

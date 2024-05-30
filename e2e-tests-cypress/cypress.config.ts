@@ -1,4 +1,5 @@
 import { defineConfig } from "cypress";
+const { install } = require("@neuralegion/cypress-har-generator");
 
 export default defineConfig({
   projectId: "$CYPRESS_PROJECT_ID",
@@ -21,7 +22,6 @@ export default defineConfig({
           data.set(key as string, value);
           return value;
         },
-
         getData(key) {
           return data.get(key as string);
         },
@@ -34,6 +34,8 @@ export default defineConfig({
       config.env.userEmail = process.env.userEmail;
       config.env.gitPAT = process.env.gitPAT;
       config.env.enableUnifiedMenu = process.env.enableUnifiedMenu;
+      const port = 9222;
+      install(on);
       return config;
     },
     testIsolation: false,

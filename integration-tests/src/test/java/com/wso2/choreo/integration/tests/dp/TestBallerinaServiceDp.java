@@ -73,6 +73,7 @@ public class TestBallerinaServiceDp extends TestBase {
 
         dp.setChoreoComponent(choreoComponent);
         dp.setEnvironments(environments);
+        dp.setChoreoProject(project);
 
         String componentId = choreoComponent.getId();
         Assert.assertNotNull(componentId);
@@ -99,7 +100,7 @@ public class TestBallerinaServiceDp extends TestBase {
     @CitrusTest
     public void promoteComponent_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
         List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients, accessToken, dp.getChoreoComponent(), dp.getEnvironments(),
-                ComponentFlavour.STANDARD);
+                ComponentFlavour.STANDARD, dp.getChoreoProject());
         dp.setPromoteStatusDTO(statusDTO);
     }
 

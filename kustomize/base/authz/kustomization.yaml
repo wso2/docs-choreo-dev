@@ -8,5 +8,6 @@ resources:
   - pdb
   - service
   - service-account
+  - secret-provider-class
 
 namespace: choreo-authorization

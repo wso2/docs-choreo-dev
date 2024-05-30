@@ -16,6 +16,7 @@ spec:
       labels:
         app: cdn-tlscert-synchronizer
     spec:
+      serviceAccountName: cdn-tls-synchronizer
       automountServiceAccountToken: false
       securityContext:
         seccompProfile:
@@ -23,30 +24,22 @@ spec:
       containers:
         - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-cdn-tlscert-synchronizer:latest
           name: choreo-cdn-tlscert-synchronizer
-          livenessProbe:
-            exec:
-              command:
-                - nc
-                - -z
-                - localhost
-                - "8000"
-            initialDelaySeconds: 5
-            periodSeconds: 60
           readinessProbe:
             exec:
-              command:
-                - nc
-                - -z
-                - localhost
-                - "8000"
+              command: ["cat", "/tmp/ready"]
             initialDelaySeconds: 5
-            periodSeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            exec:
+              command: ["pgrep", "entrypoint.sh"]
+            initialDelaySeconds: 60
+            periodSeconds: 30
           resources:
             requests:
-              memory: 64Mi
+              memory: 128Mi
               cpu: 100m
             limits:
-              memory: 128Mi
+              memory: 256Mi
               cpu: 150m
           securityContext:
             allowPrivilegeEscalation: false
@@ -56,6 +49,11 @@ spec:
             capabilities:
               drop:
                 - ALL
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
           envFrom:
             - configMapRef:
                 name: cm-cdn-tlscert-synchronizer
@@ -70,6 +68,9 @@ spec:
               mountPath: /mnt/sp.password
               readOnly: true
               subPath: SERVICE_PROVIDER_PASSWORD
+            - name: service-account-token-volume
+              mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+              readOnly: true
             - name: mount
               mountPath: /mnt
             - name: tmp
@@ -85,6 +86,9 @@ spec:
               secretProviderClass: secret-cdn-tls-cert-synchronizer
             nodePublishSecretRef:
               name: csi-secret-store-azure
+        - name: service-account-token-volume
+          secret:
+            secretName: cdn-tls-synchronizer-token
         # Volume mounts for system functionalities
         - name: mount
           emptyDir: {}

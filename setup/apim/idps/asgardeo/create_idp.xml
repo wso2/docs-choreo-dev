@@ -1,0 +1,38 @@
+<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mgt='http://mgt.idp.carbon.wso2.org' xmlns:xsd='http://model.common.application.identity.carbon.wso2.org/xsd'>
+    <soapenv:Header />
+    <soapenv:Body>
+        <mgt:addIdP>
+            <mgt:identityProvider>
+                <xsd:claimConfig>
+                    <xsd:alwaysSendMappedLocalSubjectId>false</xsd:alwaysSendMappedLocalSubjectId>
+                    <xsd:localClaimDialect>true</xsd:localClaimDialect>
+                    <xsd:roleClaimURI>http://wso2.org/claims/role</xsd:roleClaimURI>
+                </xsd:claimConfig>
+                <xsd:federationHub>false</xsd:federationHub>
+                <xsd:identityProviderDescription>Asgardeo IDP registered on STS</xsd:identityProviderDescription>
+                <xsd:displayName>Asgardeo</xsd:displayName>
+                <xsd:enable>true</xsd:enable>
+                <xsd:federationHub>false</xsd:federationHub>
+                <xsd:identityProviderName>Asgardeo</xsd:identityProviderName>
+                <xsd:alias>ChoreoSecureTokenService</xsd:alias>
+                <xsd:idpProperties>
+                    <xsd:displayName>Identity Provider's JWKS Endpoint</xsd:displayName>
+                    <xsd:name>jwksUri</xsd:name>
+                    <xsd:value>https://{ENVIRONMENT_PREFIX}api.asgardeo.io/oauth2/jwks</xsd:value>
+                </xsd:idpProperties>
+                <xsd:idpProperties>
+                    <xsd:name>idpIssuerName</xsd:name>
+                    <xsd:value>https://{ENVIRONMENT_PREFIX}api.asgardeo.io/oauth2/token</xsd:value>
+                </xsd:idpProperties>
+                <xsd:justInTimeProvisioningConfig>
+                    <xsd:dumbMode>false</xsd:dumbMode>
+                    <xsd:provisioningEnabled>false</xsd:provisioningEnabled>
+                    <xsd:modifyUserNameAllowed>false</xsd:modifyUserNameAllowed>
+                    <xsd:passwordProvisioningEnabled>false</xsd:passwordProvisioningEnabled>
+                    <xsd:promptConsent>false</xsd:promptConsent>
+                </xsd:justInTimeProvisioningConfig>
+                <xsd:primary>false</xsd:primary>
+            </mgt:identityProvider>
+        </mgt:addIdP>
+    </soapenv:Body>
+</soapenv:Envelope>

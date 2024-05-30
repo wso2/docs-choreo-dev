@@ -42,6 +42,40 @@ export class OrganizationSettings {
     cy.get(TestIds.uploadUserStoreFile).click();
   }
 
+  inviteMember(email: string, roles: string[]) {
+    cy.get(TestIds.inviteUser).should("be.visible").click();
+
+    cy.get(TestIds.tagEmails)
+      .should("be.visible")
+      .within(() => {
+        cy.get('input[type="text"]')
+          .should("be.visible")
+          .type(email)
+          .type("{enter}");
+      });
+
+    cy.get(TestIds.selectGroups).click();
+
+    roles.forEach((v) => {
+      cy.getUnstable(TestIds.groupSelectPopup)
+        .contains(v)
+        .parents("li")
+        .find("input")
+        .scrollIntoView()
+        .click();
+    });
+
+    cy.get("body").type("{esc}");
+
+    cy.get(TestIds.inviteUserDialog).click({ force: true });
+    cy.get(TestIds.inviteUserDialog).should("not.exist");
+
+    cy.get(TestIds.pendingInvites).should("be.visible").click();
+    cy.get(TestIds.searchIcon).click();
+    cy.get(TestIds.searchField).type(email);
+    cy.contains(email).should("be.visible");
+  }
+
   addRole(roleName: string, roleDescription: string, roleTag: string) {
     cy.get(TestIds.createRole).click();
     cy.get(TestIds.roleName).should("be.visible").type(roleName);
@@ -175,6 +209,33 @@ export class OrganizationSettings {
       .should("not.exist");
   }
 
+  private removeAllRolesFromGroup() {
+    cy.get(TestIds.groupRolesTab).click();
+
+    cy.get(TestIds.groupTable)
+      .should("be.visible")
+      .find("tbody")
+      .find("tr")
+      .eq(0)
+      .find("td")
+      .eq(0)
+      .then(($role) => {
+        if (!$role.text().includes("No records to display")) {
+          cy.get(TestIds.groupTable)
+            .find("tbody")
+            .find("tr")
+            .eq(0)
+            .find(TestIds.removeRoleFromGroup)
+            .click();
+          cy.get(TestIds.removeRoleFromGroupPopup).should("be.visible").click();
+          cy.get(TestIds.removeRoleFromGroupPopup).should("not.exist");
+          this.removeAllRolesFromGroup();
+        } else {
+          cy.get(TestIds.groupDetailsBack).click();
+        }
+      });
+  }
+
   addUserToGroup(userEmail: string, groupName: string) {
     this.search(groupName);
     cy.get(TestIds.groupTable)
@@ -234,6 +295,8 @@ export class OrganizationSettings {
 
   private deleteSelectedGroup(groupName: string) {
     cy.contains("td", groupName).trigger("mouseover");
+    cy.get(TestIds.editGroup).click();
+    this.removeAllRolesFromGroup();
     cy.get(TestIds.deleteGroup).click();
     cy.get(TestIds.deleteGroupConfirm).click();
     cy.contains("td", groupName).should("not.exist");

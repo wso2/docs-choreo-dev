@@ -26,6 +26,7 @@ import { mixinManage } from "../../features/manage/manage";
 import { ConfigEntryStep, createDefaultSteps } from "../../../commons/types";
 import { mixinConnections } from "../../features/component-connections/connections";
 import { ConnectionsFeature } from "../../features/component-connections/connections";
+import { TestIds } from "../../constants/TestIds";
 
 export class Service extends mixinBuild(
   mixinManage(mixinServiceDeploy(mixinTestService(mixinConnections(Component))))
@@ -46,6 +47,10 @@ export class Service extends mixinBuild(
     this._build(this);
   }
 
+  isSuccessfulBuildExists(): Cypress.Chainable<boolean> {
+    return this._isSuccessfulBuildExists();
+  }
+
   deployProjectLevelAccessibility(shouldModifyEndpoint: boolean = true) {
     this._deployService(
       this,
@@ -62,6 +67,22 @@ export class Service extends mixinBuild(
       EndpointAccessibility.Public,
       createDefaultSteps(1)
     );
+  }
+
+  deployPublicLevelAccessibilityWithConfigs(
+    configs: ConfigEntryStep[],
+    shouldModifyEndpoint: boolean = true
+  ) {
+    this._deployService(
+      this,
+      shouldModifyEndpoint,
+      EndpointAccessibility.Public,
+      configs
+    );
+  }
+
+  isDevDeploymentExists(): Cypress.Chainable<boolean> {
+    return this._isDevDeploymentExists();
   }
 
   testConsole(invokeInfo: InvokeInfo) {
@@ -108,7 +129,22 @@ export class Service extends mixinBuild(
     this._enableCors(this, environment);
   }
 
-  createConnections() {
-    this._createConnections(this);
+  createConnection(toService: string, connectionName: string) {
+    this._createConnection(toService, connectionName);
+  }
+
+  enablePassUserContextToBackend() {
+    this.sideMenu.navigateToDeploy();
+    cy.get(TestIds.endpointConfigurationsButton).should("be.visible").click();
+    cy.get(TestIds.rightDrawer)
+      .contains("div", "Pass User Context to Backend")
+      .should("be.visible")
+      .siblings("div")
+      .eq(0)
+      .within(() => {
+        cy.get("input").check();
+      });
+    cy.get(TestIds.storyButton).contains("Apply").should("be.visible").click();
+    cy.get(TestIds.runNowNotification).contains("API updated successfully");
   }
 }

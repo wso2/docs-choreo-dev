@@ -54,7 +54,7 @@ spec:
             - name: KEDA_RESPONSE_HEADER_TIMEOUT
               value: "120000ms"
             - name: KEDA_CONDITION_WAIT_TIMEOUT
-              value: "20s"
+              value: "60s"
             - name: KEDA_HTTP_DEPLOYMENT_CACHE_POLLING_INTERVAL_MS
               value: "1000"
             - name: KEDA_HTTP_FORCE_HTTP2
@@ -67,6 +67,8 @@ spec:
               value: "10s"
             - name: KEDA_HTTP_EXPECT_CONTINUE_TIMEOUT
               value: "1s"
+            - name: KEDA_SERVICE_UNAVAILABLE_RETRY
+              value: "7" # 56s before giving up
           ports:
             # TODO(pedrotorres): remove after implementing new routing table
             - name: admin

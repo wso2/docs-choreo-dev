@@ -1,0 +1,19 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-crypto-key-service
+spec:
+  secretObjects:
+    - secretName: secret-crypto-key-service
+      type: Opaque
+      data:
+        - objectName: CRYPTO_DB_PASSWORD
+          key: CRYPTO_DB_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: choreo-crypto-key-db-mssql-password
+          objectType: secret
+          objectAlias: CRYPTO_DB_PASSWORD
+          objectVersion: "{{.CRYPTO_DB_PASSWORD}}"

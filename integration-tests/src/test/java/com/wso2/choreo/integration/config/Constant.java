@@ -30,6 +30,8 @@ public final class Constant {
 
     public static final String TEST_OLD_COMPONENT_NAME = "automationtestcomponent";
     public static final String TEST_COMPONENT_NAME = "autotest";
+    public static final String TEST_CONNECTION_NAME = "autotestconnection";
+
     public static final String TEST_PROJECT_DESCRIPTION = "test project description";
     public static final String TEST_REPO_NAME_PREFIX = "test-repo-";
     public static final String GITHUB_AUTH_HEADER_PREFIX = "token ";
@@ -49,8 +51,8 @@ public final class Constant {
     public static final String TEST_CONNECTOR_VERSION = "1.0.0";
     // API Proxy related constants
     public static final String DEFAULT_API_NAME = "DefaultAPI";
-    public static final String DEFAULT_VERSION = "1.0.0";
-    public static final String DEFAULT_ENDPOINT = "http://run.mocky.io/v2/5185415ba171ea3a00704eed";
+    public static final String DEFAULT_VERSION = "v1.0";
+    public static final String DEFAULT_ENDPOINT = "https://9f3f5ca2-c1f2-43e7-afbe-a15714138b57-dev.e1-us-east-azure.choreoapis.dev/mgch/users/endpoint-9090-803/v1.0";
     public static final String APPLICATION_JSON = "application/json";
     public static final String MULTIPART_FORM_DATA = "multipart/form-data";
 
@@ -101,7 +103,8 @@ public final class Constant {
         graphql,
         ballerinaService,
         manualTrigger,
-        buildpackService
+        buildpackService,
+        byocWebAppsDockerfileLess
     }
     public enum apiLIifCycleState {
         Publish

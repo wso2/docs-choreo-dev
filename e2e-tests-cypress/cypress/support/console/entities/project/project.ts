@@ -148,23 +148,33 @@ export class Project {
     let isExists = false;
 
     return cy
-      .get(TestIds.componentTable)
-      .find("tbody")
-      .find("tr")
-      .each((row) => {
-        cy.wrap(row).within(() => {
-          cy.get("td")
-            .eq(0)
-            .then((td) => {
-              cy.wrap(td.find("div").first())
-                .invoke("attr", "title")
-                .then((title) => {
-                  if (title === name) {
-                    isExists = true;
-                  }
+      .get("body")
+      .then((body) => {
+        if (body.find(TestIds.componentTable).length > 0) {
+          this.searchComponent(name);
+          cy.get(TestIds.componentTable)
+            .find("tbody")
+            .within((tbody) => {
+              if (tbody.find("tr").length > 0) {
+                cy.get("tr").each((row) => {
+                  cy.wrap(row).within(() => {
+                    cy.get("td")
+                      .eq(0)
+                      .then((td) => {
+                        cy.wrap(td.find("div").first())
+                          .invoke("attr", "title")
+                          .then((title) => {
+                            if (title === name) {
+                              isExists = true;
+                            }
+                          });
+                      });
+                  });
                 });
+              }
             });
-        });
+          this.clearComponentSearch();
+        }
       })
       .then(() => {
         return cy.wrap(isExists);
@@ -173,16 +183,28 @@ export class Project {
 
   visitComponent(name: string): string {
     this.goToComponentListing();
-    this.searchComponent(name);
+    cy.get("body").then((body) => {
+      if (body.find(TestIds.refreshComponentListIconButton).length > 0) {
+        cy.get(TestIds.refreshComponentListIconButton)
+          .should("be.visible")
+          .click();
+      } else {
+        cy.get(TestIds.ComponentUsageInsightsLink).should("be.visible").click();
+        this.goToComponentListing();
+      }
 
-    cy.get(TestIds.componentTable).contains(name).should("be.visible").click();
-
-    cy.get('[data-cyid="home"]').should("be.visible");
-
-    cy.get(TestIds.backdropLoader, SHORT_TIME).should("not.exist");
-    cy.get(TestIds.createTime).should("be.visible");
-    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
-    cy.log("Successfully visited to the component");
+      cy.contains("Refetching Components...", SHORT_TIME).should("not.exist");
+      this.searchComponent(name);
+      cy.get(TestIds.componentTable)
+        .contains(name)
+        .should("be.visible")
+        .click();
+      cy.get('[data-cyid="home"]').should("be.visible");
+      cy.get(TestIds.backdropLoader, SHORT_TIME).should("not.exist");
+      cy.get(TestIds.createTime).should("be.visible");
+      cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
+      cy.log("Successfully visited to the component");
+    });
 
     cy.url().then((url) => {
       return url;
@@ -323,7 +345,10 @@ export class Project {
         proxyInfo.version,
         basePath,
         proxyEndpointUrl,
-        url
+        url,
+        "",
+        "",
+        ""
       );
     });
   }
@@ -580,7 +605,6 @@ export class Project {
     options?: { expectedTraffic: number }
   ) {
     this.selectEnvironment(env);
-    this.selectTimePeriod();
     this.getTotalTraffic().should((value) => {
       expect(Number(value)).gte(options?.expectedTraffic || 2);
     });
@@ -588,13 +612,17 @@ export class Project {
 
   private goToComponentListing() {
     cy.get(TestIds.listing).should("be.visible").click();
-
-    cy.get(TestIds.componentFilter).should("be.visible");
+    cy.contains("Create").should("exist");
   }
 
   private searchComponent(name: string) {
     cy.get(TestIds.searchIcon).should("be.visible").click();
     cy.get(TestIds.componentSearchBox).should("be.visible").type(name);
+  }
+
+  private clearComponentSearch() {
+    cy.get(TestIds.componentSearchBox).should("be.visible").clear();
+    cy.get(TestIds.clearComponentSearchButton).should("be.visible").click();
   }
 
   private createComponentIfEmptyProject() {

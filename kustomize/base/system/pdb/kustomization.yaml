@@ -5,7 +5,6 @@ resources:
   - api-server.yaml
   - app-service.yaml
   - audit-logging.yaml
-  - code-challenge-eval.yaml
   - connector-builder.yaml
   - connectords.yaml
   - console-next.yaml
@@ -38,7 +37,6 @@ resources:
   - cio-event-collector-service.yaml
   - cio-query-api-service.yaml
   - cio-incident-configurator.yaml
-  - cdn-tls-synchronizer.yaml
   - crypto-key-service.yaml
   - obsmanager.yaml
   - dp-helmhub.yaml

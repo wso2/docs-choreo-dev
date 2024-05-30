@@ -1,8 +1,12 @@
 package com.wso2.choreo.integration.apis.apimanager;
 
 import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
+import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
@@ -11,6 +15,7 @@ import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.ApiDTO;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
+import com.wso2.choreo.integration.models.proxyapi.ProxyAPIWrapper;
 import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.revision.RevisionWrapper;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
@@ -140,8 +145,86 @@ public class ApiManager extends ControlPlaneAPI {
                 }));
         RevisionWrapper data = revisionWrapper.get();
         return data;
+    }
 
+    public static JsonObject getApi(TestActionRunner runner, HttpClient client, String accessToken, String apiId) {
+        String path = String.format( "%s/%s?organizationId=%s", Constant.APIS_ENDPOINT, apiId, ORG_UUID);
+        AtomicReference<JsonObject> apiInfo = new AtomicReference<>();
+        runner.$(http()
+                .client(client)
+                .send()
+                .get(path)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .body(new ClassPathResource("templates/apimanager/responses/getApiSuccess.mustache"))
+                .validate((message, context) -> {
+                    String payload = message.getPayload(String.class);
+                    JsonObject dataJsonObject = new JsonParser().parse(payload).getAsJsonObject();
+                    apiInfo.set(dataJsonObject);
+                }));
 
+        return  apiInfo.get();
+    }
 
+    public static void updateApi(TestActionRunner runner, HttpClient client, String accessToken, String apiId, JsonObject reqBody) {
+        String body = reqBody.toString();
+        String path = String.format( "%s/%s?organizationId=%s", Constant.APIS_ENDPOINT, apiId, ORG_UUID);
+
+        runner.$(http()
+                .client(client)
+                .send()
+                .put(path)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(body)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON));
+
+    }
+
+    public static ProxyAPIWrapper searchAPIByQuery(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken, String query) throws IOException {
+        String resource = Constant.APIS_ENDPOINT.concat("?").concat(Constant.ORGANIZATION_ID).concat("=") + ORG_UUID + "&query=" + query;
+        AtomicReference<ProxyAPIWrapper> proxyWrapper = new AtomicReference<>();
+        runner.$(repeatOnError()
+                .until("i = 10")
+                .index("i")
+                .autoSleep(25000)
+                .actions(
+                    http()
+                            .client(client)
+                            .send()
+                            .get(resource)
+                            .message()
+                            .header(HttpHeaders.AUTHORIZATION, accessToken)
+                            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                            .accept(MediaType.APPLICATION_JSON_VALUE),
+                    http()
+                            .client(client)
+                            .receive()
+                            .response(HttpStatus.CREATED)
+                            .message()
+                            .type(MessageType.JSON)
+                            .validate((message, context) -> {
+                                String payload = message.getPayload(String.class);
+                                proxyWrapper.set(ObjectMapperUtil.mapStringToObject(ProxyAPIWrapper.class, payload, ""));
+                                if (proxyWrapper.get().getCount() == 0) {
+                                    throw new ValidationException("No APIs found");
+                                }
+                            })));
+
+        return proxyWrapper.get();
     }
 }

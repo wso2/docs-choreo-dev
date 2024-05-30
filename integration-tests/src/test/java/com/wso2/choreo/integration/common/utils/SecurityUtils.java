@@ -54,6 +54,25 @@ public class SecurityUtils {
                 .type(MessageType.JSON));
     }
 
+    public static void elevatedAccessCheckForNotFoundGetRequests(TestActionRunner runner, HttpClient client,
+                                                        String requestUrl, String accessToken) throws IOException {
+        runner.$(http()
+                .client(client)
+                .send()
+                .get(requestUrl)
+                .message()
+                .header(HttpHeaders.ACCEPT, "*/*")
+                .header(Constant.X_CLOUD_TYPE, "choreo")
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header("x-correlation-id", UUID.randomUUID()));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.NOT_FOUND)
+                .message()
+                .type(MessageType.JSON));
+    }
+
     public static void elevatedAccessCheckForDeleteRequests(TestActionRunner runner, HttpClient client,
                                                          String requestUrl, String accessToken) throws IOException {
         runner.$(http()

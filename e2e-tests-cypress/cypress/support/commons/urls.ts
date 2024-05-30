@@ -23,7 +23,7 @@ export const DEV_PORTAL_URL =
   Cypress.env("apimSvcURL") + "/api/am/devportal/v2";
 export const DEV_PORTAL_APIS_SEARCH_URL = (name?: string) => {
   if (name !== undefined) {
-    return `${DEV_PORTAL_URL}/apis?query=name:${name}&*`;
+    return `${DEV_PORTAL_URL}/apis?query=display-name:${name}&*`;
   } else {
     return `${DEV_PORTAL_URL}/apis?organizationId=*`;
   }

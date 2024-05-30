@@ -9,6 +9,7 @@ public class ComponentRepository {
     private String organizationApp;
     private String organizationConfig;
     private String branch;
+    private String branchApp;
 
     public String getNameApp() {
         return nameApp;
@@ -36,6 +37,12 @@ public class ComponentRepository {
 
     public String getBranch() {
         return branch;
+    }
+    public String getBranchApp() {
+        return branchApp;
+    }
+    public void setBranchApp(String branchApp) {
+        this.branchApp = branchApp;
     }
 
     public void setBranch(String branch) {

@@ -47,46 +47,39 @@ import java.util.Map;
  * $(http()
  * tests related to component deployment using auto deploy on commit trigger on
  */
-    public class AutoDeployOnCommit extends TestNGCitrusSpringSupport {
-        private static String accessToken;
-        private final String repoName = "empty-repo";
-        private static ChoreoComponent choreoComponent;
-        private ChoreoProject project;
+public class AutoDeployOnCommit extends TestNGCitrusSpringSupport {
+    private static String accessToken;
+    private final String repoName = "empty-repo";
+    private static ChoreoComponent choreoComponent;
+    private ChoreoProject project;
 
-        @Autowired
-        Map<Endpoints, HttpClient> citrusClients;
+    @Autowired
+    Map<Endpoints, HttpClient> citrusClients;
 
-        @BeforeClass
-        public void setup_AutoDeployOnCommit()
-                throws Exception {
-            accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        }
+    @BeforeClass
+    public void setup_AutoDeployOnCommit()
+            throws Exception {
+        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+    }
 
-        @Test
-        @CitrusTest
-        public void createProject_AutoDeployOnCommit() throws Exception {
-            project =  ComponentUtils.createProject(this, citrusClients, accessToken, Constant.region.US.toString());
-        }
+    @Test
+    @CitrusTest
+    public void createProject_AutoDeployOnCommit() throws Exception {
+        project =  ComponentUtils.createProject(this, citrusClients, accessToken, Constant.region.US.toString());
+    }
 
-        @Test(dependsOnMethods = {"createProject_AutoDeployOnCommit"})
-        @CitrusTest
-        public void createUserManagedComponent_AutoDeployOnCommit() throws Exception {
-            String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
-            Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/empty-repo").branch("main").subPath("").build();
-            GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);
-            choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
-                    ComponentFlavour.STANDARD);
-            Assert.assertNotNull(choreoComponent.getId());
-        }
+    @Test(dependsOnMethods = {"createProject_AutoDeployOnCommit"})
+    @CitrusTest
+    public void createUserManagedComponent_AutoDeployOnCommit() throws Exception {
+        String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
+        Repository repo = Repository.builder().repoUrl("https://github.com/choreo-test-apps/empty-repo").branch("main").subPath("").build();
+        GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);
+        choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
+                ComponentFlavour.STANDARD);
+        Assert.assertNotNull(choreoComponent.getId());
+    }
 
-        @Test(dependsOnMethods = {"createUserManagedComponent_AutoDeployOnCommit"})
-        @CitrusTest
-        public void handleConfigInit_AutoDeployOnCommit() throws Exception {
-            HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-            GraphQL.handleConfigInit(this, appServiceClient, accessToken, choreoComponent.getId());
-        }
-
-    @Test(dependsOnMethods = {"handleConfigInit_AutoDeployOnCommit"})
+    @Test(dependsOnMethods = {"createUserManagedComponent_AutoDeployOnCommit"})
     @CitrusTest
     public void enableAutoBuild_AutoDeployOnCommit() throws Exception {
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
@@ -97,24 +90,32 @@ import java.util.Map;
                 dto);
     }
 
-    @Test(dependsOnMethods = {"handleConfigInit_AutoDeployOnCommit"})
-        @CitrusTest
-        public void mergeNewCode_AutoDeployOnCommit() throws IOException {
-            String timeStamp = String.valueOf(new Date().getTime());
-            Map<String, String> params = new HashMap<>();
-            params.put("timeStamp", timeStamp);
-            String srcCode = MessageUtils.generateStringFromTemplate(
-                    "templates/autodeploy/service.mustache", params);
-            String encodedCode = Base64.getEncoder().encodeToString(srcCode.getBytes(StandardCharsets.UTF_8));
-            GitHub.mergeNewCode(repoName, "service.bal", " change on DeployIT ", encodedCode);
-        }
-
-        @Test(dependsOnMethods = {"mergeNewCode_AutoDeployOnCommit"})
-        @CitrusTest
-        public void deploymentStatusByVersion_AutoDeployOnCommit() throws Exception {
-            List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
-            Commit latestCommit = ComponentUtils.getLatestCommit(this, citrusClients, accessToken, choreoComponent);
-            ComponentUtils.validateComponentDeployment(this, citrusClients, accessToken, choreoComponent,
-                    latestCommit, environments);
-        }
+    @Test(dependsOnMethods = {"enableAutoBuild_AutoDeployOnCommit"})
+    @CitrusTest
+    public void enableAutoDeploy_AutoDeployOnCommit() throws Exception {
+        GraphqlDTO dto = GraphqlDTO.builder().componentId(choreoComponent.getId()).versionId(choreoComponent.getLatestApiVersion().getId()).build();
+        GraphQL.enableAutoDeploy(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken,
+                dto);
     }
+
+    @Test(dependsOnMethods = {"enableAutoDeploy_AutoDeployOnCommit"})
+    @CitrusTest
+    public void mergeNewCode_AutoDeployOnCommit() throws IOException {
+        String timeStamp = String.valueOf(new Date().getTime());
+        Map<String, String> params = new HashMap<>();
+        params.put("timeStamp", timeStamp);
+        String srcCode = MessageUtils.generateStringFromTemplate(
+                "templates/autodeploy/service.mustache", params);
+        String encodedCode = Base64.getEncoder().encodeToString(srcCode.getBytes(StandardCharsets.UTF_8));
+        GitHub.mergeNewCode(repoName, "service.bal", " change on DeployIT ", encodedCode);
+    }
+
+    @Test(dependsOnMethods = {"mergeNewCode_AutoDeployOnCommit"})
+    @CitrusTest
+    public void deploymentStatusByVersion_AutoDeployOnCommit() throws Exception {
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
+        Commit latestCommit = ComponentUtils.getLatestCommit(this, citrusClients, accessToken, choreoComponent);
+        ComponentUtils.validateComponentDeployment(this, citrusClients, accessToken, choreoComponent,
+                latestCommit, environments);
+    }
+}

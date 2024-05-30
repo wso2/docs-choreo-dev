@@ -97,6 +97,10 @@ describe("Verify containerized service functionality", () => {
     byoc.deployToDevWithConfigs([new ConfigEntryStep(addConfiguration)]);
   });
 
+  it("Verify component promotion to Prod", () => {
+    byoc.promoteWithConfigs([new ConfigEntryStep(addConfigurationProd)]);
+  });
+
   it("Verify test functionality of root resource in dev on swagger", () => {
     byoc
       .testConsole({
@@ -110,10 +114,6 @@ describe("Verify containerized service functionality", () => {
         expect(res.response).to.be.eq("Hello, Stranger!\n\n");
         expect(res.statusCode).to.be.equal(OK.toString());
       });
-  });
-
-  it("Verify component promotion to Prod", () => {
-    byoc.promoteWithConfigs([new ConfigEntryStep(addConfigurationProd)]);
   });
 
   it("Verify test functionality of root resource in prod on swagger", () => {

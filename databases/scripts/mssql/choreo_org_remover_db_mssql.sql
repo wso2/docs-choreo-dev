@@ -1,0 +1,47 @@
+-- Create User
+IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_org_remover_db_user')
+BEGIN
+    CREATE USER [choreo_org_remover_db_user] with password = N'${choreo-org-remover-db-mssql-password}'
+    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_org_remover_db TO choreo_org_remover_db_user
+END;
+GO
+
+CREATE TABLE ORG_COMPONENT_MAPPING
+(
+    [ID]             int NOT NULL IDENTITY,
+    [ORG_ID]         varchar(100) NOT NULL,
+    [COMPONENT_NAME] varchar(250) NOT NULL,
+    [STATUS]         varchar(45)  DEFAULT 'PENDING',
+    [REQUEST_ID]     varchar(100) NOT NULL,
+    PRIMARY KEY ([ID]),
+    CONSTRAINT [ORG_ID_COMPONENT_UNIQUE] UNIQUE  ([ORG_ID],[COMPONENT_NAME])
+);
+
+CREATE TABLE ORG_REMOVER_COMPONENT
+(
+    [COMPONENT_ID]   int NOT NULL IDENTITY,
+    [UUID]           varchar(100) NOT NULL,
+    [COMPONENT_NAME] varchar(250) NOT NULL,
+    PRIMARY KEY ([COMPONENT_ID]),
+    CONSTRAINT [UUID_UNIQUE] UNIQUE ([UUID]),
+    CONSTRAINT [COMPONENT_NAME_UNIQUE] UNIQUE  ([COMPONENT_NAME])
+);
+
+
+CREATE TABLE ERROR_RESPONSE
+(
+    [ID]                   INT NOT NULL IDENTITY,
+    [COMPONENT_MAPPING_ID] INT NULL,
+    [ERROR_MSG]            VARCHAR(max) NULL,
+    PRIMARY KEY ([ID]),
+    CONSTRAINT [COMPONENT_MAPPING_KEY]
+        FOREIGN KEY ([COMPONENT_MAPPING_ID])
+            REFERENCES org_component_mapping ([ID])
+            ON DELETE CASCADE ON UPDATE NO ACTION
+);
+
+CREATE INDEX [COMPONENT_MAPPING_KEY_idx] ON ERROR_RESPONSE ([COMPONENT_MAPPING_ID] ASC);
+
+-- Register default components
+INSERT INTO ORG_REMOVER_COMPONENT(UUID, COMPONENT_NAME) VALUES ('60f1d95c-1604-4b86-9c97-51f722f1206c', 'choreo-apim')
+INSERT INTO ORG_REMOVER_COMPONENT(UUID, COMPONENT_NAME) VALUES ('d1fa107f-cecf-4c8c-a2cf-e72468fd69ab', 'choreo-runtime')

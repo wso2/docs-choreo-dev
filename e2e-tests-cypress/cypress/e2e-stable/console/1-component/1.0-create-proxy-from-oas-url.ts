@@ -12,10 +12,14 @@
  */
 
 import { Enums } from "../../../support/commons/enums";
-import { Proxy } from "../../../support/console/entities/component/proxy-component";
+import {
+  Proxy,
+  ProxyMetaData,
+} from "../../../support/console/entities/component/proxy-component";
 import { Project } from "../../../support/console/entities/project/project";
 import { console } from "../../../support/console/console";
 import { OK } from "../../../support/commons/http";
+import { devPortal } from "../../../support/console/devportal";
 
 describe("Create proxy using existing url", () => {
   const PROJECT_DESCRIPTION = "Proxy from oas URL";
@@ -48,6 +52,12 @@ describe("Create proxy using existing url", () => {
       })
       .then((comp) => {
         proxy = comp;
+        // Since we are switching domains when navigating to devportal url we will no longer have access to the proxy object
+        // So we need to save the proxy metadata in nodejs global state using below cy.task() to access it later
+        cy.task("setData", {
+          key: Cypress.spec.name, // Unique key to store the data, in this case spec name is sufficient
+          value: proxy.getMetaData(),
+        });
       });
   });
 
@@ -82,6 +92,10 @@ describe("Create proxy using existing url", () => {
     proxy.deploy();
   });
 
+  it("Promote proxy", () => {
+    proxy.promote();
+  });
+
   it("Verify test functionality using Swagger UI in Dev", () => {
     proxy
       .testSwaggerConsole(Enums.Environment.DEVELOPMENT, RESOURCE)
@@ -98,10 +112,6 @@ describe("Create proxy using existing url", () => {
         expect(res.status).equal(OK);
         expect(res.body).to.have.property(EXPECTED_VALUE);
       });
-  });
-
-  it("Promote proxy", () => {
-    proxy.promote();
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
@@ -134,6 +144,10 @@ describe("Create proxy using existing url", () => {
     proxy.deploy();
   });
 
+  it("Promote new version of proxy", () => {
+    proxy.promote();
+  });
+
   it("Verify test functionality of new version in Dev", () => {
     proxy
       .testSwaggerConsole(Enums.Environment.DEVELOPMENT, RESOURCE)
@@ -153,10 +167,6 @@ describe("Create proxy using existing url", () => {
         expect(res.statusCode).to.be.equal(OK.toString());
         expect(res.response).to.contain(NEW_RESOURCE_EXPECTED_VALUE);
       });
-  });
-
-  it("Promote new version of proxy", () => {
-    proxy.promote();
   });
 
   it("Verify test functionality of new version in Prod", () => {
@@ -185,7 +195,15 @@ describe("Create proxy using existing url", () => {
   });
 
   it("Navigate to Dev portal", () => {
-    proxy.navigateToDevPortal();
+    devPortal.loginToDevPortal();
+    // Recreate Proxy object using previously saved metadata
+    cy.task("getData", Cypress.spec.name).then((metaData) => {
+      proxy = Proxy.fromMetaData(metaData as ProxyMetaData);
+    });
+  });
+
+  it("Find API in devportal custom domain", () => {
+    devPortal.searchApi(proxy.getName());
   });
 
   it("Generate Production credentials for proxy in Dev portal", () => {
