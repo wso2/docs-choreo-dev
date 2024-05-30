@@ -4,26 +4,38 @@ Choreo allows you to create and deploy applications in your preferred programmin
 
 In this guide, you will:
 
-- Build a simple greeting service. The greeter service has a single resource named “greet” and accepts a single query parameter as input.
-- Deploy it in Choreo using a `Go` buildpack. It runs on port 9090.
+- Build a simple greeting service using a sample service implementation. The sample implementation will have a single resource named `greet` that accepts a single query parameter as input.
+- Deploy the service in Choreo using a `Go` buildpack. The service will run on port 9090.
 - Test the service.
 
 ## Prerequisites
 
-- You will need a GitHub account with a repository that contains a Go implementation Fork the [Choreo examples repository](https://github.com/wso2/choreo-sample-apps/), which contains the sample for this guide.
+Before you try out this guide, complete the following:
+
+- If you are signing in to the Choreo Console for the first time, create an organization as follows:
+
+    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your preferred method.
+    2. Enter a unique organization name. For example, `Stark Industries`.
+    3. Read and accept the privacy policy and terms of use.
+    4. Click **Create**.
+
+    This creates the organization and opens the **Project Home** page of the default project created for you.
+
+- Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples/), which contains the [sample greetings service](https://github.com/wso2/choreo-samples/tree/main/greeting-service-go) implementation in `Go`.
 
 ### Learn the repository file structure
 
-Let's familiarize ourselves with the key files in the sample greeter application. The below table gives a brief overview of the important files in the greeter service.
+It is important to understand the purpose of the key files in the sample service application. The following table provides a brief overview of each file in the greeter service:
 
 !!! note 
-    The following file paths are relative to the path <sample-repository-dir>/go/greeter
+    The specified file paths are relative to `<sample-repository-dir>/go/greeter`
 
-|Filepath               |Description                                                                   |
-|-----------------------|------------------------------------------------------------------------------|
-| main.go               | The Go-based Greeter service code.
-|.choreo/endpoints.yaml | Choreo-specific configuration that provides information about how Choreo exposes the service.|
-|openapi.yaml           | OpenAPI contract of the greeter service. This is needed to publish our service as a managed API. This openapi.yaml file is referenced by the .choreo/endpoints.yaml.|
+|**Filepath**             |**Description**                                                               |
+|-------------------------|------------------------------------------------------------------------------|
+| `main.go`               | The Go-based greeter service code.                                           |
+| `Dockerfile`            | The Dockerfile to build the container image of the application.              |
+| `.choreo/endpoints.yaml`| Choreo-specific configuration that provides information about how Choreo exposes the service.|
+| `openapi.yaml`          | The OpenAPI contract of the greeter service. This is required to publish the service as a managed API. This `openapi.yaml` file is referenced by the `.choreo/endpoints.yaml` file.|
 
 Let's get started!
 
@@ -37,17 +49,17 @@ In the greeter sample, the `endpoints.yaml` file is in the `go/greeter/.choreo/`
 
 ## Step 1: Create a service component
 
-Let's create a containerized service component by following these steps:
+To create a containerized service component, follow these steps:
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the project home page.
-2. Create a project to add the service component. You can follow the instructions under Prerequisites in the Connect Your Own GitHub Repository to Choreo guide.
-3. On the Components page, click on the Service card.
-4. Enter a unique name and a description of the service. For this guide, let's enter the following values:
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
+2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
+3. Click the **Service** card.
+4. Enter a unique name and a description for the service. For this guide, you can specify the following values:
 
-    |Field          |     Value              |
-    |---------------|------------------------|
-    |Name           | Greetings              |
-    |Description    | Sends greetings        |
+    |**Field**              |     **Value**          |
+    |-----------------------|------------------------|
+    |Component Display Name | Greetings              |
+    |Description            | Sends greetings        |
 
 5. Go to the **GitHub** tab.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
@@ -62,56 +74,61 @@ Let's create a containerized service component by following these steps:
              
            You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
-7. Enter the following information:
+7. Under **Connect Your Repository**, enter the following information:
 
-    | **Field**             | **Description**                               |
-    |-----------------------|-----------------------------------------------|
-    | **GitHub Account**    | Your account                                  |
-    | **GitHub Repository** | choreo-sample-apps |
-    | **Branch**            | **`main`**                               |
-    | **Buildpack**      | Go|
-    | **Select Go Project Directory**       | go/greeter |
-    | **Select Language Version**              | 1.x |
+    | **Field**              | **Value**          |
+    |------------------------|--------------------|
+    | **Organization**       | Your GitHub account|
+    | **GitHub Repository**  | choreo-samples     |
+    | **Branch**             | **`main`**         |
 
-8. Click Create. Once the component creation is complete, you will see the component overview page.
+8. Select **Go** as the buildpack.
+9. Enter the following information:
+    
+    | **Field**                | **Value**              |
+    |--------------------------|------------------------|
+    | **Go Project Directory** | `/greeting-service-go` |
+    | **Language Version**     | 1.x                    |
 
-You have successfully created a Service component from a Dockerfile. Now let's build and deploy the service.
+10. Click **Create**. This creates the component and lists it under **Component Listing** on the project home page.
+
+You have successfully created a service from a Dockerfile. Next, you can build and deploy the service.
 
 ## Step 2: Build and deploy
-Now that we have connected the source repository, and configured the endpoint details, it's time to build the service and create an image. Then we can deploy that image test the greeter service.
+
+Now that you have connected the source repository and configured the endpoint details, it's time to build the service and create an image. Then you can deploy the image and test the greeter service.
 
 ### Step 2.1: Build
 
 To build the service, follow these steps:
 
-1. On the **Build** page, click **Build**.
-2. Select the latest commit and click **Build**.
-3. Check the deployment progress by observing the console logs on the right of the page.
-
+1. On the project home page, click on the `Greetings` component you created. This takes you to the component overview page.
+2. In the left navigation menu, click **Build**.
+3. On the **Build** page, click **Build Latest**.
 
     !!! note
-        Building the service component may take a while. You can track the progress by observing the logs. Once the build process is complete, the build status changes to **Success**.
+        Building the service component may take a while. You can track the progress via the logs in the **Build Details** pane. Once the build process is complete, the build status changes to **Success**.
 
-You can access the following scans under **Build**. 
+    You can access the following scans under **Build**. 
 
-- **The Dockerfile scan**: Choreo performs a scan to check if a non-root user ID is assigned to the Docker container to ensure security. If no non-root user is specified, the build will fail.
-- **Container (Trivy) vulnerability scan**: This detects vulnerabilities in the final docker image. 
--  **Container (Trivy) vulnerability scan**: The details of the vulnerabilities open in a separate pane. If this scan detects critical vulnerabilities, the build will fail.
-
-!!! info
-    If you have Choreo environments on a private data plane, you can ignore these vulnerabilities and proceed with the deployment.
+      - **The Dockerfile scan**: Choreo performs a scan to check if a non-root user ID is assigned to the Docker container to ensure security. If no non-root user is specified, the build will fail.
+      - **Container (Trivy) vulnerability scan**: This detects vulnerabilities in the final docker image. 
+      - **Container (Trivy) vulnerability scan**: The details of the vulnerabilities open in a separate pane. If this scan detects critical vulnerabilities, the build will fail.
+     
+        !!! info
+            If you have Choreo environments on a private data plane, you can ignore these vulnerabilities and proceed with the deployment.
 
 ### Step 2.2: Deploy
 
-Next, to deploy this service, follow these steps: 
+To deploy the service, follow these steps: 
 
 1. In the left navigation menu, click **Deploy**.
 2. On the **Set Up** card, click **Configure &  Deploy**.
-3. Skip configuring the **Environment Configurations** and click **Next**.
-4. Skip adding a **File Mount**. Click **Deploy**.
+3. In the **Environment Configurations** pane that opens, click **Next** to skip the configuration.
+4. In the **File Mount** pane, click **Next** to skip the configuration.
 5. Review the **Endpoint Details** and click **Deploy**.
 
     !!! note
-        Deploying the service component may take a while. You can track the progress by observing the logs. Once the deploying is complete, the build status changes to **Active** on the **Development** environment card.
+        Deploying the service component may take a while. Once deployed, the **Development** environment card indicates the **Deployment Status** as **Active**.
 
-Once you have successfully deployed your service, you can [test](../../testing/test-rest-endpoints-via-the-openapi-console.md), [manage](../../api-management/lifecycle-management.md), and [observe](../../monitoring-and-insights/observability-overview.md) it like any other component type in Choreo.
+Once you have successfully deployed the service, you can [test](../../testing/test-rest-endpoints-via-the-openapi-console.md), [manage](../../api-management/lifecycle-management.md), and [observe](../../monitoring-and-insights/observability-overview.md) it like any other component type in Choreo.
