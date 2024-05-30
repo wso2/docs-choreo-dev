@@ -341,7 +341,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 HttpStatus.ACCEPTED);
     }
 
-    @Test()
+    @Test(dependsOnMethods = {"invokeAPIDevWithNewPublisherServiceVersion_TestChoreoConnections"})
     @CitrusTest
     public void setUpEndpointForProxy_TestChoreoConnections() throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
