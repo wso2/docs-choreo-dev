@@ -212,7 +212,7 @@ export class TestHelper {
       if (res != "200" && retryCount < 4) {
         cy.log("Code is not 200, Retrying...");
         retryCount++;
-        cy.wait(retryDelay);
+        cy.wait(retryDelay * retryCount);
         this.invokeSwaggerResource(
           env,
           resourcePath,
