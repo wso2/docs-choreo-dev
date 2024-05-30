@@ -8,7 +8,7 @@ This script creates the MongoDB collection and search indexes required for apim 
 Get the values for following variables.
 
 ```shell
-HOST            - hostname of the mongodb atlas server (ex:- mongodb+srv://choreo-apim.idz1i.mongodb.net)
+HOST            - hostname of the mongodb atlas server, without a trainling '/' (ex:- mongodb+srv://choreo-apim-pl-0.8i8nb.mongodb.net)
 USERNAME        - username of the sre admin write user (`sre_write_user`)
 PASSWORD        - password of the sre admin write user (can be taken from `sre-writer-mongodb-password` secret in key vault)
 API_PUBLIC_KEY  - public key of the admin api key (can be taken from `admin-mongo-db-atlas-public-key` secret in key vault)
