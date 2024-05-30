@@ -22,6 +22,8 @@ SYSTEM_API_URL  - url of spec populator system api
 
 Execute `create_application.sh` script.
 
+You need to execute this from a place which has private access to MongoDB cluster, ideally the bastion vm.
+
 ```shell
 bash create_application.sh -g {PROJECT_ID} -b {API_PUBLIC_KEY} -v {API_PRIVATE_KEY} -c {CLUSTER_NAME} -n {DATABASE_NAME} -k {CONSUMER_KEY} -s {CONSUMER_SECRET} -t {STS_TKN_EP} -p {SYSTEM_API_URL}
 ```
