@@ -16,4 +16,4 @@ spec:
           objectName: multivariate-anomaly-detector-notification-manager-BAL-CONFIG-DATA
           objectType: secret
           objectAlias: BAL_CONFIG_DATA
-          objectVersion: "{{.BAL_CONFIG_DATA}"
+          objectVersion: "{{.BAL_CONFIG_DATA}}"
