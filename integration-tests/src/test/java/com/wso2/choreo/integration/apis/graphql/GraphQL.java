@@ -1120,11 +1120,13 @@ public class GraphQL extends ControlPlaneAPI {
         AtomicBoolean isPassed = new AtomicBoolean(false);
         AtomicInteger successiveFailureCount = new AtomicInteger(0);
 
-        runner.variable("deploymentSuccess", false);
+        String isDeployedKey = "deploymentSuccess" + graphqlDTO.getComponentId();
+
+        runner.variable(isDeployedKey, false);
 
         // Poll deployment status
         runner.$(repeat()
-                .until("(i = 30) or ( ${deploymentSuccess} = true )")
+                .until("(i = 30) or ( ${" + isDeployedKey + "} = true )")
                 .index("i")
                 .actions(
                         http()
@@ -1166,7 +1168,7 @@ public class GraphQL extends ControlPlaneAPI {
                                             JsonTextMessageValidator validator = new JsonTextMessageValidator();
                                             validator.validateMessage(message, new DefaultMessage(expectedResponse), context, new JsonMessageValidationContext());
                                             isPassed.set(true);
-                                            context.setVariable("deploymentSuccess", isPassed.get());
+                                            context.setVariable(isDeployedKey, isPassed.get());
                                             returnStatus.set(deploymentStatus);
                                         } catch (ValidationException e) {
                                             log.error("Validation failed", e);
