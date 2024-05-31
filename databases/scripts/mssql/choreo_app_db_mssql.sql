@@ -1,7 +1,7 @@
 -- Create User
 IF EXISTS (SELECT name FROM sys.databases WHERE name = N'choreo_app_db') AND NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_app_db_user')
 BEGIN
-    CREATE USER [choreo_app_db_user] with password = N'${choreo-app-db-mssql-password}'
+    CREATE USER [choreo_app_db_user] with password = N'${choreo_app_db_mssql_password}'
     GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_app_db TO choreo_app_db_user
 END;
 GO

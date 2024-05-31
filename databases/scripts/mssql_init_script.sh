@@ -156,20 +156,19 @@ for FILE_PATH in "$DIRECTORY"/*; do
             # Remove the longest match of "_mssql.sql" from the end of the filename
             DATABASE_NAME="${FILE_NAME%_mssql.sql}"
 
-            # Replace underscores with hyphens
-            MODIFIED_STRING="${DATABASE_NAME//_/-}"
+            # Append "_mssql_password" to the database name
+            MODIFIED_STRING="${DATABASE_NAME}_mssql_password"
 
-            # Append "-mssql-password" to the modified string
-            SECRET_NAME="${MODIFIED_STRING}-mssql-password"
+            # Replace underscores with hyphens
+            SECRET_NAME="${MODIFIED_STRING//_/-}"
 
             DATABASE_USER_NAME="${DATABASE_NAME}_user"
 
             if get_database_user_password "$KEY_VAULT_NAME" "$SECRET_NAME" DATABASE_USER_PASSWORD; then
 
-                # Escape literal & if it exists in the password since it a special char in sed
-                DATABASE_USER_PASSWORD_PROCESSED="${DATABASE_USER_PASSWORD//&/\\\\&/g}"
-                # Replace the placeholder for db user password with the actual password
-                sed -i "s/\${$SECRET_NAME}/${DATABASE_USER_PASSWORD_PROCESSED}/g" "$FILE_PATH"
+                export "$MODIFIED_STRING"="$DATABASE_USER_PASSWORD"
+                envsubst < "$FILE_PATH" > temp.sql && mv temp.sql "$FILE_PATH"
+                unset "$MODIFIED_STRING"
 
                 if execute_database_schema "$DATABASE_SERVER_NAME" "$DATABASE_SERVER_DDL_USER_NAME" "$DATABASE_SERVER_DDL_USER_PASSWORD" "$DATABASE_NAME" "$FILE_PATH"; then
                     ((successful_execution_count++))
