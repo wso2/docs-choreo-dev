@@ -1,0 +1,19 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-log-controller
+spec:
+  secretObjects:
+    - secretName: secret-log-controller
+      type: Opaque
+      data:
+        - objectName: AZURE_LA_CLIENT_SECRET
+          key: AZURE_LA_CLIENT_SECRET
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: log-analytics-read-log-controller-client-secret
+          objectType: secret
+          objectAlias: AZURE_LA_CLIENT_SECRET
+          objectVersion: "{{.AZURE_LA_CLIENT_SECRET}}"

@@ -43,6 +43,24 @@ resources:
   - cp-gw-adapter.yaml
   - cp-rrs.yaml
   - crypto-key-service.yaml
+  - email-service.yaml
+  - github-connector.yaml
+  - gsuite.yaml
+  - idp.yaml
+  - key-vault.yaml
+  - dp-secret-manager.yaml
+  - dp-rudder.yaml
+  - dp-cicd.yaml
+  - dp-cloud-manager.yaml
+  - dp-garbage-collector.yaml
+  - dp-mizzen.yaml
+  - dp-project-manager.yaml
+  - multivariate-anomaly-detector-notification-manager.yaml
+  - delete-manager.yaml
+  - moesif-service.yaml
+  - metered-usage-handler.yaml
+  - metered-usage-handler-service.yaml
+  - log-controller.yaml
 
 patches:
   - path: patch.json
