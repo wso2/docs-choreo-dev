@@ -33,7 +33,6 @@ It is important to understand the purpose of the key files in the sample service
 |**Filepath**             |**Description**                                                               |
 |-------------------------|------------------------------------------------------------------------------|
 | `main.go`               | The Go-based greeter service code.                                           |
-| `Dockerfile`            | The Dockerfile to build the container image of the application.              |
 | `.choreo/endpoints.yaml`| Choreo-specific configuration that provides information about how Choreo exposes the service.|
 | `openapi.yaml`          | The OpenAPI contract of the greeter service. This is required to publish the service as a managed API. This `openapi.yaml` file is referenced by the `.choreo/endpoints.yaml` file.|
 
@@ -92,11 +91,11 @@ To create a containerized service component, follow these steps:
 
 10. Click **Create**. This creates the component and lists it under **Component Listing** on the project home page.
 
-You have successfully created a service from a Dockerfile. Next, you can build and deploy the service.
+You have successfully created the service. The next step is to build and deploy it.
 
 ## Step 2: Build and deploy
 
-Now that you have connected the source repository and configured the endpoint details, it's time to build the service and create an image. Then you can deploy the image and test the greeter service.
+Now that you have connected the source repository and configured the endpoint details, it's time to build and deploy the greeter service.
 
 ### Step 2.1: Build
 
@@ -108,15 +107,6 @@ To build the service, follow these steps:
 
     !!! note
         Building the service component may take a while. You can track the progress via the logs in the **Build Details** pane. Once the build process is complete, the build status changes to **Success**.
-
-    You can access the following scans under **Build**. 
-
-      - **The Dockerfile scan**: Choreo performs a scan to check if a non-root user ID is assigned to the Docker container to ensure security. If no non-root user is specified, the build will fail.
-      - **Container (Trivy) vulnerability scan**: This detects vulnerabilities in the final docker image. 
-      - **Container (Trivy) vulnerability scan**: The details of the vulnerabilities open in a separate pane. If this scan detects critical vulnerabilities, the build will fail.
-     
-        !!! info
-            If you have Choreo environments on a private data plane, you can ignore these vulnerabilities and proceed with the deployment.
 
 ### Step 2.2: Deploy
 
