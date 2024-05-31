@@ -1,5 +1,34 @@
 local util = {}
 
+-- Function to connect to Redis database with retry mechanism
+--
+-- @param red Redis object
+-- @param redis_host Redis hostname or IP address
+-- @param redis_port Redis port
+-- @param redis_ssl Whether to use SSL/TLS for the connection
+-- @param redis_ssl_verify Whether to verify SSL certificates (if SSL is enabled)
+-- @param correlation_id Unique identifier for tracking the operation
+-- @return boolean indicating success or failure
+-- @return error if there was an error
+local function connectToRedis(red, redis_host, redis_port, redis_ssl, redis_ssl_verify, correlation_id)
+    local retryCount = 0
+    local maxRetries = 3
+    local ok, err
+    repeat
+        retryCount = retryCount + 1
+        ngx.log(ngx.INFO, "correlation-id: ", correlation_id, "connecting to Redis database. attempt ", retryCount)
+        ok, err = red:connect(redis_host, redis_port, {ssl=redis_ssl, ssl_verify=redis_ssl_verify})
+        if not ok then
+            ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to connect to redis: ", err)
+            if retryCount >= maxRetries then
+                return false, err
+            end
+            ngx.sleep(1) -- wait for 1 second before retrying
+        end
+    until ok
+    return true, nil
+end
+
 -- Returns an array contains local cache value and search keys
 --
 -- @param organizationId organization UUID
@@ -226,10 +255,9 @@ function util.getRedisCacheValue(key, redis_host, redis_port, redis_ssl,
     local red = redis:new()
     red:set_timeout(1000) -- 1 second
 
-    ngx.log(ngx.INFO, "correlation-id: ", correlation_id, "connecting to Redis database..")
-    local ok, err = red:connect(redis_host, redis_port, {ssl=redis_ssl, ssl_verify=redis_ssl_verify})
+    local ok, err = connectToRedis(red, redis_host, redis_port, redis_ssl, redis_ssl_verify, correlation_id)
     if not ok then
-        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to connect to redis: ", err)
+        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to connect to redis after 3 attempts: ", err)
         return nil, err
     end
 
@@ -304,10 +332,10 @@ function util.ciliumEnabled(organizationId, correlation_id)
 
     red:set_timeout(1000) -- 1 second
     ngx.log(ngx.DEBUG, "correlation-id: ", correlation_id, "connecting to Redis database..")
-    local ok, err = red:connect(ngx.var.redis_host, ngx.var.redis_port,
-        { ssl = ngx.var.redis_ssl, ssl_verify = ngx.var.redis_ssl_verify })
+    local ok, err = connectToRedis(red, ngx.var.redis_host, ngx.var.redis_port,
+        ngx.var.redis_ssl, ngx.var.redis_ssl_verify, correlation_id)
     if not ok then
-        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to connect to redis: ", err)
+        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to connect to redis after 3 attempts: ", err)
         return forwardToCilium
     end
     local res, err = red:auth(ngx.var.redis_password)
@@ -391,9 +419,9 @@ function util.getWebappMetadata(releaseDetailsSubdomain)
     local red = redis:new()
     red:set_timeout(1000) -- 1 second
 
-    local ok, err = red:connect(ngx.var.REDIS_HOST, ngx.var.REDIS_PORT, {ssl=ngx.var.REDIS_SSL, ssl_verify=ngx.var.REDIS_SSL_VERIFY})
+    local ok, err = connectToRedis(red, ngx.var.REDIS_HOST, ngx.var.REDIS_PORT, ngx.var.REDIS_SSL, ngx.var.REDIS_SSL_VERIFY, "-")
     if not ok then
-        ngx.log(ngx.ERR, "failed to connect to redis: ", err)
+        ngx.log(ngx.ERR, "failed to connect to redis after 3 attempts: ", err)
         return ngx.exit(500)
     end
 
@@ -445,9 +473,9 @@ function util.getRedisValue(key, redis_host, redis_port, redis_ssl, redis_ssl_ve
     red:set_timeout(1000) -- 1 second
     ngx.log(ngx.INFO, "correlation-id: ", correlation_id, "connecting to Redis database..")
 
-    local ok, err = red:connect(redis_host, redis_port, {ssl=redis_ssl, ssl_verify=redis_ssl_verify})
+    local ok, err = connectToRedis(red, redis_host, redis_port, redis_ssl, redis_ssl_verify, correlation_id)
     if not ok then
-        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to connect to redis: ", err)
+        ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to connect to redis after 3 attempts: ", err)
         return nil, err
     end
 
