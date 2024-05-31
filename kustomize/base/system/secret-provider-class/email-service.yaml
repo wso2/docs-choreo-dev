@@ -1,0 +1,47 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-email-service
+spec:
+  secretObjects:
+    - secretName: secret-email-service
+      type: Opaque
+      data:
+        - objectName: MAIL_SMTP_AUTH_PASSWORD
+          key: MAIL_SMTP_AUTH_PASSWORD
+        - objectName: MAIL_SMTP_AUTH_USERNAME
+          key: MAIL_SMTP_AUTH_USERNAME
+        - objectName: MAIL_SMTP_HOST
+          key: MAIL_SMTP_HOST
+        - objectName: MAIL_SMTP_PORT
+          key: MAIL_SMTP_PORT
+        - objectName: SENDER_MAIL
+          key: SENDER_MAIL
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: email-service-SMTP-PASSWORD
+          objectType: secret
+          objectAlias: MAIL_SMTP_AUTH_PASSWORD
+          objectVersion: "{{.AZURE_KEYVAULT_TENANT_ID}}"
+        - |
+          objectName: email-service-SMTP-USERNAME
+          objectType: secret
+          objectAlias: MAIL_SMTP_AUTH_USERNAME
+          objectVersion: "{{.AZURE_KEYVAULT_TENANT_ID}}"
+        - |
+          objectName: email-service-SMTP-HOST
+          objectType: secret
+          objectAlias: MAIL_SMTP_HOST
+          objectVersion: "{{.MAIL_SMTP_HOST}}"
+        - |
+          objectName: email-service-SMTP-PORT
+          objectType: secret
+          objectAlias: MAIL_SMTP_PORT
+          objectVersion: "{{.MAIL_SMTP_PORT}}"
+        - |
+          objectName: email-service-SMTP-SENDER-MAIL
+          objectType: secret
+          objectAlias: SENDER_MAIL
+          objectVersion: "{{.SENDER_MAIL}}"
