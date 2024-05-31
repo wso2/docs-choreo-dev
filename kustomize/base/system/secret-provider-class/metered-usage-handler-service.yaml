@@ -20,7 +20,7 @@ spec:
           objectName: billing-stripe-token
           objectType: secret
           objectAlias: STRIPE_TOKEN
-          objectVersion: "bd8bc971dd484c208290b7bd181c84aa"
+          objectVersion: "{{.STRIPE_TOKEN}}"
         - |
           objectName: choreo-usage-db-mssql-password
           objectType: secret
