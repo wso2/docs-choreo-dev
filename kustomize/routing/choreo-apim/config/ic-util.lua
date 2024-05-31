@@ -255,7 +255,6 @@ function util.getRedisCacheValue(key, redis_host, redis_port, redis_ssl,
     local red = redis:new()
     red:set_timeout(1000) -- 1 second
 
-    ngx.log(ngx.INFO, "correlation-id: ", correlation_id, "connecting to Redis database..")
     local ok, err = connectToRedis(red, redis_host, redis_port, redis_ssl, redis_ssl_verify, correlation_id)
     if not ok then
         ngx.log(ngx.ERR, "correlation-id: ", correlation_id, "failed to connect to redis after 3 attempts: ", err)
@@ -332,7 +331,6 @@ function util.ciliumEnabled(organizationId, correlation_id)
     end
 
     red:set_timeout(1000) -- 1 second
-    ngx.log(ngx.DEBUG, "correlation-id: ", correlation_id, "connecting to Redis database..")
     local ok, err = connectToRedis(red, ngx.var.redis_host, ngx.var.redis_port,
         ngx.var.redis_ssl, ngx.var.redis_ssl_verify, correlation_id)
     if not ok then
@@ -415,7 +413,6 @@ function util.getRedisValue(key, redis_host, redis_port, redis_ssl, redis_ssl_ve
 
     local red = redis:new()
     red:set_timeout(1000) -- 1 second
-    ngx.log(ngx.INFO, "correlation-id: ", correlation_id, "connecting to Redis database..")
 
     local ok, err = connectToRedis(red, redis_host, redis_port, redis_ssl, redis_ssl_verify, correlation_id)
     if not ok then
