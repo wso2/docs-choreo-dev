@@ -20,7 +20,7 @@ spec:
           objectName: MOESIF-TLS-CERT
           objectType: secret
           objectAlias: MOESIF_TLS_PVT_KEY
-          objectVersion: "{{.MOESIF_TLS_PVT_KEY}"
+          objectVersion: "{{.MOESIF_TLS_PVT_KEY}}"
         - |
           objectName: MOESIF-TLS-CERT
           objectType: cert
