@@ -4,11 +4,11 @@ metadata:
   name: secret-multivariate-anomaly-detector-notification-manager
 spec:
   secretObjects:
-  - secretName: secret-multivariate-anomaly-detector-notification-manager
-    type: Opaque
-    data:
-      - objectName: BAL_CONFIG_DATA
-        key: BAL_CONFIG_DATA
+    - secretName: secret-multivariate-anomaly-detector-notification-manager
+      type: Opaque
+      data:
+        - objectName: BAL_CONFIG_DATA
+          key: BAL_CONFIG_DATA
   parameters:
     objects: |
       array:

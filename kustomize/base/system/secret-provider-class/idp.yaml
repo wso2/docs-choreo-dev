@@ -4,15 +4,15 @@ metadata:
   name: secret-idp
 spec:
   secretObjects:
-  - secretName: secret-idp
-    type: Opaque
-    data:
-      - objectName: IDP_BACKEND_API_CLIENT_SECRET
-        key: IDP_BACKEND_API_CLIENT_SECRET
-      - objectName: IDP_CLIENT_SECRET
-        key: IDP_CLIENT_SECRET
-      - objectName: SCIM_BACKEND_API_USER_PASSWORD
-        key: SCIM_BACKEND_API_USER_PASSWORD
+    - secretName: secret-idp
+      type: Opaque
+      data:
+        - objectName: IDP_BACKEND_API_CLIENT_SECRET
+          key: IDP_BACKEND_API_CLIENT_SECRET
+        - objectName: IDP_CLIENT_SECRET
+          key: IDP_CLIENT_SECRET
+        - objectName: SCIM_BACKEND_API_USER_PASSWORD
+          key: SCIM_BACKEND_API_USER_PASSWORD
   parameters:
     objects: |
       array:

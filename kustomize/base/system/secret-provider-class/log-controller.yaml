@@ -4,11 +4,11 @@ metadata:
   name: secret-log-controller
 spec:
   secretObjects:
-  - secretName: secret-log-controller
-    type: Opaque
-    data:
-      - objectName: AZURE_LA_CLIENT_SECRET
-        key: AZURE_LA_CLIENT_SECRET
+    - secretName: secret-log-controller
+      type: Opaque
+      data:
+        - objectName: AZURE_LA_CLIENT_SECRET
+          key: AZURE_LA_CLIENT_SECRET
   parameters:
     objects: |
       array:
