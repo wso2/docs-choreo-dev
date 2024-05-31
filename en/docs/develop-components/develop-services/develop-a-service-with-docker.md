@@ -8,7 +8,7 @@ In this guide, you will:
 - Deploy it in Choreo using a Dockerfile. The service will run on port 9090.
 - Test the service.
 
-If you want to create a service component that exposes a Ballerina service, follow the [Develop a Ballerina Service ](develop-a-ballerina-service.md) guide.
+If you want to create a service component that exposes a Ballerina service, see [Develop a Ballerina Service ](develop-a-ballerina-service.md).
 
 ## Prerequisites
 
