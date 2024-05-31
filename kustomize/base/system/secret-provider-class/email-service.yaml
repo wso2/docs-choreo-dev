@@ -24,12 +24,12 @@ spec:
           objectName: email-service-SMTP-PASSWORD
           objectType: secret
           objectAlias: MAIL_SMTP_AUTH_PASSWORD
-          objectVersion: "{{.AZURE_KEYVAULT_TENANT_ID}}"
+          objectVersion: "{{.MAIL_SMTP_AUTH_PASSWORD}}"
         - |
           objectName: email-service-SMTP-USERNAME
           objectType: secret
           objectAlias: MAIL_SMTP_AUTH_USERNAME
-          objectVersion: "{{.AZURE_KEYVAULT_TENANT_ID}}"
+          objectVersion: "{{.MAIL_SMTP_AUTH_USERNAME}}"
         - |
           objectName: email-service-SMTP-HOST
           objectType: secret
