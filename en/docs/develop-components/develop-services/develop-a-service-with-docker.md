@@ -28,7 +28,7 @@ Before you try out this guide, complete the following:
 
 ### Learn the repository file structure
 
-It is important to understand the purpose of the key files in the sample service application. The following table provides a brief overview of each file in the greeter service:
+It is important to understand the purpose of the key files in the sample service. The following table provides a brief overview of each file in the greeter service:
 
 !!! note 
     The specified file paths are relative to `<sample-repository-dir>/go/greeter`
