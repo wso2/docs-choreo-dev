@@ -166,6 +166,7 @@ for FILE_PATH in "$DIRECTORY"/*; do
 
             if get_database_user_password "$KEY_VAULT_NAME" "$SECRET_NAME" DATABASE_USER_PASSWORD; then
 
+                # Replace the placeholder for db user password with the actual password
                 export "$MODIFIED_STRING"="$DATABASE_USER_PASSWORD"
                 envsubst < "$FILE_PATH" > temp.sql && mv temp.sql "$FILE_PATH"
                 unset "$MODIFIED_STRING"
