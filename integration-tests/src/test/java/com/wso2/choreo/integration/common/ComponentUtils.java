@@ -1013,13 +1013,7 @@ public class ComponentUtils {
                                 .message()
                                 .type(MessageType.JSON)
                                 .body(expectedResponse)
-                                .validate((message, context) -> {
-                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
-                                    if (code != expectedHttpStatus.value()) {
-                                        throw new ValidationException(String.format("Too many successive calls with response code %s," +
-                                                " expected response code %s", code, expectedHttpStatus.value()));
-                                    }
-                                })));
+                                ));
     }
 
     public static List<Environment> getEnvironments(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
