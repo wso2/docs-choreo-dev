@@ -35,12 +35,10 @@ export class _ProxyCreationWizard {
     basePath: string,
     proxyInfo: ProxyInfo
   ): string {
-    cy.get(TestIds.apiName).within(() =>
-      cy.get("input").clear({ force: true }).type(name, { force: true })
-    );
+    cy.get(TestIds.apiName).within(() => cy.get("input").clear().type(name));
     cy.get(TestIds.apiVersion).clear().type(proxyInfo.version);
     cy.get(TestIds.apiBasePath).within(() =>
-      cy.get("input").clear({ force: true }).type(basePath, { force: true })
+      cy.get("input").clear().type(basePath)
     );
 
     let endpointUrl: string | undefined;
