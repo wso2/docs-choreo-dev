@@ -367,7 +367,7 @@ configMapGenerator:
       - PDP_OAUTH_AGENT_SVC={{.PDP_OAUTH_AGENT_SVC | default "choreo-app-gateway-oauth-agent.choreodp-system.svc.cluster.local"}}
       - PDP_GATEWAY_SVC={{.PDP_GATEWAY_SVC | default "choreo-app-gateway.choreodp-system.svc.cluster.local"}}
       - APP_GATEWAY_FOR_PDPS_ENABLED={{.APP_GATEWAY_FOR_PDPS_ENABLED | default false}}
-      - PDP_CAPABILITIES_ALLOWED_ADD_ITEMS=CHOWN,DAC_OVERRIDE,SETGID,SETUID
+      - PDP_CAPABILITIES_ALLOWED_ADD_ITEMS=CHOWN,DAC_OVERRIDE,SETGID,SETUID,NET_BIND_SERVICE
       - PDP_CAPABILITIES_ALLOWED_DROP_ITEMS=ALL
       - PDP_CAPABILITIES_DROP_NONE_ALLOWED=false
   - name: env-dp-helmhub
