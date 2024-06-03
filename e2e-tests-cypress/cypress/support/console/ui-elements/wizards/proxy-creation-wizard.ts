@@ -35,7 +35,9 @@ export class _ProxyCreationWizard {
     basePath: string,
     proxyInfo: ProxyInfo
   ): string {
-    cy.get(TestIds.apiName).within(() => cy.get("input").clear().type(name));
+    cy.get(TestIds.apiName)
+      .eq(0)
+      .within(() => cy.get("input").clear().type(name));
     cy.get(TestIds.apiVersion).clear().type(proxyInfo.version);
     cy.get(TestIds.apiBasePath).within(() =>
       cy.get("input").clear().type(basePath)

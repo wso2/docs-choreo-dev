@@ -123,7 +123,7 @@ export namespace TestIds {
   export const oasUrlEntry = '[data-cyid="txt-oas-url"]';
   export const upload = '[data-cyid="btn-upload-button"]';
   export const filepathEntry = 'input[type="file"]';
-  export const apiName = '[data-cyid="api-displayname"]';
+  export const apiName = '[data-cyid^="api-"][data-cyid$="name"]';
   export const apiVersion = '[data-cyid="api-version"]';
   export const apiBasePath = '[data-cyid="api-basepath"]';
   export const apiEndpoint = '[data-cyid="api-endpoint"]';
