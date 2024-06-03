@@ -7,6 +7,7 @@ dbUser = "choreo_proxy_deployer_db_user"
 proxyDeployerPort = 9095
 healthCheckPort = 9091
 
+jwksEnabled = {{.JWKS_VALIDATION_ENABLED | default false }}
 jwtTokenScopes = ["apim:api_manage", "apim:publisher_settings"]
 
 mizzenServerBasePath = "http://dp-mizzen:80"
