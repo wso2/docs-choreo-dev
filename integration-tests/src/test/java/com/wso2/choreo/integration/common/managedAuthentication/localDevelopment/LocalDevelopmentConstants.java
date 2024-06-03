@@ -17,6 +17,11 @@ import java.util.List;
 
 public class LocalDevelopmentConstants {
 
+    public static class LocalDevelopmentProxyHeaders {
+        
+        public static final String LOCAL_DEV_MODE = "X-Use-Local-Dev-Mode";
+    }
+
     public static class EnableLocalDevelopmentRequestParams {
 
         public static final String ENABLE = "enable";
@@ -38,6 +43,6 @@ public class LocalDevelopmentConstants {
     public static class EnableLocalDevelopmentCustomConfigs {
 
         public static final boolean ENABLE = true;
-        public static final List<String> ALLOWED_URIS = List.of("https://localhost:9000", "https://localhost:9001");
+        public static final List<String> ALLOWED_URIS = List.of("https://localhost:9000");
     }
 }

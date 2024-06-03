@@ -13,6 +13,10 @@
 
 package com.wso2.choreo.integration.tests.managedAuthentication.localDevelopment;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +24,7 @@ import java.util.Map;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.wso2.choreo.integration.apis.external.ManagedAuth;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
@@ -32,12 +37,14 @@ import com.wso2.choreo.integration.common.managedAuthentication.localDevelopment
 import com.wso2.choreo.integration.common.managedAuthentication.localDevelopment.LocalDevelopmentConstants.EnableLocalDevelopmentCustomConfigs;
 import com.wso2.choreo.integration.common.managedAuthentication.localDevelopment.LocalDevelopmentConstants.EnableLocalDevelopmentDefaultConfigs;
 import com.wso2.choreo.integration.common.managedAuthentication.localDevelopment.LocalDevelopmentConstants.EnableLocalDevelopmentRequestParams;
+import com.wso2.choreo.integration.common.managedAuthentication.localDevelopment.LocalDevelopmentConstants.LocalDevelopmentProxyHeaders;
 import com.wso2.choreo.integration.common.managedAuthentication.ManagedAuthenticationUtils;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class LocalDevelopmentTests extends TestNGCitrusSpringSupport {
@@ -50,6 +57,7 @@ public class LocalDevelopmentTests extends TestNGCitrusSpringSupport {
     private List<Environment> testComponentEnvironments;
     private Environment testComponentDevEnv, testComponentProdEnv;
     private String devEnvReleaseId, prodEnvReleaseId;
+    private String devEnvInvokeURL;
 
     @Test()
     @CitrusTest
@@ -94,6 +102,7 @@ public class LocalDevelopmentTests extends TestNGCitrusSpringSupport {
                 testComponentEnvironments);
 
         devEnvReleaseId = status.getReleaseId();
+        devEnvInvokeURL = status.getInvokeUrl();
     }
 
     @Test(dependsOnMethods = "deployComponentToDevEnv_LocalDevelopmentTests")
@@ -133,6 +142,18 @@ public class LocalDevelopmentTests extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = "enableLocalDevelopmentWithCustomConfigsInDevEnvironment_LocalDevelopmentTests")
+    @CitrusTest
+    public void invokeAuthURLWithLocalDevelopmentEnabled_LocalDevelopmentTests() throws Exception {
+
+        String redirectHeaderValue = ManagedAuth.initiateManagedAuthLoginFlow(devEnvInvokeURL,
+                getHeadersForManagedAuthLoginFlow(EnableLocalDevelopmentCustomConfigs.ALLOWED_URIS.get(0)));
+
+        Assert.assertTrue(extractParametersFromRedirectURL(redirectHeaderValue, "redirect_uri")
+                .contains(EnableLocalDevelopmentCustomConfigs.ALLOWED_URIS.get(0)));
+
+    }
+
+    @Test(dependsOnMethods = "invokeAuthURLWithLocalDevelopmentEnabled_LocalDevelopmentTests")
     @CitrusTest
     public void promoteComponentToProdEnv_LocalDevelopmentTests() throws Exception {
 
@@ -192,6 +213,33 @@ public class LocalDevelopmentTests extends TestNGCitrusSpringSupport {
                 EnableLocalDevelopmentCustomConfigs.ALLOWED_URIS);
 
         return configRequest;
+    }
+
+    private static Map<String, String> getHeadersForManagedAuthLoginFlow(String proxyURL) {
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put(LocalDevelopmentProxyHeaders.LOCAL_DEV_MODE, proxyURL);
+
+        return headers;
+    }
+
+    private static String extractParametersFromRedirectURL(String redirectURL, String parameterName)
+            throws URISyntaxException, UnsupportedEncodingException {
+
+        URI uri = new URI(redirectURL);
+        String query = uri.getQuery();
+
+        Map<String, String> queryPairs = new HashMap<>();
+        String[] pairs = query.split("&");
+        for (String pair : pairs) {
+            int idx = pair.indexOf("=");
+            String key = URLDecoder.decode(pair.substring(0, idx), "UTF-8");
+            String value = URLDecoder.decode(pair.substring(idx + 1), "UTF-8");
+            queryPairs.put(key, value);
+        }
+
+        return queryPairs.get(parameterName);
+
     }
 
 }
