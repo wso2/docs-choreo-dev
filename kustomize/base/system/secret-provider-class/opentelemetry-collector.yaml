@@ -4,11 +4,11 @@ metadata:
   name: opentelemetry-collector
 spec:
   secretObjects:
-  - secretName: opentelemetry-collector
-    type: Opaque
-    data:
-      - objectName: EVENT_HUB_CONNECTION_STRING
-        key: EVENT_HUB_CONNECTION_STRING
+    - secretName: opentelemetry-collector
+      type: Opaque
+      data:
+        - objectName: EVENT_HUB_CONNECTION_STRING
+          key: EVENT_HUB_CONNECTION_STRING
   parameters:
     objects: |
       array:

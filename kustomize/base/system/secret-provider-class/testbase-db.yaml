@@ -4,11 +4,11 @@ metadata:
   name: secret-testbase-db
 spec:
   secretObjects:
-  - secretName: secret-testbase-db
-    type: Opaque
-    data:
-      - objectName: CHOREO_DB_PASSWORD
-        key: CHOREO_DB_PASSWORD
+    - secretName: secret-testbase-db
+      type: Opaque
+      data:
+        - objectName: CHOREO_DB_PASSWORD
+          key: CHOREO_DB_PASSWORD
   parameters:
     objects: |
       array:

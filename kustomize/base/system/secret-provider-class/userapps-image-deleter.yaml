@@ -4,15 +4,15 @@ metadata:
   name: secret-userapps-image-deleter
 spec:
   secretObjects:
-  - secretName: secret-userapps-image-deleter
-    type: Opaque
-    data:
-      - objectName: AZURE_CLIENT_SECRET
-        key: AZURE_CLIENT_SECRET
-      - objectName: EMAIL_USERNAME
-        key: EMAIL_USERNAME
-      - objectName: EMAIL_PASSWORD
-        key: EMAIL_PASSWORD
+    - secretName: secret-userapps-image-deleter
+      type: Opaque
+      data:
+        - objectName: AZURE_CLIENT_SECRET
+          key: AZURE_CLIENT_SECRET
+        - objectName: EMAIL_USERNAME
+          key: EMAIL_USERNAME
+        - objectName: EMAIL_PASSWORD
+          key: EMAIL_PASSWORD
   parameters:
     objects: |
       array:
