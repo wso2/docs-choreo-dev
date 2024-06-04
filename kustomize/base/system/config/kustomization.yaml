@@ -298,8 +298,6 @@ configMapGenerator:
     behavior: create
     literals:
       - TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
-      - TLS_KEY_PATH=/mnt/tls.key
-      - TLS_CERT_PATH=/mnt/tls.crt
       - KEYVAULT_NAME=shared-fe-apps-cdn-60
   - name: cm-file-devops-portal-api
     behavior: create
@@ -511,7 +509,6 @@ configMapGenerator:
       - UM_DATABASE_USERNAME="choreo_app_dev_user_mgt_db_user"
       - UM_DATABASE_PASSWORD_FILE=UM_DB_PASSWORD
       - UM_AUTHORIZATION_HEADER_NAME="x-jwt-assertion"
-      - UM_USER_STORE_MANAGEMENT_PERMISSIONS="urn:choreocontrolplane:organizationapi:org_manage"
   - name: cm-files-appdev-user-mgt
     behavior: create
     files:

@@ -1,0 +1,73 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2024, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+resources:
+  - ai-eventhub-checkpoint.yaml
+  - ai-eventhub-metrics.yaml
+  - ai-lowcode-parser.yaml
+  - ai-storage-table.yaml
+  - alert-configuration-service.yaml
+  - alert-notification-service.yaml
+  - api-manager.yaml
+  - apim-service.yaml
+  - app-db.yaml
+  - app-deployer.yaml
+  - app-dev-authorization-service.yaml
+  - app-dev-user-mgt-service.yaml
+  - app-service.yaml
+  - apps-k8s-service-account.yaml
+  - asb-auth-token.yaml
+  - audit-logging.yaml
+  - azure-insights.yaml
+  - azure-storage-account.yaml
+  - cdn-tls-cert-synchronizer.yaml
+  - choreo-admin-api.yaml
+  - choreo-apim-proxy-deployer.yaml
+  - choreo-marketplace.yaml
+  - choreo-url-management.yaml
+  - cio-event-collector-service.yaml
+  - cio-incident-configurator.yaml
+  - cio-query-api-service.yaml
+  - configuration-service.yaml
+  - connection-service.yaml
+  - cp-endpoint-resolver.yaml
+  - cp-graphql.yaml
+  - cp-gw-adapter.yaml
+  - cp-rrs.yaml
+  - crypto-key-service.yaml
+  - email-service.yaml
+  - github-connector.yaml
+  - gsuite.yaml
+  - idp.yaml
+  - key-vault.yaml
+  - dp-secret-manager.yaml
+  - dp-rudder.yaml
+  - dp-cicd.yaml
+  - dp-cloud-manager.yaml
+  - dp-garbage-collector.yaml
+  - dp-mizzen.yaml
+  - dp-project-manager.yaml
+  - multivariate-anomaly-detector-notification-manager.yaml
+  - delete-manager.yaml
+  - moesif-service.yaml
+  - metered-usage-handler.yaml
+  - metered-usage-handler-service.yaml
+  - log-controller.yaml
+
+patches:
+  - path: patch.json
+    target:
+      group: secrets-store.csi.x-k8s.io
+      version: v1
+      kind: SecretProviderClass
+
+commonLabels:
+  app: choreo-control-plane

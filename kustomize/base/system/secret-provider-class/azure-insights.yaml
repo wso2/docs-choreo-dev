@@ -1,0 +1,19 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-azure-insights
+spec:
+  secretObjects:
+    - secretName: secret-azure-insights
+      type: Opaque
+      data:
+        - objectName: AZURE_INSIGHTS_KEY
+          key: AZURE_INSIGHTS_KEY
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: azure-INSIGHTS-KEY
+          objectType: secret
+          objectAlias: AZURE_INSIGHTS_KEY
+          objectVersion: "{{.AZURE_INSIGHTS_KEY}}"

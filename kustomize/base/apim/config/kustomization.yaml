@@ -38,3 +38,12 @@ configMapGenerator:
     files:
       - global-adapter-v2/ga_config.toml
       - global-adapter-v2/log_config.toml
+  - name: choreo-apim-am-conf
+    behavior: create
+    files:
+      - am/deployment.toml
+      - am/log4j2.properties
+  - name: choreo-apim-docker-entrypoint
+    behavior: create
+    files:
+      - am/docker-entrypoint.sh

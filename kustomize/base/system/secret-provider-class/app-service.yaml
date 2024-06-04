@@ -1,0 +1,110 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-app-service
+spec:
+  secretObjects:
+    - secretName: secret-app-service
+      type: Opaque
+      data:
+        - objectName: BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY
+          key: BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY
+        - objectName: GITHUB_BOT_ACCESS_TOKEN
+          key: GITHUB_BOT_ACCESS_TOKEN
+        - objectName: USER_FEEDBACK_AZURE_BLOB_ACCOUNT_KEY
+          key: USER_FEEDBACK_AZURE_BLOB_ACCOUNT_KEY
+        - objectName: CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY
+          key: CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY
+        - objectName: MARKETING_CONSENT_APP_CLIENT_SECRET
+          key: MARKETING_CONSENT_APP_CLIENT_SECRET
+        - objectName: ASGARDEO_CLIENT_SECRET
+          key: ASGARDEO_CLIENT_SECRET
+        - objectName: IDP_APP_CLIENT_SECRET
+          key: IDP_APP_CLIENT_SECRET
+        - objectName: AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY
+          key: AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY
+        - objectName: PARDOT_USER_LIST_REGISTRATION_APP_KEY
+          key: PARDOT_USER_LIST_REGISTRATION_APP_KEY
+        - objectName: PARDOT_USER_LIST_REGISTRATION_APP_SECRET
+          key: PARDOT_USER_LIST_REGISTRATION_APP_SECRET
+        - objectName: SALESFORCE_LEAD_VIA_PARDOT_APP_KEY
+          key: SALESFORCE_LEAD_VIA_PARDOT_APP_KEY
+        - objectName: SALESFORCE_LEAD_VIA_PARDOT_APP_SECRET
+          key: SALESFORCE_LEAD_VIA_PARDOT_APP_SECRET
+        - objectName: MAX_MIND_GEO_LOC_COUNTRY_USERNAME
+          key: MAX_MIND_GEO_LOC_COUNTRY_USERNAME
+        - objectName: MAX_MIND_GEO_LOC_COUNTRY_PASSWORD
+          key: MAX_MIND_GEO_LOC_COUNTRY_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: app-service-BETA-PROGRAM-PREFINERY-INVITATION-DECODER-KEY
+          objectType: secret
+          objectAlias: BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY
+          objectVersion: "{{.BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY}}"
+        - |
+          objectName: app-service-GITHUB-BOT-ACCESS-TOKEN
+          objectType: secret
+          objectAlias: GITHUB_BOT_ACCESS_TOKEN
+          objectVersion: "{{.GITHUB_BOT_ACCESS_TOKEN}}"
+        - |
+          objectName: app-service-USER-FEEDBACK-AZURE-BLOB-ACCOUNT-KEY
+          objectType: secret
+          objectAlias: USER_FEEDBACK_AZURE_BLOB_ACCOUNT_KEY
+          objectVersion: "{{.USER_FEEDBACK_AZURE_BLOB_ACCOUNT_KEY}}"
+        - |
+          objectName: app-service-CENTRAL-ORG-REGISTRY-CERTIFICATE-KEY
+          objectType: secret
+          objectAlias: CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY
+          objectVersion: "{{.CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY}}"
+        - |
+          objectName: app-service-MARKETING-CONSENT-APP-CLIENT-SECRET
+          objectType: secret
+          objectAlias: MARKETING_CONSENT_APP_CLIENT_SECRET
+          objectVersion: "{{.MARKETING_CONSENT_APP_CLIENT_SECRET}}"
+        - |
+          objectName: app-service-system-guest-manager-client-secret
+          objectType: secret
+          objectAlias: ASGARDEO_CLIENT_SECRET
+          objectVersion: "{{.ASGARDEO_CLIENT_SECRET}}"
+        - |
+          objectName: app-service-system-user-manager-client-secret
+          objectType: secret
+          objectAlias: IDP_APP_CLIENT_SECRET
+          objectVersion: "{{.IDP_APP_CLIENT_SECRET}}"
+        - |
+          objectName: app-service-AZURE-APP-INSIGHTS-INSTRUMENTATION-KEY
+          objectType: secret
+          objectAlias: AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY
+          objectVersion: "{{.AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY}}"
+        - |
+          objectName: app-service-PARDOT-USER-LIST-REGISTRATION-APP-KEY
+          objectType: secret
+          objectAlias: PARDOT_USER_LIST_REGISTRATION_APP_KEY
+          objectVersion: "{{.PARDOT_USER_LIST_REGISTRATION_APP_KEY}}"
+        - |
+          objectName: app-service-PARDOT-USER-LIST-REGISTRATION-APP-SECRET
+          objectType: secret
+          objectAlias: PARDOT_USER_LIST_REGISTRATION_APP_SECRET
+          objectVersion: "{{.PARDOT_USER_LIST_REGISTRATION_APP_SECRET}}"
+        - |
+          objectName: app-service-PARDOT-SF-NEW-LEAD-CREATION-APP-KEY
+          objectType: secret
+          objectAlias: SALESFORCE_LEAD_VIA_PARDOT_APP_KEY
+          objectVersion: "{{.SALESFORCE_LEAD_VIA_PARDOT_APP_KEY}}"
+        - |
+          objectName: app-service-PARDOT-SF-NEW-LEAD-CREATION-APP-SECRET
+          objectType: secret
+          objectAlias: SALESFORCE_LEAD_VIA_PARDOT_APP_SECRET
+          objectVersion: "{{.SALESFORCE_LEAD_VIA_PARDOT_APP_SECRET}}"
+        - |
+          objectName: app-service-MAX-MIND-GEO-LOC-COUNTRY-USERNAME
+          objectType: secret
+          objectAlias: MAX_MIND_GEO_LOC_COUNTRY_USERNAME
+          objectVersion: "{{.MAX_MIND_GEO_LOC_COUNTRY_USERNAME}}"
+        - |
+          objectName: app-service-MAX-MIND-GEO-LOC-COUNTRY-PASSWORD
+          objectType: secret
+          objectAlias: MAX_MIND_GEO_LOC_COUNTRY_PASSWORD
+          objectVersion: "{{.MAX_MIND_GEO_LOC_COUNTRY_PASSWORD}}"

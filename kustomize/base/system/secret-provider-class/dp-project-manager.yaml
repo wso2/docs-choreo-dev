@@ -1,0 +1,26 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-dp-project-manager
+spec:
+  secretObjects:
+    - secretName: secret-dp-project-manager
+      type: Opaque
+      data:
+        - objectName: MONGODB_PASSWORD
+          key: MONGODB_PASSWORD
+        - objectName: APIM_CLIENT_SECRET
+          key: APIM_CLIENT_SECRET
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: dp-project-manager-mongodb-password
+          objectType: secret
+          objectAlias: MONGODB_PASSWORD
+          objectVersion: "{{.MONGODB_PASSWORD}}"
+        - |
+          objectName: dp-project-manager-apim-rest-api-consumer-secret
+          objectType: secret
+          objectAlias: APIM_CLIENT_SECRET
+          objectVersion: "{{.APIM_CLIENT_SECRET}}"

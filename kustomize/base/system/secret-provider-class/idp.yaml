@@ -1,0 +1,33 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-idp
+spec:
+  secretObjects:
+    - secretName: secret-idp
+      type: Opaque
+      data:
+        - objectName: IDP_BACKEND_API_CLIENT_SECRET
+          key: IDP_BACKEND_API_CLIENT_SECRET
+        - objectName: IDP_CLIENT_SECRET
+          key: IDP_CLIENT_SECRET
+        - objectName: SCIM_BACKEND_API_USER_PASSWORD
+          key: SCIM_BACKEND_API_USER_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: idp-BACKEND-API-CLIENT-SECRET
+          objectType: secret
+          objectAlias: IDP_BACKEND_API_CLIENT_SECRET
+          objectVersion: "{{.IDP_BACKEND_API_CLIENT_SECRET}}"
+        - |
+          objectName: idp-CLIENT-SECRET
+          objectType: secret
+          objectAlias: IDP_CLIENT_SECRET
+          objectVersion: "{{.IDP_CLIENT_SECRET}}"
+        - |
+          objectName: idp-SCIM-BACKEND-API-USER-PASSWORD
+          objectType: secret
+          objectAlias: SCIM_BACKEND_API_USER_PASSWORD
+          objectVersion: "{{.SCIM_BACKEND_API_USER_PASSWORD}}"

@@ -1,0 +1,19 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-key-vault
+spec:
+  secretObjects:
+    - secretName: secret-key-vault
+      type: Opaque
+      data:
+        - objectName: AZURE_KEY_VAULT_CLIENT_SECRET
+          key: AZURE_KEY_VAULT_CLIENT_SECRET
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: app-service-AZURE-KEY-VAULT-CLIENT-SECRET
+          objectType: secret
+          objectAlias: AZURE_KEY_VAULT_CLIENT_SECRET
+          objectVersion: "{{.AZURE_KEY_VAULT_CLIENT_SECRET}}"

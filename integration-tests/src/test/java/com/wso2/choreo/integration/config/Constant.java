@@ -105,6 +105,7 @@ public final class Constant {
         manualTrigger,
         buildpackService,
         byoiService
+        byocWebAppsDockerfileLess
     }
     public enum apiLIifCycleState {
         Publish

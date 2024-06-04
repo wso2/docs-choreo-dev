@@ -1,7 +1,7 @@
 -- Create User
 IF EXISTS (SELECT name FROM sys.databases WHERE name = N'choreo_app_db') AND NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_app_db_user')
 BEGIN
-    CREATE USER [choreo_app_db_user] with password = N'${choreo-app-db-mssql-password}'
+    CREATE USER [choreo_app_db_user] with password = N'${choreo_app_db_mssql_password}'
     GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_app_db TO choreo_app_db_user
 END;
 GO
@@ -1774,10 +1774,12 @@ CREATE TABLE [dbo].[org_activity]
     [last_job_run] [datetime],
     [last_api_invocation] [datetime],
     [last_ballerina_pkg_update] [datetime],
+    [marked_for_deletion] [bit] NOT NULL DEFAULT 0,
+    [is_deleted] [bit] NOT NULL DEFAULT 0,
+    [deleted_time] [datetime],
     PRIMARY KEY (id),
-    CONSTRAINT unique_org_activity UNIQUE(org_id),
-    CONSTRAINT org_activity_org_id_fk FOREIGN KEY (org_id) REFERENCES organization(id) ON DELETE CASCADE
-)
+    CONSTRAINT unique_org_activity UNIQUE(org_id)
+);
 
 /****** Object:  Trigger [dbo].[org_enterprise_login_config_UpdateTimeTrigger] ******/
 SET ANSI_NULLS ON

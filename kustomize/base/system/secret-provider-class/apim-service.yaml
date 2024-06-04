@@ -1,0 +1,33 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-apim-service
+spec:
+  secretObjects:
+    - secretName: secret-apim-service
+      type: Opaque
+      data:
+        - objectName: ADMIN_PASSWORD
+          key: ADMIN_PASSWORD
+        - objectName: APIM_REST_API_CONSUMER_SECRET
+          key: APIM_REST_API_CONSUMER_SECRET
+        - objectName: IDP_ADMIN_PASSWORD
+          key: IDP_ADMIN_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: apim-ADMIN-PASSWORD
+          objectType: secret
+          objectAlias: ADMIN_PASSWORD
+          objectVersion: "{{.ADMIN_PASSWORD}}"
+        - |
+          objectName: apim-REST-API-CONSUMER-SECRET
+          objectType: secret
+          objectAlias: APIM_REST_API_CONSUMER_SECRET
+          objectVersion: "{{.APIM_REST_API_CONSUMER_SECRET}}"
+        - |
+          objectName: apim-IDP-ADMIN-PASSWORD
+          objectType: secret
+          objectAlias: IDP_ADMIN_PASSWORD
+          objectVersion: "{{.IDP_ADMIN_PASSWORD}}"
