@@ -1,0 +1,29 @@
+version: 0.1
+
+# +required List of endpoints to create
+endpoints:
+  # +required Unique name for the endpoint. 
+  # This name will be used when generating the managed API.
+  - name: Default Endpoint
+
+    # +required Numeric port to map to on your container.
+    port: 8080
+
+    # +required Type of the traffic this endpoint accepts.
+    # Allowed values: REST, GraphQL, GRPC, TCP
+    type: REST
+
+    # +optional Network level visibility of this endpoint. 
+    # Accepted values: Project|Organization|Public.
+    # Default: Project
+    networkVisibility: Public
+
+    # +optional Context (base path) of the API that is
+    # exposed via this endpoint.
+    # Mandatory for REST and GraphQL types.
+    context: /
+
+    # +optional Name of an uploaded API schema definition file. 
+    # Defaults to a wild card route (/*) if not provided.
+    # This is only applicable to REST endpoint types.
+    schemaFilePath: openapi.yaml

@@ -103,7 +103,8 @@ public final class Constant {
         graphql,
         ballerinaService,
         manualTrigger,
-        buildpackService
+        buildpackService,
+        byoiService
     }
     public enum apiLIifCycleState {
         Publish

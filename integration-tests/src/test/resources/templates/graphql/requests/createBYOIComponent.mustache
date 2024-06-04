@@ -1,0 +1,20 @@
+mutation { 
+    createByoiComponent(
+        component: {       
+            name: "{{name}}",
+            displayName: "{{displayName}}",
+            description:  "",
+            projectId: "{{projectId}}",
+            componentType: "{{componentType}}",
+            metadata: {labels: "", version:"v1.0"},
+            port: null,
+            imageUrl: "{{imageUrl}}",
+            registryId: "{{registryId}}"
+        } 
+    )
+    {
+        id, 
+        projectId, 
+        handle
+    }
+}

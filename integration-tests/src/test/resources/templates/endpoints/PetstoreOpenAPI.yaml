@@ -1,0 +1,146 @@
+basePath: /api/v1/pets
+definitions:
+  models.Pet:
+    properties:
+      age:
+        example: 8
+        type: integer
+      id:
+        example: fe2594d0-ccea-42a2-97ac-0487458b5642
+        type: string
+      name:
+        example: Kitty
+        type: string
+    type: object
+  utils.ErrorResponse:
+    properties:
+      message:
+        example: error message
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a sample service that manages a list of pets
+  title: Choreo Pet Store
+  version: "1.0"
+paths:
+  /pets:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            items:
+              $ref: '#/definitions/models.Pet'
+            type: array
+      summary: List all the pet store pets
+      tags:
+      - pets
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: New pet details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Pet'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/models.Pet'
+        "400":
+          description: invalid pet details
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "409":
+          description: pet already exists
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Add a new pet to the pet store
+      tags:
+      - pets
+  /pets/{id}:
+    delete:
+      parameters:
+      - description: Pet ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/models.Pet'
+        "404":
+          description: pet not found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Delete a pet store pet by id
+      tags:
+      - pets
+    get:
+      parameters:
+      - description: Pet ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/models.Pet'
+        "404":
+          description: pet not found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Get pet store pet by id
+      tags:
+      - pets
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Pet ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated pet details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Pet'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/models.Pet'
+        "400":
+          description: invalid pet details
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: pet not found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Update a pet store pet by id
+      tags:
+      - pets
+swagger: "2.0"

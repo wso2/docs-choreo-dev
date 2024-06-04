@@ -39,6 +39,26 @@ public class ObjectMapperUtil {
         return componentObjectMapper.writeValueAsString(objectMap);
     }
 
+    public static <T> T mapStringToObject(Class<T> type, String jsonString) {
+
+        if (jsonString.contains("\"data\"")) {
+            JsonElement je = new JsonParser().parse(jsonString).getAsJsonObject().
+                getAsJsonObject("data");
+            return GSON.fromJson(je, type);
+        }
+        return GSON.fromJson(jsonString, type);
+    }
+
+    public static <T> T[] mapToCollection(Class<T[]> tClass, String jsonString) {
+        if (jsonString.contains("data")) {
+
+            JsonElement je = new JsonParser().parse(jsonString).getAsJsonObject().
+                getAsJsonArray("data");
+            return GSON.fromJson(je, tClass);
+        }
+        return GSON.fromJson(jsonString, tClass);
+    }
+    
     public static <T> T mapStringToObject(Class<T> type, String jsonString, String val) {
 
         if (jsonString.contains("\"data\"") && val != null && !val.equals("")) {

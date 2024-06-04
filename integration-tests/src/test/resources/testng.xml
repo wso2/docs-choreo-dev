@@ -6,7 +6,9 @@
             <class name="com.wso2.choreo.integration.common.TestContext"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestBasicAPIRevisionCreation"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingSettingsPage"/>
+            <class name="com.wso2.choreo.integration.tests.byoi.TestBYOIComponent"/>
             <class name="com.wso2.choreo.integration.tests.deploy.AutoDeployOnCommit"/>
+            <class name="com.wso2.choreo.integration.tests.deploy.AutoDeployOnCommitMonoRepo"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAPI"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPI"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertsAPI"/>
