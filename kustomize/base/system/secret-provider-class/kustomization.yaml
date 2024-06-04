@@ -78,7 +78,6 @@ resources:
   - organization-management.yaml
   - userapps-image-deleter.yaml
   - opentelemetry-collector.yaml
-  - usage-handler-service-ingress-tls.yaml
   - resource-registry-db.yaml
   - pdp-manager.yaml
 
