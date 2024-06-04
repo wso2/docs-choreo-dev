@@ -1,0 +1,26 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-quota-limiter
+spec:
+  secretObjects:
+    - secretName: secret-quota-limiter
+      type: Opaque
+      data:
+        - objectName: QUOTA_LIMITER_APIM_CLEINT_ID
+          key: QUOTA_LIMITER_APIM_CLEINT_ID
+        - objectName: QUOTA_LIMITER_APIM_CLIENT_SECRET
+          key: QUOTA_LIMITER_APIM_CLIENT_SECRET
+  parameters:
+    objects:  |
+      array:
+        - |
+          objectName: quota-limiter-apim-client-id
+          objectType: secret
+          objectAlias: QUOTA_LIMITER_APIM_CLEINT_ID
+          objectVersion: "{{.QUOTA_LIMITER_APIM_CLEINT_ID}}"
+        - |
+          objectName: quota-limiter-apim-client-secret
+          objectType: secret
+          objectAlias: QUOTA_LIMITER_APIM_CLIENT_SECRET
+          objectVersion: "{{.QUOTA_LIMITER_APIM_CLIENT_SECRET}}"

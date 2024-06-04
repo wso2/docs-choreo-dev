@@ -1,0 +1,40 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-service-now
+spec:
+  secretObjects:
+    - secretName: secret-service-now
+      type: Opaque
+      data:
+        - objectName: SERVICE_NOW_CLIENT_ID
+          key: SERVICE_NOW_CLIENT_ID
+        - objectName: SERVICE_NOW_CLIENT_SECRET
+          key: SERVICE_NOW_CLIENT_SECRET
+        - objectName: SERVICE_NOW_PASSWORD
+          key: SERVICE_NOW_PASSWORD
+        - objectName: SERVICE_NOW_USERNAME
+          key: SERVICE_NOW_USERNAME
+  parameters:
+    objects:  |
+      array:
+        - |
+          objectName: service-now-CLIENT-ID
+          objectType: secret
+          objectAlias: SERVICE_NOW_CLIENT_ID
+          objectVersion: "{{.SERVICE_NOW_CLIENT_ID}}"
+        - |
+          objectName: service-now-CLIENT-SECRET
+          objectType: secret
+          objectAlias: SERVICE_NOW_CLIENT_SECRET
+          objectVersion: "{{.SERVICE_NOW_CLIENT_SECRET}}"
+        - |
+          objectName: service-now-PASSWORD
+          objectType: secret
+          objectAlias: SERVICE_NOW_PASSWORD
+          objectVersion: "{{.SERVICE_NOW_PASSWORD}}"
+        - |
+          objectName: service-now-USERNAME
+          objectType: secret
+          objectAlias: SERVICE_NOW_USERNAME
+          objectVersion: "{{.SERVICE_NOW_USERNAME}}"

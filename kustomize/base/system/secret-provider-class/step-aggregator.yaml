@@ -1,0 +1,33 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-step-aggregator
+spec:
+  secretObjects:
+    - secretName: secret-step-aggregator
+      type: Opaque
+      data:
+        - objectName: APIM_CLIENT_SECRET
+          key: APIM_CLIENT_SECRET
+        - objectName: ADX_ANALYTICS_APP_CLIENT_SECRET
+          key: ADX_ANALYTICS_APP_CLIENT_SECRET
+        - objectName: MSSQL_PASSWORD
+          key: MSSQL_PASSWORD
+  parameters:
+    objects:  |
+      array:
+        - |
+          objectName: apim-CHOREO-STEP-AGGREGATOR-CLIENT-SECRET
+          objectType: secret
+          objectAlias: APIM_CLIENT_SECRET
+          objectVersion: "{{.APIM_CLIENT_SECRET}}"
+        - |
+          objectName: step-aggregator-ANALYTICS-ADX-SECRET
+          objectType: secret
+          objectAlias: ADX_ANALYTICS_APP_CLIENT_SECRET
+          objectVersion: "{{.ADX_ANALYTICS_APP_CLIENT_SECRET}}"
+        - |
+          objectName: choreo-step-db-mssql-password
+          objectType: secret
+          objectAlias: MSSQL_PASSWORD
+          objectVersion: "{{.MSSQL_PASSWORD}}"

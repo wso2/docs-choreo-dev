@@ -1,0 +1,29 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-test-assistant
+spec:
+  secretObjects:
+    - secretName: secret-test-assistant
+      type: Opaque
+      data:
+        - objectName: AZURE_OPENAI_API_KEY
+          key: AZURE_OPENAI_API_KEY
+  parameters:
+    objects:  |
+      array:
+        - |
+          objectName: test-assistant-MODEL-STORAGE-CONNECTION-STRING
+          objectType: secret
+          objectAlias: MODEL-STORAGE-CONNECTION-STRING
+          objectVersion: "{{.MODEL_STORAGE_CONNECTION_STRING}}"
+        - |
+          objectName: ai-test-data-generation-OPENAI-API-KEY
+          objectType: secret
+          objectAlias: OPENAI_API_KEY
+          objectVersion: "{{.OPENAI_API_KEY}}"
+        - |
+          objectName: ai-test-data-generation-COGSVC-OPENAI-ACCESS-KEY
+          objectType: secret
+          objectAlias: AZURE_OPENAI_API_KEY
+          objectVersion: "{{.AZURE_OPENAI_API_KEY}}"

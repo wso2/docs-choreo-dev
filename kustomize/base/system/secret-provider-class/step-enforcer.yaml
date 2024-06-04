@@ -1,0 +1,40 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-step-enforcer
+spec:
+  secretObjects:
+    - secretName: secret-step-enforcer
+      type: Opaque
+      data:
+        - objectName: ASB_CONN_STRING
+          key: ASB_CONN_STRING
+        - objectName: MSSQL_PASSWORD
+          key: MSSQL_PASSWORD
+        - objectName: CHOREO_INSIGHT_SERVICE_CLIENT_ID
+          key: CHOREO_INSIGHT_SERVICE_CLIENT_ID
+        - objectName: CHOREO_INSIGHT_SERVICE_CLIENT_SECRET
+          key: CHOREO_INSIGHT_SERVICE_CLIENT_SECRET
+  parameters:
+    objects:  |
+      array:
+        - |
+          objectName: asb-connection-string
+          objectType: secret
+          objectAlias: ASB_CONN_STRING
+          objectVersion: "{{.ASB_CONN_STRING}}"
+        - |
+          objectName: choreo-step-db-mssql-password
+          objectType: secret
+          objectAlias: MSSQL_PASSWORD
+          objectVersion: "{{.MSSQL_PASSWORD}}"
+        - |
+          objectName: choreo-insight-service-CLIENT-ID
+          objectType: secret
+          objectAlias: CHOREO_INSIGHT_SERVICE_CLIENT_ID
+          objectVersion: "{{.CHOREO_INSIGHT_SERVICE_CLIENT_ID}}"
+        - |
+          objectName: choreo-insight-service-CLIENT-SECRET
+          objectType: secret
+          objectAlias: CHOREO_INSIGHT_SERVICE_CLIENT_SECRET
+          objectVersion: "{{.CHOREO_INSIGHT_SERVICE_CLIENT_SECRET}}"

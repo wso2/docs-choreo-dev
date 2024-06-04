@@ -1,0 +1,33 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-organization-management
+spec:
+  secretObjects:
+    - secretName: secret-organization-management
+      type: Opaque
+      data:
+        - objectName: AZURE_ACCESS_KEY
+          key: AZURE_ACCESS_KEY
+        - objectName: KEYSTORE_PASSWORD
+          key: KEYSTORE_PASSWORD
+  parameters:
+    objects:  |
+      array:
+        - |
+          objectName: devportalcdn-sa-primary-access-key
+          objectType: secret
+          objectAlias: AZURE_ACCESS_KEY
+          objectVersion: "{{.AZURE_ACCESS_KEY}}"
+        - |
+          objectName: cp-graphql-EVENT-PUBLISHER-CLIENT-KEY-STORE-PASSWORD
+          objectType: secret
+          objectAlias: KEYSTORE_PASSWORD
+          objectVersion: "{{.KEYSTORE_PASSWORD}}"
+        - |
+          objectName: cp-graphql-EVENT-PUBLISHER-CLIENT-KEY-STORE
+          objectType: secret
+          objectFormat: pfx
+          objectEncoding: base64
+          objectAlias: BAL_KEYSTORE
+          objectVersion: "{{.BAL_KEYSTORE}}"

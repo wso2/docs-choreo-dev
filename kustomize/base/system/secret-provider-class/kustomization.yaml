@@ -61,6 +61,26 @@ resources:
   - metered-usage-handler.yaml
   - metered-usage-handler-service.yaml
   - log-controller.yaml
+  - testbase-db.yaml
+  - telemetry.yaml
+  - program-db.yaml
+  - redis.yaml
+  - service-now.yaml
+  - test-assistant.yaml
+  - subscriptions.yaml
+  - quota-limiter.yaml
+  - observability-data-generator.yaml
+  - organization-remover.yaml
+  - step-aggregator.yaml
+  - step-enforcer.yaml
+  - step-usage-publisher.yaml
+  - runtime.yaml
+  - organization-management.yaml
+  - userapps-image-deleter.yaml
+  - opentelemetry-collector.yaml
+  - usage-handler-service-ingress-tls.yaml
+  - resource-registry-db.yaml
+  - pdp-manager.yaml
 
 patches:
   - path: patch.json

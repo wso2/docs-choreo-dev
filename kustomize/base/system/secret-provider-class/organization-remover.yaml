@@ -1,0 +1,33 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-organization-remover
+spec:
+  secretObjects:
+    - secretName: secret-organization-remover
+      type: Opaque
+      data:
+        - objectName: ASB_CONNECTION_STRING
+          key: ASB_CONNECTION_STRING
+        - objectName: ORG_REMOVER_DB_PASSWORD
+          key: ORG_REMOVER_DB_PASSWORD
+        - objectName: BASIC_AUTH_PASSWORD
+          key: BASIC_AUTH_PASSWORD
+  parameters:
+    objects:  |
+      array:
+        - |
+          objectName: asb-connection-string
+          objectType: secret
+          objectAlias: ASB_CONNECTION_STRING
+          objectVersion: "{{.ASB_CONNECTION_STRING}}"
+        - |
+          objectName: choreo-org-remover-db-mssql-password
+          objectType: secret
+          objectAlias: ORG_REMOVER_DB_PASSWORD
+          objectVersion: "{{.ORG_REMOVER_DB_PASSWORD}}"
+        - |
+          objectName: organization-remover-BASIC-AUTH-PASSWORD
+          objectType: secret
+          objectAlias: BASIC_AUTH_PASSWORD
+          objectVersion: "{{.BASIC_AUTH_PASSWORD}}"

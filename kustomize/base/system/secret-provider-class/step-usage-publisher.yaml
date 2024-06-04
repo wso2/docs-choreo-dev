@@ -1,0 +1,33 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-step-usage-publisher
+spec:
+  secretObjects:
+    - secretName: secret-step-usage-publisher
+      type: Opaque
+      data:
+        - objectName: STRIPE_TOKEN
+          key: STRIPE_TOKEN
+        - objectName: MSSQL_PASSWORD
+          key: MSSQL_PASSWORD
+        - objectName: AZURE_AUTH_APP_CLIENT_SECRET
+          key: AZURE_AUTH_APP_CLIENT_SECRET
+  parameters:
+    objects:  |
+      array:
+        - |
+          objectName: billing-stripe-token
+          objectType: secret
+          objectAlias: STRIPE_TOKEN
+          objectVersion: "{{.STRIPE_TOKEN}}"
+        - |
+          objectName: choreo-step-db-mssql-password
+          objectType: secret
+          objectAlias: MSSQL_PASSWORD
+          objectVersion: "{{.MSSQL_PASSWORD}}"
+        - |
+          objectName: billing-AZURE-AUTH-APP-CLIENT-SECRET
+          objectType: secret
+          objectAlias: AZURE_AUTH_APP_CLIENT_SECRET
+          objectVersion: "{{.AZURE_AUTH_APP_CLIENT_SECRET}}"

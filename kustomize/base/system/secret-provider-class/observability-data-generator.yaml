@@ -1,0 +1,19 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-observability-data-generator
+spec:
+  secretObjects:
+    - secretName: secret-observability-data-generator
+      type: Opaque
+      data:
+        - objectName: EMPLOYEE_CONSUMER_SECRET
+          key: EMPLOYEE_CONSUMER_SECRET
+  parameters:
+    objects:  |
+      array:
+        - |
+          objectName: observability-data-generator-EMPLOYEE-CONSUMER-SECRET
+          objectType: secret
+          objectAlias: EMPLOYEE_CONSUMER_SECRET
+          objectVersion: "{{.EMPLOYEE_CONSUMER_SECRET}}"
