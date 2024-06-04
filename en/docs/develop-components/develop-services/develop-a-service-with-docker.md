@@ -79,11 +79,11 @@ To create a containerized service component, follow these steps:
 
 7. Under **Connect Your Repository**, enter the following information:
 
-    | **Field**               | **Description**       |
-    |-------------------------|-----------------------|
-    | **GitHub Account**      | Your account          |
-    | **GitHub Repository**   | choreo-sample-apps    |
-    | **Branch**              | **`main`**            |
+    | **Field**              | **Value**          |
+    |------------------------|--------------------|
+    | **Organization**       | Your GitHub account|
+    | **Repository**         | choreo-samples     |
+    | **Branch**             | **`main`**         |
 
 8. Select **Docker** as the buildpack.
 9. Enter the following information:
@@ -113,9 +113,8 @@ Now that we have connected the source repository, and configured the endpoint de
 
 To build the service, follow these steps:
 
-1. On the project home page, click on the `Greetings` component you created. This takes you to the component overview page.
-2. In the left navigation menu, click **Build**.
-3. On the **Build** page, click **Build Latest**.
+1. In the left navigation menu, click **Build**.
+2. On the **Build** page, click **Build Latest**.
 
     !!! note
         Building the service component may take a while. You can track the progress via the logs in the **Build Details** pane. Once the build process is complete, the build status changes to **Success**.
