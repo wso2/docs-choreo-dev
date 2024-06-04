@@ -10,7 +10,7 @@ spec:
         - objectName: EMPLOYEE_CONSUMER_SECRET
           key: EMPLOYEE_CONSUMER_SECRET
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: observability-data-generator-EMPLOYEE-CONSUMER-SECRET

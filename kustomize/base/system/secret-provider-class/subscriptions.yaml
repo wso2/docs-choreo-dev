@@ -12,7 +12,7 @@ spec:
         - objectName: CHOREO_STEP_DB_PASSWORD
           key: CHOREO_STEP_DB_PASSWORD
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: choreo-subscriptions-db-mssql-password

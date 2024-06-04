@@ -10,7 +10,7 @@ spec:
       - objectName: EVENTHUB_CONNECTION_STRING
         key: EVENTHUB_CONNECTION_STRING
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: telemetry-EVENTHUB-CONNECTION-STRING

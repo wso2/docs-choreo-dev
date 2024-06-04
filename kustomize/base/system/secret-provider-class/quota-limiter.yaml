@@ -12,7 +12,7 @@ spec:
         - objectName: QUOTA_LIMITER_APIM_CLIENT_SECRET
           key: QUOTA_LIMITER_APIM_CLIENT_SECRET
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: quota-limiter-apim-client-id

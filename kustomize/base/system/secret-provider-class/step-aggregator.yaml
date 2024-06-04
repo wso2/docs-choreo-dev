@@ -14,7 +14,7 @@ spec:
         - objectName: MSSQL_PASSWORD
           key: MSSQL_PASSWORD
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: apim-CHOREO-STEP-AGGREGATOR-CLIENT-SECRET

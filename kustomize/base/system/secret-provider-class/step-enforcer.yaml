@@ -16,7 +16,7 @@ spec:
         - objectName: CHOREO_INSIGHT_SERVICE_CLIENT_SECRET
           key: CHOREO_INSIGHT_SERVICE_CLIENT_SECRET
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: asb-connection-string

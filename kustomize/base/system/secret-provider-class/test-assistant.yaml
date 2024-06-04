@@ -10,7 +10,7 @@ spec:
         - objectName: AZURE_OPENAI_API_KEY
           key: AZURE_OPENAI_API_KEY
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: test-assistant-MODEL-STORAGE-CONNECTION-STRING

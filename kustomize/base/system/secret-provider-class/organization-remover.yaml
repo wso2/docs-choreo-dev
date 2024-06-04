@@ -14,7 +14,7 @@ spec:
         - objectName: BASIC_AUTH_PASSWORD
           key: BASIC_AUTH_PASSWORD
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: asb-connection-string

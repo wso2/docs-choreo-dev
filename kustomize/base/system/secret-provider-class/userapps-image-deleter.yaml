@@ -14,7 +14,7 @@ spec:
       - objectName: EMAIL_PASSWORD
         key: EMAIL_PASSWORD
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: userapps-image-deleter-AZURE-CLIENT-SECRET

@@ -12,7 +12,7 @@ spec:
         - objectName: KEYSTORE_PASSWORD
           key: KEYSTORE_PASSWORD
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: devportalcdn-sa-primary-access-key

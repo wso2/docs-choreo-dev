@@ -15,7 +15,7 @@ spec:
         - objectName: USAGE_SERVICE_INGRESS_TLS_CERTIFICATE_KEYSTORE
           key: tls.crt
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: usage-service-INGRESS-TLS-CERTIFICATE-KEYSTORE

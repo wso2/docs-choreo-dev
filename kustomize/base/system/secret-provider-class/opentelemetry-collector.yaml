@@ -10,7 +10,7 @@ spec:
       - objectName: EVENT_HUB_CONNECTION_STRING
         key: EVENT_HUB_CONNECTION_STRING
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: opentelemetry-collector-EVENT-HUB-CONNECTION-STRING

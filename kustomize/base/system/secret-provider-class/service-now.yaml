@@ -16,7 +16,7 @@ spec:
         - objectName: SERVICE_NOW_USERNAME
           key: SERVICE_NOW_USERNAME
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: service-now-CLIENT-ID

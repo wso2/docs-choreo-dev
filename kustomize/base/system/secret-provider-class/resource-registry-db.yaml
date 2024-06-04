@@ -10,7 +10,7 @@ spec:
       - objectName: CHOREO_RESOURCE_REGISTRY_DB_PASSWORD
         key: CHOREO_RESOURCE_REGISTRY_DB_PASSWORD
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: resource-registry-mongodb-password

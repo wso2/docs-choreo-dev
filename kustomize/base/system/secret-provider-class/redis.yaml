@@ -10,7 +10,7 @@ spec:
       - objectName: REDIS_PASSWORD
         key: REDIS_PASSWORD
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: common-redis-primary-access-key

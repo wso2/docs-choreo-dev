@@ -14,7 +14,7 @@ spec:
         - objectName: AZURE_AUTH_APP_CLIENT_SECRET
           key: AZURE_AUTH_APP_CLIENT_SECRET
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: billing-stripe-token
