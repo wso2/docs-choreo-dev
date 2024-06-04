@@ -184,5 +184,4 @@ public class AutoDeployOnCommitMonoRepo extends TestNGCitrusSpringSupport {
         Response res = GraphQL.deleteComponent(choreoComponentB.getId(), project.getId(), accessToken);
         Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
     }
-
 }
