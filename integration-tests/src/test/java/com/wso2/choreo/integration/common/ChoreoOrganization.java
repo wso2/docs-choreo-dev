@@ -67,7 +67,7 @@ public class ChoreoOrganization {
      * @throws ProjectCreationException if project creation fails
      */
 
-    Optional<ChoreoProject> getProjectByName(String accessToken, String name) throws ProjectRetrievalException {
+    synchronized Optional<ChoreoProject> getProjectByName(String accessToken, String name) throws ProjectRetrievalException {
         loadProjects(accessToken);
 
         for (ChoreoProject project : projectMap.values()) {
@@ -79,7 +79,7 @@ public class ChoreoOrganization {
         return Optional.empty();
     }
 
-    List<ChoreoProject> getProjects(String accessToken) throws ProjectRetrievalException {
+    synchronized List<ChoreoProject> getProjects(String accessToken) throws ProjectRetrievalException {
         loadProjects(accessToken);
 
         return new ArrayList<>(projectMap.values());
@@ -133,7 +133,7 @@ public class ChoreoOrganization {
         return false;
     }
 
-    void clearProjectMap() {
+    synchronized void clearProjectMap() {
         projectMap.clear();
     }
 
