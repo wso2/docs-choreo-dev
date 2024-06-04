@@ -1,0 +1,33 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-userapps-image-deleter
+spec:
+  secretObjects:
+    - secretName: secret-userapps-image-deleter
+      type: Opaque
+      data:
+        - objectName: AZURE_CLIENT_SECRET
+          key: AZURE_CLIENT_SECRET
+        - objectName: EMAIL_USERNAME
+          key: EMAIL_USERNAME
+        - objectName: EMAIL_PASSWORD
+          key: EMAIL_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: userapps-image-deleter-AZURE-CLIENT-SECRET
+          objectType: secret
+          objectAlias: AZURE_CLIENT_SECRET
+          objectVersion: "{{.AZURE_CLIENT_SECRET}}"
+        - |
+          objectName: userapps-image-deleter-EMAIL-USERNAME
+          objectType: secret
+          objectAlias: EMAIL_USERNAME
+          objectVersion: "{{.EMAIL_USERNAME}}"
+        - |
+          objectName: userapps-image-deleter-EMAIL-PASSWORD
+          objectType: secret
+          objectAlias: EMAIL_PASSWORD
+          objectVersion: "{{.EMAIL_PASSWORD}}"
