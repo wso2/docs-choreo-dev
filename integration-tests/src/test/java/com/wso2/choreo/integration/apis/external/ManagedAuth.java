@@ -34,7 +34,7 @@ public class ManagedAuth {
         CloseableHttpClient instance = HttpClients.custom().disableRedirectHandling().build();
 
         final HttpGet httpGet = new HttpGet(webAppUrl + "/auth/login");
-        if (!headers.isEmpty()) {
+        if (headers != null) {
             headers.forEach((key, value) -> {
                 httpGet.addHeader(key, value);
             });
