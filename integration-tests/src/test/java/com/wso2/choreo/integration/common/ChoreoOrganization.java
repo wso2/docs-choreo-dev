@@ -21,6 +21,7 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.exceptions.GraphQLException;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.ProjectRetrievalException;
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,8 +35,8 @@ import java.util.Optional;
 /**
  * Maintain information of the choreo organization used for tests
  */
+@Log4j2
 public class ChoreoOrganization {
-    private final static Logger log = LogManager.getLogger(ChoreoOrganization.class);
     private final static Gson gson = new Gson();
     private final HashMap<String, ChoreoProject> projectMap;
     private String orgHandle;
@@ -87,6 +88,8 @@ public class ChoreoOrganization {
 
     private void loadProjects(String accessToken) throws ProjectRetrievalException {
         if (projectMap.isEmpty()) {
+            log.debug("ChoreoOrganization::loadProjects()... Loading projects");
+
             try {
                 String gqlQuery = getProjectsQuery();
 
@@ -99,9 +102,13 @@ public class ChoreoOrganization {
                     ChoreoProject project = gson.fromJson(projectJson.toString(), (Type) ChoreoProject.class);
                     projectMap.put(project.getId(), project);
                 }
+
+                log.debug("ChoreoOrganization::loadProjects()... Total number of projects loaded: " + projectMap.size());
             } catch (GraphQLException e) {
                 throw new ProjectRetrievalException(e);
             }
+        } else {
+            log.debug("ChoreoOrganization::loadProjects()... Projects already loaded");
         }
     }
 
