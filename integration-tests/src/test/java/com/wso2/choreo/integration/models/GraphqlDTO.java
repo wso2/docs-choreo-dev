@@ -71,6 +71,8 @@ public class GraphqlDTO {
     private String languageVersion;
     private ByocWebAppsConfig byocWebAppsConfig;
     private String srcGitRepoBranch;
+    private String imageUrl;
+    private String registryId;
 
     @NoArgsConstructor
     @AllArgsConstructor

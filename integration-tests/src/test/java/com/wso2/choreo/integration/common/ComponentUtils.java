@@ -205,6 +205,22 @@ public class ComponentUtils {
                 .repositorySubPath(repo.getSubPath()).displayType(Constant.displayType.restAPI.name()).build();
     }
 
+    public static GraphqlDTO createBYOIComponentRequest(String name, String projectId, String imageUrl, String registryId) {
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+
+        return  GraphqlDTO.builder()
+                            .name(name.toLowerCase())
+                            .orgId(orgId)
+                            .orgHandler(orgHandle)
+                            .displayName(name)
+                            .componentType(Constant.displayType.byoiService.name())
+                            .projectId(projectId)
+                            .imageUrl(imageUrl)
+                            .registryId(registryId)
+                            .build();
+    }
+
     public static GraphqlDTO createManualTriggerComponentRequest(String name, ChoreoProject project, Repository repo) {
         GraphqlDTO graphqlDTO = createBallerinaServiceComponentRequest(name, project, repo);
         graphqlDTO.setDisplayType(Constant.displayType.manualTrigger.name());

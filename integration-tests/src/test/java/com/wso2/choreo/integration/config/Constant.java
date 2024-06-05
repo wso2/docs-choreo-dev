@@ -104,6 +104,7 @@ public final class Constant {
         ballerinaService,
         manualTrigger,
         buildpackService,
+        byoiService
         byocWebAppsDockerfileLess
     }
     public enum apiLIifCycleState {

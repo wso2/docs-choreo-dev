@@ -16,6 +16,7 @@ package com.wso2.choreo.integration.common;
 import com.wso2.choreo.integration.apis.marketplace.ConnectionService;
 import com.wso2.choreo.integration.common.ResourceAuthz.ResourceAuthzConstants;
 import com.wso2.choreo.integration.common.ResourceAuthz.ResourceAuthzUtils;
+import com.wso2.choreo.integration.apis.devops.DevopsPortalApi;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.config.Constant;
@@ -27,6 +28,8 @@ import com.wso2.choreo.integration.models.resourceAuthorization.RoleAssociation;
 import com.wso2.choreo.integration.models.resourceAuthorization.RoleGroupMappingResponseDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,7 +48,9 @@ public class DataCleaner  {
 
     public static void removeOldTestData(ChoreoOrganization org) throws Exception {
         TokenHandler tokenHandler = TestContext.getTestUserTokenHandler();
+        String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
 
+        DevopsPortalApi.deletePreviousThirdPartyRegistryCredentials(tokenHandler.getTestTokenForCPAPIs(), orgUuid);
         List<ChoreoProject> projects = org.getProjects(tokenHandler.getTestTokenForCPAPIs());
 
         log.info("Total number of projects: " + projects.size());
