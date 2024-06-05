@@ -20,7 +20,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
-import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.models.appdevUserManagement.CreateUserStoreResponseDTO;
@@ -30,10 +29,10 @@ import org.apache.http.client.utils.URIBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.util.LinkedMultiValueMap;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -60,11 +59,10 @@ public class AppdevUserManagementService {
      * @throws URISyntaxException      If an error occurs while creating the URI
      */
     public static CreateUserStoreResponseDTO createUserStoreInEnvironment(TestActionRunner runner, HttpClient client,
-            String environmentId, HashMap<String, Object> createUserStoreRequest)
+            String environmentId, LinkedMultiValueMap<String, Object> createUserStoreRequest)
             throws TokenRetrievalException, IOException, URISyntaxException {
-
+        
         AtomicReference<String> responseDTO = new AtomicReference<>();
-        String requestBody = ObjectMapperUtil.mapToString(createUserStoreRequest);
 
         URIBuilder uriBuilder = new URIBuilder(APPDEV_USER_STORE_MGT_BASE_PATH);
         uriBuilder.addParameter("orgId", Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
@@ -81,9 +79,9 @@ public class AppdevUserManagementService {
                                 .post(uriBuilder.build().toString())
                                 .message()
                                 .header(HttpHeaders.AUTHORIZATION, getAccessToken())
-                                .contentType(String.valueOf(MediaType.MULTIPART_FORM_DATA))
+                                .contentType(String.valueOf(MediaType.MULTIPART_FORM_DATA_VALUE))
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON))
-                                .body(requestBody),
+                                .body(createUserStoreRequest),
                         http()
                                 .client(client)
                                 .receive()
@@ -156,11 +154,10 @@ public class AppdevUserManagementService {
      * @throws URISyntaxException      If an error occurs while creating the URI
      */
     public static CreateUserStoreResponseDTO reCreateUserStoreInEnvironment(TestActionRunner runner, HttpClient client,
-            String userStoreId, HashMap<String, Object> createUserStoreRequest)
+            String userStoreId, LinkedMultiValueMap<String, Object> createUserStoreRequest)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
         AtomicReference<String> responseDTO = new AtomicReference<>();
-        String requestBody = ObjectMapperUtil.mapToString(createUserStoreRequest);
 
         URIBuilder uriBuilder = new URIBuilder(getUserStoreURL(userStoreId));
         uriBuilder.addParameter("orgId", Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
@@ -176,9 +173,9 @@ public class AppdevUserManagementService {
                                 .put(uriBuilder.build().toString())
                                 .message()
                                 .header(HttpHeaders.AUTHORIZATION, getAccessToken())
-                                .contentType(String.valueOf(MediaType.MULTIPART_FORM_DATA))
+                                .contentType(String.valueOf(MediaType.MULTIPART_FORM_DATA_VALUE))
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON))
-                                .body(requestBody),
+                                .body(createUserStoreRequest),
                         http()
                                 .client(client)
                                 .receive()

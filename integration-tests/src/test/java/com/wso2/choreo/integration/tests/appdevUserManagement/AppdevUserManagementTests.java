@@ -30,13 +30,13 @@ import com.wso2.choreo.integration.models.appdevUserManagement.UserStore;
 import com.wso2.choreo.integration.models.appdevUserManagement.UsersListResponseDTO;
 import com.wso2.choreo.integration.models.environments.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.LinkedMultiValueMap;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -69,6 +69,7 @@ public class AppdevUserManagementTests extends TestNGCitrusSpringSupport {
         Assert.assertNotNull(devEnvironmentId);
     }
 
+    @SuppressWarnings("resource")
     @Test(dependsOnMethods = "getOrgEnvironments_AppdevUserManagementTests")
     @CitrusTest
     public void createUserStoreInDevEnvironment_AppdevUserManagementTests()
@@ -76,10 +77,7 @@ public class AppdevUserManagementTests extends TestNGCitrusSpringSupport {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
-        HashMap<String, Object> createUserStoreRequest = new HashMap<>();
-        createUserStoreRequest.put("name", "testUserStore");
-        createUserStoreRequest.put("userstoreFile",
-                new File("src/test/resources/templates/appdevUserManagement/user-store-file.csv"));
+        LinkedMultiValueMap<String, Object> createUserStoreRequest = getCreateUserStoreRequest("testUserStore");
 
         CreateUserStoreResponseDTO createdUserStore = AppdevUserManagementUtils.createUserStoreInEnvironment(
                 this, appServiceClient, devEnvironmentId, createUserStoreRequest);
@@ -124,13 +122,11 @@ public class AppdevUserManagementTests extends TestNGCitrusSpringSupport {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
-        HashMap<String, Object> createUserStoreRequest = new HashMap<>();
-        createUserStoreRequest.put("name", "updatedTestUserStore");
-        createUserStoreRequest.put("userstoreFile",
-                new File("src/test/resources/templates/appdevUserManagement/user-store-file.csv"));
+        LinkedMultiValueMap<String, Object> reCreateUserStoreRequest = getCreateUserStoreRequest(
+                "updatedTestUserStore");
 
         CreateUserStoreResponseDTO createdUserStore = AppdevUserManagementUtils.reCreateUserStoreInEnvironment(
-                this, appServiceClient, createdUserStoreId, createUserStoreRequest);
+                this, appServiceClient, createdUserStoreId, reCreateUserStoreRequest);
 
         Assert.assertNotNull(createdUserStore);
         Assert.assertEquals(createdUserStore.getName(), "updatedTestUserStore");
@@ -144,5 +140,15 @@ public class AppdevUserManagementTests extends TestNGCitrusSpringSupport {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
         AppdevUserManagementUtils.deleteUserStoreInEnvironment(this, appServiceClient, createdUserStoreId);
+    }
+
+    private LinkedMultiValueMap<String, Object> getCreateUserStoreRequest(String userStoreName) {
+
+        LinkedMultiValueMap<String, Object> createUserStoreRequest = new LinkedMultiValueMap<>();
+        createUserStoreRequest.add("name", userStoreName);
+        createUserStoreRequest.add("userstoreFile",
+                new ClassPathResource("templates/appdevUserManagement/user-store-file.csv"));
+
+        return createUserStoreRequest;
     }
 }

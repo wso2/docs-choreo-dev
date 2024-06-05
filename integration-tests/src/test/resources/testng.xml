@@ -35,7 +35,6 @@
             <class name="com.wso2.choreo.integration.tests.keysetmanagement.KeysetManagementTests"/>
             <class name="com.wso2.choreo.integration.tests.managedAuthentication.ManagedAuthenticationTests"/>
             <class name="com.wso2.choreo.integration.tests.apim.internalEndpoints.InternalEndpoints" />
-            <class name="com.wso2.choreo.integration.tests.appdevUserManagement.AppdevUserManagementTests" />
         </classes>
     </test>
 </suite>

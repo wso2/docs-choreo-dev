@@ -20,10 +20,10 @@ import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.models.appdevUserManagement.CreateUserStoreResponseDTO;
 import com.wso2.choreo.integration.models.appdevUserManagement.UserStore;
 import com.wso2.choreo.integration.models.appdevUserManagement.UsersListResponseDTO;
+import org.springframework.util.LinkedMultiValueMap;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -44,7 +44,7 @@ public class AppdevUserManagementUtils {
      * @throws URISyntaxException      If an error occurs while creating the URI
      */
     public static CreateUserStoreResponseDTO createUserStoreInEnvironment(TestActionRunner runner, HttpClient client,
-            String environmentId, HashMap<String, Object> createUserStoreRequest)
+            String environmentId, LinkedMultiValueMap<String, Object> createUserStoreRequest)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
         return AppdevUserManagementService.createUserStoreInEnvironment(runner, client, environmentId,
@@ -81,7 +81,7 @@ public class AppdevUserManagementUtils {
      * @throws URISyntaxException      If an error occurs while creating the URI
      */
     public static CreateUserStoreResponseDTO reCreateUserStoreInEnvironment(TestActionRunner runner, HttpClient client,
-            String userStoreId, HashMap<String, Object> createUserStoreRequest)
+            String userStoreId, LinkedMultiValueMap<String, Object> createUserStoreRequest)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
         return AppdevUserManagementService.reCreateUserStoreInEnvironment(runner, client, userStoreId,
