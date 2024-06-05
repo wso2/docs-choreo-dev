@@ -25,7 +25,13 @@ import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.models.appdevUserManagement.CreateUserStoreResponseDTO;
 import com.wso2.choreo.integration.models.appdevUserManagement.UserStore;
 import com.wso2.choreo.integration.models.appdevUserManagement.UsersListResponseDTO;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -311,21 +317,93 @@ public class AppdevUserManagementService {
         return new ObjectMapper().readValue(responseDTO.get(), UsersListResponseDTO.class);
     }
 
+    /**
+     * These non Citrus based implementation is to be used in cases where the Citrus
+     * framework is yet to be initialized, such as in the BeforeSuite
+     */
+
+    /**
+     * List user stores in all environments
+     * 
+     * @param runner         Citrus test runner
+     * @param client         Citrus http client
+     * @param environmentId  Environment ID
+     * @return List of UserStore objects
+     * @throws TokenRetrievalException If an error occurs while retrieving the token
+     * @throws IOException             If an error occurs while reading the response
+     * @throws URISyntaxException      If an error occurs while creating the URI
+     */
+    public static List<UserStore> getAllUserStores() throws TokenRetrievalException, IOException, URISyntaxException {
+
+        URIBuilder uriBuilder = new URIBuilder(getAppServiceEndpoint().concat(getUserStoreAssociationsEndpoint()));
+        uriBuilder.addParameter("orgId", Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
+
+        HttpGet request = new HttpGet(uriBuilder.build().toString());
+        request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, getAccessToken());
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+
+            if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                throw new RuntimeException(responseBody);
+            }
+
+            return new ObjectMapper().readValue(responseBody, new TypeReference<List<UserStore>>() {
+            });
+        }
+    }
+
+    /**
+     * Delete a user store
+     * 
+     * @param userStoreId User store ID
+     * @throws TokenRetrievalException If an error occurs while retrieving the token
+     * @throws IOException             If an error occurs while reading the response
+     * @throws URISyntaxException      If an error occurs while creating the URI
+     */
+    public static void deleteUserStore(String userStoreId) throws TokenRetrievalException, IOException, URISyntaxException {
+
+        URIBuilder uriBuilder = new URIBuilder(getAppServiceEndpoint().concat(getUserStoreURL(userStoreId)));
+        uriBuilder.addParameter("orgId", Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
+
+        HttpDelete request = new HttpDelete(uriBuilder.build().toString());
+        request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, getAccessToken());
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+
+            if (statusCode != org.apache.http.HttpStatus.SC_NO_CONTENT) {
+                throw new RuntimeException("Failed to delete user store");
+            }
+        }
+    }
+
     private static String getAccessToken() throws TokenRetrievalException, IOException, URISyntaxException {
 
         return TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     }
 
     private static String getUserStoreURL(String userStoreId) {
+
         return APPDEV_USER_STORE_MGT_BASE_PATH + "/" + userStoreId;
     }
 
     private static String getUserStoreAssociationsEndpoint() {
+
         return APPDEV_USER_STORE_MGT_BASE_PATH + "/associations";
     }
 
     private static String getUsersEndpoint(String usersStoreId) {
+
         return APPDEV_USER_STORE_MGT_BASE_PATH + "/" + usersStoreId + "/users";
+    }
+
+    private static String getAppServiceEndpoint() {
+
+        return Configuration.getConfig(ConfigDefinition.CHOREO_NEW_APP_SERVICE_ENDPOINT) + "/";
     }
 
 }

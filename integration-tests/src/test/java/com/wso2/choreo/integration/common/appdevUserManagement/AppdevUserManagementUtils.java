@@ -123,4 +123,39 @@ public class AppdevUserManagementUtils {
 
         return AppdevUserManagementService.listUsersInUserStore(runner, client, userStoreId);
     }
+
+    /**
+     * These non Citrus based implementation is to be used in cases where the Citrus
+     * framework is yet to be initialized, such as in the BeforeSuite
+     */
+
+    /**
+     * List user stores in all environments
+     * 
+     * @param runner        Citrus test runner
+     * @param client        Citrus http client
+     * @param environmentId Environment ID
+     * @return List of UserStore objects
+     * @throws TokenRetrievalException If an error occurs while retrieving the token
+     * @throws IOException             If an error occurs while reading the response
+     * @throws URISyntaxException      If an error occurs while creating the URI
+     */
+    public static List<UserStore> getAllUserStores() throws TokenRetrievalException, IOException, URISyntaxException {
+
+        return AppdevUserManagementService.getAllUserStores();
+    }
+
+    /**
+     * Delete a user store
+     * 
+     * @param userStoreId User store ID
+     * @throws TokenRetrievalException If an error occurs while retrieving the token
+     * @throws IOException             If an error occurs while reading the response
+     * @throws URISyntaxException      If an error occurs while creating the URI
+     */
+    public static void deleteUserStore(String userStoreId)
+            throws TokenRetrievalException, IOException, URISyntaxException {
+
+        AppdevUserManagementService.deleteUserStore(userStoreId);
+    }
 }
