@@ -132,7 +132,7 @@ nav:
           - Overview: manage-databases-and-caches/choreo-managed-databases-and-caches.md
           - PostgreSQL:  manage-databases-and-caches/choreo-managed-postgresql-databases.md
           - MySQL: manage-databases-and-caches/choreo-managed-mysql-databases.md
-          - Redis: manage-databases-and-caches/choreo-managed-redis-datastores.md
+          - Cache: manage-databases-and-caches/choreo-managed-caches.md
           - Billing: manage-databases-and-caches/billing-for-platform-services.md
   - Authentication and Authorization:
       - Secure API Access with Asgardeo: authentication-and-authorization/secure-api-access-with-asgardeo.md

@@ -18,8 +18,8 @@ MySQL is a user-friendly, flexible, open-source relational database management s
 
 - [Create a MySQL database on Choreo](./choreo-managed-mysql-databases.md)
 
-## Redis on Choreo
+## Caching on Choreo
 
-Redis is a versatile, open-source in-memory data store that serves as a cache, database, streaming engine, and message broker. With Choreo, Redis offers fully-managed instances that can be swiftly provisioned and integrated into your applications within minutes.
+A fully-managed Cache compatible with legacy Redis® OSS. A versatile, in-memory NoSQL database that serves as a cache, database, streaming engine, and message broker. Choreo-managed Caching offers fully-managed instances that can be swiftly provisioned and integrated into your applications within minutes.
 
-- [Create a Redis data store on Choreo](./choreo-managed-redis-datastores.md)
+- [Create a Choreo-managed Cache](./choreo-managed-caches.md)
