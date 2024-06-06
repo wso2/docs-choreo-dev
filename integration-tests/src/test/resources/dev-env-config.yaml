@@ -44,5 +44,5 @@ logs:
   CHOREO_EU_DP_URL: e1-eu-north-azure.preview-dv.choreoapis.dev
 resourceAuthorization:
   RESOURCE_AUTHZ_USER_EMAIL: choreo-authz-test-user@wso2.com@carbon.super
-  RESOURCE_AUTHZ_USER_UUID: 8e3da96a-a1ef-400d-a429-100f71f31b9c
+  RESOURCE_AUTHZ_USER_UUID: 80ab41b3-508b-42b5-a02a-0f39a79d7b57
   #RESOURCE_AUTHZ_USER_PASSWORD:
