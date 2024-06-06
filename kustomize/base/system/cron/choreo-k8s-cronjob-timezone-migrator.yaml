@@ -11,6 +11,7 @@ spec:
   schedule: "0 */2 * * *"
   successfulJobsHistoryLimit: 1
   concurrencyPolicy: Replace
+  activeDeadlineSeconds: 6600
   jobTemplate:
     spec:
       template:
@@ -32,8 +33,6 @@ spec:
               image: choreocontrolplane.azurecr.io/choreoipaas/dp-rudder:latest
               args: 
                 - -k8s-resource-migrate=true
-                - -migrate=true
-                - -server=false
               resources:
                 limits:
                   cpu: 300m
@@ -73,13 +72,3 @@ spec:
                   name: csi-secret-store-azure
           restartPolicy: Never
           serviceAccountName: sa-choreo-default
-          affinity:
-            podAntiAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                - labelSelector:
-                    matchExpressions:
-                      - key: antiaffinity
-                        operator: In
-                        values:
-                          - dp-rudder
-                  topologyKey: kubernetes.io/hostname
