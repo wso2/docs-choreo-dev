@@ -28,7 +28,7 @@ spec:
             seccompProfile:
               type: RuntimeDefault
           containers:
-            - name: dp-rudder
+            - name: choreo-k8s-cronjob-timezone-migrator
               imagePullPolicy: Always
               image: choreocontrolplane.azurecr.io/choreoipaas/dp-rudder:latest
               args: 
