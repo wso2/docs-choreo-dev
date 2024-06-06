@@ -1620,16 +1620,16 @@ public class ComponentUtils {
      * @param projectId                     The ID of the project.
      * @param componentId                   The ID of the component.
      * @param releaseId                     The ID of the release.
-     * @param localDevelopmentEnableRequest The request object containing the necessary information for enabling local development.
+     * @param localDevelopmentConfigureRequest The request object containing the necessary information for enabling local development.
      * @throws TokenRetrievalException      If an error occurs while retrieving the token.
      * @throws IOException                  If an I/O error occurs.
      * @throws URISyntaxException           If the URI syntax is incorrect.
      */
-    public static void toggleLocalDevelopmentForManagedAuthentication(TestActionRunner runner, HttpClient client, String projectId,
-            String componentId, String releaseId, HashMap<String, Object> localDevelopmentEnableRequest, HttpStatus expectedStatus)
+    public static void configureLocalDevelopmentForManagedAuthentication(TestActionRunner runner, HttpClient client, String projectId,
+            String componentId, String releaseId, HashMap<String, Object> localDevelopmentConfigureRequest, HttpStatus expectedStatus)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
-        Component.toggleLocalDevelopmentForManagedAuthentication(runner, client, projectId, componentId, releaseId,
-                localDevelopmentEnableRequest, expectedStatus);
+        Component.configureLocalDevelopmentForManagedAuthentication(runner, client, projectId, componentId, releaseId,
+                localDevelopmentConfigureRequest, expectedStatus);
     }
 }

@@ -33,11 +33,9 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.managedAuthentication.ManagedAuthenticationConstants;
 import com.wso2.choreo.integration.common.managedAuthentication.ManagedAuthenticationConstants.Project;
-import com.wso2.choreo.integration.common.managedAuthentication.localDevelopment.LocalDevelopmentConstants.DisableLocalDevelopmentDefaultConfigs;
 import com.wso2.choreo.integration.common.managedAuthentication.localDevelopment.LocalDevelopmentConstants.EnableLocalDevelopmentCustomConfigs;
-import com.wso2.choreo.integration.common.managedAuthentication.localDevelopment.LocalDevelopmentConstants.EnableLocalDevelopmentDefaultConfigs;
-import com.wso2.choreo.integration.common.managedAuthentication.localDevelopment.LocalDevelopmentConstants.EnableLocalDevelopmentRequestParams;
 import com.wso2.choreo.integration.common.managedAuthentication.localDevelopment.LocalDevelopmentConstants.LocalDevelopmentProxyHeaders;
+import com.wso2.choreo.integration.common.managedAuthentication.localDevelopment.LocalDevelopmentUtils;
 import com.wso2.choreo.integration.common.managedAuthentication.ManagedAuthenticationUtils;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.environments.Environment;
@@ -112,9 +110,11 @@ public class LocalDevelopmentTests extends TestNGCitrusSpringSupport {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
-        ComponentUtils.toggleLocalDevelopmentForManagedAuthentication(this, appServiceClient,
+        ComponentUtils.configureLocalDevelopmentForManagedAuthentication(this, appServiceClient,
                 testProject.getId(), testComponent.getId(),
-                devEnvReleaseId, getEnableLocalDevelopmentWithDefaultConfigRequest(), HttpStatus.OK);
+                devEnvReleaseId,
+                LocalDevelopmentUtils.getEnableLocalDevelopmentWithDefaultConfigRequest(),
+                HttpStatus.OK);
     }
 
     @Test(dependsOnMethods = "enableLocalDevelopmentWithDefaultConfigsInDevEnvironment_LocalDevelopmentTests")
@@ -124,9 +124,11 @@ public class LocalDevelopmentTests extends TestNGCitrusSpringSupport {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
-        ComponentUtils.toggleLocalDevelopmentForManagedAuthentication(this, appServiceClient,
+        ComponentUtils.configureLocalDevelopmentForManagedAuthentication(this, appServiceClient,
                 testProject.getId(), testComponent.getId(),
-                devEnvReleaseId, getDisableLocalDevelopmentWithDefaultConfigRequest(), HttpStatus.OK);
+                devEnvReleaseId,
+                LocalDevelopmentUtils.getDisableLocalDevelopmentWithDefaultConfigRequest(),
+                HttpStatus.OK);
     }
 
     @Test(dependsOnMethods = "disableLocalDevelopmentWithDefaultConfigsInDevEnvironment_LocalDevelopmentTests")
@@ -136,9 +138,11 @@ public class LocalDevelopmentTests extends TestNGCitrusSpringSupport {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
-        ComponentUtils.toggleLocalDevelopmentForManagedAuthentication(this, appServiceClient,
+        ComponentUtils.configureLocalDevelopmentForManagedAuthentication(this, appServiceClient,
                 testProject.getId(), testComponent.getId(),
-                devEnvReleaseId, getEnableLocalDevelopmentWithCustomConfigRequest(), HttpStatus.OK);
+                devEnvReleaseId,
+                LocalDevelopmentUtils.getEnableLocalDevelopmentWithCustomConfigRequest(),
+                HttpStatus.OK);
     }
 
     @Test(dependsOnMethods = "enableLocalDevelopmentWithCustomConfigsInDevEnvironment_LocalDevelopmentTests")
@@ -146,7 +150,8 @@ public class LocalDevelopmentTests extends TestNGCitrusSpringSupport {
     public void invokeAuthURLWithLocalDevelopmentEnabled_LocalDevelopmentTests() throws Exception {
 
         String redirectHeaderValue = ManagedAuth.initiateManagedAuthLoginFlow(devEnvInvokeURL,
-                getHeadersForManagedAuthLoginFlow(EnableLocalDevelopmentCustomConfigs.ALLOWED_URIS.get(0)));
+                getHeadersForManagedAuthLoginFlow(
+                        EnableLocalDevelopmentCustomConfigs.ALLOWED_URIS.get(0)));
 
         Assert.assertTrue(extractParametersFromRedirectURL(redirectHeaderValue, "redirect_uri")
                 .contains(EnableLocalDevelopmentCustomConfigs.ALLOWED_URIS.get(0)));
@@ -176,43 +181,11 @@ public class LocalDevelopmentTests extends TestNGCitrusSpringSupport {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
-        ComponentUtils.toggleLocalDevelopmentForManagedAuthentication(this, appServiceClient,
+        ComponentUtils.configureLocalDevelopmentForManagedAuthentication(this, appServiceClient,
                 testProject.getId(), testComponent.getId(),
-                prodEnvReleaseId, getEnableLocalDevelopmentWithDefaultConfigRequest(),
+                prodEnvReleaseId,
+                LocalDevelopmentUtils.getEnableLocalDevelopmentWithDefaultConfigRequest(),
                 HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    private static HashMap<String, Object> getEnableLocalDevelopmentWithDefaultConfigRequest() {
-
-        HashMap<String, Object> configRequest = new HashMap<>();
-        configRequest.put(EnableLocalDevelopmentRequestParams.ENABLE,
-                EnableLocalDevelopmentDefaultConfigs.ENABLE);
-        configRequest.put(EnableLocalDevelopmentRequestParams.ALLOWED_URIS,
-                EnableLocalDevelopmentDefaultConfigs.ALLOWED_URIS);
-
-        return configRequest;
-    }
-
-    private static HashMap<String, Object> getDisableLocalDevelopmentWithDefaultConfigRequest() {
-
-        HashMap<String, Object> configRequest = new HashMap<>();
-        configRequest.put(EnableLocalDevelopmentRequestParams.ENABLE,
-                DisableLocalDevelopmentDefaultConfigs.ENABLE);
-        configRequest.put(EnableLocalDevelopmentRequestParams.ALLOWED_URIS,
-                DisableLocalDevelopmentDefaultConfigs.ALLOWED_URIS);
-
-        return configRequest;
-    }
-
-    private static HashMap<String, Object> getEnableLocalDevelopmentWithCustomConfigRequest() {
-
-        HashMap<String, Object> configRequest = new HashMap<>();
-        configRequest.put(EnableLocalDevelopmentRequestParams.ENABLE,
-                EnableLocalDevelopmentCustomConfigs.ENABLE);
-        configRequest.put(EnableLocalDevelopmentRequestParams.ALLOWED_URIS,
-                EnableLocalDevelopmentCustomConfigs.ALLOWED_URIS);
-
-        return configRequest;
     }
 
     private static Map<String, String> getHeadersForManagedAuthLoginFlow(String proxyURL) {

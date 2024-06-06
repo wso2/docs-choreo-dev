@@ -296,12 +296,12 @@ public class Component extends ControlPlaneAPI {
                                 .message()));
     }
 
-    public static void toggleLocalDevelopmentForManagedAuthentication(TestActionRunner runner, HttpClient client,
+    public static void configureLocalDevelopmentForManagedAuthentication(TestActionRunner runner, HttpClient client,
                     String projectId, String componentId, String releaseId,
-                    HashMap<String, Object> localDevelopmentEnableRequest, HttpStatus expectedStatus)
+                    HashMap<String, Object> localDevelopmentConfigRequest, HttpStatus expectedStatus)
                     throws TokenRetrievalException, IOException, URISyntaxException {
 
-            String requestBody = ObjectMapperUtil.mapToString(localDevelopmentEnableRequest);
+            String requestBody = ObjectMapperUtil.mapToString(localDevelopmentConfigRequest);
 
         runner.$(repeatOnError()
                 .until("i = 5")
