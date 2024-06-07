@@ -369,6 +369,7 @@ configMapGenerator:
       - PDP_CAPABILITIES_ALLOWED_ADD_ITEMS=CHOWN,DAC_OVERRIDE,SETGID,SETUID,NET_BIND_SERVICE
       - PDP_CAPABILITIES_ALLOWED_DROP_ITEMS=ALL
       - PDP_CAPABILITIES_DROP_NONE_ALLOWED=true
+      - NEW_BUILD_FLOW_ENABLED={{.NEW_BUILD_FLOW_ENABLED | default "false"}}
   - name: env-dp-helmhub
     behavior: create
     literals:
