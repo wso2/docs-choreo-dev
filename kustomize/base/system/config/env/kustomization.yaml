@@ -841,6 +841,7 @@ configMapGenerator:
       - REGISTRY_NAME={{.REGISTRY_NAME}}
       - LOG_LEVEL={{.LOG_LEVEL}}
       - ENVIRONMENT={{.ENVIRONMENT}}
+      - REGISTRY_NAMES={{.REGISTRY_NAMES}}
   - name: env-proxy-deployer
     behavior: create
     literals:
