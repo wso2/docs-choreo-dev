@@ -31,7 +31,7 @@ spec:
             - name: choreo-k8s-cronjob-timezone-migrator
               imagePullPolicy: Always
               image: choreocontrolplane.azurecr.io/choreoipaas/dp-rudder:latest
-              args: 
+              args:
                 - -k8s-resource-migrate=true
               resources:
                 limits:
