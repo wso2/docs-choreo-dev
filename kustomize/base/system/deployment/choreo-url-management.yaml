@@ -34,6 +34,8 @@ spec:
           ports:
             - containerPort: 9090
               name: service-port
+            - containerPort: 3000
+              name: internal-service-port
             - containerPort: 9091
               name: health-port
           readinessProbe:
