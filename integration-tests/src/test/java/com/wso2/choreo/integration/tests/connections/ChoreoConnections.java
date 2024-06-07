@@ -237,6 +237,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 clientChoreoComponent);
         clientDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, clientChoreoComponent,
                 environments, ComponentFlavour.BYOC);
+        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, clientChoreoComponent,
+                clientDeploymentStatusDTO);
     }
 
     @Test(dependsOnMethods = {"deployServiceConsumerComponent_TestChoreoConnections"})
@@ -292,6 +294,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         List<ComponentDeploymentStatusDTO> statusDTO =  ComponentUtils.promoteComponent(this, citrusClients, accessToken, clientChoreoComponent,
                 clientComponentEnvironments, ComponentFlavour.BYOC , projectOne);
         clientPromotionStatusDTO = statusDTO.get(0);  //we'll consider only the first promotion
+        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, clientChoreoComponent,
+                clientPromotionStatusDTO);
     }
 
     @Test(dependsOnMethods = {"promoteClientComponent_TestChoreoConnections"})
@@ -324,8 +328,10 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients,
                 accessToken, publicEndpointServiceComponentNewVersion);
-        ComponentUtils.deployComponent(this, citrusClients, accessToken,
+        ComponentDeploymentStatusDTO componentDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
                 publicEndpointServiceComponentNewVersion, environments, ComponentFlavour.BYOC);
+        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, publicEndpointServiceComponentNewVersion,
+                componentDeploymentStatusDTO);
     }
 
     @Test(dependsOnMethods = {"deployServicePublisherComponentNewVersion_TestChoreoConnections"})
@@ -718,6 +724,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         newClientDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, newClientChoreoComponent,
                 newClientComponentEnvironments, ComponentFlavour.BYOC);
+        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, newClientChoreoComponent,
+                newClientDeploymentStatusDTO);
     }
 
     @Test(dependsOnMethods = {"deployNewServiceConsumerComponent_TestChoreoConnections"})
@@ -776,6 +784,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 citrusClients, accessToken, newClientChoreoComponent,
                 newClientComponentEnvironments, ComponentFlavour.BYOC, projectOne);
         newClientPromotionStatusDTO = newClientStatusDTO.get(0);
+        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, newClientChoreoComponent,
+                newClientPromotionStatusDTO);
     }
 
     @Test(dependsOnMethods = {"promoteClientComponentForProxy_TestChoreoConnections"})
