@@ -22,6 +22,7 @@ spec:
           annotations:
             linkerd.io/inject: enabled
             config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
         spec:
           automountServiceAccountToken: true
           securityContext:
