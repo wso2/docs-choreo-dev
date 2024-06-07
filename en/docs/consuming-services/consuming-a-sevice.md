@@ -54,7 +54,7 @@ You can invoke the API/service using the credentials you created above. Since Ch
 3. Configure the web application to authenticate the API/service invocations from the IdP, and securely invoke the service/API in Choreo.
 4. Deploy the web application. 
 
-In this guide, you will be using the following product and examples:
+In this guide, you will be using the following products and examples:
 
 -  WSO2 Asgardeo as the IdP
 - [choreo-samples/reading-list-app/reading-list-front-end](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-front-end) as the web application. This is a React SPA that invokes the service using Axios. This web application is configured to read the
@@ -65,7 +65,36 @@ In this guide, you will be using the following product and examples:
 !!! info
     You can use your own web application implementation in place of the sample web application. For this exercise, let's use the [choreo-samples/reading-list-app/reading-list-front-end](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-front-end) as the web application.
 
-{% include "../quick-start-guides/create-web-application-qsg.md" %}
+To host the front-end application in Choreo, you must create a web application component. To create a web application component, follow the steps given below.
+
+1. In the Choreo console, select the project of the reading list application that you created in the previous steps, from the project list located on the header.
+2. Click **Create** under the **Component Listing** section to create a new component.
+3. On the **Web Application** card, click **Create**.
+4. Enter a unique name and a description for the web application. You can enter the name and description given below:
+
+    | **Field**       | **Value**               |
+    |-----------------|-------------------------|
+    | **Name**        | `Reading List Web App`  |
+    | **Description** | `Frontend application for the reading list service` |
+
+5. Click **Next**.
+6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
+7. In the **Connect Repository** pane, enter the following information:
+
+    | **Field**             | **Description**                               |
+    |-----------------------|-----------------------------------------------|
+    | **GitHub Account**    | Your account                                  |
+    | **GitHub Repository** | **`choreo-samples`** |
+    | **Branch**            | **`main`**                               |
+    | **Buildpack**      | Click **React** since the frontend is a React application built with Vite|
+    | **Build Context Path**              | **`reading-list-app/reading-list-front-end`** |
+    | **Build Command**     | **`npm install && npm run build`**             |
+    | **Build Output**      | **`dist`**                                    |
+    | **Node Version**      | **`18`**                                      |
+
+9. Click **Create**. This initializes the service with the implementation from your GitHub repository and takes you to the **Overview** page of the component.
+
+Let's consume the service through the web app. Choreo services are by default secured. To consume a service in Choreo you need an access token. Let's configure the web application to connect to an IdP (For this guide, let's use Asgardeo) to generate an access token for a user.
 
 ### Step 2: Create an OAuth application in the IdP
 
@@ -94,12 +123,58 @@ Choreo uses Asgardeo as the default identity provider for Choreo applications. W
 
 ### Step 3: Configure the web application to connect to the IdP and invoke the service
 
-{% include "../quick-start-guides/configure-front-end-application-qsg.md" %}
+In this step, you are adding the configurations needed for the web app to successfully invoke the **Reading List Service** REST API. These configurations need to be updated for each environment you deploy the web app. Here you will be updating the configurations for the development environment.
 
+!!! note
+        The web application is reading the environment-specific configurations from the `window` object at runtime. This is done via the `config.js` file in the root of the web application. In this section, you will mount the `config.js` file for the development environment. You will need to do the same for other environments as well when you deploy your web application to multiple environments.
+
+To configure the front-end application, follow the steps given below:
+
+1. While on the web application component page, click **DevOps** in the left navigation menu and then click **Configs and Secrets**.
+2. Click **+ Create**.
+3. Select the mount configuration options as follows and click **Next**:
+
+    | **Field**             | **Description**                               |
+    |-----------------------|-----------------------------------------------|
+    | **Config Type**       | **Config Map**                                |
+    | **Mount Type**        | **File Mount**                                |
+
+4. Specify values as follows for the mount configuration:
+
+    | **Field**             | **Description**                               |
+    |-----------------------|-----------------------------------------------|
+    | **Config Name**       | **Web App Config**                            |
+    | **Mount Path**        | **/usr/share/nginx/html/config.js**. Every config that needs to be exposed through the web server should be placed inside `/usr/share/nginx/html/`                          |
+
+5. Copy the config details as a JSON file as shown below into the text area. Fill the placeholders with the values you copied from the previous steps as mentioned in the table below:
+
+    ```javascript
+    window.config = {
+        redirectUrl: "<web-app-url>",
+        asgardeoClientId: "<asgardeo-client-id>",
+        asgardeoBaseUrl: "https://api.asgardeo.io/t/<your-org-name>",
+        choreoApiUrl: "<reading-list-service-url>"
+    };
+    ```
+
+    | **Field**             | **Description**                               |
+    |-----------------------|-----------------------------------------------|
+    | **redirectUrl**       | The web app URL you copied earlier. |
+    | **asgardeoClientId**  | The **Client ID** of your OAuth application. In Asgardeo, you can find it on the **Protocol** tab of the **readingListApp** application  |
+    | **asgardeoBaseUrl**   | Specify the IdP API URL (For example, Asgardeo API URL) with your organization name. i.e., `https://api.asgardeo.io/t/<ORG_NAME>`.      |
+    | **choreoApiUrl**      | The reading list service URL. Copy the Public URL of the **Reading List Service** component from the endpoint table in the overview page for the relevant environment |
+
+6. Click **Create**.
+
+Now you can proceed to deploy the web application.
 
 ### Step 4: Deploy the web application
 
-{% include "../quick-start-guides/deploy-the-web-application-qsg.md" %}
+To deploy the web application component, follow the steps below:
 
+1. In the left menu, click **Deploy**.
+2. In the **Build Area** card, click **Deploy Manually**. The deployment may take a few minutes to complete.
+3. Once the web application is deployed, copy the **Web App URL** from the development environment card.
+4. Navigate to the web app URL. You can verify that the web app is successfully hosted.
 
 That's it! You can use a user created in your IdP and invoke the service through your web application.

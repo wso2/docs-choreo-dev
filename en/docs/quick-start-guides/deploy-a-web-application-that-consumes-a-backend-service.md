@@ -51,7 +51,7 @@ Follow the steps given below to create a project:
 
 To connect to the repository you forked in the prerequisites and configure the sample service, follow the steps given below: 
 
-1. On the project home page, click **Create** under **Create Multiple Components**.
+1. On the project home page, click **Start** under **Create Multiple Components**.
 2. Go to the **GitHub** tab.
 3. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
@@ -65,15 +65,8 @@ To connect to the repository you forked in the prerequisites and configure the s
              
            You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
-4. Enter the following information:
-
-    | **Field**                    | **Value**                   |
-    |------------------------------|-----------------------------|
-    | **Organization**             | Your GitHub account         |
-    | **Repository**               | choreo-sample-book-list-app |
-    | **Branch**                   | **`main`**                  |
-
-5. In the **Add Directories** pane under **Configure Components**, click the **+** icon corresponding to `reading-list-service`.
+4. Select **`main`** as the branch.
+5. In the **Add Component Directories** pane under **Configure Components**, go to the `reading-list-service` and click the **+** icon corresponding to it.
 6. In the **Component Configuration** dialog that opens, specify values as follows for each of the fields:
 
     | **Field**             | **Value**                                     |
@@ -84,7 +77,7 @@ To connect to the repository you forked in the prerequisites and configure the s
     | **Language Version**  | 20.x.x                                        |     
 
 7. Click **Save**. This adds the `Reading List Service` component to the **Configured Components** pane.
-8. Click **Create**. This initializes the service with the implementation from your GitHub repository and takes you to the project home page.
+8. Click **Finish**. This initializes the service with the implementation from your GitHub repository and takes you to the project home page.
 
     You can see the `Reading List Service` component listed under **Component Listing** on the project home page.
 
@@ -234,7 +227,7 @@ To build the web application, follow the steps given below:
 
 ### Step 6.4: Configure and deploy the web application
 
-In this step, you will configure managed authentication, create a user to access the web application, and then deploy the web application.
+In this step, you will configure managed authentication, create a user to access the web application, and then deploy the web application. For more information on Choreo's managed authentication capability, see the [Managed Authentication](../authentication-and-authorization/secure-web-applications-with-managed-authentication.md) documentation.
 
 To configure managed authentication, follow the steps given below:
 
@@ -274,8 +267,7 @@ To create a user to access the **readingListApp** application, follow the steps 
 2. To proceed with creating a user with the populated username and password, click **Create**. Make sure you copy the populated username and password to use when you test the front-end application.
 
     !!! tip
-         - You can create multiple users to test your front-end application.
-         - You cannot change the username and password of the demo user.
+         - By default, your test user base consists of a demo user. For instructions on how to modify the test user base, see [Configure a User Store with the Built-In Identity Provider](../administer/configure-a-user-store-with-built-in-idp.md).
 
 Now, you can deploy the web application.
 

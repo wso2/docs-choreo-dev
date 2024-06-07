@@ -120,7 +120,10 @@ nav:
       - Bring Your Own Image: develop-components/bring-your-own-image.md
       - Deploy an Application with Buildpacks: develop-components/deploy-an-application-with-buildpacks.md
       - Deploy a Containerized Application: develop-components/deploy-a-containerized-application.md  
-      - Sharing and Reusing Services: develop-components/sharing-and-reusing-services.md
+      - Share and Reuse Components:
+          - Create a Connection: develop-components/sharing-and-reusing/create-a-connection.md
+          - Use a Connection in Your Service: develop-components/sharing-and-reusing/use-a-connection-in-your-service.md
+          - Use a Connection in Your Web Application: develop-components/sharing-and-reusing/use-a-connection-in-your-web-application.md
       - Manage Deployment Tracks for Choreo Components: develop-components/manage-deployment-tracks-for-choreo-components.md
       - Configure Mutual TLS Between Components: develop-components/configure-mutual-tls-between-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
@@ -132,14 +135,12 @@ nav:
           - Redis: manage-databases-and-caches/choreo-managed-redis-datastores.md
           - Billing: manage-databases-and-caches/billing-for-platform-services.md
   - Authentication and Authorization:
-      - Access Control: 
-          - Groups and Roles: authentication-and-authorization/access-control/groups-and-roles.md
-          - Control Access in the Choreo Console: authentication-and-authorization/access-control/control-access-in-the-choreo-console.md
       - Secure API Access with Asgardeo: authentication-and-authorization/secure-api-access-with-asgardeo.md
       - Secure API Access with Azure: authentication-and-authorization/secure-api-access-with-azure-ad.md
       - Secure Web Applications with Managed Authentication: authentication-and-authorization/secure-web-applications-with-managed-authentication.md
       - Test Secure API Access with Choreo Built-In Security Token Service: authentication-and-authorization/test-secure-api-access-with-choreo-built-in-security-token-service.md
       - Pass End-User Attributes to Upstream Services: authentication-and-authorization/pass-end-user-attributes-to-upstream-services.md
+      - Secure Communication Between the Choreo Gateway and Your Backend with Mutual TLS: authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls.md 
   - DevOps and CI/CD: 
       - Manage Configurations and Secrets: devops-and-ci-cd/manage-configurations-and-secrets.md
       - View Runtime Details: devops-and-ci-cd/view-runtime-details.md
@@ -147,6 +148,7 @@ nav:
       - Set Up Health Checks: devops-and-ci-cd/set-up-health-checks.md
       - Autoscale:
         - Autoscale Component Replicas: devops-and-ci-cd/autoscale/autoscale-component-replicas.md
+        - Autoscale Components with Scale-to-Zero: devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero.md
       - Configure Storage: devops-and-ci-cd/configure-storage.md
       - Manage Environments: devops-and-ci-cd/manage-environments.md
   - Testing: 
@@ -185,6 +187,7 @@ nav:
       - Choreo CLI Overview: choreo-cli/choreo-cli-overview.md
       - Get Started with the Choreo CLI: choreo-cli/get-started-with-the-choreo-cli.md  
   - Administer:
+      - Control Access in the Choreo Console: administer/control-access-in-the-choreo-console.md
       - Configure a Custom Domain for Your Organization: administer/configure-a-custom-domain-for-your-organization.md
       - Configure Enterprise Login: administer/configure-enterprise-login.md
       - Configure an External IdP:
@@ -198,6 +201,7 @@ nav:
   - References:
       - FAQ: references/faq.md
       - Choreo Limitations: references/choreo-limitations.md
+      - Troubleshoot Choreo: references/troubleshoot-choreo.md
       - Private Data Plane Security Levels: references/private-data-plane-security-levels.md
       - Private Data Plane Management Models: references/private-data-plane-management-models.md
 # Extensions
@@ -364,7 +368,11 @@ plugins:
           'develop-components/develop-a-web-application.md': 'https://wso2.com/choreo/docs/develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application/'
           'administer/configure-a-custom-domain-for-apis.md': 'https://wso2.com/choreo/docs/administer/configure-a-custom-domain-for-your-organization/'
           'administer/customize-developer-portal-domain.md': 'https://wso2.com/choreo/docs/administer/configure-a-custom-domain-for-your-organization/'
-          
+          'authentication-and-authorization/access-control/control-access-in-the-choreo-console.md': 'https://wso2.com/choreo/docs/administer/control-access-in-the-choreo-console/'
+          'authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend.md': 'https://wso2.com/choreo/docs/authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls/'
+          'develop-components/sharing-and-reusing/share-and-reuse-services.md': 'https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-service/'
+          'develop-components/sharing-and-reusing/share-and-reuse-web-applications.md': 'https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-web-application/'
+
 extra_css:
   # - assets/lib/highlightjs/default.min.css
   # - assets/css/theme.css
