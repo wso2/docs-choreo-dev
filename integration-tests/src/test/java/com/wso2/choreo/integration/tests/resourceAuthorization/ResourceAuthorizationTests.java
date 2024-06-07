@@ -67,9 +67,14 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
     private ChoreoProject projectX;
     private ChoreoProject projectY;
     private ChoreoProject projectZ;
+    private ChoreoOrganization testOrganization;
 
     @BeforeClass
     public void setup_ResourceAuthorizationTests() throws TokenRetrievalException, IOException, URISyntaxException {
+        testOrganization = new ChoreoOrganization(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE),
+                Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID)),
+                Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
+
         if (TestContext.getResourceAuthzTestUserTokenHandler().getTestTokenForCPAPIs()
                 .equals(Constant.BEARER_PREFIX)) {
             throw new SkipException("Skipping Resource Authorization tests as the tests are run "
@@ -215,8 +220,6 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void fetchProjectsWithDeveloperRole_ResourceAuthorizationTests()
             throws TokenRetrievalException, IOException, URISyntaxException, ProjectRetrievalException {
-
-        ChoreoOrganization testOrganization = TestContext.getTestOrg();
         testOrganization.clearProjects();
         String testUserAccessToken = TestContext.getResourceAuthzTestUserTokenHandler()
                 .refetchTestTokenForCPAPIs();
@@ -255,8 +258,6 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void setupProjectsForTesting_ResourceAuthorizationTests()
             throws TokenRetrievalException, IOException, URISyntaxException, ProjectRetrievalException {
-
-        ChoreoOrganization testOrganization = TestContext.getTestOrg();
         testOrganization.clearProjects();
         List<ChoreoProject> projectsList = testOrganization
                 .getProjectsList(TestContext.getTestUserTokenHandler().refetchTestTokenForCPAPIs());
@@ -301,8 +302,6 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void fetchProjectsWithProjectXLevelDeveloperRole_ResourceAuthorizationTests()
             throws TokenRetrievalException, IOException, URISyntaxException, ProjectRetrievalException {
-
-        ChoreoOrganization testOrganization = TestContext.getTestOrg();
         testOrganization.clearProjects();
         String testUserAccessToken = TestContext.getResourceAuthzTestUserTokenHandler()
                 .refetchTestTokenForCPAPIs();
@@ -321,8 +320,6 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void fetchProjectYWithProjectXDeveloperRole_ResourceAuthorizationTests()
             throws TokenRetrievalException, IOException, URISyntaxException, ProjectRetrievalException {
-
-        ChoreoOrganization testOrganization = TestContext.getTestOrg();
         testOrganization.clearProjects();
         List<ChoreoProject> projectsList = testOrganization.getProjectsList(
                 TestContext.getResourceAuthzTestUserTokenHandler().refetchTestTokenForCPAPIs());
@@ -375,8 +372,6 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void fetchProjectsWithDeveloperRoleInProjectXAndZ_ResourceAuthorizationTests()
             throws TokenRetrievalException, IOException, URISyntaxException, ProjectRetrievalException {
-
-        ChoreoOrganization testOrganization = TestContext.getTestOrg();
         testOrganization.clearProjects();
         List<ChoreoProject> projectsList = testOrganization.getProjectsList(
                 TestContext.getResourceAuthzTestUserTokenHandler().refetchTestTokenForCPAPIs());
@@ -427,8 +422,6 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void fetchProjectsWithAdminRoleInProjectsAXZ_ResourceAuthorizationTests()
             throws TokenRetrievalException, IOException, URISyntaxException, ProjectRetrievalException {
-
-        ChoreoOrganization testOrganization = TestContext.getTestOrg();
         testOrganization.clearProjects();
         List<ChoreoProject> projectsList = testOrganization.getProjectsList(
                 TestContext.getResourceAuthzTestUserTokenHandler().refetchTestTokenForCPAPIs());
@@ -446,8 +439,6 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void deleteProjectA_ResourceAuthorizationTests()
             throws TokenRetrievalException, IOException, URISyntaxException, ProjectRetrievalException {
-
-        ChoreoOrganization testOrganization = TestContext.getTestOrg();
         String userAccessToken = TestContext.getResourceAuthzTestUserTokenHandler().refetchTestTokenForCPAPIs();
         boolean isProjectDeleted = testOrganization.deleteProjectInOrganization(userAccessToken,
                 projectA.getId());
