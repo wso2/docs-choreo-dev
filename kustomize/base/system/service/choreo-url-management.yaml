@@ -6,9 +6,9 @@ metadata:
   name: choreo-url-management
 spec:
   ports:
-    - name: internal-service-port
+    - name: int-svc-port
       port: 3000
-      targetPort: internal-service-port
+      targetPort: int-svc-port
     - name: service-port
       port: 9090
       targetPort: service-port
