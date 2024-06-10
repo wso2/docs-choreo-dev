@@ -120,23 +120,21 @@ To configure and deploy the component, follow the steps given below:
 2. On the **Build Area** card, click **Configure &  Deploy**.
 3. In the **Environment Configurations** pane that opens, click **+ Add** and add the `TS_AUTH_KEY` environment variable as a secret. To add the environment variable, you must obtain an authentication key from your Tailscale network.
     - For details on how to obtain an authentication key from your Tailscale network, see [Auth keys](https://tailscale.com/kb/1085/auth-keys) in the Tailscale documentation.
-
 4. Click **Next**.
-5. In the **File Mount** pane that opens, click **+ Add** and mount a configuration file to the Tailscale proxy component to specify the port mapping for the TCP forward proxy running there.
-    - Specify `/Config.yaml` as the **Mount Path**.
-    - Specify the following in the sample configuration file:
+5. In the **File Mount** pane that opens, click **+ Add**.
+6. To mount a configuration file to the Tailscale proxy component and specify the port mapping for the TCP forward proxy running there, do the following:
+    1. Specify `/Config.yaml` as the **Mount Path**.
+    2. Specify the following in the sample configuration file:
        ```
        portMappings:
            8080: "100.108.78.93:8090"
            8081: "100.108.78.93:1433"
        ```
-6. Click **Next**.
-7. In the **Endpoints** pane that opens, click **+ Add** to edit the `endpoints.yaml` configuration to expose your Tailscale proxy as a service. The following is a sample `endpoints.yaml` configuration you can use:
+7. Click **Next**.
+8. In the **Endpoints** pane that opens, click **+ Add** and edit the `endpoints.yaml` configuration to expose your Tailscale proxy as a service. The following is a sample `endpoints.yaml` configuration you can use:
 
     !!! note
         The sample `endpoints.yaml` given below exposes two project-level endpoints that you can also use in other components in the same project to access the services. If you want to directly expose your private endpoint via the Choreo gateway either with public or organization visibility, you can set the `networkVisibility` property of the endpoint to `Public` or `Organization`.
-
-
 
     ``` yaml
 
@@ -155,8 +153,8 @@ To configure and deploy the component, follow the steps given below:
 
     ```
 
-8. Click **Save**.
-9. Click **Next** and then click **Deploy**.
+9. Click **Save**.
+10. Click **Next** and then click **Deploy**.
 
     !!! note
         Deploying the component may take a while. You can track the progress by observing the logs. Once the deployment is complete, the build status changes to **Active** on the **Development** environment card.
@@ -180,11 +178,9 @@ There is an option to disable node key expiry if necessary. For more details, se
 
 [Auth keys](https://tailscale.com/kb/1085/auth-keys) are used to register new nodes into your Tailscale network. The default [expiry time for auth keys](https://tailscale.com/kb/1085/auth-keys#key-expiry) is 90 days, but nodes remain connected even after auth key expiry. This becomes an issue only if the Tailscale Proxy component is redeployed or restarted.
 
-
 ### Updating port mapping configurations
 
 If you want to add a new private endpoint to your network and access it via the same Tailscale proxy within Choreo, you must add a new port mapping entry in the port mapping configuration of your Tailscale proxy deployment.
-
 
 ## Best practices
 
