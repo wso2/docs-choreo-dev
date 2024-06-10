@@ -2,7 +2,7 @@
 
 Secure access to private networks from the Choreo cloud data plane is an essential use case for cloud data plane users. 
 
-Choreo allows this secure connection using [Tailscale](https://tailscale.com/). For this, Choreo provides a pre-installed Tailscale image that you can use in your Choreo project. This image serves as a forward proxy, allowing you to connect to your private endpoints through Tailscale's peer-to-peer [WireGuard](https://tailscale.com/kb/1035/wireguard) network tunnels.
+Choreo allows this secure connection using [Tailscale](https://tailscale.com/). For this, Choreo provides a pre-installed Tailscale image that you can use in your Choreo project. This image acts as a forward proxy, allowing you to connect to your private endpoints through Tailscale's peer-to-peer [WireGuard](https://tailscale.com/kb/1035/wireguard) network tunnels.
 
 The following diagram illustrates the high-level deployment architecture of the Tailscale pre-installed forward proxy:
 
@@ -163,7 +163,7 @@ When the component is deployed, you can observe a new node connected to your Tai
 
 ### Step 3: Access private network endpoints with the Tailscale proxy
 
-Now you have successfully deployed the Tailscale proxy in your project and it is connected to your Tailnet. You can use the Tailscale proxy to provision access to other components to securely access private network endpoints.
+Now you have successfully deployed the Tailscale proxy in your project and it is connected to your Tailnet. You can proceed to use the Tailscale proxy to provision access for other components to securely access private network endpoints.
 
 You can [configure endpoints](https://wso2.com/choreo/docs/develop-components/configure-endpoints/#learn-the-endpointsyaml-file) of the Tailscale proxy to use it for various aspects within Choreo.
 
@@ -189,7 +189,7 @@ If you want to add a new private endpoint to your network and access it via the 
 Since the Tailscale proxy acts as a forward proxy, it is important to configure health checks. You can use one of the open ports of the TCP forwarder as a health endpoint. For details on how to set up health probes in Choreo, see [Set up health checks](./set-up-health-checks.md).
 
 ### Use Tailscale ACLs
-It is recommended to use [Tailscale ACLs](https://tailscale.com/kb/1018/acls) to precisely manage permission for users and devices on your Tailnet.
+You can use [Tailscale ACLs](https://tailscale.com/kb/1018/acls) to precisely manage permission for users and devices on your Tailnet.
 
 ### Disable scale-to-zero for the Tailscale proxy
 It is recommended to disable [Scale-to-Zero](./autoscale/autoscale-components-with-scale-to-zero.md) for the Tailscale proxy because it acts as a forward proxy and should always be up and running to make consistent connections with the Tailscale VPN mesh.
