@@ -103,7 +103,7 @@ To resolve the issue, follow the guidelines given below:
 
       To resolve this, do the following:
 
-       - Ensure your on-premises setup is properly connected to the Tailscale network and that specific services and database servers are running as expected in your on-premises setup.
+       - Ensure your on-premises setup is properly connected to the Tailscale network and that specific services, database servers, etc., are running as expected in your on-premises setup.
        - Verify that the IP addresses and ports specified in your `Config.yaml` file (mounted to Tailscale proxy during deployment) match the IP addresses in your Tailscale network.
        - Cross-check the ports defined in the `endpoints.yaml` file with the port mappings in the `Config.yaml` file.
 
