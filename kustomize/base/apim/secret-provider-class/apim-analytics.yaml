@@ -12,7 +12,7 @@ spec:
       - objectName: MOESIF_MS_AUTH_PWD
         key: MOESIF_MS_AUTH_PWD
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: apim-analytics-auth-token

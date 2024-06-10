@@ -4,7 +4,7 @@ metadata:
   name: secret-mssql-scheduler
 spec:
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: apim-TOKEN-CLEANUP-USER-PASSWORD

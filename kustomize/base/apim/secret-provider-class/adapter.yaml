@@ -14,7 +14,7 @@ spec:
       - objectName: ENFORCER_MANAGEMENT_PASSWORD
         key: ENFORCER_MANAGEMENT_PASSWORD    
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: apim-adapter-admin-password
