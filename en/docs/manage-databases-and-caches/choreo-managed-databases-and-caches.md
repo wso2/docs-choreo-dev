@@ -18,8 +18,8 @@ MySQL is a user-friendly, flexible, open-source relational database management s
 
 - [Create a MySQL database on Choreo](./choreo-managed-mysql-databases.md)
 
-## Caching on Choreo
+## Choreo-Managed Cache
 
-A fully-managed Cache compatible with legacy Redis® OSS. A versatile, in-memory NoSQL database that serves as a cache, database, streaming engine, and message broker. Choreo-managed Caching offers fully-managed instances that can be swiftly provisioned and integrated into your applications within minutes.
+A fully-managed cache compatible with legacy Redis® OSS. A versatile, in-memory NoSQL database that serves as a cache, database, streaming engine, and message broker. Choreo-managed Cache allows you to have fully-managed instances that can be swiftly provisioned and integrated into your applications within minutes.
 
 - [Create a Choreo-managed Cache](./choreo-managed-caches.md)
