@@ -167,18 +167,18 @@ Now you have successfully deployed the Tailscale proxy in your project and it is
 
 You can [configure endpoints](https://wso2.com/choreo/docs/develop-components/configure-endpoints/#learn-the-endpointsyaml-file) of the Tailscale proxy to use it for various aspects within Choreo.
 
-## Post-deployment considerations
+## Post-deployment actions
 
-### Node key expiry
+### Handle node key expiry
 
 Tailscale nodes have a default [node key](https://tailscale.com/kb/1010/node-keys) expiry time of 180 days. Nodes require re-authentication after key expiry to avoid connection losses and application downtime. Consider disabling node key expiry if needed. For more details,  
 There is an option to disable node key expiry if necessary. For more details, see [Node key expiry documentation](https://tailscale.com/kb/1028/key-expiry).
 
-### Auth key expiry
+### Handle auth key expiry
 
 [Auth keys](https://tailscale.com/kb/1085/auth-keys) are used to register new nodes into your Tailscale network. The default [expiry time for auth keys](https://tailscale.com/kb/1085/auth-keys#key-expiry) is 90 days, but nodes remain connected even after auth key expiry. This becomes an issue only if the Tailscale Proxy component is redeployed or restarted.
 
-### Updating port mapping configurations
+### Update port mapping configurations
 
 If you want to add a new private endpoint to your network and access it via the same Tailscale proxy within Choreo, you must add a new port mapping entry in the port mapping configuration of your Tailscale proxy deployment.
 
