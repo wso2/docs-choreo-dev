@@ -1,0 +1,19 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-multivariate-anomaly-detector-notification-manager
+spec:
+  secretObjects:
+    - secretName: secret-multivariate-anomaly-detector-notification-manager
+      type: Opaque
+      data:
+        - objectName: BAL_CONFIG_DATA
+          key: BAL_CONFIG_DATA
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: multivariate-anomaly-detector-notification-manager-BAL-CONFIG-DATA
+          objectType: secret
+          objectAlias: BAL_CONFIG_DATA
+          objectVersion: "{{.BAL_CONFIG_DATA}}"

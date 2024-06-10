@@ -16,9 +16,13 @@ package com.wso2.choreo.integration.common;
 import com.wso2.choreo.integration.apis.marketplace.ConnectionService;
 import com.wso2.choreo.integration.common.ResourceAuthz.ResourceAuthzConstants;
 import com.wso2.choreo.integration.common.ResourceAuthz.ResourceAuthzUtils;
+import com.wso2.choreo.integration.common.appdevUserManagement.AppdevUserManagementUtils;
+import com.wso2.choreo.integration.apis.devops.DevopsPortalApi;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.appdevUserManagement.UserStore;
 import com.wso2.choreo.integration.models.marketplace.ConnectionInfo;
 import com.wso2.choreo.integration.models.resourceAuthorization.Group;
 import com.wso2.choreo.integration.models.resourceAuthorization.GroupWithUsersDTO;
@@ -27,7 +31,11 @@ import com.wso2.choreo.integration.models.resourceAuthorization.RoleAssociation;
 import com.wso2.choreo.integration.models.resourceAuthorization.RoleGroupMappingResponseDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -45,7 +53,9 @@ public class DataCleaner  {
 
     public static void removeOldTestData(ChoreoOrganization org) throws Exception {
         TokenHandler tokenHandler = TestContext.getTestUserTokenHandler();
+        String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
 
+        DevopsPortalApi.deletePreviousThirdPartyRegistryCredentials(tokenHandler.getTestTokenForCPAPIs(), orgUuid);
         List<ChoreoProject> projects = org.getProjects(tokenHandler.getTestTokenForCPAPIs());
 
         log.info("Total number of projects: " + projects.size());
@@ -163,6 +173,24 @@ public class DataCleaner  {
             }
 
             ResourceAuthzUtils.deleteRole(role.getHandle());
+        }
+
+        // Delete existing user stores
+        deleteUserStores();
+    }
+
+    private static void deleteUserStores() throws TokenRetrievalException, IOException, URISyntaxException {
+
+        List<UserStore> userStores = AppdevUserManagementUtils.getAllUserStores();
+
+        if (userStores != null && !userStores.isEmpty()) {
+            for (UserStore userStore : userStores) {
+                try {
+                    AppdevUserManagementUtils.deleteUserStore(userStore.getUserStoreId());
+                } catch (Exception e) {
+                    log.error("Error occurred while deleting user store: " + userStore.getUserStoreId(), e);
+                }
+            }
         }
     }
 

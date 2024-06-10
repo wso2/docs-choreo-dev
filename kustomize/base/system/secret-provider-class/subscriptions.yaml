@@ -1,0 +1,26 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-subscriptions
+spec:
+  secretObjects:
+    - secretName: secret-subscriptions
+      type: Opaque
+      data:
+        - objectName: MSSQL_PASSWORD
+          key: MSSQL_PASSWORD
+        - objectName: CHOREO_STEP_DB_PASSWORD
+          key: CHOREO_STEP_DB_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: choreo-subscriptions-db-mssql-password
+          objectType: secret
+          objectAlias: MSSQL_PASSWORD
+          objectVersion: "{{.MSSQL_PASSWORD}}"
+        - |
+          objectName: choreo-step-db-mssql-password
+          objectType: secret
+          objectAlias: CHOREO_STEP_DB_PASSWORD
+          objectVersion: "{{.CHOREO_STEP_DB_PASSWORD}}"

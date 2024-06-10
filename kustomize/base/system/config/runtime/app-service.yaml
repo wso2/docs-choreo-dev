@@ -44,8 +44,6 @@ upstream:
     tls:
       cert: ${CENTRAL_ORG_REGISTRY_CERT}
       key: ${CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY}
-urlManager:
-  enable: ${ENABLE_URL_MANAGER}
 configYamlConfigurations:
   log-format: "json"
   observe-enabled: true

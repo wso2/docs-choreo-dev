@@ -1,0 +1,26 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-dp-cloud-manager
+spec:
+  secretObjects:
+    - secretName: secret-dp-cloud-manager
+      type: Opaque
+      data:
+        - objectName: DB_PASSWORD
+          key: DB_PASSWORD
+        - objectName: TOKEN_SIGNING_KEY
+          key: TOKEN_SIGNING_KEY
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: choreo-dp-cloud-manager-db-mssql-password
+          objectType: secret
+          objectAlias: DB_PASSWORD
+          objectVersion: "{{.DB_PASSWORD}}"
+        - |
+          objectName: dp-cloud-manager-token-signing-key
+          objectType: secret
+          objectAlias: TOKEN_SIGNING_KEY
+          objectVersion: "{{.TOKEN_SIGNING_KEY}}"

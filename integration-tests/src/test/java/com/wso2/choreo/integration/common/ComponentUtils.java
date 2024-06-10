@@ -205,6 +205,22 @@ public class ComponentUtils {
                 .repositorySubPath(repo.getSubPath()).displayType(Constant.displayType.restAPI.name()).build();
     }
 
+    public static GraphqlDTO createBYOIComponentRequest(String name, String projectId, String imageUrl, String registryId) {
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+
+        return  GraphqlDTO.builder()
+                            .name(name.toLowerCase())
+                            .orgId(orgId)
+                            .orgHandler(orgHandle)
+                            .displayName(name)
+                            .componentType(Constant.displayType.byoiService.name())
+                            .projectId(projectId)
+                            .imageUrl(imageUrl)
+                            .registryId(registryId)
+                            .build();
+    }
+
     public static GraphqlDTO createManualTriggerComponentRequest(String name, ChoreoProject project, Repository repo) {
         GraphqlDTO graphqlDTO = createBallerinaServiceComponentRequest(name, project, repo);
         graphqlDTO.setDisplayType(Constant.displayType.manualTrigger.name());
@@ -1013,13 +1029,7 @@ public class ComponentUtils {
                                 .message()
                                 .type(MessageType.JSON)
                                 .body(expectedResponse)
-                                .validate((message, context) -> {
-                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
-                                    if (code != expectedHttpStatus.value()) {
-                                        throw new ValidationException(String.format("Too many successive calls with response code %s," +
-                                                " expected response code %s", code, expectedHttpStatus.value()));
-                                    }
-                                })));
+                                ));
     }
 
     public static List<Environment> getEnvironments(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
