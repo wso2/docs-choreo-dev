@@ -132,7 +132,7 @@ To configure and deploy the component, follow the steps given below:
        ```
 
         !!! note
-            In this sample configuration, the TCP traffic arriving at port 8080 on your Tailscale proxy will be forwarded to port 8090 on the node with IP address 100.108.78.93 in your Tailscale network. Similarly, port 8081 will map to the corresponding address. You can find the IP addresses of your nodes on the Tailscale machines page in your network's admin console or through the Tailscale clients running on your machine.
+            In this sample configuration, the TCP traffic arriving at port 8080 on your Tailscale proxy will be forwarded to port 8090 on the node with IP address 100.108.78.93 in your Tailscale network. Similarly, port 8081 will map to the corresponding address. You can find the IP addresses of your nodes on the [Tailscale machines](https://login.tailscale.com/admin/machines) page in your Tailscale network's admin console or via the Tailscale clients running on your machine.
 
 7. Click **Next**.
 8. In the **Endpoints** pane that opens, click **+ Add** and edit the `endpoints.yaml` configuration to expose your Tailscale proxy as a service. The following is a sample `endpoints.yaml` configuration you can use:
