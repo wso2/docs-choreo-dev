@@ -198,9 +198,9 @@ If you enable Scale-to-Zero, you may experience service downtime.
 ### Run multiple replicas with HPA (horizontal pod autoscaler) 
 To achieve high availability and resiliency for the Tailscale proxy, you must run multiple replicas with HPA. To configure multiple replicas for the Tailscale proxy component, go to the **Scaling** page under **DevOps**. For more details, see [Autoscale component replicas](./autoscale/autoscale-component-replicas.md)
 
-## Security considerations
+## Security best practices
 
-It is recommended to follow production best practices & security best practices before deploying the Tailscale proxy in production environments.
+Before deploying the Tailscale proxy in production environments, it is recommended to follow the Tailscale [production best practices](https://tailscale.com/kb/1300/production-best-practices) and [security best practices](https://tailscale.com/kb/1196/security-hardening).
 
 !!! Note
      Choreo blocks incoming connections from other nodes in your Tailnet to the Tailscale proxy to prevent access to your project’s namespace in the Choreo cloud data plane. 
