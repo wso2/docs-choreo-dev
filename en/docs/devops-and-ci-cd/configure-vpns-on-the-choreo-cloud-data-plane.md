@@ -134,7 +134,7 @@ To configure and deploy the component, follow the steps given below:
 8. In the **Endpoints** pane that opens, click **+ Add** and edit the `endpoints.yaml` configuration to expose your Tailscale proxy as a service. The following is a sample `endpoints.yaml` configuration you can use:
 
     !!! note
-        The sample `endpoints.yaml` given below exposes two project-level endpoints that you can also use in other components in the same project to access the services. If you want to directly expose your private endpoint via the Choreo gateway either with public or organization visibility, you can set the `networkVisibility` property of the endpoint to `Public` or `Organization`.
+        The sample `endpoints.yaml` file given below defines two project-level endpoints. These endpoints can be used by other components within the same project to access the services. If you want to directly expose your private endpoint via the Choreo gateway either with the **Public** or **Organization** visibility, you can set the `networkVisibility` property of the endpoint to `Public` or `Organization`.
 
     ``` yaml
 
