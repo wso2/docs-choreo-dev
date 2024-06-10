@@ -15,12 +15,12 @@ spec:
     objects: |
       array:
         - |
-          objectName: "{{.REDIS_PASSWORD_OBJ_NAME | default apim-global-adapter-redis-primary-access-key}}"
+          objectName: "{{.REDIS_PASSWORD_APIM_OBJ_NAME | default apim-global-adapter-redis-primary-access-key}}"
           objectType: secret
           objectAlias: REDIS_PASSWORD
-          objectVersion: "{{.REDIS_PASSWORD}}"
+          objectVersion: "{{.REDIS_PASSWORD_APIM}}"
         - |
           objectName: cp2wu2-redis-ga-PASSWORD
           objectType: secret
           objectAlias: US_CDP_2_REDIS_PASSWORD
-          objectVersion: "{{.US_CDP_2_REDIS_PASSWORD}}"
+          objectVersion: "{{.US_CDP_2_REDIS_PASSWORD_APIM}}"
