@@ -1,0 +1,19 @@
+
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-mgw-truststore
+spec:
+  parameters:
+    objects:  |
+      array:
+        - |
+          objectName: mgw-CONTROL-PLANE-CERTIFICATE
+          objectType: secret
+          objectAlias: CONTROL_PLANE_CERTIFICATE
+          objectVersion: "{{.CONTROL_PLANE_CERTIFICATE}}"
+        - |
+          objectName: mgw-ADAPTER-TRUSTSTORE-CERTIFICATE
+          objectType: secret
+          objectAlias: ADAPTER_TRUSTSTORE_CERTIFICATE
+          objectVersion: "{{.ADAPTER_TRUSTSTORE_CERTIFICATE}}"

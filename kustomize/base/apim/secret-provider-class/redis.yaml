@@ -1,0 +1,26 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-redis
+spec:
+  secretObjects:
+  - secretName: secret-redis
+    type: Opaque
+    data:
+      - objectName: REDIS_PASSWORD
+        key: REDIS_PASSWORD
+      - objectName: US_CDP_2_REDIS_PASSWORD
+        key: US_CDP_2_REDIS_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: "{{.REDIS_PASSWORD_OBJ_NAME | default apim-global-adapter-redis-primary-access-key}}"
+          objectType: secret
+          objectAlias: REDIS_PASSWORD
+          objectVersion: "{{.REDIS_PASSWORD}}"
+        - |
+          objectName: cp2wu2-redis-ga-PASSWORD
+          objectType: secret
+          objectAlias: US_CDP_2_REDIS_PASSWORD
+          objectVersion: "{{.US_CDP_2_REDIS_PASSWORD}}"

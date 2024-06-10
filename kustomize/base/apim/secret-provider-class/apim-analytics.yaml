@@ -1,0 +1,26 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-mgw-analytics
+spec:
+  secretObjects:
+  - secretName: secret-mgw-analytics
+    type: Opaque
+    data:
+      - objectName: ANALYTICS_AUTH_TOKEN
+        key: ANALYTICS_AUTH_TOKEN
+      - objectName: MOESIF_MS_AUTH_PWD
+        key: MOESIF_MS_AUTH_PWD
+  parameters:
+    objects:  |
+      array:
+        - |
+          objectName: apim-analytics-auth-token
+          objectType: secret
+          objectAlias: ANALYTICS_AUTH_TOKEN
+          objectVersion: "{{.ANALYTICS_AUTH_TOKEN}}"
+        - |
+          objectName: apim-moesif-auth-password
+          objectType: secret
+          objectAlias: MOESIF_MS_AUTH_PWD
+          objectVersion: "{{.MOESIF_MS_AUTH_PWD}}"
