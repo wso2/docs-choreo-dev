@@ -4,13 +4,13 @@ metadata:
   name: secret-mgw-analytics
 spec:
   secretObjects:
-  - secretName: secret-mgw-analytics
-    type: Opaque
-    data:
-      - objectName: ANALYTICS_AUTH_TOKEN
-        key: ANALYTICS_AUTH_TOKEN
-      - objectName: MOESIF_MS_AUTH_PWD
-        key: MOESIF_MS_AUTH_PWD
+    - secretName: secret-mgw-analytics
+      type: Opaque
+      data:
+        - objectName: ANALYTICS_AUTH_TOKEN
+          key: ANALYTICS_AUTH_TOKEN
+        - objectName: MOESIF_MS_AUTH_PWD
+          key: MOESIF_MS_AUTH_PWD
   parameters:
     objects: |
       array:

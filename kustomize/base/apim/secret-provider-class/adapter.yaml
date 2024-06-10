@@ -4,15 +4,15 @@ metadata:
   name: secret-mgw
 spec:
   secretObjects:
-  - secretName: secret-mgw
-    type: Opaque
-    data:
-      - objectName: ADAPTER_ADMIN_PASSWORD
-        key: ADAPTER_ADMIN_PASSWORD
-      - objectName: ENFORCER_ADMIN_PASSWORD
-        key: ENFORCER_ADMIN_PASSWORD
-      - objectName: ENFORCER_MANAGEMENT_PASSWORD
-        key: ENFORCER_MANAGEMENT_PASSWORD    
+    - secretName: secret-mgw
+      type: Opaque
+      data:
+        - objectName: ADAPTER_ADMIN_PASSWORD
+          key: ADAPTER_ADMIN_PASSWORD
+        - objectName: ENFORCER_ADMIN_PASSWORD
+          key: ENFORCER_ADMIN_PASSWORD
+        - objectName: ENFORCER_MANAGEMENT_PASSWORD
+          key: ENFORCER_MANAGEMENT_PASSWORD
   parameters:
     objects: |
       array:

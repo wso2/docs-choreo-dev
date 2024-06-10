@@ -2,7 +2,7 @@ apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
 metadata:
   name: secret-mgw-adapter-consul
-spec:        
+spec:
   parameters:
     objects: |
       array:

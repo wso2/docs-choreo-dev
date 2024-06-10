@@ -4,13 +4,13 @@ metadata:
   name: secret-cc-ga-credentials
 spec:
   secretObjects:
-  - secretName: secret-cc-ga-credentials
-    type: Opaque
-    data:
-      - objectName: GLOBAL_ADAPTER_ADMIN_PASSWORD
-        key: GLOBAL_ADAPTER_ADMIN_PASSWORD
-      - objectName: GLOBAL_ADAPTER_MSSQL_PASSWORD
-        key: GLOBAL_ADAPTER_MSSQL_PASSWORD
+    - secretName: secret-cc-ga-credentials
+      type: Opaque
+      data:
+        - objectName: GLOBAL_ADAPTER_ADMIN_PASSWORD
+          key: GLOBAL_ADAPTER_ADMIN_PASSWORD
+        - objectName: GLOBAL_ADAPTER_MSSQL_PASSWORD
+          key: GLOBAL_ADAPTER_MSSQL_PASSWORD
   parameters:
     objects: |
       array:
