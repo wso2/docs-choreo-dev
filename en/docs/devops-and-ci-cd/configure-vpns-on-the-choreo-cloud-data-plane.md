@@ -2,7 +2,7 @@
 
 Secure access to private networks from the Choreo cloud data plane is an essential use case for cloud data plane users. 
 
-Choreo allows this secure connection using [Tailscale](https://tailscale.com/). For this, Choreo provides a pre-installed Tailscale image that you can use in your Choreo project. This image acts as a forward proxy, allowing you to connect to your private endpoints through Tailscale's peer-to-peer [WireGuard](https://tailscale.com/kb/1035/wireguard) network tunnels.
+Choreo allows this secure connection using [Tailscale](https://tailscale.com/). For this, Choreo provides a prebuilt Tailscale image component that can act as a forward proxy, which you can deploy in your Choreo project as a service. This service allows you to forward traffic to your external networks via Tailscale’s peer-to-peer [WireGuard](https://tailscale.com/kb/1035/wireguard) network.
 
 The following diagram illustrates the high-level deployment architecture of the Tailscale pre-installed forward proxy:
 
