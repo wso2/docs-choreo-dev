@@ -67,7 +67,8 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
 
     @BeforeClass
     public void setup_ResourceAuthorizationTests() throws TokenRetrievalException, IOException, URISyntaxException {
-        testOrganization = new ChoreoOrganization(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE),
+        testOrganization = new ChoreoOrganization(
+                Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE),
                 Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID)),
                 Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
 
@@ -91,7 +92,8 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
                 projectName, projectHandler);
         Assert.assertNotNull(projectA.getId());
 
-        log.info("Project A: " + projectA.getId());    }
+        log.info("Project A: " + projectA.getId());
+    }
 
     // Test 1
 
