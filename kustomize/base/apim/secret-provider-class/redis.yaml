@@ -4,13 +4,13 @@ metadata:
   name: secret-redis
 spec:
   secretObjects:
-  - secretName: secret-redis
-    type: Opaque
-    data:
-      - objectName: REDIS_PASSWORD
-        key: REDIS_PASSWORD
-      - objectName: US_CDP_2_REDIS_PASSWORD
-        key: US_CDP_2_REDIS_PASSWORD
+    - secretName: secret-redis
+      type: Opaque
+      data:
+        - objectName: REDIS_PASSWORD
+          key: REDIS_PASSWORD
+        - objectName: US_CDP_2_REDIS_PASSWORD
+          key: US_CDP_2_REDIS_PASSWORD
   parameters:
     objects: |
       array:
