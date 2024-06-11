@@ -960,6 +960,12 @@ Tailscale
 pre-installed
 WireGuard
 userspace
+Tailnet
+quickstart
+tailscale-proxy-project
+tailscale-proxy
+ACLs
+configure-vpns-on-the-choreo-cloud-data-plane
 unpublish
 unpublishing
  - docs/administer/customize-the-developer-portal.md
