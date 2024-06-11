@@ -182,3 +182,7 @@ areaOwners:
     assignees:
       - suvin@wso2.com
       - senthalan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.appdevAuthorization.AppdevAuthorizationTests
+    assignees:
+      - suvin@wso2.com
+      - senthalan@wso2.com
