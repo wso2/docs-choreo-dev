@@ -15,7 +15,7 @@ spec:
     objects: |
       array:
         - |
-          objectName: "{{.REDIS_PASSWORD_APIM_OBJ_NAME | default apim-global-adapter-redis-primary-access-key}}"
+          objectName: {{.REDIS_PASSWORD_APIM_OBJ_NAME | default "apim-global-adapter-redis-primary-access-key"}}
           objectType: secret
           objectAlias: REDIS_PASSWORD
           objectVersion: "{{.REDIS_PASSWORD_APIM}}"
