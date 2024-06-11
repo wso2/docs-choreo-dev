@@ -1,0 +1,54 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-apim-db
+spec:
+  secretObjects:
+    - secretName: secret-apim-db
+      type: Opaque
+      data:
+        - objectName: CHOREO_APIM_DB_PASSWORD
+          key: CHOREO_APIM_DB_PASSWORD
+        - objectName: CHOREO_APIM_SHARED_DB_PASSWORD
+          key: CHOREO_APIM_SHARED_DB_PASSWORD
+        - objectName: CHOREO_APIM_USER_DB_PASSWORD
+          key: CHOREO_APIM_USER_DB_PASSWORD
+        - objectName: MONGO_DB_ATLAS_PRIVATE_KEY
+          key: MONGO_DB_ATLAS_PRIVATE_KEY
+        - objectName: MONGO_DB_ATLAS_PUBLIC_KEY
+          key: MONGO_DB_ATLAS_PUBLIC_KEY
+        - objectName: MONGO_DB_PSWD
+          key: MONGO_DB_PSWD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: choreo-apim-db-mssql-password
+          objectType: secret
+          objectAlias: CHOREO_APIM_DB_PASSWORD
+          objectVersion: "{{.CHOREO_APIM_DB_PASSWORD}}"
+        - |
+          objectName: choreo-apim-shared-db-mssql-password
+          objectType: secret
+          objectAlias: CHOREO_APIM_SHARED_DB_PASSWORD
+          objectVersion: "{{.CHOREO_APIM_SHARED_DB_PASSWORD}}"
+        - |
+          objectName: choreo-apim-user-db-mssql-password
+          objectType: secret
+          objectAlias: CHOREO_APIM_USER_DB_PASSWORD
+          objectVersion: "{{.CHOREO_APIM_USER_DB_PASSWORD}}"
+        - |
+          objectName: apim-mongo-db-atlas-private-key
+          objectType: secret
+          objectAlias: MONGO_DB_ATLAS_PRIVATE_KEY
+          objectVersion: "{{.MONGO_DB_ATLAS_PRIVATE_KEY}}"
+        - |
+          objectName: apim-mongo-db-atlas-public-key
+          objectType: secret
+          objectAlias: MONGO_DB_ATLAS_PUBLIC_KEY
+          objectVersion: "{{.MONGO_DB_ATLAS_PUBLIC_KEY}}"
+        - |
+          objectName: apim-mongodb-password
+          objectType: secret
+          objectAlias: MONGO_DB_PSWD
+          objectVersion: "{{.MONGO_DB_PSWD}}"
