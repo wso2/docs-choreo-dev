@@ -1,0 +1,33 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-mgw
+spec:
+  secretObjects:
+    - secretName: secret-mgw
+      type: Opaque
+      data:
+        - objectName: ADAPTER_ADMIN_PASSWORD
+          key: ADAPTER_ADMIN_PASSWORD
+        - objectName: ENFORCER_ADMIN_PASSWORD
+          key: ENFORCER_ADMIN_PASSWORD
+        - objectName: ENFORCER_MANAGEMENT_PASSWORD
+          key: ENFORCER_MANAGEMENT_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: apim-adapter-admin-password
+          objectType: secret
+          objectAlias: ADAPTER_ADMIN_PASSWORD
+          objectVersion: "{{.ADAPTER_ADMIN_PASSWORD}}"
+        - |
+          objectName: apim-ENFORCER-ADMIN-PASSWORD
+          objectType: secret
+          objectAlias: ENFORCER_ADMIN_PASSWORD
+          objectVersion: "{{.ENFORCER_ADMIN_PASSWORD}}"
+        - |
+          objectName: apim-enforcer-management-password
+          objectType: secret
+          objectAlias: ENFORCER_MANAGEMENT_PASSWORD
+          objectVersion: "{{.ENFORCER_MANAGEMENT_PASSWORD}}"

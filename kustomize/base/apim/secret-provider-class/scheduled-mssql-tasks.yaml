@@ -1,0 +1,13 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-mssql-scheduler
+spec:
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: apim-TOKEN-CLEANUP-USER-PASSWORD
+          objectType: secret
+          objectAlias: APIM_TOKEN_CLEANUP_PASSWORD
+          objectVersion: "{{.APIM_TOKEN_CLEANUP_PASSWORD}}"
