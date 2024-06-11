@@ -158,8 +158,6 @@ To test the Ballerina integration, follow the steps given below:
 5. Click **Execute**. This sends a request to your deployed integration.
 6. Observe the response returned by the integration in the **Response body** section. If the integration works as expected, you should see a successful response with the aggregated employee data.
 
-Choreo also allows you to test your integration using Postman. For instructions, see [Test with Postman](../testing/test-apis-using-postman.md).
-
 ## Step 5: Observe the Ballerina integration
 
 To observe the Ballerina integration, click **Observability** in the Choreo Console left navigation menu. 
