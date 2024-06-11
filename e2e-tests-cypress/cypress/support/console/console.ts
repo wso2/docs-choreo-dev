@@ -32,6 +32,8 @@ class Console {
 
   static projectNamePrefix = "autotest";
 
+  static keyName = Utils.generateKeyName("key");
+
   login() {
     login.login();
     return cy.wrap({});
@@ -70,6 +72,62 @@ class Console {
       cy.clearAllCookies();
       cy.clearAllLocalStorage();
     });
+  }
+
+  switchtOrg(orgName: string) {
+    cy.get("#org-picker").click();
+    cy.getUnstable(`[data-value="${orgName}"]`).click();
+  }
+
+  generateOnPremKey() {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToOnPremKeys();
+  
+    cy.wait(5000);
+    cy.get(TestIds.generateOnPremKey).should("exist").click();
+    cy.get(TestIds.onPremKey).should("exist").type(Console.keyName);
+    cy.get(TestIds.onPremKeyGenBtn).click();
+    cy.get(TestIds.onPremKeyCopyBtn, { timeout: 120000 }).should(
+      "be.visible"
+    );
+    Utils.getRenderedElement(TestIds.closeDialog).eq(0).click();
+  }
+
+  editOnPremKey() {
+    cy.get("tbody").should("be.visible");
+    cy.contains(Console.keyName)
+      .parent()
+      .find(TestIds.onPremKeyEditBtn)
+      .click();
+    cy.get(TestIds.onPremKey).should("exist");
+    Console.keyName += "New";
+    cy.get(TestIds.onPremKey).clear();
+    cy.get(TestIds.onPremKey).type(Console.keyName);
+    cy.get(TestIds.onPremKeySaveBtn).click();
+  }
+
+ regenerateOnPremKey() {
+    cy.get("tbody").should("be.visible");
+    cy.contains(Console.keyName)
+      .parent()
+      .find(TestIds.onPremKeyRegen)
+      .click();
+    cy.get(TestIds.onPremKeyRegenBtn)
+      .should("exist")
+      .click();
+    cy.contains("Copy on-premises key").next().click();
+  }
+
+ deleteOnPremKey() {
+    cy.get("tbody").should("be.visible");
+    cy.contains(Console.keyName)
+      .parent()
+      .find(TestIds.onPremKeyDelete)
+      .click();
+    cy.get(TestIds.onPremKeyDeleteBtn)
+      .should("exist")
+      .click();
   }
 
   addUserStore(userStoreFile: string, env: Enums.Environment) {
@@ -277,6 +335,10 @@ class Console {
 
   private navigateToSettings() {
     cy.get('[data-cyid="settings"]').should("be.visible").click();
+  }
+
+  private navigateToOnPremKeys() {
+    cy.get('[data-cyid="nav-link-on-prem-keys-link-tabs-link-tab"]').click();
   }
 
   private navigateToRoles() {
