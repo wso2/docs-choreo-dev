@@ -84,12 +84,7 @@ Now you can test the integration.
 
 ## Step 3: Test the integration
 
-Choreo allows you to test your integration using either the integrated OpenAPI Console or Postman.
-
-In this guide, you will test the integration using the OpenAPI Console. Follow the steps given below:
-
-!!! note
-      - For instructions on how to test using Postman, see [Test with Postman](../../testing/test-apis-using-postman.md).
+To test the integration using the OpenAPI Console. Follow the steps given below:
 
 1. In the Choreo Console left navigation menu, click **Test** and then click **Console**.
 2. In the OpenAPI Console that opens, select **Development** from the environment drop-down list.

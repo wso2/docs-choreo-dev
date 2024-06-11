@@ -79,7 +79,7 @@ Now you are ready to test the API proxy.
 
 ## Step 3: Test the API proxy
 
-Choreo allows you to test your API proxy using either the [integrated OpenAPI Console](../testing/test-rest-endpoints-via-the-openapi-console.md), [cURL](../testing/test-apis-with-curl.md), or [Postman](../testing/test-apis-using-postman.md).
+Choreo allows you to test your API proxy using either the [integrated OpenAPI Console](../testing/test-rest-endpoints-via-the-openapi-console.md) or [cURL](../testing/test-apis-with-curl.md).
 
 In this guide, you will use the OpenAPI Console to test the API proxy. 
 
