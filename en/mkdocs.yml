@@ -151,11 +151,11 @@ nav:
         - Autoscale Components with Scale-to-Zero: devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero.md
       - Configure Storage: devops-and-ci-cd/configure-storage.md
       - Manage Environments: devops-and-ci-cd/manage-environments.md
+      - Configure VPNs on the Choreo Cloud Data Plane: devops-and-ci-cd/configure-vpns-on-the-choreo-cloud-data-plane.md
   - Testing: 
       - Test REST Endpoints via the OpenAPI Console: testing/test-rest-endpoints-via-the-openapi-console.md
       - Test GraphQL Endpoints via the GraphQL Console: testing/test-graphql-endpoints-via-the-graphql-console.md
       - Test APIs with cURL: testing/test-apis-with-curl.md
-      - Test APIs using Postman: testing/test-apis-using-postman.md
       - Test APIs with Choreo API Chat: testing/test-apis-with-choreo-apichat.md
       - Test Components with Test Runner: testing/test-components-with-test-runner.md
   - Consuming Services:
