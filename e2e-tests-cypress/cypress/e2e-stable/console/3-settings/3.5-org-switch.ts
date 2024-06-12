@@ -11,29 +11,18 @@
  * associated services.
  */
 
-import { Utils } from "../../../support/commons/utils";
-import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { LoginPage } from "../../../support/console/pages/login-page";
-import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-
+import { console } from "../../../support/console/console";
 
 before(() => {
-  LoginPage.login();
-});
-
-after(() => {
-  ChoreoHomePage.logout();
+  console.login();
 });
 
 describe("Verify org switch functionality", () => {
-
   it("switch org", () => {
-    ChoreoHomePage.switchtOrg("choreorbactestuser");
+    console.switchtOrg("choreorbactestuser");
   });
 
   it("Search a project in switched org", () => {
-    ProjectListingPage.selectProject("SearchProject");
+    console.searchProject("SearchProject");
   });
-
-  
 });

@@ -13,6 +13,7 @@
 
 import { TestIds } from "../../constants/TestIds";
 import { Enums } from "../../../commons/enums";
+import { Utils } from "../../../commons/utils";
 
 export class OrganizationSettings {
   addUserStore(userStoreFile: string, env: Enums.Environment) {
@@ -248,7 +249,7 @@ export class OrganizationSettings {
     cy.get(TestIds.userToGroupSelect).should("be.visible").click();
     cy.get(TestIds.userToGroupSelect).find("input").type(userEmail);
     cy.get(TestIds.userSelect).within(() => {
-      cy.contains(new RegExp(`${userEmail}`))
+      cy.contains(new RegExp(`${Utils.escapeRegExp(userEmail)}`))
         .should("be.visible")
         .click();
     });

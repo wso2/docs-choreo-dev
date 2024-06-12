@@ -11,35 +11,28 @@
  * associated services.
  */
 
-import { LoginPage } from "../../../support/console/pages/login-page";
-import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { OnPremkeyComponent } from "../../../support/console/pages/component/common/onpremkey-components";
+import { console } from "../../../support/console/console";
 
 /// <reference types="cypress" />
 
 describe("Generate on-prem keys", () => {
   before(() => {
-    LoginPage.login();
-  });
-  after(() => {
-    ChoreoHomePage.logout();
+    console.login();
   });
 
   it("generate on-prem key", () => {
-    ChoreoHomePage.navigateToSettings();
-    OnPremkeyComponent.navigateToOpPremKeySettings();
-    OnPremkeyComponent.generateOnPremKey();
+    console.generateOnPremKey();
   });
 
   it("edit on-prem key", () => {
-    OnPremkeyComponent.editOnPremKey();
+    console.editOnPremKey();
   });
 
   it("regenerate on-prem key", () => {
-    OnPremkeyComponent.regenerateOnPremKey();
+    console.regenerateOnPremKey();
   });
 
   it("delete on-prem key", () => {
-    OnPremkeyComponent.deleteOnPremKey();
+    console.deleteOnPremKey();
   });
 });

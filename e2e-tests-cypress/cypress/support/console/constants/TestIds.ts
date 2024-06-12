@@ -382,4 +382,15 @@ export namespace TestIds {
   export const ComponentUsageInsightsLink = '[data-cyid="usage-insights"]';
   export const clearComponentSearchButton =
     '[data-cyid="component-listing-auto-forcused-search-icon-button"]';
+  export const generateOnPremKey = '[title="Generate Key"]';
+  export const onPremKey = '[data-testid="on-prem-key"]';
+  export const onPremKeyGenBtn = '[data-testid="delete-on-prem-key-generate-btn"]';
+  export const onPremKeyCopyBtn = '[data-testid="on-prem-key-copy-btn"]';
+  export const onPremKeyEditBtn = '[data-testid="key-edit-btn"]';
+  export const onPremKeySaveBtn = '[data-testid="delete-on-prem-key-save-btn"]';
+  export const onPremKeyRegen = '[data-testid="key-regenerate-btn"]';
+  export const onPremKeyRegenBtn = '[data-testid="regenerate-on-prem-key-regenerate-btn"]';
+  export const onPremKeyDelete = '[data-testid="key-delete-btn"]';
+  export const onPremKeyDeleteBtn = '[data-testid="delete-on-prem-key-delete-btn"]';
+  export const closeDialog = '[data-testid="dialog-close-icon"]';
 }
