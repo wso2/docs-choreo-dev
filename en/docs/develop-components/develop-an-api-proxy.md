@@ -114,7 +114,7 @@ To apply a rate limiting level to the API, follow the steps given below:
 2. Go to the required environment card and click the setting icon corresponding to **API Configuration**.
 3. In the **API Configuration** pane that opens, click **Rate Limiting** to expand the section.
 4. Select **API Level** as the **Rate Limiting Level**.
-5. Specify appropriate values in the **Request Limit** and **Time Unit** fields. In this guide, you  can proceed with the default values.
+5. Specify appropriate values for the **Request Limit** and **Time Unit** fields. In this guide, you can proceed with the default values.
    This applies a rate-limiting policy to the entire API. If necessary, you can also apply rate limits at the operation level. For more information, see [API Rate Limiting](../api-management/api-rate-limiting.md). 
 6. Click **Apply**. This applies the rate limiting level to the API proxy and redeploys it. 
 
@@ -124,7 +124,7 @@ To publish the API proxy to the Choreo Developer Portal, follow the steps given 
 
 1. In the left navigation menu, click **Lifecycle** under **Manage**. This takes you to the **Lifecycle** page where you can see the different lifecycle stages the API can be in. You can see that the current lifecycle stage is **Created**.
 2. Click **Publish**. 
-3. In the **Publish API** dialog that opens, click **Confirm** to proceed to publish the API with the specified display name. If you want to specify a different display name, update it and click **Confirm**. This changes the API lifecycle state to **Published**. 
+3. In the **Publish API** dialog that opens, click **Confirm** to proceed publishing the API with the specified display name. If you want to change the display name, make the necessary changes and then click **Confirm**. This changes the API lifecycle state to **Published**.
 
 ## Step 5: Invoke the API 
 
