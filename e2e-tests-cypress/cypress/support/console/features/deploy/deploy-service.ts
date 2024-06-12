@@ -579,7 +579,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     private retryEnvCardDataRetrieval() {
       cy.log("Checking for retry deployment");
       for (let i = 0; i < 4; i++) {
-        Utils.clickOnOptionalElement(TestIds.retry, LONG_TIME.timeout);
+        Utils.clickOnOptionalElement(TestIds.retry, SHORT_TIME.timeout);
 
         Utils.clickOnOptionalElement(TestIds.refresh, SHORT_TIME.timeout);
 
