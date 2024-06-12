@@ -155,7 +155,7 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
       for (let i = 0; i < 4; i++) {
         Utils.clickOnOptionalElement(
           '[data-testid="retry-btn"]',
-          LONG_TIME.timeout
+          SHORT_TIME.timeout
         );
 
         Utils.clickOnOptionalElement(
