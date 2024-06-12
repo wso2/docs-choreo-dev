@@ -302,7 +302,7 @@ public class ManagedAuthenticationUtils {
      * @throws IOException if an error occurs while reading the response
      */
     public static void validateConfigPropagation(String webAppBaseUrl) throws ClientProtocolException, IOException {
-        String location = ManagedAuth.initiateManagedAuthLoginFlow(webAppBaseUrl);
+        String location = ManagedAuth.initiateManagedAuthLoginFlow(webAppBaseUrl, new HashMap<>());
         List<NameValuePair> params = URLEncodedUtils.parse(location, Charset.forName("UTF-8"));
         String redirectUrl = params.stream().filter(param -> param.getName().equals("redirect_uri")).findFirst().get().getValue();
 

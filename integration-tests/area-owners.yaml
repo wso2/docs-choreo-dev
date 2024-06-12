@@ -178,6 +178,10 @@ areaOwners:
     assignees:
       - thumula@wso2.com
       - senthalan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.managedAuthentication.localDevelopment.LocalDevelopmentTests
+    assignees:
+      - suvin@wso2.com
+      - thumula@wso2.com
   - testClass: com.wso2.choreo.integration.tests.appdevUserManagement.AppdevUserManagementTests
     assignees:
       - suvin@wso2.com
