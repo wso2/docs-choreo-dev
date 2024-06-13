@@ -85,10 +85,19 @@ In this guide, you will use the OpenAPI Console to test the API proxy.
 
 Follow the steps given below:
 
-1. In the left navigation menu, click **Test** and then click **OpenAPI Console**.
+!!! tip
+          Choreo enables OAuth 2.0 to secure APIs by default. Therefore, you need an access token to invoke an API.
 
-    !!! tip
-          By default, Choreo ensures the security of API operations. When you go to the **Test** view, Choreo automatically generates a key to test the API. To view the key, click the show key icon in the **Security Header** field.
+           - Choreo automatically generates a key to test the API via the OpenAPI Console. To view the key, click the show key icon in the **Security Header** field.
+           - Choreo allows you to disable security for an entire API or a specific API resource for testing purposes. If you want to disable security, follow these steps:
+             1. In the left navigation menu, click **Deploy**.
+             2. Go to the **Build Area** card and click **Security Settings**.
+             3. In the **Security Settings** pane, perform one of the following actions depending on your requirement:
+                 - To disable security for the entire API, clear the **OAuth2** checkbox.
+                 - To disable security for a specific API resource, go to the **Permissions** section, click to expand the relevant resource and then turn off the **Security** toggle.
+             4. Click **Apply**.
+
+1. In the left navigation menu, click **Test** and then click **OpenAPI Console**.
 
 2. Select **Development** from the environment drop-down list.
    
