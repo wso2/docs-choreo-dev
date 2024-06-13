@@ -11,7 +11,6 @@
  * associated services.
  */
 
-import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { Marketplace } from "../../../support/console/pages/marketplace/marketplace-page";
