@@ -42,6 +42,8 @@ configMapGenerator:
       - AZURE_OPENAI_ENDPOINT={{.AZURE_OPENAI_ENDPOINT}}
       - CP_AZURE_OPENAI_ENDPOINT={{.CP_AZURE_OPENAI_ENDPOINT | default "https://eastus2.api.cognitive.microsoft.com/" }}
       - ZILLIZ_CLOUD_URI={{.ZILLIZ_CLOUD_URI}}
+      - CHOREO_TOKEN_ENDPOINT={{.CHOREO_TOKEN_ENDPOINT}}
+      - PROXY_URL={{.PROXY_URL}}
       - ENABLED_RERANKER={{.ENABLED_RERANKER}}
   - name: env-marketplace-assistant-cm
     behavior: create
@@ -53,6 +55,7 @@ configMapGenerator:
       - AZURE_EMBEDDING_DEPLOYMENT={{.AZURE_EMBEDDING_DEPLOYMENT}}
       - SOURCE_PLATFORM={{.SOURCE_PLATFORM}}
       - COLLECTION_NAME={{.COLLECTION_NAME}}
+      - PROXY_URL={{.PROXY_URL}}
   - name: env-ai-copilot-cm
     behavior: create
     literals:
