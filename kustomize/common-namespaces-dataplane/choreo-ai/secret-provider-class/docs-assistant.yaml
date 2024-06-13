@@ -15,6 +15,10 @@ spec:
           key: CP_AZURE_OPENAI_API_KEY
         - objectName: COHERE_API_KEY
           key: COHERE_API_KEY
+        - objectName: PROXY_CONSUMER_KEY
+          key: PROXY_CONSUMER_KEY
+        - objectName: PROXY_CONSUMER_SECRET
+          key: PROXY_CONSUMER_SECRET
   parameters:
     objects: |
       array:
@@ -38,3 +42,13 @@ spec:
           objectType: secret
           objectAlias: COHERE_API_KEY
           objectVersion: "{{.COHERE_API_KEY}}"
+        - |
+          objectName: ai-milvus-proxy-client-id
+          objectType: secret
+          objectAlias: PROXY_CONSUMER_KEY
+          objectVersion: "{{.PROXY_CONSUMER_KEY}}"
+        - |
+          objectName: ai-milvus-proxy-consumer-secret
+          objectType: secret
+          objectAlias: PROXY_CONSUMER_SECRET
+          objectVersion: "{{.PROXY_CONSUMER_SECRET}}"
