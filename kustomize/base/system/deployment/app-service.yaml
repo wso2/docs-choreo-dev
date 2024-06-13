@@ -32,11 +32,6 @@ spec:
                 secretKeyRef:
                   name: secret-app-db
                   key: CHOREO_DB_PASSWORD
-            - name: REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: secret-redis
-                  key: REDIS_PASSWORD
             - name: GITHUB_BOT_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:
@@ -93,16 +88,6 @@ spec:
                 secretKeyRef:
                   name: secret-key-vault
                   key: AZURE_KEY_VAULT_CLIENT_SECRET
-            - name: GH_CONNECTOR_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: secret-github-connector
-                  key: GH_CONNECTOR_CLIENT_SECRET
-            - name: GSUITE_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: secret-gsuite
-                  key: GSUITE_CLIENT_SECRET
             - name: SERVICE_NOW_CLIENT_ID
               valueFrom:
                 secretKeyRef:
@@ -208,12 +193,6 @@ spec:
             - mountPath: /app-service.yaml
               name: config
               subPath: app-service.yaml
-            - name: secret-redis
-              mountPath: "/mnt/csi/secret-redis"
-              readOnly: true
-            - name: secret-gsuite
-              mountPath: "/mnt/csi/secret-gsuite"
-              readOnly: true
             - name: secret-app-db
               mountPath: "/mnt/csi/secret-app-db"
               readOnly: true
@@ -222,9 +201,6 @@ spec:
               readOnly: true
             - name: secret-idp
               mountPath: "/mnt/csi/secret-idp"
-              readOnly: true
-            - name: secret-github-connector
-              mountPath: "/mnt/csi/secret-github-connector"
               readOnly: true
             - name: secret-key-vault
               mountPath: "/mnt/csi/secret-key-vault"
@@ -251,22 +227,6 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-api-manager
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-gsuite
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-gsuite
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-redis
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-redis
             nodePublishSecretRef:
               name: csi-secret-store-azure
         - name: secret-app-db
@@ -299,14 +259,6 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-key-vault
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-github-connector
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-github-connector
             nodePublishSecretRef:
               name: csi-secret-store-azure
         - name: secret-service-now

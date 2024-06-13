@@ -44,8 +44,6 @@ resources:
   - cp-rrs.yaml
   - crypto-key-service.yaml
   - email-service.yaml
-  - github-connector.yaml
-  - gsuite.yaml
   - idp.yaml
   - key-vault.yaml
   - dp-secret-manager.yaml
