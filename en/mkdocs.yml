@@ -132,7 +132,7 @@ nav:
           - Overview: manage-databases-and-caches/choreo-managed-databases-and-caches.md
           - PostgreSQL:  manage-databases-and-caches/choreo-managed-postgresql-databases.md
           - MySQL: manage-databases-and-caches/choreo-managed-mysql-databases.md
-          - Redis: manage-databases-and-caches/choreo-managed-redis-datastores.md
+          - Choreo-Managed Cache: manage-databases-and-caches/choreo-managed-caches.md
           - Billing: manage-databases-and-caches/billing-for-platform-services.md
   - Authentication and Authorization:
       - Secure API Access with Asgardeo: authentication-and-authorization/secure-api-access-with-asgardeo.md
@@ -373,6 +373,7 @@ plugins:
           'authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend.md': 'https://wso2.com/choreo/docs/authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls/'
           'develop-components/sharing-and-reusing/share-and-reuse-services.md': 'https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-service/'
           'develop-components/sharing-and-reusing/share-and-reuse-web-applications.md': 'https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-web-application/'
+          'manage-databases-and-caches/choreo-managed-redis-datastores.md': 'https://wso2.com/choreo/docs/manage-databases-and-caches/choreo-managed-caches/'
 
 extra_css:
   # - assets/lib/highlightjs/default.min.css
