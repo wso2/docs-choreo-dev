@@ -7,6 +7,15 @@
 [truststore]
   location = "/home/wso2/security/truststore"
 
+[mizzen]
+host = "{{.MIZZEN_HOST}}"
+
+[partitionExceedAlertSettings]
+namespace = "$env{PARTITION_CHECK_NAMESPACE}"
+pollingInterval = "900s"
+retryInterval = "5s"
+retryCount = 20
+
 # Control plane's connection details
 [controlPlane]
   serviceUrl = "https://choreo-am-service:9443/"
