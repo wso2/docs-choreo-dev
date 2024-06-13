@@ -32,21 +32,21 @@ Follow the steps given below:
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
-3. Click the **API Proxy** card.
+3. Click the **API Proxy** card under **Create a Component**.
    This opens the **Create an API Proxy** pane, where you can upload an OpenAPI definition or provide the URL of an OpenAPI. In this guide, you will define resources manually. Therefore, click **Skip Source** to proceed.
 4. Specify the values given in the following table as API proxy details: 
 
     |  **Field**    | **Value**                                   |
     |---------------|---------------------------------------------|
     | **Name**      | `HR API`                                    |
-    | **Base Path** | `abc-hr`                                    |
-    | **Version**   | `1.0`                                     |
+    | **Context**   | `abc-hr`                                    |
+    | **Version**   | `1.0`                                       |
     | **Target**    | `https://samples.choreoapps.dev/company/hr` |
     |**Access Mode**| **External**                                |
 
 5.  Click **Create**.
    
-   This takes you to the **Overview** page of the API proxy component. Now you can proceed to define resources for the API proxy.
+   This creates the API proxy component and takes you to the **Overview** page. Now you can proceed to define resources for the API proxy.
 
 ## Step 2: Define resources for the API proxy
 
@@ -85,10 +85,19 @@ In this guide, you will use the OpenAPI Console to test the API proxy.
 
 Follow the steps given below:
 
-1. In the left navigation menu, click **Test** and then click **OpenAPI Console**.
+!!! tip
+          Choreo enables OAuth 2.0 to secure APIs by default. Therefore, you need an access token to invoke an API.
 
-    !!! tip
-          By default, Choreo ensures the security of API operations. When you go to the **Test** view, Choreo automatically generates a key to test the API. To view the key, click the show key icon in the **Security Header** field.
+           - Choreo automatically generates a key to test the API via the OpenAPI Console. To view the key, click the show key icon in the **Security Header** field.
+           - Choreo allows you to disable security for an entire API or a specific API resource for testing purposes. If you want to disable security, follow these steps:
+             1. In the left navigation menu, click **Deploy**.
+             2. Go to the **Build Area** card and click **Security Settings**.
+             3. In the **Security Settings** pane, perform one of the following actions depending on your requirement:
+                 - To disable security for the entire API, clear the **OAuth2** checkbox.
+                 - To disable security for a specific API resource, go to the **Permissions** section, click to expand the relevant resource and then turn off the **Security** toggle.
+             4. Click **Apply**.
+
+1. In the left navigation menu, click **Test** and then click **OpenAPI Console**.
 
 2. Select **Development** from the environment drop-down list.
    
@@ -110,25 +119,27 @@ In this guide, you will apply rate limiting to the  API and publish it.
 
 To apply a rate limiting level to the API, follow the steps given below:
  
-1. In the left navigation menu, click **Manage** and then click **Settings**.
-2. In the **Settings** pane, go to the **API Settings** section and click **Edit**.
-3. Click the **Resources** tab and select **API Level** as the **Rate Limiting Level**. This applies a rate-limiting policy to the entire API. If necessary, you can also apply rate limits at the operation level. For more information, see [API Rate Limiting](../api-management/api-rate-limiting.md). 
-4. Click **Save**.
-5. In the **Apply to Development** pane that opens, enter a meaningful message and click **Apply**.
+1. In the left navigation menu, click **Deploy**.
+2. Go to the required environment card and click the setting icon corresponding to **API Configuration**.
+3. In the **API Configuration** pane that opens, click **Rate Limiting** to expand the section.
+4. Select **API Level** as the **Rate Limiting Level**.
+5. Specify appropriate values for the **Request Limit** and **Time Unit** fields. In this guide, you can proceed with the default values.
+   This applies a rate-limiting policy to the entire API. If necessary, you can also apply rate limits at the operation level. For more information, see [API Rate Limiting](../api-management/api-rate-limiting.md). 
+6. Click **Apply**. This applies the rate limiting level to the API proxy and redeploys it. 
 
 ### Step 4.2: Publish the API proxy
    
 To publish the API proxy to the Choreo Developer Portal, follow the steps given below:
 
-1. In the left navigation menu, click **Lifecycle** under **Manage**. 
-   This displays the different lifecycle stages that an API can be in. You can see that the current lifecycle stage is **Created**.
-2. Click **Publish**. This changes the API lifecycle state to **Published**. 
+1. In the left navigation menu, click **Lifecycle** under **Manage**. This takes you to the **Lifecycle** page where you can see the different lifecycle stages the API can be in. You can see that the current lifecycle stage is **Created**.
+2. Click **Publish**. 
+3. In the **Publish API** dialog that opens, click **Confirm** to proceed publishing the API with the specified display name. If you want to change the display name, make the necessary changes and then click **Confirm**. This changes the API lifecycle state to **Published**.
 
 ## Step 5: Invoke the API 
 
 To generate credentials for the published API and to invoke it via the Choreo Developer Portal, follow the steps below:
 
-1. To open the published API in the Choreo Developer Portal via the **Lifecycle Management** pane, click **Go to Devportal**. This takes you to the `HR API` in the Choreo Developer Portal.
+1. To open the published API in the Choreo Developer Portal via the **Lifecycle** page, click **Go to Devportal**. This takes you to the `HR API` in the Choreo Developer Portal.
 
 2. To generate credentials to test the API, follow the steps given below:
 
