@@ -39,7 +39,7 @@ Follow the steps given below:
     |  **Field**    | **Value**                                   |
     |---------------|---------------------------------------------|
     | **Name**      | `HR API`                                    |
-    | **Base Path** | `abc-hr`                                    |
+    | **Context**   | `abc-hr`                                    |
     | **Version**   | `1.0`                                       |
     | **Target**    | `https://samples.choreoapps.dev/company/hr` |
     |**Access Mode**| **External**                                |
