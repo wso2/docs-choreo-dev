@@ -18,6 +18,9 @@ Choreo uses **Roles**, **Groups**, and a **Mapping level** to control access to 
 
 In Choreo, authorization operates by assigning a role to a group at a specified level. The level at which the role is assigned determines the extent of permissions granted to users.
 
+!!! warning "Important"
+    Avoid assigning multiple roles to a single user across different projects or levels (organization and project). Such assignments can grant users unintended permission to some projects, allowing them to perform tasks they shouldn't have access to. Therefore, it is recommended to assign only one role to a user across projects or levels to ensure proper access control.
+
 !!! info
     In Choreo, organization-level permissions take precedence over project-level permissions.
 
