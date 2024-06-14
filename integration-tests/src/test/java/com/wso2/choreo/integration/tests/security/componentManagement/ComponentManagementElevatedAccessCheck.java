@@ -488,8 +488,7 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
     @CitrusTest
     public void getRepoContents_ComponentManagementElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForGetRepoContents = "/component-utils/1.0.0/repositories/" + gitOrgHandle + "/" + repoName + "/branches/main/contents?"
-                + "userId=" + testUserId;
+        String requestUrlForGetRepoContents = "/component-mgt/1.0.0/repositories/" + gitOrgHandle + "/" + repoName + "/branches/main/contents";
         // It was decided to return 404 when not authorized
         // Issue - https://github.com/wso2-enterprise/choreo/issues/23763#issuecomment-2134484320
         SecurityUtils.elevatedAccessCheckForNotFoundGetRequests(this, choreoCPTestClient, requestUrlForGetRepoContents,
