@@ -6,7 +6,7 @@ PostgreSQL on Choreo offers fully Choreo-managed, efficient object-relational da
 
 Follow the steps below to create a Choreo-managed PostgreSQL database: 
 
-1. From the environment list on the header, located next to the **Deployment Tracks** list, select your **Organization**.
+1. From the organization list on the header, located next to the **Deployment Tracks** list, select your **Organization**.
 2. In the left navigation menu, click **Dependencies** and then **Databases**.
 3. Click **Create** and select **PostgreSQL** as the database type. Provide a display name for this server and follow the instructions.
 4. Select your preferred cloud provider from AWS, Azure, GCP, or Digital Ocean.
