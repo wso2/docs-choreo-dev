@@ -105,6 +105,12 @@ spec:
               readOnly: true
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-enforcer:latest
           imagePullPolicy: Always
+          lifecycle:
+            preStop:
+              exec:
+                # Graceful shutdown has not been implemented in the enforcer, hence keep the process running for
+                # 30 seconds (10 seconds + 20 seconds (Enforcer -> Router connection timeout is 20 seconds))
+                command: ["/bin/sleep", "30"]
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
@@ -175,6 +181,12 @@ spec:
               subPath: RATE_LIMITER_KEYSTORE_CERT
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router:latest
           imagePullPolicy: Always
+          lifecycle:
+            preStop:
+              exec:
+                # Passing the SIGTERM signal to the process to gracefully shutdown
+                # Keeping the process running for 10 seconds to run for sometimes as this is a new change we've done.
+                command: ["/bin/sleep", "10"]
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true

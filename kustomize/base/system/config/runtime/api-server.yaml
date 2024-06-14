@@ -59,11 +59,6 @@ upstream:
   dp-rudder: dp-rudder:80
   organization-management: organization-management:8080
   authz-service: ${AUTHZ_SERVICE_ENDPOINT}
-redis:
-  host: ${REDIS_HOST}
-  port: 6380
-  disableTls: false
-  password: ${REDIS_PASSWORD}
 logger:
   level: ${LOGGER_LEVEL}    # todo: change this to info after the new components get stable in prod.
   encoding: console

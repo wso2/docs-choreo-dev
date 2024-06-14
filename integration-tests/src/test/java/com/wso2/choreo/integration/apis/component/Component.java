@@ -56,6 +56,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 @Log4j2
 public class Component extends ControlPlaneAPI {
     private static final String CONTEXT = "/component-mgt/1.0.0";
+    private static final String MANAGED_AUTH_ENABLE_LOCAL_DEVELOPMENT_ENDPOINT = "/managed-auth/local-development";
 
     public static void triggerConfigurableGeneration(TestActionRunner runner, HttpClient client,
             ChoreoComponent component, List<Commit> commitHistory, String branchName) throws Exception {
@@ -295,6 +296,34 @@ public class Component extends ControlPlaneAPI {
                                 .message()));
     }
 
+    public static void configureLocalDevelopmentForManagedAuthentication(TestActionRunner runner, HttpClient client,
+                    String projectId, String componentId, String releaseId,
+                    HashMap<String, Object> localDevelopmentConfigureRequest, HttpStatus expectedStatus)
+                    throws TokenRetrievalException, IOException, URISyntaxException {
+
+            String requestBody = ObjectMapperUtil.mapToString(localDevelopmentConfigureRequest);
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(getToggleLocalDevelopmentURL(projectId, componentId, releaseId))
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, getAccessToken())
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                .body(requestBody),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(expectedStatus)
+                                .message()));
+    }
+
     private static String getKeyGenURL(String projectId, String componentId, String environmentId) {
 
         return getKeyManagerCommonURL(projectId, componentId, environmentId) + "/generate";
@@ -316,6 +345,13 @@ public class Component extends ControlPlaneAPI {
         return CONTEXT + "/orgs/" + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE)
                 + "/projects/" + projectId + "/components/" + componentId + "/environments/" + environmentId
                 + "/key-sets";
+    }
+
+    private static String getToggleLocalDevelopmentURL(String projectId, String componentId, String releaseId) {
+
+        return CONTEXT + "/orgs/" + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE)
+                + "/projects/" + projectId + "/components/" + componentId + "/releases/" + releaseId
+                + MANAGED_AUTH_ENABLE_LOCAL_DEVELOPMENT_ENDPOINT;        
     }
 
     private static String getAccessToken() throws TokenRetrievalException, IOException, URISyntaxException {

@@ -32,11 +32,6 @@ spec:
                 secretKeyRef:
                   name: secret-idp
                   key: IDP_CLIENT_SECRET
-            - name: REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: secret-redis
-                  key: REDIS_PASSWORD
           envFrom:
             - configMapRef:
                 name: env-api-server
@@ -77,9 +72,6 @@ spec:
             - name: secret-idp
               mountPath: /mnt/csi/secret-idp
               readOnly: true
-            - name: secret-redis
-              mountPath: "/mnt/csi/secret-redis"
-              readOnly: true
       volumes:
         - name: config
           configMap:
@@ -90,14 +82,6 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-idp
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-redis
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-redis
             nodePublishSecretRef:
               name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
