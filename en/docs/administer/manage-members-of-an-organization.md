@@ -4,4 +4,6 @@ An organization in Choreo is a logical grouping of users and user resources. A f
 
 {% include "inviting-members.md" %}
 
-{% include "../authentication-and-authorization/access-control/groups-and-roles-content.md" %}
+## Manage user permission
+
+For details on how Choreo manages user permission, see [Manage user permission](../choreo-concepts/organization.md#manage-user-permission).

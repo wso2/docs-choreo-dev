@@ -54,6 +54,16 @@ choreo create project web-app-project --type=multi-repository
 
 In Choreo, a component within your project represents a singular unit of work in a cloud-native application. It can be a microservice, API, web application, or job/task. Each component is associated with a directory path in a Git repository containing the source code for the program.
 
+!!! info "Note"
+
+          The Choreo CLI currently supports the following component types:
+
+          - Service
+          - Web Application
+          - Webhook
+          - Scheduled Task
+          - Manual Task
+
 1. Fork the repository [https://github.com/wso2/choreo-sample-todo-list-app](https://github.com/wso2/choreo-sample-todo-list-app). This contains a sample web application that you can use for this guide. 
 
 2. To initiate the creation of a Web Application component within your project, use the following command:

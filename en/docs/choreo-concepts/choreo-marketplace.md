@@ -40,7 +40,7 @@ Choreo organizes the service content into four tabs. The four tabs contain infor
 - **API definition**: Includes the service's API definition, extracted from the user repository using the `component-config` file or `endpoints.yaml` file. 
 If the user does not specify an API definition, this tab remains empty.
 
-- **How to use**: Includes instructions on how to use the selected service. This includes instructions on [creating a connection](../develop-components/sharing-and-reusing-services.md#create-a-connection-to-a-service) and [consuming this service](../develop-components/sharing-and-reusing-services.md#consuming-a-service-through-a-connection). This section is accessible for any connections that you create.
+- **How to use**: Includes instructions on how to use the selected service. This includes instructions on [creating a connection](../develop-components/sharing-and-reusing/create-a-connection.md).
 
 - **Related documents**: Includes any additional content the user has provided as documents through the Manage -> Marketplace section of the component.
 
@@ -55,6 +55,20 @@ In Choreo, a service exposed through the platform is termed a Choreo service, wi
 Upon deployment to the initial environment, services get automatically added to the Marketplace. Choreo effortlessly collects essential details such as component name, endpoint name, description, and service definitions during this deployment, utilizing them to generate the corresponding service entries in the Marketplace.
 
 The service name follows the convention of `component name - endpoint name`, while all other details remain unchanged.
+
+## Service versioning in the Choreo Marketplace
+
+In the Choreo Marketplace, service versions are displayed in their major version format. Each service in the Choreo Marketplace represents the latest version of the service within its major version, following semantic versioning principles.
+
+For example, if a Choreo service has versions `v1.0`, `v1.1`, `v1.2`, and `v2.0`, the Choreo Marketplace displays services with versions `v1` and `v2` representing the latest versions `v1.2` and `v2.0` respectively.
+
+When you deploy a new minor version of a service already deployed in Choreo, the corresponding service in the marketplace automatically updates to reflect the latest version within the same major version.
+
+### Semantic-version-based intelligent routing in the Choreo Marketplace
+
+When you use a service from the Choreo marketplace as a dependency, the dependent service's traffic automatically routes to the latest version of the corresponding service within the same major version. This ensures that your dependencies remain up-to-date without requiring manual updates within a major version.
+
+For example, if you create a connection to connect your Choreo component named `Foo` to a Choreo service named `Bar`, which is currently available in the Choreo Marketplace as version v1, and if the latest version of the service `Bar` within the v1 range is v1.2, the component `Foo` will automatically connect to `Bar` v1.2.  Subsequently, when `Bar` releases version v1.3, traffic from `Foo` will automatically route to `Bar` v1.3.
 
 ## Edit services in the Choreo Marketplace
 

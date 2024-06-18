@@ -22,4 +22,4 @@ Component Connections are Connections you define at the component level and **us
 For example, create a component connection if you want to connect a legacy service to a given component. Components can refer to the Component Connection using the connection ID. 
 If your component consumes more than one Choreo service, the Component connections created to consume those Choreo services under the OAuth security scheme can share the same OAuth application by sharing the same client ID and secret between all such connections.
 
-Learn how you can [share and reuse services using connections](../develop-components/sharing-and-reusing-services.md) in Choreo.
+Learn how you can [share and reuse services using connections](../develop-components/sharing-and-reusing/create-a-connection.md) in Choreo.

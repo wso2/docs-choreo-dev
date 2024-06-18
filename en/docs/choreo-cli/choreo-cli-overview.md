@@ -12,7 +12,18 @@ Choreo serves as a comprehensive internal platform-as-a-service. The Choreo CLI 
 
 - **Create and Manage Resources**: Simplify project and component management. You can easily initiate and organize projects in Choreo through simple commands.
 
-- **Create Builds and Deployments**: Simplifies the process of creating builds and deploying components. You can build and promote components to environments easily with simple commands, ensuring a seamless transition from development to deployment.
+   - **Create Builds and Deployments**: Simplifies the process of creating builds and deploying components. You can build and promote components to environments easily with simple commands, ensuring a seamless transition from development to deployment.
+
+    !!! info "Note"
+
+          The Choreo CLI currently supports the following component types:
+
+          - Service
+          - Web Application
+          - Webhook
+          - Scheduled Task
+          - Manual Task
 
 - **Monitor with Logs** : The integrated log functionality in the Choreo CLI allows you to effectively monitor your components. You can access valuable insights into your components behavior and performance directly from the command line.
 
+For troubleshooting tips and answers to frequently asked questions, see the [Choreo CLI FAQ](../references/faq.md#choreo-cli).

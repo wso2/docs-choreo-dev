@@ -1,4 +1,4 @@
-# Autoscale Components with Scale to Zero
+# Autoscale Components with Scale-to-Zero
 
 Choreo provides the scale-to-zero capability for HTTP applications you deploy in the data plane. This lets you run your components in a serverless mode.
 
@@ -32,13 +32,16 @@ To enable scale-to-zero for service components created before February 23, 2024,
 3. Make sure the component is deployed to an environment and is ready to receive traffic.
 4. In the left navigation menu, click **DevOps** and then click **Scaling**.
 
-- **If you are a free user**, you will see a view similar to the one below. You can click the **scale-to-zero** card to enable scale-to-zero for your component.
+    - **If you are a free user**, you will see a view similar to the one below. You can click the **scale-to-zero** card to enable scale-to-zero for your component.
 
-![Free User - Scale to Zero](../../assets/img/devops-and-ci-cd/scaling/free-user-scaling-view.png){.cInlineImage-full}
+        ![Free User - Scale to Zero](../../assets/img/devops-and-ci-cd/scaling/free-user-scaling-view.png){.cInlineImage-full}
 
-- **If you are a paid user or you are running your applications in your own private data plane**, you will see a view similar to the one below. You can click the **scale-to-zero** card to enable scale-to-zero for your component.
+    - **If you are a paid user or you are running your applications in your own private data plane**, you will see a view similar to the one below. You can click the **scale-to-zero** card to enable scale-to-zero for your component.
 
-![Paid User - Scale to Zero](../../assets/img/devops-and-ci-cd/scaling/paid-user-scaling-view.png){.cInlineImage-full}
+        ![Paid User - Scale to Zero](../../assets/img/devops-and-ci-cd/scaling/paid-user-scaling-view.png){.cInlineImage-full}
+
+    !!! note 
+         The scale-to-zero service should start within 60 seconds. If it doesn’t, the gateway will timeout the request.
 
 You can independently scale Choreo components in both the **Development** and **Production** environments. The deployment card indicates the scaling status of each environment. To configure the scale-to-zero feature for a specific environment, click on the **scale-to-zero** link, which redirects to the **Devops** → **Scaling** page.
 
@@ -50,8 +53,11 @@ When you turn on the scale-to-zero for your application, the minimum replicas fo
 
 - The scale-to-zero feature currently exclusively supports web applications and HTTP services. TCP and HTTPS services are not supported to be scaled to zero.
 - To scale to zero, your HTTP service must run on one of the specified ports: 5000, 6000, 7000, 8000, 9000, 7070 to 7079, 8080 to 8089, and 9090 to 9099 or 8290. If you have an endpoint in your component running in any other port, your component will not automatically scale-to-zero when deploying or promoting. Also, if you try to switch to the “scale-to-zero” option in the “Devops” → “Scaling” view, it will fail.
-- Currently, HTTP services which have “Project” network visible endpoints are not supported with scale-to-zero.
-  If you have such an endpoint in your component, your component will not automatically scale-to-zero when deploying or promoting. Also, if you try to switch to the “scale-to-zero” option in the “Devops” → “Scaling” view, it will fail.
+- Scheduled tasks and manually triggered components cannot connect to a service on a project scope if scale-to-zero is enabled. Attempting to do so results in the following error:
+
+    `Host not found, not forwarding request.`
+
+    To allow a task-type component to invoke a project-level service, set it to HPA mode if you are on a paid plan, or to no scaling if you are on the Developer plan.
 
 ## Architecture 
 

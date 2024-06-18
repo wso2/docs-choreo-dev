@@ -583,6 +583,7 @@ what-is-choreo
 create-your-first-rest-api
 create-your-first-rest-api-proxy
 secure-an-api-with-role-based-access-control
+secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls
 rest-api
 api-proxies
 triggers.md
@@ -953,9 +954,36 @@ Pamuk
 Kazuo
 Ishiguro
 Dickensread
+troubleshoot-choreo
+NoSQL
+VPNs
+Tailscale
+pre-installed
+WireGuard
+userspace
+Tailnet
+quickstart
+tailscale-proxy-project
+tailscale-proxy
+ACLs
+configure-vpns-on-the-choreo-cloud-data-plane
+unpublish
+unpublishing
  - docs/administer/customize-the-developer-portal.md
 cInlineImage-threeQuarter
  - docs/develop-components/manage-the-micro-integrator-runtime-version-in-your-integration-project.md
 pom.xml
  - docs/authentication-and-authorization/access-control/control-access-in-the-choreo-console.md
 cInlineImage-threeQuarter
+ - docs/develop-components/sharing-and-reusing/create-a-connection.md
+ServiceURL
+ - docs/develop-components/sharing-and-reusing/sharing-and-reusing-services.md
+ConnectionConfig
+serviceReferences
+isOptional
+isSensitive
+ConsumerKey
+ConsumerSecret
+TokenURL
+ - docs/develop-components/sharing-and-reusing/sharing-and-reusing-web-applications.md
+index.html
