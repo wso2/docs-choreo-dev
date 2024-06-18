@@ -323,6 +323,7 @@ public class ComponentUtils {
 
             graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
                     .componentHandler(responseDTO.get().getHandle()).build();
+            SleepUtil.sleep(5);
         } else if (componentFlavour.equals(ComponentFlavour.WEBAPP)) {
             dto.setComponentType("byocWebAppsDockerfileLess");
             Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createWebappComponent(runner,
