@@ -250,12 +250,15 @@ Follow the guidelines below based on your language:
 
     `web: java -jar target/sample.war` <br>
 
-### Build Time Environment Variables
+### Configure build-time environment variables
 
-You can configure the environment variables that are necessary to build the component using the Build Configurations Editor in the component Build page. This option is not available for Ballerina and WSO2 MI.
+You can configure the environment variables necessary to build the component using the **Build Configurations Editor** on the component **Build** page. 
 
-These environment variables and values will be passed to buildpack during the build time. Hence, this option can be used to configure buildpack specific environment variables or enviromemt variables required for component build.
+!!! info
+    The capability to configure build-time environment variables is not available for components created using **Ballerina** or **WSO2 MI** buildpacks.
 
-For example, you can override the Maven command of `Java` buildpack using `GOOGLE_MAVEN_BUILD_ARGS` as the environment key and `clean install` as the value. 
+During the build process, the build-time environment variables and their values are passed to the buildpack. Therefore, you can configure both buildpack-specific environment variables and those required for the component build.
 
-Refer to the [documentation](https://cloud.google.com/docs/buildpacks/service-specific-configs) for more usages.
+For example, if you want to override the Maven command of the **Java** buildpack, you can use `GOOGLE_MAVEN_BUILD_ARGS` as the environment key and `clean install` as the value. 
+
+For more examples, see [Google Cloud's buildpacks documentation](https://cloud.google.com/docs/buildpacks/service-specific-configs).
