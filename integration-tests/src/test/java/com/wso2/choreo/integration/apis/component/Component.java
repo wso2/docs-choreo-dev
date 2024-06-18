@@ -14,6 +14,7 @@
 package com.wso2.choreo.integration.apis.component;
 
 import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.consol.citrus.message.DefaultMessage;
@@ -57,6 +58,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 public class Component extends ControlPlaneAPI {
     private static final String CONTEXT = "/component-mgt/1.0.0";
     private static final String MANAGED_AUTH_ENABLE_LOCAL_DEVELOPMENT_ENDPOINT = "/managed-auth/local-development";
+    private static final String COMPONENT_CREATION_STATUS_ENDPOINT = "/component-creation/v1";
 
     public static void triggerConfigurableGeneration(TestActionRunner runner, HttpClient client,
             ChoreoComponent component, List<Commit> commitHistory, String branchName) throws Exception {
@@ -97,6 +99,38 @@ public class Component extends ControlPlaneAPI {
                                 .client(client)
                                 .receive()
                                 .response(HttpStatus.OK)));
+    }
+
+    public static void waitForAsyncComponentCreationSuccess(TestNGCitrusSpringSupport runner, HttpClient client,
+        String accessToken, String componentId) throws ValidationException {
+        runner.variable("isAsyncComponentCreationSuccess", false);
+        runner.$(repeatOnError()
+                .until("(i = 3) or (${isAsyncComponentCreationSuccess} = true)")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .get(COMPONENT_CREATION_STATUS_ENDPOINT.concat("/operation-status?ids=")
+                                        .concat(componentId))
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    String payload = message.getPayload(String.class);
+                                    log.debug(payload);
+                                    if (code == HttpStatus.OK.value() && payload.contains("\"status\":\"SUCCESSFUL\"")) {
+                                        context.setVariable("isAsyncComponentCreationSuccess", true);
+                                    } else {
+                                        throw new ValidationException("Component creation is not successful yet");
+                                    }
+                                })));
     }
 
     public static void waitForComponentCreationSuccess(TestNGCitrusSpringSupport runner, HttpClient client,
