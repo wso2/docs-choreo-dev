@@ -65,8 +65,8 @@ export function mixinTestService<T extends Types.Constructor>(
 
     _testGQL(component: Service | Byoc, invokeInfo: GraphQLInvokeInfo) {
       // As a workaround to clear any previous queries/results in the GraphQL test console,
-      // we navigate to the Postman test console and then back to the GraphQL test console
-      this.sideMenu.navigateToPostman();
+      // we navigate to API Chat and then back to the GraphQL test console
+      this.sideMenu.navigateToApiChat();
       this.sideMenu.navigateToTest();
 
       this.deploymentTrack.validate(component);
