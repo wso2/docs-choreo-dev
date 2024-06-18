@@ -296,7 +296,7 @@ export namespace TestIds {
     '[data-cyid="key-value-card-add-new-new-input-value"]';
   export const configSave = '[data-cyid="key-value-save-button"]';
   export const keyValueCheckBox =
-    '[data-cyid="key-value-card-add-new-secret-checkbox-check-box"]';
+    '[data-cyid="key-value-card-add-new-secret-check-box"]';
   export const nextButton = '[data-testid="btn-next"]';
   export const fileMount = '[data-cyid="file-mount-upload-button"]';
   export const byocPromote = '[data-cyid="promote-selector-default-configs"]';
