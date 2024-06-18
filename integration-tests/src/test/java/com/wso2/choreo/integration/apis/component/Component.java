@@ -14,11 +14,11 @@
 package com.wso2.choreo.integration.apis.component;
 
 import com.consol.citrus.TestActionRunner;
-import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.consol.citrus.message.DefaultMessage;
 import com.consol.citrus.message.Message;
+import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.consol.citrus.validation.json.JsonMessageValidationContext;
 import com.consol.citrus.validation.json.JsonTextMessageValidator;
@@ -40,6 +40,7 @@ import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.keymanager.KeyGenResponseDTO;
 import lombok.extern.log4j.Log4j2;
 import org.apache.http.client.utils.URIBuilder;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -53,6 +54,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 
 @Log4j2
 public class Component extends ControlPlaneAPI {
@@ -102,10 +104,9 @@ public class Component extends ControlPlaneAPI {
     }
 
     public static void waitForAsyncComponentCreationSuccess(TestNGCitrusSpringSupport runner, HttpClient client,
-        String accessToken, String componentId) throws ValidationException {
-        runner.variable("isAsyncComponentCreationSuccess", false);
+                                                            String accessToken, String componentId) {
         runner.$(repeatOnError()
-                .until("(i = 3) or (${isAsyncComponentCreationSuccess} = true)")
+                .until("i = 3")
                 .index("i")
                 .autoSleep(30000)
                 .actions(
@@ -119,18 +120,12 @@ public class Component extends ControlPlaneAPI {
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON)),
                         http().client(client)
                                 .receive()
-                                .response()
+                                .response(HttpStatus.OK)
                                 .message()
-                                .validate((message, context) -> {
-                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
-                                    String payload = message.getPayload(String.class);
-                                    log.debug(payload);
-                                    if (code == HttpStatus.OK.value() && payload.contains("\"status\":\"SUCCESSFUL\"")) {
-                                        context.setVariable("isAsyncComponentCreationSuccess", true);
-                                    } else {
-                                        throw new ValidationException("Component creation is not successful yet");
-                                    }
-                                })));
+                                .type(MessageType.JSON)
+                                .body(new ClassPathResource("templates/createComponent/async_component_create_status.json"))
+                                .validate(json()
+                                )));
     }
 
     public static void waitForComponentCreationSuccess(TestNGCitrusSpringSupport runner, HttpClient client,
