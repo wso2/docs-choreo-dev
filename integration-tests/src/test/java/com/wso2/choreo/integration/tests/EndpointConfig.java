@@ -39,6 +39,8 @@ public class EndpointConfig {
         TestContext.setTestOrg();
         TestContext.setTestUserTokenHandler();
         TestContext.setResourceAuthzTestUserTokenHandler();
+        TestContext.setSelfSignupTestAdminUserTokenHandler();
+        TestContext.setSelfSignupTestUserTokenHandler();
         SecurityTestContext.setTestUserTokenHandlerForSecurityTests();
     }
 
@@ -108,6 +110,17 @@ public class EndpointConfig {
     }
 
     @Bean
+    public HttpClient choreoTestClientForAsgardeo() {
+        return CitrusEndpoints
+                .http()
+                .client()
+                .restTemplate(restTemplate())
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                        ConfigDefinition.ASGARDEO_ENDPOINT))
+                .build();
+    }
+
+    @Bean
     public HttpClient choreoTestClientForTheme() {
         return CitrusEndpoints
                 .http()
@@ -156,6 +169,10 @@ public class EndpointConfig {
         endpoints.put(Endpoints.GITHUB_ENDPOINT,
                 CitrusEndpoints.http().client().restTemplate(restTemplate()).requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
                         ConfigDefinition.GITHUB_ENDPOINT)).build());
+
+        endpoints.put(Endpoints.ASGARDEO_ENDPOINT,
+                CitrusEndpoints.http().client().restTemplate(restTemplate()).requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                        ConfigDefinition.ASGARDEO_ENDPOINT)).build());
 
         endpoints.put(Endpoints.THEME_ENDPOINT,
                 CitrusEndpoints.http().client().restTemplate(restTemplate()).requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(

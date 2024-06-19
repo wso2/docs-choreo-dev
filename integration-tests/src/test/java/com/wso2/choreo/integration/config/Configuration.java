@@ -56,6 +56,7 @@ public class Configuration {
                 add(configYaml.common);
                 add(configYaml.alerts);
                 add(configYaml.insights);
+                add(configYaml.selfSignup);
                 add(configYaml.themeManagement);
                 add(configYaml.logs);
                 add(configYaml.resourceAuthorization);
