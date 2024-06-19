@@ -11,6 +11,8 @@ This guide walks you through the following steps:
   - Build the web application.
   - Deploy the web application and access it.
 
+For a video tutorial that walks you through these steps, see [Deploy a Static Web App on Choreo](https://www.youtube.com/watch?v=YPBSuLG5l5g).
+
 ## Prerequisites
 
 Before you try out this guide, complete the following:
