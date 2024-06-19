@@ -51,7 +51,7 @@ Follow the steps given below to create a project:
 
 To create a Web Application component, follow the steps given below:
 
-1. On the project home page, click **Web Application** under **Create a Single Component**.
+1. On the project home page, click **Web Application** under **Create a Component**.
 2. Enter a unique name and a description for the web application.
 3. Go to the **GitHub** tab.
 4. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
