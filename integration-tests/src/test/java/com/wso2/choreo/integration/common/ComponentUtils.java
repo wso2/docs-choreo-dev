@@ -320,9 +320,13 @@ public class ComponentUtils {
             Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createBuildpackComponent(runner,
                     appServiceClient,
                     dto, accessToken);
-
-            graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
+            String projectId = responseDTO.get().getProjectId();
+            graphqlDTO = GraphqlDTO.builder().projectId(projectId)
                     .componentHandler(responseDTO.get().getHandle()).build();
+            List<ChoreoComponent> components = GraphQL.getProjectComponents(runner, appServiceClient, projectId, accessToken);
+            String componentId = components.get(0).getId();
+            log.debug("Component Id: " + componentId);
+            Component.waitForAsyncComponentCreationSuccess(runner, appServiceClient, accessToken, componentId);
         } else if (componentFlavour.equals(ComponentFlavour.WEBAPP)) {
             dto.setComponentType("byocWebAppsDockerfileLess");
             Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createWebappComponent(runner,

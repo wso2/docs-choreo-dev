@@ -489,7 +489,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
     private verifyPromotionStatus() {
       cy.get(TestIds.prodEnvCard)
-        .find(TestIds.notDeployed, VERY_SHORT_TIME)
+        .find(TestIds.notDeployed, SHORT_TIME)
         .should("not.exist");
 
       // Begin Workaround for not being able to scroll up to see the deployment status in the prod env card

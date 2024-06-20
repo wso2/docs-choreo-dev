@@ -50,6 +50,14 @@ export class ServiceLeftMenu extends LeftMenu {
     );
   }
 
+  navigateToApiChat() {
+    this.scrollToTopOfMenu();
+    this.navigateToSubMenu(
+      "[data-cyid=link-test]",
+      new Array('[data-cyid="apiChat"]')
+    );
+  }
+
   navigateToManage() {
     this.scrollToTopOfMenu();
     this.navigateToSubMenu(
