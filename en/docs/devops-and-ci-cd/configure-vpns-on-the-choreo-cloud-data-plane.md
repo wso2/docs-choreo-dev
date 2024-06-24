@@ -123,7 +123,7 @@ To configure and deploy the component, follow the steps given below:
 4. Click **Next**.
 5. In the **File Mount** pane that opens, click **+ Add**.
 6. To mount a configuration file to the Tailscale proxy component and specify the port mapping for the TCP forward proxy running there, do the following:
-    1. Specify `/Config.yaml` as the **Mount Path**.
+    1. Specify `/config.yaml` as the **Mount Path**.
     2. Specify the following in the sample configuration file:
        ```
        portMappings:
