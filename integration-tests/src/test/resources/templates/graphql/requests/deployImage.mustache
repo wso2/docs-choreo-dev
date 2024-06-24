@@ -1,0 +1,15 @@
+mutation {
+    deployImage(
+        input: {
+          componentId: "{{componentId}}",
+          releaseId: "{{releaseId}}",
+          imageUrl: "{{imageUrl}}",
+          imageId: "",
+          cron: "",
+          cronTimezone: "",
+        }
+    ) {
+        message
+        success
+    }
+}

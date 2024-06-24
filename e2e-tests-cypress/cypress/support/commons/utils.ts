@@ -54,6 +54,14 @@ export class Utils {
   }
 
   /**
+    * See https://stackoverflow.com/questions/3115150/how-to-escape-regular-expression-special-characters-using-javascript
+    */
+
+  static escapeRegExp(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+  }
+
+  /**
    * Create name for on-prem key.
    *
    * @returns true name for a new on-prem key

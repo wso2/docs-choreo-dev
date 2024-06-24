@@ -56,6 +56,7 @@ import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.environments.ProxyEnvironment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.graphql.CreateByocComponentResponseDTO;
+import com.wso2.choreo.integration.models.graphql.CreateByoiComponentResponseDTO;
 import com.wso2.choreo.integration.models.graphql.CreateComponentResponseDTO;
 import com.wso2.choreo.integration.models.graphql.CreateNewDeploymentTrackResponseDTO;
 import com.wso2.choreo.integration.models.graphql.CreateNewVersionResponseDTO;
@@ -202,6 +203,100 @@ public class GraphQL extends ControlPlaneAPI {
                                         context.setVariable("isComponentCreationSuccess", true);
                                         responseDTO.set(ObjectMapperUtil.mapStringToObject(CreateComponentResponseDTO.class,
                                                 (String) message.getPayload(), "createComponent"));
+                                    } else {
+                                        SleepUtil.sleep(5);
+                                    }
+                                })
+                )
+        );
+
+        if (responseDTO.get() == null) {
+            throw new ComponentCreationException("Component creation response retrieval failure.");
+        } else {
+            return Optional.of(responseDTO.get());
+        }
+    }
+
+    /**
+     * Method to create a new version for a component.
+     *
+     * @param runner      Citrus runner
+     * @param client      HTTP client
+     * @param graphqlDTO  GraphqlDTO object
+     * @param accessToken Access token
+     * @return CreateNewVersionResponseDTO
+     * @throws Exception
+     */
+    public static void deployImage(TestNGCitrusSpringSupport runner, HttpClient client,GraphqlDTO graphqlDTO,
+        String accessToken) throws Exception {
+
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/deployImage.mustache", graphqlDTO);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate(jsonPath()
+                        .expression("$.data.deployImage.success", "true")
+                ));
+    }
+
+    /**
+     * Method to create a new deployment track.
+     *
+     * @param runner      Citrus runner
+     * @param client      HTTP client
+     * @param graphqlDTO  GraphqlDTO object
+     * @param accessToken Access token
+     * @return CreateNewDeploymentTrackResponseDTO
+     * @throws Exception
+     */
+    public static Optional<CreateByoiComponentResponseDTO> createBYOIComponent(TestNGCitrusSpringSupport runner, HttpClient client,
+                                                                               GraphqlDTO graphqlDTO,
+                                                                               String accessToken) throws Exception {
+        graphqlDTO.setOrgId(ORG_ID);
+        graphqlDTO.setOrgHandler(ORG_HANDLE);
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/createBYOIComponent.mustache", graphqlDTO);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+        AtomicReference<CreateByoiComponentResponseDTO> responseDTO = new AtomicReference<>();
+        runner.variable("isComponentCreationSuccess", false);
+        runner.$(repeat()
+                .until("(i = 5) or ( ${isComponentCreationSuccess} = true )")
+                .index("i")
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(requestBody)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .type(MessageType.JSON)
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code == HttpStatus.OK.value()) {
+                                        context.setVariable("isComponentCreationSuccess", true);
+                                        responseDTO.set(ObjectMapperUtil.mapStringToObject(CreateByoiComponentResponseDTO.class,
+                                                (String) message.getPayload(), "createByoiComponent"));
                                     } else {
                                         SleepUtil.sleep(5);
                                     }
@@ -1120,11 +1215,13 @@ public class GraphQL extends ControlPlaneAPI {
         AtomicBoolean isPassed = new AtomicBoolean(false);
         AtomicInteger successiveFailureCount = new AtomicInteger(0);
 
-        runner.variable("deploymentSuccess", false);
+        String isDeployedKey = "deploymentSuccess" + graphqlDTO.getComponentId();
+
+        runner.variable(isDeployedKey, false);
 
         // Poll deployment status
         runner.$(repeat()
-                .until("(i = 30) or ( ${deploymentSuccess} = true )")
+                .until("(i = 30) or ( ${" + isDeployedKey + "} = true )")
                 .index("i")
                 .actions(
                         http()
@@ -1166,7 +1263,7 @@ public class GraphQL extends ControlPlaneAPI {
                                             JsonTextMessageValidator validator = new JsonTextMessageValidator();
                                             validator.validateMessage(message, new DefaultMessage(expectedResponse), context, new JsonMessageValidationContext());
                                             isPassed.set(true);
-                                            context.setVariable("deploymentSuccess", isPassed.get());
+                                            context.setVariable(isDeployedKey, isPassed.get());
                                             returnStatus.set(deploymentStatus);
                                         } catch (ValidationException e) {
                                             log.error("Validation failed", e);

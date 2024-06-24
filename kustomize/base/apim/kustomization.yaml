@@ -27,5 +27,6 @@ resources:
   - pdb
   - rbac
   - service
+  - secret-provider-class
 
 namespace: choreo-apim

@@ -123,7 +123,7 @@ export namespace TestIds {
   export const oasUrlEntry = '[data-cyid="txt-oas-url"]';
   export const upload = '[data-cyid="btn-upload-button"]';
   export const filepathEntry = 'input[type="file"]';
-  export const apiName = '[data-cyid="api-name"]';
+  export const apiName = '[data-cyid^="api-"][data-cyid$="name"]';
   export const apiVersion = '[data-cyid="api-version"]';
   export const apiBasePath = '[data-cyid="api-basepath"]';
   export const apiEndpoint = '[data-cyid="api-endpoint"]';
@@ -296,7 +296,7 @@ export namespace TestIds {
     '[data-cyid="key-value-card-add-new-new-input-value"]';
   export const configSave = '[data-cyid="key-value-save-button"]';
   export const keyValueCheckBox =
-    '[data-cyid="key-value-card-add-new-secret-checkbox-check-box"]';
+    '[data-cyid="key-value-card-add-new-secret-check-box"]';
   export const nextButton = '[data-testid="btn-next"]';
   export const fileMount = '[data-cyid="file-mount-upload-button"]';
   export const byocPromote = '[data-cyid="promote-selector-default-configs"]';
@@ -382,4 +382,15 @@ export namespace TestIds {
   export const ComponentUsageInsightsLink = '[data-cyid="usage-insights"]';
   export const clearComponentSearchButton =
     '[data-cyid="component-listing-auto-forcused-search-icon-button"]';
+  export const generateOnPremKey = '[title="Generate Key"]';
+  export const onPremKey = '[data-testid="on-prem-key"]';
+  export const onPremKeyGenBtn = '[data-testid="delete-on-prem-key-generate-btn"]';
+  export const onPremKeyCopyBtn = '[data-testid="on-prem-key-copy-btn"]';
+  export const onPremKeyEditBtn = '[data-testid="key-edit-btn"]';
+  export const onPremKeySaveBtn = '[data-testid="delete-on-prem-key-save-btn"]';
+  export const onPremKeyRegen = '[data-testid="key-regenerate-btn"]';
+  export const onPremKeyRegenBtn = '[data-testid="regenerate-on-prem-key-regenerate-btn"]';
+  export const onPremKeyDelete = '[data-testid="key-delete-btn"]';
+  export const onPremKeyDeleteBtn = '[data-testid="delete-on-prem-key-delete-btn"]';
+  export const closeDialog = '[data-testid="dialog-close-icon"]';
 }

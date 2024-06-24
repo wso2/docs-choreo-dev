@@ -1,7 +1,7 @@
 -- Create User
 IF EXISTS (SELECT name FROM sys.databases WHERE name = N'choreo_apim_user_db') AND NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_apim_user_db_user')
 BEGIN
-    CREATE USER [choreo_apim_user_db_user] with password = N'${choreo-apim-user-db-mssql-password}'
+    CREATE USER [choreo_apim_user_db_user] with password = N'${choreo_apim_user_db_mssql_password}'
     GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_apim_user_db TO choreo_apim_user_db_user
 END;
 GO
@@ -665,3 +665,6 @@ CREATE TABLE UM_UUID_DOMAIN_MAPPER (
 );
 
 CREATE INDEX UUID_DM_UID_TID ON UM_UUID_DOMAIN_MAPPER(UM_USER_ID, UM_TENANT_ID);
+--Performance indexes start--
+CREATE INDEX UM_USER_UTI_UUN ON UM_USER (UM_TENANT_ID, UM_USER_NAME);
+-- Performance indexes end--

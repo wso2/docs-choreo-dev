@@ -489,7 +489,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
     private verifyPromotionStatus() {
       cy.get(TestIds.prodEnvCard)
-        .find(TestIds.notDeployed, VERY_SHORT_TIME)
+        .find(TestIds.notDeployed, SHORT_TIME)
         .should("not.exist");
 
       // Begin Workaround for not being able to scroll up to see the deployment status in the prod env card
@@ -579,7 +579,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     private retryEnvCardDataRetrieval() {
       cy.log("Checking for retry deployment");
       for (let i = 0; i < 4; i++) {
-        Utils.clickOnOptionalElement(TestIds.retry, LONG_TIME.timeout);
+        Utils.clickOnOptionalElement(TestIds.retry, SHORT_TIME.timeout);
 
         Utils.clickOnOptionalElement(TestIds.refresh, SHORT_TIME.timeout);
 

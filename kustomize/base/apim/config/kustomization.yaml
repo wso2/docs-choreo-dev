@@ -43,3 +43,7 @@ configMapGenerator:
     files:
       - am/deployment.toml
       - am/log4j2.properties
+  - name: choreo-apim-docker-entrypoint
+    behavior: create
+    files:
+      - am/docker-entrypoint.sh

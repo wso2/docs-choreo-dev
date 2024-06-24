@@ -216,7 +216,7 @@ export function mixinManage<T extends Types.Constructor>(
     _updateApiVisibility(component: Component, visibility: ApiVisibility) {
       this.sideMenu.navigateToManage();
       cy.get(TestIds.apiInfo).should("be.visible").click();
-      cy.get(TestIds.apiInfoDevPortal).should("be.visible").click();
+      cy.getUnstable(TestIds.apiInfoDevPortal).should("be.visible").click();
 
       cy.get(TestIds.apiVisibility)
         .should("be.visible")

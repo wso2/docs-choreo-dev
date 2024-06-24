@@ -1,0 +1,26 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-connection-service
+spec:
+  secretObjects:
+    - secretName: secret-connection-service
+      type: Opaque
+      data:
+        - objectName: APIM_CLIENT_SECRET
+          key: APIM_CLIENT_SECRET
+        - objectName: CONNECTION_DB_PASSWORD
+          key: CONNECTION_DB_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: connection-service-apim-service-provider-consumer-secret
+          objectType: secret
+          objectAlias: APIM_CLIENT_SECRET
+          objectVersion: "{{.APIM_CLIENT_SECRET}}"
+        - |
+          objectName: choreo-connection-service-db-mssql-password
+          objectType: secret
+          objectAlias: CONNECTION_DB_PASSWORD
+          objectVersion: "{{.CONNECTION_DB_PASSWORD}}"

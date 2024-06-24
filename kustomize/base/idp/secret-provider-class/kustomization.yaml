@@ -21,4 +21,4 @@ patches:
       kind: SecretProviderClass
 
 commonLabels:
-  app: stage-choreo-control-plane
+  app: choreo-control-plane

@@ -19,7 +19,7 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: choreo-connect-adapter
 spec:
-  maxReplicas: 8
+  maxReplicas: 3
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1

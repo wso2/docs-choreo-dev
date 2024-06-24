@@ -1,0 +1,2 @@
+username,password,groups,first_name,last_name,email
+"integrationTestUser","yLekKbfL","[manager, engineering]","John","Doe","john1@acme.org"

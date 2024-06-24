@@ -1,7 +1,7 @@
 -- Create User
 IF EXISTS (SELECT name FROM sys.databases WHERE name = N'choreo_app_db') AND NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_app_db_user')
 BEGIN
-    CREATE USER [choreo_app_db_user] with password = N'${choreo-app-db-mssql-password}'
+    CREATE USER [choreo_app_db_user] with password = N'${choreo_app_db_mssql_password}'
     GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_app_db TO choreo_app_db_user
 END;
 GO
@@ -1774,10 +1774,12 @@ CREATE TABLE [dbo].[org_activity]
     [last_job_run] [datetime],
     [last_api_invocation] [datetime],
     [last_ballerina_pkg_update] [datetime],
+    [marked_for_deletion] [bit] NOT NULL DEFAULT 0,
+    [is_deleted] [bit] NOT NULL DEFAULT 0,
+    [deleted_time] [datetime],
     PRIMARY KEY (id),
-    CONSTRAINT unique_org_activity UNIQUE(org_id),
-    CONSTRAINT org_activity_org_id_fk FOREIGN KEY (org_id) REFERENCES organization(id) ON DELETE CASCADE
-)
+    CONSTRAINT unique_org_activity UNIQUE(org_id)
+);
 
 /****** Object:  Trigger [dbo].[org_enterprise_login_config_UpdateTimeTrigger] ******/
 SET ANSI_NULLS ON
@@ -1909,59 +1911,6 @@ CREATE TABLE [dbo].[enterprise_group_mapping]
     CONSTRAINT unique_enterprise_group_mapping UNIQUE(enterprise_group_name, choreo_group_uuid, organization_id),
     CONSTRAINT enterprise_group_mapping$group_uuid_fk FOREIGN KEY (choreo_group_uuid) REFERENCES [group](uuid) ON DELETE CASCADE
 )
-
-CREATE TABLE [dbo].[wso2con_contest_registration]
-(
-    [id] [int] IDENTITY(1,1) NOT NULL,
-    [user_idp_id] [nvarchar](255) NOT NULL,
-    [user_email] [nvarchar](255) NOT NULL,
-    [organization_uuid] [nvarchar](255) NOT NULL,
-    [organization_handle] [nvarchar](255) NOT NULL,
-    [is_registered] [bit] NOT NULL DEFAULT 1,
-    [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    [score_summary] [nvarchar](500) NULL,
-    [last_submitted_at] [datetime] NULL,
-    [browser_id] [nvarchar](36) NULL, 
-    [org_owner_email] [nvarchar](255) NULL,
-    [first_name] [nvarchar](255) NULL,
-    [last_name] [nvarchar](255) NULL,
-    [country] [nvarchar](100) NULL,
-    [mobile_number] [nvarchar](20) NULL,
-    [verification_status] [nvarchar] (20) NOT NULL DEFAULT 'unverified',
-    PRIMARY KEY (id),
-    CONSTRAINT unique_wso2con_contest_registration UNIQUE(user_email, organization_handle)
-)
-
-CREATE TABLE [dbo].[wso2con_contest_otp_verification]
-(
-    [id] [int] IDENTITY(1,1) NOT NULL,
-    [organization_uuid] [nvarchar](255) NOT NULL,
-    [otp] [int] NOT NULL,
-    [generated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (id),
-    CONSTRAINT unique_wso2con_contest_otp_verification UNIQUE(organization_uuid)
-)
-
-/****** Object:  Trigger [dbo].[wso2con_contest_registration_UpdateTimeTrigger] ******/
-SET ANSI_NULLS ON
-    GO
-SET QUOTED_IDENTIFIER ON
-    GO
-
-CREATE TRIGGER [dbo].[wso2con_contest_registration_UpdateTimeTrigger] ON [dbo].[wso2con_contest_registration]
-    FOR INSERT, UPDATE AS
-BEGIN
-    SET NOCOUNT ON;
-    UPDATE tble
-    SET updated_at = GETDATE()
-    FROM [wso2con_contest_registration] AS tble
-    INNER JOIN inserted AS i
-    ON tble.id = i.id;
-END
-GO
-ALTER TABLE [dbo].[wso2con_contest_registration] ENABLE TRIGGER [wso2con_contest_registration_UpdateTimeTrigger]
-    GO
 
 /****** Object:  Trigger [dbo].[enterprise_group_mapping_UpdateTimeTrigger] ******/
 SET ANSI_NULLS ON

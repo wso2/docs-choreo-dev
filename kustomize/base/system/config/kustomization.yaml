@@ -280,12 +280,15 @@ configMapGenerator:
       - REACT_APP_FEATURE_TOS_SERVICE_NAME=choreo
       - REACT_APP_GA_TRACKING_CODE=UA-206124793-2
       - REACT_APP_APIM_PUBLISHER_ENDPOINT_PREFIX=/api/am/publisher/v2/
+      - REACT_APP_APIM_ADMIN_ENDPOINT_PREFIX=/api/am/admin/v2/
       - REACT_APP_ASGARDEO_SDK_STORAGE_TYPE=sessionStorage
       - REACT_APP_AUTHENTICATOR_GOOGLE=GoogleOIDCAuthenticator
       - REACT_APP_AUTHENTICATOR_GITHUB=GithubAuthenticator
       - REACT_APP_AUTHENTICATOR_ANONYMOUS=OpenIDConnectAuthenticator
       - REACT_APP_AUTHENTICATOR_ENTERPRISE=EnterpriseIDPAuthenticator
       - REACT_CHOREO_HOME_PAGE='https://wso2.com/choreo/'
+      - REACT_APP_CHOREO_STEP_BASED_ENTERPRISE_TIER_UUID='01ec1f84-ce3d-122e-ac9b-f10c95fd72da'
+      - REACT_APP_CHOREO_ENTERPRISE_TIER_UUID='4abe3757-86f6-47de-994f-f02fb0522e99'
   - name: cm-userapps-image-deleter
     behavior: create
     literals:

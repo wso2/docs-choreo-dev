@@ -1,0 +1,19 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-lowcode-parser
+spec:
+  secretObjects:
+    - secretName: secret-lowcode-parser
+      type: Opaque
+      data:
+        - objectName: CHOREO_TABLESTORAGE_CONNECTIONSTRING
+          key: CHOREO_TABLESTORAGE_CONNECTIONSTRING
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: lowcode-parser-CHOREO-TABLESTORAGE-CONNECTIONSTRING
+          objectType: secret
+          objectAlias: CHOREO_TABLESTORAGE_CONNECTIONSTRING
+          objectVersion: "{{.CHOREO_TABLESTORAGE_CONNECTIONSTRING}}"

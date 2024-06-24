@@ -14,11 +14,6 @@ db:
   additionalParams:
     autocommit: 'true'
     time_zone: "'+00:00'"
-redis:
-  host: ${REDIS_HOST}
-  port: 6380
-  disableTls: false
-  password: ${REDIS_PASSWORD}
 server:
   port: 8080
 upstream:
@@ -44,8 +39,6 @@ upstream:
     tls:
       cert: ${CENTRAL_ORG_REGISTRY_CERT}
       key: ${CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY}
-urlManager:
-  enable: ${ENABLE_URL_MANAGER}
 configYamlConfigurations:
   log-format: "json"
   observe-enabled: true
@@ -346,88 +339,6 @@ logger:
     callerEncoder: short
   outputPaths: stdout
   errorOutputPaths: stdout
-environmentSpecs:
-  defaultEnvs:
-    - k8sNamespace: ${ENVIRONMENT_SPECS_DEFAULT_ENVS_K8S_NAMESPACE}
-      name: choreo-prod
-connectors:
-  configs:
-    - name: GitHub
-      oauth2:
-        apiBaseUrl: https://api.github.com
-        clientId: ${CONNECTORS_CONFIGS_GITHUB_OAUTH2_CLIENT_ID}
-        clientSecret: ${GH_CONNECTOR_CLIENT_SECRET}
-        redirectUrl: ${CONNECTORS_CONFIGS_GITHUB_OAUTH2_REDIRECT_URL}
-        authEp:
-          url: https://github.com/login/oauth/authorize
-          params:
-            - key: scope
-              value: repo read:org read:user user:email
-        tokenEp:
-          url: https://github.com/login/oauth/access_token
-    - name: Google Sheets
-      oauth2:
-        apiBaseUrl: https://sheets.googleapis.com
-        clientId: ${CONNECTORS_CONFIGS_GOOGLE_SHEETS_OAUTH2_CLIENT_ID}
-        clientSecret: ${GSUITE_CLIENT_SECRET}
-        redirectUrl: ${CONNECTORS_CONFIGS_GOOGLE_SHEETS_OAUTH2_REDIRECT_URL}
-        authEp:
-          url: https://accounts.google.com/o/oauth2/v2/auth
-          params:
-            - key: response_type
-              value: code
-            - key: access_type
-              value: offline
-            - key: prompt
-              value: consent
-            - key: scope
-              value: https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive.readonly openid email
-        tokenEp:
-          url: https://oauth2.googleapis.com/token
-        revokeEp:
-          url: https://oauth2.googleapis.com/revoke
-    - name: Google Calendar
-      oauth2:
-        apiBaseUrl: https://www.googleapis.com/calendar/v3
-        clientId: ${CONNECTORS_CONFIGS_GOOGLE_CALENDAR_OAUTH2_CLIENT_ID}
-        clientSecret: ${GSUITE_CLIENT_SECRET}
-        redirectUrl: ${CONNECTORS_CONFIGS_GOOGLE_CALENDAR_OAUTH2_REDIRECT_URL}
-        authEp:
-          url: https://accounts.google.com/o/oauth2/v2/auth
-          params:
-            - key: response_type
-              value: code
-            - key: access_type
-              value: offline
-            - key: prompt
-              value: consent
-            - key: scope
-              value: https://www.googleapis.com/auth/calendar openid email
-        tokenEp:
-          url: https://oauth2.googleapis.com/token
-        revokeEp:
-          url: https://oauth2.googleapis.com/revoke
-    - name: Gmail
-      oauth2:
-        apiBaseUrl: https://gmail.googleapis.com
-        clientId: ${CONNECTORS_CONFIGS_GMAIL_OAUTH2_CLIENT_ID}
-        clientSecret: ${GSUITE_CLIENT_SECRET}
-        redirectUrl: ${CONNECTORS_CONFIGS_GMAIL_OAUTH2_REDIRECT_URL}
-        authEp:
-          url: https://accounts.google.com/o/oauth2/v2/auth
-          params:
-            - key: response_type
-              value: code
-            - key: access_type
-              value: offline
-            - key: prompt
-              value: consent
-            - key: scope
-              value: https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.compose openid email
-        tokenEp:
-          url: https://oauth2.googleapis.com/token
-        revokeEp:
-          url: https://oauth2.googleapis.com/revoke
 serviceBus:
   connectionString: ${ASB_CONNECTION_STRING}
 organizations:
@@ -515,8 +426,6 @@ salesforceLeadPardotConfig:
     url: {{.GEO_LOCATION_SERVICE_URL}}
     username: ${MAX_MIND_GEO_LOC_COUNTRY_USERNAME}
     password: ${MAX_MIND_GEO_LOC_COUNTRY_PASSWORD}
-groupRoleUuidImprovements:
-  enabled: ${ENABLE_GROUP_ROLE_UUID_IMPROVEMENTS}
 authzService:
   enabled: ${CHOREO_AUTHZ_SERVICE_ENABLED}
   isPostMigration: ${IS_CHOREO_AUTHZ_POST_MIGRATION}

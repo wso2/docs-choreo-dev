@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="choreoIntegrationTests" parallel="classes" thread-count="1">
+<suite name="choreoIntegrationTests" parallel="classes" thread-count="7">
     <test name="choreo">
         <classes>
             <class name="com.wso2.choreo.integration.common.TestContext"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestBasicAPIRevisionCreation"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingSettingsPage"/>
+            <class name="com.wso2.choreo.integration.tests.byoi.TestBYOIComponent"/>
             <class name="com.wso2.choreo.integration.tests.deploy.AutoDeployOnCommit"/>
+            <class name="com.wso2.choreo.integration.tests.deploy.AutoDeployOnCommitMonoRepo"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAPI"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPI"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertsAPI"/>
@@ -34,6 +36,10 @@
             <class name="com.wso2.choreo.integration.tests.resourceAuthorization.ResourceAuthorizationTests"/>
             <class name="com.wso2.choreo.integration.tests.keysetmanagement.KeysetManagementTests"/>
             <class name="com.wso2.choreo.integration.tests.managedAuthentication.ManagedAuthenticationTests"/>
+            <class name="com.wso2.choreo.integration.tests.apim.internalEndpoints.InternalEndpoints" />
+            <class name="com.wso2.choreo.integration.tests.managedAuthentication.localDevelopment.LocalDevelopmentTests" />
+            <class name="com.wso2.choreo.integration.tests.appdevUserManagement.AppdevUserManagementTests" />
+            <class name="com.wso2.choreo.integration.tests.appdevAuthorization.AppdevAuthorizationTests" />
         </classes>
     </test>
 </suite>

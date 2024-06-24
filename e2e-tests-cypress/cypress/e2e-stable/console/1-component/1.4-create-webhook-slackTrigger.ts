@@ -20,6 +20,7 @@ import {
 import { Webhook } from "../../../support/console/entities/component/webhook-component";
 import { MEDIUM_TIME } from "../../../support/commons/timeouts";
 import { ConfigEntryStep } from "../../../support/commons/types";
+import { TestIds } from "../../../support/console/constants/TestIds";
 
 after(() => {
   console.logout();
@@ -36,6 +37,18 @@ describe("Verify webhook creation functionality", () => {
 
   let project: Project;
   let webhook: Webhook;
+
+  // This step is only encountered the first time a service component with a config is promoted.
+  // However if due to an error the step is retried by Cypress this step will not be encountered.
+  // Therefore this is handled as an optional step.
+  function useDeployConfigsIfPrompted() {
+    cy.contains(/^Step/).should("be.visible");
+    cy.get("body").then((body) => {
+      if (body.find(TestIds.nextButton).length > 0) {
+        cy.get(TestIds.nextButton).click();
+      }
+    });
+  }
 
   function addConfiguration() {
     cy.get(".ConfigForm", MEDIUM_TIME).should("be.visible");
@@ -77,7 +90,7 @@ describe("Verify webhook creation functionality", () => {
 
   it("Verify component promotion to Prod", () => {
     webhook.promoteProd([
-      new ConfigEntryStep(),
+      new ConfigEntryStep(useDeployConfigsIfPrompted),
       new ConfigEntryStep(addConfiguration),
     ]);
   });

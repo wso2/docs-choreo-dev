@@ -21,6 +21,7 @@ connectionListingV2Enabled = {{.CONNECTION_LISTING_V2_ENABLED | default false}}
 dbUrl = "{{.CONNECTION_DB_URL}}"
 dbUser = "{{.CONNECTION_DB_USER}}"
 instanceBasedAuthzEnabled = {{.INSTANCE_BASED_AUTHZ_ENABLED | default false}}
+secretManagerEndpoint = "http://dp-secret-manager:80/api/v1"
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"

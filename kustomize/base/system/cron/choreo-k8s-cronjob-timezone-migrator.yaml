@@ -1,0 +1,75 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: choreo-k8s-cronjob-timezone-migrator
+  annotations:
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    choreo.component: choreo-k8s-cronjob-timezone-migrator
+spec:
+  schedule: "0 */2 * * *"
+  successfulJobsHistoryLimit: 1
+  concurrencyPolicy: Replace
+  activeDeadlineSeconds: 6600
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            choreo.component: choreo-k8s-cronjob-timezone-migrator
+            antiaffinity: dp-rudder
+          annotations:
+            linkerd.io/inject: enabled
+            config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+        spec:
+          automountServiceAccountToken: true
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: choreo-k8s-cronjob-timezone-migrator
+              imagePullPolicy: Always
+              image: choreocontrolplane.azurecr.io/choreoipaas/dp-rudder:latest
+              args:
+                - -k8s-resource-migrate=true
+              resources:
+                limits:
+                  cpu: 300m
+                  memory: 300Mi
+                requests:
+                  cpu: 200m
+                  memory: 200Mi
+              envFrom:
+                - configMapRef:
+                    name: env-dp-rudder
+                - configMapRef:
+                    name: cm-dp-rudder
+                - secretRef:
+                    name: secret-dp-rudder
+              securityContext:
+                allowPrivilegeEscalation: false
+                seccompProfile:
+                  type: RuntimeDefault
+                runAsUser: 10001
+                runAsGroup: 10001
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - all
+              volumeMounts:
+                - name: secret-dp-rudder
+                  mountPath: /mnt/csi/secret-dp-rudder
+                  readOnly: true
+          volumes:
+            - name: secret-dp-rudder
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: secret-dp-rudder
+                nodePublishSecretRef:
+                  name: csi-secret-store-azure
+          restartPolicy: Never
+          serviceAccountName: sa-choreo-default

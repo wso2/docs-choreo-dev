@@ -1,0 +1,40 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-app-deployer
+spec:
+  secretObjects:
+    - secretName: secret-app-deployer
+      type: Opaque
+      data:
+        - objectName: DOCKER_REGISTRY_PASSWORD
+          key: DOCKER_REGISTRY_PASSWORD
+        - objectName: GITHUB_TOKEN
+          key: GITHUB_TOKEN
+        - objectName: K8S_API_TOKEN
+          key: K8S_API_TOKEN
+        - objectName: APIM_CLIENT_SECRET
+          key: APIM_CLIENT_SECRET
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: app-deployer-DOCKER-REGISTRY-PASSWORD
+          objectType: secret
+          objectAlias: DOCKER_REGISTRY_PASSWORD
+          objectVersion: "{{.DOCKER_REGISTRY_PASSWORD}}"
+        - |
+          objectName: app-deployer-GITHUB-TOKEN
+          objectType: secret
+          objectAlias: GITHUB_TOKEN
+          objectVersion: "{{.GITHUB_TOKEN}}"
+        - |
+          objectName: app-deployer-K8S-API-TOKEN
+          objectType: secret
+          objectAlias: K8S_API_TOKEN
+          objectVersion: "{{.K8S_API_TOKEN}}"
+        - |
+          objectName: app-deployer-APIM-CLIENT-SECRET
+          objectType: secret
+          objectAlias: APIM_CLIENT_SECRET
+          objectVersion: "{{.APIM_CLIENT_SECRET}}"

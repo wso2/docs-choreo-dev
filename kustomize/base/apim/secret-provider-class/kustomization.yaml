@@ -1,0 +1,35 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2024, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+resources:
+  - adapter.yaml
+  - adapter-keystore.yaml
+  - adapter-truststore.yaml
+  - adapter-consul-cert.yaml
+  - apim-keystores.yaml
+  - apim.yaml
+  - apim-analytics.yaml
+  - apim-db.yaml
+  - redis.yaml
+  - scheduled-mssql-tasks.yaml
+  - global-adapter.yaml
+  - global-adapter-keystore.yaml
+  - secret-cc-deployment.yaml
+  - secret-cc-rate-limiter.yaml
+  - secret-cc-rate-limiter-cert.yaml
+  - secret-apk-config-ds-cert.yaml.yaml
+
+patches:
+  - path: patch.json
+    target:
+      group: secrets-store.csi.x-k8s.io
+      version: v1
+      kind: SecretProviderClass

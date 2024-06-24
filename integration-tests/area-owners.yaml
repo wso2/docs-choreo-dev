@@ -1,6 +1,6 @@
 emailSubject: Integration Test Failed
 releaseOwners:
-  - integration-choreo-group@wso2.com
+  - choreo-group@wso2.com
   - amilam@wso2.com
   - uvindra@wso2.com
   - isurupi@wso2.com
@@ -177,4 +177,16 @@ areaOwners:
   - testClass: com.wso2.choreo.integration.tests.managedAuthentication.ManagedAuthenticationTests
     assignees:
       - thumula@wso2.com
+      - senthalan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.managedAuthentication.localDevelopment.LocalDevelopmentTests
+    assignees:
+      - suvin@wso2.com
+      - thumula@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.appdevUserManagement.AppdevUserManagementTests
+    assignees:
+      - suvin@wso2.com
+      - senthalan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.appdevAuthorization.AppdevAuthorizationTests
+    assignees:
+      - suvin@wso2.com
       - senthalan@wso2.com

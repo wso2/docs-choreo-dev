@@ -1,0 +1,47 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-dp-cicd
+spec:
+  secretObjects:
+    - secretName: secret-dp-cicd
+      type: Opaque
+      data:
+        - objectName: DB_PASSWORD
+          key: DB_PASSWORD
+        - objectName: CHOREO-GITHUB-APP-CLIENT-SECRET
+          key: CHOREO-GITHUB-APP-CLIENT-SECRET
+        - objectName: CHOREO-GITHUB-APP-PRIVATE-KEY
+          key: CHOREO-GITHUB-APP-PRIVATE-KEY
+        - objectName: LOG-ANALYTICS-KEY
+          key: LOG-ANALYTICS-KEY
+        - objectName: CHOREO_PRIVATE_ACR_SECRET
+          key: CHOREO_PRIVATE_ACR_SECRET
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: choreo-dp-cicd-db-mssql-password
+          objectType: secret
+          objectAlias: DB_PASSWORD
+          objectVersion: "{{.DB_PASSWORD}}"
+        - |
+          objectName: dp-cicd-github-app-client-secret
+          objectType: secret
+          objectAlias: CHOREO-GITHUB-APP-CLIENT-SECRET
+          objectVersion: "{{.CHOREO_GITHUB_APP_CLIENT_SECRET}}"
+        - |
+          objectName: dp-cicd-github-app-private-key
+          objectType: secret
+          objectAlias: CHOREO-GITHUB-APP-PRIVATE-KEY
+          objectVersion: "{{.CHOREO_GITHUB_APP_PRIVATE_KEY}}"
+        - |
+          objectName: dp-cicd-log-analytics-primary-key
+          objectType: secret
+          objectAlias: LOG-ANALYTICS-KEY
+          objectVersion: "{{.LOG_ANALYTICS_KEY}}"
+        - |
+          objectName: dp-cicd-PRIVATE-ACR-SECRET
+          objectType: secret
+          objectAlias: CHOREO_PRIVATE_ACR_SECRET
+          objectVersion: "{{.CHOREO_PRIVATE_ACR_SECRET}}"

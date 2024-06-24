@@ -1,7 +1,7 @@
 -- Create User
 IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_proxy_deployer_db_user')
 BEGIN
-    CREATE USER [choreo_proxy_deployer_db_user] with password = N'${choreo-proxy-deployer-db-mssql-password}'
+    CREATE USER [choreo_proxy_deployer_db_user] with password = N'${choreo_proxy_deployer_db_mssql_password}'
     GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_proxy_deployer_db TO choreo_proxy_deployer_db_user
 END;
 GO

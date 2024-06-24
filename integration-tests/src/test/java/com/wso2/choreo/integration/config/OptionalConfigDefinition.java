@@ -15,4 +15,5 @@ package com.wso2.choreo.integration.config;
 
 public enum OptionalConfigDefinition {
     REGIONS,
+    IS_PDP_ENABLED,
 }
