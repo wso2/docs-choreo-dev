@@ -23,4 +23,5 @@ spec:
         name: memory
         target:
           type: Utilization
-          averageUtilization: 75
+          # Allowing memory to go upto 75% of the limit
+          averageUtilization: 95
