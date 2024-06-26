@@ -1,0 +1,42 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-docs-updater
+  namespace: choreo-ai
+spec:
+  secretObjects:
+    - secretName: secret-docs-updater
+      type: Opaque
+      data:
+        - objectName: ZILLIZ_CLOUD_API_KEY
+          key: ZILLIZ_CLOUD_API_KEY
+        - objectName: AZURE_OPENAI_API_KEY
+          key: AZURE_OPENAI_API_KEY
+        - objectName: COHERE_API_KEY
+          key: COHERE_API_KEY
+        - objectName: GITHUB_TOKEN
+          key: GITHUB_TOKEN
+  parameters:
+    keyvaultName: "dev-csi-64"
+    objects: |
+      array:
+        - |
+          objectName: ai-bot-docs-repo-access-github-pat
+          objectType: secret
+          objectAlias:  GITHUB_TOKEN
+          objectVersion: "{{.GITHUB_TOKEN}}"
+        - |
+          objectName: ai-zilliz-CLUSTER-API-KEY
+          objectType: secret
+          objectAlias: ZILLIZ_CLOUD_API_KEY
+          objectVersion: "{{.ZILLIZ_CLOUD_API_KEY}}"
+        - |
+          objectName: ai-cogsvc-cp-eastus2-primary-access-key
+          objectType: secret
+          objectAlias: AZURE_OPENAI_API_KEY
+          objectVersion: "{{.AZURE_OPENAI_API_KEY}}"
+        - |
+          objectName: {{.COHERE_API_KEY_OBJ_NAME | default "cohere-api-trial-key"}}
+          objectType: secret
+          objectAlias: COHERE_API_KEY
+          objectVersion: "{{.COHERE_API_KEY}}"
