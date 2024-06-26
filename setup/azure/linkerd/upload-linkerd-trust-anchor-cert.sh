@@ -81,3 +81,5 @@ object_version=${id##*/}
 echo "[INFO] Successfully uploaded the trust anchor certificate to Azure Keyvault"
 echo "[INFO] Use the following sample SPC to configure the SecretProviderClass for Linkerd trust anchor certificate:"
 generate_sample_spc
+
+rm -f ca.crt ca.key linkerd-trust-anchor.pfx
