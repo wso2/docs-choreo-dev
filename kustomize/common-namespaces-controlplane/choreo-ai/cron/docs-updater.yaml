@@ -8,7 +8,7 @@ metadata:
   labels:
     choreo.component: docs-updater
 spec:
-  schedule: 30 20 * * *
+  schedule: 00 15 * * *
   startingDeadlineSeconds: 600
   concurrencyPolicy: Replace
   successfulJobsHistoryLimit: 1
