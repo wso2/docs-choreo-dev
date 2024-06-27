@@ -41,6 +41,10 @@ configMapGenerator:
       - AZURE_ADX_PIXIE_METRIC_TABLE=pixieMetrics
       - AZURE_ADX_HUBBLE_METRIC_TABLE=hubbleMetrics
       - AZURE_ADX_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+  - name: cm-obsapi-v2
+    behavior: create
+    literals:
+      - PROMETHEUS_ADDRESS=http://thanos-querier:10902
   - name: sys-obsapi-cm
     behavior: create
     literals:
@@ -66,6 +70,7 @@ configMapGenerator:
       - AZURE_ADX_CLIENT_ID={{.AZURE_ADX_CLIENT_ID}}
       - SAMPLE_APP_RELEASE_ID={{.SAMPLE_APP_RELEASE_ID}}
       - LOG_LEVEL={{.LOG_LEVEL}}
+  - name: obsapi-v2-env
   - name: opensearch
     behavior: create
     literals:
