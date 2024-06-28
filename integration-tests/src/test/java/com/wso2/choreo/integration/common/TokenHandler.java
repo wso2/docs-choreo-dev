@@ -145,12 +145,6 @@ public class TokenHandler {
         return Constant.BEARER_PREFIX.concat(stsAccessToken);
     }
 
-    public String getAsgardeoUserToken(String orgHandle) throws TokenRetrievalException, IOException, URISyntaxException {
-        synchronized (TokenHandler.class) {
-            return getOrgSpecificTestUserToken(asgardeoClientId, asgardeoClientSecret, orgHandle);
-        }
-    }
-
     /**
      * Re-retrieve oauth token to be used when invoking Control Plane exposed choreo APIs
      *
@@ -191,41 +185,6 @@ public class TokenHandler {
         urlParameters.add(new BasicNameValuePair("grant_type", Constant.OAUTH_PASSWORD_GRANT_TYPE));
         urlParameters.add(new BasicNameValuePair("username", testUserEmail));
         urlParameters.add(new BasicNameValuePair("password", testUserPassword));
-
-        try {
-            request.setEntity(new UrlEncodedFormEntity(urlParameters));
-
-            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-                 CloseableHttpResponse response = httpClient.execute(request)) {
-                int statusCode = response.getStatusLine().getStatusCode();
-                String responseBody = EntityUtils.toString(response.getEntity());
-                if (statusCode != HttpStatus.OK.value()) {
-                    throw new TokenRetrievalException(statusCode, responseBody);
-                }
-
-                return new JsonParser().parse(responseBody).getAsJsonObject().getAsJsonPrimitive("access_token")
-                        .getAsString();
-            }
-        } catch (IOException e) {
-            throw new TokenRetrievalException("Error while getting Asgardio token", e);
-        }
-    }
-
-    private String getOrgSpecificTestUserToken(String asgardeoClientId, String asgardeoClientSecret, String orgHandle)
-            throws TokenRetrievalException {
-        String tokenAuthHeader = Constant.BASIC_PREFIX.concat(encodeCredentials(asgardeoClientId, asgardeoClientSecret));
-        String asgardeoTokenEndpoint = Configuration.getConfig(ConfigDefinition.ASGARDEO_ENDPOINT)
-                .concat("/t/" + orgHandle).concat(Constant.TOKEN_ENDPOINT_SUFFIX);
-
-        HttpPost request = new HttpPost(asgardeoTokenEndpoint);
-
-        request.setHeader(HttpHeaders.AUTHORIZATION, tokenAuthHeader);
-
-        List<NameValuePair> urlParameters = new ArrayList<>();
-        urlParameters.add(new BasicNameValuePair("grant_type", Constant.OAUTH_PASSWORD_GRANT_TYPE));
-        urlParameters.add(new BasicNameValuePair("username", testUserEmail));
-        urlParameters.add(new BasicNameValuePair("password", testUserPassword));
-        urlParameters.add(new BasicNameValuePair("scope", "openid email internal_user_mgt_create internal_user_mgt_delete internal_user_mgt_list internal_user_mgt_view internal_user_mgt_update internal_org_user_mgt_view internal_org_user_mgt_list internal_org_user_mgt_update internal_org_user_mgt_create internal_org_user_mgt_delete"));
 
         try {
             request.setEntity(new UrlEncodedFormEntity(urlParameters));

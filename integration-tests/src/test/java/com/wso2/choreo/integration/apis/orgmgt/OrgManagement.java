@@ -21,7 +21,6 @@ import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.models.orgmgt.ApprovalRequestList;
-import com.wso2.choreo.integration.models.orgmgt.ApprovalStatus;
 import com.wso2.choreo.integration.models.orgmgt.SelfSignupConfig;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -127,50 +126,6 @@ public class OrgManagement extends ControlPlaneAPI {
         return new ObjectMapper().readValue(responseDTO.get(), ApprovalRequestList.class);
     }
 
-    public static ApprovalStatus updateApprovalRequestStatus(TestActionRunner runner, HttpClient client,
-                                                             String accessToken, String orgUuid,
-                                                             ApprovalStatus approvalRequestStatus)
-            throws TokenRetrievalException, IOException, URISyntaxException {
-
-        AtomicReference<String> responseDTO = new AtomicReference<>();
-        String requestBody = ObjectMapperUtil.mapObjectToString(approvalRequestStatus);
-
-        runner.$(repeatOnError()
-                .until("i = 3")
-                .index("i")
-                .autoSleep(30000)
-                .actions(
-                        http()
-                                .client(client)
-                                .send()
-                                .put(getSelfSignupApprovalRequestUpdateEndpoint(orgUuid))
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
-                                .body(requestBody),
-                        http()
-                                .client(client)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .validate((message, context) -> {
-                                    try {
-                                        ApprovalStatus response = new ObjectMapper()
-                                                .readValue(message.getPayload().toString(),
-                                                        ApprovalStatus.class);
-                                        if (response.getStatus() == null) {
-                                            throw new RuntimeException("Response fields are empty");
-                                        }
-                                        responseDTO.set(message.getPayload(String.class));
-                                    } catch (JsonProcessingException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                })));
-
-        return new ObjectMapper().readValue(responseDTO.get(), ApprovalStatus.class);
-    }
-
     private static String getSelfSignupConfigUpdateEndpoint(String orgUuid) {
 
         return ORG_MGT_BASE_PATH + "/orgs/" + orgUuid + "/self-signup/config";
@@ -179,10 +134,5 @@ public class OrgManagement extends ControlPlaneAPI {
     private static String getApprovalRequestsEndpoint(String orgUuid) {
 
         return ORG_MGT_BASE_PATH + "/orgs/" + orgUuid + "/self-signup/approval-requests";
-    }
-
-    private static String getSelfSignupApprovalRequestUpdateEndpoint(String orgUuid) {
-
-        return ORG_MGT_BASE_PATH + "/orgs/" + orgUuid + "/self-signup/approval-requests/change-status";
     }
 }

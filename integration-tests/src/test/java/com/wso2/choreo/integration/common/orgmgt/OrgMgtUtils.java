@@ -19,7 +19,6 @@ import com.wso2.choreo.integration.apis.orgmgt.OrgManagement;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.models.orgmgt.ApprovalRequestList;
-import com.wso2.choreo.integration.models.orgmgt.ApprovalStatus;
 import com.wso2.choreo.integration.models.orgmgt.SelfSignupConfig;
 
 import java.io.IOException;
@@ -39,17 +38,6 @@ public class OrgMgtUtils {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         return OrgManagement.updateSelfSignupConfig(runner, choreoCPTestClient, accessToken, orgUuid,
                 selfSignupConfigRequest);
-    }
-
-    public static ApprovalStatus updateApprovalRequestStatus(TestActionRunner runner,
-                                                             Map<Endpoints, HttpClient> citrusClients,
-                                                             String accessToken, String orgUuid,
-                                                             ApprovalStatus approvalRequestStatus)
-            throws TokenRetrievalException, IOException, URISyntaxException {
-
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        return OrgManagement.updateApprovalRequestStatus(runner, choreoCPTestClient, accessToken, orgUuid,
-                approvalRequestStatus);
     }
 
     public static ApprovalRequestList getApprovalRequests(TestActionRunner runner,
