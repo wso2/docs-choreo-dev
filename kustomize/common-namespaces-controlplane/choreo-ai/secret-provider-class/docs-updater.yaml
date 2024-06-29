@@ -12,8 +12,6 @@ spec:
           key: ZILLIZ_CLOUD_API_KEY
         - objectName: AZURE_OPENAI_API_KEY
           key: AZURE_OPENAI_API_KEY
-        - objectName: COHERE_API_KEY
-          key: COHERE_API_KEY
         - objectName: GITHUB_TOKEN
           key: GITHUB_TOKEN
   parameters:
