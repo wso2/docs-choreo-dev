@@ -49,6 +49,8 @@ import static com.consol.citrus.container.RepeatUntilTrue.Builder.repeat;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.greaterThan;
 
 public class DPObsApiService extends DataPlaneSystemAPI {
 
@@ -397,10 +399,10 @@ public class DPObsApiService extends DataPlaneSystemAPI {
         if (Constant.region.EU.toString().equals(choreoProject.getRegion().toString())) {
             client = citrusClients.get(Endpoints.CHOREO_EU_DP_URL);
         }
-        runner.variable("isMetricsReceivedSuccess", false);
-        AtomicInteger successiveFailureCount = new AtomicInteger(0);
-        runner.$(repeat().until("(i = 5) or ( ${isMetricsReceivedSuccess} = true )")
+        runner.$(repeatOnError()
+                .until("i = 5")
                 .index("i")
+                .autoSleep(30000)
                 .actions(
                         http()
                                 .client(client)
@@ -417,39 +419,23 @@ public class DPObsApiService extends DataPlaneSystemAPI {
                                 .response(HttpStatus.OK)
                                 .message()
                                 .type(MessageType.JSON)
-                                .validate(((message, context) -> {
-                                    JsonArray failedRequestCountHistogram = new JsonParser().parse((String) message.getPayload())
-                                            .getAsJsonObject()
-                                            .getAsJsonObject("data").getAsJsonObject("hubbleRequestMetrics").getAsJsonArray("failedRequestCountHistogram");
-                                    JsonArray latencyMeanHistogram = new JsonParser().parse((String) message.getPayload())
-                                            .getAsJsonObject()
-                                            .getAsJsonObject("data").getAsJsonObject("hubbleRequestMetrics").getAsJsonArray("latencyMeanHistogram");
-                                    JsonArray latencyPercentiles = new JsonParser().parse((String) message.getPayload())
-                                            .getAsJsonObject()
-                                            .getAsJsonObject("data").getAsJsonObject("hubbleRequestMetrics").getAsJsonArray("latencyPercentiles");
-                                    JsonArray latencyPercentilesHistogram = new JsonParser().parse((String) message.getPayload())
-                                            .getAsJsonObject()
-                                            .getAsJsonObject("data").getAsJsonObject("hubbleRequestMetrics").getAsJsonArray("latencyPercentilesHistogram");
-                                    JsonArray successfulRequestCountHistogram = new JsonParser().parse((String) message.getPayload())
-                                            .getAsJsonObject()
-                                            .getAsJsonObject("data").getAsJsonObject("hubbleRequestMetrics").getAsJsonArray("successfulRequestCountHistogram");
-                                    JsonArray totalRequestCountHistogram = new JsonParser().parse((String) message.getPayload())
-                                            .getAsJsonObject()
-                                            .getAsJsonObject("data").getAsJsonObject("hubbleRequestMetrics").getAsJsonArray("totalRequestCountHistogram");
-
-                                    if (failedRequestCountHistogram.size() > 0 && latencyMeanHistogram.size() > 0 &&
-                                        latencyPercentiles.size() > 0 && latencyPercentilesHistogram.size() > 0 &&
-                                        successfulRequestCountHistogram.size() > 0 && totalRequestCountHistogram.size() > 0) {
-                                        successiveFailureCount.set(0);
-                                        context.setVariable("isMetricsReceivedSuccess", true);
-                                    } else {
-                                        if (5 < successiveFailureCount.incrementAndGet()) {
-                                            throw new ValidationException("Did not receive the metrics data");
-                                        }
-                                        SleepUtil.sleep(30);
-                                    }
-
-                                }))
+                                .validate(jsonPath()
+                                        .expression("$.data.hubbleRequestMetrics.keySet()", 
+                                                hasItems("failedRequestCountHistogram", "latencyMeanHistogram", 
+                                                "latencyPercentiles", "latencyPercentilesHistogram",
+                                                "successfulRequestCountHistogram", "totalRequestCountHistogram"))
+                                        .expression("$.data.hubbleRequestMetrics.latencyMeanHistogram.size()", greaterThan(1))
+                                        .expression("$.data.hubbleRequestMetrics.latencyMeanHistogram[0].keySet()", hasItems("time", "value"))
+                                        .expression("$.data.hubbleRequestMetrics.latencyPercentiles.size()", greaterThan(1))
+                                        .expression("$.data.hubbleRequestMetrics.latencyPercentilesHistogram.size()", greaterThan(1))
+                                        .expression("$.data.hubbleRequestMetrics.latencyPercentilesHistogram[0].keySet()", hasItems("time", "values"))
+                                        .expression("$.data.hubbleRequestMetrics.successfulRequestCountHistogram.size()", greaterThan(1))
+                                        .expression("$.data.hubbleRequestMetrics.successfulRequestCountHistogram[0].keySet()", hasItems("time", "value"))
+                                        .expression("$.data.hubbleRequestMetrics.failedRequestCountHistogram.size()", greaterThan(1))
+                                        .expression("$.data.hubbleRequestMetrics.failedRequestCountHistogram[0].keySet()", hasItems("time", "value"))
+                                        .expression("$.data.hubbleRequestMetrics.totalRequestCountHistogram.size()", greaterThan(1))
+                                        .expression("$.data.hubbleRequestMetrics.totalRequestCountHistogram[0].keySet()", hasItems("time", "value"))
+                                )
                         )
                 );
     }
