@@ -61,14 +61,6 @@ rebaseRules:
           apiVersion: actions.summerwind.dev/v1alpha1
           kind: RunnerDeployment
 
-  - path: [metadata, annotations, autoscaling.alpha.kubernetes.io/current-metrics]
-    type: copy
-    sources: [existing, new]
-    resourceMatchers:
-      - apiVersionKindMatcher:
-          apiVersion: autoscaling/v2
-          kind: HorizontalPodAutoscaler
-
   - path: [spec, capacityReservations]
     type: copy
     sources: [existing, new]
