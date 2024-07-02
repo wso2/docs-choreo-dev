@@ -1,86 +1,84 @@
 # Develop Components Using VS Code
 
-The [Choreo VS Code extension](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo) provides comprehensive component management capabilities to streamline local development within Choreo.
+The [Choreo VS Code extension](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo) provides a wide range of project and component management capabilities to enhance the local development of projects and components in Choreo.
 
 ## Prerequisites
 
-To ensure a smooth development experience with the Choreo extension, make sure you have the following:
+For a seamless development experience with the Choreo extension, ensure you configure the following in your local environment:
 
-1. [Visual Studio Code](https://code.visualstudio.com/download) installed with the [Choreo extension](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo) version **2.0.0** or later.
-
-2. A locally cloned GitHub repository to create new components or link to existing Choreo components.
-
-3. [Git](https://git-scm.com) version 2.0.0 or later.
+1. [Visual Studio Code](https://code.visualstudio.com/download) with the Choreo extension installed.
+2. [Ballerina distribution](https://ballerina.io) Update 4 or later.
+3. [Ballerina extension](https://marketplace.visualstudio.com/items?itemName=WSO2.ballerina) for VS Code, version 4.0.0 or later
 
 ## Get started
 
-To use the capabilities of the Choreo extension in the VS Code editor, you need an active [Choreo account](https://wso2.com/choreo/pricing/). If you already have an account, follow these steps to set up the extension:
+You need an active Choreo account to utilize the capabilities of the Choreo extension in the VS Code editor. If you already have a Choreo account, follow the steps given below to set up the extension:
 
-1. Install the [Choreo VS Code extension](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo) and wait for activation. On successful activation, the Choreo extension opens in the VS Code editor. 
+1. Install the [Choreo VS Code extension](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo) and wait for activation.
 2. Sign in to Choreo using one of the following methods:
-    - In the Choreo avtivity pane, click **Sign In**.
-       ![Sign in](../assets/img/develop-components/develop-using-vs-code/sign-in.png)
-    - Use the `Sign In` command provided by the Choreo extension.
+    - Click **Sign In** on successful activation of the extension.
+    - Click the Choreo icon on the left navigation menu on the VS Code editor and then click **Sign In**.
+       
+        ![Sign in](../assets/img/develop-components/develop-using-vs-code/sign-in.png)
 
-    This redirects you to an external URI to complete the authentication process. On successful sign-in, the Choreo activity pane displays your account details along with any components detected within the VS Code workspace.
+    This redirects you to an external URI to complete the authentication process. On successful sign-in, the Choreo activity pane displays all the projects and organizations linked to your Choreo account.
 
-## Create a new component
+    ![Project and organization tree view](../assets/img/develop-components/develop-using-vs-code/projects-and-orgs.png)
 
-1. Open the source code directory where you want to build, deploy, and manage components using Choreo.
-2. Create a new component using one of the following methods:
-    - In the Choreo avtivity pane, click **Create Component**.
-       ![Create Component Button](../assets/img/develop-components/develop-using-vs-code/create-component-btn.png)
-    - Use the `Create New Component` command provided by the Choreo extension.
 
-3. If the Choreo extension cannot determine the project context of the opened workspace, it prompts you to select the organization and the project to which the new component belongs.
-4. Specify component details such as the name, type, buildpack, etc.
+## Create a project
 
-    ![Component Form](../assets/img/develop-components/develop-using-vs-code/component-form.png)
-            
-    On successful creation, the component details view opens, and the Choreo activity pane displays the new component.
+!!! tip 
+      If you already have a Choreo project, you can skip this section and move to the [Clone a project](#clone-a-project) section.
 
-    ![Component Details](../assets/img/develop-components/develop-using-vs-code/component-details-view.png)
-     
+To create a new Choreo project directly via VS Code, follow the steps below:
+
+1. Click **+** next to the **PROJECTS** in the Choreo activity pane. Alternatively, execute the `Create new project` command.
+2. In the **New Choreo Project** pane, specify appropriate values for the required fields.
+
     !!! tip
-        Once the component is created, a `.choreo/context.yaml` file is generated in the root of the Git repository. For more details, see [Understand the project context](#understand-the-project-context).
+         If you want to use a monorepo where you can have all components of the project stored, select **Initialize a monorepo**. This will take you to GitHub to authorize a repository to link to the project.
 
-The component details view allows you to manage your component by performing various actions such as the following:
+    ![Create a project](../assets/img/develop-components/develop-using-vs-code/create-a-project.gif)
 
- - Triggering builds for selected commits.
- - Viewing lists of builds and statuses.
- - Diagnosing build failures with build logs.
- - Deploying builds in available environments.
- - Accessing runtime logs and deployed component URLs.
- - Invoking deployed service endpoints.
+## Clone a project
 
-## Understand the project context
+You can clone a project to easily create a copy of a project in your local machine. 
 
-Context files contain metadata related to the project, allowing the extension to establish an association between local directories and Choreo projects. These files, such as the `context.yaml`file, resides in the `/.choreo` directory within the root of the Git repository.
+To clone a project, follow the steps given below:
 
-The Choreo extension scans the root of the opened Git repository to find the `context.yaml` file and lists the components of the associated project. This allows you to easily open and manage the components they are developing within the VS Code workspace.
+1. In the Choreo activity pane, click on the project you want to clone. This opens the project overview displaying the list of components of the project.
+2. Click **Clone Project**.
+3. Select a directory in your local machine to store the project. Once the project is cloned, it opens as a workspace in VS Code.
 
-A `context.yaml` file can contain multiple projects, whereas, a workspace opened via VS Code can have multiple `context.yaml` files with different project associations. In such cases, VS Code allows you to switch between these projects, add new project associations, or remove existing ones, allowing you as a developer to focus on components of a particular project at a time.
+    !!! tip
+         Each component in the project will be available as a workspace item.
 
-You can decide whether to commit the `context.yaml` file to the Git repository. Committing this file enables other team members working on the same repository to have a seamless developer experience with Choreo.
+    ![Clone a project](../assets/img/develop-components/develop-using-vs-code/clone-a-project.gif)
 
-If the `context.yaml` file for a particular project is not committed to the Git repository or is unavailable for other reasons, you can easily regenerate it using one of the following methods:
+## Design and develop your application
 
- - In the Choreo avtivity pane, click **Link Directory**.
-    ![Link Directory](../assets/img/develop-components/develop-using-vs-code/link-dir-btn.png)
- - Use the `Link Directory` command provided by the Choreo extension.
+To design and develop your application, follow the steps given below:
 
-## Discover additional features
+1. In the Choreo activity pane, click on a project. 
+2. In the **Project Overview** page, click **Architecture View**.
+3. To create a new component, click **+ COMPONENT** and specify appropriate values for the required fields.
 
-To access a range of functionalities provided by the Choreo extension, open the VS Code command palette and type `Choreo`.
+    ![Create a component](../assets/img/develop-components/develop-using-vs-code/create-a-component.gif)
 
-## Troubleshoot issues
+This creates a source for the component locally in the given repository and displays the component as a workspace item in VS Code.
 
-To troubleshoot Choreo extension issues, follow these steps:
+## Push changes to Choreo
 
-1. To open the **OUTPUT** pane, go to the VS Code editor main menu, click **View**, and then click **Output**.
+When you create a component, you must follow the steps given below to push the changes to Choreo.
 
-2. Select **Choreo** from the drop-down menu on the right-hand side to view the Choreo output for troubleshooting.
+1. In the **Project Overview** page, click **Push to Choreo**. This pushes changes related to a component to the GitHub repository.
 
-## Get help
+    !!! tip
+        The **Project Overview** page indicates if a change related to a component has not been pushed to the GitHub repository.
 
-For assistance with the Choreo VS Code extension, create [GitHub issues](https://github.com/wso2/choreo-vscode/issues).
+2. Click **Open Source Control**, enter an appropriate commit message, and click **Commit**. and commit the changes
+3. To upload the local component changes to the Choreo platform, click **Sync Changes**.
+
+    ![Push changes to Choreo](../assets/img/develop-components/develop-using-vs-code/push-changes.gif)
+
