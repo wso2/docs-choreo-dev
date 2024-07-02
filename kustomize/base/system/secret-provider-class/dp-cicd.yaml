@@ -17,6 +17,8 @@ spec:
           key: LOG-ANALYTICS-KEY
         - objectName: CHOREO_PRIVATE_ACR_SECRET
           key: CHOREO_PRIVATE_ACR_SECRET
+        - objectName: DOCKER_REGISTRY_PAT
+          key: DOCKER_REGISTRY_PAT
   parameters:
     objects: |
       array:
@@ -45,3 +47,8 @@ spec:
           objectType: secret
           objectAlias: CHOREO_PRIVATE_ACR_SECRET
           objectVersion: "{{.CHOREO_PRIVATE_ACR_SECRET}}"
+        - |
+          objectName: choreo-docker-user-pat
+          objectType: secret
+          objectAlias: DOCKER_REGISTRY_PAT
+          objectVersion: "{{.DOCKER_REGISTRY_PAT}}"
