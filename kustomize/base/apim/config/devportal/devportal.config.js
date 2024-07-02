@@ -90,5 +90,6 @@ if (isCustomDomain) {
         permissionPortalOrgIdParam: 'orgId',
         intelligentRoutingFeatureEnabled: true,
         choreoInbuiltKeyManagerFeatureEnabled: false,
+        customSubscriptionPolicyHandlingOrg: '{{.CUSTOM_SUBSCRIPTION_POLICY_HANDLING_ORG}}',
     }
 }
