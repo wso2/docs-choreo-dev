@@ -2163,6 +2163,7 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Ma
 -- OBSERVABILITY-MANAGEMENT
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Non-Prod Logs','choreo:log_view_non_prod','OBSERVABILITY-MANAGEMENT','View non-production environment logs');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Prod Logs','choreo:log_view_prod','OBSERVABILITY-MANAGEMENT','View production environment logs');
+INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('View Organization Insights', 'choreo:insights_org_view', 'OBSERVABILITY-MANAGEMENT', 'View Organization level Insights');
 
 -- ON-PREM-KEYS
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage OnPrem Keys','urn:choreosystem:onpremkeymanagement:on_prem_key_manage','ON-PREM-KEYS','Create, Edit and Delete OnPrem Keys');
