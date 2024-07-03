@@ -1,0 +1,26 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-choreo-platform-services-manager
+spec:
+  secretObjects:
+    - secretName: secret-choreo-platform-services-manager
+      type: Opaque
+      data:
+        - objectName: DB_PASSWORD
+          key: DB_PASSWORD
+        - objectName: AIVEN_TOKEN
+          key: AIVEN_TOKEN
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: choreo-platform-service-manager-db-mssql-password
+          objectType: secret
+          objectAlias: DB_PASSWORD
+          objectVersion: "{{.DB_PASSWORD}}"
+        - |
+          objectName: platform-services-manager-aiven-token
+          objectType: secret
+          objectAlias: AIVEN_TOKEN
+          objectVersion: "{{.AIVEN_TOKEN}}"
