@@ -14,6 +14,8 @@
 import { TestIds } from "./constants/TestIds";
 import { SHORT_TIME, VERY_SHORT_TIME } from "../commons/timeouts";
 import { DEV_PORTAL_APIS_SEARCH_URL } from "../commons/urls";
+import { UserDetails } from "../commons/types";
+import { SELF_SIGNUP_REQUEST_PENDING_USER_MSG, SELF_SIGNUP_REQUEST_REJECTED_USER_MSG } from "../devportal/constants";
 
 export class DevPortal {
   loginToDevPortal(devPortalUrl?: string): void {
@@ -41,6 +43,76 @@ export class DevPortal {
         }
       });
     cy.get(TestIds.devPortalHome, VERY_SHORT_TIME).should("be.visible");
+  }
+
+  selfSignupToDevPortal(userDetails: UserDetails, devPortalUrl?: string) {
+    const resourcePath = `/${Cypress.env("selfSignupOrgHandle")}`;
+    let loginURL = Cypress.env("devportalLoginURL") + resourcePath;
+    if (devPortalUrl !== undefined) {
+      loginURL = devPortalUrl + resourcePath;
+    }
+    cy.visit(loginURL);
+    cy.get(TestIds.devPortalRegisterLink).should("be.visible");
+    cy.get(TestIds.devPortalRegisterLink).click()
+    cy.get(TestIds.devPortalRegistrationSubmitButton).should("be.visible");
+    cy.get(TestIds.devPortalRegisterPageUsernameInput).type(userDetails.email)
+    cy.get(TestIds.devPortalRegisterPagePasswordInput).type(userDetails.password, {
+      log: false,
+    })
+    cy.get(TestIds.devPortalRegisterPageFirstNameInput).type(userDetails.firstName)
+    cy.get(TestIds.devPortalRegisterPageLastNameInput).type(userDetails.lastName)
+    cy.get(TestIds.devPortalRegistrationSubmitButton).click();
+  }
+
+  checkDevPortalAccessForPendingUser() {
+    cy.wait(5000);
+    cy.contains('p', SELF_SIGNUP_REQUEST_PENDING_USER_MSG)
+      .should('be.visible');
+  }
+
+  checkDevPortalAccessForRejectedUser() {
+    cy.wait(5000);
+    cy.contains('p', SELF_SIGNUP_REQUEST_REJECTED_USER_MSG)
+      .should('be.visible');
+  }
+
+  checkDevPortalAccessForApprovedUser() {
+    cy.wait(5000);
+    cy.get(TestIds.devPortalHome, VERY_SHORT_TIME).should("be.visible");
+  }
+
+  signInToDevPortalWithApprovedUser(userDetails: UserDetails, devPortalUrl?: string) {
+    const resourcePath = `/${Cypress.env("selfSignupOrgHandle")}`;
+    let loginURL = Cypress.env("devportalLoginURL") + resourcePath;
+    if (devPortalUrl !== undefined) {
+      loginURL = devPortalUrl + resourcePath;
+    }
+    cy.visit(loginURL);
+    cy.wait(5000);
+    cy.get(TestIds.devPortalLoginPageContinueLoginButton).should("be.visible");
+    cy.get(TestIds.devPortalLoginPageUsernameInput).type(userDetails.email)
+    cy.get(TestIds.devPortalLoginPagePasswordInput).type(userDetails.password, {
+      log: false,
+    })
+    cy.get(TestIds.devPortalLoginPageContinueLoginButton).click();
+    this.checkDevPortalAccessForApprovedUser();
+  }
+
+  signInToDevPortalWithRejectedUser(userDetails: UserDetails, devPortalUrl?: string) {
+    const resourcePath = `/${Cypress.env("selfSignupOrgHandle")}`;
+    let loginURL = Cypress.env("devportalLoginURL") + resourcePath;
+    if (devPortalUrl !== undefined) {
+      loginURL = devPortalUrl + resourcePath;
+    }
+    cy.visit(loginURL);
+    cy.wait(5000);
+    cy.get(TestIds.devPortalLoginPageContinueLoginButton).should("be.visible");
+    cy.get(TestIds.devPortalLoginPageUsernameInput).type(userDetails.email)
+    cy.get(TestIds.devPortalLoginPagePasswordInput).type(userDetails.password, {
+      log: false,
+    })
+    cy.get(TestIds.devPortalLoginPageContinueLoginButton).click();
+    this.checkDevPortalAccessForRejectedUser();
   }
 
   searchApi(name: string, version?: string) {
