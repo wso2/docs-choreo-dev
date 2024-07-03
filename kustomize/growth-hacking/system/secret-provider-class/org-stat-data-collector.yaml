@@ -1,0 +1,61 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-choreo-org-stat-data-collector
+spec:
+  secretObjects:
+    - secretName: secret-choreo-org-stat-data-collector
+      type: Opaque
+      data:
+        - objectName: SUBSCRIPTION_PASSWORD
+          key: SUBSCRIPTION_PASSWORD
+        - objectName: DEPLOYMENT_PASSWORD
+          key: DEPLOYMENT_PASSWORD
+        - objectName: CHOREO_STAT_PASSWORD
+          key: CHOREO_STAT_PASSWORD
+        - objectName: COMPONENTS_PASSWORD
+          key: COMPONENTS_PASSWORD
+        - objectName: GOOGLE_SHEETS_CLIENT_SECRET
+          key: GOOGLE_SHEETS_CLIENT_SECRET
+        - objectName: GOOGLE_SHEETS_REFRESH_TOKEN
+          key: GOOGLE_SHEETS_REFRESH_TOKEN
+        - objectName: AZURE_CLIENT_SECRET
+          key: AZURE_CLIENT_SECRET
+  parameters:
+    objects:  |
+      array:
+        - |
+          objectName: choreo-subscriptions-db-mssql-password
+          objectType: secret
+          objectAlias: SUBSCRIPTION_PASSWORD
+          objectVersion: "{{.SUBSCRIPTION_PASSWORD}}"
+        - |
+          objectName: dp-CHOREO-RUDDER-MSSQL-PASSWORD
+          objectType: secret
+          objectAlias: DEPLOYMENT_PASSWORD
+          objectVersion: "{{.DEPLOYMENT_PASSWORD}}"
+        - |
+          objectName: org-stat-CHOREO-MSSQL-PASSWORD
+          objectType: secret
+          objectAlias: CHOREO_STAT_PASSWORD
+          objectVersion: "{{.CHOREO_STAT_PASSWORD}}"
+        - |
+          objectName: dp-project-manager-MONGODB-PASSWORD
+          objectType: secret
+          objectAlias: COMPONENTS_PASSWORD
+          objectVersion: "{{.COMPONENTS_PASSWORD}}"
+        - |
+          objectName: org-stat-GOOGLE-SHEETS-REFRESH-TOKEN
+          objectType: secret
+          objectAlias: GOOGLE_SHEETS_REFRESH_TOKEN
+          objectVersion: "{{.GOOGLE_SHEETS_REFRESH_TOKEN}}"
+        - |
+          objectName: org-stat-GOOGLE-SHEETS-CLIENT-SECRET
+          objectType: secret
+          objectAlias: GOOGLE_SHEETS_CLIENT_SECRET
+          objectVersion: "{{.GOOGLE_SHEETS_CLIENT_SECRET}}"
+        - |
+          objectName: choreo-log-analytics-read-org-stats-dashboard
+          objectType: secret
+          objectAlias: AZURE_CLIENT_SECRET
+          objectVersion: "{{.AZURE_CLIENT_SECRET}}"
