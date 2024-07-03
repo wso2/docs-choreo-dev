@@ -18,7 +18,7 @@ To use the capabilities of the Choreo extension in the VS Code editor, you need 
 
 1. Install the [Choreo VS Code extension](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo) and wait for activation. On successful activation, the Choreo extension opens in the VS Code editor. 
 2. Sign in to Choreo using one of the following methods:
-    - In the Choreo avtivity pane, click **Sign In**.
+    - In the Choreo activity pane, click **Sign In**.
        ![Sign in](../assets/img/develop-components/develop-using-vs-code/sign-in.png)
     - Use the `Sign In` command provided by the Choreo extension.
 
@@ -28,7 +28,7 @@ To use the capabilities of the Choreo extension in the VS Code editor, you need 
 
 1. Open the source code directory where you want to build, deploy, and manage components using Choreo.
 2. Create a new component using one of the following methods:
-    - In the Choreo avtivity pane, click **Create Component**.
+    - In the Choreo activity pane, click **Create Component**.
        ![Create Component Button](../assets/img/develop-components/develop-using-vs-code/create-component-btn.png)
     - Use the `Create New Component` command provided by the Choreo extension.
 
@@ -65,7 +65,7 @@ You can decide whether to commit the `context.yaml` file to the Git repository. 
 
 If the `context.yaml` file for a particular project is not committed to the Git repository or is unavailable for other reasons, you can easily regenerate it using one of the following methods:
 
- - In the Choreo avtivity pane, click **Link Directory**.
+ - In the Choreo activity pane, click **Link Directory**.
     ![Link Directory](../assets/img/develop-components/develop-using-vs-code/link-dir-btn.png)
  - Use the `Link Directory` command provided by the Choreo extension.
 
