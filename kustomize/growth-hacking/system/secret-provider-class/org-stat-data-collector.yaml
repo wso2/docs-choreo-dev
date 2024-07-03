@@ -22,7 +22,7 @@ spec:
         - objectName: AZURE_CLIENT_SECRET
           key: AZURE_CLIENT_SECRET
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: choreo-subscriptions-db-mssql-password
