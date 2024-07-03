@@ -14,7 +14,7 @@ spec:
         - objectName: CRYPTO_SERVICE_INGRESS_TLS_CERTIFICATE_KEYSTORE
           key: tls.crt
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: cryptoservice-INGRESS-TLS-CERTIFICATE-KEYSTORE
