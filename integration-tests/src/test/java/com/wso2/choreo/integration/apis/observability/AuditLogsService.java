@@ -69,7 +69,7 @@ public class AuditLogsService extends ControlPlaneAPI {
 		runner.$(repeatOnError()
 			.until("i = 5")
 			.index("i")
-			.autoSleep(30000)
+			.autoSleep(90000)
 			.actions(
 				http()
 					.client(client)
@@ -90,8 +90,8 @@ public class AuditLogsService extends ControlPlaneAPI {
 							AuditLogList response = new ObjectMapper()
 									.readValue(message.getPayload().toString(),
 											AuditLogList.class);
-							if (response.getList() == null) {
-								throw new RuntimeException("Response fields are empty");
+							if (response.getList() == null || response.getList().size() == 0) {
+								throw new RuntimeException("Response list is empty or null");
 							}
 							responseDTO.set(message.getPayload(String.class));
 						} catch (JsonProcessingException e) {

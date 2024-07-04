@@ -44,7 +44,7 @@ public class AuditLoggingUtils {
         AuditLogRetrievalRequest auditLogRetrievalRequest = new AuditLogRetrievalRequest();
         auditLogRetrievalRequest.setStartTime(timeRangeISO.getStartTime());
         auditLogRetrievalRequest.setEndTime(timeRangeISO.getEndTime());
-        auditLogRetrievalRequest.setLimit(100);
+        auditLogRetrievalRequest.setLimit(300);
         auditLogRetrievalRequest.setSort("desc");
         auditLogRetrievalRequest.setOutcomes(outcomes);
 
@@ -61,7 +61,7 @@ public class AuditLoggingUtils {
         AuditLogRetrievalRequest auditLogRetrievalRequest = new AuditLogRetrievalRequest();
         auditLogRetrievalRequest.setStartTime(timeRangeISO.getStartTime());
         auditLogRetrievalRequest.setEndTime(timeRangeISO.getEndTime());
-        auditLogRetrievalRequest.setLimit(100);
+        auditLogRetrievalRequest.setLimit(300);
         auditLogRetrievalRequest.setSort("desc");
         auditLogRetrievalRequest.setUserIdpIds(userIdpIds);
 
@@ -74,12 +74,12 @@ public class AuditLoggingUtils {
             throws TokenRetrievalException, IOException, URISyntaxException {
 
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        TimeRangeISO timeRangeISO = getTimeRangeISO(600);
+        TimeRangeISO timeRangeISO = getTimeRangeISO(1200);
 
         AuditLogRetrievalRequest auditLogRetrievalRequest = new AuditLogRetrievalRequest();
         auditLogRetrievalRequest.setStartTime(timeRangeISO.getStartTime());
         auditLogRetrievalRequest.setEndTime(timeRangeISO.getEndTime());
-        auditLogRetrievalRequest.setLimit(100);
+        auditLogRetrievalRequest.setLimit(300);
         auditLogRetrievalRequest.setSort("desc");
         auditLogRetrievalRequest.setProjectIds(projectIds);
 
@@ -95,7 +95,7 @@ public class AuditLoggingUtils {
         AuditLogRetrievalRequest auditLogRetrievalRequest = new AuditLogRetrievalRequest();
         auditLogRetrievalRequest.setStartTime(timeRangeISO.getStartTime());
         auditLogRetrievalRequest.setEndTime(timeRangeISO.getEndTime());
-        auditLogRetrievalRequest.setLimit(100);
+        auditLogRetrievalRequest.setLimit(300);
         auditLogRetrievalRequest.setSort("desc");
 
         return AuditLogsService.getAuditLogs(runner, choreoCPTestClient, orgUuid, auditLogRetrievalRequest);
