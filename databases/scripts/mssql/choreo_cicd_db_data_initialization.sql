@@ -1,7 +1,7 @@
 -- Add Builder
 INSERT INTO builder
 (id, builderImage, displayName, imageHash)
-VALUES('D3525DF0-F149-42E1-95AE-3BCC8F597778', 'choreocontrolplane.azurecr.io/buildpacks/builder:google-22', 'Google', '1597540db8e949c2fcb56e8e687f801f0196b16d903e7b7bbe11c120e6bea10c');
+VALUES('D3525DF0-F149-42E1-95AE-3BCC8F597778', 'choreocontrolplane.azurecr.io/buildpacks/builder:google-22', 'Google', 'a1fd64eb789cb8b11c9169ea3f0cfe3741c565eb8e2a337fcd2b179cfde09231');
 
 INSERT INTO builder 
 (id, builderImage, displayName, imageHash) 
