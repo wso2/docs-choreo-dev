@@ -1,0 +1,10 @@
+resources:
+  - org-stat-data-collector.yaml
+  - org-stat-data-publisher.yaml
+
+patches:
+  - path: patch.json
+    target:
+      group: secrets-store.csi.x-k8s.io
+      version: v1
+      kind: SecretProviderClass

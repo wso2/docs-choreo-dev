@@ -1,5 +1,5 @@
 # --------------------------------------------------------------------
-# Copyright (c) 2023, WSO2 LLC. (http://wso2.com) All Rights Reserved.
+# Copyright (c) 2024, WSO2 LLC. (http://wso2.com) All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,18 +13,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # -----------------------------------------------------------------------
-
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
-resources:
-  - config
-  - namespace.yaml
-  - cron
-  - deployment
-  - hpa
-  - pdb
-  - service
-  - secret-provider-class
-
-namespace: choreo-ai
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: milvus-proxy
+  name: milvus-proxy
+  namespace: choreo-ai
+spec:
+  ports:
+    - name: milvus-px-port
+      port: 8000
+      targetPort: milvus-px-port
+  selector:
+    choreo.component: milvus-proxy

@@ -1,0 +1,68 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: docs-updater
+  annotations:
+    checkov.io/skip1: CKV_K8S_31=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_25=Temporarily suppressing till fixing
+  labels:
+    choreo.component: docs-updater
+spec:
+  schedule: 00 15 * * *
+  startingDeadlineSeconds: 600
+  concurrencyPolicy: Replace
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            choreo.component: docs-updater
+        spec:
+          automountServiceAccountToken: false
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+          containers:
+            - name: docs-updater
+              image: choreocontrolplane.azurecr.io/choreoipaas/docs-updater:latest
+              securityContext:
+                readOnlyRootFilesystem: true
+                runAsUser: 10500
+                runAsGroup: 10500
+                capabilities:
+                  drop:
+                    - all
+                  add: ["NET_RAW"]
+                allowPrivilegeEscalation: false
+              envFrom:
+                - configMapRef:
+                    name: env-docs-updater
+                - secretRef:
+                    name: secret-docs-updater
+              resources:
+                limits:
+                  cpu: 1500m
+                  memory: 700Mi
+                requests:
+                  cpu: 1000m
+                  memory: 500Mi
+              volumeMounts:
+                - name: tmp-volume
+                  mountPath: /tmp
+                - name: secret-docs-updater
+                  mountPath: /mnt/csi/secret-docs-updater
+                  readOnly: true
+          volumes:
+            - name: tmp-volume
+              emptyDir: {}
+            - name: secret-docs-updater
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: secret-docs-updater
+                nodePublishSecretRef:
+                  name: csi-secret-store-azure

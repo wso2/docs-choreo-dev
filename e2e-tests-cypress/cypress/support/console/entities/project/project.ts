@@ -664,8 +664,8 @@ export class Project {
 
         retryCount++;
 
-        if (retryCount > 3) {
-          return -1;
+        if (retryCount > 6) {
+          return cy.wrap(-1);
         }
 
         cy.wait(VERY_SHORT_TIME.timeout * retryCount);

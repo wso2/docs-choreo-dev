@@ -52,7 +52,9 @@ enableDBBasedNotifications = {{.ENABLE_DB_BASED_NOTIFICATIONS}}
 invokeUrlOrgIdPrefixExcludedOrgs = "{{.INVOKE_URL_ORG_ID_PREFIX_EXCLUDED_ORGS}}"
 enableCustomURLMappings = {{.ENABLE_GRAPHQL_CUSTOM_URL_MAPPINGS}}
 passUserTokenForProjectManager = {{.PASS_USER_TOKEN_FOR_PROJECT_MANAGER}}
+enableResolverExecutionTimeLogger = {{.ENABLE_RESOLVER_EXECUTION_TIME_LOGGER | default false}}
 choreoOrgManagePermission = "{{.CHOREO_ORG_MANAGE_PERMISSION}}"
+maxHeaderSize = {{.MAX_HEADER_SIZE | default 65536}}
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
