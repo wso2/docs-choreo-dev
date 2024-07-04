@@ -53,11 +53,11 @@ rules:
       - patch
       - update
       - watch
-  - apiGroups: 
+  - apiGroups:
       - ""
-    resources: 
+    resources:
       - endpoints
-    verbs: 
+    verbs:
       - list
       - watch
 ---
