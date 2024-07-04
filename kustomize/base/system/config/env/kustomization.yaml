@@ -750,7 +750,7 @@ configMapGenerator:
       - REACT_APP_CUSTOM_SUBSCRIPTION_POLICY_HANDLING_ORG={{.REACT_APP_CUSTOM_SUBSCRIPTION_POLICY_HANDLING_ORG | default ""}}
       - REACT_APP_ENABLE_ASYNC_MANUAL_SCHEDULE_TASK_CREATION={{.REACT_APP_ENABLE_ASYNC_MANUAL_SCHEDULE_TASK_CREATION | default "false"}}
       - REACT_APP_ENABLE_ASYNC_EVENT_HANDLER_TEST_RUNNER_CREATION={{.REACT_APP_ENABLE_ASYNC_EVENT_HANDLER_TEST_RUNNER_CREATION | default "false"}}
-      - REACT_APP_CHOREO_RESOURCE_AUTHZ_DOC_URL={{.REACT_APP_CHOREO_RESOURCE_AUTHZ_DOC_URL | default "https://wso2.com/choreo/docs/administer/control-access-in-the-choreo-console"}}
+      - REACT_APP_CHOREO_RESOURCE_AUTHZ_DOC_URL={{.REACT_APP_CHOREO_RESOURCE_AUTHZ_DOC_URL | default "https://wso2.com/choreo/docs/administer/control-access-in-the-choreo-console/"}}
   - name: env-dp-mizzen
     behavior: create
     literals:
