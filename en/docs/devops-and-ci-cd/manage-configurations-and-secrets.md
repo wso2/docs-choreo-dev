@@ -25,31 +25,32 @@ Follow these steps to apply a file mount to a component you have created:
 2. In the **Component Listing** pane, click on the component for which you want to define configurations and secrets.
 3. In the left navigation menu, click **DevOps** and then click **Configs & Secrets**.
 4. Click **+ Create**.
-5. In the **Mount a Configuration** pane, do the following:
-    1. Select a **Config Type** depending on your requirement.
-    2. Select **File Mount** as the **Mount Type**.
-    3. Click **Next**.
-    4. In the **Config Name** field, specify a name for the file mount.
+5. In the **Create a Config or Secret** pane, click **File Mount**.
+6. If you want to create the file mount as a secret, select **Mark as a Secret**. Otherwise, proceed to the next step.
+    
+    !!!info "Note"
+           
+        If you create the file mount as a secret, you will not be able to read the file content after you create the file mount.
+
+7. In the **Display Name** field, specify a name for the file mount.
   
-        !!!tip
+    !!!tip
 
-                The configuration name does not affect the file mount or its content. It is only a reference to identify the configuration or secret you create.
+        The display name does not affect the file mount or its content. It is only a reference to identify the configuration or secret you create.
 
-    5. In the **Mount Path** field, specify where to mount the file inside the container. Use an absolute file path with the file name and extension if applicable.
+8. In the **File Mount Path** field, specify where to mount the file inside the container. Use an absolute file path with the file name and extension if applicable.
   
-        !!!tip
+    !!!tip
 
-                The file name in the mount path does not need to match the configuration name or the name of the file you upload.
+        The file name in the mount path does not need to match the configuration name or the name of the file you upload.
 
-    6. Upload a configuration file or copy and paste the configuration content into the editor.
+9. Upload a configuration file or copy and paste the configuration content into the editor.
 
-6. Click **Create**.
-
-    ![Create file mount](../assets/img/devops-and-ci-cd/configs/create-file-mount.png){.cInlineImage-full}
+10. Click **Create**.
   
     !!!info "Note"
            
-            Configurations and secrets are applied immediately to your environment on creation. To ensure that the container reflects the new content, your existing running replicas undergo a rolling restart.
+        Configurations and secrets are applied immediately to your environment on creation. To ensure that the container reflects the new content, your existing running replicas undergo a rolling restart.
 
 ## Apply environment variables to your container
 
@@ -59,22 +60,23 @@ Follow these steps to apply environment variables to a component you have create
 2. In the **Component Listing** pane, click on the component for which you want to define configurations and secrets.
 3. In the left navigation menu, click **DevOps** and then click **Configs & Secrets**.
 4. Click **+ Create**.
-5. In the **Mount a Configuration** pane, do the following:
-    1. Select a **Config Type** depending on your requirement.
-    2. Select **File Mount** as the **Mount Type**.
-    3. Click **Next**.
-    4. In the **Config Name** field, specify a name for the file mount.
-  
-        !!!tip
+5. In the **Create a Config or Secret** pane, click **Environment Variables**.
+6. If you want to create the environment variable values as secrets, select **Mark as a Secret**. Otherwise, proceed to the next step.
+    
+    !!!info "Note"
+           
+        If you create environment variables as secrets, you will not be able to read the values you set for the environment variables after you create them.
 
-                The configuration name you specify does not affect the environment variables you set. It is only a reference to identify the configuration or secret you create.
+7. In the **Display Name** field, specify a name to identify the configuration or secret.
 
-    5. Add the necessary environment variables as key-value pairs. You can click **Add Item** to add any number of environment variables.
+    !!!tip
 
-6. Click **Create**.
+        The display name you specify does not affect the environment variables you set. It is only a reference to identify the configuration or secret you create.
+
+8. Under **Add Environment Variables**, specify the necessary environment variables as key-value pairs. You can click **Add Item** to add any number of environment variables.
+
+9. Click **Create**.
    
-    ![Set environment variables](../assets/img/devops-and-ci-cd/configs/create-env-vars.png){.cInlineImage-full}
-
 ## Update an existing configuration or secret
 
 Follow these steps to update a configuration or secret you have defined:
@@ -84,8 +86,6 @@ Follow these steps to update a configuration or secret you have defined:
 3. In the left navigation menu, click **DevOps** and then click **Configs & Secrets**.
 4. Click the edit icon corresponding to the configuration or secret you want to update.
 5. Apply the necessary changes and click **Save**.
-
-    ![Modify existing configs](../assets/img/devops-and-ci-cd/configs/create-or-delete-config.png){.cInlineImage-half}
 
 ## Delete an existing configuration or secret
 
