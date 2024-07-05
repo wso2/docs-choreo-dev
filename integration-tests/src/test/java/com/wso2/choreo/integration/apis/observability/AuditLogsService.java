@@ -16,24 +16,38 @@ package com.wso2.choreo.integration.apis.observability;
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.MessageUtils;
-import com.wso2.choreo.integration.config.*;
+import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
+import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.config.TimeRangeISO;
+import com.wso2.choreo.integration.models.auditLogging.AuditLogList;
+import com.wso2.choreo.integration.models.auditLogging.AuditLogRetrievalRequest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.greaterThan;
 
 public class AuditLogsService extends ControlPlaneAPI {
 
@@ -43,6 +57,49 @@ public class AuditLogsService extends ControlPlaneAPI {
 		String startTime = fmt.format(currentDateTime.minusMinutes(100));
 		String endTime = fmt.format(currentDateTime);
 		return TimeRangeISO.builder().startTime(startTime).endTime(endTime).build();
+	}
+
+	public static AuditLogList getAuditLogs(TestActionRunner runner, HttpClient client, String orgUuid,
+											AuditLogRetrievalRequest auditLogRetrievalRequest)
+			throws TokenRetrievalException, IOException, URISyntaxException {
+
+		AtomicReference<String> responseDTO = new AtomicReference<>();
+		String requestBody = ObjectMapperUtil.mapObjectToString(auditLogRetrievalRequest);
+
+		runner.$(repeatOnError()
+			.until("i = 5")
+			.index("i")
+			.autoSleep(90000)
+			.actions(
+				http()
+					.client(client)
+					.send()
+					.post(getAuditLogsEndpoint(orgUuid))
+					.message()
+					.header(HttpHeaders.AUTHORIZATION, getAccessToken())
+					.contentType(String.valueOf(MediaType.APPLICATION_JSON))
+					.accept(String.valueOf(MediaType.APPLICATION_JSON))
+					.body(requestBody),
+				http()
+					.client(client)
+					.receive()
+					.response(HttpStatus.CREATED)
+					.message()
+					.validate((message, context) -> {
+						try {
+							AuditLogList response = new ObjectMapper()
+									.readValue(message.getPayload().toString(),
+											AuditLogList.class);
+							if (response.getList() == null || response.getList().size() == 0) {
+								throw new RuntimeException("Response list is empty or null");
+							}
+							responseDTO.set(message.getPayload(String.class));
+						} catch (JsonProcessingException e) {
+							throw new RuntimeException(e);
+						}
+					})));
+
+		return new ObjectMapper().readValue(responseDTO.get(), AuditLogList.class);
 	}
 
 	public static void verifyAuditLogs(TestActionRunner runner, HttpClient client, String accessToken)
@@ -128,4 +185,13 @@ public class AuditLogsService extends ControlPlaneAPI {
 				.type(MessageType.JSON));
 	}
 
+	private static String getAccessToken() throws TokenRetrievalException, IOException, URISyntaxException {
+
+		return TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+	}
+
+	private static String getAuditLogsEndpoint(String orgUuid) {
+
+		return Constant.OBSERVABILITY_AUDIT_LOGS + "/orgs/" + orgUuid + "/audit-logs";
+	}
 }
