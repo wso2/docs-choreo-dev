@@ -3,8 +3,8 @@ const cypress = require('cypress');
 const { exec } = require('child_process');
 process.env['ELECTRON_EXTRA_LAUNCH_ARGS'] = '--remote-debugging-port=9222';
 
-const usersCount = 20;
-const startingNumber = 13000;
+const usersCount = 25;
+const startingNumber = 5510;
 //const usernamePrefix = 'wso2con1AdminTenant';
 const usernamePrefix = 'perfAdmin';
 
