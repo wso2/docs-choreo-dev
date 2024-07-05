@@ -52,27 +52,27 @@ Let's get started!
 
 ### Learn the repository file structure
 
-Let's familiarize ourselves with the key files in the sample greeter application. The below table gives a brief overview of the important files in the greeter service.
+It is important to understand the purpose of the key files in the sample service. The following table provides a brief overview of each file in the greeter service.
 
 !!! note 
     The following file paths are relative to the path `<sample-repository-dir>/go/grpc`.
 
-|File Path                |Description                                                                                  |
-|------------------------|----------------------------------------------------------------------------------------------|
-| main.go                | The greeter service code written in the Go language.                                         |
-| greeter_client/main.go | The greeter client application written in the Go language.                                   |
-| Dockerfile.server      | The Dockerfile to build the container image of the server application.                       |
-| Dockerfile.client      | The Dockerfile to build the container image of the client application.                       |
-| .choreo/endpoints.yaml | The Choreo-specific configuration that provides information about how Choreo exposes the service.|
-| pkg/greeter.proto      | The interface definition of the gRPC service. This is used to generate the server and client stubs for the Go application.|
+|File Path                |Description                                                                                   |
+|-------------------------|----------------------------------------------------------------------------------------------|
+| `main.go`               | The greeter service code written in the Go language.                                         |
+| `greeter_client/main.go`| The greeter client application written in the Go language.                                   |
+| `Dockerfile.server`     | The Dockerfile to build the container image of the server application.                       |
+| `Dockerfile.client`     | The Dockerfile to build the container image of the client application.                       |
+| `.choreo/endpoints.yaml`| The Choreo-specific configuration that provides information about how Choreo exposes the service.|
+| `pkg/greeter.proto`     | The interface definition of the gRPC service. This is used to generate the server and client stubs for the Go application.|
 
 ### Configure the service port with endpoints
 
-Let's run the gRPC server Service component on port 8080. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. In Choreo, you can expose your services with endpoints. You can read more about endpoints in our [endpoint documentation](https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/#what-are-endpoints-in-service-components).
+Let's run the gRPC server service component on port 8080. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. In Choreo, you can expose your services with endpoints. You can read more about endpoints in our [endpoint documentation](https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/#what-are-endpoints-in-service-components).
 
-Choreo looks for an `endpoints.yaml` file inside the `.choreo` directory to configure the endpoint details of a containerized component. Place the `.choreo` directory at the root of the Docker build context path.
+Choreo looks for an `endpoints.yaml` file inside the `.choreo` directory to configure the endpoint details of the containerized component. Ensure the `.choreo` directory is at the root of the Docker build context path.
 
-In our gRPC server sample, the `endpoints.yaml` file is at `go/grpc/.choreo/endpoints.yaml`. Our build context path is `go/grpc`.
+In the gRPC server sample, the `endpoints.yaml` file is at `go/grpc/.choreo/endpoints.yaml`, where the build context path is `go/grpc`.
 
 ## Step 1: Create a service component with a gRPC endpoint
 
@@ -81,7 +81,7 @@ Let's create a containerized Service component by following these steps:
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Service** card.
-4. Enter a display name, unique name, and a description for the service component. You can enter the values given below:
+4. Enter a display name, a unique name, and a description for the service component. You can enter the values given below:
     
     !!! info
          In the **Component Name** field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.
@@ -90,7 +90,7 @@ Let's create a containerized Service component by following these steps:
     |---------------------------|-------------------------|
     | **Component Display Name**| `Go gRPC Server`        |
     | **Component Name**        | `go-grpc-server`        |
-    | **Description**           | `Sends greetings`       |
+    | **Description**           | Sends greetings         |
     
 5. Click the **GitHub** tab.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
@@ -122,7 +122,7 @@ Let's create a containerized Service component by following these steps:
     | **Dockerfile**           | `go/grpc/Dockerfile.server`|
 
     !!! info
-        1.  To successfully build your container with Choreo, it is essential to explicitly define a User ID (UID) under the USER instruction in your Dockerfile. For reference, see [sample Dockerfile](https://github.com/wso2/choreo-sample-apps/blob/main/go/greeter/Dockerfile).
+        1.  To successfully build your container with Choreo, it is essential to explicitly define a User ID (UID) under the USER instruction in your Dockerfile. For reference, see the [sample Dockerfile](https://github.com/wso2/choreo-sample-apps/blob/main/go/greeter/Dockerfile).
         To ensure that the defined USER instruction is valid, it must conform to the following conditions:
             - A valid User ID is a numeric value between 10000-20000, such as `10001` or `10500`.
             - Usernames are considered invalid and should not be used. For example, `my-custom-user-12221` or `my-custom-user` are invalid User IDs.
@@ -135,7 +135,7 @@ You have successfully created a service from a Dockerfile. Next, you can build a
 
 ## Step 2: Build and deploy
 
-Now that we have connected the source repository, and configured the endpoint details, it's time to build the service and create an image. Then we can deploy that image test the greeter service.
+Now that you have connected the source repository, and configured the endpoint details, it's time to build the service and create an image. Then you can deploy the image and test the greeter service.
 
 ### Step 2.1: Build
 
@@ -224,7 +224,7 @@ To create a manual task component, follow these steps:
     | **Docker Context**       | `go/grpc`                  |
     | **Dockerfile**           | `go/grpc/Dockerfile.client`|
 
-10. Click **Create** . Once the component creation is complete, you will see the component overview page.
+10. Click **Create**. This creates the component and takes you to the **Overview** page of the component.
 
 ### Step 3.2: Build the gRPC client component
 
@@ -258,7 +258,7 @@ The client application, in this case, the gRPC client, requires the server URL o
 To execute the gRPC client, follow these steps:
 
 1. In the left navigation menu, click **Execute**.
-2. Click **Run Now**. This triggers the gRPC client and generate logs.
+2. Click **Run Now**. This triggers the gRPC client and generates logs.
    You can trigger multiple runs to generate multiple logs.
 
 For details on what you can monitor via the execute page, see [Monitor executions](../develop-integrations/develop-a-manual-task.md#step-7-monitor-executions). 
