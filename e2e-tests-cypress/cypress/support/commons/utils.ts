@@ -24,6 +24,7 @@ export class Utils {
   static oldProjectNamePrefix = "automationtestproject";
   static projectNamePrefix = "autotest";
   static componentNamePrefix = "autotest";
+  static automatedNamePrefix = "e2etest";
   static keyNamePrefix = "e2eOnPremkey";
   static APP_SVC_URL = Cypress.env("appSvcURL");
   static ORG_NAME = Cypress.env("choreoOrgHandle");
@@ -51,6 +52,41 @@ export class Utils {
 
   static generateBasePath() {
     return Date.now().toString();
+  }
+
+  static generateName(suffix: string = "", timestamp: number): string {
+    return `${this.automatedNamePrefix}${timestamp}${suffix}`;
+  }
+
+  static generatePassword(): string {
+    const length = Math.floor(Math.random() * (30 - 8 + 1)) + 8; // Random length between 8 and 30
+    const characters = {
+      uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+      lowercase: 'abcdefghijklmnopqrstuvwxyz',
+      number: '0123456789',
+    };
+
+    const generateRandomChar = (charSet: string) => charSet.charAt(Math.floor(Math.random() * charSet.length));
+
+    const password = [
+      generateRandomChar(characters.uppercase),
+      generateRandomChar(characters.lowercase),
+      generateRandomChar(characters.number),
+      ...Array.from({ length: length - 3 }, () => generateRandomChar(characters.uppercase + characters.lowercase + characters.number))
+    ];
+
+    // Shuffle the password array to avoid predictable patterns and join to form the final password string
+    return password.sort(() => Math.random() - 0.5).join('');
+  }
+
+  static generateUserDetails() {
+    const timestamp = Date.now();
+    const firstName = this.generateName("firstName", timestamp);
+    const lastName = this.generateName("lastName", timestamp);
+    const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@choreo.e2e.com`;
+    const password = this.generatePassword();
+
+    return { firstName, lastName, email, password };
   }
 
   /**

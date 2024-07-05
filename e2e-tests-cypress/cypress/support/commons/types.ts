@@ -42,3 +42,10 @@ export function createDefaultSteps(numberOfSteps: number) {
   }
   return configSteps;
 }
+
+export interface UserDetails {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
