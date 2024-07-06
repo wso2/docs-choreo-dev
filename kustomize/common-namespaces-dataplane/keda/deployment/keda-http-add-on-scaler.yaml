@@ -36,7 +36,7 @@ spec:
                       - arm64
       containers:
         - name: scaler
-          image: choreocontrolplane.azurecr.io/choreoipaas/dp-keda-http-add-on-scaler:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/dp-keda-http-add-on-scaler:v0.8.0-6f03606d08b255fd1688930fb4c25ff3ebf88caa
           env:
             # TODO(pedrotorres): remove after implementing new routing table
             - name: KEDA_HTTP_SCALER_TARGET_ADMIN_DEPLOYMENT

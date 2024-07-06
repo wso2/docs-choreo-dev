@@ -36,11 +36,9 @@ spec:
                       - arm64
       containers:
         - name: operator
-          image: choreocontrolplane.azurecr.io/choreoipaas/dp-keda-http-add-on-operator:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/dp-keda-http-add-on-operator:v0.8.0-53b48a881dacd1a8327ebb7a0715f847f7e63f97
           args:
             - --leader-elect
-            # TODO(pedrotorres): remove after implementing new routing table
-            - --admin-port=9090
           env:
             # TODO(pedrotorres): remove after implementing new routing table
             - name: KEDAHTTP_INTERCEPTOR_SERVICE
@@ -59,8 +57,12 @@ spec:
               value: ""
           # TODO(pedrotorres): remove after implementing new routing table
           ports:
-            - name: admin
-              containerPort: 9090
+            - containerPort: 8080
+              name: metrics
+              protocol: TCP
+            - containerPort: 8081
+              name: probes
+              protocol: TCP
           # TODO(pedrotorres): set better default values avoiding overcommitment
           resources:
             requests:
@@ -83,15 +85,23 @@ spec:
               type: RuntimeDefault
           # added by choreo
           readinessProbe:
-            tcpSocket:
-              port: 9090
-            initialDelaySeconds: 20
+            failureThreshold: 3
+            httpGet:
+              path: /readyz
+              port: probes
+              scheme: HTTP
             periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
           livenessProbe:
-            tcpSocket:
-              port: 9090
-            initialDelaySeconds: 20
+            failureThreshold: 3
+            httpGet:
+              path: /readyz
+              port: probes
+              scheme: HTTP
             periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
           # added by choreo
       serviceAccountName: keda-http-add-on-operator
       terminationGracePeriodSeconds: 10
