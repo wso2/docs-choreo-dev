@@ -17,24 +17,24 @@ spec:
   scope: Namespaced
   versions:
     - additionalPrinterColumns:
-      - jsonPath: .status.targetWorkload
-        name: TargetWorkload
-        type: string
-      - jsonPath: .status.targetService
-        name: TargetService
-        type: string
-      - jsonPath: .spec.replicas.min
-        name: MinReplicas
-        type: integer
-      - jsonPath: .spec.replicas.max
-        name: MaxReplicas
-        type: integer
-      - jsonPath: .metadata.creationTimestamp
-        name: Age
-        type: date
-      - jsonPath: .status.conditions[?(@.type=="HTTPScaledObjectIsReady")].status
-        name: Active
-        type: string
+        - jsonPath: .status.targetWorkload
+          name: TargetWorkload
+          type: string
+        - jsonPath: .status.targetService
+          name: TargetService
+          type: string
+        - jsonPath: .spec.replicas.min
+          name: MinReplicas
+          type: integer
+        - jsonPath: .spec.replicas.max
+          name: MaxReplicas
+          type: integer
+        - jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+        - jsonPath: .status.conditions[?(@.type=="HTTPScaledObjectIsReady")].status
+          name: Active
+          type: string
       name: v1alpha1
       schema:
         openAPIV3Schema:
