@@ -40,7 +40,9 @@ Let's get started!
 
 ### Configure the service port with endpoints
 
-You are going to run the greeter service on port 9090. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. In Choreo, you expose services via endpoints. For detailed information on each attribute of an endpoint, see [Configure Endpoints](../configure-endpoints.md).
+In Choreo, you can expose your services via endpoints.
+
+You are going to run the greeter service on port 9090. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. For detailed information on each attribute of an endpoint, see [Configure Endpoints](../configure-endpoints.md).
 
 To configure the endpoint details of a containerized component, Choreo looks for an `endpoints.yaml` file inside the `.choreo` directory. Be sure to place the `.choreo` directory at the root of the Docker build context path.
 
