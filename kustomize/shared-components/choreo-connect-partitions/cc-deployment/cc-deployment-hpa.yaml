@@ -40,3 +40,17 @@ spec:
         target:
           type: Utilization
           averageUtilization: 75
+    - type: ContainerResource
+      containerResource:
+        name: cpu
+        container: choreo-connect-router
+        target:
+          type: Utilization
+          averageUtilization: 75
+    - type: ContainerResource
+      containerResource:
+        name: cpu
+        container: choreo-connect-enforcer
+        target:
+          type: Utilization
+          averageUtilization: 75
