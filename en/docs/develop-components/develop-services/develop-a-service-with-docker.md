@@ -44,7 +44,7 @@ Let's get started!
 
 ### Configure the service port with endpoints
 
-In Choreo, you expose services via endpoints.
+In Choreo, you can expose your services via endpoints.
 
 You are going to run the greeter service on port 9090. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. For detailed information on each attribute of an endpoint, see [Configure Endpoints](../configure-endpoints.md).
 
