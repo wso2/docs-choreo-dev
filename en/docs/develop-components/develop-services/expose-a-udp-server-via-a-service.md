@@ -50,7 +50,7 @@ It is important to understand the purpose of the key files in the sample service
 
 ### Configure the service port with endpoints
 
-In Choreo, you can expose your services with endpoints.
+In Choreo, you can expose your services via endpoints.
 
 Let's run the UDP server service component on port 5050. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. For detailed information on each attribute of an endpoint, see [Configure Endpoints](../configure-endpoints.md).
 
