@@ -117,10 +117,10 @@ spec:
                 name: env-cc-rate-limiter
           resources:
             requests:
-              memory: 100Mi
+              memory: 170Mi
               cpu: 100m
             limits:
-              memory: 150Mi
+              memory: 200Mi
               cpu: 150m
           ports:
             - containerPort: 8090

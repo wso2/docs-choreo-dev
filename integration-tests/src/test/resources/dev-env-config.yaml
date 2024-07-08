@@ -35,6 +35,11 @@ alerts:
   #ALERT_MAIL_IMAP_PASS:
   ALERT_ORG_UUID: b545f89e-b328-4ff3-8a47-0ae964674957
   ALERT_RELEASE_ID: de821f3e-9418-449f-99d9-687831b5b3f7
+selfSignup:
+  SELF_SIGNUP_ORG_UUID: 7c03ac3e-f161-4d4f-bb22-0ff2ca655705
+  SELF_SIGNUP_ORG_HANDLE: choreoselfsignup
+  SELF_SIGNUP_ORG_ADMIN_EMAIL: samchoreots@gmail.com@carbon.super
+  #SELF_SIGNUP_ORG_ADMIN_PASSWORD:
 themeManagement:
   THEME_ENDPOINT: https://apis.preview-dv.choreo.dev
   CDN_THEME_ENDPOINT: https://choreodevdevportalcdn19.blob.core.windows.net/

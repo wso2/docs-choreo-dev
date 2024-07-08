@@ -65,6 +65,56 @@ class Console {
     });
   }
 
+  enableDevportalSelfSignupAutoApprovalConfig() {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToAPIManagement();
+    this.navigateToSelfSignups();
+
+    cy.wait(5000);
+    cy.get(TestIds.consoleSelfSignupConfigPageNotification).should("be.visible");
+    cy.get(TestIds.consoleSelfSignupAutoApprovalConfigCheckbox).invoke('removeAttr', 'disabled');
+    cy.get(TestIds.consoleSelfSignupAutoApprovalConfigCheckbox).should('not.be.disabled');
+    cy.get(TestIds.consoleSelfSignupAutoApprovalConfigCheckbox).check();
+    cy.get(TestIds.consoleSelfSignupAutoApprovalConfigCheckbox).should('be.checked');
+  }
+
+  disableDevportalSelfSignupAutoApprovalConfig() {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToAPIManagement();
+    this.navigateToSelfSignups();
+
+    cy.wait(5000);
+    cy.get(TestIds.consoleSelfSignupConfigPageNotification).should("be.visible");
+    cy.get(TestIds.consoleSelfSignupAutoApprovalConfigCheckbox).uncheck();
+    cy.get(TestIds.consoleSelfSignupAutoApprovalConfigCheckbox).should('not.be.checked');
+  }
+
+  approveDevportalSelfSignupRequest() {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToAPIManagement();
+    this.navigateToSelfSignups();
+
+    cy.wait(5000);
+    cy.get(TestIds.consoleSelfSignupRequestApproveButton).should("be.visible");
+    cy.get(TestIds.consoleSelfSignupRequestApproveButton).click();
+    cy.get(TestIds.consoleSelfSignupRequestApproveButton).should("not.exist");
+  }
+
+  rejectDevportalSelfSignupRequest() {
+    this.navigateToHome();
+    this.navigateToSettings();
+    this.navigateToAPIManagement();
+    this.navigateToSelfSignups();
+
+    cy.wait(5000);
+    cy.get(TestIds.consoleSelfSignupRequestRejectButton).should("be.visible");
+    cy.get(TestIds.consoleSelfSignupRequestRejectButton).click();
+    cy.get(TestIds.consoleSelfSignupRequestRejectButton).should("not.exist");
+  }
+
   logout() {
     cy.request(login.getSignOutUrl()).then(() => {
       cy.clearAllSessionStorage();
@@ -359,6 +409,18 @@ class Console {
       .click();
     cy.get(TestIds.progressBar).should("not.exist");
     cy.get(TestIds.addDomain).should("be.visible");
+  }
+
+  private navigateToAPIManagement() {
+    cy.get('[data-cyid="nav-link-api-management-link-tabs-link-tab"]')
+      .should("be.visible")
+      .click();
+  }
+
+  private navigateToSelfSignups() {
+    cy.get('[data-cyid="nav-link-selfsignups-settings-link-tabs-link-tab"]')
+      .should("be.visible")
+      .click();
   }
 
   private deleteSelectedDomain(id: string) {

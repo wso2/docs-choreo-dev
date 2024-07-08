@@ -39,6 +39,7 @@ public class EndpointConfig {
         TestContext.setTestOrg();
         TestContext.setTestUserTokenHandler();
         TestContext.setResourceAuthzTestUserTokenHandler();
+        TestContext.setSelfSignupTestAdminUserTokenHandler();
         SecurityTestContext.setTestUserTokenHandlerForSecurityTests();
     }
 

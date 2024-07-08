@@ -37,6 +37,12 @@ public class SecurityTestContext {
     }
 
     public static synchronized void setTestUserTokenHandlerForSecurityTests() {
+        String config = System.getProperty("TestConfig");
+
+        if (!StringUtils.isEmpty(config) && !config.equals("dev-env-config.yaml")) {
+            return;
+        }
+
         if (testUserTokenHandlerForSecurityTests == null) {
             testUserTokenHandlerForSecurityTests = new TokenHandler.Builder(
                     Configuration.getSecurityConfig(SecurityConfigDefinition.SECURITY_TEST_CHOREO_ORG_HANDLE),

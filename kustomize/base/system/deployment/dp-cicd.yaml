@@ -44,6 +44,11 @@ spec:
             - configMapRef:
                 name: cm-dp-cicd
           env:
+            - name: DOCKER_REGISTRY_PAT
+              valueFrom:
+                secretKeyRef:
+                  key: DOCKER_REGISTRY_PAT
+                  name: secret-dp-cicd
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:

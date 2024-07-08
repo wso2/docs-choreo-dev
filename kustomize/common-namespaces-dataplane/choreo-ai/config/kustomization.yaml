@@ -45,6 +45,7 @@ configMapGenerator:
       - CHOREO_TOKEN_ENDPOINT={{.CHOREO_TOKEN_ENDPOINT}}
       - PROXY_URL={{.PROXY_URL}}
       - ENABLED_RERANKER={{.ENABLED_RERANKER}}
+      - COLLECTION_NAME={{.COLLECTION_NAME}}
   - name: env-marketplace-assistant-cm
     behavior: create
     literals:

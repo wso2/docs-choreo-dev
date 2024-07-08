@@ -218,6 +218,7 @@ configMapGenerator:
       - CRYPTO_KEY_SERVICE_URL=http://crypto-key-service:9091
       - CONFIG_MAPPING_SERVICE_URL=http://configuration-service:8084
       - URL_MANAGER_URL=http://choreo-url-management:9090
+      - MIZZEN_URL=http://dp-mizzen
   - name: cm-dp-project-manager
     behavior: create
     literals:

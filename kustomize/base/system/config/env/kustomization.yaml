@@ -429,6 +429,11 @@ configMapGenerator:
       - MEDIATION_WF_CODEGEN_FP={{.MEDIATION_WF_CODEGEN_FP}}
       - DISABLE_BALLERINA_CONFIG_GENERATION_WORFLOW={{.DISABLE_BALLERINA_CONFIG_GENERATION_WORFLOW}}
       - DISABLE_BALLERINA_OBSERVABILITY={{.DISABLE_BALLERINA_OBSERVABILITY | default "false"}}
+      - CHOREO_MANAGED_BUILDPACK_LIFECYCLE_IMAGE={{.CHOREO_MANAGED_BUILDPACK_LIFECYCLE_IMAGE | default "choreocontrolplane.azurecr.io/buildpacksio/lifecycle:0.19.6"}}
+      - GOOGLE_BUILDPACK_LIFECYCLE_IMAGE={{.GOOGLE_BUILDPACK_LIFECYCLE_IMAGE | default "choreocontrolplane.azurecr.io/buildpacksio/lifecycle:0.17.3"}}
+      - GOOGLE_BUILDPACK_RUN_IMAGE={{.GOOGLE_BUILDPACK_RUN_IMAGE | default "choreocontrolplane.azurecr.io/buildpacks/google-22/run:2941124e39ef19f49aabac4257daf5f652805e81"}}
+      - CHOREO_MANAGED_BUILDPACK_RUN_IMAGE={{.CHOREO_MANAGED_BUILDPACK_RUN_IMAGE | default "choreocontrolplane.azurecr.io/choreoipaas/choreo-buildpacks/stacks/alpine/run:0.2.44"}}
+      - DOCKER_REGISTRY_USERNAME={{.DOCKER_REGISTRY_USERNAME}}
   - name: env-dp-cloud-manager
     behavior: create
     literals:
@@ -749,6 +754,8 @@ configMapGenerator:
       - REACT_APP_BUILD_TIME_ENVIRONMENT_VARIABLES_DOC_LINK={{.REACT_APP_BUILD_TIME_ENVIRONMENT_VARIABLES_DOC_LINK | default "https://wso2.com/choreo/docs/develop-components/deploy-an-application-with-buildpacks/#configure-build-time-environment-variables"}}
       - REACT_APP_CUSTOM_SUBSCRIPTION_POLICY_HANDLING_ORG={{.REACT_APP_CUSTOM_SUBSCRIPTION_POLICY_HANDLING_ORG | default ""}}
       - REACT_APP_ENABLE_ASYNC_MANUAL_SCHEDULE_TASK_CREATION={{.REACT_APP_ENABLE_ASYNC_MANUAL_SCHEDULE_TASK_CREATION | default "false"}}
+      - REACT_APP_ENABLE_ASYNC_EVENT_HANDLER_TEST_RUNNER_CREATION={{.REACT_APP_ENABLE_ASYNC_EVENT_HANDLER_TEST_RUNNER_CREATION | default "false"}}
+      - REACT_APP_CHOREO_RESOURCE_AUTHZ_DOC_URL={{.REACT_APP_CHOREO_RESOURCE_AUTHZ_DOC_URL | default "https://wso2.com/choreo/docs/administer/control-access-in-the-choreo-console/"}}
   - name: env-dp-mizzen
     behavior: create
     literals:
@@ -758,9 +765,9 @@ configMapGenerator:
       - HOST_DNS={{.HOST_DNS}}
       - RB_HEALTH_CHECK_ENABLED={{.RB_HEALTH_CHECK_ENABLED  | default "true"}}
       - RB_HEALTH_CHECK_INITIAL_DELAY_SECONDS={{.RB_HEALTH_CHECK_INITIAL_DELAY_SECONDS | default "5"}}
-      - RB_HEALTH_CHECK_INTERVAL_MS={{.RB_HEALTH_CHECK_INTERVAL_MS | default "5000"}}
-      - RB_HEALTH_CHECK_HISTORY_LIMIT_SECONDS={{.RB_HEALTH_CHECK_HISTORY_LIMIT_SECONDS | default "60"}}
-      - RB_HEALTH_CHECK_SUCCESS_THRESHOLD={{.RB_HEALTH_CHECK_SUCCESS_THRESHOLD | default "0.5"}}
+      - RB_HEALTH_CHECK_INTERVAL_MS={{.RB_HEALTH_CHECK_INTERVAL_MS | default "1000"}}
+      - RB_HEALTH_CHECK_HISTORY_LIMIT_SECONDS={{.RB_HEALTH_CHECK_HISTORY_LIMIT_SECONDS | default "20"}}
+      - RB_HEALTH_CHECK_SUCCESS_THRESHOLD={{.RB_HEALTH_CHECK_SUCCESS_THRESHOLD | default "0.75"}}
   - name: env-dp-project-manager
     behavior: create
     literals:
