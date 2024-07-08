@@ -41,6 +41,7 @@
             <class name="com.wso2.choreo.integration.tests.managedAuthentication.localDevelopment.LocalDevelopmentTests" />
             <class name="com.wso2.choreo.integration.tests.appdevUserManagement.AppdevUserManagementTests" />
             <class name="com.wso2.choreo.integration.tests.appdevAuthorization.AppdevAuthorizationTests" />
+            <class name="com.wso2.choreo.integration.tests.auditLogging.AuditLogging" />
         </classes>
     </test>
 </suite>
