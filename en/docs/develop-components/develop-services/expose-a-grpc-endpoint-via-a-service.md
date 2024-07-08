@@ -55,7 +55,7 @@ Let's get started!
 It is important to understand the purpose of the key files in the sample service. The following table provides a brief overview of each file in the greeter service.
 
 !!! note 
-    The following file paths are relative to the path `<sample-repository-dir>/go/grpc`.
+    The following file paths are relative to the path `<sample-repository-dir>/go-grpc`.
 
 |File Path                |Description                                                                                   |
 |-------------------------|----------------------------------------------------------------------------------------------|
@@ -68,15 +68,17 @@ It is important to understand the purpose of the key files in the sample service
 
 ### Configure the service port with endpoints
 
-Let's run the gRPC server service component on port 8080. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. In Choreo, you can expose your services with endpoints. You can read more about endpoints in our [endpoint documentation](https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-service/#what-are-endpoints-in-service-components).
+In Choreo, you can expose your services with endpoints.
+
+Let's run the gRPC server service component on port 8080. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. For detailed information on each attribute of an endpoint, see [Configure Endpoints](../configure-endpoints.md).
 
 Choreo looks for an `endpoints.yaml` file inside the `.choreo` directory to configure the endpoint details of the containerized component. Ensure the `.choreo` directory is at the root of the Docker build context path.
 
-In the gRPC server sample, the `endpoints.yaml` file is at `go/grpc/.choreo/endpoints.yaml`, where the build context path is `go/grpc`.
+In the gRPC server sample, the `endpoints.yaml` file is at `go-grpc/.choreo/endpoints.yaml`, where the build context path is `go-grpc`.
 
 ## Step 1: Create a service component with a gRPC endpoint
 
-Let's create a containerized Service component by following these steps:
+To create a containerized service component, follow these steps:
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
@@ -90,7 +92,7 @@ Let's create a containerized Service component by following these steps:
     |---------------------------|-------------------------|
     | **Component Display Name**| `Go gRPC Server`        |
     | **Component Name**        | `go-grpc-server`        |
-    | **Description**           | Sends greetings         |
+    | **Description**           | Send greetings          |
     
 5. Click the **GitHub** tab.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
@@ -118,11 +120,11 @@ Let's create a containerized Service component by following these steps:
     
     | **Field**                | **Value**                  |
     |--------------------------|----------------------------|
-    | **Docker Context**       | `go/grpc`                  |
-    | **Dockerfile**           | `go/grpc/Dockerfile.server`|
+    | **Docker Context**       | `go-grpc`                  |
+    | **Dockerfile**           | `go-grpc/Dockerfile.server`|
 
     !!! info
-        1.  To successfully build your container with Choreo, it is essential to explicitly define a User ID (UID) under the USER instruction in your Dockerfile. For reference, see the [sample Dockerfile](https://github.com/wso2/choreo-sample-apps/blob/main/go/greeter/Dockerfile).
+        1.  To successfully build your container with Choreo, it is essential to explicitly define a User ID (UID) under the USER instruction in your Dockerfile. For reference, see the [sample Dockerfile](https://github.com/wso2/choreo-samples/blob/main/go-grpc/Dockerfile.server).
         To ensure that the defined USER instruction is valid, it must conform to the following conditions:
             - A valid User ID is a numeric value between 10000-20000, such as `10001` or `10500`.
             - Usernames are considered invalid and should not be used. For example, `my-custom-user-12221` or `my-custom-user` are invalid User IDs.
@@ -171,7 +173,7 @@ To deploy the service, follow these steps:
 
 6. Once you have successfully deployed your service, navigate to the component overview page and copy the gRPC service URL. You need to provide that URL when setting up the client application later in this guide.
 
-You have successfully deployed the gRPC server. Currently, the gRPC service is only accessible for the components deployed within the same project.
+You have successfully deployed the gRPC server. Currently, the gRPC service is only accessible by the components deployed within the same project.
 
 ## Step 3: Invoke the gRPC service
 
@@ -184,7 +186,7 @@ To create a manual task component, follow these steps:
 1. On the Choreo Console header, click the **Project** list and select the project where you created the gRPC service component. This opens the project home page.
 2. Go to the **Component Listing** section and click **+ Create**.
 3. Click the **Manual Task** card.
-4. Enter a display name, unique name, and a description for the component. You can enter the values given below:
+4. Enter a display name, a unique name, and a description for the component. You can enter the values given below:
     
     !!! info
          In the **Component Name** field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.
