@@ -31,7 +31,7 @@ Before you try out this guide, complete the following:
 It is important to understand the purpose of the key files in the sample service. The following table provides a brief overview of each file in the greeter service:
 
 !!! note 
-    The specified file paths are relative to `<sample-repository-dir>/go/greeter`
+    The specified file paths are relative to `<sample-repository-dir>/greeting-service-go`
 
 |**Filepath**             |**Description**                                                               |
 |-------------------------|------------------------------------------------------------------------------|
@@ -44,11 +44,13 @@ Let's get started!
 
 ### Configure the service port with endpoints
 
-You are going to run the greeter service on port 9090. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. In Choreo, you expose services via endpoints. For detailed information on each attribute of an endpoint, see [Configure Endpoints](../configure-endpoints.md).
+In Choreo, you expose services via endpoints.
+
+You are going to run the greeter service on port 9090. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. For detailed information on each attribute of an endpoint, see [Configure Endpoints](../configure-endpoints.md).
 
 To configure the endpoint details of a containerized component, Choreo looks for an `endpoints.yaml` file inside the `.choreo` directory. Be sure to place the `.choreo` directory at the root of the Docker build context path.
 
-In the greeter sample, the `endpoints.yaml` file is in the `go/greeter/.choreo/` directory. 
+In the greeter sample, the `endpoints.yaml` file is in the `greeting-service-go/.choreo/` directory. 
 
 ## Step 1: Create a service component from a Dockerfile
 
@@ -57,12 +59,16 @@ To create a containerized service component, follow these steps:
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Service** card.
-4. Enter a unique name and a description for the service. For this guide, you can specify the following values:
+4. Enter a display name, a unique name, and a description for the service component. You can enter the values given below:
+    
+    !!! info
+         In the **Component Name** field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.
 
-    |**Field**              |     **Value**          |
-    |-----------------------|------------------------|
-    |Component Display Name | Greetings              |
-    |Description            | Sends greetings        |
+    | **Field**                 | **Value**          |
+    |---------------------------|--------------------|
+    | **Component Display Name**| `Greetings`        |
+    | **Component Name**        | `greetings`        |
+    | **Description**           | Send greetings     |
 
 5. Go to the **GitHub** tab.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
