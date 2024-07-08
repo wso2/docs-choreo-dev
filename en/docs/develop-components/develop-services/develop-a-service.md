@@ -53,12 +53,16 @@ To create a containerized service component, follow these steps:
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Service** card.
-4. Enter a unique name and a description for the service. For this guide, you can specify the following values:
+4. Enter a display name, a unique name, and a description for the service component. You can enter the values given below:
+    
+    !!! info
+         In the **Component Name** field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.
 
-    |**Field**              |     **Value**          |
-    |-----------------------|------------------------|
-    |Component Display Name | Greetings              |
-    |Description            | Sends greetings        |
+    | **Field**                 | **Value**          |
+    |---------------------------|--------------------|
+    | **Component Display Name**| `Greetings`        |
+    | **Component Name**        | `greetings`        |
+    | **Description**           | Send greetings     |
 
 5. Go to the **GitHub** tab.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
