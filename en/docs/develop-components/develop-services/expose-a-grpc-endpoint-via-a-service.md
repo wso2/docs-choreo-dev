@@ -12,7 +12,7 @@ By following this guide, you will:
 
     ```proto
     syntax = "proto3";
-    option go_package = "gtihub.com/wso2/choreo-sample-apps/go/grpc-greeter/pkg";
+    option go_package = "github.com/wso2/choreo-samples/go-grpc/pkg";
 
     service greeter {
       rpc SayHello (HelloRequest) returns (HelloReply) {}
