@@ -234,6 +234,9 @@ configMapGenerator:
       - DB_USER=choreo_platform_service_manager_db_user
       - DB_PORT=1433
       - SUBSCRIPTION_SVC_ADDRESS=subscriptions:9090
+      - RESOURCE_REGISTRY_SVC_URL=http://resource-registry:9090
+      - RESILIENT_INVOCATION_SVC_URL=http://cp-rrs:9095
+      - PLATFORM_SERVICES_MANAGER_SVC_URL=http://platform-services-manager:80
   - name: cm-dp-rudder
     behavior: create
     literals:
