@@ -37,7 +37,7 @@ spec:
                       - arm64
       containers:
         - name: interceptor
-          image: choreocontrolplane.azurecr.io/choreoipaas/dp-keda-http-add-on-interceptor:v0.8.0-6f03606d08b255fd1688930fb4c25ff3ebf88caa
+          image: choreocontrolplane.azurecr.io/choreoipaas/dp-keda-http-add-on-interceptor:latest
           env:
             - name: KEDA_HTTP_ROUTING_TABLE_UPDATE_DURATION_MS
               value: "500"
@@ -55,8 +55,8 @@ spec:
               value: "120000ms"
             - name: KEDA_CONDITION_WAIT_TIMEOUT
               value: "60s"
-            - name: KEDA_HTTP_ENDPOINTS_CACHE_POLLING_INTERVAL_MS
-              value: "250"
+            - name: KEDA_HTTP_DEPLOYMENT_CACHE_POLLING_INTERVAL_MS
+              value: "1000"
             - name: KEDA_HTTP_FORCE_HTTP2
               value: "false"
             - name: KEDA_HTTP_MAX_IDLE_CONNS
