@@ -14,6 +14,7 @@
 set -euo pipefail
 
 function az_login() {
+  echo "[INFO] Logging in to Azure"
   local client_id client_secret tenant_id
   client_id="$1"
   client_secret="$2"
@@ -26,6 +27,7 @@ function init_csv() {
   local headers path
   headers="$1"
   path="$2"
+  echo "[INFO] Initializing CSV file $path"
   touch "$path"
   echo "$headers" >"$path"
 }
@@ -48,7 +50,11 @@ az_login "$CLIENT_ID" "$CLIENT_SECRET" "$TENANT_ID"
 init_csv "Application ID, Application Name, Expired Date" "$OUTPUT_PATH"/expired_secrets.csv
 init_csv "Application ID, Application Name, Expires On" "$OUTPUT_PATH"/expiring_secrets.csv
 
+echo "[INFO] Getting entra application list"
 mapfile -t ad_apps < <(az ad app list --all --query "[].appId" | yq '.[]')
+echo "[INFO] found ${#ad_apps[@]} entra applications"
+
+echo "[INFO] Getting expiry details of entra applications"
 for ad_app in "${ad_apps[@]}"; do
     mapfile -t expiry < <(az ad app credential list --id "$ad_app" --query "[].endDateTime" | yq '.[]')
     if [ "${#expiry[@]}" -eq 0 ]; then
