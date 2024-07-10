@@ -165,7 +165,7 @@ To enable passing end-user attributes to the backend through API calls via Chore
 6. Optionally, specify appropriate audience values in the **End User Token Audiences** field. Specifying values restricts the JWT to the respective audiences, enabling the backend service to validate and confirm the intended recipients, including itself.
 
     !!! note
-        By default, the backend JWT does not include the audience field (aud). Therefore, anyone who receives the JWT can process it.
+        The backend JWT does not include the audience field (aud) by default.
 
 7. Click **Apply**.
 8. To redeploy the component with the applied setting, go to the **Set Up** card and click **Deploy**.
