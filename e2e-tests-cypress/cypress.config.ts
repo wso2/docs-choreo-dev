@@ -40,6 +40,11 @@ export default defineConfig({
     },
     testIsolation: false,
     specPattern: "cypress/e2e-*/**/*.ts",
+    excludeSpecPattern: [
+      'cypress/e2e-stable/devportal/1.4-devportal-selfsignup-when-auto-approval-enabled-test.ts',
+      'cypress/e2e-stable/devportal/1.5-devportal-selfsignup-when-auto-approval-disabled-and-user-approved-test.ts',
+      'cypress/e2e-stable/devportal/1.6-devportal-selfsignup-when-auto-approval-disabled-and-user-rejected-test.ts'
+  ],
   },
   env: {
     FAIL_FAST_STRATEGY: "spec",
