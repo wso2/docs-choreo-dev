@@ -62,7 +62,9 @@ areaOwners:
       - janakas@wso2.com
   - testClass: com.wso2.choreo.integration.tests.observability.SysObservabilityAPITestCase
     assignees:
-      - rasikam@wso2.com
+      - lakmal@wso2.com
+      - tharinduw@wso2.com
+      - nilushan@wso2.com
   - testClass: com.wso2.choreo.integration.tests.insights.InsightsAPI
     assignees:
       - lakmal@wso2.com
@@ -80,7 +82,9 @@ areaOwners:
       - rukshan@wso2.com
   - testClass: com.wso2.choreo.integration.tests.logs.DPLogsAPITestCase
     assignees:
-      - rasikam@wso2.com
+      - lakmal@wso2.com
+      - tharinduw@wso2.com
+      - nilushan@wso2.com
   - testClass: com.wso2.choreo.integration.tests.dp.TestManualTriggerDp
     assignees:
       - asankaab@wso2.com
@@ -190,3 +194,7 @@ areaOwners:
     assignees:
       - suvin@wso2.com
       - senthalan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.auditLogging.AuditLogging
+    assignees:
+      - sumedhas@wso2.com
+      - rolandh@wso2.com
