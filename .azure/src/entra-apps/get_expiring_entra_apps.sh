@@ -44,6 +44,12 @@ fi
 if [[ -z "${OUTPUT_PATH}" ]]; then
   OUTPUT_PATH=""
 fi
+if [[ -z "${BUILD_URL}" ]]; then
+  BUILD_URL=""
+fi
+if [[ -z "${WEBHOOK_URL}" ]]; then
+  WEBHOOK_URL=""
+fi
 
 
 az_login "$CLIENT_ID" "$CLIENT_SECRET" "$TENANT_ID"
@@ -80,3 +86,18 @@ for ad_app in "${ad_apps[@]}"; do
         done
     fi
 done
+
+expiring_secret_count=$(tail -n +2 "$OUTPUT_PATH"/expiring_secrets.csv | wc -l)
+expired_secret_count=$(tail -n +2 "$OUTPUT_PATH"/expired_secrets.csv | wc -l)
+
+if [ "$expiring_secret_count" -gt 0 ]; then
+  echo "[WARNING] There are $expiring_secret_count secrets expiring within a month"
+  export EXPIRING_ENTRA_APPS_COUNT="$expiring_secret_count"
+  export EXPIRED_ENTRA_APPS_COUNT="$expired_secret_count"
+
+  message_body=$(envsubst < message.json)
+  curl -sX POST "$WEBHOOK_URL" \
+        -H 'Content-Type: application/json' \
+        -d "$message_body"
+  exit 1
+fi
