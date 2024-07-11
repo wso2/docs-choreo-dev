@@ -73,11 +73,13 @@ for entry in "${excluded_entra_apps[@]}"; do
 done
 
 ad_apps=()
+set +u
 for item in "${raw_entra_apps[@]}"; do
-  if [[ -z "${remove_map["$item"]}" ]]; then
+  if [[ -z "${remove_map[$item]}" ]]; then
     ad_apps+=("$item")
   fi
 done
+set -u
 
 echo "[INFO] Getting expiry details of ${#ad_apps[@]} entra applications"
 for ad_app in "${ad_apps[@]}"; do
