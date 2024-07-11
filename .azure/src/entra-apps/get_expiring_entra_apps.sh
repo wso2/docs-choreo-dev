@@ -50,6 +50,9 @@ fi
 if [[ -z "${WEBHOOK_URL}" ]]; then
   WEBHOOK_URL=""
 fi
+if [[ -z "${EXCLUDED_FILE_PATH}" ]]; then
+  EXCLUDED_FILE_PATH=""
+fi
 
 
 az_login "$CLIENT_ID" "$CLIENT_SECRET" "$TENANT_ID"
@@ -57,10 +60,26 @@ init_csv "Application ID, Application Name, Expired Date" "$OUTPUT_PATH"/expired
 init_csv "Application ID, Application Name, Expires On" "$OUTPUT_PATH"/expiring_secrets.csv
 
 echo "[INFO] Getting entra application list"
-mapfile -t ad_apps < <(az ad app list --all --query "[].appId" | yq '.[]')
-echo "[INFO] found ${#ad_apps[@]} entra applications"
+mapfile -t raw_entra_apps < <(az ad app list --all --query "[].appId" | yq '.[]')
+echo "[INFO] found ${#raw_entra_apps[@]} entra applications"
 
-echo "[INFO] Getting expiry details of entra applications"
+echo "[INFO] Getting excluded entra application list"
+mapfile -t excluded_entra_apps < <(yq '.excludedEntraAppIDs[]' excluded-apps.yaml)
+echo "[INFO] found ${#excluded_entra_apps[@]} entra applications to exclude"
+
+declare -A remove_map
+for entry in "${excluded_entra_apps[@]}"; do
+  remove_map["$entry"]=1
+done
+
+ad_apps=()
+for item in "${raw_entra_apps[@]}"; do
+  if [[ -z "${remove_map[$item]}" ]]; then
+    ad_apps+=("$item")
+  fi;
+done
+
+echo "[INFO] Getting expiry details of ${#ad_apps[@]} entra applications"
 for ad_app in "${ad_apps[@]}"; do
     mapfile -t expiry < <(az ad app credential list --id "$ad_app" --query "[].endDateTime" | yq '.[]')
     if [ "${#expiry[@]}" -eq 0 ]; then
