@@ -83,6 +83,7 @@ set -u
 
 echo "[INFO] Getting expiry details of ${#ad_apps[@]} entra applications"
 for ad_app in "${ad_apps[@]}"; do
+    all_secrets_expired="true"
     mapfile -t expiry < <(az ad app credential list --id "$ad_app" --query "[].endDateTime" | yq '.[]')
     if [ "${#expiry[@]}" -eq 0 ]; then
         echo "[INFO] No secret is found for application: $ad_app"
@@ -94,17 +95,21 @@ for ad_app in "${ad_apps[@]}"; do
                 expiry_date=$(date -d "$exp" +%s)
                 current_date=$(date +%s)
                 one_month_later=$(date -d "+1 month" +%s)
-                if [ "$expiry_date" -lt "$current_date" ]; then
-                  echo "[ERROR] Secret is expired for application: $ad_app"
-                  app_name=$(az ad app show --id "$ad_app" --query "displayName" | yq .)
-                  echo "$ad_app, $app_name, $exp" >> "$OUTPUT_PATH"/expired_secrets.csv
-                elif [ "$expiry_date" -lt "$one_month_later" ]; then
+                if [ "$expiry_date" -ge "$current_date" ] && [ "$expiry_date" -le "$one_month_later" ]; then
                   echo "[WARNING] Secret is expiring within a month for application: $ad_app"
                   app_name=$(az ad app show --id "$ad_app" --query "displayName" | yq .)
                   echo "$ad_app, $app_name, $exp" >> "$OUTPUT_PATH"/expiring_secrets.csv
+                  all_secrets_expired="false"
+                elif [ "$expiry_date" -gt "$one_month_later" ]; then
+                  all_secrets_expired="false"
                 fi
             fi
         done
+        if [ "$all_secrets_expired" == "true" ]; then
+            echo "[ERROR] All secrets are expired for application: $ad_app"
+            app_name=$(az ad app show --id "$ad_app" --query "displayName" | yq .)
+            echo "$ad_app, $app_name, $exp" >> "$OUTPUT_PATH"/expired_secrets.csv
+        fi
     fi
 done
 
