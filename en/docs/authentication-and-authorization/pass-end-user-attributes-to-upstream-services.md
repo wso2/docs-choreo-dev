@@ -158,10 +158,14 @@ To enable passing end-user attributes to the backend through API calls via Chore
 3. In the left navigation menu, click **Deploy**.
 4. Go to the **Set Up** card and click **Endpoint Configurations**. This opens the **Endpoint Configurations** pane.
 
-    !!! info
+    !!! note
          If the component is an API Proxy, go to the **Build Area** card and click **Security Settings**. This opens the **Security Settings** pane.
    
 5. Select the **Pass Security Context To Backend** checkbox.
-6. Optionally, specify an appropriate audience claim value for the backend service.
+6. Optionally, specify appropriate audience values in the **End User Token Audiences** field. Specifying values restricts the JWT to the respective audiences, enabling the backend service to validate and confirm the intended recipients, including itself.
+
+    !!! note
+        The backend JWT does not include the audience field (aud) by default.
+
 7. Click **Apply**.
 8. To redeploy the component with the applied setting, go to the **Set Up** card and click **Deploy**.
