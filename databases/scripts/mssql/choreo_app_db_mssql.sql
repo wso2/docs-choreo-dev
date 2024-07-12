@@ -1707,8 +1707,9 @@ CREATE TABLE [dbo].[org_self_signup_config]
     [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
-    CONSTRAINT unique_org_self_signup_config UNIQUE(organization_uuid)
-)
+    CONSTRAINT unique_org_self_signup_config UNIQUE (organization_uuid),
+    CONSTRAINT signup_config_org_uuid_fk FOREIGN KEY (organization_uuid) REFERENCES organization(uuid) ON DELETE CASCADE
+);
 
 CREATE TABLE [dbo].[org_self_signup_approval_request]
 (
@@ -1721,6 +1722,7 @@ CREATE TABLE [dbo].[org_self_signup_approval_request]
     [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     CONSTRAINT unique_org_self_signup_approval_request UNIQUE(organization_uuid, user_idp_id)
+    CONSTRAINT signup_config_org_uuid_fk FOREIGN KEY (organization_uuid) REFERENCES organization(uuid) ON DELETE CASCADE
 )
 
 CREATE TABLE [dbo].[enterprise_group_role_mapping]
@@ -1764,6 +1766,7 @@ CREATE TABLE [dbo].[org_enterprise_login_config]
     [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     CONSTRAINT unique_org_enterprise_login_config UNIQUE(organization_uuid)
+    CONSTRAINT signup_config_org_uuid_fk FOREIGN KEY (organization_uuid) REFERENCES organization(uuid) ON DELETE CASCADE
 )
 
 CREATE TABLE [dbo].[org_activity]
