@@ -87,6 +87,7 @@ for ad_app in "${ad_apps[@]}"; do
     mapfile -t expiry < <(az ad app credential list --id "$ad_app" --query "[].endDateTime" | yq '.[]')
     if [ "${#expiry[@]}" -eq 0 ]; then
         echo "[INFO] No secret is found for application: $ad_app"
+        all_secrets_expired="false"
     else
         for exp in "${expiry[@]}"; do
             if [ "$exp" == "null" ]; then
