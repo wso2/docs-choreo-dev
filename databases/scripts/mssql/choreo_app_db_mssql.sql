@@ -538,7 +538,8 @@ CREATE TABLE [dbo].[member_invitation_v2](
     [invited_application] [nvarchar](255) NOT NULL,
     [created_at] [datetime] NOT NULL,
     [updated_at] [datetime] NOT NULL,
-    CONSTRAINT [PK_member_invitation_v2_invitation_id] PRIMARY KEY CLUSTERED
+    CONSTRAINT [PK_member_invitation_v2_invitation_id] PRIMARY KEY CLUSTERED,
+    CONSTRAINT [FK_member_invitation_v2_organization_id] FOREIGN KEY (organization_id) REFERENCES organization (id) ON DELETE CASCADE
 (
 [invitation_id] ASC
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
@@ -1890,7 +1891,7 @@ CREATE TABLE [dbo].[global_configuration_data](
     CONSTRAINT [global_configuration_data$config_uuid_fk] FOREIGN KEY (config_uuid) REFERENCES dbo.global_configuration(uuid)
 )
 
-CREATE TABLE [dbo].[suspended_members]
+CREATE TABLE [dbo].[inactive_user]
 (
     [id] [int] IDENTITY(1,1) NOT NULL,
     [user_idp_id] [nvarchar](255) NOT NULL,
@@ -1899,8 +1900,9 @@ CREATE TABLE [dbo].[suspended_members]
     [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
-    CONSTRAINT unique_suspended_members UNIQUE(user_idp_id, organization_uuid)
-)
+    CONSTRAINT unique_suspended_members UNIQUE(user_idp_id, organization_uuid),
+    CONSTRAINT FK_inactive_user_organization_uuid FOREIGN KEY (organization_uuid) REFERENCES organization(uuid) ON DELETE CASCADE
+);
 
 CREATE TABLE [dbo].[enterprise_group_mapping]
 (
