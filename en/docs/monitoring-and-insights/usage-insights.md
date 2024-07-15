@@ -1,10 +1,34 @@
-# View Usage Insights
+# Choreo Analytics Overview
 
-This section explains how you can view insights about the APIs deployed in your organization.
+Choreo Analytics provides comprehensive insights into the APIs created within both the on-prem API Manager and Choreo
+platform. This powerful tool offers multiple insights, including API traffic, error rates, and latency, enabling users
+to monitor and optimize API performance effectively.
+
+Key features include:
+
+- **API Traffic Analysis**: Monitor the volume of requests and responses to understand usage patterns.
+- **Error Tracking**: Identify and analyze errors to improve API reliability.
+- **Latency Monitoring**: Measure and optimize the response times of your APIs.
+- **Reporting Capabilities**: Generate detailed reports to keep stakeholders informed and support data-driven decision-making.
+- **Alerts**: Set up alerts for specific events or thresholds to stay proactive in managing API performance.
+- **Granular Insights**: Obtain detailed information application-wise, API-wise, and user-wise for more targeted analysis.
+- **Drill Down Capabilities**: Dive deeper into data for thorough examination and root cause analysis.
+
+By leveraging these insights, businesses can make informed decisions to enhance their API strategies and overall digital transformation initiatives.
 
 ## Access the Insights page
 
 To open the **Usage Insights** page, access the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/), and click **Usage Insights** in the left navigation menu.
+
+When the selected environment is a Choreo environment and the user views insights at the organization level, the following considerations apply:
+
+- **Permission-Based Access**: Logged-in users can only view analytics if they have permission to access the respective component or project.
+- **Data Exclusion**: Insights will not include data about components the user does not have access to, nor will it include data related to deleted components.
+- **Comprehensive View Requirements**: To view insights for all components, including deleted ones, across the organization regardless of project visibility, users need the `View Organization Insights` permission under `OBSERVABILITY-MANAGEMENT` with the mapping level defined at the `Organization` level.
+- **Admin Role**: By default, only users with the admin role have the `View Organization Insights` permission and can view organization-wide insights.
+- **Configuring Permissions**: For detailed steps on configuring permissions, refer to the [Control Access in the Choreo Console](/choreo/docs/administer/control-access-in-the-choreo-console/).
+
+By ensuring proper permissions are set, organizations can manage access to analytics effectively while maintaining data security and relevance.
 
 ## Analyzing statistics
 
