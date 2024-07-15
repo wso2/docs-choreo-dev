@@ -1416,7 +1416,7 @@ vars.put(&quot;projectId&quot;, backendProjectId);</stringProp>
               <hashTree/>
             </hashTree>
           </hashTree>
-          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Invoke If" enabled="false">
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Invoke If" enabled="true">
             <boolProp name="IfController.evaluateAll">false</boolProp>
             <boolProp name="IfController.useExpression">true</boolProp>
             <stringProp name="IfController.condition">${__jexl3(&quot;${deployState}&quot; == &quot;ACTIVE&quot; &amp;&amp; &quot;${endpointState}&quot; == &quot;Active&quot;  )}</stringProp>
