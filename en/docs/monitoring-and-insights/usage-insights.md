@@ -1,6 +1,6 @@
-# Choreo Analytics Overview
+# Choreo Insights Overview
 
-Choreo Analytics provides comprehensive insights into the APIs created within both the on-prem API Manager and Choreo
+Choreo Insights provides comprehensive insights into the APIs created within both the on-prem API Manager and Choreo
 platform. This powerful tool offers multiple insights, including API traffic, error rates, and latency, enabling users
 to monitor and optimize API performance effectively.
 
@@ -22,13 +22,13 @@ To open the **Usage Insights** page, access the Choreo Console at [https://conso
 
 When the selected environment is a Choreo environment and the user views insights at the organization level, the following considerations apply:
 
-- **Permission-Based Access**: Logged-in users can only view analytics if they have permission to access the respective component or project.
+- **Permission-Based Access**: Logged-in users can only view insights if they have permission to access the respective component or project.
 - **Data Exclusion**: Insights will not include data about components the user does not have access to, nor will it include data related to deleted components.
 - **Comprehensive View Requirements**: To view insights for all components, including deleted ones, across the organization regardless of project visibility, users need the `View Organization Insights` permission under `OBSERVABILITY-MANAGEMENT` with the mapping level defined at the `Organization` level.
 - **Admin Role**: By default, only users with the admin role have the `View Organization Insights` permission and can view organization-wide insights.
 - **Configuring Permissions**: For detailed steps on configuring permissions, refer to the [Control Access in the Choreo Console](/choreo/docs/administer/control-access-in-the-choreo-console/).
 
-By ensuring proper permissions are set, organizations can manage access to analytics effectively while maintaining data security and relevance.
+By ensuring proper permissions are set, organizations can manage access to insights effectively while maintaining data security and relevance.
 
 ## Analyzing statistics
 
