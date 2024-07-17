@@ -516,7 +516,6 @@ token_endpoint="{{.ASGARDEO_SYSTEM_APP_TOKEN_ENDPOINT}}"
 client_id="CHOREO_SYSTEM_APP_MANAGER"
 client_secret="$env{ASGARDEO_SYSTEM_APP_CLIENT_SECRET}"
 authz_endpoint="{{.ASGARDEO_SYSTEM_AUTHZ_TOKEN_ENDPOINT}}"
-asgardeo_authz_endpoint="{{.ASGARDEO_AUTHORIZATION_ENDPOINT}}"
 
 {{range .PER_ORG_SETTINGS}}
 [[choreo.asgardeo.per_org_settings]]
