@@ -176,10 +176,11 @@ nav:
       - Delivery Insights:
           - Configure DORA Metrics: monitoring-and-insights/delivery-insights/configure-dora-metrics.md
           - View DORA Metrics: monitoring-and-insights/delivery-insights/view-dora-metrics.md
-      - Usage Insights: monitoring-and-insights/usage-insights.md
+      - Usage Insights: 
+          - Insights Overview: monitoring-and-insights/insights-overview.md
+          - Configure Alerts: monitoring-and-insights/alerts/configure-alerts.md
+          - Generate Custom Reports: monitoring-and-insights/generate-custom-reports.md
       - View Logs: monitoring-and-insights/view-logs.md
-      - Generate Custom Reports: monitoring-and-insights/generate-custom-reports.md
-      - Configure Alerts: monitoring-and-insights/alerts/configure-alerts.md
       - Work with the Choreo Insights API:
           - Access the Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
           - Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md 
@@ -374,6 +375,7 @@ plugins:
           'develop-components/sharing-and-reusing/share-and-reuse-services.md': 'https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-service/'
           'develop-components/sharing-and-reusing/share-and-reuse-web-applications.md': 'https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-web-application/'
           'manage-databases-and-caches/choreo-managed-redis-datastores.md': 'https://wso2.com/choreo/docs/manage-databases-and-caches/choreo-managed-caches/'
+          'monitoring-and-insights/usage-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/insights-overview/'
 
 extra_css:
   # - assets/lib/highlightjs/default.min.css
