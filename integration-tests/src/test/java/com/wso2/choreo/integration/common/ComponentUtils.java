@@ -1264,6 +1264,14 @@ public class ComponentUtils {
                 project, choreoComponent, env, true);
     }
 
+    public static void verifyComponentLevelAppMetrics(TestNGCitrusSpringSupport runner,
+            Map<Endpoints, HttpClient> citrusDPClients,
+            String accessToken, ChoreoComponent choreoComponent, Environment env, ChoreoProject project)
+            throws Exception {
+        DPObsApiService.getComponentAppMetrics(runner, citrusDPClients, accessToken,
+                choreoComponent, env, project);
+    }
+
     public static void verifyComponentLevelDPLogsLive(TestNGCitrusSpringSupport runner,
             Map<Endpoints, HttpClient> citrusDPClients,
             String accessToken, ChoreoProject project, ChoreoComponent component, Environment env) throws Exception {

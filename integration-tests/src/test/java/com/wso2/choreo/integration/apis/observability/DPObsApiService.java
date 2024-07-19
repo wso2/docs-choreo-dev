@@ -49,6 +49,8 @@ import static com.consol.citrus.container.RepeatUntilTrue.Builder.repeat;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.greaterThan;
 
 public class DPObsApiService extends DataPlaneSystemAPI {
 
@@ -320,6 +322,20 @@ public class DPObsApiService extends DataPlaneSystemAPI {
             }
         };
     }
+
+    private static HashMap<String, String> getComponentMetricsBody(Environment environment,
+        ChoreoComponent choreoComponent) throws NoLatestApiVersionFoundException {
+        TimeRangeISO timeRangeISO = getTimeRangeISO();
+        String releaseId = choreoComponent.getReleaseIdForEnvironment(environment);
+        return new HashMap<>() {
+            {
+                put("breakSize", "840s"); // TODO: which value?
+                put("destinationReleaseId", releaseId);
+                put("from", timeRangeISO.getStartTime());
+                put("to", timeRangeISO.getEndTime());
+            }
+        };
+    }
     public static void getProjectMetrics(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients, 
         String accessToken, ChoreoProject choreoProject, ChoreoComponent choreoComponent, Environment environment, 
         Boolean enableLive) throws IOException {
@@ -372,5 +388,55 @@ public class DPObsApiService extends DataPlaneSystemAPI {
                         )
         ));
 
+    }
+
+    public static void getComponentAppMetrics(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients,
+        String accessToken, ChoreoComponent choreoComponent, Environment environment, ChoreoProject choreoProject) throws NoLatestApiVersionFoundException, IOException {
+        HashMap<String, String> params = getComponentMetricsBody(environment, choreoComponent);
+        String body = MessageUtils.
+                generateStringFromTemplate("templates/observability/graphql/queryForApplicationObservabilityMetrics.mustache", params);
+        HttpClient client = citrusClients.get(Endpoints.CHOREO_US_DP_URL);
+        if (Constant.region.EU.toString().equals(choreoProject.getRegion().toString())) {
+            client = citrusClients.get(Endpoints.CHOREO_EU_DP_URL);
+        }
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.DP_OBSERVABILITY_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(body)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                                .validate(jsonPath()
+                                        .expression("$.data.hubbleRequestMetrics.keySet()", 
+                                                hasItems("failedRequestCountHistogram", "latencyMeanHistogram", 
+                                                "latencyPercentiles", "latencyPercentilesHistogram",
+                                                "successfulRequestCountHistogram", "totalRequestCountHistogram"))
+                                        .expression("$.data.hubbleRequestMetrics.latencyMeanHistogram.size()", greaterThan(1))
+                                        .expression("$.data.hubbleRequestMetrics.latencyMeanHistogram[0].keySet()", hasItems("time", "value"))
+                                        .expression("$.data.hubbleRequestMetrics.latencyPercentiles.size()", greaterThan(1))
+                                        .expression("$.data.hubbleRequestMetrics.latencyPercentilesHistogram.size()", greaterThan(1))
+                                        .expression("$.data.hubbleRequestMetrics.latencyPercentilesHistogram[0].keySet()", hasItems("time", "values"))
+                                        .expression("$.data.hubbleRequestMetrics.successfulRequestCountHistogram.size()", greaterThan(1))
+                                        .expression("$.data.hubbleRequestMetrics.successfulRequestCountHistogram[0].keySet()", hasItems("time", "value"))
+                                        .expression("$.data.hubbleRequestMetrics.failedRequestCountHistogram.size()", greaterThan(1))
+                                        .expression("$.data.hubbleRequestMetrics.failedRequestCountHistogram[0].keySet()", hasItems("time", "value"))
+                                        .expression("$.data.hubbleRequestMetrics.totalRequestCountHistogram.size()", greaterThan(1))
+                                        .expression("$.data.hubbleRequestMetrics.totalRequestCountHistogram[0].keySet()", hasItems("time", "value"))
+                                )
+                        )
+                );
     }
 }
