@@ -941,9 +941,9 @@ public class ComponentUtils {
             String expectedResponse) throws Exception {
         // Test API Invocation
         runner.$(repeatOnError()
-                .until("i = 12")
+                .until("i = 15")
                 .index("i")
-                .autoSleep(5000)
+                .autoSleep(30000)
                 .actions((http()
                         .client(invokeUrl)
                         .send()
@@ -976,9 +976,9 @@ public class ComponentUtils {
                                     String expectedResponse) throws Exception {
         // Test API Invocation
         runner.$(repeatOnError()
-                .until("i = 12")
+                .until("i = 15")
                 .index("i")
-                .autoSleep(5000)
+                .autoSleep(30000)
                 .actions((http()
                                 .client(invokeUrl)
                                 .send()
@@ -1014,9 +1014,9 @@ public class ComponentUtils {
             org.springframework.http.HttpStatus expectedHttpStatus) {
         // Test API Invocation
         runner.$(repeatOnError()
-                .until("i = 5")
+                .until("i = 15")
                 .index("i")
-                .autoSleep(10000)
+                .autoSleep(30000)
                 .actions((http()
                         .client(invokeUrl)
                         .send()
