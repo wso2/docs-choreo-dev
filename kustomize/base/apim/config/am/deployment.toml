@@ -502,6 +502,12 @@ http_method = "all"
 permissions = ["/permission/protected/"]
 
 [[resource.access_control]]
+context="/services/(.*)"
+secure=true
+http_method="all"
+permissions=["/permission/protected/"]
+
+[[resource.access_control]]
 context = "(.*)/((\\.+)|(.*;+.*)|%2e)/(.*)"
 http_method = "all"
 permissions = ["/"]
