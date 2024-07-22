@@ -10,7 +10,6 @@ In this guide, you will:
  - Manage the API.
  - Consume the API.
  
-
 ## Prerequisites
 
 Before you try out this guide, complete the following:
@@ -32,17 +31,21 @@ Follow the steps given below:
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
-3. Click the **API Proxy** card under **Create a Component**.
+3. Click the **API Proxy** card.
    This opens the **Create an API Proxy** pane, where you can upload an OpenAPI definition or provide the URL of an OpenAPI. In this guide, you will define resources manually. Therefore, click **Skip Source** to proceed.
-4. Specify the values given in the following table as API proxy details: 
+4. Specify the values given in the following table as API proxy details:
+    
+    !!! info
+         In the **Name** field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.
 
-    |  **Field**    | **Value**                                   |
-    |---------------|---------------------------------------------|
-    | **Name**      | `HR API`                                    |
-    | **Context**   | `abc-hr`                                    |
-    | **Version**   | `1.0`                                       |
-    | **Target**    | `https://samples.choreoapps.dev/company/hr` |
-    |**Access Mode**| **External**                                |
+    |  **Field**       | **Value**                                  |
+    |------------------|--------------------------------------------|
+    | **Display Name** | `HR API`                                   |
+    | **Name**         | `hr-api`                                   |
+    | **Context**      | `abc-hr`                                   |
+    | **Version**      | `1.0`                                      |
+    | **Target**       | `https://samples.choreoapps.dev/company/hr`|
+    | **Access Mode**  | **External**                               |
 
 5.  Click **Create**.
    
@@ -50,7 +53,7 @@ Follow the steps given below:
 
 ## Step 2: Define resources for the API proxy
 
-To add a new resource that can retrieve the department ID, follow the steps given below:
+To add a new resource that can retrieve a department by the department ID, follow the steps given below:
 
 1. In the left navigation menu, click **Develop** and then click **Resources**.
 2. Select **GET** as the **HTTP Verb** and enter `/department/{departmentId}` as the **URI Pattern**.
@@ -60,7 +63,7 @@ To add a new resource that can retrieve the department ID, follow the steps give
     | **Field**        | **Value**                            |
     |------------------|--------------------------------------|
     | **Operation ID** | `findDepartment`                     |
-    | **Description**  | `Find a department by Department ID` |
+    | **Description**  | `Find a department by department ID` |
 
  5. To remove the five default resources that start with `/*`, click the delete icon corresponding to each resource. This marks the resources for deletion.
  6. Click **Save**.
@@ -71,9 +74,9 @@ To deploy the API proxy to the development environment, follow the steps given b
 
 1. In the left navigation menu, click **Deploy**.
 
-2. In the **Build Area** card, click **Configure & Deploy**. This opens the **Configure & Deploy** pane, where you can provide endpoint details depending on your requirement for specific environments. In this guide, you will proceed with the populated endpoint details.
+2. In the **Build Area** card, click **Configure & Deploy**. This opens the **Configure & Deploy** pane, where you can select the API access mode depending on how you want the API to be accessible. Here, you can  select **External**.
 
-3. Click **Save & Deploy**. The **Development** card indicates the **Deployment Status** as **Active** when the API proxy is successfully deployed.
+3. Click **Deploy**. The **Development** card indicates the **Deployment Status** as **Active** when the API proxy is successfully deployed.
 
 Now you are ready to test the API proxy.
 
@@ -96,6 +99,7 @@ Follow the steps given below:
                  - To disable security for the entire API, clear the **OAuth2** checkbox.
                  - To disable security for a specific API resource, go to the **Permissions** section, click to expand the relevant resource and then turn off the **Security** toggle.
              4. Click **Apply**.
+
 
 1. In the left navigation menu, click **Test** and then click **OpenAPI Console**.
 
@@ -133,7 +137,7 @@ To publish the API proxy to the Choreo Developer Portal, follow the steps given 
 
 1. In the left navigation menu, click **Lifecycle** under **Manage**. This takes you to the **Lifecycle** page where you can see the different lifecycle stages the API can be in. You can see that the current lifecycle stage is **Created**.
 2. Click **Publish**. 
-3. In the **Publish API** dialog that opens, click **Confirm** to proceed publishing the API with the specified display name. If you want to change the display name, make the necessary changes and then click **Confirm**. This changes the API lifecycle state to **Published**.
+3. In the **Publish API** dialog that opens, click **Confirm** to proceed publishing the API with the specified display name. If you want to change the display name, make the necessary changes and then click **Confirm**. This changes the API lifecycle state to **Published**. 
 
 ## Step 5: Invoke the API 
 

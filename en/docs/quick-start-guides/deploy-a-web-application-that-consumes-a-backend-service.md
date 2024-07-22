@@ -65,16 +65,25 @@ To connect to the repository you forked in the prerequisites and configure the s
              
            You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
-4. Select **`main`** as the branch.
-5. In the **Add Component Directories** pane under **Configure Components**, go to the `reading-list-service` and click the **+** icon corresponding to it.
+4. Enter the following information:
+
+    | **Field**                    | **Value**                   |
+    |------------------------------|-----------------------------|
+    | **Organization**             | Your GitHub account         |
+    | **Repository**               | choreo-sample-book-list-app |
+    | **Branch**                   | **`main`**                  |
+
+5. In the **Add Component Directories** pane under **Configure Components**, click the **+** icon corresponding to `reading-list-service`.
 6. In the **Component Configuration** dialog that opens, specify values as follows for each of the fields:
 
-    | **Field**             | **Value**                                     |
-    |-----------------------|-----------------------------------------------|
-    | **Component Name**    | Reading List Service                          |
-    | **Component Type**    | Service                                       |
-    | **Buildpack**         | NodeJS                                        |
-    | **Language Version**  | 20.x.x                                        |     
+    | **Field**                 | **Value**                                     |
+    |---------------------------|-----------------------------------------------|
+    | **Component Display Name**| Reading List Service                          |
+    | **Component Name**        | reading-list-service                          |
+    | **Path**                  | reading-list-service                          |
+    | **Component Type**        | Service                                       |
+    | **Buildpack**             | NodeJS                                        |
+    | **Language Version**      | 20.x.x                                        |     
 
 7. Click **Save**. This adds the `Reading List Service` component to the **Configured Components** pane.
 8. Click **Finish**. This initializes the service with the implementation from your GitHub repository and takes you to the project home page.
@@ -98,8 +107,8 @@ For the REST endpoint of the service to be invokable, you need to deploy it. To 
 
 1. In the left navigation menu, click **Deploy**.
 2. In the **Set Up** card, click **Configure & Deploy**.
-3. In the **Environment Configurations** pane that opens, click **Next**.
-4. In the **File Mount** pane that opens, click **Next**.
+3. In the **Environment Configurations** pane that opens, click **Next** to skip the configuration.
+4. In the **File Mount** pane that opens, click **Next** to skip the configuration.
 5. In the **Endpoint Details** pane that opens, verify that the **Network Visibility** is set to **Public**. This setting securely exposes the endpoint for consumption.
 6. Click **Deploy**. This deploys the service to the development environment and lists the service in the [Choreo Marketplace](../choreo-concepts/choreo-marketplace.md). 
 
@@ -110,15 +119,15 @@ To test the endpoint via the integrated OpenAPI Console in Choreo, follow the st
 1. In the Choreo Console left navigation menu, click **Test** and then click **Console**.
 2. In the OpenAPI Console that opens, select **Development** from the environment drop-down list.
 3. In the **Endpoint** list, select **Books REST Endpoint**.
-4. Expand the **GET** method and click **Try it out**.
-5. Click **Execute**.
-6. Check the **Server Response** section. You will see an empty response. You can add an entry using the POST method and re-test the service. 
-7. Expand the **POST** method and click **Try it out**.
+4. Expand the **GET/books** method, click **Try it out**, then click **Execute**.
+5. Click .
+6. Check the **Server Response** section. You will see an empty response. You can add an entry using the POST method and retry the **GET/books** method again. 
+7. Expand the **POST/books** method and click **Try it out**.
 8. Update the request body so that the parameters have the values given below:
 
-    | **Parameter** | **Value**       |
-    |---------------|-----------------|
-    | **author**    | Bram Stoker    |
+    | **Parameter** | **Value**     |
+    |---------------|---------------|
+    | **author**    | Bram Stoker   |
     | **status**    | to_read       |
     | **title**     | Dracula       |
 
@@ -149,15 +158,19 @@ To host the front-end application in Choreo, you will create a web application c
 
 To create a web application component, follow the steps given below:
 
-1. In the Choreo Console header, click the **Project** list to open the project home page.
+1. In the Choreo Console header, click the **Project** list and select the project that you created in step 1.
 2. On the project home page, click **+ Create** under **Component Listing**. 
 3. Click the **Web Application** card.
-4. To create the web application, specify the following values for each of the fields:
+4. Enter a display name, unique name, and a description to create the web application. You can enter the values given below:
+    
+    !!! info
+         In the **Component Name** field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.
 
-    | **Field**             | **Value**               |
-    |-----------------------|-------------------------|
-    | **Component Name**    | Reading List Web App    |
-    | **Description**       | Front-end application for the reading list service |
+    |Field                 |     Value              |
+    |----------------------|------------------------|
+    |Component Display Name| Reading List Web App   |
+    |Component Name        | reading-list-web-app   |
+    |Description           | Front-end application for the reading list service |
 
 5. Go to the **GitHub** tab.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
@@ -180,17 +193,17 @@ To create a web application component, follow the steps given below:
     | **Repository**        | choreo-sample-book-list-app      |
     | **Branch**            | main                             |
 
-6. Select **React** as the buildpack because the sample front-end application is a React application built with Vite.
-7. Enter the following information:
+8. Select **React** as the buildpack because the sample front-end application is a React application built with Vite.
+9. Enter the following information:
 
     | **Field**             | **Value**               |
     |-----------------------|-------------------------|
     | **Project Directory** | /choreo-sample-book-list-app/reading-list-front-end-with-managed-auth |
-    | **Build Command**     | npm install && npm run build            |
+    | **Build Command**     | npm install && npm run build         |
     | **Build Path**        | dist                                 |
     | **Node Version**      | 18                                   |
 
-8. Click **Create**. This initializes the component with the implementation from your GitHub repository and takes you to the **Overview** page of the component. 
+10. Click **Create**. This initializes the component with the implementation from your GitHub repository and takes you to the **Overview** page of the component. 
 
 ### Step 6.2: Create a connection between the web application and the deployed service
 
@@ -200,30 +213,26 @@ To establish a connection between the web application you created and the deploy
 
 1. In the left navigation menu, click **Dependencies** and then click **Connections**.
 2. Click **+ Create**.
-3. In the **Create Connection** pane, click `Reading List Service-Books REST Endpoint`.`
+3. In the **Select a Service** pane, click `Reading List Service`.`
 4. Specify values as follows for each of the fields:
 
-    | **Field**        | **Value**                       |
-    |------------------|---------------------------------|
-    | **Name**         | Reading List Connection     |
+    | **Field**        | **Value**                     |
+    |------------------|-------------------------------|
+    | **Name**         | Reading List Connection       |
     | **Description**  | Connection to the reading list|
     
-5. Click **Next**. This displays the service URL of the connection for
-each environment the service is deployed in. In this guide, you will see the service URL for the Development environment.
-6. Click **Finish**. This opens the detailed view of the connection you created. You can copy the Service URL displayed here to use when you configure the web application before deploying it.
+5. Click **Create**. This creates the connection and displays the service URL of the connection for
+each environment the service is deployed in. In this guide, you will see the service URL for the Development environment. You can copy the service URL to use when you configure the web application before deploying it.
 
 ### Step 6.3: Build the web application component
 
 To build the web application, follow the steps given below:
 
 1. In the left navigation menu, click **Build**.
-2. In the **Builds** pane, click **Build**. This opens the **Commits** pane, where you can see all the commits related to the component.
-3. Select the latest commit and click **Build**. This triggers the build process and displays the build progress in the **Build Logs** pane.
+2. In the **Builds** pane, click **Build Latest**.
 
-    !!! info
-         The build process can take a while to complete. When the build process is complete, the build will be listed in the **Builds** pane along with the build status. 
-
-   Here, you will see the build status as **Success**.
+   !!! note
+        Building the service component may take a while. You can track the progress via the logs in the **Build Details** pane. Once the build process is complete, the build status changes to **Success**.
 
 ### Step 6.4: Configure and deploy the web application
 
@@ -243,7 +252,7 @@ To configure managed authentication, follow the steps given below:
         ```
 
     !!! tip
-         You can refer to the configuration file mounted at /app/public as `./public/config.js` within your web application. 
+         You can refer to the configuration file mounted at `/app/public` as `./public/config.js` within your web application. 
 
 4. Click **Next**. This opens the **Authentication** pane.
 5. Under **Authentication Settings**, make sure that you have the **Managed authentication with Choreo** toggle enabled.
@@ -294,9 +303,9 @@ To test the front-end application and send requests to the **Reading List Servic
 
      | **Title**                 | **Author**        | **Status** |
      |---------------------------|-------------------|------------|
-     | The Museum of Innocence | Orhan Pamuk     | reading  |
-     | The Remains of the Day | Kazuo Ishiguro  | to_read  |
-     | David Copperfield       | Charles Dickens | read    |
+     | The Museum of Innocence   | Orhan Pamuk       | reading    |
+     | The Remains of the Day    | Kazuo Ishiguro    | to_read    |
+     | David Copperfield         | Charles Dickens   | read       |
 
     To add each record, follow the steps given below:
 
