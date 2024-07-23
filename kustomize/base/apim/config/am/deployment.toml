@@ -602,3 +602,9 @@ display_name = "Bronze"
 request_count = "1000"
 time_unit = "min"
 description = "Allows 1000 requests per minute"
+
+[[default.subscription.policy]]
+display_name = "AsyncUnlimited"
+request_count = "-1"
+time_unit = "min"
+description = "Allows unlimited events"
