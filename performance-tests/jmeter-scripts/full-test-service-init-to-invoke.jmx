@@ -1117,7 +1117,7 @@ vars.put(&quot;projectId&quot;, backendProjectId);</stringProp>
               <hashTree/>
             </hashTree>
             <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Build Status While Controller" enabled="true">
-              <stringProp name="WhileController.condition">${__jexl3(&quot;${buildStatus}&quot; != &quot;completed&quot; &amp;&amp; &quot;${__jm__Build Status While Controller__idx}&quot; &lt; 30)}</stringProp>
+              <stringProp name="WhileController.condition">${__jexl3(&quot;${buildStatus}&quot; != &quot;completed&quot; &amp;&amp; &quot;${__jm__Build Status While Controller__idx}&quot; &lt; 60)}</stringProp>
             </WhileController>
             <hashTree>
               <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Go API - Build Status - ${__jm__Build Status While Controller__idx}" enabled="true">
