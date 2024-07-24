@@ -222,6 +222,7 @@ configMapGenerator:
       - CONFIG_MAPPING_SERVICE_URL=http://configuration-service:8084
       - URL_MANAGER_URL=http://choreo-url-management:9090
       - MIZZEN_URL=http://dp-mizzen
+      - SPEC_POPULATOR_URL=http://spec-populator.choreo-ai:8000
       - APP_DEV_AUTHZ_URL=http://app-dev-authorization-service:9090
   - name: cm-dp-project-manager
     behavior: create
