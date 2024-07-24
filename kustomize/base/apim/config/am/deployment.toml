@@ -522,6 +522,7 @@ token_endpoint="{{.ASGARDEO_SYSTEM_APP_TOKEN_ENDPOINT}}"
 client_id="CHOREO_SYSTEM_APP_MANAGER"
 client_secret="$env{ASGARDEO_SYSTEM_APP_CLIENT_SECRET}"
 authz_endpoint="{{.ASGARDEO_SYSTEM_AUTHZ_TOKEN_ENDPOINT}}"
+asgardeo_authz_endpoint="{{.ASGARDEO_AUTHORIZATION_ENDPOINT}}"
 
 {{range .PER_ORG_SETTINGS}}
 [[choreo.asgardeo.per_org_settings]]
@@ -584,21 +585,32 @@ display_name = "Unlimited"
 request_count = "-1"
 time_unit = "min"
 description = "Allows unlimited requests"
+api_type = "REST"
 
 [[default.subscription.policy]]
 display_name = "Gold"
 request_count = "5000"
 time_unit = "min"
 description = "Allows 5000 requests per minute"
+api_type = "REST"
 
 [[default.subscription.policy]]
 display_name = "Silver"
 request_count = "2000"
 time_unit = "min"
 description = "Allows 2000 requests per minute"
+api_type = "REST"
 
 [[default.subscription.policy]]
 display_name = "Bronze"
 request_count = "1000"
 time_unit = "min"
 description = "Allows 1000 requests per minute"
+api_type = "REST"
+
+[[default.subscription.policy]]
+display_name = "AsyncUnlimited"
+request_count = "-1"
+time_unit = "min"
+description = "Allows unlimited events"
+api_type = "WS"
