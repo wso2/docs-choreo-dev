@@ -19,8 +19,8 @@ enableCheckPermissionConsistencyConf = true
 
 # Permissions
 projectViewPermissionConf = "choreo:project_view"
-projectUpdatePermissionConf = "choreo:project_manage"
-projectDeletePermissionConf = "choreo:project_manage"
+projectUpdatePermissionConf = {{.PROJECT_UPDATE_PERMISSION | default "choreo:project_manage"}}
+projectDeletePermissionConf = {{.PROJECT_DELETE_PERMISSION | default "choreo:project_manage"}}
 userManagementPermissionConf = "{{.USER_MANAGEMENT_PERMISSION}}"
 roleViewPermissionConf = "{{.ROLE_VIEW_PERMISSION}}"
 roleCreatePermissionConf = "{{.ROLE_CREATE_PERMISSION}}"
