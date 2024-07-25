@@ -1,6 +1,6 @@
 # CI/CD
 
-Choreo provides a streamlined continuous integration and continuous deployment(Ci/CD) experience to deploy applications and services efficiently across multiple environments.
+Choreo provides a streamlined continuous integration and continuous deployment(CI/CD) experience to deploy applications and services efficiently across multiple environments.
 
 Choreo creates environments for each project, where all components within the project share the environments. An environment is an isolated deployment area with restricted network and resource access. Services deployed in one environment cannot communicate with services deployed in another.
 
