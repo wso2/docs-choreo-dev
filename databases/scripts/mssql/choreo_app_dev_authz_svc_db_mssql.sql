@@ -22,7 +22,7 @@ CREATE TABLE ROLE (
     project_Id VARCHAR(50) NOT NULL,
     org_id VARCHAR(50) NOT NULL,
 
-    CONSTRAINT unique_name_organizationId UNIQUE (name, org_id)
+    CONSTRAINT unique_name UNIQUE (name, org_id, project_Id)
 );
 
 IF EXISTS (SELECT NAME FROM SYSINDEXES WHERE NAME = 'idx_role_project_id_org_id')
