@@ -29,6 +29,8 @@ export default defineConfig({
       require("cypress-fail-fast/plugin")(on, config);
       config.env.choreoIDPUsername = process.env.choreoIDPUsername;
       config.env.choreoIDPPassword = process.env.choreoIDPPassword;
+      config.env.choreoSelfSignupAdminIDPUsername = process.env.choreoSelfSignupAdminIDPUsername
+      config.env.choreoSelfSignupAdminIDPPassword = process.env.choreoSelfSignupAdminIDPPassword;
       config.env.choreoOrgHandle = process.env.choreoOrgHandle;
       config.env.userName = process.env.userName;
       config.env.userEmail = process.env.userEmail;

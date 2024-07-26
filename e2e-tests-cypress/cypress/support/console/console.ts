@@ -39,6 +39,11 @@ class Console {
     return cy.wrap({});
   }
 
+  selfSignupOrgAdminLogin() {
+    login.selfSignupOrgAdminlogin();
+    return cy.wrap({});
+  }
+
   enterpriseLogin() {
     login.enterpriseLogin();
     return cy.wrap({});
@@ -66,6 +71,7 @@ class Console {
   }
 
   enableDevportalSelfSignupAutoApprovalConfig() {
+    cy.wait(5000);
     this.navigateToHome();
     this.navigateToSettings();
     this.navigateToAPIManagement();
@@ -80,6 +86,7 @@ class Console {
   }
 
   disableDevportalSelfSignupAutoApprovalConfig() {
+    cy.wait(5000);
     this.navigateToHome();
     this.navigateToSettings();
     this.navigateToAPIManagement();

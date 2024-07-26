@@ -21,7 +21,7 @@ const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
 describe("Self signup when auto approval disabled and user rejected scenario", () => {
 
   it("Login to Console", () => {
-    console.login();
+    console.selfSignupOrgAdminLogin();
   });
 
   it("Switch to self signup enabled org", () => {
@@ -48,7 +48,7 @@ describe("Self signup when auto approval disabled and user rejected scenario", (
   });
 
   it("Login to Console", () => {
-    console.login();
+    console.selfSignupOrgAdminLogin();
 
     cy.task('getData', 'userDetails').then((userDetails) => {
       cy.task('setData', { key: 'userDetails', value: userDetails as UserDetails });

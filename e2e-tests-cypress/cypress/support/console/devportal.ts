@@ -52,8 +52,17 @@ export class DevPortal {
       loginURL = devPortalUrl + resourcePath;
     }
     cy.visit(loginURL);
+    cy.wait(5000);
+    cy.get('body').then($body => {
+      const loginLinkExists = $body.find(TestIds.devPortalLoginLink).length > 0;
+      if (loginLinkExists) {
+        cy.get(TestIds.devPortalLoginLink)
+          .should('be.visible')
+          .click();
+      }
+    });
     cy.get(TestIds.devPortalRegisterLink).should("be.visible");
-    cy.get(TestIds.devPortalRegisterLink).click()
+    cy.get(TestIds.devPortalRegisterLink).click();
     cy.get(TestIds.devPortalRegistrationSubmitButton).should("be.visible");
     cy.get(TestIds.devPortalRegisterPageUsernameInput).type(userDetails.email)
     cy.get(TestIds.devPortalRegisterPagePasswordInput).type(userDetails.password, {
