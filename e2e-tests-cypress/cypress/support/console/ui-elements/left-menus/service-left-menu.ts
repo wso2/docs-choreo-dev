@@ -31,6 +31,10 @@ export class ServiceLeftMenu extends LeftMenu {
 
   navigateToTest() {
     this.scrollToTopOfMenu();
+    // A workaround when the test console does not load properly. 
+    // If an error is encountered after navigating to the test console and a retry is triggered, 
+    // navigating to the deploy page and then the test page will cause the test page to reload.
+    this.navigateToMenuItem("[data-cyid=link-deploy]");
     this.navigateToSubMenu(
       "[data-cyid=link-test]",
       new Array(
