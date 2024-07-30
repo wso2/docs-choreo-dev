@@ -61,6 +61,6 @@ upstream:
   app-service: app-service:8080
 
 deleteManager:
-  host: delete-manager:80/api/v1
+  host: delete-manager:8000/api/v1
 ballerinaCentral:
   host: {{.BAL_CENTRAL_HOST}}
