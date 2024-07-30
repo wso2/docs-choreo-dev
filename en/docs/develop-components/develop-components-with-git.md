@@ -39,7 +39,7 @@ Authorizing Choreo as a GitHub application provides Choreo the following permiss
 
 ## Authorize Bitbucket with Choreo
 
-Authorizing Choreo as a Bitbucket application provides Choreo the following permissions to perform the respective actions on your behalf within the repository:
+Authorizing using a personal access token (PAT) from Bitbucket provides Choreo with the following permissions to perform the respective actions on your behalf within the repository.
 
 |Permission    | Read| Write| Description                                                            |
 |--------------|-----|------|------------------------------------------------------------------------|
@@ -48,6 +48,12 @@ Authorizing Choreo as a Bitbucket application provides Choreo the following perm
 |Pull Requests | Y   | Y    | Create a pull request if you have chosen to start with a Choreo sample |
 |Webhooks      | Y   | Y    | Trigger automatic deployment and configuration generation              |
 
+## Authorize Self-Managed GitLab with Choreo
 
+Authorizing using a personal access token (PAT) obtained from your GitLab self-managed server provides Choreo with the following permissions to perform the respective actions on your behalf within the repository.
+
+|Permission    | Description                                                                         |
+|--------------|-------------------------------------------------------------------------------------|
+|API           | Grants full read/write access to the API, covering all groups and projects, as well as read/write access to the repository.|
 
 
