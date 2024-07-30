@@ -435,6 +435,8 @@ configMapGenerator:
       - GOOGLE_BUILDPACK_LIFECYCLE_IMAGE={{.GOOGLE_BUILDPACK_LIFECYCLE_IMAGE | default "choreocontrolplane.azurecr.io/buildpacksio/lifecycle:0.17.3"}}
       - GOOGLE_BUILDPACK_RUN_IMAGE={{.GOOGLE_BUILDPACK_RUN_IMAGE | default "choreocontrolplane.azurecr.io/buildpacks/google-22/run:2941124e39ef19f49aabac4257daf5f652805e81"}}
       - CHOREO_MANAGED_BUILDPACK_RUN_IMAGE={{.CHOREO_MANAGED_BUILDPACK_RUN_IMAGE | default "choreocontrolplane.azurecr.io/choreoipaas/choreo-buildpacks/stacks/alpine/run:0.2.44"}}
+      - DISABLE_MI_CREATE_APP_WORKFLOW={{.DISABLE_MI_CREATE_APP_WORKFLOW | default "false"}}
+      - DISABLE_MI_CONFIG_GENERATION_WORKFLOW={{.DISABLE_MI_CONFIG_GENERATION_WORKFLOW | default "false"}}
       - DOCKER_REGISTRY_USERNAME={{.DOCKER_REGISTRY_USERNAME}}
       - GITHUB_SUBMODULES_SUPPORT_ENABLED={{.GITHUB_SUBMODULES_SUPPORT_ENABLED | default "false"}}
   - name: env-dp-cloud-manager
