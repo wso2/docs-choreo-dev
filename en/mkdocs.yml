@@ -132,7 +132,7 @@ nav:
           - Overview: manage-databases-and-caches/choreo-managed-databases-and-caches.md
           - PostgreSQL:  manage-databases-and-caches/choreo-managed-postgresql-databases.md
           - MySQL: manage-databases-and-caches/choreo-managed-mysql-databases.md
-          - Redis: manage-databases-and-caches/choreo-managed-redis-datastores.md
+          - Choreo-Managed Cache: manage-databases-and-caches/choreo-managed-caches.md
           - Billing: manage-databases-and-caches/billing-for-platform-services.md
   - Authentication and Authorization:
       - Secure API Access with Asgardeo: authentication-and-authorization/secure-api-access-with-asgardeo.md
@@ -140,7 +140,7 @@ nav:
       - Secure Web Applications with Managed Authentication: authentication-and-authorization/secure-web-applications-with-managed-authentication.md
       - Test Secure API Access with Choreo Built-In Security Token Service: authentication-and-authorization/test-secure-api-access-with-choreo-built-in-security-token-service.md
       - Pass End-User Attributes to Upstream Services: authentication-and-authorization/pass-end-user-attributes-to-upstream-services.md
-      - Secure Communication Between the Choreo Gateway and Your Backend: authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend.md
+      - Secure Communication Between the Choreo Gateway and Your Backend with Mutual TLS: authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls.md 
   - DevOps and CI/CD: 
       - Manage Configurations and Secrets: devops-and-ci-cd/manage-configurations-and-secrets.md
       - View Runtime Details: devops-and-ci-cd/view-runtime-details.md
@@ -151,11 +151,11 @@ nav:
         - Autoscale Components with Scale-to-Zero: devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero.md
       - Configure Storage: devops-and-ci-cd/configure-storage.md
       - Manage Environments: devops-and-ci-cd/manage-environments.md
+      - Configure VPNs on the Choreo Cloud Data Plane: devops-and-ci-cd/configure-vpns-on-the-choreo-cloud-data-plane.md
   - Testing: 
       - Test REST Endpoints via the OpenAPI Console: testing/test-rest-endpoints-via-the-openapi-console.md
       - Test GraphQL Endpoints via the GraphQL Console: testing/test-graphql-endpoints-via-the-graphql-console.md
       - Test APIs with cURL: testing/test-apis-with-curl.md
-      - Test APIs using Postman: testing/test-apis-using-postman.md
       - Test APIs with Choreo API Chat: testing/test-apis-with-choreo-apichat.md
       - Test Components with Test Runner: testing/test-components-with-test-runner.md
   - Consuming Services:
@@ -176,10 +176,11 @@ nav:
       - Delivery Insights:
           - Configure DORA Metrics: monitoring-and-insights/delivery-insights/configure-dora-metrics.md
           - View DORA Metrics: monitoring-and-insights/delivery-insights/view-dora-metrics.md
-      - Usage Insights: monitoring-and-insights/usage-insights.md
+      - Usage Insights: 
+          - Insights Overview: monitoring-and-insights/insights-overview.md
+          - Configure Alerts: monitoring-and-insights/alerts/configure-alerts.md
+          - Generate Custom Reports: monitoring-and-insights/generate-custom-reports.md
       - View Logs: monitoring-and-insights/view-logs.md
-      - Generate Custom Reports: monitoring-and-insights/generate-custom-reports.md
-      - Configure Alerts: monitoring-and-insights/alerts/configure-alerts.md
       - Work with the Choreo Insights API:
           - Access the Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
           - Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md 
@@ -370,8 +371,11 @@ plugins:
           'administer/configure-a-custom-domain-for-apis.md': 'https://wso2.com/choreo/docs/administer/configure-a-custom-domain-for-your-organization/'
           'administer/customize-developer-portal-domain.md': 'https://wso2.com/choreo/docs/administer/configure-a-custom-domain-for-your-organization/'
           'authentication-and-authorization/access-control/control-access-in-the-choreo-console.md': 'https://wso2.com/choreo/docs/administer/control-access-in-the-choreo-console/'
+          'authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend.md': 'https://wso2.com/choreo/docs/authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls/'
           'develop-components/sharing-and-reusing/share-and-reuse-services.md': 'https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-service/'
           'develop-components/sharing-and-reusing/share-and-reuse-web-applications.md': 'https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-web-application/'
+          'manage-databases-and-caches/choreo-managed-redis-datastores.md': 'https://wso2.com/choreo/docs/manage-databases-and-caches/choreo-managed-caches/'
+          'monitoring-and-insights/usage-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/insights-overview/'
 
 extra_css:
   # - assets/lib/highlightjs/default.min.css

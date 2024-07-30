@@ -10,11 +10,11 @@ In Choreo, when you attach a mediation policy to a proxy, the deployment is a tw
 
 1. Deployment initiation: 
 
-     If the component to which you want to attach the mediation policy is new, the system creates and commits a new repository with the mediation service code based on the attached policy. This new service is called the interceptor application. 
+     If the component to which you want to attach the mediation policy is new, the system creates and commits a new repository with the mediation service code based on the attached policy. This new service is called the mediation application. 
 
 2. Deploying the API:
 
-     Once the deployment initiation is complete, you can specify configuration values if any, and proceed to deploy. Choreo builds the generated interceptor application and pushes the Docker image to the Docker registry. Finally, Choreo deploys the interceptor application with the mediation service and the API Proxy.
+     Once the deployment initiation is complete, you can specify configuration values if any, and proceed to deploy. Choreo builds the generated mediation application and pushes the Docker image to the Docker registry. Finally, Choreo deploys the mediation application with the API Proxy.
 
 When a mediation policy is attached to a specific flow, the API invocation undergoes the following behavioral modification:
  
@@ -22,7 +22,7 @@ When a mediation policy is attached to a specific flow, the API invocation under
 
  - In the request path, the requests that pass through the gateway reach the relevant component, and Choreo executes any attached policies to the resource's request path before sending it to the backend. 
 
-- In the response path, the interceptor component receives response messages from the backend, and Choreo executes any mediation policies attached to the `Response` flow or the `Error` flow. Then the response is forwarded to the client.
+- In the response path, the mediation component receives response messages from the backend, and Choreo executes any mediation policies attached to the `Response` flow or the `Error` flow. Then the response is forwarded to the client.
 
 - If an error occurs during the execution of policies or due to an internal error, Choreo executes the `Error` flow and sends an error response to the client.
 
@@ -34,7 +34,7 @@ To attach a policy to the `Request`, `Response`, or `Error` flow of a REST API p
 2. In the **Component Listing** pane, click on the REST API Proxy component for which you want to attach a policy.
 3. In the left navigation menu, click **Develop** and then click **Policies**.
 4. From the list of resources, expand the resource to which you want to attach the policy. 
-5. Click **Attach Policy** in the respective flow for which you want to attach a policy.
+5. Click **Attach Mediation Policy** in the respective flow for which you want to attach a policy.
 6. In the **Policy List** pane that opens, click on a required policy to view its details.
 7. If the attached policy requires parameter configuration, on the policy pane enter the appropriate values and configure the parameters. To make a parameter a configurable variable, input the value in the `${<variableName>}` format. For example, you can use `${name}` as an example.
 
@@ -42,16 +42,33 @@ To attach a policy to the `Request`, `Response`, or `Error` flow of a REST API p
  
 8. To attach the policy, click **Add**.
 
-After attaching an API Policy, it is necessary to deploy the API in order for the policy to become active within its corresponding flow. 
+After attaching an API Policy, it is necessary to deploy the API for the policy to become active within its corresponding flow. 
 To deploy the API follow the steps below: 
 
-9. In the left navigation menu, click **Deploy** and then click **Configure & Deploy**. Choreo performs the interceptor application generation step and opens the **Configure & Deploy** pane.
+9. In the left navigation menu, click **Deploy** and then click **Configure & Deploy**. Choreo performs the mediation application generation step and opens the **Configure & Deploy** pane.
 
 10. In the **Configure & Deploy** pane, if you have any configurable variables that require values, specify appropriate values for them.
 
      ![Save and deploy values](../assets/img/api-management/api-policies/save-and-deploy.png){.cInlineImage-full}
 
 11. Click **Save & Deploy**.
+
+## Refresh mediation policies
+
+Choreo selectively generates and builds the mediation application code during component deployment depending on specific changes. These changes include:
+
+ - Addition, deletion, or modification of API resources.
+ - Attachment, removal, or editing of API mediation policies.
+ - Endpoint modifications via the **Develop** page.
+ - Initial configuration or removal of backend endpoints or mutual TLS certificates.
+
+If none of the above changes occur during deployment, Choreo skips the code generation and build process of the mediation application.
+
+!!! info
+    - If you want to enforce the code generation and build process of the mediation application in instances where the specified changes do not take place, you must turn on the **Refresh Mediation Policies** toggle when you configure and deploy the component. 
+    - It is useful to enable **Refresh Mediation Policies** when you want to incorporate the latest Ballerina patches for your generated mediation application. However, this can result in longer deployment times.
+
+
 
 ## Implement an API policy
 
@@ -75,7 +92,7 @@ Alternatively, you can set the access token via the `BALLERINA_CENTRAL_ACCESS_TO
 export BALLERINA_CENTRAL_ACCESS_TOKEN=<access-token> 
 ```
 
-###  Step 1: Initialize a Ballerina project
+### Step 1: Initialize a Ballerina project
 
 Choreo provides a template to initialize a mediation policy project with all the required configurations. The mediation policy project will be created as a Ballerina project.
 
@@ -222,7 +239,7 @@ When implementing a policy, it is essential to follow best practices to ensure e
 
 Once you implement a policy, you must publish it to Ballerina Central. 
 
-When you attach a policy and deploy an API, Choreo pulls the necessary packages from Ballerina Central and bundles them into the interceptor application under the hood. Therefore to use policies in your APIs, you must publish them as public packages. 
+When you attach a policy and deploy an API, Choreo pulls the necessary packages from Ballerina Central and bundles them into the mediation application under the hood. Therefore to use policies in your APIs, you must publish them as public packages. 
 
 To publish the policy, follow the steps given below:
 
