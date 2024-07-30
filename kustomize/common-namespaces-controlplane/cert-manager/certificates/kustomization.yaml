@@ -10,7 +10,4 @@
 # --------------------------------------------------------------------------------------
 
 resources:
-  - ../../../helm/cert-manager
-  - certificates
-
-namespace: cert-manager
+  - mychoreoapp-com.yaml

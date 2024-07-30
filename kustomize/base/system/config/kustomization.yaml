@@ -212,13 +212,18 @@ configMapGenerator:
       - CLOUD_MANAGER_URL=http://dp-cloud-manager
       - PROXY_DEPLOYER_URL=http://choreo-apim-proxy-deployer:9095
       - ASB_DELETE_QUEUE_NAME=delete-manager
+      - ASB_COMPONENT_DELETE_QUEUE_NAME=delete-manager
+      - ASB_ENVIRONMENT_DELETE_QUEUE_NAME=delete-environments
       - API_SERVER_URL=http://api-server
       - GCHAT_URL=https://chat.googleapis.com
       - APP_SERVICE_URL=app-service:8080
       - CRYPTO_KEY_SERVICE_URL=http://crypto-key-service:9091
+      - CONFIG_SERVICE_URL=http://configuration-service:8080
       - CONFIG_MAPPING_SERVICE_URL=http://configuration-service:8084
       - URL_MANAGER_URL=http://choreo-url-management:9090
       - MIZZEN_URL=http://dp-mizzen
+      - SPEC_POPULATOR_URL=http://spec-populator.choreo-ai:8000
+      - APP_DEV_AUTHZ_URL=http://app-dev-authorization-service:9090
   - name: cm-dp-project-manager
     behavior: create
     literals:
