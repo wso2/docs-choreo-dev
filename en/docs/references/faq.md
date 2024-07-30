@@ -36,7 +36,7 @@ If you have a log monitoring product or service, such as Azure Monitor, you can 
 Choreo allows a maximum request payload size of 10 MB. 
 
 ### Q: What source control software does Choreo support?
-Choreo currently supports GitHub and Bitbucket. Support for GitLab is on our roadmap. 
+Choreo currently supports GitHub, Bitbucket and GitLab. 
 
 ### Q: Why don't I see the undeployed builds for my component in Choreo?
 You are allowed to build your component any number of times. However, Choreo has a limit on retaining undeployed builds. For users on the free-tier, Choreo will retain **only one** undeployed build. For those on any other tier, Choreo will retain the **latest five** undeployed builds.
