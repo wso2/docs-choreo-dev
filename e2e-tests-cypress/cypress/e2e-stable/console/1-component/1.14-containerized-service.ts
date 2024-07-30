@@ -14,10 +14,10 @@
 import { Enums } from "../../../support/commons/enums";
 import { Project } from "../../../support/console/entities/project/project";
 import { console } from "../../../support/console/console";
-import { Byoc } from "../../../support/console/entities/component/byoc-component";
 import { OK } from "../../../support/commons/http";
 import { ConfigEntryStep } from "../../../support/commons/types";
 import { TestIds } from "../../../support/console/constants/TestIds";
+import { Service } from "../../../support/console/entities/component/service-component";
 
 after(() => {
   console.logout();
@@ -34,7 +34,7 @@ describe("Verify containerized service functionality", () => {
   const CONFIG_FILE = '{\n\t"name": "testUser"';
 
   let project: Project;
-  let byoc: Byoc;
+  let byoc: Service;
 
   function addConfiguration() {
     cy.get(TestIds.addConfig).click();
@@ -53,7 +53,6 @@ describe("Verify containerized service functionality", () => {
     cy.get(TestIds.mountPath).type(MOUNT_PATH);
     cy.get(TestIds.formConfigField).type(CONFIG_FILE);
     cy.get(TestIds.nextButton).click();
-    cy.get(TestIds.next).should("be.visible").click();
   }
 
   function addConfigurationProd() {
@@ -81,9 +80,10 @@ describe("Verify containerized service functionality", () => {
           dockerfilePath: "Dockerfile",
           dockerContext: "",
         },
-        ""
+        "",
+        ENDPOINT_NAME
       )
-      .then((comp: Byoc) => {
+      .then((comp: Service) => {
         project.visitComponent(comp.getName());
         byoc = comp;
       });
@@ -94,11 +94,11 @@ describe("Verify containerized service functionality", () => {
   });
 
   it("Deploying to Dev with public level endpoint", () => {
-    byoc.deployToDevWithConfigs([new ConfigEntryStep(addConfiguration)]);
+    byoc.deployPublicLevelAccessibilityWithConfigs([new ConfigEntryStep(addConfiguration)], false);
   });
 
   it("Verify component promotion to Prod", () => {
-    byoc.promoteWithConfigs([new ConfigEntryStep(addConfigurationProd)]);
+    byoc.promotePublicLevelAccessibility([new ConfigEntryStep(addConfigurationProd)], false);
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
