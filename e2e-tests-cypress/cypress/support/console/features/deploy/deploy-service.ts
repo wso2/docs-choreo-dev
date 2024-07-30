@@ -422,11 +422,11 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       shouldModifyEndpoint: boolean,
       endpointVisibility: EndpointAccessibility
     ) {
-      cy.get(
-        `[data-cyid="${component.getEndpointName()}-endpoint-accordion"]`
-      ).should("be.visible");
-
       if (shouldModifyEndpoint) {
+        cy.get(
+          `[data-cyid="${component.getEndpointName()}-endpoint-accordion"]`
+        ).should("be.visible");
+
         cy.get(`[data-testid="${component.getEndpointName()}-edit-btn"]`)
           .should("be.visible")
           .click();
@@ -436,7 +436,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
         cy.get(TestIds.endpointSubmit).click();
       }
 
-      cyGet(TestIds.next).click();
+      cyGet(TestIds.next).should("be.visible").click();
     }
 
     private verifyDeploymentStatus() {

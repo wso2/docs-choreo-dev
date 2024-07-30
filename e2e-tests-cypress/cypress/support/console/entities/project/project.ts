@@ -566,6 +566,7 @@ export class Project {
     repoInfo: RepoInfo,
     byocInfo: ByocInfo,
     oasFilePath: string,
+    endpointName: string,
     componentName?: string
   ) {
     if (componentName === undefined) {
@@ -596,7 +597,7 @@ export class Project {
       componentData,
       GraphQLQueryBuilder.getBYOCComponentCreationQuery
     ).then(() => {
-      return Promise.resolve(new Byoc(componentName));
+      return Promise.resolve(new Service(componentName, endpointName));
     });
   }
 
