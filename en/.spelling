@@ -583,7 +583,7 @@ what-is-choreo
 create-your-first-rest-api
 create-your-first-rest-api-proxy
 secure-an-api-with-role-based-access-control
-secure-communication-between-the-choreo-gateway-and-your-backend
+secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls
 rest-api
 api-proxies
 triggers.md
@@ -955,6 +955,18 @@ Kazuo
 Ishiguro
 Dickensread
 troubleshoot-choreo
+NoSQL
+VPNs
+Tailscale
+pre-installed
+WireGuard
+userspace
+Tailnet
+quickstart
+tailscale-proxy-project
+tailscale-proxy
+ACLs
+configure-vpns-on-the-choreo-cloud-data-plane
 unpublish
 unpublishing
  - docs/administer/customize-the-developer-portal.md

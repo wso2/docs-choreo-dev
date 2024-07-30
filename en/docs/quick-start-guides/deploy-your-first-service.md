@@ -10,6 +10,8 @@ In this guide, you will:
 - Build and deploy the service in Choreo using the `Nodejs` buildpack. It runs on port 8080.
 - Test the service.
 
+For a video tutorial that walks you through these steps, see [Deploy Your First Service with Choreo](https://www.youtube.com/watch?v=-qoweQWCiYM).
+
 ## Prerequisites
 
 1. You must have a GitHub account with a repository that contains your service implementation. To proceed with the steps in this guide, you can fork the [Choreo sample book list service repository](https://github.com/wso2/choreo-sample-book-list-service/), which contains the sample for this guide.
@@ -61,13 +63,13 @@ Follow the steps given below to create a project:
 
 Let's create a service component by following these steps:
 
-1. On the project home page, click **Service** under **Create a Single Component**.
+1. On the project home page, click **Service** under **Create a Component**.
 2. Enter a unique name and a description for the service. For this guide, let's enter the following values:
 
-    |Field          |     Value              |
-    |---------------|------------------------|
-    |Name           | Book List              |
-    |Description    | Gets the book list     |
+    |Field                 |     Value              |
+    |----------------------|------------------------|
+    |Component Display Name| Book List              |
+    |Description           | Gets the book list     |
 
 3. Go to the **GitHub** tab.
 4. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
