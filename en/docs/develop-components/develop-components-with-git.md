@@ -59,7 +59,7 @@ For example, when you [work with the Micro Integrator (MI) runtime in Choreo](./
       - For an organization account:
 
          1. Sign in to your organization's GitHub account.
-         2. In the upper-right corner, click your profile picture, and then click **Settings**.
+         2. Under your repository name, click **Settings**.
          3. In the left navigation menu, go to the **Third-Party Access** section and click **GitHub Apps**.
          4. Click **Configure** corresponding to **choreo.dev**.
          5. Under **Repository Access**, grant access to the necessary repositories.
