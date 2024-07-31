@@ -1061,6 +1061,8 @@ public class GraphQL extends ControlPlaneAPI {
 
         AtomicBoolean isPassed = new AtomicBoolean(false);
         AtomicInteger successiveFailureCount = new AtomicInteger(0);
+        AtomicReference<String> deploymentStatus = new AtomicReference<>("pending");
+        AtomicReference<String> deploymentConclusion = new AtomicReference<>("pending");
 
         runner.$(repeat()
                 .until("(i = 20) or ( ${deploymentSuccess} = true )")
@@ -1095,8 +1097,10 @@ public class GraphQL extends ControlPlaneAPI {
                                                 .getAsJsonArray("deploymentStatusByVersion");
                                         if (deploymentStatusByVersion.size() > 0) {
                                             String status = deploymentStatusByVersion.get(0).getAsJsonObject().get("status").getAsString();
+                                            deploymentStatus.set(status);
                                             if ("completed".equals(status)) {
                                                 String conclusion = deploymentStatusByVersion.get(0).getAsJsonObject().get("conclusion").getAsString();
+                                                deploymentConclusion.set(conclusion);
                                                 if ("failure".equals(conclusion)) {
                                                     throw new DeploymentStatusByVersionFailureException("deploymentStatusByVersion[0].conclusion is failure");
                                                 }
@@ -1114,7 +1118,7 @@ public class GraphQL extends ControlPlaneAPI {
         );
 
         if (!isPassed.get()) {
-            throw new ValidationException("Deployment conclusion is not success");
+            throw new ValidationException("Timed out waiting for deployment to complete. Status: " + deploymentStatus.get() + ", Conclusion: " + deploymentConclusion.get());
         }
     }
 
@@ -1214,6 +1218,8 @@ public class GraphQL extends ControlPlaneAPI {
         AtomicReference<ComponentDeploymentStatusDTO> returnStatus = new AtomicReference<>();
         AtomicBoolean isPassed = new AtomicBoolean(false);
         AtomicInteger successiveFailureCount = new AtomicInteger(0);
+        AtomicReference<String> deploymentStatus = new AtomicReference<>("pending");
+        AtomicReference<String> deploymentStatusV2 = new AtomicReference<>("pending");
 
         String isDeployedKey = "deploymentSuccess" + graphqlDTO.getComponentId();
 
@@ -1246,25 +1252,31 @@ public class GraphQL extends ControlPlaneAPI {
                                     } else {
                                         successiveFailureCount.set(0);
 
-                                        ComponentDeploymentStatusDTO deploymentStatus = ObjectMapperUtil.
+                                        ComponentDeploymentStatusDTO componentDeploymentStatus = ObjectMapperUtil.
                                                 mapStringToObject(ComponentDeploymentStatusDTO.class,
                                                         message.getPayload(String.class), "componentDeployment");
 
-                                        if (deploymentStatus.getDeploymentStatusV2().equals("ERROR") ||
-                                                deploymentStatus.getDeploymentStatus().equals("ERROR")) {
+                                        String status = componentDeploymentStatus.getDeploymentStatus();
+                                        String statusV2 = componentDeploymentStatus.getDeploymentStatusV2();
+                                        deploymentStatus.set(status);
+                                        deploymentStatusV2.set(statusV2);
+
+                                        if (statusV2.equals("ERROR") ||
+                                                status.equals("ERROR")) {
                                             throw new ValidationException("deploymentStatusV2 is " +
-                                                    deploymentStatus.getDeploymentStatusV2() +
-                                                    " and returnStatus is " +
-                                                    deploymentStatus.getDeploymentStatus());
+                                                    statusV2 +
+                                                    " and deploymentStatus is " +
+                                                    status);
                                         }
 
 
                                         try {
                                             JsonTextMessageValidator validator = new JsonTextMessageValidator();
-                                            validator.validateMessage(message, new DefaultMessage(expectedResponse), context, new JsonMessageValidationContext());
+                                            validator.validateMessage(message, new DefaultMessage(expectedResponse),
+                                                    context, new JsonMessageValidationContext());
                                             isPassed.set(true);
                                             context.setVariable(isDeployedKey, isPassed.get());
-                                            returnStatus.set(deploymentStatus);
+                                            returnStatus.set(componentDeploymentStatus);
                                         } catch (ValidationException e) {
                                             log.error("Validation failed", e);
                                         }
@@ -1276,7 +1288,8 @@ public class GraphQL extends ControlPlaneAPI {
                                 })));
 
         if (!isPassed.get()) {
-            throw new ValidationException("Deployment conclusion is not success");
+            throw new ValidationException("Timed out waiting for deployment to complete. Status: " +
+                    deploymentStatus.get() + ", StatusV2: " + deploymentStatusV2.get());
         }
 
         return returnStatus.get();
