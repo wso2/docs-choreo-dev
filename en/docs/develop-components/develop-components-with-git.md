@@ -1,6 +1,6 @@
 # Develop Components With Git
 
-Choreo enables you to develop components by connecting your GitHub, Bitbucket, or GitLab repository. You have the flexibility to either connect an existing repository or start with an empty repository and commit the source code later. By integrating your repositories with Choreo, you can automate tasks and optimize workflows across multiple systems, all within the Choreo platform. As of now, Choreo supports GitHub, Bitbucket, and GitLab as Git providers. 
+Choreo enables you to develop components by connecting your GitHub, Bitbucket, or GitLab repository. You have the flexibility to either connect an existing repository or start with an empty repository and commit the source code later. By integrating your repositories with Choreo, you can automate tasks and optimize workflows across multiple systems, all within the Choreo platform.  Choreo currently supports GitHub, Bitbucket, and GitLab as Git providers. 
 
 In Choreo, you can connect a Git repository that contains Ballerina source code or a Docker project. To connect your Git repository as a Docker project, your Git repository should contain the Dockerfile and the build's context. The Dockerfile specifies the instructions for building the Docker image, while the build context is a set of files located in the specified path used to build the image.
 
@@ -18,7 +18,7 @@ Once you have connected your Git repository to Choreo, you can build, deploy, an
 2. Select the organization from the **Organization** list in the header. 
 3. Remove any project selection from the **Project** list in the header. 
 4. In the left navigation, click **Settings**.
-5. In the header, click the **Organization** list. This will open the organization level settings page. 
+5. In the header, click the **Organization** list. This will open the organization-level settings page. 
 6. Click on the **Credentials** tab. 
 7. Click **+Add Credentials** to configure the Git repository connection.
 8. Enter a **Credential name**, select the Git provider, and provide the **Personal Access Token** obtained from the Git provider.
@@ -28,13 +28,13 @@ Once you have connected your Git repository to Choreo, you can build, deploy, an
 
 Authorizing Choreo as a GitHub application provides Choreo the following permissions to perform the respective actions on your behalf within the repository:
 
-|Permission   | Read| Write| Description                                   |
-|-------------|-----|------|-----------------------------------------------|
-|Issues       | Y   | N    | Read component id label to filter the pull requests|
-|Metadata     | Y   | N    | List repositories                             |
-|Contents     | Y   | Y    | List branches and create a branch to commit sample code|
+|Permission   | Read| Write| Description                                                           |
+|-------------|-----|------|-----------------------------------------------------------------------|
+|Issues       | Y   | N    | Read component ID label to filter the pull requests                   |
+|Metadata     | Y   | N    | List repositories                                                     |
+|Contents     | Y   | Y    | List branches and create a branch to commit sample code               |
 |Pull Request | Y   | Y    | Create a pull request if you have chosen to start with a Choreo sample|
-|Webhooks     | Y   | Y    | Trigger automatic deployment and configuration generation|
+|Webhooks     | Y   | Y    | Trigger automatic deployment and configuration generation             |
 
 ### Add Git submodules to a project
 
@@ -85,5 +85,3 @@ Authorizing using a personal access token (PAT) obtained from your GitLab self-m
 |Permission    | Description                                                                         |
 |--------------|-------------------------------------------------------------------------------------|
 |API           | Grants full read/write access to the API, covering all groups and projects, as well as read/write access to the repository.|
-
-
