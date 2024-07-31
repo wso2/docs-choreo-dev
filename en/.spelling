@@ -967,6 +967,8 @@ tailscale-proxy-project
 tailscale-proxy
 ACLs
 configure-vpns-on-the-choreo-cloud-data-plane
+submodules
+submodule
 unpublish
 unpublishing
  - docs/administer/customize-the-developer-portal.md
