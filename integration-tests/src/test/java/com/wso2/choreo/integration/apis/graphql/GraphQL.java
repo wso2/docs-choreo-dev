@@ -594,6 +594,9 @@ public class GraphQL extends ControlPlaneAPI {
                                         context.setVariable("isProjectCreationSuccess", true);
                                         project.set(ObjectMapperUtil.mapStringToObject(ChoreoProject.class, message
                                                 .getPayload(String.class), "createProject"));
+                                    } else {
+                                        throw new ValidationException("Project creation failed with response code: " +
+                                                code + " and response: " + message.getPayload(String.class));
                                     }
                                 })
                 )
