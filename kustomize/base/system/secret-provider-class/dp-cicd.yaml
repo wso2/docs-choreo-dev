@@ -19,6 +19,8 @@ spec:
           key: CHOREO_PRIVATE_ACR_SECRET
         - objectName: DOCKER_REGISTRY_PAT
           key: DOCKER_REGISTRY_PAT
+        - objectName: CHOREO-GITHUB-RUNNER-APP-CLIENT-SECRET
+          key: CHOREO-GITHUB-RUNNER-APP-CLIENT-SECRET
   parameters:
     objects: |
       array:
@@ -52,3 +54,8 @@ spec:
           objectType: secret
           objectAlias: DOCKER_REGISTRY_PAT
           objectVersion: "{{.DOCKER_REGISTRY_PAT}}"
+        - |
+          objectName: dp-cicd-github-runner-app-client-secret
+          objectType: secret
+          objectAlias: CHOREO-GITHUB-RUNNER-APP-CLIENT-SECRET
+          objectVersion: "{{.CHOREO_GITHUB_RUNNER_APP_CLIENT_SECRET}}"
