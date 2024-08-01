@@ -243,6 +243,8 @@ configMapGenerator:
       - RESOURCE_REGISTRY_SVC_URL=http://resource-registry:9090
       - RESILIENT_INVOCATION_SVC_URL=http://cp-rrs:9095
       - PLATFORM_SERVICES_MANAGER_SVC_URL=http://platform-services-manager:80
+      - CONFIGURATION_SVC_URL=http://configuration-service:8084
+      - CLOUD_MANAGER_URL=http://dp-cloud-manager
   - name: cm-dp-rudder
     behavior: create
     literals:
