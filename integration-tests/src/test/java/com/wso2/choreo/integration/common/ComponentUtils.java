@@ -941,9 +941,9 @@ public class ComponentUtils {
             String expectedResponse) throws Exception {
         // Test API Invocation
         runner.$(repeatOnError()
-                .until("i = 12")
+                .until("i = 15")
                 .index("i")
-                .autoSleep(5000)
+                .autoSleep(30000)
                 .actions((http()
                         .client(invokeUrl)
                         .send()
@@ -976,9 +976,9 @@ public class ComponentUtils {
                                     String expectedResponse) throws Exception {
         // Test API Invocation
         runner.$(repeatOnError()
-                .until("i = 12")
+                .until("i = 15")
                 .index("i")
-                .autoSleep(5000)
+                .autoSleep(30000)
                 .actions((http()
                                 .client(invokeUrl)
                                 .send()
@@ -1014,9 +1014,9 @@ public class ComponentUtils {
             org.springframework.http.HttpStatus expectedHttpStatus) {
         // Test API Invocation
         runner.$(repeatOnError()
-                .until("i = 5")
+                .until("i = 15")
                 .index("i")
-                .autoSleep(10000)
+                .autoSleep(30000)
                 .actions((http()
                         .client(invokeUrl)
                         .send()
@@ -1262,6 +1262,14 @@ public class ComponentUtils {
             throws Exception {
         DPObsApiService.getProjectMetrics(runner, citrusDPClients, accessToken,
                 project, choreoComponent, env, true);
+    }
+
+    public static void verifyComponentLevelAppMetrics(TestNGCitrusSpringSupport runner,
+            Map<Endpoints, HttpClient> citrusDPClients,
+            String accessToken, ChoreoComponent choreoComponent, Environment env, ChoreoProject project)
+            throws Exception {
+        DPObsApiService.getComponentAppMetrics(runner, citrusDPClients, accessToken,
+                choreoComponent, env, project);
     }
 
     public static void verifyComponentLevelDPLogsLive(TestNGCitrusSpringSupport runner,

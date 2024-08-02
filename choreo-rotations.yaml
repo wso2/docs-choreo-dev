@@ -6,7 +6,7 @@ rotations:
       #     - sachithka@wso2.com
       #     - shana@wso2.com
       #     - chalithak@wso2.com
-      - name: QA Engineering
+      - name: Release Manager
         members:
           - uvindra@wso2.com
           - isurupi@wso2.com

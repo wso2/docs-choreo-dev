@@ -85,6 +85,8 @@ spec:
               mountPath: /tmp
             - name: usage-service-ingress-secret
               mountPath: /mnt/csi/usage-service-ingress-secret
+            - name: usage-service-ingress-tls-secret
+              mountPath: /mnt/csi/usage-service-ingress-tls-secret
       restartPolicy: Always
       volumes:
         - name: config
@@ -104,6 +106,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: ingress-tls-usage-handler-service
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: usage-service-ingress-tls-secret
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: usage-service-ingress-tls-secret
             nodePublishSecretRef:
               name: csi-secret-store-azure
         - name: tmp
