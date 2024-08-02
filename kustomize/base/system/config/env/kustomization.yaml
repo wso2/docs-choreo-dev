@@ -436,6 +436,7 @@ configMapGenerator:
       - CHOREO_MANAGED_BUILDPACK_RUN_IMAGE={{.CHOREO_MANAGED_BUILDPACK_RUN_IMAGE | default "choreocontrolplane.azurecr.io/choreoipaas/choreo-buildpacks/stacks/alpine/run:0.2.44"}}
       - DOCKER_REGISTRY_USERNAME={{.DOCKER_REGISTRY_USERNAME}}
       - DISABLE_GITLAB_SSL={{.DISABLE_GITLAB_SSL | default "true"}}
+      - LOG_LEVEL={{.LOG_LEVEL | default "info"}}
   - name: env-dp-cloud-manager
     behavior: create
     literals:
