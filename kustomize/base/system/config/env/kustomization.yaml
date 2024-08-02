@@ -364,6 +364,7 @@ configMapGenerator:
       - NEW_BUILD_FLOW_ENABLED={{.NEW_BUILD_FLOW_ENABLED | default "false"}}
       - K8S_CRONJOB_TIMEZONE_MIGRATION_ENABLED={{.K8S_CRONJOB_TIMEZONE_MIGRATION_ENABLED | default "false"}}
       - KEDA_HTTP_ADD_ON_MIGRATION_ENABLED={{.KEDA_HTTP_ADD_ON_MIGRATION_ENABLED | default "false"}}
+      - APIM_USER_FOR_OAUTH_APP_CREATION={{.APIM_USER_FOR_OAUTH_APP_CREATION | default ""}}
   - name: env-dp-helmhub
     behavior: create
     literals:
