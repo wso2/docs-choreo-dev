@@ -64,6 +64,7 @@ window.Settings = {
     sandboxKeyGenerationEnabled: {{.SANDBOX_KEY_GENERATION_ENABLED}},
     intelligentRoutingFeatureEnabled: {{.INTELLIGENT_ROUTING_FEATURE_ENABLED}},
     choreoInbuiltKeyManagerFeatureEnabled: {{.CHOREO_INBUILT_KEY_MANAGER_FEATURE_ENABLED}},
+    customSubscriptionPolicyHandlingOrg: '{{.CUSTOM_SUBSCRIPTION_POLICY_HANDLING_ORG | default ""}}',
 }
 
 const currentHost = window.location.hostname;
@@ -90,5 +91,6 @@ if (isCustomDomain) {
         permissionPortalOrgIdParam: 'orgId',
         intelligentRoutingFeatureEnabled: true,
         choreoInbuiltKeyManagerFeatureEnabled: false,
+        customSubscriptionPolicyHandlingOrg: '{{.CUSTOM_SUBSCRIPTION_POLICY_HANDLING_ORG | default ""}}',
     }
 }

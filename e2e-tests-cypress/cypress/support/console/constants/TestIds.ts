@@ -296,7 +296,7 @@ export namespace TestIds {
     '[data-cyid="key-value-card-add-new-new-input-value"]';
   export const configSave = '[data-cyid="key-value-save-button"]';
   export const keyValueCheckBox =
-    '[data-cyid="key-value-card-add-new-secret-checkbox-check-box"]';
+    '[data-cyid="key-value-card-add-new-secret-check-box"]';
   export const nextButton = '[data-testid="btn-next"]';
   export const fileMount = '[data-cyid="file-mount-upload-button"]';
   export const byocPromote = '[data-cyid="promote-selector-default-configs"]';
@@ -321,6 +321,19 @@ export namespace TestIds {
   export const choreoHomeDevPortalLink = "[data-cyid='developer-portal-link']";
   export const devPortalHome = '[data-testid="home-appbar-btn"]';
   export const devPortalLoginLink = '[data-testid="login-button"]';
+  export const devPortalRegisterLink = '[data-testid="login-page-create-account-button"]';
+  export const devPortalRegistrationSubmitButton = '[id="registrationSubmit"]';
+  export const devPortalRegisterPageUsernameInput = '#usernameUserInput';
+  export const devPortalRegisterPagePasswordInput = '#passwordUserInput';
+  export const devPortalRegisterPageFirstNameInput = '#firstNameUserInput';
+  export const devPortalRegisterPageLastNameInput = '#lastNameUserInput';
+  export const devPortalLoginPageUsernameInput = '#usernameUserInput';
+  export const devPortalLoginPagePasswordInput = '#password';
+  export const devPortalLoginPageContinueLoginButton = '[data-testid="login-page-continue-login-button"]';
+  export const consoleSelfSignupConfigPageNotification = '[data-testid="self-sign-up-notification"]';
+  export const consoleSelfSignupAutoApprovalConfigCheckbox = '[name="checkedC"]'
+  export const consoleSelfSignupRequestApproveButton = '[data-cyid="approve-button-button"]';
+  export const consoleSelfSignupRequestRejectButton = '[data-cyid="reject-button-button"]';
   export const devPortalSignedInUser = '[data-testid="signedin-user-menu-btn"]';
   export const addConnectionButton = '[data-cyid="create-config-button"]';
   export const ConnectionCard = '[data-cyid="api-card-card"]';

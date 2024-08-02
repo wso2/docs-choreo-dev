@@ -538,7 +538,8 @@ CREATE TABLE [dbo].[member_invitation_v2](
     [invited_application] [nvarchar](255) NOT NULL,
     [created_at] [datetime] NOT NULL,
     [updated_at] [datetime] NOT NULL,
-    CONSTRAINT [PK_member_invitation_v2_invitation_id] PRIMARY KEY CLUSTERED
+    CONSTRAINT [PK_member_invitation_v2_invitation_id] PRIMARY KEY CLUSTERED,
+    CONSTRAINT [FK_member_invitation_v2_organization_id] FOREIGN KEY (organization_id) REFERENCES organization (id) ON DELETE CASCADE
 (
 [invitation_id] ASC
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
@@ -614,6 +615,10 @@ CREATE TABLE [dbo].[organization](
     CONSTRAINT [organization$handle_unique] UNIQUE NONCLUSTERED
 (
 [handle] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    CONSTRAINT [organization_uuid_unique] UNIQUE NONCLUSTERED
+(
+[uuid] ASC
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
@@ -1707,8 +1712,9 @@ CREATE TABLE [dbo].[org_self_signup_config]
     [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
-    CONSTRAINT unique_org_self_signup_config UNIQUE(organization_uuid)
-)
+    CONSTRAINT unique_org_self_signup_config UNIQUE (organization_uuid),
+    CONSTRAINT signup_config_org_uuid_fk FOREIGN KEY (organization_uuid) REFERENCES organization(uuid) ON DELETE CASCADE
+);
 
 CREATE TABLE [dbo].[org_self_signup_approval_request]
 (
@@ -1721,6 +1727,7 @@ CREATE TABLE [dbo].[org_self_signup_approval_request]
     [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     CONSTRAINT unique_org_self_signup_approval_request UNIQUE(organization_uuid, user_idp_id)
+    CONSTRAINT signup_config_org_uuid_fk FOREIGN KEY (organization_uuid) REFERENCES organization(uuid) ON DELETE CASCADE
 )
 
 CREATE TABLE [dbo].[enterprise_group_role_mapping]
@@ -1764,6 +1771,7 @@ CREATE TABLE [dbo].[org_enterprise_login_config]
     [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     CONSTRAINT unique_org_enterprise_login_config UNIQUE(organization_uuid)
+    CONSTRAINT signup_config_org_uuid_fk FOREIGN KEY (organization_uuid) REFERENCES organization(uuid) ON DELETE CASCADE
 )
 
 CREATE TABLE [dbo].[org_activity]
@@ -1887,7 +1895,7 @@ CREATE TABLE [dbo].[global_configuration_data](
     CONSTRAINT [global_configuration_data$config_uuid_fk] FOREIGN KEY (config_uuid) REFERENCES dbo.global_configuration(uuid)
 )
 
-CREATE TABLE [dbo].[suspended_members]
+CREATE TABLE [dbo].[inactive_user]
 (
     [id] [int] IDENTITY(1,1) NOT NULL,
     [user_idp_id] [nvarchar](255) NOT NULL,
@@ -1896,8 +1904,9 @@ CREATE TABLE [dbo].[suspended_members]
     [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
-    CONSTRAINT unique_suspended_members UNIQUE(user_idp_id, organization_uuid)
-)
+    CONSTRAINT unique_suspended_members UNIQUE(user_idp_id, organization_uuid),
+    CONSTRAINT FK_inactive_user_organization_uuid FOREIGN KEY (organization_uuid) REFERENCES organization(uuid) ON DELETE CASCADE
+);
 
 CREATE TABLE [dbo].[enterprise_group_mapping]
 (
@@ -1911,59 +1920,6 @@ CREATE TABLE [dbo].[enterprise_group_mapping]
     CONSTRAINT unique_enterprise_group_mapping UNIQUE(enterprise_group_name, choreo_group_uuid, organization_id),
     CONSTRAINT enterprise_group_mapping$group_uuid_fk FOREIGN KEY (choreo_group_uuid) REFERENCES [group](uuid) ON DELETE CASCADE
 )
-
-CREATE TABLE [dbo].[wso2con_contest_registration]
-(
-    [id] [int] IDENTITY(1,1) NOT NULL,
-    [user_idp_id] [nvarchar](255) NOT NULL,
-    [user_email] [nvarchar](255) NOT NULL,
-    [organization_uuid] [nvarchar](255) NOT NULL,
-    [organization_handle] [nvarchar](255) NOT NULL,
-    [is_registered] [bit] NOT NULL DEFAULT 1,
-    [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    [score_summary] [nvarchar](500) NULL,
-    [last_submitted_at] [datetime] NULL,
-    [browser_id] [nvarchar](36) NULL, 
-    [org_owner_email] [nvarchar](255) NULL,
-    [first_name] [nvarchar](255) NULL,
-    [last_name] [nvarchar](255) NULL,
-    [country] [nvarchar](100) NULL,
-    [mobile_number] [nvarchar](20) NULL,
-    [verification_status] [nvarchar] (20) NOT NULL DEFAULT 'unverified',
-    PRIMARY KEY (id),
-    CONSTRAINT unique_wso2con_contest_registration UNIQUE(user_email, organization_handle)
-)
-
-CREATE TABLE [dbo].[wso2con_contest_otp_verification]
-(
-    [id] [int] IDENTITY(1,1) NOT NULL,
-    [organization_uuid] [nvarchar](255) NOT NULL,
-    [otp] [int] NOT NULL,
-    [generated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (id),
-    CONSTRAINT unique_wso2con_contest_otp_verification UNIQUE(organization_uuid)
-)
-
-/****** Object:  Trigger [dbo].[wso2con_contest_registration_UpdateTimeTrigger] ******/
-SET ANSI_NULLS ON
-    GO
-SET QUOTED_IDENTIFIER ON
-    GO
-
-CREATE TRIGGER [dbo].[wso2con_contest_registration_UpdateTimeTrigger] ON [dbo].[wso2con_contest_registration]
-    FOR INSERT, UPDATE AS
-BEGIN
-    SET NOCOUNT ON;
-    UPDATE tble
-    SET updated_at = GETDATE()
-    FROM [wso2con_contest_registration] AS tble
-    INNER JOIN inserted AS i
-    ON tble.id = i.id;
-END
-GO
-ALTER TABLE [dbo].[wso2con_contest_registration] ENABLE TRIGGER [wso2con_contest_registration_UpdateTimeTrigger]
-    GO
 
 /****** Object:  Trigger [dbo].[enterprise_group_mapping_UpdateTimeTrigger] ******/
 SET ANSI_NULLS ON
@@ -2216,6 +2172,7 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Ma
 -- OBSERVABILITY-MANAGEMENT
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Non-Prod Logs','choreo:log_view_non_prod','OBSERVABILITY-MANAGEMENT','View non-production environment logs');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Prod Logs','choreo:log_view_prod','OBSERVABILITY-MANAGEMENT','View production environment logs');
+INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('View Organization Insights', 'choreo:insights_org_view', 'OBSERVABILITY-MANAGEMENT', 'View Organization level Insights');
 
 -- ON-PREM-KEYS
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage OnPrem Keys','urn:choreosystem:onpremkeymanagement:on_prem_key_manage','ON-PREM-KEYS','Create, Edit and Delete OnPrem Keys');

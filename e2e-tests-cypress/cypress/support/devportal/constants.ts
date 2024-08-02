@@ -15,3 +15,8 @@ export const STANDARD_TIME_OUT = 6000;
 export const MEDIUM_TIME_OUT = 10000;
 export const LONG_TIME_OUT = 60000;
 export const DAY = 86400000;
+
+export const SELF_SIGNUP_REQUEST_PENDING_USER_MSG = "You are currently not authorized to access this site. " + 
+    "Your request to signup for the specific organization on Choreo is awaiting approval.";
+export const SELF_SIGNUP_REQUEST_REJECTED_USER_MSG = "You are not authorized to access this site. " + 
+    "The admin has declined your request to signup for the specific organization.";

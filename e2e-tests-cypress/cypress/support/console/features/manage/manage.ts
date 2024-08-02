@@ -216,7 +216,7 @@ export function mixinManage<T extends Types.Constructor>(
     _updateApiVisibility(component: Component, visibility: ApiVisibility) {
       this.sideMenu.navigateToManage();
       cy.get(TestIds.apiInfo).should("be.visible").click();
-      cy.get(TestIds.apiInfoDevPortal).should("be.visible").click();
+      cy.getUnstable(TestIds.apiInfoDevPortal).should("be.visible").click();
 
       cy.get(TestIds.apiVisibility)
         .should("be.visible")
@@ -225,9 +225,8 @@ export function mixinManage<T extends Types.Constructor>(
         .then((val) => {
           if (val !== visibility) {
             cy.get(TestIds.apiVisibility).should("be.visible").click();
-            cy.contains(visibility, { matchCase: false })
-              .should("exist")
-              .click();
+
+            cy.get(TestIds.apiVisibility).find('input').clear().type(visibility).type('{downArrow}').type('{enter}');
 
             cy.get(TestIds.apiInfoSave).should("be.enabled").click();
             cy.get(TestIds.backdropLoader).should("not.exist");

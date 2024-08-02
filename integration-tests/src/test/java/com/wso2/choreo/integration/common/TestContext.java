@@ -39,12 +39,16 @@ public class TestContext {
     @Getter
     private static TokenHandler resourceAuthzTestUserTokenHandler;
 
+    @Getter
+    private static TokenHandler selfSignupTestAdminUserTokenHandler;
+
     @BeforeSuite
     public void setup() throws Exception {
         Configuration.loadConfigs();
         setTestOrg();
         setTestUserTokenHandler();
         setResourceAuthzTestUserTokenHandler();
+        setSelfSignupTestAdminUserTokenHandler();
         DataCleaner.removeOldTestData(testOrg);
     }
 
@@ -100,4 +104,16 @@ public class TestContext {
         }
     }
 
+    public static synchronized void setSelfSignupTestAdminUserTokenHandler() {
+        if (selfSignupTestAdminUserTokenHandler == null) {
+            selfSignupTestAdminUserTokenHandler = new TokenHandler.Builder(
+                    Configuration.getConfig(ConfigDefinition.SELF_SIGNUP_ORG_HANDLE),
+                    Configuration.getConfig(ConfigDefinition.SELF_SIGNUP_ORG_ADMIN_EMAIL),
+                    Configuration.getConfig(ConfigDefinition.SELF_SIGNUP_ORG_ADMIN_PASSWORD))
+                    .asgardeoClientId(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_ID))
+                    .asgardeoClientSecret(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_SECRET))
+                    .cpAppClientId(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_ID))
+                    .cpAppClientSecret(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_SECRET)).build();
+        }
+    }
 }

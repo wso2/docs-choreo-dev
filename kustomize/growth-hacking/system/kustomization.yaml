@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
   - cron
   - config
+  - secret-provider-class
 
 namespace: choreo-system

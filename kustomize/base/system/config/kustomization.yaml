@@ -212,12 +212,19 @@ configMapGenerator:
       - CLOUD_MANAGER_URL=http://dp-cloud-manager
       - PROXY_DEPLOYER_URL=http://choreo-apim-proxy-deployer:9095
       - ASB_DELETE_QUEUE_NAME=delete-manager
+      - ASB_COMPONENT_DELETE_QUEUE_NAME=delete-manager
+      - ASB_ENVIRONMENT_DELETE_QUEUE_NAME=delete-environments
       - API_SERVER_URL=http://api-server
       - GCHAT_URL=https://chat.googleapis.com
       - APP_SERVICE_URL=app-service:8080
       - CRYPTO_KEY_SERVICE_URL=http://crypto-key-service:9091
+      - CONFIG_SERVICE_URL=http://configuration-service:8080
       - CONFIG_MAPPING_SERVICE_URL=http://configuration-service:8084
       - URL_MANAGER_URL=http://choreo-url-management:9090
+      - MIZZEN_URL=http://dp-mizzen
+      - SPEC_POPULATOR_URL=http://spec-populator.choreo-ai:8000
+      - APP_DEV_AUTHZ_URL=http://app-dev-authorization-service:9090
+      - APP_DEV_USER_MGT_URL=http://app-dev-user-mgt-service:8080
   - name: cm-dp-project-manager
     behavior: create
     literals:
@@ -233,6 +240,11 @@ configMapGenerator:
       - DB_USER=choreo_platform_service_manager_db_user
       - DB_PORT=1433
       - SUBSCRIPTION_SVC_ADDRESS=subscriptions:9090
+      - RESOURCE_REGISTRY_SVC_URL=http://resource-registry:9090
+      - RESILIENT_INVOCATION_SVC_URL=http://cp-rrs:9095
+      - PLATFORM_SERVICES_MANAGER_SVC_URL=http://platform-services-manager:80
+      - CONFIGURATION_SVC_URL=http://configuration-service:8084
+      - CLOUD_MANAGER_URL=http://dp-cloud-manager
   - name: cm-dp-rudder
     behavior: create
     literals:
@@ -280,12 +292,15 @@ configMapGenerator:
       - REACT_APP_FEATURE_TOS_SERVICE_NAME=choreo
       - REACT_APP_GA_TRACKING_CODE=UA-206124793-2
       - REACT_APP_APIM_PUBLISHER_ENDPOINT_PREFIX=/api/am/publisher/v2/
+      - REACT_APP_APIM_ADMIN_ENDPOINT_PREFIX=/api/am/admin/v2/
       - REACT_APP_ASGARDEO_SDK_STORAGE_TYPE=sessionStorage
       - REACT_APP_AUTHENTICATOR_GOOGLE=GoogleOIDCAuthenticator
       - REACT_APP_AUTHENTICATOR_GITHUB=GithubAuthenticator
       - REACT_APP_AUTHENTICATOR_ANONYMOUS=OpenIDConnectAuthenticator
       - REACT_APP_AUTHENTICATOR_ENTERPRISE=EnterpriseIDPAuthenticator
       - REACT_CHOREO_HOME_PAGE='https://wso2.com/choreo/'
+      - REACT_APP_CHOREO_STEP_BASED_ENTERPRISE_TIER_UUID='01ec1f84-ce3d-122e-ac9b-f10c95fd72da'
+      - REACT_APP_CHOREO_ENTERPRISE_TIER_UUID='4abe3757-86f6-47de-994f-f02fb0522e99'
   - name: cm-userapps-image-deleter
     behavior: create
     literals:

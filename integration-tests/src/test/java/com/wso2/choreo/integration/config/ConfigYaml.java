@@ -31,6 +31,8 @@ public class ConfigYaml {
     Map<String, String> insights;
     @JsonProperty("alerts")
     Map<String, String> alerts;
+    @JsonProperty("selfSignup")
+    Map<String, String> selfSignup;
     @JsonProperty("themeManagement")
     Map<String, String> themeManagement;
     @JsonProperty("logs")

@@ -13,6 +13,7 @@
 
 package com.wso2.choreo.integration.models.devops;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Dataplane {
     private String id;
     private String name;
@@ -39,4 +41,5 @@ public class Dataplane {
     private String gatewayType;
     private boolean ciliumEnabled;
     private boolean scaleToZeroEnabled;
+    private String stsDefaultDomain;
 }

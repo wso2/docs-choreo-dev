@@ -85,10 +85,10 @@ spec:
                   - ${WSO2_SERVER_HOME}/bin/api-manager.sh stop
           resources:
             requests:
-              memory: 3Gi
+              memory: 6Gi
               cpu: "2"
             limits:
-              memory: 5Gi
+              memory: 6Gi
               cpu: "2.5"
           securityContext:
             allowPrivilegeEscalation: false

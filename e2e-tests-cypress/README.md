@@ -578,6 +578,40 @@ Scenarios covered by the End to End tests.
 			</td>
 			<td>integration-run-sample.ts</td>
 		</tr>
+		<tr>
+			<td>23. Devportal - Self signup when auto approval enabled</td>
+			<td>
+				1) Login to self signup enabled org <br/>
+				2) Enable Dev portal self signup auto approval <br/>
+				3) Self signup new user to Dev portal <br/>
+				4) Check Dev portal access for the automatically approved self signup user <br/>
+			</td>
+			<td>1.4-devportal-selfsignup-when-auto-approval-enabled-test.ts</td>
+		</tr>
+		<tr>
+			<td>24. Devportal - Self signup when auto approval disabled and user approved</td>
+			<td>
+				1) Login to self signup enabled org <br/>
+				2) Disable Dev portal self signup auto approval <br/>
+				3) Self signup new user to Dev portal <br/>
+				4) Check Dev portal access for the approval pending self signup user <br/>
+				5) Approve self signup request <br/>
+				6) Signin approved self signup user to Dev portal <br/>
+			</td>
+			<td>1.5-devportal-selfsignup-when-auto-approval-disabled-and-user-approved-test.ts</td>
+		</tr>
+		<tr>
+			<td>25. Devportal - Self signup when auto approval disabled and user rejected</td>
+			<td>
+				1) Login to self signup enabled org <br/>
+				2) Disable Dev portal self signup auto approval <br/>
+				3) Self signup new user to Dev portal <br/>
+				4) Check Dev portal access for the approval pending self signup user <br/>
+				5) Reject self signup request <br/>
+				6) Attempt to signin rejected self signup user to Dev portal <br/>
+			</td>
+			<td>1.6-devportal-selfsignup-when-auto-approval-disabled-and-user-rejected-test.ts</td>
+		</tr>
 
     </tbody>
 
