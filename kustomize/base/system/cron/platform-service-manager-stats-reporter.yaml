@@ -17,7 +17,7 @@ spec:
           containers:
             - name: platform-services-manager-stats-reporter
               image: choreocontrolplane.azurecr.io/choreoipaas/platform-services-manager:latest
-              args: ["-cost-reporter"]
+              args: ["-cost-logger"]
               envFrom:
                 - configMapRef:
                     name: env-choreo-platform-services-manager
