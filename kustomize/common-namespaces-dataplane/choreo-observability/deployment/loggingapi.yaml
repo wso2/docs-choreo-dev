@@ -86,10 +86,10 @@ spec:
           resources:
             limits:
               cpu: 500m
-              memory: 750Mi
+              memory: 1200Mi
             requests:
               cpu: 300m
-              memory: 500Mi
+              memory: 800Mi
       volumes:
         - name: config
           configMap:
