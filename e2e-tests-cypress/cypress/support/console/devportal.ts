@@ -51,15 +51,16 @@ export class DevPortal {
     if (devPortalUrl !== undefined) {
       loginURL = devPortalUrl + resourcePath;
     }
-    cy.visit(loginURL);
-    cy.wait(5000);
-    cy.get('body').then($body => {
-      const loginLinkExists = $body.find(TestIds.devPortalLoginLink).length > 0;
-      if (loginLinkExists) {
-        cy.get(TestIds.devPortalLoginLink)
-          .should('be.visible')
-          .click();
-      }
+    cy.visit(loginURL).then(() => {
+      cy.get(TestIds.backdropLoader).should("not.exist");
+      cy.get('body').then($body => {
+        const loginLinkExists = $body.find(TestIds.devPortalLoginLink).length > 0;
+        if (loginLinkExists) {
+          cy.get(TestIds.devPortalLoginLink)
+            .should('be.visible')
+            .click();
+        }
+      });
     });
     cy.get(TestIds.devPortalRegisterLink).should("be.visible");
     cy.get(TestIds.devPortalRegisterLink).click();

@@ -71,7 +71,7 @@ class Console {
   }
 
   enableDevportalSelfSignupAutoApprovalConfig() {
-    cy.wait(5000);
+    cy.get(TestIds.backdropLoader).should("not.exist");
     this.navigateToHome();
     this.navigateToSettings();
     this.navigateToAPIManagement();
@@ -86,7 +86,7 @@ class Console {
   }
 
   disableDevportalSelfSignupAutoApprovalConfig() {
-    cy.wait(5000);
+    cy.get(TestIds.backdropLoader).should("not.exist");
     this.navigateToHome();
     this.navigateToSettings();
     this.navigateToAPIManagement();
