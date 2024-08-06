@@ -365,6 +365,8 @@ configMapGenerator:
       - K8S_CRONJOB_TIMEZONE_MIGRATION_ENABLED={{.K8S_CRONJOB_TIMEZONE_MIGRATION_ENABLED | default "false"}}
       - KEDA_HTTP_ADD_ON_MIGRATION_ENABLED={{.KEDA_HTTP_ADD_ON_MIGRATION_ENABLED | default "false"}}
       - APIM_USER_FOR_OAUTH_APP_CREATION={{.APIM_USER_FOR_OAUTH_APP_CREATION | default ""}}
+      - EU_DATA_PLANE_ID={{.EU_DATA_PLANE_ID | default ""}}
+      - LOG_DELETED_REDIS_KEYS_FROM_EU={{.LOG_DELETED_REDIS_KEYS_FROM_EU | default "false"}}
   - name: env-dp-helmhub
     behavior: create
     literals:
