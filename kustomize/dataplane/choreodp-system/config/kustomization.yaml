@@ -16,7 +16,6 @@ configMapGenerator:
       - REDIS_PWD_FILE_PATH="/etc/secrets/OAUTH_AGENT_REDIS_PWD"
       - REDIS_DB="5"
       - SECONDARY_REDIS_PORT="6380"
-      - SECONDARY_REDIS_PWD_FILE_PATH="/etc/secrets/OAUTH_AGENT_SECONDARY_REDIS_PWD"
       - SECONDARY_REDIS_DB="5"
   - name: env-dp-mizzen-agent
     behavior: create
@@ -50,3 +49,4 @@ configMapGenerator:
       - SECRET_RESOLVER_GET_ENDPOINT="{{.SECRET_RESOLVER_GET_ENDPOINT}}"
       - SUPPORT_SECONDARY_REDIS="{{.SUPPORT_SECONDARY_REDIS | default "false"}}"
       - SECONDARY_REDIS_HOST="{{.SECONDARY_REDIS_HOST | default ""}}"
+      - SECONDARY_REDIS_PWD_FILE_PATH="{{.SECONDARY_REDIS_PWD_FILE_PATH | default ""}}"
