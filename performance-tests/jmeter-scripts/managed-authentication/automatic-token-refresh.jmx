@@ -220,7 +220,7 @@
             <connectTime>true</connectTime>
           </value>
         </objProp>
-        <stringProp name="filename">/Users/thumula/Dev/app-dev-IAM/auto-refresh-test/VM/test-auto-refresh/thumula/test-auto-refresh/results/results-threads-2-run-0.jtl</stringProp>
+        <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
       <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="false">
