@@ -13,6 +13,8 @@ spec:
           key: US_CDP_2_REDIS_PASSWORD
         - objectName: NE_REDIS_PASSWORD
           key: NE_REDIS_PASSWORD
+        - objectName: APIS_REDIS_PASSWORD
+          key: APIS_REDIS_PASSWORD
   parameters:
     objects: |
       array:
@@ -21,6 +23,11 @@ spec:
           objectType: secret
           objectAlias: REDIS_PASSWORD
           objectVersion: "{{.REDIS_PASSWORD_APIM}}"
+        - |
+          objectName: {{.APIS_REDIS_PASSWORD_APIM_OBJ_NAME | default "apim-global-adapter-redis-primary-access-key"}}
+          objectType: secret
+          objectAlias: APIS_REDIS_PASSWORD
+          objectVersion: "{{.APIS_REDIS_PASSWORD_APIM}}"
         - |
           objectName: cp2wu2-redis-ga-PASSWORD
           objectType: secret
