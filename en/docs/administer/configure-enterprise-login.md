@@ -107,11 +107,11 @@ Before you proceed with the configuration, make sure you complete the following:
     3. Click **New Attribute** and select the **Groups** attribute.
     4. Click **Save** and then click **Save Changes**.
 
-### Step 2: Map Choreo groups to Asgardeo in the Choreo Console 
+### Step 2: Map Choreo groups to enterprise IdP groups via the Choreo Console 
 
 !!! note
     
-    Before you map Choreo groups to Asgardeo, ensure you meet the following criteria:
+    Before you map Choreo groups to enterprise IdP groups, ensure you meet the following criteria:
 
     - Asgardeo is your key manager.
     - You have permission to perform actions of the organization administrator role.
@@ -123,7 +123,7 @@ Before you proceed with the configuration, make sure you complete the following:
 5. Click **Manage IdP Group Mapping**.
     ![Group mapping](../assets/img/administer/enterprise-login/group-mapping.png)
 
-6. Click the edit icon corresponding to the Choreo group you want to map to Asgardeo.
+6. Click the edit icon corresponding to the Choreo group you want to map to the enterprise IdP group.
 7. In the **IdP Group Name** field, specify the exact name you configured in the enterprise IdP and enter to add it.
    
     !!! tip
