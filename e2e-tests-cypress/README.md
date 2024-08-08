@@ -132,11 +132,12 @@ parameters:
 
 ## Quick Start
 
-- ### Setup & Run
+- ### Running against local Choreo Console setup
 
-    1. Navigate to the `e2e-tests-cypress` directory
-    2. Run `npm install` - only for first time
-    3. Change the following in `cypress.env.json` if you are working on front-end local dev server
+	1. Ensure that the local instance of Choreo Console has been started and is accessible via `https://localhost:3000`
+    2. Navigate to the `e2e-tests-cypress` directory
+    3. Run `npm install` - only for first time
+    4. Change the following in `cypress.env.json` if you are working on front-end local dev server
         - The following URLs should be updated to include `https://localhost:3000` - your front-end serving url
             - `loginURL: "https://localhost:3000/login?fidp=choreoe2etest"`
             - `appSvcURL: "https://localhost:3000"`
@@ -144,13 +145,14 @@ parameters:
             - `baseUrl: "https://localhost:3000"`
             - `apimSvcURL: "https://localhost:3000"`
 
-    4. Ensure that you have the following environment variables set(refer
+    5. Ensure that you have the following environment variables set(refer
        to [Getting idpUsername and idpPassword](#getting-idpusername-and-idppassword) section for more details)
         - `choreoIDPUsername` - Your IDP username
         - `choreoIDPUsername` - Your IDP password
         - `choreoOrgHandle` - Your organization handle
+		- `cypress_overridenNewAppSvcURL` - "https://apis.preview-dv.choreo.dev"
 
-    5. Run `npm run e2etest:headless` to run test cases in [headless mode](#headless-mode)
+    6. Run in E2E tests in either [Interactive mode](#interactive-mode) or [Headless mode](#headless-mode).
 
 - ### Getting idpUsername and idpPassword
 

@@ -27,6 +27,7 @@ export default defineConfig({
         },
       });
       require("cypress-fail-fast/plugin")(on, config);
+      require('@cypress/code-coverage/task')(on, config);
       config.env.choreoIDPUsername = process.env.choreoIDPUsername;
       config.env.choreoIDPPassword = process.env.choreoIDPPassword;
       config.env.choreoSelfSignupAdminIDPUsername = process.env.choreoSelfSignupAdminIDPUsername
@@ -53,6 +54,7 @@ export default defineConfig({
     FAIL_FAST_ENABLED: true,
     FAIL_FAST_BAIL: 3,
     FAIL_FAST_PLUGIN: false,
+    COVERAGE: false,
   },
   retries: {
     // Configure retry attempts for `cypress run`
