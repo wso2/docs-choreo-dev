@@ -838,6 +838,7 @@ configMapGenerator:
       - GCHAT_SPACE_ID={{.GCHAT_SPACE_ID}}
       - BALLERINA_CENTRAL_URL={{.BALLERINA_CENTRAL_URL}}
       - ENABLE_INSTANCE_BASED_AUTHORIZATION={{.ENABLE_INSTANCE_BASED_AUTHORIZATION | default false}}
+      - ENABLE_CRYPTO_KEY_DELETION={{.ENABLE_CRYPTO_KEY_DELETION | default false}}
   - name: env-organization-management
     behavior: create
     literals:
