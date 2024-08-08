@@ -1,5 +1,4 @@
 resources:
-  - observability-data-generator.yaml
   - choreo-userapps-image-deleter.yaml
   - cio-internal-metric-collector.yaml
   - choreo-daily-usage-publisher.yaml
