@@ -38,7 +38,10 @@ if [ -z "${split_results+x}" ]; then
     source "${COMMON_SH_PATH}"
 fi
 
-check_required_common_variables
+if [ -z ${APIM_ADMIN_USERNAME+x} ] || [ -z ${APIM_ADMIN_PASSWORD+x} ] || [ -z ${APIM_URL+x} ]; then
+    echo "Required common variables not found. Exiting..."
+    exit 1
+fi
 
 # Check if all four required payloads exist in the same directory as the script.
 if [ ! -f "${SP_DIR}/create_sp_payload.xml" ] || [ ! -f "${SP_DIR}/get_sp_payload.xml" ] || [ ! -f "${SP_DIR}/create_oauth_app_payload.xml" ] || [ ! -f "${SP_DIR}/update_sp_payload.xml" ]; then
