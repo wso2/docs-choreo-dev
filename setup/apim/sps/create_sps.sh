@@ -24,8 +24,8 @@ start_port_forward() {
 
 kill_port_forward() {
     local pid=$1
-    if [[ ! -z "$pid" ]]; then
-        kill $pid
+    if [[ -n "$pid" ]]; then
+        kill "$pid"
         echo "Port forwarding stopped for PID: $pid"
     fi
 }
@@ -51,12 +51,12 @@ create_sp() {
                 "$BASE_DIR/sp_common.sh" "$SP_DIR"
             fi
         done
-        kill_port_forward $PF_PID
+        kill_port_forward "$PF_PID"
     elif [ -d "$SP_PATH" ]; then
         echo "Creating Service Provider: $SP_NAME"
         PF_PID=$(start_port_forward "choreo-am-service" "$NAMESPACE" 9443 9443)
         "$BASE_DIR/sp_common.sh" "$SP_PATH"
-        kill_port_forward $PF_PID
+        kill_port_forward "$PF_PID"
     else
         echo "Error: Service Provider '$SP_NAME' does not exist."
         exit 1
