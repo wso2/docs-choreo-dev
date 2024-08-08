@@ -45,6 +45,19 @@ class Login {
     this.handleTermsOfUse();
   }
 
+  selfSignupOrgAdminlogin() {
+    this.setBrowserLocalStorage();
+    this.setBrowserCookie();
+    this.registerNetworkCallsForInterception();
+    this.enterUserCredentials("choreoSelfSignupAdminIDPUsername", "choreoSelfSignupAdminIDPPassword");
+    this.persistOrgs();
+    this.persistLogoutURL();
+    this.persistAccessToken();
+    cy.get(TestIds.backdropLoader).should("not.exist");
+    cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible");
+    this.handleTermsOfUse();
+  }
+
   enterpriseLogin() {
     this.setBrowserLocalStorage();
     this.setBrowserCookie();
