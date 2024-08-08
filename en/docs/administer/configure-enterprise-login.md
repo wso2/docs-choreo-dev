@@ -7,10 +7,10 @@ This guide walks you through the steps to configure enterprise login for your or
 
 ## Prerequisites 
 
-Before you proceed with the configuration, ensure that you have set up the following:
+Before you proceed with the configuration, set up the following:
 
 - A valid email domain for your organization.
-- Access to the Choreo Console at https://console.choreo.dev/ via your Google, GitHub, or Microsoft account. If you are a new user, create an organization with a unique organization name. For example, "Stark Industries". 
+- Access the Choreo Console at https://console.choreo.dev/ via your Google, GitHub, or Microsoft account. If you are a new user, create an organization with a unique organization name. For example, "Stark Industries". 
 
 ## Configure enterprise login for your Choreo organization
 
@@ -107,31 +107,27 @@ Before you proceed with the configuration, make sure you complete the following:
     3. Click **New Attribute** and select the **Groups** attribute.
     4. Click **Save** and then click **Save Changes**.
 
-### Step 2: Map Asgardeo groups to Choreo roles in the Choreo Console 
+### Step 2: Map Choreo groups to enterprise IdP groups via the Choreo Console 
 
 !!! note
     
-    Before you map Asgardeo groups to Choreo roles, ensure you meet the following criteria:
+    Before you map Choreo groups to enterprise IdP groups, ensure you meet the following criteria:
 
     - Asgardeo is your key manager.
     - You have permission to perform actions of the organization administrator role.
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console, go to the top navigation menu and click **Organization**. This takes you to the organization's home page.
-3. In the left navigation menu, click **Settings**.
-4. In the header, click the **Organization** list. This will open the organization level settings page. 
-5. In the **Organization** tab, click **Role Mapping**.
-    ![Role mapping](../assets/img/administer/enterprise-login/role-mapping.png)
- 
-6. To add a new role mapping, click **+ Add Mapping**. 
-7. In the **Groups** field, enter the exact name you configured in the enterprise IdP. Next, select the applicable roles to map from the **Roles** list.
+3. In the left navigation menu, click **Settings**. This opens the organization-level settings page. 
+4. In the **Access Control** tab, click **Groups**. 
+5. Click **Manage IdP Group Mapping**.
+    ![Group mapping](../assets/img/administer/enterprise-login/group-mapping.png)
+
+6. Click the edit icon corresponding to the Choreo group you want to map to the enterprise IdP group.
+7. In the **IdP Group Name** field, specify the exact name you configured in the enterprise IdP and enter to add it.
    
     !!! tip
-
-        - You can assign one or more roles to each group.
-        - You can only update the role name. The group name is not editable.
-        - If there is a change to the group role mapping, it takes effect from the next login session onwards. 
-        - If there is no role mapping, the default developer role is applied to all enterprise users.
+        If there is a change to the IdP group mapping, it takes effect from the next login session onwards. 
 
 8. Click **Save**. 
 
