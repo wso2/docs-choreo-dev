@@ -15,6 +15,7 @@
 
 import "cypress-real-events/support";
 import "cypress-fail-fast";
+import '@cypress/code-coverage/support';
 import { MIN_RENDERING_WAIT_TIME } from "./commons/constants";
 require('@neuralegion/cypress-har-generator/commands');
 

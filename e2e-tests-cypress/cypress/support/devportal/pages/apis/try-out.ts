@@ -11,28 +11,14 @@
  * associated services.
  */
 
-import { realClick } from "cypress-real-events/commands/realClick";
 import { cyGet } from "../../../commons/cy";
 import { SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 import {
   DEV_PORTAL_APP_TOKEN_GEN_URL,
-  DEV_PORTAL_SUBSCRIPTIONS_URL,
-  GRAPHQL_URL,
 } from "../../../commons/urls";
 import { Utils } from "../../../commons/utils";
 
 export class TryOut {
-  static navigateToTryOutMenu(isWaitForEndpoints: boolean = false) {
-    if (isWaitForEndpoints) {
-      cy.intercept({ method: "POST", url: GRAPHQL_URL, times: 1 }).as(
-        "endpoints"
-      );
-    }
-    cy.get('[data-testid="tryout-item-link"]').click();
-    if (isWaitForEndpoints) {
-      cy.wait("@endpoints", VERY_SHORT_TIME);
-    }
-  }
 
   static SelectApplication(applicationName: string) {
     Utils.getRenderedElement(

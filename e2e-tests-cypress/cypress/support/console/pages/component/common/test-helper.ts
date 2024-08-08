@@ -37,49 +37,6 @@ export class TestHelper {
     return this.getSwaggerResponse(resourcePath, "");
   }
 
-  static invokeAPI(
-    projectName: string,
-    componentName: string,
-    environment: Enums.Environment,
-    httpMethod: Enums.HTTPMethod,
-    pathParm: string,
-    queryParameters1?: { key: string; value: string }[],
-    enableHeaders: boolean = true
-  ) {
-    return GraphQL._getAuthHeaderKey(
-      projectName,
-      componentName,
-      environment
-    ).then((res) => {
-      const { invokeUrl, apikey } = res;
-
-      let query = "";
-      let url = "";
-
-      if (queryParameters1) {
-        for (let index = 0; index < queryParameters1.length; index++) {
-          const element = queryParameters1[index];
-          query = query + `${element.key}=${element.value}&`;
-        }
-        url = `${invokeUrl}/${pathParm}?${query.trim()}`;
-      } else {
-        url = `${invokeUrl}/${pathParm}`;
-      }
-
-      if (enableHeaders) {
-        return Utils.sendGetRequest(url, { "api-key": apikey }).then((res) => {
-          const { body, status, headers } = res;
-          return Promise.resolve({ invokeUrl, apikey, body, status, headers });
-        });
-      }
-
-      return Utils.sendGetRequest(url).then((res) => {
-        const { body, status, headers } = res;
-        return Promise.resolve({ invokeUrl, apikey, body, status, headers });
-      });
-    });
-  }
-
   static testOnCurl(
     env: Enums.Environment,
     httpMethod: Enums.HTTPMethod,

@@ -46,4 +46,5 @@ screenshots
 reports
 videos
 hars
-
+e2e-tests-cypress/.nyc_output/
+e2e-tests-cypress/coverage/
