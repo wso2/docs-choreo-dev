@@ -243,6 +243,7 @@ rules:
       - deletecollection
   - apiGroups:
       - argoproj.io/v1alpha1
+      - argoproj.io
     resources:
       - workflows
     verbs:
