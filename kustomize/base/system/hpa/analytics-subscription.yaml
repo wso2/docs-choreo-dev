@@ -5,8 +5,8 @@ metadata:
     choreo.component: analytics-subs
   name: analytics-subs
 spec:
-  maxReplicas: 8
-  minReplicas: 2
+  maxReplicas: 2
+  minReplicas: 1
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
@@ -23,4 +23,4 @@ spec:
         name: memory
         target:
           type: Utilization
-          averageUtilization: 75
+          averageUtilization: 125
