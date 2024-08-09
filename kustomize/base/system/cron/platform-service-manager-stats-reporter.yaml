@@ -3,11 +3,12 @@ kind: CronJob
 metadata:
   name: platform-service-manager-stats-reporter
 spec:
-  schedule: "0 * * * *" # run every hour till feature is stable
+  schedule: "0 0 * * *"
   startingDeadlineSeconds: 600
   concurrencyPolicy: Replace
   jobTemplate:
     spec:
+      activeDeadlineSeconds: 3600
       backoffLimit: 4
       template:
         metadata:
@@ -17,7 +18,7 @@ spec:
           containers:
             - name: platform-services-manager-stats-reporter
               image: choreocontrolplane.azurecr.io/choreoipaas/platform-services-manager:latest
-              args: ["-cost-reporter"]
+              args: ["-cost-logger"]
               envFrom:
                 - configMapRef:
                     name: env-choreo-platform-services-manager

@@ -27,8 +27,11 @@ export default defineConfig({
         },
       });
       require("cypress-fail-fast/plugin")(on, config);
+      require('@cypress/code-coverage/task')(on, config);
       config.env.choreoIDPUsername = process.env.choreoIDPUsername;
       config.env.choreoIDPPassword = process.env.choreoIDPPassword;
+      config.env.choreoSelfSignupAdminIDPUsername = process.env.choreoSelfSignupAdminIDPUsername
+      config.env.choreoSelfSignupAdminIDPPassword = process.env.choreoSelfSignupAdminIDPPassword;
       config.env.choreoOrgHandle = process.env.choreoOrgHandle;
       config.env.userName = process.env.userName;
       config.env.userEmail = process.env.userEmail;
@@ -40,17 +43,13 @@ export default defineConfig({
     },
     testIsolation: false,
     specPattern: "cypress/e2e-*/**/*.ts",
-    excludeSpecPattern: [
-      'cypress/e2e-stable/devportal/1.4-devportal-selfsignup-when-auto-approval-enabled-test.ts',
-      'cypress/e2e-stable/devportal/1.5-devportal-selfsignup-when-auto-approval-disabled-and-user-approved-test.ts',
-      'cypress/e2e-stable/devportal/1.6-devportal-selfsignup-when-auto-approval-disabled-and-user-rejected-test.ts'
-  ],
   },
   env: {
     FAIL_FAST_STRATEGY: "spec",
     FAIL_FAST_ENABLED: true,
     FAIL_FAST_BAIL: 3,
     FAIL_FAST_PLUGIN: false,
+    COVERAGE: false,
   },
   retries: {
     // Configure retry attempts for `cypress run`

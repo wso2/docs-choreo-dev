@@ -31,3 +31,7 @@ configMapGenerator:
     behavior: create
     files:
       - default.conf=internal-default.conf
+  - name: nginx-managed-auth-refresh
+    behavior: create
+    files:
+      - nginx-managed-auth-refresh.conf

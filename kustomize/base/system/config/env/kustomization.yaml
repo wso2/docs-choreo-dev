@@ -302,6 +302,9 @@ configMapGenerator:
       - REDIS_US_CDP_2_HOST={{.REDIS_US_CDP_2_HOST}}
       - REDIS_US_CDP_2_PORT={{.REDIS_US_CDP_2_PORT}}
       - REDIS_US_CDP_2_DATA_PLANE_IDS={{.REDIS_US_CDP_2_DATA_PLANE_IDS}}
+      - REDIS_EU_CDP_HOST={{.REDIS_EU_CDP_HOST}}
+      - REDIS_EU_CDP_PORT={{.REDIS_EU_CDP_PORT}}
+      - REDIS_EU_CDP_DATA_PLANE_IDS={{.REDIS_EU_CDP_DATA_PLANE_IDS}}
       - WEB_APPS_INGRESS_CLASS={{.WEB_APPS_INGRESS_CLASS}}
       - WEB_APPS_PDP_INGRESS_CLASS={{.WEB_APPS_PDP_INGRESS_CLASS}}
       - WEB_APPS_DP_INTERNAL_LB={{.WEB_APPS_DP_INTERNAL_LB}}
@@ -365,6 +368,8 @@ configMapGenerator:
       - K8S_CRONJOB_TIMEZONE_MIGRATION_ENABLED={{.K8S_CRONJOB_TIMEZONE_MIGRATION_ENABLED | default "false"}}
       - KEDA_HTTP_ADD_ON_MIGRATION_ENABLED={{.KEDA_HTTP_ADD_ON_MIGRATION_ENABLED | default "false"}}
       - APIM_USER_FOR_OAUTH_APP_CREATION={{.APIM_USER_FOR_OAUTH_APP_CREATION | default ""}}
+      - EU_DATA_PLANE_ID={{.EU_DATA_PLANE_ID | default ""}}
+      - LOG_DELETED_REDIS_KEYS_FROM_EU={{.LOG_DELETED_REDIS_KEYS_FROM_EU | default "false"}}
   - name: env-dp-helmhub
     behavior: create
     literals:
@@ -442,6 +447,8 @@ configMapGenerator:
       - LOG_LEVEL={{.LOG_LEVEL | default "info"}}
       - GITHUB_SUBMODULES_SUPPORT_ENABLED={{.GITHUB_SUBMODULES_SUPPORT_ENABLED | default "false"}}
       - CHOREO_GITHUB_RUNNER_APP_CLIENT_ID={{.CHOREO_GITHUB_RUNNER_APP_CLIENT_ID}}
+      - MIZZEN_API_URL={{.MIZZEN_API_URL | default "http://dp-mizzen:80"}}
+      - USER_SERVICE_URL={{.USER_SERVICE_URL | default "app-service:8080"}}
   - name: env-dp-cloud-manager
     behavior: create
     literals:

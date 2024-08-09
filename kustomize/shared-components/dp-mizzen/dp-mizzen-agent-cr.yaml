@@ -44,6 +44,26 @@ rules:
   - apiGroups:
       - ""
     resources:
+      - serviceaccounts
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources:
+      - roles
+      - rolebindings
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
+  - apiGroups:
+      - ""
+    resources:
       - nodes
     verbs:
       - get
@@ -212,6 +232,33 @@ rules:
       - cilium.io
     resources:
       - ciliumenvoyconfigs
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+      - deletecollection
+  - apiGroups:
+      - argoproj.io/v1alpha1
+      - argoproj.io
+    resources:
+      - workflows
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+      - deletecollection
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - workflowtaskresults
     verbs:
       - get
       - list

@@ -63,8 +63,8 @@ public class InsightsAPI extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void testOverviewOperations() throws IOException {
         OffsetDateTime currentDateTimeAtUTC = OffsetDateTime.now(ZoneOffset.UTC);
-        OffsetDateTime sixMonthsAgoDateTimeAtUTC = currentDateTimeAtUTC.minusMonths(6);
-        dto.setFromTime(sixMonthsAgoDateTimeAtUTC.toString());
+        OffsetDateTime oneWeekAgoDateTimeAtUTC = currentDateTimeAtUTC.minusWeeks(1);
+        dto.setFromTime(oneWeekAgoDateTimeAtUTC.toString());
         dto.setToTime(currentDateTimeAtUTC.toString());
         dto.setTenant("carbon.super");
         InsightRequest.getOverviewOperations(this, choreoCPTestClient, accessToken, dto, INSIGHTS_API_RESOURCE);

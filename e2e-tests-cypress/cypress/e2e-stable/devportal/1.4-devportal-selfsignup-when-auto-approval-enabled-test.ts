@@ -21,7 +21,7 @@ const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
 describe("Self signup when auto approval enabled scenario", () => {
 
   it("Login to Console", () => {
-    console.login();
+    console.selfSignupOrgAdminLogin();
   });
 
   it("Switch to self signup enabled org", () => {
