@@ -188,7 +188,7 @@ class Login {
     cy.intercept("GET", VALIDATE_USER_URL).as("org");
     cy.intercept({
       method: "POST",
-      url: GRAPHQL_URL(),
+      url: GRAPHQL_URL,
       times: 1,
     }).as("gql");
   }

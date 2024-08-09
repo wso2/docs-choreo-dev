@@ -210,7 +210,7 @@ describe("Multiple User Logins", () => {
     cy.intercept(
       {
         method: "POST",
-        url: GRAPHQL_URL(),
+        url: GRAPHQL_URL,
       },
       (req) => {
         const requestBodyString = JSON.stringify(req.body);
@@ -257,7 +257,7 @@ describe("Multiple User Logins", () => {
     cy.intercept(
       {
         method: "POST",
-        url: GRAPHQL_URL(),
+        url: GRAPHQL_URL,
       },
       (req) => {
         // Convert req.body to a string
@@ -334,7 +334,7 @@ describe("Multiple User Logins", () => {
     cy.intercept(
       {
         method: "POST",
-        url: GRAPHQL_URL(),
+        url: GRAPHQL_URL,
       },
       (req) => {
         const requestBodyString = JSON.stringify(req.body);
@@ -383,7 +383,7 @@ describe("Multiple User Logins", () => {
     cy.intercept(
       {
         method: "POST",
-        url: GRAPHQL_URL(),
+        url: GRAPHQL_URL,
       },
       (req) => {
         const requestBodyString = JSON.stringify(req.body);
