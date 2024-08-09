@@ -606,9 +606,11 @@ CREATE TABLE [dbo].[organization](
     [uuid] [nvarchar](255) NOT NULL,
     [name] [nvarchar](255) NOT NULL,
     [handle] [nvarchar](255) NOT NULL,
+    [status] [nvarchar](63) NOT NULL DEFAULT (N'ACTIVE'),
     [created_at] [datetime] NOT NULL,
     [updated_at] [datetime] NOT NULL,
-    CONSTRAINT [PK_organization_id] PRIMARY KEY CLUSTERED
+    CONSTRAINT [PK_organization_id] PRIMARY KEY CLUSTERED,
+    CONSTRAINT [chk_status] CHECK ([status] IN ('ACTIVE', 'INACTIVE'))
 (
 [id] ASC
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
