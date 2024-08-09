@@ -21,7 +21,8 @@
     "console-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e-stable/console/**/*'",
     "test": "npm run devportal-e2etest:headless || npm run console-e2etest:headless || npm run posttest",
     "local": "npm run e2etest:headless || npm run posttest",
-    "e2etest:pdp": "npx cypress run -C cypress.pdp.json "
+    "e2etest:pdp": "npx cypress run -C cypress.pdp.json ",
+    "cy:coverage": "nyc report --reporter=text-summary --reporter=lcov"
   },
   "author": "",
   "license": "ISC"
