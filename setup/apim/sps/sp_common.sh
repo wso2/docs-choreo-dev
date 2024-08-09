@@ -123,6 +123,8 @@ API_SECRET_VAR_NAME="${SP_NAME}_API_SECRET"
 API_KEY="${!API_KEY_VAR_NAME}"
 API_SECRET="${!API_SECRET_VAR_NAME}"
 
+OUTPUT_PATH=$SCRIPT_DIR/sp_out.log
+echo "##vso[task.setvariable variable=path;isOutput=true]$OUTPUT_PATH"
 # Output to log file in the script's execution location
 {
   echo "SP_NAME: $SP_NAME"
