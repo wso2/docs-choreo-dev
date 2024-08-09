@@ -15,13 +15,6 @@ generate_client_secret() {
   openssl rand -base64 48 | tr -dc 'a-zA-Z0-9-_' | head -c 43
 }
 
-#common configs
-
-export ENVIRONMENT_PREFIX="perf"
-export APIM_ADMIN_USERNAME="admin"
-export APIM_ADMIN_PASSWORD="admin"
-export APIM_URL="https://localhost:9443"
-
 #SP configs
 
 #rudder configs
@@ -120,37 +113,6 @@ echo_results () {
     echo "response from server: $BODY"
   fi
   tput sgr0
-}
-
-
-#create a function to check required variables are set, if not prompt user to enter them
-check_required_common_variables(){
-  if [ -z ${ENVIRONMENT_PREFIX+x} ]; then
-    while [ -z "$environment" ]; do
-        read -r -p "Enter Environment (dev, stage, perf, prod): " environment
-    done
-    #export environment. If prod export "" to avoid the variable being set to 'prod'
-    if [ "$environment" == "prod" ]; then
-        export ENVIRONMENT_PREFIX=""
-    else
-        export ENVIRONMENT_PREFIX="$environment."
-    fi
-  fi
-
-  if [ -z ${APIM_ADMIN_USERNAME+x} ]; then
-      read -r -p "Enter APIM Admin Username: " APIM_ADMIN_USERNAME
-  fi
-  export APIM_ADMIN_USERNAME
-
-  if [ -z ${APIM_ADMIN_PASSWORD+x} ]; then
-      read -r -s -p "Enter APIM Admin Password: " APIM_ADMIN_PASSWORD
-  fi
-  export APIM_ADMIN_PASSWORD
-
-  if [ -z ${APIM_URL+x} ]; then
-      read -r -p "Enter APIM URL (eg: https://sts.perf.choreo.dev): " APIM_URL
-  fi
-  export APIM_URL
 }
 
 # Function to check unset environment variables in given payload variables
