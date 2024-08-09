@@ -18,6 +18,7 @@ import { OK } from "../../../support/commons/http";
 import { ConfigEntryStep } from "../../../support/commons/types";
 import { TestIds } from "../../../support/console/constants/TestIds";
 import { Service } from "../../../support/console/entities/component/service-component";
+import { Utils } from "../../../support/commons/utils";
 
 after(() => {
   console.logout();
@@ -111,7 +112,7 @@ describe("Verify containerized service functionality", () => {
         parentComponentId: "operations-greeting-get_greeter_greet",
       })
       .then((res) => {
-        expect(res.response).to.be.eq("Hello, Stranger!\n\n");
+        expect(Utils.replaceLineBreaks(res.response)).to.be.eq("Hello, Stranger!");
         expect(res.statusCode).to.be.equal(OK.toString());
       });
   });
@@ -126,7 +127,7 @@ describe("Verify containerized service functionality", () => {
         parentComponentId: "operations-greeting-get_greeter_greet",
       })
       .then((res) => {
-        expect(res.response).to.be.eq("Hello, Stranger!\n\n");
+        expect(Utils.replaceLineBreaks(res.response)).to.be.eq("Hello, Stranger!");
         expect(res.statusCode).to.be.equal(OK.toString());
       });
   });
