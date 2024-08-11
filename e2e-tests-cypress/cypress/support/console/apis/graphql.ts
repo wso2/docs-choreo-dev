@@ -390,7 +390,7 @@ export class GraphQL {
     return cy
       .request({
         method: "POST",
-        url: GRAPHQL_URL(),
+        url: GRAPHQL_URL,
         body: JSON.stringify(query),
         headers: AUTH_HEADER2(),
         failOnStatusCode: false,

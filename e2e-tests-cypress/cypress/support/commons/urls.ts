@@ -35,7 +35,7 @@ export const DEV_PORTAL_APP_KEY_GEN_URL =
   DEV_PORTAL_URL + "/applications/*/generate-keys?organizationId=*";
 export const DEV_PORTAL_SUBSCRIPTIONS_URL =
   DEV_PORTAL_URL + "/subscriptions/?apiId=*&organizationId=*";
-export const GRAPHQL_URL = () => {
+export const GRAPHQL_URL  = (() => {
   let appSvcURL = Cypress.env("newAppSvcURL");
 
   if (appSvcURL.includes("localhost")) {
@@ -43,7 +43,7 @@ export const GRAPHQL_URL = () => {
   }
 
   return appSvcURL + "/projects/1.0.0/graphql";
-};
+})();
 
 export const EP_USER_HOME_URL = `${Cypress.env(
   "baseUrl"
