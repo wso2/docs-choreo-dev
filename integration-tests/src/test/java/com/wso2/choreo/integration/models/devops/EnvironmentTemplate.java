@@ -14,6 +14,7 @@
 package com.wso2.choreo.integration.models.devops;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,6 +33,7 @@ public class EnvironmentTemplate {
     private Instant createdAt;
     private int organizationId;
     private UUID organizationUuid;
+    @JsonProperty("env_name")
     private String envName;
     private String region;
     private String choreoEnv;

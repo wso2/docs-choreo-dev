@@ -667,11 +667,11 @@ public class DevopsPortalApi extends ControlPlaneAPI {
     public static void createOrgEnvironment(TestActionRunner runner, String accessToken, String orgUuid, String name,
                                             String dataPlaneId, String dnsPrefix, boolean isProd) {
         final String url = "/organizations/" + orgUuid + "/environments";
-        Map<String, String> payloadMap = new HashMap<>();
+        Map<String, Object> payloadMap = new HashMap<>();
         payloadMap.put("name", name);
         payloadMap.put("dataplaneId", dataPlaneId);
         payloadMap.put("dnsPrefix", dnsPrefix);
-        payloadMap.put("isProd", String.valueOf(isProd));
+        payloadMap.put("isProd", isProd);
 
         String payload = ObjectMapperUtil.mapObjectToString(payloadMap);
 
@@ -679,14 +679,30 @@ public class DevopsPortalApi extends ControlPlaneAPI {
                 .until("i = 3")
                 .index("i")
                 .autoSleep(5000)
-                .actions((http().client(DEVOPS_ENDPOINT)
-                        .send()
-                        .post(url)
-                        .message()
-                        .header(HttpHeaders.AUTHORIZATION, accessToken)
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .body(payload)
-                        .accept(String.valueOf(MediaType.APPLICATION_JSON)))));
+                .actions(
+                        http().client(DEVOPS_ENDPOINT)
+                            .send()
+                            .post(url)
+                            .message()
+                            .header(HttpHeaders.AUTHORIZATION, accessToken)
+                            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                            .body(payload)
+                            .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http()
+                            .client(DEVOPS_ENDPOINT)
+                            .receive()
+                            .response(HttpStatus.CREATED)
+                            .message()
+                            .type(MessageType.JSON)
+                            .validate((message, context) -> {
+                                int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                if (code != HttpStatus.CREATED.value()) {
+                                    throw new ValidationException("Environment creation failed");
+                                }
+                            }
+                        )
+                )
+        );
     }
 
     public static void deleteOrgEnvironment(TestActionRunner runner, String accessToken, String orgUuid, String envId) {
@@ -696,11 +712,27 @@ public class DevopsPortalApi extends ControlPlaneAPI {
                 .until("i = 3")
                 .index("i")
                 .autoSleep(5000)
-                .actions((http().client(DEVOPS_ENDPOINT)
-                        .send()
-                        .delete(url)
-                        .message()
-                        .header(HttpHeaders.AUTHORIZATION, accessToken)
-                        .accept(String.valueOf(MediaType.APPLICATION_JSON)))));
+                .actions(
+                        http().client(DEVOPS_ENDPOINT)
+                            .send()
+                            .delete(url)
+                            .message()
+                            .header(HttpHeaders.AUTHORIZATION, accessToken)
+                            .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http()
+                            .client(DEVOPS_ENDPOINT)
+                            .receive()
+                            .response(HttpStatus.OK)
+                            .message()
+                            .type(MessageType.JSON)
+                            .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Environment deletion failed");
+                                    }
+                                }
+                            )
+                )
+        );
     }
 }
