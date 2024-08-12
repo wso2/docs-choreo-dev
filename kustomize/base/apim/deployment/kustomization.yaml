@@ -4,7 +4,6 @@ resources:
   - choreo-connect-global-adapter-v2.yaml
   - ga-health-check-deployment.yaml
   - apk-config-ds-deployment.yaml
-  - choreo-connect-global-adapter-eu-migration.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587,25,1433,6380
