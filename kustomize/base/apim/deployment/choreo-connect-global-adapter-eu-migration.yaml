@@ -19,7 +19,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: choreo-connect-global-adapter-v2
+  name: choreo-connect-global-adapter-eu-migration
   annotations:
     checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
     checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
@@ -28,12 +28,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: choreo-connect-global-adapter-v2
+      choreo.component: choreo-connect-global-adapter-eu-migration
   template:
     metadata:
       labels:
-        choreo.component: choreo-connect-global-adapter-v2
-        antiaffinity: choreo-connect-global-adapter-v2
+        choreo.component: choreo-connect-global-adapter-eu-migration
+        antiaffinity: choreo-connect-global-adapter-eu-migration
     spec:
       affinity:
         podAntiAffinity:
@@ -43,7 +43,7 @@ spec:
                   - key: antiaffinity
                     operator: In
                     values:
-                      - choreo-connect-global-adapter-v2
+                      - choreo-connect-global-adapter-eu-migration
               topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       securityContext:
@@ -52,7 +52,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: choreo-connect-global-adapter
+        - name: choreo-connect-global-adapter-eu-migration
           volumeMounts:
             - mountPath: /home/wso2/security/keystore/mg.key
               name: secret-mgw-keystore
@@ -78,7 +78,7 @@ spec:
               readOnly: true
               subPath: mg.pem
             - mountPath: /home/wso2/conf
-              name: global-adapter-config
+              name: global-adapter-config-eu-migration
             - name: secret-mgw
               mountPath: /mnt/csi/secret-mgw
               readOnly: true
@@ -180,9 +180,6 @@ spec:
         - name: global-adapter-config
           configMap:
             name: cc-global-adapter-conf-eu-migration
-        - name: global-adapter-config-eu-migration
-          configMap:
-            name: cc-global-adapter-conf-v2
         - name: mgw-common-cert-vol
           configMap:
             name: mgw-common-cert
