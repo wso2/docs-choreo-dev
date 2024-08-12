@@ -179,6 +179,9 @@ spec:
             name: global-adapter-keystore-vol
         - name: global-adapter-config
           configMap:
+            name: cc-global-adapter-conf-eu-migration
+        - name: global-adapter-config-eu-migration
+          configMap:
             name: cc-global-adapter-conf-v2
         - name: mgw-common-cert-vol
           configMap:
