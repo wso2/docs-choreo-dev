@@ -117,9 +117,10 @@ If Choreo's managed authentication is disabled, you must ensure that your web ap
 
 ### Step 1.5: Handle session expiry
 
-The logged in user's session expires when the time configured for `Session Expiry Time` is exceeded. `401 Unauthorized` response status code for a Choreo API request from a logged in user with the necessary permissions indicates a possible session expiry. After the session expires, the user should re-login.
+When a user session exceeds the configured session expiry time, it automatically expires. A `401 Unauthorized` response status code for a Choreo API request from a logged-in user indicates that the session may have expired, requiring the user to re-login.
 
-To programmatically re-login on receiving a `401 unauthorized` response from a Choreo API, you can encapsulate the request with the re-login logic. The following is an example code snippet that wraps GET requests:
+To programmatically handle session expiry and automatically re-login upon receiving a `401 Unauthorized` response from a Choreo API, you can encapsulate the request with re-login logic. The following sample code snippet shows how to wrap GET requests:
+
 
 ``` javascript
     export const performGet = async (url) => {
