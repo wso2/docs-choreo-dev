@@ -38,6 +38,11 @@ configMapGenerator:
     files:
       - global-adapter-v2/ga_config.toml
       - global-adapter-v2/log_config.toml
+  - name: cc-global-adapter-conf-eu-migration
+    behavior: create
+    files:
+      - global-adapter-v2/ga_config.toml
+      - global-adapter-v2/log_config.toml
   - name: choreo-apim-am-conf
     behavior: create
     files:
