@@ -61,6 +61,11 @@ spec:
                 secretKeyRef:
                   name: secret-redis
                   key: REDIS_PASSWORD
+            - name: APIS_REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-redis
+                  key: APIS_REDIS_PASSWORD
           image: choreocontrolplane.azurecr.io/choreoipaas/openresty:latest
           imagePullPolicy: Always
           lifecycle:
