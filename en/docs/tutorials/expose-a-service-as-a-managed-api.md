@@ -52,8 +52,8 @@ To see the resources of the API proxy, go to the left navigation menu, click **D
 To deploy the API proxy to the development environment, follow the steps given below:
 
 1. In the left navigation menu, click **Deploy**.
-2. In the **Build Area** card, click **Configure & Deploy**. This opens the **Configure & Deploy** pane, where you can select the API access mode depending on how you want the API to be accessible. Here, you can  select **External**.
-3. Click **Deploy**. The **Development** card indicates the **Deployment Status** as **Active** when the API proxy is successfully deployed.
+2. In the **Build Area** card, click **Configure & Deploy**. This opens the **Configure & Deploy** pane, where you can select the API access mode depending on how you want the API to be accessible. Here, you can  select **External**,and then click **Deploy**.
+3. The **Development** card indicates the **Deployment Status** as **Active** when the API proxy is successfully deployed.
 
 Now you are ready to test the API proxy.
 
