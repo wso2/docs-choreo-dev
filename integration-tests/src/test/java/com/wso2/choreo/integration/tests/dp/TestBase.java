@@ -50,7 +50,11 @@ public class TestBase extends TestNGCitrusSpringSupport implements ITest {
         Field f = testData[0].getClass().getDeclaredField("region");
         f.setAccessible(true);
         String regionName = f.get(testData[0]).toString();
-        testName.set(method.getName() + "_" + regionName);
+
+        // For PDPs regions will be specified as empty, so avoid appending region to test name in that case
+        if (!regionName.isEmpty()) {
+            testName.set(method.getName() + "_" + regionName);
+        }
     }
 
     @Override
