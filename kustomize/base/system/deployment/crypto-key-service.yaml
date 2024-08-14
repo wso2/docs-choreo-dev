@@ -75,8 +75,6 @@ spec:
             - name: config
               mountPath: /home/ballerina/Config.toml
               subPath: Config.toml
-            - name: crypto-service-ingress-secret
-              mountPath: /mnt/csi/crypto-service-ingress-secret
             - name: crypto-service-ingress-tls-secret
               mountPath: /mnt/csi/crypto-service-ingress-tls-secret
             - name: secret-crypto-key-service
@@ -86,14 +84,6 @@ spec:
         - name: config
           configMap:
             name: cm-file-crypto-key-service
-        - name: crypto-service-ingress-secret
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: ingress-tls-crypto-key-service
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
         - name: crypto-service-ingress-tls-secret
           csi:
             driver: secrets-store.csi.k8s.io
