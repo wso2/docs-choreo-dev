@@ -20,10 +20,12 @@ configMapGenerator:
       - MILVERSE_URL={{.MILVERSE_URL | default ""}}
       - SOURCE_PLATFORM={{.SOURCE_PLATFORM | default ""}}
       - EXCLUDED_ORG_LIST={{.EXCLUDED_ORG_LIST | default ""}}
+      - LOG_LEVEL={{.LOG_LEVEL | default "INFO"}}
   - name: env-milvus-proxy-cm
     behavior: create
     literals:
       - MILVERSE_URL={{.MILVERSE_URL | default ""}}
+      - LOG_LEVEL={{.LOG_LEVEL | default "INFO"}}
   - name: env-docs-updater
     behavior: create
     literals:
