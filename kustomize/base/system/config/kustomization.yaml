@@ -2,10 +2,6 @@ resources:
   - env
 
 configMapGenerator:
-  - name: cm-test-assistant
-    behavior: create
-    literals:
-      - TEMP_DATA_DIR=/temp-data-dir/
   - name: cm-choreo-testbase-db
     behavior: create
     literals:

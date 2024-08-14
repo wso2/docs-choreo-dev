@@ -105,14 +105,6 @@ configMapGenerator:
       - IS_CHOREO_AUTHZ_POST_MIGRATION={{.IS_CHOREO_AUTHZ_POST_MIGRATION}}
       - AUTHZ_SERVICE_ENDPOINT={{.AUTHZ_SERVICE_ENDPOINT}}
       - CONFIG_TOML_GEN_LOGGING_ENABLED={{.CONFIG_TOML_GEN_LOGGING_ENABLED | default "false"}}
-  - name: env-test-assistant
-    behavior: create
-    literals:
-      - IDP_JWKS_ENDPOINT={{.IDP_JWKS_ENDPOINT}}
-      - ISSUER={{.ISSUER}}
-      - AUDIENCE={{.AUDIENCE}}
-      - AZURE_MODEL_NAME={{.AZURE_MODEL_NAME}}
-      - AZURE_API_BASE={{.AZURE_API_BASE}}
   - name: env-connectords
     behavior: create
     literals:

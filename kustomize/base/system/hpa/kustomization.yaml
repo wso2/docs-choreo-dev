@@ -9,7 +9,6 @@ resources:
   - negotiator.yaml
   - connectords.yaml
   - platform-services-manager.yaml
-  - test-assistant.yaml
   - analytics-subscription.yaml
   - organization-remover.yaml
   - declarative-api.yaml
