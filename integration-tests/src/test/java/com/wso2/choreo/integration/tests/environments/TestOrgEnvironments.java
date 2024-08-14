@@ -46,6 +46,7 @@ public class TestOrgEnvironments extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private String projectId;
     private String environmentName;
+    private String envTemplateId;
     private String dnsPrefix;
     private String region;
 
@@ -103,6 +104,7 @@ public class TestOrgEnvironments extends TestNGCitrusSpringSupport {
         Assert.assertNotNull(environmentTemplates);
         for (EnvironmentTemplate environmentTemplate : environmentTemplates) {
             if (environmentTemplate.getEnvName().equals(environmentName)) {
+                envTemplateId = String.valueOf(environmentTemplate.getId());
                 return;
             }
         }
@@ -127,7 +129,7 @@ public class TestOrgEnvironments extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"getProjectEnvironments_TestOrgEnvironments_EU"})
     @CitrusTest
     public void deleteEnvironment_TestOrgEnvironments_EU() throws Exception {
-        DevopsPortalApi.deleteOrgEnvironment(this, accessToken, orgUUID, environmentName);
+        DevopsPortalApi.deleteOrgEnvironment(this, accessToken, orgUUID, envTemplateId);
         // waiting for the environment to be deleted
         TimeUnit.MINUTES.sleep(2);
     }
@@ -185,6 +187,7 @@ public class TestOrgEnvironments extends TestNGCitrusSpringSupport {
         Assert.assertNotNull(environmentTemplates);
         for (EnvironmentTemplate environmentTemplate : environmentTemplates) {
             if (environmentTemplate.getEnvName().equals(environmentName)) {
+                envTemplateId = String.valueOf(environmentTemplate.getId());
                 return;
             }
         }
@@ -208,7 +211,7 @@ public class TestOrgEnvironments extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"getProjectEnvironments_TestOrgEnvironments_US"})
     @CitrusTest
     public void deleteEnvironment_TestOrgEnvironments_US() throws Exception {
-        DevopsPortalApi.deleteOrgEnvironment(this, accessToken, orgUUID, environmentName);
+        DevopsPortalApi.deleteOrgEnvironment(this, accessToken, orgUUID, envTemplateId);
         // waiting for the environment to be deleted
         TimeUnit.MINUTES.sleep(2);
     }

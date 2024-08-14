@@ -705,8 +705,8 @@ public class DevopsPortalApi extends ControlPlaneAPI {
         );
     }
 
-    public static void deleteOrgEnvironment(TestActionRunner runner, String accessToken, String orgUuid, String envId) {
-        final String url = "/organizations/" + orgUuid + "/environments/" + envId;
+    public static void deleteOrgEnvironment(TestActionRunner runner, String accessToken, String orgUuid, String envTemplateId) {
+        final String url = "/organizations/" + orgUuid + "/environments/templates/" + envTemplateId;
 
         runner.$(repeatOnError()
                 .until("i = 3")
