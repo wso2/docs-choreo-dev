@@ -7,8 +7,6 @@ In Choreo, users with the administrator role can create, update, and delete subs
 !!! tip
     Deleting a subscription plan is only possible if there are no active subscriptions associated with it.  
 
-## Create a subscription plan
-
 To create an organization-level subscription plan, follow the steps given below: 
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
