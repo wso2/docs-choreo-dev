@@ -83,8 +83,6 @@ spec:
               readOnly: true
             - name: tmp
               mountPath: /tmp
-            - name: usage-service-ingress-secret
-              mountPath: /mnt/csi/usage-service-ingress-secret
             - name: usage-service-ingress-tls-secret
               mountPath: /mnt/csi/usage-service-ingress-tls-secret
       restartPolicy: Always
@@ -98,14 +96,6 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-choreo-metered-usage-handler-service
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: usage-service-ingress-secret
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: ingress-tls-usage-handler-service
             nodePublishSecretRef:
               name: csi-secret-store-azure
         - name: usage-service-ingress-tls-secret
