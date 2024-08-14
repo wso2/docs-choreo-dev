@@ -43,6 +43,7 @@
             <class name="com.wso2.choreo.integration.tests.appdevUserManagement.AppdevUserManagementTests" />
             <class name="com.wso2.choreo.integration.tests.appdevAuthorization.AppdevAuthorizationTests" />
             <class name="com.wso2.choreo.integration.tests.auditLogging.AuditLogging" />
+            <class name="com.wso2.choreo.integration.tests.environments.TestOrgEnvironments" />
         </classes>
     </test>
 </suite>
