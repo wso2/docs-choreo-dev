@@ -1780,6 +1780,8 @@ CREATE TABLE [dbo].[org_activity]
 (
     [id] [int] IDENTITY(1,1) NOT NULL,
     [org_id] [int] NOT NULL,
+    [org_uuid] [nvarchar](255) NOT NULL,
+    [org_handle] [nvarchar](255) NOT NULL,
     [last_login] [datetime],
     [last_job_run] [datetime],
     [last_api_invocation] [datetime],
@@ -1788,7 +1790,9 @@ CREATE TABLE [dbo].[org_activity]
     [is_deleted] [bit] NOT NULL DEFAULT 0,
     [deleted_time] [datetime],
     PRIMARY KEY (id),
-    CONSTRAINT unique_org_activity UNIQUE(org_id)
+    CONSTRAINT unique_org_activity UNIQUE(org_id),
+    CONSTRAINT unique_org_uuid UNIQUE(org_uuid),
+    CONSTRAINT unique_org_handle UNIQUE(org_handle)
 );
 
 /****** Object:  Trigger [dbo].[org_enterprise_login_config_UpdateTimeTrigger] ******/
