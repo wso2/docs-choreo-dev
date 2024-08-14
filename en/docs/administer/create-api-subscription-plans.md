@@ -1,6 +1,6 @@
 # Create API Subscription Plans
 
-API subscription plans are essential to control and manage access to APIs. These plans define the rules and limitations on how clients can interact with APIs, ensuring efficient resources utilization and robust security. With the option to set rate limits and burst control, subscription plans allow API providers to manage traffic, prevent misuse, and offer tiered service levels. Organizations can implement subscription plans to provide varying levels of API access, accommodating different user needs and business models, while ensuring optimal performance and security. 
+API subscription plans are essential to control and manage access to APIs. These plans define the rules and limitations on how clients can interact with APIs, ensuring efficient resource utilization and robust security. With the option to set rate limits and burst control, subscription plans allow API providers to manage traffic, prevent misuse, and offer tiered service levels. Organizations can implement subscription plans to provide varying levels of API access, accommodating different user needs and business models, while ensuring optimal performance and security. 
 
 In Choreo, users with the administrator role can create, update, and delete subscription plans at the organization level. 
 
@@ -16,7 +16,7 @@ To create an organization-level subscription plan, follow the steps given below:
 3. In the left navigation menu, click **Settings**. This opens the organization-level settings page.
 4. Click the **API Management** tab and then click **Subscription Plans**.
 5. Click **+ Add Subscription Plan**.
-6. In the **Create Subscription Plan** pane, enter appropriate values for each field:
+6. In the **Create Subscription Plan** pane, enter the appropriate values for each field:
     
     !!! note
          - In the **Name** field, you must specify a name to uniquely identify the subscription plan in various contexts. The value is editable only at the time you create the subscription plan. You cannot change the name after you create it.
