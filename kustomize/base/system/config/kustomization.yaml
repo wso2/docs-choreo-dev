@@ -224,6 +224,8 @@ configMapGenerator:
       - MIZZEN_URL=http://dp-mizzen
       - SPEC_POPULATOR_URL=http://spec-populator.choreo-ai:8000
       - APP_DEV_AUTHZ_URL=http://app-dev-authorization-service:9090
+      - APP_DEV_USER_MGT_URL=http://app-dev-user-mgt-service:8080
+      - MOESIF_SERVICE_URL=http://moesif-service:8080
   - name: cm-dp-project-manager
     behavior: create
     literals:
@@ -242,6 +244,8 @@ configMapGenerator:
       - RESOURCE_REGISTRY_SVC_URL=http://resource-registry:9090
       - RESILIENT_INVOCATION_SVC_URL=http://cp-rrs:9095
       - PLATFORM_SERVICES_MANAGER_SVC_URL=http://platform-services-manager:80
+      - CONFIGURATION_SVC_URL=http://configuration-service:8084
+      - CLOUD_MANAGER_URL=http://dp-cloud-manager
   - name: cm-dp-rudder
     behavior: create
     literals:

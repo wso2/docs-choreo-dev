@@ -21,6 +21,7 @@ import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.auditLogging.AuditLoggingUtils;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -132,6 +133,7 @@ public class AuditLogging extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createProject_AuditLoggingTests"})
     @CitrusTest
     public void filterAuditLogsByProject_AuditLoggingTests() throws Exception {
+        SleepUtil.sleep(10); // Wait for the audit logs to be generated
         AuditLoggingUtils.filterAuditLogsByProject(this, citrusClients, orgUuid,
                 List.of(projectA.getId()));
     }

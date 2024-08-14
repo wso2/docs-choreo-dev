@@ -37,7 +37,10 @@ if [ -z "${split_results+x}" ]; then
     source "$COMMON_SH_PATH"
 fi
 
-check_required_common_variables
+if [ -z ${APIM_ADMIN_USERNAME+x} ] || [ -z ${APIM_ADMIN_PASSWORD+x} ] || [ -z ${APIM_URL+x} ]; then
+    echo "Required common variables not found. Exiting..."
+    exit 1
+fi
 
 create_config=$(cat "create_idp.xml")
 delete_config=$(cat "delete_idp.xml")

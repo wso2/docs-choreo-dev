@@ -97,6 +97,10 @@ export class Utils {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
   }
 
+  static replaceLineBreaks(text: string) : string {
+    return text.replace(/(\r\n|\n|\r)/gm, "");
+  }
+  
   /**
    * Create name for on-prem key.
    *

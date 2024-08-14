@@ -538,7 +538,8 @@ CREATE TABLE [dbo].[member_invitation_v2](
     [invited_application] [nvarchar](255) NOT NULL,
     [created_at] [datetime] NOT NULL,
     [updated_at] [datetime] NOT NULL,
-    CONSTRAINT [PK_member_invitation_v2_invitation_id] PRIMARY KEY CLUSTERED
+    CONSTRAINT [PK_member_invitation_v2_invitation_id] PRIMARY KEY CLUSTERED,
+    CONSTRAINT [FK_member_invitation_v2_organization_id] FOREIGN KEY (organization_id) REFERENCES organization (id) ON DELETE CASCADE
 (
 [invitation_id] ASC
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
@@ -605,15 +606,21 @@ CREATE TABLE [dbo].[organization](
     [uuid] [nvarchar](255) NOT NULL,
     [name] [nvarchar](255) NOT NULL,
     [handle] [nvarchar](255) NOT NULL,
+    [status] [nvarchar](63) NOT NULL DEFAULT (N'ACTIVE'),
     [created_at] [datetime] NOT NULL,
     [updated_at] [datetime] NOT NULL,
-    CONSTRAINT [PK_organization_id] PRIMARY KEY CLUSTERED
+    CONSTRAINT [PK_organization_id] PRIMARY KEY CLUSTERED,
+    CONSTRAINT [chk_status] CHECK ([status] IN ('ACTIVE', 'INACTIVE'))
 (
 [id] ASC
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
     CONSTRAINT [organization$handle_unique] UNIQUE NONCLUSTERED
 (
 [handle] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    CONSTRAINT [organization_uuid_unique] UNIQUE NONCLUSTERED
+(
+[uuid] ASC
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
@@ -1707,8 +1714,9 @@ CREATE TABLE [dbo].[org_self_signup_config]
     [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
-    CONSTRAINT unique_org_self_signup_config UNIQUE(organization_uuid)
-)
+    CONSTRAINT unique_org_self_signup_config UNIQUE (organization_uuid),
+    CONSTRAINT signup_config_org_uuid_fk FOREIGN KEY (organization_uuid) REFERENCES organization(uuid) ON DELETE CASCADE
+);
 
 CREATE TABLE [dbo].[org_self_signup_approval_request]
 (
@@ -1721,6 +1729,7 @@ CREATE TABLE [dbo].[org_self_signup_approval_request]
     [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     CONSTRAINT unique_org_self_signup_approval_request UNIQUE(organization_uuid, user_idp_id)
+    CONSTRAINT signup_config_org_uuid_fk FOREIGN KEY (organization_uuid) REFERENCES organization(uuid) ON DELETE CASCADE
 )
 
 CREATE TABLE [dbo].[enterprise_group_role_mapping]
@@ -1764,6 +1773,7 @@ CREATE TABLE [dbo].[org_enterprise_login_config]
     [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     CONSTRAINT unique_org_enterprise_login_config UNIQUE(organization_uuid)
+    CONSTRAINT signup_config_org_uuid_fk FOREIGN KEY (organization_uuid) REFERENCES organization(uuid) ON DELETE CASCADE
 )
 
 CREATE TABLE [dbo].[org_activity]
@@ -1887,7 +1897,7 @@ CREATE TABLE [dbo].[global_configuration_data](
     CONSTRAINT [global_configuration_data$config_uuid_fk] FOREIGN KEY (config_uuid) REFERENCES dbo.global_configuration(uuid)
 )
 
-CREATE TABLE [dbo].[suspended_members]
+CREATE TABLE [dbo].[inactive_user]
 (
     [id] [int] IDENTITY(1,1) NOT NULL,
     [user_idp_id] [nvarchar](255) NOT NULL,
@@ -1896,8 +1906,9 @@ CREATE TABLE [dbo].[suspended_members]
     [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
-    CONSTRAINT unique_suspended_members UNIQUE(user_idp_id, organization_uuid)
-)
+    CONSTRAINT unique_suspended_members UNIQUE(user_idp_id, organization_uuid),
+    CONSTRAINT FK_inactive_user_organization_uuid FOREIGN KEY (organization_uuid) REFERENCES organization(uuid) ON DELETE CASCADE
+);
 
 CREATE TABLE [dbo].[enterprise_group_mapping]
 (

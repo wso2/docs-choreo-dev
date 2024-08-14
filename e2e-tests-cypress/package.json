@@ -9,6 +9,7 @@
     "webpack": "^5.68.0"
   },
   "devDependencies": {
+    "@cypress/code-coverage": "^3.12.44",
     "@neuralegion/cypress-har-generator": "^5.16.4",
     "cypress": "^13.8.0",
     "cypress-fail-fast": "^7.0.0"
@@ -16,12 +17,12 @@
   "scripts": {
     "pretest": "npm run clean:reports",
     "e2etest:headless": "npx cypress run --headless",
-    "devportal-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e-smoke/devportal/*.ts'",
-    "console-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e-smoke/console/**/*'",
-    "console-prod-periodic-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e-smoke/console/**/*' --config-file prod-periodic.json",
+    "devportal-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e-stable/devportal/*.ts'",
+    "console-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e-stable/console/**/*'",
     "test": "npm run devportal-e2etest:headless || npm run console-e2etest:headless || npm run posttest",
     "local": "npm run e2etest:headless || npm run posttest",
-    "e2etest:pdp": "npx cypress run -C cypress.pdp.json "
+    "e2etest:pdp": "npx cypress run -C cypress.pdp.json ",
+    "cy:coverage": "nyc report --reporter=text-summary --reporter=lcov"
   },
   "author": "",
   "license": "ISC"
