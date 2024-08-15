@@ -30,9 +30,10 @@ export default defineConfig({
       require('@cypress/code-coverage/task')(on, config);
       config.env.choreoIDPUsername = process.env.choreoIDPUsername;
       config.env.choreoIDPPassword = process.env.choreoIDPPassword;
-      config.env.choreoSelfSignupAdminIDPUsername = process.env.choreoSelfSignupAdminIDPUsername
-      config.env.choreoSelfSignupAdminIDPPassword = process.env.choreoSelfSignupAdminIDPPassword;
       config.env.choreoOrgHandle = process.env.choreoOrgHandle;
+      config.env.choreoSelfSignupAdminIDPUsername = process.env.choreoSelfSignupAdminIDPUsername;
+      config.env.choreoSelfSignupAdminIDPPassword = process.env.choreoSelfSignupAdminIDPPassword;
+      config.env.choreoSelfSignupAdminOrgHandle = process.env.choreoSelfSignupAdminOrgHandle;
       config.env.userName = process.env.userName;
       config.env.userEmail = process.env.userEmail;
       config.env.gitPAT = process.env.gitPAT;
