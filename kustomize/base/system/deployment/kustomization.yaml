@@ -29,7 +29,6 @@ resources:
   - quota-limiter.yaml
   - subscriptions.yaml
   - telemetry-go.yaml
-  - test-assistant.yaml
   - testbase.yaml
   - devops-portal-api.yaml
   - organization-management.yaml

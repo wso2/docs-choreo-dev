@@ -64,7 +64,6 @@ resources:
   - program-db.yaml
   - redis.yaml
   - service-now.yaml
-  - test-assistant.yaml
   - subscriptions.yaml
   - quota-limiter.yaml
   - observability-data-generator.yaml
