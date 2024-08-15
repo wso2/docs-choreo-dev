@@ -625,7 +625,7 @@ public class DevopsPortalApi extends ControlPlaneAPI {
                                                                       int orgId) throws JsonProcessingException {
         final String url = "/organizations/" + orgId + "/environment-templates";
 
-        AtomicReference<String> responseDTO = new AtomicReference<>();
+        AtomicReference<EnvironmentTemplatesListDTO> responseDTO = new AtomicReference<>();
 
         runner.$(repeatOnError()
                 .until("i = 5")
@@ -654,14 +654,13 @@ public class DevopsPortalApi extends ControlPlaneAPI {
                         if (response.getData().isEmpty()) {
                             throw new RuntimeException("No environment templates available");
                         }
-                        responseDTO.set(message.getPayload(String.class));
+                        responseDTO.set(response);
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException(e);
                     }
                 }));
 
-        return new ObjectMapper()
-                .readValue(responseDTO.get(), EnvironmentTemplatesListDTO.class);
+        return responseDTO.get();
     }
 
     public static void createOrgEnvironment(TestActionRunner runner, String accessToken, String orgUuid, String name,
@@ -681,26 +680,19 @@ public class DevopsPortalApi extends ControlPlaneAPI {
                 .autoSleep(5000)
                 .actions(
                         http().client(DEVOPS_ENDPOINT)
-                            .send()
-                            .post(url)
-                            .message()
-                            .header(HttpHeaders.AUTHORIZATION, accessToken)
-                            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                            .body(payload)
-                            .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                                .send()
+                                .post(url)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(payload)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
                         http()
-                            .client(DEVOPS_ENDPOINT)
-                            .receive()
-                            .response(HttpStatus.CREATED)
-                            .message()
-                            .type(MessageType.JSON)
-                            .validate((message, context) -> {
-                                int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
-                                if (code != HttpStatus.CREATED.value()) {
-                                    throw new ValidationException("Environment creation failed");
-                                }
-                            }
-                        )
+                                .client(DEVOPS_ENDPOINT)
+                                .receive()
+                                .response(HttpStatus.CREATED)
+                                .message()
+                                .type(MessageType.JSON)
                 )
         );
     }
@@ -714,24 +706,17 @@ public class DevopsPortalApi extends ControlPlaneAPI {
                 .autoSleep(5000)
                 .actions(
                         http().client(DEVOPS_ENDPOINT)
-                            .send()
-                            .delete(url)
-                            .message()
-                            .header(HttpHeaders.AUTHORIZATION, accessToken)
-                            .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                                .send()
+                                .delete(url)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
                         http()
-                            .client(DEVOPS_ENDPOINT)
-                            .receive()
-                            .response(HttpStatus.OK)
-                            .message()
-                            .type(MessageType.JSON)
-                            .validate((message, context) -> {
-                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
-                                    if (code != HttpStatus.OK.value()) {
-                                        throw new ValidationException("Environment deletion failed");
-                                    }
-                                }
-                            )
+                                .client(DEVOPS_ENDPOINT)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
                 )
         );
     }
