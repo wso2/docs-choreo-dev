@@ -53,25 +53,24 @@ export class DevPortal {
     }
     cy.visit(loginURL).then(() => {
       cy.get(TestIds.backdropLoader).should("not.exist");
-      cy.get('body').then($body => {
-        const loginLinkExists = $body.find(TestIds.devPortalLoginLink).length > 0;
-        if (loginLinkExists) {
+      cy.wait(3000).url(SHORT_TIME).then((url) => {
+        if (url.includes(Cypress.env("devportalLoginURL"))) {
           cy.get(TestIds.devPortalLoginLink)
             .should('be.visible')
             .click();
         }
+
+        cy.get(TestIds.devPortalRegisterLink).should("be.visible").click();
+        cy.get(TestIds.devPortalRegistrationSubmitButton).should("be.visible");
+        cy.get(TestIds.devPortalRegisterPageUsernameInput).type(userDetails.email)
+        cy.get(TestIds.devPortalRegisterPagePasswordInput).type(userDetails.password, {
+          log: false,
+        })
+        cy.get(TestIds.devPortalRegisterPageFirstNameInput).type(userDetails.firstName)
+        cy.get(TestIds.devPortalRegisterPageLastNameInput).type(userDetails.lastName)
+        cy.get(TestIds.devPortalRegistrationSubmitButton).click();
       });
     });
-    cy.get(TestIds.devPortalRegisterLink).should("be.visible");
-    cy.get(TestIds.devPortalRegisterLink).click();
-    cy.get(TestIds.devPortalRegistrationSubmitButton).should("be.visible");
-    cy.get(TestIds.devPortalRegisterPageUsernameInput).type(userDetails.email)
-    cy.get(TestIds.devPortalRegisterPagePasswordInput).type(userDetails.password, {
-      log: false,
-    })
-    cy.get(TestIds.devPortalRegisterPageFirstNameInput).type(userDetails.firstName)
-    cy.get(TestIds.devPortalRegisterPageLastNameInput).type(userDetails.lastName)
-    cy.get(TestIds.devPortalRegistrationSubmitButton).click();
   }
 
   checkDevPortalAccessForPendingUser() {

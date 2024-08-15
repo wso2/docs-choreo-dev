@@ -36,8 +36,10 @@ class Login {
     this.setBrowserLocalStorage();
     this.setBrowserCookie();
     this.registerNetworkCallsForInterception();
-    this.enterUserCredentials("choreoIDPUsername", "choreoIDPPassword");
-    this.persistOrgs();
+    const { username, password } = this.readUserCredentialsFromEnv();
+    this.enterUserCredentials(username, password);
+    const handle = this.readConfiguredOrgHandle();
+    this.persistOrgs(handle);
     this.persistLogoutURL();
     this.persistAccessToken();
     cy.get(TestIds.backdropLoader).should("not.exist");
@@ -49,8 +51,10 @@ class Login {
     this.setBrowserLocalStorage();
     this.setBrowserCookie();
     this.registerNetworkCallsForInterception();
-    this.enterUserCredentials("choreoSelfSignupAdminIDPUsername", "choreoSelfSignupAdminIDPPassword");
-    this.persistOrgs();
+    const { username, password } = this.readSelfSignupAdminUserCredentialsFromEnv();
+    this.enterUserCredentials(username, password);
+    const handle = this.readConfiguredSelfSignupAdminUserOrgHandle();
+    this.persistOrgs(handle);
     this.persistLogoutURL();
     this.persistAccessToken();
     cy.get(TestIds.backdropLoader).should("not.exist");
@@ -142,7 +146,36 @@ class Login {
     return this.signOutUrl;
   }
 
-  private enterUserCredentials(envUsername: string, envPassword: string) {
+  private readUserCredentialsFromEnv(): { username: string; password: string; } {
+    const username = Cypress.env("choreoIDPUsername");
+    const password = Cypress.env("choreoIDPPassword");
+
+    if (username === undefined || password === undefined) {
+      throw new Error("Credentials have not been defined correctly");
+    }
+
+    return {  username, password };
+  }
+
+  private readSelfSignupAdminUserCredentialsFromEnv(): { username: string; password: string; } {
+    let username = Cypress.env("choreoSelfSignupAdminIDPUsername");
+    let password = Cypress.env("choreoSelfSignupAdminIDPPassword");
+
+    if (username === undefined || password === undefined) {
+      cy.log("Self signup admin credentials not defined separately. Using default credentials");
+
+      username = Cypress.env("choreoIDPUsername");
+      password = Cypress.env("choreoIDPPassword");
+
+      if (username === undefined || password === undefined) {
+        throw new Error("Credentials have not been defined correctly");
+      }
+    }
+
+    return {  username, password };
+  }
+
+  private enterUserCredentials(username: string, password: string) {
     cy.visit(Cypress.env("loginURL"));
     cy.wait(3000)
       .url(SHORT_TIME)
@@ -150,8 +183,8 @@ class Login {
         cy.log(`URL after login page load: ${url}`);
         if (url.includes(Cypress.env("idpURL") + "/authenticationendpoint")) {
           cy.get('button[type="submit"]').should("be.visible", MEDIUM_TIME);
-          cy.get("#usernameUserInput").type(Cypress.env(envUsername));
-          cy.get(Login.password).type(Cypress.env(envPassword), {
+          cy.get("#usernameUserInput").type(username);
+          cy.get(Login.password).type(password, {
             log: false,
           });
           cy.get('button[type="submit"]').click();
@@ -193,14 +226,28 @@ class Login {
     }).as("gql");
   }
 
-  private persistOrgs() {
+  private readConfiguredOrgHandle() : string | undefined {
+    return Cypress.env("choreoOrgHandle");
+  }
+
+  private readConfiguredSelfSignupAdminUserOrgHandle() : string | undefined {
+    const orgHandle = Cypress.env("choreoSelfSignupAdminOrgHandle");
+
+    if (orgHandle === undefined) {
+      return this.readConfiguredOrgHandle();
+    }
+
+    return orgHandle;
+  }
+
+  private persistOrgs(handle: string | undefined) {
     cy.wait("@org", MEDIUM_TIME).then((res) => {
       if (res.response === undefined) {
         throw new Error("Failed to receive orgs response");
       }
 
       let userOrg;
-      const handle = Cypress.env("choreoOrgHandle");
+
       if (handle) {
         userOrg = res.response.body.organizations.find(
           (o) => o.handle === handle
