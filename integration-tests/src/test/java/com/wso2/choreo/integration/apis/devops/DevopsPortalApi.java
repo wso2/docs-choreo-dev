@@ -25,6 +25,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
+import com.wso2.choreo.integration.models.devops.EnvironmentTemplatesListDTO;
 import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
@@ -618,5 +619,105 @@ public class DevopsPortalApi extends ControlPlaneAPI {
                 .client(DEVOPS_ENDPOINT)
                 .receive()
                 .response(HttpStatus.OK));
+    }
+
+    public static EnvironmentTemplatesListDTO getEnvironmentTemplates(TestActionRunner runner, String accessToken,
+                                                                      int orgId) throws JsonProcessingException {
+        final String url = "/organizations/" + orgId + "/environment-templates";
+
+        AtomicReference<EnvironmentTemplatesListDTO> responseDTO = new AtomicReference<>();
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(5000)
+                .actions((http().client(DEVOPS_ENDPOINT)
+                        .send()
+                        .get(url)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)))));
+
+        runner.$(http()
+                .client(DEVOPS_ENDPOINT)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate((message, context) -> {
+                    try {
+                        EnvironmentTemplatesListDTO response = new ObjectMapper()
+                                .readValue(message.getPayload().toString(),
+                                        EnvironmentTemplatesListDTO.class
+                                );
+                        if (response.getData().isEmpty()) {
+                            throw new RuntimeException("No environment templates available");
+                        }
+                        responseDTO.set(response);
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                }));
+
+        return responseDTO.get();
+    }
+
+    public static void createOrgEnvironment(TestActionRunner runner, String accessToken, String orgUuid, String name,
+                                            String dataPlaneId, String dnsPrefix, boolean isProd) {
+        final String url = "/organizations/" + orgUuid + "/environments";
+        Map<String, Object> payloadMap = new HashMap<>();
+        payloadMap.put("name", name);
+        payloadMap.put("dataplaneId", dataPlaneId);
+        payloadMap.put("dnsPrefix", dnsPrefix);
+        payloadMap.put("isProd", isProd);
+
+        String payload = ObjectMapperUtil.mapObjectToString(payloadMap);
+
+        runner.$(repeatOnError()
+                .until("i = 3")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http().client(DEVOPS_ENDPOINT)
+                                .send()
+                                .post(url)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(payload)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http()
+                                .client(DEVOPS_ENDPOINT)
+                                .receive()
+                                .response(HttpStatus.CREATED)
+                                .message()
+                                .type(MessageType.JSON)
+                )
+        );
+    }
+
+    public static void deleteOrgEnvironment(TestActionRunner runner, String accessToken, String orgUuid, String envTemplateId) {
+        final String url = "/organizations/" + orgUuid + "/environments/templates/" + envTemplateId;
+
+        runner.$(repeatOnError()
+                .until("i = 3")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http().client(DEVOPS_ENDPOINT)
+                                .send()
+                                .delete(url)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http()
+                                .client(DEVOPS_ENDPOINT)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                )
+        );
     }
 }
