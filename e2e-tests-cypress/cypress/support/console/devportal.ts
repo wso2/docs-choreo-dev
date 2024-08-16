@@ -54,7 +54,8 @@ export class DevPortal {
     cy.visit(loginURL).then(() => {
       cy.get(TestIds.backdropLoader).should("not.exist");
       cy.wait(3000).url(SHORT_TIME).then((url) => {
-        if (url.includes(Cypress.env("devportalLoginURL"))) {
+        cy.log("Loaded URL: " + url);
+        if (url.includes(loginURL)) {
           cy.get(TestIds.devPortalLoginLink)
             .should('be.visible')
             .click();
