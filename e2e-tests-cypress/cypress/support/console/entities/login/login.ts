@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
+import { MEDIUM_TIME, SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { GRAPHQL_URL, VALIDATE_USER_URL } from "../../../commons/urls";
 import { Utils } from "../../../commons/utils";
 import { TestIds } from "../../constants/TestIds";
@@ -242,7 +242,8 @@ class Login {
 
   private persistOrgs(handle: string | undefined) {
     cy.wait("@org", MEDIUM_TIME).then((res) => {
-      if (res.response === undefined) {
+      if (res.response === undefined || res.response.statusCode != 200) {
+        this.handleOopsPage();
         throw new Error("Failed to receive orgs response");
       }
 
@@ -293,6 +294,12 @@ class Login {
       const header = intercept.request.headers["authorization"] as string;
       this.accessToken = header.replace("Bearer", "").trim();
     });
+  }
+
+  private handleOopsPage() {
+    cy.get(TestIds.backdropLoader).should("not.exist");
+    cy.get(TestIds.logout, VERY_SHORT_TIME).should("be.visible").click();
+    cy.get(TestIds.logout).should("not.exist");
   }
 
   private setBrowserCookie() {
