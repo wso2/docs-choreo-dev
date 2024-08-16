@@ -31,6 +31,7 @@ do
 done
 
 # Checking whether the databases are online
+sleep 100
 
 is_every_db_online=0
 
@@ -56,7 +57,7 @@ done
 
 echo "Databases restored succcefully"
 
-# Renaming the previous databases with "_old" suffix.
+Renaming the previous databases with "_old" suffix.
 
 for element in "${db_names_to_restore[@]}"
 do
@@ -71,7 +72,7 @@ echo "Original Databases renamed with _old suffix succesfully"
 
 for element in "${db_names_to_restore[@]}"
 do
-  az sql db rename --name "$element" --new-name "$old_db" --resource-group "$resource_group" -s "$server_name" --subscription "$subscription_id"
+  az sql db rename --name "${element}_restore" --new-name "$element" --resource-group "$resource_group" -s "$server_name" --subscription "$subscription_id"
   echo "${element}_restore DB Renamed to ${element}"
 done
 
