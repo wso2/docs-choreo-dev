@@ -62,7 +62,7 @@ public class ApimProxyDeployerElevatedAccessCheck extends TestNGCitrusSpringSupp
     @Test
     @CitrusTest
     public void initiateProxyDeployment_ApimPublisherElevatedAccessCheck() throws Exception {
-        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.STS_ENDPOINT);
+        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
         String requestUrl = Constant.PROXY_DEPLOYER_URL + "/components/" + componentId + "/versions/" + versionId +
                 "/initiate-deployment?environmentId=" + envId + "&accessMode=external";
         SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, "",
