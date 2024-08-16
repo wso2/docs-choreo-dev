@@ -243,31 +243,32 @@ class Login {
   private persistOrgs(handle: string | undefined) {
     cy.wait("@org", MEDIUM_TIME).then((res) => {
       if (res.response === undefined || res.response.statusCode != 200) {
-        this.handleOopsPage();
-        throw new Error("Failed to receive orgs response");
-      }
-
-      let userOrg;
-
-      if (handle) {
-        userOrg = res.response.body.organizations.find(
-          (o) => o.handle === handle
-        );
-        if (userOrg === undefined) {
-          throw new Error(
-            `Configured org handle ${handle} does not exist for current user`
-          );
-        }
-        cy.log(`Configured org handle ${userOrg.handle} selected`);
+        this.handleOopsPage().then(() => {
+          throw new Error("Failed to receive orgs response");
+        });
       } else {
-        [userOrg] = res.response.body.organizations;
-        cy.log(`First available org ${userOrg.handle} selected`);
+        let userOrg;
+
+        if (handle) {
+          userOrg = res.response.body.organizations.find(
+            (o) => o.handle === handle
+          );
+          if (userOrg === undefined) {
+            throw new Error(
+              `Configured org handle ${handle} does not exist for current user`
+            );
+          }
+          cy.log(`Configured org handle ${userOrg.handle} selected`);
+        } else {
+          [userOrg] = res.response.body.organizations;
+          cy.log(`First available org ${userOrg.handle} selected`);
+        }
+        this.displayName = res.response.body.displayName;
+        this.userEmail = res.response.body.userEmail;
+        this.orgId = userOrg.id;
+        this.orgHandle = userOrg.handle;
+        this.orgUuid = userOrg.uuid;
       }
-      this.displayName = res.response.body.displayName;
-      this.userEmail = res.response.body.userEmail;
-      this.orgId = userOrg.id;
-      this.orgHandle = userOrg.handle;
-      this.orgUuid = userOrg.uuid;
     });
   }
 
@@ -300,6 +301,7 @@ class Login {
     cy.get(TestIds.backdropLoader).should("not.exist");
     cy.get(TestIds.logout, VERY_SHORT_TIME).should("be.visible").click();
     cy.get(TestIds.logout).should("not.exist");
+    return cy.wrap({});
   }
 
   private setBrowserCookie() {
