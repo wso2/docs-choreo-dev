@@ -25,7 +25,7 @@ for element in "${db_names_to_restore[@]}"
 do
   restoring_dbs+=("${element}_restore")
   echo "Executing the Restoring database command for db ${element}"
-  az sql db restore --dest-name "${element}_restore" --name "$element" --resource-group "$resource_group" --server "$server_name" --subscription "$subscription_id" --time "$restore_time" --elastic-pool "$elastic_pool" --backup-storage-redundancy Local > ${element}_restore.json &
+  az sql db restore --dest-name "${element}_restore" --name "$element" --resource-group "$resource_group" --server "$server_name" --subscription "$subscription_id" --time "$restore_time" --elastic-pool "$elastic_pool" --backup-storage-redundancy Local > "${element}"_restore.json &
   sleep 10
   echo "${element} Restoring initiated with name ${element}_restore"
 done
@@ -61,7 +61,7 @@ echo "Databases restored succcefully"
 for element in "${db_names_to_restore[@]}"
 do
   old_db="${element}_old"
-  az sql db rename --name $element --new-name $old_db --resource-group $resource_group -s $server_name --subscription $subscription_id
+  az sql db rename --name "$element" --new-name "$old_db" --resource-group "$resource_group" -s "$server_name" --subscription "$subscription_id"
   echo "${element} DB Renamed to ${old_db}"
 done
 
@@ -71,7 +71,6 @@ echo "Original Databases renamed with _old suffix succesfully"
 
 for element in "${db_names_to_restore[@]}"
 do
-  new_db="${element}_restore"
   az sql db rename --name "$element" --new-name "$old_db" --resource-group "$resource_group" -s "$server_name" --subscription "$subscription_id"
   echo "${element}_restore DB Renamed to ${element}"
 done
