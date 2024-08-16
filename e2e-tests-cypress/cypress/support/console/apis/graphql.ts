@@ -251,7 +251,6 @@ export class GraphQL {
       if (response.status === OK && response.components.length > 0) {
         response.components.forEach((component) => {
           const { handler } = component;
-          BallerinaService.deleteConnectorsV2(token, orgHandle);
           this.changeComponentLifeCycleV2(projectId, handler, token);
           this.deleteComponentV2(component.id, projectId, orgHandle);
         });

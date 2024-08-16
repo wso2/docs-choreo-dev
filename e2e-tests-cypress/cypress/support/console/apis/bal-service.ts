@@ -31,17 +31,4 @@ export class BallerinaService {
       }
     });
   }
-
-  static deleteConnectorsV2(token: string, handle: string) {
-    const headers = { Authorization: `Bearer ${token}` };
-    Utils.sendGetRequest(
-      `${Cypress.env("balRegistryURL")}/packages/${handle}`,
-      headers
-    ).then((res) => {
-      const packages = res.body as [];
-      if (packages.length > 0) {
-        packages.forEach((p) => this.deleteConnector(p, headers));
-      }
-    });
-  }
 }
