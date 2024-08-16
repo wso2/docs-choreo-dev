@@ -33,6 +33,12 @@ When a user clicks sign in on your web application, Choreo will redirect the use
 !!! note
     Refer to [configure the identity provider section](#step-3-configure-the-identity-provider-for-the-web-application) for details on configuring an identity provider for the web application. 
 
+If you need to pass additional query parameter to the identity provider, you can pass those with the `/auth/login` request as shown in the code snippet below. Choreo will inturn attach those to the `authorize` request sent to the identity provider.
+
+``` javascript
+<button onClick={() => {window.location.href="/auth/login?fidp=myfederatedidp"}}>Login</button>
+```
+
 ### Step 1.2: Obtain user information claims
 
 Choreo's managed authentication allows you to access user information claims that the identity provider returns post-sign-in, either via a cookie or by invoking a GET resource.
