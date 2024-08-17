@@ -1,10 +1,9 @@
 #!/bin/bash
 
-apis_records_tm=("e1-us-east-azure" "*.e1-us-east-azure" "*.e1-us-east-azure.test")
-apis_records_a_records=("customdns.e1-us-east-azure")
-apps_records_a_records=("*" "*.e1-us-east-azure" "customdns.e1-us-east-azure")
+apis_records_a_records=("*.e1-eu-north-azure.test" "*.e1-eu-north-azure" "customdns.e1-eu-north-azure")
+apps_records_a_records=("*.e1-eu-north-azure" "*.ne" "customdns.e1-eu-north-azure")
 
-backup_ip="20.22.170.148"
+backup_ip="20.166.183.117"
 ttl=60
 
 resource_group="CHOREO-DNS-RG"
@@ -12,24 +11,10 @@ subscription="choreo-shared-001"
 apis_zone_name="choreoapis.dev"
 apps_zone_name="choreoapps.dev"
 
-for record in "${apis_records_tm[@]}"; do
-  az network dns record-set cname delete \
-    --name "$record" \
-    --zone-name "$apis_zone_name" \
-    --resource-group "$resource_group" \
-    --subscription "$subscription" --yes
-  az network dns record-set a add-record \
-    --ipv4-address "$backup_ip" \
-    --record-set-name "$record" \
-    --resource-group "$resource_group" \
-    --zone-name "$apis_zone_name" \
-    --subscription "$subscription" \
-    --ttl "$ttl"
-done
 
 for record in "${apis_records_a_records[@]}"; do
   existing_a_record_ip=$(az network dns record-set a show \
-                          --name "*" \
+                          --name "$record" \
                           --zone-name "$apis_zone_name" \
                           --resource-group "$resource_group" \
                           --subscription "$subscription" \
@@ -51,7 +36,7 @@ done
 
 for record in "${apps_records_a_records[@]}"; do
   existing_a_record_ip=$(az network dns record-set a show \
-                          --name "*" \
+                          --name "$record" \
                           --zone-name "$apps_zone_name" \
                           --resource-group "$resource_group" \
                           --subscription "$subscription" \
