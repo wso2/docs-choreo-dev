@@ -1,9 +1,9 @@
 #!/bin/bash
 
-apis_record_set_name="260011ca-f51c-4e90-a64c-170ff85d354d-dev.e1-us-east-azure"
-apps_record_set_name1="90c6da21-3702-462d-bc30-821a2390bd3d.e1-us-east-azure"
+apis_record_set_name="260011ca-f51c-4e90-a64c-170ff85d354d-dev.e1-eu-north-azure"
+apps_record_set_name1="d23fa96f-0ca0-456f-bca2-fa5f8d8d2539.e1-eu-north-azure"
 apps_record_set_name2="ceb2e58d-b6bf-4eab-8b73-e4386877c979.e1-us-east-azure"
-backup_ip="20.22.170.148"
+backup_ip="20.166.183.117"
 
 resource_group="CHOREO-DNS-RG"
 subscription="choreo-shared-001"

@@ -9,21 +9,21 @@ from bs4 import BeautifulSoup
 # List of endpoints
 endpoints = [
     # public --> service(keda)(no-customdomain)
-    "https://260011ca-f51c-4e90-a64c-170ff85d354d-dev.e1-us-east-azure.choreoapis.dev/usprojectinvoker1/greeting-service/v1.0/greeter/greet",
+    "https://260011ca-f51c-4e90-a64c-170ff85d354d-dev.e1-eu-north-azure.choreoapis.dev/euprojectinvoker1/greeting-service/v1.0/greeter/greet",
     # public --> service(keda)(customdomain)
-    "https://us-project-invoker-1.choreoapis.dev/usprojectinvoker1/greeting-service/v1.0/greeter/greet",
+    "https://eu-project-invoker-1.choreoapis.dev/euprojectinvoker1/greeting-service/v1.0/greeter/greet",
     # public --> webapp(keda)(no-customdomain)
-    "https://90c6da21-3702-462d-bc30-821a2390bd3d.e1-us-east-azure.choreoapps.dev",
+    "https://d23fa96f-0ca0-456f-bca2-fa5f8d8d2539.e1-eu-north-azure.choreoapps.dev",
     # public --> webapp(keda)(customdomain)
-    "https://us-project-invoker-1.choreoapps.dev/",
+    "https://eu-project-invoker-1.choreoapps.dev/",
     # public --> proxy(no-customdomain)
-    "https://260011ca-f51c-4e90-a64c-170ff85d354d-dev.e1-us-east-azure.choreoapis.dev/usprojectinvoker1/proxy/v1.0",
+    "https://260011ca-f51c-4e90-a64c-170ff85d354d-dev.e1-eu-north-azure.choreoapis.dev/euprojectinvoker1/proxy/v1.0",
     # public --> proxy(customdomain)
-    "https://us-project-invoker-1.choreoapis.dev/testcustomurl/v1.0",
+    "https://eu-project-invoker-1.choreoapis.dev/testcustomurl",
+    # public --> service --> organizational service
+    "https://260011ca-f51c-4e90-a64c-170ff85d354d-dev.e1-eu-north-azure.choreoapis.dev/euprojectinvoker2/cross-project-invoker/v1.0/internalgreeting?name=jj"
     # public --> webapp(managed_auth)(keda)
     "https://ceb2e58d-b6bf-4eab-8b73-e4386877c979.e1-us-east-azure.choreoapps.dev/choreo-apis/usprojectinvoker1/reading-list-service/v1/books",
-    # public --> service --> organizational service
-    "https://260011ca-f51c-4e90-a64c-170ff85d354d-dev.e1-us-east-azure.choreoapis.dev/usprojectinvoker2/cross-project-invoker/v1.0/internalgreeting?name=jj"
     # public --> webapp(managed auth)(no keda)
     "https://7f65027d-a04e-4f10-a39b-8f5dd4f8301d.e1-us-east-azure.choreoapps.dev/choreo-apis/usprojectinvoker1/reading-list-service-no-k/v1/books"
 ]
