@@ -18,7 +18,6 @@ To create a new environment, follow the steps given below:
 3. On the **Environments** page, click **Create** and specify the following details to create a new environment:
    
     - **Name**: A display name for the new environment.
-    - **Description**: A brief description of the new environment.
     - **Data Plane** - The data plane to create the new environment.
 
         !!!tip
