@@ -342,14 +342,28 @@ class Login {
 
   private persistLogoutURL() {
     cy.window()
-      .its("sessionStorage")
-      .invoke("getItem", "sign_out_url")
-      .then((url) => {
-        if (url === undefined || url === null) {
-          throw new Error("Failed to retrieve sign out URL");
+      .its("sessionStorage").then((sessionStorage) => {
+      
+        let signOutUrlKey = "";
+        for (let i = 0; i < sessionStorage.length; i++) {
+          if (sessionStorage.key(i)?.includes("sign_out_url")) {
+            let key = sessionStorage.key(i)
+            if (key) {
+              signOutUrlKey = key;
+            }
+            break;
+          }
         }
-        this.signOutUrl = url;
-      });
+
+        cy.window()
+        .its("sessionStorage").invoke("getItem", signOutUrlKey)
+        .then((url) => {
+          if (url === undefined || url === null) {
+            throw new Error("Failed to retrieve sign out URL");
+          }
+          this.signOutUrl = url;
+        });
+    });
   }
 
   private handleTermsOfUse() {
