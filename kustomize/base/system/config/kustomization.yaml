@@ -67,6 +67,7 @@ configMapGenerator:
       - APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
       - RUDDER_ADDRESS=http://dp-rudder:80
       - PROJECT_MANAGER_ADDRESS=http://dp-project-manager:80
+      - CICD_ADDRESS=http://dp-cicd:80
   - name: cm-connectords-cp
     behavior: create
     literals:
