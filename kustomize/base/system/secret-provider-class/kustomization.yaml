@@ -80,6 +80,7 @@ resources:
   - crypto-key-service-ingress-tls.yaml
   - usage-handler-service-ingress-tls.yaml
   - choreo-platform-services-manager.yaml
+  - workflow-mgt-db.yaml
 
 patches:
   - path: patch.json
