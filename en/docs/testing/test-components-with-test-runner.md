@@ -105,6 +105,6 @@ You have successfully created a Test Runner component using a buildpack of you c
         !!! info
             For `Postman Collection`:
 
-            -  You can run only a set of collections in the directory by specifying `-f` or `--files` as the first argument and a comma-separated list of collections as the next argument.
-            - `newman` is internally used for running the postman collections. Hence, you can pass its arguments as well.
+            -  The default behavior is to run all the collections in the specified directory. You can run only a set of collections in the directory by specifying `-f` or `--files` as the first argument and a comma-separated list of collections as the next argument.
+            - [newman](https://www.npmjs.com/package/newman) is internally used for running the postman collections. Hence, you can pass its arguments as well.
 
