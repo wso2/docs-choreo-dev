@@ -170,6 +170,9 @@ nav:
       - API Rate Limiting: api-management/api-rate-limiting.md
       - API Policies: api-management/api-policies.md
       - Control API Visibility: api-management/control-api-visibility.md
+      - Manage API Traffic:
+          - Assign Subscription Plans to APIs: api-management/manage-api-traffic/assign-subscription-plans-to-apis.md
+          - Subscribe to an API with a Subscription Plan: api-management/manage-api-traffic/subscribe-to-an-api-with-a-subscription-plan.md
       - Rename API Display Name: api-management/rename-api-display-name.md
   - Monitoring and Insights:
       - Observability Overview: monitoring-and-insights/observability-overview.md
@@ -195,6 +198,7 @@ nav:
       - Configure an External IdP:
           - Configure Asgardeo as an External IdP: administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md
           - Configure Azure as an External IdP: administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp.md
+      - Create API Subscription Plans: administer/create-api-subscription-plans.md 
       - Configure a User Store with the Built-In Identity Provider: administer/configure-a-user-store-with-built-in-idp.md
       - Developer Portal:
           - Customize the Developer Portal: administer/customize-the-developer-portal.md
