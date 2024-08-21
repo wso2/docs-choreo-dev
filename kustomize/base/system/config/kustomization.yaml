@@ -488,6 +488,10 @@ configMapGenerator:
     behavior: create
     files:
       - cp-rrs/Config.toml
+  - name: cm-file-workflow-mgt
+    behavior: create
+    files:
+      - workflow-mgt/Config.toml
   - name: cm-file-audit-logging
     behavior: create
     files:
