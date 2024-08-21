@@ -1,6 +1,7 @@
 resources:
   - org-stat-data-collector.yaml
   - org-stat-data-publisher.yaml
+  - choreo-bq-data-pipeline.yaml
 
 patches:
   - path: patch.json
