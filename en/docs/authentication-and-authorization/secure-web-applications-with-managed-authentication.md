@@ -115,53 +115,22 @@ If you enable Choreo's managed authentication, you don't have to manually add an
 If Choreo's managed authentication is disabled, you must ensure that your web application attaches a valid access token to the API call.
 
 
-### Step 1.5: Refresh session
+### Step 1.5: Handle session expiry
 
-The logged is user's session expires when the access token provided by the identity provider you have configured expires. After the session expires, the session must be refreshed to successfully call a Choreo-deployed API. For session refresh to function, you must set up the identity provider to issue a refresh token in addition to the access token.
+When a user session exceeds the configured session expiry time, it automatically expires. A `401 Unauthorized` response status code for a Choreo API request from a logged-in user indicates that the session may have expired, requiring the user to re-login.
 
-`401 Unauthorized` response status code for a Choreo API request from a logged in user with the necessary permissions indicates a possible session expiry. To refresh the session, you can make a POST request to the `/auth/refresh` endpoint.
+To programmatically handle session expiry and automatically re-login upon receiving a `401 Unauthorized` response from a Choreo API, you can encapsulate the request with re-login logic. The following sample code snippet shows how to wrap GET requests:
 
-For example:
-
-``` javascript
-const response = await fetch("/auth/refresh", { method: "POST" })
-```
-
-If the refresh token is valid, the session will be refreshed, and the system will respond with a `204 No Content` status.
-
-If the refresh token has expired, the session will not be refreshed, and the system will respond with a `401 Unauthorized` status.
-
-To automate the session refresh process on receiving a `401 unauthorized` response from the Choreo API, you can encapsulate the requests with the refresh logic. The following is an example code snippet that wraps GET requests:
 
 ``` javascript
-    export const performGetWithRetry = async (url) => {
+    export const performGet = async (url) => {
         try {
             // API call
             return await fetch('/choreo-apis/<api-suffix>');
         } catch (error) {
             if (error instanceof HttpError && error.status === 401) {
-                //Received 401 Unauthorized response from API GW. The access token may have expired.
-
-                // Try to refresh the token
-                const refreshResponse = await fetch("/auth/refresh", {
-                    method: "POST"
-                });
-
-                const status = refreshResponse.status;
-                if (status === 401) {
-                    // Session has expired (i.e., Refresh token has also expired).
-                    // Redirect to login page
-                    window.location.href = "/auth/login";
-                }
-                if (status !== 204) {
-                    // Tokens cannot be refreshed due to a server error.
-                    console.log("Failed to refresh token. Status: " + status);
-
-                    //  Throw the 401 error from API Gateway.
-                    throw error;
-                }
-                // Token refresh successful. Retry the API call.
-                return await fetch('/choreo-apis/<api-suffix>');
+                // Re-login
+                window.location.href = "/auth/login";
             } else {
                 throw error;
             }
