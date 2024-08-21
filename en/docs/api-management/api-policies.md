@@ -1,10 +1,28 @@
 # API Policies
 
-API Policies are units of business logic that you can apply to modify the flow of API invocations. 
+API policies are units of business logic that you can apply to modify the flow of API invocations. 
 
 You can apply a policy to alter the  `Request`, `Response`, or `Error` flow of an API invocation before it reaches the backend or the client. For example, you can add a policy to the response flow to transform the payload from JSON to XML and add a header to the response. 
 
-Choreo includes a set of default policies that address common use cases. You can easily attach one or more policies to an API proxy component implementation via the Choreo Console. If necessary, you can also rearrange or swap the policies you attach.
+## Inbuilt mediation policies
+
+Choreo supports a set of inbuilt mediation policies that can handle common API transformation and mediation tasks. These policies run within a single mediation service, making it straightforward to implement and manage complex mediation logic. The following inbuilt policies are available in Choreo:
+
+- **JSON to XML**: Transforms the payload from JSON format to XML.
+- **XML to JSON**: Converts XML payloads to JSON.
+- **Remove Query Parameter**: Removes specific query parameters from the request before it reaches the backend.
+- **Remove Header**: Removes specific headers from the request or response.
+- **Add Query Parameter**: Adds query parameters to the request.
+- **Add Header**: Adds arbitrary headers to the request or response.
+- **Set Header**: Sets an arbitrary header to the request or the response. 
+- **Rewrite Resource Path**: Modifies the resource path of a request before it reaches the backend.
+- **Log Message**: Logs custom messages for monitoring or debugging purposes.
+
+These inbuilt mediation policies provide flexibility to manage API requests and responses, allowing for custom transformations and logic without requiring custom code.
+
+## Attach and manage mediation policies
+
+You can easily attach one or more policies to an API proxy component implementation via the Choreo Console. If necessary, you can also rearrange or swap the policies you attach.
 
 In Choreo, when you attach a mediation policy to a proxy, the deployment is a two-step process.
 
