@@ -14,8 +14,6 @@ configMapGenerator:
   - name: env-choreo-bq-data-pipeline
     behavior: create
     literals:
-      - CHOREO_APP_INSIGHTS_API_KEY="{{.CHOREO_APP_INSIGHTS_API_KEY}}"
-      - CHOREO_APP_INSIGHTS_APP_ID="{{.CHOREO_APP_INSIGHTS_APP_ID}}"
       - BIG_QUERY_TABLE_ID_FOR_APP_INSIGHTS="{{.BIG_QUERY_TABLE_ID_FOR_APP_INSIGHTS}}"
       - FIRST_RUN="{{.FIRST_RUN}}"
       - DURATION="{{.DURATION}}"

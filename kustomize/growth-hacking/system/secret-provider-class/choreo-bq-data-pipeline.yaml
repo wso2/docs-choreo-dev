@@ -9,6 +9,10 @@ spec:
       data:
         - objectName: GOOGLE_APPLICATION_CREDENTIALS
           key: GOOGLE_APPLICATION_CREDENTIALS
+        - objectName: CHOREO_APP_INSIGHTS_API_KEY
+          key: CHOREO_APP_INSIGHTS_API_KEY
+        - objectName: CHOREO_APP_INSIGHTS_APP_ID
+          key: CHOREO_APP_INSIGHTS_APP_ID
   parameters:
     objects: |
       array:
@@ -17,3 +21,14 @@ spec:
           objectType: secret
           objectAlias: GOOGLE_APPLICATION_CREDENTIALS
           objectVersion: "{{.GOOGLE_APPLICATION_CREDENTIALS}}"
+        - |
+          objectName: choreo-choreo-app-insights-api-key
+          objectType: secret
+          objectAlias: CHOREO_APP_INSIGHTS_API_KEY
+          objectVersion: "{{.CHOREO_APP_INSIGHTS_API_KEY}}"
+        - |
+          objectName: choreo-choreo-app-insights-app-id
+          objectType: secret
+          objectAlias: CHOREO_APP_INSIGHTS_APP_ID
+          objectVersion: "{{.CHOREO_APP_INSIGHTS_APP_ID}}"
+
