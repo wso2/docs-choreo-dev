@@ -134,7 +134,7 @@ To create a Ballerina project for the mediation policy using `mediation.template
 Depending on your requirement, you can modify the `Ballerina.toml` and the `Package.md` files of the generated project. For example, you can update the org, package, package version, API documentation content, keywords, etc.
 
 !!! note
-    To successfully publish to Ballerina central, make sure you update the `org` value to your organization name.
+    To successfully publish to Ballerina Central, make sure you update the `org` value to your organization name.
 
 ```
      [package]
@@ -222,7 +222,7 @@ In this guide, you are not going to make any changes to the `Fault` flow. Theref
 
 #### Publish as a private custom policy
  
- Choreo supports publishing a policy as a private custom policy. Publishing a policy as a private custom policy makes the policy inaccessible outside of the organization. To publish a policy as a private custom policy, change the visibility to `private` prior to pushing the package to Ballerina central as follows:
+ Choreo supports publishing a policy as a private custom policy. Publishing a policy as a private custom policy makes the policy inaccessible outside of the organization. To publish a policy as a private custom policy, change the visibility to `private` prior to pushing the package to Ballerina Central as follows:
 
  1. Open the `Ballerina.toml` file of your policy. 
  2. Set the visibility to **private** by adding the configuration `visibility="private"`. For example:
@@ -238,7 +238,7 @@ In this guide, you are not going to make any changes to the `Fault` flow. Theref
         visibility = "private"
      ```
 
- 3. Package and publish your policy to Ballerina central.     
+ 3. Package and publish your policy to Ballerina Central.     
 
 #### Best practices 
 
