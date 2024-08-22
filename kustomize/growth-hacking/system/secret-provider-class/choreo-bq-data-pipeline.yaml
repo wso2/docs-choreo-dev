@@ -17,17 +17,17 @@ spec:
     objects: |
       array:
         - |
-          objectName: google-bigquery-sa-credentials
+          objectName: bq-data-pipeline-google-sa-credentials
           objectType: secret
           objectAlias: GOOGLE_APPLICATION_CREDENTIALS
           objectVersion: "{{.GOOGLE_APPLICATION_CREDENTIALS}}"
         - |
-          objectName: choreo-choreo-app-insights-api-key
+          objectName: bq-data-pipeline-choreo-app-insights-api-key
           objectType: secret
           objectAlias: CHOREO_APP_INSIGHTS_API_KEY
           objectVersion: "{{.CHOREO_APP_INSIGHTS_API_KEY}}"
         - |
-          objectName: choreo-choreo-app-insights-app-id
+          objectName: bq-data-pipeline-choreo-app-insights-app-id
           objectType: secret
           objectAlias: CHOREO_APP_INSIGHTS_APP_ID
           objectVersion: "{{.CHOREO_APP_INSIGHTS_APP_ID}}"
