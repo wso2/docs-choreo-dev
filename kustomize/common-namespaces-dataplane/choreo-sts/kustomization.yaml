@@ -18,5 +18,6 @@ resources:
   - hpa
   - pdb
   - service
+  - namespace
 
 namespace: choreo-sts
