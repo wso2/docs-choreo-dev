@@ -11,7 +11,7 @@ runtime:
     alias: "{{.CHOREO_STS_KEYSTORE_FILE_ALIAS}}"
     passwordFile: "/mnt/csi/secret-appdev-user-mgt/default-signing-keystore-password.txt"
 redis:
-  username: "{{.CHOREO_STS_REDIS_USERNAME | default default}}"
+  username: "{{.CHOREO_STS_REDIS_USERNAME | default sa}}"
   passwordFile: "/mnt/csi/secret-appdev-user-mgt/redis-password.txt"
   nodes:
     - "127.0.0.1:6379" # TODO - Suvink - Replace this after the Redis deployment is completed
