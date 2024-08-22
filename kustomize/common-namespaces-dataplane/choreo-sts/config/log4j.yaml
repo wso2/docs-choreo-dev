@@ -12,6 +12,6 @@ Configuration:
         includeNullDelimiter: true
   Loggers:
     Root:
-      level: { { .ROOT_LOG_LEVEL } }
+      level: {{.ROOT_LOG_LEVEL}}
       AppenderRef:
         - ref: Console
