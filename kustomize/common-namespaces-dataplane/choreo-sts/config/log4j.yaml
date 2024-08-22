@@ -1,0 +1,17 @@
+Configuration:
+  Appenders:
+    Console:
+      name: Console
+      target: SYSTEM_OUT
+      JsonLayout:
+        complete: true
+        compact: true
+        eventEol: true
+        properties: true
+        stacktraceAsString: true
+        includeNullDelimiter: true
+  Loggers:
+    Root:
+      level: { { .ROOT_LOG_LEVEL } }
+      AppenderRef:
+        - ref: Console
