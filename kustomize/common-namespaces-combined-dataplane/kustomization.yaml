@@ -5,4 +5,3 @@ resources:
   - ../common-namespaces-dataplane/csi-secret-store-driver
   - ../common-namespaces-dataplane/keda
   - ../common-namespaces-dataplane/reloader
-  - ../common-namespaces-dataplane/choreo-sts
