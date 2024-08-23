@@ -81,19 +81,19 @@ spec:
               subPath: log4j2.yaml
               readOnly: true
             - name: secret-choreo-sts
-              mountPath: "/mnt/csi/secret-choreo-sts"
+              mountPath: "/mnt/csi/secret-choreo-sts/client-secret-encryption-key.txt"
               subPath: "client-secret-encryption-key.txt"
               readOnly: true
             - name: secret-choreo-sts
-              mountPath: "/mnt/csi/secret-choreo-sts"
+              mountPath: "/mnt/csi/secret-choreo-sts/default-signing-keystore.keystore"
               subPath: "default-signing-keystore.keystore"
               readOnly: true
             - name: secret-choreo-sts
-              mountPath: "/mnt/csi/secret-choreo-sts"
+              mountPath: "/mnt/csi/secret-choreo-sts/default-signing-keystore-password.txt"
               subPath: "default-signing-keystore-password.txt"
               readOnly: true
             - name: secret-choreo-sts
-              mountPath: "/mnt/csi/secret-choreo-sts"
+              mountPath: "/mnt/csi/secret-choreo-sts/redis-password.txt"
               subPath: "redis-password.txt"
               readOnly: true
       restartPolicy: Always
