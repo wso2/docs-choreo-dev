@@ -94,3 +94,16 @@ You have successfully created a Test Runner component using a buildpack of you c
 3. Once the deployment is successful, on the left menu, click **Execute**.
 4. Select the environment from the environment list and click **Run Now** to trigger a test execution.
 5. Once the execution is completed it is listed in the execution page. This may take sometime. Once the execution is listed, you can click on a particular execution to view the test result(s).
+
+    !!! info "Inject dynamic values into your application as command-line arguments"
+         If you want to inject dynamic values into your application as command-line arguments when you run a test runner component, follow the steps given below:
+
+           1. Click the drop-down icon next to **Run Now** and then click **Run with Arguments**. 
+           2. In the **Runtime Arguments** pane that opens, enter the arguments you want to pass to your application. 
+           3. Click **Execute**. This triggers the task with the specified arguments.
+
+        !!! info
+            For `Postman Collection`:
+
+            -  The default behavior is to run all the collections in the specified directory. You can run only a set of collections in the directory by specifying `-f` or `--files` as the first argument and a comma-separated list of collections as the next argument.
+            - [newman](https://www.npmjs.com/package/newman) is internally used for running the postman collections. Hence, you 
