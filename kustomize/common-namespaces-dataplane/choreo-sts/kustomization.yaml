@@ -19,5 +19,6 @@ resources:
   - pdb
   - service
   - namespace
+  - service-account
 
 namespace: choreo-sts
