@@ -9,9 +9,6 @@
             <class name="com.wso2.choreo.integration.tests.byoi.TestBYOIComponent"/>
             <class name="com.wso2.choreo.integration.tests.deploy.AutoDeployOnCommit"/>
             <class name="com.wso2.choreo.integration.tests.deploy.AutoDeployOnCommitMonoRepo"/>
-            <class name="com.wso2.choreo.integration.tests.insights.InsightsAPI"/>
-            <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPI"/>
-            <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertsAPI"/>
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationRestComponentFromRoot"/>
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateMiMultiRestEndpointServiceFromSubPath"/>
             <class name="com.wso2.choreo.integration.tests.integrationComponent.TestIntegrationRestComponentWithVulnerable"/>
@@ -44,6 +41,9 @@
             <class name="com.wso2.choreo.integration.tests.appdevAuthorization.AppdevAuthorizationTests" />
             <class name="com.wso2.choreo.integration.tests.auditLogging.AuditLogging" />
             <class name="com.wso2.choreo.integration.tests.environments.TestOrgEnvironments" />
+            <class name="com.wso2.choreo.integration.tests.insights.InsightsAPI"/>
+            <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPI"/>
+            <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertsAPI"/>
         </classes>
     </test>
 </suite>
