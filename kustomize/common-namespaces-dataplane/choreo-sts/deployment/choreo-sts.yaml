@@ -112,7 +112,6 @@ spec:
               secretProviderClass: secret-choreo-sts
             nodePublishSecretRef:
               name: csi-secret-store-azure
-      serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
