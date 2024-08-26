@@ -1,0 +1,35 @@
+# --------------------------------------------------------------------
+# Copyright (c) 2024, WSO2 Inc. (http://wso2.com).
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# -----------------------------------------------------------------------
+
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-choreo-governance-service
+spec:
+  secretObjects:
+    - secretName: secret-choreo-governance-service
+      type: Opaque
+      data:
+        - objectName: CHOREO_GOVERNANCE_DB_MSSQL_PASSWORD
+          key: CHOREO_GOVERNANCE_DB_MSSQL_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: choreo-governance-db-mssql-password
+          objectType: secret
+          objectAlias: CHOREO_GOVERNANCE_DB_MSSQL_PASSWORD
+          objectVersion: "{{.CHOREO_GOVERNANCE_DB_MSSQL_PASSWORD}}"
