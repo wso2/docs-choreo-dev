@@ -243,6 +243,7 @@ configMapGenerator:
       - PLATFORM_SERVICES_MANAGER_SVC_URL=http://platform-services-manager:80
       - CONFIGURATION_SVC_URL=http://configuration-service:8084
       - CLOUD_MANAGER_URL=http://dp-cloud-manager
+      - AIVEN_PROJECT_NAME_PREFIX=choreo-org
   - name: cm-dp-rudder
     behavior: create
     literals:
