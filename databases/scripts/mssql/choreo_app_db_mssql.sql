@@ -1780,8 +1780,6 @@ CREATE TABLE [dbo].[org_activity]
 (
     [id] [int] IDENTITY(1,1) NOT NULL,
     [org_id] [int] NOT NULL,
-    [org_uuid] [nvarchar](255) NOT NULL,
-    [org_handle] [nvarchar](255) NOT NULL,
     [last_login] [datetime],
     [last_job_run] [datetime],
     [last_api_invocation] [datetime],
@@ -1790,9 +1788,7 @@ CREATE TABLE [dbo].[org_activity]
     [is_deleted] [bit] NOT NULL DEFAULT 0,
     [deleted_time] [datetime],
     PRIMARY KEY (id),
-    CONSTRAINT unique_org_activity UNIQUE(org_id),
-    CONSTRAINT unique_org_uuid UNIQUE(org_uuid),
-    CONSTRAINT unique_org_handle UNIQUE(org_handle)
+    CONSTRAINT unique_org_activity UNIQUE(org_id)
 );
 
 /****** Object:  Trigger [dbo].[org_enterprise_login_config_UpdateTimeTrigger] ******/
@@ -2086,6 +2082,19 @@ END
 GO
 ALTER TABLE [dbo].[tos_consent] ENABLE TRIGGER [tos_consent_UpdatedTimeTrigger]
 GO
+
+-- Add 2 new columns to org_activity table
+ALTER TABLE org_activity ADD [org_uuid] [nvarchar](255), [org_handle] [nvarchar](255);
+GO
+UPDATE org_activity SET org_uuid = o.uuid, org_handle = o.handle FROM org_activity a JOIN organization o ON a.org_id = o.id;
+-- Verify no entries are listed for below query
+SELECT * FROM org_activity WHERE org_id IS NOT NULL and org_uuid IS NULL;
+
+-- Add necessary unique & not null contraints 
+ALTER TABLE org_activity ALTER COLUMN org_uuid nvarchar(255) NOT NULL;
+ALTER TABLE org_activity ALTER COLUMN org_handle nvarchar(255) NOT NULL;
+ALTER TABLE org_activity ADD CONSTRAINT unique_org_uuid UNIQUE (org_uuid);
+ALTER TABLE org_activity ADD CONSTRAINT unique_org_handle UNIQUE (org_handle);
 
 /****** Add default Permission list ******/
 -- APIM-ADMIN
