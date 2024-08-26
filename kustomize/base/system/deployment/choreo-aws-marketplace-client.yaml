@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: choreo-aws-marketplace-client
+  labels:
+    component: choreo-aws-marketplace-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: choreo-aws-marketplace-client
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        component: choreo-aws-marketplace-client
+    spec:
+      containers:
+        - name: choreo-aws-marketplace-client
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-aws-marketplace-client:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: AWS_DEFAULT_REGION
+              value: us-east-1
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: choreo-aws-marketplace-client-secret
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: choreo-aws-marketplace-client-secret
+                  key: AWS_SECRET_ACCESS_KEY
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          volumeMounts:
+            - name: choreo-aws-marketplace-client-secret-vol
+              mountPath: "/mnt/csi/choreo-aws-marketplace-client-secret"
+              readOnly: true
+      volumes:
+        - name: choreo-aws-marketplace-client-secret-vol
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: choreo-aws-marketplace-client-secrets
+            nodePublishSecretRef:
+              name: csi-secret-store-azure

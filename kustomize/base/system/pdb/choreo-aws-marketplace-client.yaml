@@ -1,0 +1,12 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: choreo-aws-marketplace-client-pdb
+  namespace: choreo-system
+  labels:
+    component: choreo-aws-marketplace-client
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      component: choreo-aws-marketplace-client
