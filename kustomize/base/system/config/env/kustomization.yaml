@@ -443,6 +443,8 @@ configMapGenerator:
       - MIZZEN_API_URL={{.MIZZEN_API_URL | default "http://dp-mizzen:80"}}
       - USER_SERVICE_URL={{.USER_SERVICE_URL | default "app-service:8080"}}
       - ENABLE_SOURCE_CONFIG_VALIDATION={{.ENABLE_SOURCE_CONFIG_VALIDATION | default "false"}}
+      - APIM_SERVICE_URL={{.APIM_SERVICE_URL}}
+      - PROXY_BUILD_WF_FILE_PATH={{.PROXY_BUILD_WF_FILE_PATH | default ".github/workflows/proxy-build-v1.0.yml"}}
   - name: env-dp-cloud-manager
     behavior: create
     literals:
