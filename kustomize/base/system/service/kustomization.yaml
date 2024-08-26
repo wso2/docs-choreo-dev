@@ -46,6 +46,7 @@ resources:
   - cp-endpoint-resolver.yaml
   - connection-service.yaml
   - pdp-manager.yaml
+  - pdp-uptime.yaml
   - app-dev-user-mgt-service.yaml
   - app-dev-authorization-service.yaml
   - cp-gw-adapter.yaml
