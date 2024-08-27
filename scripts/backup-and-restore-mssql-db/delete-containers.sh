@@ -16,7 +16,7 @@ echo "Generating the key to access the storage account"
 key=$(az storage account keys list --account-name "$storage" --resource-group "$resourceGroup" --subscription "$subscriptionId" -o json --query [0].value | tr -d '"')
 
 echo "Downloading the db-names.txt file to get the availale db names for the import process"
-az storage blob download -c dbnames -n db-names.txt --account-name "$storage" --account-key "$key" > db-names.txt
+az storage blob download -c dbnames -n db-names.txt --account-name "$storage" --account-key "$key" > delete-db-storage-names.txt
 
 echo "Completed downloading the file"
 
@@ -26,15 +26,15 @@ databases=()
 echo "Reading the file data and adding the database names to an array"
 while IFS= read -r line; do
   lines+=("$line")
-done < db-names.txt
+done < delete-db-storage-names.txt
 
 
 # Deleting the storage containers
 
 for element in "${databases[@]}"
 do
-    output_container=$(echo ${"$element" | sed 's/_//g'})
-    echo "Deleting "${output_container}container" on "$storage" for "$element" database"
+    output_container=$($element | sed 's/_//g')
+    echo "Deleting ${output_container}container on $storage for $element database"
     az storage container delete --name "${output_container}container" --account-key "$key" --account-name "$storage" --subscription "$subscriptionId"
     sleep 5
 done

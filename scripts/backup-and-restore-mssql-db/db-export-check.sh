@@ -1,5 +1,7 @@
 echo "Downloading the db-names.txt file to get the availale db names for the validation process"
 
+source credentials.sh
+
 az storage blob download -c dbnames -n db-names.txt --account-name "$storage" --account-key "$key" > db-names-check.txt
 
 databases=()
@@ -13,7 +15,7 @@ done < db-names-check.txt
 
 for element in "${databases[@]}"
 do
-    json_content=$(jq . < ${element}.json)
+    json_content=$(jq . < "${element}.json")
     parameter_value=$(jq -r '.status' <<< "$json_content")
     if [[ "$parameter_value" == "Completed" ]]; then
         echo "DB ${element} exported correctly"
