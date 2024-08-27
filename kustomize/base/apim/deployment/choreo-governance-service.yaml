@@ -115,9 +115,6 @@ spec:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
-                matchExpressions:
-                  - key: antiaffinity
-                    operator: In
-                    values:
-                      - choreo-governance-service
+                matchLabels:
+                  choreo.component: choreo-governance-service
               topologyKey: kubernetes.io/hostname
