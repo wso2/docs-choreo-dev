@@ -211,6 +211,7 @@ configMapGenerator:
       - ASB_DELETE_QUEUE_NAME=delete-manager
       - ASB_COMPONENT_DELETE_QUEUE_NAME=delete-manager
       - ASB_ENVIRONMENT_DELETE_QUEUE_NAME=delete-environments
+      - ASB_DEPLOYMENT_TRACK_DELETE_QUEUE_NAME=delete-deployment-tracks
       - API_SERVER_URL=http://api-server
       - GCHAT_URL=https://chat.googleapis.com
       - APP_SERVICE_URL=app-service:8080
