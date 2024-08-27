@@ -2,6 +2,8 @@ echo "Downloading the db-names.txt file to get the availale db names for the val
 
 source credentials.sh
 
+key=$(az storage account keys list --account-name "$storage" --resource-group "$resourceGroup" --subscription "$subscriptionId" -o json --query [0].value | tr -d '"')
+
 az storage blob download -c dbnames -n db-names.txt --account-name "$storage" --account-key "$key" > db-names-check.txt
 
 databases=()
