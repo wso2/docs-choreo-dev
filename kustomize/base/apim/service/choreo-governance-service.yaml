@@ -20,7 +20,6 @@ metadata:
   labels:
     choreo.component: choreo-governance-service
   name: choreo-governance-service
-  namespace: choreo-system
 spec:
   ports:
     - name: service-port
