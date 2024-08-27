@@ -1,0 +1,15 @@
+bigquery:
+  credentials: "/Users/uvindra/gcloud-credentials/service_account_key.json"
+  scopes: ["https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/bigquery"]
+  project: "choreo-releases"
+  dataset: "release_data"
+devops:
+  url: "https://dev.azure.com/choreo-devops"
+  user-agent: "choreo-release-trend-checker"
+  max-test-results: 1000
+  dev-project: "dev-control-plane-deployments"
+  dev-definition: "dev-end-to-end-test"
+  stage-project: "stage-control-plane-deployments"
+  stage-definition: "stage-deployment-v2"
+  prod-project: "prod-control-plane-deployments"
+  prod-definition: "prod-deployment-v2"
