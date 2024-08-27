@@ -43,12 +43,6 @@ spec:
       containers:
         - name: choreo-governance-service
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-governance-service:latest
-          env:
-            - name: GOVERNANCE_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: CHOREO_GOVERNANCE_DB_MSSQL_PASSWORD
-                  name: secret-choreo-governance-service
           ports:
             - containerPort: 8080
               name: service-port
