@@ -20,11 +20,11 @@ spec:
           objectName: aws-marketplace-client-access-key-id
           objectType: secret
           objectAlias: AWS_ACCESS_KEY_ID
-          objectVersion: 79e5b6dad2ac419c9c2d75eb1d7ad9e9
+          objectVersion: "{{.AWS_ACCESS_KEY_ID}}"
         - |
           objectName: aws-marketplace-client-secret-access-key
           objectType: secret
           objectAlias: AWS_SECRET_ACCESS_KEY
-          objectVersion: 41cce844524e4e1bbcdc8f2aada37d10
+          objectVersion: "{{.AWS_SECRET_ACCESS_KEY}}"
     tenantId: da76d684-740f-4d94-8717-9d5fb21dd1f9
     usePodIdentity: "false"

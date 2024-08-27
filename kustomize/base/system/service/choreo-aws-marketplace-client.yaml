@@ -5,7 +5,7 @@ metadata:
   namespace: choreo-system
 spec:
   selector:
-    component: choreo-aws-marketplace-client
+    choreo.component: choreo-aws-marketplace-client
   ports:
     - name: tcp
       port: 8080

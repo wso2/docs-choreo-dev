@@ -51,3 +51,4 @@ resources:
   - app-dev-authorization-service.yaml
   - cp-gw-adapter.yaml
   - choreo-url-management.yaml
+  - choreo-aws-marketplace-client.yaml

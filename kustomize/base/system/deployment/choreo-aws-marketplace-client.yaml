@@ -3,12 +3,12 @@ kind: Deployment
 metadata:
   name: choreo-aws-marketplace-client
   labels:
-    component: choreo-aws-marketplace-client
+    choreo.component: choreo-aws-marketplace-client
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: choreo-aws-marketplace-client
+      choreo.component: choreo-aws-marketplace-client
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -17,8 +17,16 @@ spec:
   template:
     metadata:
       labels:
-        component: choreo-aws-marketplace-client
+        choreo.component: choreo-aws-marketplace-client
+        antiaffinity: choreo-aws-marketplace-client
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  antiaffinity: choreo-aws-marketplace-client
+              topologyKey: kubernetes.io/hostname
       containers:
         - name: choreo-aws-marketplace-client
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-aws-marketplace-client:latest
