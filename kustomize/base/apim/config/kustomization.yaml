@@ -52,3 +52,8 @@ configMapGenerator:
     behavior: create
     files:
       - am/docker-entrypoint.sh
+  - name: choreo-governance-service-conf
+    behavior: create
+    files:
+      - choreo-governance-service/application.yml
+      - choreo-governance-service/log4j2.yaml

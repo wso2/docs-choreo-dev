@@ -26,6 +26,7 @@ resources:
   - secret-cc-rate-limiter.yaml
   - secret-cc-rate-limiter-cert.yaml
   - secret-apk-config-ds-cert.yaml.yaml
+  - choreo-governance-service.yaml
 
 patches:
   - path: patch.json
