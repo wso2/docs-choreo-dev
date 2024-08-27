@@ -1,5 +1,4 @@
 bigquery:
-  credentials: "/Users/uvindra/gcloud-credentials/service_account_key.json"
   scopes: ["https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/bigquery"]
   project: "choreo-releases"
   dataset: "release_data"
