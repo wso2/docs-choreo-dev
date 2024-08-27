@@ -16,7 +16,7 @@ echo "Generating the key to access the storage account"
 key=$(az storage account keys list --account-name "$storage" --resource-group "$resourceGroup" --subscription "$subscriptionId" -o json --query [0].value | tr -d '"')
 
 echo "Downloading the db-names.txt file to get the availale db names for the import process"
-az storage blob download -c dbnames -n db-names.txt --account-name "$storage" --account-key "$key" > db-names.txt
+az storage blob download -c dbnames -n db-names.txt --account-name "$storage" --account-key "$key" > exported-db-names.txt
 
 echo "Completed downloading the file"
 
@@ -26,7 +26,7 @@ databases=()
 echo "Reading the file data and adding the database names to an array"
 while IFS= read -r line; do
   databases+=("$line")
-done < db-names.txt
+done < exported-db-names.txt
 
 echo "Creating the elastic pool to add the databases"
 az sql elastic-pool create --name "$elasticPool" --resource-group "$resourceGroup" --subscription "$subscriptionId" --server "$server" -e Standard -f Gen5 --max-size 120GB -z false
