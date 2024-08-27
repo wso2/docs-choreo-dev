@@ -125,7 +125,6 @@ nav:
           - Use a Connection in Your Service: develop-components/sharing-and-reusing/use-a-connection-in-your-service.md
           - Use a Connection in Your Web Application: develop-components/sharing-and-reusing/use-a-connection-in-your-web-application.md
       - Manage Deployment Tracks for Choreo Components: develop-components/manage-deployment-tracks-for-choreo-components.md
-      - Configure Mutual TLS Between Components: develop-components/configure-mutual-tls-between-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
   - Choreo-Managed Databases and Caches: 
@@ -140,6 +139,7 @@ nav:
       - Secure Web Applications with Managed Authentication: authentication-and-authorization/secure-web-applications-with-managed-authentication.md
       - Test Secure API Access with Choreo Built-In Security Token Service: authentication-and-authorization/test-secure-api-access-with-choreo-built-in-security-token-service.md
       - Pass End-User Attributes to Upstream Services: authentication-and-authorization/pass-end-user-attributes-to-upstream-services.md
+      - Configure Mutual TLS Between Components: authentication-and-authorization/configure-mutual-tls-between-components.md
       - Secure Communication Between the Choreo Gateway and Your Backend with Mutual TLS: authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls.md 
   - DevOps and CI/CD: 
       - Manage Configurations and Secrets: devops-and-ci-cd/manage-configurations-and-secrets.md
@@ -380,6 +380,7 @@ plugins:
           'develop-components/sharing-and-reusing/share-and-reuse-web-applications.md': 'https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-web-application/'
           'manage-databases-and-caches/choreo-managed-redis-datastores.md': 'https://wso2.com/choreo/docs/manage-databases-and-caches/choreo-managed-caches/'
           'monitoring-and-insights/usage-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/insights-overview/'
+          'develop-components/configure-mutual-tls-between-components.md': 'https://wso2.com/choreo/docs/authentication-and-authorization/configure-mutual-tls-between-components/'
 
 extra_css:
   # - assets/lib/highlightjs/default.min.css
