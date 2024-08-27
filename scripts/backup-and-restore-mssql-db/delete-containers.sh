@@ -33,7 +33,7 @@ done < db-names.txt
 
 for element in "${databases[@]}"
 do
-    output_container=$(echo "$element" | sed 's/_//g')
+    output_container=$(echo ${"$element" | sed 's/_//g'})
     echo "Deleting "${output_container}container" on "$storage" for "$element" database"
     az storage container delete --name "${output_container}container" --account-key "$key" --account-name "$storage" --subscription "$subscriptionId"
     sleep 5

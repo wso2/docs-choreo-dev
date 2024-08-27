@@ -39,7 +39,7 @@ echo "Upload completed"
 for element in "${databases[@]}"
 do
     output_container=$(echo ${"$element" | sed 's/_//g'})
-    echo "Creating ${output_container}container on "$storage" for "$element" database"
+    echo "Creating ${output_container}container on $storage for $element database"
     az storage container create --name "${output_container}container" --account-key "$key" --account-name "$storage" --subscription "$subscriptionId"
     sleep 5
 done
