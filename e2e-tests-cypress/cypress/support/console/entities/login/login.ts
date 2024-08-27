@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { MEDIUM_TIME, SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
+import { MEDIUM_TIME, SHORT_TIME, VERY_LONG_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { GRAPHQL_URL, VALIDATE_USER_URL } from "../../../commons/urls";
 import { Utils } from "../../../commons/utils";
 import { TestIds } from "../../constants/TestIds";
@@ -32,7 +32,7 @@ class Login {
   private accessToken: string = "";
   private signOutUrl: string = "";
 
-  login() {
+  login(loadingTime?: number) {
     this.setBrowserLocalStorage();
     this.setBrowserCookie();
     this.registerNetworkCallsForInterception();
@@ -42,7 +42,9 @@ class Login {
     this.persistOrgs(handle);
     this.persistLogoutURL();
     this.persistAccessToken();
-    cy.get(TestIds.backdropLoader).should("not.exist");
+    const waitTime = loadingTime || VERY_LONG_TIME;
+   // cy.get(TestIds.backdropLoader).should("not.exist");
+    cy.get(TestIds.backdropLoader, { timeout: waitTime as number }).should("not.exist");
     cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible");
     this.handleTermsOfUse();
   }

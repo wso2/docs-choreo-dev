@@ -34,7 +34,7 @@ class Console {
 
   static keyName = Utils.generateKeyName("key");
 
-  login() {
+  login(loadingTime: number) {
     login.login();
     return cy.wrap({});
   }

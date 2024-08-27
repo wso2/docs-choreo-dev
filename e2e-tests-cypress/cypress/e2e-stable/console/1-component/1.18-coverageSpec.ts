@@ -21,8 +21,9 @@ after(() => {
 describe("Verify Ballerina service functionality", () => {
 
   it("Login to Console", () => {
+    const loadingTime = 15 * 60 * 1000;
     cy.recordHar();
-    console.login();
+    console.login(loadingTime);
     cy.saveHar();
   });
 
