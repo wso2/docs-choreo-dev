@@ -13,6 +13,7 @@ python3 -m venv venv
 echo "----------------------------------"
 echo "Activating virtual env"
 echo "----------------------------------"
+# shellcheck disable=SC1091
 source venv/bin/activate
 
 # Install dependencies

@@ -1,5 +1,5 @@
 bigquery:
-  scopes: ["https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/bigquery"]
+  scopes: ["https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/bigquery"]
   project: "choreo-releases"
   dataset: "release_data"
 devops:
