@@ -25,7 +25,7 @@ databases=()
 # Read the file line by line and add each line to the array
 echo "Reading the file data and adding the database names to an array"
 while IFS= read -r line; do
-  lines+=("$line")
+  databases+=("$line")
 done < db-names.txt
 
 echo "Creating the elastic pool to add the databases"
