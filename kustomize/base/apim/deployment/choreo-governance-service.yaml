@@ -104,7 +104,7 @@ spec:
               secretProviderClass: secret-choreo-governance-service
             nodePublishSecretRef:
               name: csi-secret-store-azure
-      serviceAccountName: sa-choreo-default
+      automountServiceAccountToken: false
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
