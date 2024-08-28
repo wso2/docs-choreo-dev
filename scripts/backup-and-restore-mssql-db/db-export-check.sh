@@ -27,7 +27,7 @@ echo "Reading the file data and adding the database names to an array"
 
 while IFS= read -r line; do
   databases+=("$line")
-done < "db-names-${currentDate}-check.txt"
+done < db-names-"${currentDate}"-check.txt
 
 for element in "${databases[@]}"
 do
