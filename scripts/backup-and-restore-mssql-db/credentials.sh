@@ -21,3 +21,4 @@ currentDate="$(date '+%Y-%m-%d')"
 export currentDate
 export dateToRestore="2024-08-27"
 export bacpac="${currentDate}-backup.bacpac"
+export data_delete_date="2024-08-28"

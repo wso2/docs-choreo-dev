@@ -12,13 +12,11 @@
 
 source credentials.sh
 
-delete_date="2024-08-28"
-
 echo "Generating the key to access the storage account"
 key=$(az storage account keys list --account-name "$storage" --resource-group "$resourceGroup" --subscription "$subscriptionId" -o json --query [0].value | tr -d '"')
 
 echo "Downloading the db-names.txt file to get the availale db names for the import process"
-az storage blob download -c dbnames -n db-names-${delete_date}.txt --account-name "$storage" --account-key "$key" > db-names-${delete_date}-delete.txt
+az storage blob download -c dbnames -n db-names-${data_delete_date}.txt --account-name "$storage" --account-key "$key" > db-names-${data_delete_date}-delete.txt
 
 echo "Completed downloading the file"
 
@@ -28,14 +26,14 @@ databases=()
 echo "Reading the file data and adding the database names to an array"
 while IFS= read -r line; do
   databases+=("$line")
-done < db-names-${delete_date}-delete.txt
+done < db-names-${data_delete_date}-delete.txt
 
 # Deleting the storage containers
 
 for element in "${databases[@]}"
 do
     output_container=$(echo "$element" | sed 's/-//g' | sed 's/_//g')
-    echo "Deleting ${delete_date} data from ${output_container}container on $storage for $element database"
+    echo "Deleting ${data_delete_date} data from ${output_container}container on $storage for $element database"
     az storage blob delete  --account-key "$key" --account-name "$storage" --blob-url "https://$storage.blob.core.windows.net/${output_container}container/${dateToRestore}-backup.bacpac" --subscription "$subscriptionId"
     sleep 5
 done
