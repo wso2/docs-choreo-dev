@@ -18,7 +18,7 @@ key=$(az storage account keys list --account-name "$storage" --resource-group "$
 
 echo "Downloading the db-names-${currentDate}.txt file to get the availale db names for the import process"
 
-az storage blob download -c dbnames -n "db-names-${currentDate}.txt" --account-name "$storage" --account-key "$key" > db-names-${currentDate}-check.txt
+az storage blob download -c dbnames -n "db-names-${currentDate}.txt" --account-name "$storage" --account-key "$key" > "db-names-${currentDate}-check.txt"
 
 failed_exports=()
 
@@ -27,7 +27,7 @@ echo "Reading the file data and adding the database names to an array"
 
 while IFS= read -r line; do
   databases+=("$line")
-done < db-names-${currentDate}-check.txt
+done < "db-names-${currentDate}-check.txt"
 
 for element in "${databases[@]}"
 do

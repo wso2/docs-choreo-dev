@@ -48,7 +48,7 @@ echo "Upload completed"
 echo "Creating containers to export the databases"
 for element in "${databases[@]}"
 do
-    output_container=$(echo $element | sed 's/-//g' | sed 's/_//g')
+    output_container=$(echo "$element" | sed 's/-//g' | sed 's/_//g')
     response=$(az storage container exists --account-name "$storage" --account-key "${key}" --name "${output_container}container" --subscription "$subscriptionId")
     exists=$(jq -r '.exists' <<< "$response")
     if [[ "$exists" == "true" ]]; then
