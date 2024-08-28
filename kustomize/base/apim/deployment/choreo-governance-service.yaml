@@ -54,7 +54,7 @@ spec:
             successThreshold: 1
             httpGet:
               port: service-port
-              path: /healthz/readiness
+              path: /api/v1/healthz/readiness
           livenessProbe:
             initialDelaySeconds: 30
             timeoutSeconds: 15
@@ -63,7 +63,7 @@ spec:
             successThreshold: 1
             httpGet:
               port: service-port
-              path: /healthz/liveness
+              path: /api/v1/healthz/liveness
           resources:
             limits:
               cpu: 500m
