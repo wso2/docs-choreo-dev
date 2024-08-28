@@ -17,6 +17,7 @@ export password=""
 export login=""
 export server=""
 export elasticPool=""
-currentDate=$(date '+%Y-%m-%d')
+currentDate="$(date '+%Y-%m-%d')"
+export currentDate
 export dateToRestore="2024-08-27"
 export bacpac="${currentDate}-backup.bacpac"
