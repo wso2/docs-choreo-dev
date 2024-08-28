@@ -31,7 +31,7 @@ done < db-names-"${currentDate}"-check.txt
 
 for element in "${databases[@]}"
 do
-    json_content=$(jq . < ${element}.json)
+    json_content=$(jq . < "${element}".json)
     parameter_value=$(jq -r '.status' <<< "$json_content")
     if [[ "$parameter_value" == "Completed" ]]; then
         echo "DB ${element} exported correctly"

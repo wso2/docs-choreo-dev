@@ -64,7 +64,7 @@ echo "Creating container for the databases are completed"
 # Exporting the databases
 for element in "${databases[@]}"
 do
-    output_container=$(echo $element | sed 's/-//g' | sed 's/_//g')
+    output_container=$(echo "$element" | sed 's/-//g' | sed 's/_//g')
     echo "Executing the db export for the database ${element} to the storage container ${output_container}container"
     az sql db export --admin-password "$password" --admin-user "$login" --storage-key "$key" --storage-key-type StorageAccessKey --storage-uri "https://$storage.blob.core.windows.net/${output_container}container/$bacpac" --name "$element" --resource-group "$resourceGroup" --server "$server" --subscription "$subscriptionId" > "${element}.json" &
     sleep 5
