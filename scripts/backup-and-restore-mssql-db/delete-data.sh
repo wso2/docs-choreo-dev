@@ -34,8 +34,8 @@ done < db-names-${delete_date}-delete.txt
 
 for element in "${databases[@]}"
 do
-    output_container=$(echo $element | sed 's/-//g' | sed 's/_//g')
-    echo "Deleting ${delete_date} data from ${output_container}container on "$storage" for "$element" database"
+    output_container=$(echo "$element" | sed 's/-//g' | sed 's/_//g')
+    echo "Deleting ${delete_date} data from ${output_container}container on $storage for $element database"
     az storage blob delete  --account-key "$key" --account-name "$storage" --blob-url "https://$storage.blob.core.windows.net/${output_container}container/${dateToRestore}-backup.bacpac" --subscription "$subscriptionId"
     sleep 5
 done

@@ -37,7 +37,7 @@ do
     echo "Creating a database with the name ${element}_export_check"
     az sql db create --name "${element}_export_check" --elastic-pool "$elasticPool" --resource-group "$resourceGroup" --subscription "$subscriptionId" --server "$server" --backup-storage-redundancy Local > "${element}_export_check.json"
     echo "DB Created succesfully!"
-    output_container=$(echo $element | sed 's/-//g' | sed 's/_//g')
+    output_container=$(echo "$element" | sed 's/-//g' | sed 's/_//g')
     sleep 5
     echo "Importing the data to the ${element} database from the storage account"
     az sql db import --auth-type SQL -s "$server" -n "${element}_export_check" -g "$resourceGroup" -p "$password " -u "$login" --storage-key "$key" --storage-key-type StorageAccessKey --storage-uri "https://$storage.blob.core.windows.net/${output_container}container/${dateToRestore}-backup.bacpac" --subscription "$subscriptionId" > "${element}_import.json" &

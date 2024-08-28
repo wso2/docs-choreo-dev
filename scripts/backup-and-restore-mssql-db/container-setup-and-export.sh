@@ -21,7 +21,7 @@ databases=(choreo-alerts-db choreo_usage_db)
 
 # echo "Writing the available databases to a text file"
 for line in "${databases[@]}"; do
-    echo "$line" >> db-names-${currentDate}.txt
+    echo "$line" >> db-names-"${currentDate}".txt
 done
 
 echo "Completed the file writing to the db-names.txt file"
@@ -41,7 +41,7 @@ fi
 sleep 5
 
 echo "Uploading the created file to the dbnames container in ${storage} Storage Account"
-az storage blob upload  --account-name "$storage" --name "db-names-${currentDate}.txt" --account-key "$key"  --file db-names-${currentDate}.txt --blob-url "https://${storage}.blob.core.windows.net/dbnames/db-names-${currentDate}.txt"
+az storage blob upload  --account-name "$storage" --name "db-names-${currentDate}.txt" --account-key "$key"  --file db-names-"${currentDate}".txt --blob-url "https://${storage}.blob.core.windows.net/dbnames/db-names-${currentDate}.txt"
 echo "Upload completed"
 
 # create a storage containers for databases
