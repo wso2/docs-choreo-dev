@@ -47,6 +47,12 @@ class Login {
     this.persistOrgs(handle);
     this.persistLogoutURL();
     this.persistAccessToken();
+
+    if (loadingTime > 4000) {
+      cy.wait(4000);
+      cy.saveHar();
+    }
+
     cy.get(TestIds.backdropLoader, { timeout: loadingTime as number }).should("not.exist");
     cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible");
     this.handleTermsOfUse();
