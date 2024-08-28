@@ -39,3 +39,4 @@ do
 done
 
 echo "Deleted all the storage containers"
+
