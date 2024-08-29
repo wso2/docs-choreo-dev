@@ -946,7 +946,7 @@ configMapGenerator:
       - PRORATA_MODEL_ENABLED={{.PRORATA_MODEL_ENABLED}}
       - PLATFORM_SVC_COST_PUBLISHING_ENABLE={{.PLATFORM_SVC_COST_PUBLISHING_ENABLE | default "false"}}
       - AWS_MARKETPLACE_CLIENT_URL="http://choreo-aws-marketplace-client:8080"
-      - AWS_CHOREO_PRODUCT_CODE={{.AWS_CHOREO_PRODUCT_CODE}}
+      - AWS_CHOREO_PRODUCT_CODE={{.AWS_CHOREO_PRODUCT_CODE | default "choreo"}}
   - name: env-moesif-service
     behavior: create
     literals:
