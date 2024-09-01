@@ -113,6 +113,16 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
 
     @Test(dependsOnMethods = {"componentRetrieval_TestCreateIntegrationRestComponentFromRoot"})
     @CitrusTest
+    public void componentDeployment_TestCreateIntegrationRestComponentFromRoot() throws Exception {
+        // Deploy component
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
+        testComponent);
+        componentDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, testComponent,
+            environments, ComponentFlavour.MI);
+    }
+
+    @Test(dependsOnMethods = {"componentDeployment_TestCreateIntegrationRestComponentFromRoot"})
+    @CitrusTest
     public void generateEndpointsDev_TestCreateIntegrationRestComponentFromRoot() throws Exception {
         Map<String,String> argMap = new HashMap<>();
         argMap.put("componentId", testComponent.getId());
@@ -151,16 +161,6 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
     }
 
     @Test(dependsOnMethods = {"updateEndpointsDev_TestCreateIntegrationRestComponentFromRoot"})
-    @CitrusTest
-    public void componentDeployment_TestCreateIntegrationRestComponentFromRoot() throws Exception {
-        // Deploy component
-        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
-        testComponent);
-        componentDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, testComponent, 
-            environments, ComponentFlavour.MI);
-    }
-
-    @Test(dependsOnMethods = {"componentDeployment_TestCreateIntegrationRestComponentFromRoot"})
     @CitrusTest
     public void getEndpointsDevAfterDeploy_TestCreateIntegrationRestComponentFromRoot() throws Exception {
         Map<String,String> argMap = new HashMap<>();
