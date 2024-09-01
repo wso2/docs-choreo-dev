@@ -6,6 +6,7 @@ resources:
   - apk-config-ds-deployment.yaml
   - choreo-connect-global-adapter-eu-migration.yaml
   - choreo-governance-service.yaml
+  - choreo-linter-service.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587,25,1433,6380
