@@ -37,7 +37,7 @@ class Login {
   private accessToken: string = "";
   private signOutUrl: string = "";
 
-  login(loadingTime: number = 4000) {
+  login(loadingTime: number = VERY_SHORT_TIME.timeout) {
     this.setBrowserLocalStorage();
     this.setBrowserCookie();
     this.registerNetworkCallsForInterception();
@@ -47,11 +47,6 @@ class Login {
     this.persistOrgs(handle);
     this.persistLogoutURL();
     this.persistAccessToken();
-
-    if (loadingTime > 4000) {
-      cy.wait(4000);
-      cy.saveHar();
-    }
 
     cy.get(TestIds.backdropLoader, { timeout: loadingTime as number }).should("not.exist");
     cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible");

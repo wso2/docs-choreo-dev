@@ -27,7 +27,6 @@ describe("Verify Ballerina service functionality", () => {
     },
   },() => {
     const loadingTime = 10 * 1000; // 10 seconds
-    cy.recordHar();
     console.login(loadingTime);
   });
 
