@@ -92,6 +92,7 @@ build-your-first-cloud-native-application-with-choreo
 expose-a-service-as-a-managed-api
 build-your-first-integration
 configure-a-user-store-with-built-in-idp
+assign-subscription-plans-to-apis
 devops-and-ci-cd
 autoscale-component-replicas
 test-rest-endpoints-via-the-openapi-console
@@ -691,6 +692,7 @@ develop-a-rest-api
 develop-a-grpc-service
 develop-a-ballerina-rest-api
 configure-mutual-tls-between-components
+service-to-service-mtls
 develop-a-ballerina-graphql-api
 faq.md
 Moesif.md
