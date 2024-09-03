@@ -9,6 +9,12 @@ port = 5432
 user = "{{.DB_USER}}"
 database = 'choreo_workflow_mgt_db'
 
+[workflow_mgt_service.rpc_app_service]
+appServiceHost = "http://app-service:8080"
+
+[workflow_mgt_service.notification]
+notificationService = "http://alert-notification-service:9090"
+
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
 format="json"
