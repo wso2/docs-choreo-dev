@@ -2,7 +2,6 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: choreo-aws-marketplace-client-hpa
-  namespace: choreo-system
 spec:
   maxReplicas: 2
   minReplicas: 1
