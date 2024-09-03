@@ -254,12 +254,12 @@ export function mixinManage<T extends Types.Constructor>(
     }
 
     private saveUsagePlans(component: Component, plans: UsagePlan[]) {
-      const unlimitedPlan = `[data-testid="checkbox-${UsagePlan.Unlimited}"]`;
+      const unlimitedPlan = `[data-testid="switch-subscription-plan-${UsagePlan.Unlimited}"]`;
 
       Utils.unCheckIfChecked(unlimitedPlan);
 
       plans.forEach((plan) => {
-        const planLocator = `[data-testid="checkbox-${plan}"]`;
+        const planLocator = `[data-testid="switch-subscription-plan-${plan}"]`;
         Utils.checkIfUnchecked(planLocator);
       });
       cy.get(TestIds.usagePlanSave).click();
@@ -268,7 +268,7 @@ export function mixinManage<T extends Types.Constructor>(
         cy.get("input").should("not.be.checked");
       });
       plans.forEach((plan) => {
-        cy.get(`[data-testid="checkbox-${plan}"]`).within(() => {
+        cy.get(`[data-testid="switch-subscription-plan-${plan}"]`).within(() => {
           cy.get("input").should("be.checked");
         });
       });
