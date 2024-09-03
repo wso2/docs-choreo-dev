@@ -2,7 +2,6 @@ apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: choreo-aws-marketplace-client-pdb
-  namespace: choreo-system
   labels:
     choreo.component: choreo-aws-marketplace-client
 spec:
