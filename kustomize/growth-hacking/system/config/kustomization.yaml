@@ -7,3 +7,7 @@ configMapGenerator:
     behavior: create
     files:
       - choreo-org-stat/data-publisher/application.properties
+  - name: cm-file-choreo-bq-data-pipeline
+    behavior: create
+    files:
+      - choreo-org-stat/bq-data-pipeline/application.properties
