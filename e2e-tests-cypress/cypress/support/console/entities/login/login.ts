@@ -44,7 +44,6 @@ class Login {
     this.enterUserCredentials(username, password);
     const handle = this.readConfiguredOrgHandle();
     this.persistOrgs(handle);
-    this.persistLogoutURL();
     this.persistAccessToken();
 
     cy.get(TestIds.backdropLoader, { timeout: loadingTime as number }).should("not.exist");
@@ -61,7 +60,6 @@ class Login {
     this.enterUserCredentials(username, password);
     const handle = this.readConfiguredSelfSignupAdminUserOrgHandle();
     this.persistOrgs(handle);
-    this.persistLogoutURL();
     this.persistAccessToken();
     cy.get(TestIds.backdropLoader).should("not.exist");
     cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible");
@@ -74,8 +72,9 @@ class Login {
     this.logoutOfPreviousEnterpriseSession();
     this.enterEnterpriseUserCredentials();
     cy.get(TestIds.backdropLoader).should("not.exist");
-    cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible");
-    this.persistLogoutURL();
+    cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible").then(() => {
+      this.persistLogoutURL();
+    });
     this.handleTermsOfUse();
   }
 
@@ -305,6 +304,7 @@ class Login {
     cy.wait("@gql", MEDIUM_TIME).then((intercept) => {
       const header = intercept.request.headers["authorization"] as string;
       this.accessToken = header.replace("Bearer", "").trim();
+      this.persistLogoutURL();
     });
   }
 
