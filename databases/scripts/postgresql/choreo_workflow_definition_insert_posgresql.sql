@@ -1,3 +1,10 @@
+-- Copyright (c) 2024, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+
+-- This software is the property of WSO2 Inc. and its suppliers, if any.
+-- Dissemination of any information or reproduction of any material contained
+-- herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+-- You may not alter or remove any copyright or other notice from copies of this content.
+
 INSERT INTO public.workflow_definition
 (id, "name", description, approver_types, execute_upon_approval, allow_parallel_requests, request_format_schema)
 VALUES('ENV_PROMOTION', 'Environment Promotion','Promotion of a build from one environment to another', 'ROLE,USER', false, false,
