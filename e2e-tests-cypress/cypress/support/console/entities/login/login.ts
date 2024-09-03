@@ -14,7 +14,6 @@
 import {
   MEDIUM_TIME,
   SHORT_TIME,
-  VERY_LONG_TIME,
   VERY_SHORT_TIME,
 } from "../../../commons/timeouts";
 import { GRAPHQL_URL, VALIDATE_USER_URL } from "../../../commons/urls";
@@ -37,7 +36,7 @@ class Login {
   private accessToken: string = "";
   private signOutUrl: string = "";
 
-  login(loadingTime: number = VERY_SHORT_TIME.timeout) {
+  login(loadingTime: number = SHORT_TIME.timeout) {
     this.setBrowserLocalStorage();
     this.setBrowserCookie();
     this.registerNetworkCallsForInterception();
