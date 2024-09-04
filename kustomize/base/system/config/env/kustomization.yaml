@@ -769,6 +769,7 @@ configMapGenerator:
       - REACT_APP_ENABLE_ASYNC_EVENT_HANDLER_TEST_RUNNER_CREATION={{.REACT_APP_ENABLE_ASYNC_EVENT_HANDLER_TEST_RUNNER_CREATION | default "false"}}
       - REACT_APP_CHOREO_RESOURCE_AUTHZ_DOC_URL={{.REACT_APP_CHOREO_RESOURCE_AUTHZ_DOC_URL | default "https://wso2.com/choreo/docs/administer/control-access-in-the-choreo-console/"}}
       - REACT_APP_DOWNLOAD_LOGS_PAGE_SIZE={{.REACT_APP_DOWNLOAD_LOGS_PAGE_SIZE | default "5000"}}
+      - REACT_APP_ENABLE_DT_DELETE_CONSOLE={{.REACT_APP_ENABLE_DT_DELETE_CONSOLE | default "false"}}
   - name: env-dp-mizzen
     behavior: create
     literals:
