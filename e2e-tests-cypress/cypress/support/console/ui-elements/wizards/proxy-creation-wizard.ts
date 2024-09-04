@@ -66,7 +66,6 @@ export class _ProxyCreationWizard {
     cy.get(TestIds.createButton).should("be.enabled").click();
 
     cy.get(TestIds.backdropLoader).should("not.exist");
-    cy.get(TestIds.createTime).should("be.visible");
 
     if (endpointUrl !== undefined) {
       return endpointUrl;

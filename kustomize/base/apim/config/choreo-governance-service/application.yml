@@ -1,0 +1,33 @@
+# Copyright (c) 2024, WSO2 LLC. (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC. and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+
+server:
+  servlet:
+    context-path: /api/v1
+  max-http-request-header-size: 100KB
+
+governance-service:
+  database:
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: {{.CHOREO_GOVERNANCE_SERVICE_DB_URL}}
+    username: choreo_governance_db_user
+    # Remove the config replace value and set "/mnt/csi/secret-choreo-governance-service/CHOREO_GOVERNANCE_DB_MSSQL_PASSWORD"
+    # as the value once the secret is created in all the environments
+    passwordFromFile: {{.DATABASE_PASSWORD_FILE_PATH | default ""}}
+    pool:
+      maxActiveConnectionsCount: 100
+      initialConnectionCount: 5
+      minIdleConnectionCount: 5
+      maxWaitTimeMs: 10000
+      validationQuery: SELECT 1
+      testOnBorrow: true
+      testWhileIdle: false
+      removeAbandonedTimeoutSec: 60
+      logAbandoned: false
+      abandonWhenPercentageFull: 50
+  feature-flags:
+    disableDatabaseConnection: {{.DISABLE_DATABASE_CONNECTION | default true}}

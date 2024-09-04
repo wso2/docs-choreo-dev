@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { BUILD_FAILED, BUILD_SUCCESS } from "../../../commons/constants";
+import { BUILD_FAILED, BUILD_IN_PROGRESS, BUILD_QUEUED, BUILD_SUCCESS } from "../../../commons/constants";
 import { LONG_TIME, MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
 import { TestIds } from "../../constants/TestIds";
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
@@ -118,10 +118,18 @@ export function mixinBuild<T extends Types.Constructor>(
 
           cy.log(`Existing build id: ${currentBuildId}`);
 
-          cy.getUnstable(TestIds.build).should("be.enabled").click();
+          cy.getTableData(TestIds.tableTitle, 0, 2, false).then((buildStatus) => {
+            const status = String(buildStatus);
 
-          cy.log("Waiting for build to start");
-          this.checkIfNewBuildStarted(currentBuildId);
+            // When auto-triggered builds are enabled the build will be in queued or in progress state,
+            // so we can avoid trying to manually trigger the build.
+            if (status !== BUILD_QUEUED && status !== BUILD_IN_PROGRESS) {
+              cy.getUnstable(TestIds.build).should("be.enabled").click();
+
+              cy.log("Waiting for build to start");
+              this.checkIfNewBuildStarted(currentBuildId);
+            }
+          });
         }
       );
     }

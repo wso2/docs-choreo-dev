@@ -2083,6 +2083,19 @@ GO
 ALTER TABLE [dbo].[tos_consent] ENABLE TRIGGER [tos_consent_UpdatedTimeTrigger]
 GO
 
+-- Add 2 new columns to org_activity table
+ALTER TABLE org_activity ADD [org_uuid] [nvarchar](255), [org_handle] [nvarchar](255);
+GO
+UPDATE org_activity SET org_uuid = o.uuid, org_handle = o.handle FROM org_activity a JOIN organization o ON a.org_id = o.id;
+-- Verify no entries are listed for below query
+SELECT * FROM org_activity WHERE org_id IS NOT NULL and org_uuid IS NULL;
+
+-- Add necessary unique & not null contraints 
+ALTER TABLE org_activity ALTER COLUMN org_uuid nvarchar(255) NOT NULL;
+ALTER TABLE org_activity ALTER COLUMN org_handle nvarchar(255) NOT NULL;
+ALTER TABLE org_activity ADD CONSTRAINT unique_org_uuid UNIQUE (org_uuid);
+ALTER TABLE org_activity ADD CONSTRAINT unique_org_handle UNIQUE (org_handle);
+
 /****** Add default Permission list ******/
 -- APIM-ADMIN
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Admin Operations','apim:admin','APIM-ADMIN','Manage all admin operations');

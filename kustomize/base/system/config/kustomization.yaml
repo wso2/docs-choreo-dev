@@ -211,6 +211,7 @@ configMapGenerator:
       - ASB_DELETE_QUEUE_NAME=delete-manager
       - ASB_COMPONENT_DELETE_QUEUE_NAME=delete-manager
       - ASB_ENVIRONMENT_DELETE_QUEUE_NAME=delete-environments
+      - ASB_DEPLOYMENT_TRACK_DELETE_QUEUE_NAME=delete-deployment-tracks
       - API_SERVER_URL=http://api-server
       - GCHAT_URL=https://chat.googleapis.com
       - APP_SERVICE_URL=app-service:8080
@@ -241,8 +242,9 @@ configMapGenerator:
       - RESOURCE_REGISTRY_SVC_URL=http://resource-registry:9090
       - RESILIENT_INVOCATION_SVC_URL=http://cp-rrs:9095
       - PLATFORM_SERVICES_MANAGER_SVC_URL=http://platform-services-manager:80
-      - CONFIGURATION_SVC_URL=http://configuration-service:8084
+      - CONFIGURATION_SVC_URL=http://configuration-service:8080
       - CLOUD_MANAGER_URL=http://dp-cloud-manager
+      - AIVEN_PROJECT_NAME_PREFIX=choreo-org
   - name: cm-dp-rudder
     behavior: create
     literals:
@@ -516,6 +518,8 @@ configMapGenerator:
       - CP_GATEWAY_ADAPTER_URL=http://cp-gw-adapter:8080
       - DOCKER_HUB_URL=https://hub.docker.com
       - KV_RESOLVER_INTERNAL_SVC_URL="http://dp-kv-resolver"
+      - RIS_SCHEDULER_URL=http://cp-rrs:9095
+      - SELF_URL=http://pdp-manager:80
   - name: cm-file-resource-registry
     behavior: create
     files:

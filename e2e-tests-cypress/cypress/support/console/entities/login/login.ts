@@ -11,7 +11,11 @@
  * associated services.
  */
 
-import { MEDIUM_TIME, SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
+import {
+  MEDIUM_TIME,
+  SHORT_TIME,
+  VERY_SHORT_TIME,
+} from "../../../commons/timeouts";
 import { GRAPHQL_URL, VALIDATE_USER_URL } from "../../../commons/urls";
 import { Utils } from "../../../commons/utils";
 import { TestIds } from "../../constants/TestIds";
@@ -32,7 +36,7 @@ class Login {
   private accessToken: string = "";
   private signOutUrl: string = "";
 
-  login() {
+  login(loadingTime: number = SHORT_TIME.timeout) {
     this.setBrowserLocalStorage();
     this.setBrowserCookie();
     this.registerNetworkCallsForInterception();
@@ -40,9 +44,9 @@ class Login {
     this.enterUserCredentials(username, password);
     const handle = this.readConfiguredOrgHandle();
     this.persistOrgs(handle);
-    this.persistLogoutURL();
     this.persistAccessToken();
-    cy.get(TestIds.backdropLoader).should("not.exist");
+
+    cy.get(TestIds.backdropLoader, { timeout: loadingTime as number }).should("not.exist");
     cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible");
     this.handleTermsOfUse();
   }
@@ -51,11 +55,11 @@ class Login {
     this.setBrowserLocalStorage();
     this.setBrowserCookie();
     this.registerNetworkCallsForInterception();
-    const { username, password } = this.readSelfSignupAdminUserCredentialsFromEnv();
+    const { username, password } =
+      this.readSelfSignupAdminUserCredentialsFromEnv();
     this.enterUserCredentials(username, password);
     const handle = this.readConfiguredSelfSignupAdminUserOrgHandle();
     this.persistOrgs(handle);
-    this.persistLogoutURL();
     this.persistAccessToken();
     cy.get(TestIds.backdropLoader).should("not.exist");
     cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible");
@@ -68,8 +72,9 @@ class Login {
     this.logoutOfPreviousEnterpriseSession();
     this.enterEnterpriseUserCredentials();
     cy.get(TestIds.backdropLoader).should("not.exist");
-    cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible");
-    this.persistLogoutURL();
+    cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible").then(() => {
+      this.persistLogoutURL();
+    });
     this.handleTermsOfUse();
   }
 
@@ -146,7 +151,7 @@ class Login {
     return this.signOutUrl;
   }
 
-  private readUserCredentialsFromEnv(): { username: string; password: string; } {
+  private readUserCredentialsFromEnv(): { username: string; password: string } {
     const username = Cypress.env("choreoIDPUsername");
     const password = Cypress.env("choreoIDPPassword");
 
@@ -154,15 +159,20 @@ class Login {
       throw new Error("Credentials have not been defined correctly");
     }
 
-    return {  username, password };
+    return { username, password };
   }
 
-  private readSelfSignupAdminUserCredentialsFromEnv(): { username: string; password: string; } {
+  private readSelfSignupAdminUserCredentialsFromEnv(): {
+    username: string;
+    password: string;
+  } {
     let username = Cypress.env("choreoSelfSignupAdminIDPUsername");
     let password = Cypress.env("choreoSelfSignupAdminIDPPassword");
 
     if (username === undefined || password === undefined) {
-      cy.log("Self signup admin credentials not defined separately. Using default credentials");
+      cy.log(
+        "Self signup admin credentials not defined separately. Using default credentials"
+      );
 
       username = Cypress.env("choreoIDPUsername");
       password = Cypress.env("choreoIDPPassword");
@@ -172,7 +182,7 @@ class Login {
       }
     }
 
-    return {  username, password };
+    return { username, password };
   }
 
   private enterUserCredentials(username: string, password: string) {
@@ -226,11 +236,11 @@ class Login {
     }).as("gql");
   }
 
-  private readConfiguredOrgHandle() : string | undefined {
+  private readConfiguredOrgHandle(): string | undefined {
     return Cypress.env("choreoOrgHandle");
   }
 
-  private readConfiguredSelfSignupAdminUserOrgHandle() : string | undefined {
+  private readConfiguredSelfSignupAdminUserOrgHandle(): string | undefined {
     const orgHandle = Cypress.env("choreoSelfSignupAdminOrgHandle");
 
     if (orgHandle === undefined) {
@@ -294,6 +304,7 @@ class Login {
     cy.wait("@gql", MEDIUM_TIME).then((intercept) => {
       const header = intercept.request.headers["authorization"] as string;
       this.accessToken = header.replace("Bearer", "").trim();
+      this.persistLogoutURL();
     });
   }
 
@@ -342,12 +353,12 @@ class Login {
 
   private persistLogoutURL() {
     cy.window()
-      .its("sessionStorage").then((sessionStorage) => {
-      
+      .its("sessionStorage")
+      .then((sessionStorage) => {
         let signOutUrlKey = "";
         for (let i = 0; i < sessionStorage.length; i++) {
           if (sessionStorage.key(i)?.includes("sign_out_url")) {
-            let key = sessionStorage.key(i)
+            let key = sessionStorage.key(i);
             if (key) {
               signOutUrlKey = key;
             }
@@ -356,14 +367,15 @@ class Login {
         }
 
         cy.window()
-        .its("sessionStorage").invoke("getItem", signOutUrlKey)
-        .then((url) => {
-          if (url === undefined || url === null) {
-            throw new Error("Failed to retrieve sign out URL");
-          }
-          this.signOutUrl = url;
-        });
-    });
+          .its("sessionStorage")
+          .invoke("getItem", signOutUrlKey)
+          .then((url) => {
+            if (url === undefined || url === null) {
+              throw new Error("Failed to retrieve sign out URL");
+            }
+            this.signOutUrl = url;
+          });
+      });
   }
 
   private handleTermsOfUse() {

@@ -443,6 +443,9 @@ configMapGenerator:
       - MIZZEN_API_URL={{.MIZZEN_API_URL | default "http://dp-mizzen:80"}}
       - USER_SERVICE_URL={{.USER_SERVICE_URL | default "app-service:8080"}}
       - ENABLE_SOURCE_CONFIG_VALIDATION={{.ENABLE_SOURCE_CONFIG_VALIDATION | default "false"}}
+      - ENABLE_SAVING_REPO_VISIBILITY_STATE={{.ENABLE_SAVING_REPO_VISIBILITY_STATE | default "false"}}
+      - APIM_SERVICE_URL={{.APIM_SERVICE_URL}}
+      - PROXY_BUILD_WF_FILE_PATH={{.PROXY_BUILD_WF_FILE_PATH | default ".github/workflows/proxy-build-v1.0.yml"}}
   - name: env-dp-cloud-manager
     behavior: create
     literals:
@@ -700,7 +703,6 @@ configMapGenerator:
       - REACT_APP_ENV_WEBAPP_SHORT_URL_DOMAIN_US={{.REACT_APP_ENV_WEBAPP_SHORT_URL_DOMAIN_US}}
       - REACT_APP_ENV_WEBAPP_SHORT_URL_DOMAIN_EU={{.REACT_APP_ENV_WEBAPP_SHORT_URL_DOMAIN_EU}}
       - REACT_APP_ENV_WEBAPP_SHORT_URL_DOMAIN_IND={{.REACT_APP_ENV_WEBAPP_SHORT_URL_DOMAIN_IND}}
-      - REACT_APP_FEATURE_FLAG_CDP_DYNAMIC_ENV_CREATION={{.REACT_APP_FEATURE_FLAG_CDP_DYNAMIC_ENV_CREATION}}
       - REACT_APP_MAX_NO_OF_ORG_ENVS_ALLOWED={{.REACT_APP_MAX_NO_OF_ORG_ENVS_ALLOWED}}
       - REACT_APP_BITBUCKET_SERVER_CUSTOMER_ORGS={{.REACT_APP_BITBUCKET_SERVER_CUSTOMER_ORGS}}
       - REACT_APP_INTERNAL_MARKETPLACE_API_URL={{.REACT_APP_INTERNAL_MARKETPLACE_API_URL}}
@@ -768,6 +770,7 @@ configMapGenerator:
       - REACT_APP_CHOREO_RESOURCE_AUTHZ_DOC_URL={{.REACT_APP_CHOREO_RESOURCE_AUTHZ_DOC_URL | default "https://wso2.com/choreo/docs/administer/control-access-in-the-choreo-console/"}}
       - REACT_APP_DOWNLOAD_LOGS_PAGE_SIZE={{.REACT_APP_DOWNLOAD_LOGS_PAGE_SIZE | default "5000"}}
       - REACT_APP_APPROVAL_ORGS={{.REACT_APP_APPROVAL_ORGS | default ""}}
+      - REACT_APP_ENABLE_DT_DELETE_CONSOLE={{.REACT_APP_ENABLE_DT_DELETE_CONSOLE | default "false"}}
   - name: env-dp-mizzen
     behavior: create
     literals:
@@ -945,6 +948,8 @@ configMapGenerator:
       - IS_FEATURE_ENABLED={{.IS_FEATURE_ENABLED}}
       - PRORATA_MODEL_ENABLED={{.PRORATA_MODEL_ENABLED}}
       - PLATFORM_SVC_COST_PUBLISHING_ENABLE={{.PLATFORM_SVC_COST_PUBLISHING_ENABLE | default "false"}}
+      - AWS_MARKETPLACE_CLIENT_URL="http://choreo-aws-marketplace-client:8080"
+      - AWS_CHOREO_PRODUCT_CODE={{.AWS_CHOREO_PRODUCT_CODE | default "choreo"}}
   - name: env-moesif-service
     behavior: create
     literals:

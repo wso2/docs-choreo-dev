@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: choreo-aws-marketplace-client
+spec:
+  selector:
+    choreo.component: choreo-aws-marketplace-client
+  ports:
+    - name: tcp
+      port: 8080
+      targetPort: 8080

@@ -34,8 +34,12 @@ class Console {
 
   static keyName = Utils.generateKeyName("key");
 
-  login() {
-    login.login();
+  login(loadingTime?: number) {
+    if (loadingTime === undefined) {
+      login.login();
+    } else {
+      login.login(loadingTime);
+    }
     return cy.wrap({});
   }
 
@@ -78,11 +82,20 @@ class Console {
     this.navigateToSelfSignups();
 
     cy.wait(5000);
-    cy.get(TestIds.consoleSelfSignupConfigPageNotification).should("be.visible");
-    cy.get(TestIds.consoleSelfSignupAutoApprovalConfigCheckbox).invoke('removeAttr', 'disabled');
-    cy.get(TestIds.consoleSelfSignupAutoApprovalConfigCheckbox).should('not.be.disabled');
+    cy.get(TestIds.consoleSelfSignupConfigPageNotification).should(
+      "be.visible"
+    );
+    cy.get(TestIds.consoleSelfSignupAutoApprovalConfigCheckbox).invoke(
+      "removeAttr",
+      "disabled"
+    );
+    cy.get(TestIds.consoleSelfSignupAutoApprovalConfigCheckbox).should(
+      "not.be.disabled"
+    );
     cy.get(TestIds.consoleSelfSignupAutoApprovalConfigCheckbox).check();
-    cy.get(TestIds.consoleSelfSignupAutoApprovalConfigCheckbox).should('be.checked');
+    cy.get(TestIds.consoleSelfSignupAutoApprovalConfigCheckbox).should(
+      "be.checked"
+    );
   }
 
   disableDevportalSelfSignupAutoApprovalConfig() {
@@ -93,9 +106,13 @@ class Console {
     this.navigateToSelfSignups();
 
     cy.wait(5000);
-    cy.get(TestIds.consoleSelfSignupConfigPageNotification).should("be.visible");
+    cy.get(TestIds.consoleSelfSignupConfigPageNotification).should(
+      "be.visible"
+    );
     cy.get(TestIds.consoleSelfSignupAutoApprovalConfigCheckbox).uncheck();
-    cy.get(TestIds.consoleSelfSignupAutoApprovalConfigCheckbox).should('not.be.checked');
+    cy.get(TestIds.consoleSelfSignupAutoApprovalConfigCheckbox).should(
+      "not.be.checked"
+    );
   }
 
   approveDevportalSelfSignupRequest() {
@@ -140,14 +157,12 @@ class Console {
     this.navigateToHome();
     this.navigateToSettings();
     this.navigateToOnPremKeys();
-  
+
     cy.wait(5000);
     cy.get(TestIds.generateOnPremKey).should("exist").click();
     cy.get(TestIds.onPremKey).should("exist").type(Console.keyName);
     cy.get(TestIds.onPremKeyGenBtn).click();
-    cy.get(TestIds.onPremKeyCopyBtn, { timeout: 120000 }).should(
-      "be.visible"
-    );
+    cy.get(TestIds.onPremKeyCopyBtn, { timeout: 120000 }).should("be.visible");
     Utils.getRenderedElement(TestIds.closeDialog).eq(0).click();
   }
 
@@ -164,27 +179,17 @@ class Console {
     cy.get(TestIds.onPremKeySaveBtn).click();
   }
 
- regenerateOnPremKey() {
+  regenerateOnPremKey() {
     cy.get("tbody").should("be.visible");
-    cy.contains(Console.keyName)
-      .parent()
-      .find(TestIds.onPremKeyRegen)
-      .click();
-    cy.get(TestIds.onPremKeyRegenBtn)
-      .should("exist")
-      .click();
+    cy.contains(Console.keyName).parent().find(TestIds.onPremKeyRegen).click();
+    cy.get(TestIds.onPremKeyRegenBtn).should("exist").click();
     cy.contains("Copy on-premises key").next().click();
   }
 
- deleteOnPremKey() {
+  deleteOnPremKey() {
     cy.get("tbody").should("be.visible");
-    cy.contains(Console.keyName)
-      .parent()
-      .find(TestIds.onPremKeyDelete)
-      .click();
-    cy.get(TestIds.onPremKeyDeleteBtn)
-      .should("exist")
-      .click();
+    cy.contains(Console.keyName).parent().find(TestIds.onPremKeyDelete).click();
+    cy.get(TestIds.onPremKeyDeleteBtn).should("exist").click();
   }
 
   addUserStore(userStoreFile: string, env: Enums.Environment) {
