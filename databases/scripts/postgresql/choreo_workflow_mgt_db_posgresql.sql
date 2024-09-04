@@ -20,7 +20,7 @@ CREATE TABLE workflow_definition (
 CREATE TABLE org_workflow_config (
     id VARCHAR(36) PRIMARY KEY,
     org_id VARCHAR(36) NOT NULL,
-    enabled BOOLEAN NOT NULL DEFAULT false;
+    enabled BOOLEAN NOT NULL DEFAULT false,
     workflow_definition_id VARCHAR(50) NOT NULL REFERENCES workflow_definition(id),
     assignee_roles VARCHAR(255) NOT NULL,
     assignees VARCHAR(255) NOT NULL,
