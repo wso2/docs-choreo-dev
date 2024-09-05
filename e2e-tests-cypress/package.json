@@ -24,7 +24,7 @@
     "e2etest:pdp": "npx cypress run -C cypress.pdp.json ",
     "cy:coverage": "nyc report --reporter=text-summary --reporter=lcov",
     "cy:run": "cypress run",
-    "cy:parallel": "cypress-parallel -s cy:run -t 10 -d 'cypress/e2e-stable/console/**/*'"
+    "cy:parallel": "cypress-parallel -s cy:run -t 4 -d 'cypress/e2e-stable/console/**/*'"
   },
   "author": "",
   "license": "ISC"
