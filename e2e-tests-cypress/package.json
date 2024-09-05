@@ -22,7 +22,9 @@
     "test": "npm run devportal-e2etest:headless || npm run console-e2etest:headless || npm run posttest",
     "local": "npm run e2etest:headless || npm run posttest",
     "e2etest:pdp": "npx cypress run -C cypress.pdp.json ",
-    "cy:coverage": "nyc report --reporter=text-summary --reporter=lcov"
+    "cy:coverage": "nyc report --reporter=text-summary --reporter=lcov",
+    "cy:run": "cypress run",
+    "cy:parallel": "cypress-parallel -s cy:run -t 10 -d 'cypress/e2e-stable/console/**/*'"
   },
   "author": "",
   "license": "ISC"
