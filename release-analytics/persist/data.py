@@ -40,3 +40,20 @@ class IntegrationTest:
             "stack_trace": self.stack_trace,
             "choreo_env": self.choreo_env
         }
+
+@dataclass
+class ReleasePromotion:
+    build_number: str
+    commit_msg: str
+    promotion_time: datetime
+    source_env: str
+    dest_env: str
+
+    def get_as_row(self):
+        return {
+            "build_number": self.build_number,
+            "commit_msg": self.commit_msg,
+            "promotion_time": self.promotion_time.strftime("%Y-%m-%dT%H:%M:%S"),
+            "source_env": self.source_env,
+            "dest_env": self.dest_env
+        }
