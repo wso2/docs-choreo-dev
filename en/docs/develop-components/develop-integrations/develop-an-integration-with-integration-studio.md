@@ -3,7 +3,7 @@
 The seamless integration of APIs, microservices, applications, and data across different languages and formats requires the ability to expose integrations as APIs. Choreo simplifies building, deploying, and managing integration components, making it easy for you to quickly expose integrations as APIs.
 
 !!! note
-    - To develop integrations that you need to use in Manual Task and Schedule Task components in Choreo, you need to use the automation mode in the WSO2 Micro Integrator. See [Running MI in Automation Mode](https://apim.docs.wso2.com/en/latest/install-and-setup/install/running-the-mi-in-automation-mode/). 
+    - To develop integrations that you need to use in Manual Task and Schedule Task components in Choreo, you need to use the automation mode in the WSO2 Micro Integrator. See [Running MI in Automation Mode](https://apim.docs.wso2.com/en/4.2.0/install-and-setup/install/running-the-mi-in-automation-mode/). 
     - To develop integrations for any other component types (Service, webhook, event-handler, etc) you need to use the server mode. 
 
 This guide walks you through the steps to expose an integration you created in WSO2 Integration Studio as an API in Choreo. 
