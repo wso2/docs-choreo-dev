@@ -228,6 +228,7 @@ configMapGenerator:
     behavior: create
     literals:
       - RUDDER_URL=http://dp-rudder:80
+      - CICD_URL=http://dp-cicd:80
       - SUBSCRIPTION_SERVICE_URL=subscriptions:9090
       - DELETION_PERIOD_IN_MONTHS=3
       - AUTHZ_SERVICE_AUTHORIZATION_HEADER_NAME=x-jwt-assertion
