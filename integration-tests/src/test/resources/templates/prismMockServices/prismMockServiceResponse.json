@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "Fluffy",
+    "photoUrls": [
+      "https://example.com/fluffy.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Buddy",
+    "photoUrls": [
+      "https://example.com/buddy.jpg"
+    ]
+  }
+]

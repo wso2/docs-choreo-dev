@@ -1,0 +1,46 @@
+mutation {
+  createBuildpackComponent(
+    component: {
+      name: "{{name}}"
+      displayName: "{{name}}"
+      description: ""
+      orgId: {{orgId}}
+      orgHandler: "{{orgHandler}}"
+      projectId: "{{projectId}}"
+      labels: ""
+      componentType: "prismMockService"
+      port: null
+      oasFilePath: ""
+      accessibility: ""
+      isAsyncCreationEnabled: false
+      buildpackConfig: {
+        buildpackId: "{{buildpackId}}"
+        languageVersion: "{{languageVersion}}"
+        buildContext: "{{buildContext}}"
+        srcGitRepoUrl: "{{srcGitRepoUrl}}"
+        srcGitRepoBranch: "{{srcGitRepoBranch}}"
+      }
+    }
+  ) {
+    id
+    createdAt
+    updatedAt
+    name
+    handle
+    organizationId
+    projectId
+    orgHandle
+    type
+    description
+    imageRegistryId
+    imageRegistry {
+      id
+      createdAt
+      updatedAt
+      cloudConnectorId
+      imageRepositoryName
+    }
+    componentType
+    httpBased
+  }
+}

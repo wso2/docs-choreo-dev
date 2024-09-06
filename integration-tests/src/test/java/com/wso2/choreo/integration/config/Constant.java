@@ -105,7 +105,8 @@ public final class Constant {
         manualTrigger,
         buildpackService,
         byoiService,
-        byocWebAppsDockerfileLess
+        byocWebAppsDockerfileLess,
+        prismMockService
     }
     public enum apiLIifCycleState {
         Publish

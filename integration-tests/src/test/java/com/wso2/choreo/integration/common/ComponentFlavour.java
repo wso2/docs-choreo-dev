@@ -24,5 +24,6 @@ public enum ComponentFlavour {
     PROXY,
     CONTAINERIZED_EVENT_HANDLER,
     BUILDPACK,
-    WEBAPP
+    WEBAPP,
+    PRISM_MOCK_SERVICE
 }
