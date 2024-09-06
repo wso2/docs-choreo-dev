@@ -12,7 +12,6 @@
  */
 
 import { console } from "../../../support/console/console";
-import '@neuralegion/cypress-har-generator';
 
 after(() => {
   console.logout();
