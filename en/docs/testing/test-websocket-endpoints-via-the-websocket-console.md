@@ -1,5 +1,5 @@
 
-# Test GraphQL Endpoints via the GraphQL Console
+# Test WebSocket Endpoints via the WebSocket Test Console
 
 Choreo provides an integrated WebSocket Console to test publicly exposed WebSocket endpoints of Service components you create and deploy. The WebSocket test Console allows you to connect to the service and interactively pass messages. As Choreo uses OAuth2.0 authentication by default to secure WebSocket APIs, the GraphQL Console generates test keys to test APIs.
 
