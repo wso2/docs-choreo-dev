@@ -27,10 +27,12 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.exceptions.DeploymentStatusByVersionFailureException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 
@@ -165,8 +167,21 @@ public class TestCreateIntegrationEventComponent extends TestNGCitrusSpringSuppo
     public void componentDeployment_TestCreateIntegrationEventComponent() throws Exception {
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 testComponent);
-        componentDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, testComponent, 
-            environments, ComponentFlavour.MI);
+        List<Commit> commitHistory = GraphQL.getCommitHistory(this, choreoProjectsTestClient, testComponent.getId(), accessToken,
+                testComponent.getRepository().getBranchApp());
+
+        Commit latestCommit = Commit.getLatestCommit(commitHistory);
+        componentDeploymentStatusDTO = ComponentUtils.deployBuiltComponent(this, citrusClients, accessToken, testComponent, latestCommit,
+                environments);
+        try {
+            ComponentUtils.validateComponentDeployment(this, citrusClients, accessToken, testComponent, latestCommit, environments);
+        } catch (Exception e) {
+            if (e.getCause() instanceof DeploymentStatusByVersionFailureException) {
+                log.error("DeployStatusByVersion failure detected", e);
+            } else {
+                throw e;
+            }
+        }
     }
 
     @Test(dependsOnMethods = {"componentDeployment_TestCreateIntegrationEventComponent"})

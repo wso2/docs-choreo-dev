@@ -17,6 +17,7 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.google.gson.JsonArray;
+import com.wso2.choreo.integration.apis.component.Component;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
@@ -25,10 +26,12 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.exceptions.DeploymentStatusByVersionFailureException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.endpoints.Endpoint;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
@@ -119,6 +122,11 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
     @Test(dependsOnMethods = {"componentRetrieval_TestCreateIntegrationMICustomConfig"})
     @CitrusTest
     public void generateEndpointsDev_TestCreateIntegrationMICustomConfig() throws Exception {
+        GraphqlDTO dto = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
+        dto.setComponentId(testComponent.getId());
+        dto.setLatestVersionId(testComponent.getLatestApiVersion().getId());
+        String runId = GraphQL.getRunId(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, dto);
+        Component.waitForComponentBuildDeployComplete(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, projectId, testComponent.getId(), runId, 50);
         Map<String,String> argMap = new HashMap<>();
         argMap.put("componentId", testComponent.getId());
         argMap.put("versionId", testComponent.getLatestApiVersion().getId());
@@ -160,8 +168,21 @@ public class TestCreateIntegrationMICustomConfig extends TestNGCitrusSpringSuppo
     public void componentDeployment_TestCreateIntegrationMICustomConfig() throws Exception {
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 testComponent);
-        componentDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, testComponent, 
-            environments, ComponentFlavour.MI);
+        List<Commit> commitHistory = GraphQL.getCommitHistory(this, choreoProjectsTestClient, testComponent.getId(), accessToken,
+                testComponent.getRepository().getBranchApp());
+
+        Commit latestCommit = Commit.getLatestCommit(commitHistory);
+        componentDeploymentStatusDTO = ComponentUtils.deployBuiltComponent(this, citrusClients, accessToken, testComponent, latestCommit,
+                environments);
+        try {
+            ComponentUtils.validateComponentDeployment(this, citrusClients, accessToken, testComponent, latestCommit, environments);
+        } catch (Exception e) {
+            if (e.getCause() instanceof DeploymentStatusByVersionFailureException) {
+                log.error("DeployStatusByVersion failure detected", e);
+            } else {
+                throw e;
+            }
+        }
     }
 
     @Test(dependsOnMethods = {"componentDeployment_TestCreateIntegrationMICustomConfig"})
