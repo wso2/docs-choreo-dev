@@ -165,21 +165,8 @@ public class TestCreateMiMultiRestEndpointServiceFromSubPath extends TestNGCitru
         // Deploy component
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
         testComponent);
-        List<Commit> commitHistory = GraphQL.getCommitHistory(this, choreoProjectsTestClient, testComponent.getId(), accessToken,
-                testComponent.getRepository().getBranchApp());
-
-        Commit latestCommit = Commit.getLatestCommit(commitHistory);
-        componentDeploymentStatusDTO = ComponentUtils.deployBuiltComponent(this, citrusClients, accessToken, testComponent, latestCommit,
+        componentDeploymentStatusDTO = ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients, accessToken, testComponent,
                 environments);
-        try {
-            ComponentUtils.validateComponentDeployment(this, citrusClients, accessToken, testComponent, latestCommit, environments);
-        } catch (Exception e) {
-            if (e.getCause() instanceof DeploymentStatusByVersionFailureException) {
-                log.error("DeployStatusByVersion failure detected", e);
-            } else {
-                throw e;
-            }
-        }
     }
 
     @Test(dependsOnMethods = {"componentDeployment_TestCreateMiMultiRestEndpointServiceFromSubPath"})
