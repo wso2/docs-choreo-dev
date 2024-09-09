@@ -103,6 +103,7 @@ nav:
           - Expose a TCP Server via a Service: develop-components/develop-services/expose-a-tcp-server-via-a-service.md
           - Expose a UDP Server via a Service: develop-components/develop-services/expose-a-udp-server-via-a-service.md
           - Expose a Ballerina GraphQL Endpoint via a Service: develop-components/develop-services/expose-a-ballerina-graphql-endpoint-via-a-service.md
+          - Expose a mock server using Open API Spec: develop-components/develop-services/develop-mock-server.md
       - Develop an API Proxy: develop-components/develop-an-api-proxy.md
       - Develop Web Applications: 
           - Build and Deploy a Single-Page Web Application: develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application.md
