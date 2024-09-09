@@ -521,6 +521,7 @@ configMapGenerator:
       - KV_RESOLVER_INTERNAL_SVC_URL="http://dp-kv-resolver"
       - RIS_SCHEDULER_URL=http://cp-rrs:9095
       - SELF_URL=http://pdp-manager:80
+      - APP_SERVICE_GRPC_ADDRESS=app-service:8080
   - name: cm-file-resource-registry
     behavior: create
     files:
