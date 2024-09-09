@@ -15,6 +15,10 @@ package com.wso2.choreo.integration.tests.deploy;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.wso2.choreo.integration.apis.component.Component;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentFlavour;
@@ -76,6 +80,10 @@ public class AutoDeployOnCommit extends TestNGCitrusSpringSupport {
         GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);
         choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
+        dto.setComponentId(choreoComponent.getId());
+        dto.setLatestVersionId(choreoComponent.getLatestApiVersion().getId());
+        String runId = GraphQL.getRunId(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, dto);
+        Component.waitForComponentBuildSuccess(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, project.getId(), choreoComponent.getId(), runId, "Ballerina Build");
         Assert.assertNotNull(choreoComponent.getId());
     }
 

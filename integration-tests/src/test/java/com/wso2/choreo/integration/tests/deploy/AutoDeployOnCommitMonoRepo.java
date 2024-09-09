@@ -15,6 +15,7 @@ package com.wso2.choreo.integration.tests.deploy;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.wso2.choreo.integration.apis.component.Component;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentFlavour;
@@ -81,6 +82,10 @@ public class AutoDeployOnCommitMonoRepo extends TestNGCitrusSpringSupport {
         GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);
         choreoComponentA = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
+        dto.setComponentId(choreoComponentA.getId());
+        dto.setLatestVersionId(choreoComponentA.getLatestApiVersion().getId());
+        String runId = GraphQL.getRunId(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, dto);
+        Component.waitForComponentBuildSuccess(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, project.getId(), choreoComponentA.getId(), runId, "Ballerina Build");
         Assert.assertNotNull(choreoComponentA.getId());
     }
 
@@ -92,6 +97,10 @@ public class AutoDeployOnCommitMonoRepo extends TestNGCitrusSpringSupport {
         GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);
         choreoComponentB = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
+        dto.setComponentId(choreoComponentB.getId());
+        dto.setLatestVersionId(choreoComponentB.getLatestApiVersion().getId());
+        String runId = GraphQL.getRunId(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, dto);
+        Component.waitForComponentBuildSuccess(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, project.getId(), choreoComponentB.getId(), runId, "Ballerina Build");
         Assert.assertNotNull(choreoComponentB.getId());
     }
 

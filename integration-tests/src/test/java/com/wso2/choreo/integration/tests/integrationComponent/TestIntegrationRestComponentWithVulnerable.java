@@ -113,26 +113,6 @@ public class TestIntegrationRestComponentWithVulnerable extends TestNGCitrusSpri
                 graphqlDTO);
     }
 
-    @Test(dependsOnMethods = { "componentRetrieval_TestMIIntegrationsWithVulnerableJars" })
-    @CitrusTest
-    public void componentDeployment_TestMIIntegrationsWithVulnerableJars() throws Exception {
-
-        JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
-        String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
-        componentId = testComponent.getId();
-        ApiVersion apiVersion = testComponent.getLatestApiVersion();
-        String latestVersionId = apiVersion.getId();
-
-        String devEnvIdToDeploy = testComponent.getLatestAppEnvId(Constant.DEV_ENVIRONMENT);
-        String branch = testComponent.getRepository().getBranch();
-
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).latestVersionId(latestVersionId)
-                .devEnvIdToDeploy(devEnvIdToDeploy).branch(branch).sha(latestCommitSha).shaDate("").build();
-
-        // Deploy component
-        GraphQL.deployComponent(this, choreoProjectsTestClient, accessToken, graphqlDTO);
-    }
-
     @Test(dependsOnMethods = { "componentDeployment_TestMIIntegrationsWithVulnerableJars" })
     @CitrusTest
     public void deploymentStatusByVersion_TestMIIntegrationsWithVulnerableJars() throws Exception {

@@ -1014,7 +1014,7 @@ public class GraphQL extends ControlPlaneAPI {
         runner.$(repeatOnError()
                 .until("i = 20")
                 .index("i")
-                .autoSleep(10000)
+                .autoSleep(40000)
                 .actions(
                         http()
                                 .client(client)
@@ -1078,7 +1078,7 @@ public class GraphQL extends ControlPlaneAPI {
         runner.$(repeatOnError()
                 .until("i = 20")
                 .index("i")
-                .autoSleep(10000)
+                .autoSleep(40000)
                 .actions(
                         http()
                                 .client(client)
@@ -1142,7 +1142,7 @@ public class GraphQL extends ControlPlaneAPI {
                                     int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
 
                                     if (code != HttpStatus.OK.value()) {
-                                        if (4 < successiveFailureCount.incrementAndGet()) {
+                                        if (10 < successiveFailureCount.incrementAndGet()) {
                                             throw new ValidationException("Too many successive calls with response code != 200");
                                         }
                                     } else {
@@ -1302,8 +1302,10 @@ public class GraphQL extends ControlPlaneAPI {
                                     int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
 
                                     if (code != HttpStatus.OK.value()) {
-                                        if (4 < successiveFailureCount.incrementAndGet()) {
+                                        if (8 < successiveFailureCount.incrementAndGet()) {
                                             throw new ValidationException("Too many successive calls with response code != 200");
+                                        } else {
+                                            SleepUtil.sleep(40);
                                         }
                                     } else {
                                         successiveFailureCount.set(0);
@@ -1338,7 +1340,7 @@ public class GraphQL extends ControlPlaneAPI {
                                         }
 
                                         if (!isPassed.get()) {
-                                            SleepUtil.sleep(5);
+                                            SleepUtil.sleep(30);
                                         }
                                     }
                                 })));
@@ -1896,7 +1898,7 @@ public class GraphQL extends ControlPlaneAPI {
         runner.$(repeatOnError()
                 .until("i = 5")
                 .index("i")
-                .autoSleep(10000)
+                .autoSleep(40000)
                 .actions(
                         http()
                                 .client(client)

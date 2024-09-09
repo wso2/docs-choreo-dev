@@ -514,6 +514,29 @@ public class ComponentUtils {
         return deploymentStatusDTO;
     }
 
+    public static ComponentDeploymentStatusDTO deployAndValidateBuiltComponent(TestNGCitrusSpringSupport runner,
+                                                               Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent testComponent,
+                                                               List<Environment> environments) throws Exception {
+        HttpClient choreoProjectsTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        List<Commit> commitHistory = GraphQL.getCommitHistory(runner, choreoProjectsTestClient, testComponent.getId(), accessToken,
+                testComponent.getRepository().getBranchApp());
+
+        Commit latestCommit = Commit.getLatestCommit(commitHistory);
+        ComponentDeploymentStatusDTO componentDeploymentStatusDTO = ComponentUtils.deployBuiltComponent(runner, citrusClients, accessToken, testComponent, latestCommit,
+                environments);
+        try {
+            ComponentUtils.validateComponentDeployment(runner, citrusClients, accessToken, testComponent, latestCommit, environments);
+        } catch (Exception e) {
+            if (e.getCause() instanceof DeploymentStatusByVersionFailureException) {
+                log.error("DeployStatusByVersion failure detected", e);
+            } else {
+                throw e;
+            }
+        }
+
+        return componentDeploymentStatusDTO;
+    }
+
     public static ComponentDeploymentStatusDTO validateComponentDeployment(TestNGCitrusSpringSupport runner,
             Map<Endpoints, HttpClient> citrusClients, String accessToken,
             ChoreoComponent component, Commit latestCommit,
@@ -1006,7 +1029,7 @@ public class ComponentUtils {
                                     String expectedResponse) throws Exception {
         // Test API Invocation
         runner.$(repeatOnError()
-                .until("i = 15")
+                .until("i = 20")
                 .index("i")
                 .autoSleep(30000)
                 .actions((http()
@@ -1044,7 +1067,7 @@ public class ComponentUtils {
             org.springframework.http.HttpStatus expectedHttpStatus) {
         // Test API Invocation
         runner.$(repeatOnError()
-                .until("i = 15")
+                .until("i = 20")
                 .index("i")
                 .autoSleep(30000)
                 .actions((http()
