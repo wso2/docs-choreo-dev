@@ -188,8 +188,8 @@ class Console {
       });
 
       if (isOrgAlreadySelected) {
-        // If the Org reuested is already selected, force a temporary switch to another org
-        // so that  requested the requested Org will trigger a re-fetch of the updated token
+        // If the Org requested is already selected, force a temporary switch to another org
+        // so that selecting the requested Org again will trigger a re-fetch of the updated token
         // compatible with the requested Org. The updated token can be used in subsequent API
         // calls made to the requested Org.
         cy.log("Org already selected: " + orgName);
