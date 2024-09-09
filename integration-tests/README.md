@@ -57,6 +57,8 @@ integration-tests/src/test
 |           └─── ...
 |           EndpointConfig.java
 └───resources
+    |───log-investigation
+    |   └───log-filter.py
     |───scopes
     |   |───dev-scopes.yaml
     |   |───gen-scopes-yaml.py
@@ -102,7 +104,12 @@ integration-tests/src/test
 
 **resources**
 
-1. **/scopes**
+1. **/log-investigation**
+    - Since tests are executed in parallel the main log can contain interleaved logs from tests executed by different 
+      threads. This script can be used to filter logs based on the thread execution Id to make investigation easier.
+        - **log-filter.py** - Python script to filter logs based on the test case name
+
+2. **/scopes**
     - Scopes needed to be provided when requesting an access token from Choreo.
       These are Choreo environment specific and hence are maintained in separate yaml files.
       A Python script is provided to extract the env specific scopes from an existing access token to make it easier to maintain. For more details refer to the provided README in the directory.
@@ -111,34 +118,34 @@ integration-tests/src/test
         - **staging-scopes.yaml** - Scopes needed for Staging environment
         - **gen-scopes-yaml.py** - Python script to generate scopes yaml file
 
-2. **/templates**
+3. **/templates**
     - Sample Json payload templates used in Citrus tests
 
-3. **citrus-application.properties**
+4. **citrus-application.properties**
     - SpringBoot entry point used by the Citrus framework to run the tests.
 
-4. **dev-env-config.yaml**
+5. **dev-env-config.yaml**
     - Environment specific configurations for Dev environment.
 
-5. **dev-security-env-config.yaml**
+6. **dev-security-env-config.yaml**
     - Lower privilege user configuration used by the security tests in the Dev environment.
 
-6. **dp.xml**
+7. **dp.xml**
     - testng xml file to run the Data Plane specific tests. This is mainly used for testing the Private Data Plane setup.
 
-7. **log4j2.properties**
+8. **log4j2.properties**
     - Log4j2 configuration file to configure the logging levels during test runs. Debug and Wire logging is enabled by default.
 
-8. **prod-env-config.yaml**
+9. **prod-env-config.yaml**
     - Environment specific configurations for Prod environment.
 
-9. **security.xml**
-    - testng xml file to run the security tests.
+10. **security.xml**
+     - testng xml file to run the security tests.
 
-10. **staging-env-config.yaml**
+11. **staging-env-config.yaml**
     - Environment specific configurations for Staging environment.
 
-11. **testng.xml**
+12. **testng.xml**
     - testng xml file to run Choreo integration tests.
 
 ## 6. Adding a new test configuration
