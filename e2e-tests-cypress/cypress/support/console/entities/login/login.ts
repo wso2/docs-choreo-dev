@@ -123,6 +123,16 @@ class Login {
     });
   }
 
+  updateOrgData(organization) {
+    this.orgId = organization.id;
+    this.orgHandle = organization.handle;
+    this.orgUuid = organization.uuid;
+  }
+
+  updateAccessToken(token) {
+    this.accessToken = token;
+  }
+
   getDisplayName() {
     return this.displayName;
   }

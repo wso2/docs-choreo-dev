@@ -21,7 +21,7 @@ import { ApiDevPortalService } from "./apis/api-devportal-service";
 import { TestIds } from "./constants/TestIds";
 import { OrganizationSettings } from "./features/org-settings/org-settings";
 import { CustomDomainType, Enums } from "../commons/enums";
-import { DOMAIN_URL_MGT } from "../commons/urls";
+import { DOMAIN_URL_MGT, ORG_MGT_URL, ORGS_URL } from "../commons/urls";
 import { VERY_SHORT_TIME } from "../commons/timeouts";
 
 /**
@@ -139,6 +139,35 @@ class Console {
     cy.get(TestIds.consoleSelfSignupRequestRejectButton).should("not.exist");
   }
 
+  removePendingDevportalSelfSignupRequests() {
+    const uuid = login.getOrgUuid();
+    const token = login.getAccessToken();
+
+    const headers = {
+      authorization: `Bearer ${token}`,
+    };
+
+    const selfSignUpUrl = `${ORG_MGT_URL}/orgs/${uuid}/self-signup/approval-requests`;
+    const changeStatusUrl = `${selfSignUpUrl}/change-status`
+
+    Utils.sendGetRequest(selfSignUpUrl, headers).then((res) => {
+      const list = res.body.list as [];
+
+      cy.log("Total self signup requests: " + list.length);
+
+      list.filter((item) => item["status"] === "pending").forEach((pendingRequest) => {
+        const rejectRequest = {
+          "orgUuid":pendingRequest["orgUuid"],
+          "userIdpId":pendingRequest["userIdpId"],
+          "status":"rejected"
+        };
+
+        Utils.sendPutRequest(changeStatusUrl, headers, rejectRequest);
+        cy.wait(1000);
+      });
+    });
+  }
+
   logout() {
     cy.request(login.getSignOutUrl()).then(() => {
       cy.clearAllSessionStorage();
@@ -149,8 +178,54 @@ class Console {
   }
 
   switchtOrg(orgName: string) {
-    cy.get("#org-picker").click();
-    cy.getUnstable(`[data-value="${orgName}"]`).click();
+    let isOrgAlreadySelected = false;
+    cy.get(TestIds.orgPicker).then((orgPicker) => {
+      orgPicker.find("p").each((index, element) => {
+          if (element.textContent && element.textContent.includes(orgName)) {
+            isOrgAlreadySelected = true;
+            return false;
+        }
+      });
+
+      if (isOrgAlreadySelected) {
+        // If the Org reuested is already selected, force a temporary switch to another org
+        // so that  requested the requested Org will trigger a re-fetch of the updated token
+        // compatible with the requested Org. The updated token can be used in subsequent API
+        // calls made to the requested Org.
+        cy.log("Org already selected: " + orgName);
+
+        cy.get("#org-picker").click();
+        cy.getUnstable(`[data-value]`).each((org, index, orgsList) => {
+          if (org.attr("data-value") !== orgName) {
+            org.trigger("click");
+            return false;
+          }
+        });
+      }
+
+      cy.get("#org-picker").should("be.visible").then(() => {
+        cy.intercept({ method: "GET", url: `${ORGS_URL}/*` }).as("getOrgs");
+      });
+
+      cy.get("#org-picker").click();
+      cy.getUnstable(`[data-value="${orgName}"]`).click();
+
+      cy.wait("@getOrgs", VERY_SHORT_TIME).then((intercept) => {
+        if (intercept.response === undefined || intercept.response.statusCode != 200) {
+            throw new Error("Failed to receive orgs response");
+        } else {
+          const org = intercept.response.body.organization;
+          const header = intercept.request.headers["authorization"] as string;
+          const accessToken = header.replace("Bearer", "").trim();
+          login.updateAccessToken(accessToken);
+          login.updateOrgData(org);
+
+          cy.log("Switched to org handle: " + login.getOrgHandle());
+        }
+      });
+    });
+
+    return cy.wrap({});
   }
 
   generateOnPremKey() {

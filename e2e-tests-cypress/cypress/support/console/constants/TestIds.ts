@@ -16,6 +16,7 @@ import { EndpointAccessibility, Enums } from "../../commons/enums";
 export namespace TestIds {
   export const logout = '[data-cyid="logout-button-button"]';
   export const userProfile = '[data-testid="header-user-profile-menu"]';
+  export const orgPicker = '[data-cyid="org-picker-button"]'
   export const backdropLoader = '[data-testid="backdrop-loader"]';
   export const devPortalBackdropLoader = '[id="backdrop-loader"]';
   export const progressBar = '[role="progressbar"]';

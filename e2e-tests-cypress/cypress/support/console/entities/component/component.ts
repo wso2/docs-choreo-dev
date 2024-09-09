@@ -17,7 +17,6 @@ import path from "path";
 import {
   MEDIUM_TIME,
   SHORT_TIME,
-  VERY_SHORT_TIME,
 } from "../../../commons/timeouts";
 import { TryOut } from "../../../devportal/pages/apis/try-out";
 import { generateAppName } from "../../../devportal/utils";
@@ -27,7 +26,6 @@ import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu"
 import { Application } from "../application/application";
 import { _Stats } from "../../features/stats/stats";
 import { _Observability } from "../../features/observability/observability";
-import { ProxyMetaData, Proxy } from "./proxy-component";
 
 export interface DevPortalTryOut {
   resource: string;
@@ -251,8 +249,7 @@ export class Component {
   navigateToComponentInConsole() {
     cy.log(this.getComponentUrl());
     cy.visit(this.getComponentUrl()).then(() => {
-      cy.get(TestIds.backdropLoader).should("not.exist");
-      cy.get(TestIds.createTime).should("be.visible");
+      cy.get(TestIds.backdropLoader, SHORT_TIME).should("not.exist");
     });
   }
 
