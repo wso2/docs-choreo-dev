@@ -46,9 +46,9 @@ configMapGenerator:
       - PROXY_URL={{.PROXY_URL}}
       - ENABLED_RERANKER={{.ENABLED_RERANKER}}
       - COLLECTION_NAME={{.COLLECTION_NAME}}
-      - DEFAULT_AZURE_DEPLOYMENT_EMBEDDING={{.DEFAULT_AZURE_DEPLOYMENT_EMBEDDING | default "choreo-ai-embedding" }}
-      - DEFAULT_OPENAI_API_VERSION={{.DEFAULT_OPENAI_API_VERSION | default "2023-12-01-preview" }}
-      - DEFAULT_AZURE_DEPLOYMENT_CHAT={{.DEFAULT_AZURE_DEPLOYMENT_CHAT | default "choreo-ai-chat-4o" }}
+      - AZURE_DEPLOYMENT_EMBEDDING={{.AZURE_DEPLOYMENT_EMBEDDING | default "choreo-ai-embedding" }}
+      - OPENAI_API_VERSION={{.OPENAI_API_VERSION | default "2023-12-01-preview" }}
+      - AZURE_DEPLOYMENT_CHAT={{.AZURE_DEPLOYMENT_CHAT | default "choreo-ai-chat-4o" }}
   - name: env-marketplace-assistant-cm
     behavior: create
     literals:
