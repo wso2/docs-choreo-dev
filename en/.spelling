@@ -693,6 +693,10 @@ develop-a-grpc-service
 develop-a-ballerina-rest-api
 configure-mutual-tls-between-components
 service-to-service-mtls
+headerName
+fooValue
+authzHeaderValue
+myResourcePath
 develop-a-ballerina-graphql-api
 faq.md
 Moesif.md
