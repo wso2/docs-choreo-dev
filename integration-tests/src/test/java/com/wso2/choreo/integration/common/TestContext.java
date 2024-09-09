@@ -106,6 +106,11 @@ public class TestContext {
 
     public static synchronized void setSelfSignupTestAdminUserTokenHandler() {
         if (selfSignupTestAdminUserTokenHandler == null) {
+            if (!StringUtils.isEmpty(System.getProperty("Token"))) {
+                log.warn("Test user token is provided. Self signup tests cannot be executed.");
+                return;
+            }
+
             selfSignupTestAdminUserTokenHandler = new TokenHandler.Builder(
                     Configuration.getConfig(ConfigDefinition.SELF_SIGNUP_ORG_HANDLE),
                     Configuration.getConfig(ConfigDefinition.SELF_SIGNUP_ORG_ADMIN_EMAIL),

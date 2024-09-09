@@ -18,6 +18,8 @@ import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.SecurityConfigDefinition;
 import lombok.Getter;
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeSuite;
 
 /**
@@ -26,6 +28,8 @@ import org.testng.annotations.BeforeSuite;
  * for running the security tests.
  */
 public class SecurityTestContext {
+    private static final Logger log = LogManager.getLogger(SecurityTestContext.class);
+
     @Getter
     private static TokenHandler testUserTokenHandlerForSecurityTests;
 
@@ -44,6 +48,11 @@ public class SecurityTestContext {
         }
 
         if (testUserTokenHandlerForSecurityTests == null) {
+            if (!StringUtils.isEmpty(System.getProperty("Token"))) {
+                log.warn("Test user token is provided. Security tests cannot be executed.");
+                return;
+            }
+
             testUserTokenHandlerForSecurityTests = new TokenHandler.Builder(
                     Configuration.getSecurityConfig(SecurityConfigDefinition.SECURITY_TEST_CHOREO_ORG_HANDLE),
                     Configuration.getSecurityConfig(SecurityConfigDefinition.LOW_PRIVILEGED_USER_EMAIL),
