@@ -25,7 +25,9 @@ describe("Self signup when auto approval disabled and user rejected scenario", (
   });
 
   it("Switch to self signup enabled org", () => {
-    console.switchtOrg("choreoselfsignup");
+    console.switchtOrg("choreoselfsignup").then(() => {
+      console.removePendingDevportalSelfSignupRequests();
+    });
   });
 
   it("Disable Dev portal self signup config", () => {
