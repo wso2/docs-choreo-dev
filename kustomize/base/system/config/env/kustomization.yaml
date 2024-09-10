@@ -414,16 +414,16 @@ configMapGenerator:
       - ENABLE_ASYNC_OPERATIONS={{.ENABLE_ASYNC_OPERATIONS}}
       - ASYNC_REPO_CREATION_RETRY_CONFIG="eyJpbml0aWFsRGVsYXkiOiAyLCJwcm9ncmVzc2lvbkZhY3RvciI6IDIuMCwibWF4RGVsYXkiOiAxODAwLCJjb3VudCI6IDIwfQo="
       - MI_BUILDPACKS_ENABLED_TEST_ORGS={{.MI_BUILDPACKS_ENABLED_TEST_ORGS}}
-      - BD_CMV={{.BD_CMV | default "v1.1.30"}}
-      - BD_CM_FP={{.BD_CM_FP | default ".github/workflows/choreo-build-deploy_cm_1.1.30.yml"}}
-      - BD_BYORV={{.BD_BYORV | default "v1.1.34"}}
-      - BD_BYOR_FP={{.BD_BYOR_FP | default ".github/workflows/choreo-build-deploy_byor_1.1.34.yml"}}
-      - BD_BYOCV={{.BD_BYOCV | default "v1.0.24"}}
-      - BD_BYOC_FP={{.BD_BYOC_FP | default ".github/workflows/choreo-build-deploy_byoc_1.0.24.yml"}}
-      - BD_MIV={{.BD_MIV | default "v1.0.19"}}
-      - BD_MI_FP={{.BD_MI_FP | default ".github/workflows/choreo-build-deploy_mi_1.0.19.yml"}}
-      - BD_BPV={{.BD_BPV | default "v0.12.9"}}
-      - BD_BP_FP={{.BD_BP_FP | default ".github/workflows/choreo-build-deploy_buildpack_0.12.9.yml"}}
+      - BD_CMV={{.BD_CMV | default "v1.1.31"}}
+      - BD_CM_FP={{.BD_CM_FP | default ".github/workflows/choreo-build-deploy_cm_1.1.31.yml"}}
+      - BD_BYORV={{.BD_BYORV | default "v1.1.35"}}
+      - BD_BYOR_FP={{.BD_BYOR_FP | default ".github/workflows/choreo-build-deploy_byor_1.1.35.yml"}}
+      - BD_BYOCV={{.BD_BYOCV | default "v1.0.25"}}
+      - BD_BYOC_FP={{.BD_BYOC_FP | default ".github/workflows/choreo-build-deploy_byoc_1.0.25.yml"}}
+      - BD_MIV={{.BD_MIV | default "v1.0.20"}}
+      - BD_MI_FP={{.BD_MI_FP | default ".github/workflows/choreo-build-deploy_mi_1.0.20.yml"}}
+      - BD_BPV={{.BD_BPV | default "v0.12.10"}}
+      - BD_BP_FP={{.BD_BP_FP | default ".github/workflows/choreo-build-deploy_buildpack_0.12.10.yml"}}
       - MEDIATION_WF_CODE_GENV={{.MEDIATION_WF_CODE_GENV | default "v1.2.11"}}
       - MEDIATION_WF_CODEGEN_FP={{.MEDIATION_WF_CODEGEN_FP | default ".github/workflows/mediation-code-generator_1.2.11.yml"}}
       - DISABLE_BALLERINA_CONFIG_GENERATION_WORFLOW={{.DISABLE_BALLERINA_CONFIG_GENERATION_WORFLOW}}
