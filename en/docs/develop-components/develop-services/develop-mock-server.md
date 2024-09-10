@@ -1,8 +1,8 @@
 # Build and Deploy a Mock Server
 
-Choreo supports deploying [Prism-based](https://docs.stoplight.io/docs/prism/674b27b261c3c-prism-overview) mock servers using OpenAPI specifications. With the Choreo Prism Mock Service component, you can serve multiple mock servers from different OpenAPI specifications as separate endpoints.
+Choreo supports deploying [Prism-based](https://docs.stoplight.io/docs/prism/674b27b261c3c-prism-overview) mock servers using OpenAPI specifications. With the Choreo Prism mock service component, you can serve multiple mock servers, each based on a different OpenAPI specification, as separate endpoints.
 
-Mock servers are configured to serve static content by default based on the examples provided in the configured OpenAPI Specification (OAS). 
+By default, these mock servers serve static content generated from the examples in the configured OpenAPI Specification (OAS). 
 
 ## Prerequisites
 
@@ -17,48 +17,67 @@ Before you try out this guide, complete the following:
 
     This creates the organization and opens the **Project Home** page of the default project created for you.
 
-- Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples/), which contains the [prism mock service](https://github.com/wso2/choreo-samples/tree/main/prism-mock-service) artifacts.
+- Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples/), which contains the [Prism mock service](https://github.com/wso2/choreo-samples/tree/main/prism-mock-service) artifacts for this guide.
 
-## Step 1: Create a prism mock service component
+## Step 1: Create a Prism mock service component
 
-To create a prism mock service component, follow these steps:
+To create a Prism mock service component, follow these steps:
     
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in.
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
+2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
+3. Click the **Service** card.
+4. Enter a display name, a unique name, and a description for the service component.
+    
+    !!! info
+         In the **Component Name** field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.
+    
+5. Click the **GitHub** tab.
+6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
-2. Create your organization and a project if you haven't already.
+    Alternatively, you can paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
 
-3. Open an existing project or create a new project.
+    !!! note
+           The **Choreo GitHub App** requires the following permissions:
 
-4. Click **+ Create** and select **Service** and choose **Prism Mock** buildpack.
+           - Read and write access to code and pull requests.
+           - Read access to issues and metadata.
+             
+           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
-5. Provide a name and description for the component.
+7. Under **Connect Your Repository**, enter the following information:
 
-6. Use `https://github.com/wso2/choreo-samples` as the repository URL, and select the branch as `main`.
+    | **Field**               | **Value**               |
+    |-------------------------|-------------------------|
+    | **Organization**        | Your GitHub account     |
+    | **GitHub Repository**   | **`choreo-samples`**    |
+    | **Branch**              | **`main`**              |
 
-7. Select `prism-mock-service` as the project path.
-
-8. Click **Create**.
+8. Select **Prism Mock** as the buildpack.
+9. Select `prism-mock-service` as the **Project Directory**.
+10. Click **Create**. This creates the component and takes you to the **Overview** page of the component.
 
 ## Step 2: Build and deploy the component
 
-Now that you have connected the source repository, it's time to build and deploy the prism mock service.
+Now that you have successfully created the Prism mock service, it's time to build and deploy it.
 
 ### Step 2.1: Build
 
 To build the service, follow these steps:
 
-1. Navigate to **Build** page of the component.
-2. Click **Build Latest** to build the service from the latest commit.
+1. In the left navigation menu, click **Build**.
+2. On the **Build** page, click **Build Latest**. This builds the service from the latest commit.
 
     !!! note
         Building the service component may take a while. You can track the progress via the logs in the **Build Details** pane. Once the build process is complete, the build status changes to **Success**.
 
 ### Step 2.2: Deploy
 
-To deploy the service, follow these steps:
+To deploy the service, follow these steps: 
 
-1. Navigate to the **Deploy** page of the component.
-2. On the **Set Up** card, click **Configure & Deploy**.
+1. In the left navigation menu, click **Deploy**.
+2. On the **Set Up** card, click **Configure &  Deploy**.
+3. In the **Environment Configurations** pane that opens, click **Next** to skip the configuration.
+4. In the **File Mount** pane, click **Next** to skip the configuration.
 5. Review the **Endpoint Details** and click **Deploy**.
 
     !!! note
@@ -66,8 +85,8 @@ To deploy the service, follow these steps:
 
 Once you have successfully deployed the service, you can [test](../../testing/test-rest-endpoints-via-the-openapi-console.md), [manage](../../api-management/lifecycle-management.md), and [observe](../../monitoring-and-insights/observability-overview.md) it like any other component type in Choreo.
 
-## Serving dynamic contents
+## Serve dynamic content
 
-The prism mock service is capable of serving dynamic contents when the OpenAPI specification contains `x-faker` attribute to the properties. To use the prism mock service with dynamic contents, the clients should add `prefer:dynamic=true` in the request headers.
+The Prism mock service is capable of serving dynamic content if the OpenAPI specification includes the `x-faker` attribute for properties. To use the Prism mock service with dynamic content, clients must add the `prefer:dynamic=true` header in the request.
 
-Refer to the [prism documentation](https://docs.stoplight.io/docs/prism/9528b5a8272c0-dynamic-response-generation-with-faker) for more information.
+For more information on dynamically generated responses with the `x-faker` attribute, see the [Prism documentation](https://docs.stoplight.io/docs/prism/9528b5a8272c0-dynamic-response-generation-with-faker).
