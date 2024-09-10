@@ -47,7 +47,9 @@ class Login {
     this.persistAccessToken();
 
     cy.get(TestIds.backdropLoader, { timeout: loadingTime as number }).should("not.exist");
-    cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible");
+    cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible").then(() => {
+      this.persistLogoutURL();
+    });
     this.handleTermsOfUse();
   }
 
@@ -62,7 +64,9 @@ class Login {
     this.persistOrgs(handle);
     this.persistAccessToken();
     cy.get(TestIds.backdropLoader).should("not.exist");
-    cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible");
+    cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible").then(() => {
+      this.persistLogoutURL();
+    });
     this.handleTermsOfUse();
   }
 
@@ -94,6 +98,10 @@ class Login {
     cy.get("#sign-in-button").click();
     this.persistPerfOrgs();
     this.persistAccessToken();
+    cy.get(TestIds.backdropLoader).should("not.exist");
+    cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible").then(() => {
+      this.persistLogoutURL();
+    });
     this.selectRegion();
     this.handleTermsOfUse();
     cy.wait(25000);
@@ -314,7 +322,6 @@ class Login {
     cy.wait("@gql", MEDIUM_TIME).then((intercept) => {
       const header = intercept.request.headers["authorization"] as string;
       this.accessToken = header.replace("Bearer", "").trim();
-      this.persistLogoutURL();
     });
   }
 
