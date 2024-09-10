@@ -110,10 +110,14 @@ public class TestCreateIntegrationEventComponent extends TestNGCitrusSpringSuppo
     @Test(dependsOnMethods = {"createComponent_TestCreateIntegrationEventComponent"})
     @CitrusTest
     public void componentRetrieval_TestCreateIntegrationEventComponent() throws Exception {
-
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
         testComponent = GraphQL.retrieveComponent(this, choreoProjectsTestClient, accessToken,
                 graphqlDTO);
+        GraphqlDTO dto = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
+        dto.setComponentId(testComponent.getId());
+        dto.setLatestVersionId(testComponent.getLatestApiVersion().getId());
+        String runId = GraphQL.getRunId(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, dto);
+        Component.waitForComponentBuildDeployComplete(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, projectId, testComponent.getId(), runId, 50);
     }
 
     @Test(dependsOnMethods = {"componentRetrieval_TestCreateIntegrationEventComponent"})

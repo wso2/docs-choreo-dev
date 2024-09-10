@@ -219,7 +219,7 @@ public class Component extends ControlPlaneAPI {
         AtomicReference<String> conclusion = new AtomicReference<>("");
         AtomicReference<String> status = new AtomicReference<>("");
         runner.$(repeat()
-                .until("(i = 10) or ( ${isComponentBuildCompleted} = true )")
+                .until("(i = 20) or ( ${isComponentBuildCompleted} = true )")
                 .index("i")
                 .actions(
                         http()
