@@ -961,7 +961,7 @@ public class GraphQL extends ControlPlaneAPI {
         runner.$(repeatOnError()
                 .until("i = 20")
                 .index("i")
-                .autoSleep(40000)
+                .autoSleep(20000)
                 .actions(
                         http()
                                 .client(client)
@@ -1014,6 +1014,50 @@ public class GraphQL extends ControlPlaneAPI {
         return runIdRef.get();
     }
 
+    public static JsonArray getImageListWithRetry(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+                                         GraphqlDTO graphqlDTO, int retryIntervalSecs) throws IOException {
+        String requestQuery = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/images.mustache", graphqlDTO);
+        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(requestQuery);
+        final AtomicReference<JsonArray> runIdRef = new AtomicReference<>();
+        runner.variable("isImageListReceived", false);
+
+        runner.$(repeat()
+                .until("(i = 10) or ( ${isImageListReceived} = true )")
+                .index("i")
+                .actions(
+                        http()
+                        .client(client)
+                        .send()
+                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(requestBody)
+                        .accept(MediaType.APPLICATION_JSON_VALUE),
+                        http()
+                        .client(client)
+                        .receive()
+                        .response(HttpStatus.OK)
+                        .message()
+                        .type(MessageType.JSON)
+                        .validate((message, context) -> {
+                            JsonArray runId = new JsonParser().parse((String) message.getPayload())
+                                    .getAsJsonObject()
+                                    .getAsJsonObject("data").getAsJsonArray("deploymentTrackImages");
+                            if (!runId.isEmpty()) {
+                                context.setVariable("isImageListReceived", true);
+                                runIdRef.set(runId);
+                            }
+                            SleepUtil.sleep(retryIntervalSecs);
+                        })));
+
+        if (runIdRef.get().isEmpty()) {
+            throw new RuntimeException("Image ID list is empty.");
+        } else {
+            return runIdRef.get();
+        }
+    }
+
 
     public static void deployBuiltComponent(TestActionRunner runner, HttpClient client, String accessToken,
                                             GraphqlDTO graphqlDTO) throws IOException {
@@ -1025,7 +1069,7 @@ public class GraphQL extends ControlPlaneAPI {
         runner.$(repeatOnError()
                 .until("i = 20")
                 .index("i")
-                .autoSleep(40000)
+                .autoSleep(20000)
                 .actions(
                         http()
                                 .client(client)
@@ -1089,7 +1133,7 @@ public class GraphQL extends ControlPlaneAPI {
                                     int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
 
                                     if (code != HttpStatus.OK.value()) {
-                                        if (10 < successiveFailureCount.incrementAndGet()) {
+                                        if (8 < successiveFailureCount.incrementAndGet()) {
                                             throw new ValidationException("Too many successive calls with response code != 200");
                                         }
                                     } else {
@@ -1252,7 +1296,7 @@ public class GraphQL extends ControlPlaneAPI {
                                         if (8 < successiveFailureCount.incrementAndGet()) {
                                             throw new ValidationException("Too many successive calls with response code != 200");
                                         } else {
-                                            SleepUtil.sleep(40);
+                                            SleepUtil.sleep(30);
                                         }
                                     } else {
                                         successiveFailureCount.set(0);
@@ -1845,7 +1889,7 @@ public class GraphQL extends ControlPlaneAPI {
         runner.$(repeatOnError()
                 .until("i = 5")
                 .index("i")
-                .autoSleep(40000)
+                .autoSleep(20000)
                 .actions(
                         http()
                                 .client(client)

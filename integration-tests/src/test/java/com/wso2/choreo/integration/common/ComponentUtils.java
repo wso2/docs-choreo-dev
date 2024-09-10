@@ -570,7 +570,12 @@ public class ComponentUtils {
                 .orgUuid(org.getOrgUUID()).versionId(latestVersionId).environmentId(devEnvIdToDeploy).build();
 
         GraphqlDTO imageDTO = GraphqlDTO.builder().componentId(componentId).versionId(latestVersionId).build();
-        JsonArray images = GraphQL.getImageList(runner, appServiceClient, accessToken, imageDTO);
+        JsonArray images = GraphQL.getImageListWithRetry(runner, appServiceClient, accessToken, imageDTO, 30);
+
+        if (images.isEmpty()) {
+            throw new RuntimeException("Images not found for version ID : " + latestVersionId +
+                    " in component ID : " + componentId);
+        }
 
         GraphqlDTO graphqlDeployDTO = GraphqlDTO.builder().componentId(componentId).versionId(latestVersionId)
                 .imageId(images.get(0).getAsJsonObject().get("imageId").getAsString()).environmentId(devEnvIdToDeploy)
