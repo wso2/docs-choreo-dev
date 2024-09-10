@@ -361,6 +361,7 @@ configMapGenerator:
       - KEDA_HTTP_ADD_ON_MIGRATION_ENABLED={{.KEDA_HTTP_ADD_ON_MIGRATION_ENABLED | default "false"}}
       - APIM_USER_FOR_OAUTH_APP_CREATION={{.APIM_USER_FOR_OAUTH_APP_CREATION | default ""}}
       - EU_DATA_PLANE_ID={{.EU_DATA_PLANE_ID | default ""}}
+      - CILIUM_EGRESS_POLICY_ENABLED={{.CILIUM_EGRESS_POLICY_ENABLED | default "false"}}
   - name: env-dp-helmhub
     behavior: create
     literals:
