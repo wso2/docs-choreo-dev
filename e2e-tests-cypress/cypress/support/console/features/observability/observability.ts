@@ -74,7 +74,7 @@ export class _Observability {
     cy.get(TestIds.observabilityLogPanelEntry, { timeout: 180000 })
       .should("be.visible")
       .each((logElement) => {
-        const log = logElement.text();
+        const log = logElement.text().replace(/\xa0/g, ' ');
         cyLog(log);
 
         if (log.includes(text)) {
