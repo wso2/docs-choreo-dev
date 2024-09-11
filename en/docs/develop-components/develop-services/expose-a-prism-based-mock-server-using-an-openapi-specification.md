@@ -87,6 +87,6 @@ Once you have successfully deployed the service, you can [test](../../testing/te
 
 ## Serve dynamic content
 
-The Prism mock service is capable of serving dynamic content according to the schema definitions in the OpenAPI specification. To use the Prism mock service with dynamic content, clients must add the `prefer:dynamic=true` header in the request.
+The Prism mock service can serve dynamic content according to the schema definitions in the OpenAPI specification. To use the Prism mock service with dynamic content, clients must add the `prefer:dynamic=true` header in the request.
 
 To generate meaningful dynamic responses, you can use the `x-faker` attribute in schema definitions of the OpenAPI specification. For more information on dynamically generated responses with the `x-faker` attribute, see the [Prism documentation](https://docs.stoplight.io/docs/prism/9528b5a8272c0-dynamic-response-generation-with-faker).
