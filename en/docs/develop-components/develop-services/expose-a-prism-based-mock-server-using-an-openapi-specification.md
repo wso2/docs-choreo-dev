@@ -1,4 +1,4 @@
-# Build and Deploy a Mock Server
+# Expose a Prism-Based Mock Server Using an OpenAPI Specification
 
 Choreo supports deploying [Prism-based](https://docs.stoplight.io/docs/prism/674b27b261c3c-prism-overview) mock servers using OpenAPI specifications. With the Choreo Prism mock service component, you can serve multiple mock servers, each based on a different OpenAPI specification, as separate endpoints.
 
@@ -87,6 +87,6 @@ Once you have successfully deployed the service, you can [test](../../testing/te
 
 ## Serve dynamic content
 
-The Prism mock service is capable of serving dynamic content if the OpenAPI specification includes the `x-faker` attribute for properties. To use the Prism mock service with dynamic content, clients must add the `prefer:dynamic=true` header in the request.
+The Prism mock service is capable of serving dynamic content according to the schema definitions in the OpenAPI specification. To use the Prism mock service with dynamic content, clients must add the `prefer:dynamic=true` header in the request.
 
-For more information on dynamically generated responses with the `x-faker` attribute, see the [Prism documentation](https://docs.stoplight.io/docs/prism/9528b5a8272c0-dynamic-response-generation-with-faker).
+To generate meaningful dynamic responses, you can use the `x-faker` attribute in schema definitions of the OpenAPI specification. For more information on dynamically generated responses with the `x-faker` attribute, see the [Prism documentation](https://docs.stoplight.io/docs/prism/9528b5a8272c0-dynamic-response-generation-with-faker).
