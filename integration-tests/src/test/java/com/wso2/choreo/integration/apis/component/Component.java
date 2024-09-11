@@ -211,63 +211,6 @@ public class Component extends ControlPlaneAPI {
 
     }
 
-    public static String waitForComponentBuildSuccess(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
-                                                    String projectId,
-                                                    String componentId, String runId, String name) {
-        runner.variable("isComponentBuildCompleted", false);
-        AtomicReference<JsonArray> steps = new AtomicReference<>(new JsonArray());
-        AtomicReference<String> conclusion = new AtomicReference<>("");
-        AtomicReference<String> status = new AtomicReference<>("");
-        runner.$(repeat()
-                .until("(i = 20) or ( ${isComponentBuildCompleted} = true )")
-                .index("i")
-                .actions(
-                        http()
-                                .client(client)
-                                .send()
-                                .get(CONTEXT.concat("/orgs/")
-                                        .concat(ORG_HANDLE)
-                                        .concat("/projects/")
-                                        .concat(projectId)
-                                        .concat("/components/")
-                                        .concat(componentId)
-                                        .concat("/runs/")
-                                        .concat(runId)
-                                        .concat("/logs"))
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
-                        http().client(client)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .validate((message, context) -> {
-                                    String payload = message.getPayload(String.class);
-                                    JsonObject dataJsonObject = new JsonParser().parse(payload).getAsJsonObject()
-                                            .getAsJsonObject("data");
-                                    steps.set(dataJsonObject.getAsJsonObject("build").getAsJsonArray("steps"));
-                                    for (JsonElement element : steps.get()) {
-                                        JsonObject jsonObject = element.getAsJsonObject();
-                                        String stepName = jsonObject.get("name").getAsString();
-                                        if (name.equalsIgnoreCase(stepName)) {
-                                            status.set(jsonObject.get("status").getAsString());
-                                            if ("completed".equals(status.get())) {
-                                                if (!jsonObject.get("conclusion").isJsonNull()) {
-                                                    context.setVariable("isComponentBuildCompleted", true);
-                                                    conclusion.set(jsonObject.get("conclusion").getAsString());
-                                                }
-                                            }
-                                        }
-                                    }
-                                    SleepUtil.sleep(30);
-                                })));
-        if (!"completed".equals(status.get())) {
-            throw new RuntimeException("Component build not completed.");
-        } else {
-            return conclusion.get();
-        }
-    }
-
     public static String waitForComponentBuildDeployComplete(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
                                                       String projectId,
                                                       String componentId, String runId, int sleepInterval) {
@@ -307,6 +250,7 @@ public class Component extends ControlPlaneAPI {
                                             context.setVariable("isComponentBuildDeployCompleted", true);
                                         }
                                     }
+                                    // Wait after build is successful to give some time for deployment
                                     SleepUtil.sleep(sleepInterval);
                                 })));
         if (!"completed".equals(deployStatus.get())) {
