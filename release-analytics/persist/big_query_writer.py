@@ -10,9 +10,10 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
 """
-
-#!/usr/bin/python3
-
+import base64
+import binascii
+import json
+import os
 import sys
 from google.cloud import bigquery
 from google.oauth2 import service_account
@@ -23,7 +24,13 @@ class BigQueryWriter:
     project = ConfigReader().get_config(ConfigGroup.BIGQUERY, "project")
     dataset = ConfigReader().get_config(ConfigGroup.BIGQUERY, "dataset")
 
-    def __init__(self, account_info):
+    def __init__(self):
+        try:
+            account_info = json.loads(base64.b64decode(os.environ['GCLOUD_ACCOUNT_INFO']).decode("utf-8"))
+        except binascii.Error:
+            print("Error when decoding GCloud credentials")
+            sys.exit(1)
+
         credentials = service_account.Credentials.from_service_account_info(account_info, scopes=BigQueryWriter.scopes)
         self.client = bigquery.Client(project=BigQueryWriter.project, credentials=credentials)
         
@@ -31,6 +38,15 @@ class BigQueryWriter:
     def insert_integration_test_data(self, rows):
         table = f"{BigQueryWriter.project}.{BigQueryWriter.dataset}.INTEGRATION_TEST_RESULT"
         
+        self._insert_data(table, rows)
+
+
+    def insert_release_promotion_data(self, rows):
+        table = f"{BigQueryWriter.project}.{BigQueryWriter.dataset}.RELEASE_PROMOTION"
+
+        self._insert_data(table, rows)
+
+    def _insert_data(self, table, rows):
         if len(rows) == 0:
             print(f"No rows present to insert into {table}")
             sys.exit(1)
@@ -42,4 +58,3 @@ class BigQueryWriter:
             print("Errors occurred while inserting rows: {}".format(errors))
         else:
             print("Rows inserted successfully.")
-

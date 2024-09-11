@@ -361,7 +361,7 @@ configMapGenerator:
       - KEDA_HTTP_ADD_ON_MIGRATION_ENABLED={{.KEDA_HTTP_ADD_ON_MIGRATION_ENABLED | default "false"}}
       - APIM_USER_FOR_OAUTH_APP_CREATION={{.APIM_USER_FOR_OAUTH_APP_CREATION | default ""}}
       - EU_DATA_PLANE_ID={{.EU_DATA_PLANE_ID | default ""}}
-      - LOG_DELETED_REDIS_KEYS_FROM_EU={{.LOG_DELETED_REDIS_KEYS_FROM_EU | default "false"}}
+      - CILIUM_EGRESS_POLICY_ENABLED={{.CILIUM_EGRESS_POLICY_ENABLED | default "false"}}
   - name: env-dp-helmhub
     behavior: create
     literals:
@@ -415,16 +415,16 @@ configMapGenerator:
       - ENABLE_ASYNC_OPERATIONS={{.ENABLE_ASYNC_OPERATIONS}}
       - ASYNC_REPO_CREATION_RETRY_CONFIG="eyJpbml0aWFsRGVsYXkiOiAyLCJwcm9ncmVzc2lvbkZhY3RvciI6IDIuMCwibWF4RGVsYXkiOiAxODAwLCJjb3VudCI6IDIwfQo="
       - MI_BUILDPACKS_ENABLED_TEST_ORGS={{.MI_BUILDPACKS_ENABLED_TEST_ORGS}}
-      - BD_CMV={{.BD_CMV | default "v1.1.30"}}
-      - BD_CM_FP={{.BD_CM_FP | default ".github/workflows/choreo-build-deploy_cm_1.1.30.yml"}}
-      - BD_BYORV={{.BD_BYORV | default "v1.1.34"}}
-      - BD_BYOR_FP={{.BD_BYOR_FP | default ".github/workflows/choreo-build-deploy_byor_1.1.34.yml"}}
-      - BD_BYOCV={{.BD_BYOCV | default "v1.0.24"}}
-      - BD_BYOC_FP={{.BD_BYOC_FP | default ".github/workflows/choreo-build-deploy_byoc_1.0.24.yml"}}
-      - BD_MIV={{.BD_MIV | default "v1.0.19"}}
-      - BD_MI_FP={{.BD_MI_FP | default ".github/workflows/choreo-build-deploy_mi_1.0.19.yml"}}
-      - BD_BPV={{.BD_BPV | default "v0.12.9"}}
-      - BD_BP_FP={{.BD_BP_FP | default ".github/workflows/choreo-build-deploy_buildpack_0.12.9.yml"}}
+      - BD_CMV={{.BD_CMV | default "v1.1.31"}}
+      - BD_CM_FP={{.BD_CM_FP | default ".github/workflows/choreo-build-deploy_cm_1.1.31.yml"}}
+      - BD_BYORV={{.BD_BYORV | default "v1.1.35"}}
+      - BD_BYOR_FP={{.BD_BYOR_FP | default ".github/workflows/choreo-build-deploy_byor_1.1.35.yml"}}
+      - BD_BYOCV={{.BD_BYOCV | default "v1.0.25"}}
+      - BD_BYOC_FP={{.BD_BYOC_FP | default ".github/workflows/choreo-build-deploy_byoc_1.0.25.yml"}}
+      - BD_MIV={{.BD_MIV | default "v1.0.20"}}
+      - BD_MI_FP={{.BD_MI_FP | default ".github/workflows/choreo-build-deploy_mi_1.0.20.yml"}}
+      - BD_BPV={{.BD_BPV | default "v0.12.10"}}
+      - BD_BP_FP={{.BD_BP_FP | default ".github/workflows/choreo-build-deploy_buildpack_0.12.10.yml"}}
       - MEDIATION_WF_CODE_GENV={{.MEDIATION_WF_CODE_GENV | default "v1.2.11"}}
       - MEDIATION_WF_CODEGEN_FP={{.MEDIATION_WF_CODEGEN_FP | default ".github/workflows/mediation-code-generator_1.2.11.yml"}}
       - DISABLE_BALLERINA_CONFIG_GENERATION_WORFLOW={{.DISABLE_BALLERINA_CONFIG_GENERATION_WORFLOW}}
@@ -474,6 +474,7 @@ configMapGenerator:
       - REACT_APP_API_BASE_URL={{.REACT_APP_API_BASE_URL}}
       - REACT_APP_PROJECT_API_BASE_URL={{.REACT_APP_PROJECT_API_BASE_URL}}
       - REACT_APP_DECLARATIVE_API_BASE_URL={{.REACT_APP_DECLARATIVE_API_BASE_URL}}
+      - REACT_APP_WORKFLOW_MGT_API_URL={{.REACT_APP_WORKFLOW_MGT_API_URL | default ""}}
       - REACT_APP_DEVOPS_API_BASE_URL={{.REACT_APP_DEVOPS_API_BASE_URL}}
       - REACT_APP_CHOREO_APP_SERVICE_BASE_URL={{.REACT_APP_CHOREO_APP_SERVICE_BASE_URL}}
       - REACT_APP_CIO_DASHBOARD_QUERY_API_URL={{.REACT_APP_CIO_DASHBOARD_QUERY_API_URL}}
@@ -747,6 +748,7 @@ configMapGenerator:
       - REACT_APP_ENABLE_MANAGED_AUTH_LOCAL_DEV={{.REACT_APP_ENABLE_MANAGED_AUTH_LOCAL_DEV}}
       - REACT_APP_ENABLE_CHOREO_AUTHORIZATION={{.REACT_APP_ENABLE_CHOREO_AUTHORIZATION | default "false"}}
       - REACT_APP_ENABLE_CHOREO_AUTHORIZATION_DATE={{.REACT_APP_ENABLE_CHOREO_AUTHORIZATION_DATE | default "2024-04-30"}}
+      - REACT_APP_CHOREO_CONSOLE_TEST_HEADER={{.REACT_APP_CHOREO_CONSOLE_TEST_HEADER | default "api-key"}}
       - REACT_APP_ENABLE_CHOREO_PROJECT_AUTHORIZATION={{.REACT_APP_ENABLE_CHOREO_PROJECT_AUTHORIZATION | default "false"}}
       - REACT_APP_ENABLE_MEDIATION_FORCE_BUILD_FEATURE={{.REACT_APP_ENABLE_MEDIATION_FORCE_BUILD_FEATURE | default "false"}}
       - REACT_APP_MEDIATION_FORCE_BUILD_ENABLED_ORGANIZATIONS={{.REACT_APP_MEDIATION_FORCE_BUILD_ENABLED_ORGANIZATIONS | default "f34fc011-38a6-4663-9fa1-9a243006c538"}}
@@ -754,6 +756,7 @@ configMapGenerator:
       - REACT_APP_ENABLE_MARKETPLACE_INT_ROUTING_FEATURE={{.REACT_APP_ENABLE_MARKETPLACE_INT_ROUTING_FEATURE | default "false"}}
       - REACT_APP_FEATURE_FLAG_MAINTENANCE_CUSTOM_MESSAGE={{.REACT_APP_FEATURE_FLAG_MAINTENANCE_CUSTOM_MESSAGE | default ""}}
       - REACT_APP_ENABLE_DEFAULT_ENDPOINT_URL_FEATURE={{.REACT_APP_ENABLE_DEFAULT_ENDPOINT_URL_FEATURE | default "false"}}
+      - REACT_APP_ENABLE_APPROVAL_WORKFLOW_FEATURE={{.REACT_APP_ENABLE_APPROVAL_WORKFLOW_FEATURE | default "false"}}
       - REACT_APP_AI_COPILOT_URL_SUFFIX={{.REACT_APP_AI_COPILOT_URL_SUFFIX | default "/systemapis/aicopilot/v1.0/copilot"}}
       - REACT_APP_AI_COPILOT_BLOG_URL={{.REACT_APP_AI_COPILOT_BLOG_URL | default "https://wso2.com/library/blogs/introducing-choreo-copilot/"}}
       - REACT_APP_ENABLE_COMPONENT_NAME_FLOW_CONSOLE={{.REACT_APP_ENABLE_COMPONENT_NAME_FLOW_CONSOLE | default "false"}}
@@ -769,6 +772,9 @@ configMapGenerator:
       - REACT_APP_ENABLE_ASYNC_EVENT_HANDLER_TEST_RUNNER_CREATION={{.REACT_APP_ENABLE_ASYNC_EVENT_HANDLER_TEST_RUNNER_CREATION | default "false"}}
       - REACT_APP_CHOREO_RESOURCE_AUTHZ_DOC_URL={{.REACT_APP_CHOREO_RESOURCE_AUTHZ_DOC_URL | default "https://wso2.com/choreo/docs/administer/control-access-in-the-choreo-console/"}}
       - REACT_APP_DOWNLOAD_LOGS_PAGE_SIZE={{.REACT_APP_DOWNLOAD_LOGS_PAGE_SIZE | default "5000"}}
+      - REACT_APP_APPROVAL_ORGS={{.REACT_APP_APPROVAL_ORGS | default ""}}
+      - REACT_APP_SUBSCRIPTION_APPROVAL_ORGS={{.REACT_APP_SUBSCRIPTION_APPROVAL_ORGS | default ""}}
+      - REACT_APP_ENABLE_DT_DELETE_CONSOLE={{.REACT_APP_ENABLE_DT_DELETE_CONSOLE | default "false"}}
   - name: env-dp-mizzen
     behavior: create
     literals:
@@ -790,6 +796,7 @@ configMapGenerator:
       - DEFAULT_REGION={{.DEFAULT_REGION}}
       - AVAILABLE_REGIONS={{.AVAILABLE_REGIONS}}
       - PROJECT_ENV_INIT_ENABLED={{.PROJECT_ENV_INIT_ENABLED}}
+      - REPO_VISIBILITY_ENABLED={{.REPO_VISIBILITY_ENABLED | default "false"}}
       - COMPONENT_RESTRICTION_FEATURE_ENABLED={{.COMPONENT_RESTRICTION_FEATURE_ENABLED}}
       - APIM_URL={{.APIM_URL}}
       - APIM_CLIENT_ID={{.APIM_CLIENT_ID}}
@@ -944,6 +951,7 @@ configMapGenerator:
       - INFRA_COST_PUBLISHING_ENABLE={{.INFRA_COST_PUBLISHING_ENABLE}}
       - INFRA_COST_REPORT_SENDING_ENABLE={{.INFRA_COST_REPORT_SENDING_ENABLE}}
       - IS_FEATURE_ENABLED={{.IS_FEATURE_ENABLED}}
+      - CHARGING_COMPONENTS_WITH_PRIVATE_REPOS_ENABLED={{.CHARGING_COMPONENTS_WITH_PRIVATE_REPOS_ENABLED | default "false"}}
       - PRORATA_MODEL_ENABLED={{.PRORATA_MODEL_ENABLED}}
       - PLATFORM_SVC_COST_PUBLISHING_ENABLE={{.PLATFORM_SVC_COST_PUBLISHING_ENABLE | default "false"}}
       - AWS_MARKETPLACE_CLIENT_URL="http://choreo-aws-marketplace-client:8080"

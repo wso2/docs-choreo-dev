@@ -13,6 +13,7 @@
 
 import { ProxyInfo } from "../../entities/project/project";
 import { TestIds } from "../../constants/TestIds";
+import { SHORT_TIME } from "../../../commons/timeouts";
 
 export class _ProxyCreationWizard {
   createFromOASUrl(url: string) {
@@ -66,6 +67,7 @@ export class _ProxyCreationWizard {
     cy.get(TestIds.createButton).should("be.enabled").click();
 
     cy.get(TestIds.backdropLoader).should("not.exist");
+    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
 
     if (endpointUrl !== undefined) {
       return endpointUrl;

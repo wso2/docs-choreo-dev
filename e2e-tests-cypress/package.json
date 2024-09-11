@@ -10,7 +10,6 @@
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.12.44",
-    "@neuralegion/cypress-har-generator": "^5.16.4",
     "cypress": "^13.8.0",
     "cypress-fail-fast": "^7.0.0"
   },
@@ -22,7 +21,9 @@
     "test": "npm run devportal-e2etest:headless || npm run console-e2etest:headless || npm run posttest",
     "local": "npm run e2etest:headless || npm run posttest",
     "e2etest:pdp": "npx cypress run -C cypress.pdp.json ",
-    "cy:coverage": "nyc report --reporter=text-summary --reporter=lcov"
+    "cy:coverage": "nyc report --reporter=text-summary --reporter=lcov",
+    "cy:run": "cypress run",
+    "parallel": "cypress-parallel -s cy:run -t 4 -d 'cypress/e2e-stable/console/**/*'"
   },
   "author": "",
   "license": "ISC"

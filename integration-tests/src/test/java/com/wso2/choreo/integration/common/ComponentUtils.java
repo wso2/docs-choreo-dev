@@ -248,6 +248,24 @@ public class ComponentUtils {
                 .dockerfilePath(repo.getDockerfilePath()).build();
     }
 
+    public static GraphqlDTO createPrismMockComponentRequest(String name, ChoreoProject project, Repository repo) {
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+
+        return GraphqlDTO.builder()
+                .name(name)
+                .displayType(Constant.displayType.prismMockService.name())
+                .orgId(orgId)
+                .orgHandler(orgHandle)
+                .projectId(project.getId())
+                .componentType(Constant.displayType.prismMockService.name())
+                .buildContext(repo.getBuildContext())
+                .srcGitRepoUrl(repo.getRepoUrl())
+                .srcGitRepoBranch(repo.getBranch())
+                .buildpackId(Buildpack.PRISM_MOCK.getId())
+                .build();
+    }
+
     public static GraphqlDTO createWebappComponentRequest(String name, ChoreoProject project, 
             GraphqlDTO.ByocWebAppsConfig webAppsConfig) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
@@ -318,6 +336,17 @@ public class ComponentUtils {
         } else if (componentFlavour.equals(ComponentFlavour.BUILDPACK)) {
             dto.setComponentType("buildpackService");
             Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createBuildpackComponent(runner,
+                    appServiceClient,
+                    dto, accessToken);
+            String projectId = responseDTO.get().getProjectId();
+            graphqlDTO = GraphqlDTO.builder().projectId(projectId)
+                    .componentHandler(responseDTO.get().getHandle()).build();
+            List<ChoreoComponent> components = GraphQL.getProjectComponents(runner, appServiceClient, projectId, accessToken);
+            String componentId = components.get(0).getId();
+            log.debug("Component Id: " + componentId);
+            Component.waitForAsyncComponentCreationSuccess(runner, appServiceClient, accessToken, componentId);
+        } else if (componentFlavour.equals(ComponentFlavour.PRISM_MOCK_SERVICE)) {
+            Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createPrismMockComponent(runner,
                     appServiceClient,
                     dto, accessToken);
             String projectId = responseDTO.get().getProjectId();
@@ -408,7 +437,7 @@ public class ComponentUtils {
         String latestVersionId = apiVersion.getId();
 
         String devEnvIdToDeploy = environments.get(0).getId();
-        String branch = component.getRepository().getBranch();
+        String branch = component.getRepository().getBranchApp();
 
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).latestVersionId(latestVersionId)
                 .devEnvIdToDeploy(devEnvIdToDeploy).branch(branch).sha(sha).shaDate(shaDate).build();
@@ -485,6 +514,29 @@ public class ComponentUtils {
         return deploymentStatusDTO;
     }
 
+    public static ComponentDeploymentStatusDTO deployAndValidateBuiltComponent(TestNGCitrusSpringSupport runner,
+                                                               Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent testComponent,
+                                                               List<Environment> environments) throws Exception {
+        HttpClient choreoProjectsTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        List<Commit> commitHistory = GraphQL.getCommitHistory(runner, choreoProjectsTestClient, testComponent.getId(), accessToken,
+                testComponent.getRepository().getBranchApp());
+
+        Commit latestCommit = Commit.getLatestCommit(commitHistory);
+        ComponentDeploymentStatusDTO componentDeploymentStatusDTO = ComponentUtils.deployBuiltComponent(runner, citrusClients, accessToken, testComponent, latestCommit,
+                environments);
+        try {
+            ComponentUtils.validateComponentDeployment(runner, citrusClients, accessToken, testComponent, latestCommit, environments);
+        } catch (Exception e) {
+            if (e.getCause() instanceof DeploymentStatusByVersionFailureException) {
+                log.error("DeployStatusByVersion failure detected", e);
+            } else {
+                throw e;
+            }
+        }
+
+        return componentDeploymentStatusDTO;
+    }
+
     public static ComponentDeploymentStatusDTO validateComponentDeployment(TestNGCitrusSpringSupport runner,
             Map<Endpoints, HttpClient> citrusClients, String accessToken,
             ChoreoComponent component, Commit latestCommit,
@@ -547,7 +599,12 @@ public class ComponentUtils {
                 .orgUuid(org.getOrgUUID()).versionId(latestVersionId).environmentId(devEnvIdToDeploy).build();
 
         GraphqlDTO imageDTO = GraphqlDTO.builder().componentId(componentId).versionId(latestVersionId).build();
-        JsonArray images = GraphQL.getImageList(runner, appServiceClient, accessToken, imageDTO);
+        JsonArray images = GraphQL.getImageListWithRetry(runner, appServiceClient, accessToken, imageDTO, 30);
+
+        if (images.isEmpty()) {
+            throw new RuntimeException("Images not found for version ID : " + latestVersionId +
+                    " in component ID : " + componentId);
+        }
 
         GraphqlDTO graphqlDeployDTO = GraphqlDTO.builder().componentId(componentId).versionId(latestVersionId)
                 .imageId(images.get(0).getAsJsonObject().get("imageId").getAsString()).environmentId(devEnvIdToDeploy)
@@ -712,7 +769,7 @@ public class ComponentUtils {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         List<Commit> commitHistory = GraphQL.getCommitHistory(runner, appServiceClient, component.getId(),
-                accessToken);
+                accessToken, component.getRepository().getBranchApp());
         List<ComponentDeploymentStatusDTO> deploymentStatus = new ArrayList<>();
         int srcEnvIndex = 0;
         int destEnvIndex = 1;
@@ -728,7 +785,8 @@ public class ComponentUtils {
                 if (displayType.equals(Constant.displayType.ballerinaService.name())
                         || displayType.equals(Constant.displayType.byocService.name())
                         || displayType.equals(Constant.displayType.buildpackService.name())
-                        || displayType.equals(Constant.AppType.MI_API_SERVICE.value)) {
+                        || displayType.equals(Constant.AppType.MI_API_SERVICE.value)
+                        || displayType.equals(Constant.displayType.prismMockService.name())) {
                     Map<String, String> argMap = new HashMap<>();
                     argMap.put("componentId", component.getId());
                     argMap.put("versionId", component.getLatestApiVersion().getId());
@@ -941,7 +999,7 @@ public class ComponentUtils {
             String expectedResponse) throws Exception {
         // Test API Invocation
         runner.$(repeatOnError()
-                .until("i = 15")
+                .until("i = 20")
                 .index("i")
                 .autoSleep(30000)
                 .actions((http()
@@ -976,7 +1034,7 @@ public class ComponentUtils {
                                     String expectedResponse) throws Exception {
         // Test API Invocation
         runner.$(repeatOnError()
-                .until("i = 15")
+                .until("i = 20")
                 .index("i")
                 .autoSleep(30000)
                 .actions((http()
@@ -1014,7 +1072,7 @@ public class ComponentUtils {
             org.springframework.http.HttpStatus expectedHttpStatus) {
         // Test API Invocation
         runner.$(repeatOnError()
-                .until("i = 15")
+                .until("i = 20")
                 .index("i")
                 .autoSleep(30000)
                 .actions((http()

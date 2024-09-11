@@ -30,6 +30,7 @@
             <class name="com.wso2.choreo.integration.tests.dp.TestBallerinaServiceDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestManualTriggerDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestBuildpackDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestPrismMockDp"/>
             <class name="com.wso2.choreo.integration.tests.buildpacks.Buildpack"/>
             <class name="com.wso2.choreo.integration.tests.connections.ChoreoConnections"/>
             <class name="com.wso2.choreo.integration.tests.resourceAuthorization.ResourceAuthorizationTests"/>

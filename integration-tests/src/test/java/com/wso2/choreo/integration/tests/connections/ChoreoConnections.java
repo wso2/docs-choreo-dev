@@ -30,6 +30,7 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.ComponentRepository;
+import com.wso2.choreo.integration.common.exceptions.DeploymentStatusByVersionFailureException;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
@@ -235,8 +236,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 clientChoreoComponent);
-        clientDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, clientChoreoComponent,
-                environments, ComponentFlavour.BYOC);
+        clientDeploymentStatusDTO = ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients, accessToken, clientChoreoComponent,
+                environments);
         ComponentUtils.validateEndpoints(this, citrusClients, accessToken, clientChoreoComponent,
                 clientDeploymentStatusDTO);
     }

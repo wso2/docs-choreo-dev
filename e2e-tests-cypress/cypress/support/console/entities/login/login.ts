@@ -44,11 +44,12 @@ class Login {
     this.enterUserCredentials(username, password);
     const handle = this.readConfiguredOrgHandle();
     this.persistOrgs(handle);
-    this.persistLogoutURL();
     this.persistAccessToken();
 
     cy.get(TestIds.backdropLoader, { timeout: loadingTime as number }).should("not.exist");
-    cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible");
+    cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible").then(() => {
+      this.persistLogoutURL();
+    });
     this.handleTermsOfUse();
   }
 
@@ -61,10 +62,11 @@ class Login {
     this.enterUserCredentials(username, password);
     const handle = this.readConfiguredSelfSignupAdminUserOrgHandle();
     this.persistOrgs(handle);
-    this.persistLogoutURL();
     this.persistAccessToken();
     cy.get(TestIds.backdropLoader).should("not.exist");
-    cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible");
+    cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible").then(() => {
+      this.persistLogoutURL();
+    });
     this.handleTermsOfUse();
   }
 
@@ -74,8 +76,9 @@ class Login {
     this.logoutOfPreviousEnterpriseSession();
     this.enterEnterpriseUserCredentials();
     cy.get(TestIds.backdropLoader).should("not.exist");
-    cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible");
-    this.persistLogoutURL();
+    cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible").then(() => {
+      this.persistLogoutURL();
+    });
     this.handleTermsOfUse();
   }
 
@@ -95,6 +98,10 @@ class Login {
     cy.get("#sign-in-button").click();
     this.persistPerfOrgs();
     this.persistAccessToken();
+    cy.get(TestIds.backdropLoader).should("not.exist");
+    cy.get(TestIds.userProfile, MEDIUM_TIME).should("be.visible").then(() => {
+      this.persistLogoutURL();
+    });
     this.selectRegion();
     this.handleTermsOfUse();
     cy.wait(25000);
@@ -122,6 +129,16 @@ class Login {
         this.selectRegion(retryCount);
       }
     });
+  }
+
+  updateOrgData(organization) {
+    this.orgId = organization.id;
+    this.orgHandle = organization.handle;
+    this.orgUuid = organization.uuid;
+  }
+
+  updateAccessToken(token) {
+    this.accessToken = token;
   }
 
   getDisplayName() {

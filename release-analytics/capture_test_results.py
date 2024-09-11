@@ -10,28 +10,14 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
 """
-#!/usr/bin/python3
 
-import base64
-import binascii
-import json
-import os
 import sys
-
-from config.config_reader import ConfigReader, ConfigGroup
 from devops.pipeline_reader import PipelineReader
 from persist.big_query_writer import BigQueryWriter
 from persist.data import IntegrationTest
 
-def capture_test_results(env, project_name, definition_name):
-    try:
-        auth_token = os.environ['AZURE_DEVOPS_PAT']
-    except KeyError:
-        print("You must first set the AZURE_DEVOPS_PAT environment variable")
-        sys.exit(1)
-
-    pipeline = PipelineReader(project_name, definition_name)
-    pipeline.create_connection(auth_token)
+def capture_test_results(env):
+    pipeline = PipelineReader(env)
 
     results = pipeline.get_test_results()
 
@@ -52,13 +38,7 @@ def capture_test_results(env, project_name, definition_name):
 
        values.append(result.get_as_row())
 
-    try:
-        account_info = json.loads(base64.b64decode(os.environ['GCLOUD_ACCOUNT_INFO']).decode("utf-8"))
-    except binascii.Error:
-        print("Error when decoding GCloud credentials")
-        sys.exit(1)
-
-    bq_writer = BigQueryWriter(account_info)
+    bq_writer = BigQueryWriter()
     bq_writer.insert_integration_test_data(values)
 
 if __name__ == '__main__':
@@ -67,23 +47,5 @@ if __name__ == '__main__':
         sys.exit(1)
 
     env = sys.argv[1]
-
-    config = ConfigReader()
-    
-    project_name = ""
-    definition_name = ""
-
-    if env == "dev":
-        project_name = config.get_config(ConfigGroup.DEVOPS, "dev-project")
-        definition_name = config.get_config(ConfigGroup.DEVOPS, "dev-definition")
-    elif env == "stage":
-        project_name = config.get_config(ConfigGroup.DEVOPS, "stage-project")
-        definition_name = config.get_config(ConfigGroup.DEVOPS, "stage-definition")
-    elif env == "prod":
-        project_name = config.get_config(ConfigGroup.DEVOPS, "prod-project")
-        definition_name = config.get_config(ConfigGroup.DEVOPS, "prod-definition")
-    else:
-        print(f"Unrecognized env: {env} specified")
-        sys.exit(1)
         
-    capture_test_results(env, project_name, definition_name)
+    capture_test_results(env)

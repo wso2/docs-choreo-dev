@@ -30,6 +30,7 @@ resources:
   - subscriptions.yaml
   - telemetry-go.yaml
   - testbase.yaml
+  - workflow-mgt.yaml
   - devops-portal-api.yaml
   - organization-management.yaml
   - choreo-apim-proxy-deployer.yaml
@@ -52,5 +53,6 @@ resources:
   - cp-gw-adapter.yaml
   - choreo-url-management.yaml
   - log-controller.yaml
+  - choreo-aws-marketplace-client.yaml
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587,25,1433,6380

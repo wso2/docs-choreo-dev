@@ -11,8 +11,7 @@
  * associated services.
 """
 
-#!/usr/bin/python3
-
+import os
 import sys
 from datetime import datetime, timedelta, timezone
 from azure.devops.credentials import BasicAuthentication
@@ -25,15 +24,30 @@ class PipelineReader:
     user_agent = ConfigReader().get_config(ConfigGroup.DEVOPS, "user-agent")
     max_test_results = ConfigReader().get_config(ConfigGroup.DEVOPS, "max-test-results")
 
-    def __init__(self, project_name, definition_name):
-        self.conn = None
-        self.project = project_name
-        self.definition = definition_name
+    def __init__(self, env):
+        if env == "dev":
+            self.project = ConfigReader().get_config(ConfigGroup.DEVOPS, "dev-project")
+            self.definition = ConfigReader().get_config(ConfigGroup.DEVOPS, "dev-definition")
+        elif env == "stage":
+            self.project = ConfigReader().get_config(ConfigGroup.DEVOPS, "stage-project")
+            self.definition = ConfigReader().get_config(ConfigGroup.DEVOPS, "stage-definition")
+        elif env == "prod":
+            self.project = ConfigReader().get_config(ConfigGroup.DEVOPS, "prod-project")
+            self.definition = ConfigReader().get_config(ConfigGroup.DEVOPS, "prod-definition")
+        else:
+            print(f"Unrecognized env: {env} specified")
+            sys.exit(1)
 
-    def create_connection(self, auth_token):
-        self.conn = Connection(base_url=PipelineReader.url, 
+        try:
+            auth_token = os.environ['AZURE_DEVOPS_PAT']
+        except KeyError:
+            print("You must first set the AZURE_DEVOPS_PAT environment variable")
+            sys.exit(1)
+
+        self.conn = Connection(base_url=PipelineReader.url,
                     creds=BasicAuthentication('', auth_token),
                     user_agent=PipelineReader.user_agent)
+
 
     def get_test_results(self):
         test_results = {}
@@ -67,6 +81,42 @@ class PipelineReader:
         test_results["tests"] = tests
 
         return test_results
+
+    def get_promotion_data(self, build_id, src_env):
+        dest_env = "stage"
+        if src_env not in ["dev", "stage"]:
+            print("Invalid source environment provided")
+            sys.exit(1)
+        else:
+            if src_env == "stage":
+                dest_env = "prod"
+
+        promotion_data = {}
+        build = self._get_build_by_id(build_id)
+
+        change = self._get_build_change(build.id)
+
+        promotion_data["build_number"] = build.build_number
+        promotion_data["commit_msg"] = change.message
+        promotion_data["promotion_time"] = datetime.now(timezone.utc)
+        promotion_data["source_env"] = src_env
+        promotion_data["dest_env"] = dest_env
+
+        return promotion_data
+
+
+    def _get_build_by_id(self, build_id):
+        build_client = self.conn.clients.get_build_client()
+
+        def_obj = self._get_definition()
+
+        try:
+            for build in build_client.get_builds(self.project, definitions=[def_obj.id],
+                                                 build_ids=[build_id]):
+                return build  # There will only a single match
+        except Exception as e:
+            print("_get_build_by_number() raised error: {}".format(e))
+            sys.exit(1)
 
     def _get_latest_pipeline_build(self):
         build_client = self.conn.clients.get_build_client()

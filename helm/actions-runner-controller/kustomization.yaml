@@ -17,7 +17,9 @@ helmCharts:
       authSecret:
         name: controller-manager
         create: false
+      logLevel: info
       githubWebhookServer:
+        logLevel: info
         enabled: true
         nodeSelector:
           execution-mode: ghrunner

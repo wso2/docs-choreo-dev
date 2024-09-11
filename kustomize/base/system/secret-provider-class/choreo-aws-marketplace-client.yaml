@@ -1,0 +1,29 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: choreo-aws-marketplace-client-secrets
+spec:
+  provider: azure
+  secretObjects:
+    - secretName: choreo-aws-marketplace-client-secret
+      type: Opaque
+      data:
+        - objectName: AWS_ACCESS_KEY_ID
+          key: AWS_ACCESS_KEY_ID
+        - objectName: AWS_SECRET_ACCESS_KEY
+          key: AWS_SECRET_ACCESS_KEY
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: aws-marketplace-client-access-key-id
+          objectType: secret
+          objectAlias: AWS_ACCESS_KEY_ID
+          objectVersion: "{{.AWS_ACCESS_KEY_ID}}"
+        - |
+          objectName: aws-marketplace-client-secret-access-key
+          objectType: secret
+          objectAlias: AWS_SECRET_ACCESS_KEY
+          objectVersion: "{{.AWS_SECRET_ACCESS_KEY}}"
+    tenantId: da76d684-740f-4d94-8717-9d5fb21dd1f9
+    usePodIdentity: "false"

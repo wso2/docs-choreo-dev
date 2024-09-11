@@ -14,10 +14,12 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.BalConfig;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.exceptions.DeploymentStatusByVersionFailureException;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.code.Repository;
+import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import com.wso2.choreo.integration.models.response.Response;
@@ -98,9 +100,9 @@ public class TestWebhookDp extends TestBase {
     @Test(dependsOnMethods = {"createUserManagedComponent_CreateDeployInvokeWebhook"}, dataProvider = "dps")
     @CitrusTest
     public void componentDeployment_CreateDeployInvokeWebhook(DataProviderWrapper dp) throws Exception {
-        BalConfig balConfigs = BalConfig.builder().isRequired(true).configKeyName("config.webhookSecret").valueType("string").valueOrSource("abcd").build();
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
-                dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD, balConfigs);
+        ChoreoComponent testComponent = dp.getChoreoComponent();
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients, accessToken, testComponent,
+                dp.getEnvironments());
         dp.setDeploymentStatusDTO(statusDTO);
     }
 

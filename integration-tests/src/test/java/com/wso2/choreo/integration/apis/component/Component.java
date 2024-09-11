@@ -25,6 +25,7 @@ import com.consol.citrus.validation.json.JsonTextMessageValidator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
@@ -34,6 +35,7 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.models.commithistory.Commit;
@@ -53,6 +55,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
+import static com.consol.citrus.container.RepeatUntilTrue.Builder.repeat;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 
@@ -206,6 +209,55 @@ public class Component extends ControlPlaneAPI {
 
         return steps.get();
 
+    }
+
+    public static String waitForComponentBuildDeployComplete(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+                                                      String projectId,
+                                                      String componentId, String runId, int sleepInterval) {
+        runner.variable("isComponentBuildDeployCompleted", false);
+        AtomicReference<JsonArray> steps = new AtomicReference<>(new JsonArray());
+        AtomicReference<String> deployStatus = new AtomicReference<>("");
+        runner.$(repeat()
+                .until("(i = 10) or ( ${isComponentBuildDeployCompleted} = true )")
+                .index("i")
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .get(CONTEXT.concat("/orgs/")
+                                        .concat(ORG_HANDLE)
+                                        .concat("/projects/")
+                                        .concat(projectId)
+                                        .concat("/components/")
+                                        .concat(componentId)
+                                        .concat("/runs/")
+                                        .concat(runId)
+                                        .concat("/logs"))
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .validate((message, context) -> {
+                                    String payload = message.getPayload(String.class);
+                                    JsonObject dataJsonObject = new JsonParser().parse(payload).getAsJsonObject()
+                                            .getAsJsonObject("data");
+                                    if (!dataJsonObject.get("deploy").isJsonNull() && !dataJsonObject.getAsJsonObject("deploy").get("status").isJsonNull()) {
+                                        deployStatus.set(dataJsonObject.getAsJsonObject("deploy").get("status").getAsString());
+                                        if ("completed".equals(deployStatus.get())) {
+                                            context.setVariable("isComponentBuildDeployCompleted", true);
+                                        }
+                                    }
+                                    // Wait after build is successful to give some time for deployment
+                                    SleepUtil.sleep(sleepInterval);
+                                })));
+        if (!"completed".equals(deployStatus.get())) {
+            throw new RuntimeException("Component build and deploy not completed.");
+        } else {
+            return deployStatus.get();
+        }
     }
 
     public static KeyGenResponseDTO generateKeys(TestActionRunner runner, HttpClient client,
