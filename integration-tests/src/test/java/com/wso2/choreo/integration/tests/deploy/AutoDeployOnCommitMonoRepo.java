@@ -85,7 +85,7 @@ public class AutoDeployOnCommitMonoRepo extends TestNGCitrusSpringSupport {
         dto.setComponentId(choreoComponentA.getId());
         dto.setLatestVersionId(choreoComponentA.getLatestApiVersion().getId());
         String runId = GraphQL.getRunId(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, dto);
-        Component.waitForComponentBuildSuccess(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, project.getId(), choreoComponentA.getId(), runId, "Ballerina Build");
+        Component.waitForComponentBuildDeployComplete(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, project.getId(), choreoComponentA.getId(), runId, 50);
         Assert.assertNotNull(choreoComponentA.getId());
     }
 
@@ -100,7 +100,7 @@ public class AutoDeployOnCommitMonoRepo extends TestNGCitrusSpringSupport {
         dto.setComponentId(choreoComponentB.getId());
         dto.setLatestVersionId(choreoComponentB.getLatestApiVersion().getId());
         String runId = GraphQL.getRunId(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, dto);
-        Component.waitForComponentBuildSuccess(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, project.getId(), choreoComponentB.getId(), runId, "Ballerina Build");
+        Component.waitForComponentBuildDeployComplete(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, project.getId(), choreoComponentB.getId(), runId, 50);
         Assert.assertNotNull(choreoComponentB.getId());
     }
 

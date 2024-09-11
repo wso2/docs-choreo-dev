@@ -257,9 +257,9 @@ public class Component extends ControlPlaneAPI {
                                                     conclusion.set(jsonObject.get("conclusion").getAsString());
                                                 }
                                             }
-                                            SleepUtil.sleep(30);
                                         }
                                     }
+                                    SleepUtil.sleep(30);
                                 })));
         if (!"completed".equals(status.get())) {
             throw new RuntimeException("Component build not completed.");
