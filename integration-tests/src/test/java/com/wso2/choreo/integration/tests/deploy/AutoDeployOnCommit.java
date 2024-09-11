@@ -83,7 +83,7 @@ public class AutoDeployOnCommit extends TestNGCitrusSpringSupport {
         dto.setComponentId(choreoComponent.getId());
         dto.setLatestVersionId(choreoComponent.getLatestApiVersion().getId());
         String runId = GraphQL.getRunId(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, dto);
-        Component.waitForComponentBuildSuccess(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, project.getId(), choreoComponent.getId(), runId, "Ballerina Build");
+        Component.waitForComponentBuildDeployComplete(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, project.getId(), choreoComponent.getId(), runId, 50);
         Assert.assertNotNull(choreoComponent.getId());
     }
 
