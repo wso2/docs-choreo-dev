@@ -1,0 +1,27 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2024, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: workflow-mgt
+  name: workflow-mgt
+spec:
+  ports:
+    - name: service-port
+      port: 9082
+      targetPort: service-port
+    - name: health-port
+      port: 9050
+      targetPort: health-port
+  selector:
+    choreo.component: workflow-mgt
