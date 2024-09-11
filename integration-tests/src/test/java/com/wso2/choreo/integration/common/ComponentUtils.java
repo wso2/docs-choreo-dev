@@ -969,7 +969,7 @@ public class ComponentUtils {
             String expectedResponse) throws Exception {
         // Test API Invocation
         runner.$(repeatOnError()
-                .until("i = 15")
+                .until("i = 20")
                 .index("i")
                 .autoSleep(30000)
                 .actions((http()

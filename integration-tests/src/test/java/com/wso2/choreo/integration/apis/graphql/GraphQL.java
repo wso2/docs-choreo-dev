@@ -1047,11 +1047,12 @@ public class GraphQL extends ControlPlaneAPI {
                             if (!runId.isEmpty()) {
                                 context.setVariable("isImageListReceived", true);
                                 runIdRef.set(runId);
+                            } else {
+                                SleepUtil.sleep(retryIntervalSecs);
                             }
-                            SleepUtil.sleep(retryIntervalSecs);
                         })));
 
-        if (runIdRef.get().isEmpty()) {
+        if (runIdRef.get() == null || runIdRef.get().isEmpty()) {
             throw new RuntimeException("Image ID list is empty.");
         } else {
             return runIdRef.get();
