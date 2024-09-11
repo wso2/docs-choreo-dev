@@ -48,6 +48,11 @@ spec:
               envFrom:
                 - configMapRef:
                     name: env-choreo-bq-data-pipeline
+                - secretRef:
+                    name: secret-choreo-bq-data-pipeline
+              env:
+                - name: GOOGLE_APPLICATION_CREDENTIALS
+                  value: "/mnt/csi/secret-choreo-bq-data-pipeline/GOOGLE_APPLICATION_CREDENTIALS"
               volumeMounts:
                 - name: config #Name of the volume mount
                   mountPath: /home/wso2/configs/application.properties #Path to mount the volume
