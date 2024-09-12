@@ -129,3 +129,9 @@ export enum ApiVisibility {
   Private = "Private",
   Restricted = "Restricted",
 }
+
+export enum BuildPacks {
+  Ballerina = "Ballerina",
+  Go = "Go",
+  MI = "MI",
+}

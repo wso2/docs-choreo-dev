@@ -28,6 +28,8 @@ describe("Verify Ballerina service functionality", () => {
   const ENDPOINT_NAME = "Readinglist";
   let project: Project;
   let component: Service;
+  const REPO_URL = "https://github.com/wso2/choreo-samples"
+  let service: Service;
 
   it("Login to Console", () => {
     console.login();
@@ -37,21 +39,34 @@ describe("Verify Ballerina service functionality", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-  it("Verify Ballerina service component creation", () => {
+  it("Creating a ballerina service from choreo samples", () => {
     project
-      .createServiceComponent(
-        Enums.Accessibility.EXTERNAL,
-        {
-          url: "https://github.com/choreo-test-apps/byor-service-app1",
-          branch: "main",
-        },
-        ENDPOINT_NAME
-      )
-      .then((serviceComponent: Service) => {
-        project.visitComponent(serviceComponent.getName());
-        component = serviceComponent;
+      .createServiceComponentUI({
+        displayName: "",
+        repoUrl: REPO_URL,
+      })
+      .then((comp) => {
+        service = comp;
       });
   });
+
+
+
+  // it("Verify Ballerina service component creation", () => {
+  //   project
+  //     .createServiceComponent(
+  //       Enums.Accessibility.EXTERNAL,
+  //       {
+  //         url: "https://github.com/choreo-test-apps/byor-service-app1",
+  //         branch: "main",
+  //       },
+  //       ENDPOINT_NAME
+  //     )
+  //     .then((serviceComponent: Service) => {
+  //       project.visitComponent(serviceComponent.getName());
+  //       component = serviceComponent;
+  //     });
+  // });
 
   it("Build the component", () => {
     component.build();
