@@ -556,7 +556,7 @@ enable_domain_cache = false
 
 [choreo.project_manager]
 endpoint_url = "{{.PROJECT_MANAGER_ENDPOINT_URL}}"
-enabled = {{.PROJECT_MANAGER_ENDPOINT_ENABLED}}
+enabled = {{.PROJECT_MANAGER_ENDPOINT_ENABLED | default false}}
 
 [choreo.cloud_manager]
 endpoint_url = "{{.CLOUD_MANAGER_ENDPOINT_URL}}"
