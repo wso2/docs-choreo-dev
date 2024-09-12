@@ -776,6 +776,7 @@ configMapGenerator:
       - REACT_APP_APPROVAL_ORGS={{.REACT_APP_APPROVAL_ORGS | default ""}}
       - REACT_APP_SUBSCRIPTION_APPROVAL_ORGS={{.REACT_APP_SUBSCRIPTION_APPROVAL_ORGS | default ""}}
       - REACT_APP_ENABLE_DT_DELETE_CONSOLE={{.REACT_APP_ENABLE_DT_DELETE_CONSOLE | default "false"}}
+      - REACT_APP_EXECUTE_PAGE_OBS_API_ENABLED_ORGS={{.REACT_APP_EXECUTE_PAGE_OBS_API_ENABLED_ORGS | default ""}}
   - name: env-dp-mizzen
     behavior: create
     literals:
