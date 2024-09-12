@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: configuration-schema-service
+  name: configuration-schema-service
+spec:
+  ports:
+    - name: configuration-schema-service-port
+      port: 80
+      protocol: TCP
+      targetPort: http-port
+  selector:
+    choreo.component: configuration-schema-service

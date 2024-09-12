@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    choreo.component: configuration-schema-service
+  name: configuration-schema-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: configuration-schema-service
+  template:
+    metadata:
+      labels:
+        choreo.component: configuration-schema-service
+        antiaffinity: configuration-schema-service
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - image: choreocontrolplane.azurecr.io/choreoipaas/configuration-schema-service:latest
+          name: configuration-schema-service
+          env:
+            - name: IDP_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-idp
+                  key: IDP_CLIENT_SECRET
+          envFrom:
+            - configMapRef:
+                name: env-configuration-schema-service
+          ports:
+            - containerPort: 8080
+              name: http-port
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 256Mi
+            requests:
+              cpu: 10m
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 12000
+            runAsGroup: 12000
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          volumeMounts:
+            - mountPath: /configuration-schema-service.yaml
+              name: config
+              subPath: configuration-schema-service.yaml
+            - name: secret-idp
+              mountPath: /mnt/csi/secret-idp
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: cm-file-configuration-schema-service
+        - name: secret-idp
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-idp
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - configuration-schema-service
+              topologyKey: kubernetes.io/hostname

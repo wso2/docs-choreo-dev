@@ -1,0 +1,54 @@
+idp:
+  clientId: ${IDP_CLIENT_ID}
+  clientSecret: ${IDP_CLIENT_SECRET}
+  tokenUrl: ${IDP_TOKEN_URL}
+  redirectUrls: {{.REDIRECT_URLS}}
+  jwks: # DEPRECATED. See 'jwksEndpoints'.
+    url: ${IDP_JWKS_URL}
+    cacheRefreshInterval: ${JWKS_CACHE_REFRESH_INTERVAL}
+    cacheTtl: ${JWKS_CACHE_TTL}
+  jwtProviders:
+    - issuer: ${KM_ISSUER}
+      audiences: {{.JWT_PROVIDERS_AUDIENCES}}
+      jwks:
+        url: ${KM_JWKS_URL}
+        cacheRefreshInterval: ${JWKS_CACHE_REFRESH_INTERVAL}
+        cacheTtl: ${JWKS_CACHE_TTL}
+    - issuer: ${ASGARDEO_ISSUER}
+      audiences:
+        - ${ASGARDEO_AUDIENCE}
+      jwks:
+        url: ${ASGARDEO_JWKS_URL}
+        cacheRefreshInterval: ${JWKS_CACHE_REFRESH_INTERVAL}
+        cacheTtl: ${JWKS_CACHE_TTL}
+  issuer: ${IDP_ISSUER} # DEPRECATED. See 'issuers'.
+  audience: {{.IDP_AUDIENCE}}
+  jwtValidationLeeway: ${IDP_JWT_VALIDATION_LEEWAY}
+  skipJwtValidation: false
+  cookies:
+    maxAge: 86400
+    secure: ${IDP_COOKIES_SECURE}
+    httpOnly: true
+auth:
+  enable: true
+upstream:
+  dp-cicd: dp-cicd:80
+logger:
+  level: ${LOGGER_LEVEL} # todo: change this to info after the new components get stable in prod.
+  encoding: console
+  development: ${LOGGER_DEVELOPMENT}
+  disableStacktrace: ${LOGGER_DISABLE_STACKTRACE}
+  encoderConfig:
+    timeKey: time
+    levelKey: level
+    nameKey: logger
+    callerKey: caller
+    messageKey: message
+    stacktraceKey: stacktrace
+    lineEnding: "\n"
+    levelEncoder: capitalColor
+    timeEncoder: iso8601
+    durationEncoder: string
+    callerEncoder: short
+  outputPaths: stdout
+  errorOutputPaths: stdout # we send errors to stdout in dev so that we can easily grep without redirect

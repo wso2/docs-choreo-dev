@@ -53,3 +53,4 @@ resources:
   - cp-gw-adapter.yaml
   - choreo-url-management.yaml
   - choreo-aws-marketplace-client.yaml
+  - configuration-schema-service.yaml
