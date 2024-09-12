@@ -83,8 +83,8 @@ VALUES('ENV_PROMOTION', 'Environment Promotion','Promotion of a build from one e
             "required": true,
             "extractfrom": "componentName"
         },
-        "buildId": {
-            "displayName": "Build ID",
+        "build": {
+            "displayName": "Build/Image",
             "dataType": "string",
             "required": true,
             "extractfrom": "buildId"
@@ -95,23 +95,11 @@ VALUES('ENV_PROMOTION', 'Environment Promotion','Promotion of a build from one e
             "required": true,
             "extractfrom": "envFrom.name"
         },
-        "envFromId": {
-            "displayName": "Source Environment ID",
-            "dataType": "string",
-            "required": true,
-            "extractfrom": "envFrom.id"
-        },
         "envToName": {
             "displayName": "Target Environment Name",
             "dataType": "string",
             "required": true,
             "extractfrom": "envTo.name"
-        },
-        "envToId": {
-            "displayName": "Target Environment ID",
-            "dataType": "string",
-            "required": true,
-            "extractfrom": "envTo.id"
         },
         "commitId": {
             "displayName": "Commit ID",
