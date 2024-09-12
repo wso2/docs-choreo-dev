@@ -5,6 +5,7 @@ mongoDBUsername="{{.RESOURCE_REGISTRY_DB_USERNAME}}"
 mongoDBClusterUrl="{{.MONGO_DB_CLUSTER_URL}}"
 databaseName="{{.RESOURCE_REGISTRY_DB_NAME}}"
 collectionName="resources"
+collectionTemplate="templates"
 mongoDBOptions=""
 defaultThumbnailUrl=""
 
