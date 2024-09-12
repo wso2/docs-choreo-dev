@@ -49,3 +49,19 @@ fqName = "nginx.ingress.kubernetes.io/proxy-body-size"
 default = "10m"
 min = "1m"
 max = "50m"
+
+[[choreo.choreo_url_management.configs.allowedLoadBalancerConfigs]]
+name = "server-snippet"
+displayName = "Server Snippets"
+fqName = "nginx.ingress.kubernetes.io/server-snippet"
+default = ""
+min = ""
+max = ""
+
+[[choreo.choreo_url_management.configs.allowedLoadBalancerConfigs]]
+name = "configuration-snippet"
+displayName = "Configuration Snippet"
+fqName = "nginx.ingress.kubernetes.io/configuration-snippet"
+default = ""
+min = ""
+max = ""
