@@ -554,6 +554,9 @@ enable_organization_validation = true
 endpoint_url = "{{.RUDDER_ENDPOINT_URL}}"
 enable_domain_cache = false
 
+[choreo.cloud_manager]
+endpoint_url = "{{.CLOUD_MANAGER_ENDPOINT_URL}}"
+
 [choreo.URLManager]
 endpoint_url = "{{.URL_MANAGER_ENDPOINT_URL}}"
 
