@@ -1,4 +1,0 @@
-resources:
-  - cert-manager
-  - csi-secret-store-driver
-  - reloader
