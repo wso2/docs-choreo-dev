@@ -21,3 +21,5 @@ graphqlUrl = "{{.GRAPHQL_URL}}"
 apimUrl = "{{.APIM_URL}}"
 region = "{{.REGION}}"
 
+testAuthHeaderName = "{{.TEST_AUTH_HEADER_NAME | default "API-Key"}}"
+
