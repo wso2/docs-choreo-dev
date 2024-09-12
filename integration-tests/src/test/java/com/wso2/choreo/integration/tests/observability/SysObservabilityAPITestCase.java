@@ -95,8 +95,8 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createComponent_SysObservabilityAPITestCase"})
     @CitrusTest
     public void deployComponent_SysObservabilityAPITestCase() throws Exception {
-        deploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, 
-                accessToken, choreoComponent, environments, ComponentFlavour.STANDARD);
+        ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients, accessToken, choreoComponent,
+                environments);
     }
 
     @Test(dependsOnMethods = {"deployComponent_SysObservabilityAPITestCase"})

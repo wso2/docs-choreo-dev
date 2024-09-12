@@ -69,8 +69,8 @@ public class TestClientJWTValidation extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createComponent_TestClientJWTValidation"})
     @CitrusTest
     public void deployComponent_TestClientJWTValidation() throws Exception {
-        ComponentUtils.deployComponent(this, citrusClients, accessToken, choreoComponent,
-                environments, ComponentFlavour.STANDARD);
+        ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients, accessToken, choreoComponent,
+                environments);
     }
 
     @Test(dependsOnMethods = {"deployComponent_TestClientJWTValidation"})

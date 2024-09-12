@@ -34,7 +34,9 @@ import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -125,5 +127,12 @@ public class AutoDeployOnCommit extends TestNGCitrusSpringSupport {
         Commit latestCommit = ComponentUtils.getLatestCommit(this, citrusClients, accessToken, choreoComponent);
         ComponentUtils.validateComponentDeployment(this, citrusClients, accessToken, choreoComponent,
                 latestCommit, environments);
+    }
+
+    @Test(dependsOnMethods = {"deploymentStatusByVersion_AutoDeployOnCommit"})
+    @CitrusTest
+    public void deleteComponent_AutoDeployOnCommit() throws IOException {
+        Response res = GraphQL.deleteComponent(choreoComponent.getId(), project.getId(), accessToken);
+        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
     }
 }
