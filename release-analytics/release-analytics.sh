@@ -37,9 +37,9 @@ python -m pip install -r requirements.txt
 
 # Capture integration test results
 echo "----------------------------------"
-echo "Capturing integration test results"
+echo "Capturing release analytics with arguments: " "$@"
 echo "----------------------------------"
-python capture_test_results.py "$1"
+python release_analytics.py "$@"
 
 echo "----------------------------------"
 echo "Deactivate virtual env"
