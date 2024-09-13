@@ -112,6 +112,5 @@ To deploy the service, follow these steps:
 
     !!! note
         Deploying the service component may take a while. Once deployed, the **Development** environment card indicates the **Deployment Status** as **Active**.
-To build and deploy the service, follow the steps below:
 
 Once you have successfully deployed your service, you can [test](../../testing/test-websocket-endpoints-via-the-websocket-console.md), [manage](../../api-management/lifecycle-management.md), and observe it like any other component type in Choreo.
