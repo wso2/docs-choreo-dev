@@ -10,7 +10,7 @@ The following are some of the cutting-edge capabilities of Choreo:
 
  - Efficient and effective development:
     - **Code in any language**: Develop applications in your team's preferred programming language, harnessing existing skill sets to build powerful polyglot APIs, services, events, tasks, and more.
-    - **Native support for VSCode and GitHub**: Seamlessly collaborate and manage code with VSCode and GitHub in a feature-rich and visually-enhanced development environment.
+    - **Native support for VS Code and GitHub**: Seamlessly collaborate and manage code with VS Code and GitHub in a feature-rich and visually-enhanced development environment.
 
  - Seamless deployment:
     - **CI/CD**: Eliminate manual builds and unreliable deployments with Choreo's industry-standard CI/CD tooling, providing complete control and flexibility.
@@ -23,12 +23,10 @@ The following are some of the cutting-edge capabilities of Choreo:
     - **Ensure reliability**: DevOps and SRE teams can easily manage deployed components with built-in insights and observability.
 
  - Reusable digital assets:
-    - **Discover assets**: Accelerate delivery times by finding and reusing digital assets developed by others via Choreo's library of over 400 connectors.
     - **Control visibility and sharing**: Publish your digital assets to a shared marketplace for consumption by internal or external stakeholders, managed by role-based access control.
-    - **Enterprise Marketplace**: Choreo's secure enterprise marketplace fosters transparency and efficiency with granular access control for publishers and consumers.
+    - **Internal Marketplace**: Choreo's secure internal marketplace fosters transparency and efficiency with granular access control for publishers and consumers.
 
  - Comprehensive observability:
-    - **Performance predictions**: Optimize your applications by leveraging Choreo's performance predictions based on historical and real-time system data.
     - **Anomaly detection**: Stay ahead of issues with prompt notifications, ensuring balanced scaling and immediate action during unexpected mishaps.
     - **Troubleshoot and debug**: Quickly pinpoint and address root causes using detailed logs and data aligned in the same timeline, down to the machine-level details.
 
