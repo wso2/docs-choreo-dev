@@ -20,6 +20,7 @@ To create an organization-level subscription plan, follow the steps given below:
          - In the **Name** field, you must specify a name to uniquely identify the subscription plan in various contexts. The value is editable only at the time you create the subscription plan. You cannot change the name after you create it.
          - The **Stop on Quota Reach** checkbox is selected by default when creating a subscription plan. When selected, requests return an HTTP 429 response if the request count exceeds the limit. If you clear the checkbox, requests are allowed even if the quota is exceeded.
          - Burst control protects your backend from sudden request spikes and manages API usage. It’s especially useful for subscription plans where the request count is enforced over a long period, to prevent consumers from using their entire quota too quickly. Ensure you select the **Burst Control** checkbox when the **Request Count Time Unit** is selected as **Hour** or **Day**.
+         - Select the **Approval required** checkbox if subscription requests made to this subscription plan require administrator or API publisher approval before activation. This allows you to review and manually approve subscriptions before granting access.
   
     ![Create subscription plan](../assets/img/administer/create-subscription-plan.png)
 
