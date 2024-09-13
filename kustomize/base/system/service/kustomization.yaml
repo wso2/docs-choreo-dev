@@ -23,7 +23,6 @@ resources:
   - dp-secret-manager.yaml
   - email-service.yaml
   - moesif-service.yaml
-  - negotiator.yaml
   - orgremover.yaml
   - platform-services-manager.yaml
   - quota-limiter.yaml

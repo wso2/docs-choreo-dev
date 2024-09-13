@@ -137,11 +137,6 @@ configMapGenerator:
       - METRICS_EVENTHUB_NAME={{.METRICS_EVENTHUB_NAME}}
       - TRACES_EVENTHUB_NAME={{.TRACES_EVENTHUB_NAME}}
       - REDIS_HOST={{.REDIS_HOST}}
-  - name: env-negotiator
-    behavior: create
-    literals:
-      - CHOREO_APP_URL={{.CHOREO_APP_URL}}
-      - REDIS_HOST={{.REDIS_HOST}}
   - name: env-choreo-program-db
     behavior: create
     literals:

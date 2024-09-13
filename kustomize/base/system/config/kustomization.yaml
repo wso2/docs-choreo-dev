@@ -45,14 +45,6 @@ configMapGenerator:
       - REDIS_PORT=6380
       - REDIS_SSL=true
       - REDIS_DATABASE=3
-  - name: cm-negotiator
-    behavior: create
-    literals:
-      - NEGOTIATOR_GRPC_ADDRESS=http://negotiator:9092
-      - REDIS_PORT="6380"
-      - REDIS_SSL=true
-      - REDIS_DATABASE=3
-      - RUDDER_URL=http://dp-rudder:80
   - name: cm-choreo-program-db
     behavior: create
     literals:
@@ -395,10 +387,6 @@ configMapGenerator:
     behavior: create
     files:
       - step-aggregator/Config.toml
-  - name: cm-file-negotiator
-    behavior: create
-    files:
-      - negotiator/Config.toml
   - name: cm-cio-internal-metric-collector
     behavior: create
     literals:
@@ -576,10 +564,6 @@ configMapGenerator:
       - REDIS_PORT=6380
       - REDIS_SSL=true
       - REDIS_DATABASE=3
-  - name: cm-loglevel-negotiator
-    behavior: create
-    literals:
-      - B7A_LOG_LEVEL={{.B7A_LOG_LEVEL}}
   - name: cm-file-configuration-schema-service
     behavior: create
     files:

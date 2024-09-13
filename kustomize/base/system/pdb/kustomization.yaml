@@ -22,7 +22,6 @@ resources:
   - dp-rudder.yaml
   - dp-secret-manager.yaml
   - email-service.yaml
-  - negotiator.yaml
   - orgremover.yaml
   - platform-services-manager.yaml
   - quota-limiter.yaml
