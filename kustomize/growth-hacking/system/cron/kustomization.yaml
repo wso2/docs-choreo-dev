@@ -1,4 +1,4 @@
 resources:
   - choreo-org-stat-data-collector.yaml
   - choreo-org-stat-data-publisher.yaml
-  - choreo-bq-data-pipeline,yaml
+  - choreo-bq-data-pipeline.yaml
