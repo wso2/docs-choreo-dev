@@ -2,12 +2,12 @@
 
 Choreo allows you to create and deploy applications in your preferred programming language, offering a seamless platform for building dynamic and scalable solutions. This guide walks you through the steps to deploy a WebSocket service using the Ballerina language. No prior knowledge of the Ballerina language is required to follow this guide.
 
-WebSockets provide real-time, two-way communication between a client and server over a persistent TCP connection. This makes WebSocket APIs ideal for applications that require real time updates.
+WebSockets provide real-time, two-way communication between a client and server over a persistent TCP connection. This makes WebSocket APIs ideal for applications that require real-time updates.
 
 In this guide, you will:
 
 - Build a simple WebSocket service using a sample implementation in Ballerina.
-- Deploy the servicen in Choreo, allowing any WebSocket client application to establish a connection and exchange real-time messagess with your service.
+- Deploy the service in Choreo, allowing any WebSocket client application to establish a connection and exchange real-time messages with your service.
 
 ## Prerequisites
 
