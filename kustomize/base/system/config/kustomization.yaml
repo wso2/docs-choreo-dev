@@ -580,3 +580,7 @@ configMapGenerator:
     behavior: create
     literals:
       - B7A_LOG_LEVEL={{.B7A_LOG_LEVEL}}
+  - name: cm-file-configuration-schema-service
+    behavior: create
+    files:
+      - configuration-schema-service/configuration-schema-service.yaml
