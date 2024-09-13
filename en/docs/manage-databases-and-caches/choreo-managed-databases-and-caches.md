@@ -1,11 +1,11 @@
-# Choreo-Managed Databases and Caches
+# Choreo-Managed Databases, Vector Databases and Caches
 
 Choreo allows you to create PostgreSQL and MySQL databases as well as Choreo-Managed Cache instances on all major cloud providers (AWS, Azure, GCP, and DigitalOcean) as fully Choreo-managed platform services.
 These databases and caches can be seamlessly provisioned to offer persistence and caching capabilities for all your Choreo Components. Choreo provides various service plans for each type, ranging from smaller instances for development purposes to production-grade databases with automatic backups and multi-node high availability.
 
 ## PostgreSQL on Choreo
 
-PostgreSQL (also know as Postgres), is an open-source object-relational database management system. You can create a PostgreSQL database on Choreo as fully Choreo-managed, flexible SQL databases that are ideal for both structured and unstructured data.
+PostgreSQL (also know as Postgres), is an open-source object-relational database management system. You can create a PostgreSQL database on Choreo as fully Choreo-managed, flexible SQL databases that are ideal for both structured and unstructured data or vectors. 
 
 - [Create a PostgreSQL database on Choreo](./choreo-managed-postgresql-databases.md)
 

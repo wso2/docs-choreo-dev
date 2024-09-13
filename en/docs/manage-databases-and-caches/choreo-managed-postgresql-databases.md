@@ -1,6 +1,6 @@
-# Choreo-Managed PostgreSQL Databases
+# Choreo-Managed PostgreSQL Databases/Vector Databases
 
-PostgreSQL on Choreo offers fully Choreo-managed, efficient object-relational databases on AWS, Azure, GCP, and Digital Ocean.
+PostgreSQL on Choreo offers fully Choreo-managed, efficient object-relational databases on AWS, Azure, GCP, and Digital Ocean which also can be used as a Vector database. 
 
 ## Create a Choreo-managed PostgreSQL database
 
@@ -8,14 +8,16 @@ Follow the steps below to create a Choreo-managed PostgreSQL database:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
 2. In the header, click the **Organization** list. This opens the organization home page.
-2. In the left navigation menu, click **Dependencies** and then **Databases**.
-3. Click **Create** and select **PostgreSQL** as the database type. Provide a display name for this server and follow the instructions.
-4. Select your preferred cloud provider from AWS, Azure, GCP, or Digital Ocean.
+3. In the left navigation menu, click **Dependencies**.
+    - Select **Databases** to create a regelar database.
+    - Select **Vector Databases** to create a vector database.
+4. Click **Create** and select **PostgreSQL** as the database type. Provide a display name for this server and follow the instructions.
+5. Select your preferred cloud provider from AWS, Azure, GCP, or Digital Ocean.
     - The cloud provider is used to provision the compute and storage infrastructure for your database.
     - There is no functional difference between databases created on different cloud providers, apart from changes to service plans (and associated costs). 
-5. Choose the region for your database.
+6. Choose the region for your database.
    - Available regions will depend on the selected cloud provider. Choreo currently supports US and EU regions across all providers.
-6. Select the service plan.
+7. Select the service plan.
    - Service plans vary in the dedicated CPU, memory (RAM), storage space allocated for your database, the backup retention periods, and high-availability configurations for production use cases.
 
 ## Connecting to your Choreo-managed PostgreSQL database
