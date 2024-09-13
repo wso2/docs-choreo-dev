@@ -1,10 +1,13 @@
 # Expose a Ballerina WebSocket Endpoint via a Service
 
-Choreo allows you to create and deploy applications in your preferred programming language. This guide shows you how to deploy a service component that exposes a WebSocket API using the Ballerina language in Choreo. No prior knowledge of the Ballerina language is required to follow this guide.
+Choreo allows you to create and deploy applications in your preferred programming language, offering a seamless platform for building dynamic and scalable solutions. This guide walks you through the steps to deploy a WebSocket service using the Ballerina language. No prior knowledge of the Ballerina language is required to follow this guide.
 
-WebSocket protocols enable two-way communication between a client and a server over a persistent TCP connection. This makes WebSocket APIs ideal for applications that require real time updates. By following this guide, you will build a WebSocket service component in Ballerina and deploy it on Choreo, allowing any WebSocket client application to establish a connection and exchange messages in real-time with your service.
+WebSockets provide real-time, two-way communication between a client and server over a persistent TCP connection. This makes WebSocket APIs ideal for applications that require real time updates.
 
-This guide shows how to build a simple chat server and deploy it in Choreo using Ballerina.
+In this guide, you will:
+
+- Build a simple WebSocket service using a sample implementation in Ballerina.
+- Deploy the servicen in Choreo, allowing any WebSocket client application to establish a connection and exchange real-time messagess with your service.
 
 ## Prerequisites
 
@@ -23,14 +26,14 @@ Let's get started!
 
 ## Learn the repository file structure
 
-It is important to understand the purpose of the key files in the sample service. The following table provides a brief overview of each file in the reading list service.
+It is important to understand the purpose of the key files in the sample service. The following table provides a brief overview of each file in the Ballerina chat service.
 
 !!! note
-    The following file paths are relative to the path `<sample-repository-dir>/reading-list-graphql`.
+    The following file paths are relative to the path `<sample-repository-dir>/chat-service-websocket`.
 
 |Filepath                 | Description                                                     |
 |-------------------------|-----------------------------------------------------------------|
-| `service.bal`           | The reading list service code written in the Ballerina language.|
+| `service.bal`           | The chat service code written in the Ballerina language.        |
 | `Ballerina.toml`        | The Ballerina configuration file.                               |
 | `.choreo/endpoints.yaml`| The configuration file with endpoint details.                   |
 
@@ -78,7 +81,7 @@ To create a Ballerina service component, follow these steps:
     
     | **Field**                      | **Value**                 |
     |--------------------------------|---------------------------|
-    | **Ballerina Project Directory**| `chat-service-websocket`    |.
+    | **Ballerina Project Directory**| `chat-service-websocket`  |
 
 10. Click **Create**. This creates the component and takes you to the **Overview** page of the component.
 
@@ -86,7 +89,7 @@ You have successfully created a service component that exposes a GraphQL API wri
 
 ## Step 2: Build and deploy
 
-Now that we have connected the source repository, it's time to build and deploy the reading list service.
+Now that you have connected the source repository, it's time to build and deploy the chat service.
 
 ### Step 2.1: Build
 
@@ -111,9 +114,4 @@ To deploy the service, follow these steps:
         Deploying the service component may take a while. Once deployed, the **Development** environment card indicates the **Deployment Status** as **Active**.
 To build and deploy the service, follow the steps below:
 
-Once you have successfully deployed your service, you can test, manage, and observe it like any other component type in Choreo.
-
-For detailed instructions, see the following sections:
-
-- [Step 3: Test](https://wso2.com/choreo/docs/testing/test-websocket-endpoints-via-the-websocket-console/)
-- [Step 4: Manage](https://wso2.com/choreo/docs/manage/api-management/)
+Once you have successfully deployed your service, you can [test](../../testing/test-websocket-endpoints-via-the-websocket-console.md), [manage](../../api-management/lifecycle-management.md), and observe it like any other component type in Choreo.
