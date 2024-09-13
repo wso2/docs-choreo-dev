@@ -31,4 +31,3 @@ spec:
           objectType: secret
           objectAlias: CHOREO_APP_INSIGHTS_APP_ID
           objectVersion: "{{.CHOREO_APP_INSIGHTS_APP_ID}}"
-
