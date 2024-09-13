@@ -1,0 +1,75 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: choreo-bq-data-pipeline #Name of the cron job
+  namespace: choreo-system
+  annotations:
+    checkov.io/skip1: CKV_K8S_22=To access the root file system
+  labels:
+    choreo.component: choreo-bq-data-pipeline #Label for the cron job
+spec:
+  schedule: 30 23 * * *
+  successfulJobsHistoryLimit: 3 #Number of successful job histories to keep
+  concurrencyPolicy: Forbid #Concurrency policy to forbid concurrent execution of the job
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default" #Annotation for seccomp security
+            linkerd.io/inject: disabled #Annotation to disable linkerd injection
+          labels:
+            choreo.component: choreo-bq-data-pipeline #Label for the pod
+        spec:
+          automountServiceAccountToken: false #Automount service account token setting
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault #Type of seccomp profile
+          restartPolicy: Never #Pod restart policy
+          terminationGracePeriodSeconds: 30 #Termination grace period in seconds
+          containers:
+            - name: choreo-bq-data-pipeline #Name of the container
+              image: choreocontrolplane.azurecr.io/choreoipaas/choreo-bq-data-pipeline:latest #Docker image for the container
+              securityContext:
+                runAsUser: 10001 #User ID to run the container as
+                runAsGroup: 10001 #Group ID to run the container as
+                allowPrivilegeEscalation: false #Setting for privilege escalation
+                readOnlyRootFilesystem: false #Setting for read only root filesystem
+                capabilities:
+                  drop:
+                    - all #Capabilities to drop
+              resources:
+                limits:
+                  cpu: 1.5
+                  memory: 3Gi
+                requests:
+                  cpu: 1
+                  memory: 1Gi
+              envFrom:
+                - configMapRef:
+                    name: env-choreo-bq-data-pipeline
+                - secretRef:
+                    name: secret-choreo-bq-data-pipeline
+              env:
+                - name: GOOGLE_APPLICATION_CREDENTIALS
+                  value: "/mnt/csi/secret-choreo-bq-data-pipeline/GOOGLE_APPLICATION_CREDENTIALS"
+              volumeMounts:
+                - name: config #Name of the volume mount
+                  mountPath: /home/wso2/configs/application.properties #Path to mount the volume
+                  subPath: application.properties
+                - name: secret-choreo-bq-data-pipeline
+                  mountPath: "/mnt/csi/secret-choreo-bq-data-pipeline"
+                  readOnly: true
+          volumes:
+            - name: config
+              configMap:
+                name: cm-file-choreo-bq-data-pipeline #Name of the config map
+            - name: secret-choreo-bq-data-pipeline
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: secret-choreo-bq-data-pipeline
+                nodePublishSecretRef:
+                  name: csi-secret-store-azure
+          serviceAccountName: sa-choreo-default

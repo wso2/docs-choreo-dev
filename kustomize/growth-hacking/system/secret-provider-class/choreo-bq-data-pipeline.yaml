@@ -1,0 +1,33 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-choreo-bq-data-pipeline
+spec:
+  secretObjects:
+    - secretName: secret-choreo-bq-data-pipeline
+      type: Opaque
+      data:
+        - objectName: GOOGLE_APPLICATION_CREDENTIALS
+          key: GOOGLE_APPLICATION_CREDENTIALS
+        - objectName: CHOREO_APP_INSIGHTS_API_KEY
+          key: CHOREO_APP_INSIGHTS_API_KEY
+        - objectName: CHOREO_APP_INSIGHTS_APP_ID
+          key: CHOREO_APP_INSIGHTS_APP_ID
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: bq-data-pipeline-google-sa-credentials
+          objectType: secret
+          objectAlias: GOOGLE_APPLICATION_CREDENTIALS
+          objectVersion: "{{.GOOGLE_APPLICATION_CREDENTIALS}}"
+        - |
+          objectName: bq-data-pipeline-choreo-app-insights-api-key
+          objectType: secret
+          objectAlias: CHOREO_APP_INSIGHTS_API_KEY
+          objectVersion: "{{.CHOREO_APP_INSIGHTS_API_KEY}}"
+        - |
+          objectName: bq-data-pipeline-choreo-app-insights-app-id
+          objectType: secret
+          objectAlias: CHOREO_APP_INSIGHTS_APP_ID
+          objectVersion: "{{.CHOREO_APP_INSIGHTS_APP_ID}}"
