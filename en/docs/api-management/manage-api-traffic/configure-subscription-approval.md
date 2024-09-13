@@ -1,4 +1,4 @@
-# Subscription Request Approval
+# Configure Subscription Approval
 
 Choreo allows you to create subscription plans that require approval before being used. This feature enables you to control access to APIs by requiring administrative review and authorization of subscriptions before they become active.
 

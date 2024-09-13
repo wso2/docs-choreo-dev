@@ -173,7 +173,7 @@ nav:
       - Manage API Traffic:
           - Assign Subscription Plans to APIs: api-management/manage-api-traffic/assign-subscription-plans-to-apis.md
           - Subscribe to an API with a Subscription Plan: api-management/manage-api-traffic/subscribe-to-an-api-with-a-subscription-plan.md
-          - Subscription Request Approval: api-management/manage-api-traffic/subscription-request-approval.md
+          - Subscription Request Approval: api-management/manage-api-traffic/configure-subscription-approval.md
       - Rename API Display Name: api-management/rename-api-display-name.md
   - Monitoring and Insights:
       - Observability Overview: monitoring-and-insights/observability-overview.md
