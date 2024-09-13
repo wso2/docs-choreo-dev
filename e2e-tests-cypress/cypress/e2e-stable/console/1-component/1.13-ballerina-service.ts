@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Enums } from "../../../support/commons/enums";
+import { BuildPacks, Enums } from "../../../support/commons/enums";
 import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
 import { Service } from "../../../support/console/entities/component/service-component";
@@ -28,7 +28,8 @@ describe("Verify Ballerina service functionality", () => {
   const ENDPOINT_NAME = "Readinglist";
   let project: Project;
   let component: Service;
-  const REPO_URL = "https://github.com/wso2/choreo-samples"
+  const REPO_URL = "https://github.com/wso2/choreo-samples";
+  const REPO_NAME = "greeting-service";
   let service: Service;
 
   it("Login to Console", () => {
@@ -44,29 +45,14 @@ describe("Verify Ballerina service functionality", () => {
       .createServiceComponentUI({
         displayName: "",
         repoUrl: REPO_URL,
+        buildPack: BuildPacks.Ballerina,
+        repoName: REPO_NAME,
+        repoTestid: "greeting-service",
       })
       .then((comp) => {
         service = comp;
       });
   });
-
-
-
-  // it("Verify Ballerina service component creation", () => {
-  //   project
-  //     .createServiceComponent(
-  //       Enums.Accessibility.EXTERNAL,
-  //       {
-  //         url: "https://github.com/choreo-test-apps/byor-service-app1",
-  //         branch: "main",
-  //       },
-  //       ENDPOINT_NAME
-  //     )
-  //     .then((serviceComponent: Service) => {
-  //       project.visitComponent(serviceComponent.getName());
-  //       component = serviceComponent;
-  //     });
-  // });
 
   it("Build the component", () => {
     component.build();

@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Enums } from "../../../commons/enums";
+import { BuildPacks, Enums } from "../../../commons/enums";
 import {
   MEDIUM_TIME,
   SHORT_TIME,
@@ -56,7 +56,9 @@ export interface ProxyInfo {
 export interface ServiceInfo {
   readonly displayName: string;
   readonly repoUrl: string;
-  readonly buildPackName: string;
+  readonly buildPack: BuildPacks;
+  readonly repoName: string;
+  readonly repoTestid: string;
 }
 
 export interface WebAppInfo {
@@ -361,7 +363,7 @@ export class Project {
     });
   }
 
-//////////////////////////////
+
   createServiceComponentUI(serviceInfo: ServiceInfo) {
     this.createComponentIfEmptyProject();
     cy.get(TestIds.serviceBuildPack).should("be.visible").click();
@@ -370,7 +372,9 @@ export class Project {
     const serviceEndpointUrl = this.serviceCreationWizard.enterServiceDetails(
       serviceName,
       serviceInfo,
-      serviceInfo.repoUrl
+      serviceInfo.repoUrl,
+      serviceInfo.repoName,
+      serviceInfo.repoTestid
     );
 
     return cy.url().then(() => {
@@ -380,10 +384,6 @@ export class Project {
       );
     });
   }
-
-
-
-//////////////////////////////
 
   createManualTriggerComponent(
     accessibility: Enums.Accessibility,

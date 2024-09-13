@@ -415,5 +415,9 @@ export namespace TestIds {
   export const projectDirectoryEdit = '[data-cyid="edit-button"]';
   export const goComponentCard = '[data-cyid="Go-card-button"]';
   export const miComponentCard = '[data-cyid="WSO2 MI-card-button"]';
+  export const repoSearchBox = '[data-cyid="project-directory-search-search-bar-input"]';
+  export const continueButton = '[data-cyid="Continue-button"]';
+  export const greetingBalServiceRepo = '[data-cyid="subPath-greeting-service"]';
+  export const serviceCreateButton = '[data-cyid="Create-button"]';
 }
 
