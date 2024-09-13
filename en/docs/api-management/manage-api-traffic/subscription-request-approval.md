@@ -10,7 +10,7 @@ To use a subscription plan that requires approval, follow the steps given below:
 - You have [assigned a subscription plan that requires approval to an API](assign-subscription-plans-to-apis.md).
 - You have [subscribed to an API using a plan that requires approval](subscribe-to-an-api-with-a-subscription-plan.md).
 
-## Request Approval
+## Request approval
 
 1. In the left navigation menu, click **Approvals**. This opens the organization-level approvals page.
 2. On the **Approvals** page, you can view the list of pending subscription requests.

@@ -2,7 +2,7 @@
 
 This guide explains how to review, approve, or reject approval requests for various types of resources in Choreo.
 
-## Approving or Rejecting requests
+## Approving or rejecting requests
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. Click on the current organization in the top left.
@@ -14,7 +14,7 @@ This guide explains how to review, approve, or reject approval requests for vari
 
 ![Approve subscription](../../assets/img/api-management/manage-api-traffic/add-subscription.png)
 
-## Types of Approval Requests
+## Types of approval requests
 
 Choreo supports various types of approval requests, including:
 
