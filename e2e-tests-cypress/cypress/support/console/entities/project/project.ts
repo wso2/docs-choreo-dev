@@ -59,6 +59,7 @@ export interface ServiceInfo {
   readonly buildPack: BuildPacks;
   readonly repoName: string;
   readonly repoTestid: string;
+  readonly ENDPOINT_NAME: string;
 }
 
 export interface WebAppInfo {
@@ -369,18 +370,19 @@ export class Project {
     cy.get(TestIds.serviceBuildPack).should("be.visible").click();
 
     const serviceName = Utils.generateComponentName();
-    const serviceEndpointUrl = this.serviceCreationWizard.enterServiceDetails(
+    this.serviceCreationWizard.enterServiceDetails(
       serviceName,
       serviceInfo,
       serviceInfo.repoUrl,
       serviceInfo.repoName,
-      serviceInfo.repoTestid
+      serviceInfo.repoTestid,
+      
     );
 
     return cy.url().then(() => {
       return new Service(
         serviceName,
-        serviceEndpointUrl
+        serviceInfo.ENDPOINT_NAME,
       );
     });
   }

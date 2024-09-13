@@ -25,12 +25,11 @@ after(() => {
 
 describe("Verify Ballerina service functionality", () => {
   const PROJECT_DESCRIPTION = "sample ballerina service scenario";
-  const ENDPOINT_NAME = "Readinglist";
+  const ENDPOINT_NAME = "Endpoint 8090";
   let project: Project;
   let component: Service;
   const REPO_URL = "https://github.com/wso2/choreo-samples";
   const REPO_NAME = "greeting-service";
-  let service: Service;
 
   it("Login to Console", () => {
     console.login();
@@ -48,9 +47,10 @@ describe("Verify Ballerina service functionality", () => {
         buildPack: BuildPacks.Ballerina,
         repoName: REPO_NAME,
         repoTestid: "greeting-service",
+        ENDPOINT_NAME
       })
       .then((comp) => {
-        service = comp;
+        component = comp;
       });
   });
 
