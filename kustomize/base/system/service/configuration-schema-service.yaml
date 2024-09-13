@@ -6,7 +6,7 @@ metadata:
   name: configuration-schema-service
 spec:
   ports:
-    - name: configuration-schema-service-port
+    - name: config-schema-port
       port: 80
       protocol: TCP
       targetPort: http-port

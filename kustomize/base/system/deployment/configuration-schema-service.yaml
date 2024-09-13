@@ -78,9 +78,6 @@ spec:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
-                matchExpressions:
-                  - key: antiaffinity
-                    operator: In
-                    values:
-                      - configuration-schema-service
+                matchLabels:
+                  antiaffinity: configuration-schema-service
               topologyKey: kubernetes.io/hostname
