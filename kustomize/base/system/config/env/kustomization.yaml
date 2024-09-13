@@ -979,6 +979,14 @@ configMapGenerator:
     literals:
       - DB_URL="{{.DB_URL}}"
       - MANAGE_ROLES_GROUP_SCOPE={{.MANAGE_ROLES_GROUP_SCOPE}}
+  - name: env-choreo-api-key-service
+    behavior: create
+    literals:
+      - DB_HOST={{.DB_HOST}}
+      - DB_PORT={{.DB_PORT}}
+      - DB_NAME={{.DB_NAME}}
+      - DB_USERNAME={{.DB_USERNAME}}
+      - DB_PASSWORD_FILE={{.DB_PASSWORD_FILE}}
   - name: env-log-controller
     behavior: create
     literals:
