@@ -31,3 +31,8 @@ governance-service:
       abandonWhenPercentageFull: 50
   feature-flags:
     disableDatabaseConnection: {{.DISABLE_DATABASE_CONNECTION | default true}}
+  endpoints:
+    apimBasePath: {{.APIM_BASE_PATH}}
+    linterServiceBasePath: {{.LINTER_SERVICE_BASE_PATH}}
+  apim:
+    superAdminUserName: {{.APIM_SUPER_ADMIN_USERNAME}}
