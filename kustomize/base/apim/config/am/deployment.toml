@@ -621,3 +621,9 @@ request_count = "-1"
 time_unit = "min"
 description = "Allows unlimited events"
 api_type = "WS"
+
+[choreo.governanceService]
+endpoint_url = "http://choreo-governance-service:8080"
+worker_count = "5"
+max_reties = "3"
+retry_delay = "2000"
