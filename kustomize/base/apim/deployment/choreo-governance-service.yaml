@@ -46,6 +46,12 @@ spec:
           ports:
             - containerPort: 8080
               name: service-port
+          env:
+            - name: SUPER_ADMIN_PSWD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-choreo-governance-service
+                  key: SUPER_ADMIN_PSWD
           readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 15
