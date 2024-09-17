@@ -85,7 +85,7 @@ To create a Ballerina service component, follow these steps:
 
 10. Click **Create**. This creates the component and takes you to the **Overview** page of the component.
 
-You have successfully created a service component that exposes a GraphQL API written in the Ballerina language. Next, let's build and deploy the service.
+You have successfully created a service component that exposes a WebSocket API written in the Ballerina language. Next, let's build and deploy the service.
 
 ## Step 2: Build and deploy
 
