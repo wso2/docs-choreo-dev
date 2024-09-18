@@ -58,7 +58,7 @@ describe("Verify Ballerina service functionality", () => {
     component.build();
   });
 
-  it.skip("Deploying the component with Project level visibility", () => {
+  it("Deploying the component with Project level visibility", () => {
     component.deployProjectLevelAccessibility();
   });
 
