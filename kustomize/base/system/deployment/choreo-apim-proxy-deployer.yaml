@@ -63,7 +63,7 @@ spec:
               memory: 1Gi
             requests:
               cpu: 300m
-              memory: 768Mi
+              memory: 650Mi
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 10001 # to fix CKV_K8S_40 use uid > 10000
