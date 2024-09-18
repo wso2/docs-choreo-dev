@@ -12,6 +12,14 @@ helmCharts:
             operator: Equal
             value: "true"
             effect: NoSchedule
+          - key: choreo-deployments
+            operator: Equal
+            value: "userapps"
+            effect: NoSchedule
+          - key: kubernetes.azure.com/scalesetpriority
+            operator: Equal
+            value: "spot"
+            effect: NoSchedule
         priorityClassName: "secrets-store-csi-driver"
       secrets-store-csi-driver:
         syncSecret:

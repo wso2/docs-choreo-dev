@@ -20,6 +20,7 @@ spec:
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+        config.linkerd.io/proxy-memory-request: 30Mi
     spec:
       securityContext:
         seccompProfile:
@@ -54,7 +55,7 @@ spec:
               memory: 500Mi
             requests:
               cpu: 100m
-              memory: 200Mi
+              memory: 250Mi
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 10000
