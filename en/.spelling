@@ -697,6 +697,10 @@ headerName
 fooValue
 authzHeaderValue
 myResourcePath
+WebSocket
+WebSockets
+expose-a-ballerina-websocket-endpoint-via-a-service
+test-websocket-endpoints-via-the-websocket-console
 develop-a-ballerina-graphql-api
 faq.md
 Moesif.md
