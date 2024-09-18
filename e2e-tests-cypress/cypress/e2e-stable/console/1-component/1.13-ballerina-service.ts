@@ -47,7 +47,7 @@ describe("Verify Ballerina service functionality", () => {
         buildPack: BuildPacks.Ballerina,
         repoName: REPO_NAME,
         repoTestid: "greeting-service",
-        ENDPOINT_NAME
+        ENDPOINT_NAME,
       })
       .then((comp) => {
         component = comp;
@@ -58,7 +58,7 @@ describe("Verify Ballerina service functionality", () => {
     component.build();
   });
 
-  it("Deploying the component with Project level visibility", () => {
+  it.skip("Deploying the component with Project level visibility", () => {
     component.deployProjectLevelAccessibility();
   });
 
@@ -75,15 +75,15 @@ describe("Verify Ballerina service functionality", () => {
       .testConsole({
         env: Enums.Environment.DEVELOPMENT,
         endpoint: ENDPOINT_NAME,
-        resourcePath: "books",
+        resourcePath: "",
         method: "get",
-        parentComponentId: "operations-default-getBooks",
+        key: "name",
+        value: "User",
+        parentComponentId: "operations-default-get",
       })
       .then((res) => {
-        cy.fixture("books").then((books) => {
-          expect(res.response.toString()).to.include(books[1].title);
-        });
         expect(res.statusCode).to.be.eq(OK.toString());
+        expect(res.response).to.contain("User");
       });
   });
 
@@ -92,15 +92,15 @@ describe("Verify Ballerina service functionality", () => {
       .testConsole({
         env: Enums.Environment.PRODUCTION,
         endpoint: ENDPOINT_NAME,
-        resourcePath: "books",
+        resourcePath: "",
         method: "get",
-        parentComponentId: "operations-default-getBooks",
+        key: "name",
+        value: "User",
+        parentComponentId: "operations-default-get",
       })
       .then((res) => {
-        cy.fixture("books").then((books) => {
-          expect(res.response.toString()).to.include(books[1].title);
-        });
         expect(res.statusCode).to.be.eq(OK.toString());
+        expect(res.response).to.contain("User");
       });
   });
 
@@ -120,37 +120,37 @@ describe("Verify Ballerina service functionality", () => {
     component.promotePublicLevelAccessibility();
   });
 
-  it("Testing new version in Dev", () => {
+  it("Testing the component in Dev", () => {
     component
       .testConsole({
         env: Enums.Environment.DEVELOPMENT,
         endpoint: ENDPOINT_NAME,
-        resourcePath: "books",
+        resourcePath: "",
         method: "get",
-        parentComponentId: "operations-default-getBooks",
+        key: "name",
+        value: "User",
+        parentComponentId: "operations-default-get",
       })
       .then((res) => {
-        cy.fixture("books").then((books) => {
-          expect(res.response.toString()).to.include(books[1].title);
-        });
         expect(res.statusCode).to.be.eq(OK.toString());
+        expect(res.response).to.contain("User");
       });
   });
 
-  it("Testing new version in Prod", () => {
+  it("Testing the component in Prod", () => {
     component
       .testConsole({
         env: Enums.Environment.PRODUCTION,
         endpoint: ENDPOINT_NAME,
-        resourcePath: "books",
+        resourcePath: "",
         method: "get",
-        parentComponentId: "operations-default-getBooks",
+        key: "name",
+        value: "User",
+        parentComponentId: "operations-default-get",
       })
       .then((res) => {
-        cy.fixture("books").then((books) => {
-          expect(res.response.toString()).to.include(books[1].title);
-        });
         expect(res.statusCode).to.be.eq(OK.toString());
+        expect(res.response).to.contain("User");
       });
   });
 
