@@ -257,7 +257,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       cy.get(TestIds.selectVersion).click();
       cy.get(TestIds.createVersion).should("be.visible").click();
       cy.get(TestIds.dialog).within(() => {
-        cy.get('[data-testid*="feature"]').click();
+        cy.get('[data-testid*="app-demo"]').click();
       });
       cy.get(`[data-value="${branch}"]`).click();
       cy.get(TestIds.dialog).within(() => {
