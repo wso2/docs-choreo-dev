@@ -1,10 +1,6 @@
-
 # Test WebSocket Endpoints via the WebSocket Console
 
-
- Console
-
-Choreo provides an integrated WebSocket Console to test publicly exposed WebSocket endpoints of Service components you create and deploy. The WebSocket Console allows you to connect to the service and interactively pass messages. As Choreo uses OAuth2.0 authentication by default to secure WebSocket APIs, the WebSocket Console generates test keys to test APIs.
+Choreo provides an integrated WebSocket Console to test publicly exposed WebSocket endpoints of Service components you create and deploy. The WebSocket Console allows you to connect to your service and exchange messages interactively. Choreo secures WebSocket APIs with OAuth2.0 by default, and the console automatically generates test keys for authenticated API testing.
 
 Follow the steps below to test a WebSocket endpoint via the WebSocket Console:
 
@@ -19,22 +15,22 @@ Follow the steps below to test a WebSocket endpoint via the WebSocket Console:
 5. Select the required endpoint from the **Endpoint** list.
 
     !!! note
-        - The **Network Visibility** of an endpoint is set in the **endpoints.yaml**. You can set it to **Public**, **Organization**, or **Project**.
-        - If you have set the **Network Visibility** of the endpoint in the **endpoints.yaml** to **Public**, continue with step 7. 
-        - If you have set the **Network Visibility** of the endpoint in the **endpoints.yaml** to **Organization**, the WebSocket endpoint will not be invokable from outside the organization. In this instance, for testing purposes, Choreo allows you to generate a temporay test URL that will be active for 15 minutes. Execute step 6 to generate the temporary URL. 
+        - The **Network Visibility** of an endpoint is set in the **endpoints.yaml** file. You can set it to **Public**, **Organization**, or **Project**.
+        - If you have set the **Network Visibility** of the endpoint to **Public**, proceed to step 7. 
+        - If you have set the **Network Visibility** of the endpoint to **Organization**, it won't be accessible from outside the organization. For testing, Choreo allows you to generate a temporary URL that remains active for 15 minutes. Follow step 6 to generate the URL.
         
-6. If the **Network Visibility** of the endpoint is set to **Organization**, click on **Generate URL** to generate a temporary test URL that will be active for 15 minutes. Else, skip this step. 
+6. If the **Network Visibility** of the endpoint is set to **Organization**, click **Generate URL** to generate a temporary test URL valid for 15 minutes. Otherwise, skip this step. 
 
     !!! note
-        The temporay test URL will be available **only for 15 minutes** and it will get expired after. You can deactivate the test URL by clicking on the **Deactivate URL** button.
+        The temporary test URL is valid for 15 minutes and will expire after that. If you want to manually deactivate it, click **Deactivate URL**.
 
     ![WebSocket Console](../assets/img/testing/websocket-console.png){.cInlineImage-full}
 
 7. Expand the channel you want to test.
 
-8. Click connect. You can see the connection status in output logs.
+8. Click **Connect** to establish a connection. The connection status will be displayed in the output logs.
 
-9. Send and recieve messages to and from the deployed Service.
+9. Send and receive messages to and from the deployed service.
     
     !!! note
-         The maximum connection duration is limited to 15 Minuites and the connection will be terminated after. You can retry creating a connection by clicking the Connect Button.
+         The maximum connection duration is 15 minutes. After that, the connection terminates. To reconnect, click **Connect** again.
