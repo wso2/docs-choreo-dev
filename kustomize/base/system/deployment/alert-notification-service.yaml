@@ -20,6 +20,7 @@ spec:
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+        config.linkerd.io/proxy-memory-request: 30Mi
     spec:
       automountServiceAccountToken: true
       securityContext:
@@ -87,10 +88,10 @@ spec:
           resources:
             limits:
               cpu: 500m
-              memory: 768Mi
+              memory: 1Gi
             requests:
               cpu: 250m
-              memory: 512Mi
+              memory: 768Mi
       volumes:
         - name: secret-alert-notification-service
           csi:
