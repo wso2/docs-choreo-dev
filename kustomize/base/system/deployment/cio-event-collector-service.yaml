@@ -34,7 +34,7 @@ spec:
               memory: 500Mi
             requests:
               cpu: 200m
-              memory: 400Mi
+              memory: 350Mi
           envFrom:
             - configMapRef:
                 name: env-cio-event-collector-service
