@@ -15,9 +15,7 @@ governance-service:
     driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
     url: {{.CHOREO_GOVERNANCE_SERVICE_DB_URL}}
     username: choreo_governance_db_user
-    # Remove the config replace value and set "/mnt/csi/secret-choreo-governance-service/CHOREO_GOVERNANCE_DB_MSSQL_PASSWORD"
-    # as the value once the secret is created in all the environments
-    passwordFromFile: {{.DATABASE_PASSWORD_FILE_PATH | default ""}}
+    password: "@_from_file_(/mnt/csi/secret-choreo-governance-service/CHOREO_GOVERNANCE_DB_MSSQL_PASSWORD)"
     pool:
       maxActiveConnectionsCount: 100
       initialConnectionCount: 5
@@ -32,7 +30,8 @@ governance-service:
   feature-flags:
     disableDatabaseConnection: {{.DISABLE_DATABASE_CONNECTION | default true}}
   endpoints:
-    apimBasePath: {{.APIM_BASE_PATH}}
-    linterServiceBasePath: {{.LINTER_SERVICE_BASE_PATH}}
+    apimBasePath: "https://choreo-am-service:9443/api/am/publisher/v2/apis"
+    linterServiceBasePath: "http://choreo-linter-service:8080/linter-service"
   apim:
     superAdminUserName: {{.APIM_SUPER_ADMIN_USERNAME}}
+    superAdminPassword: "@_from_file_(/mnt/csi/secret-choreo-governance-service/APIM_SUPER_ADMIN_PASSWORD)"
