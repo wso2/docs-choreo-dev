@@ -41,11 +41,11 @@ export class _ServiceCreationWizard {
     return serviceInfo.displayName;
   }
 
-  createFromGHUrl(url: string) {
+  private createFromGHUrl(url: string) {
     cy.get(TestIds.serviceGHUrlEntry).should("be.visible").type(url);
   }
 
-  handleBuildPackSelectionFromService(serviceInfo: ServiceInfo) {
+  private handleBuildPackSelectionFromService(serviceInfo: ServiceInfo) {
     switch (serviceInfo.buildPack) {
       case BuildPacks.Ballerina:
         cy.get(TestIds.ballerinaComponentCard).should("be.visible").click();
@@ -61,11 +61,11 @@ export class _ServiceCreationWizard {
     }
   }
 
-  searchRepoName(repoSearchBox: string) {
+  private searchRepoName(repoSearchBox: string) {
     cy.get(TestIds.repoSearchBox).should("be.visible").type(repoSearchBox);
   }
 
-  selectRepo(testid: string) {
+  private selectRepo(testid: string) {
     cy.get(TestIds.greetingBalServiceRepo).should("be.visible").click();
   }
 
