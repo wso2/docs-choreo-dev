@@ -168,7 +168,10 @@ nav:
       - Lifecycle Management: api-management/lifecycle-management.md
       - Documents: api-management/documents.md
       - API Rate Limiting: api-management/api-rate-limiting.md
-      - API Policies: api-management/api-policies.md
+      - API Policies:
+          - About API Policies: api-management/api-policies/about-api-policies.md
+          - Attach and Manage Policies: api-management/api-policies/attach-and-manage-policies.md
+          - Apply Advanced Settings on Mediation Policies: api-management/api-policies/apply-advanced-settings-on-mediation-policies.md
       - Control API Visibility: api-management/control-api-visibility.md
       - Manage API Traffic:
           - Assign Subscription Plans to APIs: api-management/manage-api-traffic/assign-subscription-plans-to-apis.md
@@ -381,6 +384,7 @@ plugins:
           'manage-databases-and-caches/choreo-managed-redis-datastores.md': 'https://wso2.com/choreo/docs/manage-databases-and-caches/choreo-managed-caches/'
           'monitoring-and-insights/usage-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/insights-overview/'
           'develop-components/configure-mutual-tls-between-components.md': 'https://wso2.com/choreo/docs/authentication-and-authorization/configure-mutual-tls-between-components/'
+          'api-management/api-policies.md': 'https://wso2.com/choreo/docs/api-management/api-policies/about-api-policies/'
 
 extra_css:
   # - assets/lib/highlightjs/default.min.css
